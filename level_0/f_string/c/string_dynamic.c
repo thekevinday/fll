@@ -173,12 +173,12 @@ extern "C" {
     if (dynamic->used + 1 > dynamic->size) {
       f_array_length_t size = dynamic->used + step;
 
-      if (size > f_string_t_size) {
-        if (dynamic->used + 1 > f_string_t_size) {
+      if (size > F_string_t_size_d) {
+        if (dynamic->used + 1 > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
-        size = f_string_t_size;
+        size = F_string_t_size_d;
       }
 
       return private_f_string_dynamic_resize(size, dynamic);
@@ -844,7 +844,7 @@ extern "C" {
       return F_none;
     }
 
-    if (destination->used == f_string_t_size) {
+    if (destination->used == F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -877,7 +877,7 @@ extern "C" {
       } // for
     }
 
-    if (destination->used == f_string_t_size) {
+    if (destination->used == F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -959,12 +959,12 @@ extern "C" {
     if (dynamics->used + 1 > dynamics->size) {
       f_array_length_t size = dynamics->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (dynamics->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (dynamics->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_string_dynamics_resize(size, dynamics);
@@ -981,7 +981,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (dynamics->used + amount > dynamics->size) {
-      if (dynamics->used + amount > f_array_length_t_size) {
+      if (dynamics->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 

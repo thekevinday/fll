@@ -80,7 +80,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments->argv[position_depth], range, &data->depths.array[i].depth);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_depth, arguments->argv[position_depth]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_depth_s, arguments->argv[position_depth]);
 
           return status;
         }
@@ -104,7 +104,7 @@ extern "C" {
           status = fl_conversion_string_to_number_unsigned(arguments->argv[data->depths.array[i].index_at], range, &data->depths.array[i].value_at);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_at, arguments->argv[data->depths.array[i].index_at]);
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_at_s, arguments->argv[data->depths.array[i].index_at]);
 
             return status;
           }
@@ -151,7 +151,7 @@ extern "C" {
             fl_print_format("%c%[%sThe value '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth_s, main->error.notable);
             fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -164,7 +164,7 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth_s, main->error.notable);
             fl_print_format("%[' may not have the value '%]", main->error.to.stream, main->error.context, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' before the value '%]", main->error.to.stream, main->error.context, main->error.context);
@@ -200,7 +200,7 @@ extern "C" {
 #ifndef _di_fss_basic_read_load_
   f_status_t fss_basic_read_load(fss_basic_read_main_t * const main, fss_basic_read_data_t *data) {
 
-    f_state_t state = macro_f_state_t_initialize(fss_basic_read_common_allocation_large, fss_basic_read_common_allocation_small, 0, 0, 0, 0, 0);
+    f_state_t state = macro_f_state_t_initialize(fss_basic_read_common_allocation_large_d, fss_basic_read_delimit_common_allocation_small_d, 0, 0, 0, 0, 0);
     f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
 
     data->delimits.used = 0;
@@ -320,10 +320,10 @@ extern "C" {
   void fss_basic_read_print_object_end(fss_basic_read_main_t * const main) {
 
     if (main->parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
-      f_print_character(fss_basic_read_pipe_content_start, main->output.to.stream);
+      f_print_character(fss_basic_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
-      f_print_character(f_fss_space, main->output.to.stream);
+      f_print_character(F_fss_space_s[0], main->output.to.stream);
     }
   }
 #endif // _di_fss_basic_read_print_object_end_
@@ -339,7 +339,7 @@ extern "C" {
   void fss_basic_read_print_set_end(fss_basic_read_main_t * const main) {
 
     if (main->parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
-      f_print_character(fss_basic_read_pipe_content_end, main->output.to.stream);
+      f_print_character(fss_basic_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
       f_print_character(f_string_eol_s[0], main->output.to.stream);
@@ -638,7 +638,7 @@ extern "C" {
     if (main->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
       data->option |= fss_basic_read_data_option_line;
 
-      status = fss_basic_read_load_number(fss_basic_read_parameter_line, fss_basic_read_long_line, arguments, main, &data->line);
+      status = fss_basic_read_load_number(fss_basic_read_parameter_line, fss_basic_read_long_line_s, arguments, main, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
@@ -657,7 +657,7 @@ extern "C" {
     if (main->parameters[fss_basic_read_parameter_select].result == f_console_result_additional) {
       data->option |= fss_basic_read_data_option_select;
 
-      status = fss_basic_read_load_number(fss_basic_read_parameter_select, fss_basic_read_long_select, arguments, main, &data->select);
+      status = fss_basic_read_load_number(fss_basic_read_parameter_select, fss_basic_read_long_select_s, arguments, main, &data->select);
       if (F_status_is_error(status)) return status;
     }
 

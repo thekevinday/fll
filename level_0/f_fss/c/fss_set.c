@@ -55,12 +55,12 @@ extern "C" {
     if (set->objects.used + 1 > set->objects.size) {
       f_array_length_t size = set->objects.used + step;
 
-      if (size > f_array_length_t_size) {
-        if (set->objects.used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (set->objects.used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_set_resize(size, set);
@@ -78,7 +78,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (set->objects.used + amount > set->objects.size) {
-      if (set->objects.used + amount > f_array_length_t_size) {
+      if (set->objects.used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -149,12 +149,12 @@ extern "C" {
     if (set_quote->objects.used + 1 > set_quote->objects.size) {
       f_array_length_t size = set_quote->objects.used + step;
 
-      if (size > f_array_length_t_size) {
-        if (set_quote->objects.used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (set_quote->objects.used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_set_quote_resize(size, set_quote);
@@ -172,7 +172,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (set_quote->objects.used + amount > set_quote->objects.size) {
-      if (set_quote->objects.used + amount > f_array_length_t_size) {
+      if (set_quote->objects.used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -243,12 +243,12 @@ extern "C" {
     if (set_quotes->used + 1 > set_quotes->size) {
       f_array_length_t size = set_quotes->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (set_quotes->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (set_quotes->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_set_quotes_resize(size, set_quotes);
@@ -266,7 +266,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (set_quotes->used + amount > set_quotes->size) {
-      if (set_quotes->used + amount > f_array_length_t_size) {
+      if (set_quotes->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -337,12 +337,12 @@ extern "C" {
     if (sets->used + 1 > sets->size) {
       f_array_length_t size = sets->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (sets->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (sets->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_sets_resize(size, sets);
@@ -360,7 +360,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (sets->used + amount > sets->size) {
-      if (sets->used + amount > f_array_length_t_size) {
+      if (sets->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 

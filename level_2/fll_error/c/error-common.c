@@ -6,9 +6,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_error_file_type_
-  const f_string_t fll_error_file_type_string_directory_s = fll_error_file_type_string_directory;
-  const f_string_t fll_error_file_type_string_file_s = fll_error_file_type_string_file;
-  const f_string_t fll_error_file_type_string_pipe_s = fll_error_file_type_string_pipe;
+  const f_string_t fll_error_file_type_directory_s = FLL_error_file_type_directory_s;
+  const f_string_t fll_error_file_type_file_s = FLL_error_file_type_file_s;
+  const f_string_t fll_error_file_type_pipe_s = FLL_error_file_type_pipe_s;
 #endif // _di_fll_error_file_type_
 
 #ifdef __cplusplus

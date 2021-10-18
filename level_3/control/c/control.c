@@ -11,7 +11,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    fll_program_print_help_header(file, context, control_name_long, control_version);
+    fll_program_print_help_header(file, context, control_program_name_long_s, control_program_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -23,7 +23,7 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal file.");
     fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    fll_program_print_help_usage(file, context, control_name, f_string_empty_s);
+    fll_program_print_help_usage(file, context, control_program_name_s, f_string_empty_s);
 
     funlockfile(file.stream);
 
@@ -37,7 +37,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, control_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, control_total_parameters_d);
 
       {
         f_console_parameter_id_t ids[3] = { control_parameter_no_color, control_parameter_light, control_parameter_dark };
@@ -115,7 +115,7 @@ extern "C" {
     }
 
     if (main->parameters[control_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output.to, control_version);
+      fll_program_print_version(main->output.to, control_program_version_s);
 
       control_main_delete(main);
       return F_none;
@@ -138,7 +138,7 @@ extern "C" {
 #ifndef _di_control_main_delete_
   f_status_t control_main_delete(control_main_t *main) {
 
-    for (f_array_length_t i = 0; i < control_total_parameters; ++i) {
+    for (f_array_length_t i = 0; i < control_total_parameters_d; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

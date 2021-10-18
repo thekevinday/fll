@@ -84,89 +84,89 @@
 extern "C" {
 #endif
 
-#ifndef _di_controller_version_
-  #define controller_major_version f_string_ascii_0
-  #define controller_minor_version f_string_ascii_5
-  #define controller_micro_version f_string_ascii_6
+#ifndef _di_controller_program_version_
+  #define controller_program_version_major_s F_string_ascii_0_s
+  #define controller_program_version_minor_s F_string_ascii_5_s
+  #define controller_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef controller_nano_version_prefix
-    #define controller_nano_version_prefix
+  #ifndef controller_program_version_nano_prefix_s
+    #define controller_program_version_nano_prefix_s
   #endif
 
-  #ifndef controller_nano_version
-    #define controller_nano_version
+  #ifndef controller_program_version_nano_s
+    #define controller_program_version_nano_s
   #endif
 
-  #define controller_version controller_major_version f_string_ascii_period controller_minor_version f_string_ascii_period controller_micro_version controller_nano_version_prefix controller_nano_version
-#endif // _di_controller_version_
+  #define controller_program_version_s controller_program_version_major_s F_string_ascii_period_s controller_program_version_minor_s F_string_ascii_period_s controller_program_version_micro_s controller_program_version_nano_prefix_s controller_program_version_nano_s
+#endif // _di_controller_program_version_
 
-#ifndef _di_controller_name_
-  #define controller_name      "controller"
-  #define controller_name_long "Controller Program"
+#ifndef _di_controller_program_name_
+  #define controller_program_name_s      "controller"
+  #define controller_program_name_long_s "Controller Program"
 
-  #define controller_name_init      "init"
-  #define controller_name_init_long "Init Program"
-#endif // _di_controller_name_
+  #define controller_program_name_init_s      "init"
+  #define controller_program_name_init_long_s "Init Program"
+#endif // _di_controller_program_name_
 
 #ifndef _di_controller_defines_
 
   // the init pid path is a system-specific path and needs to be more easily contolled at compile time.
   #if defined(_override_controller_path_pid_init_) && defined(_override_controller_path_pid_init_length_)
-    #define controller_path_pid_init         _override_controller_path_pid_init_
-    #define controller_path_pid_init_length  _override_controller_path_pid_init_length_
+    #define controller_path_pid_init_s         _override_controller_path_pid_init_
+    #define controller_path_pid_init_s_length  _override_controller_path_pid_init_length_
   #elif defined(_controller_as_init_)
-    #define controller_path_pid_init        "/var/run/init/init-"
-    #define controller_path_pid_init_length 19
+    #define controller_path_pid_init_s        "/var/run/init/init-"
+    #define controller_path_pid_init_s_length 19
   #else
-    #define controller_path_pid_init        "/var/run/controller/controller-"
-    #define controller_path_pid_init_length 31
+    #define controller_path_pid_init_s        "/var/run/controller/controller-"
+    #define controller_path_pid_init_s_length 31
   #endif /* defined(_override_controller_path_pid_init_) && defined(_override_controller_path_pid_init_length_) */
 
   // the settings path is a system-specific path and needs to be more easily contolled at compile time.
   #if defined(_override_controller_path_settings_init_) && defined(_override_controller_path_settings_init_length_)
-    #define controller_path_settings_init        _override_controller_path_settings_init_
-    #define controller_path_settings_init_length _override_controller_path_settings_init_length_
+    #define controller_path_settings_init_s        _override_controller_path_settings_init_
+    #define controller_path_settings_init_s_length _override_controller_path_settings_init_length_
   #elif defined(_controller_as_init_)
-    #define controller_path_settings_init "/etc/init"
-    #define controller_path_settings_init_length 9
+    #define controller_path_settings_init_s "/etc/init"
+    #define controller_path_settings_init_s_length 9
   #else
-    #define controller_path_settings_init "/etc/controller"
-    #define controller_path_settings_init_length 15
+    #define controller_path_settings_init_s "/etc/controller"
+    #define controller_path_settings_init_s_length 15
   #endif /* defined(_override_controller_path_settings_init_) && defined(_override_controller_path_settings_init_length_) */
 
   #ifdef _override_controller_default_program_script_
-    #define controller_default_program_script _override_controller_default_program_script_
+    #define controller_default_program_script_s _override_controller_default_program_script_
   #else
-    #define controller_default_program_script "bash"
+    #define controller_default_program_script_s "bash"
   #endif // _override_controller_default_program_script_
 
-  #define controller_path_pid      "controller/run/controller-"
-  #define controller_path_settings "controller"
-  #define controller_path_suffix   ".pid"
+  #define controller_path_pid_s      "controller/run/controller-"
+  #define controller_path_settings_s "controller"
+  #define controller_path_suffix_s   ".pid"
 
-  #define controller_path_pid_length      26
-  #define controller_path_settings_length 10
-  #define controller_path_suffix_length   4
+  #define controller_path_pid_s_length      26
+  #define controller_path_settings_s_length 10
+  #define controller_path_suffix_s_length   4
 
-  #define controller_short_control         "c"
-  #define controller_short_daemon          "d"
-  #define controller_short_init            "I"
-  #define controller_short_interruptable   "i"
-  #define controller_short_pid             "p"
-  #define controller_short_settings        "s"
-  #define controller_short_simulate        "S"
-  #define controller_short_uninterruptable "U"
-  #define controller_short_validate        "v"
+  #define controller_short_control_s         "c"
+  #define controller_short_daemon_s          "d"
+  #define controller_short_init_s            "I"
+  #define controller_short_interruptable_s   "i"
+  #define controller_short_pid_s             "p"
+  #define controller_short_settings_s        "s"
+  #define controller_short_simulate_s        "S"
+  #define controller_short_uninterruptable_s "U"
+  #define controller_short_validate_s        "v"
 
-  #define controller_long_control         "control"
-  #define controller_long_daemon          "daemon"
-  #define controller_long_init            "init"
-  #define controller_long_interruptable   "interruptable"
-  #define controller_long_pid             "pid"
-  #define controller_long_settings        "settings"
-  #define controller_long_simulate        "simulate"
-  #define controller_long_uninterruptable "uninterruptable"
-  #define controller_long_validate        "validate"
+  #define controller_long_control_s         "control"
+  #define controller_long_daemon_s          "daemon"
+  #define controller_long_init_s            "init"
+  #define controller_long_interruptable_s   "interruptable"
+  #define controller_long_pid_s             "pid"
+  #define controller_long_settings_s        "settings"
+  #define controller_long_simulate_s        "simulate"
+  #define controller_long_uninterruptable_s "uninterruptable"
+  #define controller_long_validate_s        "validate"
 
   enum {
     controller_parameter_help,
@@ -201,23 +201,23 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(controller_short_control, controller_long_control, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_daemon, controller_long_daemon, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_init, controller_long_init, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_interruptable, controller_long_interruptable, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_pid, controller_long_pid, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_settings, controller_long_settings, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_simulate, controller_long_simulate, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_uninterruptable, controller_long_uninterruptable, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_validate, controller_long_validate, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_control_s, controller_long_control_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_daemon_s, controller_long_daemon_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_init_s, controller_long_init_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_interruptable_s, controller_long_interruptable_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_pid_s, controller_long_pid_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_settings_s, controller_long_settings_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_simulate_s, controller_long_simulate_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_uninterruptable_s, controller_long_uninterruptable_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_validate_s, controller_long_validate_s, 0, 0, f_console_type_normal), \
     }
 
-  #define controller_total_parameters 18
+  #define controller_total_parameters_d 18
 #endif // _di_controller_defines_
 
 #ifndef _di_controller_main_t_
   typedef struct {
-    f_console_parameter_t parameters[controller_total_parameters];
+    f_console_parameter_t parameters[controller_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

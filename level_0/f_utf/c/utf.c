@@ -1906,7 +1906,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    while (string[range->start] != f_utf_character_t_eol) {
+    while (string[range->start] != F_utf_character_t_eol_d) {
 
       if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -1939,7 +1939,7 @@ extern "C" {
         return F_status_set_error(F_utf);
       }
 
-      if (string[range->start] == f_utf_character_t_eol) {
+      if (string[range->start] == F_utf_character_t_eol_d) {
         return F_none_eol;
       }
 
@@ -2068,8 +2068,8 @@ extern "C" {
       }
 
       // U+0080 -> U+07FF
-      (*character)[0] = f_utf_byte_2 | ((char) ((unicode & 0x7c0) >> 6));
-      (*character)[1] = f_utf_byte_1 | ((char) (unicode & 0x3f));
+      (*character)[0] = F_utf_byte_2_d | ((char) ((unicode & 0x7c0) >> 6));
+      (*character)[1] = F_utf_byte_1_d | ((char) (unicode & 0x3f));
 
       if (width_max > 2) {
         (*character)[2] = 0;
@@ -2085,9 +2085,9 @@ extern "C" {
       }
 
       // U+0800 -> U+FFFF
-      (*character)[0] = f_utf_byte_3 | ((char) ((unicode & 0xf000) >> 12));
-      (*character)[1] = f_utf_byte_1 | ((char) ((unicode & 0xfc0) >> 6));
-      (*character)[2] = f_utf_byte_1 | ((char) (unicode & 0x3f));
+      (*character)[0] = F_utf_byte_3_d | ((char) ((unicode & 0xf000) >> 12));
+      (*character)[1] = F_utf_byte_1_d | ((char) ((unicode & 0xfc0) >> 6));
+      (*character)[2] = F_utf_byte_1_d | ((char) (unicode & 0x3f));
 
       if (width_max > 3) {
         character[3] = 0;
@@ -2099,10 +2099,10 @@ extern "C" {
       }
 
       // U+10000 -> U+10FFFF
-      (*character)[0] = f_utf_byte_4 | ((char) ((unicode & 0x1c0000) >> 18));
-      (*character)[1] = f_utf_byte_1 | ((char) ((unicode & 0x3f000) >> 12));
-      (*character)[2] = f_utf_byte_1 | ((char) ((unicode & 0xfc0) >> 6));
-      (*character)[3] = f_utf_byte_1 | ((char) (unicode & 0x3f));
+      (*character)[0] = F_utf_byte_4_d | ((char) ((unicode & 0x1c0000) >> 18));
+      (*character)[1] = F_utf_byte_1_d | ((char) ((unicode & 0x3f000) >> 12));
+      (*character)[2] = F_utf_byte_1_d | ((char) ((unicode & 0xfc0) >> 6));
+      (*character)[3] = F_utf_byte_1_d | ((char) (unicode & 0x3f));
     }
 
     return F_none;

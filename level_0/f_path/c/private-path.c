@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
   f_status_t private_f_path_real(const f_string_t path, f_string_dynamic_t *real) {
 
-    char buffer[f_path_length_max];
+    char buffer[F_path_length_max_d];
 
     if (!realpath(path, buffer)) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -23,7 +23,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    const f_array_length_t length = strnlen(buffer, f_path_length_max);
+    const f_array_length_t length = strnlen(buffer, F_path_length_max_d);
 
     if (length + 1 > real->size) {
       f_status_t status = F_none;

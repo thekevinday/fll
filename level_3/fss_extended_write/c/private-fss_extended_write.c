@@ -16,11 +16,11 @@ extern "C" {
     flockfile(main.error.to.stream);
 
     fl_print_format("%c%[%sMust specify the '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object, main.error.notable);
+    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object_s, main.error.notable);
     fl_print_format("%[' parameter and the '%]", main.error.to.stream, main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_content, main.error.notable);
+    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_content_s, main.error.notable);
     fl_print_format("%[' parameter the same number of times when not specifying the '%]", main.error.to.stream, main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_partial, main.error.notable);
+    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_partial_s, main.error.notable);
     fl_print_format("%[' parameter.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
     funlockfile(main.error.to.stream);
@@ -65,7 +65,7 @@ extern "C" {
   f_status_t fss_extended_write_process(const fss_extended_write_main_t main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
-    f_state_t state = macro_f_state_t_initialize(fss_extended_write_common_allocation_large, fss_extended_write_common_allocation_small, 0, 0, 0, 0, 0);
+    f_state_t state = macro_f_state_t_initialize(fss_extended_write_common_allocation_large_d, fss_extended_write_common_allocation_small_d, 0, 0, 0, 0, 0);
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
@@ -158,7 +158,7 @@ extern "C" {
 
     f_file_t input = f_file_t_initialize;
 
-    input.id = f_type_descriptor_input;
+    input.id = F_type_descriptor_input_d;
     input.size_read = 2048;
 
     f_array_length_t i = 0;
@@ -221,19 +221,19 @@ extern "C" {
 
         for (; range.start <= range.stop; ++range.start) {
 
-          if (block.string[range.start] == fss_extended_write_pipe_content_start) {
+          if (block.string[range.start] == fss_extended_write_pipe_content_start_s) {
             state = 0x2;
             ++range.start;
             break;
           }
 
-          if (block.string[range.start] == fss_extended_write_pipe_content_end) {
+          if (block.string[range.start] == fss_extended_write_pipe_content_end_s) {
             state = 0x4;
             ++range.start;
             break;
           }
 
-          if (block.string[range.start] == fss_extended_write_pipe_content_ignore) {
+          if (block.string[range.start] == fss_extended_write_pipe_content_ignore_s) {
             // this is not used by objects.
             continue;
           }
@@ -252,7 +252,7 @@ extern "C" {
 
       if (state == 0x2) {
         if (contents.used + 1 > contents.size) {
-          status = f_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
+          status = f_string_dynamics_increase_by(F_fss_default_allocation_step_d, &contents);
 
           if (F_status_is_error(status)) {
             fll_error_print(main.error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
@@ -275,9 +275,9 @@ extern "C" {
         if (total) {
           for (; range.start <= range.stop; ++range.start) {
 
-            if (block.string[range.start] == fss_extended_write_pipe_content_start) {
+            if (block.string[range.start] == fss_extended_write_pipe_content_start_s) {
               if (contents.used + 1 > contents.size) {
-                status = f_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
+                status = f_string_dynamics_increase_by(F_fss_default_allocation_step_d, &contents);
 
                 if (F_status_is_error(status)) {
                   fll_error_print(main.error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
@@ -289,13 +289,13 @@ extern "C" {
               continue;
             }
 
-            if (block.string[range.start] == fss_extended_write_pipe_content_end) {
+            if (block.string[range.start] == fss_extended_write_pipe_content_end_s) {
               state = 0x4;
               ++range.start;
               break;
             }
 
-            if (block.string[range.start] == fss_extended_write_pipe_content_ignore) {
+            if (block.string[range.start] == fss_extended_write_pipe_content_ignore_s) {
 
               // this is not used by this program.
               continue;
@@ -309,7 +309,7 @@ extern "C" {
             }
 
             if (contents.array[contents.used - 1].used + 1 > contents.array[contents.used - 1].size) {
-              status = f_string_dynamic_increase_by(f_fss_default_allocation_step, &contents.array[contents.used - 1]);
+              status = f_string_dynamic_increase_by(F_fss_default_allocation_step_d, &contents.array[contents.used - 1]);
 
               if (F_status_is_error(status)) {
                 fll_error_print(main.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);

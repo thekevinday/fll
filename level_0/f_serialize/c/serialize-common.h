@@ -17,9 +17,9 @@ extern "C" {
 #endif
 
 #ifndef _di_f_serialize_splitter_s_
-  #define f_serialize_simple_splitter     ":"
-  #define f_serialize_delimited_splitter  "'"
-  #define f_serialize_delimited_delimiter "\\"
+  #define F_serialize_simple_splitter_s     ":"
+  #define F_serialize_delimited_splitter_s  "'"
+  #define F_serialize_delimited_delimiter_s "\\"
 
   extern const f_string_t f_serialize_simple_splitter_s;
   extern const f_string_t f_serialize_delimited_splitter_s;

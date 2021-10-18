@@ -24,7 +24,7 @@ extern "C" {
  *   The source path to determine what the real path is.
  * @param real
  *   The (allocated) real file path.
- *   This will have a max size of f_path_length_max + 1.
+ *   This will have a max size of F_path_length_max_d + 1.
  *   This will be NULL terminated at real->used + 1.
  *
  * @return
@@ -42,7 +42,7 @@ extern "C" {
  * @see f_path_real()
  */
 #if !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
-  extern f_status_t private_f_path_real(const f_string_t path, f_string_dynamic_t *real) f_attribute_visibility_internal;
+  extern f_status_t private_f_path_real(const f_string_t path, f_string_dynamic_t *real) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
 
 #ifdef __cplusplus

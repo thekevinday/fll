@@ -143,7 +143,7 @@ extern "C" {
  * @param path
  *   The file path to the directory.
  * @param flag
- *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
+ *   Any valid flag, such as F_directory_at_path_empty_d, F_directory_at_automount_no_d, or F_directory_at_symlink_follow_no_d.
  *
  * @return
  *   F_true if path was found and path is a directory (or a symlink to a directory).
@@ -196,7 +196,7 @@ extern "C" {
  * @param path
  *   The file path to the directory.
  * @param flag
- *   Any valid flag, such as f_directory_at_path_empty, f_directory_at_automount_no, or f_directory_at_symlink_follow_no.
+ *   Any valid flag, such as F_directory_at_path_empty_d, F_directory_at_automount_no_d, or F_directory_at_symlink_follow_no_d.
  *
  * @return
  *   F_true if path was found and path is a directory.
@@ -466,7 +466,7 @@ extern "C" {
  * @param mode
  *   The file mode to use when (directory) file is created.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
  *   F_none on success.

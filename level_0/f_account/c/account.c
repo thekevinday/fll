@@ -29,7 +29,7 @@ extern "C" {
 
     {
       if (length == -1) {
-        length = f_account_pwd_length_fallback_first;
+        length = F_account_pwd_length_fallback_first_d;
       }
 
       // must be set to 0 to avoid problems due to the design of getpwnam()/getpwnam_r().
@@ -61,9 +61,9 @@ extern "C" {
       }
     }
 
-    length = f_account_pwd_length_fallback_second;
+    length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[f_account_pwd_length_fallback_second];
+    char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getpwnam_r(name, &password, buffer, length, &pointer);
 
@@ -110,7 +110,7 @@ extern "C" {
 
     {
       if (length == -1) {
-        length = f_account_pwd_length_fallback_first;
+        length = F_account_pwd_length_fallback_first_d;
       }
 
       // must be set to 0 to avoid problems due to the design of getpwuid()/getpwuid_r().
@@ -142,9 +142,9 @@ extern "C" {
       }
     }
 
-    length = f_account_pwd_length_fallback_second;
+    length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[f_account_pwd_length_fallback_second];
+    char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getpwuid_r(id, &password, buffer, length, &pointer);
 
@@ -183,7 +183,7 @@ extern "C" {
 
     {
       if (length == -1) {
-        length = f_account_pwd_length_fallback_first;
+        length = F_account_pwd_length_fallback_first_d;
       }
 
       // must be set to 0 to avoid problems due to the design of getgrnam()/getgrnam_r().
@@ -217,9 +217,9 @@ extern "C" {
       }
     }
 
-    length = f_account_pwd_length_fallback_second;
+    length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[f_account_pwd_length_fallback_second];
+    char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getgrnam_r(name, &grp, buffer, length, &pointer);
 
@@ -260,7 +260,7 @@ extern "C" {
 
     {
       if (length == -1) {
-        length = f_account_pwd_length_fallback_first;
+        length = F_account_pwd_length_fallback_first_d;
       }
 
       // must be set to 0 to avoid problems due to the design of getpwnam()/getpwnam_r().
@@ -294,9 +294,9 @@ extern "C" {
       }
     }
 
-    length = f_account_pwd_length_fallback_second;
+    length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[f_account_pwd_length_fallback_second];
+    char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getpwnam_r(name, &password, buffer, length, &pointer);
 
@@ -341,7 +341,7 @@ extern "C" {
 
     {
       if (length == -1) {
-        length = f_account_pwd_length_fallback_first;
+        length = F_account_pwd_length_fallback_first_d;
       }
 
       // must be set to 0 to avoid problems due to the design of getpwuid()/getpwuid_r().
@@ -383,9 +383,9 @@ extern "C" {
       }
     }
 
-    length = f_account_pwd_length_fallback_second;
+    length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[f_account_pwd_length_fallback_second];
+    char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getpwuid_r(id, &password, buffer, length, &pointer);
 

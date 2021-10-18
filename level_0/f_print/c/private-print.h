@@ -46,7 +46,7 @@ extern "C" {
  * @see f_print_dynamic_partial()
  */
 #if !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
-  extern f_status_t private_f_print(const f_string_t string, const f_array_length_t length, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print(const f_string_t string, const f_array_length_t length, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
 
 /**
@@ -86,7 +86,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial_safely()
  */
 #if !defined(_di_f_print_character_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
-  extern f_status_t private_f_print_character_safely(const char character, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_character_safely(const char character, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_character_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
 
 /**
@@ -112,7 +112,7 @@ extern "C" {
  * @see f_print_to_safely()
  */
 #if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_to_safely_) || !defined(_di_f_print_dynamic_partial_to_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
-  extern f_string_t private_f_print_character_safely_get(const char character) f_attribute_visibility_internal;
+  extern f_string_t private_f_print_character_safely_get(const char character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_to_safely_) || !defined(_di_f_print_dynamic_partial_to_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
 /**
  * Private implementation of f_print_raw().
@@ -146,7 +146,7 @@ extern "C" {
  * @see f_print_raw_dynamic_partial()
  */
 #if !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
-  extern f_status_t private_f_print_raw(const f_string_t string, const f_array_length_t length, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_raw(const f_string_t string, const f_array_length_t length, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
 
 /**
@@ -182,7 +182,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #if !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
-  extern f_status_t private_f_print_safely(const f_string_t string, const f_array_length_t length, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_safely(const f_string_t string, const f_array_length_t length, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
 
 /**
@@ -222,7 +222,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial()
  */
 #if !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
-  extern f_status_t private_f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
 
 /**
@@ -262,7 +262,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial_raw()
  */
 #if !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
-  extern f_status_t private_f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
 
 /**
@@ -303,7 +303,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #if !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
-  extern f_status_t private_f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
 
 /**
@@ -346,7 +346,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial()
  */
 #if !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_dynamic_in_) || !defined(_di_f_print_except_in_dynamic_partial_)
-  extern f_status_t private_f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_dynamic_in_) || !defined(_di_f_print_except_in_dynamic_partial_)
 
 /**
@@ -389,7 +389,7 @@ extern "C" {
  * @see f_print_except_in_dynamic_partial_raw()
  */
 #if !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_dynamic_in_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
-  extern f_status_t private_f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_dynamic_in_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
 
 /**
@@ -433,7 +433,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #if !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_dynamic_in_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
-  extern f_status_t private_f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_dynamic_in_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
 
 /**
@@ -464,7 +464,7 @@ extern "C" {
  * @see f_print_raw_terminated()
  */
 #if !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
-  extern f_status_t private_f_print_terminated(const f_string_t string, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_terminated(const f_string_t string, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
 
 /**
@@ -497,7 +497,7 @@ extern "C" {
  * @see f_print_to_dynamic_partial()
  */
 #if !defined(_di_f_print_to_) || !defined(_di_f_print_to_dynamic_) || !defined(_di_f_print_to_dynamic_partial_)
-  extern f_status_t private_f_print_to(const f_string_t string, const f_array_length_t length, const int id) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_to(const f_string_t string, const f_array_length_t length, const int id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_to_) || !defined(_di_f_print_to_dynamic_) || !defined(_di_f_print_to_dynamic_partial_)
 
 /**
@@ -530,7 +530,7 @@ extern "C" {
  * @see f_print_to_dynamic_partial_raw()
  */
 #if !defined(_di_f_print_to_raw_) || !defined(_di_f_print_to_dynamic_raw_) || !defined(_di_f_print_to_dynamic_partial_raw_)
-  extern f_status_t private_f_print_to_raw(const f_string_t string, const f_array_length_t length, const int id) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_to_raw(const f_string_t string, const f_array_length_t length, const int id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_to_raw_) || !defined(_di_f_print_to_dynamic_raw_) || !defined(_di_f_print_to_dynamic_partial_raw_)
 
 /**
@@ -564,7 +564,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #if !defined(_di_f_print_to_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_dynamic_partial_safely_)
-  extern f_status_t private_f_print_to_safely(const f_string_t string, const f_array_length_t length, const int id) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_to_safely(const f_string_t string, const f_array_length_t length, const int id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_to_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_dynamic_partial_safely_)
 
 /**
@@ -602,7 +602,7 @@ extern "C" {
  * @see f_print_to_except_dynamic_partial()
  */
 #if !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
-  extern f_status_t private_f_print_to_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_to_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
 
 /**
@@ -640,7 +640,7 @@ extern "C" {
  * @see f_print_to_except_dynamic_partial_raw()
  */
 #if !defined(_di_f_print_to_except_raw_) || !defined(_di_f_print_to_except_dynamic_raw_) || !defined(_di_f_print_to_except_dynamic_partial_raw_)
-  extern f_status_t private_f_print_to_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_to_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_to_except_raw_) || !defined(_di_f_print_to_except_dynamic_raw_) || !defined(_di_f_print_to_except_dynamic_partial_raw_)
 
 /**
@@ -679,7 +679,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #if !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_)
-  extern f_status_t private_f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) f_attribute_visibility_internal;
+  extern f_status_t private_f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_)
 
 #ifdef __cplusplus

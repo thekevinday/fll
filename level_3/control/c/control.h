@@ -42,26 +42,26 @@
 extern "C" {
 #endif
 
-#ifndef _di_control_version_
-  #define control_major_version f_string_ascii_0
-  #define control_minor_version f_string_ascii_5
-  #define control_micro_version f_string_ascii_6
+#ifndef _di_control_program_version_
+  #define control_program_version_major_s F_string_ascii_0_s
+  #define control_program_version_minor_s F_string_ascii_5_s
+  #define control_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef control_nano_version_prefix
-    #define control_nano_version_prefix
+  #ifndef control_program_version_nano_prefix_s
+    #define control_program_version_nano_prefix_s
   #endif
 
-  #ifndef control_nano_version
-    #define control_nano_version
+  #ifndef control_program_version_nano_s
+    #define control_program_version_nano_s
   #endif
 
-  #define control_version control_major_version f_string_ascii_period control_minor_version f_string_ascii_period control_micro_version control_nano_version_prefix control_nano_version
-#endif // _di_control_version_
+  #define control_program_version_s control_program_version_major_s F_string_ascii_period_s control_program_version_minor_s F_string_ascii_period_s control_program_version_micro_s control_program_version_nano_prefix_s control_program_version_nano_s
+#endif // _di_control_program_version_
 
-#ifndef _di_control_name_
-  #define control_name "control"
-  #define control_name_long "Control Program"
-#endif // _di_control_name_
+#ifndef _di_control_program_name_
+  #define control_program_name_s      "control"
+  #define control_program_name_long_s "Control Program"
+#endif // _di_control_program_name_
 
 #ifndef _di_control_defines_
 
@@ -90,12 +90,12 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
     }
 
-  #define control_total_parameters 9
+  #define control_total_parameters_d 9
 #endif // _di_control_defines_
 
 #ifndef _di_control_data_t_
   typedef struct {
-    f_console_parameter_t parameters[control_total_parameters];
+    f_console_parameter_t parameters[control_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

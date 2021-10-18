@@ -31,9 +31,9 @@ extern "C" {
  *
  *  is provided as a way t have a string max for systems that do not support max string length in 64-bits (when f_array_length_t is set to uint64_t).
  *
- * The ideal length for a string is f_array_length_t_size, which generally defaults to 2^64 (unsigned).
+ * The ideal length for a string is F_array_length_t_size_d, which generally defaults to 2^64 (unsigned).
  * However, the libc/POSIX appears to limit this to 2^63 (signed).
- * f_string_t_size is provided to help safely navigate this.
+ * F_string_t_size_d is provided to help safely navigate this.
  */
 #ifndef _di_f_string_t_
   typedef char *f_string_t;
@@ -49,7 +49,7 @@ extern "C" {
   #define macro_f_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_string_t), (void **) & string);
 
   // @fixme update all code utilizing f_array_length_t on a string, such as strnlen().
-  #define f_string_t_size f_type_size_64_positive
+  #define F_string_t_size_d F_type_size_64_positive_d
 #endif // _di_f_string_t_
 
 /**
@@ -79,7 +79,8 @@ extern "C" {
  */
 #ifndef _di_f_string_eol_s_
   #define f_string_eol_s f_string_ascii_feed_line_s
-  #define f_string_eol_s_length 1
+  #define F_string_eol_s F_string_ascii_feed_line_s
+  #define F_string_eol_s_length 1
 #endif // _di_f_string_eol_s_
 
 #ifndef _di_f_string_empty_s_
@@ -88,30 +89,48 @@ extern "C" {
 
 #ifndef _di_f_string_placeholder_s_
   #define f_string_placeholder_s f_string_empty_s
-  #define f_string_placeholder_s_length 1
+  #define F_string_placeholder_s F_string_empty_s
+  #define F_string_placeholder_s_length 1
 #endif // _di_f_string_placeholder_s_
 
 #ifndef _di_f_string_space_s_
   #define f_string_space_s f_string_ascii_space_s
-  #define f_string_space_s_length 1
+  #define F_string_space_s F_string_ascii_space_s
+  #define F_string_space_s_length 1
 #endif // _di_f_string_space_s_
 
 #ifndef _di_string_format_s_
-  #define f_string_format_string             "%s"
-  #define f_string_format_character          "%c"
-  #define f_string_format_wide_string        "%ls"
-  #define f_string_format_wide_character     "%lc"
-  #define f_string_format_integer            "%i"
-  #define f_string_format_unsigned           "%u"
-  #define f_string_format_digit              "%d"
-  #define f_string_format_float              "%f"
-  #define f_string_format_short_integer      "%hi"
-  #define f_string_format_short_unsigned     "%hu"
-  #define f_string_format_long_integer       "%li"
-  #define f_string_format_long_unsigned      "%lu"
-  #define f_string_format_long_double        "%ld"
-  #define f_string_format_long_long_integer  "%lli"
-  #define f_string_format_long_long_unsigned "%llu"
+  #define F_string_format_string_s             "%s"
+  #define F_string_format_character_s          "%c"
+  #define F_string_format_wide_string_s        "%ls"
+  #define F_string_format_wide_character_s     "%lc"
+  #define F_string_format_integer_s            "%i"
+  #define F_string_format_unsigned_s           "%u"
+  #define F_string_format_digit_s              "%d"
+  #define F_string_format_float_s              "%f"
+  #define F_string_format_short_integer_s      "%hi"
+  #define F_string_format_short_unsigned_s     "%hu"
+  #define F_string_format_long_integer_s       "%li"
+  #define F_string_format_long_unsigned_s      "%lu"
+  #define F_string_format_long_double_s        "%ld"
+  #define F_string_format_long_long_integer_s  "%lli"
+  #define F_string_format_long_long_unsigned_s "%llu"
+
+  #define F_string_format_string_s_length             2
+  #define F_string_format_character_s_length          2
+  #define F_string_format_wide_string_s_length        3
+  #define F_string_format_wide_character_s_length     3
+  #define F_string_format_integer_s_length            2
+  #define F_string_format_unsigned_s_length           2
+  #define F_string_format_digit_s_length              2
+  #define F_string_format_float_s_length              2
+  #define F_string_format_short_integer_s_length      3
+  #define F_string_format_short_unsigned_s_length     3
+  #define F_string_format_long_integer_s_length       3
+  #define F_string_format_long_unsigned_s_length      3
+  #define F_string_format_long_double_s_length        3
+  #define F_string_format_long_long_integer_s_length  4
+  #define F_string_format_long_long_unsigned_s_length 4
 
   extern const f_string_t f_string_format_string_s;
   extern const f_string_t f_string_format_character_s;
@@ -131,9 +150,13 @@ extern "C" {
 #endif // _di_string_format_s_
 
 #ifndef _di_f_array_length_printf_
-  #define f_array_length_printf       string_format_integer
-  #define f_array_length_short_printf string_format_short_integer
-  #define f_array_length_long_printf  string_format_long_integer
+  #define F_array_length_printf_s       F_string_format_integer_s
+  #define F_array_length_short_printf_s F_string_format_short_integer_s
+  #define F_array_length_long_printf_s  F_string_format_long_integer_s
+
+  #define F_array_length_printf_s_length       F_string_format_integer_s_length
+  #define F_array_length_short_printf_s_length F_string_format_short_integer_s_length
+  #define F_array_length_long_printf_s_length  F_string_format_long_integer_s_length
 #endif // _di_f_array_length_printf_
 
 /**
@@ -149,137 +172,269 @@ extern "C" {
  * @todo provide extended ASCII-characters.
  */
 #ifndef _di_string_ascii_s_
-  #define f_string_ascii_0 "0"
-  #define f_string_ascii_1 "1"
-  #define f_string_ascii_2 "2"
-  #define f_string_ascii_3 "3"
-  #define f_string_ascii_4 "4"
-  #define f_string_ascii_5 "5"
-  #define f_string_ascii_6 "6"
-  #define f_string_ascii_7 "7"
-  #define f_string_ascii_8 "8"
-  #define f_string_ascii_9 "9"
+  #define F_string_ascii_0_s "0"
+  #define F_string_ascii_1_s "1"
+  #define F_string_ascii_2_s "2"
+  #define F_string_ascii_3_s "3"
+  #define F_string_ascii_4_s "4"
+  #define F_string_ascii_5_s "5"
+  #define F_string_ascii_6_s "6"
+  #define F_string_ascii_7_s "7"
+  #define F_string_ascii_8_s "8"
+  #define F_string_ascii_9_s "9"
 
-  #define f_string_ascii_a "a"
-  #define f_string_ascii_b "b"
-  #define f_string_ascii_c "c"
-  #define f_string_ascii_d "d"
-  #define f_string_ascii_e "e"
-  #define f_string_ascii_f "f"
-  #define f_string_ascii_g "g"
-  #define f_string_ascii_h "h"
-  #define f_string_ascii_i "i"
-  #define f_string_ascii_j "j"
-  #define f_string_ascii_k "k"
-  #define f_string_ascii_l "l"
-  #define f_string_ascii_m "m"
-  #define f_string_ascii_n "n"
-  #define f_string_ascii_o "o"
-  #define f_string_ascii_p "p"
-  #define f_string_ascii_q "q"
-  #define f_string_ascii_r "r"
-  #define f_string_ascii_s "s"
-  #define f_string_ascii_t "t"
-  #define f_string_ascii_u "u"
-  #define f_string_ascii_v "v"
-  #define f_string_ascii_w "w"
-  #define f_string_ascii_x "x"
-  #define f_string_ascii_y "y"
-  #define f_string_ascii_z "z"
+  #define F_string_ascii_a_s "a"
+  #define F_string_ascii_b_s "b"
+  #define F_string_ascii_c_s "c"
+  #define F_string_ascii_d_s "d"
+  #define F_string_ascii_e_s "e"
+  #define F_string_ascii_f_s "f"
+  #define F_string_ascii_g_s "g"
+  #define F_string_ascii_h_s "h"
+  #define F_string_ascii_i_s "i"
+  #define F_string_ascii_j_s "j"
+  #define F_string_ascii_k_s "k"
+  #define F_string_ascii_l_s "l"
+  #define F_string_ascii_m_s "m"
+  #define F_string_ascii_n_s "n"
+  #define F_string_ascii_o_s "o"
+  #define F_string_ascii_p_s "p"
+  #define F_string_ascii_q_s "q"
+  #define F_string_ascii_r_s "r"
+  #define F_string_ascii_s_s "s"
+  #define F_string_ascii_t_s "t"
+  #define F_string_ascii_u_s "u"
+  #define F_string_ascii_v_s "v"
+  #define F_string_ascii_w_s "w"
+  #define F_string_ascii_x_s "x"
+  #define F_string_ascii_y_s "y"
+  #define F_string_ascii_z_s "z"
 
-  #define f_string_ascii_A "A"
-  #define f_string_ascii_B "B"
-  #define f_string_ascii_C "C"
-  #define f_string_ascii_D "D"
-  #define f_string_ascii_E "E"
-  #define f_string_ascii_F "F"
-  #define f_string_ascii_G "G"
-  #define f_string_ascii_H "H"
-  #define f_string_ascii_I "I"
-  #define f_string_ascii_J "J"
-  #define f_string_ascii_K "K"
-  #define f_string_ascii_L "L"
-  #define f_string_ascii_M "M"
-  #define f_string_ascii_N "N"
-  #define f_string_ascii_O "O"
-  #define f_string_ascii_P "P"
-  #define f_string_ascii_Q "Q"
-  #define f_string_ascii_R "R"
-  #define f_string_ascii_S "S"
-  #define f_string_ascii_T "T"
-  #define f_string_ascii_U "U"
-  #define f_string_ascii_V "V"
-  #define f_string_ascii_W "W"
-  #define f_string_ascii_X "X"
-  #define f_string_ascii_Y "Y"
-  #define f_string_ascii_Z "Z"
+  #define F_string_ascii_A_s "A"
+  #define F_string_ascii_B_s "B"
+  #define F_string_ascii_C_s "C"
+  #define F_string_ascii_D_s "D"
+  #define F_string_ascii_E_s "E"
+  #define F_string_ascii_F_s "F"
+  #define F_string_ascii_G_s "G"
+  #define F_string_ascii_H_s "H"
+  #define F_string_ascii_I_s "I"
+  #define F_string_ascii_J_s "J"
+  #define F_string_ascii_K_s "K"
+  #define F_string_ascii_L_s "L"
+  #define F_string_ascii_M_s "M"
+  #define F_string_ascii_N_s "N"
+  #define F_string_ascii_O_s "O"
+  #define F_string_ascii_P_s "P"
+  #define F_string_ascii_Q_s "Q"
+  #define F_string_ascii_R_s "R"
+  #define F_string_ascii_S_s "S"
+  #define F_string_ascii_T_s "T"
+  #define F_string_ascii_U_s "U"
+  #define F_string_ascii_V_s "V"
+  #define F_string_ascii_W_s "W"
+  #define F_string_ascii_X_s "X"
+  #define F_string_ascii_Y_s "Y"
+  #define F_string_ascii_Z_s "Z"
 
-  #define f_string_ascii_ampersand         "&"
-  #define f_string_ascii_asterisk          "*"
-  #define f_string_ascii_brace_close       "}"
-  #define f_string_ascii_brace_open        "{"
-  #define f_string_ascii_bracket_close     "]"
-  #define f_string_ascii_bracket_open      "["
-  #define f_string_ascii_caret             "^"
-  #define f_string_ascii_comma             ","
-  #define f_string_ascii_colon             ":"
-  #define f_string_ascii_colon_semi        ";"
-  #define f_string_ascii_dollar            "$"
-  #define f_string_ascii_equal             "="
-  #define f_string_ascii_exclamation       "!"
-  #define f_string_ascii_grave             "`"
-  #define f_string_ascii_mark_question     "?"
-  #define f_string_ascii_minus             "-"
-  #define f_string_ascii_parenthesis_open  "("
-  #define f_string_ascii_parenthesis_close ")"
-  #define f_string_ascii_percent           "%"
-  #define f_string_ascii_period            "."
-  #define f_string_ascii_pipe              "|"
-  #define f_string_ascii_plus              "+"
-  #define f_string_ascii_pound             "#"
-  #define f_string_ascii_quote_double      "\""
-  #define f_string_ascii_quote_single      "'"
-  #define f_string_ascii_sign_at           "@"
-  #define f_string_ascii_sign_greater_than ">"
-  #define f_string_ascii_sign_less_than    "<"
-  #define f_string_ascii_slash_forward     "/"
-  #define f_string_ascii_slash_backward    "\\"
-  #define f_string_ascii_tilde             "~"
-  #define f_string_ascii_underscore        "_"
+  #define F_string_ascii_ampersand_s         "&"
+  #define F_string_ascii_asterisk_s          "*"
+  #define F_string_ascii_brace_close_s       "}"
+  #define F_string_ascii_brace_open_s        "{"
+  #define F_string_ascii_bracket_close_s     "]"
+  #define F_string_ascii_bracket_open_s      "["
+  #define F_string_ascii_caret_s             "^"
+  #define F_string_ascii_comma_s             ","
+  #define F_string_ascii_colon_s             ":"
+  #define F_string_ascii_colon_semi_s        ";"
+  #define F_string_ascii_dollar_s            "$"
+  #define F_string_ascii_equal_s             "="
+  #define F_string_ascii_exclamation_s       "!"
+  #define F_string_ascii_grave_s             "`"
+  #define F_string_ascii_mark_question_s     "?"
+  #define F_string_ascii_minus_s             "-"
+  #define F_string_ascii_parenthesis_open_s  "("
+  #define F_string_ascii_parenthesis_close_s ")"
+  #define F_string_ascii_percent_s           "%"
+  #define F_string_ascii_period_s            "."
+  #define F_string_ascii_pipe_s              "|"
+  #define F_string_ascii_plus_s              "+"
+  #define F_string_ascii_pound_s             "#"
+  #define F_string_ascii_quote_double_s      "\""
+  #define F_string_ascii_quote_single_s      "'"
+  #define F_string_ascii_sign_at_s           "@"
+  #define F_string_ascii_sign_greater_than_s ">"
+  #define F_string_ascii_sign_less_than_s    "<"
+  #define F_string_ascii_slash_forward_s     "/"
+  #define F_string_ascii_slash_backward_s    "\\"
+  #define F_string_ascii_tilde_s             "~"
+  #define F_string_ascii_underscore_s        "_"
 
-  #define f_string_ascii_acknowledge            ""
-  #define f_string_ascii_acknowledge_negative   ""
-  #define f_string_ascii_bell                   ""
-  #define f_string_ascii_cancel                 ""
-  #define f_string_ascii_data_link_escape       ""
-  #define f_string_ascii_device_control_one     ""
-  #define f_string_ascii_device_control_two     ""
-  #define f_string_ascii_device_control_three   ""
-  #define f_string_ascii_device_control_four    ""
-  #define f_string_ascii_enquiry                ""
-  #define f_string_ascii_escape                 ""
-  #define f_string_ascii_feed_form              "\f"
-  #define f_string_ascii_feed_line              "\n"
-  #define f_string_ascii_header_start           ""
-  #define f_string_ascii_medium_stop            ""
-  #define f_string_ascii_null                   "\0"
-  #define f_string_ascii_return_carriage        "\r"
-  #define f_string_ascii_separator_file         ""
-  #define f_string_ascii_separator_group        ""
-  #define f_string_ascii_separator_record       ""
-  #define f_string_ascii_separator_unit         ""
-  #define f_string_ascii_shift_in               ""
-  #define f_string_ascii_shift_out              ""
-  #define f_string_ascii_space                  " "
-  #define f_string_ascii_space_back             ""
-  #define f_string_ascii_substitute             ""
-  #define f_string_ascii_synchronous_idle       ""
-  #define f_string_ascii_tab_horizontal         "\t"
-  #define f_string_ascii_tab_vertical           "\v"
-  #define f_string_ascii_text_start             ""
-  #define f_string_ascii_text_stop              ""
-  #define f_string_ascii_transmission_stop      ""
-  #define f_string_ascii_transmission_block_end ""
+  #define F_string_ascii_acknowledge_s            ""
+  #define F_string_ascii_acknowledge_negative_s   ""
+  #define F_string_ascii_bell_s                   ""
+  #define F_string_ascii_cancel_s                 ""
+  #define F_string_ascii_data_link_escape_s       ""
+  #define F_string_ascii_device_control_one_s     ""
+  #define F_string_ascii_device_control_two_s     ""
+  #define F_string_ascii_device_control_three_s   ""
+  #define F_string_ascii_device_control_four_s    ""
+  #define F_string_ascii_enquiry_s                ""
+  #define F_string_ascii_escape_s                 ""
+  #define F_string_ascii_feed_form_s              "\f"
+  #define F_string_ascii_feed_line_s              "\n"
+  #define F_string_ascii_header_start_s           ""
+  #define F_string_ascii_medium_stop_s            ""
+  #define F_string_ascii_null_s                   "\0"
+  #define F_string_ascii_return_carriage_s        "\r"
+  #define F_string_ascii_separator_file_s         ""
+  #define F_string_ascii_separator_group_s        ""
+  #define F_string_ascii_separator_record_s       ""
+  #define F_string_ascii_separator_unit_s         ""
+  #define F_string_ascii_shift_in_s               ""
+  #define F_string_ascii_shift_out_s              ""
+  #define F_string_ascii_space_s                  " "
+  #define F_string_ascii_space_back_s             ""
+  #define F_string_ascii_substitute_s             ""
+  #define F_string_ascii_synchronous_idle_s       ""
+  #define F_string_ascii_tab_horizontal_s         "\t"
+  #define F_string_ascii_tab_vertical_s           "\v"
+  #define F_string_ascii_text_start_s             ""
+  #define F_string_ascii_text_stop_s              ""
+  #define F_string_ascii_transmission_stop_s      ""
+  #define F_string_ascii_transmission_block_end_s ""
+
+  #define F_string_ascii_0_s_length 1
+  #define F_string_ascii_1_s_length 1
+  #define F_string_ascii_2_s_length 1
+  #define F_string_ascii_3_s_length 1
+  #define F_string_ascii_4_s_length 1
+  #define F_string_ascii_5_s_length 1
+  #define F_string_ascii_6_s_length 1
+  #define F_string_ascii_7_s_length 1
+  #define F_string_ascii_8_s_length 1
+  #define F_string_ascii_9_s_length 1
+
+  #define F_string_ascii_a_s_length 1
+  #define F_string_ascii_b_s_length 1
+  #define F_string_ascii_c_s_length 1
+  #define F_string_ascii_d_s_length 1
+  #define F_string_ascii_e_s_length 1
+  #define F_string_ascii_f_s_length 1
+  #define F_string_ascii_g_s_length 1
+  #define F_string_ascii_h_s_length 1
+  #define F_string_ascii_i_s_length 1
+  #define F_string_ascii_j_s_length 1
+  #define F_string_ascii_k_s_length 1
+  #define F_string_ascii_l_s_length 1
+  #define F_string_ascii_m_s_length 1
+  #define F_string_ascii_n_s_length 1
+  #define F_string_ascii_o_s_length 1
+  #define F_string_ascii_p_s_length 1
+  #define F_string_ascii_q_s_length 1
+  #define F_string_ascii_r_s_length 1
+  #define F_string_ascii_s_s_length 1
+  #define F_string_ascii_t_s_length 1
+  #define F_string_ascii_u_s_length 1
+  #define F_string_ascii_v_s_length 1
+  #define F_string_ascii_w_s_length 1
+  #define F_string_ascii_x_s_length 1
+  #define F_string_ascii_y_s_length 1
+  #define F_string_ascii_z_s_length 1
+
+  #define F_string_ascii_A_s_length 1
+  #define F_string_ascii_B_s_length 1
+  #define F_string_ascii_C_s_length 1
+  #define F_string_ascii_D_s_length 1
+  #define F_string_ascii_E_s_length 1
+  #define F_string_ascii_F_s_length 1
+  #define F_string_ascii_G_s_length 1
+  #define F_string_ascii_H_s_length 1
+  #define F_string_ascii_I_s_length 1
+  #define F_string_ascii_J_s_length 1
+  #define F_string_ascii_K_s_length 1
+  #define F_string_ascii_L_s_length 1
+  #define F_string_ascii_M_s_length 1
+  #define F_string_ascii_N_s_length 1
+  #define F_string_ascii_O_s_length 1
+  #define F_string_ascii_P_s_length 1
+  #define F_string_ascii_Q_s_length 1
+  #define F_string_ascii_R_s_length 1
+  #define F_string_ascii_S_s_length 1
+  #define F_string_ascii_T_s_length 1
+  #define F_string_ascii_U_s_length 1
+  #define F_string_ascii_V_s_length 1
+  #define F_string_ascii_W_s_length 1
+  #define F_string_ascii_X_s_length 1
+  #define F_string_ascii_Y_s_length 1
+  #define F_string_ascii_Z_s_length 1
+
+  #define F_string_ascii_ampersand_s_length         1
+  #define F_string_ascii_asterisk_s_length          1
+  #define F_string_ascii_brace_close_s_length       1
+  #define F_string_ascii_brace_open_s_length        1
+  #define F_string_ascii_bracket_close_s_length     1
+  #define F_string_ascii_bracket_open_s_length      1
+  #define F_string_ascii_caret_s_length             1
+  #define F_string_ascii_comma_s_length             1
+  #define F_string_ascii_colon_s_length             1
+  #define F_string_ascii_colon_semi_s_length        1
+  #define F_string_ascii_dollar_s_length            1
+  #define F_string_ascii_equal_s_length             1
+  #define F_string_ascii_exclamation_s_length       1
+  #define F_string_ascii_grave_s_length             1
+  #define F_string_ascii_mark_question_s_length     1
+  #define F_string_ascii_minus_s_length             1
+  #define F_string_ascii_parenthesis_open_s_length  1
+  #define F_string_ascii_parenthesis_close_s_length 1
+  #define F_string_ascii_percent_s_length           1
+  #define F_string_ascii_period_s_length            1
+  #define F_string_ascii_pipe_s_length              1
+  #define F_string_ascii_plus_s_length              1
+  #define F_string_ascii_pound_s_length             1
+  #define F_string_ascii_quote_double_s_length      1
+  #define F_string_ascii_quote_single_s_length      1
+  #define F_string_ascii_sign_at_s_length           1
+  #define F_string_ascii_sign_greater_than_s_length 1
+  #define F_string_ascii_sign_less_than_s_length    1
+  #define F_string_ascii_slash_forward_s_length     1
+  #define F_string_ascii_slash_backward_s_length    1
+  #define F_string_ascii_tilde_s_length             1
+  #define F_string_ascii_underscore_s_length        1
+
+  #define F_string_ascii_acknowledge_s_length            1
+  #define F_string_ascii_acknowledge_negative_s_length   1
+  #define F_string_ascii_bell_s_length                   1
+  #define F_string_ascii_cancel_s_length                 1
+  #define F_string_ascii_data_link_escape_s_length       1
+  #define F_string_ascii_device_control_one_s_length     1
+  #define F_string_ascii_device_control_two_s_length     1
+  #define F_string_ascii_device_control_three_s_length   1
+  #define F_string_ascii_device_control_four_s_length    1
+  #define F_string_ascii_enquiry_s_length                1
+  #define F_string_ascii_escape_s_length                 1
+  #define F_string_ascii_feed_form_s_length              1
+  #define F_string_ascii_feed_line_s_length              1
+  #define F_string_ascii_header_start_s_length           1
+  #define F_string_ascii_medium_stop_s_length            1
+  #define F_string_ascii_null_s_length                   1
+  #define F_string_ascii_return_carriage_s_length        1
+  #define F_string_ascii_separator_file_s_length         1
+  #define F_string_ascii_separator_group_s_length        1
+  #define F_string_ascii_separator_record_s_length       1
+  #define F_string_ascii_separator_unit_s_length         1
+  #define F_string_ascii_shift_in_s_length               1
+  #define F_string_ascii_shift_out_s_length              1
+  #define F_string_ascii_space_s_length                  1
+  #define F_string_ascii_space_back_s_length             1
+  #define F_string_ascii_substitute_s_length             1
+  #define F_string_ascii_synchronous_idle_s_length       1
+  #define F_string_ascii_tab_horizontal_s_length         1
+  #define F_string_ascii_tab_vertical_s_length           1
+  #define F_string_ascii_text_start_s_length             1
+  #define F_string_ascii_text_stop_s_length              1
+  #define F_string_ascii_transmission_stop_s_length      1
+  #define F_string_ascii_transmission_block_end_s_length 1
 
   extern const f_string_t f_string_ascii_0_s;
   extern const f_string_t f_string_ascii_1_s;

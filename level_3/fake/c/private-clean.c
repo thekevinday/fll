@@ -30,10 +30,10 @@ extern "C" {
     }
 
     if (main.error.verbosity == f_console_verbosity_verbose) {
-      status = f_directory_remove_custom(main.path_build.string, f_directory_descriptors_max, F_true, fake_clean_remove_recursively_verbosely);
+      status = f_directory_remove_custom(main.path_build.string, F_directory_descriptors_max_d, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
-      status = f_directory_remove(main.path_build.string, f_directory_descriptors_max, F_true);
+      status = f_directory_remove(main.path_build.string, F_directory_descriptors_max_d, F_true);
     }
 
     if (F_status_set_fine(status) == F_file_found_not) {

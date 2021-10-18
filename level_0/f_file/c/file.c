@@ -57,7 +57,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
+      return private_f_file_copy_content(source, destination, size_block == 0 ? F_file_default_read_size_d : size_block);
     }
     else if (macro_f_file_type_is_link(source_stat.st_mode)) {
       status = private_f_file_link(destination, source);
@@ -112,18 +112,18 @@ extern "C" {
 
     if (macro_f_file_type_is_regular(source_stat.st_mode)) {
 
-      status = private_f_file_create(destination, (~f_file_type_mask) & mode.regular, exclusive);
+      status = private_f_file_create(destination, (~F_file_type_mask_d) & mode.regular, exclusive);
       if (F_status_is_error(status)) return status;
 
       if (!exclusive) {
-        status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.regular);
+        status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.regular);
         if (F_status_is_error(status)) return status;
       }
 
-      return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
+      return private_f_file_copy_content(source, destination, size_block == 0 ? F_file_default_read_size_d : size_block);
     }
     else if (macro_f_file_type_is_directory(source_stat.st_mode)) {
-      status = private_f_file_create_directory(destination, (~f_file_type_mask) & mode.directory);
+      status = private_f_file_create_directory(destination, (~F_file_type_mask_d) & mode.directory);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -131,7 +131,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.directory);
+      status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.directory);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -158,7 +158,7 @@ extern "C" {
       return F_none;
     }
     else if (macro_f_file_type_is_fifo(source_stat.st_mode)) {
-      status = private_f_file_create_fifo(destination, (~f_file_type_mask) & mode.fifo);
+      status = private_f_file_create_fifo(destination, (~F_file_type_mask_d) & mode.fifo);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -166,13 +166,13 @@ extern "C" {
         }
       }
 
-      status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.fifo);
+      status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.fifo);
       if (F_status_is_error(status)) return status;
 
       return F_none;
     }
     else if (macro_f_file_type_is_socket(source_stat.st_mode)) {
-      status = private_f_file_create_node(destination, macro_f_file_type_get(source_stat.st_mode) | ((~f_file_type_mask) & mode.socket), source_stat.st_rdev);
+      status = private_f_file_create_node(destination, macro_f_file_type_get(source_stat.st_mode) | ((~F_file_type_mask_d) & mode.socket), source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -180,13 +180,13 @@ extern "C" {
         }
       }
 
-      status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.socket);
+      status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.socket);
       if (F_status_is_error(status)) return status;
 
       return F_none;
     }
     else if (macro_f_file_type_is_block(source_stat.st_mode) || macro_f_file_type_is_character(source_stat.st_mode)) {
-      status = private_f_file_create_node(destination, macro_f_file_type_get(source_stat.st_mode) | ((~f_file_type_mask) & mode.block), source_stat.st_rdev);
+      status = private_f_file_create_node(destination, macro_f_file_type_get(source_stat.st_mode) | ((~F_file_type_mask_d) & mode.block), source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -194,7 +194,7 @@ extern "C" {
         }
       }
 
-      status = private_f_file_mode_set(destination, (~f_file_type_mask) & mode.block);
+      status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.block);
       if (F_status_is_error(status)) return status;
 
       return F_none;
@@ -567,214 +567,134 @@ extern "C" {
       if (!mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_file_mode_t change = mode_change & f_file_mode_t_block_special;
+    f_file_mode_t change = mode_change & F_file_mode_t_block_special_d;
 
     *mode = 0;
 
-    if (mode_replace & f_file_mode_t_replace_special) {
-      if (change & f_file_mode_t_mask_bit_set_owner & f_file_mode_t_mask_how_add) {
-        *mode = f_file_mode_special_set_user;
+    if (mode_replace & F_file_mode_t_replace_special_d) {
+      if (change & F_file_mode_t_mask_bit_set_owner_d & F_file_mode_t_mask_how_add_d) {
+        *mode = F_file_mode_special_set_user_d;
       }
 
-      if (change & f_file_mode_t_mask_bit_set_group & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_special_set_group;
+      if (change & F_file_mode_t_mask_bit_set_group_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_special_set_group_d;
       }
 
-      if (change & f_file_mode_t_mask_bit_sticky & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_special_sticky;
-      }
-    }
-    else {
-      *mode = mode_file & f_file_mode_special_all;
-
-      if (mode_change & f_file_mode_t_block_special) {
-        if (change & f_file_mode_t_mask_bit_set_owner & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_special_set_user) {
-            *mode -= f_file_mode_special_set_user;
-          }
-        }
-        else if (change & f_file_mode_t_mask_bit_set_owner & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_special_set_user)) {
-            *mode |= f_file_mode_special_set_user;
-          }
-        }
-
-        if (change & f_file_mode_t_mask_bit_set_group & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_special_set_group) {
-            *mode -= f_file_mode_special_set_group;
-          }
-        }
-        else if (change & f_file_mode_t_mask_bit_set_group & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_special_set_group)) {
-            *mode |= f_file_mode_special_set_group;
-          }
-        }
-
-        if (change & f_file_mode_t_mask_bit_sticky & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_special_sticky) {
-            *mode -= f_file_mode_special_sticky;
-          }
-        }
-        else if (change & f_file_mode_t_mask_bit_sticky & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_special_sticky)) {
-            *mode |= f_file_mode_special_sticky;
-          }
-        }
-      }
-    }
-
-    change = mode_change & f_file_mode_t_block_owner;
-
-    if (mode_replace & f_file_mode_t_replace_owner) {
-      if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_owner_r;
-      }
-
-      if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_owner_w;
-      }
-
-      if (change & f_file_mode_t_mask_bit_execute & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_owner_x;
-      }
-      else if (change & f_file_mode_t_mask_bit_execute_only & f_file_mode_t_mask_how_add) {
-        if (directory_is || (mode_file & f_file_mode_owner_x)) {
-          *mode |= f_file_mode_owner_x;
-        }
+      if (change & F_file_mode_t_mask_bit_sticky_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_special_sticky_d;
       }
     }
     else {
-      *mode |= mode_file & f_file_mode_owner_rwx;
+      *mode = mode_file & F_file_mode_special_all_d;
 
-      if (mode_change & f_file_mode_t_block_owner) {
-        if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_owner_r) {
-            *mode -= f_file_mode_owner_r;
+      if (mode_change & F_file_mode_t_block_special_d) {
+        if (change & F_file_mode_t_mask_bit_set_owner_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_special_set_user_d) {
+            *mode -= F_file_mode_special_set_user_d;
           }
         }
-        else if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_owner_r)) {
-            *mode |= f_file_mode_owner_r;
-          }
-        }
-
-        if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_owner_w) {
-            *mode -= f_file_mode_owner_w;
-          }
-        }
-        else if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_owner_w)) {
-            *mode |= f_file_mode_owner_w;
+        else if (change & F_file_mode_t_mask_bit_set_owner_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_special_set_user_d)) {
+            *mode |= F_file_mode_special_set_user_d;
           }
         }
 
-        if (change & f_file_mode_t_mask_bit_execute) {
-          change &= f_file_mode_t_mask_bit_execute;
-
-          if (change & f_file_mode_t_mask_how_subtract) {
-            if (*mode & f_file_mode_owner_x) {
-              *mode -= f_file_mode_owner_x;
-            }
-          }
-          else if (change & f_file_mode_t_mask_how_add) {
-            if (!(*mode & f_file_mode_owner_x)) {
-              *mode |= f_file_mode_owner_x;
-            }
+        if (change & F_file_mode_t_mask_bit_set_group_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_special_set_group_d) {
+            *mode -= F_file_mode_special_set_group_d;
           }
         }
-        else if (change & f_file_mode_t_mask_bit_execute_only) {
-          change &= f_file_mode_t_mask_bit_execute_only;
+        else if (change & F_file_mode_t_mask_bit_set_group_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_special_set_group_d)) {
+            *mode |= F_file_mode_special_set_group_d;
+          }
+        }
 
-          if (directory_is || (mode_file & f_file_mode_owner_x)) {
-            if (change & f_file_mode_t_mask_how_subtract) {
-              if (*mode & f_file_mode_owner_x) {
-                *mode -= f_file_mode_owner_x;
-              }
-            }
-            else if (change & f_file_mode_t_mask_how_add) {
-              if (!(*mode & f_file_mode_owner_x)) {
-                *mode |= f_file_mode_owner_x;
-              }
-            }
+        if (change & F_file_mode_t_mask_bit_sticky_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_special_sticky_d) {
+            *mode -= F_file_mode_special_sticky_d;
+          }
+        }
+        else if (change & F_file_mode_t_mask_bit_sticky_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_special_sticky_d)) {
+            *mode |= F_file_mode_special_sticky_d;
           }
         }
       }
     }
 
-    change = mode_change & f_file_mode_t_block_group;
+    change = mode_change & F_file_mode_t_block_owner_d;
 
-    if (mode_replace & f_file_mode_t_replace_group) {
-      if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_group_r;
+    if (mode_replace & F_file_mode_t_replace_owner_d) {
+      if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_owner_r_d;
       }
 
-      if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_group_w;
+      if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_owner_w_d;
       }
 
-      if (change & f_file_mode_t_mask_bit_execute & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_group_x;
+      if (change & F_file_mode_t_mask_bit_execute_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_owner_x_d;
       }
-      else if (change & f_file_mode_t_mask_bit_execute_only & f_file_mode_t_mask_how_add) {
-        if (directory_is || (mode_file & f_file_mode_group_x)) {
-          *mode |= f_file_mode_group_x;
+      else if (change & F_file_mode_t_mask_bit_execute_only_d & F_file_mode_t_mask_how_add_d) {
+        if (directory_is || (mode_file & F_file_mode_owner_x_d)) {
+          *mode |= F_file_mode_owner_x_d;
         }
       }
     }
     else {
-      *mode |= mode_file & f_file_mode_group_rwx;
+      *mode |= mode_file & F_file_mode_owner_rwx_d;
 
-      if (mode_change & f_file_mode_t_block_group) {
-
-        if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_group_r) {
-            *mode -= f_file_mode_group_r;
+      if (mode_change & F_file_mode_t_block_owner_d) {
+        if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_owner_r_d) {
+            *mode -= F_file_mode_owner_r_d;
           }
         }
-        else if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_group_r)) {
-            *mode |= f_file_mode_group_r;
-          }
-        }
-
-        if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_group_w) {
-            *mode -= f_file_mode_group_w;
-          }
-        }
-        else if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_group_w)) {
-            *mode |= f_file_mode_group_w;
+        else if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_owner_r_d)) {
+            *mode |= F_file_mode_owner_r_d;
           }
         }
 
-        if (change & f_file_mode_t_mask_bit_execute) {
-          change &= f_file_mode_t_mask_bit_execute;
+        if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_owner_w_d) {
+            *mode -= F_file_mode_owner_w_d;
+          }
+        }
+        else if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_owner_w_d)) {
+            *mode |= F_file_mode_owner_w_d;
+          }
+        }
 
-          if (change & f_file_mode_t_mask_how_subtract) {
-            if (*mode & f_file_mode_group_x) {
-              *mode -= f_file_mode_group_x;
+        if (change & F_file_mode_t_mask_bit_execute_d) {
+          change &= F_file_mode_t_mask_bit_execute_d;
+
+          if (change & F_file_mode_t_mask_how_subtract_d) {
+            if (*mode & F_file_mode_owner_x_d) {
+              *mode -= F_file_mode_owner_x_d;
             }
           }
-          else if (change & f_file_mode_t_mask_how_add) {
-            if (!(*mode & f_file_mode_group_x)) {
-              *mode |= f_file_mode_group_x;
+          else if (change & F_file_mode_t_mask_how_add_d) {
+            if (!(*mode & F_file_mode_owner_x_d)) {
+              *mode |= F_file_mode_owner_x_d;
             }
           }
         }
-        else if (change & f_file_mode_t_mask_bit_execute_only) {
-          change &= f_file_mode_t_mask_bit_execute_only;
+        else if (change & F_file_mode_t_mask_bit_execute_only_d) {
+          change &= F_file_mode_t_mask_bit_execute_only_d;
 
-          if (directory_is || (mode_file & f_file_mode_group_x)) {
-            if (change & f_file_mode_t_mask_how_subtract) {
-              if (*mode & f_file_mode_group_x) {
-                *mode -= f_file_mode_group_x;
+          if (directory_is || (mode_file & F_file_mode_owner_x_d)) {
+            if (change & F_file_mode_t_mask_how_subtract_d) {
+              if (*mode & F_file_mode_owner_x_d) {
+                *mode -= F_file_mode_owner_x_d;
               }
             }
-            else if (change & f_file_mode_t_mask_how_add) {
-              if (!(*mode & f_file_mode_group_x)) {
-                *mode |= f_file_mode_group_x;
+            else if (change & F_file_mode_t_mask_how_add_d) {
+              if (!(*mode & F_file_mode_owner_x_d)) {
+                *mode |= F_file_mode_owner_x_d;
               }
             }
           }
@@ -782,80 +702,160 @@ extern "C" {
       }
     }
 
-    change = mode_change & f_file_mode_t_block_world;
+    change = mode_change & F_file_mode_t_block_group_d;
 
-    if (mode_replace & f_file_mode_t_replace_world) {
-
-      if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_world_r;
+    if (mode_replace & F_file_mode_t_replace_group_d) {
+      if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_group_r_d;
       }
 
-      if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_world_w;
+      if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_group_w_d;
       }
 
-      if (change & f_file_mode_t_mask_bit_execute & f_file_mode_t_mask_how_add) {
-        *mode |= f_file_mode_world_x;
+      if (change & F_file_mode_t_mask_bit_execute_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_group_x_d;
       }
-      else if (change & f_file_mode_t_mask_bit_execute_only & f_file_mode_t_mask_how_add) {
-        if (directory_is || (mode_file & f_file_mode_world_x)) {
-          *mode |= f_file_mode_world_x;
+      else if (change & F_file_mode_t_mask_bit_execute_only_d & F_file_mode_t_mask_how_add_d) {
+        if (directory_is || (mode_file & F_file_mode_group_x_d)) {
+          *mode |= F_file_mode_group_x_d;
         }
       }
     }
     else {
-      *mode |= mode_file & f_file_mode_world_rwx;
+      *mode |= mode_file & F_file_mode_group_rwx_d;
 
-      if (mode_change & f_file_mode_t_block_world) {
+      if (mode_change & F_file_mode_t_block_group_d) {
 
-        if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_world_r) {
-            *mode -= f_file_mode_world_r;
+        if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_group_r_d) {
+            *mode -= F_file_mode_group_r_d;
           }
         }
-        else if (change & f_file_mode_t_mask_bit_read & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_world_r)) {
-            *mode |= f_file_mode_world_r;
-          }
-        }
-
-        if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_subtract) {
-          if (*mode & f_file_mode_world_w) {
-            *mode -= f_file_mode_world_w;
-          }
-        }
-        else if (change & f_file_mode_t_mask_bit_write & f_file_mode_t_mask_how_add) {
-          if (!(*mode & f_file_mode_world_w)) {
-            *mode |= f_file_mode_world_w;
+        else if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_group_r_d)) {
+            *mode |= F_file_mode_group_r_d;
           }
         }
 
-        if (change & f_file_mode_t_mask_bit_execute) {
-          change &= f_file_mode_t_mask_bit_execute;
+        if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_group_w_d) {
+            *mode -= F_file_mode_group_w_d;
+          }
+        }
+        else if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_group_w_d)) {
+            *mode |= F_file_mode_group_w_d;
+          }
+        }
 
-          if (change & f_file_mode_t_mask_how_subtract) {
-            if (*mode & f_file_mode_world_x) {
-              *mode -= f_file_mode_world_x;
+        if (change & F_file_mode_t_mask_bit_execute_d) {
+          change &= F_file_mode_t_mask_bit_execute_d;
+
+          if (change & F_file_mode_t_mask_how_subtract_d) {
+            if (*mode & F_file_mode_group_x_d) {
+              *mode -= F_file_mode_group_x_d;
             }
           }
-          else if (change & f_file_mode_t_mask_how_add) {
-            if (!(*mode & f_file_mode_world_x)) {
-              *mode |= f_file_mode_world_x;
+          else if (change & F_file_mode_t_mask_how_add_d) {
+            if (!(*mode & F_file_mode_group_x_d)) {
+              *mode |= F_file_mode_group_x_d;
             }
           }
         }
-        else if (change & f_file_mode_t_mask_bit_execute_only) {
-          change &= f_file_mode_t_mask_bit_execute_only;
+        else if (change & F_file_mode_t_mask_bit_execute_only_d) {
+          change &= F_file_mode_t_mask_bit_execute_only_d;
 
-          if (directory_is || (mode_file & f_file_mode_world_x)) {
-            if (change & f_file_mode_t_mask_how_subtract) {
-              if (*mode & f_file_mode_world_x) {
-                *mode -= f_file_mode_world_x;
+          if (directory_is || (mode_file & F_file_mode_group_x_d)) {
+            if (change & F_file_mode_t_mask_how_subtract_d) {
+              if (*mode & F_file_mode_group_x_d) {
+                *mode -= F_file_mode_group_x_d;
               }
             }
-            else if (change & f_file_mode_t_mask_how_add) {
-              if (!(*mode & f_file_mode_world_x)) {
-                *mode |= f_file_mode_world_x;
+            else if (change & F_file_mode_t_mask_how_add_d) {
+              if (!(*mode & F_file_mode_group_x_d)) {
+                *mode |= F_file_mode_group_x_d;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    change = mode_change & F_file_mode_t_block_world_d;
+
+    if (mode_replace & F_file_mode_t_replace_world_d) {
+
+      if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_world_r_d;
+      }
+
+      if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_world_w_d;
+      }
+
+      if (change & F_file_mode_t_mask_bit_execute_d & F_file_mode_t_mask_how_add_d) {
+        *mode |= F_file_mode_world_x_d;
+      }
+      else if (change & F_file_mode_t_mask_bit_execute_only_d & F_file_mode_t_mask_how_add_d) {
+        if (directory_is || (mode_file & F_file_mode_world_x_d)) {
+          *mode |= F_file_mode_world_x_d;
+        }
+      }
+    }
+    else {
+      *mode |= mode_file & F_file_mode_world_rwx_d;
+
+      if (mode_change & F_file_mode_t_block_world_d) {
+
+        if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_world_r_d) {
+            *mode -= F_file_mode_world_r_d;
+          }
+        }
+        else if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_world_r_d)) {
+            *mode |= F_file_mode_world_r_d;
+          }
+        }
+
+        if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_subtract_d) {
+          if (*mode & F_file_mode_world_w_d) {
+            *mode -= F_file_mode_world_w_d;
+          }
+        }
+        else if (change & F_file_mode_t_mask_bit_write_d & F_file_mode_t_mask_how_add_d) {
+          if (!(*mode & F_file_mode_world_w_d)) {
+            *mode |= F_file_mode_world_w_d;
+          }
+        }
+
+        if (change & F_file_mode_t_mask_bit_execute_d) {
+          change &= F_file_mode_t_mask_bit_execute_d;
+
+          if (change & F_file_mode_t_mask_how_subtract_d) {
+            if (*mode & F_file_mode_world_x_d) {
+              *mode -= F_file_mode_world_x_d;
+            }
+          }
+          else if (change & F_file_mode_t_mask_how_add_d) {
+            if (!(*mode & F_file_mode_world_x_d)) {
+              *mode |= F_file_mode_world_x_d;
+            }
+          }
+        }
+        else if (change & F_file_mode_t_mask_bit_execute_only_d) {
+          change &= F_file_mode_t_mask_bit_execute_only_d;
+
+          if (directory_is || (mode_file & F_file_mode_world_x_d)) {
+            if (change & F_file_mode_t_mask_how_subtract_d) {
+              if (*mode & F_file_mode_world_x_d) {
+                *mode -= F_file_mode_world_x_d;
+              }
+            }
+            else if (change & F_file_mode_t_mask_how_add_d) {
+              if (!(*mode & F_file_mode_world_x_d)) {
+                *mode |= F_file_mode_world_x_d;
               }
             }
           }
@@ -912,71 +912,71 @@ extern "C" {
       f_file_mode_t what = 0;
 
       // translate the umask into an f_file_mode_t umask equivalent.
-      if (umask & f_file_mode_special_set_user) {
-        mode_umask = f_file_mode_t_block_special & f_file_mode_t_mask_bit_set_owner;
+      if (umask & F_file_mode_special_set_user_d) {
+        mode_umask = F_file_mode_t_block_special_d & F_file_mode_t_mask_bit_set_owner_d;
       }
 
-      if (umask & f_file_mode_special_set_group) {
-        mode_umask |= f_file_mode_t_block_special & f_file_mode_t_mask_bit_set_group;
+      if (umask & F_file_mode_special_set_group_d) {
+        mode_umask |= F_file_mode_t_block_special_d & F_file_mode_t_mask_bit_set_group_d;
       }
 
-      if (umask & f_file_mode_special_sticky) {
-        mode_umask |= f_file_mode_t_block_special & f_file_mode_t_mask_bit_sticky;
+      if (umask & F_file_mode_special_sticky_d) {
+        mode_umask |= F_file_mode_t_block_special_d & F_file_mode_t_mask_bit_sticky_d;
       }
 
-      if (umask & f_file_mode_owner_r) {
-        mode_umask |= f_file_mode_t_block_owner & f_file_mode_t_mask_bit_read;
+      if (umask & F_file_mode_owner_r_d) {
+        mode_umask |= F_file_mode_t_block_owner_d & F_file_mode_t_mask_bit_read_d;
       }
 
-      if (umask & f_file_mode_owner_w) {
-        mode_umask |= f_file_mode_t_block_owner & f_file_mode_t_mask_bit_write;
+      if (umask & F_file_mode_owner_w_d) {
+        mode_umask |= F_file_mode_t_block_owner_d & F_file_mode_t_mask_bit_write_d;
       }
 
-      if (umask & f_file_mode_owner_x) {
-        mode_umask |= f_file_mode_t_block_owner & f_file_mode_t_mask_bit_execute;
+      if (umask & F_file_mode_owner_x_d) {
+        mode_umask |= F_file_mode_t_block_owner_d & F_file_mode_t_mask_bit_execute_d;
       }
 
-      if (umask & f_file_mode_group_r) {
-        mode_umask |= f_file_mode_t_block_group & f_file_mode_t_mask_bit_read;
+      if (umask & F_file_mode_group_r_d) {
+        mode_umask |= F_file_mode_t_block_group_d & F_file_mode_t_mask_bit_read_d;
       }
 
-      if (umask & f_file_mode_group_w) {
-        mode_umask |= f_file_mode_t_block_group & f_file_mode_t_mask_bit_write;
+      if (umask & F_file_mode_group_w_d) {
+        mode_umask |= F_file_mode_t_block_group_d & F_file_mode_t_mask_bit_write_d;
       }
 
-      if (umask & f_file_mode_group_x) {
-        mode_umask |= f_file_mode_t_block_group & f_file_mode_t_mask_bit_execute;
+      if (umask & F_file_mode_group_x_d) {
+        mode_umask |= F_file_mode_t_block_group_d & F_file_mode_t_mask_bit_execute_d;
       }
 
-      if (umask & f_file_mode_world_r) {
-        mode_umask |= f_file_mode_t_block_world & f_file_mode_t_mask_bit_read;
+      if (umask & F_file_mode_world_r_d) {
+        mode_umask |= F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_read_d;
       }
 
-      if (umask & f_file_mode_world_w) {
-        mode_umask |= f_file_mode_t_block_world & f_file_mode_t_mask_bit_write;
+      if (umask & F_file_mode_world_w_d) {
+        mode_umask |= F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_write_d;
       }
 
-      if (umask & f_file_mode_world_x) {
-        mode_umask |= f_file_mode_t_block_world & f_file_mode_t_mask_bit_execute;
+      if (umask & F_file_mode_world_x_d) {
+        mode_umask |= F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_execute_d;
       }
 
       for (f_array_length_t i = 0; syntax && string[i]; ++i) {
 
         if (string[i] == f_string_ascii_o_s[0]) {
           on |= 1;
-          mode_mask |= f_file_mode_t_block_world;
+          mode_mask |= F_file_mode_t_block_world_d;
         }
         else if (string[i] == f_string_ascii_g_s[0]) {
           on |= 2;
-          mode_mask |= f_file_mode_t_block_group;
+          mode_mask |= F_file_mode_t_block_group_d;
         }
         else if (string[i] == f_string_ascii_u_s[0]) {
           on |= 4;
-          mode_mask |= f_file_mode_t_block_owner;
+          mode_mask |= F_file_mode_t_block_owner_d;
         }
         else if (string[i] == f_string_ascii_a_s[0]) {
           on = 7;
-          mode_mask = f_file_mode_t_block_standard;
+          mode_mask = F_file_mode_t_block_standard_d;
         }
         else if (string[i] == f_string_ascii_plus_s[0] || string[i] == f_string_ascii_minus_s[0] || string[i] == f_string_ascii_equal_s[0]) {
           if (string[i] == f_string_ascii_plus_s[0]) {
@@ -989,61 +989,61 @@ extern "C" {
             how = on ? 2 : 5;
 
             // clear by mask to prepare for replacement, which includes clearing the special block.
-            mode_mask |= f_file_mode_t_block_special;
+            mode_mask |= F_file_mode_t_block_special_d;
             *mode -= (*mode) & mode_mask;
 
-            *replace |= f_file_mode_t_replace_special;
+            *replace |= F_file_mode_t_replace_special_d;
 
-            if (mode_mask & f_file_mode_t_block_owner) {
-              *replace |= f_file_mode_t_replace_owner;
+            if (mode_mask & F_file_mode_t_block_owner_d) {
+              *replace |= F_file_mode_t_replace_owner_d;
             }
 
-            if (mode_mask & f_file_mode_t_block_group) {
-              *replace |= f_file_mode_t_replace_group;
+            if (mode_mask & F_file_mode_t_block_group_d) {
+              *replace |= F_file_mode_t_replace_group_d;
             }
 
-            if (mode_mask & f_file_mode_t_block_world) {
-              *replace |= f_file_mode_t_replace_world;
+            if (mode_mask & F_file_mode_t_block_world_d) {
+              *replace |= F_file_mode_t_replace_world_d;
             }
           }
 
           if (!on) {
             on = 7;
-            mode_mask = f_file_mode_t_block_all;
+            mode_mask = F_file_mode_t_block_all_d;
           }
 
           for (++i; string[i]; ++i) {
 
             if (string[i] == f_string_ascii_r_s[0]) {
-              what = f_file_mode_t_mask_bit_read;
+              what = F_file_mode_t_mask_bit_read_d;
             }
             else if (string[i] == f_string_ascii_w_s[0]) {
-              what = f_file_mode_t_mask_bit_write;
+              what = F_file_mode_t_mask_bit_write_d;
             }
             else if (string[i] == f_string_ascii_x_s[0]) {
-              what = f_file_mode_t_mask_bit_execute;
+              what = F_file_mode_t_mask_bit_execute_d;
             }
             else if (string[i] == f_string_ascii_X_s[0]) {
-              what = f_file_mode_t_mask_bit_execute_only;
+              what = F_file_mode_t_mask_bit_execute_only_d;
             }
             else if (string[i] == f_string_ascii_s_s[0]) {
-              mode_mask |= f_file_mode_t_block_special;
+              mode_mask |= F_file_mode_t_block_special_d;
 
               if (on & 4) {
-                what = f_file_mode_t_mask_bit_set_owner;
+                what = F_file_mode_t_mask_bit_set_owner_d;
               }
               else if (on & 2) {
-                what = f_file_mode_t_mask_bit_set_group;
+                what = F_file_mode_t_mask_bit_set_group_d;
               }
               else {
                 what = 0;
               }
             }
             else if (string[i] == f_string_ascii_t_s[0]) {
-              mode_mask |= f_file_mode_t_block_special;
+              mode_mask |= F_file_mode_t_block_special_d;
 
               if (on & 1) {
-                what = f_file_mode_t_mask_bit_sticky;
+                what = F_file_mode_t_mask_bit_sticky_d;
               }
               else {
                 what = 0;
@@ -1065,10 +1065,10 @@ extern "C" {
             }
 
             if (how == 1 || how == 2 || how == 4 || how == 5) {
-              *mode |= what & mode_mask & f_file_mode_t_mask_how_add;
+              *mode |= what & mode_mask & F_file_mode_t_mask_how_add_d;
             }
             else if (how == 3 || how == 6) {
-              *mode |= what & mode_mask & f_file_mode_t_mask_how_subtract;
+              *mode |= what & mode_mask & F_file_mode_t_mask_how_subtract_d;
             }
           } // for
 
@@ -1102,12 +1102,12 @@ extern "C" {
         how = 2;
         i = 1;
 
-        *replace = f_file_mode_t_replace_standard;
+        *replace = F_file_mode_t_replace_standard_d;
       }
       else {
         how = 2;
 
-        *replace = f_file_mode_t_replace_standard | f_file_mode_t_replace_directory;
+        *replace = F_file_mode_t_replace_standard_d | F_file_mode_t_replace_directory_d;
       }
 
       if (string[i] == f_string_ascii_0_s[0]) {
@@ -1153,7 +1153,7 @@ extern "C" {
 
           // if there are only '0's then the standard and setuid/setgid/sticky bits are to be replaced.
           if (!*mode) {
-            *replace = f_file_mode_t_replace_standard | f_file_mode_t_replace_special;
+            *replace = F_file_mode_t_replace_standard_d | F_file_mode_t_replace_special_d;
           }
         }
       }
@@ -1240,56 +1240,56 @@ extern "C" {
       if (!to) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const f_file_mode_t add = from & f_file_mode_t_mask_how_add;
+    const f_file_mode_t add = from & F_file_mode_t_mask_how_add_d;
 
     *to = 0;
 
-    if (add & f_file_mode_t_mask_bit_set_owner) {
-      *to |= f_file_mode_special_set_user;
+    if (add & F_file_mode_t_mask_bit_set_owner_d) {
+      *to |= F_file_mode_special_set_user_d;
     }
 
-    if (add & f_file_mode_t_mask_bit_set_group) {
-      *to |= f_file_mode_special_set_group;
+    if (add & F_file_mode_t_mask_bit_set_group_d) {
+      *to |= F_file_mode_special_set_group_d;
     }
 
-    if (add & f_file_mode_t_mask_bit_sticky) {
-      *to |= f_file_mode_special_sticky;
+    if (add & F_file_mode_t_mask_bit_sticky_d) {
+      *to |= F_file_mode_special_sticky_d;
     }
 
-    if (add & f_file_mode_t_block_owner & f_file_mode_t_mask_bit_read) {
-      *to |= f_file_mode_owner_r;
+    if (add & F_file_mode_t_block_owner_d & F_file_mode_t_mask_bit_read_d) {
+      *to |= F_file_mode_owner_r_d;
     }
 
-    if (add & f_file_mode_t_block_group & f_file_mode_t_mask_bit_read) {
-      *to |= f_file_mode_group_r;
+    if (add & F_file_mode_t_block_group_d & F_file_mode_t_mask_bit_read_d) {
+      *to |= F_file_mode_group_r_d;
     }
 
-    if (add & f_file_mode_t_block_world & f_file_mode_t_mask_bit_write) {
-      *to |= f_file_mode_world_r;
+    if (add & F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_write_d) {
+      *to |= F_file_mode_world_r_d;
     }
 
-    if (add & f_file_mode_t_block_owner & f_file_mode_t_mask_bit_write) {
-      *to |= f_file_mode_owner_w;
+    if (add & F_file_mode_t_block_owner_d & F_file_mode_t_mask_bit_write_d) {
+      *to |= F_file_mode_owner_w_d;
     }
 
-    if (add & f_file_mode_t_block_group & f_file_mode_t_mask_bit_write) {
-      *to |= f_file_mode_group_w;
+    if (add & F_file_mode_t_block_group_d & F_file_mode_t_mask_bit_write_d) {
+      *to |= F_file_mode_group_w_d;
     }
 
-    if (add & f_file_mode_t_block_world & f_file_mode_t_mask_bit_write) {
-      *to |= f_file_mode_world_w;
+    if (add & F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_write_d) {
+      *to |= F_file_mode_world_w_d;
     }
 
-    if (add & f_file_mode_t_block_owner & (f_file_mode_t_mask_bit_execute | f_file_mode_t_mask_bit_execute_only)) {
-      *to |= f_file_mode_owner_x;
+    if (add & F_file_mode_t_block_owner_d & (F_file_mode_t_mask_bit_execute_d | F_file_mode_t_mask_bit_execute_only_d)) {
+      *to |= F_file_mode_owner_x_d;
     }
 
-    if (add & f_file_mode_t_block_group & (f_file_mode_t_mask_bit_execute | f_file_mode_t_mask_bit_execute_only)) {
-      *to |= f_file_mode_group_x;
+    if (add & F_file_mode_t_block_group_d & (F_file_mode_t_mask_bit_execute_d | F_file_mode_t_mask_bit_execute_only_d)) {
+      *to |= F_file_mode_group_x_d;
     }
 
-    if (add & f_file_mode_t_block_world & (f_file_mode_t_mask_bit_execute | f_file_mode_t_mask_bit_execute_only)) {
-      *to |= f_file_mode_world_x;
+    if (add & F_file_mode_t_block_world_d & (F_file_mode_t_mask_bit_execute_d | F_file_mode_t_mask_bit_execute_only_d)) {
+      *to |= F_file_mode_world_x_d;
     }
 
     return F_none;
@@ -1315,7 +1315,7 @@ extern "C" {
     f_array_length_t size = strnlen(path_to_name, length);
 
     if (name_base->used + size > name_base->size) {
-      if (name_base->used + size > f_string_t_size) {
+      if (name_base->used + size > F_string_t_size_d) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -1351,7 +1351,7 @@ extern "C" {
     f_array_length_t size = strnlen(path_to_name, length);
 
     if (name_directory->used + size > name_directory->size) {
-      if (name_directory->used + size > f_string_t_size) {
+      if (name_directory->used + size > F_string_t_size_d) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -1428,7 +1428,7 @@ extern "C" {
     for (f_string_t buffer_read = 0; ; ) {
 
       if (buffer->used + file.size_read > buffer->size) {
-        if (buffer->size + file.size_read > f_string_t_size) {
+        if (buffer->size + file.size_read > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -1478,7 +1478,7 @@ extern "C" {
     f_string_t buffer_read = 0;
 
     if (buffer->used + file.size_read > buffer->size) {
-      if (buffer->size + file.size_read > f_string_t_size) {
+      if (buffer->size + file.size_read > F_string_t_size_d) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -1538,7 +1538,7 @@ extern "C" {
       }
 
       if (buffer->used + buffer_size > buffer->size) {
-        if (buffer->size + buffer_size > f_string_t_size) {
+        if (buffer->size + buffer_size > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -1997,7 +1997,7 @@ extern "C" {
     for (;;) {
 
       if (buffer->used + file.size_read > buffer->size) {
-        if (buffer->size + file.size_read > f_string_t_size) {
+        if (buffer->size + file.size_read > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -2043,7 +2043,7 @@ extern "C" {
     ssize_t size_read = 0;
 
     if (buffer->used + file.size_read > buffer->size) {
-      if (buffer->size + file.size_read > f_string_t_size) {
+      if (buffer->size + file.size_read > F_string_t_size_d) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -2097,7 +2097,7 @@ extern "C" {
       }
 
       if (buffer->used + buffer_size > buffer->size) {
-        if (buffer->size + buffer_size > f_string_t_size) {
+        if (buffer->size + buffer_size > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -2417,7 +2417,7 @@ extern "C" {
       return status;
     }
 
-    if (utimensat(f_file_at_current_working, path, 0, dereference ? 0 : f_file_at_symlink_follow_no) < 0) {
+    if (utimensat(F_file_at_current_working_d, path, 0, dereference ? 0 : F_file_at_symlink_follow_no_d) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);

@@ -1047,7 +1047,7 @@ extern "C" {
         const f_array_length_t length = strlen(result);
 
         if (name->used + length + 1 > name->size) {
-          if (name->used + length + 1 > f_string_t_size) {
+          if (name->used + length + 1 > F_string_t_size_d) {
             return F_status_set_error(F_string_too_large);
           }
 
@@ -1088,7 +1088,7 @@ extern "C" {
 
       if (result) {
         if (text->used + length + 1 > text->size) {
-          if (text->used + length + 1 > f_string_t_size) {
+          if (text->used + length + 1 > F_string_t_size_d) {
             return F_status_set_error(F_string_too_large);
           }
 

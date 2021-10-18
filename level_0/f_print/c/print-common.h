@@ -22,7 +22,7 @@ extern "C" {
  * This is documented in the man write(2) pages under Linux to being 0x7ffff000 regardless of 32-bit or 64-bit.
  */
 #ifndef _di_f_print_write_max_
- #define f_print_write_max 0x7ffff000
+ #define F_print_write_max_d 0x7ffff000
 #endif // _di_f_print_write_max_
 
 /**
@@ -36,40 +36,40 @@ extern "C" {
  * The code currently expects these to be 3-bytes wide so changing this to any other width will require changing code that utilizes these.
  */
 #ifndef _di_f_print_sequences_
-  #define f_print_sequence_acknowledge               "␆"
-  #define f_print_sequence_acknowledge_negative      "␕"
-  #define f_print_sequence_backspace                 "␈"
-  #define f_print_sequence_bell                      "␇"
-  #define f_print_sequence_cancel                    "␘"
-  #define f_print_sequence_carriage_return           "␍"
-  #define f_print_sequence_data_link_escape          "␐"
-  #define f_print_sequence_delete                    "␡"
-  #define f_print_sequence_device_control_1          "␑"
-  #define f_print_sequence_device_control_2          "␒"
-  #define f_print_sequence_device_control_3          "␓"
-  #define f_print_sequence_device_control_4          "␔"
-  #define f_print_sequence_end_of_medium             "␙"
-  #define f_print_sequence_end_of_text               "␃"
-  #define f_print_sequence_end_of_transmission       "␄"
-  #define f_print_sequence_end_of_transmission_block "␗"
-  #define f_print_sequence_enquiry                   "␅"
-  #define f_print_sequence_escape                    "␛"
-  #define f_print_sequence_form_feed                 "␌"
-  #define f_print_sequence_line_feed                 "␊"
-  #define f_print_sequence_null                      "␀"
-  #define f_print_sequence_separator_file            "␜"
-  #define f_print_sequence_separator_group           "␝"
-  #define f_print_sequence_separator_record          "␞"
-  #define f_print_sequence_separator_unit            "␟"
-  #define f_print_sequence_shift_in                  "␏"
-  #define f_print_sequence_shift_out                 "␎"
-  #define f_print_sequence_start_of_header           "␁"
-  #define f_print_sequence_start_of_text             "␂"
-  #define f_print_sequence_substitute                "␚"
-  #define f_print_sequence_synchronous_idle          "␖"
-  #define f_print_sequence_tab                       "␉"
-  #define f_print_sequence_tab_vertical              "␋"
-  #define f_print_sequence_unknown                   "�"
+  #define F_print_sequence_acknowledge_s               "␆"
+  #define F_print_sequence_acknowledge_negative_s      "␕"
+  #define F_print_sequence_backspace_s                 "␈"
+  #define F_print_sequence_bell_s                      "␇"
+  #define F_print_sequence_cancel_s                    "␘"
+  #define F_print_sequence_carriage_return_s           "␍"
+  #define F_print_sequence_data_link_escape_s          "␐"
+  #define F_print_sequence_delete_s                    "␡"
+  #define F_print_sequence_device_control_1_s          "␑"
+  #define F_print_sequence_device_control_2_s          "␒"
+  #define F_print_sequence_device_control_3_s          "␓"
+  #define F_print_sequence_device_control_4_s          "␔"
+  #define F_print_sequence_end_of_medium_s             "␙"
+  #define F_print_sequence_end_of_text_s               "␃"
+  #define F_print_sequence_end_of_transmission_s       "␄"
+  #define F_print_sequence_end_of_transmission_block_s "␗"
+  #define F_print_sequence_enquiry_s                   "␅"
+  #define F_print_sequence_escape_s                    "␛"
+  #define F_print_sequence_form_feed_s                 "␌"
+  #define F_print_sequence_line_feed_s                 "␊"
+  #define F_print_sequence_null_s                      "␀"
+  #define F_print_sequence_separator_file_s            "␜"
+  #define F_print_sequence_separator_group_s           "␝"
+  #define F_print_sequence_separator_record_s          "␞"
+  #define F_print_sequence_separator_unit_s            "␟"
+  #define F_print_sequence_shift_in_s                  "␏"
+  #define F_print_sequence_shift_out_s                 "␎"
+  #define F_print_sequence_start_of_header_s           "␁"
+  #define F_print_sequence_start_of_text_s             "␂"
+  #define F_print_sequence_substitute_s                "␚"
+  #define F_print_sequence_synchronous_idle_s          "␖"
+  #define F_print_sequence_tab_s                       "␉"
+  #define F_print_sequence_tab_vertical_s              "␋"
+  #define F_print_sequence_unknown_s                   "�"
 
   extern const f_string_t f_print_sequence_acknowledge_s;
   extern const f_string_t f_print_sequence_acknowledge_negative_s;
@@ -137,18 +137,18 @@ extern "C" {
  * @see fprintf()
  */
 #ifndef _di_f_print_format_flag_
-  #define f_print_format_flag_align_left     0x1
-  #define f_print_format_flag_convert        0x2
-  #define f_print_format_flag_ignore_index   0x4
-  #define f_print_format_flag_ignore_range   0x8
-  #define f_print_format_flag_precision      0x10
-  #define f_print_format_flag_range          0x20
-  #define f_print_format_flag_sign_always    0x40
-  #define f_print_format_flag_sign_pad       0x80
-  #define f_print_format_flag_trim           0x100
-  #define f_print_format_flag_uppercase      0x200
-  #define f_print_format_flag_width          0x400
-  #define f_print_format_flag_zeros_leading  0x800
+  #define F_print_format_flag_align_left_d     0x1
+  #define F_print_format_flag_convert_d        0x2
+  #define F_print_format_flag_ignore_index_d   0x4
+  #define F_print_format_flag_ignore_range_d   0x8
+  #define F_print_format_flag_precision_d      0x10
+  #define F_print_format_flag_range_d          0x20
+  #define F_print_format_flag_sign_always_d    0x40
+  #define F_print_format_flag_sign_pad_d       0x80
+  #define F_print_format_flag_trim_d           0x100
+  #define F_print_format_flag_uppercase_d      0x200
+  #define F_print_format_flag_width_d          0x400
+  #define F_print_format_flag_zeros_leading_d  0x800
 #endif // _di_f_print_format_flags_
 
 /**

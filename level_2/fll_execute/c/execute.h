@@ -360,9 +360,9 @@ extern "C" {
  * @param arguments
  *   An array of strings representing the arguments.
  * @param option
- *   A bitwise set of options, such as: fl_execute_parameter_option_exit and fl_execute_parameter_option_path.
- *   If fl_execute_parameter_option_exit: this will call exit() at the end of execution (be it success or failure).
- *   If fl_execute_parameter_option_path: use the whole program path (such as "/bin/bash" instead "bash" when populating argument[0].
+ *   A bitwise set of options, such as: FL_execute_parameter_option_exit_d and FL_execute_parameter_option_path_d.
+ *   If FL_execute_parameter_option_exit_d: this will call exit() at the end of execution (be it success or failure).
+ *   If FL_execute_parameter_option_path_d: use the whole program path (such as "/bin/bash" instead "bash" when populating argument[0].
  * @param environment
  *   (optional) An map of strings representing the environment variable names and their respective values.
  *   Completely clears the environment and then creates environment variables for each name and value pair in this map.
@@ -397,7 +397,7 @@ extern "C" {
  * When the path has a slash "/" or the environment is to be cleared, then this does validate the path to the program.
  * Otherwise, this does not validate the path to the program.
  *
- * When the parameter.option has the fl_execute_parameter_option_exit bit set, then this calls exit() when the child process returns.
+ * When the parameter.option has the FL_execute_parameter_option_exit_d bit set, then this calls exit() when the child process returns.
  * Otherwise, this returns F_child and assigns the child's return code to result for the child process.
  * The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process when F_child is returned.
  *
@@ -414,7 +414,7 @@ extern "C" {
  * @param parameter
  *   (optional) This and most of its fields are optional and are disabled when set to 0.
  *   option:
- *     A bitwise set of options, such as: fl_execute_parameter_option_exit and fl_execute_parameter_option_path.
+ *     A bitwise set of options, such as: FL_execute_parameter_option_exit_d and FL_execute_parameter_option_path_d.
  *   environment:
  *     An map of strings representing the environment variable names and their respective values.
  *     Completely clears the environment and then creates environment variables for each name and value pair in this map.
@@ -434,14 +434,14 @@ extern "C" {
  *   (optional) This and most of its fields are optional and are disabled when set to NULL.
  * @param result
  *   (optional) The execute status code returned after finishing or attempting to finish execution of program.
- *   When fl_execute_parameter_option_return is passed via parameter.option, then this instead stores the child process id (PID).
- *   This is should be of (int *) except when fl_execute_parameter_option_return this should instead be (pid_t *).
+ *   When FL_execute_parameter_option_return_d is passed via parameter.option, then this instead stores the child process id (PID).
+ *   This is should be of (int *) except when FL_execute_parameter_option_return_d this should instead be (pid_t *).
  *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
  *   F_child on success and this is the child thread.
- *   F_parent on success and this is the parent thread (only happens when fl_execute_parameter_option_return is passed).
+ *   F_parent on success and this is the parent thread (only happens when FL_execute_parameter_option_return_d is passed).
  *
  *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
  *   F_control_group (with error bit) on failure to set control group in the child (only the parent process returns this).

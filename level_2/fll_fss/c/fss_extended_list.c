@@ -21,10 +21,10 @@ extern "C" {
 
     do {
       if (objects->used == objects->size) {
-        macro_f_fss_objects_t_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
+        macro_f_fss_objects_t_resize(status2, (*objects), objects->used + F_fss_default_allocation_step_d);
         if (F_status_is_error(status)) return status;
 
-        macro_f_fss_contents_t_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
+        macro_f_fss_contents_t_resize(status2, (*contents), contents->used + F_fss_default_allocation_step_d);
         if (F_status_is_error(status)) return status;
       }
 
@@ -36,7 +36,7 @@ extern "C" {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
             ++objects->used;
 
-            macro_f_fss_content_t_increase(status2, f_fss_default_allocation_step_small, contents->array[contents->used])
+            macro_f_fss_content_t_increase(status2, F_fss_default_allocation_step_small_d, contents->array[contents->used])
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;
@@ -71,7 +71,7 @@ extern "C" {
         else if (status == FL_fss_found_object_content_not) {
           found_data = F_true;
 
-          macro_f_fss_content_t_increase(status2, f_fss_default_allocation_step_small, contents->array[contents->used])
+          macro_f_fss_content_t_increase(status2, F_fss_default_allocation_step_small_d, contents->array[contents->used])
           if (F_status_is_error(status2)) return status2;
 
           break;
@@ -121,7 +121,7 @@ extern "C" {
       ++objects->used;
       ++contents->used;
 
-    } while (range->start < f_string_t_size);
+    } while (range->start < F_string_t_size_d);
 
     return F_status_is_error(F_number_overflow);
   }

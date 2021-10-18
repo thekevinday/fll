@@ -49,30 +49,32 @@
 extern "C" {
 #endif
 
-#ifndef _di_byte_dump_version_
-  #define byte_dump_major_version f_string_ascii_0
-  #define byte_dump_minor_version f_string_ascii_5
-  #define byte_dump_micro_version f_string_ascii_6
+#ifndef _di_byte_dump_program_version_
+  #define byte_dump_program_version_major_s F_string_ascii_0_s
+  #define byte_dump_program_version_minor_s F_string_ascii_5_s
+  #define byte_dump_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef byte_dump_nano_version_prefix
-    #define byte_dump_nano_version_prefix
+  #ifndef byte_dump_program_version_nano_prefix_s
+    #define byte_dump_program_version_nano_prefix_s
   #endif
 
-  #ifndef byte_dump_nano_version
-    #define byte_dump_nano_version
+  #ifndef byte_dump_program_version_nano_s
+    #define byte_dump_program_version_nano_s
   #endif
 
-  #define byte_dump_version byte_dump_major_version f_string_ascii_period byte_dump_minor_version f_string_ascii_period byte_dump_micro_version byte_dump_nano_version_prefix byte_dump_nano_version
-#endif // _di_byte_dump_version_
+  #define byte_dump_version_s byte_dump_program_version_major_s F_string_ascii_period_s byte_dump_program_version_minor_s F_string_ascii_period_s byte_dump_program_version_micro_s byte_dump_program_version_nano_prefix_s byte_dump_program_version_nano_s
+#endif // _di_byte_dump_program_version_
 
-#ifndef _di_byte_dump_name_
-  #define byte_dump_name      "byte_dump"
-  #define byte_dump_name_long "Byte Dump"
-#endif // _di_byte_dump_name_
+#ifndef _di_byte_dump_program_name_
+  #define byte_dump_program_name_s      "byte_dump"
+  #define byte_dump_program_name_long_s "Byte Dump"
+#endif // _di_byte_dump_program_name_
 
+/**
+ * Set to at least 4 to provide a UTF-8 friendly allocation step.
+ */
 #ifndef _di_byte_dump_default_allocation_step_
-  // Set to at least 4 to provide a UTF-8 friendly allocation step.
-  #define byte_dump_default_allocation_step 4
+  #define byte_dump_default_allocation_step_d 4
 #endif // _di_byte_dump_default_allocation_step_
 
 #ifndef _di_byte_dump_defines_
@@ -90,77 +92,77 @@ extern "C" {
     byte_dump_presentation_classic,
   };
 
-  #define byte_dump_sequence_acknowledge               "␆"
-  #define byte_dump_sequence_acknowledge_negative      "␕"
-  #define byte_dump_sequence_backspace                 "␈"
-  #define byte_dump_sequence_bell                      "␇"
-  #define byte_dump_sequence_cancel                    "␘"
-  #define byte_dump_sequence_carriage_return           "␍"
-  #define byte_dump_sequence_data_link_escape          "␐"
-  #define byte_dump_sequence_delete                    "␡"
-  #define byte_dump_sequence_device_control_1          "␑"
-  #define byte_dump_sequence_device_control_2          "␒"
-  #define byte_dump_sequence_device_control_3          "␓"
-  #define byte_dump_sequence_device_control_4          "␔"
-  #define byte_dump_sequence_end_of_enquiry            "␅"
-  #define byte_dump_sequence_end_of_medium             "␙"
-  #define byte_dump_sequence_end_of_text               "␃"
-  #define byte_dump_sequence_end_of_transmission       "␄"
-  #define byte_dump_sequence_end_of_transmission_block "␗"
-  #define byte_dump_sequence_escape                    "␛"
-  #define byte_dump_sequence_file_separator            "␜"
-  #define byte_dump_sequence_form_feed                 "␌"
-  #define byte_dump_sequence_group_separator           "␝"
-  #define byte_dump_sequence_line_feed                 "␊"
-  #define byte_dump_sequence_new_line                  "␤"
-  #define byte_dump_sequence_null                      "␀"
-  #define byte_dump_sequence_record_separator          "␞"
-  #define byte_dump_sequence_shift_in                  "␏"
-  #define byte_dump_sequence_shift_out                 "␎"
-  #define byte_dump_sequence_space                     "␠"
-  #define byte_dump_sequence_start_of_header           "␁"
-  #define byte_dump_sequence_start_of_text             "␂"
-  #define byte_dump_sequence_substitute                "␚"
-  #define byte_dump_sequence_synchronous_idle          "␖"
-  #define byte_dump_sequence_tab                       "␉"
-  #define byte_dump_sequence_tab_vertical              "␋"
-  #define byte_dump_sequence_unit_separator            "␟"
+  #define byte_dump_sequence_acknowledge_s               "␆"
+  #define byte_dump_sequence_acknowledge_negative_s      "␕"
+  #define byte_dump_sequence_backspace_s                 "␈"
+  #define byte_dump_sequence_bell_s                      "␇"
+  #define byte_dump_sequence_cancel_s                    "␘"
+  #define byte_dump_sequence_carriage_return_s           "␍"
+  #define byte_dump_sequence_data_link_escape_s          "␐"
+  #define byte_dump_sequence_delete_s                    "␡"
+  #define byte_dump_sequence_device_control_1_s          "␑"
+  #define byte_dump_sequence_device_control_2_s          "␒"
+  #define byte_dump_sequence_device_control_3_s          "␓"
+  #define byte_dump_sequence_device_control_4_s          "␔"
+  #define byte_dump_sequence_end_of_enquiry_s            "␅"
+  #define byte_dump_sequence_end_of_medium_s             "␙"
+  #define byte_dump_sequence_end_of_text_s               "␃"
+  #define byte_dump_sequence_end_of_transmission_s       "␄"
+  #define byte_dump_sequence_end_of_transmission_block_s "␗"
+  #define byte_dump_sequence_escape_s                    "␛"
+  #define byte_dump_sequence_file_separator_s            "␜"
+  #define byte_dump_sequence_form_feed_s                 "␌"
+  #define byte_dump_sequence_group_separator_s           "␝"
+  #define byte_dump_sequence_line_feed_s                 "␊"
+  #define byte_dump_sequence_new_line_s                  "␤"
+  #define byte_dump_sequence_null_s                      "␀"
+  #define byte_dump_sequence_record_separator_s          "␞"
+  #define byte_dump_sequence_shift_in_s                  "␏"
+  #define byte_dump_sequence_shift_out_s                 "␎"
+  #define byte_dump_sequence_space_s                     "␠"
+  #define byte_dump_sequence_start_of_header_s           "␁"
+  #define byte_dump_sequence_start_of_text_s             "␂"
+  #define byte_dump_sequence_substitute_s                "␚"
+  #define byte_dump_sequence_synchronous_idle_s          "␖"
+  #define byte_dump_sequence_tab_s                       "␉"
+  #define byte_dump_sequence_tab_vertical_s              "␋"
+  #define byte_dump_sequence_unit_separator_s            "␟"
 
-  #define byte_dump_character_wall        "|"
-  #define byte_dump_character_placeholder "␣" // other likely choices: (substitute form 1: '␚', substitute form 2: '␦').
-  #define byte_dump_character_incomplete  "�"
-  #define byte_dump_character_unused      "�"
+  #define byte_dump_character_wall_s        "|"
+  #define byte_dump_character_placeholder_s "␣" // other likely choices: (substitute form 1: '␚', substitute form 2: '␦').
+  #define byte_dump_character_incomplete_s  "�"
+  #define byte_dump_character_unused_s      "�"
 
-  #define byte_dump_short_binary      "b"
-  #define byte_dump_short_decimal     "d"
-  #define byte_dump_short_duodecimal  "D"
-  #define byte_dump_short_hexidecimal "x"
-  #define byte_dump_short_octal       "o"
-  #define byte_dump_short_unicode     "U"
+  #define byte_dump_short_binary_s      "b"
+  #define byte_dump_short_decimal_s     "d"
+  #define byte_dump_short_duodecimal_s  "D"
+  #define byte_dump_short_hexidecimal_s "x"
+  #define byte_dump_short_octal_s       "o"
+  #define byte_dump_short_unicode_s     "U"
 
-  #define byte_dump_short_first       "f"
-  #define byte_dump_short_last        "l"
-  #define byte_dump_short_text        "t"
-  #define byte_dump_short_width       "w"
-  #define byte_dump_short_placeholder "p"
+  #define byte_dump_short_first_s       "f"
+  #define byte_dump_short_last_s        "l"
+  #define byte_dump_short_text_s        "t"
+  #define byte_dump_short_width_s       "w"
+  #define byte_dump_short_placeholder_s "p"
 
-  #define byte_dump_long_binary      "binary"
-  #define byte_dump_long_decimal     "decimal"
-  #define byte_dump_long_duodecimal  "duodecimal"
-  #define byte_dump_long_hexidecimal "hexidecimal"
-  #define byte_dump_long_octal       "octal"
-  #define byte_dump_long_unicode     "unicode"
+  #define byte_dump_long_binary_s      "binary"
+  #define byte_dump_long_decimal_s     "decimal"
+  #define byte_dump_long_duodecimal_s  "duodecimal"
+  #define byte_dump_long_hexidecimal_s "hexidecimal"
+  #define byte_dump_long_octal_s       "octal"
+  #define byte_dump_long_unicode_s     "unicode"
 
-  #define byte_dump_long_first "first" // first offset byte size.
-  #define byte_dump_long_last  "last"  // last offset byte size.
-  #define byte_dump_long_width "width" // number of characters to display per row.
+  #define byte_dump_long_first_s "first" // first offset byte size.
+  #define byte_dump_long_last_s  "last"  // last offset byte size.
+  #define byte_dump_long_width_s "width" // number of characters to display per row.
 
-  #define byte_dump_long_text        "text"        // display text
-  #define byte_dump_long_placeholder "placeholder" // display (colored) placeholders to signify codes that are UTF-8 fragments.
+  #define byte_dump_long_text_s        "text"        // display text
+  #define byte_dump_long_placeholder_s "placeholder" // display (colored) placeholders to signify codes that are UTF-8 fragments.
 
-  #define byte_dump_long_normal  "normal"  // use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
-  #define byte_dump_long_simple  "simple"  // use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
-  #define byte_dump_long_classic "classic" // use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
+  #define byte_dump_long_normal_s  "normal"  // use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
+  #define byte_dump_long_simple_s  "simple"  // use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
+  #define byte_dump_long_classic_s "classic" // use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
 
   enum {
     byte_dump_parameter_help,
@@ -203,28 +205,28 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(byte_dump_short_binary, byte_dump_long_binary, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_decimal, byte_dump_long_decimal, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_duodecimal, byte_dump_long_duodecimal, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_octal, byte_dump_long_octal, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_unicode, byte_dump_long_unicode, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_first, byte_dump_long_first, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_last, byte_dump_long_last, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_width, byte_dump_long_width, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_text, byte_dump_long_text, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_placeholder, byte_dump_long_placeholder, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, byte_dump_long_normal, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, byte_dump_long_simple, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, byte_dump_long_classic, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_binary_s, byte_dump_long_binary_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_decimal_s, byte_dump_long_decimal_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_duodecimal_s, byte_dump_long_duodecimal_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_hexidecimal_s, byte_dump_long_hexidecimal_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_octal_s, byte_dump_long_octal_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_unicode_s, byte_dump_long_unicode_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_first_s, byte_dump_long_first_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_last_s, byte_dump_long_last_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_width_s, byte_dump_long_width_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_text_s, byte_dump_long_text_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_placeholder_s, byte_dump_long_placeholder_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, byte_dump_long_normal_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, byte_dump_long_simple_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(0, byte_dump_long_classic_s, 0, 0, f_console_type_normal), \
     }
 
-  #define byte_dump_total_parameters 23
+  #define byte_dump_total_parameters_d 23
 #endif // _di_byte_dump_defines_
 
 #ifndef _di_byte_dump_main_t_
   typedef struct {
-    f_console_parameter_t parameters[byte_dump_total_parameters];
+    f_console_parameter_t parameters[byte_dump_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

@@ -53,7 +53,7 @@ extern "C" {
   } fl_print_t;
 
   #define fl_print_t_initialize { \
-    macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
+    macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d), \
     f_console_verbosity_normal, \
     0, \
     0, \
@@ -63,12 +63,12 @@ extern "C" {
   }
 
   #define macro_fl_print_t_initialize(to, verbosity, prefix, suffix, context, notable, set) { to, verbosity, prefix, suffix, context, notable, set }
-  #define macro_fl_print_t_initialize_debug() macro_fl_print_t_initialize(macro_f_file_t_initialize2(f_type_debug, f_type_descriptor_debug, f_file_flag_write_only), f_console_verbosity_normal, fl_print_debug_s, 0, f_color_set_t_initialize, f_color_set_t_initialize, 0)
-  #define macro_fl_print_t_initialize_debug2(suffix, set) macro_fl_print_t_initialize(macro_f_file_t_initialize2(f_type_debug, f_type_descriptor_debug, f_file_flag_write_only), f_console_verbosity_normal, fl_print_debug_s, suffix, f_color_set_t_initialize, f_color_set_t_initialize, set)
-  #define macro_fl_print_t_initialize_error() macro_fl_print_t_initialize(macro_f_file_t_initialize2(f_type_error, f_type_descriptor_error, f_file_flag_write_only), f_console_verbosity_normal, fl_print_error_s, 0, f_color_set_t_initialize, f_color_set_t_initialize, 0)
-  #define macro_fl_print_t_initialize_error2(suffix, set) macro_fl_print_t_initialize(macro_f_file_t_initialize2(f_type_error, f_type_descriptor_error, f_file_flag_write_only), f_console_verbosity_normal, fl_print_error_s, suffix, f_color_set_t_initialize, f_color_set_t_initialize, set)
-  #define macro_fl_print_t_initialize_warning() macro_fl_print_t_initialize(macro_f_file_t_initialize2(f_type_warning, f_type_descriptor_warning, f_file_flag_write_only), f_console_verbosity_normal, fl_print_warning_s, 0, f_color_set_t_initialize, f_color_set_t_initialize, 0)
-  #define macro_fl_print_t_initialize_warning2(suffix, set) macro_fl_print_t_initialize(macro_f_file_t_initialize2(f_type_warning, f_type_descriptor_warning, f_file_flag_write_only), f_console_verbosity_normal, fl_print_warning_s, suffix, f_color_set_t_initialize, f_color_set_t_initialize, set)
+  #define macro_fl_print_t_initialize_debug() macro_fl_print_t_initialize(macro_f_file_t_initialize2(F_type_debug_d, F_type_descriptor_debug_d, F_file_flag_write_only_d), f_console_verbosity_normal, fl_print_debug_s, 0, f_color_set_t_initialize, f_color_set_t_initialize, 0)
+  #define macro_fl_print_t_initialize_debug2(suffix, set) macro_fl_print_t_initialize(macro_f_file_t_initialize2(F_type_debug_d, F_type_descriptor_debug_d, F_file_flag_write_only_d), f_console_verbosity_normal, fl_print_debug_s, suffix, f_color_set_t_initialize, f_color_set_t_initialize, set)
+  #define macro_fl_print_t_initialize_error() macro_fl_print_t_initialize(macro_f_file_t_initialize2(F_type_error_d, F_type_descriptor_error_d, F_file_flag_write_only_d), f_console_verbosity_normal, fl_print_error_s, 0, f_color_set_t_initialize, f_color_set_t_initialize, 0)
+  #define macro_fl_print_t_initialize_error2(suffix, set) macro_fl_print_t_initialize(macro_f_file_t_initialize2(F_type_error_d, F_type_descriptor_error_d, F_file_flag_write_only_d), f_console_verbosity_normal, fl_print_error_s, suffix, f_color_set_t_initialize, f_color_set_t_initialize, set)
+  #define macro_fl_print_t_initialize_warning() macro_fl_print_t_initialize(macro_f_file_t_initialize2(F_type_warning_d, F_type_descriptor_warning_d, F_file_flag_write_only_d), f_console_verbosity_normal, fl_print_warning_s, 0, f_color_set_t_initialize, f_color_set_t_initialize, 0)
+  #define macro_fl_print_t_initialize_warning2(suffix, set) macro_fl_print_t_initialize(macro_f_file_t_initialize2(F_type_warning_d, F_type_descriptor_warning_d, F_file_flag_write_only_d), f_console_verbosity_normal, fl_print_warning_s, suffix, f_color_set_t_initialize, f_color_set_t_initialize, set)
 #endif // _di_fl_print_t_
 
 #ifdef __cplusplus

@@ -18,329 +18,329 @@ extern "C" {
  * These are generally the names to match, representing some action or setting.
  */
 #ifndef _di_controller_string_s_
-  #define controller_string_action        "action"
-  #define controller_string_actions       "actions"
-  #define controller_string_affinity      "affinity"
-  #define controller_string_as            "as"
-  #define controller_string_asynchronous  "asynchronous"
-  #define controller_string_bash          "bash"
-  #define controller_string_batch         "batch"
-  #define controller_string_capability    "capability"
-  #define controller_string_create        "create"
-  #define controller_string_command       "command"
-  #define controller_string_consider      "consider"
-  #define controller_string_control       "control"
-  #define controller_string_control_group "control_group"
-  #define controller_string_cpu           "cpu"
-  #define controller_string_core          "core"
-  #define controller_string_data          "data"
-  #define controller_string_deadline      "deadline"
-  #define controller_string_default       "default"
-  #define controller_string_define        "define"
-  #define controller_string_delay         "delay"
-  #define controller_string_disable       "disable"
-  #define controller_string_entry         "entry"
-  #define controller_string_entries       "entries"
-  #define controller_string_environment   "environment"
-  #define controller_string_execute       "execute"
-  #define controller_string_existing      "existing"
-  #define controller_string_exit          "exit"
-  #define controller_string_exits         "exits"
-  #define controller_string_fail          "fail"
-  #define controller_string_failsafe      "failsafe"
-  #define controller_string_failure       "failure"
-  #define controller_string_fifo          "fifo"
-  #define controller_string_freeze        "freeze"
-  #define controller_string_fsize         "fsize"
-  #define controller_string_full_path     "full_path"
-  #define controller_string_group         "group"
-  #define controller_string_groups        "groups"
-  #define controller_string_how           "how"
-  #define controller_string_idle          "idle"
-  #define controller_string_item          "item"
-  #define controller_string_init          "init"
-  #define controller_string_kill          "kill"
-  #define controller_string_limit         "limit"
-  #define controller_string_locks         "locks"
-  #define controller_string_main          "main"
-  #define controller_string_max           "max"
-  #define controller_string_memlock       "memlock"
-  #define controller_string_method        "method"
-  #define controller_string_mode          "mode"
-  #define controller_string_msgqueue      "msgqueue"
-  #define controller_string_name          "name"
-  #define controller_string_need          "need"
-  #define controller_string_new           "new"
-  #define controller_string_nice          "nice"
-  #define controller_string_no            "no"
-  #define controller_string_nofile        "nofile"
-  #define controller_string_normal        "normal"
-  #define controller_string_nproc         "nproc"
-  #define controller_string_on            "on"
-  #define controller_string_optional      "optional"
-  #define controller_string_other         "other"
-  #define controller_string_parameter     "parameter"
-  #define controller_string_parameters    "parameters"
-  #define controller_string_path          "path"
-  #define controller_string_pause         "pause"
-  #define controller_string_pid           "pid"
-  #define controller_string_pid_file      "pid_file"
-  #define controller_string_processor     "processor"
-  #define controller_string_program       "program"
-  #define controller_string_ready         "ready"
-  #define controller_string_reload        "reload"
-  #define controller_string_require       "require"
-  #define controller_string_required      "required"
-  #define controller_string_rerun         "rerun"
-  #define controller_string_reset         "reset"
-  #define controller_string_restart       "restart"
-  #define controller_string_resume        "resume"
-  #define controller_string_round_robin   "round_robin"
-  #define controller_string_rss           "rss"
-  #define controller_string_rtprio        "rtprio"
-  #define controller_string_rttime        "rttime"
-  #define controller_string_rule          "rule"
-  #define controller_string_rules         "rules"
-  #define controller_string_scheduler     "scheduler"
-  #define controller_string_script        "script"
-  #define controller_string_service       "service"
-  #define controller_string_setting       "setting"
-  #define controller_string_sigpending    "sigpending"
-  #define controller_string_show          "show"
-  #define controller_string_stack         "stack"
-  #define controller_string_start         "start"
-  #define controller_string_stop          "stop"
-  #define controller_string_succeed       "succeed"
-  #define controller_string_success       "success"
-  #define controller_string_synchronous   "synchronous"
-  #define controller_string_thaw          "thaw"
-  #define controller_string_timeout       "timeout"
-  #define controller_string_type          "type"
-  #define controller_string_use           "use"
-  #define controller_string_user          "user"
-  #define controller_string_utility       "utility"
-  #define controller_string_value         "value"
-  #define controller_string_wait          "wait"
-  #define controller_string_want          "want"
-  #define controller_string_wish          "wish"
-  #define controller_string_with          "with"
-  #define controller_string_yes           "yes"
+  #define CONTROLLER_action_s        "action"
+  #define CONTROLLER_actions_s       "actions"
+  #define CONTROLLER_affinity_s      "affinity"
+  #define CONTROLLER_as_s            "as"
+  #define CONTROLLER_asynchronous_s  "asynchronous"
+  #define CONTROLLER_bash_s          "bash"
+  #define CONTROLLER_batch_s         "batch"
+  #define CONTROLLER_capability_s    "capability"
+  #define CONTROLLER_create_s        "create"
+  #define CONTROLLER_command_s       "command"
+  #define CONTROLLER_consider_s      "consider"
+  #define CONTROLLER_control_s       "control"
+  #define CONTROLLER_control_group_s "control_group"
+  #define CONTROLLER_cpu_s           "cpu"
+  #define CONTROLLER_core_s          "core"
+  #define CONTROLLER_data_s          "data"
+  #define CONTROLLER_deadline_s      "deadline"
+  #define CONTROLLER_default_s       "default"
+  #define CONTROLLER_define_s        "define"
+  #define CONTROLLER_delay_s         "delay"
+  #define CONTROLLER_disable_s       "disable"
+  #define CONTROLLER_entry_s         "entry"
+  #define CONTROLLER_entries_s       "entries"
+  #define CONTROLLER_environment_s   "environment"
+  #define CONTROLLER_execute_s       "execute"
+  #define CONTROLLER_existing_s      "existing"
+  #define CONTROLLER_exit_s          "exit"
+  #define CONTROLLER_exits_s         "exits"
+  #define CONTROLLER_fail_s          "fail"
+  #define CONTROLLER_failsafe_s      "failsafe"
+  #define CONTROLLER_failure_s       "failure"
+  #define CONTROLLER_fifo_s          "fifo"
+  #define CONTROLLER_freeze_s        "freeze"
+  #define CONTROLLER_fsize_s         "fsize"
+  #define CONTROLLER_full_path_s     "full_path"
+  #define CONTROLLER_group_s         "group"
+  #define CONTROLLER_groups_s        "groups"
+  #define CONTROLLER_how_s           "how"
+  #define CONTROLLER_idle_s          "idle"
+  #define CONTROLLER_item_s          "item"
+  #define CONTROLLER_init_s          "init"
+  #define CONTROLLER_kill_s          "kill"
+  #define CONTROLLER_limit_s         "limit"
+  #define CONTROLLER_locks_s         "locks"
+  #define CONTROLLER_main_s          "main"
+  #define CONTROLLER_max_s           "max"
+  #define CONTROLLER_memlock_s       "memlock"
+  #define CONTROLLER_method_s        "method"
+  #define CONTROLLER_mode_s          "mode"
+  #define CONTROLLER_msgqueue_s      "msgqueue"
+  #define CONTROLLER_name_s          "name"
+  #define CONTROLLER_need_s          "need"
+  #define CONTROLLER_new_s           "new"
+  #define CONTROLLER_nice_s          "nice"
+  #define CONTROLLER_no_s            "no"
+  #define CONTROLLER_nofile_s        "nofile"
+  #define CONTROLLER_normal_s        "normal"
+  #define CONTROLLER_nproc_s         "nproc"
+  #define CONTROLLER_on_s            "on"
+  #define CONTROLLER_optional_s      "optional"
+  #define CONTROLLER_other_s         "other"
+  #define CONTROLLER_parameter_s     "parameter"
+  #define CONTROLLER_parameters_s    "parameters"
+  #define CONTROLLER_path_s          "path"
+  #define CONTROLLER_pause_s         "pause"
+  #define CONTROLLER_pid_s           "pid"
+  #define CONTROLLER_pid_file_s      "pid_file"
+  #define CONTROLLER_processor_s     "processor"
+  #define CONTROLLER_program_s       "program"
+  #define CONTROLLER_ready_s         "ready"
+  #define CONTROLLER_reload_s        "reload"
+  #define CONTROLLER_require_s       "require"
+  #define CONTROLLER_required_s      "required"
+  #define CONTROLLER_rerun_s         "rerun"
+  #define CONTROLLER_reset_s         "reset"
+  #define CONTROLLER_restart_s       "restart"
+  #define CONTROLLER_resume_s        "resume"
+  #define CONTROLLER_round_robin_s   "round_robin"
+  #define CONTROLLER_rss_s           "rss"
+  #define CONTROLLER_rtprio_s        "rtprio"
+  #define CONTROLLER_rttime_s        "rttime"
+  #define CONTROLLER_rule_s          "rule"
+  #define CONTROLLER_rules_s         "rules"
+  #define CONTROLLER_scheduler_s     "scheduler"
+  #define CONTROLLER_script_s        "script"
+  #define CONTROLLER_service_s       "service"
+  #define CONTROLLER_setting_s       "setting"
+  #define CONTROLLER_sigpending_s    "sigpending"
+  #define CONTROLLER_show_s          "show"
+  #define CONTROLLER_stack_s         "stack"
+  #define CONTROLLER_start_s         "start"
+  #define CONTROLLER_stop_s          "stop"
+  #define CONTROLLER_succeed_s       "succeed"
+  #define CONTROLLER_success_s       "success"
+  #define CONTROLLER_synchronous_s   "synchronous"
+  #define CONTROLLER_thaw_s          "thaw"
+  #define CONTROLLER_timeout_s       "timeout"
+  #define CONTROLLER_type_s          "type"
+  #define CONTROLLER_use_s           "use"
+  #define CONTROLLER_user_s          "user"
+  #define CONTROLLER_utility_s       "utility"
+  #define CONTROLLER_value_s         "value"
+  #define CONTROLLER_wait_s          "wait"
+  #define CONTROLLER_want_s          "want"
+  #define CONTROLLER_wish_s          "wish"
+  #define CONTROLLER_with_s          "with"
+  #define CONTROLLER_yes_s           "yes"
 
-  #define controller_string_action_length        6
-  #define controller_string_actions_length       7
-  #define controller_string_affinity_length      8
-  #define controller_string_as_length            2
-  #define controller_string_asynchronous_length  12
-  #define controller_string_bash_length          4
-  #define controller_string_batch_length         5
-  #define controller_string_capability_length    10
-  #define controller_string_create_length        6
-  #define controller_string_command_length       7
-  #define controller_string_consider_length      8
-  #define controller_string_control_length       7
-  #define controller_string_control_group_length 13
-  #define controller_string_core_length          4
-  #define controller_string_cpu_length           3
-  #define controller_string_data_length          4
-  #define controller_string_deadline_length      8
-  #define controller_string_default_length       7
-  #define controller_string_define_length        6
-  #define controller_string_delay_length         5
-  #define controller_string_disable_length       7
-  #define controller_string_entry_length         5
-  #define controller_string_entries_length       7
-  #define controller_string_environment_length   11
-  #define controller_string_existing_length      8
-  #define controller_string_execute_length       7
-  #define controller_string_exit_length          4
-  #define controller_string_exits_length         5
-  #define controller_string_fail_length          4
-  #define controller_string_failure_length       7
-  #define controller_string_failsafe_length      8
-  #define controller_string_fifo_length          4
-  #define controller_string_freeze_length        6
-  #define controller_string_fsize_length         5
-  #define controller_string_full_path_length     9
-  #define controller_string_group_length         5
-  #define controller_string_groups_length        6
-  #define controller_string_how_length           3
-  #define controller_string_idle_length          4
-  #define controller_string_init_length          4
-  #define controller_string_item_length          4
-  #define controller_string_kill_length          4
-  #define controller_string_limit_length         5
-  #define controller_string_locks_length         5
-  #define controller_string_main_length          4
-  #define controller_string_max_length           3
-  #define controller_string_memlock_length       7
-  #define controller_string_method_length        6
-  #define controller_string_mode_length          4
-  #define controller_string_msgqueue_length      8
-  #define controller_string_name_length          4
-  #define controller_string_need_length          4
-  #define controller_string_new_length           3
-  #define controller_string_nice_length          4
-  #define controller_string_no_length            2
-  #define controller_string_nofile_length        6
-  #define controller_string_normal_length        6
-  #define controller_string_nproc_length         5
-  #define controller_string_on_length            2
-  #define controller_string_optional_length      8
-  #define controller_string_other_length         5
-  #define controller_string_parameter_length     9
-  #define controller_string_parameters_length    10
-  #define controller_string_path_length          4
-  #define controller_string_pause_length         5
-  #define controller_string_pid_length           3
-  #define controller_string_pid_file_length      8
-  #define controller_string_processor_length     9
-  #define controller_string_program_length       7
-  #define controller_string_ready_length         5
-  #define controller_string_reload_length        6
-  #define controller_string_require_length       7
-  #define controller_string_required_length      8
-  #define controller_string_rerun_length         5
-  #define controller_string_reset_length         5
-  #define controller_string_restart_length       7
-  #define controller_string_resume_length        6
-  #define controller_string_round_robin_length   11
-  #define controller_string_rss_length           3
-  #define controller_string_rtprio_length        6
-  #define controller_string_rttime_length        6
-  #define controller_string_rule_length          4
-  #define controller_string_rules_length         5
-  #define controller_string_scheduler_length     9
-  #define controller_string_script_length        6
-  #define controller_string_service_length       7
-  #define controller_string_setting_length       7
-  #define controller_string_show_length          4
-  #define controller_string_sigpending_length    10
-  #define controller_string_stack_length         5
-  #define controller_string_start_length         5
-  #define controller_string_stop_length          4
-  #define controller_string_succeed_length       7
-  #define controller_string_success_length       7
-  #define controller_string_synchronous_length   11
-  #define controller_string_thaw_length          4
-  #define controller_string_timeout_length       7
-  #define controller_string_type_length          4
-  #define controller_string_use_length           3
-  #define controller_string_user_length          4
-  #define controller_string_utility_length       7
-  #define controller_string_value_length         5
-  #define controller_string_wait_length          4
-  #define controller_string_want_length          4
-  #define controller_string_wish_length          4
-  #define controller_string_with_length          4
-  #define controller_string_yes_length           3
+  #define controller_action_s_length        6
+  #define controller_actions_s_length       7
+  #define controller_affinity_s_length      8
+  #define controller_as_s_length            2
+  #define controller_asynchronous_s_length  12
+  #define controller_bash_s_length          4
+  #define controller_batch_s_length         5
+  #define controller_capability_s_length    10
+  #define controller_create_s_length        6
+  #define controller_command_s_length       7
+  #define controller_consider_s_length      8
+  #define controller_control_s_length       7
+  #define controller_control_group_s_length 13
+  #define controller_core_s_length          4
+  #define controller_cpu_s_length           3
+  #define controller_data_s_length          4
+  #define controller_deadline_s_length      8
+  #define controller_default_s_length       7
+  #define controller_define_s_length        6
+  #define controller_delay_s_length         5
+  #define controller_disable_s_length       7
+  #define controller_entry_s_length         5
+  #define controller_entries_s_length       7
+  #define controller_environment_s_length   11
+  #define controller_existing_s_length      8
+  #define controller_execute_s_length       7
+  #define controller_exit_s_length          4
+  #define controller_exits_s_length         5
+  #define controller_fail_s_length          4
+  #define controller_failure_s_length       7
+  #define controller_failsafe_s_length      8
+  #define controller_fifo_s_length          4
+  #define controller_freeze_s_length        6
+  #define controller_fsize_s_length         5
+  #define controller_full_path_s_length     9
+  #define controller_group_s_length         5
+  #define controller_groups_s_length        6
+  #define controller_how_s_length           3
+  #define controller_idle_s_length          4
+  #define controller_init_s_length          4
+  #define controller_item_s_length          4
+  #define controller_kill_s_length          4
+  #define controller_limit_s_length         5
+  #define controller_locks_s_length         5
+  #define controller_main_s_length          4
+  #define controller_max_s_length           3
+  #define controller_memlock_s_length       7
+  #define controller_method_s_length        6
+  #define controller_mode_s_length          4
+  #define controller_msgqueue_s_length      8
+  #define controller_name_s_length          4
+  #define controller_need_s_length          4
+  #define controller_new_s_length           3
+  #define controller_nice_s_length          4
+  #define controller_no_s_length            2
+  #define controller_nofile_s_length        6
+  #define controller_normal_s_length        6
+  #define controller_nproc_s_length         5
+  #define controller_on_s_length            2
+  #define controller_optional_s_length      8
+  #define controller_other_s_length         5
+  #define controller_parameter_s_length     9
+  #define controller_parameters_s_length    10
+  #define controller_path_s_length          4
+  #define controller_pause_s_length         5
+  #define controller_pid_s_length           3
+  #define controller_pid_file_s_length      8
+  #define controller_processor_s_length     9
+  #define controller_program_s_length       7
+  #define controller_ready_s_length         5
+  #define controller_reload_s_length        6
+  #define controller_require_s_length       7
+  #define controller_required_s_length      8
+  #define controller_rerun_s_length         5
+  #define controller_reset_s_length         5
+  #define controller_restart_s_length       7
+  #define controller_resume_s_length        6
+  #define controller_round_robin_s_length   11
+  #define controller_rss_s_length           3
+  #define controller_rtprio_s_length        6
+  #define controller_rttime_s_length        6
+  #define controller_rule_s_length          4
+  #define controller_rules_s_length         5
+  #define controller_scheduler_s_length     9
+  #define controller_script_s_length        6
+  #define controller_service_s_length       7
+  #define controller_setting_s_length       7
+  #define controller_show_s_length          4
+  #define controller_sigpending_s_length    10
+  #define controller_stack_s_length         5
+  #define controller_start_s_length         5
+  #define controller_stop_s_length          4
+  #define controller_succeed_s_length       7
+  #define controller_success_s_length       7
+  #define controller_synchronous_s_length   11
+  #define controller_thaw_s_length          4
+  #define controller_timeout_s_length       7
+  #define controller_type_s_length          4
+  #define controller_use_s_length           3
+  #define controller_user_s_length          4
+  #define controller_utility_s_length       7
+  #define controller_value_s_length         5
+  #define controller_wait_s_length          4
+  #define controller_want_s_length          4
+  #define controller_wish_s_length          4
+  #define controller_with_s_length          4
+  #define controller_yes_s_length           3
 
-  extern const f_string_t controller_string_action_s;
-  extern const f_string_t controller_string_actions_s;
-  extern const f_string_t controller_string_affinity_s;
-  extern const f_string_t controller_string_as_s;
-  extern const f_string_t controller_string_asynchronous_s;
-  extern const f_string_t controller_string_bash_s;
-  extern const f_string_t controller_string_batch_s;
-  extern const f_string_t controller_string_capability_s;
-  extern const f_string_t controller_string_create_s;
-  extern const f_string_t controller_string_command_s;
-  extern const f_string_t controller_string_consider_s;
-  extern const f_string_t controller_string_control_s;
-  extern const f_string_t controller_string_control_group_s;
-  extern const f_string_t controller_string_core_s;
-  extern const f_string_t controller_string_cpu_s;
-  extern const f_string_t controller_string_data_s;
-  extern const f_string_t controller_string_deadline_s;
-  extern const f_string_t controller_string_default_s;
-  extern const f_string_t controller_string_define_s;
-  extern const f_string_t controller_string_delay_s;
-  extern const f_string_t controller_string_disable_s;
-  extern const f_string_t controller_string_entry_s;
-  extern const f_string_t controller_string_entries_s;
-  extern const f_string_t controller_string_environment_s;
-  extern const f_string_t controller_string_existing_s;
-  extern const f_string_t controller_string_execute_s;
-  extern const f_string_t controller_string_exit_s;
-  extern const f_string_t controller_string_exits_s;
-  extern const f_string_t controller_string_fail_s;
-  extern const f_string_t controller_string_failsafe_s;
-  extern const f_string_t controller_string_failure_s;
-  extern const f_string_t controller_string_fifo_s;
-  extern const f_string_t controller_string_freeze_s;
-  extern const f_string_t controller_string_fsize_s;
-  extern const f_string_t controller_string_full_path_s;
-  extern const f_string_t controller_string_group_s;
-  extern const f_string_t controller_string_groups_s;
-  extern const f_string_t controller_string_how_s;
-  extern const f_string_t controller_string_idle_s;
-  extern const f_string_t controller_string_init_s;
-  extern const f_string_t controller_string_item_s;
-  extern const f_string_t controller_string_kill_s;
-  extern const f_string_t controller_string_limit_s;
-  extern const f_string_t controller_string_locks_s;
-  extern const f_string_t controller_string_main_s;
-  extern const f_string_t controller_string_max_s;
-  extern const f_string_t controller_string_memlock_s;
-  extern const f_string_t controller_string_method_s;
-  extern const f_string_t controller_string_mode_s;
-  extern const f_string_t controller_string_msgqueue_s;
-  extern const f_string_t controller_string_name_s;
-  extern const f_string_t controller_string_need_s;
-  extern const f_string_t controller_string_new_s;
-  extern const f_string_t controller_string_nice_s;
-  extern const f_string_t controller_string_no_s;
-  extern const f_string_t controller_string_nofile_s;
-  extern const f_string_t controller_string_normal_s;
-  extern const f_string_t controller_string_nproc_s;
-  extern const f_string_t controller_string_on_s;
-  extern const f_string_t controller_string_optional_s;
-  extern const f_string_t controller_string_other_s;
-  extern const f_string_t controller_string_parameter_s;
-  extern const f_string_t controller_string_parameters_s;
-  extern const f_string_t controller_string_path_s;
-  extern const f_string_t controller_string_pause_s;
-  extern const f_string_t controller_string_pid_s;
-  extern const f_string_t controller_string_pid_file_s;
-  extern const f_string_t controller_string_processor_s;
-  extern const f_string_t controller_string_program_s;
-  extern const f_string_t controller_string_ready_s;
-  extern const f_string_t controller_string_reload_s;
-  extern const f_string_t controller_string_require_s;
-  extern const f_string_t controller_string_required_s;
-  extern const f_string_t controller_string_rerun_s;
-  extern const f_string_t controller_string_reset_s;
-  extern const f_string_t controller_string_restart_s;
-  extern const f_string_t controller_string_resume_s;
-  extern const f_string_t controller_string_round_robin_s;
-  extern const f_string_t controller_string_rss_s;
-  extern const f_string_t controller_string_rtprio_s;
-  extern const f_string_t controller_string_rttime_s;
-  extern const f_string_t controller_string_rule_s;
-  extern const f_string_t controller_string_rules_s;
-  extern const f_string_t controller_string_scheduler_s;
-  extern const f_string_t controller_string_script_s;
-  extern const f_string_t controller_string_service_s;
-  extern const f_string_t controller_string_setting_s;
-  extern const f_string_t controller_string_show_s;
-  extern const f_string_t controller_string_sigpending_s;
-  extern const f_string_t controller_string_stack_s;
-  extern const f_string_t controller_string_start_s;
-  extern const f_string_t controller_string_stop_s;
-  extern const f_string_t controller_string_succeed_s;
-  extern const f_string_t controller_string_success_s;
-  extern const f_string_t controller_string_synchronous_s;
-  extern const f_string_t controller_string_thaw_s;
-  extern const f_string_t controller_string_timeout_s;
-  extern const f_string_t controller_string_type_s;
-  extern const f_string_t controller_string_use_s;
-  extern const f_string_t controller_string_user_s;
-  extern const f_string_t controller_string_utility_s;
-  extern const f_string_t controller_string_value_s;
-  extern const f_string_t controller_string_wait_s;
-  extern const f_string_t controller_string_want_s;
-  extern const f_string_t controller_string_wish_s;
-  extern const f_string_t controller_string_with_s;
-  extern const f_string_t controller_string_yes_s;
+  extern const f_string_t controller_action_s;
+  extern const f_string_t controller_actions_s;
+  extern const f_string_t controller_affinity_s;
+  extern const f_string_t controller_as_s;
+  extern const f_string_t controller_asynchronous_s;
+  extern const f_string_t controller_bash_s;
+  extern const f_string_t controller_batch_s;
+  extern const f_string_t controller_capability_s;
+  extern const f_string_t controller_create_s;
+  extern const f_string_t controller_command_s;
+  extern const f_string_t controller_consider_s;
+  extern const f_string_t controller_control_s;
+  extern const f_string_t controller_control_group_s;
+  extern const f_string_t controller_core_s;
+  extern const f_string_t controller_cpu_s;
+  extern const f_string_t controller_data_s;
+  extern const f_string_t controller_deadline_s;
+  extern const f_string_t controller_default_s;
+  extern const f_string_t controller_define_s;
+  extern const f_string_t controller_delay_s;
+  extern const f_string_t controller_disable_s;
+  extern const f_string_t controller_entry_s;
+  extern const f_string_t controller_entries_s;
+  extern const f_string_t controller_environment_s;
+  extern const f_string_t controller_existing_s;
+  extern const f_string_t controller_execute_s;
+  extern const f_string_t controller_exit_s;
+  extern const f_string_t controller_exits_s;
+  extern const f_string_t controller_fail_s;
+  extern const f_string_t controller_failsafe_s;
+  extern const f_string_t controller_failure_s;
+  extern const f_string_t controller_fifo_s;
+  extern const f_string_t controller_freeze_s;
+  extern const f_string_t controller_fsize_s;
+  extern const f_string_t controller_full_path_s;
+  extern const f_string_t controller_group_s;
+  extern const f_string_t controller_groups_s;
+  extern const f_string_t controller_how_s;
+  extern const f_string_t controller_idle_s;
+  extern const f_string_t controller_init_s;
+  extern const f_string_t controller_item_s;
+  extern const f_string_t controller_kill_s;
+  extern const f_string_t controller_limit_s;
+  extern const f_string_t controller_locks_s;
+  extern const f_string_t controller_main_s;
+  extern const f_string_t controller_max_s;
+  extern const f_string_t controller_memlock_s;
+  extern const f_string_t controller_method_s;
+  extern const f_string_t controller_mode_s;
+  extern const f_string_t controller_msgqueue_s;
+  extern const f_string_t controller_name_s;
+  extern const f_string_t controller_need_s;
+  extern const f_string_t controller_new_s;
+  extern const f_string_t controller_nice_s;
+  extern const f_string_t controller_no_s;
+  extern const f_string_t controller_nofile_s;
+  extern const f_string_t controller_normal_s;
+  extern const f_string_t controller_nproc_s;
+  extern const f_string_t controller_on_s;
+  extern const f_string_t controller_optional_s;
+  extern const f_string_t controller_other_s;
+  extern const f_string_t controller_parameter_s;
+  extern const f_string_t controller_parameters_s;
+  extern const f_string_t controller_path_s;
+  extern const f_string_t controller_pause_s;
+  extern const f_string_t controller_pid_s;
+  extern const f_string_t controller_pid_file_s;
+  extern const f_string_t controller_processor_s;
+  extern const f_string_t controller_program_s;
+  extern const f_string_t controller_ready_s;
+  extern const f_string_t controller_reload_s;
+  extern const f_string_t controller_require_s;
+  extern const f_string_t controller_required_s;
+  extern const f_string_t controller_rerun_s;
+  extern const f_string_t controller_reset_s;
+  extern const f_string_t controller_restart_s;
+  extern const f_string_t controller_resume_s;
+  extern const f_string_t controller_round_robin_s;
+  extern const f_string_t controller_rss_s;
+  extern const f_string_t controller_rtprio_s;
+  extern const f_string_t controller_rttime_s;
+  extern const f_string_t controller_rule_s;
+  extern const f_string_t controller_rules_s;
+  extern const f_string_t controller_scheduler_s;
+  extern const f_string_t controller_script_s;
+  extern const f_string_t controller_service_s;
+  extern const f_string_t controller_setting_s;
+  extern const f_string_t controller_show_s;
+  extern const f_string_t controller_sigpending_s;
+  extern const f_string_t controller_stack_s;
+  extern const f_string_t controller_start_s;
+  extern const f_string_t controller_stop_s;
+  extern const f_string_t controller_succeed_s;
+  extern const f_string_t controller_success_s;
+  extern const f_string_t controller_synchronous_s;
+  extern const f_string_t controller_thaw_s;
+  extern const f_string_t controller_timeout_s;
+  extern const f_string_t controller_type_s;
+  extern const f_string_t controller_use_s;
+  extern const f_string_t controller_user_s;
+  extern const f_string_t controller_utility_s;
+  extern const f_string_t controller_value_s;
+  extern const f_string_t controller_wait_s;
+  extern const f_string_t controller_want_s;
+  extern const f_string_t controller_wish_s;
+  extern const f_string_t controller_with_s;
+  extern const f_string_t controller_yes_s;
 #endif // _di_controller_string_s_
 
 /**
@@ -372,15 +372,15 @@ extern "C" {
 /**
  * Provide common/generic definitions.
  *
- * The controller_common_allocation_large or controller_common_allocation_small must be at least 2 for this project.
+ * The controller_common_allocation_large_d or controller_common_allocation_small_d must be at least 2 for this project.
  *
  * controller_common_allocation_*:
  *   - large: An allocation step used for buffers that are anticipated to have large buffers.
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
  */
 #ifndef _di_controller_common_
-  #define controller_common_allocation_large 256
-  #define controller_common_allocation_small 16
+  #define controller_common_allocation_large_d 256
+  #define controller_common_allocation_small_d 16
 #endif // _di_controller_common_
 
 /**
@@ -585,10 +585,10 @@ extern "C" {
  * max_success:   The maximum number of times to "rerun" (with 0 representing "rerun" infinitely) for successful executions.
  */
 #ifndef _di_controller_rule_rerun_t_
-  #define controller_rule_rerun_is_failure       0x1
-  #define controller_rule_rerun_is_failure_reset 0x2
-  #define controller_rule_rerun_is_success       0x4
-  #define controller_rule_rerun_is_success_reset 0x8
+  #define controller_rule_rerun_is_failure_d       0x1
+  #define controller_rule_rerun_is_failure_reset_d 0x2
+  #define controller_rule_rerun_is_success_d       0x4
+  #define controller_rule_rerun_is_success_reset_d 0x8
 
   typedef struct {
     uint8_t is;
@@ -633,11 +633,11 @@ extern "C" {
  * parameters: All parameters associated with the Rule Action.
  */
 #ifndef _di_controller_rule_action_t_
-  #define controller_rule_action_method_string_extended      "FSS-0001 (Extended)"
-  #define controller_rule_action_method_string_extended_list "FSS-0003 (Extended List)"
+  #define controller_rule_action_method_string_extended_s      "FSS-0001 (Extended)"
+  #define controller_rule_action_method_string_extended_list_s "FSS-0003 (Extended List)"
 
-  #define controller_rule_action_method_string_extended_length      19
-  #define controller_rule_action_method_string_extended_list_length 24
+  #define controller_rule_action_method_string_extended_s_length      19
+  #define controller_rule_action_method_string_extended_list_s_length 24
 
   enum {
     controller_rule_action_method_extended = 1,
@@ -915,17 +915,17 @@ extern "C" {
   };
 
   // bitwise codes representing properties on controller_rule_t that have been found in the rule file.
-  #define controller_rule_has_control_group 0x1
-  #define controller_rule_has_environment   0x2
-  #define controller_rule_has_group         0x4
-  #define controller_rule_has_nice          0x8
-  #define controller_rule_has_scheduler     0x10
-  #define controller_rule_has_user          0x20
+  #define controller_rule_has_control_group_d 0x1
+  #define controller_rule_has_environment_d   0x2
+  #define controller_rule_has_group_d         0x4
+  #define controller_rule_has_nice_d          0x8
+  #define controller_rule_has_scheduler_d     0x10
+  #define controller_rule_has_user_d          0x20
 
   // Designate codes for timeout settings to be used during the loading of the rule timeout settings.
-  #define controller_rule_timeout_code_kill  1
-  #define controller_rule_timeout_code_start 2
-  #define controller_rule_timeout_code_stop  3
+  #define controller_rule_timeout_code_kill_d  1
+  #define controller_rule_timeout_code_start_d 2
+  #define controller_rule_timeout_code_stop_d  3
 
   typedef struct {
     f_status_t status[controller_rule_action_type__enum_size];
@@ -1032,7 +1032,7 @@ extern "C" {
  * A set of codes representing different with flags.
  */
 #ifndef _di_controller_with_defines_
-  #define controller_with_full_path 0x1
+  #define controller_with_full_path_d 0x1
 #endif // _di_controller_with_defines_
 
 /**
@@ -1096,11 +1096,11 @@ extern "C" {
  * main_thread:  Used for passing the controller_thread_t data to the process thread (to populate controller_global_t).
  */
 #ifndef _di_controller_process_t_
-  #define controller_process_option_asynchronous 0x1
-  #define controller_process_option_require      0x2
-  #define controller_process_option_simulate     0x4
-  #define controller_process_option_validate     0x8
-  #define controller_process_option_wait         0x10
+  #define controller_process_option_asynchronous_d 0x1
+  #define controller_process_option_require_d      0x2
+  #define controller_process_option_simulate_d     0x4
+  #define controller_process_option_validate_d     0x8
+  #define controller_process_option_wait_d         0x10
 
   enum {
     controller_process_state_idle = 1,
@@ -1241,13 +1241,13 @@ extern "C" {
     controller_entry_action_type_thaw,
   };
 
-  #define controller_entry_rule_code_asynchronous 0x1
-  #define controller_entry_rule_code_require      0x2
-  #define controller_entry_rule_code_wait         0x4
+  #define controller_entry_rule_code_asynchronous_d 0x1
+  #define controller_entry_rule_code_require_d      0x2
+  #define controller_entry_rule_code_wait_d         0x4
 
-  #define controller_entry_timeout_code_kill  0x1
-  #define controller_entry_timeout_code_start 0x2
-  #define controller_entry_timeout_code_stop  0x4
+  #define controller_entry_timeout_code_kill_d  0x1
+  #define controller_entry_timeout_code_start_d 0x2
+  #define controller_entry_timeout_code_stop_d  0x4
 
   typedef struct {
     uint8_t type;
@@ -1499,35 +1499,35 @@ extern "C" {
  * cache:      A cache used by the main entry/rule processing thread for synchronous operations.
  */
 #ifndef _di_controller_thread_t_
-  #define controller_thread_cleanup_interval_long     3600      // 1 hour in seconds.
-  #define controller_thread_cleanup_interval_short    180       // 3 minutes in seconds.
-  #define controller_thread_exit_process_cancel_wait  600000000 // 0.6 seconds in nanoseconds.
-  #define controller_thread_exit_process_cancel_total 150       // 90 seconds in multiples of wait.
-  #define controller_thread_simulation_timeout        200000    // 0.2 seconds in microseconds.
+  #define controller_thread_cleanup_interval_long_d     3600      // 1 hour in seconds.
+  #define controller_thread_cleanup_interval_short_d    180       // 3 minutes in seconds.
+  #define controller_thread_exit_process_cancel_wait_d  600000000 // 0.6 seconds in nanoseconds.
+  #define controller_thread_exit_process_cancel_total_d 150       // 90 seconds in multiples of wait.
+  #define controller_thread_simulation_timeout_d        200000    // 0.2 seconds in microseconds.
 
-  #define controller_thread_signal_wait_timeout_seconds     70
-  #define controller_thread_signal_wait_timeout_nanoseconds 0
+  #define controller_thread_signal_wait_timeout_seconds_d     70
+  #define controller_thread_signal_wait_timeout_nanoseconds_d 0
 
-  #define controller_thread_lock_read_timeout_seconds      3
-  #define controller_thread_lock_read_timeout_nanoseconds  0
-  #define controller_thread_lock_write_timeout_seconds     3
-  #define controller_thread_lock_write_timeout_nanoseconds 0
+  #define controller_thread_lock_read_timeout_seconds_d      3
+  #define controller_thread_lock_read_timeout_nanoseconds_d  0
+  #define controller_thread_lock_write_timeout_seconds_d     3
+  #define controller_thread_lock_write_timeout_nanoseconds_d 0
 
-  #define controller_thread_wait_timeout_1_before 4
-  #define controller_thread_wait_timeout_2_before 12
-  #define controller_thread_wait_timeout_3_before 28
+  #define controller_thread_wait_timeout_1_before_d 4
+  #define controller_thread_wait_timeout_2_before_d 12
+  #define controller_thread_wait_timeout_3_before_d 28
 
-  #define controller_thread_wait_timeout_1_seconds     0
-  #define controller_thread_wait_timeout_1_nanoseconds 20000000  // 0.02 seconds in nanoseconds.
-  #define controller_thread_wait_timeout_2_seconds     0
-  #define controller_thread_wait_timeout_2_nanoseconds 200000000 // 0.2 seconds in nanoseconds.
-  #define controller_thread_wait_timeout_3_seconds     2
-  #define controller_thread_wait_timeout_3_nanoseconds 0
-  #define controller_thread_wait_timeout_4_seconds     20
-  #define controller_thread_wait_timeout_4_nanoseconds 0
+  #define controller_thread_wait_timeout_1_seconds_d     0
+  #define controller_thread_wait_timeout_1_nanoseconds_d 20000000  // 0.02 seconds in nanoseconds.
+  #define controller_thread_wait_timeout_2_seconds_d     0
+  #define controller_thread_wait_timeout_2_nanoseconds_d 200000000 // 0.2 seconds in nanoseconds.
+  #define controller_thread_wait_timeout_3_seconds_d     2
+  #define controller_thread_wait_timeout_3_nanoseconds_d 0
+  #define controller_thread_wait_timeout_4_seconds_d     20
+  #define controller_thread_wait_timeout_4_nanoseconds_d 0
 
-  #define controller_thread_exit_ready_timeout_seconds     0
-  #define controller_thread_exit_ready_timeout_nanoseconds 500000000 // 0.5 seconds in nanoseconds.
+  #define controller_thread_exit_ready_timeout_seconds_d     0
+  #define controller_thread_exit_ready_timeout_nanoseconds_d 500000000 // 0.5 seconds in nanoseconds.
 
   /**
    * States for enabled, designating how to stop the process.
@@ -1670,7 +1670,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_cache_action_delete_simple_
-  extern void controller_cache_action_delete_simple(controller_cache_action_t *cache) f_attribute_visibility_internal;
+  extern void controller_cache_action_delete_simple(controller_cache_action_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_cache_action_delete_simple_
 
 /**
@@ -1688,7 +1688,7 @@ extern "C" {
  * @see f_string_rangess_resize()
  */
 #ifndef _di_controller_cache_delete_simple_
-  extern void controller_cache_delete_simple(controller_cache_t *cache) f_attribute_visibility_internal;
+  extern void controller_cache_delete_simple(controller_cache_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_cache_delete_simple_
 
 /**
@@ -1700,7 +1700,7 @@ extern "C" {
  * @see f_string_dynamics_resize()
  */
 #ifndef _di_controller_entry_action_delete_simple_
-  extern void controller_entry_action_delete_simple(controller_entry_action_t *action) f_attribute_visibility_internal;
+  extern void controller_entry_action_delete_simple(controller_entry_action_t *action) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_action_delete_simple_
 
 /**
@@ -1713,7 +1713,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_entry_actions_delete_simple_
-  extern void controller_entry_actions_delete_simple(controller_entry_actions_t *actions) f_attribute_visibility_internal;
+  extern void controller_entry_actions_delete_simple(controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_actions_delete_simple_
 
 /**
@@ -1725,7 +1725,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_entry_item_delete_simple_
-  extern void controller_entry_item_delete_simple(controller_entry_item_t *item) f_attribute_visibility_internal;
+  extern void controller_entry_item_delete_simple(controller_entry_item_t *item) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_item_delete_simple_
 
 /**
@@ -1738,7 +1738,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_entry_items_delete_simple_
-  extern void controller_entry_items_delete_simple(controller_entry_items_t *items) f_attribute_visibility_internal;
+  extern void controller_entry_items_delete_simple(controller_entry_items_t *items) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_items_delete_simple_
 
 /**
@@ -1767,7 +1767,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_controller_error_file_print_
-  extern void controller_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_error_file_print_
 
 /**
@@ -1790,7 +1790,7 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_controller_error_print_
-  extern void controller_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_error_print_
 
 /**
@@ -1809,7 +1809,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_lock_create_
-  extern f_status_t controller_lock_create(controller_lock_t *lock) f_attribute_visibility_internal;
+  extern f_status_t controller_lock_create(controller_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_create_
 
 /**
@@ -1820,7 +1820,7 @@ extern "C" {
  *   Will be set to NULLif delete succeeded.
  */
 #ifndef _di_controller_lock_delete_mutex_
-  extern void controller_lock_delete_mutex(f_thread_mutex_t *mutex) f_attribute_visibility_internal;
+  extern void controller_lock_delete_mutex(f_thread_mutex_t *mutex) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_delete_mutex_
 
 /**
@@ -1831,7 +1831,7 @@ extern "C" {
  *   Will be set to NULL if delete succeeded.
  */
 #ifndef _di_controller_lock_delete_rw_
-  extern void controller_lock_delete_rw(f_thread_lock_t *lock) f_attribute_visibility_internal;
+  extern void controller_lock_delete_rw(f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_delete_rw_
 
 /**
@@ -1844,7 +1844,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_lock_delete_simple_
-  extern void controller_lock_delete_simple(controller_lock_t *lock) f_attribute_visibility_internal;
+  extern void controller_lock_delete_simple(controller_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_delete_simple_
 
 /**
@@ -1867,7 +1867,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_lock_error_critical_print_
-  extern void controller_lock_error_critical_print(const fl_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_lock_error_critical_print(const fl_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_error_critical_print_
 
 /**
@@ -1895,7 +1895,7 @@ extern "C" {
  * @see f_thread_lock_read_timed()
  */
 #ifndef _di_controller_lock_read_
-  extern f_status_t controller_lock_read(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
+  extern f_status_t controller_lock_read(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_read_
 
 /**
@@ -1919,7 +1919,7 @@ extern "C" {
  * @see controller_lock_read()
  */
 #ifndef _di_controller_lock_read_process_
-  extern f_status_t controller_lock_read_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
+  extern f_status_t controller_lock_read_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_read_process_
 
 /**
@@ -1943,7 +1943,7 @@ extern "C" {
  * @see controller_lock_read()
  */
 #ifndef _di_controller_lock_read_process_type_
-  extern f_status_t controller_lock_read_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
+  extern f_status_t controller_lock_read_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_read_process_type_
 
 /**
@@ -1971,7 +1971,7 @@ extern "C" {
  * @see f_thread_lock_write_timed()
  */
 #ifndef _di_controller_lock_write_
-  extern f_status_t controller_lock_write(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
+  extern f_status_t controller_lock_write(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_write_
 
 /**
@@ -1995,7 +1995,7 @@ extern "C" {
  * @see controller_lock_write_process_type()
  */
 #ifndef _di_controller_lock_write_process_
-  extern f_status_t controller_lock_write_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
+  extern f_status_t controller_lock_write_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_write_process_
 
 /**
@@ -2019,13 +2019,13 @@ extern "C" {
  * @see controller_lock_write()
  */
 #ifndef _di_controller_lock_write_process_type_
-  extern f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
+  extern f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_write_process_type_
 
 /**
  * Increase the size of the pid array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param pids
@@ -2033,7 +2033,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small_d <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -2042,7 +2042,7 @@ extern "C" {
  * @see controller_pids_resize()
  */
 #ifndef _di_controller_pids_increase_
-  extern f_status_t controller_pids_increase(controller_pids_t *pids) f_attribute_visibility_internal;
+  extern f_status_t controller_pids_increase(controller_pids_t *pids) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -2062,7 +2062,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_pids_resize_
-  extern f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t *pids) f_attribute_visibility_internal;
+  extern f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t *pids) F_attribute_visibility_internal_d;
 #endif // _di_controller_pids_resize_
 
 /**
@@ -2080,7 +2080,7 @@ extern "C" {
  * @see f_thread_mutex_unlock()
  */
 #ifndef _di_controller_print_lock_
-  extern void controller_print_lock(const f_file_t to, controller_thread_t * const thread) f_attribute_visibility_internal;
+  extern void controller_print_lock(const f_file_t to, controller_thread_t * const thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_print_lock_
 
 /**
@@ -2103,7 +2103,7 @@ extern "C" {
  * @see f_thread_mutex_unlock()
  */
 #ifndef _di_controller_print_unlock_flush_
-  void controller_print_unlock_flush(const f_file_t to, controller_thread_t * const thread) f_attribute_visibility_internal;
+  void controller_print_unlock_flush(const f_file_t to, controller_thread_t * const thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_print_unlock_flush_
 
 /**
@@ -2117,7 +2117,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_process_delete_simple_
-  extern void controller_process_delete_simple(controller_process_t *process) f_attribute_visibility_internal;
+  extern void controller_process_delete_simple(controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_delete_simple_
 
 /***
@@ -2139,7 +2139,7 @@ extern "C" {
  * @see f_thread_condition_wait_timed()
  */
 #ifndef _di_controller_process_wait_
-  extern f_status_t controller_process_wait(const controller_global_t global, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_process_wait(const controller_global_t global, controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_wait_
 
 /**
@@ -2151,13 +2151,13 @@ extern "C" {
  * @see controller_processs_resize()
  */
 #ifndef _di_controller_processs_delete_simple_
-  extern void controller_processs_delete_simple(controller_processs_t *processs) f_attribute_visibility_internal;
+  extern void controller_processs_delete_simple(controller_processs_t *processs) F_attribute_visibility_internal_d;
 #endif // _di_controller_processs_delete_simple_
 
 /**
  * Increase the size of the rule array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param processs
@@ -2165,7 +2165,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small_d <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -2174,7 +2174,7 @@ extern "C" {
  * @see controller_processs_resize()
  */
 #ifndef _di_controller_processs_increase_
-  extern f_status_t controller_processs_increase(controller_processs_t *processs) f_attribute_visibility_internal;
+  extern f_status_t controller_processs_increase(controller_processs_t *processs) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -2199,7 +2199,7 @@ extern "C" {
  * @see f_thread_lock_create()
  */
 #ifndef _di_controller_processs_resize_
-  extern f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t *processs) f_attribute_visibility_internal;
+  extern f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t *processs) F_attribute_visibility_internal_d;
 #endif // _di_controller_processs_resize_
 
 /**
@@ -2211,7 +2211,7 @@ extern "C" {
  * @see f_string_dynamics_resize()
  */
 #ifndef _di_controller_rule_action_delete_simple_
-  extern void controller_rule_action_delete_simple(controller_rule_action_t *action) f_attribute_visibility_internal;
+  extern void controller_rule_action_delete_simple(controller_rule_action_t *action) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_delete_simple_
 
 /**
@@ -2224,7 +2224,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_actions_delete_simple_
-  extern void controller_rule_actions_delete_simple(controller_rule_actions_t *actions) f_attribute_visibility_internal;
+  extern void controller_rule_actions_delete_simple(controller_rule_actions_t *actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_actions_delete_simple_
 
 /**
@@ -2246,7 +2246,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_delete_simple_
-  extern void controller_rule_delete_simple(controller_rule_t *rule) f_attribute_visibility_internal;
+  extern void controller_rule_delete_simple(controller_rule_t *rule) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_delete_simple_
 
 /**
@@ -2258,7 +2258,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_item_delete_simple_
-  extern void controller_rule_item_delete_simple(controller_rule_item_t *item) f_attribute_visibility_internal;
+  extern void controller_rule_item_delete_simple(controller_rule_item_t *item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_delete_simple_
 
 /**
@@ -2271,7 +2271,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_items_delete_simple_
-  extern void controller_rule_items_delete_simple(controller_rule_items_t *items) f_attribute_visibility_internal;
+  extern void controller_rule_items_delete_simple(controller_rule_items_t *items) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_items_delete_simple_
 
 /**
@@ -2283,7 +2283,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_on_delete_simple_
-  extern void controller_rule_on_delete_simple(controller_rule_on_t *on) f_attribute_visibility_internal;
+  extern void controller_rule_on_delete_simple(controller_rule_on_t *on) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_on_delete_simple_
 
 /**
@@ -2296,13 +2296,13 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_ons_delete_simple_
-  extern void controller_rule_ons_delete_simple(controller_rule_ons_t *ons) f_attribute_visibility_internal;
+  extern void controller_rule_ons_delete_simple(controller_rule_ons_t *ons) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_ons_delete_simple_
 
 /**
  * Increase the size of the rule array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param ons
@@ -2310,7 +2310,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small_d <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -2319,7 +2319,7 @@ extern "C" {
  * @see controller_rule_ons_resize()
  */
 #ifndef _di_controller_rule_ons_increase_
-  extern f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -2339,7 +2339,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rule_ons_resize_
-  extern f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t *ons) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t *ons) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_ons_resize_
 
 /**
@@ -2351,13 +2351,13 @@ extern "C" {
  * @see controller_rules_resize()
  */
 #ifndef _di_controller_rules_delete_simple_
-  extern void controller_rules_delete_simple(controller_rules_t *rules) f_attribute_visibility_internal;
+  extern void controller_rules_delete_simple(controller_rules_t *rules) F_attribute_visibility_internal_d;
 #endif // _di_controller_rules_delete_simple_
 
 /**
  * Increase the size of the rule array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param rules
@@ -2365,7 +2365,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small_d <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -2374,7 +2374,7 @@ extern "C" {
  * @see controller_rules_resize()
  */
 #ifndef _di_controller_rules_increase_
-  extern f_status_t controller_rules_increase(controller_rules_t *rules) f_attribute_visibility_internal;
+  extern f_status_t controller_rules_increase(controller_rules_t *rules) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -2394,7 +2394,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rules_resize_
-  extern f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t *rules) f_attribute_visibility_internal;
+  extern f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t *rules) F_attribute_visibility_internal_d;
 #endif // _di_controller_rules_resize_
 
 /**
@@ -2408,7 +2408,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_setting_delete_simple_
-  extern void controller_setting_delete_simple(controller_setting_t *setting) f_attribute_visibility_internal;
+  extern void controller_setting_delete_simple(controller_setting_t *setting) F_attribute_visibility_internal_d;
 #endif // _di_controller_setting_delete_simple_
 
 /**
@@ -2421,7 +2421,7 @@ extern "C" {
  * @see f_thread_mutex_unlock()
  */
 #ifndef _di_controller_thread_delete_simple_
-  extern void controller_thread_delete_simple(controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_thread_delete_simple(controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_delete_simple_
 
 /**
@@ -2438,7 +2438,7 @@ extern "C" {
  *   The resulting current time.
  */
 #ifndef _di_controller_time_
-  void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) f_attribute_visibility_internal;
+  void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) F_attribute_visibility_internal_d;
 #endif // _di_controller_time_
 
 /**
@@ -2451,7 +2451,7 @@ extern "C" {
  *   A time structure suitable for passing to nanosleep() and similar functions.
  */
 #ifndef _di_controller_time_micro_
-  extern struct timespec controller_time_micro(const f_number_unsigned_t microseconds) f_attribute_visibility_internal;
+  extern struct timespec controller_time_micro(const f_number_unsigned_t microseconds) F_attribute_visibility_internal_d;
 #endif // _di_controller_time_micro_
 
 #ifdef __cplusplus

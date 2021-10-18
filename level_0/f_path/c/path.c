@@ -55,9 +55,9 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    char buffer[f_path_length_max];
+    char buffer[F_path_length_max_d];
 
-    if (!getcwd(buffer, f_path_length_max)) {
+    if (!getcwd(buffer, F_path_length_max_d)) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -73,7 +73,7 @@ extern "C" {
       return private_f_path_real(buffer, path);
     }
 
-    const f_array_length_t length = strnlen(buffer, f_path_length_max);
+    const f_array_length_t length = strnlen(buffer, F_path_length_max_d);
 
     if (length + 1 > path->size) {
       f_status_t status = F_none;

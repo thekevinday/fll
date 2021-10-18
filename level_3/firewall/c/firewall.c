@@ -17,7 +17,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    fll_program_print_help_header(file, context, firewall_name_long, firewall_version);
+    fll_program_print_help_header(file, context, firewall_program_name_long_s, firewall_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -30,13 +30,13 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
     fl_print_format("%c%c %[Available Commands:%] ", file.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
-    fl_print_format("%c  %[%s%]    Turn on the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_start, context.set.standout);
-    fl_print_format("%c  %[%s%]     Turn off the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_stop, context.set.standout);
-    fl_print_format("%c  %[%s%]  Turn off and then turn on the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_restart, context.set.standout);
-    fl_print_format("%c  %[%s%]     Prevent all communication.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_lock, context.set.standout);
-    fl_print_format("%c  %[%s%]     Show active firewall settings.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_show, context.set.standout);
+    fl_print_format("%c  %[%s%]    Turn on the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_start_s, context.set.standout);
+    fl_print_format("%c  %[%s%]     Turn off the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_stop_s, context.set.standout);
+    fl_print_format("%c  %[%s%]  Turn off and then turn on the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_restart_s, context.set.standout);
+    fl_print_format("%c  %[%s%]     Prevent all communication.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_lock_s, context.set.standout);
+    fl_print_format("%c  %[%s%]     Show active firewall settings.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_show_s, context.set.standout);
 
-    fll_program_print_help_usage(file, context, firewall_name, "command");
+    fll_program_print_help_usage(file, context, firewall_program_name_s, "command");
 
     funlockfile(file.stream);
 
@@ -49,7 +49,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, firewall_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, firewall_total_parameters_d);
 
       {
         f_console_parameter_id_t ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
@@ -122,7 +122,7 @@ extern "C" {
     }
 
     if (main->parameters[firewall_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output.to, firewall_version);
+      fll_program_print_version(main->output.to, firewall_version_s);
 
       firewall_main_delete(main);
       return F_none;
@@ -265,7 +265,7 @@ extern "C" {
           parameters.array[4].used = 9;
           parameters.array[5].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, 0, (void *) &return_code);
+          status = fll_execute_program((f_string_t) firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -296,7 +296,7 @@ extern "C" {
           parameters.array[4].used = 9;
           parameters.array[5].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, 0, (void *) &return_code);
+          status = fll_execute_program((f_string_t) firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -323,7 +323,7 @@ extern "C" {
           parameters.array[2].used = 9;
           parameters.array[3].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, 0, (void *) &return_code);
+          status = fll_execute_program((f_string_t) firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -341,7 +341,7 @@ extern "C" {
             firewall_print_error_on_allocation_failure(main->error);
           }
           else {
-            firewall_print_error_on_operation(main->error, firewall_tool_iptables, parameters);
+            firewall_print_error_on_operation(main->error, firewall_tool_iptables_s, parameters);
           }
 
           status = F_status_set_error(status);
@@ -369,7 +369,7 @@ extern "C" {
       }
 
       // load all network devices
-      status = f_directory_list((f_string_t) network_devices, 0, alphasort, &main->devices);
+      status = f_directory_list((f_string_t) network_devices_s, 0, alphasort, &main->devices);
 
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);
@@ -382,7 +382,7 @@ extern "C" {
             fll_print_format("%c%[%sCould not find any network devices.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
           }
           else if (status == F_failure) {
-            fll_print_format("%c%[%sFailed to read the device directory '%s'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_devices, main->error.context, f_string_eol_s[0]);
+            fll_print_format("%c%[%sFailed to read the device directory '%s'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_devices_s, main->error.context, f_string_eol_s[0]);
           }
         }
 
@@ -397,7 +397,7 @@ extern "C" {
 
         for (; i < main->devices.used; ++i) {
 
-          if (fl_string_compare((f_string_t) firewall_device_loop, main->devices.array[i].string, firewall_device_loop_length + 1, main->devices.array[i].used) == F_equal_to) {
+          if (fl_string_compare((f_string_t) firewall_device_loop_s, main->devices.array[i].string, firewall_device_loop_s_length + 1, main->devices.array[i].used) == F_equal_to) {
             f_string_dynamic_t swap_string = main->devices.array[i];
 
             --main->devices.used;
@@ -412,7 +412,7 @@ extern "C" {
       }
 
       if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart || command == firewall_parameter_command_lock) {
-        status = firewall_buffer_rules(network_path firewall_file_other, F_false, &local, main);
+        status = firewall_buffer_rules(network_path_s firewall_file_other_s, F_false, &local, main);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
@@ -427,11 +427,11 @@ extern "C" {
           for (; i < local.chain_objects.used; ++i) {
             length = local.chain_objects.array[i].stop - local.chain_objects.array[i].start + 1;
 
-            if (!reserved.has_stop && fl_string_compare((f_string_t) firewall_group_stop, local.buffer.string + local.chain_objects.array[i].start, firewall_group_stop_length, length) == F_equal_to) {
+            if (!reserved.has_stop && fl_string_compare((f_string_t) firewall_group_stop_s, local.buffer.string + local.chain_objects.array[i].start, firewall_group_stop_s_length, length) == F_equal_to) {
               reserved.stop_at = i;
               reserved.has_stop = F_true;
             }
-            else if (!reserved.has_lock && fl_string_compare((f_string_t) firewall_group_lock, local.buffer.string + local.chain_objects.array[i].start, firewall_group_lock_length, length) == F_equal_to) {
+            else if (!reserved.has_lock && fl_string_compare((f_string_t) firewall_group_lock_s, local.buffer.string + local.chain_objects.array[i].start, firewall_group_lock_s_length, length) == F_equal_to) {
               reserved.lock_at = i;
               reserved.has_lock = F_true;
             }
@@ -468,7 +468,7 @@ extern "C" {
           }
           else {
             if (main->error.verbosity != f_console_verbosity_quiet) {
-              fll_print_format("%c%[%sFailed to perform lock request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path firewall_file_other, main->error.context, f_string_eol_s[0]);
+              fll_print_format("%c%[%sFailed to perform lock request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path_s firewall_file_other_s, main->error.context, f_string_eol_s[0]);
             }
 
             firewall_delete_local_data(&local);
@@ -510,7 +510,7 @@ extern "C" {
           }
           else {
             if (main->error.verbosity != f_console_verbosity_quiet) {
-              fll_print_format("%c%[%sFailed to perform stop request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path firewall_file_other, main->error.context, f_string_eol_s[0]);
+              fll_print_format("%c%[%sFailed to perform stop request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path_s firewall_file_other_s, main->error.context, f_string_eol_s[0]);
             }
 
             firewall_delete_local_data(&local);
@@ -523,7 +523,7 @@ extern "C" {
       }
 
       if (command == firewall_parameter_command_start || command == firewall_parameter_command_restart) {
-        status = firewall_buffer_rules(network_path firewall_file_first, F_false, &local, main);
+        status = firewall_buffer_rules(network_path_s firewall_file_first_s, F_false, &local, main);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
@@ -586,7 +586,7 @@ extern "C" {
           {
             f_string_dynamic_t file_path = f_string_dynamic_t_initialize;
 
-            macro_f_string_dynamic_t_resize(status, file_path, network_path_length + main->devices.array[i].used + firewall_file_suffix_length + 1);
+            macro_f_string_dynamic_t_resize(status, file_path, network_path_s_length + main->devices.array[i].used + firewall_file_suffix_s_length + 1);
 
             if (F_status_is_error(status)) {
               firewall_print_error_on_allocation_failure(main->error);
@@ -596,11 +596,11 @@ extern "C" {
               return status;
             }
 
-            memcpy((void *)file_path.string, network_path, network_path_length);
-            memcpy((void *)(file_path.string + network_path_length), main->devices.array[i].string, main->devices.array[i].used);
-            memcpy((void *)(file_path.string + network_path_length + main->devices.array[i].used), firewall_file_suffix, firewall_file_suffix_length);
+            memcpy((void *)file_path.string, network_path_s, network_path_s_length);
+            memcpy((void *)(file_path.string + network_path_s_length), main->devices.array[i].string, main->devices.array[i].used);
+            memcpy((void *)(file_path.string + network_path_s_length + main->devices.array[i].used), firewall_file_suffix_s, firewall_file_suffix_s_length);
 
-            file_path.used = network_path_length + main->devices.array[i].used + firewall_file_suffix_length;
+            file_path.used = network_path_s_length + main->devices.array[i].used + firewall_file_suffix_s_length;
             file_path.string[file_path.used] = 0;
 
             status = firewall_buffer_rules(file_path.string, F_true, &local, main);
@@ -656,7 +656,7 @@ extern "C" {
           firewall_delete_local_data(&local);
         } // for
 
-        status = firewall_buffer_rules(network_path firewall_file_last, F_false, &local, main);
+        status = firewall_buffer_rules(network_path_s firewall_file_last_s, F_false, &local, main);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
@@ -719,7 +719,7 @@ extern "C" {
 #ifndef _di_firewall_main_delete_
   f_status_t firewall_main_delete(firewall_main_t *main) {
 
-    for (f_array_length_t i = 0; i < firewall_total_parameters; ++i) {
+    for (f_array_length_t i = 0; i < firewall_total_parameters_d; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

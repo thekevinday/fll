@@ -20,8 +20,8 @@ extern "C" {
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
  */
 #ifndef _di_iki_read_common_
-  #define iki_read_common_allocation_large 256
-  #define iki_read_common_allocation_small 16
+  #define iki_read_common_allocation_large_d 256
+  #define iki_read_common_allocation_small_d 16
 #endif // _di_iki_read_common_
 
 #ifdef __cplusplus

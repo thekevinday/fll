@@ -67,12 +67,12 @@ extern "C" {
     if (statuss->used + 1 > statuss->size) {
       f_array_length_t size = statuss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (statuss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (statuss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_statuss_resize(size, statuss);
@@ -90,7 +90,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (statuss->used + amount > statuss->size) {
-      if (statuss->used + amount > f_array_length_t_size) {
+      if (statuss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -185,12 +185,12 @@ extern "C" {
     if (statusss->used + 1 > statusss->size) {
       f_array_length_t size = statusss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (statusss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (statusss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_statusss_resize(size, statusss);
@@ -208,7 +208,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (statusss->used + amount > statusss->size) {
-      if (statusss->used + amount > f_array_length_t_size) {
+      if (statusss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -291,12 +291,12 @@ extern "C" {
     if (states->used + 1 > states->size) {
       f_array_length_t size = states->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (states->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (states->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_states_resize(size, states);
@@ -314,7 +314,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (states->used + amount > states->size) {
-      if (states->used + amount > f_array_length_t_size) {
+      if (states->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -409,12 +409,12 @@ extern "C" {
     if (statess->used + 1 > statess->size) {
       f_array_length_t size = statess->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (statess->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (statess->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_statess_resize(size, statess);
@@ -432,7 +432,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (statess->used + amount > statess->size) {
-      if (statess->used + amount > f_array_length_t_size) {
+      if (statess->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -515,12 +515,12 @@ extern "C" {
     if (cells->used + 1 > cells->size) {
       f_array_length_t size = cells->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (cells->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (cells->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_cells_resize(size, cells);
@@ -538,7 +538,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (cells->used + amount > cells->size) {
-      if (cells->used + amount > f_array_length_t_size) {
+      if (cells->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -633,12 +633,12 @@ extern "C" {
     if (cellss->used + 1 > cellss->size) {
       f_array_length_t size = cellss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (cellss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (cellss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_cellss_resize(size, cellss);
@@ -656,7 +656,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (cellss->used + amount > cellss->size) {
-      if (cellss->used + amount > f_array_length_t_size) {
+      if (cellss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -739,12 +739,12 @@ extern "C" {
     if (ids->used + 1 > ids->size) {
       f_array_length_t size = ids->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (ids->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (ids->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_fll_ids_resize(size, ids);
@@ -762,7 +762,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (ids->used + amount > ids->size) {
-      if (ids->used + amount > f_array_length_t_size) {
+      if (ids->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -857,12 +857,12 @@ extern "C" {
     if (idss->used + 1 > idss->size) {
       f_array_length_t size = idss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (idss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (idss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_fll_idss_resize(size, idss);
@@ -880,7 +880,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (idss->used + amount > idss->size) {
-      if (idss->used + amount > f_array_length_t_size) {
+      if (idss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -963,12 +963,12 @@ extern "C" {
     if (lengths->used + 1 > lengths->size) {
       f_array_length_t size = lengths->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (lengths->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (lengths->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_array_lengths_resize(size, lengths);
@@ -986,7 +986,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (lengths->used + amount > lengths->size) {
-      if (lengths->used + amount > f_array_length_t_size) {
+      if (lengths->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1081,12 +1081,12 @@ extern "C" {
     if (lengthss->used + 1 > lengthss->size) {
       f_array_length_t size = lengthss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (lengthss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (lengthss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_array_lengthss_resize(size, lengthss);
@@ -1104,7 +1104,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (lengthss->used + amount > lengthss->size) {
-      if (lengthss->used + amount > f_array_length_t_size) {
+      if (lengthss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1187,12 +1187,12 @@ extern "C" {
     if (int8s->used + 1 > int8s->size) {
       f_array_length_t size = int8s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int8s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int8s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int8s_resize(size, int8s);
@@ -1210,7 +1210,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int8s->used + amount > int8s->size) {
-      if (int8s->used + amount > f_array_length_t_size) {
+      if (int8s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1305,12 +1305,12 @@ extern "C" {
     if (int8ss->used + 1 > int8ss->size) {
       f_array_length_t size = int8ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int8ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int8ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int8ss_resize(size, int8ss);
@@ -1328,7 +1328,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int8ss->used + amount > int8ss->size) {
-      if (int8ss->used + amount > f_array_length_t_size) {
+      if (int8ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1411,12 +1411,12 @@ extern "C" {
     if (uint8s->used + 1 > uint8s->size) {
       f_array_length_t size = uint8s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint8s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint8s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint8s_resize(size, uint8s);
@@ -1434,7 +1434,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint8s->used + amount > uint8s->size) {
-      if (uint8s->used + amount > f_array_length_t_size) {
+      if (uint8s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1529,12 +1529,12 @@ extern "C" {
     if (uint8ss->used + 1 > uint8ss->size) {
       f_array_length_t size = uint8ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint8ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint8ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint8ss_resize(size, uint8ss);
@@ -1552,7 +1552,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint8ss->used + amount > uint8ss->size) {
-      if (uint8ss->used + amount > f_array_length_t_size) {
+      if (uint8ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1635,12 +1635,12 @@ extern "C" {
     if (int16s->used + 1 > int16s->size) {
       f_array_length_t size = int16s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int16s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int16s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int16s_resize(size, int16s);
@@ -1658,7 +1658,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int16s->used + amount > int16s->size) {
-      if (int16s->used + amount > f_array_length_t_size) {
+      if (int16s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1753,12 +1753,12 @@ extern "C" {
     if (int16ss->used + 1 > int16ss->size) {
       f_array_length_t size = int16ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int16ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int16ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int16ss_resize(size, int16ss);
@@ -1776,7 +1776,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int16ss->used + amount > int16ss->size) {
-      if (int16ss->used + amount > f_array_length_t_size) {
+      if (int16ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1859,12 +1859,12 @@ extern "C" {
     if (uint16s->used + 1 > uint16s->size) {
       f_array_length_t size = uint16s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint16s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint16s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint16s_resize(size, uint16s);
@@ -1882,7 +1882,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint16s->used + amount > uint16s->size) {
-      if (uint16s->used + amount > f_array_length_t_size) {
+      if (uint16s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -1977,12 +1977,12 @@ extern "C" {
     if (uint16ss->used + 1 > uint16ss->size) {
       f_array_length_t size = uint16ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint16ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint16ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint16ss_resize(size, uint16ss);
@@ -2000,7 +2000,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint16ss->used + amount > uint16ss->size) {
-      if (uint16ss->used + amount > f_array_length_t_size) {
+      if (uint16ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2083,12 +2083,12 @@ extern "C" {
     if (int32s->used + 1 > int32s->size) {
       f_array_length_t size = int32s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int32s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int32s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int32s_resize(size, int32s);
@@ -2106,7 +2106,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int32s->used + amount > int32s->size) {
-      if (int32s->used + amount > f_array_length_t_size) {
+      if (int32s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2201,12 +2201,12 @@ extern "C" {
     if (int32ss->used + 1 > int32ss->size) {
       f_array_length_t size = int32ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int32ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int32ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int32ss_resize(size, int32ss);
@@ -2224,7 +2224,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int32ss->used + amount > int32ss->size) {
-      if (int32ss->used + amount > f_array_length_t_size) {
+      if (int32ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2307,12 +2307,12 @@ extern "C" {
     if (uint32s->used + 1 > uint32s->size) {
       f_array_length_t size = uint32s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint32s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint32s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint32s_resize(size, uint32s);
@@ -2330,7 +2330,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint32s->used + amount > uint32s->size) {
-      if (uint32s->used + amount > f_array_length_t_size) {
+      if (uint32s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2425,12 +2425,12 @@ extern "C" {
     if (uint32ss->used + 1 > uint32ss->size) {
       f_array_length_t size = uint32ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint32ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint32ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint32ss_resize(size, uint32ss);
@@ -2448,7 +2448,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint32ss->used + amount > uint32ss->size) {
-      if (uint32ss->used + amount > f_array_length_t_size) {
+      if (uint32ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2531,12 +2531,12 @@ extern "C" {
     if (int64s->used + 1 > int64s->size) {
       f_array_length_t size = int64s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int64s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int64s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int64s_resize(size, int64s);
@@ -2554,7 +2554,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int64s->used + amount > int64s->size) {
-      if (int64s->used + amount > f_array_length_t_size) {
+      if (int64s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2649,12 +2649,12 @@ extern "C" {
     if (int64ss->used + 1 > int64ss->size) {
       f_array_length_t size = int64ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int64ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int64ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int64ss_resize(size, int64ss);
@@ -2672,7 +2672,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int64ss->used + amount > int64ss->size) {
-      if (int64ss->used + amount > f_array_length_t_size) {
+      if (int64ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2755,12 +2755,12 @@ extern "C" {
     if (uint64s->used + 1 > uint64s->size) {
       f_array_length_t size = uint64s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint64s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint64s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint64s_resize(size, uint64s);
@@ -2778,7 +2778,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint64s->used + amount > uint64s->size) {
-      if (uint64s->used + amount > f_array_length_t_size) {
+      if (uint64s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2873,12 +2873,12 @@ extern "C" {
     if (uint64ss->used + 1 > uint64ss->size) {
       f_array_length_t size = uint64ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint64ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint64ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint64ss_resize(size, uint64ss);
@@ -2896,7 +2896,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint64ss->used + amount > uint64ss->size) {
-      if (uint64ss->used + amount > f_array_length_t_size) {
+      if (uint64ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -2979,12 +2979,12 @@ extern "C" {
     if (int128s->used + 1 > int128s->size) {
       f_array_length_t size = int128s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int128s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int128s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int128s_resize(size, int128s);
@@ -3002,7 +3002,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int128s->used + amount > int128s->size) {
-      if (int128s->used + amount > f_array_length_t_size) {
+      if (int128s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -3097,12 +3097,12 @@ extern "C" {
     if (int128ss->used + 1 > int128ss->size) {
       f_array_length_t size = int128ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (int128ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (int128ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_int128ss_resize(size, int128ss);
@@ -3120,7 +3120,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (int128ss->used + amount > int128ss->size) {
-      if (int128ss->used + amount > f_array_length_t_size) {
+      if (int128ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -3203,12 +3203,12 @@ extern "C" {
     if (uint128s->used + 1 > uint128s->size) {
       f_array_length_t size = uint128s->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint128s->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint128s->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint128s_resize(size, uint128s);
@@ -3226,7 +3226,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint128s->used + amount > uint128s->size) {
-      if (uint128s->used + amount > f_array_length_t_size) {
+      if (uint128s->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -3321,12 +3321,12 @@ extern "C" {
     if (uint128ss->used + 1 > uint128ss->size) {
       f_array_length_t size = uint128ss->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (uint128ss->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (uint128ss->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_type_uint128ss_resize(size, uint128ss);
@@ -3344,7 +3344,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (uint128ss->used + amount > uint128ss->size) {
-      if (uint128ss->used + amount > f_array_length_t_size) {
+      if (uint128ss->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 

@@ -53,7 +53,7 @@ extern "C" {
  * @see private_f_conversion_digit_to_file_prefix()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -122,7 +122,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const char pad, int total, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const char pad, int total, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -157,7 +157,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -190,7 +190,7 @@ extern "C" {
  * @see private_f_conversion_digit_to_string_prefix()
  */
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  extern f_status_t private_f_conversion_digit_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t *destination) f_attribute_visibility_internal;
+  extern f_status_t private_f_conversion_digit_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 /**
@@ -212,7 +212,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_to_string()
  */
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  extern void private_f_conversion_digit_to_string_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, f_string_dynamic_t *destination) f_attribute_visibility_internal;
+  extern void private_f_conversion_digit_to_string_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 /**
@@ -233,7 +233,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_to_string()
  */
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  extern void private_f_conversion_digit_to_string_pad(const f_conversion_data_t data, const char pad, int total, f_string_dynamic_t *destination) f_attribute_visibility_internal;
+  extern void private_f_conversion_digit_to_string_pad(const f_conversion_data_t data, const char pad, int total, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 /**
@@ -255,7 +255,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_to_string()
  */
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  extern void private_f_conversion_digit_to_string_prefix(const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t *destination) f_attribute_visibility_internal;
+  extern void private_f_conversion_digit_to_string_prefix(const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 #ifdef __cplusplus

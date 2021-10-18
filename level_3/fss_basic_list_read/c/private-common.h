@@ -20,8 +20,8 @@ extern "C" {
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
  */
 #ifndef _di_fss_basic_list_read_common_
-  #define fss_basic_list_read_common_allocation_large 256
-  #define fss_basic_list_read_common_allocation_small 16
+  #define fss_basic_list_common_allocation_large_d 256
+  #define fss_basic_list_read_common_allocation_small_d 16
 #endif // _di_fss_basic_list_read_common_
 
 /**
@@ -154,17 +154,17 @@ extern "C" {
  * delimits_content: The positions within the buffer representing Content character delimits.
  */
 #ifndef _di_fss_basic_list_read_data_t_
-  #define fss_basic_list_read_data_option_at      0x1
-  #define fss_basic_list_read_data_option_columns 0x2
-  #define fss_basic_list_read_data_option_content 0x4
-  #define fss_basic_list_read_data_option_empty   0x8
-  #define fss_basic_list_read_data_option_line    0x10
-  #define fss_basic_list_read_data_option_name    0x20
-  #define fss_basic_list_read_data_option_object  0x40
-  #define fss_basic_list_read_data_option_raw     0x80
-  #define fss_basic_list_read_data_option_select  0x100
-  #define fss_basic_list_read_data_option_total   0x200
-  #define fss_basic_list_read_data_option_trim    0x400
+  #define fss_basic_list_read_data_option_at_d      0x1
+  #define fss_basic_list_read_data_option_columns_d 0x2
+  #define fss_basic_list_read_data_option_content_d 0x4
+  #define fss_basic_list_read_data_option_empty_d   0x8
+  #define fss_basic_list_read_data_option_line_d    0x10
+  #define fss_basic_list_read_data_option_name_d    0x20
+  #define fss_basic_list_read_data_option_object_d  0x40
+  #define fss_basic_list_read_data_option_raw_d     0x80
+  #define fss_basic_list_read_data_option_select_d  0x100
+  #define fss_basic_list_read_data_option_total_d   0x200
+  #define fss_basic_list_read_data_option_trim_d    0x400
 
   typedef struct {
     uint16_t option;
@@ -211,7 +211,7 @@ extern "C" {
  *   The data to deallocate.
  */
 #ifndef _di_fss_basic_list_read_data_delete_simple_
-  extern void fss_basic_list_read_data_delete_simple(fss_basic_list_read_data_t *data) f_attribute_visibility_internal;
+  extern void fss_basic_list_read_data_delete_simple(fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_data_delete_simple_
 
 /**
@@ -221,7 +221,7 @@ extern "C" {
  *   The depth to deallocate.
  */
 #ifndef _di_fss_basic_list_read_depth_delete_simple_
-  extern void fss_basic_list_read_depth_delete_simple(fss_basic_list_read_depth_t *depth) f_attribute_visibility_internal;
+  extern void fss_basic_list_read_depth_delete_simple(fss_basic_list_read_depth_t *depth) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_depth_delete_simple_
 
 /**
@@ -245,7 +245,7 @@ extern "C" {
  * @see fss_basic_list_read_depths_increase()
  */
 #ifndef _di_fss_basic_list_read_depths_resize_
-  extern f_status_t fss_basic_list_read_depths_resize(const f_array_length_t length, fss_basic_list_read_depths_t *depths) f_attribute_visibility_internal;
+  extern f_status_t fss_basic_list_read_depths_resize(const f_array_length_t length, fss_basic_list_read_depths_t *depths) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_depths_resize_
 
 #ifdef __cplusplus

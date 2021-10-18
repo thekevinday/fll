@@ -71,8 +71,8 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      content.string = fake_make_skeleton_content_defines;
-      content.used = fake_make_skeleton_content_defines_length;
+      content.string = fake_make_skeleton_content_defines_s;
+      content.used = fake_make_skeleton_content_defines_s_length;
       content.size = content.used;
 
       status = fake_skeleton_operate_file_create(main, main.file_data_build_defines, F_false, content);
@@ -81,8 +81,8 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      content.string = fake_make_skeleton_content_dependencies;
-      content.used = fake_make_skeleton_content_dependencies_length;
+      content.string = fake_make_skeleton_content_dependencies_s;
+      content.used = fake_make_skeleton_content_dependencies_s_length;
       content.size = content.used;
 
       status = fake_skeleton_operate_file_create(main, main.file_data_build_dependencies, F_false, content);
@@ -111,8 +111,8 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      content.string = fake_make_skeleton_content_settings;
-      content.used = fake_make_skeleton_content_settings_length;
+      content.string = fake_make_skeleton_content_settings_s;
+      content.used = fake_make_skeleton_content_settings_s_length;
       content.size = content.used;
 
       status = fake_skeleton_operate_file_create(main, main.file_data_build_settings, F_false, content);
@@ -133,8 +133,8 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      content.string = fake_make_skeleton_content_fakefile;
-      content.used = fake_make_skeleton_content_fakefile_length;
+      content.string = fake_make_skeleton_content_fakefile_s;
+      content.used = fake_make_skeleton_content_fakefile_s_length;
       content.size = content.used;
 
       status = fake_skeleton_operate_file_create(main, main.file_data_build_fakefile, F_false, content);
@@ -187,7 +187,7 @@ extern "C" {
       return F_status_set_warning(F_failure);
     }
     else if (status == F_file_found_not) {
-      status = f_directory_create(path.string, f_file_mode_all_rwx);
+      status = f_directory_create(path.string, F_file_mode_all_rwx_d);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
@@ -227,7 +227,7 @@ extern "C" {
 
     if (!path.used) return F_none;
 
-    status = f_file_is(path.string, f_file_type_regular, F_false);
+    status = f_file_is(path.string, F_file_type_regular_d, F_false);
 
     if (status == F_true) {
       if (main.error.verbosity == f_console_verbosity_verbose) {
@@ -239,7 +239,7 @@ extern "C" {
 
     // symbolic links might also be fine.
     if (status == F_false) {
-      status = f_file_is(path.string, f_file_type_link, F_false);
+      status = f_file_is(path.string, F_file_type_link_d, F_false);
 
       if (status == F_true) {
         if (main.error.verbosity == f_console_verbosity_verbose) {
@@ -258,10 +258,10 @@ extern "C" {
       return F_status_set_warning(F_none);
     }
     else if (F_status_set_fine(status) == F_file_found_not) {
-      mode_t mode = f_file_mode_all_rw;
+      mode_t mode = F_file_mode_all_rw_d;
 
       if (executable) {
-        mode = f_file_mode_all_rwx;
+        mode = F_file_mode_all_rwx_d;
       }
 
       status = f_file_create(path.string, mode, F_true);
@@ -290,7 +290,7 @@ extern "C" {
       if (content.used) {
         f_file_t file = f_file_t_initialize;
 
-        file.flag = f_file_flag_append_wo;
+        file.flag = F_file_flag_append_wo_d;
         file.size_write = content.used;
 
         status = f_file_open(path.string, 0, &file);

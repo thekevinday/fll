@@ -201,7 +201,7 @@ extern "C" {
       if (width) {
         status = f_utf_is_control(string + i, i + width > length ? length - i : width);
 
-        if (status == F_false && total + width < f_print_write_max) {
+        if (status == F_false && total + width < F_print_write_max_d) {
           total += width;
           i += width;
 
@@ -209,7 +209,7 @@ extern "C" {
         }
       }
       else {
-        if ((string[i] > 0x1f && string[i] != 0x7f) && total < f_print_write_max) {
+        if ((string[i] > 0x1f && string[i] != 0x7f) && total < F_print_write_max_d) {
           ++total;
           ++i;
 
@@ -675,7 +675,7 @@ extern "C" {
 
     while (i < length) {
 
-      if (string[i] && total < f_print_write_max) {
+      if (string[i] && total < F_print_write_max_d) {
         ++total;
         ++i;
 
@@ -733,7 +733,7 @@ extern "C" {
 
     while (i < length) {
 
-      if (total < f_print_write_max) {
+      if (total < F_print_write_max_d) {
         ++total;
         ++i;
 
@@ -792,7 +792,7 @@ extern "C" {
       s = private_f_print_character_safely_get(string[i]);
 
       if (s) {
-        if (total < f_print_write_max) {
+        if (total < F_print_write_max_d) {
           ++total;
           ++i;
 
@@ -800,7 +800,7 @@ extern "C" {
         }
       }
       else {
-        if (total + macro_f_utf_byte_width(string[i]) < f_print_write_max) {
+        if (total + macro_f_utf_byte_width(string[i]) < F_print_write_max_d) {
           total += macro_f_utf_byte_width(string[i]);
           i += macro_f_utf_byte_width(string[i]);
 
@@ -919,7 +919,7 @@ extern "C" {
       } // while
 
       if (j >= except.used || except.array[j] != i) {
-        if (string[i] && total < f_print_write_max) {
+        if (string[i] && total < F_print_write_max_d) {
           ++total;
           ++i;
 
@@ -984,7 +984,7 @@ extern "C" {
       } // while
 
       if (j >= except.used || except.array[j] != i) {
-        if (total < f_print_write_max) {
+        if (total < F_print_write_max_d) {
           ++total;
           ++i;
 
@@ -1058,7 +1058,7 @@ extern "C" {
 
       s = private_f_print_character_safely_get(string[i]);
 
-      if (!s && total < f_print_write_max) {
+      if (!s && total < F_print_write_max_d) {
         ++total;
         ++i;
 

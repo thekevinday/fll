@@ -14,27 +14,27 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_length + main.path_build_libraries_shared.used;
+    f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_s_length + main.path_build_libraries_shared.used;
 
     char build_libraries[build_libraries_length + 1];
 
-    memcpy(build_libraries, fake_build_parameter_library_link_path, fake_build_parameter_library_link_path_length);
+    memcpy(build_libraries, fake_build_parameter_library_link_path_s, fake_build_parameter_library_link_path_s_length);
 
     if (is_shared) {
-      memcpy(build_libraries + fake_build_parameter_library_link_path_length, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
+      memcpy(build_libraries + fake_build_parameter_library_link_path_s_length, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
     }
     else {
-      memcpy(build_libraries + fake_build_parameter_library_link_path_length, main.path_build_libraries_static.string, main.path_build_libraries_static.used);
+      memcpy(build_libraries + fake_build_parameter_library_link_path_s_length, main.path_build_libraries_static.string, main.path_build_libraries_static.used);
     }
 
     build_libraries[build_libraries_length] = 0;
 
-    f_array_length_t build_includes_length = fake_build_parameter_library_include_length + main.path_build_includes.used;
+    f_array_length_t build_includes_length = fake_build_parameter_library_include_s_length + main.path_build_includes.used;
 
     char build_includes[build_includes_length + 1];
 
-    memcpy(build_includes, fake_build_parameter_library_include, fake_build_parameter_library_include_length);
-    memcpy(build_includes + fake_build_parameter_library_include_length, main.path_build_includes.string, main.path_build_includes.used);
+    memcpy(build_includes, fake_build_parameter_library_include_s, fake_build_parameter_library_include_s_length);
+    memcpy(build_includes + fake_build_parameter_library_include_s_length, main.path_build_includes.string, main.path_build_includes.used);
 
     const f_string_t values[] = {
       build_libraries,
@@ -56,12 +56,12 @@ extern "C" {
       f_array_length_t length = 0;
 
       if (F_status_is_error_not(*status)) {
-        length = fake_build_parameter_library_include_length + main.path_work_includes.used;
+        length = fake_build_parameter_library_include_s_length + main.path_work_includes.used;
 
         char string[length + 1];
 
-        memcpy(string, fake_build_parameter_library_include, fake_build_parameter_library_include_length);
-        memcpy(string + fake_build_parameter_library_include_length, main.path_work_includes.string, main.path_work_includes.used);
+        memcpy(string, fake_build_parameter_library_include_s, fake_build_parameter_library_include_s_length);
+        memcpy(string + fake_build_parameter_library_include_s_length, main.path_work_includes.string, main.path_work_includes.used);
 
         string[length] = 0;
 
@@ -69,12 +69,12 @@ extern "C" {
       }
 
       if (data_build.setting.search_shared && (is_shared || !data_build.setting.search_exclusive) && F_status_is_error_not(*status)) {
-        length = fake_build_parameter_library_link_path_length + main.path_work_libraries_shared.used;
+        length = fake_build_parameter_library_link_path_s_length + main.path_work_libraries_shared.used;
 
         char string[length + 1];
 
-        memcpy(string, fake_build_parameter_library_link_path, fake_build_parameter_library_link_path_length);
-        memcpy(string + fake_build_parameter_library_link_path_length, main.path_work_libraries_shared.string, main.path_work_libraries_shared.used);
+        memcpy(string, fake_build_parameter_library_link_path_s, fake_build_parameter_library_link_path_s_length);
+        memcpy(string + fake_build_parameter_library_link_path_s_length, main.path_work_libraries_shared.string, main.path_work_libraries_shared.used);
 
         string[length] = 0;
 
@@ -82,12 +82,12 @@ extern "C" {
       }
 
       if (data_build.setting.search_static && (!is_shared || !data_build.setting.search_exclusive) && F_status_is_error_not(*status)) {
-        length = fake_build_parameter_library_link_path_length + main.path_work_libraries_static.used;
+        length = fake_build_parameter_library_link_path_s_length + main.path_work_libraries_static.used;
 
         char string[length + 1];
 
-        memcpy(string, fake_build_parameter_library_link_path, fake_build_parameter_library_link_path_length);
-        memcpy(string + fake_build_parameter_library_link_path_length, main.path_work_libraries_static.string, main.path_work_libraries_static.used);
+        memcpy(string, fake_build_parameter_library_link_path_s, fake_build_parameter_library_link_path_s_length);
+        memcpy(string + fake_build_parameter_library_link_path_s_length, main.path_work_libraries_static.string, main.path_work_libraries_static.used);
 
         string[length] = 0;
 
@@ -306,7 +306,7 @@ extern "C" {
             break;
           }
 
-          *status = fl_directory_create(destination_directory.string, destination_directory.used, f_file_mode_all_rwx);
+          *status = fl_directory_create(destination_directory.string, destination_directory.used, F_file_mode_all_rwx_d);
 
           if (F_status_is_error(*status)) {
             fll_error_file_print(main.error, F_status_set_fine(*status), "fl_directory_create", F_true, destination_directory.string, "create", fll_error_file_type_directory);
@@ -341,7 +341,7 @@ extern "C" {
           break;
         }
 
-        *status = f_file_copy(path_source.string, destination_file.string, mode, f_file_default_read_size, F_false);
+        *status = f_file_copy(path_source.string, destination_file.string, mode, F_file_default_read_size_d, F_false);
 
         if (F_status_is_error(*status)) {
           fake_print_error_build_operation_file(main, F_status_set_fine(*status), "f_file_copy", "copy", "to", path_source.string, destination_file.string, F_true);
@@ -497,19 +497,19 @@ extern "C" {
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
-    *status = fll_execute_arguments_add(fake_other_operation_build, fake_other_operation_build_length, &arguments);
+    *status = fll_execute_arguments_add(fake_other_operation_build_s, fake_other_operation_build_s_length, &arguments);
 
     // ensure console color mode is passed to the scripts so that they can also react to color mode.
-    if (F_status_is_error_not(*status) && main.context.mode != f_color_mode_none) {
+    if (F_status_is_error_not(*status) && main.context.mode != F_color_mode_none_d) {
       char argument[3] = { f_console_symbol_short_disable_s[0], 0, 0 };
 
-      if (main.context.mode == f_color_mode_dark) {
+      if (main.context.mode == F_color_mode_dark_d) {
         argument[1] = f_console_standard_short_dark_s[0];
       }
-      else if (main.context.mode == f_color_mode_light) {
+      else if (main.context.mode == F_color_mode_light_d) {
         argument[1] = f_console_standard_short_light_s[0];
       }
-      else if (main.context.mode == f_color_mode_no_color) {
+      else if (main.context.mode == F_color_mode_no_color_d) {
         argument[1] = f_console_standard_short_no_color_s[0];
       }
 
@@ -583,33 +583,33 @@ extern "C" {
       };
 
       const f_array_length_t parameters_prefix_length[] = {
-         f_console_symbol_short_enable_length,
-         f_console_symbol_short_enable_length,
-         f_console_symbol_short_enable_length,
-         f_console_symbol_short_enable_length,
-         f_console_symbol_short_enable_length,
-         f_console_symbol_short_enable_length,
-         f_console_symbol_short_enable_length,
+         F_console_symbol_short_enable_s_length,
+         F_console_symbol_short_enable_s_length,
+         F_console_symbol_short_enable_s_length,
+         F_console_symbol_short_enable_s_length,
+         F_console_symbol_short_enable_s_length,
+         F_console_symbol_short_enable_s_length,
+         F_console_symbol_short_enable_s_length,
       };
 
       const f_string_t parameters_name[] = {
-        fake_short_define,
-        fake_short_process,
-        fake_short_settings,
-        fake_short_path_build,
-        fake_short_path_data,
-        fake_short_path_sources,
-        fake_short_path_work,
+        fake_short_define_s,
+        fake_short_process_s,
+        fake_short_settings_s,
+        fake_short_path_build_s,
+        fake_short_path_data_s,
+        fake_short_path_sources_s,
+        fake_short_path_work_s,
       };
 
       const f_array_length_t parameters_name_length[] = {
-         fake_short_define_length,
-         fake_short_process_length,
-         fake_short_settings_length,
-         fake_short_path_build_length,
-         fake_short_path_data_length,
-         fake_short_path_sources_length,
-         fake_short_path_work_length,
+         fake_short_define_s_length,
+         fake_short_process_s_length,
+         fake_short_settings_s_length,
+         fake_short_path_build_s_length,
+         fake_short_path_data_s_length,
+         fake_short_path_sources_s_length,
+         fake_short_path_work_s_length,
       };
 
       const f_string_t parameters_value[] = {
@@ -686,7 +686,7 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(fl_execute_parameter_option_path, 0, &data_build.environment, &signals, 0);
+      fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(FL_execute_parameter_option_path_d, 0, &data_build.environment, &signals, 0);
 
       *status = fll_execute_program(path.string, arguments, &parameter, 0, (void *) &return_code);
 
@@ -743,7 +743,7 @@ extern "C" {
 
     for (; i > 0; --i) {
 
-      if (name->string[i] == f_path_extension_separator[0]) {
+      if (name->string[i] == F_path_extension_separator_s[0]) {
         name->used = i;
         break;
       }
@@ -823,7 +823,7 @@ extern "C" {
       }
     }
 
-    const f_array_length_t parameter_file_name_length = fake_build_parameter_library_name_prefix_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_shared_length;
+    const f_array_length_t parameter_file_name_length = fake_build_parameter_library_name_prefix_s_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_shared_s_length;
     const f_array_length_t parameter_file_name_major_length = data_build.setting.version_major.used ? parameter_file_name_length + data_build.setting.version_major_prefix.used + data_build.setting.version_major.used : 0;
     const f_array_length_t parameter_file_name_minor_length = data_build.setting.version_minor.used ? parameter_file_name_major_length + data_build.setting.version_minor_prefix.used + data_build.setting.version_minor.used : 0;
     const f_array_length_t parameter_file_name_micro_length = data_build.setting.version_micro.used ? parameter_file_name_minor_length + data_build.setting.version_micro_prefix.used + data_build.setting.version_micro.used : 0;
@@ -841,25 +841,25 @@ extern "C" {
     parameter_file_name_micro[parameter_file_name_micro_length] = 0;
     parameter_file_name_nano[parameter_file_name_nano_length] = 0;
 
-    memcpy(parameter_file_name, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+    memcpy(parameter_file_name, fake_build_parameter_library_name_prefix_s, fake_build_parameter_library_name_prefix_s_length);
 
     if (parameter_file_name_major_length) {
-      memcpy(parameter_file_name_major, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+      memcpy(parameter_file_name_major, fake_build_parameter_library_name_prefix_s, fake_build_parameter_library_name_prefix_s_length);
 
       if (parameter_file_name_minor_length) {
-        memcpy(parameter_file_name_minor, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+        memcpy(parameter_file_name_minor, fake_build_parameter_library_name_prefix_s, fake_build_parameter_library_name_prefix_s_length);
 
         if (parameter_file_name_micro_length) {
-          memcpy(parameter_file_name_micro, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+          memcpy(parameter_file_name_micro, fake_build_parameter_library_name_prefix_s, fake_build_parameter_library_name_prefix_s_length);
 
           if (parameter_file_name_nano_length) {
-            memcpy(parameter_file_name_nano, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+            memcpy(parameter_file_name_nano, fake_build_parameter_library_name_prefix_s, fake_build_parameter_library_name_prefix_s_length);
           }
         }
       }
     }
 
-    f_array_length_t count = fake_build_parameter_library_name_prefix_length;
+    f_array_length_t count = fake_build_parameter_library_name_prefix_s_length;
 
     memcpy(parameter_file_name + count, data_build.setting.project_name.string, data_build.setting.project_name.used);
 
@@ -881,26 +881,26 @@ extern "C" {
 
     count += data_build.setting.project_name.used;
 
-    memcpy(parameter_file_name + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+    memcpy(parameter_file_name + count, fake_build_parameter_library_name_suffix_shared_s, fake_build_parameter_library_name_suffix_shared_s_length);
 
     if (parameter_file_name_major_length) {
-      memcpy(parameter_file_name_major + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+      memcpy(parameter_file_name_major + count, fake_build_parameter_library_name_suffix_shared_s, fake_build_parameter_library_name_suffix_shared_s_length);
 
       if (parameter_file_name_minor_length) {
-        memcpy(parameter_file_name_minor + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+        memcpy(parameter_file_name_minor + count, fake_build_parameter_library_name_suffix_shared_s, fake_build_parameter_library_name_suffix_shared_s_length);
 
         if (parameter_file_name_micro_length) {
-          memcpy(parameter_file_name_micro + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+          memcpy(parameter_file_name_micro + count, fake_build_parameter_library_name_suffix_shared_s, fake_build_parameter_library_name_suffix_shared_s_length);
 
           if (parameter_file_name_nano_length) {
-            memcpy(parameter_file_name_nano + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+            memcpy(parameter_file_name_nano + count, fake_build_parameter_library_name_suffix_shared_s, fake_build_parameter_library_name_suffix_shared_s_length);
           }
         }
       }
     }
 
     if (parameter_file_name_major_length) {
-      count += fake_build_parameter_library_name_suffix_shared_length;
+      count += fake_build_parameter_library_name_suffix_shared_s_length;
 
       if (data_build.setting.version_major_prefix.used) {
         memcpy(parameter_file_name_major + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
@@ -993,7 +993,7 @@ extern "C" {
     }
 
     {
-      f_array_length_t parameter_linker_length = fake_build_parameter_library_shared_prefix_length;
+      f_array_length_t parameter_linker_length = fake_build_parameter_library_shared_prefix_s_length;
       f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used;
 
       if (data_build.setting.version_file == fake_build_version_type_major) {
@@ -1025,7 +1025,7 @@ extern "C" {
       char parameter_linker[parameter_linker_length + 1];
       char parameter_file_path[parameter_file_path_length + 1];
 
-      memcpy(parameter_linker, fake_build_parameter_library_shared_prefix, fake_build_parameter_library_shared_prefix_length);
+      memcpy(parameter_linker, fake_build_parameter_library_shared_prefix_s, fake_build_parameter_library_shared_prefix_s_length);
       memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
 
       if (data_build.setting.version_file == fake_build_version_type_major) {
@@ -1042,32 +1042,32 @@ extern "C" {
       }
 
       if (data_build.setting.version_target == fake_build_version_type_major) {
-        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_major, parameter_file_name_major_length);
+        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_s_length, parameter_file_name_major, parameter_file_name_major_length);
       }
       else if (data_build.setting.version_target == fake_build_version_type_minor) {
-        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_minor, parameter_file_name_minor_length);
+        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_s_length, parameter_file_name_minor, parameter_file_name_minor_length);
       }
       else if (data_build.setting.version_target == fake_build_version_type_micro) {
-        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_micro, parameter_file_name_micro_length);
+        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_s_length, parameter_file_name_micro, parameter_file_name_micro_length);
       }
       else if (data_build.setting.version_target == fake_build_version_type_nano) {
-        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_nano, parameter_file_name_nano_length);
+        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_s_length, parameter_file_name_nano, parameter_file_name_nano_length);
       }
 
       parameter_linker[parameter_linker_length] = 0;
       parameter_file_path[parameter_file_path_length] = 0;
 
       const f_string_t values[] = {
-        fake_build_parameter_library_shared,
+        fake_build_parameter_library_shared_s,
         parameter_linker,
-        fake_build_parameter_library_output,
+        fake_build_parameter_library_output_s,
         parameter_file_path,
       };
 
       const f_array_length_t lengths[] = {
-        fake_build_parameter_library_shared_length,
+        fake_build_parameter_library_shared_s_length,
         parameter_linker_length,
-        fake_build_parameter_library_output_length,
+        fake_build_parameter_library_output_s_length,
         parameter_file_path_length,
       };
 
@@ -1262,11 +1262,11 @@ extern "C" {
     f_string_dynamic_t source_path = f_string_dynamic_t_initialize;
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
-    *status = fll_execute_arguments_add(fake_build_parameter_object_link_arguments, fake_build_parameter_object_link_arguments_length, &arguments);
+    *status = fll_execute_arguments_add(fake_build_parameter_object_link_arguments_s, fake_build_parameter_object_link_arguments_s_length, &arguments);
 
     if (F_status_is_error_not(*status)) {
-      f_array_length_t destination_length = main.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_length;
-      destination_length += data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_length;
+      f_array_length_t destination_length = main.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s_length;
+      destination_length += data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_s_length;
 
       char destination[destination_length + 1];
 
@@ -1275,14 +1275,14 @@ extern "C" {
       memcpy(destination, main.path_build_libraries_static.string, main.path_build_libraries_static.used);
       destination_length += main.path_build_libraries_static.used;
 
-      memcpy(destination + destination_length, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
-      destination_length += fake_build_parameter_library_name_prefix_length;
+      memcpy(destination + destination_length, fake_build_parameter_library_name_prefix_s, fake_build_parameter_library_name_prefix_s_length);
+      destination_length += fake_build_parameter_library_name_prefix_s_length;
 
       memcpy(destination + destination_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
       destination_length += data_build.setting.project_name.used;
 
-      memcpy(destination + destination_length, fake_build_parameter_library_name_suffix_static, fake_build_parameter_library_name_suffix_static_length);
-      destination_length += fake_build_parameter_library_name_suffix_static_length;
+      memcpy(destination + destination_length, fake_build_parameter_library_name_suffix_static_s, fake_build_parameter_library_name_suffix_static_s_length);
+      destination_length += fake_build_parameter_library_name_suffix_static_s_length;
 
       destination[destination_length] = 0;
 
@@ -1323,7 +1323,7 @@ extern "C" {
             break;
           }
 
-          *status = f_string_append_assure(f_path_separator_s, f_path_separator_length, &source_path);
+          *status = f_string_append_assure(f_path_separator_s, F_path_separator_s_length, &source_path);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main.error, F_status_set_fine(*status), "f_string_append_assure", F_true);
@@ -1337,10 +1337,10 @@ extern "C" {
             break;
           }
 
-          source_length = source_path.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+          source_length = source_path.used + file_name.used + fake_build_parameter_object_name_suffix_s_length;
         }
         else {
-          source_length = main.path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+          source_length = main.path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_s_length;
         }
 
         char source[source_length + 1];
@@ -1348,12 +1348,12 @@ extern "C" {
         if (source_path.used) {
           memcpy(source, source_path.string, source_path.used);
           memcpy(source + source_path.used, file_name.string, file_name.used);
-          memcpy(source + source_path.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+          memcpy(source + source_path.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s_length);
         }
         else {
           memcpy(source, main.path_build_objects.string, main.path_build_objects.used);
           memcpy(source + main.path_build_objects.used, file_name.string, file_name.used);
-          memcpy(source + main.path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+          memcpy(source + main.path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s_length);
         }
 
         source[source_length] = 0;
@@ -1406,8 +1406,8 @@ extern "C" {
       };
 
       const f_array_length_t variables_length[] = {
-        f_path_environment_length,
-        f_path_present_working_length
+        F_path_environment_s_length,
+        F_path_present_working_s_length
       };
 
       for (uint8_t i = 0; i < 2; ++i) {
@@ -1431,9 +1431,9 @@ extern "C" {
           flockfile(main.error.to.stream);
 
           fl_print_format("%c%[%SThe values for the setting '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_environment, main.error.notable);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_environment_s, main.error.notable);
           fl_print_format("%[' of setting file '%]", main.error.to.stream, main.error.context, main.error.context);
-          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_environment, main.error.notable);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_environment_s, main.error.notable);
           fl_print_format("%[' is too large.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
           flockfile(main.error.to.stream);
@@ -1490,7 +1490,7 @@ extern "C" {
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
         {
-          f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large, fake_common_allocation_small, 0, &fake_signal_state_interrupt_fss, 0, (void *) &main, 0);
+          f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) &main, 0);
 
           *status = fll_fss_extended_read(buffer, state, &range, &objects, &contents, 0, 0, &delimits, 0);
         }
@@ -1526,7 +1526,7 @@ extern "C" {
       };
 
       f_string_t names[] = {
-        fake_build_setting_name_project_name,
+        fake_build_setting_name_project_name_s,
       };
 
       for (uint8_t i = 0; i < 1; ++i) {
@@ -1605,113 +1605,113 @@ extern "C" {
     f_string_dynamics_t version_target = f_string_dynamics_t_initialize;
 
     const f_string_t settings_name[] = {
-      fake_build_setting_name_build_compiler,
-      fake_build_setting_name_build_indexer,
-      fake_build_setting_name_build_language,
-      fake_build_setting_name_build_libraries,
-      fake_build_setting_name_build_script,
-      fake_build_setting_name_build_shared,
-      fake_build_setting_name_build_sources_headers,
-      fake_build_setting_name_build_sources_library,
-      fake_build_setting_name_build_sources_program,
-      fake_build_setting_name_build_sources_script,
-      fake_build_setting_name_build_sources_settings,
-      fake_build_setting_name_build_static,
-      fake_build_setting_name_defines_all,
-      fake_build_setting_name_defines_library,
-      fake_build_setting_name_defines_program,
-      fake_build_setting_name_defines_shared,
-      fake_build_setting_name_defines_static,
-      fake_build_setting_name_environment,
-      fake_build_setting_name_flags_all,
-      fake_build_setting_name_flags_library,
-      fake_build_setting_name_flags_program,
-      fake_build_setting_name_flags_shared,
-      fake_build_setting_name_flags_static,
-      fake_build_setting_name_modes,
-      fake_build_setting_name_modes_default,
-      fake_build_setting_name_path_headers,
-      fake_build_setting_name_path_headers_preserve,
-      fake_build_setting_name_path_language,
-      fake_build_setting_name_path_library_script,
-      fake_build_setting_name_path_library_shared,
-      fake_build_setting_name_path_library_static,
-      fake_build_setting_name_path_program_script,
-      fake_build_setting_name_path_program_shared,
-      fake_build_setting_name_path_program_static,
-      fake_build_setting_name_path_sources,
-      fake_build_setting_name_path_standard,
-      fake_build_setting_name_process_post,
-      fake_build_setting_name_process_pre,
-      fake_build_setting_name_project_name,
-      fake_build_setting_name_search_exclusive,
-      fake_build_setting_name_search_shared,
-      fake_build_setting_name_search_static,
-      fake_build_setting_name_version_file,
-      fake_build_setting_name_version_major,
-      fake_build_setting_name_version_major_prefix,
-      fake_build_setting_name_version_micro,
-      fake_build_setting_name_version_micro_prefix,
-      fake_build_setting_name_version_minor,
-      fake_build_setting_name_version_minor_prefix,
-      fake_build_setting_name_version_nano,
-      fake_build_setting_name_version_nano_prefix,
-      fake_build_setting_name_version_target,
+      fake_build_setting_name_build_compiler_s,
+      fake_build_setting_name_build_indexer_s,
+      fake_build_setting_name_build_language_s,
+      fake_build_setting_name_build_libraries_s,
+      fake_build_setting_name_build_script_s,
+      fake_build_setting_name_build_shared_s,
+      fake_build_setting_name_build_sources_headers_s,
+      fake_build_setting_name_build_sources_library_s,
+      fake_build_setting_name_build_sources_program_s,
+      fake_build_setting_name_build_sources_script_s,
+      fake_build_setting_name_build_sources_settings_s,
+      fake_build_setting_name_build_static_s,
+      fake_build_setting_name_defines_all_s,
+      fake_build_setting_name_defines_library_s,
+      fake_build_setting_name_defines_program_s,
+      fake_build_setting_name_defines_shared_s,
+      fake_build_setting_name_defines_static_s,
+      fake_build_setting_name_environment_s,
+      fake_build_setting_name_flags_all_s,
+      fake_build_setting_name_flags_library_s,
+      fake_build_setting_name_flags_program_s,
+      fake_build_setting_name_flags_shared_s,
+      fake_build_setting_name_flags_static_s,
+      fake_build_setting_name_modes_s,
+      fake_build_setting_name_modes_default_s,
+      fake_build_setting_name_path_headers_s,
+      fake_build_setting_name_path_headers_preserve_s,
+      fake_build_setting_name_path_language_s,
+      fake_build_setting_name_path_library_script_s,
+      fake_build_setting_name_path_library_shared_s,
+      fake_build_setting_name_path_library_static_s,
+      fake_build_setting_name_path_program_script_s,
+      fake_build_setting_name_path_program_shared_s,
+      fake_build_setting_name_path_program_static_s,
+      fake_build_setting_name_path_sources_s,
+      fake_build_setting_name_path_standard_s,
+      fake_build_setting_name_process_post_s,
+      fake_build_setting_name_process_pre_s,
+      fake_build_setting_name_project_name_s,
+      fake_build_setting_name_search_exclusive_s,
+      fake_build_setting_name_search_shared_s,
+      fake_build_setting_name_search_static_s,
+      fake_build_setting_name_version_file_s,
+      fake_build_setting_name_version_major_s,
+      fake_build_setting_name_version_major_prefix_s,
+      fake_build_setting_name_version_micro_s,
+      fake_build_setting_name_version_micro_prefix_s,
+      fake_build_setting_name_version_minor_s,
+      fake_build_setting_name_version_minor_prefix_s,
+      fake_build_setting_name_version_nano_s,
+      fake_build_setting_name_version_nano_prefix_s,
+      fake_build_setting_name_version_target_s,
     };
 
     const f_array_length_t settings_length[] = {
-      fake_build_setting_name_build_compiler_length,
-      fake_build_setting_name_build_indexer_length,
-      fake_build_setting_name_build_language_length,
-      fake_build_setting_name_build_libraries_length,
-      fake_build_setting_name_build_script_length,
-      fake_build_setting_name_build_shared_length,
-      fake_build_setting_name_build_sources_headers_length,
-      fake_build_setting_name_build_sources_library_length,
-      fake_build_setting_name_build_sources_program_length,
-      fake_build_setting_name_build_sources_script_length,
-      fake_build_setting_name_build_sources_settings_length,
-      fake_build_setting_name_build_static_length,
-      fake_build_setting_name_defines_all_length,
-      fake_build_setting_name_defines_library_length,
-      fake_build_setting_name_defines_program_length,
-      fake_build_setting_name_defines_shared_length,
-      fake_build_setting_name_defines_static_length,
-      fake_build_setting_name_environment_length,
-      fake_build_setting_name_flags_all_length,
-      fake_build_setting_name_flags_library_length,
-      fake_build_setting_name_flags_program_length,
-      fake_build_setting_name_flags_shared_length,
-      fake_build_setting_name_flags_static_length,
-      fake_build_setting_name_modes_length,
-      fake_build_setting_name_modes_default_length,
-      fake_build_setting_name_path_headers_length,
-      fake_build_setting_name_path_headers_preserve_length,
-      fake_build_setting_name_path_language_length,
-      fake_build_setting_name_path_library_script_length,
-      fake_build_setting_name_path_library_shared_length,
-      fake_build_setting_name_path_library_static_length,
-      fake_build_setting_name_path_program_script_length,
-      fake_build_setting_name_path_program_shared_length,
-      fake_build_setting_name_path_program_static_length,
-      fake_build_setting_name_path_sources_length,
-      fake_build_setting_name_path_standard_length,
-      fake_build_setting_name_process_post_length,
-      fake_build_setting_name_process_pre_length,
-      fake_build_setting_name_project_name_length,
-      fake_build_setting_name_search_exclusive_length,
-      fake_build_setting_name_search_shared_length,
-      fake_build_setting_name_search_static_length,
-      fake_build_setting_name_version_file_length,
-      fake_build_setting_name_version_major_length,
-      fake_build_setting_name_version_major_prefix_length,
-      fake_build_setting_name_version_micro_length,
-      fake_build_setting_name_version_micro_prefix_length,
-      fake_build_setting_name_version_minor_length,
-      fake_build_setting_name_version_minor_prefix_length,
-      fake_build_setting_name_version_nano_length,
-      fake_build_setting_name_version_nano_prefix_length,
-      fake_build_setting_name_version_target_length,
+      fake_build_setting_name_build_compiler_s_length,
+      fake_build_setting_name_build_indexer_s_length,
+      fake_build_setting_name_build_language_s_length,
+      fake_build_setting_name_build_libraries_s_length,
+      fake_build_setting_name_build_script_s_length,
+      fake_build_setting_name_build_shared_s_length,
+      fake_build_setting_name_build_sources_headers_s_length,
+      fake_build_setting_name_build_sources_library_s_length,
+      fake_build_setting_name_build_sources_program_s_length,
+      fake_build_setting_name_build_sources_script_s_length,
+      fake_build_setting_name_build_sources_settings_s_length,
+      fake_build_setting_name_build_static_s_length,
+      fake_build_setting_name_defines_all_s_length,
+      fake_build_setting_name_defines_library_s_length,
+      fake_build_setting_name_defines_program_s_length,
+      fake_build_setting_name_defines_shared_s_length,
+      fake_build_setting_name_defines_static_s_length,
+      fake_build_setting_name_environment_length_s,
+      fake_build_setting_name_flags_all_s_length,
+      fake_build_setting_name_flags_library_s_length,
+      fake_build_setting_name_flags_program_s_length,
+      fake_build_setting_name_flags_shared_s_length,
+      fake_build_setting_name_flags_static_s_length,
+      fake_build_setting_name_modes_s_length,
+      fake_build_setting_name_modes_default_s_length,
+      fake_build_setting_name_path_headers_s_length,
+      fake_build_setting_name_path_headers_preserve_s_length,
+      fake_build_setting_name_path_language_s_length,
+      fake_build_setting_name_path_library_script_s_length,
+      fake_build_setting_name_path_library_shared_s_length,
+      fake_build_setting_name_path_library_static_s_length,
+      fake_build_setting_name_path_program_script_s_length,
+      fake_build_setting_name_path_program_shared_s_length,
+      fake_build_setting_name_path_program_static_s_length,
+      fake_build_setting_name_path_sources_s_length,
+      fake_build_setting_name_path_standard_s_length,
+      fake_build_setting_name_process_post_s_length,
+      fake_build_setting_name_process_pre_s_length,
+      fake_build_setting_name_project_name_s_length,
+      fake_build_setting_name_search_exclusive_s_length,
+      fake_build_setting_name_search_shared_s_length,
+      fake_build_setting_name_search_static_s_length,
+      fake_build_setting_name_version_file_s_length,
+      fake_build_setting_name_version_major_s_length,
+      fake_build_setting_name_version_major_prefix_s_length,
+      fake_build_setting_name_version_micro_s_length,
+      fake_build_setting_name_version_micro_prefix_s_length,
+      fake_build_setting_name_version_minor_s_length,
+      fake_build_setting_name_version_minor_prefix_s_length,
+      fake_build_setting_name_version_nano_s_length,
+      fake_build_setting_name_version_nano_prefix_s_length,
+      fake_build_setting_name_version_target_s_length,
     };
 
     f_string_dynamics_t *settings_value[] = {
@@ -1826,14 +1826,14 @@ extern "C" {
 
     f_string_t function = "fll_fss_snatch_apart";
 
-    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total, settings_value, settings_matches, 0);
+    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total_d, settings_value, settings_matches, 0);
 
     if (*status == F_none) {
       const int total_build_libraries = setting->build_libraries.used;
 
-      f_string_dynamic_t settings_mode_name_dynamic[fake_build_setting_total];
-      f_string_t settings_mode_names[fake_build_setting_total];
-      f_array_length_t setting_mode_lengths[fake_build_setting_total];
+      f_string_dynamic_t settings_mode_name_dynamic[fake_build_setting_total_d];
+      f_string_t settings_mode_names[fake_build_setting_total_d];
+      f_array_length_t setting_mode_lengths[fake_build_setting_total_d];
 
       const f_string_dynamics_t *modes = &setting->modes_default;
       bool found = F_false;
@@ -1876,11 +1876,11 @@ extern "C" {
           break;
         }
 
-        memset(&settings_mode_name_dynamic, 0, sizeof(f_string_dynamic_t) * fake_build_setting_total);
-        memset(&settings_mode_names, 0, sizeof(f_string_t) * fake_build_setting_total);
-        memset(&setting_mode_lengths, 0, sizeof(f_array_length_t) * fake_build_setting_total);
+        memset(&settings_mode_name_dynamic, 0, sizeof(f_string_dynamic_t) * fake_build_setting_total_d);
+        memset(&settings_mode_names, 0, sizeof(f_string_t) * fake_build_setting_total_d);
+        memset(&setting_mode_lengths, 0, sizeof(f_array_length_t) * fake_build_setting_total_d);
 
-        for (j = 0; j < fake_build_setting_total; ++j) {
+        for (j = 0; j < fake_build_setting_total_d; ++j) {
 
           setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
 
@@ -1899,14 +1899,14 @@ extern "C" {
         } // for
 
         if (*status == F_none) {
-          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, fake_build_setting_total, settings_value, 0, 0);
+          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, fake_build_setting_total_d, settings_value, 0, 0);
 
           if (F_status_is_error(*status)) {
             function = "fll_fss_snatch_apart";
           }
         }
 
-        for (j = 0; j < fake_build_setting_total; ++j) {
+        for (j = 0; j < fake_build_setting_total_d; ++j) {
           macro_f_string_dynamic_t_delete_simple(settings_mode_name_dynamic[j]);
         } // for
 
@@ -1959,39 +1959,39 @@ extern "C" {
     }
     else if (!fake_signal_received(main)) {
       const f_string_t settings_single_name[] = {
-        fake_build_setting_name_build_compiler,
-        fake_build_setting_name_build_indexer,
-        fake_build_setting_name_build_language,
-        fake_build_setting_name_build_script,
-        fake_build_setting_name_build_shared,
-        fake_build_setting_name_build_static,
-        fake_build_setting_name_path_headers,
-        fake_build_setting_name_path_headers_preserve,
-        fake_build_setting_name_path_language,
-        fake_build_setting_name_path_library_script,
-        fake_build_setting_name_path_library_shared,
-        fake_build_setting_name_path_library_static,
-        fake_build_setting_name_path_program_script,
-        fake_build_setting_name_path_program_shared,
-        fake_build_setting_name_path_program_static,
-        fake_build_setting_name_path_sources,
-        fake_build_setting_name_path_standard,
-        fake_build_setting_name_process_post,
-        fake_build_setting_name_process_pre,
-        fake_build_setting_name_project_name,
-        fake_build_setting_name_search_exclusive,
-        fake_build_setting_name_search_shared,
-        fake_build_setting_name_search_static,
-        fake_build_setting_name_version_file,
-        fake_build_setting_name_version_major,
-        fake_build_setting_name_version_major_prefix,
-        fake_build_setting_name_version_micro,
-        fake_build_setting_name_version_micro_prefix,
-        fake_build_setting_name_version_minor,
-        fake_build_setting_name_version_minor_prefix,
-        fake_build_setting_name_version_nano,
-        fake_build_setting_name_version_nano_prefix,
-        fake_build_setting_name_version_target,
+        fake_build_setting_name_build_compiler_s,
+        fake_build_setting_name_build_indexer_s,
+        fake_build_setting_name_build_language_s,
+        fake_build_setting_name_build_script_s,
+        fake_build_setting_name_build_shared_s,
+        fake_build_setting_name_build_static_s,
+        fake_build_setting_name_path_headers_s,
+        fake_build_setting_name_path_headers_preserve_s,
+        fake_build_setting_name_path_language_s,
+        fake_build_setting_name_path_library_script_s,
+        fake_build_setting_name_path_library_shared_s,
+        fake_build_setting_name_path_library_static_s,
+        fake_build_setting_name_path_program_script_s,
+        fake_build_setting_name_path_program_shared_s,
+        fake_build_setting_name_path_program_static_s,
+        fake_build_setting_name_path_sources_s,
+        fake_build_setting_name_path_standard_s,
+        fake_build_setting_name_process_post_s,
+        fake_build_setting_name_process_pre_s,
+        fake_build_setting_name_project_name_s,
+        fake_build_setting_name_search_exclusive_s,
+        fake_build_setting_name_search_shared_s,
+        fake_build_setting_name_search_static_s,
+        fake_build_setting_name_version_file_s,
+        fake_build_setting_name_version_major_s,
+        fake_build_setting_name_version_major_prefix_s,
+        fake_build_setting_name_version_micro_s,
+        fake_build_setting_name_version_micro_prefix_s,
+        fake_build_setting_name_version_minor_s,
+        fake_build_setting_name_version_minor_prefix_s,
+        fake_build_setting_name_version_nano_s,
+        fake_build_setting_name_version_nano_prefix_s,
+        fake_build_setting_name_version_target_s,
       };
 
       const f_string_statics_t *settings_single_source[] = {
@@ -2193,7 +2193,7 @@ extern "C" {
         0,
         0,
         0,
-        fake_build_version_micro,
+        fake_build_version_micro_s,
         0,
         0,
         0,
@@ -2202,7 +2202,7 @@ extern "C" {
         0,
         0,
         0,
-        fake_build_version_major,
+        fake_build_version_major_s,
       };
 
       // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", "micro", or "nano".
@@ -2263,10 +2263,10 @@ extern "C" {
         }
 
         if (settings_single_type[i] == 1) {
-          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_common_setting_bool_yes, settings_single_source[i]->array[0].used, fake_common_setting_bool_yes_length) == F_equal_to) {
+          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_common_setting_bool_yes_s, settings_single_source[i]->array[0].used, fake_common_setting_bool_yes_s_length) == F_equal_to) {
             *settings_single_bool[i] = F_true;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_common_setting_bool_no, settings_single_source[i]->array[0].used, fake_common_setting_bool_no_length) == F_equal_to) {
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_common_setting_bool_no_s, settings_single_source[i]->array[0].used, fake_common_setting_bool_no_s_length) == F_equal_to) {
             *settings_single_bool[i] = F_false;
           }
           else {
@@ -2280,11 +2280,11 @@ extern "C" {
               fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
               fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
               fl_print_format("%[' may be either '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_yes, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_yes_s, main.warning.notable);
               fl_print_format("%[' or '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_no, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_no_s, main.warning.notable);
               fl_print_format("%[', defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_yes, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_yes_s, main.warning.notable);
               fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
 
               funlockfile(main.warning.to.stream);
@@ -2292,13 +2292,13 @@ extern "C" {
           }
         }
         else if (settings_single_type[i] == 4) {
-          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_bash, settings_single_source[i]->array[0].used, fake_build_language_bash_length) == F_equal_to) {
+          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_bash_s, settings_single_source[i]->array[0].used, fake_build_language_bash_s_length) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_bash;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_c, settings_single_source[i]->array[0].used, fake_build_language_c_length) == F_equal_to) {
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_c_s, settings_single_source[i]->array[0].used, fake_build_language_c_s_length) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_c;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_cpp, settings_single_source[i]->array[0].used, fake_build_language_cpp_length) == F_equal_to) {
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_cpp_s, settings_single_source[i]->array[0].used, fake_build_language_cpp_s_length) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_cpp;
           }
           else {
@@ -2312,13 +2312,13 @@ extern "C" {
               fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
               fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
               fl_print_format("%[' may only be one of '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_bash, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_bash_s, main.warning.notable);
               fl_print_format("%[', '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_c, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_c_s, main.warning.notable);
               fl_print_format("%[', or '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_cpp, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_cpp_s, main.warning.notable);
               fl_print_format("%[', defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_c, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_c_s, main.warning.notable);
               fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
 
               funlockfile(main.warning.to.stream);
@@ -2326,16 +2326,16 @@ extern "C" {
           }
         }
         else if (settings_single_type[i] == 5) {
-          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_major, settings_single_source[i]->array[0].used, fake_build_version_major_length) == F_equal_to) {
+          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_major_s, settings_single_source[i]->array[0].used, fake_build_version_major_s_length) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_major;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor, settings_single_source[i]->array[0].used, fake_build_version_minor_length) == F_equal_to) {
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor_s, settings_single_source[i]->array[0].used, fake_build_version_minor_s_length) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_minor;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro, settings_single_source[i]->array[0].used, fake_build_version_micro_length) == F_equal_to) {
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro_s, settings_single_source[i]->array[0].used, fake_build_version_micro_s_length) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_micro;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_nano, settings_single_source[i]->array[0].used, fake_build_version_nano_length) == F_equal_to) {
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_nano_s, settings_single_source[i]->array[0].used, fake_build_version_nano_s_length) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_nano;
           }
           else {
@@ -2349,13 +2349,13 @@ extern "C" {
               fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
               fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
               fl_print_format("%[' may only be one of '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_major, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_major_s, main.warning.notable);
               fl_print_format("%[', '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_minor, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_minor_s, main.warning.notable);
               fl_print_format("%[', '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_micro, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_micro_s, main.warning.notable);
               fl_print_format("%[', or '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_nano, main.warning.notable);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_nano_s, main.warning.notable);
               fl_print_format("%[', defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
               fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, settings_single_version_default_name[i], main.warning.notable);
               fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
@@ -2377,7 +2377,7 @@ extern "C" {
           }
 
           if (settings_single_type[i] == 2) {
-            *status = f_string_append_assure(f_path_separator_s, f_path_separator_length, settings_single_destination[i]);
+            *status = f_string_append_assure(f_path_separator_s, F_path_separator_s_length, settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
               fll_error_print(main.error, F_status_set_fine(*status), "f_string_append_assure", F_true);
@@ -2401,11 +2401,11 @@ extern "C" {
             flockfile(main.warning.to.stream);
 
             fl_print_format("%c%[%SThe setting '%]", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, main.warning.context);
-            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, fake_build_setting_name_version_file, main.warning.notable);
+            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, fake_build_setting_name_version_file_s, main.warning.notable);
             fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
             fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
             fl_print_format("%[' is required, defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-            fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_micro, main.warning.notable);
+            fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_micro_s, main.warning.notable);
             fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
 
             funlockfile(main.warning.to.stream);
@@ -2419,11 +2419,11 @@ extern "C" {
             flockfile(main.warning.to.stream);
 
             fl_print_format("%c%[%SThe setting '%]", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, main.warning.context);
-            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, fake_build_setting_name_version_target, main.warning.notable);
+            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, fake_build_setting_name_version_target_s, main.warning.notable);
             fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
             fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
             fl_print_format("%[' is required, defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
-            fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_major, main.warning.notable);
+            fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_major_s, main.warning.notable);
             fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
 
             funlockfile(main.warning.to.stream);
@@ -2456,22 +2456,22 @@ extern "C" {
         };
 
         const char *name_target[] = {
-          fake_build_version_major,
-          fake_build_version_minor,
-          fake_build_version_micro,
-          fake_build_version_nano,
+          fake_build_version_major_s,
+          fake_build_version_minor_s,
+          fake_build_version_micro_s,
+          fake_build_version_nano_s,
         };
 
         const char *name_object[] = {
-          fake_build_setting_name_version_major,
-          fake_build_setting_name_version_minor,
-          fake_build_setting_name_version_micro,
-          fake_build_setting_name_version_nano,
+          fake_build_setting_name_version_major_s,
+          fake_build_setting_name_version_minor_s,
+          fake_build_setting_name_version_micro_s,
+          fake_build_setting_name_version_nano_s,
         };
 
         const char *setting_name[] = {
-          fake_build_setting_name_version_file,
-          fake_build_setting_name_version_target,
+          fake_build_setting_name_version_file_s,
+          fake_build_setting_name_version_target_s,
         };
 
         const uint8_t setting_target[] = {
@@ -2488,7 +2488,7 @@ extern "C" {
             if (!has_prefix_object[i]) {
               prefix[i]->used = 0;
 
-              *status = f_string_append(fake_build_setting_default_version_prefix, fake_build_setting_default_version_prefix_length, prefix[i]);
+              *status = f_string_append(fake_build_setting_default_version_prefix_s, fake_build_setting_default_version_prefix_s_length, prefix[i]);
 
               if (F_status_is_error(*status)) {
                 fll_error_print(main.error, F_status_set_fine(*status), "f_string_append", F_true);
@@ -2576,15 +2576,15 @@ extern "C" {
 
     {
       const f_string_t sources[] = {
-        fake_build_setting_default_version,
-        fake_build_setting_default_version,
-        fake_build_setting_default_version,
+        fake_build_setting_default_version_s,
+        fake_build_setting_default_version_s,
+        fake_build_setting_default_version_s,
       };
 
       const f_array_length_t lengths[] = {
-        fake_build_setting_default_version_length,
-        fake_build_setting_default_version_length,
-        fake_build_setting_default_version_length,
+        fake_build_setting_default_version_s_length,
+        fake_build_setting_default_version_s_length,
+        fake_build_setting_default_version_s_length,
       };
 
       f_string_dynamic_t * const destinations[] = {
@@ -2631,11 +2631,11 @@ extern "C" {
           flockfile(main.error.to.stream);
 
           fl_print_format("%c%[%SThe parameters '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled_s, main.error.notable);
           fl_print_format("%[' and '%]", main.error.to.stream, main.error.context, main.error.context);
-          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled_s, main.error.notable);
           fl_print_format("%[' contradict, defaulting to '%]", main.error.to.stream, main.error.context, main.error.context);
-          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled : fake_long_shared_disabled, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, main.error.notable);
           fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
           funlockfile(main.error.to.stream);
@@ -2666,11 +2666,11 @@ extern "C" {
           flockfile(main.error.to.stream);
 
           fl_print_format("%c%[%SThe parameters '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled_s, main.error.notable);
           fl_print_format("%[' and '%]", main.error.to.stream, main.error.context, main.error.context);
-          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled_s, main.error.notable);
           fl_print_format("%[' contradict, defaulting to '%]", main.error.to.stream, main.error.context, main.error.context);
-          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled : fake_long_static_disabled, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, main.error.notable);
           fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
           funlockfile(main.error.to.stream);
@@ -2692,11 +2692,11 @@ extern "C" {
           flockfile(main.error.to.stream);
 
           fl_print_format("%c%[%SThe build settings '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_build_shared, main.error.notable);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_build_shared_s, main.error.notable);
           fl_print_format("%[' and '%]", main.error.to.stream, main.error.context, main.error.context);
-          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_build_static, main.error.notable);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_build_static_s, main.error.notable);
           fl_print_format("%[' cannot both be false when using the language '%]", main.error.to.stream, main.error.context, main.error.context);
-          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_language == fake_build_language_type_c ? fake_build_language_c : fake_build_language_cpp, main.error.notable);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_language == fake_build_language_type_c ? fake_build_language_c_s : fake_build_language_cpp_s, main.error.notable);
           fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
           funlockfile(main.error.to.stream);
@@ -2722,35 +2722,35 @@ extern "C" {
     }
 
     const f_string_t names[] = {
-      fake_build_stage_libraries_script,
-      fake_build_stage_libraries_shared,
-      fake_build_stage_libraries_static,
-      fake_build_stage_objects_static,
-      fake_build_stage_process_post,
-      fake_build_stage_process_pre,
-      fake_build_stage_programs_script,
-      fake_build_stage_programs_shared,
-      fake_build_stage_programs_static,
-      fake_build_stage_skeleton,
-      fake_build_stage_sources_headers,
-      fake_build_stage_sources_script,
-      fake_build_stage_sources_settings,
+      fake_build_stage_libraries_script_s,
+      fake_build_stage_libraries_shared_s,
+      fake_build_stage_libraries_static_s,
+      fake_build_stage_objects_static_s,
+      fake_build_stage_process_post_s,
+      fake_build_stage_process_pre_s,
+      fake_build_stage_programs_script_s,
+      fake_build_stage_programs_shared_s,
+      fake_build_stage_programs_static_s,
+      fake_build_stage_skeleton_s,
+      fake_build_stage_sources_headers_s,
+      fake_build_stage_sources_script_s,
+      fake_build_stage_sources_settings_s,
     };
 
     const f_array_length_t lengths[] = {
-      fake_build_stage_libraries_script_length,
-      fake_build_stage_libraries_shared_length,
-      fake_build_stage_libraries_static_length,
-      fake_build_stage_objects_static_length,
-      fake_build_stage_process_post_length,
-      fake_build_stage_process_pre_length,
-      fake_build_stage_programs_script_length,
-      fake_build_stage_programs_shared_length,
-      fake_build_stage_programs_static_length,
-      fake_build_stage_skeleton_length,
-      fake_build_stage_sources_headers_length,
-      fake_build_stage_sources_script_length,
-      fake_build_stage_sources_settings_length,
+      fake_build_stage_libraries_script_s_length,
+      fake_build_stage_libraries_shared_s_length,
+      fake_build_stage_libraries_static_s_length,
+      fake_build_stage_objects_static_s_length,
+      fake_build_stage_process_post_s_length,
+      fake_build_stage_process_pre_s_length,
+      fake_build_stage_programs_script_s_length,
+      fake_build_stage_programs_shared_s_length,
+      fake_build_stage_programs_static_s_length,
+      fake_build_stage_skeleton_s_length,
+      fake_build_stage_sources_headers_s_length,
+      fake_build_stage_sources_script_s_length,
+      fake_build_stage_sources_settings_s_length,
     };
 
     f_string_dynamic_t * const values[] = {
@@ -2786,7 +2786,7 @@ extern "C" {
       return;
     }
 
-    for (uint8_t i = 0; i < fake_build_stage_total; ++i) {
+    for (uint8_t i = 0; i < fake_build_stage_total_d; ++i) {
 
       *status = f_string_dynamic_append_nulless(main.path_build_stage, values[i]);
 
@@ -2803,7 +2803,7 @@ extern "C" {
           break;
         }
 
-        *status = f_string_append(fake_build_stage_separate, fake_build_stage_separate_length, values[i]);
+        *status = f_string_append(fake_build_stage_separate_s, fake_build_stage_separate_s_length, values[i]);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_append", F_true);
@@ -2818,7 +2818,7 @@ extern "C" {
         break;
       }
 
-      *status = f_string_append(fake_build_stage_separate, fake_build_stage_separate_length, values[i]);
+      *status = f_string_append(fake_build_stage_separate_s, fake_build_stage_separate_s_length, values[i]);
 
       if (F_status_is_error(*status)) {
         fll_error_print(main.error, F_status_set_fine(*status), "f_string_append", F_true);
@@ -2832,7 +2832,7 @@ extern "C" {
         break;
       }
 
-      *status = f_string_append(fake_build_stage_built, fake_build_stage_built_length, values[i]);
+      *status = f_string_append(fake_build_stage_built_s, fake_build_stage_built_s_length, values[i]);
 
       if (F_status_is_error(*status)) {
         fll_error_print(main.error, F_status_set_fine(*status), "f_string_append", F_true);
@@ -2922,7 +2922,7 @@ extern "C" {
           break;
         }
 
-        *status = f_string_append_assure(f_path_separator_s, f_path_separator_length, &destination_path);
+        *status = f_string_append_assure(f_path_separator_s, F_path_separator_s_length, &destination_path);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_append_assure", F_true);
@@ -2986,10 +2986,10 @@ extern "C" {
           break;
         }
 
-        destination_length = destination_path.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+        destination_length = destination_path.used + file_name.used + fake_build_parameter_object_name_suffix_s_length;
       }
       else {
-        destination_length = main.path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_length;
+        destination_length = main.path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_s_length;
       }
 
       char destination[destination_length + 1];
@@ -2997,29 +2997,29 @@ extern "C" {
       if (destination_path.used) {
         memcpy(destination, destination_path.string, destination_path.used);
         memcpy(destination + destination_path.used, file_name.string, file_name.used);
-        memcpy(destination + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+        memcpy(destination + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s_length);
       }
       else {
         memcpy(destination, main.path_build_objects.string, main.path_build_objects.used);
         memcpy(destination + main.path_build_objects.used, file_name.string, file_name.used);
-        memcpy(destination + main.path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix, fake_build_parameter_object_name_suffix_length);
+        memcpy(destination + main.path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s_length);
       }
 
       destination[destination_length] = 0;
 
       const f_string_t values[] = {
         source,
-        fake_build_parameter_object_compile,
-        fake_build_parameter_object_static,
-        fake_build_parameter_object_output,
+        fake_build_parameter_object_compile_s,
+        fake_build_parameter_object_static_s,
+        fake_build_parameter_object_output_s,
         destination,
       };
 
       const f_array_length_t lengths[] = {
         source_length,
-        fake_build_parameter_object_compile_length,
-        fake_build_parameter_object_static_length,
-        fake_build_parameter_object_output_length,
+        fake_build_parameter_object_compile_s_length,
+        fake_build_parameter_object_static_s_length,
+        fake_build_parameter_object_output_s_length,
         destination_length,
       };
 
@@ -3238,12 +3238,12 @@ extern "C" {
       parameter_file_name_path[parameter_file_name_path_length] = 0;
 
       const f_string_t values[] = {
-        fake_build_parameter_library_output,
+        fake_build_parameter_library_output_s,
         parameter_file_name_path,
       };
 
       const f_array_length_t lengths[] = {
-        fake_build_parameter_library_output_length,
+        fake_build_parameter_library_output_s_length,
         parameter_file_name_path_length,
       };
 
@@ -3256,12 +3256,12 @@ extern "C" {
 
     // if project-specific library sources exist, then the -lproject_name needs to be added to the arguments.
     if (F_status_is_error_not(*status) && data_build.setting.build_sources_library.used) {
-      f_array_length_t link_project_library_length = fake_build_parameter_library_link_file_length + data_build.setting.project_name.used;
+      f_array_length_t link_project_library_length = fake_build_parameter_library_link_file_s_length + data_build.setting.project_name.used;
 
       char link_project_library[link_project_library_length + 1];
 
-      memcpy(link_project_library, fake_build_parameter_library_link_file, fake_build_parameter_library_link_file_length);
-      memcpy(link_project_library + fake_build_parameter_library_link_file_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
+      memcpy(link_project_library, fake_build_parameter_library_link_file_s, fake_build_parameter_library_link_file_s_length);
+      memcpy(link_project_library + fake_build_parameter_library_link_file_s_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
       link_project_library[link_project_library_length] = 0;
 
       *status = fll_execute_arguments_add(link_project_library, link_project_library_length, &arguments);
@@ -3334,7 +3334,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status)) {
-      f_array_length_t source_library_length = main.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_length;
+      f_array_length_t source_library_length = main.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_s_length;
 
       char source_library[source_library_length + 1];
 
@@ -3345,14 +3345,14 @@ extern "C" {
         memcpy(source_library, main.path_build_libraries_static.string, main.path_build_libraries_static.used);
         source_library_length += main.path_build_libraries_static.used;
 
-        memcpy(source_library + source_library_length, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
-        source_library_length += fake_build_parameter_library_name_prefix_length;
+        memcpy(source_library + source_library_length, fake_build_parameter_library_name_prefix_s, fake_build_parameter_library_name_prefix_s_length);
+        source_library_length += fake_build_parameter_library_name_prefix_s_length;
 
         memcpy(source_library + source_library_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
         source_library_length += data_build.setting.project_name.used;
 
-        memcpy(source_library + source_library_length, fake_build_parameter_library_name_suffix_static, fake_build_parameter_library_name_suffix_static_length);
-        source_library_length += fake_build_parameter_library_name_suffix_static_length;
+        memcpy(source_library + source_library_length, fake_build_parameter_library_name_suffix_static_s, fake_build_parameter_library_name_suffix_static_s_length);
+        source_library_length += fake_build_parameter_library_name_suffix_static_s_length;
       }
 
       source_library[source_library_length] = 0;
@@ -3367,15 +3367,15 @@ extern "C" {
 
       const f_string_t values[] = {
         source_library,
-        fake_build_parameter_library_static,
-        fake_build_parameter_library_output,
+        fake_build_parameter_library_static_s,
+        fake_build_parameter_library_output_s,
         parameter_file_name_path,
       };
 
       const f_array_length_t lengths[] = {
         source_library_length,
-        fake_build_parameter_library_static_length,
-        fake_build_parameter_library_output_length,
+        fake_build_parameter_library_static_s_length,
+        fake_build_parameter_library_output_s_length,
         parameter_file_name_path_length,
       };
 

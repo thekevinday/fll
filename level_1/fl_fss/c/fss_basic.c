@@ -76,7 +76,7 @@ extern "C" {
         return status;
       }
 
-      if (buffer.string[range->start] == f_fss_basic_close) break;
+      if (buffer.string[range->start] == f_fss_basic_close_s[0]) break;
     } // for
 
     if (F_status_is_error(status)) {
@@ -101,7 +101,7 @@ extern "C" {
 
     const f_array_length_t destination_used = destination->used;
 
-    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double, state, range, destination);
+    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : F_fss_delimit_quote_double_s, state, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
@@ -114,8 +114,8 @@ extern "C" {
         return status_allocation;
       }
 
-      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
-      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
+      destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
+      destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
     }
 
     if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
@@ -123,7 +123,7 @@ extern "C" {
         f_status_t status2 = F_none;
 
         if (complete == f_fss_complete_full_trim) {
-          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_delimit_quote_double, destination_used, state, destination);
+          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : F_fss_delimit_quote_double_s, destination_used, state, destination);
 
           if (F_status_is_error(status2)) {
             destination->used = destination_used;
@@ -139,7 +139,7 @@ extern "C" {
           return status2;
         }
 
-        destination->string[destination->used++] = f_fss_basic_open;
+        destination->string[destination->used++] = f_fss_basic_open_s[0];
       }
     }
 
@@ -170,7 +170,7 @@ extern "C" {
         status = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status)) return status;
 
-        destination->string[destination->used++] = f_fss_basic_close;
+        destination->string[destination->used++] = f_fss_basic_close_s[0];
       }
 
       if (range->start > range->stop) {
@@ -196,13 +196,13 @@ extern "C" {
         }
       }
 
-      if (content.string[range->start] == f_fss_eol) {
+      if (content.string[range->start] == f_fss_eol_s[0]) {
         destination->used = destination_used;
 
         return F_status_set_error(F_none_eol);
       }
 
-      if (content.string[range->start] == f_fss_delimit_placeholder) {
+      if (content.string[range->start] == F_fss_delimit_placeholder_s) {
         continue;
       }
 
@@ -210,7 +210,7 @@ extern "C" {
     } // for
 
     if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
-      destination->string[destination->used++] = f_fss_basic_close;
+      destination->string[destination->used++] = f_fss_basic_close_s[0];
     }
 
     if (range->start > range->stop) {

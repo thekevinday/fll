@@ -94,7 +94,7 @@ extern "C" {
  *   Otherwise, this gets the path as it appears to be.
  * @param path
  *   The (allocated) file path.
- *   This will have a max size of f_path_length_max + 1.
+ *   This will have a max size of F_path_length_max_d + 1.
  *   This will be NULL terminated at real->used + 1.
  *
  * @return
@@ -143,14 +143,14 @@ extern "C" {
  * This does check to see if the path exists or not (path must exist).
  * This processes all relative parts.
  * This processes all symbolic links.
- * This has a max size of f_path_length_max + 1.
+ * This has a max size of F_path_length_max_d + 1.
  *
  * @param path
  *   The source path to determine what the real path is.
  *   This is a NULL terminated string.
  * @param real
  *   The (allocated) real file path.
- *   This will have a max size of f_path_length_max + 1.
+ *   This will have a max size of F_path_length_max_d + 1.
  *   This will be NULL terminated at real->used + 1.
  *
  * @return

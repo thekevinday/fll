@@ -55,12 +55,12 @@ extern "C" {
     if (named->objects.used + 1 > named->objects.size) {
       f_array_length_t size = named->objects.used + step;
 
-      if (size > f_array_length_t_size) {
-        if (named->objects.used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (named->objects.used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_named_resize(size, named);
@@ -78,7 +78,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (named->objects.used + amount > named->objects.size) {
-      if (named->objects.used + amount > f_array_length_t_size) {
+      if (named->objects.used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -149,12 +149,12 @@ extern "C" {
     if (nameds->used + 1 > nameds->size) {
       f_array_length_t size = nameds->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (nameds->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (nameds->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_nameds_resize(size, nameds);
@@ -172,7 +172,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (nameds->used + amount > nameds->size) {
-      if (nameds->used + amount > f_array_length_t_size) {
+      if (nameds->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 

@@ -20,15 +20,15 @@ extern "C" {
  * The defines for control groups.
  */
 #ifndef _di_f_control_group_defines_
-  #define f_control_group_path_system_default "sys/fs/cgroup/"
-  #define f_control_group_path_system_prefix  "/"
-  #define f_control_group_path_system_suffix   "/cgroup.procs"
+  #define F_control_group_path_system_default_s "sys/fs/cgroup/"
+  #define F_control_group_path_system_prefix_s  "/"
+  #define F_control_group_path_system_suffix_s  "/cgroup.procs"
 
-  #define f_control_group_path_system_default_length 14
-  #define f_control_group_path_system_prefix_length  1
-  #define f_control_group_path_system_suffix_length  13
+  #define F_control_group_path_system_default_s_length 14
+  #define F_control_group_path_system_prefix_s_length  1
+  #define F_control_group_path_system_suffix_s_length  13
 
-  #define f_control_group_pid_length_max 64
+  #define F_control_group_pid_length_max_d 64
 
   extern const f_string_t f_control_group_path_system_default_s;
   extern const f_string_t f_control_group_path_system_prefix_s;

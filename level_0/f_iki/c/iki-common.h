@@ -20,35 +20,35 @@ extern "C" {
  * IKI-specific syntax.
  */
 #ifndef _di_f_iki_syntax_
-  #define f_iki_syntax_separator   ':'
-  #define f_iki_syntax_placeholder  0
-  #define f_iki_syntax_quote_double '"'
-  #define f_iki_syntax_quote_single '\''
-  #define f_iki_syntax_slash        '\\'
+  #define F_iki_syntax_separator_s   ':'
+  #define F_iki_syntax_placeholder_s  0
+  #define F_iki_syntax_quote_double_s '"'
+  #define F_iki_syntax_quote_single_s '\''
+  #define F_iki_syntax_slash_s        '\\'
 #endif //_di_f_iki_syntax_
 
 #ifndef _di_iki_vocabulary_0001_s_
-  #define iki_vocabulary_0001_address  "address"
-  #define iki_vocabulary_0001_code     "code"
-  #define iki_vocabulary_0001_email    "email"
-  #define iki_vocabulary_0001_name     "name"
-  #define iki_vocabulary_0001_phone    "phone"
-  #define iki_vocabulary_0001_quote    "quote"
-  #define iki_vocabulary_0001_uri      "uri"
-  #define iki_vocabulary_0001_url      "url"
-  #define iki_vocabulary_0001_urn      "urn"
-  #define iki_vocabulary_0001_variable "var"
+  #define IKI_vocabulary_0001_address_s  "address"
+  #define IKI_vocabulary_0001_code_s     "code"
+  #define IKI_vocabulary_0001_email_s    "email"
+  #define IKI_vocabulary_0001_name_s     "name"
+  #define IKI_vocabulary_0001_phone_s    "phone"
+  #define IKI_vocabulary_0001_quote_s    "quote"
+  #define IKI_vocabulary_0001_uri_s      "uri"
+  #define IKI_vocabulary_0001_url_s      "url"
+  #define IKI_vocabulary_0001_urn_s      "urn"
+  #define IKI_vocabulary_0001_variable_s "var"
 
-  #define iki_vocabulary_0001_address_length  7
-  #define iki_vocabulary_0001_code_length     4
-  #define iki_vocabulary_0001_email_length    5
-  #define iki_vocabulary_0001_name_length     4
-  #define iki_vocabulary_0001_phone_length    5
-  #define iki_vocabulary_0001_quote_length    5
-  #define iki_vocabulary_0001_uri_length      3
-  #define iki_vocabulary_0001_url_length      3
-  #define iki_vocabulary_0001_urn_length      3
-  #define iki_vocabulary_0001_variable_length 3
+  #define IKI_vocabulary_0001_address_s_length  7
+  #define IKI_vocabulary_0001_code_s_length     4
+  #define IKI_vocabulary_0001_email_s_length    5
+  #define IKI_vocabulary_0001_name_s_length     4
+  #define IKI_vocabulary_0001_phone_s_length    5
+  #define IKI_vocabulary_0001_quote_s_length    5
+  #define IKI_vocabulary_0001_uri_s_length      3
+  #define IKI_vocabulary_0001_url_s_length      3
+  #define IKI_vocabulary_0001_urn_s_length      3
+  #define IKI_vocabulary_0001_variable_s_length 3
 
   extern const f_string_t iki_vocabulary_0001_address_s;
   extern const f_string_t iki_vocabulary_0001_code_s;
@@ -63,11 +63,11 @@ extern "C" {
 #endif // _di_iki_vocabulary_0001_s_
 
 #ifndef _di_iki_vocabulary_0002_s_
-  #define iki_vocabulary_0002_define    "define"
-  #define iki_vocabulary_0002_parameter "parameter"
+  #define IKI_vocabulary_0002_define_s    "define"
+  #define IKI_vocabulary_0002_parameter_s "parameter"
 
-  #define iki_vocabulary_0002_define_length    6
-  #define iki_vocabulary_0002_parameter_length 9
+  #define IKI_vocabulary_0002_define_s_length    6
+  #define IKI_vocabulary_0002_parameter_s_length 9
 
   extern const f_string_t iki_vocabulary_0002_define_s;
   extern const f_string_t iki_vocabulary_0002_parameter_s;
@@ -188,7 +188,7 @@ extern "C" {
  * For a UTF-8 friendly allocation step, set to at least 4.
  */
 #ifndef _di_f_iki_default_allocation_step_
-  #define f_iki_default_allocation_step 4
+  #define F_iki_default_allocation_step_d 4
 #endif // _di_f_iki_default_allocation_step_
 
 /**
@@ -202,8 +202,8 @@ extern "C" {
   #define macro_f_iki_allocate_delimits_if_necessary(state, status, delimits) \
     status = F_none; \
     if (delimits.used == delimits.size) { \
-      if (delimits.used + state.step_small > f_array_length_t_size) { \
-        if (delimits.used == f_array_length_t_size) { \
+      if (delimits.used + state.step_small > F_array_length_t_size_d) { \
+        if (delimits.used == F_array_length_t_size_d) { \
           status = F_status_set_error(F_string_too_large); \
         } \
         else { \
@@ -227,8 +227,8 @@ extern "C" {
   #define macro_f_iki_allocate_ranges_if_necessary(state, status, ranges) \
     status = F_none; \
     if (ranges.used == ranges.size) { \
-      if (ranges.used + state.step_small > f_array_length_t_size) { \
-        if (ranges.used == f_array_length_t_size) { \
+      if (ranges.used + state.step_small > F_array_length_t_size_d) { \
+        if (ranges.used == F_array_length_t_size_d) { \
           status = F_status_set_error(F_string_too_large); \
         } \
         else { \
@@ -270,7 +270,7 @@ extern "C" {
 #ifndef _di_macro_f_iki_seek_whitespace_
   #define macro_f_iki_seek_whitespace(status, buffer, range, width_max, condition) \
     while (range->start <= range->stop && range->start < buffer->used) { \
-      if (buffer->string[range->start] == f_iki_syntax_placeholder) { \
+      if (buffer->string[range->start] == F_iki_syntax_placeholder_s) { \
         ++range->start; \
         continue; \
       } \
@@ -297,7 +297,7 @@ extern "C" {
 #ifndef _di_macro_f_iki_seek_word_dash_plus_
   #define macro_f_iki_seek_word_dash_plus(status, buffer, range, width_max, condition) \
     while (range->start <= range->stop && range->start < buffer->used) { \
-      if (buffer->string[range->start] == f_iki_syntax_placeholder) { \
+      if (buffer->string[range->start] == F_iki_syntax_placeholder_s) { \
         ++range->start; \
         continue; \
       } \

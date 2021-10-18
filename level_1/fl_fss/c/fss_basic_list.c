@@ -39,7 +39,7 @@ extern "C" {
     found->start = range->start;
 
     // ignore all comment lines.
-    if (buffer.string[range->start] == f_fss_comment) {
+    if (buffer.string[range->start] == f_fss_comment_s[0]) {
 
       status = f_fss_seek_to_eol(buffer, range);
       if (F_status_is_error(status)) return status;
@@ -66,7 +66,7 @@ extern "C" {
     bool graph_first = F_true;
 
     // identify where the object ends.
-    while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol) {
+    while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol_s[0]) {
 
       if (state.interrupt) {
         status = state.interrupt((void *) &state, 0);
@@ -77,7 +77,7 @@ extern "C" {
         }
       }
 
-      if (buffer.string[range->start] == f_fss_delimit_slash) {
+      if (buffer.string[range->start] == F_fss_delimit_slash_s) {
         slash_first = range->start;
         slash_count = 1;
 
@@ -92,9 +92,9 @@ extern "C" {
             }
           }
 
-          if (buffer.string[range->start] == f_fss_delimit_placeholder) {
+          if (buffer.string[range->start] == F_fss_delimit_placeholder_s) {
             continue;
-          } else if (buffer.string[range->start] != f_fss_delimit_slash) {
+          } else if (buffer.string[range->start] != F_fss_delimit_slash_s) {
             break;
           }
 
@@ -103,7 +103,7 @@ extern "C" {
 
         private_macro_fl_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
 
-        if (buffer.string[range->start] == f_fss_basic_list_open) {
+        if (buffer.string[range->start] == f_fss_basic_list_open_s[0]) {
           graph_first = F_false;
           stop = range->start - 1;
 
@@ -121,7 +121,7 @@ extern "C" {
               }
             }
 
-            if (buffer.string[range->start] == f_fss_eol) break;
+            if (buffer.string[range->start] == f_fss_eol_s[0]) break;
 
             status = f_fss_is_space(buffer, *range);
             if (F_status_is_error(status)) break;
@@ -134,7 +134,7 @@ extern "C" {
 
           private_macro_fl_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
 
-          if (buffer.string[range->start] == f_fss_eol) {
+          if (buffer.string[range->start] == f_fss_eol_s[0]) {
             start = range->start;
 
             range->start = slash_first;
@@ -145,7 +145,7 @@ extern "C" {
             if (slash_count % 2 == 0) {
               while (slash_count > 0) {
 
-                if (buffer.string[range->start] == f_fss_delimit_slash) {
+                if (buffer.string[range->start] == F_fss_delimit_slash_s) {
                   if (slash_count % 2 == 1) {
                     delimits->array[delimits->used] = range->start;
                     ++delimits->used;
@@ -174,7 +174,7 @@ extern "C" {
             return FL_fss_found_object_not;
           }
         }
-        else if (graph_first && buffer.string[range->start] == f_fss_comment) {
+        else if (graph_first && buffer.string[range->start] == f_fss_comment_s[0]) {
           graph_first = F_false;
 
           // comments may only have whitespace before the '#', therefore only the first slash needs to be delimited.
@@ -190,7 +190,7 @@ extern "C" {
 
         continue;
       }
-      else if (buffer.string[range->start] == f_fss_basic_list_open) {
+      else if (buffer.string[range->start] == f_fss_basic_list_open_s[0]) {
         graph_first = F_false;
         stop = range->start - 1;
 
@@ -208,7 +208,7 @@ extern "C" {
             }
           }
 
-          if (buffer.string[range->start] == f_fss_eol) break;
+          if (buffer.string[range->start] == f_fss_eol_s[0]) break;
 
           status = f_fss_is_space(buffer, *range);
           if (F_status_is_error(status)) break;
@@ -221,7 +221,7 @@ extern "C" {
 
         private_macro_fl_fss_object_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
 
-        if (buffer.string[range->start] == f_fss_eol) {
+        if (buffer.string[range->start] == f_fss_eol_s[0]) {
           found->stop = stop;
 
           status = f_utf_buffer_increment(buffer, range, 1);
@@ -311,7 +311,7 @@ extern "C" {
         }
       }
 
-      if (buffer.string[range->start] == f_fss_eol) {
+      if (buffer.string[range->start] == f_fss_eol_s[0]) {
         if (graph_first == 0x2) {
           macro_f_fss_delimits_t_increase(status, state.step_small, (*delimits));
           if (F_status_is_error(status)) break;
@@ -326,7 +326,7 @@ extern "C" {
         continue;
       }
 
-      if (buffer.string[range->start] == f_fss_delimit_slash) {
+      if (buffer.string[range->start] == F_fss_delimit_slash_s) {
         slash_first = range->start;
         slash_count = 1;
 
@@ -341,9 +341,9 @@ extern "C" {
             }
           }
 
-          if (buffer.string[range->start] == f_fss_delimit_placeholder) {
+          if (buffer.string[range->start] == F_fss_delimit_placeholder_s) {
             continue;
-          } else if (buffer.string[range->start] != f_fss_delimit_slash) {
+          } else if (buffer.string[range->start] != F_fss_delimit_slash_s) {
             break;
           }
 
@@ -352,7 +352,7 @@ extern "C" {
 
         if (range->start > range->stop || range->start >= buffer.used) break;
 
-        if (buffer.string[range->start] == f_fss_basic_list_open) {
+        if (buffer.string[range->start] == f_fss_basic_list_open_s[0]) {
           graph_first = 0x0;
           ++range->start;
 
@@ -367,7 +367,7 @@ extern "C" {
               }
             }
 
-            if (buffer.string[range->start] == f_fss_eol) break;
+            if (buffer.string[range->start] == f_fss_eol_s[0]) break;
 
             status = f_fss_is_space(buffer, *range);
             if (F_status_is_error(status)) break;
@@ -380,7 +380,7 @@ extern "C" {
 
           if (range->start > range->stop || range->start >= buffer.used) break;
 
-          if (buffer.string[range->start] == f_fss_eol) {
+          if (buffer.string[range->start] == f_fss_eol_s[0]) {
             start = range->start;
             range->start = slash_first;
 
@@ -396,7 +396,7 @@ extern "C" {
 
             while (slash_count > 0) {
 
-              if (buffer.string[range->start] == f_fss_delimit_slash) {
+              if (buffer.string[range->start] == F_fss_delimit_slash_s) {
                 if (slash_count % 2 == 1) {
                   delimits->array[delimits->used++] = range->start;
                 }
@@ -421,7 +421,7 @@ extern "C" {
             range->start = start + 1;
           }
         }
-        else if (graph_first == 0x1 && buffer.string[range->start] == f_fss_comment) {
+        else if (graph_first == 0x1 && buffer.string[range->start] == f_fss_comment_s[0]) {
           graph_first = 0x2;
           comment_delimit = slash_first;
           ++range->start;
@@ -430,7 +430,7 @@ extern "C" {
         continue;
       }
 
-      if (buffer.string[range->start] == f_fss_basic_list_open) {
+      if (buffer.string[range->start] == f_fss_basic_list_open_s[0]) {
         ++range->start;
         graph_first = 0x0;
 
@@ -445,7 +445,7 @@ extern "C" {
             }
           }
 
-          if (buffer.string[range->start] == f_fss_eol) break;
+          if (buffer.string[range->start] == f_fss_eol_s[0]) break;
 
           status = f_fss_is_space(buffer, *range);
           if (F_status_is_error(status)) break;
@@ -461,9 +461,9 @@ extern "C" {
         if (range->start > range->stop || range->start >= buffer.used) break;
 
         // found a valid object, set stop point to last newline.
-        if (buffer.string[range->start] == f_fss_eol) {
+        if (buffer.string[range->start] == f_fss_eol_s[0]) {
 
-          if (newline_last == found->array[found->used].start && buffer.string[found->array[found->used].start] != f_fss_eol) {
+          if (newline_last == found->array[found->used].start && buffer.string[found->array[found->used].start] != f_fss_eol_s[0]) {
             range->start = newline_last;
             return FL_fss_found_content_not;
           }
@@ -475,7 +475,7 @@ extern "C" {
           return FL_fss_found_content;
         }
 
-        if (buffer.string[range->start] == f_fss_eol) {
+        if (buffer.string[range->start] == f_fss_eol_s[0]) {
           if (graph_first == 0x2) {
             macro_f_fss_delimits_t_increase(status, state.step_small, (*delimits));
             if (F_status_is_error(status)) break;
@@ -490,7 +490,7 @@ extern "C" {
         continue;
       }
 
-      if (graph_first == 0x1 && buffer.string[range->start] == f_fss_comment) {
+      if (graph_first == 0x1 && buffer.string[range->start] == f_fss_comment_s[0]) {
         start = range->start;
 
         status = f_fss_seek_to_eol(buffer, range);
@@ -553,10 +553,10 @@ extern "C" {
         const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
-        destination->string[destination->used++] = f_fss_basic_list_open;
+        destination->string[destination->used++] = f_fss_basic_list_open_s[0];
 
         if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
-          destination->string[destination->used++] = f_fss_basic_list_open_end;
+          destination->string[destination->used++] = f_fss_basic_list_open_end_s[0];
         }
       }
 
@@ -590,13 +590,13 @@ extern "C" {
         }
       }
 
-      if (object.string[range->start] == f_fss_comment) {
+      if (object.string[range->start] == f_fss_comment_s[0]) {
 
         // when a comment is found, escape it.
         status = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status)) break;
 
-        destination->string[destination->used++] = f_fss_delimit_slash;
+        destination->string[destination->used++] = F_fss_delimit_slash_s;
         break;
       }
 
@@ -606,8 +606,8 @@ extern "C" {
       if (status == F_true) break;
 
       // objects will not have leading whitespaces, but having this does not result in an invalid object, so just write the provided spaces.
-      if (object.string[range->start] != f_fss_delimit_placeholder) {
-        if (object.string[range->start] == f_fss_eol) {
+      if (object.string[range->start] != F_fss_delimit_placeholder_s) {
+        if (object.string[range->start] == f_fss_eol_s[0]) {
           status = F_status_set_error(F_none_eol);
           break;
         }
@@ -648,7 +648,7 @@ extern "C" {
         }
       }
 
-      if (object.string[range->start] == f_fss_delimit_slash) {
+      if (object.string[range->start] == F_fss_delimit_slash_s) {
         slash_count = 1;
 
         for (++range->start; range->start <= range->stop && range->start < object.used; ++range->start) {
@@ -662,9 +662,9 @@ extern "C" {
             }
           }
 
-          if (object.string[range->start] == f_fss_delimit_placeholder) {
+          if (object.string[range->start] == F_fss_delimit_placeholder_s) {
             continue;
-          } else if (object.string[range->start] != f_fss_delimit_slash) {
+          } else if (object.string[range->start] != F_fss_delimit_slash_s) {
             break;
           }
 
@@ -683,7 +683,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         while (--slash_count) {
-          destination->string[destination->used++] = f_fss_delimit_slash;
+          destination->string[destination->used++] = F_fss_delimit_slash_s;
         } // while
 
         if (range->start > range->stop || range->start >= object.used) {
@@ -691,8 +691,8 @@ extern "C" {
         }
       }
 
-      if (object.string[range->start] != f_fss_delimit_placeholder) {
-        if (object.string[range->start] == f_fss_eol) {
+      if (object.string[range->start] != F_fss_delimit_placeholder_s) {
+        if (object.string[range->start] == f_fss_eol_s[0]) {
           status = F_status_set_error(F_none_eol);
           break;
         }
@@ -736,10 +736,10 @@ extern "C" {
         return status;
       }
 
-      destination->string[destination->used++] = f_fss_basic_list_open;
+      destination->string[destination->used++] = f_fss_basic_list_open_s[0];
 
       if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
-        destination->string[destination->used++] = f_fss_basic_list_open_end;
+        destination->string[destination->used++] = f_fss_basic_list_open_end_s[0];
       }
     }
 
@@ -770,7 +770,7 @@ extern "C" {
         const f_status_t status_allocation = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
-        destination->string[destination->used++] = f_fss_basic_list_close;
+        destination->string[destination->used++] = f_fss_basic_list_close_s[0];
       }
 
       if (status == F_none_stop) {
@@ -807,7 +807,7 @@ extern "C" {
         }
       }
 
-      if (content.string[range->start] == f_fss_delimit_slash && !is_comment) {
+      if (content.string[range->start] == F_fss_delimit_slash_s && !is_comment) {
         slash_count = 1;
 
         if (do_prepend) {
@@ -831,31 +831,31 @@ extern "C" {
             }
           }
 
-          if (content.string[range->start] == f_fss_delimit_placeholder) continue;
-          if (content.string[range->start] != f_fss_delimit_slash) break;
+          if (content.string[range->start] == F_fss_delimit_placeholder_s) continue;
+          if (content.string[range->start] != F_fss_delimit_slash_s) break;
 
-          destination->string[destination->used++] = f_fss_delimit_slash;
+          destination->string[destination->used++] = F_fss_delimit_slash_s;
           ++slash_count;
         } // for
 
-        if (content.string[range->start] == f_fss_basic_list_open) {
+        if (content.string[range->start] == f_fss_basic_list_open_s[0]) {
           start = range->start++;
 
           status = f_fss_skip_past_space(content, range);
           if (F_status_is_error(status)) break;
 
-          if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
+          if (content.string[range->start] == f_fss_eol_s[0] || range->start >= content.used || range->start > range->stop) {
 
             // increase by total slashes + 1, along with the basic list open and possible newline.
             status = f_string_dynamic_increase_by(slash_count + 3, destination);
             if (F_status_is_error(status)) break;
 
             while (--slash_count) {
-              destination->string[destination->used++] = f_fss_delimit_slash;
+              destination->string[destination->used++] = F_fss_delimit_slash_s;
             } // while
 
-            destination->string[destination->used++] = f_fss_delimit_slash;
-            destination->string[destination->used++] = f_fss_basic_list_open;
+            destination->string[destination->used++] = F_fss_delimit_slash_s;
+            destination->string[destination->used++] = f_fss_basic_list_open_s[0];
 
             range->start = start + 1;
 
@@ -868,12 +868,12 @@ extern "C" {
           status = f_string_dynamic_increase(state.step_large, destination);
           if (F_status_is_error(status)) break;
 
-          destination->string[destination->used++] = f_fss_basic_list_open;
+          destination->string[destination->used++] = f_fss_basic_list_open_s[0];
           range->start = start + 1;
           continue;
         }
       }
-      else if (content.string[range->start] == f_fss_basic_list_open && !is_comment) {
+      else if (content.string[range->start] == f_fss_basic_list_open_s[0] && !is_comment) {
         start = range->start++;
 
         if (do_prepend) {
@@ -888,14 +888,14 @@ extern "C" {
         status = f_fss_skip_past_space(content, range);
         if (F_status_is_error(status)) break;
 
-        if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
+        if (content.string[range->start] == f_fss_eol_s[0] || range->start >= content.used || range->start > range->stop) {
 
           // increase by slash and basic list open and possible newline.
           status = f_string_dynamic_increase_by(3, destination);
           if (F_status_is_error(status)) break;
 
-          destination->string[destination->used++] = f_fss_delimit_slash;
-          destination->string[destination->used++] = f_fss_basic_list_open;
+          destination->string[destination->used++] = F_fss_delimit_slash_s;
+          destination->string[destination->used++] = f_fss_basic_list_open_s[0];
 
           range->start = start + 1;
 
@@ -908,14 +908,14 @@ extern "C" {
         status = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status)) break;
 
-        destination->string[destination->used++] = f_fss_basic_list_open;
+        destination->string[destination->used++] = f_fss_basic_list_open_s[0];
         range->start = start + 1;
         continue;
       }
-      else if (content.string[range->start] == f_fss_comment && !has_graph) {
+      else if (content.string[range->start] == f_fss_comment_s[0] && !has_graph) {
         is_comment = F_true;
       }
-      else if (content.string[range->start] == f_fss_eol) {
+      else if (content.string[range->start] == f_fss_eol_s[0]) {
         has_graph = F_false;
         is_comment = F_false;
       }
@@ -930,7 +930,7 @@ extern "C" {
         }
       }
 
-      if (content.string[range->start] != f_fss_delimit_placeholder) {
+      if (content.string[range->start] != F_fss_delimit_placeholder_s) {
         if (do_prepend) {
           status = f_string_dynamic_prepend(*prepend, destination);
           if (F_status_is_error(status)) break;
@@ -938,7 +938,7 @@ extern "C" {
           do_prepend = F_false;
         }
 
-        if (content.string[range->start] == f_fss_eol) {
+        if (content.string[range->start] == f_fss_eol_s[0]) {
           do_prepend = F_true;
         }
 
@@ -969,12 +969,12 @@ extern "C" {
       // check to see if a newline exists, at the end.
       if (destination->used) {
         for (i = destination->used - 1; i > 0; --i) {
-          if (destination->string[i] != f_fss_delimit_placeholder) break;
+          if (destination->string[i] != F_fss_delimit_placeholder_s) break;
         } // for
       }
 
-      if (!destination->used || destination->string[i] != f_fss_eol) {
-        destination->string[destination->used++] = f_fss_basic_list_close;
+      if (!destination->used || destination->string[i] != f_fss_eol_s[0]) {
+        destination->string[destination->used++] = f_fss_basic_list_close_s[0];
       }
     }
 

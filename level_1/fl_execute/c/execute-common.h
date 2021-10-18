@@ -19,13 +19,13 @@ extern "C" {
 /**
  * A structure for containing additional parameters for the execute functions that call the execv() family of functions.
  *
- * bitwise options:
- *   fl_execute_parameter_option_exit:       used to desginate to exit after calling child otherwise child process will return.
- *   fl_execute_parameter_option_path:       used to designate that the full path to the program is to be passed in argument[0] instead of the program name (such as '/bin/bash' instead of 'bash').
- *   fl_execute_parameter_option_threadsafe: used to designate that threadsafe functions are to be used (such as: f_thread_signal_mask instead of f_signal_mask).
- *   fl_execute_parameter_option_return:     used to designate that the parent process will immediately return instead of waiting for the child process to complete.
+ * FL_execute_parameter_option_*:
+ * - exit:       used to desginate to exit after calling child otherwise child process will return.
+ * - path:       used to designate that the full path to the program is to be passed in argument[0] instead of the program name (such as '/bin/bash' instead of 'bash').
+ * - threadsafe: used to designate that threadsafe functions are to be used (such as: f_thread_signal_mask instead of f_signal_mask).
+ * - return:     used to designate that the parent process will immediately return instead of waiting for the child process to complete.
  *
- * If thread support is disabled in the library, then fl_execute_parameter_option_threadsafe will fallback to non-threadsafe.
+ * If thread support is disabled in the library, then FL_execute_parameter_option_threadsafe_d will fallback to non-threadsafe.
  *
  * option:      Accepts the bitwise options
  * wait:        Represents options passed to waitpid(), such as WUNTRACED.
@@ -34,10 +34,10 @@ extern "C" {
  * data:        The data to pipe to the child process, set to 0 to not use.
  */
 #ifndef _di_fl_execute_parameter_t_
-  #define fl_execute_parameter_option_exit       0x1
-  #define fl_execute_parameter_option_path       0x2
-  #define fl_execute_parameter_option_threadsafe 0x4
-  #define fl_execute_parameter_option_return     0x8
+  #define FL_execute_parameter_option_exit_d       0x1
+  #define FL_execute_parameter_option_path_d       0x2
+  #define FL_execute_parameter_option_threadsafe_d 0x4
+  #define FL_execute_parameter_option_return_d     0x8
 
   typedef struct {
     uint8_t option;

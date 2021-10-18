@@ -112,7 +112,7 @@ extern "C" {
 /**
  * Increase the size of the string statuss array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -138,7 +138,7 @@ extern "C" {
  * Resize the string statuss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -289,7 +289,7 @@ extern "C" {
 /**
  * Increase the size of the string statusss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -315,7 +315,7 @@ extern "C" {
  * Resize the string statusss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -444,7 +444,7 @@ extern "C" {
 /**
  * Increase the size of the string states array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -470,7 +470,7 @@ extern "C" {
  * Resize the string states array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -621,7 +621,7 @@ extern "C" {
 /**
  * Increase the size of the string statess array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -647,7 +647,7 @@ extern "C" {
  * Resize the string statess array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -776,7 +776,7 @@ extern "C" {
 /**
  * Increase the size of the string cells array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -802,7 +802,7 @@ extern "C" {
  * Resize the string cells array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -953,7 +953,7 @@ extern "C" {
 /**
  * Increase the size of the string cellss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -979,7 +979,7 @@ extern "C" {
  * Resize the string cellss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1108,7 +1108,7 @@ extern "C" {
 /**
  * Increase the size of the string ids array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1134,7 +1134,7 @@ extern "C" {
  * Resize the string ids array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1285,7 +1285,7 @@ extern "C" {
 /**
  * Increase the size of the string idss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1311,7 +1311,7 @@ extern "C" {
  * Resize the string idss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1440,7 +1440,7 @@ extern "C" {
 /**
  * Increase the size of the string lengths array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1466,7 +1466,7 @@ extern "C" {
  * Resize the string lengths array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1617,7 +1617,7 @@ extern "C" {
 /**
  * Increase the size of the string lengthss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1643,7 +1643,7 @@ extern "C" {
  * Resize the string lengthss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1772,7 +1772,7 @@ extern "C" {
 /**
  * Increase the size of the string int8s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1798,7 +1798,7 @@ extern "C" {
  * Resize the string int8s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1949,7 +1949,7 @@ extern "C" {
 /**
  * Increase the size of the string int8ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1975,7 +1975,7 @@ extern "C" {
  * Resize the string int8ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2104,7 +2104,7 @@ extern "C" {
 /**
  * Increase the size of the string uint8s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2130,7 +2130,7 @@ extern "C" {
  * Resize the string uint8s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2281,7 +2281,7 @@ extern "C" {
 /**
  * Increase the size of the string uint8ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2307,7 +2307,7 @@ extern "C" {
  * Resize the string uint8ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2436,7 +2436,7 @@ extern "C" {
 /**
  * Increase the size of the string int16s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2462,7 +2462,7 @@ extern "C" {
  * Resize the string int16s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2613,7 +2613,7 @@ extern "C" {
 /**
  * Increase the size of the string int16ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2639,7 +2639,7 @@ extern "C" {
  * Resize the string int16ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2768,7 +2768,7 @@ extern "C" {
 /**
  * Increase the size of the string uint16s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2794,7 +2794,7 @@ extern "C" {
  * Resize the string uint16s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2945,7 +2945,7 @@ extern "C" {
 /**
  * Increase the size of the string uint16ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2971,7 +2971,7 @@ extern "C" {
  * Resize the string uint16ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3100,7 +3100,7 @@ extern "C" {
 /**
  * Increase the size of the string int32s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3126,7 +3126,7 @@ extern "C" {
  * Resize the string int32s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3277,7 +3277,7 @@ extern "C" {
 /**
  * Increase the size of the string int32ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3303,7 +3303,7 @@ extern "C" {
  * Resize the string int32ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3432,7 +3432,7 @@ extern "C" {
 /**
  * Increase the size of the string uint32s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3458,7 +3458,7 @@ extern "C" {
  * Resize the string uint32s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3609,7 +3609,7 @@ extern "C" {
 /**
  * Increase the size of the string uint32ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3635,7 +3635,7 @@ extern "C" {
  * Resize the string uint32ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3764,7 +3764,7 @@ extern "C" {
 /**
  * Increase the size of the string int64s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3790,7 +3790,7 @@ extern "C" {
  * Resize the string int64s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3941,7 +3941,7 @@ extern "C" {
 /**
  * Increase the size of the string int64ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3967,7 +3967,7 @@ extern "C" {
  * Resize the string int64ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -4096,7 +4096,7 @@ extern "C" {
 /**
  * Increase the size of the string uint64s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -4122,7 +4122,7 @@ extern "C" {
  * Resize the string uint64s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -4273,7 +4273,7 @@ extern "C" {
 /**
  * Increase the size of the string uint64ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -4299,7 +4299,7 @@ extern "C" {
  * Resize the string uint64ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -4428,7 +4428,7 @@ extern "C" {
 /**
  * Increase the size of the string int128s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -4454,7 +4454,7 @@ extern "C" {
  * Resize the string int128s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -4605,7 +4605,7 @@ extern "C" {
 /**
  * Increase the size of the string int128ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -4631,7 +4631,7 @@ extern "C" {
  * Resize the string int128ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -4760,7 +4760,7 @@ extern "C" {
 /**
  * Increase the size of the string uint128s array, but only if necesary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -4786,7 +4786,7 @@ extern "C" {
  * Resize the string uint128s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -4937,7 +4937,7 @@ extern "C" {
 /**
  * Increase the size of the string uint128ss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -4963,7 +4963,7 @@ extern "C" {
  * Resize the string uint128ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount

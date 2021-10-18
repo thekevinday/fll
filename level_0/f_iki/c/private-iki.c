@@ -21,7 +21,7 @@ extern "C" {
 
         return F_false;
       }
-      else if (buffer.string[i] == f_iki_syntax_slash) {
+      else if (buffer.string[i] == F_iki_syntax_slash_s) {
         ++delimits;
       }
       else {

@@ -18,7 +18,7 @@ extern "C" {
 
     if (global->thread->enabled != controller_thread_enabled) return 0;
 
-    const unsigned int interval = global->main->parameters[controller_parameter_simulate].result == f_console_result_found ? controller_thread_cleanup_interval_short : controller_thread_cleanup_interval_long;
+    const unsigned int interval = global->main->parameters[controller_parameter_simulate].result == f_console_result_found ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d;
 
     f_status_t status = F_none;
 
@@ -347,7 +347,7 @@ extern "C" {
       if (!controller_thread_is_enabled(is_normal, thread)) return;
     }
 
-    const f_status_t status = controller_rule_process_do(controller_process_option_asynchronous, process);
+    const f_status_t status = controller_rule_process_do(controller_process_option_asynchronous_d, process);
 
     if (status == F_child) {
 
@@ -479,7 +479,7 @@ extern "C" {
       } // for
     } // for
 
-    for (i = 0; i < global->thread->processs.size && spent < controller_thread_exit_process_cancel_total; ++i) {
+    for (i = 0; i < global->thread->processs.size && spent < controller_thread_exit_process_cancel_total_d; ++i) {
 
       if (!global->thread->processs.array[i]) continue;
       if (caller && i == caller->id) continue;
@@ -492,7 +492,7 @@ extern "C" {
       do {
         if (!process->id_thread) break;
 
-        controller_time(0, controller_thread_exit_process_cancel_wait, &time);
+        controller_time(0, controller_thread_exit_process_cancel_wait_d, &time);
 
         status = f_thread_join_timed(process->id_thread, time, 0);
 
@@ -507,12 +507,12 @@ extern "C" {
 
         ++spent;
 
-      } while (status == F_time && spent < controller_thread_exit_process_cancel_total);
+      } while (status == F_time && spent < controller_thread_exit_process_cancel_total_d);
 
       if (process->path_pids.used) {
         for (j = 0; j < process->path_pids.used; ++j) {
 
-          for (; spent < controller_thread_exit_process_cancel_total; ++spent) {
+          for (; spent < controller_thread_exit_process_cancel_total_d; ++spent) {
 
             if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j].string) == F_true) {
               status = controller_file_pid_read(process->path_pids.array[j], &pid);
@@ -522,7 +522,7 @@ extern "C" {
                 // a hackish way to determine if the pid exists while waiting.
                 if (getpgid(pid) >= 0) {
                   time.tv_sec = 0;
-                  time.tv_nsec = controller_thread_exit_process_cancel_wait;
+                  time.tv_nsec = controller_thread_exit_process_cancel_wait_d;
 
                   nanosleep(&time, 0);
                   continue;
@@ -558,7 +558,7 @@ extern "C" {
               f_signal_send(F_signal_kill, process->childs.array[j]);
 
               time.tv_sec = 0;
-              time.tv_nsec = controller_thread_exit_process_cancel_wait;
+              time.tv_nsec = controller_thread_exit_process_cancel_wait_d;
 
               process->childs.array[j] = 0;
             }
@@ -649,7 +649,7 @@ extern "C" {
             break;
           }
 
-          controller_time(controller_thread_exit_ready_timeout_seconds, controller_thread_exit_ready_timeout_nanoseconds, &time);
+          controller_time(controller_thread_exit_ready_timeout_seconds_d, controller_thread_exit_ready_timeout_nanoseconds_d, &time);
 
           status = f_thread_condition_wait_timed(&time, &global->thread->lock.alert_condition, &global->thread->lock.alert);
 
@@ -969,7 +969,7 @@ extern "C" {
 
     while (controller_thread_is_enabled(is_normal, global->thread)) {
 
-      controller_time(controller_thread_exit_ready_timeout_seconds, controller_thread_exit_ready_timeout_nanoseconds, &time);
+      controller_time(controller_thread_exit_ready_timeout_seconds_d, controller_thread_exit_ready_timeout_nanoseconds_d, &time);
 
       error = sigtimedwait(&global->main->signal.set, &information, &time);
 

@@ -27,7 +27,7 @@ extern "C" {
           ++digits;
 
           if (negative) {
-            if (digits > f_conversion_digits_binary_signed) {
+            if (digits > F_conversion_digits_binary_signed_d) {
               return F_status_set_error(F_number_underflow);
             }
 
@@ -35,7 +35,7 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (digits > f_conversion_digits_binary_signed) {
+            if (digits > F_conversion_digits_binary_signed_d) {
               return F_status_set_error(F_number_overflow);
             }
 
@@ -85,7 +85,7 @@ extern "C" {
         if (digits) {
           ++digits;
 
-          if (digits > f_conversion_digits_binary_unsigned) {
+          if (digits > F_conversion_digits_binary_unsigned_d) {
             return F_status_set_error(F_number_overflow);
           }
 
@@ -130,8 +130,8 @@ extern "C" {
           ++digits;
 
           if (negative) {
-            if (digits > f_conversion_digits_decimal_signed) {
-              if ((converted * 10) - digit < f_number_t_size_negative || (converted * 10) - digit > converted) {
+            if (digits > F_conversion_digits_decimal_signed_d) {
+              if ((converted * 10) - digit < F_number_t_size_negative_d || (converted * 10) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
               }
             }
@@ -140,8 +140,8 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (digits > f_conversion_digits_decimal_signed) {
-              if ((converted * 10) + digit > f_number_t_size_positive || (converted * 10) + digit < converted) {
+            if (digits > F_conversion_digits_decimal_signed_d) {
+              if ((converted * 10) + digit > F_number_t_size_positive_d || (converted * 10) + digit < converted) {
                 return F_status_set_error(F_number_overflow);
               }
             }
@@ -193,8 +193,8 @@ extern "C" {
         if (digits) {
           ++digits;
 
-          if (digits > f_conversion_digits_decimal_unsigned) {
-            if ((converted * 10) + digit > f_number_t_size_unsigned || (converted * 10) + digit < converted) {
+          if (digits > F_conversion_digits_decimal_unsigned_d) {
+            if ((converted * 10) + digit > F_number_t_size_unsigned_d || (converted * 10) + digit < converted) {
               return F_status_set_error(F_number_overflow);
             }
           }
@@ -240,8 +240,8 @@ extern "C" {
           ++digits;
 
           if (negative) {
-            if (digits > f_conversion_digits_duodecimal_signed) {
-              if ((converted * 12) - digit < f_number_t_size_negative || (converted * 12) - digit > converted) {
+            if (digits > F_conversion_digits_duodecimal_signed_d) {
+              if ((converted * 12) - digit < F_number_t_size_negative_d || (converted * 12) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
               }
             }
@@ -250,8 +250,8 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (digits > f_conversion_digits_duodecimal_signed) {
-              if ((converted * 12) + digit > f_number_t_size_positive || (converted * 12) + digit < converted) {
+            if (digits > F_conversion_digits_duodecimal_signed_d) {
+              if ((converted * 12) + digit > F_number_t_size_positive_d || (converted * 12) + digit < converted) {
                 return F_status_set_error(F_number_overflow);
               }
             }
@@ -303,8 +303,8 @@ extern "C" {
         if (digits) {
           ++digits;
 
-          if (digits > f_conversion_digits_duodecimal_unsigned) {
-            if ((converted * 12) + digit > f_number_t_size_unsigned || (converted * 12) + digit < converted) {
+          if (digits > F_conversion_digits_duodecimal_unsigned_d) {
+            if ((converted * 12) + digit > F_number_t_size_unsigned_d || (converted * 12) + digit < converted) {
               return F_status_set_error(F_number_overflow);
             }
           }
@@ -350,8 +350,8 @@ extern "C" {
           ++digits;
 
           if (negative) {
-            if (digits > f_conversion_digits_hexidecimal_signed) {
-              if ((converted << 4) - digit < f_number_t_size_negative || (converted << 4) - digit > converted) {
+            if (digits > F_conversion_digits_hexidecimal_signed_d) {
+              if ((converted << 4) - digit < F_number_t_size_negative_d || (converted << 4) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
               }
             }
@@ -360,8 +360,8 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (digits > f_conversion_digits_hexidecimal_signed) {
-              if ((converted << 4) + digit > f_number_t_size_positive || (converted << 4) + digit < converted) {
+            if (digits > F_conversion_digits_hexidecimal_signed_d) {
+              if ((converted << 4) + digit > F_number_t_size_positive_d || (converted << 4) + digit < converted) {
                 return F_status_set_error(F_number_overflow);
               }
             }
@@ -413,8 +413,8 @@ extern "C" {
         if (digits) {
           ++digits;
 
-          if (digits > f_conversion_digits_hexidecimal_unsigned) {
-            if ((converted << 4) + digit > f_number_t_size_unsigned || (converted << 4) + digit < converted) {
+          if (digits > F_conversion_digits_hexidecimal_unsigned_d) {
+            if ((converted << 4) + digit > F_number_t_size_unsigned_d || (converted << 4) + digit < converted) {
               return F_status_set_error(F_number_overflow);
             }
           }
@@ -460,8 +460,8 @@ extern "C" {
           ++digits;
 
           if (negative) {
-            if (digits > f_conversion_digits_octal_signed) {
-              if ((converted << 3) - digit < f_number_t_size_negative || (converted << 3) - digit > converted) {
+            if (digits > F_conversion_digits_octal_signed_d) {
+              if ((converted << 3) - digit < F_number_t_size_negative_d || (converted << 3) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
               }
             }
@@ -470,8 +470,8 @@ extern "C" {
             converted -= digit;
           }
           else {
-            if (digits > f_conversion_digits_octal_signed) {
-              if ((converted << 3) + digit > f_number_t_size_positive || (converted << 3) + digit < converted) {
+            if (digits > F_conversion_digits_octal_signed_d) {
+              if ((converted << 3) + digit > F_number_t_size_positive_d || (converted << 3) + digit < converted) {
                 return F_status_set_error(F_number_overflow);
               }
             }
@@ -523,8 +523,8 @@ extern "C" {
         if (digits) {
           ++digits;
 
-          if (digits > f_conversion_digits_octal_unsigned) {
-            if ((converted << 3) + digit > f_number_t_size_unsigned || (converted << 3) + digit < converted) {
+          if (digits > F_conversion_digits_octal_unsigned_d) {
+            if ((converted << 3) + digit > F_number_t_size_unsigned_d || (converted << 3) + digit < converted) {
               return F_status_set_error(F_number_overflow);
             }
           }

@@ -15,13 +15,13 @@ extern "C" {
 #ifndef _di_fll_error_file_print_
   f_status_t fll_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type) {
 
-    const char *type_name = fll_error_file_type_string_file;
+    const char *type_name = FLL_error_file_type_file_s;
 
     if (type == fll_error_file_type_directory) {
-      type_name = fll_error_file_type_string_directory;
+      type_name = FLL_error_file_type_directory_s;
     }
     else if (type == fll_error_file_type_pipe) {
-      type_name = fll_error_file_type_string_pipe;
+      type_name = FLL_error_file_type_pipe_s;
     }
 
     if (status == F_access_denied) {

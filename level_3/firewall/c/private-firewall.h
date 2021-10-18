@@ -25,7 +25,7 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_perform_commands(const firewall_local_data_t local, const firewall_main_t main) f_attribute_visibility_internal;
+extern f_status_t firewall_perform_commands(const firewall_local_data_t local, const firewall_main_t main) F_attribute_visibility_internal_d;
 
 /**
  * Create custom chains.
@@ -42,7 +42,7 @@ extern f_status_t firewall_perform_commands(const firewall_local_data_t local, c
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, firewall_local_data_t *local, firewall_main_t *main) f_attribute_visibility_internal;
+extern f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, firewall_local_data_t *local, firewall_main_t *main) F_attribute_visibility_internal_d;
 
 /**
  * Deallocate chains.
@@ -55,7 +55,7 @@ extern f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *rese
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_delete_chains(const firewall_main_t main) f_attribute_visibility_internal;
+extern f_status_t firewall_delete_chains(const firewall_main_t main) F_attribute_visibility_internal_d;
 
 /**
  * Lock the firewall.
@@ -68,7 +68,7 @@ extern f_status_t firewall_delete_chains(const firewall_main_t main) f_attribute
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_default_lock(const firewall_main_t main) f_attribute_visibility_internal;
+extern f_status_t firewall_default_lock(const firewall_main_t main) F_attribute_visibility_internal_d;
 
 /**
  * Buffer firewall rules.
@@ -88,7 +88,7 @@ extern f_status_t firewall_default_lock(const firewall_main_t main) f_attribute_
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional, firewall_local_data_t *local, firewall_main_t *main) f_attribute_visibility_internal;
+extern f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional, firewall_local_data_t *local, firewall_main_t *main) F_attribute_visibility_internal_d;
 
 /**
  * Process buffered rules.
@@ -105,7 +105,7 @@ extern f_status_t firewall_buffer_rules(const f_string_t filename, const bool op
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_main_t *main) f_attribute_visibility_internal;
+extern f_status_t firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_main_t *main) F_attribute_visibility_internal_d;
 
 /**
  * Delete allocated local data.
@@ -118,7 +118,7 @@ extern f_status_t firewall_process_rules(f_string_range_t *range, firewall_local
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_delete_local_data(firewall_local_data_t *local) f_attribute_visibility_internal;
+extern f_status_t firewall_delete_local_data(firewall_local_data_t *local) F_attribute_visibility_internal_d;
 
 #ifdef __cplusplus
 } // extern "C"

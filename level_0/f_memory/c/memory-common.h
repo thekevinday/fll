@@ -38,8 +38,8 @@ extern "C" {
  * Other projects may provide their own values.
  */
 #ifndef _di_f_memory_default_allocation_step_
-  #define f_memory_default_allocation_large 64
-  #define f_memory_default_allocation_small 4
+  #define F_memory_default_allocation_large_d 64
+  #define F_memory_default_allocation_small_d 4
 #endif // _di_f_memory_default_allocation_step_
 
 /**
@@ -377,8 +377,8 @@ extern "C" {
  * Provide a macro for calling other macros for incrementing a buffer.
  *
  * If the used + step is greater than size, then increase by step_default.
- * If step_default exceeds f_array_length_t_size, then attempt to increment by step.
- * If step exceeds f_array_length_t_size, set status to error_too_large.
+ * If step_default exceeds F_array_length_t_size_d, then attempt to increment by step.
+ * If step exceeds F_array_length_t_size_d, set status to error_too_large.
  *
  * Be sure to check size for error after calling this.
  *
@@ -387,13 +387,13 @@ extern "C" {
  * step:            The step to increase by, must be less than or equal to step_default.
  * step_default:    The default step to increase by if memory allows.
  * macro_resize:    The resize structure macro to call that excepts the exact arguments: (status, structure, length).
- * error_too_large: The error status to return when f_array_length_t_size would be exceeded.
+ * error_too_large: The error status to return when F_array_length_t_size_d would be exceeded.
  */
 #ifndef _di_macro_f_memory_structure_increment_
   #define macro_f_memory_structure_increment(status, structure, step, step_default, macro_resize, error_too_large) \
     if (structure.used + step > structure.size) { \
-      if (structure.used + step_default > f_array_length_t_size) { \
-        if (structure.used + step > f_array_length_t_size) { \
+      if (structure.used + step_default > F_array_length_t_size_d) { \
+        if (structure.used + step > F_array_length_t_size_d) { \
           status = F_status_set_error(error_too_large); \
         } \
         else { \

@@ -72,7 +72,7 @@ extern "C" {
  *   If 0, then this and statuses are ignored.
  */
 #ifndef _di_fl_directory_recurse_t_
-  #define fl_directory_recurse_depth_max 65535
+  #define FL_directory_recurse_depth_max_d 65535
 
   typedef struct {
     f_number_unsigned_t depth_max;
@@ -86,7 +86,7 @@ extern "C" {
     f_directory_statuss_t *failures;
   } fl_directory_recurse_t;
 
-  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), 0, 0 }
+  #define fl_directory_recurse_t_initialize { FL_directory_recurse_depth_max_d, F_file_default_read_size_d, F_false, macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d), 0, 0 }
 #endif // _di_fl_directory_recurse_t_
 
 /**

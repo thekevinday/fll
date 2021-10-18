@@ -39,7 +39,7 @@ extern "C" {
  * @see f_environment_get_dynamic()
  */
 #if !defined(_di_f_environment_get_) || !defined(_di_f_environment_get_dynamic_)
-  extern f_status_t private_f_environment_get(const f_string_t name, f_string_dynamic_t *value) f_attribute_visibility_internal;
+  extern f_status_t private_f_environment_get(const f_string_t name, f_string_dynamic_t *value) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_environment_get_) || !defined(_di_f_environment_get_dynamic_)
 
 /**
@@ -67,7 +67,7 @@ extern "C" {
  * @see f_environment_set_dynamic()
  */
 #if !defined(_di_f_environment_set_) || !defined(_di_f_environment_set_dynamic_)
-  extern f_status_t private_f_environment_set(const f_string_t name, const f_string_t value, const bool replace) f_attribute_visibility_internal;
+  extern f_status_t private_f_environment_set(const f_string_t name, const f_string_t value, const bool replace) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_environment_set_) || !defined(_di_f_environment_set_dynamic_)
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  * @see f_environment_unset_dynamic()
  */
 #if !defined(_di_f_environment_unset_) || !defined(_di_f_environment_unset_dynamic_)
-  extern f_status_t private_f_environment_unset(const f_string_t name) f_attribute_visibility_internal;
+  extern f_status_t private_f_environment_unset(const f_string_t name) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_environment_unset_) || !defined(_di_f_environment_unset_dynamic_)
 
 #ifdef __cplusplus

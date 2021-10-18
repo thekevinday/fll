@@ -23,7 +23,7 @@ extern "C" {
 #if !defined(_di_f_string_append_assure_nulless_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_assure_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_string_dynamic_partial_append_nulless_) || !defined(_di_f_string_dynamic_partial_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
   f_status_t private_f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_t_size) {
+    if (destination->used + length > F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -93,7 +93,7 @@ extern "C" {
   f_status_t private_f_string_dynamic_increase_by(const f_array_length_t amount, f_string_dynamic_t *dynamic) {
 
     if (dynamic->used + amount > dynamic->size) {
-      if (dynamic->used + amount > f_string_t_size) {
+      if (dynamic->used + amount > F_string_t_size_d) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -124,7 +124,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
   f_status_t private_f_string_dynamics_adjust(const f_array_length_t length, f_string_dynamics_t *dynamics) {
 
-    if (dynamics->used + length > f_array_length_t_size) {
+    if (dynamics->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -176,7 +176,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
   f_status_t private_f_string_dynamics_resize(const f_array_length_t length, f_string_dynamics_t *dynamics) {
 
-    if (dynamics->used + length > f_array_length_t_size) {
+    if (dynamics->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -205,7 +205,7 @@ extern "C" {
 #if !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_decimate_by_)
   f_status_t private_f_string_map_multis_adjust(const f_array_length_t length, f_string_map_multis_t *map_multis) {
 
-    if (map_multis->used + length > f_array_length_t_size) {
+    if (map_multis->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -237,7 +237,7 @@ extern "C" {
 #if !defined(_di_f_string_map_multis_decrease_by_) || !defined(_di_f_string_map_multis_increase_) || !defined(_di_f_string_map_multis_increase_by_) || !defined(_di_f_string_map_multis_terminate_) || !defined(_di_f_string_map_multis_terminate_after_)
   f_status_t private_f_string_map_multis_resize(const f_array_length_t length, f_string_map_multis_t *map_multis) {
 
-    if (map_multis->used + length > f_array_length_t_size) {
+    if (map_multis->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -269,7 +269,7 @@ extern "C" {
 #if !defined(_di_f_string_maps_adjust_) || !defined(_di_f_string_maps_decimate_by_)
   f_status_t private_f_string_maps_adjust(const f_array_length_t length, f_string_maps_t *maps) {
 
-    if (maps->used + length > f_array_length_t_size) {
+    if (maps->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -301,7 +301,7 @@ extern "C" {
 #if !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
   f_status_t private_f_string_maps_resize(const f_array_length_t length, f_string_maps_t *maps) {
 
-    if (maps->used + length > f_array_length_t_size) {
+    if (maps->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -333,7 +333,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
   f_status_t private_f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_t_size) {
+    if (destination->used + length > F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -358,7 +358,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamic_mish_nulless_) || !defined(_di_f_string_dynamic_partial_mish_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_mish_nulless_) || !defined(_di_f_string_prepend_assure_nulless_) || !defined(_di_f_string_prepend_nulless_)
   f_status_t private_f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_t_size) {
+    if (destination->used + length > F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -424,7 +424,7 @@ extern "C" {
 #if !defined(_di_f_string_quantitys_adjust_) || !defined(_di_f_string_quantitys_decimate_by_)
   f_status_t private_f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t *quantitys) {
 
-    if (quantitys->used + length > f_array_length_t_size) {
+    if (quantitys->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -445,7 +445,7 @@ extern "C" {
 #if !defined(_di_f_string_quantitys_decrease_) || !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_) || !defined(_di_f_string_quantitys_terminate_) || !defined(_di_f_string_quantitys_terminate_after_)
   f_status_t private_f_string_quantitys_resize(const f_array_length_t length, f_string_quantitys_t *quantitys) {
 
-    if (quantitys->used + length > f_array_length_t_size) {
+    if (quantitys->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -466,7 +466,7 @@ extern "C" {
 #if !defined(_di_f_string_quantityss_adjust_) || !defined(_di_f_string_quantityss_decimate_by_)
   f_status_t private_f_string_quantityss_adjust(const f_array_length_t length, f_string_quantityss_t *quantityss) {
 
-    if (quantityss->used + length > f_array_length_t_size) {
+    if (quantityss->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -495,7 +495,7 @@ extern "C" {
 #if !defined(_di_f_string_quantityss_decrease_) || !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_) || !defined(_di_f_string_quantityss_terminate_) || !defined(_di_f_string_quantityss_terminate_after_)
   f_status_t private_f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t *quantityss) {
 
-    if (quantityss->used + length > f_array_length_t_size) {
+    if (quantityss->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -524,7 +524,7 @@ extern "C" {
 #if !defined(_di_f_string_ranges_adjust_) || !defined(_di_f_string_ranges_decimate_by_)
   f_status_t private_f_string_ranges_adjust(const f_array_length_t length, f_string_ranges_t *ranges) {
 
-    if (ranges->used + length > f_array_length_t_size) {
+    if (ranges->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -545,7 +545,7 @@ extern "C" {
 #if !defined(_di_f_string_ranges_decrease_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_terminate_) || !defined(_di_f_string_ranges_terminate_after_)
   f_status_t private_f_string_ranges_resize(const f_array_length_t length, f_string_ranges_t *ranges) {
 
-    if (ranges->used + length > f_array_length_t_size) {
+    if (ranges->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -566,7 +566,7 @@ extern "C" {
 #if !defined(_di_f_string_rangess_adjust_) || !defined(_di_f_string_rangess_decimate_by_)
   f_status_t private_f_string_rangess_adjust(const f_array_length_t length, f_string_rangess_t *rangess) {
 
-    if (rangess->used + length > f_array_length_t_size) {
+    if (rangess->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -595,7 +595,7 @@ extern "C" {
 #if !defined(_di_f_string_rangess_decrease_) || !defined(_di_f_string_rangess_decrease_by_) || !defined(_di_f_string_rangess_increase_) || !defined(_di_f_string_rangess_increase_by_) || !defined(_di_f_string_rangess_terminate_) || !defined(_di_f_string_rangess_terminate_after_)
   f_status_t private_f_string_rangess_resize(const f_array_length_t length, f_string_rangess_t *rangess) {
 
-    if (rangess->used + length > f_array_length_t_size) {
+    if (rangess->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -624,7 +624,7 @@ extern "C" {
 #if !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
   f_status_t private_f_string_triples_adjust(const f_array_length_t length, f_string_triples_t *triples) {
 
-    if (triples->used + length > f_array_length_t_size) {
+    if (triples->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -659,7 +659,7 @@ extern "C" {
 #if !defined(_di_f_string_triples_decrease_) || !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_) || !defined(_di_f_string_triples_terminate_) || !defined(_di_f_string_triples_terminate_after_)
   f_status_t private_f_string_triples_resize(const f_array_length_t length, f_string_triples_t *triples) {
 
-    if (triples->used + length > f_array_length_t_size) {
+    if (triples->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 

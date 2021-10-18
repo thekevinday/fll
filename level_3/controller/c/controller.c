@@ -15,7 +15,7 @@ extern "C" {
 
     controller_print_lock(main.output.to, 0);
 
-    fll_program_print_help_header(main.output.to, main.context, main.program_name_long, controller_version);
+    fll_program_print_help_header(main.output.to, main.context, main.program_name_long, controller_program_version_s);
 
     fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -29,24 +29,24 @@ extern "C" {
 
     f_print_character(f_string_eol_s[0], main.output.to.stream);
 
-    fll_program_print_help_option(main.output.to, main.context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Specify a custom control group file path, such as '" f_control_group_path_system_prefix f_control_group_path_system_default "'.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_init, controller_long_init, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" controller_path_settings "'.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_simulate, controller_long_simulate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_uninterruptable, controller_long_uninterruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_control_s, controller_long_control_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Specify a custom control group file path, such as '" F_control_group_path_system_prefix_s F_control_group_path_system_default_s "'.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_interruptable_s, controller_long_interruptable_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid_s CONTROLLER_default_s controller_path_suffix_s "'.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" controller_path_settings_s "'.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_uninterruptable_s, controller_long_uninterruptable_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
     fll_program_print_help_usage(main.output.to, main.context, main.program_name, "entry");
 
-    fl_print_format("  When both the %[%s%s%] parameter and the", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate, main.context.set.notable);
-    fl_print_format(" %[%s%s%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_validate, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When both the %[%s%s%] parameter and the", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate_s, main.context.set.notable);
+    fl_print_format(" %[%s%s%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_validate_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, main.setting_default.used ? controller_long_uninterruptable : controller_long_interruptable, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, main.setting_default.used ? controller_long_uninterruptable_s : controller_long_interruptable_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format(" Specify an empty string for the %[%s%s%] parameter to disable pid file creation for this program.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" Specify an empty string for the %[%s%s%] parameter to disable pid file creation for this program.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     controller_print_unlock_flush(main.output.to, 0);
 
@@ -60,7 +60,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, controller_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, controller_total_parameters_d);
 
       {
         f_console_parameter_id_t ids[3] = { controller_parameter_no_color, controller_parameter_light, controller_parameter_dark };
@@ -140,7 +140,7 @@ extern "C" {
     if (main->parameters[controller_parameter_version].result == f_console_result_found) {
       controller_print_lock(main->output.to, 0);
 
-      fll_program_print_version(main->output.to, controller_version);
+      fll_program_print_version(main->output.to, controller_program_version_s);
 
       controller_print_unlock_flush(main->output.to, 0);
 
@@ -154,7 +154,7 @@ extern "C" {
       status = f_string_append_nulless(arguments.argv[main->remaining.array[0]], strnlen(arguments.argv[main->remaining.array[0]], f_console_parameter_size), &setting.name_entry);
     }
     else {
-      status = f_string_append_nulless(controller_string_default_s, controller_string_default_length, &setting.name_entry);
+      status = f_string_append_nulless(controller_default_s, controller_default_s_length, &setting.name_entry);
     }
 
     if (F_status_is_error(status)) {
@@ -186,7 +186,7 @@ extern "C" {
         controller_print_lock(main->error.to, 0);
 
         fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-        fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings, main->context.set.notable);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings_s, main->context.set.notable);
         fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
         controller_print_unlock_flush(main->error.to, 0);
@@ -205,13 +205,13 @@ extern "C" {
     }
     else {
       if (main->parameters[controller_parameter_init].result == f_console_result_found && !main->as_init) {
-        status = f_string_append(controller_path_settings_init, controller_path_settings_init_length, &setting.path_setting);
+        status = f_string_append(controller_path_settings_init_s, controller_path_settings_init_s_length, &setting.path_setting);
       }
       else if (main->setting_default.used) {
         status = f_string_append(main->setting_default.string, main->setting_default.used, &setting.path_setting);
       }
       else {
-        status = f_string_append(controller_path_settings, controller_path_settings_length, &setting.path_setting);
+        status = f_string_append(controller_path_settings_s, controller_path_settings_s_length, &setting.path_setting);
       }
 
       if (F_status_is_error(status)) {
@@ -225,7 +225,7 @@ extern "C" {
           controller_print_lock(main->error.to, 0);
 
           fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.set.notable);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable);
           fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           controller_print_unlock_flush(main->error.to, 0);
@@ -252,7 +252,7 @@ extern "C" {
     if (F_status_is_error_not(status) && !setting.path_pid.used && !main->parameters[controller_parameter_pid].locations.used) {
 
       if (main->parameters[controller_parameter_init].result == f_console_result_found) {
-        status = f_string_append(controller_path_pid_init, controller_path_pid_init_length, &setting.path_pid);
+        status = f_string_append(controller_path_pid_init_s, controller_path_pid_init_s_length, &setting.path_pid);
       }
       else {
         status = f_string_append(main->path_pid.string, main->path_pid.used, &setting.path_pid);
@@ -263,7 +263,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_string_append(controller_path_suffix, controller_path_suffix_length, &setting.path_pid);
+        status = f_string_append(controller_path_suffix_s, controller_path_suffix_s_length, &setting.path_pid);
       }
 
       if (F_status_is_error(status)) {
@@ -277,7 +277,7 @@ extern "C" {
           controller_print_lock(main->error.to, 0);
 
           fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.set.notable);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control_s, main->context.set.notable);
           fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           controller_print_unlock_flush(main->error.to, 0);
@@ -295,7 +295,7 @@ extern "C" {
             fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
           }
           else {
-            status = f_string_append_assure(f_path_separator, 1, &setting.path_control);
+            status = f_string_append_assure(F_path_separator_s, 1, &setting.path_control);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
@@ -314,7 +314,7 @@ extern "C" {
             controller_print_lock(main->warning.to, 0);
 
             fl_print_format("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
-            fl_print_format("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.set.notable);
+            fl_print_format("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control_s, main->context.set.notable);
             fl_print_format("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
 
             controller_print_unlock_flush(main->warning.to, 0);
@@ -330,7 +330,7 @@ extern "C" {
 
           fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
           fl_print_format("%[' must not be specified with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon, main->context.set.notable);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon_s, main->context.set.notable);
           fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           controller_print_unlock_flush(main->error.to, 0);
@@ -378,17 +378,17 @@ extern "C" {
 
       // a control file path is required.
       if (!setting.path_control.used) {
-        status = f_string_append_nulless(f_control_group_path_system_prefix, f_control_group_path_system_prefix_length, &setting.path_control);
+        status = f_string_append_nulless(F_control_group_path_system_prefix_s, F_control_group_path_system_prefix_s_length, &setting.path_control);
 
         if (F_status_is_error_not(status)) {
-          status = f_string_append_nulless(f_control_group_path_system_default, f_control_group_path_system_default_length, &setting.path_control);
+          status = f_string_append_nulless(F_control_group_path_system_default_s, F_control_group_path_system_default_s_length, &setting.path_control);
         }
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
         }
         else {
-          status = f_string_append_assure(f_path_separator, 1, &setting.path_control);
+          status = f_string_append_assure(F_path_separator_s, 1, &setting.path_control);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
@@ -452,7 +452,7 @@ extern "C" {
 #ifndef _di_controller_main_delete_
   f_status_t controller_main_delete(controller_main_t *main) {
 
-    for (f_array_length_t i = 0; i < controller_total_parameters; ++i) {
+    for (f_array_length_t i = 0; i < controller_total_parameters_d; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

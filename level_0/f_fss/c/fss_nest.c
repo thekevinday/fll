@@ -55,12 +55,12 @@ extern "C" {
     if (items->used + 1 > items->size) {
       f_array_length_t size = items->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (items->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (items->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_items_resize(size, items);
@@ -78,7 +78,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (items->used + amount > items->size) {
-      if (items->used + amount > f_array_length_t_size) {
+      if (items->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -149,12 +149,12 @@ extern "C" {
     if (nest->used + 1 > nest->size) {
       f_array_length_t size = nest->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (nest->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (nest->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_nest_resize(size, nest);
@@ -172,7 +172,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (nest->used + amount > nest->size) {
-      if (nest->used + amount > f_array_length_t_size) {
+      if (nest->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -243,12 +243,12 @@ extern "C" {
     if (nests->used + 1 > nests->size) {
       f_array_length_t size = nests->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (nests->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (nests->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_fss_nests_resize(size, nests);
@@ -266,7 +266,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (nests->used + amount > nests->size) {
-      if (nests->used + amount > f_array_length_t_size) {
+      if (nests->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 

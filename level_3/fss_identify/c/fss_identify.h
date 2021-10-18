@@ -48,39 +48,39 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_identify_version_
-  #define fss_identify_major_version f_string_ascii_0
-  #define fss_identify_minor_version f_string_ascii_5
-  #define fss_identify_micro_version f_string_ascii_6
+#ifndef _di_fss_identify_program_version_
+  #define fss_identify_program_version_major_s F_string_ascii_0_s
+  #define fss_identify_program_version_minor_s F_string_ascii_5_s
+  #define fss_identify_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef fss_identify_nano_version_prefix
-    #define fss_identify_nano_version_prefix
+  #ifndef fss_identify_program_version_nano_prefix_s
+    #define fss_identify_program_version_nano_prefix_s
   #endif
 
-  #ifndef fss_identify_nano_version
-    #define fss_identify_nano_version
+  #ifndef fss_identify_program_version_nano_s
+    #define fss_identify_program_version_nano_s
   #endif
 
-  #define fss_identify_version fss_identify_major_version f_string_ascii_period fss_identify_minor_version f_string_ascii_period fss_identify_micro_version fss_identify_nano_version_prefix fss_identify_nano_version
-#endif // _di_fss_identify_version_
+  #define fss_identify_program_version fss_identify_program_version_major_s F_string_ascii_period_s fss_identify_program_version_minor_s F_string_ascii_period_s fss_identify_program_version_micro_s fss_identify_program_version_nano_prefix_s fss_identify_program_version_nano_s
+#endif // _di_fss_identify_program_version_
 
-#ifndef _di_fss_identify_name_
-  #define fss_identify_name "fss_identify"
-  #define fss_identify_name_long "FSS Identify"
-#endif // _di_fss_identify_name_
+#ifndef _di_fss_identify_program_name_
+  #define fss_identify_program_name_s      "fss_identify"
+  #define fss_identify_program_name_long_s "FSS Identify"
+#endif // _di_fss_identify_program_name_
 
 #ifndef _di_fss_identify_defines_
-  #define fss_identify_short_content "c"
-  #define fss_identify_short_line    "l"
-  #define fss_identify_short_name    "n"
-  #define fss_identify_short_object  "o"
-  #define fss_identify_short_total   "t"
+  #define fss_identify_short_content_s "c"
+  #define fss_identify_short_line_s    "l"
+  #define fss_identify_short_name_s    "n"
+  #define fss_identify_short_object_s  "o"
+  #define fss_identify_short_total_s   "t"
 
-  #define fss_identify_long_content "content"
-  #define fss_identify_long_line    "line"
-  #define fss_identify_long_name    "name"
-  #define fss_identify_long_object  "object"
-  #define fss_identify_long_total   "total"
+  #define fss_identify_long_content_s "content"
+  #define fss_identify_long_line_s    "line"
+  #define fss_identify_long_name_s    "name"
+  #define fss_identify_long_object_s  "object"
+  #define fss_identify_long_total_s   "total"
 
   enum {
     fss_identify_parameter_help,
@@ -111,19 +111,19 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_identify_short_content, fss_identify_long_content, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_line, fss_identify_long_line, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_name, fss_identify_long_name, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_object, fss_identify_long_object, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_total, fss_identify_long_total, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_identify_short_content_s, fss_identify_long_content_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_identify_short_line_s, fss_identify_long_line_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_identify_short_name_s, fss_identify_long_name_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_identify_short_object_s, fss_identify_long_object_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_identify_short_total_s, fss_identify_long_total_s, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_identify_total_parameters 14
+  #define fss_identify_total_parameters_d 14
 #endif // _di_fss_identify_defines_
 
 #ifndef _di_fss_identify_data_t_
   typedef struct {
-    f_console_parameter_t parameters[fss_identify_total_parameters];
+    f_console_parameter_t parameters[fss_identify_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

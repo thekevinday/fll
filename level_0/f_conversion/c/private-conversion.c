@@ -19,11 +19,11 @@ extern "C" {
       digits = 1;
     }
 
-    if (data.flag & f_conversion_data_flag_base_prepend) {
-      const int used = digits + 2 + (data.flag & f_conversion_data_flag_sign_always & f_conversion_data_flag_sign_pad ? 1 : 0);
+    if (data.flag & F_conversion_data_flag_base_prepend_d) {
+      const int used = digits + 2 + (data.flag & F_conversion_data_flag_sign_always_d & F_conversion_data_flag_sign_pad_d ? 1 : 0);
 
       if (data.width > used) {
-        if (data.flag & f_conversion_data_flag_zeros_leading) {
+        if (data.flag & F_conversion_data_flag_zeros_leading_d) {
           if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
             return F_status_set_error(F_output);
           }
@@ -77,10 +77,10 @@ extern "C" {
       }
     }
     else {
-      const int used = digits + (data.flag & (f_conversion_data_flag_sign_always | f_conversion_data_flag_sign_pad) ? 1 : 0);
+      const int used = digits + (data.flag & (F_conversion_data_flag_sign_always_d | F_conversion_data_flag_sign_pad_d) ? 1 : 0);
 
       if (data.width > used) {
-        if (data.flag & f_conversion_data_flag_zeros_leading) {
+        if (data.flag & F_conversion_data_flag_zeros_leading_d) {
           if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
             return F_status_set_error(F_output);
           }
@@ -174,7 +174,7 @@ extern "C" {
         c = 0x30 + work;
       }
       else {
-        if (data.flag & f_conversion_data_flag_base_upper) {
+        if (data.flag & F_conversion_data_flag_base_upper_d) {
           c = 0x37 + work;
         }
         else {
@@ -236,7 +236,7 @@ extern "C" {
         }
       }
     }
-    else if (data.flag & f_conversion_data_flag_sign_always) {
+    else if (data.flag & F_conversion_data_flag_sign_always_d) {
       if (fwrite_unlocked(f_string_ascii_plus_s, 1, 1, output) == -1) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -248,7 +248,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
     }
-    else if (data.flag & f_conversion_data_flag_sign_pad) {
+    else if (data.flag & F_conversion_data_flag_sign_pad_d) {
       if (fwrite_unlocked(f_string_ascii_space_s, 1, 1, output) == -1) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -261,7 +261,7 @@ extern "C" {
       }
     }
 
-    if (data.flag & f_conversion_data_flag_base_prepend) {
+    if (data.flag & F_conversion_data_flag_base_prepend_d) {
       if (fwrite_unlocked(f_string_ascii_0_s, 1, 1, output) == -1) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -277,23 +277,23 @@ extern "C" {
 
       switch (data.base) {
         case 2:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
           break;
 
         case 8:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_O_s[0] : f_string_ascii_o_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_O_s[0] : f_string_ascii_o_s[0];
           break;
 
         case 10:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_T_s[0] : f_string_ascii_t_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_T_s[0] : f_string_ascii_t_s[0];
           break;
 
         case 12:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_D_s[0] : f_string_ascii_d_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_D_s[0] : f_string_ascii_d_s[0];
           break;
 
         case 16:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_X_s[0] : f_string_ascii_x_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_X_s[0] : f_string_ascii_x_s[0];
           break;
 
         default:
@@ -344,11 +344,11 @@ extern "C" {
       }
     }
 
-    if (data.flag & f_conversion_data_flag_base_prepend) {
-      const int used = digits + 2 + (data.flag & f_conversion_data_flag_sign_always & f_conversion_data_flag_sign_pad ? 1 : 0);
+    if (data.flag & F_conversion_data_flag_base_prepend_d) {
+      const int used = digits + 2 + (data.flag & F_conversion_data_flag_sign_always_d & F_conversion_data_flag_sign_pad_d ? 1 : 0);
 
       if (data.width > used) {
-        if (data.flag & f_conversion_data_flag_zeros_leading) {
+        if (data.flag & F_conversion_data_flag_zeros_leading_d) {
           private_f_conversion_digit_to_string_prefix(data, negative, destination);
           private_f_conversion_digit_to_string_pad(data, f_string_ascii_0_s[0], data.width - used, destination);
           private_f_conversion_digit_to_string_number(data, number, digits, destination);
@@ -370,10 +370,10 @@ extern "C" {
       }
     }
     else {
-      const int used = digits + (data.flag & (f_conversion_data_flag_sign_always | f_conversion_data_flag_sign_pad) ? 1 : 0);
+      const int used = digits + (data.flag & (F_conversion_data_flag_sign_always_d | F_conversion_data_flag_sign_pad_d) ? 1 : 0);
 
       if (data.width > used) {
-        if (data.flag & f_conversion_data_flag_zeros_leading) {
+        if (data.flag & F_conversion_data_flag_zeros_leading_d) {
           private_f_conversion_digit_to_string_prefix(data, negative, destination);
           private_f_conversion_digit_to_string_pad(data, f_string_ascii_0_s[0], data.width - used, destination);
           private_f_conversion_digit_to_string_number(data, number, digits, destination);
@@ -431,7 +431,7 @@ extern "C" {
         c = 0x30 + work;
       }
       else {
-        if (data.flag & f_conversion_data_flag_base_upper) {
+        if (data.flag & F_conversion_data_flag_base_upper_d) {
           c = 0x37 + work;
         }
         else {
@@ -461,37 +461,37 @@ extern "C" {
         destination->string[destination->used++] = f_string_ascii_minus_s[0];
       }
     }
-    else if (data.flag & f_conversion_data_flag_sign_always) {
+    else if (data.flag & F_conversion_data_flag_sign_always_d) {
       destination->string[destination->used++] = f_string_ascii_plus_s[0];
     }
-    else if (data.flag & f_conversion_data_flag_sign_pad) {
+    else if (data.flag & F_conversion_data_flag_sign_pad_d) {
       destination->string[destination->used++] = f_string_ascii_space_s[0];
     }
 
-    if (data.flag & f_conversion_data_flag_base_prepend) {
+    if (data.flag & F_conversion_data_flag_base_prepend_d) {
       destination->string[destination->used++] = f_string_ascii_0_s[0];
 
       char c = 0;
 
       switch (data.base) {
         case 2:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
           break;
 
         case 8:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_O_s[0] : f_string_ascii_o_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_O_s[0] : f_string_ascii_o_s[0];
           break;
 
         case 10:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_T_s[0] : f_string_ascii_t_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_T_s[0] : f_string_ascii_t_s[0];
           break;
 
         case 12:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_D_s[0] : f_string_ascii_d_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_D_s[0] : f_string_ascii_d_s[0];
           break;
 
         case 16:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_X_s[0] : f_string_ascii_x_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_X_s[0] : f_string_ascii_x_s[0];
           break;
 
         default:

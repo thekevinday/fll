@@ -221,7 +221,7 @@ extern "C" {
 /**
  * Increase the size of the map_multis array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -247,7 +247,7 @@ extern "C" {
  * Resize the map_multis array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -376,7 +376,7 @@ extern "C" {
 /**
  * Increase the size of the string maps array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -402,7 +402,7 @@ extern "C" {
  * Resize the string maps array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount

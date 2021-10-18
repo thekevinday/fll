@@ -25,7 +25,7 @@ extern "C" {
  *   F_false if to not apply delimits.
  */
 #ifndef _di_fss_extended_read_delimit_content_is_
-  extern f_status_t fss_extended_read_delimit_content_is(const f_array_length_t depth, fss_extended_read_data_t * const data) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_delimit_content_is(const f_array_length_t depth, fss_extended_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_delimit_content_is_
 
 /**
@@ -41,7 +41,7 @@ extern "C" {
  *   F_false if to not apply delimits.
  */
 #ifndef _di_fss_extended_read_delimit_object_is_
-  extern f_status_t fss_extended_read_delimit_object_is(const f_array_length_t depth, fss_extended_read_data_t * const data) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_delimit_object_is(const f_array_length_t depth, fss_extended_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_delimit_object_is_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  * @see fss_extended_read_depths_resize()
  */
 #ifndef _di_fss_extended_read_depth_process_
-  extern f_status_t fss_extended_read_depth_process(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_depth_process(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_depth_process_
 
 /**
@@ -90,7 +90,7 @@ extern "C" {
  *   On failure to identify, an empty string is returned.
  */
 #ifndef _di_fss_extended_read_file_identify_
-  extern f_string_t fss_extended_read_file_identify(const f_array_length_t at, const fss_extended_read_files_t files) f_attribute_visibility_internal;
+  extern f_string_t fss_extended_read_file_identify(const f_array_length_t at, const fss_extended_read_files_t files) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_file_identify_
 
 /**
@@ -116,7 +116,7 @@ extern "C" {
  * @see fss_extended_read_process_option()
  */
 #ifndef _di_fss_extended_read_load_
-  extern f_status_t fss_extended_read_load(fss_extended_read_main_t * const main, fss_extended_read_data_t *data) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_load(fss_extended_read_main_t * const main, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_load_
 
 /**
@@ -146,7 +146,7 @@ extern "C" {
  * @see fss_extended_read_depths_resize()
  */
 #ifndef _di_fss_extended_read_load_number_
-  extern f_status_t fss_extended_read_load_number(const f_array_length_t parameter, const f_string_t name, f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, f_number_unsigned_t *number) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_load_number(const f_array_length_t parameter, const f_string_t name, f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_load_number_
 
 /**
@@ -166,7 +166,7 @@ extern "C" {
  *   The program data.
  */
 #ifndef _di_fss_extended_read_print_at_
-  extern void fss_extended_read_print_at(const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_extended_read_main_t * const main, fss_extended_read_data_t * const data) f_attribute_visibility_internal;
+  extern void fss_extended_read_print_at(const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_extended_read_main_t * const main, fss_extended_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_print_at_
 
 /**
@@ -184,7 +184,7 @@ extern "C" {
  *   F_success on success and something was matched (and total was printed).
  */
 #ifndef _di_fss_extended_read_print_at_total_
-  extern f_status_t fss_extended_read_print_at_total(const f_array_length_t at, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_print_at_total(const f_array_length_t at, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_print_at_total_
 
 /**
@@ -194,7 +194,7 @@ extern "C" {
  *   The main data.
  */
 #ifndef _di_fss_extended_read_print_content_end_
-  extern void fss_extended_read_print_content_end(fss_extended_read_main_t * const main) f_attribute_visibility_internal;
+  extern void fss_extended_read_print_content_end(fss_extended_read_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_print_content_end_
 
 /**
@@ -204,7 +204,7 @@ extern "C" {
  *   The main data.
  */
 #ifndef _di_fss_extended_read_print_object_end_
-  extern void fss_extended_read_print_object_end(fss_extended_read_main_t * const main) f_attribute_visibility_internal;
+  extern void fss_extended_read_print_object_end(fss_extended_read_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_print_object_end_
 
 /**
@@ -214,7 +214,7 @@ extern "C" {
  *   The main data.
  */
 #ifndef _di_fss_extended_read_print_one_
-  extern void fss_extended_read_print_one(fss_extended_read_main_t * const main) f_attribute_visibility_internal;
+  extern void fss_extended_read_print_one(fss_extended_read_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_print_one_
 
 /**
@@ -224,7 +224,7 @@ extern "C" {
  *   The main data.
  */
 #ifndef _di_fss_extended_read_print_set_end_
-  extern void fss_extended_read_print_set_end(fss_extended_read_main_t * const main) f_attribute_visibility_internal;
+  extern void fss_extended_read_print_set_end(fss_extended_read_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_print_set_end_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  *   The main data.
  */
 #ifndef _di_fss_extended_read_print_zero_
-  extern void fss_extended_read_print_zero(fss_extended_read_main_t * const main) f_attribute_visibility_internal;
+  extern void fss_extended_read_print_zero(fss_extended_read_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_print_zero_
 
 /**
@@ -259,7 +259,7 @@ extern "C" {
  * @see fss_extended_read_process_option()
  */
 #ifndef _di_fss_extended_read_process_
-  extern f_status_t fss_extended_read_process(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_process(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_
 
 /**
@@ -277,7 +277,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_at_
-  extern f_status_t fss_extended_read_process_at(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_process_at(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_at_
 
 /**
@@ -295,7 +295,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_columns_
-  extern f_status_t fss_extended_read_process_columns(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_process_columns(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_columns_
 
 /**
@@ -313,7 +313,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_line_
-  extern f_status_t fss_extended_read_process_line(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_process_line(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_line_
 
 /**
@@ -331,7 +331,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_name_
-  extern f_status_t fss_extended_read_process_name(fss_extended_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_process_name(fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_name_
 
 /**
@@ -354,7 +354,7 @@ extern "C" {
  * @see fss_extended_read_load_setting()
  */
 #ifndef _di_fss_extended_read_process_option_
-  extern f_status_t fss_extended_read_process_option(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_process_option(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_option_
 
 /**
@@ -372,7 +372,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_total_
-  extern f_status_t fss_extended_read_process_total(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_process_total(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_total_
 
 
@@ -394,7 +394,7 @@ extern "C" {
  *   F_false if not delimited.
  */
 #ifndef _di_fss_extended_read_is_delimited_at_depth_
-  extern f_status_t fss_extended_read_is_delimited_at_depth(const fss_extended_read_main_t main, const f_array_length_t depth) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_is_delimited_at_depth(const fss_extended_read_main_t main, const f_array_length_t depth) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_is_delimited_at_depth_
 
 /**
@@ -421,7 +421,7 @@ extern "C" {
  * @see fss_extended_read_main_preprocess_depth()
  */
 #ifndef _di_fss_extended_read_main_process_file_
-  extern f_status_t fss_extended_read_main_process_file(const f_console_arguments_t arguments, fss_extended_read_main_t *main, const f_string_t file_name, const fss_extended_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_main_process_file(const f_console_arguments_t arguments, fss_extended_read_main_t *main, const f_string_t file_name, const fss_extended_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_main_process_file_
 
 #ifdef __cplusplus

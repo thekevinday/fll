@@ -23,7 +23,7 @@ extern "C" {
  *   The string with used == 0 if no match was found.
  */
 #ifndef _di_controller_rule_action_method_name_
-  extern f_string_static_t controller_rule_action_method_name(const uint8_t type) f_attribute_visibility_internal;
+  extern f_string_static_t controller_rule_action_method_name(const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_method_name_
 
 /**
@@ -43,7 +43,7 @@ extern "C" {
  *   F_false on success and rule was not found.
  */
 #ifndef _di_controller_rule_find_
-  extern f_status_t controller_rule_find(const f_string_static_t alias, const controller_rules_t rules, f_array_length_t *at) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_find(const f_string_static_t alias, const controller_rules_t rules, f_array_length_t *at) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_find_
 
 /**
@@ -76,7 +76,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_controller_rule_parameters_read_
-  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_parameters_read_
 
 /**
@@ -92,7 +92,7 @@ extern "C" {
  *
  */
 #ifndef _di_controller_rule_action_type_to_action_execute_type_
-  extern uint8_t controller_rule_action_type_to_action_execute_type(const uint8_t type) f_attribute_visibility_internal;
+  extern uint8_t controller_rule_action_type_to_action_execute_type(const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_type_to_action_execute_type_
 
 /**
@@ -106,7 +106,7 @@ extern "C" {
  *   The string with used == 0 if no match was found.
  */
 #ifndef _di_controller_rule_action_type_name_
-  extern f_string_static_t controller_rule_action_type_name(const uint8_t type) f_attribute_visibility_internal;
+  extern f_string_static_t controller_rule_action_type_name(const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_type_name_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  *   The string with used == 0 if no match was found.
  */
 #ifndef _di_controller_rule_action_type_execute_name_
-  extern f_string_static_t controller_rule_action_type_execute_name(const uint8_t type) f_attribute_visibility_internal;
+  extern f_string_static_t controller_rule_action_type_execute_name(const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_type_execute_name_
 
 /**
@@ -140,7 +140,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_controller_rule_actions_increase_by_
-  extern f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_actions_increase_by_
 
 /**
@@ -179,7 +179,7 @@ extern "C" {
  * @see f_fss_count_lines()
  */
 #ifndef _di_controller_rule_action_read_
-  extern f_status_t controller_rule_action_read(const bool is_normal, const controller_global_t global, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_action_read(const bool is_normal, const controller_global_t global, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_read_
 
 /**
@@ -212,7 +212,7 @@ extern "C" {
  *  @see f_type_int32s_append()
  */
 #ifndef _di_controller_rule_copy_
-  extern f_status_t controller_rule_copy(const controller_rule_t source, controller_rule_t *destination) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_copy(const controller_rule_t source, controller_rule_t *destination) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_copy_
 
 /**
@@ -242,7 +242,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_rule_error_print_
-  extern void controller_rule_error_print(const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_rule_error_print(const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_error_print_
 
 /**
@@ -267,7 +267,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_error_print_cache_
-  extern void controller_rule_error_print_cache(const fl_print_t print, const controller_cache_action_t cache, const bool item) f_attribute_visibility_internal;
+  extern void controller_rule_error_print_cache(const fl_print_t print, const controller_cache_action_t cache, const bool item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_error_print_cache_
 
 /**
@@ -290,7 +290,7 @@ extern "C" {
  * @see controller_rule_error_print_cache()
  */
 #ifndef _di_controller_rule_item_error_print_
-  extern void controller_rule_item_error_print(const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print(const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_error_print_
 
 /**
@@ -309,7 +309,7 @@ extern "C" {
  *   The process to use.
  */
 #ifndef _di_controller_rule_item_error_print_execute_
-  extern void controller_rule_item_error_print_execute(const bool script_is, const f_string_t name, const f_status_t status, controller_process_t * const process) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_execute(const bool script_is, const f_string_t name, const f_status_t status, controller_process_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_error_print_execute_
 
 /**
@@ -326,7 +326,7 @@ extern "C" {
  *   A short explanation on why this is an error or warning.
  */
 #ifndef _di_controller_rule_item_error_print_need_want_wish_
-  extern void controller_rule_item_error_print_need_want_wish(const fl_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_need_want_wish(const fl_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_error_print_need_want_wish_
 
 /**
@@ -338,7 +338,7 @@ extern "C" {
  *   The rule alias of the rule that is not loaded.
  */
 #ifndef _di_controller_rule_item_error_print_rule_not_loaded_
-  extern void controller_rule_item_error_print_rule_not_loaded(const fl_print_t print, const f_string_t alias) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_rule_not_loaded(const fl_print_t print, const f_string_t alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_error_print_rule_not_loaded_
 
 /**
@@ -350,7 +350,7 @@ extern "C" {
  *   The rule alias of the rule that is missing the pid file designation.
  */
 #ifndef _di_controller_rule_action_error_missing_pid_
-  extern void controller_rule_action_error_missing_pid(const fl_print_t print, const f_string_t alias) f_attribute_visibility_internal;
+  extern void controller_rule_action_error_missing_pid(const fl_print_t print, const f_string_t alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_error_missing_pid_
 
 /**
@@ -371,7 +371,7 @@ extern "C" {
  *   - controller_rule_action_type_stop
  * @param options
  *   Process options to consider when executing.
- *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_process_option_simulate_d, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param global
  *   The global data.
  * @param process
@@ -391,7 +391,7 @@ extern "C" {
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_status_t controller_rule_execute(const uint8_t action, const uint8_t options, const controller_global_t global, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute(const uint8_t action, const uint8_t options, const controller_global_t global, controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_
 
 /**
@@ -407,7 +407,7 @@ extern "C" {
  *   The arguments to pass to the program.
  * @param options
  *   Process options to consider when executing.
- *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_process_option_simulate_d, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param execute_set
  *   The execute parameter and as settings.
  * @param process
@@ -425,7 +425,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_foreground_
 
 /**
@@ -446,7 +446,7 @@ extern "C" {
  *   The arguments to pass to the program.
  * @param options
  *   Process options to consider when executing.
- *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_process_option_simulate_d, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param with
  *   The "with" option flags.
  * @param execute_set
@@ -467,7 +467,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**
@@ -490,7 +490,7 @@ extern "C" {
  *   -2 to designate exit due to signal/disabled thread.
  */
 #ifndef _di_controller_rule_execute_rerun_
-  extern int8_t controller_rule_execute_rerun(const uint8_t action, controller_process_t *process, controller_rule_item_t *item) f_attribute_visibility_internal;
+  extern int8_t controller_rule_execute_rerun(const uint8_t action, controller_process_t *process, controller_rule_item_t *item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_rerun_
 
 /**
@@ -518,7 +518,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_id_construct_
-  extern f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *alias) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_id_construct_
 
 /**
@@ -536,7 +536,7 @@ extern "C" {
  *   F_false on unavailable.
  */
 #ifndef _di_controller_rule_status_is_available_
-  extern f_status_t controller_rule_status_is_available(const uint8_t action, const controller_rule_t rule) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_status_is_available(const uint8_t action, const controller_rule_t rule) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_status_is_available_
 
 /**
@@ -554,7 +554,7 @@ extern "C" {
  *   F_false if status does not represent an error.
  */
 #ifndef _di_controller_rule_status_is_error_
-  extern f_status_t controller_rule_status_is_error(const uint8_t action, const controller_rule_t rule) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_status_is_error(const uint8_t action, const controller_rule_t rule) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_status_is_error_
 
 /**
@@ -586,7 +586,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_item_read_
-  extern f_status_t controller_rule_item_read(const bool is_normal, const controller_global_t global, controller_cache_t *cache, controller_rule_item_t *item) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_item_read(const bool is_normal, const controller_global_t global, controller_cache_t *cache, controller_rule_item_t *item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_read_
 
 /**
@@ -600,7 +600,7 @@ extern "C" {
  *   The string with used == 0 if no match was found.
  */
 #ifndef _di_controller_rule_item_type_name_
-  extern f_string_static_t controller_rule_item_type_name(const uint8_t type) f_attribute_visibility_internal;
+  extern f_string_static_t controller_rule_item_type_name(const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_type_name_
 
 /**
@@ -622,7 +622,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rule_items_increase_by_
-  extern f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t *items) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t *items) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_items_increase_by_
 
 /**
@@ -636,7 +636,7 @@ extern "C" {
  *   The string with used == 0 if no match was found.
  */
 #ifndef _di_controller_rule_setting_limit_type_name_
-  extern f_string_static_t controller_rule_setting_limit_type_name(const uint8_t type) f_attribute_visibility_internal;
+  extern f_string_static_t controller_rule_setting_limit_type_name(const uint8_t type) F_attribute_visibility_internal_d;
 #endif // di_controller_rule_setting_limit_type_name_
 
 /**
@@ -668,7 +668,7 @@ extern "C" {
  *   Errors (with error bit) from: controller_lock_write().
  */
 #ifndef _di_controller_rule_process_
-  extern f_status_t controller_rule_process(const controller_global_t global, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_process(const controller_global_t global, controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_process_
 
 /**
@@ -677,8 +677,8 @@ extern "C" {
  * @param options_force
  *   Force the given process options, only supporting a subset of process options.
  *
- *   If controller_process_option_asynchronous, then asynchronously execute.
- *   If not controller_process_option_asynchronous, then synchronously execute.
+ *   If controller_process_option_asynchronous_d, then asynchronously execute.
+ *   If not controller_process_option_asynchronous_d, then synchronously execute.
  * @param alias_rule
  *   The alias of the rule, such as "boot/init".
  * @param action
@@ -714,7 +714,7 @@ extern "C" {
  * @see f_thread_create()
  */
 #ifndef _di_controller_rule_process_begin_
-  extern f_status_t controller_rule_process_begin(const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const uint8_t type, const f_array_lengths_t stack, const controller_global_t global, const controller_cache_t cache) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_process_begin(const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const uint8_t type, const f_array_lengths_t stack, const controller_global_t global, const controller_cache_t cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_process_begin_
 
 /**
@@ -726,8 +726,8 @@ extern "C" {
  * @param options_force
  *   Force the given process options, only supporting a subset of process options.
  *
- *   If controller_process_option_asynchronous, then asynchronously execute.
- *   If not controller_process_option_asynchronous, then synchronously execute.
+ *   If controller_process_option_asynchronous_d, then asynchronously execute.
+ *   If not controller_process_option_asynchronous_d, then synchronously execute.
  * @param process
  *   The process data.
  *
@@ -749,7 +749,7 @@ extern "C" {
  * @see controller_rule_process_begin()
  */
 #ifndef _di_controller_rule_process_do_
-  extern f_status_t controller_rule_process_do(const uint8_t options_force, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_process_do(const uint8_t options_force, controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_process_do_
 
 /**
@@ -787,7 +787,7 @@ extern "C" {
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
-  extern f_status_t controller_rule_read(const bool is_normal, const f_string_static_t alias, controller_global_t global, controller_cache_t *cache, controller_entry_t *entry, controller_rule_t *rule) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_read(const bool is_normal, const f_string_static_t alias, controller_global_t global, controller_cache_t *cache, controller_entry_t *entry, controller_rule_t *rule) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_read_
 
 /**
@@ -818,7 +818,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_signed()
  */
 #ifndef _di_controller_rule_action_read_rerun_number_
-  extern f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t *cache, f_array_length_t *index, f_number_unsigned_t *number) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t *cache, f_array_length_t *index, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_read_rerun_number_
 
 /**
@@ -860,7 +860,7 @@ extern "C" {
  * @see fll_path_canonical()
  */
 #ifndef _di_controller_rule_setting_read_
-  extern f_status_t controller_rule_setting_read(const bool is_normal, const controller_global_t global, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_setting_read(const bool is_normal, const controller_global_t global, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_
 
 /**
@@ -879,7 +879,7 @@ extern "C" {
  *   An additional message to append at the end (before the final period).
  */
 #ifndef _di_controller_rule_setting_read_print_value_
-  extern void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) f_attribute_visibility_internal;
+  extern void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_value_
 
 /**
@@ -897,7 +897,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_rule_setting_read_print_values_
-  extern void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_values_
 
 /**
@@ -922,7 +922,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_setting_read_problem_print_
-  extern void controller_rule_setting_read_problem_print(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern void controller_rule_setting_read_problem_print(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_problem_print_
 
 /**
@@ -951,7 +951,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_setting_read_problem_print_with_range_
-  extern void controller_rule_setting_read_problem_print_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern void controller_rule_setting_read_problem_print_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_problem_print_with_range_
 
 /**
@@ -968,15 +968,15 @@ extern "C" {
  * @param options
  *   A number using bits to represent specific boolean options.
  *   If no bits set, then operate normally in a synchronous manner.
- *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
- *   If bit controller_process_option_asynchronous, then run asynchronously.
+ *   If bit controller_process_option_simulate_d, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_process_option_asynchronous_d, then run asynchronously.
  * @param global
  *   The global data.
  * @param cache
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_rule_validate_
-  extern void controller_rule_validate(const controller_rule_t rule, const uint8_t action, const uint8_t options, const controller_global_t global, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern void controller_rule_validate(const controller_rule_t rule, const uint8_t action, const uint8_t options, const controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_validate_
 
 /**
@@ -1005,7 +1005,7 @@ extern "C" {
  *    F_require (with error bit set) if a required process is in failed status when required is TRUE.
  */
 #ifndef _di_controller_rule_wait_all_
-  extern f_status_t controller_rule_wait_all(const bool is_normal, const controller_global_t global, const bool required, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_wait_all(const bool is_normal, const controller_global_t global, const bool required, controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_wait_all_
 
 /**
@@ -1032,7 +1032,7 @@ extern "C" {
  * @see controller_rule_wait_all()
  */
 #ifndef _di_controller_rule_wait_all_process_type_
-  extern f_status_t controller_rule_wait_all_process_type(const uint8_t type, const controller_global_t global, const bool required, controller_process_t *caller) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_wait_all_process_type(const uint8_t type, const controller_global_t global, const bool required, controller_process_t *caller) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_wait_all_process_type_
 
 #ifdef __cplusplus

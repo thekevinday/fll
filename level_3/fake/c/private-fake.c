@@ -114,8 +114,8 @@ extern "C" {
         status = f_file_size(path_file, F_true, &size_file);
 
         if (F_status_is_error_not(status)) {
-          if (size_file > fake_common_initial_buffer_max) {
-            size_file = fake_common_initial_buffer_max;
+          if (size_file > fake_common_initial_buffer_max_d) {
+            size_file = fake_common_initial_buffer_max_d;
           }
 
            macro_f_string_dynamic_t_resize((status), (*buffer), size_file);
@@ -224,39 +224,39 @@ extern "C" {
 
     {
       const f_string_t parameters_source[] = {
-        fake_path_part_documents,
-        fake_path_part_includes,
-        fake_path_part_libraries,
-        fake_path_part_objects,
-        fake_path_part_programs,
-        fake_path_part_settings,
-        fake_path_part_stage,
-        fake_path_part_build,
-        fake_path_part_settings,
-        fake_path_part_documents,
-        fake_path_part_licenses,
-        fake_path_part_bash,
-        fake_path_part_c,
-        fake_path_part_cpp,
-        fake_path_part_script,
+        fake_path_part_documents_s,
+        fake_path_part_includes_s,
+        fake_path_part_libraries_s,
+        fake_path_part_objects_s,
+        fake_path_part_programs_s,
+        fake_path_part_settings_s,
+        fake_path_part_stage_s,
+        fake_path_part_build_s,
+        fake_path_part_settings_s,
+        fake_path_part_documents_s,
+        fake_path_part_licenses_s,
+        fake_path_part_bash_s,
+        fake_path_part_c_s,
+        fake_path_part_cpp_s,
+        fake_path_part_script_s,
       };
 
       const f_array_length_t parameters_length[] = {
-        fake_path_part_documents_length,
-        fake_path_part_includes_length,
-        fake_path_part_libraries_length,
-        fake_path_part_objects_length,
-        fake_path_part_programs_length,
-        fake_path_part_settings_length,
-        fake_path_part_stage_length,
-        fake_path_part_build_length,
-        fake_path_part_settings_length,
-        fake_path_part_documents_length,
-        fake_path_part_licenses_length,
-        fake_path_part_bash_length,
-        fake_path_part_c_length,
-        fake_path_part_cpp_length,
-        fake_path_part_script_length,
+        fake_path_part_documents_s_length,
+        fake_path_part_includes_s_length,
+        fake_path_part_libraries_s_length,
+        fake_path_part_objects_s_length,
+        fake_path_part_programs_s_length,
+        fake_path_part_settings_s_length,
+        fake_path_part_stage_s_length,
+        fake_path_part_build_s_length,
+        fake_path_part_settings_s_length,
+        fake_path_part_documents_s_length,
+        fake_path_part_licenses_s_length,
+        fake_path_part_bash_s_length,
+        fake_path_part_c_s_length,
+        fake_path_part_cpp_s_length,
+        fake_path_part_script_s_length,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
@@ -357,31 +357,31 @@ extern "C" {
 
     {
       const f_string_t parameters_source[] = {
-        fake_path_part_script,
-        fake_path_part_shared,
-        fake_path_part_static,
-        fake_path_part_script,
-        fake_path_part_shared,
-        fake_path_part_static,
-        fake_file_defines,
-        fake_file_dependencies,
+        fake_path_part_script_s,
+        fake_path_part_shared_s,
+        fake_path_part_static_s,
+        fake_path_part_script_s,
+        fake_path_part_shared_s,
+        fake_path_part_static_s,
+        fake_file_defines_s,
+        fake_file_dependencies_s,
         main->fakefile.string,
         main->settings.string,
-        fake_file_readme,
+        fake_file_readme_s,
       };
 
       const f_array_length_t parameters_length[] = {
-        fake_path_part_script_length,
-        fake_path_part_shared_length,
-        fake_path_part_static_length,
-        fake_path_part_script_length,
-        fake_path_part_shared_length,
-        fake_path_part_static_length,
-        fake_file_defines_length,
-        fake_file_dependencies_length,
+        fake_path_part_script_s_length,
+        fake_path_part_shared_s_length,
+        fake_path_part_static_s_length,
+        fake_path_part_script_s_length,
+        fake_path_part_shared_s_length,
+        fake_path_part_static_s_length,
+        fake_file_defines_s_length,
+        fake_file_dependencies_s_length,
         main->fakefile.used,
         main->settings.used,
-        fake_file_readme_length,
+        fake_file_readme_s_length,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
@@ -432,15 +432,15 @@ extern "C" {
 
       {
         const f_string_t parameters_source[] = {
-          fake_path_part_includes,
-          fake_path_part_libraries,
-          fake_path_part_programs,
+          fake_path_part_includes_s,
+          fake_path_part_libraries_s,
+          fake_path_part_programs_s,
         };
 
         const f_array_length_t parameters_length[] = {
-          fake_path_part_includes_length,
-          fake_path_part_libraries_length,
-          fake_path_part_programs_length,
+          fake_path_part_includes_s_length,
+          fake_path_part_libraries_s_length,
+          fake_path_part_programs_s_length,
         };
 
         f_string_dynamic_t * const parameters_value[] = {
@@ -503,21 +503,21 @@ extern "C" {
 
       {
         const f_string_t parameters_source[] = {
-          fake_path_part_script,
-          fake_path_part_shared,
-          fake_path_part_static,
-          fake_path_part_script,
-          fake_path_part_shared,
-          fake_path_part_static,
+          fake_path_part_script_s,
+          fake_path_part_shared_s,
+          fake_path_part_static_s,
+          fake_path_part_script_s,
+          fake_path_part_shared_s,
+          fake_path_part_static_s,
         };
 
         const f_array_length_t parameters_length[] = {
-          fake_path_part_script_length,
-          fake_path_part_shared_length,
-          fake_path_part_static_length,
-          fake_path_part_script_length,
-          fake_path_part_shared_length,
-          fake_path_part_static_length,
+          fake_path_part_script_s_length,
+          fake_path_part_shared_s_length,
+          fake_path_part_static_s_length,
+          fake_path_part_script_s_length,
+          fake_path_part_shared_s_length,
+          fake_path_part_static_s_length,
         };
 
         f_string_dynamic_t * const parameters_value[] = {
@@ -627,21 +627,21 @@ extern "C" {
       };
 
       const f_string_t parameters_name[] = {
-        fake_long_fakefile,
-        fake_long_process,
-        fake_long_settings,
+        fake_long_fakefile_s,
+        fake_long_process_s,
+        fake_long_settings_s,
       };
 
       const f_string_t parameter_defaults[] = {
-        fake_default_fakefile,
-        fake_default_process,
-        fake_default_settings,
+        fake_default_fakefile_s,
+        fake_default_process_s,
+        fake_default_settings_s,
       };
 
       const f_array_length_t parameter_default_lengths[] = {
-        fake_default_fakefile_length,
-        fake_default_process_length,
-        fake_default_settings_length,
+        fake_default_fakefile_s_length,
+        fake_default_process_s_length,
+        fake_default_settings_s_length,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
@@ -689,7 +689,7 @@ extern "C" {
                     flockfile(main->error.to.stream);
 
                     fl_print_format("%c%[%SFailed to process the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-                    fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_process, main->error.notable);
+                    fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_process_s, main->error.notable);
                     fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
                     funlockfile(main->error.to.stream);
@@ -703,7 +703,7 @@ extern "C" {
                     flockfile(main->error.to.stream);
 
                     fl_print_format("%c%[%SThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-                    fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_process, main->error.notable);
+                    fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_process_s, main->error.notable);
                     fl_print_format("%[' parameters value '%]", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
                     fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, arguments.argv[location], main->error.notable);
                     fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
@@ -769,7 +769,7 @@ extern "C" {
     }
 
     if (main->parameters[fake_parameter_define].result == f_console_result_found) {
-      fake_print_error_parameter_missing_value(*main, fake_long_define);
+      fake_print_error_parameter_missing_value(*main, fake_long_define_s);
 
       return F_status_set_error(F_parameter);
     }
@@ -783,24 +783,24 @@ extern "C" {
       };
 
       const f_string_t parameters_name[] = {
-        fake_long_path_build,
-        fake_long_path_data,
-        fake_long_path_sources,
-        fake_long_path_work,
+        fake_long_path_build_s,
+        fake_long_path_data_s,
+        fake_long_path_sources_s,
+        fake_long_path_work_s,
       };
 
       const f_string_t parameter_defaults[] = {
-        fake_default_path_build,
-        fake_default_path_data,
-        fake_default_path_sources,
-        fake_default_path_work,
+        fake_default_path_build_s,
+        fake_default_path_data_s,
+        fake_default_path_sources_s,
+        fake_default_path_work_s,
       };
 
       const f_array_length_t parameter_default_lengths[] = {
-        fake_default_path_build_length,
-        fake_default_path_data_length,
-        fake_default_path_sources_length,
-        fake_default_path_work_length,
+        fake_default_path_build_s_length,
+        fake_default_path_data_s_length,
+        fake_default_path_sources_s_length,
+        fake_default_path_work_s_length,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
@@ -869,7 +869,7 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SFailed to process the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_define, main->error.notable);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_define_s, main->error.notable);
           fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -880,7 +880,7 @@ extern "C" {
     }
 
     if (main->parameters[fake_parameter_mode].result == f_console_result_found) {
-      fake_print_error_parameter_missing_value(*main, fake_long_mode);
+      fake_print_error_parameter_missing_value(*main, fake_long_mode_s);
       return F_status_set_error(F_parameter);
     }
     else if (main->parameters[fake_parameter_mode].result == f_console_result_additional) {
@@ -891,7 +891,7 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SFailed to process the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_mode, main->error.notable);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_mode_s, main->error.notable);
           fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -917,7 +917,7 @@ extern "C" {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%SFailed to process the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_mode, main->error.notable);
+              fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_mode_s, main->error.notable);
               fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
               funlockfile(main->error.to.stream);
@@ -931,8 +931,8 @@ extern "C" {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%SThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_mode, main->error.notable);
-              fl_print_format("%[' parameters value '%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_mode, main->error.notable);
+              fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_mode_s, main->error.notable);
+              fl_print_format("%[' parameters value '%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_mode_s, main->error.notable);
               fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, main->mode.array[i], main->error.notable);
               fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
@@ -1038,21 +1038,21 @@ extern "C" {
     }
 
     const f_string_t parameters_name[] = {
-      fake_long_path_build,
-      fake_long_path_data,
-      fake_long_path_work,
+      fake_long_path_build_s,
+      fake_long_path_data_s,
+      fake_long_path_work_s,
     };
 
     const f_string_t parameter_defaults[] = {
-      fake_default_path_build,
-      fake_default_path_data,
-      fake_default_path_work,
+      fake_default_path_build_s,
+      fake_default_path_data_s,
+      fake_default_path_work_s,
     };
 
     const f_array_length_t parameter_default_lengths[] = {
-      fake_default_path_build_length,
-      fake_default_path_data_length,
-      fake_default_path_work_length,
+      fake_default_path_build_s_length,
+      fake_default_path_data_s_length,
+      fake_default_path_work_s_length,
     };
 
     const f_string_dynamic_t *parameters_value[] = {

@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
   f_status_t private_fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments) {
 
-    f_status_t status = f_string_dynamics_increase(f_memory_default_allocation_small, arguments);
+    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
     if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t argument = f_string_dynamic_t_initialize;
@@ -42,7 +42,7 @@ extern "C" {
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
   f_status_t private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments) {
 
-    f_status_t status = f_string_dynamics_increase(f_memory_default_allocation_small, arguments);
+    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
     if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t argument = f_string_dynamic_t_initialize;
@@ -99,7 +99,7 @@ extern "C" {
       return status;
     }
 
-    status = f_string_dynamics_increase(f_memory_default_allocation_small, arguments);
+    status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
 
     if (F_status_is_error(status)) {
       f_string_dynamic_resize(0, &argument);
@@ -122,7 +122,7 @@ extern "C" {
       errno = 0;
 
       if (nice(*as.nice) == -1 && errno == -1) {
-        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+        if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(F_execute_nice);
         }
 
@@ -135,7 +135,7 @@ extern "C" {
       const f_status_t status = f_capability_process_set(as.capability);
 
       if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
-        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+        if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(F_execute_capability);
         }
 
@@ -147,7 +147,7 @@ extern "C" {
     if (as.id_groups) {
       if (setgroups(as.id_groups->used, (const gid_t *) as.id_groups->array) == -1) {
 
-        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+        if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(F_execute_group);
         }
 
@@ -158,7 +158,7 @@ extern "C" {
 
     if (as.id_group) {
       if (setgid(*as.id_group) == -1) {
-        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+        if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(F_execute_group);
         }
 
@@ -169,7 +169,7 @@ extern "C" {
 
     if (as.id_user) {
       if (setuid(*as.id_user) == -1) {
-        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+        if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(F_execute_user);
         }
 
@@ -282,7 +282,7 @@ extern "C" {
         {
           char string_result[2] = { '0', 0 };
 
-          const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
+          const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], F_file_flag_write_only_d);
 
           f_string_static_t buffer = f_string_static_t_initialize;
 
@@ -304,7 +304,7 @@ extern "C" {
         }
       }
 
-      if (parameter && parameter->option & fl_execute_parameter_option_return) {
+      if (parameter && parameter->option & FL_execute_parameter_option_return_d) {
 
         if (result != 0) {
           pid_t *r = (pid_t *) result;
@@ -342,7 +342,7 @@ extern "C" {
       response.used = 0;
       response.size = 2;
 
-      const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], f_file_flag_read_only, 1, 1);
+      const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], F_file_flag_read_only_d, 1, 1);
 
       f_file_read_block(file, &response);
 
@@ -354,7 +354,7 @@ extern "C" {
           *r = F_execute_failure;
         }
 
-        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+        if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(F_execute_failure);
         }
 
@@ -367,7 +367,7 @@ extern "C" {
         f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
         f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
       #else // _di_pthread_support_
-        if (parameter->option & fl_execute_parameter_option_threadsafe) {
+        if (parameter->option & FL_execute_parameter_option_threadsafe_d) {
           f_thread_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_thread_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
         }
@@ -428,7 +428,7 @@ extern "C" {
       *r = code;
     }
 
-    if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+    if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
       exit(code);
     }
 
@@ -462,7 +462,7 @@ extern "C" {
       {
         char string_result[2] = { '0', 0 };
 
-        const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
+        const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], F_file_flag_write_only_d);
 
         f_status_t status = F_none;
 
@@ -495,7 +495,7 @@ extern "C" {
         }
       }
 
-      if (parameter && parameter->option & fl_execute_parameter_option_return) {
+      if (parameter && parameter->option & FL_execute_parameter_option_return_d) {
 
         if (result != 0) {
           pid_t *r = (pid_t *) result;
@@ -533,7 +533,7 @@ extern "C" {
       response.used = 0;
       response.size = 2;
 
-      const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], f_file_flag_read_only, 1, 1);
+      const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], F_file_flag_read_only_d, 1, 1);
 
       f_file_read_block(file, &response);
 
@@ -545,7 +545,7 @@ extern "C" {
           *r = F_status_set_error(F_failure);
         }
 
-        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+        if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(-1);
         }
 
@@ -558,7 +558,7 @@ extern "C" {
         f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
         f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
       #else // _di_pthread_support_
-        if (parameter->option & fl_execute_parameter_option_threadsafe) {
+        if (parameter->option & FL_execute_parameter_option_threadsafe_d) {
           f_thread_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_thread_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
         }
@@ -577,7 +577,7 @@ extern "C" {
       } // for
     }
 
-    dup2(descriptors[0], f_type_descriptor_input);
+    dup2(descriptors[0], F_type_descriptor_input_d);
 
     if (as) {
       const f_status_t status = private_fll_execute_as_child(*as, parameter, (int *) result);
@@ -620,7 +620,7 @@ extern "C" {
       *r = code;
     }
 
-    if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+    if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
       exit(code);
     }
 

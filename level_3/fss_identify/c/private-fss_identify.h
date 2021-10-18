@@ -37,7 +37,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_fss_identify_load_line_
-  extern f_status_t fss_identify_load_line(const fss_identify_main_t main, const f_file_t file, const f_string_t name, f_string_static_t *buffer, f_string_range_t *range) f_attribute_visibility_internal;
+  extern f_status_t fss_identify_load_line(const fss_identify_main_t main, const f_file_t file, const f_string_t name, f_string_static_t *buffer, f_string_range_t *range) F_attribute_visibility_internal_d;
 #endif // _di_fss_identify_load_line_
 
 /**
@@ -49,7 +49,7 @@ extern "C" {
  *   The Identifier to print.
  */
 #ifndef _di_fss_identify_print_
-  extern void fss_identify_print(const fss_identify_main_t main, f_fll_id_t id) f_attribute_visibility_internal;
+  extern void fss_identify_print(const fss_identify_main_t main, f_fll_id_t id) F_attribute_visibility_internal_d;
 #endif // _di_fss_identify_print_
 
 /**
@@ -75,7 +75,7 @@ extern "C" {
  * @see fll_fss_identify()
  */
 #ifndef _di_fss_identify_process_
-  extern f_status_t fss_identify_process(const fss_identify_main_t main, const f_string_t name, const f_string_static_t buffer, f_string_range_t *range, fss_identify_data_t *data) f_attribute_visibility_internal;
+  extern f_status_t fss_identify_process(const fss_identify_main_t main, const f_string_t name, const f_string_static_t buffer, f_string_range_t *range, fss_identify_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_identify_process_
 
 #ifdef __cplusplus

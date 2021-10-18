@@ -65,12 +65,12 @@ extern "C" {
     if (*used + 1 > *size) {
       f_array_length_t length_new = *used + step;
 
-      if (length_new > f_array_length_t_size) {
-        if (*used + 1 > f_array_length_t_size) {
+      if (length_new > F_array_length_t_size_d) {
+        if (*used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        length_new = f_array_length_t_size;
+        length_new = F_array_length_t_size_d;
       }
 
       return private_f_memory_structure_resize(length_new, type_size, structure, used, size);
@@ -90,7 +90,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (*used + amount > *size) {
-      if (*used + amount > f_array_length_t_size) {
+      if (*used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 

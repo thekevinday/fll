@@ -120,7 +120,7 @@ extern "C" {
 
     do {
       if (ids && ids->used + 1 > ids->size) {
-        status = f_type_fll_ids_increase(f_fss_default_allocation_step_small, ids);
+        status = f_type_fll_ids_increase(F_fss_default_allocation_step_small_d, ids);
       }
 
       if (F_status_is_error_not(status)) {
@@ -149,7 +149,7 @@ extern "C" {
       }
 
       if (ids) {
-        status = f_type_fll_ids_increase(f_fss_default_allocation_step_small, ids);
+        status = f_type_fll_ids_increase(F_fss_default_allocation_step_small_d, ids);
 
         if (F_status_is_error(status)) {
           if (ids) {
@@ -281,7 +281,7 @@ extern "C" {
         }
 
         if (values[j]->used + contents.array[i].used > values[j]->size) {
-          if (values[j]->used + contents.array[i].used > f_array_length_t_size) {
+          if (values[j]->used + contents.array[i].used > F_array_length_t_size_d) {
             return F_status_set_error(F_array_too_large);
           }
 
@@ -390,8 +390,8 @@ extern "C" {
         }
 
         if (values[j]->used == values[j]->size) {
-          if (values[j]->used + f_fss_default_allocation_step > f_array_length_t_size) {
-            if (values[j]->used == f_array_length_t_size) {
+          if (values[j]->used + F_fss_default_allocation_step_d > F_array_length_t_size_d) {
+            if (values[j]->used == F_array_length_t_size_d) {
               macro_f_string_dynamic_t_delete_simple(name);
 
               return F_status_set_error(F_array_too_large);
@@ -411,7 +411,7 @@ extern "C" {
             }
           }
           else {
-            macro_f_string_maps_t_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
+            macro_f_string_maps_t_resize(status, (*values[j]), values[j]->used + F_fss_default_allocation_step_d);
 
             if (F_status_is_error(status)) {
               macro_f_string_dynamic_t_delete_simple(name);
@@ -420,7 +420,7 @@ extern "C" {
             }
 
             if (indexs) {
-              macro_f_array_lengths_t_resize(status, (*indexs[j]), indexs[j]->used + f_fss_default_allocation_step);
+              macro_f_array_lengths_t_resize(status, (*indexs[j]), indexs[j]->used + F_fss_default_allocation_step_d);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -496,11 +496,11 @@ extern "C" {
           matches[j] = F_true;
         }
 
-        status = f_string_map_multis_increase(f_fss_default_allocation_step_small, values[j]);
+        status = f_string_map_multis_increase(F_fss_default_allocation_step_small_d, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -573,11 +573,11 @@ extern "C" {
           matches[j] = F_true;
         }
 
-        status = f_string_maps_increase(f_fss_default_allocation_step_small, values[j]);
+        status = f_string_maps_increase(F_fss_default_allocation_step_small_d, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -683,11 +683,11 @@ extern "C" {
           map_multi = &values[j]->array[k];
         }
         else {
-          status = f_string_map_multis_increase(f_fss_default_allocation_step_small, values[j]);
+          status = f_string_map_multis_increase(F_fss_default_allocation_step_small_d, values[j]);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
+            macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
             if (F_status_is_error(status)) return status;
           }
 
@@ -708,7 +708,7 @@ extern "C" {
           if (contents.array[i].used == 1) continue;
         }
 
-        status = f_string_dynamics_increase(f_fss_default_allocation_step_small, &map_multi->value);
+        status = f_string_dynamics_increase(F_fss_default_allocation_step_small_d, &map_multi->value);
         if (F_status_is_error(status)) return status;
 
         for (k = 1; k < contents.array[i].used; ++k) {
@@ -803,11 +803,11 @@ extern "C" {
           map = &values[j]->array[k];
         }
         else {
-          status = f_string_maps_increase(f_fss_default_allocation_step_small, values[j]);
+          status = f_string_maps_increase(F_fss_default_allocation_step_small_d, values[j]);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
+            macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
             if (F_status_is_error(status)) return status;
           }
 
@@ -937,11 +937,11 @@ extern "C" {
           matches[j] = F_true;
         }
 
-        status = f_string_dynamics_increase(f_fss_default_allocation_step_small, values[j]);
+        status = f_string_dynamics_increase(F_fss_default_allocation_step_small_d, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, F_fss_default_allocation_step_small_d, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 

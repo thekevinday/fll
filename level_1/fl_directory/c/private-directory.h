@@ -42,7 +42,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #if !defined(_di_fl_directory_clone_)
-  extern f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) f_attribute_visibility_internal;
+  extern f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_clone_)
 
 /**
@@ -75,7 +75,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #if !defined(_di_fl_directory_clone_file_)
-  extern f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) f_attribute_visibility_internal;
+  extern f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_clone_file_)
 
 /**
@@ -104,7 +104,7 @@ extern "C" {
  * @see fl_directory_copy()
  */
 #if !defined(_di_fl_directory_copy_)
-  extern f_status_t private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) f_attribute_visibility_internal;
+  extern f_status_t private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_copy_)
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see fl_directory_copy()
  */
 #if !defined(_di_fl_directory_copy_file_)
-  extern f_status_t private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) f_attribute_visibility_internal;
+  extern f_status_t private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_copy_file_)
 
 /**
@@ -176,7 +176,7 @@ extern "C" {
  * @see fl_directory_list()
  */
 #if !defined(_di_fl_directory_list_)
-  extern f_status_t private_fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) f_attribute_visibility_internal;
+  extern f_status_t private_fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_list_)
 
 /**
@@ -208,7 +208,7 @@ extern "C" {
  * @see fl_directory_path_push_dynamic()
  */
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
-  extern f_status_t private_fl_directory_path_push(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) f_attribute_visibility_internal;
+  extern f_status_t private_fl_directory_path_push(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
 
 #ifdef __cplusplus

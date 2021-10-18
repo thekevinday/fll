@@ -790,7 +790,7 @@ extern "C" {
       range->start += macro_f_utf_byte_width(buffer[range->start]);
     } // for
 
-    if (range->start > range->stop || buffer[range->start] != f_string_ascii_minus[0]) {
+    if (range->start > range->stop || buffer[range->start] != F_string_ascii_minus_s[0]) {
 
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
@@ -919,7 +919,7 @@ extern "C" {
       for (f_array_length_t j = i, i = 0; j <= range->stop; ++j) {
 
         if (!buffer[j]) continue;
-        if (buffer[j] == f_string_ascii_minus[0]) break;
+        if (buffer[j] == F_string_ascii_minus_s[0]) break;
 
         id->name[i] = buffer[j];
         ++i;

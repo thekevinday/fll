@@ -50,61 +50,61 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_extended_list_read_version_
-  #define fss_extended_list_read_major_version f_string_ascii_0
-  #define fss_extended_list_read_minor_version f_string_ascii_5
-  #define fss_extended_list_read_micro_version f_string_ascii_6
+#ifndef _di_fss_extended_list_read_program_version_
+  #define fss_extended_list_read_program_version_major_s F_string_ascii_0_s
+  #define fss_extended_list_read_program_version_minor_s F_string_ascii_5_s
+  #define fss_extended_list_read_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef fss_extended_list_read_nano_version_prefix
-    #define fss_extended_list_read_nano_version_prefix
+  #ifndef fss_extended_list_read_version_nano_prefix_s
+    #define fss_extended_list_read_version_nano_prefix_s
   #endif
 
-  #ifndef fss_extended_list_read_nano_version
-    #define fss_extended_list_read_nano_version
+  #ifndef fss_extended_list_read_version_nano_s
+    #define fss_extended_list_read_version_nano_s
   #endif
 
-  #define fss_extended_list_read_version fss_extended_list_read_major_version f_string_ascii_period fss_extended_list_read_minor_version f_string_ascii_period fss_extended_list_read_micro_version fss_extended_list_read_nano_version_prefix fss_extended_list_read_nano_version
-#endif // _di_fss_extended_list_read_version_
+  #define fss_extended_list_read_program_version_s fss_extended_list_read_program_version_major_s F_string_ascii_period_s fss_extended_list_read_program_version_minor_s F_string_ascii_period_s fss_extended_list_read_program_version_micro_s fss_extended_list_read_version_nano_prefix_s fss_extended_list_read_version_nano_s
+#endif // _di_fss_extended_list_read_program_version_
 
-#ifndef _di_fss_extended_list_read_name_
-  #define fss_extended_list_read_name      "fss_extended_list_read"
-  #define fss_extended_list_read_name_long "FSS Extended List Read"
-#endif // _di_fss_extended_list_read_name_
+#ifndef _di_fss_extended_list_read_program_name_
+  #define fss_extended_list_read_program_name_s      "fss_extended_list_read"
+  #define fss_extended_list_read_program_name_long_s "FSS Extended List Read"
+#endif // _di_fss_extended_list_read_program_name_
 
 #ifndef _di_fss_extended_list_read_defines_
   #define fss_extended_list_read_pipe_content_end    '\f'
   #define fss_extended_list_read_pipe_content_ignore '\v'
   #define fss_extended_list_read_pipe_content_start  '\b'
 
-  #define fss_extended_list_read_short_at      "a"
-  #define fss_extended_list_read_short_content "c"
-  #define fss_extended_list_read_short_columns "C"
-  #define fss_extended_list_read_short_delimit "D"
-  #define fss_extended_list_read_short_depth   "d"
-  #define fss_extended_list_read_short_empty   "e"
-  #define fss_extended_list_read_short_line    "l"
-  #define fss_extended_list_read_short_name    "n"
-  #define fss_extended_list_read_short_object  "o"
-  #define fss_extended_list_read_short_pipe    "p"
-  #define fss_extended_list_read_short_raw     "R"
-  #define fss_extended_list_read_short_select  "s"
-  #define fss_extended_list_read_short_total   "t"
-  #define fss_extended_list_read_short_trim    "T"
+  #define fss_extended_list_read_short_at_s      "a"
+  #define fss_extended_list_read_short_content_s "c"
+  #define fss_extended_list_read_short_columns_s "C"
+  #define fss_extended_list_read_short_delimit_s "D"
+  #define fss_extended_list_read_short_depth_s   "d"
+  #define fss_extended_list_read_short_empty_s   "e"
+  #define fss_extended_list_read_short_line_s    "l"
+  #define fss_extended_list_read_short_name_s    "n"
+  #define fss_extended_list_read_short_object_s  "o"
+  #define fss_extended_list_read_short_pipe_s    "p"
+  #define fss_extended_list_read_short_raw_s     "R"
+  #define fss_extended_list_read_short_select_s  "s"
+  #define fss_extended_list_read_short_total_s   "t"
+  #define fss_extended_list_read_short_trim_s    "T"
 
-  #define fss_extended_list_read_long_at      "at"
-  #define fss_extended_list_read_long_content "content"
-  #define fss_extended_list_read_long_columns "columns"
-  #define fss_extended_list_read_long_delimit "delimit"
-  #define fss_extended_list_read_long_depth   "depth"
-  #define fss_extended_list_read_long_empty   "empty"
-  #define fss_extended_list_read_long_line    "line"
-  #define fss_extended_list_read_long_name    "name"
-  #define fss_extended_list_read_long_object  "object"
-  #define fss_extended_list_read_long_pipe    "pipe"
-  #define fss_extended_list_read_long_raw     "raw"
-  #define fss_extended_list_read_long_select  "select"
-  #define fss_extended_list_read_long_total   "total"
-  #define fss_extended_list_read_long_trim    "trim"
+  #define fss_extended_list_read_long_at_s      "at"
+  #define fss_extended_list_read_long_content_s "content"
+  #define fss_extended_list_read_long_columns_s "columns"
+  #define fss_extended_list_read_long_delimit_s "delimit"
+  #define fss_extended_list_read_long_depth_s   "depth"
+  #define fss_extended_list_read_long_empty_s   "empty"
+  #define fss_extended_list_read_long_line_s    "line"
+  #define fss_extended_list_read_long_name_s    "name"
+  #define fss_extended_list_read_long_object_s  "object"
+  #define fss_extended_list_read_long_pipe_s    "pipe"
+  #define fss_extended_list_read_long_raw_s     "raw"
+  #define fss_extended_list_read_long_select_s  "select"
+  #define fss_extended_list_read_long_total_s   "total"
+  #define fss_extended_list_read_long_trim_s    "trim"
 
   enum {
     fss_extended_list_read_parameter_help,
@@ -144,23 +144,23 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_at, fss_extended_list_read_long_at, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_content, fss_extended_list_read_long_content, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_columns, fss_extended_list_read_long_columns, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_delimit, fss_extended_list_read_long_delimit, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_depth, fss_extended_list_read_long_depth, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_empty, fss_extended_list_read_long_empty, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_line, fss_extended_list_read_long_line, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_name, fss_extended_list_read_long_name, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_object, fss_extended_list_read_long_object, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_pipe, fss_extended_list_read_long_pipe, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_raw, fss_extended_list_read_long_raw, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_select, fss_extended_list_read_long_select, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_total, fss_extended_list_read_long_total, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_list_read_short_trim, fss_extended_list_read_long_trim, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_at_s, fss_extended_list_read_long_at_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_content_s, fss_extended_list_read_long_content_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_columns_s, fss_extended_list_read_long_columns_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_delimit_s, fss_extended_list_read_long_delimit_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_depth_s, fss_extended_list_read_long_depth_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_empty_s, fss_extended_list_read_long_empty_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_line_s, fss_extended_list_read_long_line_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_name_s, fss_extended_list_read_long_name_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_object_s, fss_extended_list_read_long_object_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_pipe_s, fss_extended_list_read_long_pipe_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_raw_s, fss_extended_list_read_long_raw_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_select_s, fss_extended_list_read_long_select_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_total_s, fss_extended_list_read_long_total_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_trim_s, fss_extended_list_read_long_trim_s, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_extended_list_read_total_parameters 23
+  #define fss_extended_list_read_total_parameters_d 23
 #endif // _di_fss_extended_list_read_defines_
 
 /**
@@ -177,17 +177,17 @@ extern "C" {
  *   - object:                 Objects arre to have delimits applied.
  */
 #ifndef _di_fss_extended_list_read_delimit_mode_
-  #define fss_extended_list_read_delimit_mode_name_none    "none"
-  #define fss_extended_list_read_delimit_mode_name_all     "all"
-  #define fss_extended_list_read_delimit_mode_name_object  "object"
-  #define fss_extended_list_read_delimit_mode_name_greater "+"
-  #define fss_extended_list_read_delimit_mode_name_lesser  "-"
+  #define fss_extended_list_read_delimit_mode_name_none_s    "none"
+  #define fss_extended_list_read_delimit_mode_name_all_s     "all"
+  #define fss_extended_list_read_delimit_mode_name_object_s  "object"
+  #define fss_extended_list_read_delimit_mode_name_greater_s "+"
+  #define fss_extended_list_read_delimit_mode_name_lesser_s  "-"
 
-  #define fss_extended_list_read_delimit_mode_name_none_length    4
-  #define fss_extended_list_read_delimit_mode_name_all_length     3
-  #define fss_extended_list_read_delimit_mode_name_object_length  6
-  #define fss_extended_list_read_delimit_mode_name_greater_length 1
-  #define fss_extended_list_read_delimit_mode_name_lesser_length  1
+  #define fss_extended_list_read_delimit_mode_name_none_s_length    4
+  #define fss_extended_list_read_delimit_mode_name_all_s_length     3
+  #define fss_extended_list_read_delimit_mode_name_object_s_length  6
+  #define fss_extended_list_read_delimit_mode_name_greater_s_length 1
+  #define fss_extended_list_read_delimit_mode_name_lesser_s_length  1
 
   enum {
     fss_extended_list_read_delimit_mode_none = 1,
@@ -204,7 +204,7 @@ extern "C" {
 
 #ifndef _di_fss_extended_list_read_main_t_
   typedef struct {
-    f_console_parameter_t parameters[fss_extended_list_read_total_parameters];
+    f_console_parameter_t parameters[fss_extended_list_read_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

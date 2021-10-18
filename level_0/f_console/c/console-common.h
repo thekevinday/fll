@@ -39,17 +39,17 @@ extern "C" {
  * The symbols passed to the program for option handling.
  */
 #ifndef _di_f_console_symbol_s_
-  #define f_console_symbol_short_enable  "-"
-  #define f_console_symbol_short_disable "+"
+  #define F_console_symbol_short_enable_s  "-"
+  #define F_console_symbol_short_disable_s "+"
 
-  #define f_console_symbol_short_enable_length  1
-  #define f_console_symbol_short_disable_length 1
+  #define F_console_symbol_short_enable_s_length  1
+  #define F_console_symbol_short_disable_s_length 1
 
-  #define f_console_symbol_long_enable  "--"
-  #define f_console_symbol_long_disable "++"
+  #define F_console_symbol_long_s_enable  "--"
+  #define F_console_symbol_long_s_disable "++"
 
-  #define f_console_symbol_long_enable_length  2
-  #define f_console_symbol_long_disable_length 2
+  #define F_console_symbol_long_enable_s_length  2
+  #define F_console_symbol_long_disable_s_length 2
 
   extern const f_string_t f_console_symbol_short_enable_s;
   extern const f_string_t f_console_symbol_short_disable_s;
@@ -71,20 +71,20 @@ extern "C" {
  * This is not stricly a requirement, but expect level 3 projects to work this way.
  *
  * The following options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation:
- * - debug: Enable debugging, which will likely increase output verbosity.
- * - normal: Use normal printing (don't use debug/quiet/verbose).
- * - quiet: Decrease verbosity, print less, in some use cases this could mean printing nothing.
+ * - debug:   Enable debugging, which will likely increase output verbosity.
+ * - normal:  Use normal printing (don't use debug/quiet/verbose).
+ * - quiet:   Decrease verbosity, print less, in some use cases this could mean printing nothing.
  * - verbose: Increase verbosity, print more, in some use cases this could mean printing just about everything.
  *
  * The following are less subjective in interpretation but do allow some flexibility.
- * - dark: Do display color intended for dark backgrounds (often the default behavior) when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
- * - help: Display the help text. This does not define how the text is displayed only that the text is displayed.
- * - light: Do display color intended for light backgrounds when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ * - dark:     Do display color intended for dark backgrounds (often the default behavior) when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ * - help:     Display the help text. This does not define how the text is displayed only that the text is displayed.
+ * - light:    Do display color intended for light backgrounds when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
  * - no_color: Do not display color when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
- * - version: Should always print only the version number, no colors, but what represents the version number is undefined by this project.
+ * - version:  Should always print only the version number, no colors, but what represents the version number is undefined by this project.
  *
  * The following options are for special purposes:
- * - status_in: Is intended to accept the name of an environment variable in which to read the status from.
+ * - status_in:  Is intended to accept the name of an environment variable in which to read the status from.
  * - status_out: Is intended to accept the name of an environment variable in which to ride the status to.
  *
  * In the case of "status_in" and "status_out", the environment variable will store a string representing the base-10 unsigned 16-bit status code.
@@ -93,53 +93,53 @@ extern "C" {
  *   - To avoid problems with the status code after a program is forcibly killed, the status_out environment variable should be cleared at program start.
  */
 #ifndef _di_f_console_standard_s_
-  #define f_console_standard_short_dark       "d"
-  #define f_console_standard_short_debug      "D"
-  #define f_console_standard_short_help       "h"
-  #define f_console_standard_short_light      "l"
-  #define f_console_standard_short_no_color   "n"
-  #define f_console_standard_short_normal     "N"
-  #define f_console_standard_short_quiet      "q"
-  #define f_console_standard_short_status_in  "s"
-  #define f_console_standard_short_status_out "S"
-  #define f_console_standard_short_verbose    "V"
-  #define f_console_standard_short_version    "v"
+  #define F_console_standard_short_dark_s       "d"
+  #define F_console_standard_short_debug_s      "D"
+  #define F_console_standard_short_help_s       "h"
+  #define F_console_standard_short_light_s      "l"
+  #define F_console_standard_short_no_color_s   "n"
+  #define F_console_standard_short_normal_s     "N"
+  #define F_console_standard_short_quiet_s      "q"
+  #define F_console_standard_short_status_in_s  "s"
+  #define F_console_standard_short_status_out_s "S"
+  #define F_console_standard_short_verbose_s    "V"
+  #define F_console_standard_short_version_s    "v"
 
-  #define f_console_standard_short_dark_length       1
-  #define f_console_standard_short_debug_length      1
-  #define f_console_standard_short_help_length       1
-  #define f_console_standard_short_light_length      1
-  #define f_console_standard_short_no_color_length   1
-  #define f_console_standard_short_normal_length     1
-  #define f_console_standard_short_quiet_length      1
-  #define f_console_standard_short_status_in_length  1
-  #define f_console_standard_short_status_out_length 1
-  #define f_console_standard_short_verbose_length    1
-  #define f_console_standard_short_version_length    1
+  #define F_console_standard_short_dark_s_length       1
+  #define F_console_standard_short_debug_s_length      1
+  #define F_console_standard_short_help_s_length       1
+  #define F_console_standard_short_light_s_length      1
+  #define F_console_standard_short_no_color_s_length   1
+  #define F_console_standard_short_normal_s_length     1
+  #define F_console_standard_short_quiet_s_length      1
+  #define F_console_standard_short_status_in_s_length  1
+  #define F_console_standard_short_status_out_s_length 1
+  #define F_console_standard_short_verbose_s_length    1
+  #define F_console_standard_short_version_s_length    1
 
-  #define f_console_standard_long_dark       "dark"
-  #define f_console_standard_long_debug      "debug"
-  #define f_console_standard_long_help       "help"
-  #define f_console_standard_long_light      "light"
-  #define f_console_standard_long_no_color   "no_color"
-  #define f_console_standard_long_normal     "normal"
-  #define f_console_standard_long_quiet      "quiet"
-  #define f_console_standard_long_status_in  "status_in"
-  #define f_console_standard_long_status_out "status_out"
-  #define f_console_standard_long_verbose    "verbose"
-  #define f_console_standard_long_version    "version"
+  #define F_console_standard_long_dark_s       "dark"
+  #define F_console_standard_long_debug_s      "debug"
+  #define F_console_standard_long_help_s       "help"
+  #define F_console_standard_long_light_s      "light"
+  #define F_console_standard_long_no_color_s   "no_color"
+  #define F_console_standard_long_normal_s     "normal"
+  #define F_console_standard_long_quiet_s      "quiet"
+  #define F_console_standard_long_status_in_s  "status_in"
+  #define F_console_standard_long_status_out_s "status_out"
+  #define F_console_standard_long_verbose_s    "verbose"
+  #define F_console_standard_long_version_s    "version"
 
-  #define f_console_standard_long_dark_length       4
-  #define f_console_standard_long_debug_length      5
-  #define f_console_standard_long_help_length       4
-  #define f_console_standard_long_light_length      5
-  #define f_console_standard_long_no_color_length   8
-  #define f_console_standard_long_normal_length     6
-  #define f_console_standard_long_quiet_length      5
-  #define f_console_standard_long_status_in_length  9
-  #define f_console_standard_long_status_out_length 10
-  #define f_console_standard_long_verbose_length    7
-  #define f_console_standard_long_version_length    7
+  #define F_console_standard_long_dark_s_length       4
+  #define F_console_standard_long_debug_s_length      5
+  #define F_console_standard_long_help_s_length       4
+  #define F_console_standard_long_light_s_length      5
+  #define F_console_standard_long_no_color_s_length   8
+  #define F_console_standard_long_normal_s_length     6
+  #define F_console_standard_long_quiet_s_length      5
+  #define F_console_standard_long_status_in_s_length  9
+  #define F_console_standard_long_status_out_s_length 10
+  #define F_console_standard_long_verbose_s_length    7
+  #define F_console_standard_long_version_s_length    7
 
   extern const f_string_t f_console_standard_short_dark_s;
   extern const f_string_t f_console_standard_short_debug_s;
@@ -169,11 +169,11 @@ extern "C" {
 /**
  * The maximum size for a single parameter (the length of the string representing the parameter).
  *
- * The ideal parameter value is f_array_length_t_size, which generally defaults to 2^64 (unsigned).
+ * The ideal parameter value is F_array_length_t_size_d, which generally defaults to 2^64 (unsigned).
  * However, the libc/POSIX appears to limit this to 2^63 (signed).
  */
 #ifndef _di_f_console_length_size_
-  #define f_console_parameter_size f_string_t_size
+  #define f_console_parameter_size F_string_t_size_d
 #endif // _di_f_console_length_size_
 
 /**

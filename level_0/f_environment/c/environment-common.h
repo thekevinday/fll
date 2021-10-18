@@ -20,7 +20,7 @@ extern "C" {
  * Environment related defines.
  */
 #ifndef _di_f_environment_defines_
-  #define f_environment_max_length f_string_t_size
+  #define f_environment_max_length F_string_t_size_d
 #endif // _di_f_environment_defines_
 
 #ifdef __cplusplus

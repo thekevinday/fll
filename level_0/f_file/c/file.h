@@ -575,7 +575,7 @@ extern "C" {
  * @param path
  *   The path file name.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
  *   F_true if file exists.
@@ -688,7 +688,7 @@ extern "C" {
  * @param type
  *   The type of the file.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
  *   F_true if path was found and path is type.
@@ -836,7 +836,7 @@ extern "C" {
  * @param point
  *   A path to the link that does the pointing.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
  *   F_none on success.
@@ -1015,7 +1015,7 @@ extern "C" {
  *
  * When using digits, the umask is always ignored.
  * When there is a leading '0' or '=' when using digits, then the special bits should be replaced.
- * Otherwise, the current special bits are intended to be respected (designated by f_file_mode_t_replace_directory).
+ * Otherwise, the current special bits are intended to be respected (designated by F_file_mode_t_replace_directory_d).
  *
  * When using non-digits and '+', '-', or '=' are specified without a leading 'a', 'u', 'g', or 'o', then the mode operations should be performed against the current umask.
  * These are designated with the umask hows, such as f_file_mode_how_umask_replace.
@@ -1041,7 +1041,7 @@ extern "C" {
  *   The determined mode.
  *   This uses bitwise data.
  * @param replace
- *   The determined modes that are to be replaced, such as: f_file_mode_t_replace_owner.
+ *   The determined modes that are to be replaced, such as: F_file_mode_t_replace_owner_d.
  *   This uses bitwise data.
  *
  * @return
@@ -1483,7 +1483,7 @@ extern "C" {
  * @param path
  *   The path file name.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
  *   F_none on success.
@@ -1660,7 +1660,7 @@ extern "C" {
  *   The new group id to use.
  *   Set to -1 to not change.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
  *   F_none on success.
@@ -1838,7 +1838,7 @@ extern "C" {
  * @param path
  *   The path to the file.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  * @param stat_file
  *   The statistics read.
  *
@@ -2342,7 +2342,7 @@ extern "C" {
  * @param mode
  *   The file mode to use when (regular) file is created.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  *
  * @return
  *   F_none on success.
@@ -2410,7 +2410,7 @@ extern "C" {
  * @param path
  *   The path file name.
  * @param flag
- *   Any valid flag, such as f_file_at_path_empty, f_file_at_automount_no, or f_file_at_symlink_follow_no.
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  * @param type
  *   The type of the file.
  *

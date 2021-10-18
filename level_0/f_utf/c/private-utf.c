@@ -2270,7 +2270,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_append_assure_nulless_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mash_nulless_) || !defined(_di_f_utf_string_mash_nulless_)
   f_status_t private_f_utf_string_append_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_t_size) {
+    if (destination->used + length > F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -2340,7 +2340,7 @@ extern "C" {
   f_status_t private_f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic) {
 
     if (dynamic->used + amount > dynamic->size) {
-      if (dynamic->used + amount > f_string_t_size) {
+      if (dynamic->used + amount > F_string_t_size_d) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -2371,7 +2371,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
   f_status_t private_f_utf_string_dynamics_adjust(const f_array_length_t length, f_utf_string_dynamics_t *dynamics) {
 
-    if (dynamics->used + length > f_array_length_t_size) {
+    if (dynamics->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -2423,7 +2423,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_)
   f_status_t private_f_utf_string_dynamics_resize(const f_array_length_t length, f_utf_string_dynamics_t *dynamics) {
 
-    if (dynamics->used + length > f_array_length_t_size) {
+    if (dynamics->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -2451,7 +2451,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_decimate_by_)
   f_status_t private_f_utf_string_map_multis_adjust(const f_array_length_t length, f_utf_string_map_multis_t *map_multis) {
 
-    if (map_multis->used + length > f_array_length_t_size) {
+    if (map_multis->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -2483,7 +2483,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_terminate_) || !defined(_di_f_utf_string_map_multis_terminate_after_)
   f_status_t private_f_utf_string_map_multis_resize(const f_array_length_t length, f_utf_string_map_multis_t *map_multis) {
 
-    if (map_multis->used + length > f_array_length_t_size) {
+    if (map_multis->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -2515,7 +2515,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_maps_adjust_) || !defined(_di_f_utf_string_maps_decimate_by_)
   f_status_t private_f_utf_string_maps_adjust(const f_array_length_t length, f_utf_string_maps_t *maps) {
 
-    if (maps->used + length > f_array_length_t_size) {
+    if (maps->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -2547,7 +2547,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_maps_decrease_by_) || !defined(_di_f_utf_string_maps_increase_) || !defined(_di_f_utf_string_maps_increase_by_) || !defined(_di_f_utf_string_maps_terminate_) || !defined(_di_f_utf_string_maps_terminate_after_)
   f_status_t private_f_utf_string_maps_resize(const f_array_length_t length, f_utf_string_maps_t *maps) {
 
-    if (maps->used + length > f_array_length_t_size) {
+    if (maps->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -2579,7 +2579,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_dynamic_mish_) || !defined(_di_f_utf_string_dynamic_partial_mish_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_) || !defined(_di_f_utf_string_dynamic_partial_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_assure_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_mish_) || !defined(_di_f_utf_string_prepend_assure_) || !defined(_di_f_utf_string_prepend_)
   f_status_t private_f_utf_string_prepend(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_t_size) {
+    if (destination->used + length > F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -2604,7 +2604,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_dynamic_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_mish_nulless_) || !defined(_di_f_utf_string_prepend_assure_nulless_) || !defined(_di_f_utf_string_prepend_nulless_)
   f_status_t private_f_utf_string_prepend_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_t_size) {
+    if (destination->used + length > F_string_t_size_d) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -2670,7 +2670,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
   f_status_t private_f_utf_string_triples_adjust(const f_array_length_t length, f_utf_string_triples_t *triples) {
 
-    if (triples->used + length > f_array_length_t_size) {
+    if (triples->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 
@@ -2705,7 +2705,7 @@ extern "C" {
 #if !defined(_di_f_utf_string_triples_decrease_) || !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
   f_status_t private_f_utf_string_triples_resize(const f_array_length_t length, f_utf_string_triples_t *triples) {
 
-    if (triples->used + length > f_array_length_t_size) {
+    if (triples->used + length > F_array_length_t_size_d) {
       return F_status_set_error(F_array_too_large);
     }
 

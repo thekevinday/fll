@@ -44,51 +44,51 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_extended_write_version_
-  #define fss_extended_write_major_version f_string_ascii_0
-  #define fss_extended_write_minor_version f_string_ascii_5
-  #define fss_extended_write_micro_version f_string_ascii_6
+#ifndef _di_fss_extended_write_program_version_
+  #define fss_extended_write_program_version_major_s F_string_ascii_0_s
+  #define fss_extended_write_program_version_minor_s F_string_ascii_5_s
+  #define fss_extended_write_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef fss_extended_write_nano_version_prefix
-    #define fss_extended_write_nano_version_prefix
+  #ifndef fss_extended_write_program_version_nano_prefix_s
+    #define fss_extended_write_program_version_nano_prefix_s
   #endif
 
-  #ifndef fss_extended_write_nano_version
-    #define fss_extended_write_nano_version
+  #ifndef fss_extended_write_program_version_nano_s
+    #define fss_extended_write_program_version_nano_s
   #endif
 
-  #define fss_extended_write_version fss_extended_write_major_version f_string_ascii_period fss_extended_write_minor_version f_string_ascii_period fss_extended_write_micro_version fss_extended_write_nano_version_prefix fss_extended_write_nano_version
-#endif // _di_fss_extended_write_version_
+  #define fss_extended_write_program_version_s fss_extended_write_program_version_major_s F_string_ascii_period_s fss_extended_write_program_version_minor_s F_string_ascii_period_s fss_extended_write_program_version_micro_s fss_extended_write_program_version_nano_prefix_s fss_extended_write_program_version_nano_s
+#endif // _di_fss_extended_write_program_version_
 
-#ifndef _di_fss_extended_write_name_
-  #define fss_extended_write_name      "fss_extended_write"
-  #define fss_extended_write_name_long "FSS Extended Write"
-#endif // _di_fss_extended_write_name_
+#ifndef _di_fss_extended_write_program_name_
+  #define fss_extended_write_program_name_s      "fss_extended_write"
+  #define fss_extended_write_program_name_long_s "FSS Extended Write"
+#endif // _di_fss_extended_write_program_name_
 
 #ifndef _di_fss_extended_write_defines_
-  #define fss_extended_write_pipe_content_end    '\f'
-  #define fss_extended_write_pipe_content_ignore '\v'
-  #define fss_extended_write_pipe_content_start  '\b'
+  #define fss_extended_write_pipe_content_end_s    '\f'
+  #define fss_extended_write_pipe_content_ignore_s '\v'
+  #define fss_extended_write_pipe_content_start_s  '\b'
 
-  #define fss_extended_write_short_file     "f"
-  #define fss_extended_write_short_content  "c"
-  #define fss_extended_write_short_double   "d"
-  #define fss_extended_write_short_ignore   "I"
-  #define fss_extended_write_short_object   "o"
-  #define fss_extended_write_short_partial  "p"
-  #define fss_extended_write_short_prepend  "P"
-  #define fss_extended_write_short_single   "s"
-  #define fss_extended_write_short_trim     "T"
+  #define fss_extended_write_short_file_s    "f"
+  #define fss_extended_write_short_content_s "c"
+  #define fss_extended_write_short_double_s  "d"
+  #define fss_extended_write_short_ignore_s  "I"
+  #define fss_extended_write_short_object_s  "o"
+  #define fss_extended_write_short_partial_s "p"
+  #define fss_extended_write_short_prepend_s "P"
+  #define fss_extended_write_short_single_s  "s"
+  #define fss_extended_write_short_trim_s    "T"
 
-  #define fss_extended_write_long_file    "file"
-  #define fss_extended_write_long_content "content"
-  #define fss_extended_write_long_double  "double"
-  #define fss_extended_write_long_ignore  "ignore"
-  #define fss_extended_write_long_object  "object"
-  #define fss_extended_write_long_partial "partial"
-  #define fss_extended_write_long_prepend "prepend"
-  #define fss_extended_write_long_single  "single"
-  #define fss_extended_write_long_trim    "trim"
+  #define fss_extended_write_long_file_s    "file"
+  #define fss_extended_write_long_content_s "content"
+  #define fss_extended_write_long_double_s  "double"
+  #define fss_extended_write_long_ignore_s  "ignore"
+  #define fss_extended_write_long_object_s  "object"
+  #define fss_extended_write_long_partial_s "partial"
+  #define fss_extended_write_long_prepend_s "prepend"
+  #define fss_extended_write_long_single_s  "single"
+  #define fss_extended_write_long_trim_s    "trim"
 
   enum {
     fss_extended_write_parameter_help,
@@ -123,23 +123,23 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_extended_write_short_file, fss_extended_write_long_file, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_write_short_content, fss_extended_write_long_content, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_write_short_double, fss_extended_write_long_double, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_write_short_ignore, fss_extended_write_long_ignore, 0, 2, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_write_short_object, fss_extended_write_long_object, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_write_short_partial, fss_extended_write_long_partial, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_write_short_prepend, fss_extended_write_long_prepend, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_write_short_single, fss_extended_write_long_single, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_extended_write_short_trim, fss_extended_write_long_trim, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_file_s, fss_extended_write_long_file_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_content_s, fss_extended_write_long_content_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_double_s, fss_extended_write_long_double_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_ignore_s, fss_extended_write_long_ignore_s, 0, 2, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_object_s, fss_extended_write_long_object_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_partial_s, fss_extended_write_long_partial_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_prepend_s, fss_extended_write_long_prepend_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_single_s, fss_extended_write_long_single_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_write_short_trim_s, fss_extended_write_long_trim_s, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_extended_write_total_parameters 18
+  #define fss_extended_write_total_parameters_d 18
 #endif // _di_fss_extended_write_defines_
 
 #ifndef _di_fss_extended_write_main_t_
   typedef struct {
-    f_console_parameter_t parameters[fss_extended_write_total_parameters];
+    f_console_parameter_t parameters[fss_extended_write_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

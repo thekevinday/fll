@@ -37,8 +37,8 @@ extern "C" {
     f_file_t file_source = f_file_t_initialize;
     f_file_t file_destination = f_file_t_initialize;
 
-    file_source.flag = f_file_flag_read_only;
-    file_destination.flag = f_file_flag_write_only | f_file_flag_no_follow;
+    file_source.flag = F_file_flag_read_only_d;
+    file_destination.flag = F_file_flag_write_only_d | F_file_flag_no_follow_d;
 
     f_status_t status = private_f_file_open(source, 0, &file_source);
     if (F_status_is_error(status)) return status;
@@ -85,8 +85,8 @@ extern "C" {
     f_file_t file_source = f_file_t_initialize;
     f_file_t file_destination = f_file_t_initialize;
 
-    file_source.flag = f_file_flag_read_only;
-    file_destination.flag = f_file_flag_write_only | f_file_flag_no_follow;
+    file_source.flag = F_file_flag_read_only_d;
+    file_destination.flag = F_file_flag_write_only_d | F_file_flag_no_follow_d;
 
     f_status_t status = private_f_file_open_at(at_id, source, 0, &file_source);
     if (F_status_is_error(status)) return status;
@@ -132,10 +132,10 @@ extern "C" {
 
     f_file_t file = f_file_t_initialize;
 
-    file.flag = f_file_flag_close_execute | f_file_flag_create | f_file_flag_write_only;
+    file.flag = F_file_flag_close_execute_d | F_file_flag_create_d | F_file_flag_write_only_d;
 
     if (exclusive) {
-      file.flag |= f_file_flag_exclusive;
+      file.flag |= F_file_flag_exclusive_d;
     }
 
     const f_status_t status = private_f_file_open(path, mode, &file);
@@ -153,10 +153,10 @@ extern "C" {
 
     f_file_t file = f_file_t_initialize;
 
-    file.flag = f_file_flag_close_execute | f_file_flag_create | f_file_flag_write_only;
+    file.flag = F_file_flag_close_execute_d | F_file_flag_create_d | F_file_flag_write_only_d;
 
     if (exclusive) {
-      file.flag |= f_file_flag_exclusive;
+      file.flag |= F_file_flag_exclusive_d;
     }
 
     const f_status_t status = private_f_file_open_at(at_id, path, mode, &file);
@@ -397,7 +397,7 @@ extern "C" {
 
     // create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
-      if (link_stat.st_size + 1 > f_array_length_t_size) {
+      if (link_stat.st_size + 1 > F_array_length_t_size_d) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -434,7 +434,7 @@ extern "C" {
 
     // create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
-      if (link_stat.st_size + 1 > f_array_length_t_size) {
+      if (link_stat.st_size + 1 > F_array_length_t_size_d) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -754,19 +754,19 @@ extern "C" {
 #if !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
   const char *private_f_file_stream_open_mode_determine(const int flag) {
 
-    if (flag & f_file_flag_read_write) {
-      if (flag & f_file_flag_truncate) {
+    if (flag & F_file_flag_read_write_d) {
+      if (flag & F_file_flag_truncate_d) {
         return f_file_open_mode_read_truncate_s;
       }
-      else if (flag & f_file_flag_append) {
+      else if (flag & F_file_flag_append_d) {
         return f_file_open_mode_read_append_s;
       }
 
       // failsafe to read write prepend.
       return f_file_open_mode_read_write_s;
     }
-    else if (flag & f_file_flag_write_only) {
-      if (flag & f_file_flag_truncate) {
+    else if (flag & F_file_flag_write_only_d) {
+      if (flag & F_file_flag_truncate_d) {
         return f_file_open_mode_truncate_s;
       }
 

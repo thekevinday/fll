@@ -45,7 +45,7 @@ extern "C" {
  *   The data to deallocate.
  */
 #ifndef _di_fss_identify_data_delete_
-  extern void fss_identify_data_delete(fss_identify_data_t *data) f_attribute_visibility_internal;
+  extern void fss_identify_data_delete(fss_identify_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_identify_data_delete_
 
 #ifdef __cplusplus

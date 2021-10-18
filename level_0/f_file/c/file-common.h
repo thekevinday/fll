@@ -20,8 +20,8 @@ extern "C" {
  * Provide common file-typ specific data types.
  */
 #ifndef _di_f_file_types_
-  #define f_file_default_read_size  8192 // default to 8k read sizes. // @fixme rename and move into _di_f_file_type_
-  #define f_file_default_write_size 8192 // default to 8k write sizes. // @fixme rename and move into _di_f_file_type_
+  #define F_file_default_read_size_d  8192 // default to 8k read sizes. // @fixme rename and move into _di_f_file_type_
+  #define F_file_default_write_size_d 8192 // default to 8k write sizes. // @fixme rename and move into _di_f_file_type_
 #endif // _di_f_file_types_
 
 /**
@@ -29,11 +29,12 @@ extern "C" {
  *
  * The fseek() function parameters can be confusing, so provide a hopefully more readibly code via these macros.
  *
- * The macro_f_file_seek_begin() sets the file pointer from this many bytes from the beginning of the file.
- * The macro_f_file_seek_data() sets the file pointer from this many bytes from the end of the file, relative to the next data.
- * The macro_f_file_seek_end() sets the file pointer from this many bytes from the end of the file.
- * The macro_f_file_seek_hole() sets the file pointer from this many bytes from the end of the file, relative to the next hole.
- * The macro_f_file_seek_to() sets the file pointer from this many bytes relative to the current position.
+ * macro_f_file_seek_*:
+ * - begin: sets the file pointer from this many bytes from the beginning of the file.
+ * - data:  sets the file pointer from this many bytes from the end of the file, relative to the next data.
+ * - end:   sets the file pointer from this many bytes from the end of the file.
+ * - hole:  sets the file pointer from this many bytes from the end of the file, relative to the next hole.
+ * - to:    sets the file pointer from this many bytes relative to the current position.
  */
 #ifndef _di_f_file_seeks_
   #define macro_f_file_seek_begin(file, bytes) fseek(file, bytes, SEEK_SET)
@@ -49,57 +50,57 @@ extern "C" {
  * These type macros are of size 32-bit (int32_t).
  */
 #ifndef _di_f_file_type_
-  #define f_file_type_mask S_IFMT
+  #define F_file_type_mask_d S_IFMT
 
-  #define f_file_type_block     S_IFBLK
-  #define f_file_type_character S_IFCHR
-  #define f_file_type_directory S_IFDIR
-  #define f_file_type_fifo      S_IFIFO
-  #define f_file_type_link      S_IFLNK
-  #define f_file_type_regular   S_IFREG
-  #define f_file_type_socket    S_IFSOCK
+  #define F_file_type_block_d     S_IFBLK
+  #define F_file_type_character_d S_IFCHR
+  #define F_file_type_directory_d S_IFDIR
+  #define F_file_type_fifo_d      S_IFIFO
+  #define F_file_type_link_d      S_IFLNK
+  #define F_file_type_regular_d   S_IFREG
+  #define F_file_type_socket_d    S_IFSOCK
 
-  #define f_file_type_name_block     "block"
-  #define f_file_type_name_character "character"
-  #define f_file_type_name_directory "directory"
-  #define f_file_type_name_fifo      "fifo"
-  #define f_file_type_name_link      "link"
-  #define f_file_type_name_regular   "regular"
-  #define f_file_type_name_socket    "socket"
+  #define F_file_type_name_block_s     "block"
+  #define F_file_type_name_character_s "character"
+  #define F_file_type_name_directory_s "directory"
+  #define F_file_type_name_fifo_s      "fifo"
+  #define F_file_type_name_link_s      "link"
+  #define F_file_type_name_regular_s   "regular"
+  #define F_file_type_name_socket_s    "socket"
 
-  #define f_file_type_name_block_length     5
-  #define f_file_type_name_character_length 9
-  #define f_file_type_name_directory_length 9
-  #define f_file_type_name_fifo_length      4
-  #define f_file_type_name_link_length      4
-  #define f_file_type_name_regular_length   7
-  #define f_file_type_name_socket_length    6
+  #define F_file_type_name_block_s_length     5
+  #define F_file_type_name_character_s_length 9
+  #define F_file_type_name_directory_s_length 9
+  #define F_file_type_name_fifo_s_length      4
+  #define F_file_type_name_link_s_length      4
+  #define F_file_type_name_regular_s_length   7
+  #define F_file_type_name_socket_s_length    6
 
-  #define macro_f_file_type_get(mode) (f_file_type_mask & mode)
+  #define macro_f_file_type_get(mode) (F_file_type_mask_d & mode)
 
-  #define macro_f_file_type_is_block(mode)     (macro_f_file_type_get(mode) == f_file_type_block)
-  #define macro_f_file_type_is_character(mode) (macro_f_file_type_get(mode) == f_file_type_character)
-  #define macro_f_file_type_is_directory(mode) (macro_f_file_type_get(mode) == f_file_type_directory)
-  #define macro_f_file_type_is_fifo(mode)      (macro_f_file_type_get(mode) == f_file_type_fifo)
-  #define macro_f_file_type_is_link(mode)      (macro_f_file_type_get(mode) == f_file_type_link)
-  #define macro_f_file_type_is_regular(mode)   (macro_f_file_type_get(mode) == f_file_type_regular)
-  #define macro_f_file_type_is_socket(mode)    (macro_f_file_type_get(mode) == f_file_type_socket)
+  #define macro_f_file_type_is_block(mode)     (macro_f_file_type_get(mode) == F_file_type_block_d)
+  #define macro_f_file_type_is_character(mode) (macro_f_file_type_get(mode) == F_file_type_character_d)
+  #define macro_f_file_type_is_directory(mode) (macro_f_file_type_get(mode) == F_file_type_directory_d)
+  #define macro_f_file_type_is_fifo(mode)      (macro_f_file_type_get(mode) == F_file_type_fifo_d)
+  #define macro_f_file_type_is_link(mode)      (macro_f_file_type_get(mode) == F_file_type_link_d)
+  #define macro_f_file_type_is_regular(mode)   (macro_f_file_type_get(mode) == F_file_type_regular_d)
+  #define macro_f_file_type_is_socket(mode)    (macro_f_file_type_get(mode) == F_file_type_socket_d)
 
-  #define macro_f_file_open_mode_append        "a"
-  #define macro_f_file_open_mode_read          "r"
-  #define macro_f_file_open_mode_read_append   "a+"
-  #define macro_f_file_open_mode_read_truncate "w+"
-  #define macro_f_file_open_mode_read_write    "r+"
-  #define macro_f_file_open_mode_truncate      "w"
+  #define F_file_open_mode_append_s        "a"
+  #define F_file_open_mode_read_s          "r"
+  #define F_file_open_mode_read_append_s   "a+"
+  #define F_file_open_mode_read_truncate_s "w+"
+  #define F_file_open_mode_read_write_s    "r+"
+  #define F_file_open_mode_truncate_s      "w"
 
-  #define macro_f_file_open_mode_append_length        1
-  #define macro_f_file_open_mode_read_length          1
-  #define macro_f_file_open_mode_read_append_length   2
-  #define macro_f_file_open_mode_read_truncate_length 2
-  #define macro_f_file_open_mode_read_write_length    2
-  #define macro_f_file_open_mode_truncate_length      1
+  #define F_file_open_mode_append_s_length        1
+  #define F_file_open_mode_read_s_length          1
+  #define F_file_open_mode_read_append_s_length   2
+  #define F_file_open_mode_read_truncate_s_length 2
+  #define F_file_open_mode_read_write_s_length    2
+  #define F_file_open_mode_truncate_s_length      1
 
-  extern const f_string_t f_file_type_name_blocks;
+  extern const f_string_t f_file_type_name_blocks_s;
   extern const f_string_t f_file_type_name_character_s;
   extern const f_string_t f_file_type_name_directory_s;
   extern const f_string_t f_file_type_name_link_s;
@@ -132,10 +133,10 @@ extern "C" {
     size_t size_write;
   } f_file_t;
 
-  #define f_file_t_initialize { 0, -1, f_file_flag_read_only, f_file_default_read_size, f_file_default_write_size }
+  #define f_file_t_initialize { 0, -1, F_file_flag_read_only_d, F_file_default_read_size_d, F_file_default_write_size_d }
 
   #define macro_f_file_t_initialize(stream, id, flag, read_size, write_size) { stream, id, flag, read_size, write_size }
-  #define macro_f_file_t_initialize2(stream, id, flag) { stream, id, flag, f_file_default_read_size, f_file_default_write_size }
+  #define macro_f_file_t_initialize2(stream, id, flag) { stream, id, flag, F_file_default_read_size_d, F_file_default_write_size_d }
 
   #define macro_f_file_t_clear(file) \
     file.stream = 0; \
@@ -147,25 +148,25 @@ extern "C" {
   #define macro_f_file_t_reset(file) \
     file.stream = 0; \
     file.id = -1; \
-    file.flag = f_file_flag_read_only; \
-    file.size_read = f_file_default_read_size; \
-    file.size_write = f_file_default_write_size;
+    file.flag = F_file_flag_read_only_d; \
+    file.size_read = F_file_default_read_size_d; \
+    file.size_write = F_file_default_write_size_d;
 #endif // _di_f_file_t_
 
 /**
  * File AT_* define related functionality.
  */
 #ifndef _di_f_file_at_
-  #define f_file_at_current_working    -100
-  #define f_file_at_symlink_follow     0x400
-  #define f_file_at_symlink_follow_no  0x100
-  #define f_file_at_remove_directory   0x200
-  #define f_file_at_automount_no       0x800
-  #define f_file_at_path_empty         0x1000
-  #define f_file_at_statx_sync_type    0x6000
-  #define f_file_at_statx_sync_as_stat 0x0000
-  #define f_file_at_statx_sync_force   0x2000
-  #define f_file_at_statx_sync_no      0x4000
+  #define F_file_at_current_working_d    -100
+  #define F_file_at_symlink_follow_d     0x400
+  #define F_file_at_symlink_follow_no_d  0x100
+  #define F_file_at_remove_directory_d   0x200
+  #define F_file_at_automount_no_d       0x800
+  #define F_file_at_path_empty_d         0x1000
+  #define F_file_at_statx_sync_type_d    0x6000
+  #define F_file_at_statx_sync_as_stat_d 0x0000
+  #define F_file_at_statx_sync_force_d   0x2000
+  #define F_file_at_statx_sync_no_d      0x4000
 #endif // _di_f_file_at_
 
 /**
@@ -174,101 +175,101 @@ extern "C" {
 #ifndef _di_f_file_flag_
 
   // file open flags
-  #define f_file_flag_append             O_APPEND
-  #define f_file_flag_asynchronous       O_ASYNC
-  #define f_file_flag_create             O_CREAT
-  #define f_file_flag_close_execute      O_CLOEXEC
-  #define f_file_flag_direct             O_DIRECT
-  #define f_file_flag_directory          O_DIRECTORY
-  #define f_file_flag_exclusive          O_EXCL
-  #define f_file_flag_large_file         O_LARGEFILE
-  #define f_file_flag_no_access_time     O_NOATIME
-  #define f_file_flag_no_follow          O_NOFOLLOW
-  #define f_file_flag_no_tty             O_NOCTTY
-  #define f_file_flag_non_blocking       O_NONBLOCK
-  #define f_file_flag_path               010000000
-  #define f_file_flag_read_only          O_RDONLY
-  #define f_file_flag_read_write         O_RDWR
-  #define f_file_flag_synchronous        O_SYNC
-  #define f_file_flag_synchronous_direct O_DSYNC
-  #define f_file_flag_temporary          O_TMPFILE
-  #define f_file_flag_truncate           O_TRUNC
-  #define f_file_flag_write_only         O_WRONLY
+  #define F_file_flag_append_d             O_APPEND
+  #define F_file_flag_asynchronous_d       O_ASYNC
+  #define F_file_flag_create_d             O_CREAT
+  #define F_file_flag_close_execute_d      O_CLOEXEC
+  #define F_file_flag_direct_d             O_DIRECT
+  #define F_file_flag_directory_d          O_DIRECTORY
+  #define F_file_flag_exclusive_d          O_EXCL
+  #define F_file_flag_large_file_d         O_LARGEFILE
+  #define F_file_flag_no_access_time_d     O_NOATIME
+  #define F_file_flag_no_follow_d          O_NOFOLLOW
+  #define F_file_flag_no_tty_d             O_NOCTTY
+  #define F_file_flag_non_blocking_d       O_NONBLOCK
+  #define F_file_flag_path_d               010000000
+  #define F_file_flag_read_only_d          O_RDONLY
+  #define F_file_flag_read_write_d         O_RDWR
+  #define F_file_flag_synchronous_d        O_SYNC
+  #define F_file_flag_synchronous_direct_d O_DSYNC
+  #define F_file_flag_temporary_d          O_TMPFILE
+  #define F_file_flag_truncate_d           O_TRUNC
+  #define F_file_flag_write_only_d         O_WRONLY
 
   // file open flags pre-combined with create.
-  #define f_file_flag_create_ro (O_CREAT | O_RDONLY)
-  #define f_file_flag_create_wo (O_CREAT | O_WRONLY)
-  #define f_file_flag_create_rw (O_CREAT | O_RDRW)
+  #define F_file_flag_create_ro_d (O_CREAT | O_RDONLY)
+  #define F_file_flag_create_wo_d (O_CREAT | O_WRONLY)
+  #define F_file_flag_create_rw_d (O_CREAT | O_RDRW)
 
   // file open flags pre-combined will fail if file exists.
-  #define f_file_flag_create_new_ro (O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_flag_create_new_wo (O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_flag_create_new_rw (O_CREAT | O_EXCL | O_RDRW)
+  #define F_file_flag_create_new_ro_d (O_CREAT | O_EXCL | O_RDONLY)
+  #define F_file_flag_create_new_wo_d (O_CREAT | O_EXCL | O_WRONLY)
+  #define F_file_flag_create_new_rw_d (O_CREAT | O_EXCL | O_RDRW)
 
   // file open flags pre-combined will truncate any existing files to 0.
-  #define f_file_flag_truncate_ro (O_CREAT | O_TRUNC | O_RDONLY)
-  #define f_file_flag_truncate_rw (O_CREAT | O_TRUNC | O_RDRW)
-  #define f_file_flag_truncate_wo (O_CREAT | O_TRUNC | O_WRONLY)
+  #define F_file_flag_truncate_ro_d (O_CREAT | O_TRUNC | O_RDONLY)
+  #define F_file_flag_truncate_rw_d (O_CREAT | O_TRUNC | O_RDRW)
+  #define F_file_flag_truncate_wo_d (O_CREAT | O_TRUNC | O_WRONLY)
 
   // file open flags pre-combined will truncate any existing files to 0.
-  #define f_file_flag_append_rw (O_CREAT | O_APPEND | O_RDRW)
-  #define f_file_flag_append_wo (O_CREAT | O_APPEND | O_WRONLY)
+  #define F_file_flag_append_rw_d (O_CREAT | O_APPEND | O_RDRW)
+  #define F_file_flag_append_wo_d (O_CREAT | O_APPEND | O_WRONLY)
 
   // file open flags pre-combined with synchronous io.
-  #define f_file_flag_sync_ro            (O_SYNC | O_RDONLY)
-  #define f_file_flag_sync_wo            (O_SYNC | O_WRONLY)
-  #define f_file_flag_sync_rw            (O_SYNC | O_RDRW)
-  #define f_file_flag_sync_create_ro     (O_SYNC | O_CREAT | O_RDONLY)
-  #define f_file_flag_sync_create_wo     (O_SYNC | O_CREAT | O_WRONLY)
-  #define f_file_flag_sync_create_rw     (O_SYNC | O_CREAT | O_RDRW)
-  #define f_file_flag_sync_create_new_ro (O_SYNC | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_flag_sync_create_new_wo (O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_flag_sync_create_new_rw (O_SYNC | O_CREAT | O_EXCL | O_RDRW)
+  #define F_file_flag_sync_ro_d            (O_SYNC | O_RDONLY)
+  #define F_file_flag_sync_wo_d            (O_SYNC | O_WRONLY)
+  #define F_file_flag_sync_rw_d            (O_SYNC | O_RDRW)
+  #define F_file_flag_sync_create_ro_d     (O_SYNC | O_CREAT | O_RDONLY)
+  #define F_file_flag_sync_create_wo_d     (O_SYNC | O_CREAT | O_WRONLY)
+  #define F_file_flag_sync_create_rw_d     (O_SYNC | O_CREAT | O_RDRW)
+  #define F_file_flag_sync_create_new_ro_d (O_SYNC | O_CREAT | O_EXCL | O_RDONLY)
+  #define F_file_flag_sync_create_new_wo_d (O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
+  #define F_file_flag_sync_create_new_rw_d (O_SYNC | O_CREAT | O_EXCL | O_RDRW)
 
   // file open flags pre-combined with asynchronous io.
-  #define f_file_flag_async_ro            (O_ASYNC | O_RDONLY)
-  #define f_file_flag_async_wo            (O_ASYNC | O_WRONLY)
-  #define f_file_flag_async_rw            (O_ASYNC | O_RDRW)
-  #define f_file_flag_async_create_ro     (O_ASYNC | O_CREAT | O_RDONLY)
-  #define f_file_flag_async_create_wo     (O_ASYNC | O_CREAT | O_WRONLY)
-  #define f_file_flag_async_create_rw     (O_ASYNC | O_CREAT | O_RDRW)
-  #define f_file_flag_async_create_new_ro (O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_flag_async_create_new_wo (O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_flag_async_create_new_rw (O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
+  #define F_file_flag_async_ro_d            (O_ASYNC | O_RDONLY)
+  #define F_file_flag_async_wo_d            (O_ASYNC | O_WRONLY)
+  #define F_file_flag_async_rw_d            (O_ASYNC | O_RDRW)
+  #define F_file_flag_async_create_ro_d     (O_ASYNC | O_CREAT | O_RDONLY)
+  #define F_file_flag_async_create_wo_d     (O_ASYNC | O_CREAT | O_WRONLY)
+  #define F_file_flag_async_create_rw_d     (O_ASYNC | O_CREAT | O_RDRW)
+  #define F_file_flag_async_create_new_ro_d (O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
+  #define F_file_flag_async_create_new_wo_d (O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
+  #define F_file_flag_async_create_new_rw_d (O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
 
   // file open flags pre-combined with direct io (which works synchronously).
-  #define f_file_flag_direct_ro            (O_DIRECT | O_RDONLY)
-  #define f_file_flag_direct_wo            (O_DIRECT | O_WRONLY)
-  #define f_file_flag_direct_rw            (O_DIRECT | O_RDRW)
-  #define f_file_flag_direct_create_ro     (O_DIRECT | O_CREAT | O_RDONLY)
-  #define f_file_flag_direct_create_wo     (O_DIRECT | O_CREAT | O_WRONLY)
-  #define f_file_flag_direct_create_rw     (O_DIRECT | O_CREAT | O_RDRW)
-  #define f_file_flag_direct_create_new_ro (O_DIRECT | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_flag_direct_create_new_wo (O_DIRECT | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_flag_direct_create_new_rw (O_DIRECT | O_CREAT | O_EXCL | O_RDRW)
+  #define F_file_flag_direct_ro_d            (O_DIRECT | O_RDONLY)
+  #define F_file_flag_direct_wo_d            (O_DIRECT | O_WRONLY)
+  #define F_file_flag_direct_rw_d            (O_DIRECT | O_RDRW)
+  #define F_file_flag_direct_create_ro_d     (O_DIRECT | O_CREAT | O_RDONLY)
+  #define F_file_flag_direct_create_wo_d     (O_DIRECT | O_CREAT | O_WRONLY)
+  #define F_file_flag_direct_create_rw_d     (O_DIRECT | O_CREAT | O_RDRW)
+  #define F_file_flag_direct_create_new_ro_d (O_DIRECT | O_CREAT | O_EXCL | O_RDONLY)
+  #define F_file_flag_direct_create_new_wo_d (O_DIRECT | O_CREAT | O_EXCL | O_WRONLY)
+  #define F_file_flag_direct_create_new_rw_d (O_DIRECT | O_CREAT | O_EXCL | O_RDRW)
 
   // file open flags pre-combined with large_file.
-  #define f_file_flag_large_ro                  (O_LARGEFILE | O_RDONLY)
-  #define f_file_flag_large_wo                  (O_LARGEFILE | O_WRONLY)
-  #define f_file_flag_large_rw                  (O_LARGEFILE | O_RDRW)
-  #define f_file_flag_large_sync_ro             (O_LARGEFILE | O_SYNC | O_RDONLY)
-  #define f_file_flag_large_sync_wo             (O_LARGEFILE | O_SYNC | O_WRONLY)
-  #define f_file_flag_large_sync_rw             (O_LARGEFILE | O_SYNC | O_RDRW)
-  #define f_file_flag_large_sync_create_ro      (O_LARGEFILE | O_SYNC | O_CREAT | O_RDONLY)
-  #define f_file_flag_large_sync_create_wo      (O_LARGEFILE | O_SYNC | O_CREAT | O_WRONLY)
-  #define f_file_flag_large_sync_create_rw      (O_LARGEFILE | O_SYNC | O_CREAT | O_RDRW)
-  #define f_file_flag_large_sync_create_new_ro  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_flag_large_sync_create_new_wo  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_flag_large_sync_create_new_rw  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_RDRW)
-  #define f_file_flag_large_async_ro            (O_LARGEFILE | O_ASYNC | O_RDONLY)
-  #define f_file_flag_large_async_wo            (O_LARGEFILE | O_ASYNC | O_WRONLY)
-  #define f_file_flag_large_async_rw            (O_LARGEFILE | O_ASYNC | O_RDRW)
-  #define f_file_flag_large_async_create_ro     (O_LARGEFILE | O_ASYNC | O_CREAT | O_RDONLY)
-  #define f_file_flag_large_async_create_wo     (O_LARGEFILE | O_ASYNC | O_CREAT | O_WRONLY)
-  #define f_file_flag_large_async_create_rw     (O_LARGEFILE | O_ASYNC | O_CREAT | O_RDRW)
-  #define f_file_flag_large_async_create_new_ro (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
-  #define f_file_flag_large_async_create_new_wo (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
-  #define f_file_flag_large_async_create_new_rw (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
+  #define F_file_flag_large_ro_d                  (O_LARGEFILE | O_RDONLY)
+  #define F_file_flag_large_wo_d                  (O_LARGEFILE | O_WRONLY)
+  #define F_file_flag_large_rw_d                  (O_LARGEFILE | O_RDRW)
+  #define F_file_flag_large_sync_ro_d             (O_LARGEFILE | O_SYNC | O_RDONLY)
+  #define F_file_flag_large_sync_wo_d             (O_LARGEFILE | O_SYNC | O_WRONLY)
+  #define F_file_flag_large_sync_rw_d             (O_LARGEFILE | O_SYNC | O_RDRW)
+  #define F_file_flag_large_sync_create_ro_d      (O_LARGEFILE | O_SYNC | O_CREAT | O_RDONLY)
+  #define F_file_flag_large_sync_create_wo_d      (O_LARGEFILE | O_SYNC | O_CREAT | O_WRONLY)
+  #define F_file_flag_large_sync_create_rw_d      (O_LARGEFILE | O_SYNC | O_CREAT | O_RDRW)
+  #define F_file_flag_large_sync_create_new_ro_d  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_RDONLY)
+  #define F_file_flag_large_sync_create_new_wo_d  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
+  #define F_file_flag_large_sync_create_new_rw_d  (O_LARGEFILE | O_SYNC | O_CREAT | O_EXCL | O_RDRW)
+  #define F_file_flag_large_async_ro_d            (O_LARGEFILE | O_ASYNC | O_RDONLY)
+  #define F_file_flag_large_async_wo_d            (O_LARGEFILE | O_ASYNC | O_WRONLY)
+  #define F_file_flag_large_async_rw_d            (O_LARGEFILE | O_ASYNC | O_RDRW)
+  #define F_file_flag_large_async_create_ro_d     (O_LARGEFILE | O_ASYNC | O_CREAT | O_RDONLY)
+  #define F_file_flag_large_async_create_wo_d     (O_LARGEFILE | O_ASYNC | O_CREAT | O_WRONLY)
+  #define F_file_flag_large_async_create_rw_d     (O_LARGEFILE | O_ASYNC | O_CREAT | O_RDRW)
+  #define F_file_flag_large_async_create_new_ro_d (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
+  #define F_file_flag_large_async_create_new_wo_d (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
+  #define F_file_flag_large_async_create_new_rw_d (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
 #endif // _di_f_file_flag_
 
 /**
@@ -295,81 +296,81 @@ extern "C" {
 #ifndef _di_f_file_mode_
   typedef uint32_t f_file_mode_t;
 
-  #define f_file_mode_t_block_special 0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_t_block_owner   0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
-  #define f_file_mode_t_block_group   0x0000ff00 // 0000 0000 0000 0000 1111 1111 0000 0000
-  #define f_file_mode_t_block_world   0x000000ff // 0000 0000 0000 0000 0000 0000 1111 1111
+  #define F_file_mode_t_block_special_d 0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
+  #define F_file_mode_t_block_owner_d   0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
+  #define F_file_mode_t_block_group_d   0x0000ff00 // 0000 0000 0000 0000 1111 1111 0000 0000
+  #define F_file_mode_t_block_world_d   0x000000ff // 0000 0000 0000 0000 0000 0000 1111 1111
 
-  #define f_file_mode_t_block_all      0x77ffffff // 0111 0111 1111 1111 1111 1111 1111 1111
-  #define f_file_mode_t_block_standard 0x00ffffff // 0000 0000 1111 1111 1111 1111 1111 1111
+  #define F_file_mode_t_block_all_d      0x77ffffff // 0111 0111 1111 1111 1111 1111 1111 1111
+  #define F_file_mode_t_block_standard_d 0x00ffffff // 0000 0000 1111 1111 1111 1111 1111 1111
 
-  #define f_file_mode_t_mask_how_add      0x070f0f0f // 0000 0111 0000 1111 0000 1111 0000 1111
-  #define f_file_mode_t_mask_how_subtract 0x70f0f0f0 // 0111 0000 1111 0000 1111 0000 1111 0000
+  #define F_file_mode_t_mask_how_add_d      0x070f0f0f // 0000 0111 0000 1111 0000 1111 0000 1111
+  #define F_file_mode_t_mask_how_subtract_d 0x70f0f0f0 // 0111 0000 1111 0000 1111 0000 1111 0000
 
-  #define f_file_mode_t_mask_bit_execute      0x00111111 // 0000 0000 0001 0001 0001 0001 0001 0001
-  #define f_file_mode_t_mask_bit_execute_only 0x00888888 // 0000 0000 1000 1000 1000 1000 1000 1000
-  #define f_file_mode_t_mask_bit_read         0x00444444 // 0000 0000 0100 0100 0100 0100 0100 0100
-  #define f_file_mode_t_mask_bit_set_group    0x22000000 // 0010 0010 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_t_mask_bit_set_owner    0x44000000 // 0100 0100 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_t_mask_bit_sticky       0x11000000 // 0001 0001 0000 0000 0000 0000 0000 0000
-  #define f_file_mode_t_mask_bit_write        0x00222222 // 0000 0000 0010 0010 0010 0010 0010 0010
+  #define F_file_mode_t_mask_bit_execute_d      0x00111111 // 0000 0000 0001 0001 0001 0001 0001 0001
+  #define F_file_mode_t_mask_bit_execute_only_d 0x00888888 // 0000 0000 1000 1000 1000 1000 1000 1000
+  #define F_file_mode_t_mask_bit_read_d         0x00444444 // 0000 0000 0100 0100 0100 0100 0100 0100
+  #define F_file_mode_t_mask_bit_set_group_d    0x22000000 // 0010 0010 0000 0000 0000 0000 0000 0000
+  #define F_file_mode_t_mask_bit_set_owner_d    0x44000000 // 0100 0100 0000 0000 0000 0000 0000 0000
+  #define F_file_mode_t_mask_bit_sticky_d       0x11000000 // 0001 0001 0000 0000 0000 0000 0000 0000
+  #define F_file_mode_t_mask_bit_write_d        0x00222222 // 0000 0000 0010 0010 0010 0010 0010 0010
 
-  #define f_file_mode_t_replace_owner     0x1  // 0000 0001
-  #define f_file_mode_t_replace_group     0x2  // 0000 0010
-  #define f_file_mode_t_replace_world     0x4  // 0000 0100
-  #define f_file_mode_t_replace_special   0x8  // 0000 1000
-  #define f_file_mode_t_replace_directory 0x10 // 0001 0000
+  #define F_file_mode_t_replace_owner_d     0x1  // 0000 0001
+  #define F_file_mode_t_replace_group_d     0x2  // 0000 0010
+  #define F_file_mode_t_replace_world_d     0x4  // 0000 0100
+  #define F_file_mode_t_replace_special_d   0x8  // 0000 1000
+  #define F_file_mode_t_replace_directory_d 0x10 // 0001 0000
 
-  #define f_file_mode_t_replace_all      0x1f // 0001 1111
-  #define f_file_mode_t_replace_other    0x18 // 0001 1000
-  #define f_file_mode_t_replace_standard 0x7  // 0000 0111
+  #define F_file_mode_t_replace_all_d      0x1f // 0001 1111
+  #define F_file_mode_t_replace_other_d    0x18 // 0001 1000
+  #define F_file_mode_t_replace_standard_d 0x7  // 0000 0111
 
   // file permission modes (mode_t).
-  #define f_file_mode_owner_rwx S_IRWXU
-  #define f_file_mode_owner_r   S_IRUSR
-  #define f_file_mode_owner_w   S_IWUSR
-  #define f_file_mode_owner_x   S_IXUSR
-  #define f_file_mode_owner_rw  (S_IRUSR | S_IWUSR)
-  #define f_file_mode_owner_rx  (S_IRUSR | S_IXUSR)
-  #define f_file_mode_owner_wx  (S_IWUSR | S_IXUSR)
-  #define f_file_mode_group_rwx S_IRWXG
-  #define f_file_mode_group_r   S_IRGRP
-  #define f_file_mode_group_w   S_IWGRP
-  #define f_file_mode_group_x   S_IXGRP
-  #define f_file_mode_group_rw  (S_IRGRP | S_IWGRP)
-  #define f_file_mode_group_rx  (S_IRGRP | S_IXGRP)
-  #define f_file_mode_group_wx  (S_IWGRP | S_IXGRP)
-  #define f_file_mode_world_rwx S_IRWXO
-  #define f_file_mode_world_r   S_IROTH
-  #define f_file_mode_world_w   S_IWOTH
-  #define f_file_mode_world_x   S_IXOTH
-  #define f_file_mode_world_rw  (S_IROTH | S_IWOTH)
-  #define f_file_mode_world_rx  (S_IROTH | S_IXOTH)
-  #define f_file_mode_world_wx  (S_IWOTH | S_IXOTH)
+  #define F_file_mode_owner_rwx_d S_IRWXU
+  #define F_file_mode_owner_r_d   S_IRUSR
+  #define F_file_mode_owner_w_d   S_IWUSR
+  #define F_file_mode_owner_x_d   S_IXUSR
+  #define F_file_mode_owner_rw_d  (S_IRUSR | S_IWUSR)
+  #define F_file_mode_owner_rx_d  (S_IRUSR | S_IXUSR)
+  #define F_file_mode_owner_wx_d  (S_IWUSR | S_IXUSR)
+  #define F_file_mode_group_rwx_d S_IRWXG
+  #define F_file_mode_group_r_d   S_IRGRP
+  #define F_file_mode_group_w_d   S_IWGRP
+  #define F_file_mode_group_x_d   S_IXGRP
+  #define F_file_mode_group_rw_d  (S_IRGRP | S_IWGRP)
+  #define F_file_mode_group_rx_d  (S_IRGRP | S_IXGRP)
+  #define F_file_mode_group_wx_d  (S_IWGRP | S_IXGRP)
+  #define F_file_mode_world_rwx_d S_IRWXO
+  #define F_file_mode_world_r_d   S_IROTH
+  #define F_file_mode_world_w_d   S_IWOTH
+  #define F_file_mode_world_x_d   S_IXOTH
+  #define F_file_mode_world_rw_d  (S_IROTH | S_IWOTH)
+  #define F_file_mode_world_rx_d  (S_IROTH | S_IXOTH)
+  #define F_file_mode_world_wx_d  (S_IWOTH | S_IXOTH)
 
-  #define f_file_mode_all_rwx (f_file_mode_owner_rwx | f_file_mode_group_rwx | f_file_mode_world_rwx)
-  #define f_file_mode_all_rw  (f_file_mode_owner_rw | f_file_mode_group_rw | f_file_mode_world_rw)
-  #define f_file_mode_all_wx  (f_file_mode_owner_wx | f_file_mode_group_wx | f_file_mode_world_wx)
-  #define f_file_mode_all_rx  (f_file_mode_owner_rx | f_file_mode_group_rx | f_file_mode_world_rx)
-  #define f_file_mode_all_r   (f_file_mode_owner_r | f_file_mode_group_r | f_file_mode_world_r)
-  #define f_file_mode_all_w   (f_file_mode_owner_w | f_file_mode_group_w | f_file_mode_world_w)
-  #define f_file_mode_all_x   (f_file_mode_owner_x | f_file_mode_group_x | f_file_mode_world_x)
+  #define F_file_mode_all_rwx_d (F_file_mode_owner_rwx_d | F_file_mode_group_rwx_d | F_file_mode_world_rwx_d)
+  #define F_file_mode_all_rw_d  (F_file_mode_owner_rw_d | F_file_mode_group_rw_d | F_file_mode_world_rw_d)
+  #define F_file_mode_all_wx_d  (F_file_mode_owner_wx_d | F_file_mode_group_wx_d | F_file_mode_world_wx_d)
+  #define F_file_mode_all_rx_d  (F_file_mode_owner_rx_d | F_file_mode_group_rx_d | F_file_mode_world_rx_d)
+  #define F_file_mode_all_r_d   (F_file_mode_owner_r_d | F_file_mode_group_r_d | F_file_mode_world_r_d)
+  #define F_file_mode_all_w_d   (F_file_mode_owner_w_d | F_file_mode_group_w_d | F_file_mode_world_w_d)
+  #define F_file_mode_all_x_d   (F_file_mode_owner_x_d | F_file_mode_group_x_d | F_file_mode_world_x_d)
 
   // file mode set-uid/set-gid/sticky-bits and all bits (mode_t).
-  #define f_file_mode_special_set_user  S_ISUID
-  #define f_file_mode_special_set_group S_ISGID
-  #define f_file_mode_special_sticky    S_ISVTX
-  #define f_file_mode_special_all       (S_ISUID | S_ISGID | S_ISVTX)
+  #define F_file_mode_special_set_user_d  S_ISUID
+  #define F_file_mode_special_set_group_d S_ISGID
+  #define F_file_mode_special_sticky_d    S_ISVTX
+  #define F_file_mode_special_all_d       (S_ISUID | S_ISGID | S_ISVTX)
 
   // all permissions modes and special modes (mode_t).
-  #define f_file_mode_all (f_file_mode_special_all | f_file_mode_all_rwx)
+  #define F_file_mode_all_d (F_file_mode_special_all_d | F_file_mode_all_rwx_d)
 
   // special file mode combinations (mode_t).
-  #define f_file_mode_user_access    (f_file_mode_owner_rwx | f_file_mode_group_rwx | f_file_mode_world_x)
-  #define f_file_mode_user_directory (f_file_mode_owner_rwx | f_file_mode_group_rwx)
-  #define f_file_mode_user_file      (f_file_mode_owner_rw | f_file_mode_group_rw)
-  #define f_file_mode_user_program   (f_file_mode_owner_rx | f_file_mode_group_rx)
-  #define f_file_mode_user_protected (f_file_mode_owner_r | f_file_mode_group_r)
+  #define F_file_mode_user_access_d    (F_file_mode_owner_rwx_d | F_file_mode_group_rwx_d | F_file_mode_world_x_d)
+  #define F_file_mode_user_directory_d (F_file_mode_owner_rwx_d | F_file_mode_group_rwx_d)
+  #define F_file_mode_user_file_d      (F_file_mode_owner_rw_d | F_file_mode_group_rw_d)
+  #define F_file_mode_user_program_d   (F_file_mode_owner_rx_d | F_file_mode_group_rx_d)
+  #define F_file_mode_user_protected_d (F_file_mode_owner_r_d | F_file_mode_group_r_d)
 #endif // _di_f_file_mode_
 
 #ifdef __cplusplus

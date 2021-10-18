@@ -50,165 +50,171 @@
 extern "C" {
 #endif
 
-#ifndef _di_firewall_version_
-  #define firewall_major_version f_string_ascii_0
-  #define firewall_minor_version f_string_ascii_5
-  #define firewall_micro_version f_string_ascii_6
+#ifndef _di_firewall_program_version_
+  #define firewall_program_version_major_s F_string_ascii_0_s
+  #define firewall_program_version_minor_s F_string_ascii_5_s
+  #define firewall_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef firewall_nano_version_prefix
-    #define firewall_nano_version_prefix
+  #ifndef firewall_program_version_nano_prefix_s
+    #define firewall_program_version_nano_prefix_s
   #endif
 
-  #ifndef firewall_nano_version
-    #define firewall_nano_version
+  #ifndef firewall_program_version_nano_s
+    #define firewall_program_version_nano_s
   #endif
 
-  #define firewall_version firewall_major_version f_string_ascii_period firewall_minor_version f_string_ascii_period firewall_micro_version firewall_nano_version_prefix firewall_nano_version
-#endif // _di_firewall_version_
+  #define firewall_version_s firewall_program_version_major_s F_string_ascii_period_s firewall_program_version_minor_s F_string_ascii_period_s firewall_program_version_micro_s firewall_program_version_nano_prefix_s firewall_program_version_nano_s
+#endif // _di_firewall_program_version_
 
-#ifndef _di_firewall_name_
-  #define firewall_name      "firewall"
-  #define firewall_name_long "Kevux Firewall Manager"
-#endif // _di_firewall_name_
+#ifndef _di_firewall_program_name_
+  #define firewall_program_name_s      "firewall"
+  #define firewall_program_name_long_s "Kevux Firewall Manager"
+#endif // _di_firewall_program_name_
 
 #ifndef _di_firewall_paths_
-  #define network_path          "/etc/network/" // TODO: this should be moved to a network project library, possibly the Paths project in fot the network project
-  #define network_devices       "/sys/class/net/" // TODO: this should also be moved to a network project library
-  #define firewall_file_first   "firewall-first"
-  #define firewall_file_last    "firewall-last"
-  #define firewall_file_other   "firewall-other"
-  #define firewall_file_suffix  "-firewall"
+  #define network_path_s          "/etc/network/" // TODO: this should be moved to a network project library, possibly the Paths project in fot the network project
+  #define network_devices_s       "/sys/class/net/" // TODO: this should also be moved to a network project library
+  #define firewall_file_first_s   "firewall-first"
+  #define firewall_file_last_s    "firewall-last"
+  #define firewall_file_other_s   "firewall-other"
+  #define firewall_file_suffix_s  "-firewall"
 
-  #define network_path_length          13
-  #define network_devices_length       15
-  #define firewall_file_first_length   14
-  #define firewall_file_last_length    13
-  #define firewall_file_other_length   14
-  #define firewall_file_suffix_length  9
+  #define network_path_s_length          13
+  #define network_devices_s_length       15
+  #define firewall_file_first_s_length   14
+  #define firewall_file_last_s_length    13
+  #define firewall_file_other_s_length   14
+  #define firewall_file_suffix_s_length  9
 #endif // _di_firewall_paths_
 
 #ifndef _di_firewall_default_allocation_step_
-  #define firewall_default_allocation_step f_memory_default_allocation_small
+  #define firewall_default_allocation_step_d F_memory_default_allocation_small_d
 #endif // _di_firewall_default_allocation_step_
 
 #ifndef _di_firewall_defines_
-  #define firewall_tool            "tool"
-  #define firewall_tool_iptables   "iptables"
-  #define firewall_tool_ip6tables  "ip6tables"
-  #define firewall_tool_ip46tables "ip46tables"
-  #define firewall_tool_ipset      "ipset"
+  #define firewall_tool_s            "tool"
+  #define firewall_tool_iptables_s   "iptables"
+  #define firewall_tool_ip6tables_s  "ip6tables"
+  #define firewall_tool_ip46tables_s "ip46tables"
+  #define firewall_tool_ipset_s      "ipset"
 
-  #define firewall_tool_length            4
-  #define firewall_tool_iptables_length   8
-  #define firewall_tool_ip6tables_length  9
-  #define firewall_tool_ip46tables_length 10
-  #define firewall_tool_ipset_length      5
+  #define firewall_tool_s_length            4
+  #define firewall_tool_iptables_s_length   8
+  #define firewall_tool_ip6tables_s_length  9
+  #define firewall_tool_ip46tables_s_length 10
+  #define firewall_tool_ipset_s_length      5
 
-  #define firewall_group_stop "stop"
-  #define firewall_group_lock "lock"
-  #define firewall_group_main "main"
+  #define firewall_group_stop_s "stop"
+  #define firewall_group_lock_s "lock"
+  #define firewall_group_main_s "main"
 
-  #define firewall_group_stop_length  4
-  #define firewall_group_lock_length  4
-  #define firewall_group_main_length  4
+  #define firewall_group_stop_s_length  4
+  #define firewall_group_lock_s_length  4
+  #define firewall_group_main_s_length  4
 
-  #define firewall_command_start   "start"
-  #define firewall_command_stop    "stop"
-  #define firewall_command_restart "restart"
-  #define firewall_command_lock    "lock"
-  #define firewall_command_show    "show"
+  #define firewall_command_start_s   "start"
+  #define firewall_command_stop_s    "stop"
+  #define firewall_command_restart_s "restart"
+  #define firewall_command_lock_s    "lock"
+  #define firewall_command_show_s    "show"
+
+  #define firewall_command_start_s_length   5
+  #define firewall_command_stop_s_length    4
+  #define firewall_command_restart_s_length 7
+  #define firewall_command_lock_s_length    4
+  #define firewall_command_show_s_length    4
 
   #define firewall_ip_list                    "ip_list"
-  #define firewall_ip_list_source             "source"
-  #define firewall_ip_list_source_action      "-s"
-  #define firewall_ip_list_destination        "destination"
-  #define firewall_ip_list_destination_action "-d"
+  #define firewall_ip_list_source_s             "source"
+  #define firewall_ip_list_source_action_s      "-s"
+  #define firewall_ip_list_destination_s        "destination"
+  #define firewall_ip_list_destination_action_s "-d"
 
-  #define firewall_ip_list_length                    7
-  #define firewall_ip_list_source_length             6
-  #define firewall_ip_list_source_action_length      2
-  #define firewall_ip_list_destination_length        11
-  #define firewall_ip_list_destination_action_length 2
+  #define firewall_ip_list_length_s                    7
+  #define firewall_ip_list_source_s_length             6
+  #define firewall_ip_list_source_action_s_length      2
+  #define firewall_ip_list_destination_s_length        11
+  #define firewall_ip_list_destination_action_s_length 2
 
-  #define firewall_rule        "rule"
-  #define firewall_rule_length 4
+  #define firewall_rule_s        "rule"
+  #define firewall_rule_s_length 4
 
-  #define firewall_chain             "chain"
-  #define firewall_chain_forward     "FORWARD"
-  #define firewall_chain_input       "INPUT"
-  #define firewall_chain_none        "none"
-  #define firewall_chain_output      "OUTPUT"
-  #define firewall_chain_postrouting "POSTROUTING"
-  #define firewall_chain_prerouting  "PREROUTING"
+  #define firewall_chain_s             "chain"
+  #define firewall_chain_forward_s     "FORWARD"
+  #define firewall_chain_input_s       "INPUT"
+  #define firewall_chain_none_s        "none"
+  #define firewall_chain_output_s      "OUTPUT"
+  #define firewall_chain_postrouting_s "POSTROUTING"
+  #define firewall_chain_prerouting_s  "PREROUTING"
 
-  #define firewall_chain_length             5
-  #define firewall_chain_forward_length     7
-  #define firewall_chain_input_length       5
-  #define firewall_chain_none_length        4
-  #define firewall_chain_output_length      6
-  #define firewall_chain_postrouting_length 12
-  #define firewall_chain_prerouting_length  11
+  #define firewall_chain_length_s             5
+  #define firewall_chain_forward_s_length     7
+  #define firewall_chain_input_s_length       5
+  #define firewall_chain_none_s_length        4
+  #define firewall_chain_output_s_length      6
+  #define firewall_chain_postrouting_s_length 12
+  #define firewall_chain_prerouting_s_length  11
 
-  #define firewall_direction        "direction"
-  #define firewall_direction_input  "input"
-  #define firewall_direction_output "output"
-  #define firewall_direction_none   "none"
+  #define firewall_direction_s        "direction"
+  #define firewall_direction_input_s  "input"
+  #define firewall_direction_output_s "output"
+  #define firewall_direction_none_s   "none"
 
-  #define firewall_direction_length        9
-  #define firewall_direction_input_length  5
-  #define firewall_direction_output_length 6
-  #define firewall_direction_none_length   4
+  #define firewall_direction_s_length        9
+  #define firewall_direction_input_s_length  5
+  #define firewall_direction_output_s_length 6
+  #define firewall_direction_none_s_length   4
 
-  #define firewall_action        "action"
-  #define firewall_action_append "append"
-  #define firewall_action_insert "insert"
-  #define firewall_action_policy "policy"
-  #define firewall_action_none   "none"
+  #define firewall_action_s        "action"
+  #define firewall_action_append_s "append"
+  #define firewall_action_insert_s "insert"
+  #define firewall_action_policy_s "policy"
+  #define firewall_action_none_s   "none"
 
-  #define firewall_action_length        6
-  #define firewall_action_append_length 6
-  #define firewall_action_insert_length 6
-  #define firewall_action_policy_length 6
-  #define firewall_action_none_length   4
+  #define firewall_action_length_s        6
+  #define firewall_action_append_s_length 6
+  #define firewall_action_insert_s_length 6
+  #define firewall_action_policy_s_length 6
+  #define firewall_action_none_s_length   4
 
-  #define firewall_action_append_command "-A"
-  #define firewall_action_insert_command "-I"
-  #define firewall_action_policy_command "-P"
+  #define firewall_action_append_command_s "-A"
+  #define firewall_action_insert_command_s "-I"
+  #define firewall_action_policy_command_s "-P"
 
-  #define firewall_action_append_command_length 2
-  #define firewall_action_insert_command_length 2
-  #define firewall_action_policy_command_length 2
+  #define firewall_action_append_command_s_length 2
+  #define firewall_action_insert_command_s_length 2
+  #define firewall_action_policy_command_s_length 2
 
-  #define firewall_device      "device"
-  #define firewall_device_all  "all"
-  #define firewall_device_this "this"
-  #define firewall_device_loop "lo"
+  #define firewall_device_s      "device"
+  #define firewall_device_all_s  "all"
+  #define firewall_device_this_s "this"
+  #define firewall_device_loop_s "lo"
 
-  #define firewall_device_length      6
-  #define firewall_device_all_length  3
-  #define firewall_device_this_length 4
-  #define firewall_device_loop_length 2
+  #define firewall_device_s_length      6
+  #define firewall_device_all_s_length  3
+  #define firewall_device_this_s_length 4
+  #define firewall_device_loop_s_length 2
 
-  #define firewall_device_input_command  "-i"
-  #define firewall_device_output_command "-o"
+  #define firewall_device_input_command_s  "-i"
+  #define firewall_device_output_command_s "-o"
 
-  #define firewall_device_input_command_length  2
-  #define firewall_device_output_command_length 2
+  #define firewall_device_input_command_length_s  2
+  #define firewall_device_output_command_length_s 2
 
-  #define firewall_protocol      "protocol"
-  #define firewall_protocol_none "none"
+  #define firewall_protocol_s      "protocol"
+  #define firewall_protocol_none_s "none"
 
-  #define firewall_protocol_length      8
-  #define firewall_protocol_none_length 4
+  #define firewall_protocol_s_length      8
+  #define firewall_protocol_none_s_length 4
 
-  #define firewall_protocol_command        "-p"
-  #define firewall_protocol_command_length 2
+  #define firewall_protocol_command_s        "-p"
+  #define firewall_protocol_command_s_length 2
 
-  #define firewall_chain_create_command "-N"
-  #define firewall_chain_delete_command "-X"
+  #define firewall_chain_create_command_s "-N"
+  #define firewall_chain_delete_command_s "-X"
 
-  #define firewall_chain_create_command_length 2
-  #define firewall_chain_delete_command_length 2
+  #define firewall_chain_create_command_s_length 2
+  #define firewall_chain_delete_command_s_length 2
 
   enum {
     firewall_program_none = 1,
@@ -264,19 +270,19 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_start, F_false, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_stop, F_false, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_restart, F_false, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_lock, F_false, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_show, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_start_s, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_stop_s, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_restart_s, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_lock_s, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_show_s, F_false, f_console_type_other), \
     }
 
-  #define firewall_total_parameters 14
+  #define firewall_total_parameters_d 14
 #endif // _di_firewall_defines_
 
 #ifndef _di_firewall_main_t_
   typedef struct {
-    f_console_parameter_t parameters[firewall_total_parameters];
+    f_console_parameter_t parameters[firewall_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

@@ -30,7 +30,7 @@ extern "C" {
  * This does not check if the path exists or not.
  * This processes the relative parts: './', '../', and extra '/'.
  * This does not process symbolic links.
- * This has a max size of f_string_t_size.
+ * This has a max size of F_string_t_size_d.
  *
  * @param path
  *   The source path to determine what the canonical path is.

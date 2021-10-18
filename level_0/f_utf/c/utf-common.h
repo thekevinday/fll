@@ -27,7 +27,7 @@ extern "C" {
  *
  * The f_utf_byte_is method will return non-zero if the character is a UTF-8 character of any width.
  *
- * The f_utf_byte_1 is specifically used only on UTF-8 fragments.
+ * The F_utf_byte_1_d is specifically used only on UTF-8 fragments.
  * For example, with the 2-byte-wide UTF-8 character '1100x xxxx 10yy yyyy', the 8-byte block '10yy yyyy' would be a fragment.
  *
  * The macro_f_utf_byte_is_* macros are used to determine a width of the character (either 1, 2, 3, or 4, respectively).
@@ -36,22 +36,22 @@ extern "C" {
  * The macro_f_utf_byte_width_is is identical to macro_f_utf_byte_width, except it returns 0 when character is ASCII.
  */
 #ifndef _di_f_utf_byte_
-  #define f_utf_byte_1 0x80 // 1000 0000
-  #define f_utf_byte_2 0xc0 // 1100 0000
-  #define f_utf_byte_3 0xe0 // 1110 0000
-  #define f_utf_byte_4 0xf0 // 1111 0000
+  #define F_utf_byte_1_d 0x80 // 1000 0000
+  #define F_utf_byte_2_d 0xc0 // 1100 0000
+  #define F_utf_byte_3_d 0xe0 // 1110 0000
+  #define F_utf_byte_4_d 0xf0 // 1111 0000
 
-  #define f_utf_byte_off_1 0xc0 // 1100 0000
-  #define f_utf_byte_off_2 0xe0 // 1110 0000
-  #define f_utf_byte_off_3 0xf0 // 1111 0000
-  #define f_utf_byte_off_4 0xf8 // 1111 1000
+  #define F_utf_byte_off_1_d 0xc0 // 1100 0000
+  #define F_utf_byte_off_2_d 0xe0 // 1110 0000
+  #define F_utf_byte_off_3_d 0xf0 // 1111 0000
+  #define F_utf_byte_off_4_d 0xf8 // 1111 1000
 
-  #define macro_f_utf_byte_is(character) ((character) & f_utf_byte_1)
+  #define macro_f_utf_byte_is(character) ((character) & F_utf_byte_1_d)
 
-  #define macro_f_utf_byte_is_1(character) (((character) & f_utf_byte_off_1) == f_utf_byte_1) // (10xx xxxx & 1100 0000) == 1000 0000
-  #define macro_f_utf_byte_is_2(character) (((character) & f_utf_byte_off_2) == f_utf_byte_2) // (110x xxxx & 1110 0000) == 1100 0000
-  #define macro_f_utf_byte_is_3(character) (((character) & f_utf_byte_off_3) == f_utf_byte_3) // (1110 xxxx & 1111 0000) == 1110 0000
-  #define macro_f_utf_byte_is_4(character) (((character) & f_utf_byte_off_4) == f_utf_byte_4) // (1111 0xxx & 1111 1000) == 1111 0000
+  #define macro_f_utf_byte_is_1(character) (((character) & F_utf_byte_off_1_d) == F_utf_byte_1_d) // (10xx xxxx & 1100 0000) == 1000 0000
+  #define macro_f_utf_byte_is_2(character) (((character) & F_utf_byte_off_2_d) == F_utf_byte_2_d) // (110x xxxx & 1110 0000) == 1100 0000
+  #define macro_f_utf_byte_is_3(character) (((character) & F_utf_byte_off_3_d) == F_utf_byte_3_d) // (1110 xxxx & 1111 0000) == 1110 0000
+  #define macro_f_utf_byte_is_4(character) (((character) & F_utf_byte_off_4_d) == F_utf_byte_4_d) // (1111 0xxx & 1111 1000) == 1111 0000
 
   #define macro_f_utf_byte_width(character)    ((!macro_f_utf_byte_is(character) || macro_f_utf_byte_is_1(character)) ? 1 : (macro_f_utf_byte_is_2(character) ? 2 : (macro_f_utf_byte_is_3(character) ? 3 : 4)))
   #define macro_f_utf_byte_width_is(character) (macro_f_utf_byte_is(character) ? (macro_f_utf_byte_is_1(character) ? 1 : (macro_f_utf_byte_is_2(character) ? 2 : (macro_f_utf_byte_is_3(character) ? 3 : 4))) : 0)
@@ -65,32 +65,32 @@ extern "C" {
  * This does not provide whitespace codes for standard ascii whitespaces, such as '\t' or '\r'.
  */
 #ifndef _di_f_utf_space_
-  #define f_utf_space_em_length           3
-  #define f_utf_space_em_quad_length      3
-  #define f_utf_space_em_per_three_length 3
-  #define f_utf_space_em_per_four_length  3
-  #define f_utf_space_em_per_six_length   3
+  #define F_utf_space_em_s_length           3
+  #define F_utf_space_em_quad_s_length      3
+  #define F_utf_space_em_per_three_s_length 3
+  #define F_utf_space_em_per_four_s_length  3
+  #define F_utf_space_em_per_six_s_length   3
 
-  #define f_utf_space_en_length      3
-  #define f_utf_space_en_quad_length 3
+  #define F_utf_space_en_s_length      3
+  #define F_utf_space_en_quad_s_length 3
 
-  #define f_utf_space_line_feed_reverse_length 2
-  #define f_utf_space_line_next_length         2
+  #define F_utf_space_line_feed_reverse_s_length 2
+  #define F_utf_space_line_next_s_length         2
 
-  #define f_utf_space_medium_mathematical_length 3
+  #define F_utf_space_medium_mathematical_s_length 3
 
-  #define f_utf_space_no_break_length        2
-  #define f_utf_space_no_break_narrow_length 3
+  #define F_utf_space_no_break_s_length        2
+  #define F_utf_space_no_break_narrow_s_length 3
 
-  #define f_utf_space_ogham_length       3
-  #define f_utf_space_figure_length      3
-  #define f_utf_space_punctuation_length 3
-  #define f_utf_space_thin_length        3
-  #define f_utf_space_hair_length        3
-  #define f_utf_space_ideographic_length 3
+  #define F_utf_space_ogham_s_length       3
+  #define F_utf_space_figure_s_length      3
+  #define F_utf_space_punctuation_s_length 3
+  #define F_utf_space_thin_s_length        3
+  #define F_utf_space_hair_s_length        3
+  #define F_utf_space_ideographic_s_length 3
 
-  #define f_utf_space_separator_line_length      3
-  #define f_utf_space_separator_paragraph_length 3
+  #define F_utf_space_separator_line_s_length      3
+  #define F_utf_space_separator_paragraph_s_length 3
 
   extern const uint8_t f_utf_space_em_s[];
   extern const uint8_t f_utf_space_em_quad_s[];
@@ -130,13 +130,13 @@ extern "C" {
  * This does not provide substitute whitespace codes for standard ascii whitespaces, such as '\t' or '\r'.
  */
 #ifndef _di_f_utf_substitute_
-  #define f_utf_substitute_symbol_blank_length 3
-  #define f_utf_substitute_symbol_space_length 3
+  #define F_utf_substitute_symbol_blank_s_length 3
+  #define F_utf_substitute_symbol_space_s_length 3
 
-  #define f_utf_substitute_middle_dot_length 2
+  #define F_utf_substitute_middle_dot_s_length 2
 
-  #define f_utf_substitute_open_box_length            3
-  #define f_utf_substitute_open_box_shouldered_length 3
+  #define F_utf_substitute_open_box_d_length            3
+  #define F_utf_substitute_open_box_shouldered_d_length 3
 
   extern const uint8_t f_utf_substitute_symbol_blank_s[];
   extern const uint8_t f_utf_substitute_symbol_space_s[];
@@ -176,34 +176,34 @@ extern "C" {
 #ifndef _di_f_utf_character_t_
   typedef uint32_t f_utf_character_t;
 
-  #define f_utf_character_mask_byte_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
-  #define f_utf_character_mask_byte_2 0xffff0000 // 1111 1111, 1111 1111, 0000 0000, 0000 0000
-  #define f_utf_character_mask_byte_3 0xffffff00 // 1111 1111, 1111 1111, 1111 1111, 0000 0000
-  #define f_utf_character_mask_byte_4 0xffffffff // 1111 1111, 1111 1111, 1111 1111, 1111 1111
+  #define F_utf_character_mask_byte_1_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_character_mask_byte_2_d 0xffff0000 // 1111 1111, 1111 1111, 0000 0000, 0000 0000
+  #define F_utf_character_mask_byte_3_d 0xffffff00 // 1111 1111, 1111 1111, 1111 1111, 0000 0000
+  #define F_utf_character_mask_byte_4_d 0xffffffff // 1111 1111, 1111 1111, 1111 1111, 1111 1111
 
-  #define f_utf_character_mask_char_1 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
-  #define f_utf_character_mask_char_2 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
-  #define f_utf_character_mask_char_3 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
-  #define f_utf_character_mask_char_4 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
+  #define F_utf_character_mask_char_1_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_character_mask_char_2_d 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
+  #define F_utf_character_mask_char_3_d 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
+  #define F_utf_character_mask_char_4_d 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
 
-  #define macro_f_utf_character_t_to_char_1(character) (((character) & f_utf_character_mask_char_1) >> 24) // grab first byte.
-  #define macro_f_utf_character_t_to_char_2(character) (((character) & f_utf_character_mask_char_2) >> 16) // grab second byte.
-  #define macro_f_utf_character_t_to_char_3(character) (((character) & f_utf_character_mask_char_3) >> 8)  // grab third byte.
-  #define macro_f_utf_character_t_to_char_4(character) ((character) & f_utf_character_mask_char_4)         // grab fourth byte.
+  #define macro_f_utf_character_t_to_char_1(character) (((character) & F_utf_character_mask_char_1_d) >> 24) // grab first byte.
+  #define macro_f_utf_character_t_to_char_2(character) (((character) & F_utf_character_mask_char_2_d) >> 16) // grab second byte.
+  #define macro_f_utf_character_t_to_char_3(character) (((character) & F_utf_character_mask_char_3_d) >> 8)  // grab third byte.
+  #define macro_f_utf_character_t_to_char_4(character) ((character) & F_utf_character_mask_char_4_d)         // grab fourth byte.
 
-  #define macro_f_utf_character_t_from_char_1(character) (((character) << 24) & f_utf_character_mask_char_1) // shift to first byte.
-  #define macro_f_utf_character_t_from_char_2(character) (((character) << 16) & f_utf_character_mask_char_2) // shift to second byte.
-  #define macro_f_utf_character_t_from_char_3(character) (((character) << 8) & f_utf_character_mask_char_3)  // shift to third byte.
-  #define macro_f_utf_character_t_from_char_4(character) ((character) & f_utf_character_mask_char_4)         // shift to fourth byte.
+  #define macro_f_utf_character_t_from_char_1(character) (((character) << 24) & F_utf_character_mask_char_1_d) // shift to first byte.
+  #define macro_f_utf_character_t_from_char_2(character) (((character) << 16) & F_utf_character_mask_char_2_d) // shift to second byte.
+  #define macro_f_utf_character_t_from_char_3(character) (((character) << 8) & F_utf_character_mask_char_3_d)  // shift to third byte.
+  #define macro_f_utf_character_t_from_char_4(character) ((character) & F_utf_character_mask_char_4_d)         // shift to fourth byte.
 
   #define macro_f_utf_character_t_width(character)    (macro_f_utf_byte_width(macro_f_utf_character_t_to_char_1(character)))
   #define macro_f_utf_character_t_width_is(character) (macro_f_utf_byte_width_is(macro_f_utf_character_t_to_char_1(character)))
 #endif // _di_f_utf_character_t_
 
 #ifndef _di_f_utf_character_t_codes_
-  #define f_utf_character_t_eol         0x0a000000 // 0000 1010, 0000 0000, 0000 0000, 0000 0000
-  #define f_utf_character_t_eos         0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
-  #define f_utf_character_t_placeholder 0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_character_t_eol_d         0x0a000000 // 0000 1010, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_character_t_eos_d         0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_character_t_placeholder_d 0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
 #endif // _di_f_utf_character_t_codes_
 
 /**

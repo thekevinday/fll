@@ -53,39 +53,39 @@
 extern "C" {
 #endif
 
-#ifndef _di_iki_write_version_
-  #define iki_write_major_version f_string_ascii_0
-  #define iki_write_minor_version f_string_ascii_5
-  #define iki_write_micro_version f_string_ascii_6
+#ifndef _di_iki_write_program_version_
+  #define iki_write_program_version_major_s F_string_ascii_0_s
+  #define iki_write_program_version_minor_s F_string_ascii_5_s
+  #define iki_write_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef iki_write_nano_version_prefix
-    #define iki_write_nano_version_prefix
+  #ifndef iki_write_program_version_nano_prefix_s
+    #define iki_write_program_version_nano_prefix_s
   #endif
 
-  #ifndef iki_write_nano_version
-    #define iki_write_nano_version
+  #ifndef iki_write_program_version_nano_s
+    #define iki_write_program_version_nano_s
   #endif
 
-  #define iki_write_version iki_write_major_version f_string_ascii_period iki_write_minor_version f_string_ascii_period iki_write_micro_version iki_write_nano_version_prefix iki_write_nano_version
-#endif // _di_iki_write_version_
+  #define iki_write_program_version_s iki_write_program_version_major_s F_string_ascii_period_s iki_write_program_version_minor_s F_string_ascii_period_s iki_write_program_version_micro_s iki_write_program_version_nano_prefix_s iki_write_program_version_nano_s
+#endif // _di_iki_write_program_version_
 
-#ifndef _di_iki_write_name_
-  #define iki_write_name      "iki_write"
-  #define iki_write_name_long "IKI Write"
-#endif // _di_iki_write_name_
+#ifndef _di_iki_write_program_name_
+  #define iki_write_program_name_s      "iki_write"
+  #define iki_write_program_name_long_s "IKI Write"
+#endif // _di_iki_write_program_name_
 
 #ifndef _di_iki_write_defines_
-  #define iki_write_short_file    "f"
-  #define iki_write_short_content "c"
-  #define iki_write_short_double  "d"
-  #define iki_write_short_object  "o"
-  #define iki_write_short_single  "s"
+  #define iki_write_short_file_s    "f"
+  #define iki_write_short_content_s "c"
+  #define iki_write_short_double_s  "d"
+  #define iki_write_short_object_s  "o"
+  #define iki_write_short_single_s  "s"
 
-  #define iki_write_long_file    "file"
-  #define iki_write_long_content "content"
-  #define iki_write_long_double  "double"
-  #define iki_write_long_object  "object"
-  #define iki_write_long_single  "single"
+  #define iki_write_long_file_s    "file"
+  #define iki_write_long_content_s "content"
+  #define iki_write_long_double_s  "double"
+  #define iki_write_long_object_s  "object"
+  #define iki_write_long_single_s  "single"
 
   enum {
     iki_write_parameter_help,
@@ -116,19 +116,19 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(iki_write_short_file, iki_write_long_file, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(iki_write_short_content, iki_write_long_content, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(iki_write_short_double, iki_write_long_double, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(iki_write_short_object, iki_write_long_object, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(iki_write_short_single, iki_write_long_single, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_write_short_file_s, iki_write_long_file_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_write_short_content_s, iki_write_long_content_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_write_short_double_s, iki_write_long_double_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_write_short_object_s, iki_write_long_object_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(iki_write_short_single_s, iki_write_long_single_s, 0, 0, f_console_type_normal), \
     }
 
-  #define iki_write_total_parameters 14
+  #define iki_write_total_parameters_d 14
 #endif // _di_iki_write_defines_
 
 #ifndef _di_iki_write_main_t_
   typedef struct {
-    f_console_parameter_t parameters[iki_write_total_parameters];
+    f_console_parameter_t parameters[iki_write_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

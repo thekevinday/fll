@@ -96,14 +96,14 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (triples->used + 1 > triples->size) {
-      f_array_length_t size = triples->used + f_memory_default_allocation_small;
+      f_array_length_t size = triples->used + F_memory_default_allocation_small_d;
 
-      if (size > f_array_length_t_size) {
-        if (triples->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (triples->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_string_triples_resize(size, triples);
@@ -121,7 +121,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (triples->used + amount > triples->size) {
-      if (triples->used + amount > f_array_length_t_size) {
+      if (triples->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 

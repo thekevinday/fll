@@ -48,13 +48,13 @@ int main(const int argc, const f_string_t *argv) {
   status = fake_main(arguments, &data);
 
   // flush output pipes before closing.
-  fflush(f_type_output);
-  fflush(f_type_error);
+  fflush(F_type_output_d);
+  fflush(F_type_error_d);
 
   // close all open file descriptors.
-  close(f_type_descriptor_output);
-  close(f_type_descriptor_input);
-  close(f_type_descriptor_error);
+  close(F_type_descriptor_output_d);
+  close(F_type_descriptor_input_d);
+  close(F_type_descriptor_error_d);
 
   f_signal_close(&data.signal);
 

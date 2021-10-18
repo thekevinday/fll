@@ -31,48 +31,48 @@ extern "C" {
 
 #ifndef _di_fll_fss_status_string_
   #ifndef _di_fll_fss_status_error_
-    #define fll_fss_status_string_format "FL_fss_format"
-    #define fll_fss_status_string_format_length 13
+    #define FLL_fss_status_format_s "FL_fss_format"
+    #define FLL_fss_status_format_s_length 13
 
-    #define fll_fss_status_string_format_eos "FL_fss_format_eos"
-    #define fll_fss_status_string_format_eos_length 17
+    #define FLL_fss_status_format_eos_s "FL_fss_format_eos"
+    #define FLL_fss_status_format_eos_s_length 17
   #endif // _di_fll_fss_status_error_
 
   #ifndef _di_fll_fss_status_warning_
-    #define fll_fss_status_string_accepted_invalid "FL_fss_accepted_invalid"
-    #define fll_fss_status_string_accepted_invalid_length 23
+    #define FLL_fss_status_accepted_invalid_s "FL_fss_accepted_invalid"
+    #define FLL_fss_status_accepted_invalid_s_length 23
 
-    #define fll_fss_status_string_accepted_invalid_eos "FL_fss_accepted_invalid_eos"
-    #define fll_fss_status_string_accepted_invalid_eos_length 27
+    #define FLL_fss_status_accepted_invalid_eos_s "FL_fss_accepted_invalid_eos"
+    #define FLL_fss_status_accepted_invalid_eos_s_length 27
   #endif // _di_fll_fss_status_warning_
 
   #ifndef _di_fll_fss_status_success_
-    #define fll_fss_status_string_found_object "FL_fss_found_object"
-    #define fll_fss_status_string_found_object_length 19
+    #define FLL_fss_status_found_object_s "FL_fss_found_object"
+    #define FLL_fss_status_found_object_s_length 19
 
-    #define fll_fss_status_string_found_content "FL_fss_found_content"
-    #define fll_fss_status_string_found_content_length 20
+    #define FLL_fss_status_found_content_s "FL_fss_found_content"
+    #define FLL_fss_status_found_content_s_length 20
 
-    #define fll_fss_status_string_found_object_not "FL_fss_found_object_not"
-    #define fll_fss_status_string_found_object_not_length 23
+    #define FLL_fss_status_found_object_not_s "FL_fss_found_object_not"
+    #define FLL_fss_status_found_object_not_s_length 23
 
-    #define fll_fss_status_string_found_content_not "FL_fss_found_content_not"
-    #define fll_fss_status_string_found_content_not_length 24
+    #define FLL_fss_status_found_content_not_s "FL_fss_found_content_not"
+    #define FLL_fss_status_found_content_not_s_length 24
 
-    #define fll_fss_status_string_found_object_content_not "FL_fss_found_object_content_not"
-    #define fll_fss_status_string_found_object_content_not_length 31
+    #define FLL_fss_status_found_object_content_not_s "FL_fss_found_object_content_not"
+    #define FLL_fss_status_found_object_content_not_s_length 31
   #endif // _di_fll_fss_status_success_
 
   #ifndef _di_fll_fss_status_codes_
-    #define fll_fss_status_string_found_comment "FL_fss_found_comment"
-    #define fll_fss_status_string_found_comment_length 14
+    #define FLL_fss_status_found_comment_s "FL_fss_found_comment"
+    #define FLL_fss_status_found_comment_length_s 14
   #endif // _di_fll_fss_status_codes_
 
-  #define fll_fss_status_string_status_code_first "FL_fss_status_code_first"
-  #define fll_fss_status_string_status_code_first_length 24
+  #define FLL_fss_status_status_code_first_s "FL_fss_status_code_first"
+  #define FLL_fss_status_status_code_first_s_length 24
 
-  #define fll_fss_status_string_status_code_last "FL_fss_status_code_last"
-  #define fll_fss_status_string_status_code_last_length 22
+  #define FLL_fss_status_status_code_last_s "FL_fss_status_code_last"
+  #define FLL_fss_status_status_code_last_s_length 22
 #endif // _di_fll_fss_status_string_
 
 /**

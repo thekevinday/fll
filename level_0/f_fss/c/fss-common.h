@@ -20,10 +20,36 @@ extern "C" {
  * FSS-specific types.
  */
 #ifndef _di_f_fss_types_t_
+  #define F_fss_brace_close_s  F_string_ascii_brace_close_s
+  #define F_fss_brace_open_s   F_string_ascii_brace_open_s
+  #define F_fss_colon_s        F_string_ascii_colon_s
+  #define F_fss_minus_s        F_string_ascii_minus_s
+  #define F_fss_f_s            F_string_ascii_f_s
+  #define F_fss_pound_s        F_string_ascii_pound_s
+  #define F_fss_quote_double_s F_string_ascii_quote_double_s
+  #define F_fss_quote_single_s F_string_ascii_quote_single_s
+  #define F_fss_s_s            F_string_ascii_s_s
+  #define F_fss_slash_s        F_string_ascii_slash_backward_s
+  #define F_fss_space_s        F_string_ascii_space_s
+  #define F_fss_underscore_s   F_string_ascii_underscore_s
+
+  #define F_fss_brace_close_s_length  F_string_ascii_brace_close_s_length
+  #define F_fss_brace_open_s_length   F_string_ascii_brace_open_s_length
+  #define F_fss_colon_s_length        F_string_ascii_colon_s_length
+  #define F_fss_minus_s_length        F_string_ascii_minus_s_length
+  #define F_fss_f_s_length            F_string_ascii_f_s_length
+  #define F_fss_pound_s_length        F_string_ascii_pound_s_length
+  #define F_fss_quote_double_s_length F_string_ascii_quote_double_s_length
+  #define F_fss_quote_single_s_length F_string_ascii_quote_single_s_length
+  #define F_fss_s_s_length            F_string_ascii_s_s_length
+  #define F_fss_slash_s_length        F_string_ascii_slash_backward_s_length
+  #define F_fss_space_s_length        F_string_ascii_space_s_length
+  #define F_fss_underscore_s_length   F_string_ascii_underscore_s_length
+
   #define f_fss_brace_close_s  f_string_ascii_brace_close_s
   #define f_fss_brace_open_s   f_string_ascii_brace_open_s
   #define f_fss_colon_s        f_string_ascii_colon_s
-  #define f_fss_minus_s         f_string_ascii_minus_s
+  #define f_fss_minus_s        f_string_ascii_minus_s
   #define f_fss_f_s            f_string_ascii_f_s
   #define f_fss_pound_s        f_string_ascii_pound_s
   #define f_fss_quote_double_s f_string_ascii_quote_double_s
@@ -33,43 +59,42 @@ extern "C" {
   #define f_fss_space_s        f_string_ascii_space_s
   #define f_fss_underscore_s   f_string_ascii_underscore_s
 
-  #define f_fss_comment                 f_fss_pound_s[0]
-  #define f_fss_eol                     f_string_eol_s[0]
-  #define f_fss_space                   f_fss_space_s[0]
-  #define f_fss_space_holder            f_fss_underscore_s[0]
-  #define f_fss_basic_open              f_fss_space_s[0]
-  #define f_fss_basic_close             f_string_eol_s[0]
-  #define f_fss_extended_open           f_fss_space_s[0]
-  #define f_fss_extended_next           f_fss_space_s[0]
-  #define f_fss_extended_close          f_string_eol_s[0]
-  #define f_fss_basic_list_open         f_fss_colon_s[0]
-  #define f_fss_basic_list_open_end     f_string_eol_s[0]
-  #define f_fss_basic_list_close        f_string_eol_s[0]
-  #define f_fss_extended_list_open      f_fss_brace_open_s[0]
-  #define f_fss_extended_list_open_end  f_string_eol_s[0]
-  #define f_fss_extended_list_close     f_fss_brace_close_s[0]
-  #define f_fss_extended_list_close_end f_string_eol_s[0]
-  #define f_fss_embedded_list_open      f_fss_brace_open_s[0]
-  #define f_fss_embedded_list_open_end  f_string_eol_s[0]
-  #define f_fss_embedded_list_close     f_fss_brace_close_s[0]
-  #define f_fss_embedded_list_close_end f_string_eol_s[0]
-  #define f_fss_type_header_open        f_fss_pound_s[0]
-  #define f_fss_type_header_part1       f_fss_space_s[0]
-  #define f_fss_type_header_part2       f_fss_f_s[0]
-  #define f_fss_type_header_part3       f_fss_s_s[0]
-  #define f_fss_type_header_part4       f_fss_s_s[0]
-  #define f_fss_type_header_part5       f_fss_minus_s[0]
-  #define f_fss_type_header_close       f_string_eol_s[0]
+  #define f_fss_comment_s                 f_fss_pound_s
+  #define f_fss_eol_s                     f_string_eol_s
+  #define f_fss_space_holder_s            f_fss_underscore_s
+  #define f_fss_basic_open_s              f_fss_space_s
+  #define f_fss_basic_close_s             f_string_eol_s
+  #define f_fss_extended_open_s           f_fss_space_s
+  #define f_fss_extended_next_s           f_fss_space_s
+  #define f_fss_extended_close_s          f_string_eol_s
+  #define f_fss_basic_list_open_s         f_fss_colon_s
+  #define f_fss_basic_list_open_end_s     f_string_eol_s
+  #define f_fss_basic_list_close_s        f_string_eol_s
+  #define f_fss_extended_list_open_s      f_fss_brace_open_s
+  #define f_fss_extended_list_open_end_s  f_string_eol_s
+  #define f_fss_extended_list_close_s     f_fss_brace_close_s
+  #define f_fss_extended_list_close_end_s f_string_eol_s
+  #define f_fss_embedded_list_open_s      f_fss_brace_open_s
+  #define f_fss_embedded_list_open_end_s  f_string_eol_s
+  #define f_fss_embedded_list_close_s     f_fss_brace_close_s
+  #define f_fss_embedded_list_close_end_s f_string_eol_s
+  #define f_fss_type_header_open_s        f_fss_pound_s
+  #define f_fss_type_header_part1_s       f_fss_space_s
+  #define f_fss_type_header_part2_s       f_fss_f_s
+  #define f_fss_type_header_part3_s       f_fss_s_s
+  #define f_fss_type_header_part4_s       f_fss_s_s
+  #define f_fss_type_header_part5_s       f_fss_minus_s
+  #define f_fss_type_header_close_s       f_string_eol_s
 #endif // _di_f_fss_types_t_
 
 /**
  * FSS-specific delimiters.
  */
 #ifndef _di_f_fss_delimiters_
-  #define f_fss_delimit_placeholder  f_string_placeholder_s[0]
-  #define f_fss_delimit_quote_single f_fss_quote_single_s[0]
-  #define f_fss_delimit_quote_double f_fss_quote_double_s[0]
-  #define f_fss_delimit_slash        f_fss_slash_s[0]
+  #define F_fss_delimit_placeholder_s  f_string_placeholder_s[0]
+  #define F_fss_delimit_quote_single_s f_fss_quote_single_s[0]
+  #define F_fss_delimit_quote_double_s f_fss_quote_double_s[0]
+  #define F_fss_delimit_slash_s        f_fss_slash_s[0]
 #endif //_di_f_fss_delimiters_
 
 /**
@@ -128,9 +153,9 @@ extern "C" {
  * Recommended to be set to at least 4 to be UTF-8 friendlier.
  */
 #ifndef _di_f_fss_default_allocation_step_
-  #define f_fss_default_allocation_step f_memory_default_allocation_small
-  #define f_fss_default_allocation_step_small f_memory_default_allocation_small
-  #define f_fss_default_allocation_step_large f_memory_default_allocation_large
+  #define F_fss_default_allocation_step_d       F_memory_default_allocation_small_d
+  #define F_fss_default_allocation_step_small_d F_memory_default_allocation_small_d
+  #define F_fss_default_allocation_step_large_d F_memory_default_allocation_large_d
 #endif // _di_f_fss_default_allocation_step_
 
 /**
@@ -312,7 +337,7 @@ extern "C" {
 /**
  * Increase the size of the string quantitys array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -337,7 +362,7 @@ extern "C" {
  * Resize the string quantitys array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -444,7 +469,7 @@ extern "C" {
 /**
  * Increase the size of the string quantityss array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -470,7 +495,7 @@ extern "C" {
  * Resize the string quantityss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount

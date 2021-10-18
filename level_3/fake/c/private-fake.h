@@ -33,7 +33,7 @@ extern "C" {
  *   A value of 1 is returned if status has the error bit set.
  */
 #ifndef _di_fake_execute_
-  extern int fake_execute(const fake_main_t main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_execute(const fake_main_t main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_execute_
 
 /**
@@ -52,7 +52,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_file_buffer_
-  extern f_status_t fake_file_buffer(const fake_main_t main, const f_string_t path_file, f_string_dynamic_t *buffer) f_attribute_visibility_internal;
+  extern f_status_t fake_file_buffer(const fake_main_t main, const f_string_t path_file, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fake_file_buffer_
 
 /**
@@ -67,7 +67,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_
-  extern f_status_t fake_path_generate(fake_main_t *main) f_attribute_visibility_internal;
+  extern f_status_t fake_path_generate(fake_main_t *main) F_attribute_visibility_internal_d;
 #endif // _di_fake_path_generate_
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_string_dynamic_
-  extern f_status_t fake_path_generate_string_dynamic(fake_main_t *main, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size) f_attribute_visibility_internal;
+  extern f_status_t fake_path_generate_string_dynamic(fake_main_t *main, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size) F_attribute_visibility_internal_d;
 #endif // _di_fake_path_generate_string_dynamic_
 
 /**
@@ -105,7 +105,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_process_console_parameters_
-  extern f_status_t fake_process_console_parameters(const f_console_arguments_t arguments, fake_main_t *main) f_attribute_visibility_internal;
+  extern f_status_t fake_process_console_parameters(const f_console_arguments_t arguments, fake_main_t *main) F_attribute_visibility_internal_d;
 #endif // _di_validate_console_parameters_
 
 /**
@@ -121,7 +121,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_signal_read_
-  extern f_status_t fake_signal_received(const fake_main_t main) f_attribute_visibility_internal;
+  extern f_status_t fake_signal_received(const fake_main_t main) F_attribute_visibility_internal_d;
 #endif // _di_fake_signal_read_
 
 /**
@@ -138,7 +138,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupted.
  */
 #ifndef _di_fake_signal_state_interrupt_fss_
-  extern f_status_t fake_signal_state_interrupt_fss(void *state, void *internal) f_attribute_visibility_internal;
+  extern f_status_t fake_signal_state_interrupt_fss(void *state, void *internal) F_attribute_visibility_internal_d;
 #endif // _di_fake_signal_state_interrupt_fss_
 
 /**
@@ -155,7 +155,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupted.
  */
 #ifndef _di_fake_signal_state_interrupt_iki_
-  extern f_status_t fake_signal_state_interrupt_iki(void *state, void *internal) f_attribute_visibility_internal;
+  extern f_status_t fake_signal_state_interrupt_iki(void *state, void *internal) F_attribute_visibility_internal_d;
 #endif // _di_fake_signal_state_interrupt_iki_
 
 /**
@@ -174,7 +174,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_
-  extern f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_main_t main) f_attribute_visibility_internal;
+  extern f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_main_t main) F_attribute_visibility_internal_d;
 #endif // _di_fake_validate_parameter_directories_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_clone_
-  extern void fake_verbose_print_clone(const f_file_t output, const f_string_t source, const f_string_t destination) f_attribute_visibility_internal;
+  extern void fake_verbose_print_clone(const f_file_t output, const f_string_t source, const f_string_t destination) F_attribute_visibility_internal_d;
 #endif // _di_fake_verbose_print_clone_
 
 /**
@@ -202,7 +202,7 @@ extern "C" {
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_copy_
-  extern void fake_verbose_print_copy(const f_file_t output, const f_string_t source, const f_string_t destination) f_attribute_visibility_internal;
+  extern void fake_verbose_print_copy(const f_file_t output, const f_string_t source, const f_string_t destination) F_attribute_visibility_internal_d;
 #endif // _di_fake_verbose_print_copy_
 
 /**
@@ -216,7 +216,7 @@ extern "C" {
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_move_
-  extern void fake_verbose_print_move(const f_file_t output, const f_string_t source, const f_string_t destination) f_attribute_visibility_internal;
+  extern void fake_verbose_print_move(const f_file_t output, const f_string_t source, const f_string_t destination) F_attribute_visibility_internal_d;
 #endif // _di_fake_verbose_print_move_
 
 #ifdef __cplusplus

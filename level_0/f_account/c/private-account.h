@@ -39,7 +39,7 @@ extern "C" {
  * @see macro_f_string_dynamic_t_resize()
  */
 #if !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
-  extern f_status_t private_f_account_from_passwd(const struct passwd password, const f_array_length_t password_length, f_account_t *account) f_attribute_visibility_internal;
+  extern f_status_t private_f_account_from_passwd(const struct passwd password, const f_array_length_t password_length, f_account_t *account) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
 
 #ifdef __cplusplus

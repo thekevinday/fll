@@ -45,37 +45,37 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_status_code_version_
-  #define fss_status_code_major_version f_string_ascii_0
-  #define fss_status_code_minor_version f_string_ascii_5
-  #define fss_status_code_micro_version f_string_ascii_6
+#ifndef _di_fss_status_code_program_version_
+  #define fss_status_code_program_version_major_s F_string_ascii_0_s
+  #define fss_status_code_program_version_minor_s F_string_ascii_5_s
+  #define fss_status_code_program_version_micro_s F_string_ascii_6_s
 
-  #ifndef fss_status_code_nano_version_prefix
-    #define fss_status_code_nano_version_prefix
+  #ifndef fss_status_code_program_version_nano_prefix_s
+    #define fss_status_code_program_version_nano_prefix_s
   #endif
 
-  #ifndef fss_status_code_nano_version
-    #define fss_status_code_nano_version
+  #ifndef fss_status_code_program_version_nano_s
+    #define fss_status_code_program_version_nano_s
   #endif
 
-  #define fss_status_code_version fss_status_code_major_version f_string_ascii_period fss_status_code_minor_version f_string_ascii_period fss_status_code_micro_version fss_status_code_nano_version_prefix fss_status_code_nano_version
-#endif // _di_fss_status_code_version_
+  #define fss_status_code_program_version_s fss_status_code_program_version_major_s F_string_ascii_period_s fss_status_code_program_version_minor_s F_string_ascii_period_s fss_status_code_program_version_micro_s fss_status_code_program_version_nano_prefix_s fss_status_code_program_version_nano_s
+#endif // _di_fss_status_code_program_version_
 
-#ifndef _di_fss_status_code_name_
-  #define fss_status_code_name "fss_status_code"
-  #define fss_status_code_name_long "FSS Status Code"
-#endif // _di_fss_status_code_name_
+#ifndef _di_fss_status_code_program_name_
+  #define fss_status_code_program_name_s      "fss_status_code"
+  #define fss_status_code_program_name_long_s "FSS Status Code"
+#endif // _di_fss_status_code_program_name_
 
 #ifndef _di_fss_status_code_defines_
-  #define fss_status_code_short_is_fine    "f"
-  #define fss_status_code_short_is_warning "w"
-  #define fss_status_code_short_is_error   "e"
-  #define fss_status_code_short_number     "n"
+  #define fss_status_code_short_is_fine_s    "f"
+  #define fss_status_code_short_is_warning_s "w"
+  #define fss_status_code_short_is_error_s   "e"
+  #define fss_status_code_short_number_s     "n"
 
-  #define fss_status_code_long_is_fine    "is_fine"
-  #define fss_status_code_long_is_warning "is_warning"
-  #define fss_status_code_long_is_error   "is_error"
-  #define fss_status_code_long_number     "number"
+  #define fss_status_code_long_is_fine_s    "is_fine"
+  #define fss_status_code_long_is_warning_s "is_warning"
+  #define fss_status_code_long_is_error_s   "is_error"
+  #define fss_status_code_long_number_s     "number"
 
   enum {
     fss_status_code_parameter_help,
@@ -105,18 +105,18 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_status_code_short_is_fine, fss_status_code_long_is_fine, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_status_code_short_is_warning, fss_status_code_long_is_warning, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_status_code_short_is_error, fss_status_code_long_is_error, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_status_code_short_number, fss_status_code_long_number, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_status_code_short_is_fine_s, fss_status_code_long_is_fine_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_status_code_short_is_warning_s, fss_status_code_long_is_warning_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_status_code_short_is_error_s, fss_status_code_long_is_error_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_status_code_short_number_s, fss_status_code_long_number_s, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_status_code_total_parameters 13
+  #define fss_status_code_total_parameters_d 13
 #endif // _di_fss_status_code_defines_
 
 #ifndef _di_fss_status_code_main_t_
   typedef struct {
-    f_console_parameter_t parameters[fss_status_code_total_parameters];
+    f_console_parameter_t parameters[fss_status_code_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

@@ -32,7 +32,7 @@ extern "C" {
       return status;
     }
 
-    status = f_file_is(source, f_file_type_directory, F_false);
+    status = f_file_is(source, F_file_type_directory_d, F_false);
 
     if (status == F_file_found_not) {
       return F_status_set_error(status);

@@ -20,8 +20,8 @@ extern "C" {
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
  */
 #ifndef _di_fss_basic_read_common_
-  #define fss_basic_read_common_allocation_large 256
-  #define fss_basic_read_common_allocation_small 16
+  #define fss_basic_read_common_allocation_large_d 256
+  #define fss_basic_read_delimit_common_allocation_small_d 16
 #endif // _di_fss_basic_read_common_
 
 /**
@@ -206,7 +206,7 @@ extern "C" {
  *   The data to deallocate.
  */
 #ifndef _di_fss_basic_read_data_delete_simple_
-  extern void fss_basic_read_data_delete_simple(fss_basic_read_data_t *data) f_attribute_visibility_internal;
+  extern void fss_basic_read_data_delete_simple(fss_basic_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_data_delete_simple_
 
 /**
@@ -216,7 +216,7 @@ extern "C" {
  *   The depth to deallocate.
  */
 #ifndef _di_fss_basic_read_depth_delete_simple_
-  extern void fss_basic_read_depth_delete_simple(fss_basic_read_depth_t *depth) f_attribute_visibility_internal;
+  extern void fss_basic_read_depth_delete_simple(fss_basic_read_depth_t *depth) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_depth_delete_simple_
 
 /**
@@ -240,7 +240,7 @@ extern "C" {
  * @see fss_basic_read_depths_increase()
  */
 #ifndef _di_fss_basic_read_depths_resize_
-  extern f_status_t fss_basic_read_depths_resize(const f_array_length_t length, fss_basic_read_depths_t *depths) f_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_depths_resize(const f_array_length_t length, fss_basic_read_depths_t *depths) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_depths_resize_
 
 #ifdef __cplusplus

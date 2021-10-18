@@ -164,7 +164,7 @@ extern "C" {
 
       const f_status_t status_failure = status;
 
-      macro_f_memory_structure_increment(status, (*recurse.failures), 1, f_memory_default_allocation_small, macro_f_directory_statuss_t_resize, F_array_too_large);
+      macro_f_memory_structure_increment(status, (*recurse.failures), 1, F_memory_default_allocation_small_d, macro_f_directory_statuss_t_resize, F_array_too_large);
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
@@ -178,7 +178,7 @@ extern "C" {
       status = f_file_stat(source.string, F_false, &source_stat);
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_t_size - 1;
+          size = F_string_t_size_d - 1;
         }
         else {
           size = source.used + file.used + 1;
@@ -192,7 +192,7 @@ extern "C" {
       }
       else {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_t_size - 1;
+          size = F_string_t_size_d - 1;
         }
         else {
           size = destination.used + file.used + 1;
@@ -369,7 +369,7 @@ extern "C" {
 
       const f_status_t status_failure = status;
 
-      macro_f_memory_structure_increment(status, (*recurse.failures), 1, f_memory_default_allocation_small, macro_f_directory_statuss_t_resize, F_array_too_large);
+      macro_f_memory_structure_increment(status, (*recurse.failures), 1, F_memory_default_allocation_small_d, macro_f_directory_statuss_t_resize, F_array_too_large);
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
@@ -384,7 +384,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_t_size - 1;
+          size = F_string_t_size_d - 1;
         }
         else {
           size = source.used + file.used + 1;
@@ -398,7 +398,7 @@ extern "C" {
       }
       else {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_t_size - 1;
+          size = F_string_t_size_d - 1;
         }
         else {
           size = destination.used + file.used + 1;
@@ -500,7 +500,7 @@ extern "C" {
 
     for (; i < length; ++i) {
 
-      size = strnlen(entity[i]->d_name, f_directory_name_max);
+      size = strnlen(entity[i]->d_name, F_directory_name_max_d);
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(entity[i]->d_name, "..", 3) || !strncmp(entity[i]->d_name, ".", 2)) {
@@ -516,25 +516,25 @@ extern "C" {
 
       mode = macro_f_file_type_get(file_stat.st_mode);
 
-      if (mode == f_file_type_block) {
+      if (mode == F_file_type_block_d) {
         names = &listing->block;
       }
-      else if (mode == f_file_type_character) {
+      else if (mode == F_file_type_character_d) {
         names = &listing->character;
       }
-      else if (mode == f_file_type_directory) {
+      else if (mode == F_file_type_directory_d) {
         names = &listing->directory;
       }
-      else if (mode == f_file_type_regular) {
+      else if (mode == F_file_type_regular_d) {
         names = &listing->regular;
       }
-      else if (mode == f_file_type_link) {
+      else if (mode == F_file_type_link_d) {
         names = &listing->link;
       }
-      else if (mode == f_file_type_fifo) {
+      else if (mode == F_file_type_fifo_d) {
         names = &listing->fifo;
       }
-      else if (mode == f_file_type_socket) {
+      else if (mode == F_file_type_socket_d) {
         names = &listing->socket;
       }
       else {
@@ -542,7 +542,7 @@ extern "C" {
       }
 
       if (names->used == names->size) {
-        macro_f_string_dynamics_t_resize(status, (*names), names->size + f_directory_default_allocation_step);
+        macro_f_string_dynamics_t_resize(status, (*names), names->size + F_directory_default_allocation_step_d);
         if (F_status_is_error(status)) break;
       }
 
@@ -551,7 +551,7 @@ extern "C" {
       if (F_status_is_error(status)) break;
 
       if (names->array[names->used].used > 0 && names->array[names->used].string[names->array[names->used].used - 1] != 0) {
-        if (names->array[names->used].used == f_string_t_size) {
+        if (names->array[names->used].used == F_string_t_size_d) {
           status = F_status_set_error(F_string_too_large);
           break;
         }
@@ -766,7 +766,7 @@ extern "C" {
       total += length_truncated - start;
 
       if (destination->used + total > destination->size) {
-        if (destination->used + total > f_string_t_size) {
+        if (destination->used + total > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 

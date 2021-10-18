@@ -87,7 +87,7 @@ typedef struct {
 // TODO: temporarily added, convert this to a function below.
 #define macro_firewall_append_argument_to_arguments(status, arguments, argument) \
   if (arguments.used == arguments.size) { \
-    macro_f_string_dynamics_t_resize(status, arguments, arguments.used + firewall_default_allocation_step); \
+    macro_f_string_dynamics_t_resize(status, arguments, arguments.used + firewall_default_allocation_step_d); \
     \
     if (F_status_is_error(status)) break; \
   } \
@@ -108,7 +108,7 @@ typedef struct {
  * @param arguments
  *   The arguments passed to the tool.
  */
-extern void firewall_print_debug_tool(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) f_attribute_visibility_internal;
+extern void firewall_print_debug_tool(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 
 /**
  * Print an memory allocation error.
@@ -116,7 +116,7 @@ extern void firewall_print_debug_tool(const fl_print_t output, const f_string_t 
  * @param output
  *   The output to print to.
  */
-extern void firewall_print_error_on_allocation_failure(const fl_print_t output) f_attribute_visibility_internal;
+extern void firewall_print_error_on_allocation_failure(const fl_print_t output) F_attribute_visibility_internal_d;
 
 /**
  * Print an invalid parameter error for the given function.
@@ -126,7 +126,7 @@ extern void firewall_print_error_on_allocation_failure(const fl_print_t output) 
  * @param function
  *   The function that failed.
  */
-extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, const f_string_t function) f_attribute_visibility_internal;
+extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, const f_string_t function) F_attribute_visibility_internal_d;
 
 /**
  * Print an invalid parameter error for the given function.
@@ -138,7 +138,7 @@ extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, c
  * @param filename
  *   The name of the file.
  */
-extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_t filename) f_attribute_visibility_internal;
+extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_t filename) F_attribute_visibility_internal_d;
 
 /**
  * Print an error about the given operation failed.
@@ -150,7 +150,7 @@ extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t 
  * @param arguments
  *   The arguments passed to the tool.
  */
-extern void firewall_print_error_on_operation(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) f_attribute_visibility_internal;
+extern void firewall_print_error_on_operation(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 
 /**
  * Print an unhandled error for the given function.
@@ -162,7 +162,7 @@ extern void firewall_print_error_on_operation(const fl_print_t output, const f_s
  * @param status
  *   The failure status code.
  */
-extern void firewall_print_error_on_unhandled(const fl_print_t output, const f_string_t function, const f_status_t status) f_attribute_visibility_internal;
+extern void firewall_print_error_on_unhandled(const fl_print_t output, const f_string_t function, const f_status_t status) F_attribute_visibility_internal_d;
 
 /**
  * Print an unhandled error for the given function for some given file.
@@ -176,7 +176,7 @@ extern void firewall_print_error_on_unhandled(const fl_print_t output, const f_s
  * @param filename
  *   The name of the file.
  */
-extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_t filename) f_attribute_visibility_internal;
+extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_t filename) F_attribute_visibility_internal_d;
 
 #ifdef __cplusplus
 } // extern "C"

@@ -82,12 +82,12 @@ extern "C" {
     if (ranges->used + 1 > ranges->size) {
       f_array_length_t size = ranges->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (ranges->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (ranges->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_string_ranges_resize(size, ranges);
@@ -105,7 +105,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (ranges->used + amount > ranges->size) {
-      if (ranges->used + amount > f_array_length_t_size) {
+      if (ranges->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 
@@ -176,12 +176,12 @@ extern "C" {
     if (rangess->used + 1 > rangess->size) {
       f_array_length_t size = rangess->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (rangess->used + 1 > f_array_length_t_size) {
+      if (size > F_array_length_t_size_d) {
+        if (rangess->used + 1 > F_array_length_t_size_d) {
           return F_status_set_error(F_array_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = F_array_length_t_size_d;
       }
 
       return private_f_string_rangess_resize(size, rangess);
@@ -199,7 +199,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (rangess->used + amount > rangess->size) {
-      if (rangess->used + amount > f_array_length_t_size) {
+      if (rangess->used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
 

@@ -44,37 +44,37 @@
 extern "C" {
 #endif
 
-#ifndef _di_status_code_version_
-  #define status_code_major_version f_string_ascii_0
-  #define status_code_minor_version f_string_ascii_5
-  #define status_code_micro_version f_string_ascii_6
+#ifndef _di_status_code_program_version_
+  #define status_code_progam_version_major_s F_string_ascii_0_s
+  #define status_code_progam_version_minor_s F_string_ascii_5_s
+  #define status_code_progam_version_micro_s F_string_ascii_6_s
 
-  #ifndef status_code_nano_version_prefix
-    #define status_code_nano_version_prefix
+  #ifndef status_code_progam_version_nano_prefix_s
+    #define status_code_progam_version_nano_prefix_s
   #endif
 
-  #ifndef status_code_nano_version
-    #define status_code_nano_version
+  #ifndef status_code_progam_version_nano_s
+    #define status_code_progam_version_nano_s
   #endif
 
-  #define status_code_version status_code_major_version f_string_ascii_period status_code_minor_version f_string_ascii_period status_code_micro_version status_code_nano_version_prefix status_code_nano_version
-#endif // _di_status_code_version_
+  #define status_code_progam_version_s status_code_progam_version_major_s F_string_ascii_period_s status_code_progam_version_minor_s F_string_ascii_period_s status_code_progam_version_micro_s status_code_progam_version_nano_prefix_s status_code_progam_version_nano_s
+#endif // _di_status_code_program_version_
 
-#ifndef _di_status_code_name_
-  #define status_code_name "status_code"
-  #define status_code_name_long "FSS Status Code"
-#endif // _di_status_code_name_
+#ifndef _di_status_code_program_name_
+  #define status_code_progam_name_s      "status_code"
+  #define status_code_progam_name_long_s "FSS Status Code"
+#endif // _di_status_code_program_name_
 
 #ifndef _di_status_code_defines_
-  #define status_code_short_is_fine    "f"
-  #define status_code_short_is_warning "w"
-  #define status_code_short_is_error   "e"
-  #define status_code_short_number     "n"
+  #define status_code_short_is_fine_s    "f"
+  #define status_code_short_is_warning_s "w"
+  #define status_code_short_is_error_s   "e"
+  #define status_code_short_number_s     "n"
 
-  #define status_code_long_is_fine    "is_fine"
-  #define status_code_long_is_warning "is_warning"
-  #define status_code_long_is_error   "is_error"
-  #define status_code_long_number     "number"
+  #define status_code_long_is_fine_s    "is_fine"
+  #define status_code_long_is_warning_s "is_warning"
+  #define status_code_long_is_error_s   "is_error"
+  #define status_code_long_number_s     "number"
 
   enum {
     status_code_parameter_help,
@@ -104,18 +104,18 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(status_code_short_is_fine, status_code_long_is_fine, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(status_code_short_is_warning, status_code_long_is_warning, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(status_code_short_is_error, status_code_long_is_error, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(status_code_short_number, status_code_long_number, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(status_code_short_is_fine_s, status_code_long_is_fine_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(status_code_short_is_warning_s, status_code_long_is_warning_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(status_code_short_is_error_s, status_code_long_is_error_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(status_code_short_number_s, status_code_long_number_s, 0, 0, f_console_type_normal), \
     }
 
-  #define status_code_total_parameters 13
+  #define status_code_total_parameters_d 13
 #endif // _di_status_code_defines_
 
 #ifndef _di_status_code_main_t_
   typedef struct {
-    f_console_parameter_t parameters[status_code_total_parameters];
+    f_console_parameter_t parameters[status_code_total_parameters_d];
 
     f_array_lengths_t remaining;
     bool process_pipe;

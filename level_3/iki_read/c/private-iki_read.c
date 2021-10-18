@@ -111,7 +111,7 @@ extern "C" {
     bool unmatched = F_true;
 
     {
-      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large, iki_read_common_allocation_small, 0, 0, 0, 0, 0);
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
 
       status = fl_iki_read(state, &main->buffer, buffer_range, variable, vocabulary, content);
     }
@@ -264,7 +264,7 @@ extern "C" {
     f_string_range_t range = buffer_range;
 
     {
-      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large, iki_read_common_allocation_small, 0, 0, 0, 0, 0);
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
 
       status = fl_iki_read(state, &main->buffer, &range, variable, vocabulary, content);
     }
@@ -330,7 +330,7 @@ extern "C" {
         } // for
 
         if (name_missed) {
-          macro_f_memory_structure_increment(status, names, 1, f_iki_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, names, 1, F_iki_default_allocation_step_d, macro_f_string_dynamics_t_resize, F_array_too_large);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "iki_read_process_buffer_ranges_whole", F_true);
@@ -466,7 +466,7 @@ extern "C" {
     }
 
     {
-      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large, iki_read_common_allocation_small, 0, 0, 0, 0, 0);
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
 
       status = fl_iki_read(state, &main->buffer, &range, variable, vocabulary, content);
     }
@@ -563,7 +563,7 @@ extern "C" {
         status = fl_string_compare(arguments.argv[index], main->buffer.string + vocabulary->array[j].start, length, (vocabulary->array[j].stop - vocabulary->array[j].start) + 1);
 
         if (status == F_equal_to) {
-          macro_f_memory_structure_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, macro_iki_read_substitutions_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, substitutionss[j], 1, F_iki_default_allocation_step_d, macro_iki_read_substitutions_t_resize, F_array_too_large);
           if (F_status_is_error(status)) return status;
 
           index = parameter->values.array[i + 1];

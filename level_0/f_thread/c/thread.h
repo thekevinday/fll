@@ -682,7 +682,7 @@ extern "C" {
 /**
  * Increase the size of the thread attributes array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -707,7 +707,7 @@ extern "C" {
  * Resize the thread attributes array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -897,7 +897,7 @@ extern "C" {
 /**
  * Increase the size of the thread barrier attributes array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -922,7 +922,7 @@ extern "C" {
  * Resize the thread barrier attributes array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1090,7 +1090,7 @@ extern "C" {
 /**
  * Increase the size of the thread barriers array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1115,7 +1115,7 @@ extern "C" {
  * Resize the thread barriers array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1435,7 +1435,7 @@ extern "C" {
 /**
  * Increase the size of the thread attributes array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1460,7 +1460,7 @@ extern "C" {
  * Resize the thread attributes array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -1704,7 +1704,7 @@ extern "C" {
 /**
  * Increase the size of the thread conditions array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -1729,7 +1729,7 @@ extern "C" {
  * Resize the thread conditions array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2081,7 +2081,7 @@ extern "C" {
 /**
  * Increase the size of the thread keys array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2106,7 +2106,7 @@ extern "C" {
  * Resize the thread keys array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2297,7 +2297,7 @@ extern "C" {
 /**
  * Increase the size of the thread attributes array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2322,7 +2322,7 @@ extern "C" {
  * Resize the thread attributes array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2622,7 +2622,7 @@ extern "C" {
 /**
  * Increase the size of the read/write array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2647,7 +2647,7 @@ extern "C" {
  * Resize the read/write locks array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -2963,7 +2963,7 @@ extern "C" {
 /**
  * Increase the size of the thread attributes array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -2988,7 +2988,7 @@ extern "C" {
  * Resize the thread attributes array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3291,7 +3291,7 @@ extern "C" {
 /**
  * Increase the size of the thread mutexs array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3316,7 +3316,7 @@ extern "C" {
  * Resize the thread mutexs array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3767,7 +3767,7 @@ extern "C" {
 /**
  * Increase the size of the thread semaphores array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3792,7 +3792,7 @@ extern "C" {
  * Resize the thread semaphores array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -3895,7 +3895,7 @@ extern "C" {
 /**
  * Increase the size of the thread sets array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -3920,7 +3920,7 @@ extern "C" {
  * Resize the thread sets array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -4215,7 +4215,7 @@ extern "C" {
 /**
  * Increase the size of the thread spin locks array, but only if necessary.
  *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param step
@@ -4240,7 +4240,7 @@ extern "C" {
  * Resize the thread spin locks array to a larger size.
  *
  * This will resize making the array larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount

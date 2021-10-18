@@ -21,7 +21,7 @@ extern "C" {
  *   The entry action whose parameters will be printed.
  */
 #ifndef _di_controller_entry_action_parameters_print_
-  extern void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) f_attribute_visibility_internal;
+  extern void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_action_parameters_print_
 
 /**
@@ -35,7 +35,7 @@ extern "C" {
  *    FALSE otherwise.
  */
 #ifndef _di_controller_entry_action_type_is_rule_
-  extern f_status_t controller_entry_action_type_is_rule(uint8_t type) f_attribute_visibility_internal;
+  extern f_status_t controller_entry_action_type_is_rule(uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_action_type_is_rule_
 
 /**
@@ -49,7 +49,7 @@ extern "C" {
  *   The string with used == 0 if no match was found.
  */
 #ifndef _di_controller_entry_action_type_name_
-  extern f_string_static_t controller_entry_action_type_name(const uint8_t type) f_attribute_visibility_internal;
+  extern f_string_static_t controller_entry_action_type_name(const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_action_type_name_
 
 /**
@@ -63,7 +63,7 @@ extern "C" {
  *    FALSE otherwise.
  */
 #ifndef _di_controller_entry_action_type_to_rule_action_type_
-  extern uint8_t controller_entry_action_type_to_rule_action_type(uint8_t type) f_attribute_visibility_internal;
+  extern uint8_t controller_entry_action_type_to_rule_action_type(uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_action_type_to_rule_action_type_
 
 /**
@@ -85,7 +85,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_actions_increase_by_
-  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) f_attribute_visibility_internal;
+  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_actions_increase_by_
 
 /**
@@ -125,7 +125,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_status_t controller_entry_actions_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache, controller_entry_actions_t *actions) f_attribute_visibility_internal;
+  extern f_status_t controller_entry_actions_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_actions_read_
 
 /**
@@ -153,7 +153,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_entry_error_print_
-  extern void controller_entry_error_print(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_entry_error_print(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_error_print_
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  * @see controller_entry_read()
  */
 #ifndef _di_controller_entry_error_print_cache_
-  extern void controller_entry_error_print_cache(const bool is_entry, const fl_print_t output, const controller_cache_action_t cache) f_attribute_visibility_internal;
+  extern void controller_entry_error_print_cache(const bool is_entry, const fl_print_t output, const controller_cache_action_t cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_error_print_cache_
 
 /**
@@ -197,7 +197,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_items_increase_by_
-  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) f_attribute_visibility_internal;
+  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_items_increase_by_
 
 /**
@@ -220,8 +220,8 @@ extern "C" {
  *   Errors (with error bit) from: controller_entry_items_increase_by().
  *   Errors (with error bit) from: controller_file_load().
  *   Errors (with error bit) from: controller_status_simplify_error().
- *   Errors (with error bit) from: controller_string_dynamic_append_terminated().
- *   Errors (with error bit) from: controller_string_dynamic_partial_append_terminated().
+ *   Errors (with error bit) from: controller_dynamic_append_terminated().
+ *   Errors (with error bit) from: controller_dynamic_partial_append_terminated().
  *   Errors (with error bit) from: f_fss_count_lines().
  *   Errors (with error bit) from: fl_fss_apply_delimit().
  *   Errors (with error bit) from: f_string_dynamic_append().
@@ -233,8 +233,8 @@ extern "C" {
  * @see controller_entry_items_increase_by()
  * @see controller_file_load()
  * @see controller_status_simplify_error()
- * @see controller_string_dynamic_append_terminated()
- * @see controller_string_dynamic_partial_append_terminated()
+ * @see controller_dynamic_append_terminated()
+ * @see controller_dynamic_partial_append_terminated()
  * @see f_fss_count_lines()
  * @see fl_fss_apply_delimit()
  * @see f_string_dynamic_append()
@@ -243,7 +243,7 @@ extern "C" {
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
-  extern f_status_t controller_entry_read(const bool is_entry, controller_global_t global, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern f_status_t controller_entry_read(const bool is_entry, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_read_
 
 /**
@@ -260,7 +260,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_entry_settings_read_
-  extern f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_
 
 /**
@@ -277,7 +277,7 @@ extern "C" {
  *   The expected number of arguments.
  */
 #ifndef _di_controller_entry_settings_read_print_setting_requires_exactly_
-  extern void controller_entry_settings_read_print_setting_requires_exactly(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_number_unsigned_t total) f_attribute_visibility_internal;
+  extern void controller_entry_settings_read_print_setting_requires_exactly(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_number_unsigned_t total) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_print_setting_requires_exactly_
 
 /**
@@ -292,7 +292,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_entry_settings_read_print_setting_unknown_action_
-  extern void controller_entry_settings_read_print_setting_unknown_action(const bool is_entry, const controller_global_t global, const controller_cache_t cache) f_attribute_visibility_internal;
+  extern void controller_entry_settings_read_print_setting_unknown_action(const bool is_entry, const controller_global_t global, const controller_cache_t cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_print_setting_unknown_action_
 
 /**
@@ -311,7 +311,7 @@ extern "C" {
  *   The location in the content actions array representing the action value.
  */
 #ifndef _di_controller_entry_settings_read_print_setting_unknown_action_value_
-  extern void controller_entry_settings_read_print_setting_unknown_action_value(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_array_length_t index) f_attribute_visibility_internal;
+  extern void controller_entry_settings_read_print_setting_unknown_action_value(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_array_length_t index) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_print_setting_unknown_action_value_
 
 #ifdef __cplusplus

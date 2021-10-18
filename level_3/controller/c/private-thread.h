@@ -23,7 +23,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_cleanup_
-  extern void * controller_thread_cleanup(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_cleanup(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_cleanup_
 
 /**
@@ -37,7 +37,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_control_
-  extern void * controller_thread_control(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_control(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_control_
 
 /**
@@ -54,7 +54,7 @@ extern "C" {
  *   FALSE when disabled.
  */
 #ifndef _di_controller_thread_is_enabled_
-  extern f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_is_enabled_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  * @see controller_thread_is_enabled_process_type()
  */
 #ifndef _di_controller_thread_is_enabled_process_
-  extern f_status_t controller_thread_is_enabled_process(controller_process_t * const process, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern f_status_t controller_thread_is_enabled_process(controller_process_t * const process, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_is_enabled_process_
 
 /**
@@ -90,7 +90,7 @@ extern "C" {
  * @see controller_thread_is_enabled()
  */
 #ifndef _di_controller_thread_is_enabled_process_type_
-  extern f_status_t controller_thread_is_enabled_process_type(const uint8_t type, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern f_status_t controller_thread_is_enabled_process_type(const uint8_t type, controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_is_enabled_process_type_
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  *   F_failure (with error bit) on any failure.
  */
 #ifndef _di_controller_thread_main_
-  extern f_status_t controller_thread_main(controller_main_t *main, controller_setting_t *setting) f_attribute_visibility_internal;
+  extern f_status_t controller_thread_main(controller_main_t *main, controller_setting_t *setting) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_main_
 
 /**
@@ -124,7 +124,7 @@ extern "C" {
  * @see controller_rule_process_do()
  */
 #ifndef _di_controller_thread_process_
-  extern void controller_thread_process(const bool is_normal, controller_process_t *process) f_attribute_visibility_internal;
+  extern void controller_thread_process(const bool is_normal, controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_
 
 /**
@@ -140,7 +140,7 @@ extern "C" {
  * @see controller_thread_process()
  */
 #ifndef _di_controller_thread_process_normal_
-  extern void * controller_thread_process_normal(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_process_normal(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_normal_
 
 /**
@@ -156,7 +156,7 @@ extern "C" {
  * @see controller_thread_process()
  */
 #ifndef _di_controller_thread_process_other_
-  extern void * controller_thread_process_other(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_process_other(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_other_
 
 /**
@@ -178,7 +178,7 @@ extern "C" {
  *   Set to NULL to not use.
  */
 #ifndef _di_controller_thread_process_cancel_
-  extern void controller_thread_process_cancel(const bool is_normal, const uint8_t by, controller_global_t *global, controller_process_t *caller) f_attribute_visibility_internal;
+  extern void controller_thread_process_cancel(const bool is_normal, const uint8_t by, controller_global_t *global, controller_process_t *caller) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_cancel_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *   The global thread data.
  */
 #ifndef _di_controller_thread_process_exit_
-  extern void controller_thread_process_exit(controller_global_t *global) f_attribute_visibility_internal;
+  extern void controller_thread_process_exit(controller_global_t *global) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_exit_
 
 /**
@@ -205,7 +205,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_entry_
-  extern void * controller_thread_entry(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_entry(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_entry_
 
 /**
@@ -225,7 +225,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_exit_
-  extern void * controller_thread_exit(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_exit(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_exit_
 
 /***
@@ -246,7 +246,7 @@ extern "C" {
  * @see f_thread_join()
  */
 #ifndef _di_controller_thread_join_
-  extern f_status_t controller_thread_join(f_thread_id_t *id) f_attribute_visibility_internal;
+  extern f_status_t controller_thread_join(f_thread_id_t *id) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_join_
 
 /**
@@ -266,7 +266,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_rule_
-  extern void * controller_thread_rule(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_rule(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_rule_
 
 /**
@@ -279,7 +279,7 @@ extern "C" {
  *   The global data.
  */
 #ifndef _di_controller_thread_signal_
-  extern void controller_thread_signal(const bool is_normal, controller_global_t *global) f_attribute_visibility_internal;
+  extern void controller_thread_signal(const bool is_normal, controller_global_t *global) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_
 
 /**
@@ -296,7 +296,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupted.
  */
 #ifndef _di_controller_thread_signal_state_fss_
-  extern f_status_t controller_thread_signal_state_fss(void *state, void *internal) f_attribute_visibility_internal;
+  extern f_status_t controller_thread_signal_state_fss(void *state, void *internal) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_state_fss_
 
 /**
@@ -313,7 +313,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupted.
  */
 #ifndef _di_controller_thread_signal_state_iki_
-  extern f_status_t controller_thread_signal_state_iki(void *state, void *internal) f_attribute_visibility_internal;
+  extern f_status_t controller_thread_signal_state_iki(void *state, void *internal) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_state_iki_
 
 /**
@@ -331,7 +331,7 @@ extern "C" {
  * @see controller_thread_signal()
  */
 #ifndef _di_controller_thread_signal_normal_
-  extern void * controller_thread_signal_normal(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_signal_normal(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_normal_
 
 /**
@@ -349,7 +349,7 @@ extern "C" {
  * @see controller_thread_signal()
  */
 #ifndef _di_controller_thread_signal_other_
-  extern void * controller_thread_signal_other(void *arguments) f_attribute_visibility_internal;
+  extern void * controller_thread_signal_other(void *arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_other_
 
 #ifdef __cplusplus

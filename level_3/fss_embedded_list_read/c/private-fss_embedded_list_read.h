@@ -30,7 +30,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_embedded_list_read_main_preprocess_depth_
-  extern f_status_t fss_embedded_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_embedded_list_read_main_t main, fss_embedded_list_read_depths_t *depths) f_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_embedded_list_read_main_t main, fss_embedded_list_read_depths_t *depths) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_main_preprocess_depth_
 
 /**
@@ -61,7 +61,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_embedded_list_read_main_process_file_
-  extern f_status_t fss_embedded_list_read_main_process_file(const f_console_arguments_t arguments, fss_embedded_list_read_main_t *main, const f_string_t file_name, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) f_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_main_process_file(const f_console_arguments_t arguments, fss_embedded_list_read_main_t *main, const f_string_t file_name, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_main_process_file_
 
 /**
@@ -97,7 +97,7 @@ extern "C" {
  * @see fss_embedded_list_read_main_process_file()
  */
 #ifndef _di_fss_embedded_list_read_main_process_for_depth_
-  extern f_status_t fss_embedded_list_read_main_process_for_depth(const f_console_arguments_t arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, fss_embedded_list_read_main_t *main, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_main_process_for_depth(const f_console_arguments_t arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, fss_embedded_list_read_main_t *main, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_main_process_for_depth_
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  *   The main data.
  */
 #ifndef _di_fss_embedded_list_read_print_content_ignore_
-  extern void fss_embedded_list_read_print_content_ignore(const fss_embedded_list_read_main_t main) f_attribute_visibility_internal;
+  extern void fss_embedded_list_read_print_content_ignore(const fss_embedded_list_read_main_t main) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_print_content_ignore_
 
 /**
@@ -119,7 +119,7 @@ extern "C" {
  *   The main data.
  */
 #ifndef _di_fss_embedded_list_read_print_object_end_
-  extern void fss_embedded_list_read_print_object_end(const fss_embedded_list_read_main_t main) f_attribute_visibility_internal;
+  extern void fss_embedded_list_read_print_object_end(const fss_embedded_list_read_main_t main) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_print_object_end_
 
 /**
@@ -129,7 +129,7 @@ extern "C" {
  *   The main data.
  */
 #ifndef _di_fss_embedded_list_read_print_set_end_
-  extern void fss_embedded_list_read_print_set_end(const fss_embedded_list_read_main_t main) f_attribute_visibility_internal;
+  extern void fss_embedded_list_read_print_set_end(const fss_embedded_list_read_main_t main) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_print_set_end_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  * @see fss_embedded_list_read_main_process_file()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_
-  extern void fss_embedded_list_read_process_delimits(const fss_embedded_list_read_main_t main, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_attribute_visibility_internal;
+  extern void fss_embedded_list_read_process_delimits(const fss_embedded_list_read_main_t main, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_process_delimits_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_contents_
-  extern void fss_embedded_list_read_process_delimits_contents(const fss_embedded_list_read_main_t main, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) f_attribute_visibility_internal;
+  extern void fss_embedded_list_read_process_delimits_contents(const fss_embedded_list_read_main_t main, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_process_delimits_contents_
 
 /**
@@ -185,7 +185,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_objects_
-  extern void fss_embedded_list_read_process_delimits_objects(const fss_embedded_list_read_main_t main, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) f_attribute_visibility_internal;
+  extern void fss_embedded_list_read_process_delimits_objects(const fss_embedded_list_read_main_t main, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_process_delimits_objects_
 
 /**
@@ -206,7 +206,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits_contents()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_within_greater_
-  extern f_status_t fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_main_t main, const f_array_length_t depth, const f_array_length_t location) f_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_main_t main, const f_array_length_t depth, const f_array_length_t location) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_process_delimits_within_greater_
 
 #ifdef __cplusplus

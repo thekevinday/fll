@@ -130,7 +130,7 @@ extern "C" {
           status = fl_conversion_string_to_number_unsigned(arguments.argv[values_order[i]], range, &number);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_depth, arguments.argv[values_order[i]]);
+            fll_error_parameter_integer_print(main.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_depth_s, arguments.argv[values_order[i]]);
 
             return status;
           }
@@ -197,7 +197,7 @@ extern "C" {
           fl_print_format("%c%[%sThe value '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
           fl_print_format("%[%ul%]", main.error.to.stream, main.error.notable, depths->array[i].depth, main.error.notable);
           fl_print_format("%[' may only be specified once for the parameter '%]", main.error.to.stream, main.error.notable, main.error.notable);
-          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main.error.notable);
           fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
           funlockfile(main.error.to.stream);
@@ -208,7 +208,7 @@ extern "C" {
           flockfile(main.error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main.error.notable);
           fl_print_format("%[' may not have the value '%]", main.error.to.stream, main.error.notable, main.error.notable);
           fl_print_format("%[%ul%]", main.error.to.stream, main.error.notable, depths->array[i].depth, main.error.notable);
           fl_print_format("%[' before the value '%]", main.error.to.stream, main.error.notable, main.error.notable);
@@ -232,7 +232,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_state_t state = macro_f_state_t_initialize(fss_embedded_list_read_common_allocation_large, fss_embedded_list_read_common_allocation_small, 0, 0, 0, 0, 0);
+      f_state_t state = macro_f_state_t_initialize(fss_embedded_list_read_common_allocation_large_d, fss_embedded_list_read_common_allocation_small_d, 0, 0, 0, 0, 0);
       f_string_range_t input = macro_f_string_range_t_initialize(main->buffer.used);
 
       objects_delimits->used = 0;
@@ -271,7 +271,7 @@ extern "C" {
       // comments are not to be part of the file, so remove them.
       for (; i < comments->used; ++i) {
         for (j = comments->array[i].start; j <= comments->array[i].stop; ++j) {
-          main->buffer.string[j] = f_fss_delimit_placeholder;
+          main->buffer.string[j] = F_fss_delimit_placeholder_s;
         } // for
       } // for
     }
@@ -297,7 +297,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &select);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_select, arguments.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_select_s, arguments.argv[index]);
 
           return status;
         }
@@ -318,7 +318,7 @@ extern "C" {
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &line);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_line, arguments.argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_line_s, arguments.argv[index]);
 
         return status;
       }
@@ -650,7 +650,7 @@ extern "C" {
       f_print_except_dynamic_partial(main->buffer, items->array[i].content.array[0], *contents_delimits, main->output.to.stream);
 
       if (main->parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-        f_print_character(fss_embedded_list_read_pipe_content_end, main->output.to.stream);
+        f_print_character(fss_embedded_list_read_pipe_content_end_s, main->output.to.stream);
       }
     } // for
 
@@ -664,15 +664,15 @@ extern "C" {
   void fss_embedded_list_read_print_object_end(const fss_embedded_list_read_main_t main) {
 
     if (main.parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-      f_print_character(fss_embedded_list_read_pipe_content_start, main.output.to.stream);
+      f_print_character(fss_embedded_list_read_pipe_content_start_s, main.output.to.stream);
     }
     else {
       if (main.parameters[fss_embedded_list_read_parameter_object].result == f_console_result_found && main.parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
-        f_print_character(f_fss_embedded_list_open, main.output.to.stream);
-        f_print_character(f_fss_embedded_list_open_end, main.output.to.stream);
+        f_print_character(f_fss_embedded_list_open_s[0], main.output.to.stream);
+        f_print_character(f_fss_embedded_list_open_end_s[0], main.output.to.stream);
       }
       else {
-        f_print_character(f_fss_eol, main.output.to.stream);
+        f_print_character(f_fss_eol_s[0], main.output.to.stream);
       }
     }
   }
@@ -682,7 +682,7 @@ extern "C" {
   void fss_embedded_list_read_print_content_ignore(const fss_embedded_list_read_main_t main) {
 
     if (main.parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-      f_print_character(fss_embedded_list_read_pipe_content_ignore, main.output.to.stream);
+      f_print_character(fss_embedded_list_read_pipe_content_ignore_s, main.output.to.stream);
     }
   }
 #endif // _di_fss_embedded_list_read_print_content_ignore_
@@ -691,15 +691,15 @@ extern "C" {
   void fss_embedded_list_read_print_set_end(const fss_embedded_list_read_main_t main) {
 
     if (main.parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-      f_print_character(fss_embedded_list_read_pipe_content_end, main.output.to.stream);
+      f_print_character(fss_embedded_list_read_pipe_content_end_s, main.output.to.stream);
     }
     else {
       if (main.parameters[fss_embedded_list_read_parameter_object].result == f_console_result_found && main.parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
-        f_print_character(f_fss_embedded_list_close, main.output.to.stream);
-        f_print_character(f_fss_embedded_list_close_end, main.output.to.stream);
+        f_print_character(f_fss_embedded_list_close_s[0], main.output.to.stream);
+        f_print_character(f_fss_embedded_list_close_end_s[0], main.output.to.stream);
       }
       else {
-        f_print_character(f_fss_eol, main.output.to.stream);
+        f_print_character(f_fss_eol_s[0], main.output.to.stream);
       }
     }
   }

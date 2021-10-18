@@ -140,7 +140,7 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
 
     const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
-    const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+    const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, F_path_length_max_d) : strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
 
     char program_name[size_name + 1];
 
@@ -149,7 +149,7 @@ extern "C" {
     int code = 0;
 
     // full path is explicitly requested.
-    if (option & fl_execute_parameter_option_path) {
+    if (option & FL_execute_parameter_option_path_d) {
       f_string_dynamic_t path = f_string_dynamic_t_initialize;
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
       f_string_dynamic_t *found = 0;
@@ -166,7 +166,7 @@ extern "C" {
         }
 
         path.string = program ? program : arguments.array[0].string;
-        path.used = strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+        path.used = strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
         found = &path;
       }
       else {
@@ -302,7 +302,7 @@ extern "C" {
       *r = code;
     }
 
-    if (option & fl_execute_parameter_option_exit) {
+    if (option & FL_execute_parameter_option_exit_d) {
       exit(code);
     }
 
@@ -325,14 +325,14 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
 
     const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
-    const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+    const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, F_path_length_max_d) : strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
 
     char program_name[size_name + 1];
 
     private_fll_execute_path_arguments_fixate(program ? program : arguments.array[0].string, arguments, last_slash, !program, size_name, program_name, fixed_arguments);
 
     // determine full path when the environment is to be cleared or full path is explicitly requested.
-    if (parameter && parameter->environment || parameter && (parameter->option & fl_execute_parameter_option_path)) {
+    if (parameter && parameter->environment || parameter && (parameter->option & FL_execute_parameter_option_path_d)) {
       f_string_dynamic_t path = f_string_dynamic_t_initialize;
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
       f_string_dynamic_t *found = 0;
@@ -349,7 +349,7 @@ extern "C" {
         }
 
         path.string = program ? program : arguments.array[0].string;
-        path.used = strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+        path.used = strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
         found = &path;
       }
       else {
@@ -429,7 +429,7 @@ extern "C" {
       status = macro_f_string_dynamics_t_delete_simple(paths);
       if (F_status_is_error(status)) return status;
 
-      if (parameter && (parameter->option & fl_execute_parameter_option_path)) {
+      if (parameter && (parameter->option & FL_execute_parameter_option_path_d)) {
         fixed_arguments[0] = program_path;
       }
 

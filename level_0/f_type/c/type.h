@@ -30,13 +30,13 @@ extern "C" {
  *
  * Use these macros for visibility-specific tweaks so that if these are not supported by any given compiler, then they can be easily disabled.
  *
- * f_attribute_visibility_internal provides a way to make some functions effectively private.
+ * F_attribute_visibility_internal_d provides a way to make some functions effectively private.
  */
 #ifndef _di_f_attribute_visibility_
-  #define f_attribute_visibility_hidden    __attribute__((visibility("hidden")))
-  #define f_attribute_visibility_internal  __attribute__((visibility("internal")))
-  #define f_attribute_visibility_protected __attribute__((visibility("protected")))
-  #define f_attribute_visibility_public    __attribute__((visibility("default")))
+  #define F_attribute_visibility_hidden_d    __attribute__((visibility("hidden")))
+  #define F_attribute_visibility_internal_d  __attribute__((visibility("internal")))
+  #define F_attribute_visibility_protected_d __attribute__((visibility("protected")))
+  #define F_attribute_visibility_public_d    __attribute__((visibility("default")))
 #endif // _di_f_attribute_visibility_
 
 /**
@@ -104,7 +104,7 @@ extern "C" {
     void *data;
   } f_state_t;
 
-  #define f_state_t_initialize { f_memory_default_allocation_large, f_memory_default_allocation_small, 0, 0, 0, 0, 0 }
+  #define f_state_t_initialize { F_memory_default_allocation_large_d, F_memory_default_allocation_small_d, 0, 0, 0, 0, 0 }
 
   #define macro_f_state_t_initialize(step_large, step_small, handle, interrupt, callbacks, custom, data) { \
     step_large, \
@@ -147,66 +147,66 @@ extern "C" {
  *
  * The size is to be the (max supported size - 1) such that that last number can be used for overflow operations.
  *
- * For example, f_type_size_8_negative is 2^7, or -1 to -128, therefore the max size here is -128 - 1 or -127.
- * For example, f_type_size_8_positive is 2^7, or 0 to 127, therefore the max size here is 127 - 1 or 126.
- * For example, f_type_size_8_unsigned is 2^8, or 0 to 255, therefore the max size here is 255 - 1 or 254.
+ * For example, F_type_size_8_negative_d is 2^7, or -1 to -128, therefore the max size here is -128 - 1 or -127.
+ * For example, F_type_size_8_positive_d is 2^7, or 0 to 127, therefore the max size here is 127 - 1 or 126.
+ * For example, F_type_size_8_unsigned_d is 2^8, or 0 to 255, therefore the max size here is 255 - 1 or 254.
  *
  * The max_size is provided for actual max sizes.
- * For example, f_type_size_8_negative is 2^7, or -1 to -128, therefore the max size here is -128.
- * For example, f_type_size_8_positive is 2^7, or 0 to 127, therefore the max size here is 127.
- * For example, f_type_size_8_unsigned is 2^8, or 0 to 255, therefore the max size here is 255.
+ * For example, F_type_size_8_negative_d is 2^7, or -1 to -128, therefore the max size here is -128.
+ * For example, F_type_size_8_positive_d is 2^7, or 0 to 127, therefore the max size here is 127.
+ * For example, F_type_size_8_unsigned_d is 2^8, or 0 to 255, therefore the max size here is 255.
  */
 #ifndef _di_f_type_sizes_
-  #define f_type_size_8_negative 0x7f
-  #define f_type_size_8_positive 0x7e
-  #define f_type_size_8_unsigned 0xfe
+  #define F_type_size_8_negative_d 0x7f
+  #define F_type_size_8_positive_d 0x7e
+  #define F_type_size_8_unsigned_d 0xfe
 
-  #define f_type_size_16_negative 0x7fff
-  #define f_type_size_16_positive 0x7ffe
-  #define f_type_size_16_unsigned 0xfffe
+  #define F_type_size_16_negative_d 0x7fff
+  #define F_type_size_16_positive_d 0x7ffe
+  #define F_type_size_16_unsigned_d 0xfffe
 
-  #define f_type_size_32_negative 0x7fffffff
-  #define f_type_size_32_positive 0x7ffffffe
-  #define f_type_size_32_unsigned 0xfffffffe
+  #define F_type_size_32_negative_d 0x7fffffff
+  #define F_type_size_32_positive_d 0x7ffffffe
+  #define F_type_size_32_unsigned_d 0xfffffffe
 
-  #define f_type_size_64_negative 0x7fffffffffffffff
-  #define f_type_size_64_positive 0x7ffffffffffffffe
-  #define f_type_size_64_unsigned 0xfffffffffffffffe
+  #define F_type_size_64_negative_d 0x7fffffffffffffff
+  #define F_type_size_64_positive_d 0x7ffffffffffffffe
+  #define F_type_size_64_unsigned_d 0xfffffffffffffffe
 
   #ifndef _di_f_type_int_128_t_
-    #define f_type_size_128_negative 0x7fffffffffffffffffffffff
-    #define f_type_size_128_positive 0x7ffffffffffffffffffffffe
-    #define f_type_size_128_unsigned 0xfffffffffffffffffffffffe
+    #define F_type_size_128_negative_d 0x7fffffffffffffffffffffff
+    #define F_type_size_128_positive_d 0x7ffffffffffffffffffffffe
+    #define F_type_size_128_unsigned_d 0xfffffffffffffffffffffffe
   #else
-    #define f_type_size_128_negative f_type_size_64_negative
-    #define f_type_size_128_positive f_type_size_64_positive
-    #define f_type_size_128_unsigned f_type_size_64_unsigned
+    #define F_type_size_128_negative_d F_type_size_64_negative_d
+    #define F_type_size_128_positive_d F_type_size_64_positive_d
+    #define F_type_size_128_unsigned_d F_type_size_64_unsigned_d
   #endif // _di_f_type_int_128_t_
 
-  #define f_type_size_max_8_negative 0x80
-  #define f_type_size_max_8_positive 0x7f
-  #define f_type_size_max_8_unsigned 0xff
+  #define F_type_size_max_8_negative_d 0x80
+  #define F_type_size_max_8_positive_d 0x7f
+  #define F_type_size_max_8_unsigned_d 0xff
 
-  #define f_type_size_max_16_negative 0x8000
-  #define f_type_size_max_16_positive 0x7fff
-  #define f_type_size_max_16_unsigned 0xffff
+  #define F_type_size_max_16_negative_d 0x8000
+  #define F_type_size_max_16_positive_d 0x7fff
+  #define F_type_size_max_16_unsigned_d 0xffff
 
-  #define f_type_size_max_32_negative 0x80000000
-  #define f_type_size_max_32_positive 0x7fffffff
-  #define f_type_size_max_32_unsigned 0xffffffff
+  #define F_type_size_max_32_negative_d 0x80000000
+  #define F_type_size_max_32_positive_d 0x7fffffff
+  #define F_type_size_max_32_unsigned_d 0xffffffff
 
-  #define f_type_size_max_64_negative 0x8000000000000000
-  #define f_type_size_max_64_positive 0x7fffffffffffffff
-  #define f_type_size_max_64_unsigned 0xffffffffffffffff
+  #define F_type_size_max_64_negative_d 0x8000000000000000
+  #define F_type_size_max_64_positive_d 0x7fffffffffffffff
+  #define F_type_size_max_64_unsigned_d 0xffffffffffffffff
 
   #ifndef _di_f_type_int_128_t_
-    #define f_type_size_max_128_negative 0x800000000000000000000000
-    #define f_type_size_max_128_positive 0x7fffffffffffffffffffffff
-    #define f_type_size_max_128_unsigned 0xffffffffffffffffffffffff
+    #define F_type_size_max_128_negative_d 0x800000000000000000000000
+    #define F_type_size_max_128_positive_d 0x7fffffffffffffffffffffff
+    #define F_type_size_max_128_unsigned_d 0xffffffffffffffffffffffff
   #else
-    #define f_type_size_max_128_negative f_type_size_max_64_negative
-    #define f_type_size_max_128_positive f_type_size_max_64_positive
-    #define f_type_size_max_128_unsigned f_type_size_max_64_unsigned
+    #define F_type_size_max_128_negative_d F_type_size_max_64_negative_d
+    #define F_type_size_max_128_positive_d F_type_size_max_64_positive_d
+    #define F_type_size_max_128_unsigned_d F_type_size_max_64_unsigned_d
   #endif // _di_f_type_int_128_t_
 #endif // _di_f_type_sizes_
 
@@ -224,39 +224,39 @@ extern "C" {
   typedef int64_t  f_number_signed_t;
   typedef uint64_t f_number_unsigned_t;
 
-  #define f_number_t_size_unsigned f_type_size_64_unsigned
-  #define f_number_t_size_positive f_type_size_64_positive
-  #define f_number_t_size_negative f_type_size_64_negative
+  #define F_number_t_size_unsigned_d F_type_size_64_unsigned_d
+  #define F_number_t_size_positive_d F_type_size_64_positive_d
+  #define F_number_t_size_negative_d F_type_size_64_negative_d
 
-  #define f_number_t_size_max_unsigned f_type_size_max_64_unsigned
-  #define f_number_t_size_max_positive f_type_size_max_64_positive
-  #define f_number_t_size_max_negative f_type_size_max_64_negative
+  #define F_number_t_size_max_unsigned_d F_type_size_max_64_unsigned_d
+  #define F_number_t_size_max_positive_d F_type_size_max_64_positive_d
+  #define F_number_t_size_max_negative_d F_type_size_max_64_negative_d
 #endif // _di_f_type_number_64_t_
 
 #ifdef _en_f_type_number_32_t_
   typedef int32_t  f_number_signed_t;
   typedef uint32_t f_number_unsigned_t;
 
-  #define f_number_t_size_unsigned f_type_size_32_unsigned
-  #define f_number_t_size_positive f_type_size_32_positive
-  #define f_number_t_size_negative f_type_size_32_negative
+  #define F_number_t_size_unsigned_d F_type_size_32_unsigned_d
+  #define F_number_t_size_positive_d F_type_size_32_positive_d
+  #define F_number_t_size_negative_d F_type_size_32_negative_d
 
-  #define f_number_t_size_max_unsigned f_type_size_max_32_unsigned
-  #define f_number_t_size_max_positive f_type_size_max_32_positive
-  #define f_number_t_size_max_negative f_type_size_max_32_negative
+  #define F_number_t_size_max_unsigned_d F_type_size_max_32_unsigned_d
+  #define F_number_t_size_max_positive_d F_type_size_max_32_positive_d
+  #define F_number_t_size_max_negative_d F_type_size_max_32_negative_d
 #endif // _en_f_type_number_32_t_
 
 #ifdef _en_f_type_number_128_t_
   typedef f_int_128_t  f_number_signed_t;
   typedef f_uint_128_t f_number_unsigned_t;
 
-  #define f_number_t_size_unsigned f_type_size_128_unsigned
-  #define f_number_t_size_positive f_type_size_128_positive
-  #define f_number_t_size_negative f_type_size_128_negative
+  #define F_number_t_size_unsigned_d F_type_size_128_unsigned_d
+  #define F_number_t_size_positive_d F_type_size_128_positive_d
+  #define F_number_t_size_negative_d F_type_size_128_negative_d
 
-  #define f_number_t_size_max_unsigned f_type_size_max_128_unsigned
-  #define f_number_t_size_max_positive f_type_size_max_128_positive
-  #define f_number_t_size_max_negative f_type_size_max_128_negative
+  #define F_number_t_size_max_unsigned_d F_type_size_max_128_unsigned_d
+  #define F_number_t_size_max_positive_d F_type_size_max_128_positive_d
+  #define F_number_t_size_max_negative_d F_type_size_max_128_negative_d
 #endif // _en_f_type_number_128_t_
 
 /**
@@ -266,17 +266,17 @@ extern "C" {
  * Therefore, these will map to standard output.
  */
 #ifndef _di_f_type_input_output_
-  #define f_type_debug   stdout
-  #define f_type_error   stderr
-  #define f_type_input   stdin
-  #define f_type_output  stdout
-  #define f_type_warning stdout
+  #define F_type_debug_d   stdout
+  #define F_type_error_d   stderr
+  #define F_type_input_d   stdin
+  #define F_type_output_d  stdout
+  #define F_type_warning_d stdout
 
-  #define f_type_descriptor_debug   STDOUT_FILENO
-  #define f_type_descriptor_error   STDERR_FILENO
-  #define f_type_descriptor_input   STDIN_FILENO
-  #define f_type_descriptor_output  STDOUT_FILENO
-  #define f_type_descriptor_warning STDOUT_FILENO
+  #define F_type_descriptor_debug_d   STDOUT_FILENO
+  #define F_type_descriptor_error_d   STDERR_FILENO
+  #define F_type_descriptor_input_d   STDIN_FILENO
+  #define F_type_descriptor_output_d  STDOUT_FILENO
+  #define F_type_descriptor_warning_d STDOUT_FILENO
 #endif // _di_f_type_input_output_
 
 /**
@@ -290,8 +290,8 @@ extern "C" {
 #ifndef _di_f_array_t_
   typedef f_number_unsigned_t f_array_length_t;
 
-  #define f_array_length_t_size     f_number_t_size_unsigned
-  #define f_array_length_t_size_max f_number_t_size_max_unsigned
+  #define F_array_length_t_size_d     F_number_t_size_unsigned_d
+  #define F_array_length_t_size_max_d F_number_t_size_max_unsigned_d
 #endif // _di_f_array_t_
 
 /**
@@ -380,24 +380,24 @@ extern "C" {
   }
 
   #define macro_f_mode_t_set_default(mode) \
-    mode.block = f_file_mode_all_rw; \
-    mode.character = f_file_mode_all_rw; \
-    mode.directory = f_file_mode_all_rwx; \
-    mode.fifo = f_file_mode_all_rw; \
-    mode.regular = f_file_mode_all_rw; \
-    mode.link = f_file_mode_all_rw; \
-    mode.socket = f_file_mode_all_rw; \
-    mode.unknown = f_file_mode_all_rw;
+    mode.block = F_file_mode_all_rw_d; \
+    mode.character = F_file_mode_all_rw_d; \
+    mode.directory = F_file_mode_all_rwx_d; \
+    mode.fifo = F_file_mode_all_rw_d; \
+    mode.regular = F_file_mode_all_rw_d; \
+    mode.link = F_file_mode_all_rw_d; \
+    mode.socket = F_file_mode_all_rw_d; \
+    mode.unknown = F_file_mode_all_rw_d;
 
   #define macro_f_mode_t_set_default_umask(mode, mask) \
-    mode.block = f_file_mode_all_rw & ~mask; \
-    mode.character = f_file_mode_all_rw & ~mask; \
-    mode.directory = f_file_mode_all_rwx & ~mask; \
-    mode.fifo = f_file_mode_all_rw & ~mask; \
-    mode.regular = f_file_mode_all_rw & ~mask; \
-    mode.link = f_file_mode_all_rw & ~mask; \
-    mode.socket = f_file_mode_all_rw & ~mask; \
-    mode.unknown = f_file_mode_all_rw & ~mask;
+    mode.block = F_file_mode_all_rw_d & ~mask; \
+    mode.character = F_file_mode_all_rw_d & ~mask; \
+    mode.directory = F_file_mode_all_rwx_d & ~mask; \
+    mode.fifo = F_file_mode_all_rw_d & ~mask; \
+    mode.regular = F_file_mode_all_rw_d & ~mask; \
+    mode.link = F_file_mode_all_rw_d & ~mask; \
+    mode.socket = F_file_mode_all_rw_d & ~mask; \
+    mode.unknown = F_file_mode_all_rw_d & ~mask;
 
   #define macro_f_mode_t_set_all(mode, value) \
     mode.block = value; \

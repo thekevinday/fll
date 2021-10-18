@@ -11,7 +11,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    fll_program_print_help_header(file, context, iki_read_name_long, iki_read_version);
+    fll_program_print_help_header(file, context, iki_read_program_name_long_s, iki_read_program_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -25,35 +25,35 @@ extern "C" {
 
     f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(file, context, iki_read_short_at, iki_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select variable at this numeric index.");
-    fll_program_print_help_option(file, context, iki_read_short_line, iki_read_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the variables at the given line within the file.");
-    fll_program_print_help_option(file, context, iki_read_short_name, iki_read_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select variables with this name.");
-    fll_program_print_help_option(file, context, iki_read_short_whole, iki_read_long_whole, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print all of the data instead of just the IKI variable data.");
+    fll_program_print_help_option(file, context, iki_read_short_at_s, iki_read_long_at_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select variable at this numeric index.");
+    fll_program_print_help_option(file, context, iki_read_short_line_s, iki_read_long_line_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the variables at the given line within the file.");
+    fll_program_print_help_option(file, context, iki_read_short_name_s, iki_read_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select variables with this name.");
+    fll_program_print_help_option(file, context, iki_read_short_whole_s, iki_read_long_whole_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print all of the data instead of just the IKI variable data.");
 
     f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(file, context, iki_read_short_content, iki_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the variable content (default).");
-    fll_program_print_help_option(file, context, iki_read_short_literal, iki_read_long_literal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the entire variable (aka: object, content, and syntax).");
-    fll_program_print_help_option(file, context, iki_read_short_object, iki_read_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the variable name (aka: object).");
-    fll_program_print_help_option(file, context, iki_read_short_total, iki_read_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the total number of variables.");
+    fll_program_print_help_option(file, context, iki_read_short_content_s, iki_read_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the variable content (default).");
+    fll_program_print_help_option(file, context, iki_read_short_literal_s, iki_read_long_literal_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the entire variable (aka: object, content, and syntax).");
+    fll_program_print_help_option(file, context, iki_read_short_object_s, iki_read_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the variable name (aka: object).");
+    fll_program_print_help_option(file, context, iki_read_short_total_s, iki_read_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the total number of variables.");
 
     f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(file, context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Substitute the entire variable for the given name and content value with the given string.");
+    fll_program_print_help_option(file, context, iki_read_short_substitute_s, iki_read_long_substitute_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Substitute the entire variable for the given name and content value with the given string.");
 
-    fll_program_print_help_usage(file, context, iki_read_name, "filename(s)");
+    fll_program_print_help_usage(file, context, iki_read_program_name_s, "filename(s)");
 
     fl_print_format(" %[Notes:%]%c", file.stream, context.set.important, context.set.important, f_string_eol_s[0]);
     fl_print_format("  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  This %[%s%s%] option, requires 3 additional parameters:", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_replace, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%].%c", file.stream, context.set.notable, context.set.notable, iki_read_substitution_with, context.set.notable, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  This %[%s%s%] option, requires 3 additional parameters:", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable);
+    fl_print_format(" %[<%]%s%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, context.set.notable);
+    fl_print_format(" %[<%]%s%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_replace_s, context.set.notable, context.set.notable);
+    fl_print_format(" %[<%]%s%[>%].%c", file.stream, context.set.notable, context.set.notable, iki_read_substitution_with_s, context.set.notable, context.set.notable, f_string_eol_s[0]);
 
-    fl_print_format("    %[%s%]: The name of the vocabulary whose content is to be substituted.%c", file.stream, context.set.notable, iki_read_substitution_vocabulary, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("    %[%s%]: The content matching this exact string will be substituted.%c", file.stream, context.set.notable, iki_read_substitution_replace, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("    %[%s%]: The new string to use as the substitute.%c%c", file.stream, context.set.notable, iki_read_substitution_with, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("    %[%s%]: The name of the vocabulary whose content is to be substituted.%c", file.stream, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    %[%s%]: The content matching this exact string will be substituted.%c", file.stream, context.set.notable, iki_read_substitution_replace_s, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    %[%s%]: The new string to use as the substitute.%c%c", file.stream, context.set.notable, iki_read_substitution_with_s, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     fl_print_format("  The vocabulary and replacement are case-sensitive and must exactly match.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
@@ -70,7 +70,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, iki_read_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, iki_read_total_parameters_d);
 
       {
         f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color, iki_read_parameter_light, iki_read_parameter_dark };
@@ -151,7 +151,7 @@ extern "C" {
     }
 
     if (main->parameters[iki_read_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output.to, iki_read_version);
+      fll_program_print_version(main->output.to, iki_read_program_version_s);
 
       iki_read_main_delete(main);
       return F_none;
@@ -163,7 +163,7 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_at, main->error.notable);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_at_s, main->error.notable);
           fl_print_format("%[' requires a positive number.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -180,7 +180,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, f_console_symbol_long_enable iki_read_long_at, arguments.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, F_console_symbol_long_s_enable iki_read_long_at_s, arguments.argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -192,9 +192,9 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_at, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_at_s, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_whole, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_whole_s, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -209,7 +209,7 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_line, main->error.notable);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_line_s, main->error.notable);
           fl_print_format("%[' requires a positive number.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -226,7 +226,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, f_console_symbol_long_enable iki_read_long_line, arguments.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, F_console_symbol_long_s_enable iki_read_long_line_s, arguments.argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -239,7 +239,7 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_name, main->error.notable);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_name_s, main->error.notable);
           fl_print_format("%[' requires a string.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -254,7 +254,7 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_substitute, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, main->error.notable);
             fl_print_format("%[' requires 3 strings.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -268,9 +268,9 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_substitute, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total_s, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -286,9 +286,9 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal_s, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object_s, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -302,9 +302,9 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal_s, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_content, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_content_s, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -318,9 +318,9 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal_s, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total_s, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -337,9 +337,9 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object_s, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_content, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_content_s, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -353,9 +353,9 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object_s, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total_s, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -380,9 +380,9 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_whole, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_whole_s, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total_s, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -404,7 +404,7 @@ extern "C" {
       if (main->process_pipe) {
         f_file_t file = f_file_t_initialize;
 
-        file.id = f_type_descriptor_input;
+        file.id = F_type_descriptor_input_d;
 
         status = f_file_read(file, &main->buffer);
 
@@ -490,7 +490,7 @@ extern "C" {
 #ifndef _di_iki_read_main_delete_
   f_status_t iki_read_main_delete(iki_read_main_t *main) {
 
-    for (f_array_length_t i = 0; i < iki_read_total_parameters; ++i) {
+    for (f_array_length_t i = 0; i < iki_read_total_parameters_d; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

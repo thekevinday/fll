@@ -24,54 +24,54 @@ extern "C" {
  * 64-bit is the designed default.
  */
 #ifndef _di_f_type_number_64_t_
-  #define f_conversion_digits_binary_unsigned 64
-  #define f_conversion_digits_binary_signed   63
+  #define F_conversion_digits_binary_unsigned_d 64
+  #define F_conversion_digits_binary_signed_d   63
 
-  #define f_conversion_digits_octal_unsigned 22
-  #define f_conversion_digits_octal_signed   22
+  #define F_conversion_digits_octal_unsigned_d 22
+  #define F_conversion_digits_octal_signed_d   22
 
-  #define f_conversion_digits_decimal_unsigned 19
-  #define f_conversion_digits_decimal_signed   19
+  #define F_conversion_digits_decimal_unsigned_d 19
+  #define F_conversion_digits_decimal_signed_d   19
 
-  #define f_conversion_digits_duodecimal_unsigned 18
-  #define f_conversion_digits_duodecimal_signed   18
+  #define F_conversion_digits_duodecimal_unsigned_d 18
+  #define F_conversion_digits_duodecimal_signed_d   18
 
-  #define f_conversion_digits_hexidecimal_unsigned 16
-  #define f_conversion_digits_hexidecimal_signed   16
+  #define F_conversion_digits_hexidecimal_unsigned_d 16
+  #define F_conversion_digits_hexidecimal_signed_d   16
 #endif // _di_f_type_number_64_t_
 
 #ifdef _en_f_type_number_32_t_
-  #define f_conversion_digits_binary_unsigned 32
-  #define f_conversion_digits_binary_signed   31
+  #define F_conversion_digits_binary_unsigned_d 32
+  #define F_conversion_digits_binary_signed_d   31
 
-  #define f_conversion_digits_octal_unsigned 10
-  #define f_conversion_digits_octal_signed   10
+  #define F_conversion_digits_octal_unsigned_d 10
+  #define F_conversion_digits_octal_signed_d   10
 
-  #define f_conversion_digits_decimal_unsigned 9
-  #define f_conversion_digits_decimal_signed   9
+  #define F_conversion_digits_decimal_unsigned_d 9
+  #define F_conversion_digits_decimal_signed_d   9
 
-  #define f_conversion_digits_duodecimal_unsigned 8
-  #define f_conversion_digits_duodecimal_signed   8
+  #define F_conversion_digits_duodecimal_unsigned_d 8
+  #define F_conversion_digits_duodecimal_signed_d   8
 
-  #define f_conversion_digits_hexidecimal_unsigned 8
-  #define f_conversion_digits_hexidecimal_signed   8
+  #define F_conversion_digits_hexidecimal_unsigned_d 8
+  #define F_conversion_digits_hexidecimal_signed_d   8
 #endif // _en_f_type_number_32_t_
 
 #ifdef _en_f_type_number_128_t_
-  #define f_conversion_digits_binary_unsigned 128
-  #define f_conversion_digits_binary_signed   127
+  #define F_conversion_digits_binary_unsigned_d 128
+  #define F_conversion_digits_binary_signed_d   127
 
-  #define f_conversion_digits_octal_unsigned 43
-  #define f_conversion_digits_octal_signed   43
+  #define F_conversion_digits_octal_unsigned_d 43
+  #define F_conversion_digits_octal_signed_d   43
 
-  #define f_conversion_digits_decimal_unsigned 38
-  #define f_conversion_digits_decimal_signed   38
+  #define F_conversion_digits_decimal_unsigned_d 38
+  #define F_conversion_digits_decimal_signed_d   38
 
-  #define f_conversion_digits_duodecimal_unsigned 36
-  #define f_conversion_digits_duodecimal_signed   36
+  #define F_conversion_digits_duodecimal_unsigned_d 36
+  #define F_conversion_digits_duodecimal_signed_d   36
 
-  #define f_conversion_digits_hexidecimal_unsigned 32
-  #define f_conversion_digits_hexidecimal_signed   32
+  #define F_conversion_digits_hexidecimal_unsigned_d 32
+  #define F_conversion_digits_hexidecimal_signed_d   32
 #endif // _en_f_type_number_128_t_
 
 /**
@@ -136,12 +136,12 @@ extern "C" {
  * - base 16: 0x, 0X.
  */
 #ifndef _di_f_conversion_data_flag_
-  #define f_conversion_data_flag_align_left    0x1
-  #define f_conversion_data_flag_base_prepend  0x2
-  #define f_conversion_data_flag_base_upper    0x4
-  #define f_conversion_data_flag_sign_always   0x8
-  #define f_conversion_data_flag_sign_pad      0x10
-  #define f_conversion_data_flag_zeros_leading 0x20
+  #define F_conversion_data_flag_align_left_d    0x1
+  #define F_conversion_data_flag_base_prepend_d  0x2
+  #define F_conversion_data_flag_base_upper_d    0x4
+  #define F_conversion_data_flag_sign_always_d   0x8
+  #define F_conversion_data_flag_sign_pad_d      0x10
+  #define F_conversion_data_flag_zeros_leading_d 0x20
 #endif // _di_f_conversion_data_flag_
 
 #ifdef __cplusplus

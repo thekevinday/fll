@@ -21,7 +21,7 @@ extern "C" {
       }
     }
 
-    f_file_t file = macro_f_file_t_initialize2(0, -1, f_file_flag_write_only);
+    f_file_t file = macro_f_file_t_initialize2(0, -1, F_file_flag_write_only_d);
     f_status_t status = F_none;
     f_array_length_t length = 0;
 
@@ -29,7 +29,7 @@ extern "C" {
 
       if (!control_group.groups.array[i].used) continue;
 
-      length = control_group.path.used + control_group.groups.array[i].used + f_control_group_path_system_suffix_length;
+      length = control_group.path.used + control_group.groups.array[i].used + F_control_group_path_system_suffix_s_length;
 
       char path[length + 1];
 
@@ -38,7 +38,7 @@ extern "C" {
       }
 
       memcpy(path + control_group.path.used, control_group.groups.array[i].string, control_group.groups.array[i].used);
-      memcpy(path + control_group.path.used + f_control_group_path_system_default_length, f_control_group_path_system_suffix, f_control_group_path_system_suffix_length);
+      memcpy(path + control_group.path.used + F_control_group_path_system_default_s_length, F_control_group_path_system_suffix_s, F_control_group_path_system_suffix_s_length);
 
       path[length] = 0;
 

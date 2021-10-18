@@ -17,21 +17,64 @@ extern "C" {
 #endif
 
 #ifndef _di_f_color_max_size_
-  #define f_color_max_size 7
+  #define F_color_max_size_d 7
 #endif // _di_f_color_max_size_
 
 #ifndef _di_f_color_types_t_
   typedef char f_color_code_t;
 
-  #define f_color_code_none      0
-  #define f_color_code_linux     1
-  #define f_color_code_xterminal 2
+  #define F_color_code_none_d      0
+  #define F_color_code_linux_d     1
+  #define F_color_code_xterminal_d 2
 #endif // _di_f_color_types_t_
 
 /**
  * Provide a global color related strings.
  */
 #ifndef _di_f_color_strings_s_
+  #define F_color_string_begin_s  "\033[";
+  #define F_color_string_end_s    "m";
+  #define F_color_string_medium_s ";";
+
+  #define F_color_string_code_reset_s            "0"
+  #define F_color_string_code_bold_s             "1"
+  #define F_color_string_code_underline_s        "4"
+  #define F_color_string_code_blink_s            "5"
+  #define F_color_string_code_reverse_s          "7"
+  #define F_color_string_code_conceal_s          "8"
+  #define F_color_string_code_black_s            "30"
+  #define F_color_string_code_red_s              "31"
+  #define F_color_string_code_green_s            "32"
+  #define F_color_string_code_yellow_s           "33"
+  #define F_color_string_code_blue_s             "34"
+  #define F_color_string_code_purple_s           "35"
+  #define F_color_string_code_teal_s             "36"
+  #define F_color_string_code_white_s            "37"
+  #define F_color_string_code_black_bg_s         "40"
+  #define F_color_string_code_red_bg_s           "41"
+  #define F_color_string_code_green_bg_s         "42"
+  #define F_color_string_code_yellow_bg_s        "43"
+  #define F_color_string_code_blue_bg_s          "44"
+  #define F_color_string_code_purple_bg_s        "45"
+  #define F_color_string_code_teal_bg_s          "46"
+  #define F_color_string_code_white_bg_s         "47"
+  #define F_color_string_code_bright_black_s     "90"
+  #define F_color_string_code_bright_red_s       "91"
+  #define F_color_string_code_bright_green_s     "92"
+  #define F_color_string_code_bright_yellow_s    "93"
+  #define F_color_string_code_bright_blue_s      "94"
+  #define F_color_string_code_bright_purple_s    "95"
+  #define F_color_string_code_bright_teal_s      "96"
+  #define F_color_string_code_bright_white_s     "97"
+  #define F_color_string_code_bright_black_bg_s  "100"
+  #define F_color_string_code_bright_red_bg_s    "101"
+  #define F_color_string_code_bright_green_bg_s  "102"
+  #define F_color_string_code_bright_yellow_bg_s "103"
+  #define F_color_string_code_bright_blue_bg_s   "104"
+  #define F_color_string_code_bright_purple_bg_s "105"
+  #define F_color_string_code_bright_teal_bg_s   "106"
+  #define F_color_string_code_bright_white_bg_s  "107"
+
   extern const f_string_t f_color_string_begin_s;
   extern const f_string_t f_color_string_end_s;
   extern const f_string_t f_color_string_medium_s;
@@ -81,16 +124,19 @@ extern "C" {
  *
  * Color modes communicate how the color is supposed to be.
  *
- * The f_color_mode_none define designates that there is no assigned mode (the mode is undefined).
- * The f_color_mode_no_color define designates that the color mode is set to no color (disable colors).
+ * F_color_mode_*:
+ * - none:     define designates that there is no assigned mode (the mode is undefined).
+ * - no_color: define designates that the color mode is set to no color (disable colors).
+ * - dark:     define designates that the color mode is for dark backgrounds.
+ * - light:    define designates that the color mode is for light backgrounds.
  */
 #ifndef _di_f_color_mode_t_
   typedef uint8_t f_color_mode_t;
 
-  #define f_color_mode_none      0
-  #define f_color_mode_no_color  1
-  #define f_color_mode_dark      2
-  #define f_color_mode_light     3
+  #define F_color_mode_none_d      0
+  #define F_color_mode_no_color_d  1
+  #define F_color_mode_dark_d      2
+  #define F_color_mode_light_d     3
 #endif // _di_f_color_mode_t_
 
 #ifndef _di_f_color_format_t_
@@ -402,12 +448,12 @@ extern "C" {
     f_string_dynamic_t normal_reset;
   } f_color_context_t;
 
-  #define f_color_context_t_initialize { f_color_t_initialize_linux, f_color_format_t_initialize_linux, f_color_mode_none, f_color_set_context_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
+  #define f_color_context_t_initialize { f_color_t_initialize_linux, f_color_format_t_initialize_linux, F_color_mode_none_d, f_color_set_context_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
   #define macro_f_color_context_t_clear(context) \
     macro_f_color_t_clear(context.list) \
     macro_f_color_format_t_clear(context.format) \
-    context.mode = f_color_mode_none; \
+    context.mode = F_color_mode_none_d; \
     macro_f_color_set_context_t_clear(context.set) \
     macro_f_string_dynamic_t_clear(context.error) \
     macro_f_string_dynamic_t_clear(context.title) \
@@ -418,15 +464,15 @@ extern "C" {
     macro_f_string_dynamic_t_clear(context.normal_reset)
 
   #define macro_f_color_context_t_new(status, context) \
-    macro_f_string_dynamic_t_resize(status, context.reset, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.warning, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.error, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.title, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.notable, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.important, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.standout, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal_reset, f_color_max_size + 1)
+    macro_f_string_dynamic_t_resize(status, context.reset, F_color_max_size_d + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.warning, F_color_max_size_d + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.error, F_color_max_size_d + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.title, F_color_max_size_d + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.notable, F_color_max_size_d + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.important, F_color_max_size_d + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.standout, F_color_max_size_d + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal, F_color_max_size_d + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal_reset, F_color_max_size_d + 1)
 
   #define macro_f_color_context_t_delete_simple(context) \
     macro_f_string_dynamic_t_delete_simple(context.reset) \

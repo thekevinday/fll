@@ -20,7 +20,7 @@ extern "C" {
     bool found_data = F_false;
 
     if (!nest->used) {
-      macro_f_fss_nest_t_resize(status2, (*nest), f_fss_default_allocation_step);
+      macro_f_fss_nest_t_resize(status2, (*nest), F_fss_default_allocation_step_d);
       if (F_status_is_error(status2)) return status2;
     }
     else {
@@ -30,7 +30,7 @@ extern "C" {
     do {
       do {
         if (nest->depth[0].used == nest->depth[0].size) {
-          macro_f_fss_items_t_resize(status2, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
+          macro_f_fss_items_t_resize(status2, nest->depth[0], nest->depth[0].used + F_fss_default_allocation_step_d);
           if (F_status_is_error(status)) return status;
         }
 
@@ -119,7 +119,7 @@ extern "C" {
         return F_none_stop;
       }
 
-    } while (range->start < f_string_t_size);
+    } while (range->start < F_string_t_size_d);
 
     return F_status_is_error(F_number_overflow);
   }

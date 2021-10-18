@@ -34,7 +34,7 @@ extern "C" {
       memcpy(path + control_group.path.used, control_group.groups.array[i].string, control_group.groups.array[i].used);
       path[length] = 0;
 
-      status = fl_directory_create(path, length, f_file_mode_all_rwx);
+      status = fl_directory_create(path, length, F_file_mode_all_rwx_d);
       if (F_status_is_error(status)) break;
     } // for
 

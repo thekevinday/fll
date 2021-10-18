@@ -61,7 +61,7 @@ extern "C" {
       f_print(id.name, id.used, main.output.to.stream);
 
       if (main.parameters[fss_identify_parameter_object].result != f_console_result_found || main.parameters[fss_identify_parameter_content].result == f_console_result_found) {
-        f_print_character(f_fss_type_header_part5, main.output.to.stream);
+        f_print_terminated(f_fss_type_header_part5_s, main.output.to.stream);
       }
     }
 

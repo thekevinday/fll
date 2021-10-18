@@ -98,7 +98,7 @@ extern "C" {
 
     // load colors unless told not to.
     if (decision == choices.id[0]) {
-      context->mode = f_color_mode_no_color;
+      context->mode = F_color_mode_no_color_d;
     }
     else {
       f_status_t allocation_status = F_none;
@@ -159,7 +159,7 @@ extern "C" {
           status = F_none;
         }
         else {
-          macro_f_memory_structure_increment(status, (*destination), 1, f_memory_default_allocation_small, macro_f_string_dynamics_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, (*destination), 1, F_memory_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
           if (F_status_is_error(status)) break;
 
           destination->array[destination->used++] = ripped;
@@ -231,7 +231,7 @@ extern "C" {
           status = F_none;
         }
         else {
-          macro_f_string_dynamics_t_increase(status, f_memory_default_allocation_small, (*destination));
+          macro_f_string_dynamics_t_increase(status, F_memory_default_allocation_small_d, (*destination));
           if (F_status_is_error(status)) return status;
 
           destination->array[destination->used++] = ripped;

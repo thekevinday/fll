@@ -32,29 +32,29 @@ extern "C" {
  * The path extension separator is for the separator that separates the main part of a file path with its extension (which is generally a '.').
  */
 #ifndef _di_f_path_defines_
-  #define f_path_separator          f_string_ascii_slash_forward
-  #define f_path_separator_current  f_string_ascii_period
-  #define f_path_separator_variable f_string_ascii_colon
+  #define F_path_separator_s          F_string_ascii_slash_forward_s
+  #define F_path_separator_current_s  F_string_ascii_period_s
+  #define F_path_separator_variable_s F_string_ascii_colon_s
 
-  #define f_path_separator_length          1
-  #define f_path_separator_current_length  1
-  #define f_path_separator_variable_length 1
+  #define F_path_separator_s_length          1
+  #define F_path_separator_current_s_length  1
+  #define F_path_separator_variable_s_length 1
 
-  #define f_path_extension_separator f_string_ascii_period
+  #define F_path_extension_separator_s F_string_ascii_period_s
 
-  #define f_path_extension_separator_length 1
+  #define F_path_extension_separator_s_length 1
 
-  #define f_path_environment         "PATH"
-  #define f_path_home_wildcard       f_string_ascii_tilde
-  #define f_path_present_working     "PWD"
-  #define f_path_present_working_old "OLDPWD"
+  #define F_path_environment_s         "PATH"
+  #define F_path_home_wildcard_s       F_string_ascii_tilde_s
+  #define F_path_present_working_s     "PWD"
+  #define F_path_present_working_old_s "OLDPWD"
 
-  #define f_path_environment_length         4
-  #define f_path_home_wildcard_length       1
-  #define f_path_present_working_length     3
-  #define f_path_present_working_old_length 6
+  #define F_path_environment_s_length         4
+  #define F_path_home_wildcard_s_length       1
+  #define F_path_present_working_s_length     3
+  #define F_path_present_working_old_s_length 6
 
-  #define f_path_length_max PATH_MAX
+  #define F_path_length_max_d PATH_MAX
 
   extern const f_string_t f_path_separator_s;
   extern const f_string_t f_path_separator_current_s;
@@ -78,67 +78,67 @@ extern "C" {
   #define _di_path_tree_hierarchy_standard_
 
   // KFS Root Level
-  #define f_path_tree_devices   f_path_separator "devices"
-  #define f_path_tree_external  f_path_separator "external"
-  #define f_path_tree_libraries f_path_separator "libraries"
-  #define f_path_tree_programs  f_path_separator "programs"
-  #define f_path_tree_temporary f_path_separator "temporary"
-  #define f_path_tree_home      f_path_separator "home"
-  #define f_path_tree_run       f_path_separator "run"
-  #define f_path_tree_binary    f_path_separator ".system"
+  #define F_path_tree_devices_s   F_path_separator_s "devices"
+  #define F_path_tree_external_s  F_path_separator_s "external"
+  #define F_path_tree_libraries_s F_path_separator_s "libraries"
+  #define F_path_tree_programs_s  F_path_separator_s "programs"
+  #define F_path_tree_temporary_s F_path_separator_s "temporary"
+  #define F_path_tree_home_s      F_path_separator_s "home"
+  #define F_path_tree_run_s       F_path_separator_s "run"
+  #define F_path_tree_binary_s    F_path_separator_s ".system"
 
   // Kernel Level
-  #define f_path_tree_boot      f_path_devices f_path_separator "boot"
-  #define f_path_tree_hardware  f_path_devices f_path_separator "devices"
-  #define f_path_tree_processes f_path_devices f_path_separator "processes"
-  #define f_path_tree_system    f_path_devices f_path_separator "system"
+  #define F_path_tree_boot_s      f_path_devices F_path_separator_s "boot"
+  #define F_path_tree_hardware_s  f_path_devices F_path_separator_s "devices"
+  #define F_path_tree_processes_s f_path_devices F_path_separator_s "processes"
+  #define F_path_tree_system_s    f_path_devices F_path_separator_s "system"
 
   // Program Level
-  #define f_path_tree_programs_public    f_path_programs f_path_separator "public"
-  #define f_path_tree_programs_system    f_path_programs f_path_separator "system"
-  #define f_path_tree_programs_remote    f_path_programs f_path_separator "remote"
-  #define f_path_tree_programs_services  f_path_programs f_path_separator "targets"
-  #define f_path_tree_programs_toolchain f_path_programs f_path_separator "toolchain"
-  #define f_path_tree_programs_users     f_path_programs f_path_separator "users"
-  #define f_path_tree_programs_susers    f_path_programs f_path_separator "users"
-  #define f_path_tree_programs_boot      f_path_boot f_path_separator "programs"
-  #define f_path_tree_programs_sboot     f_path_boot f_path_separator "programs"
+  #define F_path_tree_programs_public_s    f_path_programs F_path_separator_s "public"
+  #define F_path_tree_programs_system_s    f_path_programs F_path_separator_s "system"
+  #define F_path_tree_programs_remote_s    f_path_programs F_path_separator_s "remote"
+  #define F_path_tree_programs_services_s  f_path_programs F_path_separator_s "targets"
+  #define F_path_tree_programs_toolchain_s f_path_programs F_path_separator_s "toolchain"
+  #define F_path_tree_programs_users_s     f_path_programs F_path_separator_s "users"
+  #define F_path_tree_programs_susers_s    f_path_programs F_path_separator_s "users"
+  #define F_path_tree_programs_boot_s      f_path_boot F_path_separator_s "programs"
+  #define F_path_tree_programs_sboot_s     f_path_boot F_path_separator_s "programs"
 
   // Library Level
-  #define f_path_tree_libraries_public    f_path_libraries f_path_separator "public"
-  #define f_path_tree_libraries_system    f_path_libraries f_path_separator "system"
-  #define f_path_tree_libraries_remote    f_path_libraries f_path_separator "remote"
-  #define f_path_tree_libraries_services  f_path_libraries f_path_separator "targets"
-  #define f_path_tree_libraries_toolchain f_path_libraries f_path_separator "toolchain"
-  #define f_path_tree_libraries_users     f_path_libraries f_path_separator "users"
-  #define f_path_tree_libraries_boot      f_path_boot f_path_separator "libraries"
+  #define F_path_tree_libraries_public_s    f_path_libraries F_path_separator_s "public"
+  #define F_path_tree_libraries_system_s    f_path_libraries F_path_separator_s "system"
+  #define F_path_tree_libraries_remote_s    f_path_libraries F_path_separator_s "remote"
+  #define F_path_tree_libraries_services_s  f_path_libraries F_path_separator_s "targets"
+  #define F_path_tree_libraries_toolchain_s f_path_libraries F_path_separator_s "toolchain"
+  #define F_path_tree_libraries_users_s     f_path_libraries F_path_separator_s "users"
+  #define F_path_tree_libraries_boot_s      f_path_boot F_path_separator_s "libraries"
 
   // Home Level
-  #define f_path_tree_home_services f_path_home f_path_separator "services"
-  #define f_path_tree_home_share    f_path_home f_path_separator "share"
-  #define f_path_tree_home_users    f_path_home f_path_separator "users"
-  #define f_path_tree_home_websites f_path_home f_path_separator "websites"
+  #define F_path_tree_home_services_s f_path_home F_path_separator_s "services"
+  #define F_path_tree_home_share_s    f_path_home F_path_separator_s "share"
+  #define F_path_tree_home_users_s    f_path_home F_path_separator_s "users"
+  #define F_path_tree_home_websites_s f_path_home F_path_separator_s "websites"
 
   // System Level
-  #define f_path_tree_system_logs      f_path_system f_path_separator "logs"
-  #define f_path_tree_system_settings  f_path_system f_path_separator "settings"
-  #define f_path_tree_system_data      f_path_system f_path_separator "data"
-  #define f_path_tree_system_variables f_path_system f_path_separator "variables" // for backwards FHS support only, use of this directory is considered bad practice for KFS, use f_path_temporary_variables instead
+  #define F_path_tree_system_logs_s      f_path_system F_path_separator_s "logs"
+  #define F_path_tree_system_settings_s  f_path_system F_path_separator_s "settings"
+  #define F_path_tree_system_data_s      f_path_system F_path_separator_s "data"
+  #define F_path_tree_system_variables_s f_path_system F_path_separator_s "variables" // for backwards FHS support only, use of this directory is considered bad practice for KFS, use f_path_temporary_variables instead
 
   // Temporary Level
-  #define f_path_tree_temporary_public    f_path_temporary f_path_separator "public"
-  #define f_path_tree_temporary_services  f_path_temporary f_path_separator "services"
-  #define f_path_tree_temporary_users     f_path_temporary f_path_separator "users"
-  #define f_path_tree_temporary_variables f_path_temporary f_path_separator "variables"
+  #define F_path_tree_temporary_public_s    f_path_temporary F_path_separator_s "public"
+  #define F_path_tree_temporary_services_s  f_path_temporary F_path_separator_s "services"
+  #define F_path_tree_temporary_users_s     f_path_temporary F_path_separator_s "users"
+  #define F_path_tree_temporary_variables_s f_path_temporary F_path_separator_s "variables"
 
   // Private User Directories
-  #define f_path_tree_user_downloads "downloads"
-  #define f_path_tree_user_desktop   "desktop"
-  #define f_path_tree_user_private   "private"
-  #define f_path_tree_user_settings  "settings"
-  #define f_path_tree_user_data      "data"
-  #define f_path_tree_user_temporary "temporary"
-  #define f_path_tree_user_shared    "shared"
+  #define F_path_tree_user_downloads_s "downloads"
+  #define F_path_tree_user_desktop_s   "desktop"
+  #define F_path_tree_user_private_s   "private"
+  #define F_path_tree_user_settings_s  "settings"
+  #define F_path_tree_user_data_s      "data"
+  #define F_path_tree_user_temporary_s "temporary"
+  #define F_path_tree_user_shared_s    "shared"
 #endif // _di_path_tree_kevux_standard_
 
 /**
@@ -151,133 +151,133 @@ extern "C" {
   #define _di_path_tree_kevux_standard_
 
   // KFS Root Level
-  #define f_path_tree_devices   f_path_separator
-  #define f_path_tree_external  f_path_separator "mnt"
-  #define f_path_tree_libraries f_path_separator
-  #define f_path_tree_programs  f_path_separator
-  #define f_path_tree_temporary f_path_separator
-  #define f_path_tree_home      f_path_separator "home"
-  #define f_path_tree_run       f_path_separator "run"
-  #define f_path_tree_binary    f_path_separator ".system"
+  #define F_path_tree_devices_s   F_path_separator_s
+  #define F_path_tree_external_s  F_path_separator_s "mnt"
+  #define F_path_tree_libraries_s F_path_separator_s
+  #define F_path_tree_programs_s  F_path_separator_s
+  #define F_path_tree_temporary_s F_path_separator_s
+  #define F_path_tree_home_s      F_path_separator_s "home"
+  #define F_path_tree_run_s       F_path_separator_s "run"
+  #define F_path_tree_binary_s    F_path_separator_s ".system"
 
   // FHS Root Level
-  #define f_path_tree_boot      f_path_separator "boot"
-  #define f_path_tree_hardware  f_path_separator "dev"
-  #define f_path_tree_processes f_path_separator "proc"
-  #define f_path_tree_system    f_path_separator "sysfs"
+  #define F_path_tree_boot_s      F_path_separator_s "boot"
+  #define F_path_tree_hardware_s  F_path_separator_s "dev"
+  #define F_path_tree_processes_s F_path_separator_s "proc"
+  #define F_path_tree_system_s    F_path_separator_s "sysfs"
 
   // Program Level
-  #define f_path_tree_programs_public    f_path_separator "usr" f_path_separator "bin"
-  #define f_path_tree_programs_system    f_path_separator "usr" f_path_separator "sbin"
-  #define f_path_tree_programs_remote    f_path_separator "usr" f_path_separator "bin"
-  #define f_path_tree_programs_services  f_path_separator "usr" f_path_separator "sbin"
-  #define f_path_tree_programs_toolchain f_path_separator "usr" f_path_separator "bin"
-  #define f_path_tree_programs_users     f_path_separator "usr" f_path_separator "local" f_path_separator "bin"
-  #define f_path_tree_programs_susers    f_path_separator "usr" f_path_separator "local" f_path_separator "sbin"
-  #define f_path_tree_programs_boot      f_path_separator "bin"
-  #define f_path_tree_programs_sboot     f_path_separator "sbin"
+  #define F_path_tree_programs_public_s    F_path_separator_s "usr" F_path_separator_s "bin"
+  #define F_path_tree_programs_system_s    F_path_separator_s "usr" F_path_separator_s "sbin"
+  #define F_path_tree_programs_remote_s    F_path_separator_s "usr" F_path_separator_s "bin"
+  #define F_path_tree_programs_services_s  F_path_separator_s "usr" F_path_separator_s "sbin"
+  #define F_path_tree_programs_toolchain_s F_path_separator_s "usr" F_path_separator_s "bin"
+  #define F_path_tree_programs_users_s     F_path_separator_s "usr" F_path_separator_s "local" F_path_separator_s "bin"
+  #define F_path_tree_programs_susers_s    F_path_separator_s "usr" F_path_separator_s "local" F_path_separator_s "sbin"
+  #define F_path_tree_programs_boot_s      F_path_separator_s "bin"
+  #define F_path_tree_programs_sboot_s     F_path_separator_s "sbin"
 
   // Library Level
-  #define f_path_tree_libraries_public    f_path_separator "usr" f_path_separator "lib"
-  #define f_path_tree_libraries_system    f_path_separator "usr" f_path_separator "lib"
-  #define f_path_tree_libraries_remote    f_path_separator "usr" f_path_separator "lib"
-  #define f_path_tree_libraries_services  f_path_separator "usr" f_path_separator "lib"
-  #define f_path_tree_libraries_toolchain f_path_separator "usr" f_path_separator "lib"
-  #define f_path_tree_libraries_users     f_path_separator "usr" f_path_separator "local" f_path_separator "lib"
-  #define f_path_tree_libraries_boot      f_path_separator "lib"
+  #define F_path_tree_libraries_public_s    F_path_separator_s "usr" F_path_separator_s "lib"
+  #define F_path_tree_libraries_system_s    F_path_separator_s "usr" F_path_separator_s "lib"
+  #define F_path_tree_libraries_remote_s    F_path_separator_s "usr" F_path_separator_s "lib"
+  #define F_path_tree_libraries_services_s  F_path_separator_s "usr" F_path_separator_s "lib"
+  #define F_path_tree_libraries_toolchain_s F_path_separator_s "usr" F_path_separator_s "lib"
+  #define F_path_tree_libraries_users_s     F_path_separator_s "usr" F_path_separator_s "local" F_path_separator_s "lib"
+  #define F_path_tree_libraries_boot_s      F_path_separator_s "lib"
 
   // Home Level
-  #define f_path_tree_home_services f_path_separator "srv"
-  #define f_path_tree_home_share    f_path_separator ""
-  #define f_path_tree_home_users    f_path_home
-  #define f_path_tree_home_websites f_path_separator "srv" f_path_separator "www"
+  #define F_path_tree_home_services_s F_path_separator_s "srv"
+  #define F_path_tree_home_share_s    F_path_separator_s ""
+  #define F_path_tree_home_users_s    f_path_home
+  #define F_path_tree_home_websites_s F_path_separator_s "srv" F_path_separator_s "www"
 
   // System Level
-  #define f_path_tree_system_logs      f_path_separator "var" f_path_separator "log"
-  #define f_path_tree_system_settings  f_path_separator "etc"
-  #define f_path_tree_system_data      f_path_separator "usr" f_path_separator "share"
-  #define f_path_tree_system_variables f_path_separator "var"
+  #define F_path_tree_system_logs_s      F_path_separator_s "var" F_path_separator_s "log"
+  #define F_path_tree_system_settings_s  F_path_separator_s "etc"
+  #define F_path_tree_system_data_s      F_path_separator_s "usr" F_path_separator_s "share"
+  #define F_path_tree_system_variables_s F_path_separator_s "var"
 
   // Temporary Level
-  #define f_path_tree_temporary_public    f_path_separator "tmp"
-  #define f_path_tree_temporary_services  f_path_separator "tmp"
-  #define f_path_tree_temporary_users     f_path_separator "tmp"
-  #define f_path_tree_temporary_variables f_path_separator "var" f_path_separator "tmp"
+  #define F_path_tree_temporary_public_s    F_path_separator_s "tmp"
+  #define F_path_tree_temporary_services_s  F_path_separator_s "tmp"
+  #define F_path_tree_temporary_users_s     F_path_separator_s "tmp"
+  #define F_path_tree_temporary_variables_s F_path_separator_s "var" F_path_separator_s "tmp"
 
   // Private User Directories
-  #define f_path_tree_user_downloads "downloads"
-  #define f_path_tree_user_desktop   "desktop"
-  #define f_path_tree_user_private   ""
-  #define f_path_tree_user_settings  ""
-  #define f_path_tree_user_data      ""
-  #define f_path_tree_user_temporary ""
-  #define f_path_tree_user_shared    ""
+  #define F_path_tree_user_downloads_s "downloads"
+  #define F_path_tree_user_desktop_s   "desktop"
+  #define F_path_tree_user_private_s   ""
+  #define F_path_tree_user_settings_s  ""
+  #define F_path_tree_user_data_s      ""
+  #define F_path_tree_user_temporary_s ""
+  #define F_path_tree_user_shared_s    ""
 #endif // _di_path_tree_hierarchy_standard_
 
 #ifdef _di_path_tree_s_
 
   // KFS Root Level
-  extern const f_string_t f_path_tree_devices;
-  extern const f_string_t f_path_tree_external;
-  extern const f_string_t f_path_tree_libraries;
-  extern const f_string_t f_path_tree_programs;
-  extern const f_string_t f_path_tree_temporary;
-  extern const f_string_t f_path_tree_home;
-  extern const f_string_t f_path_tree_run;
-  extern const f_string_t f_path_tree_binary;
+  extern const f_string_t f_path_tree_devices_s;
+  extern const f_string_t f_path_tree_external_s;
+  extern const f_string_t f_path_tree_libraries_s;
+  extern const f_string_t f_path_tree_programs_s;
+  extern const f_string_t f_path_tree_temporary_s;
+  extern const f_string_t f_path_tree_home_s;
+  extern const f_string_t f_path_tree_run_s;
+  extern const f_string_t f_path_tree_binary_s;
 
   // FHS Root Level
-  extern const f_string_t f_path_tree_boot;
-  extern const f_string_t f_path_tree_hardware;
-  extern const f_string_t f_path_tree_processes;
-  extern const f_string_t f_path_tree_system;
+  extern const f_string_t f_path_tree_boot_s;
+  extern const f_string_t f_path_tree_hardware_s;
+  extern const f_string_t f_path_tree_processes_s;
+  extern const f_string_t f_path_tree_system_s;
 
   // Program Level
-  extern const f_string_t f_path_tree_programs_public;
-  extern const f_string_t f_path_tree_programs_system;
-  extern const f_string_t f_path_tree_programs_remote;
-  extern const f_string_t f_path_tree_programs_services;
-  extern const f_string_t f_path_tree_programs_toolchain;
-  extern const f_string_t f_path_tree_programs_users;
-  extern const f_string_t f_path_tree_programs_susers;
-  extern const f_string_t f_path_tree_programs_boot;
-  extern const f_string_t f_path_tree_programs_sboot;
+  extern const f_string_t f_path_tree_programs_public_s;
+  extern const f_string_t f_path_tree_programs_system_s;
+  extern const f_string_t f_path_tree_programs_remote_s;
+  extern const f_string_t f_path_tree_programs_services_s;
+  extern const f_string_t f_path_tree_programs_toolchain_s;
+  extern const f_string_t f_path_tree_programs_users_s;
+  extern const f_string_t f_path_tree_programs_susers_s;
+  extern const f_string_t f_path_tree_programs_boot_s;
+  extern const f_string_t f_path_tree_programs_sboot_s;
 
   // Library Level
-  extern const f_string_t f_path_tree_libraries_public;
-  extern const f_string_t f_path_tree_libraries_system;
-  extern const f_string_t f_path_tree_libraries_remote;
-  extern const f_string_t f_path_tree_libraries_services;
-  extern const f_string_t f_path_tree_libraries_toolchain;
-  extern const f_string_t f_path_tree_libraries_users;
-  extern const f_string_t f_path_tree_libraries_boot;
+  extern const f_string_t f_path_tree_libraries_public_s;
+  extern const f_string_t f_path_tree_libraries_system_s;
+  extern const f_string_t f_path_tree_libraries_remote_s;
+  extern const f_string_t f_path_tree_libraries_services_s;
+  extern const f_string_t f_path_tree_libraries_toolchain_s;
+  extern const f_string_t f_path_tree_libraries_users_s;
+  extern const f_string_t f_path_tree_libraries_boot_s;
 
   // Home Level
-  extern const f_string_t f_path_tree_home_services;
-  extern const f_string_t f_path_tree_home_share;
-  extern const f_string_t f_path_tree_home_users;
-  extern const f_string_t f_path_tree_home_websites;
+  extern const f_string_t f_path_tree_home_services_s;
+  extern const f_string_t f_path_tree_home_share_s;
+  extern const f_string_t f_path_tree_home_users_s;
+  extern const f_string_t f_path_tree_home_websites_s;
 
-  // System Level
-  extern const f_string_t f_path_tree_system_logs;
-  extern const f_string_t f_path_tree_system_settings;
-  extern const f_string_t f_path_tree_system_data;
-  extern const f_string_t f_path_tree_system_variables;
+  // system level
+  extern const f_string_t f_path_tree_system_logs_s;
+  extern const f_string_t f_path_tree_system_settings_s;
+  extern const f_string_t f_path_tree_system_data_s;
+  extern const f_string_t f_path_tree_system_variables_s;
 
-  // Temporary Level
-  extern const f_string_t f_path_tree_temporary_public;
-  extern const f_string_t f_path_tree_temporary_services;
-  extern const f_string_t f_path_tree_temporary_users;
-  extern const f_string_t f_path_tree_temporary_variables;
+  // temporary level
+  extern const f_string_t f_path_tree_temporary_public_s;
+  extern const f_string_t f_path_tree_temporary_services_s;
+  extern const f_string_t f_path_tree_temporary_users_s;
+  extern const f_string_t f_path_tree_temporary_variables_s;
 
-  // Private User Directories
-  extern const f_string_t f_path_user_downloads;
-  extern const f_string_t f_path_user_desktop;
-  extern const f_string_t f_path_user_private;
-  extern const f_string_t f_path_user_settings;
-  extern const f_string_t f_path_user_data;
-  extern const f_string_t f_path_user_temporary;
-  extern const f_string_t f_path_user_shared;
+  // private user directories
+  extern const f_string_t f_path_user_downloads_s;
+  extern const f_string_t f_path_user_desktop_s;
+  extern const f_string_t f_path_user_private_s;
+  extern const f_string_t f_path_user_settings_s;
+  extern const f_string_t f_path_user_data_s;
+  extern const f_string_t f_path_user_temporary_s;
+  extern const f_string_t f_path_user_shared_s;
 #endif // _di_path_tree_s_
 
 #ifdef __cplusplus

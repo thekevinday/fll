@@ -7,8 +7,8 @@
  *
  * Provides string capabilities.
  *
- * It is highly recommended that all string arrays are set to a max size of f_array_length_t_size.
- * Any calculations against the length (aka: string.used) can always perform (A < B) operators such that the B is f_array_length_t_size + 1 without integer overflow.
+ * It is highly recommended that all string arrays are set to a max size of F_array_length_t_size_d.
+ * Any calculations against the length (aka: string.used) can always perform (A < B) operators such that the B is F_array_length_t_size_d + 1 without integer overflow.
  */
 #ifndef _F_string_h
 #define _F_string_h

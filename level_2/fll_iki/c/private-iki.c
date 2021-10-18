@@ -28,21 +28,21 @@ extern "C" {
         }
 
         for (j = 0; j < delimits; ++j) {
-          escaped->string[escaped->used++] = f_iki_syntax_slash;
+          escaped->string[escaped->used++] = F_iki_syntax_slash_s;
         } // for
 
-        escaped->string[escaped->used++] = f_iki_syntax_slash;
+        escaped->string[escaped->used++] = F_iki_syntax_slash_s;
         escaped->string[escaped->used++] = quote;
 
         delimits = 0;
       }
       else if (content.string[i]) {
         if (escaped->used + 1 > escaped->size) {
-          status = f_string_dynamic_increase_by(f_memory_default_allocation_small, escaped);
+          status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, escaped);
           if (F_status_is_error(status)) return status;
         }
 
-        if (content.string[i] == f_iki_syntax_slash) {
+        if (content.string[i] == F_iki_syntax_slash_s) {
           ++delimits;
         }
         else {
@@ -61,7 +61,7 @@ extern "C" {
       }
 
       for (j = 0; j < delimits; ++j) {
-        escaped->string[escaped->used++] = f_iki_syntax_slash;
+        escaped->string[escaped->used++] = F_iki_syntax_slash_s;
       } // for
     }
 
@@ -94,7 +94,7 @@ extern "C" {
 
         return F_status_set_error(F_syntax);
       }
-      else if (content.string[i] == f_iki_syntax_slash) {
+      else if (content.string[i] == F_iki_syntax_slash_s) {
         delimits = 1;
 
         if (i + 1 < content.used) {
@@ -118,14 +118,14 @@ extern "C" {
               }
 
               for (j = 0; j < delimits; ++j) {
-                unescaped->string[unescaped->used++] = f_iki_syntax_slash;
+                unescaped->string[unescaped->used++] = F_iki_syntax_slash_s;
               } // for
 
               delimits = 0;
               unescaped->string[unescaped->used++] = quote;
               break;
             }
-            else if (content.string[j] == f_iki_syntax_slash) {
+            else if (content.string[j] == F_iki_syntax_slash_s) {
               ++delimits;
             }
             else if (content.string[j]) {
@@ -165,7 +165,7 @@ extern "C" {
           }
 
           for (j = 0; j < delimits; ++j) {
-            unescaped->string[unescaped->used++] = f_iki_syntax_slash;
+            unescaped->string[unescaped->used++] = F_iki_syntax_slash_s;
           } // for
 
           break;
@@ -173,7 +173,7 @@ extern "C" {
       }
       else if (content.string[i]) {
         if (unescaped->used + 1 > unescaped->size) {
-          status = f_string_dynamic_increase_by(f_memory_default_allocation_small, unescaped);
+          status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, unescaped);
           if (F_status_is_error(status)) return status;
         }
 

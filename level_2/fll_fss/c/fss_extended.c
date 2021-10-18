@@ -24,19 +24,19 @@ extern "C" {
 
     do {
       if (objects->used == objects->size) {
-        macro_f_fss_objects_t_increase(status2, f_fss_default_allocation_step_small, (*objects));
+        macro_f_fss_objects_t_increase(status2, F_fss_default_allocation_step_small_d, (*objects));
         if (F_status_is_error(status2)) return status2;
 
-        macro_f_fss_contents_t_increase(status2, f_fss_default_allocation_step_small, (*contents));
+        macro_f_fss_contents_t_increase(status2, F_fss_default_allocation_step_small_d, (*contents));
         if (F_status_is_error(status2)) return status2;
 
         if (objects_quoted) {
-          macro_f_fss_quotes_t_increase(status2, f_fss_default_allocation_step_small, (*objects_quoted));
+          macro_f_fss_quotes_t_increase(status2, F_fss_default_allocation_step_small_d, (*objects_quoted));
           if (F_status_is_error(status2)) return status2;
         }
 
         if (contents_quoted) {
-          macro_f_fss_quotess_t_increase(status2, f_fss_default_allocation_step_small, (*contents_quoted));
+          macro_f_fss_quotess_t_increase(status2, F_fss_default_allocation_step_small_d, (*contents_quoted));
           if (F_status_is_error(status2)) return status2;
         }
       }
@@ -57,13 +57,13 @@ extern "C" {
               ++objects_quoted->used;
             }
 
-            macro_f_fss_content_t_increase(status2, f_fss_default_allocation_step_small, contents->array[contents->used])
+            macro_f_fss_content_t_increase(status2, F_fss_default_allocation_step_small_d, contents->array[contents->used])
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;
 
             if (contents_quoted) {
-              macro_f_fss_quotes_t_increase(status2, f_fss_default_allocation_step_small, contents_quoted->array[contents_quoted->used])
+              macro_f_fss_quotes_t_increase(status2, F_fss_default_allocation_step_small_d, contents_quoted->array[contents_quoted->used])
               if (F_status_is_error(status2)) return status2;
 
               ++contents_quoted->used;
@@ -91,7 +91,7 @@ extern "C" {
           found_data = F_true;
 
           if (contents_quoted) {
-            macro_f_fss_quotes_t_increase(status2, f_fss_default_allocation_step_small, contents_quoted->array[contents_quoted->used])
+            macro_f_fss_quotes_t_increase(status2, F_fss_default_allocation_step_small_d, contents_quoted->array[contents_quoted->used])
             if (F_status_is_error(status2)) return status2;
 
             quoted_content = &contents_quoted->array[contents_quoted->used];
@@ -186,7 +186,7 @@ extern "C" {
         ++contents_quoted->used;
       }
 
-    } while (range->start < f_string_t_size);
+    } while (range->start < F_string_t_size_d);
 
     return F_status_is_error(F_number_overflow);
   }

@@ -531,7 +531,7 @@ extern "C" {
           status = f_utf_is_control(string + i, 1);
         }
 
-        if (status == F_false && total + width < f_print_write_max) {
+        if (status == F_false && total + width < F_print_write_max_d) {
           total += width;
           i += width;
 
@@ -539,7 +539,7 @@ extern "C" {
         }
       }
       else {
-        if ((string[i] > 0x1f && string[i] != 0x7f) && total < f_print_write_max) {
+        if ((string[i] > 0x1f && string[i] != 0x7f) && total < F_print_write_max_d) {
           ++total;
           ++i;
 

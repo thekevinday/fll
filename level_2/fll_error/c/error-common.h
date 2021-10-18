@@ -26,17 +26,17 @@ extern "C" {
     fll_error_file_type_pipe,
   };
 
-  #define fll_error_file_type_string_directory "directory"
-  #define fll_error_file_type_string_file      "file"
-  #define fll_error_file_type_string_pipe      "pipe"
+  #define FLL_error_file_type_directory_s "directory"
+  #define FLL_error_file_type_file_s      "file"
+  #define FLL_error_file_type_pipe_s      "pipe"
 
-  #define fll_error_file_type_length_directory 9
-  #define fll_error_file_type_length_file      4
-  #define fll_error_file_type_length_pipe      4
+  #define FLL_error_file_type_directory_s_length 9
+  #define FLL_error_file_type_file_s_length      4
+  #define FLL_error_file_type_pipe_s_length      4
 
-  extern const f_string_t fll_error_file_type_string_directory_s;
-  extern const f_string_t fll_error_file_type_string_file_s;
-  extern const f_string_t fll_error_file_type_string_pipe_s;
+  extern const f_string_t fll_error_file_type_directory_s;
+  extern const f_string_t fll_error_file_type_file_s;
+  extern const f_string_t fll_error_file_type_pipe_s;
 #endif // _di_fll_error_file_type_
 
 #ifdef __cplusplus

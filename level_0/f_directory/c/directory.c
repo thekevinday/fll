@@ -156,7 +156,7 @@ extern "C" {
 
     for (; i < length; ++i) {
 
-      size = strnlen(listing[i]->d_name, f_directory_name_max);
+      size = strnlen(listing[i]->d_name, F_directory_name_max_d);
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(listing[i]->d_name, "..", 3) || !strncmp(listing[i]->d_name, ".", 2))  {
@@ -166,7 +166,7 @@ extern "C" {
       }
 
       if (names->used == names->size) {
-        macro_f_memory_structure_increment(status, (*names), 1, f_directory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
+        macro_f_memory_structure_increment(status, (*names), 1, F_directory_default_allocation_step_d, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) break;
       }
 
@@ -204,10 +204,10 @@ extern "C" {
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    int flag = f_directory_flag_directory | f_directory_flag_close_execute | f_directory_flag_path;
+    int flag = F_directory_flag_directory_d | F_directory_flag_close_execute_d | F_directory_flag_path_d;
 
     if (dereference) {
-      flag |= f_directory_flag_no_follow;
+      flag |= F_directory_flag_no_follow_d;
     }
 
     *id = open(path, flag);
@@ -242,10 +242,10 @@ extern "C" {
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    int flag = f_directory_flag_directory | f_directory_flag_close_execute | f_directory_flag_path;
+    int flag = F_directory_flag_directory_d | F_directory_flag_close_execute_d | F_directory_flag_path_d;
 
     if (dereference) {
-      flag |= f_directory_flag_no_follow;
+      flag |= F_directory_flag_no_follow_d;
     }
 
     *id = openat(at_id, path, flag);
@@ -400,7 +400,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if (utimensat(f_directory_at_current_working, path, 0, 0) < 0) {
+    if (utimensat(F_directory_at_current_working_d, path, 0, 0) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);

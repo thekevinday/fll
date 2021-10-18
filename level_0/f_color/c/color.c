@@ -52,7 +52,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        context->mode = f_color_mode_light;
+        context->mode = F_color_mode_light_d;
       }
 
       if (F_status_is_error_not(status)) {
@@ -69,7 +69,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        context->mode = f_color_mode_dark;
+        context->mode = F_color_mode_dark_d;
       }
 
       if (F_status_is_error_not(status)) {
@@ -122,13 +122,13 @@ extern "C" {
       if (!color4 && color5 != 0)                                 return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_array_length_t string_size = strnlen(format.begin, f_color_max_size) + strnlen(format.end, f_color_max_size) + 1;
+    f_array_length_t string_size = strnlen(format.begin, F_color_max_size_d) + strnlen(format.end, F_color_max_size_d) + 1;
 
-    if      (!color2) string_size += strnlen(color1, f_color_max_size);
-    else if (!color3) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size);
-    else if (!color4) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size);
-    else if (!color5) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size);
-    else              string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size) + strnlen(color3, f_color_max_size) + strnlen(color4, f_color_max_size) + strnlen(color5, f_color_max_size);
+    if      (!color2) string_size += strnlen(color1, F_color_max_size_d);
+    else if (!color3) string_size += strnlen(color1, F_color_max_size_d) + strnlen(color2, F_color_max_size_d);
+    else if (!color4) string_size += strnlen(color1, F_color_max_size_d) + strnlen(color2, F_color_max_size_d) + strnlen(color3, F_color_max_size_d);
+    else if (!color5) string_size += strnlen(color1, F_color_max_size_d) + strnlen(color2, F_color_max_size_d) + strnlen(color3, F_color_max_size_d) + strnlen(color4, F_color_max_size_d);
+    else              string_size += strnlen(color1, F_color_max_size_d) + strnlen(color2, F_color_max_size_d) + strnlen(color3, F_color_max_size_d) + strnlen(color4, F_color_max_size_d) + strnlen(color5, F_color_max_size_d);
 
     if (buffer->size - buffer->used - 1 < string_size) {
       f_status_t status = F_none;
@@ -141,49 +141,49 @@ extern "C" {
     }
 
     if (!color2) {
-      strncat(buffer->string, format.begin, f_color_max_size);
-      strncat(buffer->string, color1, f_color_max_size);
-      strncat(buffer->string, format.end, f_color_max_size);
+      strncat(buffer->string, format.begin, F_color_max_size_d);
+      strncat(buffer->string, color1, F_color_max_size_d);
+      strncat(buffer->string, format.end, F_color_max_size_d);
     }
     else if (!color3) {
-      strncat(buffer->string, format.begin, f_color_max_size);
-      strncat(buffer->string, color1, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color2, f_color_max_size);
-      strncat(buffer->string, format.end, f_color_max_size);
+      strncat(buffer->string, format.begin, F_color_max_size_d);
+      strncat(buffer->string, color1, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color2, F_color_max_size_d);
+      strncat(buffer->string, format.end, F_color_max_size_d);
     }
     else if (!color4) {
-      strncat(buffer->string, format.begin, f_color_max_size);
-      strncat(buffer->string, color1, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color2, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color3, f_color_max_size);
-      strncat(buffer->string, format.end, f_color_max_size);
+      strncat(buffer->string, format.begin, F_color_max_size_d);
+      strncat(buffer->string, color1, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color2, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color3, F_color_max_size_d);
+      strncat(buffer->string, format.end, F_color_max_size_d);
     }
     else if (!color5) {
-      strncat(buffer->string, format.begin, f_color_max_size);
-      strncat(buffer->string, color1, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color2, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color3, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color4, f_color_max_size);
-      strncat(buffer->string, format.end, f_color_max_size);
+      strncat(buffer->string, format.begin, F_color_max_size_d);
+      strncat(buffer->string, color1, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color2, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color3, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color4, F_color_max_size_d);
+      strncat(buffer->string, format.end, F_color_max_size_d);
     }
     else {
-      strncat(buffer->string, format.begin, f_color_max_size);
-      strncat(buffer->string, color1, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color2, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color3, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color4, f_color_max_size);
-      strncat(buffer->string, format.medium, f_color_max_size);
-      strncat(buffer->string, color5, f_color_max_size);
-      strncat(buffer->string, format.end, f_color_max_size);
+      strncat(buffer->string, format.begin, F_color_max_size_d);
+      strncat(buffer->string, color1, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color2, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color3, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color4, F_color_max_size_d);
+      strncat(buffer->string, format.medium, F_color_max_size_d);
+      strncat(buffer->string, color5, F_color_max_size_d);
+      strncat(buffer->string, format.end, F_color_max_size_d);
     }
 
     buffer->used += string_size;

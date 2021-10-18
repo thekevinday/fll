@@ -45,7 +45,7 @@ extern "C" {
  * @see fll_execute_arguments_dynamic_add_set()
  */
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
-  extern f_status_t private_fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments) f_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
 
 /**
@@ -86,7 +86,7 @@ extern "C" {
  * @see fll_execute_arguments_dynamic_add_parameter_set()
  */
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
-  extern f_status_t private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments) f_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
 
 /**
@@ -100,7 +100,7 @@ extern "C" {
  *   (optional) This and most of its fields are optional and are disabled when set to 0.
  *   This function only cares about "option" on this structure.
  *   option:
- *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ *     A bitwise set of options, such as: FL_execute_parameter_option_exit_d, and FL_execute_parameter_option_path_d.
  * @param result
  *   The code returned after finishing execution of program.
  *
@@ -125,7 +125,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) f_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -141,7 +141,7 @@ extern "C" {
  *   (optional) This and most of its fields are optional and are disabled when set to 0.
  *   This function only cares about "option" on this structure.
  *   option:
- *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ *     A bitwise set of options, such as: FL_execute_parameter_option_exit_d, and FL_execute_parameter_option_path_d.
  * @param result
  *   A NULL termianted 2-byte string array where the first character represents the return code ('0' for success, '1' for failure).
  *
@@ -167,7 +167,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, char *result) f_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, char *result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -185,7 +185,7 @@ extern "C" {
  * @param parameter
  *   (optional) This and most of its fields are optional and are disabled when set to 0.
  *   option:
- *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ *     A bitwise set of options, such as: FL_execute_parameter_option_exit_d, and FL_execute_parameter_option_path_d.
  *   names:
  *     An array of strings representing the environment variable names.
  *     At most names.used variables are created.
@@ -204,14 +204,14 @@ extern "C" {
  *   (optional) This and most of its fields are optional and are disabled when set to NULL.
  * @param result
  *   (optional) The execute status code returned after finishing or attempting to finish execution of program.
- *   When fl_execute_parameter_option_return is passed via parameter.option, then this instead stores the child process id (PID).
- *   This is should be of (int *) except when fl_execute_parameter_option_return this should instead be (pid_t *).
+ *   When FL_execute_parameter_option_return_d is passed via parameter.option, then this instead stores the child process id (PID).
+ *   This is should be of (int *) except when FL_execute_parameter_option_return_d this should instead be (pid_t *).
  *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
  *   F_child on success and this is the child thread.
- *   F_parent on success and this is the parent thread (only happens when fl_execute_parameter_option_return is passed).
+ *   F_parent on success and this is the parent thread (only happens when FL_execute_parameter_option_return_d is passed).
  *
  *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
  *   F_control_group (with error bit) on failure to set control group in the child (only the parent process returns this).
@@ -243,7 +243,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) f_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_fork(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -261,7 +261,7 @@ extern "C" {
  * @param parameter
  *   (optional) This and most of its fields are optional and are disabled when set to 0.
  *   option:
- *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ *     A bitwise set of options, such as: FL_execute_parameter_option_exit_d, and FL_execute_parameter_option_path_d.
  *   names:
  *     An array of strings representing the environment variable names.
  *     At most names.used variables are created.
@@ -280,14 +280,14 @@ extern "C" {
  *   (optional) This and most of its fields are optional and are disabled when set to NULL.
  * @param result
  *   (optional) The execute status code returned after finishing or attempting to finish execution of program.
- *   When fl_execute_parameter_option_return is passed via parameter.option, then this instead stores the child process id (PID).
- *   This is should be of (int *) except when fl_execute_parameter_option_return this should instead be (pid_t *).
+ *   When FL_execute_parameter_option_return_d is passed via parameter.option, then this instead stores the child process id (PID).
+ *   This is should be of (int *) except when FL_execute_parameter_option_return_d this should instead be (pid_t *).
  *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
  *   F_child on success and this is the child thread.
- *   F_parent on success and this is the parent thread (only happens when fl_execute_parameter_option_return is passed).
+ *   F_parent on success and this is the parent thread (only happens when FL_execute_parameter_option_return_d is passed).
  *
  *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
  *   F_control_group (with error bit) on failure to set control group in the child (only the parent process returns this).
@@ -318,7 +318,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork_data(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) f_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_fork_data(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -347,7 +347,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_t last_slash, const bool fixated_is, const f_array_length_t name_size, char program_name[], f_string_t fixed_arguments[]) f_attribute_visibility_internal;
+  extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_t last_slash, const bool fixated_is, const f_array_length_t name_size, char program_name[], f_string_t fixed_arguments[]) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 #ifdef __cplusplus

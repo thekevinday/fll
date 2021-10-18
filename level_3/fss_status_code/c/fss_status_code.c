@@ -11,7 +11,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    fll_program_print_help_header(file, context, fss_status_code_name_long, fss_status_code_version);
+    fll_program_print_help_header(file, context, fss_status_code_program_name_long_s, fss_status_code_program_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -25,12 +25,12 @@ extern "C" {
 
     f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(file, context, fss_status_code_short_is_fine, fss_status_code_long_is_fine, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print F_true if the error code is not an error, F_false otherwise.");
-    fll_program_print_help_option(file, context, fss_status_code_short_is_warning, fss_status_code_long_is_warning, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print F_true if the error code is a warning, F_false otherwise.");
-    fll_program_print_help_option(file, context, fss_status_code_short_is_error, fss_status_code_long_is_error, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print F_true if the error code is an error, F_false otherwise.");
-    fll_program_print_help_option(file, context, fss_status_code_short_number, fss_status_code_long_number, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Convert status code name to number.");
+    fll_program_print_help_option(file, context, fss_status_code_short_is_fine_s, fss_status_code_long_is_fine_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print F_true if the error code is not an error, F_false otherwise.");
+    fll_program_print_help_option(file, context, fss_status_code_short_is_warning_s, fss_status_code_long_is_warning_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print F_true if the error code is a warning, F_false otherwise.");
+    fll_program_print_help_option(file, context, fss_status_code_short_is_error_s, fss_status_code_long_is_error_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print F_true if the error code is an error, F_false otherwise.");
+    fll_program_print_help_option(file, context, fss_status_code_short_number_s, fss_status_code_long_number_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Convert status code name to number.");
 
-    fll_program_print_help_usage(file, context, fss_status_code_name, "status code(s)");
+    fll_program_print_help_usage(file, context, fss_status_code_program_name_s, "status code(s)");
 
     funlockfile(file.stream);
 
@@ -43,7 +43,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_status_code_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_status_code_total_parameters_d);
 
       {
         f_console_parameter_id_t ids[3] = { fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark };
@@ -116,7 +116,7 @@ extern "C" {
     }
 
     if (main->parameters[fss_status_code_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output.to, fss_status_code_version);
+      fll_program_print_version(main->output.to, fss_status_code_program_version_s);
 
       fss_status_code_main_delete(main);
       return F_none;
@@ -127,9 +127,9 @@ extern "C" {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_error, main->error.notable);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_error_s, main->error.notable);
         fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_warning, main->error.notable);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_warning_s, main->error.notable);
         fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
@@ -141,9 +141,9 @@ extern "C" {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_error, main->error.notable);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_error_s, main->error.notable);
         fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_fine, main->error.notable);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_fine_s, main->error.notable);
         fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
@@ -156,9 +156,9 @@ extern "C" {
       flockfile(main->error.to.stream);
 
       fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-      fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_warning, main->error.notable);
+      fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_warning_s, main->error.notable);
       fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-      fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_fine, main->error.notable);
+      fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_fine_s, main->error.notable);
       fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
       funlockfile(main->error.to.stream);
@@ -244,7 +244,7 @@ extern "C" {
 #ifndef _di_fss_status_code_main_delete_
   f_status_t fss_status_code_main_delete(fss_status_code_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fss_status_code_total_parameters; ++i) {
+    for (f_array_length_t i = 0; i < fss_status_code_total_parameters_d; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
