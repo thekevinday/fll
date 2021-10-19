@@ -21,9 +21,17 @@ build_indexer ar
 build_language c
 build_libraries -lc
 build_libraries-individual -lfl_status -lfl_string -lf_conversion -lf_memory -lf_string -lf_utf
+build_libraries_shared
+build_libraries_static
 build_sources_library status.c
+build_sources_library_shared
+build_sources_library_static
 build_sources_program
+build_sources_program_shared
+build_sources_program_static
 build_sources_headers status.h
+build_sources_headers_shared
+build_sources_headers_static
 build_sources_script
 build_sources_setting
 build_script yes
@@ -45,12 +53,22 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-defines_all
+defines
+defines_library
+defines_library_shared
+defines_library_static
+defines_program
+defines_program_shared
+defines_program_static
 defines_static
 defines_shared
 
-flags_all -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags_library -fPIC
+flags_library_shared
+flags_library_static
+flags_program -fPIE
+flags_program_shared
+flags_program_static
 flags_shared
 flags_static
-flags_library -fPIC
-flags_program -fPIE

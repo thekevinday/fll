@@ -26,8 +26,8 @@ build_script no
 path_sources
 path_standard no
 
-defines_all -D_FILE_OFFSET_BITS=64
+defines -D_FILE_OFFSET_BITS=64
 
-flags_all -z now -g -fdiagnostics-color=always -Wall -Winline -O2
+flags -z now -g -fdiagnostics-color=always -Wall -Winline -O2
 flags_library -fPIC
 flags_program -fPIE

@@ -14,23 +14,39 @@ Settings Specification:
     "build_indexer": Must only be a valid filename.
     "build_language": Must only be one of: "bash", "c", or "c++".
     "build_libraries": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
+    "build_libraries_shared": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
+    "build_libraries_static": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
     "build_script": Must only one of: "yes" or "no".
     "build_shared": Must only one of: "yes" or "no".
     "build_sources_headers": Must only contain any number of valid filenames.
+    "build_sources_headers_shared": Must only contain any number of valid filenames.
+    "build_sources_headers_static": Must only contain any number of valid filenames.
     "build_sources_library": Must only contain any number of valid filenames.
+    "build_sources_library_shared": Must only contain any number of valid filenames.
+    "build_sources_library_static": Must only contain any number of valid filenames.
     "build_sources_program": Must only contain any number of valid filenames.
+    "build_sources_program_shared": Must only contain any number of valid filenames.
+    "build_sources_program_static": Must only contain any number of valid filenames.
     "build_sources_script": Must only contain any number of valid filenames.
     "build_sources_setting": Must only contain any number of valid filenames.
     "build_static": Must only one of: "yes" or "no".
-    "defines_all": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    "defines": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     "defines_library": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    "defines_library_shared": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    "defines_library_static": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     "defines_program": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    "defines_program_shared": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    "defines_program_static": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     "defines_shared": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     "defines_static": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     "environment": Environment variable names, case-sensitive, usually uppercase. May only contain characters allowed in an environment variable.
-    "flags_all": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    "flags": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     "flags_library": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    "flags_library_shared": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    "flags_library_static": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     "flags_program": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    "flags_program_shared": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    "flags_program_static": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     "flags_shared": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     "flags_static": Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     "modes": Any valid word character, '-', or '+'.
@@ -65,21 +81,35 @@ Settings Specification:
 
   The following Object names support having a "-" and a "mode" name, such as "build_libraries-individual" for a mode called "individual"\:
     "build_libraries"
+    "build_libraries_shared"
+    "build_libraries_static"
     "build_sources_headers"
+    "build_sources_headers_shared"
+    "build_sources_headers_static"
     "build_sources_library"
+    "build_sources_library_shared"
+    "build_sources_library_static"
     "build_sources_program"
+    "build_sources_program_shared"
+    "build_sources_program_static"
     "build_sources_script"
     "build_sources_setting"
-    "defines_all"
+    "defines"
+    "defines_library"
+    "defines_library_shared"
+    "defines_library_static"
+    "defines_program"
+    "defines_program_shared"
+    "defines_program_static"
     "defines_shared"
     "defines_static"
     "environment"
-    "flags_all"
+    "flags"
     "flags_library"
+    "flags_library_shared"
+    "flags_library_static"
     "flags_program"
+    "flags_program_shared"
+    "flags_program_static"
     "flags_shared"
     "flags_static"
-
-    TODO: look into adding all, except for "modes" and "modes_default".
-    TODO: some options will "replace" while others will "append".
-          those that "replace" will be single property ones, such as "build_compiler" or "version_major".

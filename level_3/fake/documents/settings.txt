@@ -26,6 +26,18 @@ Settings Documentation:
     This should include the compiler specific parameter parts, such as the "-l" prefix in "-lc".
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
 
+  build_libraries_shared\:
+    A collection of libraries to be linked against.
+    This should include the compiler specific parameter parts, such as the "-l" prefix in "-lc".
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only shared builds.
+
+  build_libraries_static\:
+    A collection of libraries to be linked against.
+    This should include the compiler specific parameter parts, such as the "-l" prefix in "-lc".
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only static builds.
+
   build_script\:
     When "yes", the build process will build any scripts, such as a Bash script.
     This is currently not implemented.
@@ -38,17 +50,55 @@ Settings Documentation:
     May include a relative sub-path to each individual header (such as: "level_0/a.h level_0/b.h level_1/c.h").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
 
+  build_sources_headers_shared\:
+    A collection of header files.
+    May include a relative sub-path to each individual header (such as: "level_0/a.h level_0/b.h level_1/c.h").
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    Be careful not to have any conflicting names between this and build_sources_headers_static in case of when static and shared builds are both enabled.
+    These are applied to only shared builds.
+
+  build_sources_headers_static\:
+    A collection of header files.
+    May include a relative sub-path to each individual header (such as: "level_0/a.h level_0/b.h level_1/c.h").
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These files are used when compiling the library.
+    Be careful not to have any conflicting names between this and build_sources_headers_shared in case of when static and shared builds are both enabled.
+    These are applied to only static builds.
+
   build_sources_library\:
     A collection of library related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
-    These files are used when compiling the library.
+
+  build_sources_library_shared\:
+    A collection of library related source files.
+    May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only shared builds.
+
+  build_sources_library_static\:
+    A collection of library related source files.
+    May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only static builds.
 
   build_sources_program\:
     A collection of program related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These files are used when compiling the program.
+
+  build_sources_program_shared\:
+    A collection of program related source files.
+    May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These files are used when compiling the program for shared builds.
+
+  build_sources_program_static\:
+    A collection of program related source files.
+    May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These files are used when compiling the program for static builds.
 
   build_sources_script\:
     A collection of script files.
@@ -65,7 +115,7 @@ Settings Documentation:
   build_static\:
     When "yes", the build process will compile any source code for any supported language that supports static library linking.
 
-  defines_all\:
+  defines\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
@@ -77,11 +127,35 @@ Settings Documentation:
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only library builds.
 
+  defines_library_shared\:
+    A collection of macro names.
+    This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
+    These will be appended to the compiler for compiled languages such as C and C++.
+    These are applied to only shared library builds.
+
+  defines_library_static\:
+    A collection of macro names.
+    This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
+    These will be appended to the compiler for compiled languages such as C and C++.
+    These are applied to only static library builds.
+
   defines_program\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only program builds.
+
+  defines_program_shared\:
+    A collection of macro names.
+    This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
+    These will be appended to the compiler for compiled languages such as C and C++.
+    These are applied to only shared program builds.
+
+  defines_program_static\:
+    A collection of macro names.
+    This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
+    These will be appended to the compiler for compiled languages such as C and C++.
+    These are applied to only shared program builds.
 
   defines_shared\:
     A collection of macro names.
@@ -101,7 +175,7 @@ Settings Documentation:
     There are times when someone desires that an environment variable be exposed to the user-space programs.
     Add them here and they will be available in the environment of all user-space programs executed.
 
-  flags_all\:
+  flags\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to both shared and static builds.
@@ -111,10 +185,30 @@ Settings Documentation:
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied when building a library.
 
+  flags_library_shared\:
+    A collection of any flag supported by the "build_compiler", such as gcc.
+    This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
+    These are applied to only library shared builds.
+
+  flags_library_static\:
+    A collection of any flag supported by the "build_compiler", such as gcc.
+    This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
+    These are applied to only library static builds.
+
   flags_program\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied when building a program.
+
+  flags_program_shared\:
+    A collection of any flag supported by the "build_compiler", such as gcc.
+    This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
+    These are applied to only program shared builds.
+
+  flags_program_static\:
+    A collection of any flag supported by the "build_compiler", such as gcc.
+    This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
+    These are applied to only program static builds.
 
   flags_shared\:
     A collection of any flag supported by the "build_compiler", such as gcc.

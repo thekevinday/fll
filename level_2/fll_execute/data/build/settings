@@ -22,9 +22,17 @@ build_language c
 build_libraries -lc -lcap
 build_libraries-individual -lfl_control_group -lfl_environment -lf_account -lf_capability -lf_control_group -lf_environment -lf_execute -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_thread -lf_type_array -lf_utf
 build_libraries-individual_threadless -lfl_control_group -lfl_environment -lf_account -lf_capability -lf_control_group -lf_environment -lf_execute -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_type_array -lf_utf
+build_libraries_shared
+build_libraries_static
 build_sources_library execute.c private-execute.c
+build_sources_library_shared
+build_sources_library_static
 build_sources_program
+build_sources_program_shared
+build_sources_program_static
 build_sources_headers execute.h
+build_sources_headers_shared
+build_sources_headers_static
 build_sources_script
 build_sources_setting
 build_script yes
@@ -46,15 +54,31 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-#defines_all -D_di_libcap_
-defines_all -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
-defines_all-individual_threadless -D_di_pthread_support_
+#defines -D_di_libcap_
+defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines-individual_threadless -D_di_pthread_support_
+defines_library
+defines_library_shared
+defines_library_static
+defines_program
+defines_program_shared
+defines_program_static
 defines_static
 defines_shared
 
-flags_all -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
-flags_all-individual -pthread
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags-individual -pthread
+flags_library -fPIC
+flags_library_shared
+flags_library_static
+flags_program -fPIE
+flags_program_shared
+flags_program_static
+flags_library -fPIC
+flags_library_shared
+flags_library_static
+flags_program -fPIE
+flags_program_shared
+flags_program_static
 flags_shared
 flags_static
-flags_library -fPIC
-flags_program -fPIE

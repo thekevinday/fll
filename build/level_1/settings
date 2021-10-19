@@ -22,11 +22,19 @@ build_language c
 build_libraries -lc -lcap
 build_libraries-level -lfll_0
 build_libraries-level_threadless -lfll_0
+build_libraries_shared
+build_libraries_static
 build_sources_library console.c control_group.c conversion.c private-conversion.c directory.c private-directory.c environment.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c iki.c print.c print-common.c private-print.c signal.c status.c string.c private-string.c utf.c private-utf.c utf_file.c private-utf_file.c
 build_sources_library-level
+build_sources_library_shared
+build_sources_library_static
 build_sources_program
+build_sources_program_shared
+build_sources_program_static
 build_sources_headers console.h control_group.h conversion.h directory.h environment.h execute.h execute-common.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status.h iki.h print.h print-common.h signal.h signal-common.h status.h string.h utf.h utf_file.h
 build_sources_headers-level
+build_sources_headers_shared
+build_sources_headers_static
 build_sources_script
 build_sources_setting
 build_script yes
@@ -46,16 +54,26 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-#defines_all -D_di_libcap_
-defines_all -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
-defines_all-level
-defines_all-level_threadless -D_di_pthread_support_
+#defines -D_di_libcap_
+defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines-level
+defines-level_threadless -D_di_pthread_support_
+defines_library
+defines_library_shared
+defines_library_static
+defines_program
+defines_program_shared
+defines_program_static
 defines_static
 defines_shared
 
-flags_all -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
-flags_all-level -pthread
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags-level -pthread
+flags_library -fPIC
+flags_library_shared
+flags_library_static
+flags_program -fPIE
+flags_program_shared
+flags_program_static
 flags_shared
 flags_static
-flags_library -fPIC
-flags_program -fPIE
