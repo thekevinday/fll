@@ -582,48 +582,6 @@ extern "C" {
               }
             }
           }
-          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_indexer_arguments_s, data_make->buffer, fake_make_setting_indexer_arguments_s_length, settings.objects.array[i]) == F_equal_to) {
-            f_array_length_t j = 0;
-
-            // clear all existing indexer arguments.
-            for (; j < data_make->setting_build.build_indexer_arguments.used; ++j) {
-              data_make->setting_build.build_indexer_arguments.array[j].used = 0;
-            } // for
-
-            data_make->setting_build.build_indexer_arguments.used = 0;
-
-            if (settings.contents.array[i].used > data_make->setting_build.build_indexer_arguments.size) {
-              *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->setting_build.build_indexer_arguments);
-
-              if (F_status_is_error(*status)) {
-                fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-                break;
-              }
-            }
-
-            for (j = 0; j < settings.contents.array[i].used; ++j) {
-
-              *status = f_string_dynamic_partial_append_nulless(data_make->buffer, settings.contents.array[i].array[j], &data_make->setting_build.build_indexer_arguments.array[data_make->setting_build.build_indexer_arguments.used]);
-
-              if (F_status_is_error(*status)) {
-                fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_partial_append_nulless", F_true);
-                break;
-              }
-
-              *status = f_string_dynamic_terminate_after(&data_make->setting_build.build_indexer_arguments.array[data_make->setting_build.build_indexer_arguments.used]);
-
-              if (F_status_is_error(*status)) {
-                fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-                break;
-              }
-
-              ++data_make->setting_build.build_indexer_arguments.used;
-            } // for
-
-            if (F_status_is_error(*status)) break;
-
-            *status = F_none;
-          }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_load_build_s, data_make->buffer, fake_make_setting_load_build_s_length, settings.objects.array[i]) == F_equal_to) {
             if (unmatched_load) {
               if (settings.contents.array[i].used) {
@@ -720,7 +678,7 @@ extern "C" {
         return;
       }
 
-      // if either compiler or linker is specified, each will replace any existing build_compiler or build_indexer, respectively.
+      // if either compiler or indexer is specified, each will replace any existing build_compiler or build_indexer, respectively.
       if (range_compiler) {
         data_make->setting_build.build_compiler.used = 0;
         *status = f_string_dynamic_partial_append(data_make->buffer, *range_compiler, &data_make->setting_build.build_compiler);
@@ -744,7 +702,9 @@ extern "C" {
         *status = F_status_set_error(F_signal);
       }
       else {
-        fake_build_load_setting_process(main, main.file_data_build_fakefile.string, data_make->buffer, settings.objects, settings.contents, &data_make->setting_build, status);
+
+        // load the fakefile "settings" as if they are build "settings".
+        fake_build_load_setting_process(main, F_false, main.file_data_build_fakefile.string, data_make->buffer, settings.objects, settings.contents, &data_make->setting_build, status);
       }
 
       if (F_status_is_error_not(*status) && settings.objects.used) {
@@ -3779,6 +3739,7 @@ extern "C" {
       } // for
 
       f_print_character(f_string_space_s[0], main->output.to.stream);
+      f_print_character(f_string_eol_s[0], main->output.to.stream);
 
       funlockfile(main->output.to.stream);
 

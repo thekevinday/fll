@@ -265,6 +265,9 @@ extern "C" {
  *
  * @param main
  *   The main data.
+ * @param checks
+ *   If TRUE, perform certain "required" sanity checks.
+ *   If FALSE, do not perform certain "required" sanity checks (intended for a fakefile rather than a build settings file).
  * @param path_file
  *   The path to the buffer.
  * @param buffer
@@ -285,7 +288,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_process_
-  extern void fake_build_load_setting_process(const fake_main_t main, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_setting_process(const fake_main_t main, const bool checks, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_setting_process_
 
 /**

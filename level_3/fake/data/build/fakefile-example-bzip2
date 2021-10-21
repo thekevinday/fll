@@ -35,5 +35,5 @@ bzip2recover:
 scripts:
   print
   print copying bzip2 scripts.
-  touch directory build/ build/program/ build/program/scripts/
-  copy bzdiff bzgrep build/program/scripts/
+  touch directory build build/programs build/programs/scripts
+  copy bzdiff bzgrep build/programs/scripts

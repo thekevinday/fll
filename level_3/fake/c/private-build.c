@@ -48,6 +48,8 @@ extern "C" {
 
     for (uint8_t i = 0; i < 2; ++i) {
 
+      if (!lengths[i]) continue;
+
       *status = fll_execute_arguments_add(values[i], lengths[i], arguments);
       if (F_status_is_error(*status)) break;
     } // for
@@ -98,117 +100,183 @@ extern "C" {
     f_array_length_t i = 0;
 
     for (i = 0; i < data_build.setting.build_libraries.used && F_status_is_error_not(*status); ++i) {
+
+      if (!data_build.setting.build_libraries.array[i].used) continue;
+
       *status = fll_execute_arguments_add(data_build.setting.build_libraries.array[i].string, data_build.setting.build_libraries.array[i].used, arguments);
     } // for
 
     if (is_shared) {
       for (i = 0; i < data_build.setting.build_libraries_shared.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.build_libraries_shared.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.build_libraries_shared.array[i].string, data_build.setting.build_libraries_shared.array[i].used, arguments);
       } // for
     }
     else {
       for (i = 0; i < data_build.setting.build_libraries_static.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.build_libraries_static.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.build_libraries_static.array[i].string, data_build.setting.build_libraries_static.array[i].used, arguments);
       } // for
     }
 
     for (i = 0; i < data_build.setting.flags.used && F_status_is_error_not(*status); ++i) {
+
+      if (!data_build.setting.flags.array[i].used) continue;
+
       *status = fll_execute_arguments_add(data_build.setting.flags.array[i].string, data_build.setting.flags.array[i].used, arguments);
     } // for
 
     if (is_shared) {
       for (i = 0; i < data_build.setting.flags_shared.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.flags_shared.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.flags_shared.array[i].string, data_build.setting.flags_shared.array[i].used, arguments);
       } // for
     }
     else {
       for (i = 0; i < data_build.setting.flags_static.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.flags_static.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.flags_static.array[i].string, data_build.setting.flags_static.array[i].used, arguments);
       } // for
     }
 
     if (is_library) {
       for (i = 0; i < data_build.setting.flags_library.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.flags_library.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.flags_library.array[i].string, data_build.setting.flags_library.array[i].used, arguments);
       } // for
 
       if (is_shared) {
         for (i = 0; i < data_build.setting.flags_library_shared.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build.setting.flags_library_shared.array[i].used) continue;
+
           *status = fll_execute_arguments_add(data_build.setting.flags_library_shared.array[i].string, data_build.setting.flags_library_shared.array[i].used, arguments);
         } // for
       }
       else {
         for (i = 0; i < data_build.setting.flags_library_static.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build.setting.flags_library_static.array[i].used) continue;
+
           *status = fll_execute_arguments_add(data_build.setting.flags_library_static.array[i].string, data_build.setting.flags_library_static.array[i].used, arguments);
         } // for
       }
     }
     else {
       for (i = 0; i < data_build.setting.flags_program.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.flags_program.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.flags_program.array[i].string, data_build.setting.flags_program.array[i].used, arguments);
       } // for
 
       if (is_shared) {
         for (i = 0; i < data_build.setting.flags_program_shared.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build.setting.flags_program_shared.array[i].used) continue;
+
           *status = fll_execute_arguments_add(data_build.setting.flags_program_shared.array[i].string, data_build.setting.flags_program_shared.array[i].used, arguments);
         } // for
       }
       else {
         for (i = 0; i < data_build.setting.flags_program_static.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build.setting.flags_program_static.array[i].used) continue;
+
           *status = fll_execute_arguments_add(data_build.setting.flags_program_static.array[i].string, data_build.setting.flags_program_static.array[i].used, arguments);
         } // for
       }
     }
 
     for (i = 0; i < data_build.setting.defines.used && F_status_is_error_not(*status); ++i) {
+
+      if (!data_build.setting.defines.array[i].used) continue;
+
       *status = fll_execute_arguments_add(data_build.setting.defines.array[i].string, data_build.setting.defines.array[i].used, arguments);
     } // for
 
     if (is_shared) {
       for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.defines_shared.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.defines_shared.array[i].string, data_build.setting.defines_shared.array[i].used, arguments);
       } // for
     }
     else {
       for (i = 0; i < data_build.setting.defines_static.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.defines_static.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.defines_static.array[i].string, data_build.setting.defines_static.array[i].used, arguments);
       } // for
     }
 
     if (is_library) {
       for (i = 0; i < data_build.setting.defines_library.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.defines_library.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.defines_library.array[i].string, data_build.setting.defines_library.array[i].used, arguments);
       } // for
 
       if (is_shared) {
         for (i = 0; i < data_build.setting.defines_library_shared.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build.setting.defines_library_shared.array[i].used) continue;
+
           *status = fll_execute_arguments_add(data_build.setting.defines_library_shared.array[i].string, data_build.setting.defines_library_shared.array[i].used, arguments);
         } // for
       }
       else {
         for (i = 0; i < data_build.setting.defines_library_static.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build.setting.defines_library_static.array[i].used) continue;
+
           *status = fll_execute_arguments_add(data_build.setting.defines_library_static.array[i].string, data_build.setting.defines_library_static.array[i].used, arguments);
         } // for
       }
     }
     else {
       for (i = 0; i < data_build.setting.defines_program.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build.setting.defines_program.array[i].used) continue;
+
         *status = fll_execute_arguments_add(data_build.setting.defines_program.array[i].string, data_build.setting.defines_program.array[i].used, arguments);
       } // for
 
       if (is_shared) {
         for (i = 0; i < data_build.setting.defines_program_shared.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build.setting.defines_program_shared.array[i].used) continue;
+
           *status = fll_execute_arguments_add(data_build.setting.defines_program_shared.array[i].string, data_build.setting.defines_program_shared.array[i].used, arguments);
         } // for
       }
       else {
         for (i = 0; i < data_build.setting.defines_program_static.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build.setting.defines_program_static.array[i].used) continue;
+
           *status = fll_execute_arguments_add(data_build.setting.defines_program_static.array[i].string, data_build.setting.defines_program_static.array[i].used, arguments);
         } // for
       }
     }
 
     for (i = 0; i < main.define.used && F_status_is_error_not(*status); ++i) {
+
+      if (!main.define.array[i].used) continue;
+
       *status = fll_execute_arguments_add(main.define.array[i].string, main.define.array[i].used, arguments);
     } // for
   }
@@ -874,6 +942,8 @@ extern "C" {
 
         for (j = 0; j < sources[i]->used; ++j) {
 
+          if (!sources[i]->array[j].used) continue;
+
           source_length = path_sources->used + sources[i]->array[j].used;
 
           char source[source_length + 1];
@@ -1147,6 +1217,8 @@ extern "C" {
 
       for (uint8_t i = 0; i < 4; ++i) {
 
+        if (!lengths[i]) continue;
+
         *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -1338,6 +1410,8 @@ extern "C" {
     f_array_length_t i = 0;
 
     for (; i < data_build.setting.build_indexer_arguments.used; ++i) {
+
+      if (!data_build.setting.build_indexer_arguments.array[i].used) continue;
 
       *status = fll_execute_arguments_add(data_build.setting.build_indexer_arguments.array[i].string, data_build.setting.build_indexer_arguments.array[i].used, &arguments);
       if (F_status_is_error(*status)) break;
@@ -1593,7 +1667,7 @@ extern "C" {
             fll_error_print(main.error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
           }
           else {
-            fake_build_load_setting_process(main, setting_file.used ? path_file : main.file_data_build_settings.string, buffer, objects, contents, setting, status);
+            fake_build_load_setting_process(main, F_true, setting_file.used ? path_file : main.file_data_build_settings.string, buffer, objects, contents, setting, status);
           }
         }
 
@@ -1646,7 +1720,7 @@ extern "C" {
 #endif // _di_fake_build_load_setting_
 
 #ifndef _di_fake_build_load_setting_process_
-  void fake_build_load_setting_process(const fake_main_t main, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) {
+  void fake_build_load_setting_process(const fake_main_t main, const bool checks, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) {
 
     if (F_status_is_error(*status) && buffer.used) return;
 
@@ -2101,8 +2175,7 @@ extern "C" {
         if (main.error.verbosity != f_console_verbosity_quiet) {
           funlockfile(main.error.to.stream);
 
-          // @todo update FSS functions to return which setting index the problem happened on.
-          fl_print_format("%c%[%SA setting in the build setting file '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%c%[%SA setting in the file '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
           fl_print_format("%[%S%]", main.error.to.stream, main.error.notable, path_file, main.error.notable);
           fl_print_format("%[' is too long.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
@@ -2550,7 +2623,7 @@ extern "C" {
       } // for
 
       if (F_status_is_error_not(*status)) {
-        if (!setting->version_file) {
+        if (checks && !setting->version_file) {
           setting->version_file = fake_build_version_type_micro;
 
           if (main.warning.verbosity == f_console_verbosity_verbose) {
@@ -2568,7 +2641,7 @@ extern "C" {
           }
         }
 
-        if (!setting->version_target) {
+        if (checks && !setting->version_target) {
           setting->version_target = fake_build_version_type_major;
 
           if (main.warning.verbosity == f_console_verbosity_verbose) {
@@ -2652,7 +2725,7 @@ extern "C" {
               }
             }
           }
-          else {
+          else if (checks) {
             prefix[i]->used = 0;
 
             for (j = 0; j < 2; ++j) {
@@ -3192,6 +3265,8 @@ extern "C" {
 
         for (uint8_t k = 0; k < 5; ++k) {
 
+          if (!lengths[k]) continue;
+
           *status = fll_execute_arguments_add(values[k], lengths[k], &arguments);
           if (F_status_is_error(*status)) break;
         } // for
@@ -3440,6 +3515,8 @@ extern "C" {
 
       for (uint8_t i = 0; i < 2; ++i) {
 
+        if (!lengths[i]) continue;
+
         *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -3584,6 +3661,8 @@ extern "C" {
       };
 
       for (uint8_t i = 0; i < 4; ++i) {
+
+        if (!lengths[i]) continue;
 
         *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
         if (F_status_is_error(*status)) break;

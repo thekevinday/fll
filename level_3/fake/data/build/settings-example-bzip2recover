@@ -14,6 +14,7 @@ project_name bzip2recover
 version_major 1
 version_minor 0
 version_micro 8
+version_file micro
 version_target major
 
 build_compiler gcc
