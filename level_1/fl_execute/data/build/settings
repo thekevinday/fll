@@ -18,6 +18,7 @@ modes_default individual
 
 build_compiler gcc
 build_indexer ar
+build_indexer_arguments rcs
 build_language c
 build_libraries -lc -lcap
 build_libraries-individual -lf_capability -lf_execute -lf_limit -lf_memory -lf_signal -lf_string -lf_type_array

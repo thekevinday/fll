@@ -433,116 +433,117 @@ bootstrap_id() {
   case $name in
     "build_compiler") echo -n 0;;
     "build_indexer") echo -n 1;;
-    "build_language") echo -n 2;;
-    "build_libraries") echo -n 3;;
-    "build_libraries_shared") echo -n 4;;
-    "build_libraries_static") echo -n 5;;
-    "build_script") echo -n 6;;
-    "build_shared") echo -n 7;;
-    "build_sources_headers") echo -n 8;;
-    "build_sources_headers_shared") echo -n 9;;
-    "build_sources_headers_static") echo -n 10;;
-    "build_sources_library") echo -n 11;;
-    "build_sources_library_shared") echo -n 12;;
-    "build_sources_library_static") echo -n 13;;
-    "build_sources_program") echo -n 14;;
-    "build_sources_program_shared") echo -n 15;;
-    "build_sources_program_static") echo -n 16;;
-    "build_sources_script") echo -n 17;;
-    "build_sources_setting") echo -n 18;;
-    "build_static") echo -n 19;;
-    "defines") echo -n 20;;
-    "defines_library") echo -n 21;;
-    "defines_library_shared") echo -n 22;;
-    "defines_library_static") echo -n 23;;
-    "defines_program") echo -n 24;;
-    "defines_program_shared") echo -n 25;;
-    "defines_program_static") echo -n 26;;
-    "defines_shared") echo -n 27;;
-    "defines_static") echo -n 28;;
-    "environment") echo -n 29;;
-    "flags") echo -n 30;;
-    "flags_library") echo -n 31;;
-    "flags_library_shared") echo -n 32;;
-    "flags_library_static") echo -n 33;;
-    "flags_program") echo -n 34;;
-    "flags_program_shared") echo -n 35;;
-    "flags_program_static") echo -n 36;;
-    "flags_shared") echo -n 37;;
-    "flags_static") echo -n 38;;
-    "modes") echo -n 39;;
-    "modes_default") echo -n 40;;
-    "path_headers") echo -n 41;;
-    "path_headers_preserve") echo -n 42;;
-    "path_language") echo -n 42;;
-    "path_library_script") echo -n 43;;
-    "path_library_shared") echo -n 44;;
-    "path_library_static") echo -n 45;;
-    "path_program_script") echo -n 46;;
-    "path_program_shared") echo -n 47;;
-    "path_program_static") echo -n 48;;
-    "path_sources") echo -n 50;;
-    "path_standard") echo -n 51;;
-    "process_post") echo -n 52;;
-    "process_pre") echo -n 53;;
-    "project_name") echo -n 54;;
-    "search_exclusive") echo -n 55;;
-    "search_shared") echo -n 56;;
-    "search_static") echo -n 57;;
-    "version_file") echo -n 58;;
-    "version_major") echo -n 59;;
-    "version_major_prefix") echo -n 60;;
-    "version_micro") echo -n 61;;
-    "version_micro_prefix") echo -n 62;;
-    "version_minor") echo -n 63;;
-    "version_minor_prefix") echo -n 64;;
-    "version_nano") echo -n 65;;
-    "version_nano_prefix") echo -n 66;;
-    "version_target") echo -n 67;;
+    "build_indexer_arguments") echo -n 2;;
+    "build_language") echo -n 3;;
+    "build_libraries") echo -n 4;;
+    "build_libraries_shared") echo -n 5;;
+    "build_libraries_static") echo -n 6;;
+    "build_script") echo -n 7;;
+    "build_shared") echo -n 8;;
+    "build_sources_headers") echo -n 9;;
+    "build_sources_headers_shared") echo -n 10;;
+    "build_sources_headers_static") echo -n 11;;
+    "build_sources_library") echo -n 12;;
+    "build_sources_library_shared") echo -n 13;;
+    "build_sources_library_static") echo -n 14;;
+    "build_sources_program") echo -n 15;;
+    "build_sources_program_shared") echo -n 16;;
+    "build_sources_program_static") echo -n 17;;
+    "build_sources_script") echo -n 18;;
+    "build_sources_setting") echo -n 19;;
+    "build_static") echo -n 20;;
+    "defines") echo -n 21;;
+    "defines_library") echo -n 22;;
+    "defines_library_shared") echo -n 23;;
+    "defines_library_static") echo -n 24;;
+    "defines_program") echo -n 25;;
+    "defines_program_shared") echo -n 26;;
+    "defines_program_static") echo -n 27;;
+    "defines_shared") echo -n 28;;
+    "defines_static") echo -n 29;;
+    "environment") echo -n 30;;
+    "flags") echo -n 31;;
+    "flags_library") echo -n 32;;
+    "flags_library_shared") echo -n 33;;
+    "flags_library_static") echo -n 34;;
+    "flags_program") echo -n 35;;
+    "flags_program_shared") echo -n 36;;
+    "flags_program_static") echo -n 37;;
+    "flags_shared") echo -n 38;;
+    "flags_static") echo -n 39;;
+    "modes") echo -n 40;;
+    "modes_default") echo -n 41;;
+    "path_headers") echo -n 42;;
+    "path_headers_preserve") echo -n 43;;
+    "path_language") echo -n 44;;
+    "path_library_script") echo -n 45;;
+    "path_library_shared") echo -n 46;;
+    "path_library_static") echo -n 47;;
+    "path_program_script") echo -n 48;;
+    "path_program_shared") echo -n 49;;
+    "path_program_static") echo -n 50;;
+    "path_sources") echo -n 51;;
+    "path_standard") echo -n 52;;
+    "process_post") echo -n 53;;
+    "process_pre") echo -n 54;;
+    "project_name") echo -n 55;;
+    "search_exclusive") echo -n 56;;
+    "search_shared") echo -n 57;;
+    "search_static") echo -n 58;;
+    "version_file") echo -n 59;;
+    "version_major") echo -n 60;;
+    "version_major_prefix") echo -n 61;;
+    "version_micro") echo -n 62;;
+    "version_micro_prefix") echo -n 63;;
+    "version_minor") echo -n 64;;
+    "version_minor_prefix") echo -n 65;;
+    "version_nano") echo -n 66;;
+    "version_nano_prefix") echo -n 67;;
+    "version_target") echo -n 68;;
 
-    "build_libraries-$mode") echo -n 68;;
-    "build_libraries_shared-$mode") echo -n 69;;
-    "build_libraries_static-$mode") echo -n 70;;
-    "build_sources_headers-$mode") echo -n 71;;
-    "build_sources_headers_shared-$mode") echo -n 72;;
-    "build_sources_headers_static-$mode") echo -n 73;;
-    "build_sources_library-$mode") echo -n 74;;
-    "build_sources_library_shared-$mode") echo -n 75;;
-    "build_sources_library_static-$mode") echo -n 76;;
-    "build_sources_program-$mode") echo -n 77;;
-    "build_sources_program_shared-$mode") echo -n 78;;
-    "build_sources_program_static-$mode") echo -n 79;;
-    "build_sources_script-$mode") echo -n 80;;
-    "build_sources_setting-$mode") echo -n 81;;
-    "defines-$mode") echo -n 82;;
-    "defines_library-$mode") echo -n 83;;
-    "defines_library_shared-$mode") echo -n 84;;
-    "defines_library_static-$mode") echo -n 85;;
-    "defines_program-$mode") echo -n 86;;
-    "defines_program_shared-$mode") echo -n 87;;
-    "defines_program_static-$mode") echo -n 88;;
-    "defines_shared-$mode") echo -n 89;;
-    "defines_static-$mode") echo -n 90;;
-    "environment-$mode") echo -n 91;;
-    "flags-$mode") echo -n 92;;
-    "flags_library-$mode") echo -n 93;;
-    "flags_library_shared-$mode") echo -n 94;;
-    "flags_library_static-$mode") echo -n 95;;
-    "flags_program-$mode") echo -n 96;;
-    "flags_program_shared-$mode") echo -n 97;;
-    "flags_program_static-$mode") echo -n 98;;
-    "flags_shared-$mode") echo -n 99;;
-    "flags_static-$mode") echo -n 100;;
+    "build_libraries-$mode") echo -n 69;;
+    "build_libraries_shared-$mode") echo -n 70;;
+    "build_libraries_static-$mode") echo -n 71;;
+    "build_sources_headers-$mode") echo -n 72;;
+    "build_sources_headers_shared-$mode") echo -n 73;;
+    "build_sources_headers_static-$mode") echo -n 74;;
+    "build_sources_library-$mode") echo -n 75;;
+    "build_sources_library_shared-$mode") echo -n 76;;
+    "build_sources_library_static-$mode") echo -n 77;;
+    "build_sources_program-$mode") echo -n 78;;
+    "build_sources_program_shared-$mode") echo -n 79;;
+    "build_sources_program_static-$mode") echo -n 80;;
+    "build_sources_script-$mode") echo -n 81;;
+    "build_sources_setting-$mode") echo -n 82;;
+    "defines-$mode") echo -n 83;;
+    "defines_library-$mode") echo -n 84;;
+    "defines_library_shared-$mode") echo -n 85;;
+    "defines_library_static-$mode") echo -n 86;;
+    "defines_program-$mode") echo -n 87;;
+    "defines_program_shared-$mode") echo -n 88;;
+    "defines_program_static-$mode") echo -n 89;;
+    "defines_shared-$mode") echo -n 90;;
+    "defines_static-$mode") echo -n 91;;
+    "environment-$mode") echo -n 92;;
+    "flags-$mode") echo -n 93;;
+    "flags_library-$mode") echo -n 94;;
+    "flags_library_shared-$mode") echo -n 95;;
+    "flags_library_static-$mode") echo -n 96;;
+    "flags_program-$mode") echo -n 97;;
+    "flags_program_shared-$mode") echo -n 98;;
+    "flags_program_static-$mode") echo -n 99;;
+    "flags_shared-$mode") echo -n 100;;
+    "flags_static-$mode") echo -n 101;;
 
-    "has-version_major_prefix") echo -n 101;;
-    "has-version_micro_prefix") echo -n 102;;
-    "has-version_minor_prefix") echo -n 103;;
-    "has-version_nano_prefix") echo -n 104;;
+    "has-version_major_prefix") echo -n 102;;
+    "has-version_micro_prefix") echo -n 103;;
+    "has-version_minor_prefix") echo -n 104;;
+    "has-version_nano_prefix") echo -n 105;;
 
-    "has-version_major_prefix-$mode") echo -n 105;;
-    "has-version_micro_prefix-$mode") echo -n 106;;
-    "has-version_minor_prefix-$mode") echo -n 107;;
-    "has-version_nano_prefix-$mode") echo -n 108;;
+    "has-version_major_prefix-$mode") echo -n 106;;
+    "has-version_micro_prefix-$mode") echo -n 107;;
+    "has-version_minor_prefix-$mode") echo -n 108;;
+    "has-version_nano_prefix-$mode") echo -n 109;;
   esac
 }
 
@@ -569,7 +570,7 @@ bootstrap_load_settings() {
     return 1
   fi
 
-  for i in build_compiler build_indexer build_language build_libraries build_libraries_shared build_libraries_static build_script build_shared build_sources_headers build_sources_headers_shared build_sources_headers_static build_sources_library build_sources_library_shared build_sources_library_static build_sources_program build_sources_program_shared build_sources_program_static build_sources_script build_sources_setting build_static defines defines_library defines_library_shared defines_library_static defines_program defines_shared defines_program_shared defines_program_static defines_static environment flags flags_library flags_program flags_shared flags_static modes modes_default path_headers path_headers_preserve path_language path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre project_name search_exclusive search_shared search_static version_major version_major_prefix version_micro version_micro_prefix version_minor version_minor_prefix version_nano version_nano_prefix version_target ; do
+  for i in build_compiler build_indexer build_indexer_arguments build_language build_libraries build_libraries_shared build_libraries_static build_script build_shared build_sources_headers build_sources_headers_shared build_sources_headers_static build_sources_library build_sources_library_shared build_sources_library_static build_sources_program build_sources_program_shared build_sources_program_static build_sources_script build_sources_setting build_static defines defines_library defines_library_shared defines_library_static defines_program defines_shared defines_program_shared defines_program_static defines_static environment flags flags_library flags_program flags_shared flags_static modes modes_default path_headers path_headers_preserve path_language path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre project_name search_exclusive search_shared search_static version_major version_major_prefix version_micro version_micro_prefix version_minor version_minor_prefix version_nano version_nano_prefix version_target ; do
     variables[$(bootstrap_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }
@@ -637,6 +638,7 @@ bootstrap_operation_build() {
   local target=${variables[$(bootstrap_id version_target)]}
   local compiler=${variables[$(bootstrap_id build_compiler)]}
   local indexer=${variables[$(bootstrap_id build_indexer)]}
+  local indexer_arguments=${variables[$(bootstrap_id build_indexer_arguments)]}
   local arguments_include="-I${path_build}includes"
   local arguments_shared="-L${path_build}libraries/shared"
   local arguments_static="-L${path_build}libraries/static"
@@ -1192,10 +1194,10 @@ bootstrap_operation_build() {
       if [[ $failure == "" && ( $sources_library != "" || $sources_library_static != "" ) ]] ; then
 
         if [[ $verbosity == "verbose" ]] ; then
-          echo $indexer rcs ${path_build}libraries/static/lib$name.a $sources
+          echo $indexer $indexer_arguments ${path_build}libraries/static/lib$name.a $sources
         fi
 
-        $indexer rcs ${path_build}libraries/static/lib$name.a $sources || failure=1
+        $indexer $indexer_arguments ${path_build}libraries/static/lib$name.a $sources || failure=1
       fi
     fi
 

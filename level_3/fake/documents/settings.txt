@@ -5,59 +5,66 @@ Settings Documentation:
   The settings file is designed for very simple compilations that represent a single named program and/or a single named library.
   For specific details on the allowed formatting, see the settings.txt under the specifications folder.
 
-  build_compiler\:
-    Expects the name of the compiler, which generally should not be the path to the file, just the executable name.
-    The programs "gcc" and "clang" are known to work.
-    Many of the parameters in the settings file can be changed if using a non-GCC, but there is certain hard-coded functionality that may still need changing.
+  - build_compiler\:
+    This represents the name of the compiler program to use, such as "gcc".
 
-  build_indexer\:
-    Exactly like build_compiler, except for the linker, aka indexer.
+    The programs "gcc" and "clang" are known to work.
+    Many of the parameters in the settings file can be changed if using a non-GCC, but there may be certain hard-coded functionality that may need to be changed.
+
+  - build_indexer\:
+    This represents the name of the indexer program to use, such as "ar".
+    An indexer is often called a linker.
+
     The default behavior is to support the GNU "ar" program.
     Similar to "build_compiler", any linker that supports the "ar" program parameters is effectively supported.
 
-  build_language\:
+  - build_indexer_arguments\:
+    This represents arguments needed to build an archive file from object files, such as "rcs".
+    These arguments are placed immediately before the object files passed to the "indexer" program.
+
+  - build_language\:
     The programming language to build with.
     The languages "c" and "c++" are supported (with "bash" as a consideration for support).
     The "bash" language is not currently implemented and needs some consideration because there is nothing to compile.
     The "bash" language will likely build a set of individual scripts, and perhaps script dependencies, into a single Bash script.
 
-  build_libraries\:
+  - build_libraries\:
     A collection of libraries to be linked against.
     This should include the compiler specific parameter parts, such as the "-l" prefix in "-lc".
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
 
-  build_libraries_shared\:
+  - build_libraries_shared\:
     A collection of libraries to be linked against.
     This should include the compiler specific parameter parts, such as the "-l" prefix in "-lc".
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These are applied to only shared builds.
 
-  build_libraries_static\:
+  - build_libraries_static\:
     A collection of libraries to be linked against.
     This should include the compiler specific parameter parts, such as the "-l" prefix in "-lc".
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These are applied to only static builds.
 
-  build_script\:
+  - build_script\:
     When "yes", the build process will build any scripts, such as a Bash script.
     This is currently not implemented.
 
-  build_shared\:
+  - build_shared\:
     When "yes", the build process will compile any source code for any supported language that supports shared library linking.
 
-  build_sources_headers\:
+  - build_sources_headers\:
     A collection of header files.
     May include a relative sub-path to each individual header (such as: "level_0/a.h level_0/b.h level_1/c.h").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
 
-  build_sources_headers_shared\:
+  - build_sources_headers_shared\:
     A collection of header files.
     May include a relative sub-path to each individual header (such as: "level_0/a.h level_0/b.h level_1/c.h").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     Be careful not to have any conflicting names between this and build_sources_headers_static in case of when static and shared builds are both enabled.
     These are applied to only shared builds.
 
-  build_sources_headers_static\:
+  - build_sources_headers_static\:
     A collection of header files.
     May include a relative sub-path to each individual header (such as: "level_0/a.h level_0/b.h level_1/c.h").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
@@ -65,216 +72,216 @@ Settings Documentation:
     Be careful not to have any conflicting names between this and build_sources_headers_shared in case of when static and shared builds are both enabled.
     These are applied to only static builds.
 
-  build_sources_library\:
+  - build_sources_library\:
     A collection of library related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
 
-  build_sources_library_shared\:
+  - build_sources_library_shared\:
     A collection of library related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These are applied to only shared builds.
 
-  build_sources_library_static\:
+  - build_sources_library_static\:
     A collection of library related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These are applied to only static builds.
 
-  build_sources_program\:
+  - build_sources_program\:
     A collection of program related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These files are used when compiling the program.
 
-  build_sources_program_shared\:
+  - build_sources_program_shared\:
     A collection of program related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These files are used when compiling the program for shared builds.
 
-  build_sources_program_static\:
+  - build_sources_program_static\:
     A collection of program related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These files are used when compiling the program for static builds.
 
-  build_sources_script\:
+  - build_sources_script\:
     A collection of script files.
     These are settings files used by the project and are simply copied over to the build directory.
     Unless a pre-process script (or in theory post-process script) is configured to alter these, they are not modified.
     Unlike the "compile_language" setting "bash", this is not for built Bash script, but is instead for any valid scripting language (including Bash).
     These could be in any language.
 
-  build_sources_setting\:
+  - build_sources_setting\:
     A collection of settings files.
     These are settings files used by the project and are simply copied over to the build directory.
     Unless a pre-process script (or in theory post-process script) is configured to alter these, they are not modified.
 
-  build_static\:
+  - build_static\:
     When "yes", the build process will compile any source code for any supported language that supports static library linking.
 
-  defines\:
+  - defines\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to both shared and static builds.
 
-  defines_library\:
+  - defines_library\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only library builds.
 
-  defines_library_shared\:
+  - defines_library_shared\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only shared library builds.
 
-  defines_library_static\:
+  - defines_library_static\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only static library builds.
 
-  defines_program\:
+  - defines_program\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only program builds.
 
-  defines_program_shared\:
+  - defines_program_shared\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only shared program builds.
 
-  defines_program_static\:
+  - defines_program_static\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only shared program builds.
 
-  defines_shared\:
+  - defines_shared\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only shared builds.
 
-  defines_static\:
+  - defines_static\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only static builds.
 
-  environment\:
+  - environment\:
     A collection of environment names to pass from the callers environment into the executed programs environment.
     For security and integrity reasons, all environment variables are removed when calling user-space programs, such as "gcc".
     There are times when someone desires that an environment variable be exposed to the user-space programs.
     Add them here and they will be available in the environment of all user-space programs executed.
 
-  flags\:
+  - flags\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to both shared and static builds.
 
-  flags_library\:
+  - flags_library\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied when building a library.
 
-  flags_library_shared\:
+  - flags_library_shared\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to only library shared builds.
 
-  flags_library_static\:
+  - flags_library_static\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to only library static builds.
 
-  flags_program\:
+  - flags_program\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied when building a program.
 
-  flags_program_shared\:
+  - flags_program_shared\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to only program shared builds.
 
-  flags_program_static\:
+  - flags_program_static\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to only program static builds.
 
-  flags_shared\:
+  - flags_shared\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to only shared builds.
 
-  flags_static\:
+  - flags_static\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to only static builds.
 
-  modes\:
+  - modes\:
     A collection of available build modes.
     Build modes provide custom variants of the build process where certain settings are appended onto others.
     See the settings.txt specification for a list of which setting names this applies to.
 
-  modes_default\:
+  - modes_default\:
     The name of the default mode to use when no mode is specified.
     This must be one of the modes specified in the "modes" setting.
 
-  path_headers\:
+  - path_headers\:
     A sub-path in which headers are to be installed under.
     For example, the FLL project might use the "level_0", "level_1", etc.. headers without requiring that structure within the source.
     A resulting build destination for a path_headers of "level_0" would be something like "build/includes/level_0/".
     If "path_headers" is "level_0", "path_headers_preserve" is "yes", and "build_sources_headers" has "xxx/a.h yyy/zzz/b.h", then the headers would be at: "build/includes/level_0/xxx/a.h build/includes/level_0/yyy/zzz/b.h"
 
-  path_headers_preserve\:
+  - path_headers_preserve\:
     When "yes" the relative directory structure in the source (as defined in "build_sources_headers") is preserved.
     If the "build_sources_headers" has the header files "xxx/a.h yyy/zzz/b.h" and this is "yes", then the directories "xxx/" and "yyy/zzz/" are created and the files are stored within them.
     If the "build_sources_headers" has the header files "xxx/a.h yyy/zzz/b.h" and this is "no", then the directories "xxx/" and "yyy/zzz/" are stripped before installing.
     When this is "no" and the "build_sources_headers" has header files "xxx/a.h yyy/a.h", then one of the "a.h" files will be overwritten, depending on order they were supplied.
 
-  path_language\:
+  - path_language\:
     A sub-path in which to find the source files for the currently defined language.
     If the "build_language" is changed, it is recommended to change this as well to match.
 
-  path_library_script\:
+  - path_library_script\:
     A sub-path representing when the built library script files are placed.
     This is currently not implemented.
 
-  path_library_shared\:
+  - path_library_shared\:
     A sub-path representing when the built shared library files are placed.
 
-  path_library_static\:
+  - path_library_static\:
     A sub-path representing when the built shared library files are placed.
 
-  path_program_script\:
+  - path_program_script\:
     A sub-path representing when the built program script files are placed.
     This is currently not implemented.
 
-  path_program_shared\:
+  - path_program_shared\:
     A sub-path representing when the built shared program files are placed.
 
-  path_program_static\:
+  - path_program_static\:
     A sub-path representing when the built shared program files are placed.
 
-  path_sources\:
+  - path_sources\:
     A sub-path representing when the built shared program files are placed.
 
-  path_standard\:
+  - path_standard\:
     When "yes", the sources path will be built using the sources path with the language, such as "sources/c/", ignoring "path_sources" completely.
     When "no", the default sources path structure is not used and instead "path_sources" is used.
     When the parameter -S/--sources is specified, such as "-S xxx", then when "yes" is used path would be "xxx/c/" and when "no" path would be "xxx/".
     The default behavior is "yes".
 
-  process_post\:
+  - process_post\:
     The filename (relative to the "data/build/" directory) of a script to execute after the "build" operation successfully completes.
     A small subset of parameters from the main execution are passed to this script during execution as parameters (using short parameter codes)\:
       Color context parameters, such as: "+l", "+n", and "+d".
@@ -288,7 +295,7 @@ Settings Documentation:
       Sources Path parameter, such as "-S X', whereas "X" is any valid argument associated with "-S".
       Work Path parameter, such as "-w X', whereas "X" is any valid argument associated with "-w".
 
-  process_pre\:
+  - process_pre\:
     The filename (relative to the "data/build/" directory) of a script to execute before the "build" operation is executed.
     A small subset of parameters from the main execution are passed to this script during execution as parameters (using short parameter codes)\:
       Color context parameters, such as: "+l", "+n", and "+d".
@@ -302,28 +309,28 @@ Settings Documentation:
       Sources Path parameter, such as "-S X', whereas "X" is any valid argument associated with "-S".
       Work Path parameter, such as "-w X', whereas "X" is any valid argument associated with "-w".
 
-  project_name\:
+  - project_name\:
     The name of the project.
     If program sources are specified, then this will be used as the program name.
     If library sources are specified, then this will be used in the library name, such as "libX.so" where "X" would be the "project_name" value.
 
-  search_exclusive\:
+  - search_exclusive\:
     When "yes", the search path during compile for shared libraries will only include shared library paths.
     When "no", the search path during compile time for shared libraries will include shared library paths followed by static library paths.
     Setting this to "yes" helps prevent static libraries from ending up in shared libraries (very useful when bootstrapping a system).
     Setting this to "no" allows for including static libraries if no shared libraries are found but static are.
     This does not alter search paths introduced automatically by the "build_compiler" or "build_indexer", so it is still possible for static libraries to end up even when this is set to "yes".
 
-  search_shared\:
+  - search_shared\:
     When "yes", shared library paths are searched during compile.
     Both this and "search_static" cannot be "no" at the same time.
     The default behavior is "yes".
 
-  search_shared\:
+  - search_shared\:
     When "yes", static library paths are searched during compile.
     Both this and search_shared cannot be "no" at the same time.
 
-  version_file\:
+  - version_file\:
     Designates which version should be used when building the symbolic links.
     Any version prefixes are used as defined.
     A Symbolic link is created against this created file such that "libX.so" is a link to "libX.so.A".
@@ -334,59 +341,59 @@ Settings Documentation:
     When "micro" is used, the file created is "libX.so.A.B.C", whereas "X" is the "project_name" and "A.B.C" is the major, minor, and micro versions, respectively.
     When "nano" is used, the file created is "libX.so.A.B.C.D", whereas "X" is the "project_name" and "A.B.C.D" is the major, minor, micro, and nano versions, respectively.
 
-  version_major\:
+  - version_major\:
     The major version number (or in theory any characters allowed in a filename).
     This should generally be a positive number or 0.
     Anything else is currently untested but allowed.
     With a structure of "A.B.C", the major version would be the "A".
 
-  version_major_prefix\:
+  - version_major_prefix\:
     The version major prefix is the character used to designate the start of the major version.
     This can zero or more characters.
     The default is an empty string.
     With a structure of "A.B.C", the major version prefix would be before the "A".
     This is only added if "version_major" is not empty.
 
-  version_minor\:
+  - version_minor\:
     The minor version number (or in theory any characters allowed in a filename).
     This should generally be a positive number or 0.
     Anything else is currently untested but allowed.
     With a structure of "A.B.C", the minor version would be the "B".
 
-  version_minor_prefix\:
+  - version_minor_prefix\:
     The version minor prefix is the character used to separate the major from the minor.
     This can zero or more characters.
     The default prefix is an ASCII period character "." if and only if "version_minor" is not an empty string.
     With a structure of "A.B.C", the minor version prefix would be the "." before the "B".
     This is only added if "version_minor" is not empty.
 
-  version_micro\:
+  - version_micro\:
     The micro version number (or in theory any characters allowed in a filename).
     This should generally be a positive number or 0.
     Anything else is currently untested but allowed.
     With a structure of "A.B.C", the micro version would be the "C".
 
-  version_micro_prefix\:
+  - version_micro_prefix\:
     The version micro prefix is the character used to separate the minor from the micro.
     This can zero or more characters.
     The default prefix is an ASCII period character "." if and only if "version_micro" is not an empty string.
     With a structure of "A.B.C", the micro version prefix would be the "." before the "C".
     This is only added if "version_micro" is not empty.
 
-  version_nano\:
+  - version_nano\:
     The nano version number (or in theory any characters allowed in a filename).
     This should generally be a positive number or 0.
     Anything else is currently untested but allowed.
     With a structure of "A.B.C.D", the micro version prefix would be the "." before the "D".
 
-  version_nano_prefix\:
+  - version_nano_prefix\:
     The version nano prefix is the character used to separate the micro from the nano.
     This can zero or more characters.
     The default prefix is an ASCII period character "." if and only if "version_nano" is not an empty string.
     With a structure of "A.B.C.D", the minor version would be the "." before the "D".
     This is only added if "version_nano" is not empty.
 
-  version_target\:
+  - version_target\:
     Designates which version should be used when linking the shared library.
     Any version prefixes are used as defined.
     The default target is "micro".

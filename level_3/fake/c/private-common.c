@@ -12,6 +12,7 @@ extern "C" {
   const f_string_t fake_build_setting_name_build_libraries_shared_s = FAKE_build_setting_name_build_libraries_shared_s;
   const f_string_t fake_build_setting_name_build_libraries_static_s = FAKE_build_setting_name_build_libraries_static_s;
   const f_string_t fake_build_setting_name_build_indexer_s = FAKE_build_setting_name_build_indexer_s;
+  const f_string_t fake_build_setting_name_build_indexer_arguments_s = FAKE_build_setting_name_build_indexer_arguments_s;
   const f_string_t fake_build_setting_name_build_script_s = FAKE_build_setting_name_build_script_s;
   const f_string_t fake_build_setting_name_build_shared_s = FAKE_build_setting_name_build_shared_s;
   const f_string_t fake_build_setting_name_build_sources_headers_s = FAKE_build_setting_name_build_sources_headers_s;
@@ -113,8 +114,6 @@ extern "C" {
   const f_string_t fake_build_parameter_object_name_suffix_s = FAKE_build_parameter_object_name_suffix_s;
   const f_string_t fake_build_parameter_object_output_s = FAKE_build_parameter_object_output_s;
   const f_string_t fake_build_parameter_object_static_s = FAKE_build_parameter_object_static_s;
-
-  const f_string_t fake_build_parameter_object_link_arguments_s = FAKE_build_parameter_object_link_arguments_s;
 #endif // _di_fake_build_parameter_
 
 #ifndef _di_fake_common_
@@ -132,7 +131,8 @@ extern "C" {
   const f_string_t fake_make_setting_define_s = FAKE_make_setting_define_s;
   const f_string_t fake_make_setting_environment_s = FAKE_make_setting_environment_s;
   const f_string_t fake_make_setting_fail_s = FAKE_make_setting_fail_s;
-  const f_string_t fake_make_setting_linker_s = FAKE_make_setting_linker_s;
+  const f_string_t fake_make_setting_indexer_s = FAKE_make_setting_indexer_s;
+  const f_string_t fake_make_setting_indexer_arguments_s = FAKE_make_setting_indexer_arguments_s;
   const f_string_t fake_make_setting_load_build_s = FAKE_make_setting_load_build_s;
   const f_string_t fake_make_setting_parameter_s = FAKE_make_setting_parameter_s;
   const f_string_t fake_make_setting_return_s = FAKE_make_setting_return_s;

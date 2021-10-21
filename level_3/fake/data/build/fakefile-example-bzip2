@@ -15,6 +15,7 @@ settings:
 
   compiler gcc
   indexer ar
+  indexer_arguments rcs
 
 main:
   operate bzip2

@@ -53,6 +53,7 @@ extern "C" {
     f_string_dynamic_t version_nano;
     f_string_dynamic_t version_nano_prefix;
 
+    f_string_dynamics_t build_indexer_arguments;
     f_string_dynamics_t build_libraries;
     f_string_dynamics_t build_libraries_shared;
     f_string_dynamics_t build_libraries_static;
@@ -159,6 +160,7 @@ extern "C" {
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
   }
 
   #define macro_fake_build_setting_t_delete_simple(setting) \
@@ -184,6 +186,7 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(setting.version_minor_prefix); \
     macro_f_string_dynamic_t_delete_simple(setting.version_nano); \
     macro_f_string_dynamic_t_delete_simple(setting.version_nano_prefix); \
+    macro_f_string_dynamics_t_delete_simple(setting.build_indexer_arguments); \
     macro_f_string_dynamics_t_delete_simple(setting.build_libraries); \
     macro_f_string_dynamics_t_delete_simple(setting.build_libraries_shared); \
     macro_f_string_dynamics_t_delete_simple(setting.build_libraries_static); \
@@ -226,6 +229,7 @@ extern "C" {
   #define FAKE_build_setting_name_build_libraries_shared_s       "build_libraries_shared"
   #define FAKE_build_setting_name_build_libraries_static_s       "build_libraries_static"
   #define FAKE_build_setting_name_build_indexer_s                "build_indexer"
+  #define FAKE_build_setting_name_build_indexer_arguments_s      "build_indexer_arguments"
   #define FAKE_build_setting_name_build_script_s                 "build_script"
   #define FAKE_build_setting_name_build_shared_s                 "build_shared"
   #define FAKE_build_setting_name_build_sources_headers_s        "build_sources_headers"
@@ -295,6 +299,7 @@ extern "C" {
   #define fake_build_setting_name_build_libraries_shared_s_length       22
   #define fake_build_setting_name_build_libraries_static_s_length       22
   #define fake_build_setting_name_build_indexer_s_length                13
+  #define fake_build_setting_name_build_indexer_arguments_s_length      23
   #define fake_build_setting_name_build_script_s_length                 12
   #define fake_build_setting_name_build_shared_s_length                 12
   #define fake_build_setting_name_build_sources_headers_s_length        21
@@ -364,6 +369,7 @@ extern "C" {
   extern const f_string_t fake_build_setting_name_build_libraries_shared_s;
   extern const f_string_t fake_build_setting_name_build_libraries_static_s;
   extern const f_string_t fake_build_setting_name_build_indexer_s;
+  extern const f_string_t fake_build_setting_name_build_indexer_arguments_s;
   extern const f_string_t fake_build_setting_name_build_script_s;
   extern const f_string_t fake_build_setting_name_build_shared_s;
   extern const f_string_t fake_build_setting_name_build_sources_headers_s;
@@ -427,7 +433,7 @@ extern "C" {
   extern const f_string_t fake_build_setting_name_version_nano_prefix_s;
   extern const f_string_t fake_build_setting_name_version_target_s;
 
-  #define fake_build_setting_total_d 68
+  #define fake_build_setting_total_d 69
 
   #define FAKE_build_setting_default_version_s        "0"
   #define FAKE_build_setting_default_version_prefix_s "."
@@ -602,12 +608,6 @@ extern "C" {
   extern const f_string_t fake_build_parameter_object_name_suffix_s;
   extern const f_string_t fake_build_parameter_object_output_s;
   extern const f_string_t fake_build_parameter_object_static_s;
-
-  #define FAKE_build_parameter_object_link_arguments_s "rcs"
-
-  #define fake_build_parameter_object_link_arguments_s_length 3
-
-  extern const f_string_t fake_build_parameter_object_link_arguments_s;
 #endif // _di_fake_build_parameter_
 
 /**
@@ -675,29 +675,32 @@ extern "C" {
   #define macro_fake_make_setting_t_delete_simple(setting) \
     macro_f_string_map_multis_t_delete_simple(setting.parameter)
 
-  #define FAKE_make_setting_compiler_s    "compiler"
-  #define FAKE_make_setting_define_s      "define"
-  #define FAKE_make_setting_environment_s "environment"
-  #define FAKE_make_setting_fail_s        "fail"
-  #define FAKE_make_setting_linker_s      "linker"
-  #define FAKE_make_setting_load_build_s  "load_build"
-  #define FAKE_make_setting_parameter_s   "parameter"
-  #define FAKE_make_setting_return_s      "return"
+  #define FAKE_make_setting_compiler_s          "compiler"
+  #define FAKE_make_setting_define_s            "define"
+  #define FAKE_make_setting_environment_s       "environment"
+  #define FAKE_make_setting_fail_s              "fail"
+  #define FAKE_make_setting_indexer_s           "indexer"
+  #define FAKE_make_setting_indexer_arguments_s "indexer_arguments"
+  #define FAKE_make_setting_load_build_s        "load_build"
+  #define FAKE_make_setting_parameter_s         "parameter"
+  #define FAKE_make_setting_return_s            "return"
 
-  #define fake_make_setting_compiler_s_length    8
-  #define fake_make_setting_define_s_length      6
-  #define fake_make_setting_environment_s_length 11
-  #define fake_make_setting_fail_s_length        4
-  #define fake_make_setting_linker_s_length      6
-  #define fake_make_setting_load_build_s_length  10
-  #define fake_make_setting_parameter_s_length   9
-  #define fake_make_setting_return_s_length      6
+  #define fake_make_setting_compiler_s_length          8
+  #define fake_make_setting_define_s_length            6
+  #define fake_make_setting_environment_s_length       11
+  #define fake_make_setting_fail_s_length              4
+  #define fake_make_setting_indexer_s_length           7
+  #define fake_make_setting_indexer_arguments_s_length 17
+  #define fake_make_setting_load_build_s_length        10
+  #define fake_make_setting_parameter_s_length         9
+  #define fake_make_setting_return_s_length            6
 
   extern const f_string_t fake_make_setting_compiler_s;
   extern const f_string_t fake_make_setting_define_s;
   extern const f_string_t fake_make_setting_environment_s;
   extern const f_string_t fake_make_setting_fail_s;
-  extern const f_string_t fake_make_setting_linker_s;
+  extern const f_string_t fake_make_setting_indexer_s;
+  extern const f_string_t fake_make_setting_indexer_arguments_s;
   extern const f_string_t fake_make_setting_load_build_s;
   extern const f_string_t fake_make_setting_parameter_s;
   extern const f_string_t fake_make_setting_return_s;

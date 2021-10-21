@@ -18,6 +18,7 @@ modes_default monolithic
 
 build_compiler gcc
 build_indexer ar
+build_indexer_arguments rcs
 build_language c
 build_libraries -lc -lcap
 build_libraries-individual -lfll_error -lfll_execute -lfll_fss -lfll_print -lfll_program -lfl_console -lfl_control_group -lfl_conversion -lfl_environment -lfl_fss -lfl_print -lfl_status -lfl_string -lf_account -lf_capability -lf_color -lf_console -lf_control_group -lf_conversion -lf_directory -lf_environment -lf_execute -lf_file -lf_fss -lf_limit -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_string -lf_thread -lf_type_array -lf_utf

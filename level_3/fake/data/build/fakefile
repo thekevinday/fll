@@ -6,6 +6,7 @@ settings:
 
   compiler gcc
   indexer ar
+  indexer_arguments rcs
 
   environment
 

@@ -1335,7 +1335,13 @@ extern "C" {
     f_string_dynamic_t source_path = f_string_dynamic_t_initialize;
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
-    *status = fll_execute_arguments_add(fake_build_parameter_object_link_arguments_s, fake_build_parameter_object_link_arguments_s_length, &arguments);
+    f_array_length_t i = 0;
+
+    for (; i < data_build.setting.build_indexer_arguments.used; ++i) {
+
+      *status = fll_execute_arguments_add(data_build.setting.build_indexer_arguments.array[i].string, data_build.setting.build_indexer_arguments.array[i].used, &arguments);
+      if (F_status_is_error(*status)) break;
+    } // for
 
     if (F_status_is_error_not(*status)) {
       f_array_length_t destination_length = main.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s_length;
@@ -1364,16 +1370,14 @@ extern "C" {
 
     if (F_status_is_error_not(*status)) {
       f_array_length_t source_length = 0;
+      f_array_length_t j = 0;
 
       const f_string_dynamics_t *sources[2] = {
         &data_build.setting.build_sources_library,
         &data_build.setting.build_sources_library_static,
       };
 
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
-
-      for (; i < 2; ++i) {
+      for (i = 0; i < 2; ++i) {
 
         for (j = 0; j < sources[i]->used; ++j) {
 
@@ -1691,6 +1695,7 @@ extern "C" {
     const f_string_t settings_name[] = {
       fake_build_setting_name_build_compiler_s,
       fake_build_setting_name_build_indexer_s,
+      fake_build_setting_name_build_indexer_arguments_s,
       fake_build_setting_name_build_language_s,
       fake_build_setting_name_build_libraries_s,
       fake_build_setting_name_build_libraries_shared_s,
@@ -1762,6 +1767,7 @@ extern "C" {
     const f_array_length_t settings_length[] = {
       fake_build_setting_name_build_compiler_s_length,
       fake_build_setting_name_build_indexer_s_length,
+      fake_build_setting_name_build_indexer_arguments_s_length,
       fake_build_setting_name_build_language_s_length,
       fake_build_setting_name_build_libraries_s_length,
       fake_build_setting_name_build_libraries_shared_s_length,
@@ -1833,6 +1839,7 @@ extern "C" {
     f_string_dynamics_t *settings_value[] = {
       &build_compiler,
       &build_indexer,
+      &setting->build_indexer_arguments,
       &build_language,
       &setting->build_libraries,
       &setting->build_libraries_shared,
@@ -1902,6 +1909,7 @@ extern "C" {
     };
 
     bool settings_matches[] = {
+      F_false,
       F_false,
       F_false,
       F_false,
@@ -2597,10 +2605,10 @@ extern "C" {
         };
 
         bool has_prefix_object[] = {
-          settings_matches[60], // version_major_prefix
-          settings_matches[62], // version_minor_prefix
-          settings_matches[64], // version_micro_prefix
-          settings_matches[66], // version_nano_prefix
+          settings_matches[61], // version_major_prefix
+          settings_matches[63], // version_minor_prefix
+          settings_matches[65], // version_micro_prefix
+          settings_matches[67], // version_nano_prefix
         };
 
         const char *name_target[] = {

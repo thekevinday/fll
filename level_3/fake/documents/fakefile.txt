@@ -17,6 +17,9 @@ Fakefile Documentation:
     - compiler\:
       This represents the name of the compiler program to use, such as "gcc".
 
+      The programs "gcc" and "clang" are known to work.
+      Many of the parameters in the settings file can be changed if using a non-GCC, but there may be certain hard-coded functionality that may need to be changed.
+
       When specified and "load_build" is "true", then this will override the "build_compiler" specified in the loaded build settings.
 
     - define\:
@@ -43,8 +46,15 @@ Fakefile Documentation:
 
     - indexer\:
       This represents the name of the indexer program to use, such as "ar".
+      An indexer is often called a linker.
+
+      Similar to "build_compiler", any linker that supports the "ar" program parameters is effectively supported.
 
       When specified and "load_build" is "true", then this will override the "build_indexer" specified in the loaded build settings.
+
+    - indexer_arguments\:
+      This represents arguments needed to build an archive file from object files, such as "rcs".
+      These arguments are placed immediately before the object files passed to the "indexer" program.
 
     - load_build\:
       This represents whether or not to load the load the build settings file.

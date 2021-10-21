@@ -30,6 +30,7 @@ Fakefile Specification:
   - environment: Zero or more Content representing valid environment variable names (alpha-numeric with underscore, but cannot begin with a number).
   - fail: Only one Content, which must be either "exit", "warn" or "ignore" (quotes not required) (case-sensitive).
   - indexer: Only one Content, which must only be a valid filename.
+  - indexer_arguments: Zero or more arguments supported by the indexer specified in "build_indexer".
   - load_build: Only one Content, which must be either "yes" or "no" (quotes not required) (case-sensitive).
   - parameter: First Content represents variable name (case-sensitive), remaining Content represents varaiable value for IKI substitution.
 
@@ -84,7 +85,7 @@ Fakefile Specification:
   - success: has no other Content.
 
   The "if" Section Operation conditions and numbers\:
-    The numbers may be represented in any of the forms:
+    The numbers may be represented in any of the forms\:
     1) decimal: all numbers without a base-type prefix are of base-type 10, referred to as decimal.
     2) binary: all numbers with the prefix "0b" (uppercase or lowercase 'b') are of base-type 2, referred to as binary.
     3) octal: all numbers with the prefix "0o" (that is zero followed by the letter o, uppercase or lowercase 'o') are of base-type 8, referred to as octal.
@@ -95,7 +96,7 @@ Fakefile Specification:
     (At this time) The numbers may only be whole numbers.
     Note: there are plans to impose no limits on the number size or any decimal values, but this requires significant work is not to be implemented at this time.
 
-    Only the following "if" Section Operation conditions operate using these numbers:
+    Only the following "if" Section Operation conditions operate using these numbers\:
     - >
     - <
     - >=

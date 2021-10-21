@@ -423,7 +423,7 @@ extern "C" {
       }
 
       f_string_range_t *range_compiler = 0;
-      f_string_range_t *range_linker = 0;
+      f_string_range_t *range_indexer = 0;
 
       data_make->setting_make.parameter.array[0].value.used = 1;
       data_make->setting_make.load_build = F_true;
@@ -565,22 +565,64 @@ extern "C" {
               fake_print_warning_settings_content_multiple(main, main.file_data_build_fakefile.string, fake_make_setting_fail_s);
             }
           }
-          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_linker_s, data_make->buffer, fake_make_setting_linker_s_length, settings.objects.array[i]) == F_equal_to) {
-            if (range_linker) {
-              fake_print_warning_settings_content_multiple(main, main.file_data_build_fakefile.string, fake_make_setting_linker_s);
+          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_indexer_s, data_make->buffer, fake_make_setting_indexer_s_length, settings.objects.array[i]) == F_equal_to) {
+            if (range_indexer) {
+              fake_print_warning_settings_content_multiple(main, main.file_data_build_fakefile.string, fake_make_setting_indexer_s);
             }
             else {
               if (settings.contents.array[i].used) {
-                range_linker = &settings.contents.array[i].array[0];
+                range_indexer = &settings.contents.array[i].array[0];
 
                 if (settings.contents.array[i].used > 1) {
-                  fake_print_warning_settings_content_multiple(main, main.file_data_build_fakefile.string, fake_make_setting_linker_s);
+                  fake_print_warning_settings_content_multiple(main, main.file_data_build_fakefile.string, fake_make_setting_indexer_s);
                 }
               }
               else {
                 fake_print_warning_settings_content_empty(main, main.file_data_build_fakefile.string, data_make->buffer, settings.objects.array[i], fake_make_section_settings_s);
               }
             }
+          }
+          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_indexer_arguments_s, data_make->buffer, fake_make_setting_indexer_arguments_s_length, settings.objects.array[i]) == F_equal_to) {
+            f_array_length_t j = 0;
+
+            // clear all existing indexer arguments.
+            for (; j < data_make->setting_build.build_indexer_arguments.used; ++j) {
+              data_make->setting_build.build_indexer_arguments.array[j].used = 0;
+            } // for
+
+            data_make->setting_build.build_indexer_arguments.used = 0;
+
+            if (settings.contents.array[i].used > data_make->setting_build.build_indexer_arguments.size) {
+              *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->setting_build.build_indexer_arguments);
+
+              if (F_status_is_error(*status)) {
+                fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
+                break;
+              }
+            }
+
+            for (j = 0; j < settings.contents.array[i].used; ++j) {
+
+              *status = f_string_dynamic_partial_append_nulless(data_make->buffer, settings.contents.array[i].array[j], &data_make->setting_build.build_indexer_arguments.array[data_make->setting_build.build_indexer_arguments.used]);
+
+              if (F_status_is_error(*status)) {
+                fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_partial_append_nulless", F_true);
+                break;
+              }
+
+              *status = f_string_dynamic_terminate_after(&data_make->setting_build.build_indexer_arguments.array[data_make->setting_build.build_indexer_arguments.used]);
+
+              if (F_status_is_error(*status)) {
+                fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
+                break;
+              }
+
+              ++data_make->setting_build.build_indexer_arguments.used;
+            } // for
+
+            if (F_status_is_error(*status)) break;
+
+            *status = F_none;
           }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_load_build_s, data_make->buffer, fake_make_setting_load_build_s_length, settings.objects.array[i]) == F_equal_to) {
             if (unmatched_load) {
@@ -684,9 +726,9 @@ extern "C" {
         *status = f_string_dynamic_partial_append(data_make->buffer, *range_compiler, &data_make->setting_build.build_compiler);
       }
 
-      if (F_status_is_error_not(*status) && range_linker) {
+      if (F_status_is_error_not(*status) && range_indexer) {
         data_make->setting_build.build_indexer.used = 0;
-        *status = f_string_dynamic_partial_append(data_make->buffer, *range_linker, &data_make->setting_build.build_indexer);
+        *status = f_string_dynamic_partial_append(data_make->buffer, *range_indexer, &data_make->setting_build.build_indexer);
       }
 
       if (F_status_is_error(*status)) {
@@ -736,14 +778,17 @@ extern "C" {
         f_status_t status_validate = F_none;
         f_string_dynamic_t combined = f_string_dynamic_t_initialize;
 
-        for (f_array_length_t i = 0; i < define.used; ++i) {
+        f_array_length_t i = 0;
+        f_array_length_t j = 0;
+
+        for (; i < define.used; ++i) {
 
           status_validate = fake_make_operate_validate_define_name(define.array[i].name);
 
           if (status_validate) {
             combined.used = 0;
 
-            for (f_array_length_t j = 0; j < define.array[i].value.used; ++j) {
+            for (j = 0; j < define.array[i].value.used; ++j) {
 
               *status = f_string_dynamic_mash(f_string_space_s, 1, define.array[i].value.array[j], &combined);
 
@@ -1107,7 +1152,7 @@ extern "C" {
     }
 
     if (main->output.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c$[Making project.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+      fll_print_format("%c%[Making project.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
     }
 
     f_status_t status = F_none;
@@ -2053,7 +2098,7 @@ extern "C" {
       flockfile(main->output.to.stream);
 
       fl_print_format("%c%[Processing Section '%]", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
-      fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, section->name, main->context.set.notable);
+      fl_print_format("%[%/Q%]", main->output.to.stream, main->context.set.notable, data_make->buffer, section->name, main->context.set.notable);
       fl_print_format("%['.%]%c", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s[0]);
 
       funlockfile(main->output.to.stream);
@@ -4047,9 +4092,9 @@ extern "C" {
     if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
       flockfile(data_make->error.to.stream);
 
-      fl_print_format("%c%[%SFailed with return code '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
-      fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, data_make->setting_make.parameter.array[0].value.array[0], data_make->error.notable);
-      fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
+      fl_print_format("%c%[%SFailed with return code %]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+      fl_print_format("%[%i%]", data_make->error.to.stream, data_make->error.notable, return_code, data_make->error.notable);
+      fl_print_format("%[.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
       funlockfile(data_make->error.to.stream);
     }
