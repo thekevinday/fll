@@ -5,29 +5,11 @@ This file contains FLL-wide todo notes.
   In which case, the language can be hardcoded in as a single language.
   Later versions after this first locale support will then consider supporting multiple languages not necessarily compiled in.
 
-- Consider creating an fss simple content type (such that data->contents.array[at].start can be used instead of data->contents.array[at].array[0].start).
-
-- FSS needs to allow escaping of comments, "\# " would escape a comment, every backslash after that would be literal.
-
-- status_code and fss_status_code should be able to distinguish a number and a non-number string.
-  This will allow for auto-detecting whether or not something is a code to print the string or a string to print the code.
-  When this is done, then the --number parameter can be removed.
-  (Also add --help Note: pointing out that f, -w, and -e only apply to numeric codes and will result in 0 (false) for all strings.)
-
-- investigate static executables in how valgrind reports errors.
-
 - consider updating byte_dump to support multiple --first and multiple parameters such all --first parameters are effectively added together.
   What this does is allow skipping a file using counters greater than the max_int size.
   The --last position, should therefore be rewritten to be relative to the --first position.
   alternatively, implement a --skip parameter that skips past the max_int number of bytes X number of times (--skip X) would skip X*max_int bytes.
   alternatively, implement support for specifying metric unit symbols (such as 100m for 100 megabytes).
-
-- implement the "time" functonality to represent a unit of time (unlike the normal system, this unit of time is say milliseconds in any given year that can continue on until max_int).
-
-- implement the "data" unit that using the metric system more appropriately, such that a data is a single byte.
-  1 megadata in base 10 is (10^6)*8 = # of bits, and 1 megadata in base 16 s (16^6)*8 = # of bits.
-
-- console processing code needs to ignore unknown codes (namely, negative/positive numbers like: -3 or +4) (do not consider these parameters).
 
 - Research/Implement optimizaton by using pointers to reduce the complexity of processing multi-depth structures, such as fss_nest:
   this:
@@ -37,58 +19,19 @@ This file contains FLL-wide todo notes.
     current->array[0] = xxx;
   The idea is that in the first case, thee is a lot more dereferencing needing to be performed whereas the second case, the massive dereferencing happens only the first time and then all subsequent calls have simpler dereferencing.
 
-- Add support for truncating whitespace before and after the name:
-  1) When selecting by object name 'ex ample' could then match ' ex ample '.
-  2) When printing the object name by itself, 'ex ample' would be printed instead of ' ex ample '.
-  3) Use -T/--trim to remove whitespace both before and after for all FSS read programs (just like PHP trim).
-  4) The leading whitespace on newlines that are to support such need not be trimmed automatically unless -T/--trim is passed.
-
-- Add support for printing line numbers, including when printing objects.
-  - Consider adding support for printing selection identifiers, such as the second object will have an id of 2, even if it is 100 lines down.
-
-- The leading and trailing whitespaces in names should be ignored when selecting and printing.
-
-- Update level-3 code to use the newly minted color2 function where appropriate.
-
  * Programs to create:
  * - document: the documentation is built/processed/generated.
- * - generate: special scripts are run for the purpose of generating any build-time code/scripts/files.
  * - finish: the project is installed.
- * - package: the project is turned into a package (tarballed, etc..).
  * - coverage: the project has tests run against it.
-
-
-
-- consider redesigning console parameters to use three sets of arrays instead of one (short, long, and other).
-  - this would increase performance, but is it worth the complexity of the structure?
-  - it may simplify the design in other ways.
-
 
 - F_STATUS_XX could be the error code for the program on exit, such that +s, ++status is a new standard parameter for specifying the variable name.
   Variable name will be made uppercase and will be only alphabetic or underscore.
 
-
-Go though all source code and ensure that, for all non-exceptional cases, any dynamic strings appends to existing buffers instead of overwriting them (based on buffer->used).
-Then document this behavior.
-
-The status code processing code are all out of alphabetic order and need cleanup.
-
 Go back through all existing f_file and f_directory code, updating return codes and respective documentation.
 Update f_utf_file and create a f_utf_directory?
-
-Remove empty projects and cleanup private functions.
 
 The f_conversion project:
 - needs to have its parameter orders corrected.
 - needs to follow the private-conversion.? design.
-
-Consider implementing a specification for accessibility characters using non-printing characters as a code word followed by another UTF-8 character to represent its code.
-Followed by a UTF-8 character s done to ensure type safety.
-This is likely to be limited to programs/terminals that accept it as to avoid printing extra noise.
-A simpler compatible version might be made that only utilizes non-printing characters.
-
-fl_string_find_next() and fl_string_find_previous() find next or previous occurances of a string.
-fl_string_locations() find all locations where a string exists.
-fl_string_total() find total occurances of a string.
 
 fix recursive functions to be consistent and all have max recursion lengths just like the *_all() file functions.
