@@ -2660,8 +2660,71 @@ extern "C" {
       }
     #endif // _di_F_status_access_
 
+    #ifndef _di_F_status_terminal_
+      if (fl_string_compare(string, FL_status_string_terminal, length, FL_status_string_terminal_length) == F_equal_to) {
+        *code = F_terminal;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_access, length, FL_status_string_terminal_access_length) == F_equal_to) {
+        *code = F_terminal_access;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_known, length, FL_status_string_terminal_known_length) == F_equal_to) {
+        *code = F_terminal_known;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_known_not, length, FL_status_string_terminal_known_not_length) == F_equal_to) {
+        *code = F_terminal_known_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_not, length, FL_status_string_terminal_not_length) == F_equal_to) {
+        *code = F_terminal_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_prohibited, length, FL_status_string_terminal_prohibited_length) == F_equal_to) {
+        *code = F_terminal_prohibited;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_read, length, FL_status_string_terminal_read_length) == F_equal_to) {
+        *code = F_terminal_read;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_valid, length, FL_status_string_terminal_valid_length) == F_equal_to) {
+        *code = F_terminal_valid;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_valid_not, length, FL_status_string_terminal_valid_not_length) == F_equal_to) {
+        *code = F_terminal_valid_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminal_write, length, FL_status_string_terminal_write_length) == F_equal_to) {
+        *code = F_terminal_write;
+
+        return F_none;
+      }
+    #endif // _di_F_status_terminal_
+
     if (fl_string_compare(string, FL_status_string_status_code_last, length, FL_status_string_status_code_last_length) == F_equal_to) {
       *code = F_status_code_last;
+
       return F_none;
     }
 

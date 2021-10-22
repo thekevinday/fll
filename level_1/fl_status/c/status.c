@@ -1355,6 +1355,39 @@ extern "C" {
           break;
       #endif // _di_F_status_access_
 
+      #ifndef _di_F_status_terminal_
+        case F_terminal:
+          *string = FL_status_string_terminal;
+          break;
+        case F_terminal_access:
+          *string = FL_status_string_terminal_access;
+          break;
+        case F_terminal_known:
+          *string = FL_status_string_terminal_known;
+          break;
+        case F_terminal_known_not:
+          *string = FL_status_string_terminal_known_not;
+          break;
+        case F_terminal_not:
+          *string = FL_status_string_terminal_not;
+          break;
+        case F_terminal_prohibited:
+          *string = FL_status_string_terminal_prohibited;
+          break;
+        case F_terminal_read:
+          *string = FL_status_string_terminal_read;
+          break;
+        case F_terminal_valid:
+          *string = FL_status_string_terminal_valid;
+          break;
+        case F_terminal_valid_not:
+          *string = FL_status_string_terminal_valid_not;
+          break;
+        case F_terminal_write:
+          *string = FL_status_string_terminal_write;
+          break;
+      #endif // _di_F_status_terminal_
+
       case F_status_code_last:
         *string = FL_status_string_status_code_last;
         break;

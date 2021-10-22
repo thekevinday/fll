@@ -954,6 +954,30 @@ extern "C" {
     #define FL_status_string_access_owner_length           14
   #endif // _di_F_status_access_
 
+  #ifndef _di_F_status_terminal_
+    #define FL_status_string_terminal            "F_terminal"
+    #define FL_status_string_terminal_access     "F_terminal_access"
+    #define FL_status_string_terminal_known      "F_terminal_known"
+    #define FL_status_string_terminal_known_not  "F_terminal_known_not"
+    #define FL_status_string_terminal_not        "F_terminal_not"
+    #define FL_status_string_terminal_prohibited "F_terminal_prohibited"
+    #define FL_status_string_terminal_read       "F_terminal_read"
+    #define FL_status_string_terminal_valid      "F_terminal_valid"
+    #define FL_status_string_terminal_valid_not  "F_terminal_valid_not"
+    #define FL_status_string_terminal_write      "F_terminal_write"
+
+    #define FL_status_string_terminal_length             10
+    #define FL_status_string_terminal_access_length      17
+    #define FL_status_string_terminal_known_length       16
+    #define FL_status_string_terminal_known_not_length   20
+    #define FL_status_string_terminal_not_length         14
+    #define FL_status_string_terminal_prohibited_length  21
+    #define FL_status_string_terminal_read_length        15
+    #define FL_status_string_terminal_valid_length       16
+    #define FL_status_string_terminal_valid_not_length   20
+    #define FL_status_string_terminal_write_length       16
+  #endif // _di_F_status_terminal_
+
   #define FL_status_string_status_code_last "F_status_code_last"
 
   #define FL_status_string_status_code_last_length 18

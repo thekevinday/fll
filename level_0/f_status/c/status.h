@@ -551,6 +551,19 @@ extern "C" {
       F_access_owner,
     #endif // _di_F_status_access_
 
+    #ifndef _di_F_status_terminal_
+      F_terminal,
+      F_terminal_access,
+      F_terminal_known,
+      F_terminal_known_not,
+      F_terminal_not,
+      F_terminal_prohibited,
+      F_terminal_read,
+      F_terminal_valid,
+      F_terminal_valid_not,
+      F_terminal_write,
+    #endif // _di_F_status_terminal_
+
     // Required.
     F_status_code_last,
   }; // enum
