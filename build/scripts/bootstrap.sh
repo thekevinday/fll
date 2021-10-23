@@ -46,6 +46,8 @@ bootstrap_main() {
   local path_c=sources/c/
   local path_work=
   local project_built=
+  local project_built_shared=
+  local project_built_static=
   local project_label=
   local defines_override=
   local process=
@@ -195,6 +197,9 @@ bootstrap_main() {
     project_built="${project_built}-$process"
   fi
 
+  project_built_shared="${project_built}.shared"
+  project_built_static="${project_built}.static"
+
   if [[ ${variables[$(bootstrap_id modes)]} == "" ]] ; then
     if [[ $mode != "" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -322,26 +327,20 @@ bootstrap_main() {
       echo -e "${c_highlight}Building Project:${c_reset} $c_notice$project_label${c_highlight}.$c_reset"
     fi
 
-    if [[ -f ${project_built}.built ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
-      fi
-    else
-      if [[ ! -f ${project_built}.prepared ]] ; then
-        bootstrap_prepare_build
-
-        if [[ $? -ne 0 ]] ; then
-          bootstrap_cleanup
-          return 1
-        fi
-      fi
-
-      bootstrap_operation_build
+    if [[ ! -f ${project_built}.prepared ]] ; then
+      bootstrap_prepare_build
 
       if [[ $? -ne 0 ]] ; then
         bootstrap_cleanup
         return 1
       fi
+    fi
+
+    bootstrap_operation_build
+
+    if [[ $? -ne 0 ]] ; then
+      bootstrap_cleanup
+      return 1
     fi
   elif [[ $operation == "clean" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -933,6 +932,15 @@ bootstrap_operation_build() {
     search_static="no"
   fi
 
+
+  if [[ $shared == "yes" && -f ${project_built_shared}.built || $static == "yes" && -f ${project_built_static}.built ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_warning}WARNING: this project has already been built.$c_reset"
+    fi
+
+    return 0
+  fi
+
   if [[ $shared == "yes" ]] ; then
     if [[ $sources_headers == "" ]] ; then
       sources_headers=${variables[$(bootstrap_id build_sources_headers_shared)]}
@@ -1102,7 +1110,7 @@ bootstrap_operation_build() {
     fi
   fi
 
-  if [[ $failure == "" && $shared == "yes" ]] ; then
+  if [[ $failure == "" && $shared == "yes" && ! -f ${project_built_shared}.built ]] ; then
     if [[ $sources_library != "" || $sources_library_shared != "" ]] ; then
       sources=
       for i in $sources_library $sources_library_shared ; do
@@ -1160,9 +1168,13 @@ bootstrap_operation_build() {
 
       $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared || failure=1
     fi
+
+    if [[ $failure == "" ]] ; then
+      touch ${project_built_shared}.built
+    fi
   fi
 
-  if [[ $failure == "" && $static == "yes" ]] ; then
+  if [[ $failure == "" && $static == "yes" && ! -f ${project_built_static}.built ]] ; then
     sources=
     if [[ $sources_library != "" || $sources_library_static != "" ]] ; then
       for i in $sources_library $sources_library_static ; do
@@ -1219,6 +1231,10 @@ bootstrap_operation_build() {
 
       $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static || failure=1
     fi
+
+    if [[ $failure == "" ]] ; then
+      touch ${project_built_static}.built
+    fi
   fi
 
   if [[ $failure != "" ]] ; then
@@ -1228,8 +1244,6 @@ bootstrap_operation_build() {
 
     return 1
   fi
-
-  touch ${project_built}.built
 }
 
 bootstrap_operation_clean() {
@@ -1245,8 +1259,12 @@ bootstrap_operation_clean() {
     rm $verbose -f ${project_built}.prepared
   fi
 
-  if [[ -f ${project_built}.built ]] ; then
-    rm $verbose -f ${project_built}.built
+  if [[ -f ${project_built_shared}.built ]] ; then
+    rm $verbose -f ${project_built_shared}.built
+  fi
+
+  if [[ -f ${project_built_static}.built ]] ; then
+    rm $verbose -f ${project_built_static}.built
   fi
 }
 
