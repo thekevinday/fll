@@ -1198,6 +1198,21 @@ extern "C" {
         else if (code == F_execute_schedule) {
           fl_print_format("%[' failed to setup scheduler.%]%c", print->to.stream, print->context, print->context, f_string_eol_s[0]);
         }
+        else if (code == F_execute_terminal) {
+          fl_print_format("%[' failed while processing the terminal.%]%c", print->to.stream, print->context, print->context, f_string_eol_s[0]);
+        }
+        else if (code == F_execute_terminal_known_not) {
+          fl_print_format("%[' cannot process terminal, unknown terminal control command.%]%c", print->to.stream, print->context, print->context, f_string_eol_s[0]);
+        }
+        else if (code == F_execute_terminal_not) {
+          fl_print_format("%[' cannot process terminal, not a known terminal.%]%c", print->to.stream, print->context, print->context, f_string_eol_s[0]);
+        }
+        else if (code == F_execute_terminal_prohibited) {
+          fl_print_format("%[' insufficient permissions to process the terminal.%]%c", print->to.stream, print->context, print->context, f_string_eol_s[0]);
+        }
+        else if (code == F_execute_terminal_valid_not) {
+          fl_print_format("%[' invalid parameter while processing the terminal.%]%c", print->to.stream, print->context, print->context, f_string_eol_s[0]);
+        }
         else if (code == F_execute_too_large) {
           fl_print_format("%[' too many arguments or arguments are too large.%]%c", print->to.stream, print->context, print->context, f_string_eol_s[0]);
         }
@@ -1350,6 +1365,10 @@ extern "C" {
 
         if (process->rule.items.array[i].with & controller_with_full_path_d) {
           execute_set.parameter.option |= FL_execute_parameter_option_path_d;
+        }
+
+        if (global.main->as_init) {
+          execute_set.parameter.option |= FL_execute_parameter_option_session_d; // @todo need "session new" and "session same".
         }
 
         if (process->rule.items.array[i].type == controller_rule_item_type_command) {

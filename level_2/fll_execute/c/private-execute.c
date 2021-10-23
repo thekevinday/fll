@@ -272,7 +272,6 @@ extern "C" {
     }
 
     if (id_process) {
-
       if (as) {
 
         // close the read pipe for the parent.
@@ -327,6 +326,10 @@ extern "C" {
       }
 
       return F_none;
+    }
+
+    if (parameter && parameter->option & FL_execute_parameter_option_session_d) {
+      setsid();
     }
 
     if (as) {
@@ -518,6 +521,10 @@ extern "C" {
       }
 
       return F_none;
+    }
+
+    if (parameter && parameter->option & FL_execute_parameter_option_session_d) {
+      setsid();
     }
 
     // close the write pipe for the child.

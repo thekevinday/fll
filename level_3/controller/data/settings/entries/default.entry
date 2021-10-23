@@ -51,5 +51,6 @@ console:
 
 
 maintenance:
-  #execute /bin/agetty -8 -i -J - linux
+  #execute /bin/agetty -8 -i -J tty1 linux
+  #execute /bin/setsid -c /bin/bash --login
   execute /bin/bash --login

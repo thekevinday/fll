@@ -15,6 +15,9 @@
 
 // libc includes
 #include <sched.h>
+#include <termios.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 // fll-0 includes
 #include <fll/level_0/type.h>

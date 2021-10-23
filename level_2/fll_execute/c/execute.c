@@ -148,6 +148,10 @@ extern "C" {
 
     int code = 0;
 
+    if (option & FL_execute_parameter_option_session_d) {
+      setsid();
+    }
+
     // full path is explicitly requested.
     if (option & FL_execute_parameter_option_path_d) {
       f_string_dynamic_t path = f_string_dynamic_t_initialize;

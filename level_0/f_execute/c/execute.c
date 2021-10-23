@@ -115,6 +115,26 @@ extern "C" {
       return F_execute_schedule;
     }
 
+    if (F_status_set_fine(status) == F_terminal) {
+      return F_execute_terminal;
+    }
+
+    if (F_status_set_fine(status) == F_terminal_known_not) {
+      return F_execute_terminal_known_not;
+    }
+
+    if (F_status_set_fine(status) == F_terminal_not) {
+      return F_execute_terminal_not;
+    }
+
+    if (F_status_set_fine(status) == F_terminal_prohibited) {
+      return F_execute_terminal_prohibited;
+    }
+
+    if (F_status_set_fine(status) == F_terminal_valid_not) {
+      return F_execute_terminal_valid_not;
+    }
+
     if (F_status_set_fine(status) == F_too_large) {
       return F_execute_too_large;
     }
@@ -240,6 +260,26 @@ extern "C" {
 
     if (status == F_execute_schedule) {
       return F_schedule;
+    }
+
+    if (status == F_execute_terminal) {
+      return F_terminal;
+    }
+
+    if (status == F_execute_terminal_known_not) {
+      return F_terminal_known_not;
+    }
+
+    if (status == F_execute_terminal_not) {
+      return F_terminal_not;
+    }
+
+    if (status == F_execute_terminal_prohibited) {
+      return F_terminal_prohibited;
+    }
+
+    if (status == F_execute_terminal_valid_not) {
+      return F_terminal_valid_not;
     }
 
     if (status == F_execute_too_large) {

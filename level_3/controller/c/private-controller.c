@@ -1194,8 +1194,13 @@ extern "C" {
           controller_thread_process_cancel(is_entry, is_entry ? controller_thread_cancel_execute : controller_thread_cancel_exit_execute, global, process);
 
           int result = 0;
+          int option = FL_execute_parameter_option_path_d;
 
-          status = fll_execute_into(0, entry_action->parameters, FL_execute_parameter_option_path_d, 0, (void *) &result);
+          if (global->main->as_init) {
+            option |= FL_execute_parameter_option_session_d; // @todo need "session new" and "session same".
+          }
+
+          status = fll_execute_into(0, entry_action->parameters, option, 0, (void *) &result);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_file_found_not) {

@@ -363,6 +363,7 @@ extern "C" {
  *   A bitwise set of options, such as: FL_execute_parameter_option_exit_d and FL_execute_parameter_option_path_d.
  *   If FL_execute_parameter_option_exit_d: this will call exit() at the end of execution (be it success or failure).
  *   If FL_execute_parameter_option_path_d: use the whole program path (such as "/bin/bash" instead "bash" when populating argument[0].
+ *   If FL_execute_parameter_option_session_d: will start a new session, setting process group id.
  * @param environment
  *   (optional) An map of strings representing the environment variable names and their respective values.
  *   Completely clears the environment and then creates environment variables for each name and value pair in this map.
@@ -479,6 +480,7 @@ extern "C" {
  * @see memcpy()
  * @see nice()
  * @see pipe()
+ * @see setsid()
  * @see sched_setaffinity()
  * @see sched_setscheduler()
  * @see setgid()
