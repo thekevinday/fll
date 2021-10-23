@@ -34,12 +34,12 @@ extern "C" {
  * data:        The data to pipe to the child process, set to 0 to not use.
  */
 #ifndef _di_fl_execute_parameter_t_
-  #define FL_execute_parameter_option_exit_d        0x1
-  #define FL_execute_parameter_option_path_d        0x2
-  #define FL_execute_parameter_option_return_d      0x4
-  #define FL_execute_parameter_option_session_d     0x8
-  #define FL_execute_parameter_option_terminal_d    0x10
-  #define FL_execute_parameter_option_threadsafe_d  0x20
+  #define FL_execute_parameter_option_exit_d       0x1
+  #define FL_execute_parameter_option_path_d       0x2
+  #define FL_execute_parameter_option_return_d     0x4
+  #define FL_execute_parameter_option_session_d    0x8
+  #define FL_execute_parameter_option_terminal_d   0x10
+  #define FL_execute_parameter_option_threadsafe_d 0x20
 
   typedef struct {
     uint8_t option;

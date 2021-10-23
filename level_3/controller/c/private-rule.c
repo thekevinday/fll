@@ -629,12 +629,27 @@ extern "C" {
           } // for
         }
         else if (type == controller_rule_action_type_with) {
-          item->with = 0;
 
           for (f_array_length_t i = 0; i < cache->content_action.used; ++i) {
 
             if (fl_string_dynamic_partial_compare_string(controller_full_path_s, cache->buffer_item, controller_full_path_s_length, cache->content_action.array[i]) == F_equal_to) {
               item->with |= controller_with_full_path_d;
+            }
+            else if (fl_string_dynamic_partial_compare_string(controller_session_new_s, cache->buffer_item, controller_session_new_s_length, cache->content_action.array[i]) == F_equal_to) {
+              item->with |= controller_with_session_new_d;
+
+              // "session_new" and "session_same" are mutually exclusive.
+              if (item->with & controller_with_session_same_d) {
+                item->with -= controller_with_session_same_d;
+              }
+            }
+            else if (fl_string_dynamic_partial_compare_string(controller_session_same_s, cache->buffer_item, controller_session_same_s_length, cache->content_action.array[i]) == F_equal_to) {
+              item->with |= controller_with_session_same_d;
+
+              // "session_new" and "session_same" are mutually exclusive.
+              if (item->with & controller_with_session_new_d) {
+                item->with -= controller_with_session_new_d;
+              }
             }
             else {
               if (global.main->error.verbosity != f_console_verbosity_quiet) {
@@ -1367,8 +1382,8 @@ extern "C" {
           execute_set.parameter.option |= FL_execute_parameter_option_path_d;
         }
 
-        if (global.main->as_init) {
-          execute_set.parameter.option |= FL_execute_parameter_option_session_d; // @todo need "session new" and "session same".
+        if (process->rule.items.array[i].with & controller_with_session_new_d) {
+          execute_set.parameter.option |= FL_execute_parameter_option_session_d;
         }
 
         if (process->rule.items.array[i].type == controller_rule_item_type_command) {
@@ -3779,6 +3794,17 @@ extern "C" {
           }
 
           if (rule->items.array[rule->items.used].type) {
+
+            // initialize the item with settings.
+            rule->items.array[rule->items.used].with = 0;
+
+            if (entry->session == controller_entry_session_new) {
+              rule->items.array[rule->items.used].with |= controller_with_session_new_d;
+            }
+            else {
+              rule->items.array[rule->items.used].with |= controller_with_session_same_d;
+            }
+
             status = controller_rule_item_read(is_normal, global, cache, &rule->items.array[rule->items.used]);
             if (F_status_is_error(status)) break;
 
@@ -5820,9 +5846,11 @@ extern "C" {
     controller_print_lock(main->output.to, global.thread);
 
     fl_print_format("%cRule %[%Q%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s[0]);
+
+    // name.
     fl_print_format("  %[%s%] %Q%c", main->output.to.stream, main->context.set.important, controller_name_s, main->context.set.important, rule.name, f_string_eol_s[0]);
-    fl_print_format("  %[%s%] %s%c", main->output.to.stream, main->context.set.important, controller_how_s, main->context.set.important, options & controller_process_option_asynchronous_d ? controller_asynchronous_s : controller_synchronous_s, f_string_eol_s[0]);
-    fl_print_format("  %[%s%] %s%c", main->output.to.stream, main->context.set.important, controller_wait_s, main->context.set.important, options & controller_process_option_wait_d ? controller_yes_s : controller_no_s, f_string_eol_s[0]);
+
+    // capability.
     fl_print_format("  %[%s%] ", main->output.to.stream, main->context.set.important, controller_capability_s, main->context.set.important);
 
     if (f_capability_supported()) {
@@ -5837,9 +5865,10 @@ extern "C" {
       f_print_terminated(f_string_eol_s, main->output.to.stream);
     }
     else {
-      fl_print_format("%[(unsupported)%]%c", main->output.to.stream, main->context.set.warning, controller_capability_s, main->context.set.warning, f_string_eol_s[0]);
+      fl_print_format("%[(unsupported)%]%c", main->output.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s[0]);
     }
 
+    // control group.
     fl_print_format("  %[%s%]", main->output.to.stream, main->context.set.important, controller_control_group_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_control_group_d) {
@@ -5853,13 +5882,22 @@ extern "C" {
       } // for
     }
 
-    fl_print_format("%c  %[%s%]", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_nice_s, main->context.set.important);
+    f_print_terminated(f_string_eol_s, main->output.to.stream);
+
+    // how.
+    fl_print_format("  %[%s%] %s%c", main->output.to.stream, main->context.set.important, controller_how_s, main->context.set.important, options & controller_process_option_asynchronous_d ? controller_asynchronous_s : controller_synchronous_s, f_string_eol_s[0]);
+
+    // nice.
+    fl_print_format("  %[%s%]", main->output.to.stream, main->context.set.important, controller_nice_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_nice_d) {
       fl_print_format(" %i", main->output.to.stream, rule.nice);
     }
 
-    fl_print_format("%c  %[%s%]", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_scheduler_s, main->context.set.important);
+    f_print_terminated(f_string_eol_s, main->output.to.stream);
+
+    // scheduler.
+    fl_print_format("  %[%s%]", main->output.to.stream, main->context.set.important, controller_scheduler_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_scheduler_d) {
       f_string_t policy = "";
@@ -5886,19 +5924,31 @@ extern "C" {
       fl_print_format(" %s %i", main->output.to.stream, policy, rule.scheduler.priority);
     }
 
-    fl_print_format("%c  %[%s%] %Q%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_script_s, main->context.set.important, rule.script, f_string_eol_s[0]);
+    f_print_terminated(f_string_eol_s, main->output.to.stream);
+
+    // script.
+    fl_print_format("  %[%s%] %Q%c", main->output.to.stream, main->context.set.important, controller_script_s, main->context.set.important, rule.script, f_string_eol_s[0]);
+
+    // user.
     fl_print_format("  %[%s%]", main->output.to.stream, main->context.set.important, controller_user_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_user_d) {
       fl_print_format(" %i", main->output.to.stream, rule.user);
     }
 
-    fl_print_format("%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_affinity_s, main->context.set.important, f_string_eol_s[0]);
+    f_print_terminated(f_string_eol_s, main->output.to.stream);
+
+    // wait.
+    fl_print_format("  %[%s%] %s%c", main->output.to.stream, main->context.set.important, controller_wait_s, main->context.set.important, options & controller_process_option_wait_d ? controller_yes_s : controller_no_s, f_string_eol_s[0]);
+
+    // affinity.
+    fl_print_format("  %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_affinity_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.affinity.used; ++i) {
       fl_print_format("    %i%c", main->output.to.stream, rule.affinity.array[i], f_string_eol_s[0]);
     } // for
 
+    // define.
     fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_define_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.define.used; ++i) {
@@ -5908,6 +5958,7 @@ extern "C" {
       }
     } // for
 
+    // environment.
     fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_environment_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.environment.used; ++i) {
@@ -5919,6 +5970,7 @@ extern "C" {
 
     fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s[0]);
 
+    // parameter.
     for (i = 0; i < rule.parameter.used; ++i) {
 
       if (rule.parameter.array[i].name.used && rule.parameter.array[i].value.used) {
@@ -5926,6 +5978,7 @@ extern "C" {
       }
     } // for
 
+    // group.
     fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_group_s, main->context.set.important, f_string_eol_s[0]);
 
     if (rule.has & controller_rule_has_group_d) {
@@ -5936,12 +5989,14 @@ extern "C" {
       } // for
     }
 
+    // limit.
     fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_limit_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.limits.used; ++i) {
       fl_print_format("    %Q %[=%] %un %un%c", main->output.to.stream, controller_rule_setting_limit_type_name(rule.limits.array[i].type), main->context.set.important, main->context.set.important, rule.limits.array[i].value.rlim_cur, rule.limits.array[i].value.rlim_max, f_string_eol_s[0]);
     } // for
 
+    // on.
     fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_on_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.ons.used; ++i) {
@@ -6014,6 +6069,7 @@ extern "C" {
 
     fl_print_format("  }%c", main->output.to.stream, f_string_eol_s[0]);
 
+    // items.
     if (rule.items.used) {
       controller_rule_action_t *action = 0;
       controller_rule_item_t *item = 0;
@@ -6028,8 +6084,74 @@ extern "C" {
         item = &rule.items.array[i];
 
         fl_print_format("  %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_item_s, main->context.set.important, f_string_eol_s[0]);
+
+        // type.
         fl_print_format("    %[%s%] %Q%c", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_item_type_name(item->type), f_string_eol_s[0]);
 
+        // pid_file.
+        fl_print_format("    %[%s%]", main->output.to.stream, main->context.set.important, controller_pid_file_s, main->context.set.important);
+        if (item->pid_file.used) {
+          fl_print_format(" %Q", main->output.to.stream, item->pid_file);
+        }
+        f_print_terminated(f_string_eol_s, main->output.to.stream);
+
+        // with.
+        fl_print_format("    %[%s%]", main->output.to.stream, main->context.set.important, controller_with_s, main->context.set.important);
+        if (item->with & controller_with_full_path_d) {
+          fl_print_format(" %s", main->output.to.stream, controller_full_path_s);
+        }
+        if (item->with & controller_with_session_new_d) {
+          fl_print_format(" %s", main->output.to.stream, controller_session_new_s);
+        }
+        if (item->with & controller_with_session_same_d) {
+          fl_print_format(" %s", main->output.to.stream, controller_session_same_s);
+        }
+        f_print_terminated(f_string_eol_s, main->output.to.stream);
+
+        // actions.
+        for (j = 0; j < item->actions.used; ++j) {
+
+          action = &item->actions.array[j];
+
+          fl_print_format("    %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_action_s, main->context.set.important, f_string_eol_s[0]);
+          fl_print_format("      %[%s%] %q%c", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s[0]);
+
+          if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
+            fl_print_format("      %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s[0]);
+
+            parameter = &action->parameters.array[0];
+
+            if (parameter->used) {
+              f_print_terminated("        ", main->output.to.stream);
+
+              for (k = 0; k < parameter->used; ++k) {
+
+                if (parameter->string[k] == f_fss_eol_s[0]) {
+                  if (k + 1 < parameter->used) {
+                    f_print_terminated(f_string_eol_s, main->output.to.stream);
+                    f_print_terminated("        ", main->output.to.stream);
+                  }
+                }
+                else {
+                  f_print_character_safely(parameter->string[k], main->output.to.stream);
+                }
+              } // for
+
+              f_print_terminated(f_string_eol_s, main->output.to.stream);
+            }
+
+            fl_print_format("      }%c", main->output.to.stream, f_string_eol_s[0]);
+          }
+          else {
+            for (k = 0; k < action->parameters.used; ++k) {
+              fl_print_format("      %[%s%] %Q%c", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s[0]);
+            } // for
+          }
+
+          fl_print_format("    }%c", main->output.to.stream, f_string_eol_s[0]);
+        } // for
+
+        // rerun.
         fl_print_format("    %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_rerun_s, main->context.set.important, f_string_eol_s[0]);
         for (j = 0; j < controller_rule_action_type_execute__enum_size; ++j) {
 
@@ -6098,60 +6220,6 @@ extern "C" {
           } // for
         } // for
         fl_print_format("    }%c", main->output.to.stream, f_string_eol_s[0]);
-
-        fl_print_format("    %[%s%]", main->output.to.stream, main->context.set.important, controller_pid_file_s, main->context.set.important);
-        if (item->pid_file.used) {
-          fl_print_format(" %Q", main->output.to.stream, item->pid_file);
-        }
-        f_print_terminated(f_string_eol_s, main->output.to.stream);
-
-        fl_print_format("    %[%s%]", main->output.to.stream, main->context.set.important, controller_with_s, main->context.set.important);
-        if (item->with & controller_with_full_path_d) {
-          fl_print_format(" %s", main->output.to.stream, controller_full_path_s);
-        }
-        f_print_terminated(f_string_eol_s, main->output.to.stream);
-
-        for (j = 0; j < item->actions.used; ++j) {
-
-          action = &item->actions.array[j];
-
-          fl_print_format("    %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_action_s, main->context.set.important, f_string_eol_s[0]);
-          fl_print_format("      %[%s%] %q%c", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s[0]);
-
-          if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
-            fl_print_format("      %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s[0]);
-
-            parameter = &action->parameters.array[0];
-
-            if (parameter->used) {
-              f_print_terminated("        ", main->output.to.stream);
-
-              for (k = 0; k < parameter->used; ++k) {
-
-                if (parameter->string[k] == f_fss_eol_s[0]) {
-                  if (k + 1 < parameter->used) {
-                    f_print_terminated(f_string_eol_s, main->output.to.stream);
-                    f_print_terminated("        ", main->output.to.stream);
-                  }
-                }
-                else {
-                  f_print_character_safely(parameter->string[k], main->output.to.stream);
-                }
-              } // for
-
-              f_print_terminated(f_string_eol_s, main->output.to.stream);
-            }
-
-            fl_print_format("      }%c", main->output.to.stream, f_string_eol_s[0]);
-          }
-          else {
-            for (k = 0; k < action->parameters.used; ++k) {
-              fl_print_format("      %[%s%] %Q%c", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s[0]);
-            } // for
-          }
-
-          fl_print_format("    }%c", main->output.to.stream, f_string_eol_s[0]);
-        } // for
 
         fl_print_format("  }%c", main->output.to.stream, f_string_eol_s[0]);
       } // for

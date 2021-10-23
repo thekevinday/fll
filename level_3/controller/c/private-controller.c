@@ -1196,8 +1196,8 @@ extern "C" {
           int result = 0;
           int option = FL_execute_parameter_option_path_d;
 
-          if (global->main->as_init) {
-            option |= FL_execute_parameter_option_session_d; // @todo need "session new" and "session same".
+          if (entry->session == controller_entry_session_new) {
+            option |= FL_execute_parameter_option_session_d;
           }
 
           status = fll_execute_into(0, entry_action->parameters, option, 0, (void *) &result);

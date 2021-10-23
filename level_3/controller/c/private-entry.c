@@ -796,6 +796,13 @@ extern "C" {
     entry->status = F_known_not;
     entry->items.used = 0;
 
+    if (global.main->as_init) {
+      entry->session = controller_entry_session_new;
+    }
+    else {
+      entry->session = controller_entry_session_same;
+    }
+
     cache->action.line_action = 0;
     cache->action.line_item = 0;
 
@@ -1218,6 +1225,25 @@ extern "C" {
         }
         else if (fl_string_dynamic_partial_compare_string(controller_require_s, cache->buffer_file, controller_require_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
           entry->pid = controller_entry_pid_require;
+        }
+        else {
+          controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);
+
+          continue;
+        }
+      }
+      else if (fl_string_dynamic_compare_string(controller_session_s, cache->action.name_action, controller_session_s_length) == F_equal_to) {
+        if (cache->content_actions.array[i].used < 0 || cache->content_actions.array[i].used > 1) {
+          controller_entry_settings_read_print_setting_requires_exactly(is_entry, global, *cache, 1);
+
+          continue;
+        }
+
+        if (fl_string_dynamic_partial_compare_string(controller_new_s, cache->buffer_file, controller_new_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          entry->session = controller_entry_session_new;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_same_s, cache->buffer_file, controller_same_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          entry->session = controller_entry_session_same;
         }
         else {
           controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);

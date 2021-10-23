@@ -15,9 +15,11 @@ Exit Specification:
 
   The Items:
     "main": required.
+
     "setting": optional, Actions may be one of:
-      - "pid": either "disable", "optional", or "require".
-      - "show": either "normal" or "init".
+      - "pid": Exactly one Content that is one of "disable", "require", or "ready".
+      - "session": Exactly one Content that is one of  "new" or "same".
+      - "show": Exactly one Content that is one of  "normal" or "init".
 
     The Exit file may have any other valid Item Objects, but only the above are reserved.
 
@@ -29,7 +31,9 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "failsafe": One Content that is a valid Object name, except for the reserved "main".
+
       "freeze": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -37,7 +41,9 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "item": One Content that is a valid Object name, except for the reserved "main".
+
       "kill": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -45,6 +51,7 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "pause": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -52,9 +59,11 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "ready": Zero or One Content.
         The first may only be one of\:
         - "wait"
+
       "reload": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -62,6 +71,7 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "restart": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -69,6 +79,7 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "resume": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -76,6 +87,7 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "start": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -83,6 +95,7 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "stop": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -90,6 +103,7 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "thaw": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
@@ -97,6 +111,7 @@ Exit Specification:
           - "asynchronous"
           - "require"
           - "wait"
+
       "timeout": Two Content.
         The first being one of\:
           - "start"

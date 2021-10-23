@@ -101,9 +101,13 @@ extern "C" {
   #define CONTROLLER_rttime_s        "rttime"
   #define CONTROLLER_rule_s          "rule"
   #define CONTROLLER_rules_s         "rules"
+  #define CONTROLLER_same_s          "same"
   #define CONTROLLER_scheduler_s     "scheduler"
   #define CONTROLLER_script_s        "script"
   #define CONTROLLER_service_s       "service"
+  #define CONTROLLER_session_s       "session"
+  #define CONTROLLER_session_new_s   "session_new"
+  #define CONTROLLER_session_same_s  "session_same"
   #define CONTROLLER_setting_s       "setting"
   #define CONTROLLER_sigpending_s    "sigpending"
   #define CONTROLLER_show_s          "show"
@@ -209,9 +213,13 @@ extern "C" {
   #define controller_rttime_s_length        6
   #define controller_rule_s_length          4
   #define controller_rules_s_length         5
+  #define controller_same_s_length          4
   #define controller_scheduler_s_length     9
   #define controller_script_s_length        6
   #define controller_service_s_length       7
+  #define controller_session_s_length       7
+  #define controller_session_new_s_length   11
+  #define controller_session_same_s_length  12
   #define controller_setting_s_length       7
   #define controller_show_s_length          4
   #define controller_sigpending_s_length    10
@@ -317,9 +325,13 @@ extern "C" {
   extern const f_string_t controller_rttime_s;
   extern const f_string_t controller_rule_s;
   extern const f_string_t controller_rules_s;
+  extern const f_string_t controller_same_s;
   extern const f_string_t controller_scheduler_s;
   extern const f_string_t controller_script_s;
   extern const f_string_t controller_service_s;
+  extern const f_string_t controller_session_s;
+  extern const f_string_t controller_session_new_s;
+  extern const f_string_t controller_session_same_s;
   extern const f_string_t controller_setting_s;
   extern const f_string_t controller_show_s;
   extern const f_string_t controller_sigpending_s;
@@ -1032,7 +1044,9 @@ extern "C" {
  * A set of codes representing different with flags.
  */
 #ifndef _di_controller_with_defines_
-  #define controller_with_full_path_d 0x1
+  #define controller_with_full_path_d    0x1
+  #define controller_with_session_new_d  0x2
+  #define controller_with_session_same_d 0x4
 #endif // _di_controller_with_defines_
 
 /**
@@ -1358,8 +1372,14 @@ extern "C" {
  *   - normal: Do not print anything other than warnings and errors, but allow executed programs and scripts to output however they like.
  *   - init:   Print like an init program, printing status of entry and rules as they are being started, stopped, etc...
  *
+ * controller_entry_session_*:
+ *   - none: No special session configuration specified, use built in defaults.
+ *   - new:  Designate the default to use a new session, ignoring built in defaults (passing FL_execute_parameter_option_session_d to the execute functions).
+ *   - same: Designate the default to use a same session, ignoring built in defaults.
+ *
  * status:        The overall status.
  * pid:           The PID file generation setting.
+ * session:       The default session settings (when NULL, no default is specified).
  * show:          The show setting for controlling what to show when executing entry items and rules.
  * timeout_kill:  The timeout to wait relating to using a kill signal.
  * timeout_start: The timeout to wait relating to starting a process.
@@ -1378,10 +1398,17 @@ extern "C" {
     controller_entry_show_init,
   };
 
+  enum {
+    controller_entry_session_none = 0,
+    controller_entry_session_new,
+    controller_entry_session_same,
+  };
+
   typedef struct {
     f_status_t status;
 
     uint8_t pid;
+    uint8_t session;
     uint8_t show;
 
     f_number_unsigned_t timeout_kill;
@@ -1394,6 +1421,7 @@ extern "C" {
   #define controller_entry_t_initialize { \
     F_known_not, \
     controller_entry_pid_require, \
+    controller_entry_session_none, \
     controller_entry_show_normal, \
     0, \
     0, \

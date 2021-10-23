@@ -91,10 +91,14 @@ extern "C" {
   const f_string_t controller_rttime_s = CONTROLLER_rttime_s;
   const f_string_t controller_rule_s = CONTROLLER_rule_s;
   const f_string_t controller_rules_s = CONTROLLER_rules_s;
+  const f_string_t controller_same_s = CONTROLLER_same_s;
   const f_string_t controller_scheduler_s = CONTROLLER_scheduler_s;
   const f_string_t controller_script_s = CONTROLLER_script_s;
   const f_string_t controller_service_s = CONTROLLER_service_s;
   const f_string_t controller_setting_s = CONTROLLER_setting_s;
+  const f_string_t controller_session_s = CONTROLLER_session_s;
+  const f_string_t controller_session_new_s = CONTROLLER_session_new_s;
+  const f_string_t controller_session_same_s = CONTROLLER_session_same_s;
   const f_string_t controller_show_s = CONTROLLER_show_s;
   const f_string_t controller_sigpending_s = CONTROLLER_sigpending_s;
   const f_string_t controller_stack_s = CONTROLLER_stack_s;

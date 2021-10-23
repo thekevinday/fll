@@ -9,22 +9,22 @@ Rule Documentation:
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
   The "setting" Rule Type has the following FSS-0001 (Extended) Content\:
-    "affinity": Define one or more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
-    "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
-    "control_group": Define a control group (cgroup) in which everything within this rule executes under.
-    "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule. @todo make sure this is implemented.
-    "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
-    "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
-    "limit": Define a resource limit to use (multiple limits may be specified, but only once for each type).
-    "name": A name used to represent this rule, which is printed to the user, screen, logs, etc...
-    "nice": A single niceness value to run all processes executed within this rule as (-20 gets to be greediest in CPU usage and 19 being the nicest in CPU usage).
-    "on": Define a Rule Action in which a specified dependency is needed, wanted, or wished for.
-    "parameter": A statically defined IKI name and its associated value for use in this rule file. @todo make sure this is implemented and make sure to perform iki substitutions (with "define" being a reserved iki parameter name for environment variable usage, such as define:"PATH").
-    "path": A single Content used to set a custom PATH environment variable value.
-    "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
-    "scheduler": A valid name of a scheduler to use followed by an optional priority number.
-    "timeout": A set of timeouts to wait for in which to perform a set action or to consider failure.
-    "user": A single user name or ID to execute as.
+    - "affinity": Define one or more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
+    - "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
+    - "control_group": Define a control group (cgroup) in which everything within this rule executes under.
+    - "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule. @todo make sure this is implemented.
+    - "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
+    - "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
+    - "limit": Define a resource limit to use (multiple limits may be specified, but only once for each type).
+    - "name": A name used to represent this rule, which is printed to the user, screen, logs, etc...
+    - "nice": A single niceness value to run all processes executed within this rule as (-20 gets to be greediest in CPU usage and 19 being the nicest in CPU usage).
+    - "on": Define a Rule Action in which a specified dependency is needed, wanted, or wished for.
+    - "parameter": A statically defined IKI name and its associated value for use in this rule file. @todo make sure this is implemented and make sure to perform iki substitutions (with "define" being a reserved iki parameter name for environment variable usage, such as define:"PATH").
+    - "path": A single Content used to set a custom PATH environment variable value.
+    - "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
+    - "scheduler": A valid name of a scheduler to use followed by an optional priority number.
+    - "timeout": A set of timeouts to wait for in which to perform a set action or to consider failure.
+    - "user": A single user name or ID to execute as.
 
   In the case of "capability"\:
     If the user the controller program is run as does not have the desired capabilities already, they cannot be added.
@@ -121,5 +121,7 @@ Rule Documentation:
 
     The "with" Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
     The following flags are supported:
-      "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
+      - "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
                    When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").
+      - "session_new": Execute in a new session setting the process group to the executed process' id (making the executed process a "controlling terminal").
+      - "session_same": Execute in the same session where the process group is set to the parent process id.

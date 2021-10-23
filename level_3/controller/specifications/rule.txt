@@ -18,72 +18,72 @@ Rule Specification:
     - Each Setting Content are the "Setting Values".
 
   The Rule Types\:
-    "command": FSS-0003 (Extended List) or FSS-0001 (Extended).
-    "script": FSS-0003 (Extended List) or FSS-0001 (Extended).
-    "service": FSS-0003 (Extended List) or FSS-0001 (Extended).
-    "setting": (Required) FSS-0001 (Extended).
-    "utility": FSS-0003 (Extended List) or FSS-0001 (Extended).
+    - "command": FSS-0003 (Extended List) or FSS-0001 (Extended).
+    - "script": FSS-0003 (Extended List) or FSS-0001 (Extended).
+    - "service": FSS-0003 (Extended List) or FSS-0001 (Extended).
+    - "setting": (Required) FSS-0001 (Extended).
+    - "utility": FSS-0003 (Extended List) or FSS-0001 (Extended).
 
   For the above Rule Types, "setting" may be specified only once whereas the others may be specifed multiple times.
   The "setting" Rule Type is always processed first, regardless of position.
   The other Rule Types are processed top-down.
 
   The "setting" Rule Type has the following FSS-0001 (Extended)\:
-    "affinity": One or more Content, each must be a 0 or greater whole number.
-    "capability": One Content representing capabilities.
-    "control_group": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
-    "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-    "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-    "group": One or more Content representing group names or group ids.
-    "limit": Three Content, with the first representing a valid resource type and the second and third being a valid resource limit number (positive whole number or 0).
-    "name": One Content, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
-    "nice": One Content, must be a valid number for process "niceness" (Any whole number inclusively between -20 to 19).
-    "on": Four Content, the first being a Rule Action, the second being "need", "want", or "wish", the third being a partial path, and the fourth being a Rule file name without ".rule" extension.
-    "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
-    "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
-    "scheduler": One or Two Content representing a scheduler name and the optional numeric priority (Any whole number inclusively between 0 and 99).
-    "script": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
-    "user": One Content representing a user name or user id.
+    - "affinity": One or more Content, each must be a 0 or greater whole number.
+    - "capability": One Content representing capabilities.
+    - "control_group": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
+    - "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+    - "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+    - "group": One or more Content representing group names or group ids.
+    - "limit": Three Content, with the first representing a valid resource type and the second and third being a valid resource limit number (positive whole number or 0).
+    - "name": One Content, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
+    - "nice": One Content, must be a valid number for process "niceness" (Any whole number inclusively between -20 to 19).
+    - "on": Four Content, the first being a Rule Action, the second being "need", "want", or "wish", the third being a partial path, and the fourth being a Rule file name without ".rule" extension.
+    - "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
+    - "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
+    - "scheduler": One or Two Content representing a scheduler name and the optional numeric priority (Any whole number inclusively between 0 and 99).
+    - "script": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
+    - "user": One Content representing a user name or user id.
 
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:
-    "freeze": One or more Content representing a program being executed and its arguments.
-    "kill": One or more Content representing a program being executed and its arguments.
-    "pause": One or more Content representing a program being executed and its arguments.
-    "reload": One or more Content representing a program being executed and its arguments.
-    "rerun": Two or more Content representing a Rule type that executes and its properties.
-    "restart": One or more Content representing a program being executed and its arguments.
-    "resume": One or more Content representing a program being executed and its arguments.
-    "start": One or more Content representing a program being executed and its arguments.
-    "stop": One or more Content representing a program being executed and its arguments.
-    "thaw": One or more Content representing a program being executed and its arguments.
-    "with": One or more Content representing special options for the Rule Type.
+    - "freeze": One or more Content representing a program being executed and its arguments.
+    - "kill": One or more Content representing a program being executed and its arguments.
+    - "pause": One or more Content representing a program being executed and its arguments.
+    - "reload": One or more Content representing a program being executed and its arguments.
+    - "rerun": Two or more Content representing a Rule type that executes and its properties.
+    - "restart": One or more Content representing a program being executed and its arguments.
+    - "resume": One or more Content representing a program being executed and its arguments.
+    - "start": One or more Content representing a program being executed and its arguments.
+    - "stop": One or more Content representing a program being executed and its arguments.
+    - "thaw": One or more Content representing a program being executed and its arguments.
+    - "with": One or more Content representing special options for the Rule Type.
 
   The "service" and "utility" Rule Types allow the following the FSS-0001 (Extended)\:
-    "pid_file": One Content representing the path to a PID file.
-    "rerun": Two or more Content representing a Rule type that executes and its properties.
-    "with": One or more Content representing special options for the Rule Type.
+    - "pid_file": One Content representing the path to a PID file.
+    - "rerun": Two or more Content representing a Rule type that executes and its properties.
+    - "with": One or more Content being one of "full_path", "session_new", or "session_same".
 
   The "command" and "service" Rule Types allow the following the FSS-0003 (Extended List)\:
-    "freeze": A list repesenting multiple programs and their respective arguments to execute.
-    "kill": A list repesenting multiple programs and their respective arguments to execute.
-    "pause": A list repesenting multiple programs and their respective arguments to execute.
-    "reload": A list repesenting multiple programs and their respective arguments to execute.
-    "restart": A list repesenting multiple programs and their respective arguments to execute.
-    "resume": A list repesenting multiple programs and their respective arguments to execute.
-    "start": A list repesenting multiple programs and their respective arguments to execute.
-    "stop": A list repesenting multiple programs and their respective arguments to execute.
-    "thaw": A list repesenting multiple programs and their respective arguments to execute.
+    - "freeze": A list repesenting multiple programs and their respective arguments to execute.
+    - "kill": A list repesenting multiple programs and their respective arguments to execute.
+    - "pause": A list repesenting multiple programs and their respective arguments to execute.
+    - "reload": A list repesenting multiple programs and their respective arguments to execute.
+    - "restart": A list repesenting multiple programs and their respective arguments to execute.
+    - "resume": A list repesenting multiple programs and their respective arguments to execute.
+    - "start": A list repesenting multiple programs and their respective arguments to execute.
+    - "stop": A list repesenting multiple programs and their respective arguments to execute.
+    - "thaw": A list repesenting multiple programs and their respective arguments to execute.
 
   The "script" and "utility" Rule Types allow the following the FSS-0003 (Extended List)\:
-    "freeze": A list repesenting the contents of a script, such as a GNU Bash shell.
-    "kill": A list repesenting the contents of a script, such as a GNU Bash shell.
-    "pause": A list repesenting the contents of a script, such as a GNU Bash shell.
-    "reload": A list repesenting the contents of a script, such as a GNU Bash shell.
-    "restart": A list repesenting the contents of a script, such as a GNU Bash shell.
-    "resume": A list repesenting the contents of a script, such as a GNU Bash shell.
-    "start": A list repesenting the contents of a script, such as a GNU Bash shell.
-    "stop": A list repesenting the contents of a script, such as a GNU Bash shell.
-    "thaw": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "freeze": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "kill": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "pause": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "reload": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "restart": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "resume": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "start": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "stop": A list repesenting the contents of a script, such as a GNU Bash shell.
+    - "thaw": A list repesenting the contents of a script, such as a GNU Bash shell.
 
   The "rerun" Rule Type Content has the following structure\:
     The first Content represents one of: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", or "thaw".

@@ -3,20 +3,23 @@
 Simulate Documentation:
   This describes the intent and purpose of the simulation and validation parameters.
 
-  The "controller" program is design to support being run as an alternative to an init program (such as Sysvinit or SystemD).
+  The "controller" program is designed to support being run as an alternative to an init program (such as Sysvinit or SystemD).
   To help prevent problems, simulation and validation functionality is provided.
 
-  The "validate" functionality, by itself will simply check the syntax of the Entry and Rule files (for Rule files specified in the Entry or Exit file).
-  Errors are reported and nothing is executed.
-  The "controller" program will return 0 on validation success and 1 on validation failure.
+  The "validate" functionality\:
+    By itself will simply check the syntax of the Entry and Rule files (for Rule files specified in the Entry or Exit file).
+    Errors are reported and nothing is executed.
+    The "controller" program will return 0 on validation success and 1 on validation failure.
 
-  The "simulate" functionality, by itself will perform a simulated execution of all Rules designated by an Entry or Exit file.
-  The simulation is not a true simulation in that no program is ever called to perform any operations.
-  Furthermore, any "script" specified inside a Rule is only simulated as a whole and not its individual parts.
-  Once the Entry file is finished executing, the "simulate" will continue to run waiting on "control" commands.
+  The "simulate" functionality\:
+    By itself will perform a simulated execution of all Rules designated by an Entry or Exit file.
+    The simulation is not a true simulation in that no program is ever called to perform any operations.
+    Furthermore, any "script" specified inside a Rule is only simulated as a whole and not its individual parts.
+    Once the Entry file is finished executing, the "simulate" will continue to run waiting on "control" commands.
 
-  The "simulate" functionality, when specified along with the "validate" functionality, will perform similar to "validate" functionality except that additional information of the Rules to be executed will be printed.
-  There will be neither execution nor simulated execution of any Rule when both "simulate" and "validate" are used together.
+  The "simulate" with "validate" functionality\:
+    Will perform similar to "validate" functionality except that additional information of the Rules to be executed will be printed.
+    There will be neither execution nor simulated execution of any Rule when both "simulate" and "validate" are used together.
 
   When a Rule is simulated, an empty script command (generally defaulting to "bash") is executed in place of the actual program being executed for each program or script in the Rule file that is to be executed.
   This allows for testing the designated permissions and other settings that would be applied when calling some program.
