@@ -2902,7 +2902,6 @@ extern "C" {
     }
 
     if ((process->options & controller_process_option_wait_d) && F_status_is_error_not(status) && (process->options & controller_process_option_validate_d)) {
-
       status_lock = controller_rule_wait_all_process_type(process->type, global, F_false, process);
 
       if (status_lock == F_signal) {
@@ -3021,6 +3020,7 @@ extern "C" {
       return F_status_set_error(F_lock);
     }
 
+    // Update the global rule status, which is stored separately from the rule status for this process.
     if (controller_rule_find(process->rule.alias, global.setting->rules, &id_rule) == F_true) {
       controller_rule_t *rule = &global.setting->rules.array[id_rule];
 
@@ -3066,6 +3066,7 @@ extern "C" {
     }
 
     f_status_t status = F_none;
+    f_status_t status_lock = F_none;
 
     controller_process_t *process = 0;
 
@@ -3110,15 +3111,15 @@ extern "C" {
         return status;
       }
 
-      status = controller_lock_write_process(process, global.thread, &process->lock);
+      status_lock = controller_lock_write_process(process, global.thread, &process->lock);
 
-      if (status == F_signal || F_status_is_error(status)) {
-        controller_lock_error_critical_print(global.main->error, F_status_set_fine(status), F_false, global.thread);
+      if (status_lock == F_signal || F_status_is_error(status_lock)) {
+        controller_lock_error_critical_print(global.main->error, F_status_set_fine(status_lock), F_false, global.thread);
 
         f_thread_unlock(&process->active);
         f_thread_unlock(&global.thread->lock.process);
 
-        return status;
+        return status_lock;
       }
 
       // once a write lock on the process is achieved, it is safe to unlock the global process read lock.
@@ -3146,14 +3147,14 @@ extern "C" {
 
     f_thread_unlock(&process->lock);
 
-    status = controller_lock_write_process(process, global.thread, &process->lock);
+    status_lock = controller_lock_write_process(process, global.thread, &process->lock);
 
-    if (status == F_signal || F_status_is_error(status)) {
-      controller_lock_error_critical_print(global.main->error, F_status_set_fine(status), F_false, global.thread);
+    if (status_lock == F_signal || F_status_is_error(status_lock)) {
+      controller_lock_error_critical_print(global.main->error, F_status_set_fine(status_lock), F_false, global.thread);
 
       f_thread_unlock(&process->active);
 
-      return status;
+      return status_lock;
     }
 
     process->state = controller_process_state_active;
@@ -3248,15 +3249,16 @@ extern "C" {
     }
 
     if (!action || F_status_is_error(status) && (process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+      {
+        status_lock = controller_lock_write_process(process, global.thread, &process->lock);
 
-      status = controller_lock_write_process(process, global.thread, &process->lock);
+        if (status_lock == F_signal || F_status_is_error(status_lock)) {
+          controller_lock_error_critical_print(global.main->error, F_status_set_fine(status_lock), F_false, global.thread);
 
-      if (status == F_signal || F_status_is_error(status)) {
-        controller_lock_error_critical_print(global.main->error, F_status_set_fine(status), F_false, global.thread);
+          f_thread_unlock(&process->active);
 
-        f_thread_unlock(&process->active);
-
-        return status;
+          return status_lock;
+        }
       }
 
       if (!action || (options_force & controller_process_option_asynchronous_d)) {
@@ -3377,7 +3379,7 @@ extern "C" {
       }
       else if (!process->action) {
 
-        // this is a "consider" Action, so do not actually execute the rule.
+        // This is a "consider" Action, so do not actually execute the rule.
         f_thread_unlock(&process->lock);
 
         if (options_force & controller_process_option_asynchronous_d) {
@@ -3402,7 +3404,7 @@ extern "C" {
               controller_print_unlock_flush(global.main->error.to, global.thread);
             }
 
-            // never continue on circular recursion errors even in simulate mode.
+            // Never continue on circular recursion errors even in simulate mode.
             status = F_status_set_error(F_recurse);
 
             break;
@@ -3504,11 +3506,8 @@ extern "C" {
       return status_lock;
     }
 
-    if (controller_rule_find(process->rule.alias, global.setting->rules, &id_rule) == F_true) {
-      if (F_status_set_fine(status) == F_lock) {
-        global.setting->rules.array[id_rule].status[process->action] = F_status_set_error(F_failure);
-      }
-      else {
+    if (F_status_set_fine(status) == F_lock) {
+      if (controller_rule_find(process->rule.alias, global.setting->rules, &id_rule) == F_true) {
         global.setting->rules.array[id_rule].status[process->action] = status;
       }
     }
@@ -6446,7 +6445,7 @@ extern "C" {
           if (status_lock == F_signal || F_status_is_error(status_lock)) break;
         }
 
-        if (required && (process_list[i]->options & controller_process_option_require_d)) {
+        if (process_list[i]->options & controller_process_option_require_d) {
           if (controller_rule_status_is_error(process_list[i]->action, process_list[i]->rule)) {
             status = F_status_set_error(F_require);
 
@@ -6479,33 +6478,31 @@ extern "C" {
           break;
         }
 
-        if (required) {
-          if (caller) {
-            status_lock = controller_lock_read_process(caller, global.thread, &process_list[i]->lock);
-          }
-          else {
-            status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->lock);
-          }
+        if (caller) {
+          status_lock = controller_lock_read_process(caller, global.thread, &process_list[i]->lock);
+        }
+        else {
+          status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->lock);
+        }
 
-          if (status_lock == F_signal || F_status_is_error(status_lock)) {
+        if (status_lock == F_signal || F_status_is_error(status_lock)) {
+          f_thread_unlock(&process_list[i]->active);
+
+          break;
+        }
+
+        if ((process_list[i]->options & controller_process_option_require_d)) {
+          f_thread_unlock(&process_list[i]->lock);
+
+          if (controller_rule_status_is_error(process_list[i]->action, process_list[i]->rule)) {
+            status = F_status_set_error(F_require);
+
             f_thread_unlock(&process_list[i]->active);
-
             break;
           }
-
-          if ((process_list[i]->options & controller_process_option_require_d)) {
-            f_thread_unlock(&process_list[i]->lock);
-
-            if (controller_rule_status_is_error(process_list[i]->action, process_list[i]->rule)) {
-              status = F_status_set_error(F_require);
-
-              f_thread_unlock(&process_list[i]->active);
-              break;
-            }
-          }
-          else {
-            f_thread_unlock(&process_list[i]->lock);
-          }
+        }
+        else {
+          f_thread_unlock(&process_list[i]->lock);
         }
       }
       else {

@@ -305,7 +305,7 @@ extern "C" {
         controller_thread_join(&thread.id_signal);
       }
       else if (setting->mode == controller_setting_mode_program) {
-        controller_rule_wait_all(F_true, global, F_false, 0);
+        status = controller_rule_wait_all(F_true, global, F_false, 0);
       }
     }
 

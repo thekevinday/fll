@@ -6,9 +6,9 @@ setting:
 main:
   failsafe start_top
 
-  start serial s_1 asynchronous
-  start serial s_2 asynchronous
-  start serial s_3 asynchronous
+  start serial s_1 asynchronous require
+  start serial s_2 asynchronous require
+  start serial s_3 asynchronous require
 
   ready wait
 

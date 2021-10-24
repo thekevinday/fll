@@ -990,7 +990,7 @@ extern "C" {
  *   The global data.
  * @param required
  *   If TRUE, then only process required rules and if a required rule has failed, return.
- *   If FALSE, process all waits, returning normally.
+ *   If FALSE, process all waits, returning normally (required rules still result in failure).
  * @param caller
  *   The process representing the caller so that the process never waits on itself.
  *   (optional) set to 0 when calling from a thread that is not running/executing any process.
@@ -1005,7 +1005,7 @@ extern "C" {
  *    F_require (with error bit set) if a required process is in failed status when required is TRUE.
  */
 #ifndef _di_controller_rule_wait_all_
-  extern f_status_t controller_rule_wait_all(const bool is_normal, const controller_global_t global, const bool required, controller_process_t *process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_wait_all(const bool is_normal, const controller_global_t global, const bool required, controller_process_t *caller) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_wait_all_
 
 /**

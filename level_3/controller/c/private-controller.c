@@ -557,8 +557,9 @@ extern "C" {
               controller_print_unlock_flush(global.main->warning.to, global.thread);
             }
           }
-
-          global.setting->ready = controller_setting_ready_wait;
+          else {
+            global.setting->ready = controller_setting_ready_wait;
+          }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
           error_has = F_false;
@@ -883,7 +884,8 @@ extern "C" {
             }
 
             if (global->main->parameters[controller_parameter_validate].result == f_console_result_none) {
-              controller_rule_wait_all(is_entry, *global, F_false, process);
+              status = controller_rule_wait_all(is_entry, *global, F_false, process);
+              if (F_status_is_error(status)) return status;
             }
           }
 
