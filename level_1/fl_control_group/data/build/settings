@@ -4,7 +4,7 @@ project_name fl_control_group
 
 version_major 0
 version_minor 5
-version_micro 6
+version_micro 7
 version_file minor
 version_target micro
 

@@ -53,7 +53,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_program_version_
   #define fss_basic_list_program_version_major F_string_ascii_0_s
   #define fss_basic_list_program_version_minor F_string_ascii_5_s
-  #define fss_basic_list_program_version_micro F_string_ascii_6_s
+  #define fss_basic_list_program_version_micro F_string_ascii_7_s
 
   #ifndef fss_basic_list_program_version_nano_prefix_s
     #define fss_basic_list_program_version_nano_prefix_s

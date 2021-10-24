@@ -46,7 +46,7 @@ Readme Documentation:
   - The Featureless Make, which is a level_3 project provided by FLL.
 
   An example bootstrap script is provided (build/scripts/bootstrap-example.sh) is provided for to show how to build the FLL directly from source.
-  Use it as an example or explicitly call it (such as: "bash build/scripts/bootstrap-example.sh monolithic 0.5.6").
+  Use it as an example or explicitly call it (such as: "bash build/scripts/bootstrap-example.sh monolithic 0.5.7").
 
   See: dependencies for specific dependencies of this project.
   See: readme.bootstrap for bootstrap compiling (or just regular compiling) any part of the FLL and notes on installing.
