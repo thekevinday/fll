@@ -1204,119 +1204,120 @@ package_operation_copy_package() {
 }
 
 package_operation_create_config_stubs() {
-  if [[ -f ${package}data/build/settings ]] ; then
-    if [[ $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" && ! -f ${package}sources/c/config.c ]] ; then
-      if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" ]] ; then
-        sed -i -E -e "s|^\s*\bbuild_sources_program\s+|&config.c |" ${package}data/build/settings
+  if [[ ! -f ${package}data/build/settings ]] ; then
+    return 0
+  fi
 
-        if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to insert the config.c into $c_notice${package}data/build/settings$c_error.$c_reset"
-          fi
+  local language=
 
-          let failure=1
-          return $failure
+  if [[ $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" ]] ; then
+    language="c"
+  elif [[  $(grep -soP '^\s*\bbuild_language\b\s+c\+\+\s*$' ${package}data/build/settings) != "" ]] ; then
+    language="c++"
+  else
+    return 0
+  fi
+
+  if [[ $language == "c" && ! -f ${package}sources/c/config.c ]] ; then
+    if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+      sed -i -E -e "s|^\s*\bbuild_sources_program\s+|&config.c |" ${package}data/build/settings
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to insert the config.c into $c_notice${package}data/build/settings$c_error.$c_reset"
         fi
-      elif [[ $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
-        sed -i -E -e "s|^\s*\bbuild_sources_library\s+|&config.c |" ${package}data/build/settings
 
-        if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to insert the config.c into $c_notice${package}data/build/settings$c_error.$c_reset"
-          fi
-
-          let failure=1
-          return $failure
-        fi
+        let failure=1
+        return $failure
       fi
+    elif [[ $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+      sed -i -E -e "s|^\s*\bbuild_sources_library\s+|&config.c |" ${package}data/build/settings
 
-      if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" || $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
-        echo > ${package}sources/c/config.c
-
-        if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create the config.c at $c_notice${package}sources/c/config.c$c_error.$c_reset"
-          fi
-
-          let failure=1
-          return $failure
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to insert the config.c into $c_notice${package}data/build/settings$c_error.$c_reset"
         fi
-      fi
-    elif [[ $(grep -soP '^\s*\bbuild_language\b\s+c\+\+\s*$' ${package}data/build/settings) != "" && ! -f ${package}sources/c/config.cpp ]] ; then
-      if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" ]] ; then
-        sed -i -E -e "s|^\s*\bbuild_sources_program\s+|&config.cpp |" ${package}data/build/settings
 
-        if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to insert the config.cpp into $c_notice${package}data/build/settings$c_error.$c_reset"
-          fi
-
-          let failure=1
-          return $failure
-        fi
-      elif [[ $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
-        sed -i -E -e "s|^\s*\bbuild_sources_library\s+|&config.cpp |" ${package}data/build/settings
-
-        if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to insert the config.cpp into $c_notice${package}data/build/settings$c_error.$c_reset"
-          fi
-
-          let failure=1
-          return $failure
-        fi
-      fi
-
-      if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" || $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
-        echo > ${package}sources/c++/config.cpp
-
-        if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c++/config.cpp$c_error.$c_reset"
-          fi
-
-          let failure=1
-          return $failure
-        fi
+        let failure=1
+        return $failure
       fi
     fi
 
-    if [[ ( $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" && ! -f ${package}sources/c/config.h ) || ( $(grep -soP '^\s*\bbuild_language\b\s+c\+\+\s*$' ${package}data/build/settings) != "" && ! -f ${package}sources/c++/config.h ) ]] ; then
-      if [[ $(grep -soP '^\s*\bbuild_sources_headers\b\s+\S' ${package}data/build/settings) != "" ]] ; then
-        sed -i -E -e "s|^\s*\bbuild_sources_headers\s+|&config.h |" ${package}data/build/settings
+    if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" || $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+      echo > ${package}sources/c/config.c &&
+      echo "#include \"config.h\"" >> ${package}sources/c/config.c
 
-        if [[ $? -ne 0 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to insert the config.h into $c_notice${package}data/build/settings$c_error.$c_reset"
-          fi
-
-          let failure=1
-          return $failure
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to create the config.c at $c_notice${package}sources/c/config.c$c_error.$c_reset"
         fi
 
-        if [[ $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" ]] ; then
-          echo > ${package}sources/c/config.h
+        let failure=1
+        return $failure
+      fi
+    fi
+  elif [[ $language == "c++" && ! -f ${package}sources/c/config.cpp ]] ; then
+    if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+      sed -i -E -e "s|^\s*\bbuild_sources_program\s+|&config.cpp |" ${package}data/build/settings
 
-          if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c/config.h$c_error.$c_reset"
-            fi
-
-            let failure=1
-            return $failure
-          fi
-        else
-          echo > ${package}sources/c++/config.h
-
-          if [[ $? -ne 0 ]] ; then
-            if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c++/config.h$c_error.$c_reset"
-            fi
-
-            let failure=1
-            return $failure
-          fi
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to insert the config.cpp into $c_notice${package}data/build/settings$c_error.$c_reset"
         fi
+
+        let failure=1
+        return $failure
+      fi
+    elif [[ $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+      sed -i -E -e "s|^\s*\bbuild_sources_library\s+|&config.cpp |" ${package}data/build/settings
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to insert the config.cpp into $c_notice${package}data/build/settings$c_error.$c_reset"
+        fi
+
+        let failure=1
+        return $failure
+      fi
+    fi
+
+    if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" || $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+      echo > ${package}sources/c++/config.cpp &&
+      echo "#include \"config.h\"" >> ${package}sources/c++/config.cpp
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c++/config.cpp$c_error.$c_reset"
+        fi
+
+        let failure=1
+        return $failure
+      fi
+    fi
+  fi
+
+  if [[ ( $language == "c" && ! -f ${package}sources/c/config.h ) || ( $language == "c++" && ! -f ${package}sources/c++/config.h ) ]] ; then
+    if [[ $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" ]] ; then
+      echo > ${package}sources/c/config.h
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c/config.h$c_error.$c_reset"
+        fi
+
+        let failure=1
+        return $failure
+      fi
+    else
+      echo > ${package}sources/c++/config.h
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c++/config.h$c_error.$c_reset"
+        fi
+
+        let failure=1
+        return $failure
       fi
     fi
   fi
