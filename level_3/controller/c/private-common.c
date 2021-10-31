@@ -955,7 +955,7 @@ extern "C" {
     const int result = nanosleep(&time, 0);
 
     if (setting->interruptible) {
-      f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
+      f_signal_mask(SIG_BLOCK, &main->signal.set, 0);
     }
 
     return result;
