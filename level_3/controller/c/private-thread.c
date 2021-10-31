@@ -18,14 +18,13 @@ extern "C" {
 
     if (global->thread->enabled != controller_thread_enabled) return 0;
 
-    const unsigned int interval = global->main->parameters[controller_parameter_simulate].result == f_console_result_found ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d;
+    const struct timespec delay = controller_time_seconds(global->main->parameters[controller_parameter_simulate].result == f_console_result_found ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d);
 
     f_status_t status = F_none;
 
     while (global->thread->enabled == controller_thread_enabled) {
 
-      // @todo consider switching to nanosleep() which may act better with interrupts and not require f_thread_cancel().
-      sleep(interval);
+      controller_time_sleep_nanoseconds(global->main, global->setting, delay);
 
       if (global->thread->enabled != controller_thread_enabled) break;
 
@@ -348,18 +347,6 @@ extern "C" {
       if (!controller_thread_is_enabled(is_normal, thread)) return;
     }
 
-    // Threads are restricted during the main thread so that the signals can be processed.
-    // This thread must regain control over the signals within its own thread scope.
-    {
-      controller_main_t *main = (controller_main_t *) process->main_data;
-      controller_setting_t *setting = (controller_setting_t *) process->main_setting;
-
-      if (setting->interruptible) {
-        f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
-        f_signal_close(&main->signal);
-      }
-    }
-
     const f_status_t status = controller_rule_process_do(controller_process_option_asynchronous_d, process);
 
     if (status == F_child) {
@@ -444,7 +431,7 @@ extern "C" {
     f_array_length_t j = 0;
     pid_t pid = 0;
 
-    // the sleep() function that is run inside the cleanup function must be interrupted via the f_thread_cancel().
+    // The sleep functions that are run inside the cleanup function must be interrupted via the f_thread_cancel().
     if (global->thread->id_cleanup) {
       f_thread_cancel(global->thread->id_cleanup);
       f_thread_join(global->thread->id_cleanup, 0);

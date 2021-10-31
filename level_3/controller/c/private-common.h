@@ -2477,10 +2477,52 @@ extern "C" {
  *
  * @return
  *   A time structure suitable for passing to nanosleep() and similar functions.
+ *
+ * @see nanosleep()
  */
 #ifndef _di_controller_time_milliseconds_
   extern struct timespec controller_time_milliseconds(const f_number_unsigned_t milliseconds) F_attribute_visibility_internal_d;
 #endif // _di_controller_time_milliseconds_
+
+/**
+ * Convert seconds to nanoseconds.
+ *
+ * @param seconds
+ *   The number of seconds.
+ *
+ * @return
+ *   A time structure suitable for passing to nanosleep() and similar functions.
+ *
+ * @see nanosleep()
+ */
+#ifndef _di_controller_time_seconds_
+  extern struct timespec controller_time_seconds(const f_number_unsigned_t seconds) F_attribute_visibility_internal_d;
+#endif // _di_controller_time_seconds_
+
+/**
+ * Sleep for a given number of nanoseconds.
+ *
+ * The nanosleep() function handles signals within itself.
+ * Temporarily unblock signals so that the nanosleep can receive the signal and then restore the signals once done.
+ *
+ * The signals will not be unblocked when in uninterruptible mode.
+ *
+ * @param main
+ *   The program main data.
+ * @param setting
+ *   The settings.
+ * @param time
+ *   The number of nanoseconds to sleep.
+ *
+ * @return
+ *   The results of nanosleep().
+ *
+ * @see nanosleep()
+ * @see controller_time_milliseconds()
+ */
+#ifndef _di_controller_time_sleep_nanoseconds_
+  extern int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_setting_t * const setting, struct timespec time) F_attribute_visibility_internal_d;
+#endif // _di_controller_time_sleep_nanoseconds_
 
 #ifdef __cplusplus
 } // extern "C"

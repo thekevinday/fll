@@ -934,6 +934,34 @@ extern "C" {
   }
 #endif // _di_controller_time_milliseconds_
 
+#ifndef _di_controller_time_seconds_
+  struct timespec controller_time_seconds(const f_number_unsigned_t seconds) {
+
+    struct timespec time;
+    time.tv_sec = seconds;
+    time.tv_nsec = 0;
+
+    return time;
+  }
+#endif // _di_controller_time_seconds_
+
+#ifndef _di_controller_time_sleep_nanoseconds_
+  int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_setting_t * const setting, struct timespec time) {
+
+    if (setting->interruptible) {
+      f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
+    }
+
+    const int result = nanosleep(&time, 0);
+
+    if (setting->interruptible) {
+      f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
+    }
+
+    return result;
+  }
+#endif // _di_controller_time_sleep_nanoseconds_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

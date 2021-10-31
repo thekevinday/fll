@@ -1645,9 +1645,9 @@ extern "C" {
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
       {
-        struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
+        const struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
 
-        if (nanosleep(&delay, 0) == -1) {
+        if (controller_time_sleep_nanoseconds(main, (controller_setting_t *) process->main_setting, delay) == -1) {
           status = F_signal;
         }
       }
@@ -1901,9 +1901,9 @@ extern "C" {
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
       {
-        struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
+        const struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
 
-        if (nanosleep(&delay, 0) == -1) {
+        if (controller_time_sleep_nanoseconds(main, (controller_setting_t *) process->main_setting, delay) == -1) {
           status = F_signal;
         }
       }
@@ -2090,9 +2090,9 @@ extern "C" {
         }
 
         if (rerun_item->delay) {
-          struct timespec time = controller_time_milliseconds(rerun_item->delay);
+          const struct timespec delay = controller_time_milliseconds(rerun_item->delay);
 
-          if (nanosleep(&time, 0) == -1) {
+          if (controller_time_sleep_nanoseconds(main, (controller_setting_t *) process->main_setting, delay) == -1) {
             return -1;
           }
 
