@@ -24,6 +24,7 @@ extern "C" {
 
     while (global->thread->enabled == controller_thread_enabled) {
 
+      // @todo consider switching to nanosleep() which may act better with interrupts and not require f_thread_cancel().
       sleep(interval);
 
       if (global->thread->enabled != controller_thread_enabled) break;
@@ -347,6 +348,18 @@ extern "C" {
       if (!controller_thread_is_enabled(is_normal, thread)) return;
     }
 
+    // Threads are restricted during the main thread so that the signals can be processed.
+    // This thread must regain control over the signals within its own thread scope.
+    {
+      controller_main_t *main = (controller_main_t *) process->main_data;
+      controller_setting_t *setting = (controller_setting_t *) process->main_setting;
+
+      if (setting->interruptable) {
+        f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
+        f_signal_close(&main->signal);
+      }
+    }
+
     const f_status_t status = controller_rule_process_do(controller_process_option_asynchronous_d, process);
 
     if (status == F_child) {
@@ -432,7 +445,6 @@ extern "C" {
     pid_t pid = 0;
 
     // the sleep() function that is run inside the cleanup function must be interrupted via the f_thread_cancel().
-    // @todo consider switching to nanosleep() which may act better with interrupts and not require f_thread_cancel().
     if (global->thread->id_cleanup) {
       f_thread_cancel(global->thread->id_cleanup);
       f_thread_join(global->thread->id_cleanup, 0);
@@ -463,7 +475,7 @@ extern "C" {
       for (j = 0; j < process->childs.used; ++j) {
 
         if (process->childs.array[j] > 0) {
-          f_signal_send(F_signal_termination, process->childs.array[j]);
+          f_signal_send(global->thread->signal ? global->thread->signal : F_signal_termination, process->childs.array[j]);
         }
       } // for
 
@@ -473,7 +485,7 @@ extern "C" {
           status = controller_file_pid_read(process->path_pids.array[j], &pid);
 
           if (pid) {
-            f_signal_send(F_signal_termination, pid);
+            f_signal_send(global->thread->signal ? global->thread->signal : F_signal_termination, pid);
           }
         }
       } // for
@@ -491,6 +503,8 @@ extern "C" {
 
       do {
         if (!process->id_thread) break;
+
+        f_thread_signal(process->id_thread, global->thread->signal ? global->thread->signal : F_signal_termination);
 
         controller_time(0, controller_thread_exit_process_cancel_wait_d, &time);
 
@@ -979,7 +993,6 @@ extern "C" {
 
       if (global->setting->interruptable) {
         if (information.si_signo == F_signal_interrupt || information.si_signo == F_signal_abort || information.si_signo == F_signal_quit || information.si_signo == F_signal_termination) {
-
           global->thread->signal = information.si_signo;
 
           controller_thread_process_cancel(is_normal, controller_thread_cancel_signal, global, 0);

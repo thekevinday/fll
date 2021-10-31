@@ -1647,14 +1647,18 @@ extern "C" {
       {
         struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
 
-        nanosleep(&delay, 0);
+        if (nanosleep(&delay, 0) == -1) {
+          status = F_signal;
+        }
       }
 
-      const f_string_static_t simulated_program = macro_f_string_static_t_initialize(f_string_empty_s, 0);
-      const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &simulated_program);
+      if (status != F_signal) {
+        const f_string_static_t simulated_program = macro_f_string_static_t_initialize(f_string_empty_s, 0);
+        const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
+        fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+      }
     }
     else {
       status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
@@ -1899,14 +1903,18 @@ extern "C" {
       {
         struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
 
-        nanosleep(&delay, 0);
+        if (nanosleep(&delay, 0) == -1) {
+          status = F_signal;
+        }
       }
 
-      const f_string_static_t simulated_program = macro_f_string_static_t_initialize(f_string_empty_s, 0);
-      const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &simulated_program);
+      if (status != F_signal) {
+        const f_string_static_t simulated_program = macro_f_string_static_t_initialize(f_string_empty_s, 0);
+        const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
+        fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+      }
     }
     else {
       status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
@@ -2084,7 +2092,7 @@ extern "C" {
         if (rerun_item->delay) {
           struct timespec time = controller_time_milliseconds(rerun_item->delay);
 
-          if (nanosleep(&time, 0) < 0) {
+          if (nanosleep(&time, 0) == -1) {
             return -1;
           }
 
