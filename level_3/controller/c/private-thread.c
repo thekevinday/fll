@@ -431,7 +431,6 @@ extern "C" {
     f_array_length_t j = 0;
     pid_t pid = 0;
 
-    // The sleep functions that are run inside the cleanup function must be interrupted via the f_thread_cancel().
     if (global->thread->id_cleanup) {
       f_thread_cancel(global->thread->id_cleanup);
       f_thread_join(global->thread->id_cleanup, 0);
