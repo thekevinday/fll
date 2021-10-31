@@ -49,7 +49,6 @@ console:
   start terminal four asynchronous
   start terminal one require wait
 
-
 maintenance:
   #execute /bin/agetty -8 -i -J tty1 linux
   #execute /bin/setsid -c /bin/bash --login
