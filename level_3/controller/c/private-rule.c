@@ -505,39 +505,39 @@ extern "C" {
           }
         }
         else if (type == controller_rule_action_type_rerun) {
-          uint8_t type = 0;
+          uint8_t type_rerun = 0;
 
           if (cache->content_action.used) {
             if (fl_string_dynamic_partial_compare_string(controller_freeze_s, cache->buffer_item, controller_freeze_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_freeze;
+              type_rerun = controller_rule_action_type_execute_freeze;
             }
             if (fl_string_dynamic_partial_compare_string(controller_kill_s, cache->buffer_item, controller_kill_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_kill;
+              type_rerun = controller_rule_action_type_execute_kill;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_pause_s, cache->buffer_item, controller_pause_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_pause;
+              type_rerun = controller_rule_action_type_execute_pause;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_reload_s, cache->buffer_item, controller_reload_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_reload;
+              type_rerun = controller_rule_action_type_execute_reload;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_restart_s, cache->buffer_item, controller_restart_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_restart;
+              type_rerun = controller_rule_action_type_execute_restart;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_resume_s, cache->buffer_item, controller_resume_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_resume;
+              type_rerun = controller_rule_action_type_execute_resume;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_start_s, cache->buffer_item, controller_start_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_start;
+              type_rerun = controller_rule_action_type_execute_start;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_stop_s, cache->buffer_item, controller_stop_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_stop;
+              type_rerun = controller_rule_action_type_execute_stop;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_thaw_s, cache->buffer_item, controller_thaw_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type = controller_rule_action_type_execute_thaw;
+              type_rerun = controller_rule_action_type_execute_thaw;
             }
           }
 
-          if (!type) {
+          if (!type_rerun) {
             if (global.main->error.verbosity != f_console_verbosity_quiet) {
               controller_print_lock(global.main->error.to, global.thread);
 
@@ -569,12 +569,12 @@ extern "C" {
 
           if (cache->content_action.used > 1) {
             if (fl_string_dynamic_partial_compare_string(controller_failure_s, cache->buffer_item, controller_failure_s_length, cache->content_action.array[1]) == F_equal_to) {
-              rerun_item = &item->reruns[type].failure;
-              item->reruns[type].is |= controller_rule_rerun_is_failure_d;
+              rerun_item = &item->reruns[type_rerun].failure;
+              item->reruns[type_rerun].is |= controller_rule_rerun_is_failure_d;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_success_s, cache->buffer_item, controller_success_s_length, cache->content_action.array[1]) == F_equal_to) {
-              rerun_item = &item->reruns[type].success;
-              item->reruns[type].is |= controller_rule_rerun_is_success_d;
+              rerun_item = &item->reruns[type_rerun].success;
+              item->reruns[type_rerun].is |= controller_rule_rerun_is_success_d;
             }
           }
           else {
@@ -607,7 +607,7 @@ extern "C" {
               status = controller_rule_action_read_rerun_number(global, controller_max_s, cache, &i, &rerun_item->max);
             }
             else if (fl_string_dynamic_partial_compare_string(controller_reset_s, cache->buffer_item, controller_reset_s_length, cache->content_action.array[i]) == F_equal_to) {
-              item->reruns[type].is |= rerun_item == &item->reruns[type].failure ? controller_rule_rerun_is_failure_reset_d : controller_rule_rerun_is_success_reset_d;
+              item->reruns[type_rerun].is |= rerun_item == &item->reruns[type_rerun].failure ? controller_rule_rerun_is_failure_reset_d : controller_rule_rerun_is_success_reset_d;
             }
             else {
               if (global.main->error.verbosity != f_console_verbosity_quiet) {
@@ -700,7 +700,7 @@ extern "C" {
                 controller_error_print(global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, global.thread);
               }
               else {
-                actions->array[actions->used].parameters.used = 1;
+                actions->array[actions->used++].parameters.used = 1;
               }
             }
           }

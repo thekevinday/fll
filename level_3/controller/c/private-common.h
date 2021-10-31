@@ -676,6 +676,7 @@ extern "C" {
     controller_rule_action_type__enum_size,
   };
 
+  // Execute type starts at 0 because it is intended to be used as an index within a static array.
   enum {
     controller_rule_action_type_execute_freeze = 0,
     controller_rule_action_type_execute_kill,
