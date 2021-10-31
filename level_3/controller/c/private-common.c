@@ -923,16 +923,16 @@ extern "C" {
   }
 #endif // _di_controller_time_
 
-#ifndef _di_controller_time_micro_
-  struct timespec controller_time_micro(const f_number_unsigned_t microseconds) {
+#ifndef _di_controller_time_milliseconds_
+  struct timespec controller_time_milliseconds(const f_number_unsigned_t milliseconds) {
 
     struct timespec time;
-    time.tv_sec = microseconds / 1000;
-    time.tv_nsec = (time.tv_sec ? microseconds - time.tv_sec : microseconds) * 1000;
+    time.tv_sec = milliseconds > 1000 ? milliseconds / 1000 : 0;
+    time.tv_nsec = (time.tv_sec ? milliseconds - time.tv_sec : milliseconds) * 1000;
 
     return time;
   }
-#endif // _di_controller_time_micro_
+#endif // _di_controller_time_milliseconds_
 
 #ifdef __cplusplus
 } // extern "C"

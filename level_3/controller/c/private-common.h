@@ -1531,7 +1531,7 @@ extern "C" {
   #define controller_thread_cleanup_interval_short_d    180       // 3 minutes in seconds.
   #define controller_thread_exit_process_cancel_wait_d  600000000 // 0.6 seconds in nanoseconds.
   #define controller_thread_exit_process_cancel_total_d 150       // 90 seconds in multiples of wait.
-  #define controller_thread_simulation_timeout_d        200000    // 0.2 seconds in microseconds.
+  #define controller_thread_simulation_timeout_d        200       // 0.2 seconds in milliseconds.
 
   #define controller_thread_signal_wait_timeout_seconds_d     70
   #define controller_thread_signal_wait_timeout_nanoseconds_d 0
@@ -2470,17 +2470,17 @@ extern "C" {
 #endif // _di_controller_time_
 
 /**
- * Convert microseconds to nanoseconds.
+ * Convert milliseconds to nanoseconds.
  *
- * @param microseconds
- *   The number of microseconds.
+ * @param milliseconds
+ *   The number of milliseconds.
  *
  * @return
  *   A time structure suitable for passing to nanosleep() and similar functions.
  */
-#ifndef _di_controller_time_micro_
-  extern struct timespec controller_time_micro(const f_number_unsigned_t microseconds) F_attribute_visibility_internal_d;
-#endif // _di_controller_time_micro_
+#ifndef _di_controller_time_milliseconds_
+  extern struct timespec controller_time_milliseconds(const f_number_unsigned_t milliseconds) F_attribute_visibility_internal_d;
+#endif // _di_controller_time_milliseconds_
 
 #ifdef __cplusplus
 } // extern "C"

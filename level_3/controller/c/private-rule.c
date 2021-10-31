@@ -1645,7 +1645,8 @@ extern "C" {
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
       {
-        struct timespec delay = controller_time_micro(controller_thread_simulation_timeout_d);
+        struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
+
         nanosleep(&delay, 0);
       }
 
@@ -1896,7 +1897,8 @@ extern "C" {
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
       {
-        struct timespec delay = controller_time_micro(controller_thread_simulation_timeout_d);
+        struct timespec delay = controller_time_milliseconds(controller_thread_simulation_timeout_d);
+
         nanosleep(&delay, 0);
       }
 
@@ -2080,7 +2082,7 @@ extern "C" {
         }
 
         if (rerun_item->delay) {
-          struct timespec time = controller_time_micro(rerun_item->delay);
+          struct timespec time = controller_time_milliseconds(rerun_item->delay);
 
           if (nanosleep(&time, 0) < 0) {
             return -1;
