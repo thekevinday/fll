@@ -151,21 +151,21 @@ extern "C" {
   #define controller_short_control_s         "c"
   #define controller_short_daemon_s          "d"
   #define controller_short_init_s            "I"
-  #define controller_short_interruptable_s   "i"
+  #define controller_short_interruptible_s   "i"
   #define controller_short_pid_s             "p"
   #define controller_short_settings_s        "s"
   #define controller_short_simulate_s        "S"
-  #define controller_short_uninterruptable_s "U"
+  #define controller_short_uninterruptible_s "U"
   #define controller_short_validate_s        "v"
 
   #define controller_long_control_s         "control"
   #define controller_long_daemon_s          "daemon"
   #define controller_long_init_s            "init"
-  #define controller_long_interruptable_s   "interruptable"
+  #define controller_long_interruptible_s   "interruptible"
   #define controller_long_pid_s             "pid"
   #define controller_long_settings_s        "settings"
   #define controller_long_simulate_s        "simulate"
-  #define controller_long_uninterruptable_s "uninterruptable"
+  #define controller_long_uninterruptible_s "uninterruptible"
   #define controller_long_validate_s        "validate"
 
   enum {
@@ -182,11 +182,11 @@ extern "C" {
     controller_parameter_control,
     controller_parameter_daemon,
     controller_parameter_init,
-    controller_parameter_interruptable,
+    controller_parameter_interruptible,
     controller_parameter_pid,
     controller_parameter_settings,
     controller_parameter_simulate,
-    controller_parameter_uninterruptable,
+    controller_parameter_uninterruptible,
     controller_parameter_validate,
   };
 
@@ -204,11 +204,11 @@ extern "C" {
       f_console_parameter_t_initialize(controller_short_control_s, controller_long_control_s, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_daemon_s, controller_long_daemon_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_init_s, controller_long_init_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_interruptable_s, controller_long_interruptable_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_interruptible_s, controller_long_interruptible_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_pid_s, controller_long_pid_s, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_settings_s, controller_long_settings_s, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_simulate_s, controller_long_simulate_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(controller_short_uninterruptable_s, controller_long_uninterruptable_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_uninterruptible_s, controller_long_uninterruptible_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_validate_s, controller_long_validate_s, 0, 0, f_console_type_normal), \
     }
 

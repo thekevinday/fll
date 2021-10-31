@@ -32,11 +32,11 @@ extern "C" {
     fll_program_print_help_option(main.output.to, main.context, controller_short_control_s, controller_long_control_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Specify a custom control group file path, such as '" F_control_group_path_system_prefix_s F_control_group_path_system_default_s "'.");
     fll_program_print_help_option(main.output.to, main.context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(main.output.to, main.context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_interruptable_s, controller_long_interruptable_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_interruptible_s, controller_long_interruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
     fll_program_print_help_option(main.output.to, main.context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid_s CONTROLLER_default_s controller_path_suffix_s "'.");
     fll_program_print_help_option(main.output.to, main.context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" controller_path_settings_s "'.");
     fll_program_print_help_option(main.output.to, main.context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_uninterruptable_s, controller_long_uninterruptable_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
+    fll_program_print_help_option(main.output.to, main.context, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
     fll_program_print_help_option(main.output.to, main.context, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
     fll_program_print_help_usage(main.output.to, main.context, main.program_name, "entry");
@@ -44,7 +44,7 @@ extern "C" {
     fl_print_format("  When both the %[%s%s%] parameter and the", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate_s, main.context.set.notable);
     fl_print_format(" %[%s%s%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_validate_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, main.setting_default.used ? controller_long_uninterruptable_s : controller_long_interruptable_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, main.setting_default.used ? controller_long_uninterruptible_s : controller_long_interruptible_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     fl_print_format(" Specify an empty string for the %[%s%s%] parameter to disable pid file creation for this program.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
@@ -345,19 +345,19 @@ extern "C" {
       setting.entry.pid = controller_entry_pid_disable;
       setting.entry.show = controller_entry_show_init;
 
-      if (main->parameters[controller_parameter_interruptable].result == f_console_result_found) {
-        setting.interruptable = F_true;
+      if (main->parameters[controller_parameter_interruptible].result == f_console_result_found) {
+        setting.interruptible = F_true;
       }
       else {
-        setting.interruptable = F_false;
+        setting.interruptible = F_false;
       }
     }
     else {
-      if (main->parameters[controller_parameter_uninterruptable].result == f_console_result_found) {
-        setting.interruptable = F_false;
+      if (main->parameters[controller_parameter_uninterruptible].result == f_console_result_found) {
+        setting.interruptible = F_false;
       }
       else {
-        setting.interruptable = F_true;
+        setting.interruptible = F_true;
       }
     }
 

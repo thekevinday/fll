@@ -1445,7 +1445,7 @@ extern "C" {
  *   - program: Run as a program, exiting when finished prrocess entry (and any respective exit).
  *   - service: Run as a service, listening for requests after processing entry.
  *
- * interruptable:    TRUE if the program responds to interrupt signals, FALSE to block/ignore interrupt signals.
+ * interruptible:    TRUE if the program responds to interrupt signals, FALSE to block/ignore interrupt signals.
  * ready:            State representing if the settings are all loaded and is ready to run program operations.
  * failsafe_enabled: TRUE if failsafe execution is enabled, FALSE otherwise.
  * failsafe_item_id: The Entry Item ID to execute when failsafe execution is enabled.
@@ -1471,7 +1471,7 @@ extern "C" {
   };
 
   typedef struct {
-    bool interruptable;
+    bool interruptible;
     bool pid_created;
     uint8_t ready;
     uint8_t mode;

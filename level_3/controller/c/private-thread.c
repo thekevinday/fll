@@ -354,7 +354,7 @@ extern "C" {
       controller_main_t *main = (controller_main_t *) process->main_data;
       controller_setting_t *setting = (controller_setting_t *) process->main_setting;
 
-      if (setting->interruptable) {
+      if (setting->interruptible) {
         f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
         f_signal_close(&main->signal);
       }
@@ -991,7 +991,7 @@ extern "C" {
         if (errno == EAGAIN) continue;
       }
 
-      if (global->setting->interruptable) {
+      if (global->setting->interruptible) {
         if (information.si_signo == F_signal_interrupt || information.si_signo == F_signal_abort || information.si_signo == F_signal_quit || information.si_signo == F_signal_termination) {
           global->thread->signal = information.si_signo;
 
