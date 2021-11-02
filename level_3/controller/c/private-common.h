@@ -1746,6 +1746,28 @@ extern "C" {
 #endif // _di_controller_entry_actions_delete_simple_
 
 /**
+ * Increase the size of the entry item actions array by the specified amount, but only if necessary.
+ *
+ * This only increases size if the current used plus amount is greater than the currently allocated size.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param actions
+ *   The entry item actions to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_controller_entry_actions_increase_by_
+  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
+#endif // _di_controller_entry_actions_increase_by_
+
+/**
  * Fully deallocate all memory for the given entry item without caring about return status.
  *
  * @param item
@@ -1771,75 +1793,26 @@ extern "C" {
 #endif // _di_controller_entry_items_delete_simple_
 
 /**
- * Print the file error, locking the print mutex during the print.
+ * Increase the size of the entry items array by the specified amount, but only if necessary.
  *
- * @param print
- *   Designates how printing is to be performed.
- * @param status
- *   The status code to process.
- *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
- * @param function
- *   The name of the function where the error happened.
- *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- * @param name
- *   The name of the file or directory.
- * @param operation
- *   The operation that fails, such as 'create' or 'access'.
- * @param type
- *   A valid file type code from the fll_error_file_type enum.
- * @param thread
- *   (optional) The thread data.
- *   Set to NULL to disable locking on the thread (this should be done only if the lock is already in place).
+ * This only increases size if the current used plus amount is greater than the currently allocated size.
  *
- * @see fll_error_file_print()
- */
-#ifndef _di_controller_error_file_print_
-  extern void controller_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) F_attribute_visibility_internal_d;
-#endif // _di_controller_error_file_print_
-
-/**
- * Print the error, locking the print mutex during the print.
- *
- * @param print
- *   Designates how printing is to be performed.
- * @param status
- *   The status code to process.
- *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
- * @param function
- *   The name of the function where the error happened.
- *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- * @param thread
- *   (optional) The thread data.
- *   Set to NULL to disable locking on the thread (this should be done only if the lock is already in place).
- *
- * @see fll_error_print()
- */
-#ifndef _di_controller_error_print_
-  extern void controller_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) F_attribute_visibility_internal_d;
-#endif // _di_controller_error_print_
-
-/**
- * Perform the initial, required, allocation for the lock.
- *
- * @param lock
- *   The lock to allocate.
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param items
+ *   The entry items to resize.
  *
  * @return
  *   F_none on success.
+ *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
  *
- *   Errors (with error bit) from: f_thread_lock_delete().
- *   Errors (with error bit) from: f_thread_mutex_delete().
+ *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_thread_lock_delete()
- * @see f_thread_mutex_delete()
+ * @see f_memory_resize()
  */
-#ifndef _di_controller_lock_create_
-  extern f_status_t controller_lock_create(controller_lock_t *lock) F_attribute_visibility_internal_d;
-#endif // _di_controller_lock_create_
+#ifndef _di_controller_entry_items_increase_by_
+  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) F_attribute_visibility_internal_d;
+#endif // _di_controller_entry_items_increase_by_
 
 /**
  * Delete the mutex lock and if the mutex lock is busy, forcibly unlock it and then delete it.
@@ -1875,181 +1848,6 @@ extern "C" {
 #ifndef _di_controller_lock_delete_simple_
   extern void controller_lock_delete_simple(controller_lock_t *lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_delete_simple_
-
-/**
- * Print a r/w lock related error message, locking the print mutex during the print.
- *
- * This will ignore F_signal and not print any messages, if passed.
- *
- * @param print
- *   Designates how printing is to be performed.
- * @param status
- *   The status code to process.
- *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
- * @param read
- *   If TRUE, then this is for a read lock.
- *   If FALSE, then this is for a write lock.
- * @param thread
- *   The thread data.
- *
- * @see fll_error_print()
- * @see controller_entry_error_print_cache()
- */
-#ifndef _di_controller_lock_error_critical_print_
-  extern void controller_lock_error_critical_print(const fl_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) F_attribute_visibility_internal_d;
-#endif // _di_controller_lock_error_critical_print_
-
-/**
- * Wait to get a read lock.
- *
- * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
- *
- * @param is_normal
- *   If TRUE, then process as if this operates during a normal operation (entry and control).
- *   If FALSE, then process as if this operates during a an exit operation.
- * @param thread
- *   The thread data used to determine if the main thread is disabled or not.
- * @param lock
- *   The r/w lock to obtain a read lock on.
- *
- * @return
- *   F_none on success.
- *   F_signal on (exit) signal received, lock will not be set when this is returned.
- *   F_status if main thread is disabled and write lock was never achieved.
- *
- *   Status from: f_thread_lock_read_timed().
- *
- *   Errors (with error bit) from: f_thread_lock_read_timed().
- *
- * @see f_thread_lock_read_timed()
- */
-#ifndef _di_controller_lock_read_
-  extern f_status_t controller_lock_read(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
-#endif // _di_controller_lock_read_
-
-/**
- * Wait to get a read lock for some process.
- *
- * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
- *
- * @param process
- *   The process to use when checking if thread is enabled.
- * @param thread
- *   The thread data used to determine if the main thread is disabled or not.
- * @param lock
- *   The r/w lock to obtain a read lock on.
- *
- * @return
- *
- *   Status from: controller_lock_read().
- *
- *   Errors (with error bit) from: controller_lock_read().
- *
- * @see controller_lock_read()
- */
-#ifndef _di_controller_lock_read_process_
-  extern f_status_t controller_lock_read_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
-#endif // _di_controller_lock_read_process_
-
-/**
- * Wait to get a read lock for some process type.
- *
- * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
- *
- * @param type
- *   The process type to use when checking if thread is enabled.
- * @param thread
- *   The thread data used to determine if the main thread is disabled or not.
- * @param lock
- *   The r/w lock to obtain a read lock on.
- *
- * @return
- *
- *   Status from: controller_lock_read().
- *
- *   Errors (with error bit) from: controller_lock_read().
- *
- * @see controller_lock_read()
- */
-#ifndef _di_controller_lock_read_process_type_
-  extern f_status_t controller_lock_read_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
-#endif // _di_controller_lock_read_process_type_
-
-/**
- * Wait to get a write lock.
- *
- * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
- *
- * @param is_normal
- *   If TRUE, then process as if this operates during a normal operation (entry and control).
- *   If FALSE, then process as if this operates during a an exit operation.
- * @param thread
- *   The thread data used to determine if the main thread is disabled or not.
- * @param lock
- *   The r/w lock to obtain a write lock on.
- *
- * @return
- *   F_none on success.
- *   F_signal on (exit) signal received, lock will not be set when this is returned.
- *   F_status if main thread is disabled and write lock was never achieved.
- *
- *   Status from: f_thread_lock_write_timed().
- *
- *   Errors (with error bit) from: f_thread_lock_write_timed().
- *
- * @see f_thread_lock_write_timed()
- */
-#ifndef _di_controller_lock_write_
-  extern f_status_t controller_lock_write(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
-#endif // _di_controller_lock_write_
-
-/**
- * Wait to get a write lock for some process.
- *
- * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
- *
- * @param process
- *   The process to use when checking if thread is enabled.
- * @param thread
- *   The thread data used to determine if the main thread is disabled or not.
- * @param lock
- *   The r/w lock to obtain a write lock on.
- *
- * @return
- *
- *   Status from: controller_lock_write_process_type().
- *
- *   Errors (with error bit) from: controller_lock_write_process_type().
- *
- * @see controller_lock_write_process_type()
- */
-#ifndef _di_controller_lock_write_process_
-  extern f_status_t controller_lock_write_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
-#endif // _di_controller_lock_write_process_
-
-/**
- * Wait to get a write lock for some process type.
- *
- * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
- *
- * @param type
- *   The process type to use when checking if thread is enabled.
- * @param thread
- *   The thread data used to determine if the main thread is disabled or not.
- * @param lock
- *   The r/w lock to obtain a write lock on.
- *
- * @return
- *
- *   Status from: controller_lock_write().
- *
- *   Errors (with error bit) from: controller_lock_write().
- *
- * @see controller_lock_write()
- */
-#ifndef _di_controller_lock_write_process_type_
-  extern f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) F_attribute_visibility_internal_d;
-#endif // _di_controller_lock_write_process_type_
 
 /**
  * Increase the size of the pid array, but only if necessary.
@@ -2095,47 +1893,6 @@ extern "C" {
 #endif // _di_controller_pids_resize_
 
 /**
- * Lock the mutex and the stream.
- *
- * This is implemented as a compliment to controller_print_unlock_flush() for consistency reasons.
- *
- * @param to
- *   The file stream to lock.
- * @param thread
- *   The thread containing the print mutex to lock.
- *
- * @see flockfile()
- *
- * @see f_thread_mutex_unlock()
- */
-#ifndef _di_controller_print_lock_
-  extern void controller_print_lock(const f_file_t to, controller_thread_t * const thread) F_attribute_visibility_internal_d;
-#endif // _di_controller_print_lock_
-
-/**
- * Flush the stream buffer and then unlock the mutex.
- *
- * This unlocks both the stream and the mutex locks.
- *
- * Weird behavior was observed when piping data from this program.
- * The behavior appears related to how this handles locks in addition to the file streams own locking mechanisms.
- *
- * As a work-around, this performs a flush immediately before unlocking the print mutex.
- *
- * @param to
- *   The file stream to unlock and flush.
- * @param thread
- *   The thread containing the print mutex to unlock.
- *
- * @see funlockfile()
- *
- * @see f_thread_mutex_unlock()
- */
-#ifndef _di_controller_print_unlock_flush_
-  void controller_print_unlock_flush(const f_file_t to, controller_thread_t * const thread) F_attribute_visibility_internal_d;
-#endif // _di_controller_print_unlock_flush_
-
-/**
  * Fully deallocate all memory for the given process without caring about return status.
  *
  * @param process
@@ -2148,28 +1905,6 @@ extern "C" {
 #ifndef _di_controller_process_delete_simple_
   extern void controller_process_delete_simple(controller_process_t *process) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_delete_simple_
-
-/***
- * Safely wait for a process, periodically checking to see if process completed or check if exiting.
- *
- * @param global
- *   The global data.
- * @param process
- *   The process to wait on.
- *
- * @return
- *   F_none on success.
- *   F_signal on success and signal found.
- *
- *   Success from: f_thread_condition_wait_timed().
- *
- *   Errors (with error bit) from: f_thread_condition_wait_timed().
- *
- * @see f_thread_condition_wait_timed()
- */
-#ifndef _di_controller_process_wait_
-  extern f_status_t controller_process_wait(const controller_global_t global, controller_process_t *process) F_attribute_visibility_internal_d;
-#endif // _di_controller_process_wait_
 
 /**
  * Fully deallocate all memory for the given processs without caring about return status.
@@ -2255,6 +1990,26 @@ extern "C" {
 #ifndef _di_controller_rule_actions_delete_simple_
   extern void controller_rule_actions_delete_simple(controller_rule_actions_t *actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_actions_delete_simple_
+
+/**
+ * Increase the size of the rule actions array by the specified amount, but only if necessary.
+ *
+ * This only increases size if the current used plus amount is greater than the currently allocated size.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param actions
+ *   The actions to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_controller_rule_actions_increase_by_
+  extern f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) F_attribute_visibility_internal_d;
+#endif // _di_controller_rule_actions_increase_by_
 
 /**
  * Fully deallocate all memory for the given rule without caring about return status.
@@ -2452,78 +2207,6 @@ extern "C" {
 #ifndef _di_controller_thread_delete_simple_
   extern void controller_thread_delete_simple(controller_thread_t *thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_delete_simple_
-
-/**
- * Get the current time, plus the given offset.
- *
- * @todo this is basic enough that there needs to be an f_time class with this function f_time_now(), f_time_future(), f_time_past().
- *       "struct timespec" -> f_time_nano_t, "struct timeval" -> f_time_micro_t.
- *
- * @param seconds
- *   The seconds to add to current time.
- * @param nanoseconds
- *   The nanoseconds to add to current time.
- * @param time
- *   The resulting current time.
- */
-#ifndef _di_controller_time_
-  void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) F_attribute_visibility_internal_d;
-#endif // _di_controller_time_
-
-/**
- * Convert milliseconds to nanoseconds.
- *
- * @param milliseconds
- *   The number of milliseconds.
- *
- * @return
- *   A time structure suitable for passing to nanosleep() and similar functions.
- *
- * @see nanosleep()
- */
-#ifndef _di_controller_time_milliseconds_
-  extern struct timespec controller_time_milliseconds(const f_number_unsigned_t milliseconds) F_attribute_visibility_internal_d;
-#endif // _di_controller_time_milliseconds_
-
-/**
- * Convert seconds to nanoseconds.
- *
- * @param seconds
- *   The number of seconds.
- *
- * @return
- *   A time structure suitable for passing to nanosleep() and similar functions.
- *
- * @see nanosleep()
- */
-#ifndef _di_controller_time_seconds_
-  extern struct timespec controller_time_seconds(const f_number_unsigned_t seconds) F_attribute_visibility_internal_d;
-#endif // _di_controller_time_seconds_
-
-/**
- * Sleep for a given number of nanoseconds.
- *
- * The nanosleep() function handles signals within itself.
- * Temporarily unblock signals so that the nanosleep can receive the signal and then restore the signals once done.
- *
- * The signals will not be unblocked when in uninterruptible mode.
- *
- * @param main
- *   The program main data.
- * @param setting
- *   The settings.
- * @param time
- *   The number of nanoseconds to sleep.
- *
- * @return
- *   The results of nanosleep().
- *
- * @see nanosleep()
- * @see controller_time_milliseconds()
- */
-#ifndef _di_controller_time_sleep_nanoseconds_
-  extern int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_setting_t * const setting, struct timespec time) F_attribute_visibility_internal_d;
-#endif // _di_controller_time_sleep_nanoseconds_
 
 #ifdef __cplusplus
 } // extern "C"

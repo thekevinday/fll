@@ -211,33 +211,6 @@ extern "C" {
 #endif // _di_controller_file_pid_read_
 
 /**
- * Find an existing process, for the given Rule Action.
- *
- * Do not confuse this with a process in the context of a PID.
- * This is a stucture for the current processing of some rule.
- *
- * This does not do any locking or unlocking for the processs data, be sure to lock appropriately before and after calling this.
- *
- * @param action
- *   The Rule Action to find.
- * @param alias
- *   The Rule alias to find.
- * @param processs
- *   The array of processes to.
- * @param at
- *   The location within processs the id was found.
- *   (optional) Set to NULL to disable.
- *
- * @return
- *   F_none if not given a valid id to search.
- *   F_false if there is no process found.
- *   F_true if there is a process found (address is stored in "at").
- */
-#ifndef _di_controller_find_process_
-  f_status_t controller_find_process(const f_array_length_t action, const f_string_static_t alias, const controller_processs_t processs, f_array_length_t *at) F_attribute_visibility_internal_d;
-#endif // _di_controller_find_process_
-
-/**
  * Convert the string from a string representation of an ID or a user name into the numeric representation of that ID or user name.
  *
  * @param buffer
@@ -318,170 +291,6 @@ extern "C" {
 #endif // _di_controller_perform_ready_
 
 /**
- * Pre-process all items for the loaded entry.
- *
- * @param is_entry
- *   If TRUE, then this operate as an entry.
- *   If FALSE, then this operate as an exit.
- * @param global
- *   The global data.
- * @param cache
- *   The main/global cache to use.
- *
- * @return
- *   F_none on success.
- *   F_recurse (with error bit) on a recursion error.
- *   F_valid_not (with error bit) on invalid entry item, entry item action, or entry item action value.
- *
- *   Errors (with error bit) from: macro_f_array_lengths_t_increase_by().
- *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
- *
- *   This will detect and report all errors, but only the first error is returned.
- *   Memory related errors return immediately.
-
- * @see macro_f_array_lengths_t_increase_by()
- * @see f_string_dynamic_append()
- * @see f_string_dynamic_terminate_after()
- */
-#ifndef _di_controller_preprocess_entry_
-  extern f_status_t controller_preprocess_entry(const bool is_entry, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
-#endif // _di_controller_preprocess_entry_
-
-/**
- * Process (execute) all Items for the loaded Entry or Exit.
- *
- * @param failsafe
- *   If TRUE, operate in failsafe mode (starts at designated failsafe Item).
- *   If FALSE, operate in normal mode (starts at "main" Item).
- * @param is_entry
- *   If TRUE, then this operate as an entry.
- *   If FALSE, then this operate as an exit.
- * @param global
- *   The global data.
- * @param cache
- *   The main/global cache to use.
- *
- * @return
- *   F_none on success.
- *   F_execute on success and program exiting (scripts may result in this) or when execute would have been executed but is instead simulated.
- *
- *   F_require (with error bit) if a required Item failed.
- *   F_critical (with error bit) on any critical error.
- *   F_execute (with error bit) if the "execute" Item Action failed.
- *
- *   Errors (with error bit) from: macro_f_array_lengths_t_increase_by().
- *   Errors (with error bit) from: controller_perform_ready().
- *   Errors (with error bit) from: controller_dynamic_append_terminated().
- *
- * @see macro_f_array_lengths_t_increase_by()
- * @see controller_perform_ready()
- * @see controller_dynamic_append_terminated()
- */
-#ifndef _di_controller_process_entry_
-  extern f_status_t controller_process_entry(const bool failsafe, const bool is_entry, controller_global_t *global, controller_cache_t *cache) F_attribute_visibility_internal_d;
-#endif // _di_controller_process_entry_
-
-/**
- * Print message regarding the population of a setting when in simulation or verbose mode.
- *
- * @param is_entry
- *   If TRUE, then this operate as an entry.
- *   If FALSE, then this operate as an exit.
- * @param global
- *   The global data.
- * @param name
- *   The Object name of the setting being populated.
- * @param name_sub
- *   (optional) A sub-name associated with the setting being populated.
- *   Set to NULL to disable.
- * @param value
- *   The value being set.
- * @param suffix
- *   An additional message to append at the end (before the final period).
- */
-#ifndef _di_controller_process_entry_print_simulate_setting_value_
-  extern void controller_process_entry_print_simulate_setting_value(const bool is_entry, const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) F_attribute_visibility_internal_d;
-#endif // _di_controller_process_entry_print_simulate_setting_value_
-
-/**
- * Prepare the process.
- *
- * The process is initialized with the process id, the rule alias, and the rule action type.
- * These are the necessary parts for uniquely identifying the process.
- *
- * If a process by the given Rule alias and Rule Action already exists, then nothing is done.
- *
- * This requires that a global.thread->lock.process lock be set on process->lock before being called.
- *
- * @param is_normal
- *   If TRUE, then process as if this operates during a normal operation (entry and control).
- *   If FALSE, then process as if this operates during a an exit operation.
- * @param action
- *   The Rule Action to use.
- * @param alias
- *   The Rule alias to use.
- * @param global
- *   The global data.
- * @param id
- *   (optional) The process ID when found or created.
- *   Set to NULL to not use.
- *
- * @return
- *   F_none on success.
- *   F_found on success, but nothing was done because an existing process was found.
- *
- *   F_lock (with error bit) if failed to re-establish read lock on global.thread->lock.process while returning.
- *
- *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
- *
- *   Errors (with error bit) from: controller_lock_read().
- *   Errors (with error bit) from: controller_lock_write().
- *
- * @see f_string_dynamic_append()
- * @see f_string_dynamic_terminate_after()
- * @see controller_lock_read()
- * @see controller_lock_write()
- */
-#ifndef _di_controller_process_prepare_
-  extern f_status_t controller_process_prepare(const bool is_normal, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) F_attribute_visibility_internal_d;
-#endif // _di_controller_process_prepare_
-
-/**
- * Prepare the process for some process type.
- *
- * The process is initialized with the process id, the rule alias, and the rule action type.
- * These are the necessary parts for uniquely identifying the process.
- *
- * If a process by the given Rule alias and Rule Action already exists, then nothing is done.
- *
- * This requires that a global.thread->lock.process lock be set on process->lock before being called.
- *
- * @param type
- *   The process type to use when checking if thread is enabled.
- * @param action
- *   The Rule Action to use.
- * @param alias
- *   The Rule alias to use.
- * @param global
- *   The global data.
- * @param id
- *   (optional) The process ID when found or created.
- *   Set to NULL to not use.
- *
- * @return
- *   Success from: controller_process_prepare()
- *
- *   Errors (with error bit) from: controller_process_prepare().
- *
- * @see controller_process_prepare()
- */
-#ifndef _di_controller_process_prepare_process_type_
-  extern f_status_t controller_process_prepare_process_type(const uint8_t type, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) F_attribute_visibility_internal_d;
-#endif // _di_controller_process_prepare_process_type_
-
-/**
  * Given a wide range of status codes (that are errors), simplify them down to a small subset.
  *
  * @param status
@@ -493,6 +302,78 @@ extern "C" {
 #ifndef _di_controller_status_simplify_error_
   extern f_status_t controller_status_simplify_error(const f_status_t status) F_attribute_visibility_internal_d;
 #endif // _di_controller_status_simplify_error_
+
+/**
+ * Get the current time, plus the given offset.
+ *
+ * @todo this is basic enough that there needs to be an f_time class with this function f_time_now(), f_time_future(), f_time_past().
+ *       "struct timespec" -> f_time_nano_t, "struct timeval" -> f_time_micro_t.
+ *
+ * @param seconds
+ *   The seconds to add to current time.
+ * @param nanoseconds
+ *   The nanoseconds to add to current time.
+ * @param time
+ *   The resulting current time.
+ */
+#ifndef _di_controller_time_
+  void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) F_attribute_visibility_internal_d;
+#endif // _di_controller_time_
+
+/**
+ * Convert milliseconds to nanoseconds.
+ *
+ * @param milliseconds
+ *   The number of milliseconds.
+ *
+ * @return
+ *   A time structure suitable for passing to nanosleep() and similar functions.
+ *
+ * @see nanosleep()
+ */
+#ifndef _di_controller_time_milliseconds_
+  extern struct timespec controller_time_milliseconds(const f_number_unsigned_t milliseconds) F_attribute_visibility_internal_d;
+#endif // _di_controller_time_milliseconds_
+
+/**
+ * Convert seconds to nanoseconds.
+ *
+ * @param seconds
+ *   The number of seconds.
+ *
+ * @return
+ *   A time structure suitable for passing to nanosleep() and similar functions.
+ *
+ * @see nanosleep()
+ */
+#ifndef _di_controller_time_seconds_
+  extern struct timespec controller_time_seconds(const f_number_unsigned_t seconds) F_attribute_visibility_internal_d;
+#endif // _di_controller_time_seconds_
+
+/**
+ * Sleep for a given number of nanoseconds.
+ *
+ * The nanosleep() function handles signals within itself.
+ * Temporarily unblock signals so that the nanosleep can receive the signal and then restore the signals once done.
+ *
+ * The signals will not be unblocked when in uninterruptible mode.
+ *
+ * @param main
+ *   The program main data.
+ * @param setting
+ *   The settings.
+ * @param time
+ *   The number of nanoseconds to sleep.
+ *
+ * @return
+ *   The results of nanosleep().
+ *
+ * @see nanosleep()
+ * @see controller_time_milliseconds()
+ */
+#ifndef _di_controller_time_sleep_nanoseconds_
+  extern int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_setting_t * const setting, struct timespec time) F_attribute_visibility_internal_d;
+#endif // _di_controller_time_sleep_nanoseconds_
 
 /**
  * Validate that the given string is a valid environment variable name.

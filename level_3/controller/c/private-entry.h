@@ -13,18 +13,6 @@ extern "C" {
 #endif
 
 /**
- * Print all parameters for some action, separated by a space.
- *
- * @param stream
- *   The file stream to print to.
- * @param action
- *   The entry action whose parameters will be printed.
- */
-#ifndef _di_controller_entry_action_parameters_print_
-  extern void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_action_parameters_print_
-
-/**
  * Determine if the type code represents a Rule type.
  *
  * @param type
@@ -67,28 +55,6 @@ extern "C" {
 #endif // _di_controller_entry_action_type_to_rule_action_type_
 
 /**
- * Increase the size of the entry item actions array by the specified amount, but only if necessary.
- *
- * This only increases size if the current used plus amount is greater than the currently allocated size.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param actions
- *   The entry item actions to resize.
- *
- * @return
- *   F_none on success.
- *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_memory_resize()
- */
-#ifndef _di_controller_entry_actions_increase_by_
-  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_actions_increase_by_
-
-/**
  * Read the entry list, extracting all items and values.
  *
  * @param is_entry
@@ -129,76 +95,69 @@ extern "C" {
 #endif // _di_controller_entry_actions_read_
 
 /**
- * Print the entry related error, locking the print mutex during the print.
+ * Pre-process all items for the loaded entry.
  *
  * @param is_entry
- *   If TRUE, then this loads as an entry.
- *   If FALSE, then this loads as an exit.
- * @param print
- *   Designates how printing is to be performed.
+ *   If TRUE, then this operate as an entry.
+ *   If FALSE, then this operate as an exit.
+ * @param global
+ *   The global data.
  * @param cache
- *   The action cache.
- * @param status
- *   The status code to process.
- *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
- * @param function
- *   The name of the function where the error happened.
- *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- * @param thread
- *   The thread data.
- *
- * @see fll_error_print()
- * @see controller_entry_error_print_cache()
- */
-#ifndef _di_controller_entry_error_print_
-  extern void controller_entry_error_print(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_error_print_
-
-/**
- * Print additional error/warning information in addition to existing error that is found within the cache.
- *
- * This is explicitly intended to be used in addition to the error message.
- *
- * This neither locks the thread nor does it check to see if output is enabled or disabled.
- *
- * @param is_entry
- *   If TRUE, then this loads as an entry.
- *   If FALSE, then this loads as an exit.
- * @param output
- *   Designates how printing is to be performed.
- * @param cache
- *   The action cache.
- *
- * @see controller_entry_actions_read()
- * @see controller_entry_read()
- */
-#ifndef _di_controller_entry_error_print_cache_
-  extern void controller_entry_error_print_cache(const bool is_entry, const fl_print_t output, const controller_cache_action_t cache) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_error_print_cache_
-
-/**
- * Increase the size of the entry items array by the specified amount, but only if necessary.
- *
- * This only increases size if the current used plus amount is greater than the currently allocated size.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param items
- *   The entry items to resize.
+ *   The main/global cache to use.
  *
  * @return
  *   F_none on success.
- *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
+ *   F_recurse (with error bit) on a recursion error.
+ *   F_valid_not (with error bit) on invalid entry item, entry item action, or entry item action value.
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: macro_f_array_lengths_t_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
- * @see f_memory_resize()
+ *   This will detect and report all errors, but only the first error is returned.
+ *   Memory related errors return immediately.
+
+ * @see macro_f_array_lengths_t_increase_by()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_terminate_after()
  */
-#ifndef _di_controller_entry_items_increase_by_
-  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_items_increase_by_
+#ifndef _di_controller_entry_preprocess_
+  extern f_status_t controller_entry_preprocess(const bool is_entry, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
+#endif // _di_controller_entry_preprocess_
+
+/**
+ * Process (execute) all Items for the loaded Entry or Exit.
+ *
+ * @param failsafe
+ *   If TRUE, operate in failsafe mode (starts at designated failsafe Item).
+ *   If FALSE, operate in normal mode (starts at "main" Item).
+ * @param is_entry
+ *   If TRUE, then this operate as an entry.
+ *   If FALSE, then this operate as an exit.
+ * @param global
+ *   The global data.
+ * @param cache
+ *   The main/global cache to use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_execute on success and program exiting (scripts may result in this) or when execute would have been executed but is instead simulated.
+ *
+ *   F_require (with error bit) if a required Item failed.
+ *   F_critical (with error bit) on any critical error.
+ *   F_execute (with error bit) if the "execute" Item Action failed.
+ *
+ *   Errors (with error bit) from: macro_f_array_lengths_t_increase_by().
+ *   Errors (with error bit) from: controller_perform_ready().
+ *   Errors (with error bit) from: controller_dynamic_append_terminated().
+ *
+ * @see macro_f_array_lengths_t_increase_by()
+ * @see controller_perform_ready()
+ * @see controller_dynamic_append_terminated()
+ */
+#ifndef _di_controller_entry_process_
+  extern f_status_t controller_entry_process(const bool failsafe, const bool is_entry, controller_global_t *global, controller_cache_t *cache) F_attribute_visibility_internal_d;
+#endif // _di_controller_entry_process_
 
 /**
  * Read the entry, extracting all lists.
@@ -262,57 +221,6 @@ extern "C" {
 #ifndef _di_controller_entry_settings_read_
   extern f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_
-
-/**
- * Print a message for when an entry setting action has the incorrect number of parameters.
- *
- * @param is_entry
- *   If TRUE, then this loads as an entry.
- *   If FALSE, then this loads as an exit.
- * @param global
- *   The global data.
- * @param cache
- *   A structure for containing and caching relevant data.
- * @param total
- *   The expected number of arguments.
- */
-#ifndef _di_controller_entry_settings_read_print_setting_requires_exactly_
-  extern void controller_entry_settings_read_print_setting_requires_exactly(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_number_unsigned_t total) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_settings_read_print_setting_requires_exactly_
-
-/**
- * Print a message for when an entry setting action is unknown.
- *
- * @param is_entry
- *   If TRUE, then this loads as an entry.
- *   If FALSE, then this loads as an exit.
- * @param global
- *   The global data.
- * @param cache
- *   A structure for containing and caching relevant data.
- */
-#ifndef _di_controller_entry_settings_read_print_setting_unknown_action_
-  extern void controller_entry_settings_read_print_setting_unknown_action(const bool is_entry, const controller_global_t global, const controller_cache_t cache) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_settings_read_print_setting_unknown_action_
-
-/**
- * Print a message for when an entry setting action has an unknown value.
- *
- * @param is_entry
- *   If TRUE, then this loads as an entry.
- *   If FALSE, then this loads as an exit.
- * @param global
- *   The global data.
- * @param cache
- *   A structure for containing and caching relevant data.
- * @param total
- *   The expected number of arguments.
- * @param index
- *   The location in the content actions array representing the action value.
- */
-#ifndef _di_controller_entry_settings_read_print_setting_unknown_action_value_
-  extern void controller_entry_settings_read_print_setting_unknown_action_value(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_array_length_t index) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_settings_read_print_setting_unknown_action_value_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -1,10 +1,12 @@
 #include "controller.h"
 #include "private-common.h"
 #include "private-control.h"
+#include "private-controller.h"
+#include "private-controller_print.h"
 #include "private-entry.h"
+#include "private-lock_print.h"
 #include "private-rule.h"
 #include "private-thread.h"
-#include "private-controller.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,7 +15,7 @@ extern "C" {
 #ifndef _di_controller_print_help_
   f_status_t controller_print_help(const controller_main_t main) {
 
-    controller_print_lock(main.output.to, 0);
+    controller_lock_print(main.output.to, 0);
 
     fll_program_print_help_header(main.output.to, main.context, main.program_name_long, controller_program_version_s);
 
@@ -48,7 +50,7 @@ extern "C" {
 
     fl_print_format(" Specify an empty string for the %[%s%s%] parameter to disable pid file creation for this program.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    controller_print_unlock_flush(main.output.to, 0);
+    controller_unlock_print_flush(main.output.to, 0);
 
     return F_none;
   }
@@ -138,11 +140,11 @@ extern "C" {
     }
 
     if (main->parameters[controller_parameter_version].result == f_console_result_found) {
-      controller_print_lock(main->output.to, 0);
+      controller_lock_print(main->output.to, 0);
 
       fll_program_print_version(main->output.to, controller_program_version_s);
 
-      controller_print_unlock_flush(main->output.to, 0);
+      controller_unlock_print_flush(main->output.to, 0);
 
       controller_main_delete(main);
       return F_none;
@@ -183,13 +185,13 @@ extern "C" {
 
     if (main->parameters[controller_parameter_settings].result == f_console_result_found) {
       if (main->error.verbosity != f_console_verbosity_quiet) {
-        controller_print_lock(main->error.to, 0);
+        controller_lock_print(main->error.to, 0);
 
         fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
         fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings_s, main->context.set.notable);
         fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-        controller_print_unlock_flush(main->error.to, 0);
+        controller_unlock_print_flush(main->error.to, 0);
       }
 
       status = F_status_set_error(F_parameter);
@@ -222,13 +224,13 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (main->parameters[controller_parameter_pid].result == f_console_result_found) {
         if (main->error.verbosity != f_console_verbosity_quiet) {
-          controller_print_lock(main->error.to, 0);
+          controller_lock_print(main->error.to, 0);
 
           fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
           fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable);
           fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-          controller_print_unlock_flush(main->error.to, 0);
+          controller_unlock_print_flush(main->error.to, 0);
         }
 
         status = F_status_set_error(F_parameter);
@@ -274,13 +276,13 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (main->parameters[controller_parameter_control].result == f_console_result_found) {
         if (main->error.verbosity != f_console_verbosity_quiet) {
-          controller_print_lock(main->error.to, 0);
+          controller_lock_print(main->error.to, 0);
 
           fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
           fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control_s, main->context.set.notable);
           fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-          controller_print_unlock_flush(main->error.to, 0);
+          controller_unlock_print_flush(main->error.to, 0);
         }
 
         status = F_status_set_error(F_parameter);
@@ -311,13 +313,13 @@ extern "C" {
         }
         else {
           if (main->warning.verbosity == f_console_verbosity_debug) {
-            controller_print_lock(main->warning.to, 0);
+            controller_lock_print(main->warning.to, 0);
 
             fl_print_format("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
             fl_print_format("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control_s, main->context.set.notable);
             fl_print_format("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
 
-            controller_print_unlock_flush(main->warning.to, 0);
+            controller_unlock_print_flush(main->warning.to, 0);
           }
         }
       }
@@ -326,14 +328,14 @@ extern "C" {
     if (F_status_is_error_not(status) && main->parameters[controller_parameter_daemon].result == f_console_result_found) {
       if (main->parameters[controller_parameter_validate].result == f_console_result_found) {
         if (main->error.verbosity != f_console_verbosity_quiet) {
-          controller_print_lock(main->error.to, 0);
+          controller_lock_print(main->error.to, 0);
 
           fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
           fl_print_format("%[' must not be specified with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
           fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon_s, main->context.set.notable);
           fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-          controller_print_unlock_flush(main->error.to, 0);
+          controller_unlock_print_flush(main->error.to, 0);
         }
 
         status = F_status_set_error(F_parameter);
@@ -422,7 +424,7 @@ extern "C" {
 
       if (F_status_is_error(status_delete) && main->warning.verbosity == f_console_verbosity_debug) {
         if (F_status_set_fine(status_delete) == F_number_not) {
-          controller_print_lock(main->warning.to, 0);
+          controller_lock_print(main->warning.to, 0);
 
           fl_print_format("%c%[%SThe pid file '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
           fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, setting.path_pid, main->warning.notable);
@@ -430,7 +432,7 @@ extern "C" {
           fl_print_format("%[%i%]", main->warning.to.stream, main->warning.notable, main->pid, main->warning.notable);
           fl_print_format("%[' doesn't contain the expected number, not deleting file.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
 
-          controller_print_unlock_flush(main->warning.to, 0);
+          controller_unlock_print_flush(main->warning.to, 0);
         }
         else {
           fll_error_file_print(main->warning, F_status_set_fine(status_delete), "controller_file_pid_delete", F_true, setting.path_pid.string, "delete", fll_error_file_type_file);
