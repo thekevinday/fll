@@ -35,11 +35,11 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = macro_fl_color_save_1(&context->notable, context->format, context->list.bold);
+      status = macro_fl_color_save_2(&context->success, context->format, context->list.bold, context->list.green);
     }
 
     if (F_status_is_error_not(status)) {
-      status = macro_fl_color_save_1(&context->standout,  context->format, context->list.purple);
+      status = macro_fl_color_save_1(&context->notable, context->format, context->list.bold);
     }
 
     if (use_light_colors) {
@@ -52,11 +52,11 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        context->mode = F_color_mode_light_d;
+        status = macro_fl_color_save_1(&context->standout,  context->format, context->list.purple);
       }
 
       if (F_status_is_error_not(status)) {
-        status = macro_fl_color_save_1(&context->standout,  context->format, context->list.purple);
+        context->mode = F_color_mode_light_d;
       }
     }
     else {
@@ -69,11 +69,11 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        context->mode = F_color_mode_dark_d;
+        status = macro_fl_color_save_1(&context->standout, context->format, context->list.green);
       }
 
       if (F_status_is_error_not(status)) {
-        status = macro_fl_color_save_1(&context->standout,  context->format, context->list.green);
+        context->mode = F_color_mode_dark_d;
       }
     }
 
@@ -95,6 +95,9 @@ extern "C" {
 
       context->set.standout.before = &context->standout;
       context->set.standout.after = &context->reset;
+
+      context->set.success.before = &context->success;
+      context->set.success.after = &context->reset;
 
       context->set.normal.before = &context->normal;
       context->set.normal.after = &context->reset;

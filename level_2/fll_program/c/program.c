@@ -122,6 +122,7 @@ extern "C" {
     context->set.notable = f_color_set_empty_s;
     context->set.important = f_color_set_empty_s;
     context->set.standout = f_color_set_empty_s;
+    context->set.success = f_color_set_empty_s;
     context->set.normal = f_color_set_empty_s;
     context->set.normal_reset = f_color_set_empty_s;
 

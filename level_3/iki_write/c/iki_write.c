@@ -61,7 +61,14 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
+        main->output.set = &main->context.set;
+        main->error.set = &main->context.set;
+        main->warning.set = &main->context.set;
+
         if (main->context.set.error.before) {
+          main->output.context = f_color_set_empty_s;
+          main->output.notable = main->context.set.notable;
+
           main->error.context = main->context.set.error;
           main->error.notable = main->context.set.notable;
 
@@ -69,7 +76,7 @@ extern "C" {
           main->warning.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
+          f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
           fll_program_parameter_process_empty(&main->context, sets);
         }

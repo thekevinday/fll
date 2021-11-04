@@ -31,12 +31,12 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
  *   Errors (with error bit) from: f_string_dynamic_terminate().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
- * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_resize()
  * @see f_string_dynamic_terminate()
  * @see f_string_dynamics_increase()
  * @see fll_execute_arguments_add()
@@ -72,12 +72,12 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
  *   Errors (with error bit) from: f_string_dynamic_terminate().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
- * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_resize()
  * @see f_string_dynamic_terminate()
  * @see f_string_dynamics_increase()
  * @see fll_execute_arguments_add_parameter()

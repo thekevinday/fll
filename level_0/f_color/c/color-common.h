@@ -16,8 +16,16 @@
 extern "C" {
 #endif
 
+/**
+ * Color max size represents the maximum length of the resulting color string.
+ *
+ * This color max size does not include the terminating null.
+ *
+ * A color max size terminated represents the max size with the terminating null.
+ */
 #ifndef _di_f_color_max_size_
-  #define F_color_max_size_d 7
+  #define F_color_max_size_d            7
+  #define F_color_max_size_terminated_d 8
 #endif // _di_f_color_max_size_
 
 #ifndef _di_f_color_types_t_
@@ -382,6 +390,7 @@ extern "C" {
  * notable:      Color context associated with "notable".
  * important:    Color context associated with "important".
  * standout:     Color context associated with "standout".
+ * success:      Color context associated with "success".
  * normal:       Color context associated with "normal".
  * normal_reset: Color context associated with "normal_reset".
  */
@@ -393,13 +402,14 @@ extern "C" {
     f_color_set_t notable;
     f_color_set_t important;
     f_color_set_t standout;
+    f_color_set_t success;
     f_color_set_t normal;
     f_color_set_t normal_reset;
   } f_color_set_context_t;
 
-  #define f_color_set_context_t_initialize { f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize }
+  #define f_color_set_context_t_initialize { f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize }
 
-  #define macro_f_color_set_context_t_initialize(warning, error, title, notable, important, standout, normal, normal_reset) { warning, error, title, notable, important, standout, normal, normal_reset }
+  #define macro_f_color_set_context_t_initialize(warning, error, title, notable, important, standout, success, normal, normal_reset) { warning, error, title, notable, important, standout, success, normal, normal_reset }
 
   #define macro_f_color_set_context_t_clear(set) \
     macro_f_color_set_t_clear(set.warning) \
@@ -408,6 +418,7 @@ extern "C" {
     macro_f_color_set_t_clear(set.notable) \
     macro_f_color_set_t_clear(set.important) \
     macro_f_color_set_t_clear(set.standout) \
+    macro_f_color_set_t_clear(set.success) \
     macro_f_color_set_t_clear(set.normal) \
     macro_f_color_set_t_clear(set.normal_reset)
 
@@ -428,6 +439,7 @@ extern "C" {
  * notable:      Color context associated with "notable".
  * important:    Color context associated with "important".
  * standout:     Color context associated with "standout".
+ * success:      Color context associated with "success".
  * normal:       Color context associated with "normal".
  * normal_reset: Color context associated with "normal_reset".
  */
@@ -444,11 +456,12 @@ extern "C" {
     f_string_dynamic_t notable;
     f_string_dynamic_t important;
     f_string_dynamic_t standout;
+    f_string_dynamic_t success;
     f_string_dynamic_t normal;
     f_string_dynamic_t normal_reset;
   } f_color_context_t;
 
-  #define f_color_context_t_initialize { f_color_t_initialize_linux, f_color_format_t_initialize_linux, F_color_mode_none_d, f_color_set_context_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
+  #define f_color_context_t_initialize { f_color_t_initialize_linux, f_color_format_t_initialize_linux, F_color_mode_none_d, f_color_set_context_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
   #define macro_f_color_context_t_clear(context) \
     macro_f_color_t_clear(context.list) \
@@ -460,19 +473,21 @@ extern "C" {
     macro_f_string_dynamic_t_clear(context.notable) \
     macro_f_string_dynamic_t_clear(context.important) \
     macro_f_string_dynamic_t_clear(context.standout) \
+    macro_f_string_dynamic_t_clear(context.success) \
     macro_f_string_dynamic_t_clear(context.normal) \
     macro_f_string_dynamic_t_clear(context.normal_reset)
 
   #define macro_f_color_context_t_new(status, context) \
-    macro_f_string_dynamic_t_resize(status, context.reset, F_color_max_size_d + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.warning, F_color_max_size_d + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.error, F_color_max_size_d + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.title, F_color_max_size_d + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.notable, F_color_max_size_d + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.important, F_color_max_size_d + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.standout, F_color_max_size_d + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal, F_color_max_size_d + 1) \
-    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal_reset, F_color_max_size_d + 1)
+    macro_f_string_dynamic_t_resize(status, context.reset, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.warning, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.error, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.title, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.notable, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.important, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.standout, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.success, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal_reset, F_color_max_size_terminated_d)
 
   #define macro_f_color_context_t_delete_simple(context) \
     macro_f_string_dynamic_t_delete_simple(context.reset) \
@@ -482,6 +497,7 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(context.notable) \
     macro_f_string_dynamic_t_delete_simple(context.important) \
     macro_f_string_dynamic_t_delete_simple(context.standout) \
+    macro_f_string_dynamic_t_delete_simple(context.success) \
     macro_f_string_dynamic_t_delete_simple(context.normal) \
     macro_f_string_dynamic_t_delete_simple(context.normal_reset) \
     macro_f_color_context_t_clear(context)
@@ -494,6 +510,7 @@ extern "C" {
     macro_f_string_dynamic_t_destroy_simple(context.notable, size) \
     macro_f_string_dynamic_t_destroy_simple(context.important, size) \
     macro_f_string_dynamic_t_destroy_simple(context.standout, size) \
+    macro_f_string_dynamic_t_destroy_simple(context.success, size) \
     macro_f_string_dynamic_t_destroy_simple(context.normal) \
     macro_f_string_dynamic_t_destroy_simple(context.normal_reset) \
     macro_f_color_context_t_clear(context)
