@@ -149,6 +149,7 @@ extern "C" {
  *   The character to validate.
  * @param width
  *   The number of bytes repesenting the character width.
+ *   A width of 0 or 1 are treated as ASCII (width 1).
  *
  * @return
  *   F_true if a UTF-8 control picture character.
@@ -425,6 +426,7 @@ extern "C" {
  *   The character to validate.
  * @param width
  *   The number of bytes repesenting the character width.
+ *   A width of 0 or 1 are treated as ASCII (width 1).
  *
  * @return
  *   F_true if a UTF-8 character.
