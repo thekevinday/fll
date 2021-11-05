@@ -538,6 +538,7 @@ extern "C" {
   f_status_t fss_embedded_list_write_main_delete(fss_embedded_list_write_main_t *main) {
 
     for (f_array_length_t i = 0; i < fss_embedded_list_write_total_parameters_d; ++i) {
+
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
