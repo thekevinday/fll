@@ -2005,28 +2005,28 @@ extern "C" {
     if (width == 1) {
 
       // U+0000 -> U+007F
-      *unicode = character[0] & 0x7f;
+      *unicode = ((uint8_t) character[0]) & 0x7f;
     }
     else if (width == 2) {
 
       // U+0080 -> U+07FF
-      *unicode = (character[0] & 0x1f) << 6;
-      *unicode |= character[1] & 0x3f;
+      *unicode = (((uint8_t) character[0]) & 0x1f) << 6;
+      *unicode |= ((uint8_t) character[1]) & 0x3f;
     }
     else if (width == 3) {
 
       // U+0800 -> U+FFFF
-      *unicode = (character[0] & 0xf) << 12;
-      *unicode |= (character[1] & 0x3f) << 6;
-      *unicode |= character[2] & 0x3f;
+      *unicode = (((uint8_t) character[0]) & 0xf) << 12;
+      *unicode |= (((uint8_t) character[1]) & 0x3f) << 6;
+      *unicode |= ((uint8_t) character[2]) & 0x3f;
     }
     else if (width == 4) {
 
       // U+10000 -> U+10FFFF
-      *unicode = (character[0] & 0x7) << 18;
-      *unicode |= (character[1] & 0x3f) << 12;
-      *unicode |= (character[2] & 0x3f) << 6;
-      *unicode |= character[3] & 0x3f;
+      *unicode = (((uint8_t) character[0]) & 0x7) << 18;
+      *unicode |= (((uint8_t) character[1]) & 0x3f) << 12;
+      *unicode |= (((uint8_t) character[2]) & 0x3f) << 6;
+      *unicode |= ((uint8_t) character[3]) & 0x3f;
     }
 
     return F_none;
@@ -2048,7 +2048,7 @@ extern "C" {
     if (unicode < 0x80) {
 
       // U+0000 -> U+007F
-      (*character)[0] = (char) unicode;
+      (*character)[0] = (uint8_t) unicode;
 
       if (width_max > 1) {
         (*character)[1] = 0;
@@ -2068,8 +2068,8 @@ extern "C" {
       }
 
       // U+0080 -> U+07FF
-      (*character)[0] = F_utf_byte_2_d | ((char) ((unicode & 0x7c0) >> 6));
-      (*character)[1] = F_utf_byte_1_d | ((char) (unicode & 0x3f));
+      (*character)[0] = F_utf_byte_2_d | ((uint8_t) ((unicode & 0x7c0) >> 6));
+      (*character)[1] = F_utf_byte_1_d | ((uint8_t) (unicode & 0x3f));
 
       if (width_max > 2) {
         (*character)[2] = 0;
@@ -2085,9 +2085,9 @@ extern "C" {
       }
 
       // U+0800 -> U+FFFF
-      (*character)[0] = F_utf_byte_3_d | ((char) ((unicode & 0xf000) >> 12));
-      (*character)[1] = F_utf_byte_1_d | ((char) ((unicode & 0xfc0) >> 6));
-      (*character)[2] = F_utf_byte_1_d | ((char) (unicode & 0x3f));
+      (*character)[0] = F_utf_byte_3_d | ((uint8_t) ((unicode & 0xf000) >> 12));
+      (*character)[1] = F_utf_byte_1_d | ((uint8_t) ((unicode & 0xfc0) >> 6));
+      (*character)[2] = F_utf_byte_1_d | ((uint8_t) (unicode & 0x3f));
 
       if (width_max > 3) {
         character[3] = 0;
@@ -2099,10 +2099,10 @@ extern "C" {
       }
 
       // U+10000 -> U+10FFFF
-      (*character)[0] = F_utf_byte_4_d | ((char) ((unicode & 0x1c0000) >> 18));
-      (*character)[1] = F_utf_byte_1_d | ((char) ((unicode & 0x3f000) >> 12));
-      (*character)[2] = F_utf_byte_1_d | ((char) ((unicode & 0xfc0) >> 6));
-      (*character)[3] = F_utf_byte_1_d | ((char) (unicode & 0x3f));
+      (*character)[0] = F_utf_byte_4_d | ((uint8_t) ((unicode & 0x1c0000) >> 18));
+      (*character)[1] = F_utf_byte_1_d | ((uint8_t) ((unicode & 0x3f000) >> 12));
+      (*character)[2] = F_utf_byte_1_d | ((uint8_t) ((unicode & 0xfc0) >> 6));
+      (*character)[3] = F_utf_byte_1_d | ((uint8_t) (unicode & 0x3f));
     }
 
     return F_none;
