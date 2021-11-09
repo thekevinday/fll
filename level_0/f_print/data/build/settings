@@ -24,13 +24,13 @@ build_libraries -lc
 build_libraries-individual -lf_memory -lf_string -lf_utf
 build_libraries_shared
 build_libraries_static
-build_sources_library print.c print-common.c private-print.c
+build_sources_library print.c print_to.c print-common.c private-print.c private-print_to.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers print.h print-common.h
+build_sources_headers print.h print_to.h print-common.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script
