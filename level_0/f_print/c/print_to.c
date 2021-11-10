@@ -14,7 +14,7 @@ extern "C" {
  * @return
  *   The appropriate status.
  */
-inline f_status_t private_inline_f_print_to_error() {
+static inline f_status_t private_inline_f_print_to_error() {
   if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
   if (errno == EBADF) return F_status_set_error(F_file_descriptor);
   if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);

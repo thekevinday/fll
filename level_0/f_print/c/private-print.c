@@ -305,7 +305,16 @@ extern "C" {
         safe = private_f_print_character_safely_get(string[i]);
       }
       else {
-        safe = 0;
+        if (total) {
+          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+            return F_status_set_error(F_output);
+          }
+
+          total = 0;
+        }
+
+        start = ++i;
+        continue;
       }
 
       width = macro_f_utf_character_t_width(string[i]);
@@ -463,7 +472,16 @@ extern "C" {
         safe = private_f_print_character_safely_get(string[i]);
       }
       else {
-        safe = 0;
+        if (total) {
+          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+            return F_status_set_error(F_output);
+          }
+
+          total = 0;
+        }
+
+        start = ++i;
+        continue;
       }
 
       width = macro_f_utf_character_t_width(string[i]);
@@ -592,7 +610,16 @@ extern "C" {
         safe = private_f_print_character_safely_get(string[i]);
       }
       else {
-        safe = 0;
+        if (total) {
+          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+            return F_status_set_error(F_output);
+          }
+
+          total = 0;
+        }
+
+        start = ++i;
+        continue;
       }
 
       width = macro_f_utf_character_t_width(string[i]);

@@ -14,7 +14,7 @@ extern "C" {
  * @return
  *   The appropriate status.
  */
-inline f_status_t private_inline_f_print_to_error() {
+static inline f_status_t private_inline_f_print_to_error() {
   if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
   if (errno == EBADF) return F_status_set_error(F_file_descriptor);
   if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);
@@ -218,7 +218,16 @@ inline f_status_t private_inline_f_print_to_error() {
         safe = private_f_print_character_safely_get(string[i]);
       }
       else {
-        safe = 0;
+        if (total) {
+          if (write(id, string + start, total) == -1) {
+            return private_inline_f_print_to_error();
+          }
+
+          total = 0;
+        }
+
+        start = ++i;
+        continue;
       }
 
       if (safe) {
@@ -489,7 +498,16 @@ inline f_status_t private_inline_f_print_to_error() {
         safe = private_f_print_character_safely_get(string[i]);
       }
       else {
-        safe = 0;
+        if (total) {
+          if (write(id, string + start, total) == -1) {
+            return private_inline_f_print_to_error();
+          }
+
+          total = 0;
+        }
+
+        start = ++i;
+        continue;
       }
 
       if (safe) {
@@ -623,7 +641,16 @@ inline f_status_t private_inline_f_print_to_error() {
         safe = private_f_print_character_safely_get(string[i]);
       }
       else {
-        safe = 0;
+        if (total) {
+          if (write(id, string + start, total) == -1) {
+            return private_inline_f_print_to_error();
+          }
+
+          total = 0;
+        }
+
+        start = ++i;
+        continue;
       }
 
       if (safe) {
