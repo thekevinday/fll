@@ -78,6 +78,9 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
+      context->set.reset.before = &context->reset;
+      context->set.reset.after = &context->reset;
+
       context->set.warning.before = &context->warning;
       context->set.warning.after = &context->reset;
 

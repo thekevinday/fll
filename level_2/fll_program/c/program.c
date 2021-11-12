@@ -116,6 +116,7 @@ extern "C" {
 #ifndef _di_fll_program_parameter_process_empty_
   void fll_program_parameter_process_empty(f_color_context_t *context, f_color_set_t *sets[]) {
 
+    context->set.reset = f_color_set_empty_s;
     context->set.warning = f_color_set_empty_s;
     context->set.error = f_color_set_empty_s;
     context->set.title = f_color_set_empty_s;

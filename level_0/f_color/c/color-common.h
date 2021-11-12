@@ -384,6 +384,7 @@ extern "C" {
  *
  * This is intended to be used for printing, such that the printed code is prefixed with the "before" and postfixed with the "after", for each context.
  *
+ * reset:        Reset the color context.
  * warning:      Color context associated with "warning".
  * error:        Color context associated with "error".
  * title:        Color context associated with "title".
@@ -396,6 +397,7 @@ extern "C" {
  */
 #ifndef _di_f_color_set_context_t_
   typedef struct {
+    f_color_set_t reset;
     f_color_set_t warning;
     f_color_set_t error;
     f_color_set_t title;
@@ -407,11 +409,12 @@ extern "C" {
     f_color_set_t normal_reset;
   } f_color_set_context_t;
 
-  #define f_color_set_context_t_initialize { f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize }
+  #define f_color_set_context_t_initialize { f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize }
 
-  #define macro_f_color_set_context_t_initialize(warning, error, title, notable, important, standout, success, normal, normal_reset) { warning, error, title, notable, important, standout, success, normal, normal_reset }
+  #define macro_f_color_set_context_t_initialize(reset, warning, error, title, notable, important, standout, success, normal, normal_reset) { reset, warning, error, title, notable, important, standout, success, normal, normal_reset }
 
   #define macro_f_color_set_context_t_clear(set) \
+    macro_f_color_set_t_clear(set.reset) \
     macro_f_color_set_t_clear(set.warning) \
     macro_f_color_set_t_clear(set.error) \
     macro_f_color_set_t_clear(set.title) \
@@ -433,6 +436,7 @@ extern "C" {
  * format:       The color code formatting strings.
  * mode:         A code representing the color mode.
  * set:          A collection of color context sets for direct use in color printing.
+ * reset:        Reset the color context.
  * warning:      Color context associated with "warning".
  * error:        Color context associated with "error".
  * title:        Color context associated with "title".
@@ -468,6 +472,8 @@ extern "C" {
     macro_f_color_format_t_clear(context.format) \
     context.mode = F_color_mode_none_d; \
     macro_f_color_set_context_t_clear(context.set) \
+    macro_f_string_dynamic_t_clear(context.reset) \
+    macro_f_string_dynamic_t_clear(context.warning) \
     macro_f_string_dynamic_t_clear(context.error) \
     macro_f_string_dynamic_t_clear(context.title) \
     macro_f_string_dynamic_t_clear(context.notable) \
@@ -479,6 +485,7 @@ extern "C" {
 
   #define macro_f_color_context_t_new(status, context) \
     macro_f_string_dynamic_t_resize(status, context.reset, F_color_max_size_terminated_d) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.reset, F_color_max_size_terminated_d) \
     if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.warning, F_color_max_size_terminated_d) \
     if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.error, F_color_max_size_terminated_d) \
     if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.title, F_color_max_size_terminated_d) \
