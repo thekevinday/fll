@@ -30,9 +30,9 @@ extern "C" {
 
     memset(&information, 0, sizeof(struct signalfd_siginfo));
 
-    const f_status_t status = f_signal_read(signal_interrupt->signal, &information);
+    const f_status_t status = f_signal_read(signal_interrupt->signal, 0, &information);
 
-    if (status == F_signal) {
+    if (F_status_set_fine(status) == F_interrupt) {
       for (f_array_length_t i = 0; i < signal_interrupt->interrupts.used; ++i) {
 
         if (information.ssi_signo == signal_interrupt->interrupts.array[i]) {

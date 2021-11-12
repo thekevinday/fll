@@ -1367,7 +1367,7 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, (length - i) + 1);
 
-      // determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
@@ -1407,7 +1407,7 @@ extern "C" {
 
         if (j == length || status == F_true || !string[i]) break;
 
-        // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
         while (i < j) {
 
           while (at < except_at.used && except_at.array[at] < i) {

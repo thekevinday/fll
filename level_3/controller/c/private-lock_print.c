@@ -10,7 +10,7 @@ extern "C" {
   void controller_lock_print_error_critical(const fl_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) {
 
     // A signal is not an error.
-    if (status == F_signal) return;
+    if (status == F_interrupt) return;
 
     if (print.verbosity != f_console_verbosity_quiet) {
       controller_lock_print(print.to, thread);

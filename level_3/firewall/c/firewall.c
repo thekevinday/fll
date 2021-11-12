@@ -45,7 +45,8 @@ extern "C" {
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_status_t firewall_main(const f_console_arguments_t arguments, firewall_main_t *main) {
+  f_status_t firewall_main(firewall_main_t * const main, const f_console_arguments_t *arguments) {
+
     f_status_t status = F_none;
 
     {
@@ -55,7 +56,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -79,6 +80,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           firewall_main_delete(main);
+
           return F_status_set_error(status);
         }
       }
@@ -93,6 +95,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           firewall_main_delete(main);
+
           return status;
         }
 
@@ -125,6 +128,7 @@ extern "C" {
       firewall_print_help(main->output.to, main->context);
 
       firewall_main_delete(main);
+
       return F_none;
     }
 
@@ -132,6 +136,7 @@ extern "C" {
       fll_program_print_version(main->output.to, firewall_version_s);
 
       firewall_main_delete(main);
+
       return F_none;
     }
 
@@ -216,13 +221,13 @@ extern "C" {
 
           for (; counter < main->remaining.used; ++counter) {
 
-            if (strncmp("nat", arguments.argv[main->remaining.array[counter]], 4) != 0) {
-              if (strncmp("mangle",  arguments.argv[main->remaining.array[counter]], 7) != 0) {
-                if (strncmp("ports",  arguments.argv[main->remaining.array[counter]], 6) != 0) {
+            if (strncmp("nat", arguments->argv[main->remaining.array[counter]], 4) != 0) {
+              if (strncmp("mangle",  arguments->argv[main->remaining.array[counter]], 7) != 0) {
+                if (strncmp("ports",  arguments->argv[main->remaining.array[counter]], 6) != 0) {
                   flockfile(main->warning.to.stream);
 
                   fl_print_format("%c%[%S'%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
-                  fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, arguments.argv[main->remaining.array[counter]], main->warning.notable);
+                  fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, arguments->argv[main->remaining.array[counter]], main->warning.notable);
                   fl_print_format("%[' is not a valid show option.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
 
                   funlockfile(main->warning.to.stream);
@@ -249,6 +254,7 @@ extern "C" {
 
           firewall_delete_local_data(&local);
           firewall_main_delete(main);
+
           return status;
         }
 
@@ -372,6 +378,7 @@ extern "C" {
         macro_f_string_dynamics_t_delete_simple( parameters);
         firewall_delete_local_data(&local);
         firewall_main_delete(main);
+
         return status;
       }
 
@@ -395,6 +402,7 @@ extern "C" {
 
         firewall_delete_local_data(&local);
         firewall_main_delete(main);
+
         return F_status_set_error(status);
       }
 
@@ -419,11 +427,12 @@ extern "C" {
       }
 
       if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart || command == firewall_parameter_command_lock) {
-        status = firewall_buffer_rules(network_path_s firewall_file_other_s, F_false, &local, main);
+        status = firewall_buffer_rules(main, network_path_s firewall_file_other_s, F_false, &local);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
           firewall_main_delete(main);
+
           return status;
         }
 
@@ -447,15 +456,16 @@ extern "C" {
 
         if (command == firewall_parameter_command_lock) {
           if (reserved.has_lock) {
-            status = firewall_delete_chains(*main);
+            status = firewall_delete_chains(main);
 
             if (F_status_is_error_not(status)) {
-              status = firewall_default_lock(*main);
+              status = firewall_default_lock(main);
             }
 
             if (F_status_is_error(status)) {
               firewall_delete_local_data(&local);
               firewall_main_delete(main);
+
               return status;
             }
 
@@ -467,10 +477,11 @@ extern "C" {
             input.start = local.chain_contents.array[reserved.lock_at].array[0].start;
             input.stop = local.chain_contents.array[reserved.lock_at].array[0].stop;
 
-            status = firewall_process_rules(&input, &local, main);
+            status = firewall_process_rules(main, &input, &local);
 
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
+
             return status;
           }
           else {
@@ -480,21 +491,23 @@ extern "C" {
 
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
+
             return F_status_set_error(F_data);
           }
         }
 
         if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart) {
           if (reserved.has_stop) {
-            status = firewall_delete_chains(*main);
+            status = firewall_delete_chains(main);
 
             if (F_status_is_error_not(status)) {
-              status = firewall_default_lock(*main);
+              status = firewall_default_lock(main);
             }
 
             if (F_status_is_error(status)) {
               firewall_delete_local_data(&local);
               firewall_main_delete(main);
+
               return status;
             }
 
@@ -507,11 +520,12 @@ extern "C" {
             input.start = local.chain_contents.array[reserved.stop_at].array[0].start;
             input.stop = local.chain_contents.array[reserved.stop_at].array[0].stop;
 
-            status = firewall_process_rules(&input, &local, main);
+            status = firewall_process_rules(main, &input, &local);
 
             if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
               firewall_main_delete(main);
+
               return status;
             }
           }
@@ -522,6 +536,7 @@ extern "C" {
 
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
+
             return F_status_set_error(F_data);
           }
         }
@@ -530,33 +545,36 @@ extern "C" {
       }
 
       if (command == firewall_parameter_command_start || command == firewall_parameter_command_restart) {
-        status = firewall_buffer_rules(network_path_s firewall_file_first_s, F_false, &local, main);
+        status = firewall_buffer_rules(main, network_path_s firewall_file_first_s, F_false, &local);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
           firewall_main_delete(main);
+
           return status;
         }
 
         if (command == firewall_parameter_command_start) {
-          status = firewall_delete_chains(*main);
+          status = firewall_delete_chains(main);
 
           if (F_status_is_error_not(status)) {
-            status = firewall_default_lock(*main);
+            status = firewall_default_lock(main);
           }
 
           if (F_status_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
+
             return status;
           }
         }
 
-        status = firewall_create_custom_chains(&reserved, &local, main);
+        status = firewall_create_custom_chains(main, &reserved, &local);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
           firewall_main_delete(main);
+
           return status;
         }
 
@@ -574,11 +592,12 @@ extern "C" {
           local.is_main = reserved.has_main && i == reserved.main_at ? F_true : F_false;
           local.chain = i;
 
-          status = firewall_process_rules(&input, &local, main);
+          status = firewall_process_rules(main, &input, &local);
 
           if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
+
             return status;
           }
 
@@ -600,6 +619,7 @@ extern "C" {
 
               firewall_delete_local_data(&local);
               firewall_main_delete(main);
+
               return status;
             }
 
@@ -610,7 +630,7 @@ extern "C" {
             file_path.used = network_path_s_length + main->devices.array[i].used + firewall_file_suffix_s_length;
             file_path.string[file_path.used] = 0;
 
-            status = firewall_buffer_rules(file_path.string, F_true, &local, main);
+            status = firewall_buffer_rules(main, file_path.string, F_true, &local);
 
             macro_f_string_dynamic_t_delete_simple(file_path);
           }
@@ -626,14 +646,16 @@ extern "C" {
             }
 
             firewall_main_delete(main);
+
             return F_status_set_error(status);
           }
 
-          status = firewall_create_custom_chains(&reserved, &local, main);
+          status = firewall_create_custom_chains(main, &reserved, &local);
 
           if (F_status_is_error(status)) {
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
+
             return status;
           }
 
@@ -651,11 +673,12 @@ extern "C" {
             local.is_main = reserved.has_main && j == reserved.main_at ? F_true : F_false;
             local.chain = j;
 
-            status = firewall_process_rules(&input, &local, main);
+            status = firewall_process_rules(main, &input, &local);
 
             if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
               firewall_main_delete(main);
+
               return status;
             }
           } // for
@@ -663,21 +686,23 @@ extern "C" {
           firewall_delete_local_data(&local);
         } // for
 
-        status = firewall_buffer_rules(network_path_s firewall_file_last_s, F_false, &local, main);
+        status = firewall_buffer_rules(main, network_path_s firewall_file_last_s, F_false, &local);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
           firewall_main_delete(main);
+
           return status;
         }
 
-        status = firewall_create_custom_chains(&reserved, &local, main);
+        status = firewall_create_custom_chains(main, &reserved, &local);
 
         if (F_status_is_error(status)) {
           f_status_t status2 = F_none;
 
           macro_firewall_delete_fss_buffers(status2, local.buffer, local.chain_objects, local.chain_contents)
           firewall_main_delete(main);
+
           return status;
         }
 
@@ -695,11 +720,12 @@ extern "C" {
           local.is_main = reserved.has_main && i == reserved.main_at ? F_true : F_false;
           local.chain = i;
 
-          status = firewall_process_rules(&input, &local, main);
+          status = firewall_process_rules(main, &input, &local);
 
           if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
+
             return status;
           }
 
@@ -718,13 +744,22 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
+    if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (F_status_set_fine(status) == F_interrupt) {
+        fflush(main->output.to.stream);
+
+        fll_print_terminated(f_string_eol_s, main->output.to.stream);
+      }
+    }
+
     firewall_main_delete(main);
+
     return status;
   }
 #endif // _di_firewall_main_
 
 #ifndef _di_firewall_main_delete_
-  f_status_t firewall_main_delete(firewall_main_t *main) {
+  f_status_t firewall_main_delete(firewall_main_t * const main) {
 
     for (f_array_length_t i = 0; i < firewall_total_parameters_d; ++i) {
 

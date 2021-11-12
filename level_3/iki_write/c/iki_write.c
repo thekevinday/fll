@@ -48,7 +48,7 @@ extern "C" {
 #endif // _di_iki_write_print_help_
 
 #ifndef _di_iki_write_main_
-  f_status_t iki_write_main(const f_console_arguments_t arguments, iki_write_main_t *main) {
+  f_status_t iki_write_main(iki_write_main_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -59,7 +59,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { iki_write_parameter_no_color, iki_write_parameter_light, iki_write_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -88,6 +88,7 @@ extern "C" {
           }
 
           iki_write_main_delete(main);
+
           return F_status_set_error(status);
         }
       }
@@ -135,6 +136,7 @@ extern "C" {
       iki_write_print_help(main->output.to, main->context);
 
       iki_write_main_delete(main);
+
       return F_none;
     }
 
@@ -142,6 +144,7 @@ extern "C" {
       fll_program_print_version(main->output.to, iki_write_program_version_s);
 
       iki_write_main_delete(main);
+
       return F_none;
     }
 
@@ -172,10 +175,10 @@ extern "C" {
           file.id = -1;
           file.stream = 0;
 
-          status = f_file_stream_open(arguments.argv[location], 0, &file);
+          status = f_file_stream_open(arguments->argv[location], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[location], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], "open", fll_error_file_type_file);
           }
         }
       }
@@ -295,6 +298,11 @@ extern "C" {
 
         for (f_status_t status_pipe = F_none; ; ) {
 
+          if (iki_write_signal_received(main)) {
+            status = F_status_set_error(F_interrupt);
+            break;
+          }
+
           if (status_pipe != F_none_eof) {
             status_pipe = f_file_read(pipe, &buffer);
 
@@ -356,7 +364,7 @@ extern "C" {
               }
             }
 
-            status = iki_write_process(*main, file, object, content, quote, &escaped);
+            status = iki_write_process(main, file, object, content, quote, &escaped);
             if (F_status_is_error(status)) break;
 
             fll_print_character(f_string_eol_s[0], file.stream);
@@ -408,15 +416,20 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->parameters[iki_write_parameter_object].values.used; ++i) {
 
-          object.string = arguments.argv[main->parameters[iki_write_parameter_object].values.array[i]];
+          if (iki_write_signal_received(main)) {
+            status = F_status_set_error(F_interrupt);
+            break;
+          }
+
+          object.string = arguments->argv[main->parameters[iki_write_parameter_object].values.array[i]];
           object.used = strnlen(object.string, f_console_parameter_size);
           object.size = object.used;
 
-          content.string = arguments.argv[main->parameters[iki_write_parameter_content].values.array[i]];
+          content.string = arguments->argv[main->parameters[iki_write_parameter_content].values.array[i]];
           content.used = strnlen(content.string, f_console_parameter_size);
           content.size = content.used;
 
-          status = iki_write_process(*main, file, object, content, quote, &escaped);
+          status = iki_write_process(main, file, object, content, quote, &escaped);
           if (F_status_is_error(status)) break;
 
           fll_print_character(f_string_eol_s[0], file.stream);
@@ -437,20 +450,25 @@ extern "C" {
       }
     }
 
-    // ensure a newline is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fll_print_character(f_string_eol_s[0], main->error.to.stream);
+        if (F_status_set_fine(status) == F_interrupt) {
+          fflush(main->output.to.stream);
+        }
+
+        fll_print_character(f_string_eol_s[0], main->output.to.stream);
       }
     }
 
     iki_write_main_delete(main);
+
     return status;
   }
 #endif // _di_iki_write_main_
 
 #ifndef _di_iki_write_main_delete_
-  f_status_t iki_write_main_delete(iki_write_main_t *main) {
+  f_status_t iki_write_main_delete(iki_write_main_t * const main) {
 
     for (f_array_length_t i = 0; i < iki_write_total_parameters_d; ++i) {
 

@@ -13,51 +13,51 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_print_help_
-  f_status_t controller_print_help(const controller_main_t main) {
+  f_status_t controller_print_help(controller_main_t * const main) {
 
-    controller_lock_print(main.output.to, 0);
+    controller_lock_print(main->output.to, 0);
 
-    fll_program_print_help_header(main.output.to, main.context, main.program_name_long, controller_program_version_s);
+    fll_program_print_help_header(main->output.to, main->context, main->program_name_long, controller_program_version_s);
 
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not main.output.to in color.");
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal main.output.to.");
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal main.output.to.");
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal main.output.to.");
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal main.output.to.");
-    fll_program_print_help_option(main.output.to, main.context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not main->output.to in color.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal main->output.to.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal main->output.to.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal main->output.to.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal main->output.to.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], main.output.to.stream);
+    f_print_character(f_string_eol_s[0], main->output.to.stream);
 
-    fll_program_print_help_option(main.output.to, main.context, controller_short_control_s, controller_long_control_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Specify a custom control group file path, such as '" F_control_group_path_system_prefix_s F_control_group_path_system_default_s "'.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_interruptible_s, controller_long_interruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid_s CONTROLLER_default_s controller_path_suffix_s "'.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" controller_path_settings_s "'.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
-    fll_program_print_help_option(main.output.to, main.context, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_control_s, controller_long_control_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Specify a custom control group file path, such as '" F_control_group_path_system_prefix_s F_control_group_path_system_default_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_interruptible_s, controller_long_interruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid_s CONTROLLER_default_s controller_path_suffix_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" controller_path_settings_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
-    fll_program_print_help_usage(main.output.to, main.context, main.program_name, "entry");
+    fll_program_print_help_usage(main->output.to, main->context, main->program_name, "entry");
 
-    fl_print_format("  When both the %[%s%s%] parameter and the", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate_s, main.context.set.notable);
-    fl_print_format(" %[%s%s%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_validate_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When both the %[%s%s%] parameter and the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate_s, main->context.set.notable);
+    fl_print_format(" %[%s%s%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_validate_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, main.setting_default.used ? controller_long_uninterruptible_s : controller_long_interruptible_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, main->setting_default.used ? controller_long_uninterruptible_s : controller_long_interruptible_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format(" Specify an empty string for the %[%s%s%] parameter to disable pid file creation for this program.%c%c", main.output.to.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" Specify an empty string for the %[%s%s%] parameter to disable pid file creation for this program.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    controller_unlock_print_flush(main.output.to, 0);
+    controller_unlock_print_flush(main->output.to, 0);
 
     return F_none;
   }
 #endif // _di_controller_print_help_
 
 #ifndef _di_controller_main_
-  f_status_t controller_main(const f_console_arguments_t arguments, controller_main_t *main) {
+  f_status_t controller_main(controller_main_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -68,7 +68,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { controller_parameter_no_color, controller_parameter_light, controller_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -140,7 +140,7 @@ extern "C" {
     }
 
     if (main->parameters[controller_parameter_help].result == f_console_result_found) {
-      controller_print_help(*main);
+      controller_print_help(main);
 
       controller_main_delete(main);
       return F_none;
@@ -160,7 +160,7 @@ extern "C" {
     controller_setting_t setting = controller_setting_t_initialize;
 
     if (main->remaining.used) {
-      status = f_string_append_nulless(arguments.argv[main->remaining.array[0]], strnlen(arguments.argv[main->remaining.array[0]], f_console_parameter_size), &setting.name_entry);
+      status = f_string_append_nulless(arguments->argv[main->remaining.array[0]], strnlen(arguments->argv[main->remaining.array[0]], f_console_parameter_size), &setting.name_entry);
     }
     else {
       status = f_string_append_nulless(controller_default_s, controller_default_s_length, &setting.name_entry);
@@ -206,7 +206,7 @@ extern "C" {
     else if (main->parameters[controller_parameter_settings].locations.used) {
       const f_array_length_t location = main->parameters[controller_parameter_settings].values.array[main->parameters[controller_parameter_settings].values.used - 1];
 
-      status = fll_path_canonical(arguments.argv[location], &setting.path_setting);
+      status = fll_path_canonical(arguments->argv[location], &setting.path_setting);
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
@@ -245,8 +245,8 @@ extern "C" {
       else if (main->parameters[controller_parameter_pid].locations.used) {
         const f_array_length_t location = main->parameters[controller_parameter_pid].values.array[main->parameters[controller_parameter_pid].values.used - 1];
 
-        if (strnlen(arguments.argv[location], f_console_parameter_size)) {
-          status = fll_path_canonical(arguments.argv[location], &setting.path_pid);
+        if (strnlen(arguments->argv[location], f_console_parameter_size)) {
+          status = fll_path_canonical(arguments->argv[location], &setting.path_pid);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
@@ -297,8 +297,8 @@ extern "C" {
       else if (main->parameters[controller_parameter_control].locations.used) {
         const f_array_length_t location = main->parameters[controller_parameter_control].values.array[main->parameters[controller_parameter_control].values.used - 1];
 
-        if (strnlen(arguments.argv[location], f_console_parameter_size)) {
-          status = fll_path_canonical(arguments.argv[location], &setting.path_control);
+        if (strnlen(arguments->argv[location], f_console_parameter_size)) {
+          status = fll_path_canonical(arguments->argv[location], &setting.path_control);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
@@ -379,7 +379,7 @@ extern "C" {
         status = f_signal_open(&main->signal);
       }
 
-      // if there is an error opening a signal descriptor, then do not handle signals.
+      // If there is an error opening a signal descriptor, then do not handle signals.
       if (F_status_is_error(status)) {
         f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
         f_signal_close(&main->signal);
@@ -418,16 +418,16 @@ extern "C" {
     }
 
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (!(status == F_child || status == F_signal)) {
-      if (F_status_is_error(status) && main->error.verbosity != f_console_verbosity_quiet) {
-        f_print_terminated(f_string_eol_s, main->error.to.stream);
+    if (F_status_is_error(status) && main->output.verbosity != f_console_verbosity_quiet) {
+      if (F_status_set_fine(status) == F_interrupt) {
+        fflush(main->output.to.stream);
       }
+
+      fll_print_terminated(f_string_eol_s, main->output.to.stream);
     }
 
-    f_signal_close(&main->signal);
-
     if (status != F_child && setting.pid_created) {
-      f_status_t status_delete = controller_file_pid_delete(main->pid, setting.path_pid);
+      const f_status_t status_delete = controller_file_pid_delete(main->pid, setting.path_pid);
 
       if (F_status_is_error(status_delete) && main->warning.verbosity == f_console_verbosity_debug) {
         if (F_status_set_fine(status_delete) == F_number_not) {
@@ -441,7 +441,7 @@ extern "C" {
 
           controller_unlock_print_flush(main->warning.to, 0);
         }
-        else {
+        else if (F_status_set_fine(status_delete) != F_interrupt) {
           fll_error_file_print(main->warning, F_status_set_fine(status_delete), "controller_file_pid_delete", F_true, setting.path_pid.string, "delete", fll_error_file_type_file);
         }
       }
@@ -450,7 +450,7 @@ extern "C" {
     controller_setting_delete_simple(&setting);
     controller_main_delete(main);
 
-    if (status == F_child || status == F_signal) {
+    if (status == F_child) {
       return status;
     }
 
@@ -459,7 +459,7 @@ extern "C" {
 #endif // _di_controller_main_
 
 #ifndef _di_controller_main_delete_
-  f_status_t controller_main_delete(controller_main_t *main) {
+  f_status_t controller_main_delete(controller_main_t * const main) {
 
     for (f_array_length_t i = 0; i < controller_total_parameters_d; ++i) {
 

@@ -32,7 +32,7 @@ extern "C" {
 #endif // _di_control_print_help_
 
 #ifndef _di_control_main_
-  f_status_t control_main(const f_console_arguments_t arguments, control_main_t *main) {
+  f_status_t control_main(control_main_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -43,7 +43,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { control_parameter_no_color, control_parameter_light, control_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -72,6 +72,7 @@ extern "C" {
           }
 
           control_main_delete(main);
+
           return F_status_set_error(status);
         }
       }
@@ -86,6 +87,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           control_main_delete(main);
+
           return status;
         }
 
@@ -118,6 +120,7 @@ extern "C" {
       control_print_help(main->output.to, main->context);
 
       control_main_delete(main);
+
       return F_none;
     }
 
@@ -125,25 +128,31 @@ extern "C" {
       fll_program_print_version(main->output.to, control_program_version_s);
 
       control_main_delete(main);
+
       return F_none;
     }
 
     // @todo
 
-    // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (main->error.verbosity != f_console_verbosity_quiet) {
+    // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
+    if (main->output.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fll_print_terminated(f_string_eol_s, main->error.to.stream);
+        if (F_status_set_fine(status) == F_interrupt) {
+          fflush(main->output.to.stream);
+        }
+
+        fll_print_terminated(f_string_eol_s, main->output.to.stream);
       }
     }
 
     control_main_delete(main);
+
     return status;
   }
 #endif // _di_control_main_
 
 #ifndef _di_control_main_delete_
-  f_status_t control_main_delete(control_main_t *main) {
+  f_status_t control_main_delete(control_main_t * const main) {
 
     for (f_array_length_t i = 0; i < control_total_parameters_d; ++i) {
 

@@ -491,7 +491,7 @@ extern "C" {
 #endif // _di_controller_rule_actions_increase_by_
 
 #ifndef _di_controller_rule_delete_simple_
-  void controller_rule_delete_simple(controller_rule_t *rule) {
+  void controller_rule_delete_simple(controller_rule_t * const rule) {
 
     f_string_dynamic_resize(0, &rule->alias);
     f_string_dynamic_resize(0, &rule->name);

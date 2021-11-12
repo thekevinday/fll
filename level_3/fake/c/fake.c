@@ -82,7 +82,7 @@ extern "C" {
 #endif // _di_fake_print_help_
 
 #ifndef _di_fake_main_
-  f_status_t fake_main(const f_console_arguments_t arguments, fake_main_t *main) {
+  f_status_t fake_main(fake_main_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -94,7 +94,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { fake_parameter_no_color, fake_parameter_light, fake_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -295,11 +295,11 @@ extern "C" {
 
         if (main->operation == fake_operation_build) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *main);
+            status = fake_validate_parameter_directories(arguments, main);
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_error_not(status) && status != F_signal) {
+          if (F_status_is_error_not(status)) {
             f_string_static_t stub = f_string_static_t_initialize;
 
             status = fake_build_operate(stub, main);
@@ -307,21 +307,21 @@ extern "C" {
         }
         else if (main->operation == fake_operation_clean) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *main);
+            status = fake_validate_parameter_directories(arguments, main);
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_error_not(status) && status != F_signal) {
-            status = fake_clean_operate(*main);
+          if (F_status_is_error_not(status)) {
+            status = fake_clean_operate(main);
           }
         }
         else if (main->operation == fake_operation_make) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *main);
+            status = fake_validate_parameter_directories(arguments, main);
             validate_parameter_directories = F_false;
           }
 
-          if (F_status_is_error_not(status) && status != F_signal) {
+          if (F_status_is_error_not(status)) {
             status = fake_make_operate(main);
 
             if (status == F_child) {
@@ -330,10 +330,14 @@ extern "C" {
           }
         }
         else if (main->operation == fake_operation_skeleton) {
-          status = fake_skeleton_operate(*main);
+          status = fake_skeleton_operate(main);
         }
 
-        if (status == F_signal || status == F_child || fake_signal_received(*main)) {
+        if (status == F_child) {
+          break;
+        }
+        else if (F_status_set_fine(status) == F_interrupt || fake_signal_received(main)) {
+          status = F_status_set_error(F_interrupt);
           break;
         }
         else if (F_status_is_error(status)) {
@@ -351,10 +355,13 @@ extern "C" {
         }
       } // for
 
-      // ensure a newline is always put at the end of the program execution, unless in quiet mode.
       if (main->error.verbosity != f_console_verbosity_quiet) {
-        if (F_status_is_error(status) || status == F_signal) {
-          fll_print_character(f_string_eol_s[0], main->error.to.stream);
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_interrupt) {
+            fflush(main->output.to.stream);
+          }
+
+          fll_print_terminated(f_string_eol_s, main->output.to.stream);
         }
         else if (status != F_child) {
           fll_print_format("%cAll operations complete.%c%c", main->output.to.stream, f_string_eol_s[0], f_string_eol_s[0], f_string_eol_s[0]);
@@ -370,14 +377,16 @@ extern "C" {
     }
 
     fake_main_delete(main);
+
     return status;
   }
 #endif // _di_fake_main_
 
 #ifndef _di_fake_main_delete_
-  f_status_t fake_main_delete(fake_main_t *main) {
+  f_status_t fake_main_delete(fake_main_t * const main) {
 
     for (f_array_length_t i = 0; i < fake_total_parameters_d; ++i) {
+
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

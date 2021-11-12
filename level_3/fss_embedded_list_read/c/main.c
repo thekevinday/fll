@@ -9,16 +9,41 @@ int main(const int argc, const f_string_t *argv) {
     data.process_pipe = F_true;
   }
 
-  const f_status_t status = fss_embedded_list_read_main(arguments, &data);
+  // Handle signals so that program can cleanly exit, deallocating as appropriate.
+  {
+    f_signal_set_empty(&data.signal.set);
+    f_signal_set_add(F_signal_abort, &data.signal.set);
+    f_signal_set_add(F_signal_broken_pipe, &data.signal.set);
+    f_signal_set_add(F_signal_hangup, &data.signal.set);
+    f_signal_set_add(F_signal_interrupt, &data.signal.set);
+    f_signal_set_add(F_signal_quit, &data.signal.set);
+    f_signal_set_add(F_signal_termination, &data.signal.set);
 
-  // flush output pipes before closing.
+    f_status_t status = f_signal_mask(SIG_BLOCK, &data.signal.set, 0);
+
+    if (F_status_is_error_not(status)) {
+      status = f_signal_open(&data.signal);
+
+      // If there is an error opening a signal descriptor, then do not handle signals.
+      if (F_status_is_error(status)) {
+        f_signal_mask(SIG_UNBLOCK, &data.signal.set, 0);
+        f_signal_close(&data.signal);
+      }
+    }
+  }
+
+  const f_status_t status = fss_embedded_list_read_main(&data, &arguments);
+
+  // Flush output pipes before closing.
   fflush(F_type_output_d);
   fflush(F_type_error_d);
 
-  // close all open file descriptors.
+  // Close all open file descriptors.
   close(F_type_descriptor_output_d);
   close(F_type_descriptor_input_d);
   close(F_type_descriptor_error_d);
+
+  f_signal_close(&data.signal);
 
   if (F_status_is_error(status)) {
     return 1;

@@ -71,7 +71,7 @@ extern "C" {
 #endif // _di_byte_dump_print_help_
 
 #ifndef _di_byte_dump_main_
-  f_status_t byte_dump_main(const f_console_arguments_t arguments, byte_dump_main_t *main) {
+  f_status_t byte_dump_main(byte_dump_main_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -83,7 +83,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { byte_dump_parameter_no_color, byte_dump_parameter_light, byte_dump_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -109,6 +109,7 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
           byte_dump_main_delete(main);
+
           return F_status_set_error(status);
         }
       }
@@ -125,6 +126,7 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
           byte_dump_main_delete(main);
+
           return status;
         }
 
@@ -215,6 +217,7 @@ extern "C" {
       byte_dump_print_help(main->output.to, main->context);
 
       byte_dump_main_delete(main);
+
       return F_none;
     }
 
@@ -222,6 +225,7 @@ extern "C" {
       fll_program_print_version(main->output.to, byte_dump_version_s);
 
       byte_dump_main_delete(main);
+
       return F_none;
     }
 
@@ -240,11 +244,11 @@ extern "C" {
       }
       else if (main->parameters[byte_dump_parameter_width].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_width].values.array[main->parameters[byte_dump_parameter_width].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
+        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           flockfile(main->error.to.stream);
@@ -276,15 +280,16 @@ extern "C" {
         funlockfile(main->error.to.stream);
 
         byte_dump_main_delete(main);
+
         return F_status_set_error(status);
       }
       else if (main->parameters[byte_dump_parameter_first].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_first].values.array[main->parameters[byte_dump_parameter_first].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
+        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
 
         if (F_status_is_error(status) || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);
@@ -300,6 +305,7 @@ extern "C" {
           funlockfile(main->error.to.stream);
 
           byte_dump_main_delete(main);
+
           return F_status_set_error(status);
         }
 
@@ -316,15 +322,16 @@ extern "C" {
         funlockfile(main->error.to.stream);
 
         byte_dump_main_delete(main);
+
         return F_status_set_error(status);
       }
       else if (main->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_last].values.array[main->parameters[byte_dump_parameter_last].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
+        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
 
         if (F_status_is_error(status) || number < 0 || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);
@@ -340,6 +347,7 @@ extern "C" {
           funlockfile(main->error.to.stream);
 
           byte_dump_main_delete(main);
+
           return F_status_set_error(status);
         }
 
@@ -359,6 +367,7 @@ extern "C" {
           funlockfile(main->error.to.stream);
 
           byte_dump_main_delete(main);
+
           return F_status_set_error(status);
         }
 
@@ -397,7 +406,7 @@ extern "C" {
 
         funlockfile(main->output.to.stream);
 
-        status = byte_dump_file(*main, 0, file);
+        status = byte_dump_file(main, 0, file);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true);
@@ -414,7 +423,7 @@ extern "C" {
 
           for (f_array_length_t counter = 0; counter < main->remaining.used; ++counter) {
 
-            status = f_file_exists(arguments.argv[main->remaining.array[counter]]);
+            status = f_file_exists(arguments->argv[main->remaining.array[counter]]);
 
             if (status == F_false) {
               status = F_status_set_error(F_file_found_not);
@@ -425,7 +434,7 @@ extern "C" {
                 missing_files = status;
               }
 
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.argv[main->remaining.array[counter]], "open", fll_error_file_type_file);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, arguments->argv[main->remaining.array[counter]], "open", fll_error_file_type_file);
             }
           } // for
 
@@ -433,6 +442,7 @@ extern "C" {
             status = F_status_set_error(missing_files);
 
             byte_dump_main_delete(main);
+
             return status;
           }
         }
@@ -441,12 +451,13 @@ extern "C" {
 
         for (f_array_length_t counter = 0; counter < main->remaining.used; ++counter) {
 
-          status = f_file_stream_open(arguments.argv[main->remaining.array[counter]], 0, &file);
+          status = f_file_stream_open(arguments->argv[main->remaining.array[counter]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[main->remaining.array[counter]], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->remaining.array[counter]], "open", fll_error_file_type_file);
 
             byte_dump_main_delete(main);
+
             return status;
           }
 
@@ -454,8 +465,7 @@ extern "C" {
 
           f_print_terminated(f_string_eol_s, main->output.to.stream);
           fl_print_format("%[Byte Dump of: %]%[", main->output.to.stream, main->context.set.title, main->context.set.title, main->context.set.notable);
-          fll_print_safely_terminated(arguments.argv[main->remaining.array[counter]], main->output.to.stream);
-          fl_print_format("%] %[(in ", main->output.to.stream, main->context.set.notable, main->context.set.title);
+          fl_print_format("%S%] %[(in ", main->output.to.stream, arguments->argv[main->remaining.array[counter]], main->context.set.notable, main->context.set.title);
 
           if (main->mode == byte_dump_mode_hexidecimal) {
             f_print_terminated("Hexidecimal", main->output.to.stream);
@@ -477,14 +487,28 @@ extern "C" {
 
           funlockfile(main->output.to.stream);
 
-          status = byte_dump_file(*main, arguments.argv[main->remaining.array[counter]], file);
+          status = byte_dump_file(main, arguments->argv[main->remaining.array[counter]], file);
 
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, arguments.argv[main->remaining.array[counter]], "process", fll_error_file_type_file);
+            if (F_status_set_fine(status) == F_interrupt) {
+
+              // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
+              if (main->output.verbosity != f_console_verbosity_quiet) {
+                fflush(main->output.to.stream);
+
+                fll_print_terminated(f_string_eol_s, main->output.to.stream);
+              }
+            }
+            else {
+              if (main->error.verbosity != f_console_verbosity_quiet) {
+                fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, arguments->argv[main->remaining.array[counter]], "process", fll_error_file_type_file);
+              }
+            }
 
             byte_dump_main_delete(main);
+
             return status;
           }
         } // for
@@ -499,12 +523,13 @@ extern "C" {
     }
 
     byte_dump_main_delete(main);
+
     return status;
   }
 #endif // _di_byte_dump_main_
 
 #ifndef _di_byte_dump_main_delete_
-  f_status_t byte_dump_main_delete(byte_dump_main_t *main) {
+  f_status_t byte_dump_main_delete(byte_dump_main_t * const main) {
 
     for (f_array_length_t i = 0; i < byte_dump_total_parameters_d; ++i) {
 
@@ -516,6 +541,7 @@ extern "C" {
     macro_f_array_lengths_t_delete_simple(main->remaining);
 
     macro_f_color_context_t_delete_simple(main->context);
+    macro_f_color_context_t_clear(main->context)
 
     return F_none;
   }

@@ -60,7 +60,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_write_print_help_
 
 #ifndef _di_fss_embedded_list_write_main_
-  f_status_t fss_embedded_list_write_main(const f_console_arguments_t arguments, fss_embedded_list_write_main_t *main) {
+  f_status_t fss_embedded_list_write_main(fss_embedded_list_write_main_t * const main, const f_console_arguments_t *arguments) {
     f_status_t status = F_none;
 
     {
@@ -70,7 +70,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { fss_embedded_list_write_parameter_no_color, fss_embedded_list_write_parameter_light, fss_embedded_list_write_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -176,15 +176,15 @@ extern "C" {
 
           output.id = -1;
           output.stream = 0;
-          status = f_file_stream_open(arguments.argv[location], 0, &output);
+          status = f_file_stream_open(arguments->argv[location], 0, &output);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[location], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], "open", fll_error_file_type_file);
           }
         }
       }
       else if (main->parameters[fss_embedded_list_write_parameter_file].result == f_console_result_found) {
-        fss_embedded_list_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_file_s);
+        fss_embedded_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_file_s);
         status = F_status_set_error(F_parameter);
       }
     }
@@ -193,15 +193,15 @@ extern "C" {
       if (main->parameters[fss_embedded_list_write_parameter_object].locations.used || main->parameters[fss_embedded_list_write_parameter_content].locations.used) {
         if (main->parameters[fss_embedded_list_write_parameter_object].locations.used) {
           if (main->parameters[fss_embedded_list_write_parameter_object].locations.used != main->parameters[fss_embedded_list_write_parameter_object].values.used) {
-            fss_embedded_list_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_object_s);
+            fss_embedded_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_object_s);
             status = F_status_set_error(F_parameter);
           }
           else if (main->parameters[fss_embedded_list_write_parameter_content].locations.used != main->parameters[fss_embedded_list_write_parameter_content].values.used) {
-            fss_embedded_list_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content_s);
+            fss_embedded_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content_s);
             status = F_status_set_error(F_parameter);
           }
           else if (main->parameters[fss_embedded_list_write_parameter_object].locations.used != main->parameters[fss_embedded_list_write_parameter_content].locations.used && main->parameters[fss_embedded_list_write_parameter_partial].result == f_console_result_none) {
-            fss_embedded_list_write_error_parameter_same_times_print(*main);
+            fss_embedded_list_write_error_parameter_same_times_print(main);
             status = F_status_set_error(F_parameter);
           }
           else if (main->parameters[fss_embedded_list_write_parameter_content].locations.used && main->parameters[fss_embedded_list_write_parameter_partial].locations.used) {
@@ -259,11 +259,11 @@ extern "C" {
         }
         else if (main->parameters[fss_embedded_list_write_parameter_content].locations.used) {
           if (main->parameters[fss_embedded_list_write_parameter_content].locations.used != main->parameters[fss_embedded_list_write_parameter_content].values.used) {
-            fss_embedded_list_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content_s);
+            fss_embedded_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content_s);
             status = F_status_set_error(F_parameter);
           }
           else if (!main->parameters[fss_embedded_list_write_parameter_partial].locations.used) {
-            fss_embedded_list_write_error_parameter_same_times_print(*main);
+            fss_embedded_list_write_error_parameter_same_times_print(main);
             status = F_status_set_error(F_parameter);
           }
         }
@@ -317,12 +317,12 @@ extern "C" {
       }
       else if (main->parameters[fss_embedded_list_write_parameter_prepend].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[fss_embedded_list_write_parameter_prepend].values.array[main->parameters[fss_embedded_list_write_parameter_prepend].values.used - 1];
-        const f_array_length_t length = strnlen(arguments.argv[index], f_console_parameter_size);
+        const f_array_length_t length = strnlen(arguments->argv[index], f_console_parameter_size);
 
         if (length) {
           f_string_range_t range = macro_f_string_range_t_initialize(length);
 
-          main->prepend.string = arguments.argv[index];
+          main->prepend.string = arguments->argv[index];
           main->prepend.used = length;
           main->prepend.size = length;
 
@@ -419,9 +419,9 @@ extern "C" {
       f_string_ranges_t ignore = f_string_ranges_t_initialize;
 
       if (main->process_pipe) {
-        status = fss_embedded_list_write_process_pipe(*main, output, quote, &buffer, &ignore);
+        status = fss_embedded_list_write_process_pipe(main, output, quote, &buffer, &ignore);
 
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(status) && F_status_set_fine(status) != F_interrupt) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
             flockfile(main->error.to.stream);
 
@@ -441,25 +441,35 @@ extern "C" {
           if (main->parameters[fss_embedded_list_write_parameter_object].result == f_console_result_additional) {
             for (f_array_length_t i = 0; i < main->parameters[fss_embedded_list_write_parameter_object].values.used; ++i) {
 
-              object.string = arguments.argv[main->parameters[fss_embedded_list_write_parameter_object].values.array[i]];
+              if (fss_embedded_list_write_signal_received(main)) {
+                status = F_status_set_error(F_interrupt);
+                break;
+              }
+
+              object.string = arguments->argv[main->parameters[fss_embedded_list_write_parameter_object].values.array[i]];
               object.used = strnlen(object.string, f_console_parameter_size);
               object.size = object.used;
 
-              status = fss_embedded_list_write_process(*main, output, quote, &object, 0, 0, &buffer);
+              status = fss_embedded_list_write_process(main, output, quote, &object, 0, 0, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
           else {
             for (f_array_length_t i = 0; i < main->parameters[fss_embedded_list_write_parameter_content].values.used; ++i) {
 
-              status = fss_embedded_list_write_process_parameter_ignore(arguments, *main, main->parameters[fss_embedded_list_write_parameter_content].locations, i, &ignore);
+              if (fss_embedded_list_write_signal_received(main)) {
+                status = F_status_set_error(F_interrupt);
+                break;
+              }
+
+              status = fss_embedded_list_write_process_parameter_ignore(main, arguments, main->parameters[fss_embedded_list_write_parameter_content].locations, i, &ignore);
               if (F_status_is_error(status)) break;
 
-              content.string = arguments.argv[main->parameters[fss_embedded_list_write_parameter_content].values.array[i]];
+              content.string = arguments->argv[main->parameters[fss_embedded_list_write_parameter_content].values.array[i]];
               content.used = strnlen(content.string, f_console_parameter_size);
               content.size = content.used;
 
-              status = fss_embedded_list_write_process(*main, output, quote, 0, &content, &ignore, &buffer);
+              status = fss_embedded_list_write_process(main, output, quote, 0, &content, &ignore, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
@@ -467,18 +477,23 @@ extern "C" {
         else {
           for (f_array_length_t i = 0; i < main->parameters[fss_embedded_list_write_parameter_object].values.used; ++i) {
 
-            status = fss_embedded_list_write_process_parameter_ignore(arguments, *main, main->parameters[fss_embedded_list_write_parameter_content].locations, i, &ignore);
+            if (fss_embedded_list_write_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
+              break;
+            }
+
+            status = fss_embedded_list_write_process_parameter_ignore(main, arguments, main->parameters[fss_embedded_list_write_parameter_content].locations, i, &ignore);
             if (F_status_is_error(status)) break;
 
-            object.string = arguments.argv[main->parameters[fss_embedded_list_write_parameter_object].values.array[i]];
+            object.string = arguments->argv[main->parameters[fss_embedded_list_write_parameter_object].values.array[i]];
             object.used = strnlen(object.string, f_console_parameter_size);
             object.size = object.used;
 
-            content.string = arguments.argv[main->parameters[fss_embedded_list_write_parameter_content].values.array[i]];
+            content.string = arguments->argv[main->parameters[fss_embedded_list_write_parameter_content].values.array[i]];
             content.used = strnlen(content.string, f_console_parameter_size);
             content.size = content.used;
 
-            status = fss_embedded_list_write_process(*main, output, quote, &object, &content, &ignore, &buffer);
+            status = fss_embedded_list_write_process(main, output, quote, &object, &content, &ignore, &buffer);
             if (F_status_is_error(status)) break;
           } // for
         }
@@ -530,12 +545,13 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(object);
     macro_f_string_dynamic_t_delete_simple(content);
     fss_embedded_list_write_main_delete(main);
+
     return status;
   }
 #endif // _di_fss_embedded_list_write_main_
 
 #ifndef _di_fss_embedded_list_write_main_delete_
-  f_status_t fss_embedded_list_write_main_delete(fss_embedded_list_write_main_t *main) {
+  f_status_t fss_embedded_list_write_main_delete(fss_embedded_list_write_main_t * const main) {
 
     for (f_array_length_t i = 0; i < fss_embedded_list_write_total_parameters_d; ++i) {
 

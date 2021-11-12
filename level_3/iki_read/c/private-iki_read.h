@@ -18,12 +18,10 @@ extern "C" {
  * If the --at parameter is not specified in the console arguments, then range is untouched.
  * The range.start will be greater than main->buffer.used if the --at range is not found before buffer end is reached.
  *
- * @param arguments
- *   The console arguments passed to the program.
+ * @param main
+ *   The main program data.
  * @param file_name
  *   The name of the file being processed.
- * @param main
- *   The main data.
  * @param range
  *   The range value to represent the --at values.
  *
@@ -35,18 +33,18 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_at_
-  extern f_status_t iki_read_process_at(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main, f_string_range_t *range) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_at(iki_read_main_t * const main, const f_string_t file_name, f_string_range_t *range) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_at_
 
 /**
  * Process a given buffer.
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The console arguments passed to the program.
  * @param file_name
  *   The name of the file being processed.
- * @param main
- *   The main data.
  *
  * @return
  *   F_none on success.
@@ -55,18 +53,18 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_
-  extern f_status_t iki_read_process_buffer(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_
 
 /**
  * Process a given buffer, printing the given range.
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The console arguments passed to the program.
  * @param file_name
  *   The name of the file being processed.
- * @param main
- *   The main data.
  * @param buffer_range
  *   The range within the buffer to process.
  * @param variable
@@ -86,7 +84,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_
-  extern f_status_t iki_read_process_buffer_ranges(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main, f_string_range_t *buffer_range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_ranges(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, f_string_range_t *buffer_range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_ranges_
 
 /**
@@ -94,14 +92,14 @@ extern "C" {
  *
  * The entire variable is replaced with the range from the associated ranges.
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The console arguments passed to the program.
  * @param file_name
  *   The name of the file being processed.
  * @param buffer_range
  *   The range within the buffer to process.
- * @param main
- *   The main data.
  * @param variable
  *   The ranges representing a variable.
  * @param vocabulary
@@ -119,18 +117,18 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  extern f_status_t iki_read_process_buffer_ranges_whole(const f_console_arguments_t arguments, const f_string_t file_name, const f_string_range_t buffer_range, iki_read_main_t *main, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, const f_string_range_t buffer_range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 /**
  * Process a given buffer, printing the total.
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The console arguments passed to the program.
  * @param file_name
  *   The name of the file being processed.
- * @param main
- *   The main data.
  * @param variable
  *   The ranges representing a variable.
  * @param vocabulary
@@ -144,18 +142,18 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_total_
-  extern f_status_t iki_read_process_buffer_total(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_total_
 
 /**
  * Process the arguments, associating substitions with a given vocabulary.
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The console arguments passed to the program.
  * @param file_name
  *   The name of the file being processed.
- * @param main
- *   The main data.
  * @param vocabulary
  *   The ranges representing a vocabulary.
  * @param substitutionss
@@ -167,14 +165,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_substitutions_identify_
-  extern f_status_t iki_read_substitutions_identify(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_substitutions_identify(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_substitutions_identify_
 
 /**
  * Print any applicable substition and if there is non then print the given range at the given index.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param variable
  *   The ranges representing a variable.
  * @param content
@@ -190,7 +188,7 @@ extern "C" {
  *   Set to FALSE to print the entire variable when printing substituted text.
  */
 #ifndef _di_iki_read_substitutions_print_
-  extern void iki_read_substitutions_print(const iki_read_main_t main, const f_iki_variable_t variable, const f_iki_content_t content, const f_string_ranges_t ranges, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
+  extern void iki_read_substitutions_print(iki_read_main_t * const main, const f_iki_variable_t variable, const f_iki_content_t content, const f_string_ranges_t ranges, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_substitutions_print_
 
 #ifdef __cplusplus

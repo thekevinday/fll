@@ -55,7 +55,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_delimit_object_is_
 
 #ifndef _di_fss_basic_list_read_depth_process_
-  f_status_t fss_basic_list_read_depth_process(f_console_arguments_t * const arguments, fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data) {
+  f_status_t fss_basic_list_read_depth_process(fss_basic_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) {
 
     f_status_t status = F_none;
 
@@ -84,6 +84,10 @@ extern "C" {
     f_array_length_t position_name = 0;
 
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
+
+      if (fss_basic_list_read_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
 
       data->depths.array[i].depth = 0;
       data->depths.array[i].index_at = 0;
@@ -166,6 +170,10 @@ extern "C" {
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
       for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
+
+        if (fss_basic_list_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
@@ -257,7 +265,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_load_
 
 #ifndef _di_fss_basic_list_read_load_number_
-  f_status_t fss_basic_list_read_load_number(const f_array_length_t parameter, const f_string_t name, f_console_arguments_t * const arguments, fss_basic_list_read_main_t * const main, f_number_unsigned_t *number) {
+  f_status_t fss_basic_list_read_load_number(fss_basic_list_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) {
 
     if (main->parameters[parameter].result == f_console_result_additional) {
       const f_array_length_t index = main->parameters[parameter].values.array[main->parameters[parameter].values.used - 1];
@@ -279,7 +287,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_load_number_
 
 #ifndef _di_fss_basic_list_read_print_at_
-  void fss_basic_list_read_print_at(const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t * const data) {
+  void fss_basic_list_read_print_at(fss_basic_list_read_main_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_basic_list_read_data_t * const data) {
 
     if (at >= data->contents.used) {
       return;
@@ -385,9 +393,9 @@ extern "C" {
 #endif // _di_fss_basic_list_read_print_zero_
 
 #ifndef _di_fss_basic_list_read_process_
-  f_status_t fss_basic_list_read_process(f_console_arguments_t * const arguments, fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data) {
+  f_status_t fss_basic_list_read_process(fss_basic_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) {
 
-    f_status_t status = fss_basic_list_read_process_option(arguments, main, data);
+    f_status_t status = fss_basic_list_read_process_option(main, arguments, data);
     if (F_status_is_error(status)) return status;
 
     // This standard does not support multiple content groups.
@@ -440,7 +448,11 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      fss_basic_list_read_print_at(i, *delimits_object, *delimits_content, main, data);
+      if (fss_basic_list_read_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
+
+      fss_basic_list_read_print_at(main, i, *delimits_object, *delimits_content, data);
     } // for
 
     return F_none;
@@ -478,11 +490,15 @@ extern "C" {
 
       if (!names[i]) continue;
 
+      if (fss_basic_list_read_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
+
       if (at == data->depths.array[0].value_at) {
         if (data->option & fss_basic_list_read_data_option_line_d) {
           f_array_length_t line = 0;
 
-          status = fss_basic_list_read_process_at_line(i, *delimits_object, *delimits_content, main, data, &line);
+          status = fss_basic_list_read_process_at_line(main, i, *delimits_object, *delimits_content, data, &line);
           if (status == F_success) return F_none;
         }
         else if (data->option & fss_basic_list_read_data_option_columns_d) {
@@ -501,7 +517,7 @@ extern "C" {
           funlockfile(main->output.to.stream);
         }
         else {
-          fss_basic_list_read_print_at(i, *delimits_object, *delimits_content, main, data);
+          fss_basic_list_read_print_at(main, i, *delimits_object, *delimits_content, data);
         }
 
         return F_none;
@@ -541,6 +557,10 @@ extern "C" {
 
       if (!names[at]) continue;
 
+      if (fss_basic_list_read_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
+
       if (data->contents.array[at].used > max) {
         max = data->contents.array[at].used;
       }
@@ -553,7 +573,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_process_columns_
 
 #ifndef _di_fss_basic_list_read_process_at_line_
-  f_status_t fss_basic_list_read_process_at_line(const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, f_array_length_t *line) {
+  f_status_t fss_basic_list_read_process_at_line(fss_basic_list_read_main_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_basic_list_read_data_t *data, f_array_length_t *line) {
 
     if (data->option & fss_basic_list_read_data_option_object_d) {
       if (*line == data->line) {
@@ -592,6 +612,10 @@ extern "C" {
       }
 
       for (i = range.start; i <= range.stop; ++i) {
+
+        if (fss_basic_list_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
 
         if (data->buffer.string[i] == f_string_eol_s[0]) {
           if (*line == data->line) {
@@ -666,7 +690,11 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      status = fss_basic_list_read_process_at_line(i, *delimits_object, *delimits_content, main, data, &line);
+      if (fss_basic_list_read_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
+
+      status = fss_basic_list_read_process_at_line(main, i, *delimits_object, *delimits_content, data, &line);
       if (status == F_success) break;
     } // for
 
@@ -701,7 +729,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_process_name_
 
 #ifndef _di_fss_basic_list_read_process_option_
-  f_status_t fss_basic_list_read_process_option(f_console_arguments_t * const arguments, fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data) {
+  f_status_t fss_basic_list_read_process_option(fss_basic_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) {
 
     f_status_t status = F_none;
 
@@ -724,7 +752,7 @@ extern "C" {
     if (main->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
       data->option |= fss_basic_list_read_data_option_line_d;
 
-      status = fss_basic_list_read_load_number(fss_basic_list_read_parameter_line, fss_basic_list_long_line_s, arguments, main, &data->line);
+      status = fss_basic_list_read_load_number(main, fss_basic_list_read_parameter_line, fss_basic_list_long_line_s, arguments, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
@@ -743,7 +771,7 @@ extern "C" {
     if (main->parameters[fss_basic_list_read_parameter_select].result == f_console_result_additional) {
       data->option |= fss_basic_list_read_data_option_select_d;
 
-      status = fss_basic_list_read_load_number(fss_basic_list_read_parameter_select, fss_basic_list_long_select_s, arguments, main, &data->select);
+      status = fss_basic_list_read_load_number(main, fss_basic_list_read_parameter_select, fss_basic_list_long_select_s, arguments, &data->select);
       if (F_status_is_error(status)) return status;
     }
 
@@ -774,6 +802,10 @@ extern "C" {
     for (f_array_length_t at = 0; at < data->contents.used; ++at) {
 
       if (!names[at]) continue;
+
+      if (fss_basic_list_read_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
 
       if (data->option & fss_basic_list_read_data_option_object_d) {
         ++total;

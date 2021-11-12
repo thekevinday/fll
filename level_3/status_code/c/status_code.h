@@ -26,6 +26,7 @@
 #include <fll/level_0/console.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
+#include <fll/level_0/signal.h>
 
 // fll-1 includes
 #include <fll/level_1/console.h>
@@ -124,6 +125,8 @@ extern "C" {
     fl_print_t error;
     fl_print_t warning;
 
+    f_signal_t signal;
+
     f_color_context_t context;
   } status_code_main_t;
 
@@ -135,6 +138,7 @@ extern "C" {
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
+      f_signal_t_initialize, \
       f_color_context_t_initialize, \
     }
 #endif // _di_status_code_main_t_
@@ -159,10 +163,18 @@ extern "C" {
  *
  * Be sure to call status_code_main_delete() after executing this.
  *
+ * If main.signal is non-zero, then this blocks and handles the following signals:
+ * - F_signal_abort
+ * - F_signal_broken_pipe
+ * - F_signal_hangup
+ * - F_signal_interrupt
+ * - F_signal_quit
+ * - F_signal_termination
+ *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The parameters passed to the process.
- * @param main
- *   The main data.
  *
  * @return
  *   F_none on success.
@@ -172,7 +184,7 @@ extern "C" {
  * @see status_code_main_delete()
  */
 #ifndef _di_status_code_main_
-  extern f_status_t status_code_main(const f_console_arguments_t arguments, status_code_main_t *main);
+  extern f_status_t status_code_main(status_code_main_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_status_code_main_
 
 /**
@@ -181,7 +193,7 @@ extern "C" {
  * Be sure to call this after executing status_code_main().
  *
  * @param main
- *   The main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -191,7 +203,7 @@ extern "C" {
  * @see status_code_main()
  */
 #ifndef _di_status_code_main_delete_
-  extern f_status_t status_code_main_delete(status_code_main_t *main);
+  extern f_status_t status_code_main_delete(status_code_main_t * const main);
 #endif // _di_status_code_main_delete_
 
 #ifdef __cplusplus

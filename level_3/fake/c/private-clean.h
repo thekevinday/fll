@@ -16,15 +16,17 @@ extern "C" {
  * Execute the clean operation.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
  *
+ *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_clean_operate_
-  extern f_status_t fake_clean_operate(const fake_main_t main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_clean_operate(fake_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fake_clean_operate_
 
 /**

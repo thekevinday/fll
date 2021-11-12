@@ -10,32 +10,32 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_execute_
-  int fake_execute(const fake_main_t main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
+  int fake_execute(fake_main_t * const main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
 
     if (F_status_is_error(*status)) return 1;
 
-    if (main.error.verbosity == f_console_verbosity_verbose) {
-      flockfile(main.output.to.stream);
+    if (main->error.verbosity == f_console_verbosity_verbose) {
+      flockfile(main->output.to.stream);
 
-      f_print_dynamic(program, main.output.to.stream);
+      f_print_dynamic(program, main->output.to.stream);
 
       for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
         if (!arguments.array[i].used) continue;
 
-        fl_print_format(" %Q", main.output.to.stream, arguments.array[i]);
+        fl_print_format(" %Q", main->output.to.stream, arguments.array[i]);
       } // for
 
-      f_print_character(f_string_eol_s[0], main.output.to.stream);
+      f_print_character(f_string_eol_s[0], main->output.to.stream);
 
-      funlockfile(main.output.to.stream);
+      funlockfile(main->output.to.stream);
 
-      // flush to stdout before executing command.
-      fflush(main.output.to.stream);
+      // Flush to stdout before executing command.
+      fflush(main->output.to.stream);
     }
 
     if (fake_signal_received(main)) {
-      *status = F_status_set_error(F_signal);
+      *status = F_status_set_error(F_interrupt);
 
       return 0;
     }
@@ -44,7 +44,7 @@ extern "C" {
 
     if (program.used) {
 
-      // child processes should receive all signals, without blocking.
+      // Child processes should receive all signals, without blocking.
       f_signal_how_t signals = f_signal_how_t_initialize;
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
@@ -54,7 +54,7 @@ extern "C" {
       *status = fll_execute_program(program.string, arguments, &parameter, 0, (void *) &return_code);
 
       if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_signal);
+        *status = F_status_set_error(F_interrupt);
 
         return 0;
       }
@@ -74,18 +74,18 @@ extern "C" {
       return_code = 1;
 
       if (F_status_set_fine(*status) == F_file_found_not) {
-        if (main.error.verbosity != f_console_verbosity_quiet) {
-          flockfile(main.error.to.stream);
+        if (main->error.verbosity != f_console_verbosity_quiet) {
+          flockfile(main->error.to.stream);
 
-          fl_print_format("%c%[%SFailed to find program '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-          fl_print_format("%[%Q%]", main.error.to.stream, main.error.notable, program, main.error.notable);
-          fl_print_format("%[' for executing.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SFailed to find program '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, program, main->error.notable);
+          fl_print_format("%[' for executing.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-          funlockfile(main.error.to.stream);
+          funlockfile(main->error.to.stream);
         }
       }
       else {
-        fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_program", F_true);
+        fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_program", F_true);
       }
     }
 
@@ -94,14 +94,14 @@ extern "C" {
 #endif // _di_fake_execute_
 
 #ifndef _di_fake_file_buffer_
-  f_status_t fake_file_buffer(const fake_main_t main, const f_string_t path_file, f_string_dynamic_t *buffer) {
+  f_status_t fake_file_buffer(fake_main_t * const main, const f_string_t path_file, f_string_dynamic_t *buffer) {
 
     f_file_t file = f_file_t_initialize;
     f_string_t name_function = "f_file_exists";
     f_status_t status = F_none;
 
     if (fake_signal_received(main)) {
-      return F_status_set_error(F_signal);
+      return F_status_set_error(F_interrupt);
     }
 
     status = f_file_exists(path_file);
@@ -121,9 +121,10 @@ extern "C" {
            macro_f_string_dynamic_t_resize((status), (*buffer), size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main.error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
 
             macro_f_string_dynamic_t_delete_simple((*buffer));
+
             return status;
           }
         }
@@ -133,14 +134,6 @@ extern "C" {
 
       name_function = "f_file_open";
       status = f_file_stream_open(path_file, 0, &file);
-
-      if (fake_signal_received(main)) {
-        if (file.id) {
-          f_file_stream_close(F_true, &file);
-        }
-
-        return F_status_set_error(F_signal);
-      }
 
       if (F_status_is_error_not(status)) {
         name_function = "f_file_read";
@@ -154,7 +147,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main.error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
+      fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
 
       macro_f_string_dynamic_t_delete_simple((*buffer));
     }
@@ -614,7 +607,8 @@ extern "C" {
 #endif // _di_fake_path_generate_string_dynamic_
 
 #ifndef _di_fake_process_console_parameters_
-  f_status_t fake_process_console_parameters(const f_console_arguments_t arguments, fake_main_t *main) {
+  f_status_t fake_process_console_parameters(const f_console_arguments_t *arguments, fake_main_t *main) {
+
     f_status_t status = F_none;
 
     // @todo move as many of the inline error printing code into more general functions where possible to provide more accurate error reporting.
@@ -659,19 +653,19 @@ extern "C" {
       for (uint8_t i = 0; i < 3; ++i) {
 
         if (main->parameters[parameters_id[i]].result == f_console_result_found) {
-          fake_print_error_parameter_missing_value(*main, parameters_name[i]);
+          fake_print_error_parameter_missing_value(main, parameters_name[i]);
 
           return F_status_set_error(F_parameter);
         }
         else if (main->parameters[parameters_id[i]].result == f_console_result_additional) {
           if (main->parameters[parameters_id[i]].locations.used > 1) {
-            fake_print_error_parameter_too_many(*main, parameters_name[i]);
+            fake_print_error_parameter_too_many(main, parameters_name[i]);
 
             return F_status_set_error(F_parameter);
           }
 
           f_array_length_t location = main->parameters[parameters_id[i]].values.array[0];
-          f_array_length_t length = strnlen(arguments.argv[location], f_console_parameter_size);
+          f_array_length_t length = strnlen(arguments->argv[location], f_console_parameter_size);
 
           if (length > 0) {
             if (parameters_validate_word[i]) {
@@ -682,7 +676,7 @@ extern "C" {
 
                 width_max = length - j;
 
-                status = f_utf_is_word_dash_plus(arguments.argv[location] + j, width_max, F_false);
+                status = f_utf_is_word_dash_plus(arguments->argv[location] + j, width_max, F_false);
 
                 if (F_status_is_error(status)) {
                   if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
@@ -705,7 +699,7 @@ extern "C" {
                     fl_print_format("%c%[%SThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
                     fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_process_s, main->error.notable);
                     fl_print_format("%[' parameters value '%]", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
-                    fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, arguments.argv[location], main->error.notable);
+                    fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, arguments->argv[location], main->error.notable);
                     fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
                     funlockfile(main->error.to.stream);
@@ -716,7 +710,7 @@ extern "C" {
               } // for
             }
 
-            status = f_string_append(arguments.argv[location], length, parameters_value[i]);
+            status = f_string_append(arguments->argv[location], length, parameters_value[i]);
 
             if (F_status_is_error(status)) {
               if (status == F_status_set_error(F_string_too_large)) {
@@ -769,7 +763,7 @@ extern "C" {
     }
 
     if (main->parameters[fake_parameter_define].result == f_console_result_found) {
-      fake_print_error_parameter_missing_value(*main, fake_long_define_s);
+      fake_print_error_parameter_missing_value(main, fake_long_define_s);
 
       return F_status_set_error(F_parameter);
     }
@@ -813,16 +807,18 @@ extern "C" {
       for (uint8_t i = 0; i < 4; ++i) {
 
         if (main->parameters[parameters_id[i]].result == f_console_result_found) {
-          fake_print_error_parameter_missing_value(*main, parameters_name[i]);
+          fake_print_error_parameter_missing_value(main, parameters_name[i]);
+
           return F_status_set_error(F_parameter);
         }
         else if (main->parameters[parameters_id[i]].result == f_console_result_additional) {
           if (main->parameters[parameters_id[i]].values.used > 1) {
-            fake_print_error_parameter_too_many(*main, parameters_name[i]);
+            fake_print_error_parameter_too_many(main, parameters_name[i]);
+
             return F_status_set_error(F_parameter);
           }
 
-          status = fl_console_parameter_to_string_dynamic_directory(arguments.argv[main->parameters[parameters_id[i]].values.array[0]], parameters_value[i]);
+          status = fl_console_parameter_to_string_dynamic_directory(arguments->argv[main->parameters[parameters_id[i]].values.array[0]], parameters_value[i]);
 
           if (F_status_is_error(status)) {
             if (fll_error_print(main->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
@@ -862,7 +858,7 @@ extern "C" {
     }
 
     if (main->parameters[fake_parameter_define].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip(arguments.argv, main->parameters[fake_parameter_define].values, &main->define);
+      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters[fake_parameter_define].values, &main->define);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
@@ -880,11 +876,11 @@ extern "C" {
     }
 
     if (main->parameters[fake_parameter_mode].result == f_console_result_found) {
-      fake_print_error_parameter_missing_value(*main, fake_long_mode_s);
+      fake_print_error_parameter_missing_value(main, fake_long_mode_s);
       return F_status_set_error(F_parameter);
     }
     else if (main->parameters[fake_parameter_mode].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip(arguments.argv, main->parameters[fake_parameter_mode].values, &main->mode);
+      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters[fake_parameter_mode].values, &main->mode);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
@@ -949,41 +945,6 @@ extern "C" {
   }
 #endif // _di_fake_process_console_parameters_
 
-#ifndef _di_fake_signal_read_
-  f_status_t fake_signal_received(const fake_main_t main) {
-
-    if (!main.signal.id) {
-      return F_false;
-    }
-
-    f_status_t status = F_none;
-
-    struct signalfd_siginfo information;
-
-    memset(&information, 0, sizeof(struct signalfd_siginfo));
-
-    status = f_signal_read(main.signal, &information);
-
-    if (status == F_signal) {
-      switch (information.ssi_signo) {
-        case F_signal_abort:
-        case F_signal_hangup:
-        case F_signal_interrupt:
-        case F_signal_quit:
-        case F_signal_termination:
-
-          if (main.error.verbosity != f_console_verbosity_quiet) {
-            fll_print_format("%c%[ALERT: An appropriate exit signal has been received, now aborting.%]%c", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.context, f_string_eol_s[0]);
-          }
-
-          return F_true;
-      }
-    }
-
-    return F_false;
-  }
-#endif // _di_fake_signal_read_
-
 #ifndef _di_fake_signal_state_interrupt_fss_
   f_status_t fake_signal_state_interrupt_fss(void *state, void *internal) {
 
@@ -999,7 +960,7 @@ extern "C" {
 
     fake_main_t *main = (fake_main_t *) state_ptr->custom;
 
-    if (fake_signal_received(*main)) {
+    if (fake_signal_received(main)) {
       return F_status_set_error(F_interrupt);
     }
 
@@ -1022,7 +983,7 @@ extern "C" {
 
     fake_main_t *main = (fake_main_t *) state_ptr->custom;
 
-    if (fake_signal_received(*main)) {
+    if (fake_signal_received(main)) {
       return F_status_set_error(F_interrupt);
     }
 
@@ -1031,10 +992,10 @@ extern "C" {
 #endif // _di_fake_signal_state_interrupt_iki_
 
 #ifndef _di_fake_validate_directories_
-  f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_main_t main) {
+  f_status_t fake_validate_parameter_directories(const f_console_arguments_t *arguments, fake_main_t * const main) {
 
     if (fake_signal_received(main)) {
-      return F_signal;
+      return F_status_set_error(F_interrupt);
     }
 
     const f_string_t parameters_name[] = {
@@ -1056,9 +1017,9 @@ extern "C" {
     };
 
     const f_string_dynamic_t *parameters_value[] = {
-      &main.path_build,
-      &main.path_data,
-      &main.path_work,
+      &main->path_build,
+      &main->path_data,
+      &main->path_work,
     };
 
     const bool parameters_required[] = {
@@ -1073,7 +1034,7 @@ extern "C" {
     for (uint8_t i = 0; i < 3; ++i) {
 
       if (fake_signal_received(main)) {
-        return F_status_set_error(F_signal);
+        return F_status_set_error(F_interrupt);
       }
 
       if (parameters_value[i]->used) {
@@ -1085,20 +1046,20 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) != F_directory_found_not || parameters_required[i]) {
-            fll_error_file_print(main.error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i]->string, "access", fll_error_file_type_directory);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i]->string, "access", fll_error_file_type_directory);
 
             return status;
           }
         }
       }
       else if (parameters_required[i]) {
-        flockfile(main.error.to.stream);
+        flockfile(main->error.to.stream);
 
-        fl_print_format("%c%[%SNo valid path for the (required) directory parameter '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-        fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, parameters_name[i], main.error.notable);
-        fl_print_format("%[' was found.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SNo valid path for the (required) directory parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameters_name[i], main->error.notable);
+        fl_print_format("%[' was found.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-        funlockfile(main.error.to.stream);
+        funlockfile(main->error.to.stream);
 
         return F_status_set_error(F_directory_found_not);
       }

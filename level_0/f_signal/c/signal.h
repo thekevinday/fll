@@ -75,10 +75,13 @@ extern "C" {
 #endif // _di_f_signal_open_
 
 /**
- * Read a current process signal, if one exists, in a non-blocking manner.
+ * Read a current process signal, if one exists.
  *
  * @param signal
  *   The signal settings.
+ * @param timeout
+ *   Block for the number of milliseconds, waiting for a signal.
+ *   A value of 0 means that this will not block.
  * @param information
  *   The signal data to be populated if a signal is found during read.
  *
@@ -101,7 +104,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_signal_read_
-  extern f_status_t f_signal_read(const f_signal_t signal, struct signalfd_siginfo *information);
+  extern f_status_t f_signal_read(const f_signal_t signal, const int timeout, struct signalfd_siginfo *information);
 #endif // _di_f_signal_read_
 
 /**

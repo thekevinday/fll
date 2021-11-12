@@ -117,7 +117,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_print_help_
 
 #ifndef _di_fss_extended_list_read_main_
-  f_status_t fss_extended_list_read_main(f_console_arguments_t * const arguments, fss_extended_list_read_main_t *main) {
+  f_status_t fss_extended_list_read_main(fss_extended_list_read_main_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -348,6 +348,11 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_read_parameter_delimit].values.used; ++i) {
 
+          if (fss_extended_list_read_signal_received(main)) {
+            status = F_status_set_error(F_interrupt);
+            break;
+          }
+
           location = main->parameters[fss_extended_list_read_parameter_delimit].values.array[i];
           length = strnlen(arguments->argv[location], f_console_parameter_size);
 
@@ -469,7 +474,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fss_extended_list_read_depth_process(arguments, main, &data);
+        status = fss_extended_list_read_depth_process(main, arguments, &data);
       }
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
@@ -540,6 +545,11 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
+          if (fss_extended_list_read_signal_received(main)) {
+            status = F_status_set_error(F_interrupt);
+            break;
+          }
+
           data.files.array[data.files.used].range.start = data.buffer.used;
           file.stream = 0;
           file.id = -1;
@@ -601,7 +611,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fss_extended_list_read_process(arguments, main, &data);
+        status = fss_extended_list_read_process(main, arguments, &data);
       }
 
       fss_extended_list_read_data_delete_simple(&data);
@@ -609,6 +619,14 @@ extern "C" {
     else {
       fll_print_format("%c%[%sYou failed to specify one or more files.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
       status = F_status_set_error(F_parameter);
+    }
+
+    if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (F_status_set_fine(status) == F_interrupt) {
+        fflush(main->output.to.stream);
+
+        fll_print_terminated(f_string_eol_s, main->output.to.stream);
+      }
     }
 
     fss_extended_list_read_data_delete_simple(&data);

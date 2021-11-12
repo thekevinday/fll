@@ -58,7 +58,8 @@ extern "C" {
 #endif // _di_fss_identify_print_help_
 
 #ifndef _di_fss_identify_main_
-  f_status_t fss_identify_main(const f_console_arguments_t arguments, fss_identify_main_t *main) {
+  f_status_t fss_identify_main(fss_identify_main_t * const main, const f_console_arguments_t *arguments) {
+
     f_status_t status = F_none;
 
     {
@@ -68,7 +69,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { fss_identify_parameter_no_color, fss_identify_parameter_light, fss_identify_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -173,12 +174,12 @@ extern "C" {
       }
       else if (main->parameters[fss_identify_parameter_line].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[fss_identify_parameter_line].values.array[main->parameters[fss_identify_parameter_line].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments.argv[index], f_console_parameter_size));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], f_console_parameter_size));
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &data.line);
+        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &data.line);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_identify_long_line_s, arguments.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_identify_long_line_s, arguments->argv[index]);
         }
       }
     }
@@ -226,7 +227,7 @@ extern "C" {
       }
       else if (main->parameters[fss_identify_parameter_name].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[fss_identify_parameter_name].values.array[main->parameters[fss_identify_parameter_name].values.used - 1];
-        const f_array_length_t length = strnlen(arguments.argv[index], f_console_parameter_size);
+        const f_array_length_t length = strnlen(arguments->argv[index], f_console_parameter_size);
         const f_string_range_t range = macro_f_string_range_t_initialize(length);
 
         if (length == 0) {
@@ -252,7 +253,7 @@ extern "C" {
 
           for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
-            status = f_utf_is_word(arguments.argv[index] + i, length, F_true);
+            status = f_utf_is_word(arguments->argv[index] + i, length, F_true);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_true);
@@ -263,7 +264,7 @@ extern "C" {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%sThe value '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, arguments.argv[index], main->error.notable);
+              fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, arguments->argv[index], main->error.notable);
               fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
               fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
               fl_print_format("%[' may only contain word characters.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
@@ -275,7 +276,7 @@ extern "C" {
               break;
             }
 
-            data.name.string[data.name.used++] = arguments.argv[index][i];
+            data.name.string[data.name.used++] = arguments->argv[index][i];
           } // for
         }
       }
@@ -290,16 +291,21 @@ extern "C" {
       file.stream = F_type_input_d;
       file.size_read = 512;
 
-      status = fss_identify_load_line(*main, file, "-", &buffer, &range);
+      status = fss_identify_load_line(main, file, "-", &buffer, &range);
 
       if (F_status_is_error_not(status)) {
-        status = fss_identify_process(*main, "-", buffer, &range, &data);
+        status = fss_identify_process(main, "-", buffer, &range, &data);
       }
     }
 
     if (F_status_is_error_not(status)) {
 
       for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
+
+        if (fss_identify_signal_received(main)) {
+          status = F_status_set_error(F_interrupt);
+          break;
+        }
 
         if (main->parameters[fss_identify_parameter_line].result == f_console_result_additional) {
           if (data.current > data.line) break;
@@ -309,16 +315,16 @@ extern "C" {
 
         file.size_read = 512;
 
-        status = f_file_stream_open(arguments.argv[main->remaining.array[i]], 0, &file);
+        status = f_file_stream_open(arguments->argv[main->remaining.array[i]], 0, &file);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[main->remaining.array[i]], "open", fll_error_file_type_file);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file);
         }
         else {
-          status = fss_identify_load_line(*main, file, arguments.argv[main->remaining.array[i]], &buffer, &range);
+          status = fss_identify_load_line(main, file, arguments->argv[main->remaining.array[i]], &buffer, &range);
 
           if (F_status_is_error_not(status)) {
-            status = fss_identify_process(*main, arguments.argv[main->remaining.array[i]], buffer, &range, &data);
+            status = fss_identify_process(main, arguments->argv[main->remaining.array[i]], buffer, &range, &data);
           }
         }
 
@@ -336,10 +342,14 @@ extern "C" {
       }
     }
 
-    // ensure a newline is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fll_print_character(f_string_eol_s[0], main->error.to.stream);
+        if (F_status_set_fine(status) == F_interrupt) {
+          fflush(main->output.to.stream);
+        }
+
+        fll_print_terminated(f_string_eol_s, main->output.to.stream);
       }
     }
 
@@ -351,7 +361,7 @@ extern "C" {
 #endif // _di_fss_identify_main_
 
 #ifndef _di_fss_identify_main_delete_
-  f_status_t fss_identify_main_delete(fss_identify_main_t *main) {
+  f_status_t fss_identify_main_delete(fss_identify_main_t * const main) {
 
     for (f_array_length_t i = 0; i < fss_identify_total_parameters_d; ++i) {
 

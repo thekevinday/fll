@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_identify_load_line_
-  f_status_t fss_identify_load_line(const fss_identify_main_t main, const f_file_t file, const f_string_t name, f_string_static_t *buffer, f_string_range_t *range) {
+  f_status_t fss_identify_load_line(fss_identify_main_t * const main, const f_file_t file, const f_string_t name, f_string_static_t *buffer, f_string_range_t *range) {
 
     f_status_t status = F_none;
 
@@ -17,11 +17,16 @@ extern "C" {
     range->stop = 0;
 
     do {
+      if (fss_identify_signal_received(main)) {
+        status = F_status_set_error(F_interrupt);
+        break;
+      }
+
       if (buffer->used + file.size_read > buffer->size) {
         status = f_string_dynamic_resize(buffer->size + file.size_read, buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main.error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
 
           return status;
         }
@@ -30,7 +35,7 @@ extern "C" {
       status = f_file_stream_read_block(file, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main.error, F_status_set_fine(status), "f_file_stream_read_block", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
 
         return status;
       }
@@ -53,30 +58,30 @@ extern "C" {
 #endif // _di_fss_identify_load_line_
 
 #ifndef _di_fss_identify_print_
-  void fss_identify_print(const fss_identify_main_t main, f_fll_id_t id) {
+  void fss_identify_print(fss_identify_main_t * const main, f_fll_id_t id) {
 
-    flockfile(main.output.to.stream);
+    flockfile(main->output.to.stream);
 
-    if (main.parameters[fss_identify_parameter_object].result == f_console_result_found || main.parameters[fss_identify_parameter_content].result != f_console_result_found) {
-      f_print(id.name, id.used, main.output.to.stream);
+    if (main->parameters[fss_identify_parameter_object].result == f_console_result_found || main->parameters[fss_identify_parameter_content].result != f_console_result_found) {
+      f_print(id.name, id.used, main->output.to.stream);
 
-      if (main.parameters[fss_identify_parameter_object].result != f_console_result_found || main.parameters[fss_identify_parameter_content].result == f_console_result_found) {
-        f_print_terminated(f_fss_type_header_part5_s, main.output.to.stream);
+      if (main->parameters[fss_identify_parameter_object].result != f_console_result_found || main->parameters[fss_identify_parameter_content].result == f_console_result_found) {
+        f_print_terminated(f_fss_type_header_part5_s, main->output.to.stream);
       }
     }
 
-    if (main.parameters[fss_identify_parameter_object].result != f_console_result_found || main.parameters[fss_identify_parameter_content].result == f_console_result_found) {
-      fl_print_format("%04_ui", main.output.to.stream, id.type);
+    if (main->parameters[fss_identify_parameter_object].result != f_console_result_found || main->parameters[fss_identify_parameter_content].result == f_console_result_found) {
+      fl_print_format("%04_ui", main->output.to.stream, id.type);
     }
 
-    f_print_character(f_string_eol_s[0], main.output.to.stream);
+    f_print_character(f_string_eol_s[0], main->output.to.stream);
 
-    funlockfile(main.output.to.stream);
+    funlockfile(main->output.to.stream);
   }
 #endif // _di_fss_identify_print_
 
 #ifndef _di_fss_identify_process_
-  f_status_t fss_identify_process(const fss_identify_main_t main, const f_string_t name, const f_string_static_t buffer, f_string_range_t *range, fss_identify_data_t *data) {
+  f_status_t fss_identify_process(fss_identify_main_t * const main, const f_string_t name, const f_string_static_t buffer, f_string_range_t *range, fss_identify_data_t *data) {
 
     f_status_t status = F_none;
     f_fll_ids_t ids = f_fll_ids_t_initialize;
@@ -84,14 +89,14 @@ extern "C" {
     status = fll_fss_identify(buffer.string, range, &ids);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main.error, F_status_set_fine(status), "fll_fss_identify", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
 
       f_type_fll_ids_resize(0, &ids);
 
       return status;
     }
 
-    if (main.parameters[fss_identify_parameter_line].result == f_console_result_additional) {
+    if (main->parameters[fss_identify_parameter_line].result == f_console_result_additional) {
 
       for (f_array_length_t i = 0; i < ids.used; ++i, ++data->current) {
 
@@ -102,7 +107,7 @@ extern "C" {
             }
           }
 
-          if (main.parameters[fss_identify_parameter_total].result == f_console_result_found) {
+          if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
             ++data->total;
           }
           else {
@@ -115,7 +120,7 @@ extern "C" {
         }
       } // for
     }
-    else if (main.parameters[fss_identify_parameter_total].result == f_console_result_found) {
+    else if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
       if (data->name.used) {
 
         for (f_array_length_t i = 0; i < ids.used; ++i, ++data->current) {

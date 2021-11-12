@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_fss_extended_read_delimit_content_is_
 
 #ifndef _di_fss_extended_read_depth_process_
-  f_status_t fss_extended_read_depth_process(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
+  f_status_t fss_extended_read_depth_process(fss_extended_read_main_t * const main, const f_console_arguments_t *arguments, fss_extended_read_data_t *data) {
 
     f_status_t status = F_none;
 
@@ -88,6 +88,10 @@ extern "C" {
     f_array_length_t position_name = 0;
 
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
+
+      if (fss_extended_read_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
 
       data->depths.array[i].depth = 0;
       data->depths.array[i].index_at = 0;
@@ -170,6 +174,10 @@ extern "C" {
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
       for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
+
+        if (fss_extended_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
@@ -259,7 +267,7 @@ extern "C" {
 #endif // _di_fss_extended_read_load_
 
 #ifndef _di_fss_extended_read_load_number_
-  f_status_t fss_extended_read_load_number(const f_array_length_t parameter, const f_string_t name, f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, f_number_unsigned_t *number) {
+  f_status_t fss_extended_read_load_number(fss_extended_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) {
 
     if (main->parameters[parameter].result == f_console_result_additional) {
       const f_array_length_t index = main->parameters[parameter].values.array[main->parameters[parameter].values.used - 1];
@@ -281,7 +289,7 @@ extern "C" {
 #endif // _di_fss_extended_read_load_number_
 
 #ifndef _di_fss_extended_read_print_at_
-  void fss_extended_read_print_at(const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_extended_read_main_t * const main, fss_extended_read_data_t * const data) {
+  void fss_extended_read_print_at(fss_extended_read_main_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_extended_read_data_t * const data) {
 
     if (at >= data->contents.used) {
       return;
@@ -373,7 +381,7 @@ extern "C" {
 #endif // _di_fss_extended_read_print_at_
 
 #ifndef _di_fss_extended_read_print_at_total_
-  f_status_t fss_extended_read_print_at_total(const f_array_length_t at, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
+  f_status_t fss_extended_read_print_at_total(fss_extended_read_main_t * const main, const f_array_length_t at, fss_extended_read_data_t *data) {
 
     if (data->option & fss_extended_read_data_option_select) {
       if (data->option & fss_extended_read_data_option_object) {
@@ -452,6 +460,7 @@ extern "C" {
 
 #ifndef _di_fss_extended_read_print_one_
   void fss_extended_read_print_one(fss_extended_read_main_t * const main) {
+
     f_print_character(f_string_ascii_1_s[0], main->output.to.stream);
     f_print_character(f_string_eol_s[0], main->output.to.stream);
   }
@@ -477,9 +486,9 @@ extern "C" {
 #endif // _di_fss_extended_read_print_zero_
 
 #ifndef _di_fss_extended_read_process_
-  f_status_t fss_extended_read_process(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
+  f_status_t fss_extended_read_process(fss_extended_read_main_t * const main, const f_console_arguments_t *arguments, fss_extended_read_data_t *data) {
 
-    f_status_t status = fss_extended_read_process_option(arguments, main, data);
+    f_status_t status = fss_extended_read_process_option(main, arguments, data);
     if (F_status_is_error(status)) return status;
 
     status = fss_extended_read_load(main, data);
@@ -519,7 +528,7 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      fss_extended_read_print_at(i, *delimits_object, *delimits_content, main, data);
+      fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
     } // for
 
     return F_none;
@@ -578,7 +587,7 @@ extern "C" {
           if (data->line) break;
 
           if (data->option & fss_extended_read_data_option_total) {
-            if (fss_extended_read_print_at_total(i, main, data) == F_none) {
+            if (fss_extended_read_print_at_total(main, i, data) == F_none) {
               break;
             }
           }
@@ -587,7 +596,7 @@ extern "C" {
               f_print_character_safely(data->quotes_object.array[at] == f_fss_quote_type_single ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
             }
 
-            fss_extended_read_print_at(i, *delimits_object, *delimits_content, main, data);
+            fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
             if ((data->option & fss_extended_read_data_option_raw) && data->quotes_object.array[at]) {
               f_print_character_safely(data->quotes_object.array[at] == f_fss_quote_type_single ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
@@ -598,7 +607,7 @@ extern "C" {
           fll_print_format("%ul%c", main->output.to.stream, data->contents.array[i].used, f_string_eol_s[0]);
         }
         else if (data->option & fss_extended_read_data_option_total) {
-          if (fss_extended_read_print_at_total(i, main, data) == F_none) {
+          if (fss_extended_read_print_at_total(main, i, data) == F_none) {
             break;
           }
         }
@@ -607,7 +616,7 @@ extern "C" {
             f_print_character_safely(data->quotes_content.array[at].array[i] == f_fss_quote_type_single ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
           }
 
-          fss_extended_read_print_at(i, *delimits_object, *delimits_content, main, data);
+          fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
           if ((data->option & fss_extended_read_data_option_raw) && data->quotes_content.array[at].array[i]) {
             f_print_character_safely(data->quotes_content.array[at].array[i] == f_fss_quote_type_single ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
@@ -701,7 +710,7 @@ extern "C" {
       }
 
       if (line == data->line) {
-        fss_extended_read_print_at(i, *delimits_object, *delimits_content, main, data);
+        fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
         break;
       }
@@ -749,7 +758,7 @@ extern "C" {
 #endif // _di_fss_extended_read_process_name_
 
 #ifndef _di_fss_extended_read_process_option_
-  f_status_t fss_extended_read_process_option(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
+  f_status_t fss_extended_read_process_option(fss_extended_read_main_t * const main, const f_console_arguments_t *arguments, fss_extended_read_data_t *data) {
 
     f_status_t status = F_none;
 
@@ -772,7 +781,7 @@ extern "C" {
     if (main->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
       data->option |= fss_extended_read_data_option_line;
 
-      status = fss_extended_read_load_number(fss_extended_read_parameter_line, fss_extended_read_long_line_s, arguments, main, &data->line);
+      status = fss_extended_read_load_number(main, fss_extended_read_parameter_line, fss_extended_read_long_line_s, arguments, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
@@ -791,7 +800,7 @@ extern "C" {
     if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
       data->option |= fss_extended_read_data_option_select;
 
-      status = fss_extended_read_load_number(fss_extended_read_parameter_select, fss_extended_read_long_select_s, arguments, main, &data->select);
+      status = fss_extended_read_load_number(main, fss_extended_read_parameter_select, fss_extended_read_long_select_s, arguments, &data->select);
       if (F_status_is_error(status)) return status;
     }
 

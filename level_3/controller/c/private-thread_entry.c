@@ -25,14 +25,18 @@ extern "C" {
 
     *status = controller_entry_read(F_true, *entry->global, cache);
 
-    if (F_status_is_error(*status)) {
+
+    if (F_status_set_fine(*status) == F_interrupt) {
+      entry->setting->ready = controller_setting_ready_abort;
+    }
+    else if (F_status_is_error(*status)) {
       entry->setting->ready = controller_setting_ready_fail;
     }
-    else if (*status != F_signal && *status != F_child) {
+    else if (*status != F_child) {
       *status = controller_entry_preprocess(F_true, *entry->global, cache);
     }
 
-    if (F_status_is_error_not(*status) && *status != F_signal && *status != F_child) {
+    if (F_status_is_error_not(*status) && *status != F_child) {
       if (main->parameters[controller_parameter_validate].result == f_console_result_none || main->parameters[controller_parameter_simulate].result == f_console_result_found) {
 
         if (entry->setting->entry.pid == controller_entry_pid_require && f_file_exists(entry->setting->path_pid.string) == F_true) {
@@ -102,7 +106,7 @@ extern "C" {
               }
             }
           }
-          else if (*status == F_signal) {
+          else if (F_status_set_fine(*status) == F_interrupt) {
             entry->setting->ready = controller_setting_ready_abort;
           }
           else if (*status != F_child) {
@@ -146,17 +150,20 @@ extern "C" {
 
     *status = controller_entry_read(F_false, *entry->global, cache);
 
-    if (F_status_is_error(*status)) {
+    if (F_status_set_fine(*status) == F_interrupt) {
+      entry->setting->ready = controller_setting_ready_abort;
+    }
+    else if (F_status_is_error(*status)) {
       entry->setting->ready = controller_setting_ready_fail;
     }
     else if (*status == F_file_found_not) {
       entry->setting->ready = controller_setting_ready_done;
     }
-    else if (*status != F_signal && *status != F_child) {
+    else if (*status != F_child) {
       *status = controller_entry_preprocess(F_false, *entry->global, cache);
     }
 
-    if (F_status_is_error_not(*status) && *status != F_signal && *status != F_child && *status != F_file_found_not) {
+    if (F_status_is_error_not(*status) && *status != F_child && *status != F_file_found_not) {
       if (main->parameters[controller_parameter_validate].result == f_console_result_none || main->parameters[controller_parameter_simulate].result == f_console_result_found) {
 
         *status = controller_entry_process(F_false, F_false, entry->global, cache);
@@ -214,7 +221,7 @@ extern "C" {
             }
           }
         }
-        else if (*status == F_signal) {
+        else if (F_status_set_fine(*status) == F_interrupt) {
           entry->setting->ready = controller_setting_ready_abort;
         }
         else if (*status != F_child) {

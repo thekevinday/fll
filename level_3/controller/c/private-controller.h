@@ -359,7 +359,7 @@ extern "C" {
  * The signals will not be unblocked when in uninterruptible mode.
  *
  * @param main
- *   The program main data.
+ *   The main program data.
  * @param setting
  *   The settings.
  * @param time

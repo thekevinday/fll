@@ -1,5 +1,6 @@
 #include "fake.h"
 #include "private-common.h"
+#include "private-print.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -225,6 +226,35 @@ extern "C" {
   const f_string_t fake_make_skeleton_content_fakefile_s = FAKE_make_skeleton_content_fakefile_s;
   const f_string_t fake_make_skeleton_content_settings_s = FAKE_make_skeleton_content_settings_s;
 #endif // _di_fake_skeleton_content_
+
+#ifndef _di_fake_signal_received_
+  f_status_t fake_signal_received(fake_main_t * const main) {
+
+    if (!main->signal.id) {
+      return F_false;
+    }
+
+    struct signalfd_siginfo information;
+
+    memset(&information, 0, sizeof(struct signalfd_siginfo));
+
+    if (f_signal_read(main->signal, 0, &information) == F_signal) {
+      switch (information.ssi_signo) {
+        case F_signal_abort:
+        case F_signal_broken_pipe:
+        case F_signal_hangup:
+        case F_signal_interrupt:
+        case F_signal_quit:
+        case F_signal_termination:
+          fake_print_signal_received(main, information.ssi_signo);
+
+          return information.ssi_signo;
+      }
+    }
+
+    return F_false;
+  }
+#endif // _di_fake_signal_received_
 
 #ifdef __cplusplus
 } // extern "C"

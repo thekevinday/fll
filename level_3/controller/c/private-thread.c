@@ -253,7 +253,7 @@ extern "C" {
     }
 
     // only make the rule and control threads available once any/all pre-processing and are completed.
-    if (F_status_is_error_not(status) && status != F_signal && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled) {
+    if (F_status_is_error_not(status) && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled) {
       if (main->parameters[controller_parameter_validate].result == f_console_result_none) {
 
         // wait for the entry thread to complete before starting the rule thread.
@@ -293,7 +293,7 @@ extern "C" {
       return F_child;
     }
 
-    if (F_status_is_error_not(status) && status != F_signal && status != F_failure && main->parameters[controller_parameter_validate].result == f_console_result_none && controller_thread_is_enabled(F_true, &thread)) {
+    if (F_status_is_error_not(status) && status != F_failure && main->parameters[controller_parameter_validate].result == f_console_result_none && controller_thread_is_enabled(F_true, &thread)) {
 
       if (setting->mode == controller_setting_mode_service) {
         controller_thread_join(&thread.id_signal);
@@ -324,8 +324,14 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (status == F_signal) {
-      return F_signal;
+    if (F_status_set_fine(status) == F_interrupt) {
+      controller_print_signal_received(main, thread.signal);
+
+      if (main->output.verbosity != f_console_verbosity_quiet) {
+        fll_print_terminated(f_string_eol_s, main->output.to.stream);
+      }
+
+      return F_status_set_error(F_interrupt);
     }
 
     return F_none;

@@ -910,7 +910,7 @@ extern "C" {
     } // while
 
     if (!controller_thread_is_enabled(is_entry, global.thread)) {
-      return F_signal;
+      return F_status_set_error(F_interrupt);
     }
 
     // if ready was never found in the entry, then default to always ready.
@@ -1194,7 +1194,7 @@ extern "C" {
         else if (entry_action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(entry_action->type)) {
           status_lock = controller_lock_write(is_entry, global->thread, &global->thread->lock.rule);
 
-          if (status_lock == F_signal || F_status_is_error(status_lock)) {
+          if (F_status_is_error(status_lock)) {
             controller_lock_print_error_critical(global->main->error, F_status_set_fine(status_lock), F_false, global->thread);
             break;
           }
@@ -1221,9 +1221,8 @@ extern "C" {
 
           status_lock = controller_lock_read(is_entry, global->thread, &global->thread->lock.rule);
 
-          if (status_lock == F_signal || F_status_is_error(status_lock)) {
+          if (F_status_is_error(status_lock)) {
             controller_lock_print_error_critical(global->main->error, F_status_set_fine(status_lock), F_true, global->thread);
-
             break;
           }
 
@@ -1279,7 +1278,7 @@ extern "C" {
 
             status_lock = controller_lock_write(is_entry, global->thread, &global->thread->lock.rule);
 
-            if (!(status_lock == F_signal || F_status_is_error(status_lock))) {
+            if (F_status_is_fine(status_lock)) {
               status = controller_rule_read(is_entry, alias_rule, *global, cache, entry, &global->setting->rules.array[global->setting->rules.used]);
             }
 
@@ -1299,13 +1298,12 @@ extern "C" {
             cache->action.line_action = cache_line_action;
             cache->action.line_item = cache_line_item;
 
-            if (status_lock == F_signal || F_status_is_error(status_lock)) {
+            if (F_status_is_error(status_lock)) {
               controller_lock_print_error_critical(global->main->error, F_status_set_fine(status_lock), F_false, global->thread);
-
               break;
             }
 
-            if (status == F_signal || !controller_thread_is_enabled(is_entry, global->thread)) {
+            if (F_status_set_fine(status) == F_interrupt || !controller_thread_is_enabled(is_entry, global->thread)) {
               f_thread_unlock(&global->thread->lock.rule);
 
               break;
@@ -1313,13 +1311,11 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               if (global->main->error.verbosity != f_console_verbosity_quiet) {
-                if (F_status_set_fine(status) != F_interrupt) {
-                  controller_lock_print(global->main->error.to, global->thread);
+                controller_lock_print(global->main->error.to, global->thread);
 
-                  controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
+                controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
 
-                  controller_unlock_print_flush(global->main->error.to, global->thread);
-                }
+                controller_unlock_print_flush(global->main->error.to, global->thread);
               }
 
               // Designate the action as failed.
@@ -1373,7 +1369,7 @@ extern "C" {
 
             status = controller_rule_process_begin(options_force, alias_rule, controller_entry_action_type_to_rule_action_type(entry_action->type), options_process, is_entry ? controller_process_type_entry : controller_process_type_exit, stack, *global, *cache);
 
-            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal) {
+            if (F_status_set_fine(status) == F_memory_not || status == F_child || F_status_set_fine(status) == F_interrupt) {
               break;
             }
 
@@ -1517,7 +1513,7 @@ extern "C" {
         }
       } // for
 
-      if (status == F_child || status == F_signal) break;
+      if (status == F_child || F_status_set_fine(status) == F_interrupt) break;
 
       cache->action.line_action = 0;
       cache->action.name_action.used = 0;
@@ -1554,7 +1550,7 @@ extern "C" {
     } // while
 
     if (!controller_thread_is_enabled(is_entry, global->thread)) {
-      return F_signal;
+      return F_status_set_error(F_interrupt);
     }
 
     if (status == F_child) {
@@ -1569,11 +1565,11 @@ extern "C" {
     if (F_status_is_error_not(status) && !failsafe && global->main->parameters[controller_parameter_validate].result == f_console_result_none) {
       const f_status_t status_wait = controller_rule_wait_all(is_entry, *global, F_true, 0);
 
-      if (status_wait == F_signal || F_status_is_error(status_wait)) {
+      if (F_status_is_error(status_wait)) {
         return status_wait;
       }
 
-      if (F_status_set_fine(status_wait) == F_require) {
+      if (status_wait == F_require) {
         return F_status_set_error(F_require);
       }
     }
@@ -1834,8 +1830,8 @@ extern "C" {
           }
         } // for
 
-        if (is_entry && status == F_signal) {
-          return F_signal;
+        if (is_entry && F_status_set_fine(status) == F_interrupt) {
+          return status;
         }
 
         if (F_status_is_error_not(status)) {
@@ -1869,7 +1865,7 @@ extern "C" {
               for (j = 0; j < entry->items.array[i].actions.used; ++j) {
 
                 if (!controller_thread_is_enabled(is_entry, global.thread)) {
-                  return F_signal;
+                  return F_status_set_error(F_interrupt);
                 }
 
                 action = &entry->items.array[i].actions.array[j];

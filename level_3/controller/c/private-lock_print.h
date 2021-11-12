@@ -15,7 +15,7 @@ extern "C" {
 /**
  * Print a r/w lock related error message, locking the print mutex during the print.
  *
- * This will ignore F_signal and not print any messages, if passed.
+ * This will ignore F_interrupt and not print any messages, if passed.
  *
  * @param print
  *   Designates how printing is to be performed.

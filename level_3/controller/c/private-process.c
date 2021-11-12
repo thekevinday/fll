@@ -36,30 +36,17 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (status == F_signal || F_status_is_error(status)) {
-      controller_lock_print_error_critical(global.main->error, F_status_set_fine(status), F_true, global.thread);
-
-      return status;
-    }
-
     if (controller_process_find(action, alias, global.thread->processs, id) == F_false) {
       f_thread_unlock(&global.thread->lock.process);
 
       status = controller_lock_write(is_normal, global.thread, &global.thread->lock.process);
 
-      if (status == F_signal || F_status_is_error(status)) {
+      if (F_status_is_error(status)) {
         controller_lock_print_error_critical(global.main->error, F_status_set_fine(status), F_false, global.thread);
-
-        const f_status_t status_lock = controller_lock_read(is_normal, global.thread, &global.thread->lock.process);
-
-        if (status_lock == F_signal || F_status_is_error(status_lock)) {
-          return F_status_set_error(F_lock);
-        }
-
-        return status;
       }
-
-      status = controller_processs_increase(&global.thread->processs);
+      else {
+        status = controller_processs_increase(&global.thread->processs);
+      }
 
       if (F_status_is_error_not(status) && global.thread->processs.array[global.thread->processs.used]) {
 
@@ -67,46 +54,38 @@ extern "C" {
 
         status = controller_lock_write(is_normal, global.thread, &process->lock);
 
-        if (status == F_signal || F_status_is_error(status)) {
+        if (F_status_is_error(status)) {
           controller_lock_print_error_critical(global.main->error, F_status_set_fine(status), F_false, global.thread);
-
-          f_thread_unlock(&global.thread->lock.process);
-
-          const f_status_t status_lock = controller_lock_read(is_normal, global.thread, &global.thread->lock.process);
-
-          if (status_lock == F_signal || F_status_is_error(status_lock)) {
-            return F_status_set_error(F_lock);
-          }
-
-          return status;
         }
+        else {
+          process->action = action;
+          process->rule.alias.used = 0;
 
-        process->action = action;
-        process->rule.alias.used = 0;
-
-        status = f_string_dynamic_append(alias, &process->rule.alias);
-
-        if (F_status_is_error_not(status)) {
-          status = f_string_dynamic_terminate_after(&process->rule.alias);
+          status = f_string_dynamic_append(alias, &process->rule.alias);
 
           if (F_status_is_error_not(status)) {
-            process->id = global.thread->processs.used++;
-            status = F_none;
+            status = f_string_dynamic_terminate_after(&process->rule.alias);
 
-            if (id) {
-              *id = process->id;
+            if (F_status_is_error_not(status)) {
+              process->id = global.thread->processs.used++;
+              status = F_none;
+
+              if (id) {
+                *id = process->id;
+              }
             }
           }
-        }
 
-        f_thread_unlock(&process->lock);
+          f_thread_unlock(&process->lock);
+        }
       }
 
       f_thread_unlock(&global.thread->lock.process);
 
+      // The read lock must be restored on return.
       const f_status_t status_lock = controller_lock_read(is_normal, global.thread, &global.thread->lock.process);
 
-      if (status_lock == F_signal || F_status_is_error(status_lock)) {
+      if (F_status_is_error(status_lock)) {
         return F_status_set_error(F_lock);
       }
     }
@@ -129,7 +108,7 @@ extern "C" {
   f_status_t controller_process_wait(const controller_global_t global, controller_process_t *process) {
 
     if (!controller_thread_is_enabled_process(process, global.thread)) {
-      return F_signal;
+      return F_status_set_error(F_interrupt);
     }
 
     struct timespec time;
@@ -160,16 +139,14 @@ extern "C" {
       f_thread_mutex_unlock(&process->wait_lock);
 
       if (!controller_thread_is_enabled_process(process, global.thread)) {
-        return F_signal;
+        return F_status_set_error(F_interrupt);
       }
 
-      if (F_status_is_error(status)) {
-        break;
-      }
+      if (F_status_is_error(status)) break;
 
       status_lock = controller_lock_read_process(process, global.thread, &process->lock);
 
-      if (status_lock == F_signal || F_status_is_error(status_lock)) {
+      if (F_status_is_error(status_lock)) {
         controller_lock_print_error_critical(global.main->error, F_status_set_fine(status_lock), F_true, global.thread);
 
         break;
@@ -180,7 +157,8 @@ extern "C" {
 
         return F_none;
       }
-      else if (status != F_time) {
+
+      if (status != F_time) {
 
         // move up the wait timer after a trigger was received.
         if (count < controller_thread_wait_timeout_2_before_d) {

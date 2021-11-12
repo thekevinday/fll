@@ -126,7 +126,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_signal on success and signal found.
+ *
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
  *   Success from: f_thread_condition_wait_timed().
  *

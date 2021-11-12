@@ -46,8 +46,9 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_signal on (exit) signal received, lock will not be set when this is returned.
  *   F_status if main thread is disabled and write lock was never achieved.
+ *
+ *   F_interrupt (with error bit set) on (exit) signal received, lock will not be set when this is returned.
  *
  *   Status from: f_thread_lock_read_timed().
  *
@@ -122,8 +123,9 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_signal on (exit) signal received, lock will not be set when this is returned.
  *   F_status if main thread is disabled and write lock was never achieved.
+ *
+ *   F_interrupt (with error bit set) on (exit) signal received, lock will not be set when this is returned.
  *
  *   Status from: f_thread_lock_write_timed().
  *

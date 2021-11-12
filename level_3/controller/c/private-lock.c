@@ -45,7 +45,7 @@ extern "C" {
 
       if (status == F_time) {
         if (!controller_thread_is_enabled(is_normal, thread)) {
-          return F_signal;
+          return F_status_set_error(F_interrupt);
         }
       }
       else {
@@ -86,7 +86,7 @@ extern "C" {
 
       if (status == F_time) {
         if (!controller_thread_is_enabled(is_normal, thread)) {
-          return F_signal;
+          return F_status_set_error(F_interrupt);
         }
       }
       else {

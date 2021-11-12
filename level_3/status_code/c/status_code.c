@@ -39,7 +39,8 @@ extern "C" {
 #endif // _di_status_code_print_help_
 
 #ifndef _di_status_code_main_
-  f_status_t status_code_main(const f_console_arguments_t arguments, status_code_main_t *main) {
+  f_status_t status_code_main(status_code_main_t * const main, const f_console_arguments_t *arguments) {
+
     f_status_t status = F_none;
 
     {
@@ -49,7 +50,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { status_code_parameter_no_color, status_code_parameter_light, status_code_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -73,6 +74,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           status_code_main_delete(main);
+
           return F_status_set_error(status);
         }
       }
@@ -119,6 +121,7 @@ extern "C" {
       status_code_print_help(main->output.to, main->context);
 
       status_code_main_delete(main);
+
       return F_none;
     }
 
@@ -126,6 +129,7 @@ extern "C" {
       fll_program_print_version(main->output.to, status_code_progam_version_s);
 
       status_code_main_delete(main);
+
       return F_none;
     }
 
@@ -142,6 +146,7 @@ extern "C" {
         funlockfile(main->error.to.stream);
 
         status_code_main_delete(main);
+
         return F_status_set_error(status);
       }
       else if (main->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
@@ -156,6 +161,7 @@ extern "C" {
         funlockfile(main->error.to.stream);
 
         status_code_main_delete(main);
+
         return F_status_set_error(status);
       }
     }
@@ -171,6 +177,7 @@ extern "C" {
       funlockfile(main->error.to.stream);
 
       status_code_main_delete(main);
+
       return F_status_set_error(status);
     }
 
@@ -178,6 +185,7 @@ extern "C" {
       fll_print_format("%[You failed to specify a status code.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
       status_code_main_delete(main);
+
       return F_status_set_error(F_parameter);
     }
 
@@ -193,7 +201,12 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          status2 = status_code_process_check(*main, arguments.argv[main->remaining.array[i]]);
+          if (status_code_signal_received(main)) {
+            status = F_status_set_error(F_signal);
+            break;
+          }
+
+          status2 = status_code_process_check(main, arguments->argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -213,7 +226,12 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          status2 = status_code_process_number(*main, arguments.argv[main->remaining.array[i]]);
+          if (status_code_signal_received(main)) {
+            status = F_status_set_error(F_signal);
+            break;
+          }
+
+          status2 = status_code_process_number(main, arguments->argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -233,7 +251,12 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          status2 = status_code_process_normal(*main, arguments.argv[main->remaining.array[i]]);
+          if (status_code_signal_received(main)) {
+            status = F_status_set_error(F_signal);
+            break;
+          }
+
+          status2 = status_code_process_normal(main, arguments->argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -244,13 +267,22 @@ extern "C" {
       }
     }
 
+    if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (F_status_set_fine(status) == F_interrupt) {
+        fflush(main->output.to.stream);
+
+        fll_print_terminated(f_string_eol_s, main->output.to.stream);
+      }
+    }
+
     status_code_main_delete(main);
+
     return status;
   }
 #endif // _di_status_code_main_
 
 #ifndef _di_status_code_main_delete_
-  f_status_t status_code_main_delete(status_code_main_t *main) {
+  f_status_t status_code_main_delete(status_code_main_t * const main) {
 
     for (f_array_length_t i = 0; i < status_code_total_parameters_d; ++i) {
 

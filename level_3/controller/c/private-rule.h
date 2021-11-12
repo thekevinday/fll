@@ -222,10 +222,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_child on child process exiting.
- *   F_signal on (exit) signal received.
  *   F_ignore if the rule is unknown and nothing can be done.
  *
  *   F_failure (with error bit) if failed to execute.
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
  *
  *   On success and the rule is run synchronously, then the individual status for the rule is set to F_complete.
@@ -258,8 +258,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_child on child process exiting.
- *   F_signal on (exit) signal received.
  *
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
  *
  *   Errors (with error bit) from: fll_execute_program().
@@ -299,10 +299,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_child on child process exiting.
- *   F_signal on (exit) signal received.
  *
- *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
  *   F_file_found (with error bit) if the PID file already exists.
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
+ *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
  *
  *   Errors (with error bit) from: fll_execute_program().
  *
@@ -327,7 +327,7 @@ extern "C" {
  *   0 to designate do not re-run.
  *   -1 to designate an error from nanosleep(), with errno set to values like:
  *     - EFAULT: Designates that there was a problem copying information from user space.
- *     - EINTR:  Consider this having returned F_signal.
+ *     - EINTR:  Consider this having returned F_interrupt.
  *     - EINVAL: Consider this having returned F_status_set_error(F_parameter);
  *   -2 to designate exit due to signal/disabled thread.
  */
@@ -501,9 +501,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_child on child process exiting.
- *   F_signal on (exit) signal received.
  *   F_failure on execution failure.
  *
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
  *
  *   Errors (with error bit) from: controller_lock_read().
@@ -540,9 +540,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_busy on success and the process was found to already be running (nothing to do).
- *   F_signal on (exit) signal received.
  *
  *   F_found_not (with error bit) if unable to for a process for the given rule id.
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *   F_recurse (with error bit) on recursion error (the process is already on the process stack).
  *
  *   Status from: controller_rule_process().
@@ -577,9 +577,9 @@ extern "C" {
  *   F_none on success.
  *   F_found on the process was found to already be running (nothing to do).
  *   F_process_not if the process was not executed because it is a "consider" Action.
- *   F_signal on (exit) signal received.
  *
  *   F_found_not (with error bit) if unable to for a process for the given rule id.
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
  *   Status from: controller_rule_process().
  *
@@ -652,6 +652,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_valid_not (with error bit) on failure due to invalid value.
  *
  *   Errors (with error bit) from: fl_conversion_string_to_number_signed().
@@ -685,6 +686,7 @@ extern "C" {
  *
  * @return
  *    F_none on success.
+ *
  *    F_valid_not (with error bit) on success but there were one or more invalid settings encountered.
  *
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
@@ -748,12 +750,12 @@ extern "C" {
  *   Failure to set this to the process on a thread running/executing a process will likely result in a deadlock.
  *
  * @return
- *    F_none on success.
- *    F_data_not on success and nothing to do.
- *    F_require on success, but a required rule has not been run yet.
- *    F_signal on (exit) signal received.
+ *   F_none on success.
+ *   F_data_not on success and nothing to do.
+ *   F_require on success, but a required rule has not been run yet.
  *
- *    F_require (with error bit set) if a required process is in failed status when required is TRUE.
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
+ *   F_require (with error bit set) if a required process is in failed status when required is TRUE.
  */
 #ifndef _di_controller_rule_wait_all_
   extern f_status_t controller_rule_wait_all(const bool is_normal, const controller_global_t global, const bool required, controller_process_t *caller) F_attribute_visibility_internal_d;
@@ -775,7 +777,6 @@ extern "C" {
  *   Failure to set this to the process on a thread running/executing a process will likely result in a deadlock.
  *
  * @return
- *
  *   Success from controller_rule_wait_all().
  *
  *   Errors (with error bit) from: controller_rule_wait_all().

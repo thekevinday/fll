@@ -227,10 +227,11 @@ extern "C" {
     fl_print_t error;
     fl_print_t warning;
 
+    f_signal_t signal;
+
     pid_t pid;
     mode_t umask;
     int child;
-    f_signal_t signal;
 
     f_string_t program_name;
     f_string_t program_name_long;
@@ -249,10 +250,10 @@ extern "C" {
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
-      0, \
-      0, \
-      0, \
       f_signal_t_initialize, \
+      0, \
+      0, \
+      0, \
       f_string_t_initialize, \
       f_string_t_initialize, \
       f_string_static_t_initialize, \
@@ -265,13 +266,13 @@ extern "C" {
  * Print help.
  *
  * @param main
- *   The program main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
  */
 #ifndef _di_controller_print_help_
-  extern f_status_t controller_print_help(const controller_main_t main);
+  extern f_status_t controller_print_help(controller_main_t * const main);
 #endif // _di_controller_print_help_
 
 /**
@@ -279,20 +280,31 @@ extern "C" {
  *
  * Be sure to call controller_main_delete() after executing this.
  *
+ * If main.signal is non-zero, then this blocks and handles the following signals:
+ * - F_signal_abort
+ * - F_signal_broken_pipe
+ * - F_signal_hangup
+ * - F_signal_interrupt
+ * - F_signal_quit
+ * - F_signal_termination
+ *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The parameters passed to the process.
- * @param main
- *   The program main data.
  *
  * @return
  *   F_none on success.
+ *   F_child if this is a child process returning.
+ *
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see controller_main_delete()
  */
 #ifndef _di_controller_main_
-  extern f_status_t controller_main(const f_console_arguments_t arguments, controller_main_t *main);
+  extern f_status_t controller_main(controller_main_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_controller_main_
 
 /**
@@ -300,8 +312,16 @@ extern "C" {
  *
  * Be sure to call this after executing controller_main().
  *
+ * If main.signal is non-zero, then this blocks and handles the following signals:
+ * - F_signal_abort
+ * - F_signal_broken_pipe
+ * - F_signal_hangup
+ * - F_signal_interrupt
+ * - F_signal_quit
+ * - F_signal_termination
+ *
  * @param main
- *   The program main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -311,7 +331,7 @@ extern "C" {
  * @see controller_main()
  */
 #ifndef _di_controller_main_delete_
-  extern f_status_t controller_main_delete(controller_main_t *main);
+  extern f_status_t controller_main_delete(controller_main_t * const main);
 #endif // _di_controller_main_delete_
 
 #ifdef __cplusplus

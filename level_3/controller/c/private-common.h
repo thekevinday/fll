@@ -2205,7 +2205,7 @@ extern "C" {
  * @see f_thread_mutex_unlock()
  */
 #ifndef _di_controller_thread_delete_simple_
-  extern void controller_thread_delete_simple(controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern void controller_thread_delete_simple(controller_thread_t * const thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_delete_simple_
 
 #ifdef __cplusplus

@@ -18,7 +18,7 @@ extern "C" {
  * Will print the command if in verbose mode.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param environment
  *   The environment variable data.
  * @param program
@@ -31,16 +31,18 @@ extern "C" {
  * @return
  *   The return code result from execution.
  *   A value of 1 is returned if status has the error bit set.
+ *
+ *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  */
 #ifndef _di_fake_execute_
-  extern int fake_execute(const fake_main_t main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_execute(fake_main_t * const main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_execute_
 
 /**
  * Load the contents of a file into the given buffer, handling all potential errors.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param path_file
  *   The path to the file to load.
  * @param buffer
@@ -49,17 +51,19 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_file_buffer_
-  extern f_status_t fake_file_buffer(const fake_main_t main, const f_string_t path_file, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fake_file_buffer(fake_main_t * const main, const f_string_t path_file, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fake_file_buffer_
 
 /**
  * Generate all appropriate paths based on runtime information.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -74,7 +78,7 @@ extern "C" {
  * Generate all appropriate paths based on runtime information from dynamic strings.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param source
  *   The string to copy from.
  * @param destination
@@ -97,7 +101,7 @@ extern "C" {
  * @param arguments
  *   The parameters passed to the process.
  * @param main
- *   The main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -105,24 +109,8 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_process_console_parameters_
-  extern f_status_t fake_process_console_parameters(const f_console_arguments_t arguments, fake_main_t *main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_process_console_parameters(const f_console_arguments_t *arguments, fake_main_t *main) F_attribute_visibility_internal_d;
 #endif // _di_validate_console_parameters_
-
-/**
- * Check to see if a termination signal has been received.
- *
- * @param main
- *   The main data.
- *
- * @return
- *   F_true if a termination signal is received.
- *   F_false if no termination signal is received.
- *
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_signal_read_
-  extern f_status_t fake_signal_received(const fake_main_t main) F_attribute_visibility_internal_d;
-#endif // _di_fake_signal_read_
 
 /**
  * Callback passed to FSS functions for checking for interrupts.
@@ -135,7 +123,7 @@ extern "C" {
  * @return
  *   F_interrupt_not if not interrupted.
  *
- *   F_interrupt (with error bit) if interrupted.
+ *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  */
 #ifndef _di_fake_signal_state_interrupt_fss_
   extern f_status_t fake_signal_state_interrupt_fss(void *state, void *internal) F_attribute_visibility_internal_d;
@@ -152,7 +140,7 @@ extern "C" {
  * @return
  *   F_interrupt_not if not interrupted.
  *
- *   F_interrupt (with error bit) if interrupted.
+ *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  */
 #ifndef _di_fake_signal_state_interrupt_iki_
   extern f_status_t fake_signal_state_interrupt_iki(void *state, void *internal) F_attribute_visibility_internal_d;
@@ -166,15 +154,17 @@ extern "C" {
  * @param arguments
  *   The parameters passed to the process.
  * @param main
- *   The main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
  *
+ *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_
-  extern f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_main_t main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_validate_parameter_directories(const f_console_arguments_t *arguments, fake_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fake_validate_parameter_directories_
 
 /**

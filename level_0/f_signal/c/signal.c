@@ -53,7 +53,7 @@ extern "C" {
 #endif // _di_f_signal_open_
 
 #ifndef _di_f_signal_read_
-  f_status_t f_signal_read(const f_signal_t signal, struct signalfd_siginfo *information) {
+  f_status_t f_signal_read(const f_signal_t signal, const int timeout, struct signalfd_siginfo *information) {
 
     if (!signal.id) {
       return F_data_not;
@@ -67,7 +67,7 @@ extern "C" {
 
     struct pollfd polls[] = { data_poll };
 
-    const int result = poll(polls, 1, 0);
+    const int result = poll(polls, 1, timeout);
 
     if (result < 0) {
       if (errno == EFAULT) return F_status_set_error(F_buffer);

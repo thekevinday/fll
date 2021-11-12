@@ -1133,6 +1133,24 @@ extern "C" {
   extern const f_string_t fake_make_skeleton_content_settings_s;
 #endif // _di_fake_skeleton_content_
 
+/**
+ * Check to see if a process signal is received.
+ *
+ * Only signals that are blocked via main.signal will be received.
+ *
+ * @param main
+ *   The main program data.
+ *
+ * @return
+ *   A positive number representing a valid signal on signal received.
+ *   F_false on no signal received.
+ *
+ * @see f_signal_read()
+ */
+#ifndef _di_fake_signal_received_
+  extern f_status_t fake_signal_received(fake_main_t * const main) F_attribute_visibility_internal_d;
+#endif // _di_fake_signal_received_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

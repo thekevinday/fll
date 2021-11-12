@@ -393,11 +393,12 @@ extern "C" {
     fl_print_t error;
     fl_print_t warning;
 
+    f_signal_t signal;
+
     uint8_t operation;
 
     mode_t umask;
     int child;
-    f_signal_t signal;
 
     f_string_dynamics_t define;
     f_string_dynamic_t fakefile;
@@ -463,10 +464,10 @@ extern "C" {
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
-      0, \
-      0, \
-      0, \
       f_signal_t_initialize, \
+      0, \
+      0, \
+      0, \
       f_string_dynamics_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \
@@ -537,26 +538,29 @@ extern "C" {
  *
  * If main.signal is non-zero, then this blocks and handles the following signals:
  * - F_signal_abort
+ * - F_signal_broken_pipe
  * - F_signal_hangup
  * - F_signal_interrupt
  * - F_signal_quit
  * - F_signal_termination
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The parameters passed to the process.
- * @param main
- *   The main data.
  *
  * @return
  *   F_none on success.
- *   F_status if one of the above signals is received.
+ *   F_child if this is a child process returning.
+ *
+ *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see fake_main_delete()
  */
 #ifndef _di_fake_main_
-  extern f_status_t fake_main(const f_console_arguments_t arguments, fake_main_t *main);
+  extern f_status_t fake_main(fake_main_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_fake_main_
 
 /**
@@ -565,7 +569,7 @@ extern "C" {
  * Be sure to call this after executing fake_main().
  *
  * @param main
- *   The main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -575,7 +579,7 @@ extern "C" {
  * @see fake_main()
  */
 #ifndef _di_fake_main_delete_
-  extern f_status_t fake_main_delete(fake_main_t *main);
+  extern f_status_t fake_main_delete(fake_main_t * const main);
 #endif // _di_fake_main_delete_
 
 #ifdef __cplusplus

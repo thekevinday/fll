@@ -16,7 +16,7 @@ extern "C" {
  * Dump the contents of the file to standard out.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param file_name
  *   The name of the file.
  * @param file
@@ -25,17 +25,19 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_failure (with error bit) on failure, usually when read() fails.
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  */
 #ifndef _di_byte_dump_file_
-  extern f_status_t byte_dump_file(const byte_dump_main_t main, const f_string_t file_name, const f_file_t file) F_attribute_visibility_internal_d;
+  extern f_status_t byte_dump_file(byte_dump_main_t * const main, const f_string_t file_name, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // _di_byte_dump_file_
 
 /**
  * Print a single character hex code and if the width is reached properly terminate the line.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param characters
  *   An array of UTF-8 and ASCII characters.
  * @param invalid
@@ -69,7 +71,7 @@ extern "C" {
  * @see byte_dump_print_text()
  */
 #ifndef _di_byte_dump_print_character_fragment_
-  extern bool byte_dump_print_character_fragment(const byte_dump_main_t main, const f_utf_string_static_t characters, const char invalid[], const uint8_t width_utf, const char byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) F_attribute_visibility_internal_d;
+  extern bool byte_dump_print_character_fragment(byte_dump_main_t * const main, const f_utf_string_static_t characters, const char invalid[], const uint8_t width_utf, const char byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) F_attribute_visibility_internal_d;
 #endif // _di_byte_dump_print_character_fragment_
 
 /**
@@ -78,7 +80,7 @@ extern "C" {
  * This should be called only when text mode is enabled.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param characters
  *   An array of UTF-8 and ASCII characters.
  * @param invalid
@@ -91,7 +93,7 @@ extern "C" {
  *   Will be reduced to 0 once used.
  */
 #ifndef _di_byte_dump_print_text_
-  extern void byte_dump_print_text(const byte_dump_main_t main, const f_utf_string_static_t characters, const char invalid[], byte_dump_previous_t *previous, uint8_t *offset) F_attribute_visibility_internal_d;
+  extern void byte_dump_print_text(byte_dump_main_t * const main, const f_utf_string_static_t characters, const char invalid[], byte_dump_previous_t *previous, uint8_t *offset) F_attribute_visibility_internal_d;
 #endif // _di_byte_dump_print_text_
 
 #ifdef __cplusplus

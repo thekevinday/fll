@@ -83,16 +83,16 @@ extern "C" {
  * Start all threads, wait on threads, and handle requests.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param setting
  *   The controller settings data.
  *
  * @return
  *   F_none on success.
  *   F_child on child process exiting.
- *   F_signal on signal received.
  *
  *   F_failure (with error bit) on any failure.
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  */
 #ifndef _di_controller_thread_main_
   extern f_status_t controller_thread_main(controller_main_t *main, controller_setting_t *setting) F_attribute_visibility_internal_d;

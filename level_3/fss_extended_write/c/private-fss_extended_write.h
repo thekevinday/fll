@@ -15,22 +15,22 @@ extern "C" {
 /**
  * Print an message about the object and content parameters not being specified the correct number of times.
  *
- * @param data
- *   The main data.
+ * @param main
+ *   The main program data.
  *
  * @return
  *   F_none on success.
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_write_error_parameter_at_least_once_print_
-  void fss_extended_write_error_parameter_at_least_once(const fss_extended_write_main_t data) F_attribute_visibility_internal_d;
+  void fss_extended_write_error_parameter_at_least_once(fss_extended_write_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_write_error_parameter_at_least_once_print_
 
 /**
  * Print an message about a parameter missing a value.
  *
- * @param data
- *   The main data.
+ * @param main
+ *   The main program data.
  * @param symbol
  *   The console symbol, such as "--" in "--help".
  * @param parameter
@@ -41,28 +41,28 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_write_error_parameter_value_missing_print_
-  void fss_extended_write_error_parameter_value_missing_print(const fss_extended_write_main_t data, const f_string_t symbol, const f_string_t parameter) F_attribute_visibility_internal_d;
+  void fss_extended_write_error_parameter_value_missing_print(fss_extended_write_main_t * const main, const f_string_t symbol, const f_string_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_write_error_parameter_value_missing_print_
 
 /**
  * Print an message about a parameter EOL being unsupported.
  *
- * @param data
- *   The main data.
+ * @param main
+ *   The main program data.
  *
  * @return
  *   F_none on success.
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_write_error_parameter_unsupported_eol_print_
-  void fss_extended_write_error_parameter_unsupported_eol_print(const fss_extended_write_main_t data) F_attribute_visibility_internal_d;
+  void fss_extended_write_error_parameter_unsupported_eol_print(fss_extended_write_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_write_error_parameter_unsupported_eol_print_
 
 /**
  * Process a given object and content, printing the FSS if valid or an error if invalid.
  *
- * @param data
- *   The main data.
+ * @param main
+ *   The main program data.
  * @param output
  *   The file to output to.
  * @param quote
@@ -82,14 +82,14 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_write_process_
-  extern f_status_t fss_extended_write_process(const fss_extended_write_main_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_write_process(fss_extended_write_main_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_write_process_
 
 /**
  * Process the pipe, reading from the pipe and writing to the output.
  *
- * @param data
- *   The main data.
+ * @param main
+ *   The main program data.
  * @param output
  *   The file to output to.
  * @param quote
@@ -103,7 +103,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_write_process_pipe_
-  extern f_status_t fss_extended_write_process_pipe(const fss_extended_write_main_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_write_process_pipe(fss_extended_write_main_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_write_process_pipe_
 
 #ifdef __cplusplus

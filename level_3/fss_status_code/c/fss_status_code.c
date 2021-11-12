@@ -39,7 +39,8 @@ extern "C" {
 #endif // _di_fss_status_code_print_help_
 
 #ifndef _di_fss_status_code_main_
-  f_status_t fss_status_code_main(const f_console_arguments_t arguments, fss_status_code_main_t *main) {
+  f_status_t fss_status_code_main(fss_status_code_main_t * const main, const f_console_arguments_t *arguments) {
+
     f_status_t status = F_none;
 
     {
@@ -49,7 +50,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -193,7 +194,12 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          status2 = fss_status_code_process_check(*main, arguments.argv[main->remaining.array[i]]);
+          if (fss_status_code_signal_received(main)) {
+            status = F_status_set_error(F_interrupt);
+            break;
+          }
+
+          status2 = fss_status_code_process_check(main, arguments->argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -213,7 +219,12 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          status2 = fss_status_code_process_number(*main, arguments.argv[main->remaining.array[i]]);
+          if (fss_status_code_signal_received(main)) {
+            status = F_status_set_error(F_interrupt);
+            break;
+          }
+
+          status2 = fss_status_code_process_number(main, arguments->argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -232,7 +243,13 @@ extern "C" {
         flockfile(main->output.to.stream);
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
-          status2 = fss_status_code_process_normal(*main, arguments.argv[main->remaining.array[i]]);
+
+          if (fss_status_code_signal_received(main)) {
+            status = F_status_set_error(F_interrupt);
+            break;
+          }
+
+          status2 = fss_status_code_process_normal(main, arguments->argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -243,13 +260,22 @@ extern "C" {
       }
     }
 
+    if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (F_status_set_fine(status) == F_interrupt) {
+        fflush(main->output.to.stream);
+
+        fll_print_terminated(f_string_eol_s, main->output.to.stream);
+      }
+    }
+
     fss_status_code_main_delete(main);
+
     return status;
   }
 #endif // _di_fss_status_code_main_
 
 #ifndef _di_fss_status_code_main_delete_
-  f_status_t fss_status_code_main_delete(fss_status_code_main_t *main) {
+  f_status_t fss_status_code_main_delete(fss_status_code_main_t * const main) {
 
     for (f_array_length_t i = 0; i < fss_status_code_total_parameters_d; ++i) {
 

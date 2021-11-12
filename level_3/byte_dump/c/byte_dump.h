@@ -32,6 +32,7 @@
 #include <fll/level_0/file.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
+#include <fll/level_0/signal.h>
 
 // fll-1 includes
 #include <fll/level_1/console.h>
@@ -235,6 +236,8 @@ extern "C" {
     fl_print_t error;
     fl_print_t warning;
 
+    f_signal_t signal;
+
     uint64_t first;
     uint64_t last;
     uint8_t width;
@@ -252,6 +255,7 @@ extern "C" {
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
+      f_signal_t_initialize, \
       0, \
       0, \
       8, \
@@ -281,19 +285,30 @@ extern "C" {
  *
  * Be sure to call byte_dump_main_delete() after executing this.
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The parameters passed to the process.
- * @param main
- *   The main data.
+ *
+ * If main.signal is non-zero, then this blocks and handles the following signals:
+ * - F_signal_abort
+ * - F_signal_broken_pipe
+ * - F_signal_hangup
+ * - F_signal_interrupt
+ * - F_signal_quit
+ * - F_signal_termination
  *
  * @return
  *   F_none on success.
+ *
+ *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
+ *
  *   Status codes (with error bit) are returned on any problem.
  *
  * @see byte_dump_main_delete()
  */
 #ifndef _di_byte_dump_main_
-  extern f_status_t byte_dump_main(const f_console_arguments_t arguments, byte_dump_main_t *main);
+  extern f_status_t byte_dump_main(byte_dump_main_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_byte_dump_main_
 
 /**
@@ -302,7 +317,7 @@ extern "C" {
  * Be sure to call this after executing byte_dump_main().
  *
  * @param main
- *   The main data.
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -312,7 +327,7 @@ extern "C" {
  * @see byte_dump_main()
  */
 #ifndef _di_byte_dump_main_delete_
-  extern f_status_t byte_dump_main_delete(byte_dump_main_t *main);
+  extern f_status_t byte_dump_main_delete(byte_dump_main_t * const main);
 #endif // _di_byte_dump_main_delete_
 
 #ifdef __cplusplus

@@ -16,7 +16,7 @@ extern "C" {
  * Perform the 'check' processes, such as --fine or --error.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param value
  *   The parameter value to process.
  *
@@ -34,14 +34,14 @@ extern "C" {
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_fss_status_code_process_check_
-  extern f_status_t fss_status_code_process_check(const fss_status_code_main_t main, const f_string_t value) F_attribute_visibility_internal_d;
+  extern f_status_t fss_status_code_process_check(fss_status_code_main_t * const main, const f_string_t value) F_attribute_visibility_internal_d;
 #endif // _di_fss_status_code_process_check_
 
 /**
  * Perform the 'number' processes, such as --number.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param value
  *   The parameter value to process.
  *
@@ -56,14 +56,14 @@ extern "C" {
  * @see fll_fss_status_from_string()
  */
 #ifndef _di_fss_status_code_process_number_
-  extern f_status_t fss_status_code_process_number(const fss_status_code_main_t main, const f_string_t value) F_attribute_visibility_internal_d;
+  extern f_status_t fss_status_code_process_number(fss_status_code_main_t * const main, const f_string_t value) F_attribute_visibility_internal_d;
 #endif // _di_fss_status_code_process_number_
 
 /**
  * Perform the normal processes.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param value
  *   The parameter value to process.
  *
@@ -83,14 +83,14 @@ extern "C" {
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_fss_status_code_process_normal_
-  extern f_status_t fss_status_code_process_normal(const fss_status_code_main_t main, const f_string_t value) F_attribute_visibility_internal_d;
+  extern f_status_t fss_status_code_process_normal(fss_status_code_main_t * const main, const f_string_t value) F_attribute_visibility_internal_d;
 #endif // _di_fss_status_code_process_normal_
 
 /**
  * Convert the value string to the number, reporting any errors.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param value
  *   The parameter value to process.
  * @param number
@@ -111,7 +111,7 @@ extern "C" {
  * @see fl_console_parameter_to_number_unsigned()
  */
 #ifndef _di_fss_status_code_convert_number_
-  extern f_status_t fss_status_code_convert_number(const fss_status_code_main_t main, const f_string_t value, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t fss_status_code_convert_number(fss_status_code_main_t * const main, const f_string_t value, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_fss_status_code_convert_number_
 
 #ifdef __cplusplus

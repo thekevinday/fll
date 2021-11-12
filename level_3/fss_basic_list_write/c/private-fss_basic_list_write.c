@@ -7,62 +7,62 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_list_write_error_parameter_same_times_print_
-  void fss_basic_list_write_error_parameter_same_times_print(const fss_basic_list_write_main_t main) {
+  void fss_basic_list_write_error_parameter_same_times_print(fss_basic_list_write_main_t * const main) {
 
-    if (main.error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet) {
       return;
     }
 
-    flockfile(main.error.to.stream);
+    flockfile(main->error.to.stream);
 
-    fl_print_format("%c%[%sMust specify the '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_basic_list_write_long_object_s, main.error.notable);
-    fl_print_format("%[' parameter and the '%]", main.error.to.stream, main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_basic_list_write_long_content_s, main.error.notable);
-    fl_print_format("%[' parameter the same number of times when not specifying the '%]", main.error.to.stream, main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_basic_list_write_long_partial_s, main.error.notable);
-    fl_print_format("%[' parameter.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+    fl_print_format("%c%[%sMust specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_write_long_object_s, main->error.notable);
+    fl_print_format("%[' parameter and the '%]", main->error.to.stream, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_write_long_content_s, main->error.notable);
+    fl_print_format("%[' parameter the same number of times when not specifying the '%]", main->error.to.stream, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_write_long_partial_s, main->error.notable);
+    fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-    funlockfile(main.error.to.stream);
+    funlockfile(main->error.to.stream);
   }
 #endif // _di_fss_basic_list_write_error_parameter_same_times_print_
 
 #ifndef _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
-  void fss_basic_list_write_error_parameter_unsupported_eol_print(const fss_basic_list_write_main_t main) {
+  void fss_basic_list_write_error_parameter_unsupported_eol_print(fss_basic_list_write_main_t * const main) {
 
-    if (main.error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet) {
       return;
     }
 
-    flockfile(main.error.to.stream);
+    flockfile(main->error.to.stream);
 
-    fl_print_format("%c%[%sThis standard does not support end of line character '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[\\n%]", main.error.to.stream, main.error.notable, main.error.notable);
-    fl_print_format("%[' in objects.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+    fl_print_format("%c%[%sThis standard does not support end of line character '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[\\n%]", main->error.to.stream, main->error.notable, main->error.notable);
+    fl_print_format("%[' in objects.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-    funlockfile(main.error.to.stream);
+    funlockfile(main->error.to.stream);
   }
 #endif // _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
 
 #ifndef _di_fss_basic_list_write_error_parameter_value_missing_print_
-  void fss_basic_list_write_error_parameter_value_missing_print(const fss_basic_list_write_main_t main, const f_string_t symbol, const f_string_t parameter) {
+  void fss_basic_list_write_error_parameter_value_missing_print(fss_basic_list_write_main_t * const main, const f_string_t symbol, const f_string_t parameter) {
 
-    if (main.error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet) {
       return;
     }
 
-    flockfile(main.error.to.stream);
+    flockfile(main->error.to.stream);
 
-    fl_print_format("%c%[%sThe parameter '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[%S%S%]", main.error.to.stream, main.error.notable, symbol, parameter, main.error.notable);
-    fl_print_format("%[' was specified, but no value was given.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+    fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[%S%S%]", main->error.to.stream, main->error.notable, symbol, parameter, main->error.notable);
+    fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-    funlockfile(main.error.to.stream);
+    funlockfile(main->error.to.stream);
   }
 #endif // _di_fss_basic_list_write_error_parameter_value_missing_print_
 
 #ifndef _di_fss_basic_list_write_process_
-  f_status_t fss_basic_list_write_process(const fss_basic_list_write_main_t main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_list_write_process(fss_basic_list_write_main_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
     f_state_t state = macro_f_state_t_initialize(fss_basic_list_write_common_allocation_large_d, fss_basic_list_write_common_allocation_small_d, 0, 0, 0, 0, 0);
@@ -81,7 +81,7 @@ extern "C" {
       }
 
       if (content) {
-        if (main.parameters[fss_basic_list_write_parameter_trim].result == f_console_result_found) {
+        if (main->parameters[fss_basic_list_write_parameter_trim].result == f_console_result_found) {
           complete = f_fss_complete_full_trim;
         }
         else {
@@ -98,7 +98,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(main.error, F_status_set_fine(status), "fl_fss_basic_list_object_write_string", F_true);
+        fll_error_print(main->error, F_status_set_fine(status), "fl_fss_basic_list_object_write_string", F_true);
 
         return status;
       }
@@ -108,10 +108,10 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      status = fl_fss_basic_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &main.prepend, state, &range, buffer);
+      status = fl_fss_basic_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &main->prepend, state, &range, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main.error, F_status_set_fine(status), "fl_fss_basic_list_content_write_string", F_true);
+        fll_error_print(main->error, F_status_set_fine(status), "fl_fss_basic_list_content_write_string", F_true);
 
         return status;
       }
@@ -121,7 +121,7 @@ extern "C" {
       status = f_string_append(f_string_eol_s, 1, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main.error, F_status_set_fine(status), "f_string_append", F_true);
+        fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
 
         return status;
       }
@@ -130,12 +130,13 @@ extern "C" {
     fll_print_dynamic(*buffer, output.stream);
 
     buffer->used = 0;
+
     return status;
   }
 #endif // _di_fss_basic_list_write_process_
 
 #ifndef _di_fss_basic_list_write_process_pipe_
-  f_status_t fss_basic_list_write_process_pipe(const fss_basic_list_write_main_t main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_list_write_process_pipe(fss_basic_list_write_main_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;
@@ -158,6 +159,11 @@ extern "C" {
 
     for (;;) {
 
+      if (fss_basic_list_write_signal_received(main)) {
+        status = F_status_set_error(F_interrupt);
+        break;
+      }
+
       if (range.start > range.stop) {
         if (status_pipe == F_none_eof) break;
 
@@ -166,7 +172,7 @@ extern "C" {
         status_pipe = f_file_read_block(input, &block);
 
         if (F_status_is_error(status_pipe)) {
-          fll_error_print(main.error, F_status_set_fine(status_pipe), "f_file_read_block", F_true);
+          fll_error_print(main->error, F_status_set_fine(status_pipe), "f_file_read_block", F_true);
 
           status_pipe = F_status_set_error(F_pipe);
           break;
@@ -190,7 +196,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(block.used, &object);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
             break;
           }
         }
@@ -239,7 +245,7 @@ extern "C" {
             status = f_string_dynamic_increase_by(total, &content);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
               break;
             }
           }
@@ -247,8 +253,8 @@ extern "C" {
           for (; range.start <= range.stop; ++range.start) {
 
             if (block.string[range.start] == fss_basic_list_write_pipe_content_start_s) {
-              if (main.error.verbosity != f_console_verbosity_quiet) {
-                fll_print_format("%c%[%sThis standard only supports one content per object.%]%c", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context, f_string_eol_s[0]);
+              if (main->error.verbosity != f_console_verbosity_quiet) {
+                fll_print_format("%c%[%sThis standard only supports one content per object.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
               }
 
               status = F_status_set_error(F_supported_not);
@@ -292,6 +298,7 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(block);
     macro_f_string_dynamic_t_delete_simple(object);
     macro_f_string_dynamic_t_delete_simple(content);
+
     return status;
   }
 #endif // _di_fss_basic_list_write_process_pipe_

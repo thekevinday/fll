@@ -57,7 +57,8 @@ extern "C" {
 #endif // _di_fss_extended_write_print_help_
 
 #ifndef _di_fss_extended_write_main_
-  f_status_t fss_extended_write_main(const f_console_arguments_t arguments, fss_extended_write_main_t *main) {
+  f_status_t fss_extended_write_main(fss_extended_write_main_t * const main, const f_console_arguments_t *arguments) {
+
     f_status_t status = F_none;
 
     {
@@ -67,7 +68,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { fss_extended_write_parameter_no_color, fss_extended_write_parameter_light, fss_extended_write_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         main->output.set = &main->context.set;
         main->error.set = &main->context.set;
@@ -173,15 +174,15 @@ extern "C" {
 
           output.id = -1;
           output.stream = 0;
-          status = f_file_stream_open(arguments.argv[location], 0, &output);
+          status = f_file_stream_open(arguments->argv[location], 0, &output);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[location], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], "open", fll_error_file_type_file);
           }
         }
       }
       else if (main->parameters[fss_extended_write_parameter_file].result == f_console_result_found) {
-        fss_extended_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_extended_write_long_file_s);
+        fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_file_s);
         status = F_status_set_error(F_parameter);
       }
     }
@@ -190,15 +191,15 @@ extern "C" {
       if (main->parameters[fss_extended_write_parameter_object].locations.used || main->parameters[fss_extended_write_parameter_content].locations.used) {
         if (main->parameters[fss_extended_write_parameter_object].locations.used) {
           if (main->parameters[fss_extended_write_parameter_object].locations.used != main->parameters[fss_extended_write_parameter_object].values.used) {
-            fss_extended_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_extended_write_long_object_s);
+            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_object_s);
             status = F_status_set_error(F_parameter);
           }
           else if (main->parameters[fss_extended_write_parameter_content].locations.used != main->parameters[fss_extended_write_parameter_content].values.used) {
-            fss_extended_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_extended_write_long_content_s);
+            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_content_s);
             status = F_status_set_error(F_parameter);
           }
           else if (!main->parameters[fss_extended_write_parameter_content].locations.used && main->parameters[fss_extended_write_parameter_partial].result == f_console_result_none) {
-            fss_extended_write_error_parameter_at_least_once(*main);
+            fss_extended_write_error_parameter_at_least_once(main);
             status = F_status_set_error(F_parameter);
           }
           else if (main->parameters[fss_extended_write_parameter_content].locations.used && main->parameters[fss_extended_write_parameter_partial].locations.used) {
@@ -270,11 +271,11 @@ extern "C" {
         }
         else if (main->parameters[fss_extended_write_parameter_content].locations.used) {
           if (main->parameters[fss_extended_write_parameter_content].locations.used != main->parameters[fss_extended_write_parameter_content].values.used) {
-            fss_extended_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_extended_write_long_content_s);
+            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_content_s);
             status = F_status_set_error(F_parameter);
           }
           else if (!main->parameters[fss_extended_write_parameter_partial].locations.used) {
-            fss_extended_write_error_parameter_at_least_once(*main);
+            fss_extended_write_error_parameter_at_least_once(main);
             status = F_status_set_error(F_parameter);
           }
         }
@@ -328,12 +329,12 @@ extern "C" {
       }
       else if (main->parameters[fss_extended_write_parameter_prepend].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[fss_extended_write_parameter_prepend].values.array[main->parameters[fss_extended_write_parameter_prepend].values.used - 1];
-        const f_array_length_t length = strnlen(arguments.argv[index], f_console_parameter_size);
+        const f_array_length_t length = strnlen(arguments->argv[index], f_console_parameter_size);
 
         // Even though this standard does not utilize this parameter, provide the validation for consistency.
         if (length) {
           f_string_range_t range = macro_f_string_range_t_initialize(length);
-          const f_string_static_t prepend = macro_f_string_static_t_initialize(arguments.argv[index], length);
+          const f_string_static_t prepend = macro_f_string_static_t_initialize(arguments->argv[index], length);
 
           for (; range.start < length; ++range.start) {
 
@@ -427,7 +428,7 @@ extern "C" {
       f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
 
       if (main->process_pipe) {
-        status = fss_extended_write_process_pipe(*main, output, quote, &buffer);
+        status = fss_extended_write_process_pipe(main, output, quote, &buffer);
 
         if (F_status_is_error(status)) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
@@ -448,11 +449,16 @@ extern "C" {
 
             for (f_array_length_t i = 0; i < main->parameters[fss_extended_write_parameter_object].values.used; ++i) {
 
-              object.string = arguments.argv[main->parameters[fss_extended_write_parameter_object].values.array[i]];
+              if (fss_extended_write_signal_received(main)) {
+                status = F_status_set_error(F_interrupt);
+                break;
+              }
+
+              object.string = arguments->argv[main->parameters[fss_extended_write_parameter_object].values.array[i]];
               object.used = strnlen(object.string, f_console_parameter_size);
               object.size = object.used;
 
-              status = fss_extended_write_process(*main, output, quote, &object, 0, &buffer);
+              status = fss_extended_write_process(main, output, quote, &object, 0, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
@@ -473,13 +479,13 @@ extern "C" {
 
               for (; i < main->parameters[fss_extended_write_parameter_content].values.used; ++i) {
 
-                contents.array[contents.used].string = arguments.argv[main->parameters[fss_extended_write_parameter_content].values.array[i]];
+                contents.array[contents.used].string = arguments->argv[main->parameters[fss_extended_write_parameter_content].values.array[i]];
                 contents.array[contents.used].used = strnlen(contents.array[contents.used].string, f_console_parameter_size);
                 contents.array[contents.used].size = contents.array[contents.used].used;
                 ++contents.used;
               } // for
 
-              status = fss_extended_write_process(*main, output, quote, 0, &contents, &buffer);
+              status = fss_extended_write_process(main, output, quote, 0, &contents, &buffer);
 
               // clear the contents array of the static strings to avoid deallocation attempts on static variables.
               for (; i < main->parameters[fss_extended_write_parameter_content].values.used; ++i) {
@@ -502,13 +508,18 @@ extern "C" {
 
           for (; i < main->parameters[fss_extended_write_parameter_object].values.used; ++i) {
 
+            if (fss_extended_write_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
+              break;
+            }
+
             object_current = main->parameters[fss_extended_write_parameter_object].locations.array[i];
 
             if (i + 1 < main->parameters[fss_extended_write_parameter_object].values.used) {
               object_next = main->parameters[fss_extended_write_parameter_object].locations.array[i + 1];
             }
 
-            object.string = arguments.argv[main->parameters[fss_extended_write_parameter_object].values.array[i]];
+            object.string = arguments->argv[main->parameters[fss_extended_write_parameter_object].values.array[i]];
             object.used = strnlen(object.string, f_console_parameter_size);
             object.size = object.used;
 
@@ -533,7 +544,7 @@ extern "C" {
                 contents.array[contents.used].used = 0;
               }
 
-              status = f_string_append(arguments.argv[main->parameters[fss_extended_write_parameter_content].values.array[j]], strnlen(arguments.argv[main->parameters[fss_extended_write_parameter_content].values.array[j]], f_console_parameter_size), &contents.array[contents.used]);
+              status = f_string_append(arguments->argv[main->parameters[fss_extended_write_parameter_content].values.array[j]], strnlen(arguments->argv[main->parameters[fss_extended_write_parameter_content].values.array[j]], f_console_parameter_size), &contents.array[contents.used]);
 
               if (F_status_is_error(status)) {
                 fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
@@ -545,7 +556,7 @@ extern "C" {
 
             if (F_status_is_error(status)) break;
 
-            status = fss_extended_write_process(*main, output, quote, &object, &contents, &buffer);
+            status = fss_extended_write_process(main, output, quote, &object, &contents, &buffer);
             if (F_status_is_error(status)) break;
           } // for
         }
@@ -584,10 +595,14 @@ extern "C" {
       }
     }
 
-    // ensure a newline is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fll_print_character(f_string_eol_s[0], main->error.to.stream);
+        if (F_status_set_fine(status) == F_interrupt) {
+          fflush(main->output.to.stream);
+        }
+
+        fll_print_terminated(f_string_eol_s, main->output.to.stream);
       }
     }
 
@@ -595,12 +610,13 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(object);
     macro_f_string_dynamics_t_delete_simple(contents);
     fss_extended_write_main_delete(main);
+
     return status;
   }
 #endif // _di_fss_extended_write_main_
 
 #ifndef _di_fss_extended_write_main_delete_
-  f_status_t fss_extended_write_main_delete(fss_extended_write_main_t *main) {
+  f_status_t fss_extended_write_main_delete(fss_extended_write_main_t * const main) {
 
     for (f_array_length_t i = 0; i < fss_extended_write_total_parameters_d; ++i) {
 

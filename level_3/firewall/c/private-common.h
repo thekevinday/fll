@@ -178,6 +178,36 @@ extern void firewall_print_error_on_unhandled(const fl_print_t output, const f_s
  */
 extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_t filename) F_attribute_visibility_internal_d;
 
+/**
+ * Print a message about a process signal being recieved, such as an interrupt signal.
+ *
+ * @param main
+ *   The main program data.
+ * @param signal
+ *   The signal received.
+ */
+#ifndef _di_firewall_print_signal_received_
+  extern void firewall_print_signal_received(firewall_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
+#endif // _di_firewall_print_signal_received_
+
+/**
+ * Check to see if a process signal is received.
+ *
+ * Only signals that are blocked via main.signal will be received.
+ *
+ * @param main
+ *   The main program data.
+ *
+ * @return
+ *   A positive number representing a valid signal on signal received.
+ *   F_false on no signal received.
+ *
+ * @see f_signal_read()
+ */
+#ifndef _di_firewall_signal_received_
+  extern f_status_t firewall_signal_received(firewall_main_t * const main) F_attribute_visibility_internal_d;
+#endif // _di_firewall_signal_received_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

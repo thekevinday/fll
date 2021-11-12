@@ -49,10 +49,10 @@ extern "C" {
  *
  * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The parameters passed to the process.
- * @param main
- *   The main data.
  * @param data
  *   The program data.
  *
@@ -72,7 +72,7 @@ extern "C" {
  * @see fss_extended_list_read_depths_resize()
  */
 #ifndef _di_fss_extended_list_read_depth_process_
-  extern f_status_t fss_extended_list_read_depth_process(f_console_arguments_t * const arguments, fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_list_read_depth_process(fss_extended_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_extended_list_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_list_read_depth_process_
 
 /**
@@ -99,7 +99,7 @@ extern "C" {
  * This will print an error message on error.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  *
@@ -124,14 +124,14 @@ extern "C" {
  *
  * This will print an error message on error.
  *
+ * @param main
+ *   The main program data.
  * @param parameter
  *   An ID representing the parameter.
  * @param name
  *   The parameter name to print on error.
  * @param arguments
  *   The console arguments passed to the program.
- * @param main
- *   The main data.
  * @param number
  *   The location to store the loaded number.
  *
@@ -146,7 +146,7 @@ extern "C" {
  * @see fss_extended_list_read_depths_resize()
  */
 #ifndef _di_fss_extended_list_read_load_number_
-  extern f_status_t fss_extended_list_read_load_number(const f_array_length_t parameter, const f_string_t name, f_console_arguments_t * const arguments, fss_extended_list_read_main_t * const main, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_list_read_load_number(fss_extended_list_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_list_read_load_number_
 
 /**
@@ -154,26 +154,26 @@ extern "C" {
  *
  * Only what is requested to print (Object, Content, both, or neither) will be printed, if there is something to print.
  *
+ * @param main
+ *   The main program data.
  * @param at
  *   The index in the Objects and Contents to print.
  * @param delimits_object
  *   The delimits to be applied to an Object.
  * @param delimits_content
  *   The delimits to be applied to Content.
- * @param main
- *   The main data.
  * @param data
  *   The program data.
  */
 #ifndef _di_fss_extended_list_read_print_at_
-  extern void fss_extended_list_read_print_at(const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t * const data) F_attribute_visibility_internal_d;
+  extern void fss_extended_list_read_print_at(fss_extended_list_read_main_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_extended_list_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_list_read_print_at_
 
 /**
  * Explicitly print the Object at the given position.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  * @param at
@@ -191,7 +191,7 @@ extern "C" {
  * This is only used in pipe output mode.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  */
 #ifndef _di_fss_extended_list_read_print_content_ignore_
   extern void fss_extended_list_read_print_content_ignore(fss_extended_list_read_main_t * const main) F_attribute_visibility_internal_d;
@@ -201,7 +201,7 @@ extern "C" {
  * Print the end of an Object (which is essentially the start of Content).
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  */
@@ -213,7 +213,7 @@ extern "C" {
  * Print the number one and a newline.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  */
 #ifndef _di_fss_extended_list_read_print_one_
   extern void fss_extended_list_read_print_one(fss_extended_list_read_main_t * const main) F_attribute_visibility_internal_d;
@@ -223,7 +223,7 @@ extern "C" {
  * Print the end of an Object/Content set.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  */
@@ -235,7 +235,7 @@ extern "C" {
  * Print the number zero and a newline.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  */
 #ifndef _di_fss_extended_list_read_print_zero_
   extern void fss_extended_list_read_print_zero(fss_extended_list_read_main_t * const main) F_attribute_visibility_internal_d;
@@ -246,10 +246,10 @@ extern "C" {
  *
  * This will print an error message on error.
  *
+ * @param main
+ *   The main program data.
  * @param arguments
  *   The parameters passed to the process.
- * @param main
- *   The main data.
  * @param data
  *   The program data.
  *
@@ -263,14 +263,14 @@ extern "C" {
  * @see fss_extended_list_read_process_option()
  */
 #ifndef _di_fss_extended_list_read_process_
-  extern f_status_t fss_extended_list_read_process(f_console_arguments_t * const arguments, fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_list_read_process(fss_extended_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_extended_list_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_list_read_process_
 
 /**
  * Process based on at parameter.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  * @param names
@@ -290,7 +290,7 @@ extern "C" {
  * Process based on columns parameter.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  * @param names
@@ -308,7 +308,7 @@ extern "C" {
  * Process based on at parameter for some line.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param delimits_object
  *   The delimits to be applied to an Object.
  * @param delimits_content
@@ -324,14 +324,14 @@ extern "C" {
  *   F_success on success and the line was matched (and possibly printed).
  */
 #ifndef _di_fss_extended_list_read_process_at_line_
-  extern f_status_t fss_extended_list_read_process_at_line(const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t *data, f_array_length_t *line) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_list_read_process_at_line(fss_extended_list_read_main_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_extended_list_read_data_t *data, f_array_length_t *line) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_list_read_process_at_line_
 
 /**
  * Process based on line parameter.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  * @param names
@@ -369,7 +369,7 @@ extern "C" {
  * @param arguments
  *   The parameters passed to the process.
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  *
@@ -383,14 +383,14 @@ extern "C" {
  * @see fss_extended_list_read_load_setting()
  */
 #ifndef _di_fss_extended_list_read_process_option_
-  extern f_status_t fss_extended_list_read_process_option(f_console_arguments_t * const arguments, fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_list_read_process_option(fss_extended_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_extended_list_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_list_read_process_option_
 
 /**
  * Process based on total parameter.
  *
  * @param main
- *   The main data.
+ *   The main program data.
  * @param data
  *   The program data.
  * @param names
