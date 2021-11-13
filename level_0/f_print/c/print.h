@@ -95,6 +95,9 @@ extern "C" {
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  * This can result in the 1-byte character being substituted with a 3-byte character when printing.
  *
+ * For UTF-8 characters, this cannot detect if the UTF-8 character is a control or anything else.
+ * This is, in genereal, not safe for printing UTF-8 characters given that a character is 1-byte.
+ *
  * This should only be called for the first 1-byte character of a multibyte character.
  *
  * @param character
@@ -104,6 +107,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_utf on success, but character is a UTF-8 character.
  *   F_data_not if there is nothing to print.
  *
  *   F_output (with error bit) on failure.
@@ -1092,6 +1096,34 @@ extern "C" {
 #ifndef _di_f_print_safely_
   extern f_status_t f_print_safely(const f_string_t string, const f_array_length_t length, FILE *output);
 #endif // _di_f_print_safely_
+
+/**
+ * Get a safe representation of the character if the character is considered unsafe.
+ *
+ * Control characters are converted to the Unicode control character symbols, including NULL.
+ * UTF-8 sequences with a width of 1 are converted to the unknown character '�'.
+ * For all other UTF-8 sequences, 0 is returned because it cannot be processed via a single 8-byte character.
+ *
+ * The returned string will either be NULL (for characters that are already safe) or a string representing the replacement.
+ * This can result in a 3-byte character being returned as a string of 3 1-bytes.
+ *
+ * This should only be called for the first 1-byte character of a multibyte character.
+ *
+ * @param character
+ *   The character to verify as safe or not and then print.
+ * @param width_max
+ *   This is set to the max number of bytes available.
+ *   This is then updated to represent the max bytes used if enough space is available.
+ *
+ * @return
+ *   NULL is returned if the character is already safe or if the character has a UTF-8 width of 2 or greater.
+ *   A non-NULL string is returned if the character needs safe replacement.
+ *   The non-NULL strings returned are NULL terminated.
+ *   The non-NULL strings returned are the 3-byte characters used as placeholder symbols.
+ */
+#ifndef _di_f_print_safely_get_
+  extern f_string_t f_print_safely_get(const f_string_t character, const f_array_length_t width_max);
+#endif // _di_f_print_safely_get_
 
 /**
  * Similar to a c-library printf.

@@ -393,6 +393,48 @@ extern "C" {
 #endif // !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
 
 /**
+ * Private implementation of f_print_safely_get().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   A string representing an ASCII or a UTF-8 character to get safe representation.
+ * @param width_max
+ *   This is set to the max number of bytes available.
+ *   This is then updated to represent the max bytes used if enough space is available.
+ *
+ * @return
+ *   NULL is returned if the character is already safe.
+ *   A non-NULL string is returned if the character needs safe replacement.
+ *   The non-NULL strings returned are NULL terminated.
+ *   The non-NULL strings returned are the 3-byte characters used as placeholder symbols.
+ *
+ * @see f_print_character_safely_get()
+ * @see f_print_dynamic_partial_safely()
+ * @see f_print_dynamic_safely()
+ * @see f_print_except_dynamic_partial_safely()
+ * @see f_print_except_dynamic_safely()
+ * @see f_print_except_in_dynamic_safely()
+ * @see f_print_except_in_dynamic_partial_safely()
+ * @see f_print_except_in_safely_
+ * @see f_print_except_safely()
+ * @see f_print_safely()
+ * @see f_print_safely_terminated()
+ * @see f_print_to_dynamic_partial_safely()
+ * @see f_print_to_dynamic_safely()
+ * @see f_print_to_except_dynamic_partial_safely()
+ * @see f_print_to_except_dynamic_safely()
+ * @see f_print_to_except_in_dynamic_safely()
+ * @see f_print_to_except_in_dynamic_partial_safely()
+ * @see f_print_to_except_in_safely_
+ * @see f_print_to_except_safely()
+ * @see f_print_to_safely()
+ */
+#if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
+  extern f_string_t private_f_print_safely_get(const f_string_t character, const f_array_length_t width_max) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
+
+/**
  * Private implementation of f_print_terminated().
  *
  * Intended to be shared to each of the different implementation variations.

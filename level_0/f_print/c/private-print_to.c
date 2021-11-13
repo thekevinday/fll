@@ -215,7 +215,9 @@ static inline f_status_t private_inline_f_print_to_error() {
       }
 
       if (string[i]) {
-        safe = private_f_print_character_safely_get(string[i]);
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
       }
       else {
         if (total) {
@@ -247,39 +249,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         continue;
       }
 
-      width = macro_f_utf_character_t_width(string[i]);
-
-      status = f_utf_is_valid(string + i, width);
-
-      if (F_status_is_error(status) || status == F_false || i + width >= stop) {
-        if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
-
-          total = 0;
-        }
-
-        if (write(id, f_print_sequence_unknown_s, 3) == -1) {
-          return private_inline_f_print_to_error();
-        }
-
-        if (F_status_is_error(status) || status == F_false) {
-          i += width;
-          start = i;
-        }
-        else {
-          i = stop;
-          start = stop;
-        }
-
-        continue;
-      }
-
-      total += width;
-      i += width;
-
-      if (total >= F_print_write_max_d) {
+      if (total + width >= F_print_write_max_d) {
         if (write(id, string + start, total) == -1) {
           return private_inline_f_print_to_error();
         }
@@ -287,6 +257,9 @@ static inline f_status_t private_inline_f_print_to_error() {
         total = 0;
         start = i;
       }
+
+      total += width;
+      i += width;
     } // while
 
     if (total) {
@@ -495,7 +468,9 @@ static inline f_status_t private_inline_f_print_to_error() {
       }
 
       if (string[i]) {
-        safe = private_f_print_character_safely_get(string[i]);
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
       }
       else {
         if (total) {
@@ -527,39 +502,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         continue;
       }
 
-      width = macro_f_utf_character_t_width(string[i]);
-
-      status = f_utf_is_valid(string + i, width);
-
-      if (F_status_is_error(status) || status == F_false || i + width >= stop) {
-        if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
-
-          total = 0;
-        }
-
-        if (write(id, f_print_sequence_unknown_s, 3) == -1) {
-          return private_inline_f_print_to_error();
-        }
-
-        if (F_status_is_error(status) || status == F_false) {
-          i += width;
-          start = i;
-        }
-        else {
-          i = stop;
-          start = stop;
-        }
-
-        continue;
-      }
-
-      total += width;
-      i += width;
-
-      if (total >= F_print_write_max_d) {
+      if (total + width >= F_print_write_max_d) {
         if (write(id, string + start, total) == -1) {
           return private_inline_f_print_to_error();
         }
@@ -567,6 +510,9 @@ static inline f_status_t private_inline_f_print_to_error() {
         total = 0;
         start = i;
       }
+
+      total += width;
+      i += width;
     } // while
 
     if (total) {
@@ -638,7 +584,9 @@ static inline f_status_t private_inline_f_print_to_error() {
     while (i < length) {
 
       if (string[i]) {
-        safe = private_f_print_character_safely_get(string[i]);
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
       }
       else {
         if (total) {
@@ -666,43 +614,12 @@ static inline f_status_t private_inline_f_print_to_error() {
           return private_inline_f_print_to_error();
         }
 
-        start = ++i;
+        i += width;
+        start = i;
         continue;
       }
 
-      width = macro_f_utf_character_t_width(string[i]);
-
-      status = f_utf_is_valid(string + i, width);
-
-      if (F_status_is_error(status) || status == F_false || i + width >= length) {
-        if (total) {
-          if (write(id, string + start, total) == -1) {
-            return private_inline_f_print_to_error();
-          }
-
-          total = 0;
-        }
-
-        if (write(id, f_print_sequence_unknown_s, 3) == -1) {
-          return private_inline_f_print_to_error();
-        }
-
-        if (F_status_is_error(status) || status == F_false) {
-          i += width;
-          start = i;
-        }
-        else {
-          i = length;
-          start = length;
-        }
-
-        continue;
-      }
-
-      total += width;
-      i += width;
-
-      if (total >= F_print_write_max_d) {
+      if (total + width >= F_print_write_max_d) {
         if (write(id, string + start, total) == -1) {
           return private_inline_f_print_to_error();
         }
@@ -710,6 +627,9 @@ static inline f_status_t private_inline_f_print_to_error() {
         total = 0;
         start = i;
       }
+
+      total += width;
+      i += width;
     } // while
 
     if (total) {

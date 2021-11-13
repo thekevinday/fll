@@ -51,7 +51,7 @@ extern "C" {
     }
     else if (macro_f_utf_character_t_width_is(character) > 1 || character > 0x1f) {
       if (fwrite_unlocked(&character, 1, 1, output) != -1) {
-        return F_none;
+        return F_utf;
       }
     }
     else {
@@ -491,6 +491,12 @@ extern "C" {
   }
 #endif // _di_f_print_safely_
 
+#ifndef _di_f_print_safely_get_
+  f_string_t f_print_safely_get(const f_string_t character, const f_array_length_t width_max) {
+    return private_f_print_safely_get(character, width_max);
+  }
+#endif // _di_f_print_safely_get_
+
 #ifndef _di_f_print_safely_terminated_
   f_status_t f_print_safely_terminated(const f_string_t string, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
@@ -501,8 +507,6 @@ extern "C" {
       return F_data_not;
     }
 
-    f_status_t status = F_none;
-
     f_array_length_t start = 0;
     f_array_length_t total = 0;
 
@@ -512,133 +516,67 @@ extern "C" {
 
     for (register f_array_length_t i = 0; string[i]; ) {
 
-      width = macro_f_utf_character_t_width_is(string[i]);
+      safe = 0;
+      width = macro_f_utf_character_t_width(string[i]);
 
-      if (width) {
-        if (width > 1) {
-          if (string[i + 1]) {
-            if (width > 2) {
-              if (string[i + 2]) {
-                if (width > 3) {
-                  if (string[i + 3]) {
-                    status = f_utf_is_control(string + i, 4);
-                  }
-                  else {
-                    status = F_utf;
-                  }
+      if (width > 1) {
+        if (string[i + 1]) {
+          if (width > 2) {
+            if (string[i + 2]) {
+              if (width > 3) {
+                if (!string[i + 3]) {
+                  safe = (f_string_t) f_print_sequence_unknown_s;
                 }
-                else {
-                  status = f_utf_is_control(string + i, 3);
-                }
-              }
-              else {
-                status = F_utf;
               }
             }
             else {
-              status = f_utf_is_control(string + i, 2);
+              safe = (f_string_t) f_print_sequence_unknown_s;
             }
-          }
-          else {
-            status = F_utf;
           }
         }
         else {
-          status = f_utf_is_control(string + i, 1);
-        }
-
-        if (status == F_false && total + width < F_print_write_max_d) {
-          total += width;
-          i += width;
-
-          continue;
+          safe = (f_string_t) f_print_sequence_unknown_s;
         }
       }
-      else {
-        if ((string[i] > 0x1f && string[i] != 0x7f) && total < F_print_write_max_d) {
-          ++total;
-          ++i;
 
-          continue;
-        }
-
-        status = F_none;
+      if (!safe) {
+        safe = private_f_print_safely_get(string + i, width);
       }
 
-      if (total) {
-        if (fwrite_unlocked(string + start, 1, total, output) == -1) {
-          return F_status_set_error(F_output);
-        }
-
-        total = 0;
-      }
-
-      if (status == F_true || F_status_set_fine(status) == F_utf) {
-        if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) != -1) {
-          return F_status_set_error(F_output);
-        }
-
-        for (start = 0; string[start] && start < width; ) {
-          ++start;
-        } // while
-
-        if (start != width) break;
-
-        i += width;
-      }
-      else if (status == F_false) {
-        if (fwrite_unlocked(string + start, 1, width, output) == -1) {
-          return F_status_set_error(F_output);
-        }
-
-        for (start = 0; string[start] && start < width; ) {
-          ++start;
-        } // while
-
-        if (start != width) break;
-
-        i += width;
-      }
-      else {
-        safe = private_f_print_character_safely_get(string[i]);
-
-        if (safe) {
-          if (fwrite_unlocked(safe, 1, 3, output) == -1) {
+      if (safe) {
+        if (total) {
+          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
             return F_status_set_error(F_output);
           }
+
+          total = 0;
         }
-        else {
-          status = f_utf_is_valid(string + i, width);
 
-          if (F_status_is_error(status) || status == F_false) {
-            if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) == -1) {
-              return F_status_set_error(F_output);
-            }
-
-            for (start = 0; string[start] && start < width; ) {
-              ++start;
-            } // while
-
-            if (start != width) break;
-          }
-          else {
-            for (start = 0; string[start] && start < width; ) {
-              ++start;
-            } // while
-
-            if (start != width) break;
-
-            total = width;
-            start = i;
-            i += width;
-            continue;
-          }
+        if (fwrite_unlocked(safe, 1, 3, output) == -1) {
+          return F_status_set_error(F_output);
         }
 
         i += width;
+        start = i;
+        continue;
       }
 
-      start = i;
+      if (total + width >= F_print_write_max_d) {
+        if (total) {
+          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+            return F_status_set_error(F_output);
+          }
+
+          total = 0;
+        }
+
+        i += width;
+        start = i - 1;
+        continue;
+      }
+
+      total += width;
+      i += width;
     } // for
 
     if (total) {

@@ -44,10 +44,12 @@ extern "C" {
     if (character == 0x7f) {
       return (f_string_t) f_print_sequence_delete_s;
     }
-    else if (macro_f_utf_character_t_width_is(character) == 1) {
+
+    if (macro_f_utf_character_t_width_is(character) == 1) {
       return (f_string_t) f_print_sequence_unknown_s;
     }
-    else if (macro_f_utf_character_t_width_is(character) > 1 || character > 0x1f) {
+
+    if (macro_f_utf_character_t_width_is(character) > 1 || character > 0x1f) {
       return 0;
     }
 
@@ -302,7 +304,9 @@ extern "C" {
       }
 
       if (string[i]) {
-        safe = private_f_print_character_safely_get(string[i]);
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
       }
       else {
         if (total) {
@@ -316,8 +320,6 @@ extern "C" {
         start = ++i;
         continue;
       }
-
-      width = macro_f_utf_character_t_width(string[i]);
 
       if (safe) {
         if (total) {
@@ -334,33 +336,6 @@ extern "C" {
 
         i += width;
         start = i;
-        continue;
-      }
-
-      status = f_utf_is_valid(string + i, width);
-
-      if (F_status_is_error(status) || status == F_false || i + width >= stop) {
-        if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
-            return F_status_set_error(F_output);
-          }
-
-          total = 0;
-        }
-
-        if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) == -1) {
-          return F_status_set_error(F_output);
-        }
-
-        if (F_status_is_error(status) || status == F_false) {
-          i += width;
-          start = i;
-        }
-        else {
-          i = stop;
-          start = stop;
-        }
-
         continue;
       }
 
@@ -469,7 +444,9 @@ extern "C" {
       }
 
       if (string[i]) {
-        safe = private_f_print_character_safely_get(string[i]);
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
       }
       else {
         if (total) {
@@ -501,33 +478,6 @@ extern "C" {
 
         i += width;
         start = i;
-        continue;
-      }
-
-      status = f_utf_is_valid(string + i, width);
-
-      if (F_status_is_error(status) || status == F_false || i + width >= stop) {
-        if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
-            return F_status_set_error(F_output);
-          }
-
-          total = 0;
-        }
-
-        if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) == -1) {
-          return F_status_set_error(F_output);
-        }
-
-        if (F_status_is_error(status) || status == F_false) {
-          i += width;
-          start = i;
-        }
-        else {
-          i = stop;
-          start = stop;
-        }
-
         continue;
       }
 
@@ -607,7 +557,9 @@ extern "C" {
     while (i < length) {
 
       if (string[i]) {
-        safe = private_f_print_character_safely_get(string[i]);
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
       }
       else {
         if (total) {
@@ -622,8 +574,6 @@ extern "C" {
         continue;
       }
 
-      width = macro_f_utf_character_t_width(string[i]);
-
       if (safe) {
         if (total) {
           if (fwrite_unlocked(string + start, 1, total, output) == -1) {
@@ -634,26 +584,6 @@ extern "C" {
         }
 
         if (fwrite_unlocked(safe, 1, 3, output) == -1) {
-          return F_status_set_error(F_output);
-        }
-
-        i += width;
-        start = i;
-        continue;
-      }
-
-      status = f_utf_is_valid(string + i, width);
-
-      if (F_status_is_error(status) || status == F_false) {
-        if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
-            return F_status_set_error(F_output);
-          }
-
-          total = 0;
-        }
-
-        if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) == -1) {
           return F_status_set_error(F_output);
         }
 
@@ -684,6 +614,29 @@ extern "C" {
     return F_none;
   }
 #endif // !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+
+#if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
+  f_string_t private_f_print_safely_get(const f_string_t character, const f_array_length_t width_max) {
+
+    if (character[0] == 0x7f) {
+      return (f_string_t) f_print_sequence_delete_s;
+    }
+
+    if (macro_f_utf_character_t_width_is(character[0])) {
+      if (f_utf_is_valid(character, width_max) != F_true || f_utf_is_control(character, width_max)) {
+        return (f_string_t) f_print_sequence_unknown_s;
+      }
+
+      return 0;
+    }
+
+    if (character[0] > 0x1f) {
+      return 0;
+    }
+
+    return (f_string_t) f_print_sequence_set_control_s[character[0]];
+  }
+#endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
 
 #if !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
   f_status_t private_f_print_terminated(const f_string_t string, FILE *output) {
