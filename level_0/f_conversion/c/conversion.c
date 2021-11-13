@@ -19,7 +19,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_is_decimal_
   f_status_t f_conversion_character_is_decimal(const char character) {
 
-    if (character > 0x29 && character < 0x40) {
+    if (character > 0x2f && character < 0x3a) {
       return F_true;
     }
 
@@ -30,7 +30,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_is_duodecimal_
   f_status_t f_conversion_character_is_duodecimal(const char character) {
 
-    if (character > 0x29 && character < 0x40) {
+    if (character > 0x2f && character < 0x3a) {
       return F_true;
     }
 
@@ -49,7 +49,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_is_hexidecimal_
   f_status_t f_conversion_character_is_hexidecimal(const char character) {
 
-    if (character > 0x29 && character < 0x40) {
+    if (character > 0x2f && character < 0x3a) {
       return F_true;
     }
     else if (character > 0x40 && character < 0x47) {
@@ -66,7 +66,7 @@ extern "C" {
 #ifndef _di_f_conversion_character_is_octal_
   f_status_t f_conversion_character_is_octal(const char character) {
 
-    if (character > 0x29 && character < 0x38) {
+    if (character > 0x2f && character < 0x38) {
       return F_true;
     }
 
@@ -98,7 +98,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (character > 0x29 && character < 0x40) {
+    if (character > 0x2f && character < 0x3a) {
       *number = 0xf & character;
 
       return F_none;
@@ -114,7 +114,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (character > 0x29 && character < 0x40) {
+    if (character > 0x2f && character < 0x3a) {
       *number = 0xf & character;
 
       return F_none;
@@ -136,7 +136,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (character > 0x29 && character < 0x40) {
+    if (character > 0x2f && character < 0x3a) {
       *number = 0xf & character;
 
       return F_none;
