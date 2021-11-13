@@ -86,8 +86,7 @@ extern "C" {
       fl_print_format("%[%S%]", print->to.stream, print->notable, name, print->notable);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
-        fl_print_format("%[' failed due to a failure to setup the '%]", print->to.stream, print->context, print->context);
-        fl_print_color_before(print->notable, print->to.stream);
+        fl_print_format("%[' failed due to a failure to setup the '%]%[", print->to.stream, print->context, print->context, print->notable);
 
         if (status == F_control_group) {
           f_print_terminated(controller_control_group_s, print->to.stream);
@@ -102,8 +101,7 @@ extern "C" {
           f_print_terminated(controller_scheduler_s, print->to.stream);
         }
 
-        fl_print_color_after(print->notable, print->to.stream);
-        fl_print_format("%['.%]%c", print->to.stream, print->context, print->context, f_string_eol_s[0]);
+        fl_print_format("%]%['.%]%c", print->to.stream, print->notable, print->context, print->context, f_string_eol_s[0]);
       }
       else if (WIFEXITED(process->result) ? WEXITSTATUS(process->result) : 0) {
         const uint8_t code = WIFEXITED(process->result) ? WEXITSTATUS(process->result) : 0;
