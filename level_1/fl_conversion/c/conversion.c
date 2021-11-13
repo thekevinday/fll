@@ -356,6 +356,7 @@ extern "C" {
         // Immediate next value must be either a number, 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
         if (j > range.stop) {
           *number = 0;
+
           return F_none;
         }
         else if (string[j] > 0x2f && string[j] < 0x3a) {

@@ -84,7 +84,7 @@ extern "C" {
 #ifndef _di_f_conversion_data_t_
   typedef struct {
     uint8_t base;
-    uint8_t flag;
+    uint16_t flag;
 
     int width;
   } f_conversion_data_t;
@@ -121,12 +121,15 @@ extern "C" {
  * Define flags used by f_conversion_data_t.
  *
  * f_conversion_data_flag_*:
- * - align_left:    Use left-justification.
- * - base_prepend:  Prepend the base character, such as "0x", or "0X", defaulting to lowercase (this includes base 10) (does nothing for unsupported base units).
- * - base_upper:    Any alphabet characters in the number are made uppercase rather than lowercase and when *_base_prepend flag is used, use uppercase in the base prepend.
- * - sign_always:   Always show the signs ("+" or "-").
- * - sign_pad:      If the sign is not to be shown, then add a space as a placeholder (ignored when *_sign_always is used).
- * - zeros_leading: If the number has fewer digits that specified in the padding, then display leading zeros to fill the pad length.
+ * - align_left:      Use left-justification.
+ * - base_prepend:    Prepend the base character, such as "0x", or "0X", defaulting to lowercase (this includes base 10) (does nothing for unsupported base units).
+ * - base_upper:      Any alphabet characters in the number are made uppercase rather than lowercase and when *_base_prepend flag is used, use uppercase in the base prepend.
+ * - exponent:        Use exponent rather than decimal for printing double values.
+ * - exponent_either: Use either exponent or decimila for printing double values.
+ * - exponent_upper:  When using exponent, display the exponent 'e' as uppercase 'E'.
+ * - sign_always:     Always show the signs ("+" or "-").
+ * - sign_pad:        If the sign is not to be shown, then add a space as a placeholder (ignored when *_sign_always is used).
+ * - zeros_leading:   If the number has fewer digits that specified in the padding, then display leading zeros to fill the pad length.
  *
  * Supported base prepend base units:
  * - base 2:  0b, 0B.
@@ -136,12 +139,15 @@ extern "C" {
  * - base 16: 0x, 0X.
  */
 #ifndef _di_f_conversion_data_flag_
-  #define F_conversion_data_flag_align_left_d    0x1
-  #define F_conversion_data_flag_base_prepend_d  0x2
-  #define F_conversion_data_flag_base_upper_d    0x4
-  #define F_conversion_data_flag_sign_always_d   0x8
-  #define F_conversion_data_flag_sign_pad_d      0x10
-  #define F_conversion_data_flag_zeros_leading_d 0x20
+  #define F_conversion_data_flag_align_left_d      0x1
+  #define F_conversion_data_flag_base_prepend_d    0x2
+  #define F_conversion_data_flag_base_upper_d      0x4
+  #define F_conversion_data_flag_exponent_d        0x8
+  #define F_conversion_data_flag_exponent_either_d 0x10
+  #define F_conversion_data_flag_exponent_upper_d  0x20
+  #define F_conversion_data_flag_sign_always_d     0x40
+  #define F_conversion_data_flag_sign_pad_d        0x80
+  #define F_conversion_data_flag_zeros_leading_d   0x100
 #endif // _di_f_conversion_data_flag_
 
 #ifdef __cplusplus

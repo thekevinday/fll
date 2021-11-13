@@ -54,111 +54,138 @@ extern "C" {
  * The order in which basic format flags are processed in regards parameters is a present order irrespective to the order specified.
  * The basic format flags "/", ";", and ":" are examples of this.
  *
+ * Floating and double floating format flags may be immediately followed by one of:
+ *   - "e": Round and convert to [-]d.ddde±dd (exponent notation).
+ *   - "E": Round and convert to [-]d.dddE±dd (exponent notation).
+ *   - "g": Round and convert to notation of either decimal or exponent.
+ *   - "G": Round and convert to notation of either decimal or exponent.
+ *
+ * The default format is decimal: [-]ddd.ddd.
+ *
+ * The case-sensitivity of above, such as 'e' vs 'E,' does not replace or relate to the case-sensitivity meaning of 'd' or 'D'.
+ * Instead, when 'e' is specified 'e' is used (such as such as [-]d.ddde±dd), but when 'E' is specified, then 'E' is used (such as [-]d.dddE±dd).
+ *
+ * Note: Currently the float/double implementation does not support the notation modes except integer (default) or hexidecimal.
+ * This is not intended but is simply a result of the temporary use of sprintf() to perform these operations.
+ * Once a custom implementation is provided, replacing snprintf(), then this can properly support the notation modes.
+ * Therefore, this function is supposed to support notation modes and does not yet do this (@fixme/@todo).
+ *
+ * This "%$" sequence is used to prevent characters from being interpreted.
+ * For example, consider "%de" vs "%d%$e".
+ * The first case "%de" is interpretted as a double using the "e" notation.
+ * The second case "%d%$e" is interpretted as a double followed by the letter "e".
+ *
  * For these basic format flags ("/", ";", and ":"), the order is always processed as:
- * 1) static/dynamic string.
- * 2) partial range.
- * 3) ignore at.
- * 4) ignore in.
+ *   1) static/dynamic string.
+ *   2) partial range.
+ *   3) ignore at.
+ *   4) ignore in.
  *
  * Uppercase base format flags designates to print the base designation in uppercase and lowercase base format flags designate to print the base designation in lowercase.
  * There are 5 support base format flags:
- * - binary: 0b/0B, representing base-2 units.
- * - octal: 0o/0O, representing base-8 units (note that this is a letter O, and not a zero).
- * - decimal: 0t/0T, representing base-10 units (this is the default when no base is specified, in which case the 0t/0T is not printed).
- * - duodecimal: 0d/0D, representing base-12 units.
- * - hexidecimal: 0x/0X, representing base-16 units.
+ *   - binary: 0b/0B, representing base-2 units.
+ *   - octal: 0o/0O, representing base-8 units (note that this is a letter O, and not a zero).
+ *   - decimal: 0t/0T, representing base-10 units (this is the default when no base is specified, in which case the 0t/0T is not printed).
+ *   - duodecimal: 0d/0D, representing base-12 units.
+ *   - hexidecimal: 0x/0X, representing base-16 units.
  *
  * When printing digits, using lowercase designates to print alphabetic digits in lowercase and using uppercase designates to print alphabetic digits in uppercase.
  *
  * To keep the design simple, this does not support index position variable replacement like fprintf() does (such as '%1$', '%2$', etc..).
  *
  * Basic Format Flags:
- * - "-": Use left-justification.
- * - "#": Use alternate form conversion (prefixing 0b/0B, 0o/0O, 0t/0T, 0d/0D, 0x/0X).
- * - ";": Ignore characters in the given positions from a f_array_length_t (only applies to static/dynamic string arguments but not character arguments).
- * - ":": Ignore characters in the given ranges from a f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
- * - "/", Print only the given range of a string, specified by f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
- * - "+", Always show the signs (+ or -).
- * - " ", Add a space where a sign would be if the sign is not displayed (this is the space character).
- * - "=", Trim leading and trailing whitespaces (only applies to static/dynamic string arguments but not character arguments).
- * - "0" to "9", The width to use, however if a leading 0 is used, then a 0 is printed in each leading digit as needed.
+ *   - "-":        Use left-justification.
+ *   - "#":        Use alternate form conversion (prefixing 0b/0B, 0o/0O, 0t/0T, 0d/0D, 0x/0X).
+ *   - ";":        Ignore characters in the given positions from a f_array_length_t (only applies to static/dynamic string arguments but not character arguments).
+ *   - ":":        Ignore characters in the given ranges from a f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
+ *   - "/",        Print only the given range of a string, specified by f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
+ *   - "+",        Always show the signs (+ or -).
+ *   - " ",        Add a space where a sign would be if the sign is not displayed (this is the space character).
+ *   - "=",        Trim leading and trailing whitespaces (only applies to static/dynamic string arguments but not character arguments).
+ *   - "0" to "9", The width to use, however if a leading 0 is used, then a 0 is printed in each leading digit as needed.
+ *   - "*",        For number-based values, designates that the width is specified in the parameter (order is: (width, value)).
+ *   - ".*",       For number-based values, designates that the precision is specified in the parameter (order is: (precision, value), but if *.* is specified, then order is: (width, precision, value)).
  *
  * Base Format Flags:
- * - "!": Display digits in Binary notation.
- * - "@": Display digits in Octal notation.
- * - "^": Display digits in Decimal notation.
- * - "&": Display digits in Duodecimal notation.
- * - "_": Display digits in Hexidecimal notation.
+ *   - "!": Display digits in Binary notation.
+ *   - "@": Display digits in Octal notation.
+ *   - "^": Display digits in Decimal notation.
+ *   - "&": Display digits in Duodecimal notation.
+ *   - "_": Display digits in Hexidecimal notation.
+ *
+ * Special Format Flags:
+ *   - "$": Ignore flag.
+ *   - "%": Use left-justification.
  *
  * Type Format Flags:
- * - "c":          Type is a 1-byte unsigned character.
- * - "C":          Type is a 1-byte unsigned character, where control characters and invalid UTF-8 are replaced.
- * - "[":          Type is a f_color_set_t such that the f_color_set_t.begin is used.
- * - "]":          Type is a f_color_set_t such that the f_color_set_t.after is used.
- * - "iii" "III":  Type is a int8_t digit.
- * - "ii", "II":   Type is a int16_t digit.
- * - "i", "I":     Type is a int32_t digit.
- * - "il", "IL":   Type is a signed int64_t digit.
- * - "ill", "ILL": Type is a f_int_128_t digit.
- * - "in", "IN":   Type is a f_number_signed_t digit.
- * - "z", "Z":     Type is a size_t digit.
- * - "s":          Type is a NULL terminated string, where the string is printed as-is.
- * - "S":          Type is a NULL terminated string, where control characters and invalid UTF-8 are replaced.
- * - "q":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed).
- * - "Q":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed), where control characters and invalid UTF-8 are replaced.
- * - "r":          Type is a f_string_static_t or f_string_dynamic_t and NULLs (and all other control characters) are printed.
- * - "R":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are printed, but control characters and invalid UTF-8 are replaced. @todo not yet implemented.
- * - "uii", "UII": Type is a uint8_t digit.
- * - "ui", "UI":   Type is a uint16_t digit.
- * - "u", "U":     Type is a uint32_t digit.
- * - "ul", "UL":   Type is a uint64_t digit.
- * - "ull", "ULL": Type is a f_uint_128_t digit.
- * - "un", "UN":   Type is a f_number_unsigned_t digit (which by default is what f_array_length_t is a type of).
+ *   - "d", "D":     Type is a double digit (32-bit), may be immediately followed by an "e", "E", "g", or "G".
+ *   - "dl", "DL":   Type is a long double digit (64-bit), may be immediately followed by an "e", "E", "g", or "G".
+ *   - "c":          Type is a 1-byte unsigned character.
+ *   - "C":          Type is a 1-byte unsigned character, where control characters and invalid UTF-8 are replaced.
+ *   - "[":          Type is a f_color_set_t such that the f_color_set_t.begin is used.
+ *   - "]":          Type is a f_color_set_t such that the f_color_set_t.after is used.
+ *   - "iii" "III":  Type is a int8_t digit.
+ *   - "ii", "II":   Type is a int16_t digit.
+ *   - "i", "I":     Type is a int32_t digit.
+ *   - "il", "IL":   Type is a signed int64_t digit.
+ *   - "ill", "ILL": Type is a f_int_128_t digit.
+ *   - "in", "IN":   Type is a f_number_signed_t digit.
+ *   - "z", "Z":     Type is a size_t digit.
+ *   - "s":          Type is a NULL terminated string, where the string is printed as-is.
+ *   - "S":          Type is a NULL terminated string, where control characters and invalid UTF-8 are replaced.
+ *   - "q":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed).
+ *   - "Q":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed), where control characters and invalid UTF-8 are replaced.
+ *   - "r":          Type is a f_string_static_t or f_string_dynamic_t and NULLs (and all other control characters) are printed.
+ *   - "R":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are printed, but control characters and invalid UTF-8 are replaced. @todo not yet implemented.
+ *   - "uii", "UII": Type is a uint8_t digit.
+ *   - "ui", "UI":   Type is a uint16_t digit.
+ *   - "u", "U":     Type is a uint32_t digit.
+ *   - "ul", "UL":   Type is a uint64_t digit.
+ *   - "ull", "ULL": Type is a f_uint_128_t digit.
+ *   - "un", "UN":   Type is a f_number_unsigned_t digit (which by default is what f_array_length_t is a type of).
  *
  * The following are control characters and their replacements for "safe" printing (unknown is used for invalid UTF-8 sequences):
- * - "␆": Acknowledge.
- * - "␕": Negative Acknowledge.
- * - "␈": Backspace.
- * - "␇": Bell.
- * - "␘": Cancel.
- * - "␍": Carriage Return.
- * - "␐": Data Link Escape.
- * - "␡": Delete.
- * - "␑": Device Control 1.
- * - "␒": Device Control 2.
- * - "␓": Device Control 3.
- * - "␔": Device Control 4.
- * - "␙": End of Medium.
- * - "␃": End of Text.
- * - "␄": End of Transmission.
- * - "␗": End of Transmission Block.
- * - "␅": Enquiry.
- * - "␛": Escape.
- * - "␌": Form Feed.
- * - "␊": Line Feed.
- * - "␀": Null.
- * - "␜": Separator File.
- * - "␝": Separator Group.
- * - "␞": Separator Record.
- * - "␟": Separator Unit.
- * - "␏": Shift In.
- * - "␎": Shift Out.
- * - "␁": Start Of Header.
- * - "␂": Start Of Text.
- * - "␚": Substitute.
- * - "␖": Synchronous Idle.
- * - "␉": Tab.
- * - "␋": Vertical Tab.
- * - "�": Unknown.
+ *   - "␆": Acknowledge.
+ *   - "␕": Negative Acknowledge.
+ *   - "␈": Backspace.
+ *   - "␇": Bell.
+ *   - "␘": Cancel.
+ *   - "␍": Carriage Return.
+ *   - "␐": Data Link Escape.
+ *   - "␡": Delete.
+ *   - "␑": Device Control 1.
+ *   - "␒": Device Control 2.
+ *   - "␓": Device Control 3.
+ *   - "␔": Device Control 4.
+ *   - "␙": End of Medium.
+ *   - "␃": End of Text.
+ *   - "␄": End of Transmission.
+ *   - "␗": End of Transmission Block.
+ *   - "␅": Enquiry.
+ *   - "␛": Escape.
+ *   - "␌": Form Feed.
+ *   - "␊": Line Feed.
+ *   - "␀": Null.
+ *   - "␜": Separator File.
+ *   - "␝": Separator Group.
+ *   - "␞": Separator Record.
+ *   - "␟": Separator Unit.
+ *   - "␏": Shift In.
+ *   - "␎": Shift Out.
+ *   - "␁": Start Of Header.
+ *   - "␂": Start Of Text.
+ *   - "␚": Substitute.
+ *   - "␖": Synchronous Idle.
+ *   - "␉": Tab.
+ *   - "␋": Vertical Tab.
+ *   - "�": Unknown/Invalid.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
- *
- * @todo float/double support is not yet implemented, but is intended to eventually be supported.
  *
  * @param string
  *   The formatted string to process and output.
  *   This is a NULL terminated string.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param ...
  *   Additional arguments relating to the string.
@@ -169,6 +196,7 @@ extern "C" {
  *
  * @see fprintf()
  * @see fputc_unlocked()
+ * @see snprintf()
  * @see va_start()
  * @see va_end()
  *
@@ -181,7 +209,7 @@ extern "C" {
  * @see f_print_terminated()
  */
 #ifndef _di_fl_print_format_
-  extern f_status_t fl_print_format(const f_string_t string, FILE *output, ...);
+  extern f_status_t fl_print_format(const f_string_t string, FILE *stream, ...);
 #endif // _di_fl_print_format_
 
 /**
@@ -195,8 +223,8 @@ extern "C" {
  * @param string
  *   The current character position within the string.
  *   This pointer might be updated by this function.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param stream
+ *   The file stream to stream to, including standard streams such as stdout and stderr.
  * @param ap
  *   The variable arguments list.
  * @param status
@@ -240,7 +268,7 @@ extern "C" {
  * @see f_print_terminated()
  */
 #ifndef _di_fl_print_format_convert_
-  extern f_string_t fl_print_format_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status);
+  extern f_string_t fl_print_format_convert(const f_string_t string, FILE *stream, va_list *ap, f_status_t *status);
 #endif // _di_fl_print_format_convert_
 
 /**
@@ -252,7 +280,7 @@ extern "C" {
  *
  * @param string
  *   The formatted string to process and output.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param ap
  *   The variable list.
@@ -292,7 +320,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fl_print_string_va_
-  extern f_status_t fl_print_string_va(const f_string_t string, FILE *output, va_list *ap);
+  extern f_status_t fl_print_string_va(const f_string_t string, FILE *stream, va_list *ap);
 #endif // _di_fl_print_string_va_
 
 /**
@@ -309,7 +337,7 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -327,7 +355,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_
-  extern f_status_t fl_print_trim(const f_string_t string, const f_array_length_t length, FILE *output);
+  extern f_status_t fl_print_trim(const f_string_t string, const f_array_length_t length, FILE *stream);
 #endif // _di_fl_print_trim_
 
 /**
@@ -347,7 +375,7 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -363,7 +391,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_raw_
-  extern f_status_t fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE *output);
+  extern f_status_t fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE *stream);
 #endif // _di_fl_print_trim_raw_
 
 /**
@@ -381,7 +409,7 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -398,7 +426,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_safely_
-  extern f_status_t fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE *output);
+  extern f_status_t fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE *stream);
 #endif // _di_fl_print_trim_safely_
 
 /**
@@ -416,7 +444,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -434,7 +462,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_
-  extern f_status_t fl_print_trim_dynamic(const f_string_static_t buffer, FILE *output);
+  extern f_status_t fl_print_trim_dynamic(const f_string_static_t buffer, FILE *stream);
 #endif // _di_fl_print_trim_dynamic_
 
 /**
@@ -455,7 +483,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -471,7 +499,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_raw_
-  extern f_status_t fl_print_trim_dynamic_raw(const f_string_static_t buffer, FILE *output);
+  extern f_status_t fl_print_trim_dynamic_raw(const f_string_static_t buffer, FILE *stream);
 #endif // _di_fl_print_trim_dynamic_raw_
 
 /**
@@ -490,7 +518,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -507,7 +535,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_safely_
-  extern f_status_t fl_print_trim_dynamic_safely(const f_string_static_t buffer, FILE *output);
+  extern f_status_t fl_print_trim_dynamic_safely(const f_string_static_t buffer, FILE *stream);
 #endif // _di_fl_print_trim_dynamic_safely_
 
 /**
@@ -527,7 +555,7 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -545,7 +573,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_
-  extern f_status_t fl_print_trim_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+  extern f_status_t fl_print_trim_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
 #endif // _di_fl_print_trim_dynamic_partial_
 
 /**
@@ -568,7 +596,7 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -584,7 +612,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+  extern f_status_t fl_print_trim_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
 #endif // _di_fl_print_trim_dynamic_partial_raw_
 
 /**
@@ -605,7 +633,7 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -622,7 +650,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+  extern f_status_t fl_print_trim_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
 #endif // _di_fl_print_trim_dynamic_partial_safely_
 
 /**
@@ -647,7 +675,7 @@ extern "C" {
  * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -665,7 +693,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_
-  extern f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output);
+  extern f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream);
 #endif // _di_fl_print_trim_except_
 
 /**
@@ -693,7 +721,7 @@ extern "C" {
  * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -709,7 +737,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_raw_
-  extern f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output);
+  extern f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream);
 #endif // _di_fl_print_trim_except_raw_
 
 /**
@@ -735,7 +763,7 @@ extern "C" {
  * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -752,7 +780,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_safely_
-  extern f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output);
+  extern f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream);
 #endif // _di_fl_print_trim_except_safely_
 
 /**
@@ -774,7 +802,7 @@ extern "C" {
  * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -792,7 +820,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_
-  extern f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
 #endif // _di_fl_print_trim_except_dynamic_
 
 /**
@@ -817,7 +845,7 @@ extern "C" {
  * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -833,7 +861,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_raw_
-  extern f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
 #endif // _di_fl_print_trim_except_dynamic_raw_
 
 /**
@@ -856,7 +884,7 @@ extern "C" {
  * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -873,7 +901,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_safely_
-  extern f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
 #endif // _di_fl_print_trim_except_dynamic_safely_
 
 /**
@@ -902,7 +930,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -920,7 +948,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_
-  extern f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_
 
 /**
@@ -952,7 +980,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -968,7 +996,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_raw_
-  extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_raw_
 
 /**
@@ -998,7 +1026,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1015,7 +1043,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_safely_
-  extern f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_safely_
 
 /**
@@ -1043,7 +1071,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1061,7 +1089,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_
-  extern f_status_t fl_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_dynamic_
 
 /**
@@ -1090,7 +1118,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1106,7 +1134,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_raw_
-  extern f_status_t fl_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_dynamic_raw_
 
 /**
@@ -1133,7 +1161,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1150,7 +1178,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_dynamic_safely_
 
 /**
@@ -1178,7 +1206,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1196,7 +1224,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_
 
 /**
@@ -1227,7 +1255,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1243,7 +1271,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_
 
 /**
@@ -1272,7 +1300,7 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1289,7 +1317,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_safely_
 
 /**
@@ -1313,7 +1341,7 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1331,7 +1359,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_
-  extern f_status_t fl_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
 #endif // _di_fl_print_trim_except_dynamic_partial_
 
 /**
@@ -1358,7 +1386,7 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1374,7 +1402,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_
 
 /**
@@ -1399,7 +1427,7 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -1416,7 +1444,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
 #endif // _di_fl_print_trim_except_dynamic_partial_safely_
 
 #ifdef __cplusplus

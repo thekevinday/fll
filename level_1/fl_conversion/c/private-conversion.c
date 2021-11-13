@@ -60,6 +60,7 @@ extern "C" {
     } // for
 
     *number = converted;
+
     return F_none;
   }
 #endif // !defined(_di_fl_conversion_string_to_binary_signed_) || !defined(_di_fl_conversion_string_to_number_signed_) || !defined(_di_fl_conversion_string_to_binary_signed_)
@@ -103,6 +104,7 @@ extern "C" {
     } // for
 
     *number = converted;
+
     return F_none;
   }
 #endif // !defined(_di_fl_conversion_string_to_binary_signed_) || !defined(_di_fl_conversion_string_to_number_signed_) || !defined(_di_fl_conversion_string_to_binary_unsigned_)
@@ -167,6 +169,7 @@ extern "C" {
     } // for
 
     *number = converted;
+
     return F_none;
   }
 #endif // !defined(_di_fl_conversion_string_to_binary_signed_) || !defined(_di_fl_conversion_string_to_number_signed_) || !defined(_di_fl_conversion_string_to_decimal_signed_)
@@ -213,6 +216,7 @@ extern "C" {
     } // for
 
     *number = converted;
+
     return F_none;
   }
 #endif // !defined(_di_fl_conversion_string_to_binary_signed_) || !defined(_di_fl_conversion_string_to_number_signed_) || !defined(_di_fl_conversion_string_to_decimal_unsigned_)
@@ -277,6 +281,7 @@ extern "C" {
     } // for
 
     *number = converted;
+
     return F_none;
   }
 #endif // !defined(_di_fl_conversion_string_to_binary_signed_) || !defined(_di_fl_conversion_string_to_number_signed_) || !defined(_di_fl_conversion_string_to_duodecimal_signed_)
@@ -323,6 +328,7 @@ extern "C" {
     } // for
 
     *number = converted;
+
     return F_none;
   }
 #endif // !defined(_di_fl_conversion_string_to_binary_signed_) || !defined(_di_fl_conversion_string_to_number_signed_) || !defined(_di_fl_conversion_string_to_duodecimal_unsigned_)
@@ -497,6 +503,7 @@ extern "C" {
     } // for
 
     *number = converted;
+
     return F_none;
   }
 #endif // !defined(_di_fl_conversion_string_to_binary_signed_) || !defined(_di_fl_conversion_string_to_number_signed_) || !defined(_di_fl_conversion_string_to_octal_signed_)
@@ -543,6 +550,7 @@ extern "C" {
     } // for
 
     *number = converted;
+
     return F_none;
   }
 #endif // !defined(_di_fl_conversion_string_to_binary_signed_) || !defined(_di_fl_conversion_string_to_number_signed_) || !defined(_di_fl_conversion_string_to_octal_unsigned_)
