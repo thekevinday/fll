@@ -383,7 +383,6 @@ extern "C" {
     }
 
     if (cell->column < main->width) {
-      // @fixme when unicode is enabled but invalid, the mode and its respective length now matters. This needs to be included in the width calculations.
       if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found && !invalid[character_current]) {
         if (byte_current == 1) {
           uint32_t unicode = 0;
@@ -561,7 +560,7 @@ extern "C" {
     uint8_t at = 0;
     uint8_t c = 0;
     uint8_t width_utf = 0;
-    bool printed = F_false;
+    bool print = F_true;
 
     char byte[5] = { 0, 0, 0, 0, 0 };
 
@@ -665,7 +664,7 @@ extern "C" {
               byte[1] = 0;
             }
 
-            f_print_safely(byte, width_utf ? width_utf : 1, main->output.to.stream);
+            f_print_safely(byte, width_utf, main->output.to.stream);
           }
           else {
             f_print_character_safely(c, main->output.to.stream);
@@ -723,103 +722,123 @@ extern "C" {
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
       }
-      else if (width_utf == 2 && characters.string[i] == 0xd89d0000) {
-
-        // U+061C
-        f_print_character(f_string_space_s[0], main->output.to.stream);
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xefbfb000 && characters.string[i] <= 0xefbfbc00) {
-
-        // Use space to represent Specials codes.
-        // 0xefbfbd00 is excluded because it is printable (and is the "Replacement Character" code).
-        f_print_character(f_string_space_s[0], main->output.to.stream);
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xe290a700 && characters.string[i] <= 0xe290bf00) {
-
-        // Use space to represent Control Pictues codes that are not currently defined but are reserved.
-        f_print_character(f_string_space_s[0], main->output.to.stream);
-      }
-      else if (width_utf == 3 && characters.string[i] >= 0xee808000 && characters.string[i] <= 0xefa3bf00) {
-
-        // Use space to represent Private Use Area codes.
-        f_print_character(f_string_space_s[0], main->output.to.stream);
-      }
-      else if (width_utf == 4 && characters.string[i] >= 0xf09c80a0 && characters.string[i] <= 0xf09c80bd) {
-
-        // Use space to represent Vaiation Selectors Supplement codes.
-        f_print_character(f_string_space_s[0], main->output.to.stream);
-      }
-      else if (width_utf == 4 && characters.string[i] >= 0xf3b08080 && characters.string[i] <= 0xf3bfbfbf) {
-
-        // Use space to represent Supplemental Private Use Area-A codes.
-        f_print_character(f_string_space_s[0], main->output.to.stream);
-      }
-      else if (width_utf == 4 && characters.string[i] >= 0xf4808080 && characters.string[i] <= 0xf48fbfbf) {
-
-        // Use space to represent Supplemental Private Use Area-B codes.
-        f_print_character(f_string_space_s[0], main->output.to.stream);
-      }
-      else if (width_utf == 1) {
-
-        // Print invalid placeholder for invalid UTF-8 widths.
-        if (invalid[i]) {
-          fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
-        }
-        else {
-          fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_incomplete_s, main->context.set.warning);
-        }
-      }
       else if (width_utf) {
-        f_print_character(c, main->output.to.stream);
+        print = F_false;
 
-        if (width_utf > 1) {
-          f_print_character(macro_f_utf_character_t_to_char_2(characters.string[i]), main->output.to.stream);
+        if (width_utf == 1) {
 
-          if (width_utf > 2) {
-            f_print_character(macro_f_utf_character_t_to_char_3(characters.string[i]), main->output.to.stream);
-
-            if (width_utf > 3) {
-              f_print_character(macro_f_utf_character_t_to_char_4(characters.string[i]), main->output.to.stream);
-            }
+          // Print invalid placeholder for invalid UTF-8 widths.
+          if (invalid[i]) {
+            fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
+          }
+          else {
+            fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_incomplete_s, main->context.set.warning);
           }
         }
+        else if (width_utf == 2) {
+          if (characters.string[i] == 0xd89d0000) {
+            f_print_terminated("  ", main->output.to.stream);
+          }
+          else {
+            print = F_true;
+          }
+        }
+        else if (width_utf == 3) {
+          if (characters.string[i] >= 0xefbfb000 && characters.string[i] <= 0xefbfbc00) {
 
-        // @todo implement a function in f_utf, such as f_utf_is_combining(), for detecting these combining characters.
-        // print a space for combining characters to combine into, thereby allowing it to be safely and readably displayed.
-        if (width_utf == 2 && characters.string[i] >= 0xdea60000 && characters.string[i] <= 0xdeb00000) {
+            // Use space to represent Specials codes.
+            // 0xefbfbd00 is excluded because it is printable (and is the "Replacement Character" code).
+            f_print_character(f_string_space_s[0], main->output.to.stream);
+          }
+          else if (characters.string[i] >= 0xe290a700 && characters.string[i] <= 0xe290bf00) {
 
-          // Thana combining codes: U+07A6 to U+07B0.
-          f_print_character(f_string_space_s[0], main->output.to.stream);
-        }
-        else if (width_utf == 2 && characters.string[i] >= 0xcc800000 && characters.string[i] <= 0xcdaf0000) {
-          f_print_character(f_string_space_s[0], main->output.to.stream);
-        }
-        else if (width_utf == 3 && characters.string[i] >= 0xe1aab000 && characters.string[i] <= 0xe1abbf00) {
-          f_print_character(f_string_space_s[0], main->output.to.stream);
-        }
-        else if (width_utf == 3 && characters.string[i] >= 0xe1b78000 && characters.string[i] <= 0xe1b7bf00) {
-          f_print_character(f_string_space_s[0], main->output.to.stream);
-        }
-        else if (width_utf == 3 && characters.string[i] >= 0xe2839000 && characters.string[i] <= 0xe283bf00) {
-          f_print_character(f_string_space_s[0], main->output.to.stream);
-        }
-        else if (width_utf == 2 && characters.string[i] >= 0xd8900000 && characters.string[i] <= 0xd89a0000) {
-          f_print_character(f_string_space_s[0], main->output.to.stream);
-        }
-        else if (width_utf == 2 && characters.string[i] >= 0xd98b0000 && characters.string[i] <= 0xd99f0000) {
+            // Use space to represent Control Pictues codes that are not currently defined but are reserved.
+            f_print_character(f_string_space_s[0], main->output.to.stream);
+          }
+          else if (characters.string[i] >= 0xee808000 && characters.string[i] <= 0xefa3bf00) {
 
-          // Arabic, U+064B to U+065F.
+            // Use space to represent Private Use Area codes.
+            f_print_character(f_string_space_s[0], main->output.to.stream);
+          }
+          else {
+            print = F_true;
+          }
+        }
+        else if (characters.string[i] >= 0xf09c80a0 && characters.string[i] <= 0xf09c80bd) {
+
+          // Use space to represent Variation Selectors Supplement codes.
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
-        else if (width_utf == 2 && characters.string[i] >= 0xdb960000 && characters.string[i] <= 0xdb9c0000) {
+        else if (characters.string[i] >= 0xf3b08080 && characters.string[i] <= 0xf3bfbfbf) {
 
-          // Arabic, U+06D6 to U+06DC.
+          // Use space to represent Supplemental Private Use Area-A codes.
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
-        else if (width_utf == 2 && characters.string[i] >= 0xd6910000 && characters.string[i] <= 0xd6bd0000) {
+        else if (characters.string[i] >= 0xf4808080 && characters.string[i] <= 0xf48fbfbf) {
 
-          // Hebrew, U+0591 to U+05BD.
+          // Use space to represent Supplemental Private Use Area-B codes.
           f_print_character(f_string_space_s[0], main->output.to.stream);
+        }
+        else {
+          print = F_true;
+        }
+
+        if (print) {
+          f_print_character(c, main->output.to.stream);
+
+          if (width_utf > 1) {
+            f_print_character(macro_f_utf_character_t_to_char_2(characters.string[i]), main->output.to.stream);
+
+            if (width_utf > 2) {
+              f_print_character(macro_f_utf_character_t_to_char_3(characters.string[i]), main->output.to.stream);
+
+              if (width_utf > 3) {
+                f_print_character(macro_f_utf_character_t_to_char_4(characters.string[i]), main->output.to.stream);
+              }
+            }
+          }
+
+          // @todo implement a function in f_utf, such as f_utf_is_combining(), for detecting these combining characters.
+          // Print a space for combining characters to combine into, thereby allowing it to be safely and readably displayed.
+          if (width_utf == 2) {
+            if (characters.string[i] >= 0xdea60000 && characters.string[i] <= 0xdeb00000) {
+
+              // Thana combining codes: U+07A6 to U+07B0.
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+            else if (characters.string[i] >= 0xcc800000 && characters.string[i] <= 0xcdaf0000) {
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+            else if (characters.string[i] >= 0xd8900000 && characters.string[i] <= 0xd89a0000) {
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+            else if (characters.string[i] >= 0xd98b0000 && characters.string[i] <= 0xd99f0000) {
+
+              // Arabic, U+064B to U+065F.
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+            else if (characters.string[i] >= 0xdb960000 && characters.string[i] <= 0xdb9c0000) {
+
+              // Arabic, U+06D6 to U+06DC.
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+            else if (characters.string[i] >= 0xd6910000 && characters.string[i] <= 0xd6bd0000) {
+
+              // Hebrew, U+0591 to U+05BD.
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+          }
+          else if (width_utf == 3) {
+            if (characters.string[i] >= 0xe1aab000 && characters.string[i] <= 0xe1abbf00) {
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+            else if (characters.string[i] >= 0xe1b78000 && characters.string[i] <= 0xe1b7bf00) {
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+            else if (characters.string[i] >= 0xe2839000 && characters.string[i] <= 0xe283bf00) {
+              f_print_character(f_string_space_s[0], main->output.to.stream);
+            }
+          }
         }
       }
       else {
