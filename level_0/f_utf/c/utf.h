@@ -224,8 +224,8 @@ extern "C" {
  *   The character to validate.
  *
  * @return
- *   F_true if a UTF-8 control picture character.
- *   F_false if not a UTF-8 control picture character.
+ *   F_true if a UTF-8 combining character.
+ *   F_false if not a UTF-8 combining character.
  *
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  */
@@ -235,6 +235,8 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 control character.
+ *
+ * This includes control code and control format characters.
  *
  * @param character
  *   The character to validate.
@@ -250,6 +252,45 @@ extern "C" {
 #ifndef _di_f_utf_character_is_control_
   extern f_status_t f_utf_character_is_control(const f_utf_character_t character);
 #endif // _di_f_utf_character_is_control_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 control code character.
+ *
+ * Control Code characters are the traditional control characters, such as "\n" as well as some newer Unicode ones.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 control code character.
+ *   F_false if not a UTF-8 control code character.
+ *
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see iscntrl()
+ */
+#ifndef _di_f_utf_character_is_control_code_
+  extern f_status_t f_utf_character_is_control_code(const f_utf_character_t character);
+#endif // _di_f_utf_character_is_control_code_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 control format character.
+ *
+ * Control Format characters are special characters used for formatting.
+ * These are considered control characters.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 control format character.
+ *   F_false if not a UTF-8 control format character.
+ *
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ */
+#ifndef _di_f_utf_character_is_control_format_
+  extern f_status_t f_utf_character_is_control_format(const f_utf_character_t character);
+#endif // _di_f_utf_character_is_control_format_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 control picture character.
@@ -876,8 +917,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_true if a UTF-8 control picture character.
- *   F_false if not a UTF-8 control picture character.
+ *   F_true if a UTF-8 combining character.
+ *   F_false if not a UTF-8 combining character.
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
@@ -887,6 +928,8 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 control character.
+ *
+ * This includes control code and control format characters.
  *
  * @param character
  *   The character to validate.
@@ -906,6 +949,51 @@ extern "C" {
 #ifndef _di_f_utf_is_control_
   extern f_status_t f_utf_is_control(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_control_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 control code character.
+ *
+ * Control Code characters are the traditional control characters, such as "\n" as well as some newer Unicode ones.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 control code character.
+ *   F_false if not a UTF-8 control code character.
+ *
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_control_code_
+  extern f_status_t f_utf_is_control_code(const f_string_t character, const f_array_length_t width_max);
+#endif // _di_f_utf_is_control_code_
+
+/**
+ * Check to see if the entire byte block of the character is a UTF-8 control format character.
+ *
+ * Control Format characters are special characters used for formatting.
+ * These are considered control characters.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 control format character.
+ *   F_false if not a UTF-8 control format character.
+ *
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_control_format_
+  extern f_status_t f_utf_is_control_format(const f_string_t character, const f_array_length_t width_max);
+#endif // _di_f_utf_is_control_format_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 control picture character.

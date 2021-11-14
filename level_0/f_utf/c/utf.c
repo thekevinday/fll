@@ -229,6 +229,46 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_control_
 
+#ifndef _di_f_utf_character_is_control_code_
+  f_status_t f_utf_character_is_control_code(const f_utf_character_t character) {
+
+    const uint8_t width = macro_f_utf_character_t_width_is(character);
+
+    if (!width) {
+      if (iscntrl(macro_f_utf_character_t_to_char_1(character))) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_utf);
+    }
+
+    return private_f_utf_character_is_control_code(character, width);
+  }
+#endif // _di_f_utf_character_is_control_code_
+
+#ifndef _di_f_utf_character_is_control_picture_
+  f_status_t character_is_control_format(const f_utf_character_t character) {
+
+    const uint8_t width = macro_f_utf_character_t_width_is(character);
+
+    if (!width) {
+
+      // There are no control format characters in ASCII.
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_utf);
+    }
+
+    return private_f_utf_character_is_control_format(character, width);
+  }
+#endif // _di_f_utf_character_is_control_format_
+
 #ifndef _di_f_utf_character_is_control_picture_
   f_status_t f_utf_character_is_control_picture(const f_utf_character_t character) {
 
@@ -1008,6 +1048,63 @@ extern "C" {
   }
 #endif // _di_f_utf_is_control_
 
+#ifndef _di_f_utf_is_control_code
+  f_status_t f_utf_is_control_code(const f_string_t character, const f_array_length_t width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const uint8_t width = macro_f_utf_byte_width_is(*character);
+
+    if (!width) {
+      if (iscntrl(*character)) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_complete_not_utf);
+    }
+
+    f_utf_character_t character_utf = 0;
+
+    f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
+    if (F_status_is_error(status)) return status;
+
+    return private_f_utf_character_is_control_code(character_utf, width);
+  }
+#endif // _di_f_utf_is_control_code_
+
+#ifndef _di_f_utf_is_control_format_
+  f_status_t f_utf_is_control_format(const f_string_t character, const f_array_length_t width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const uint8_t width = macro_f_utf_byte_width_is(*character);
+
+    // There are no ASCII control formats.
+    if (!width) {
+      return F_false;
+    }
+
+    if (width == 1) {
+      return F_status_is_error(F_complete_not_utf);
+    }
+
+    f_utf_character_t character_utf = 0;
+
+    {
+      const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_f_utf_character_is_control_format(character_utf, width);
+  }
+#endif // _di_f_utf_is_control_format_
+
 #ifndef _di_f_utf_is_control_picture_
   f_status_t f_utf_is_control_picture(const f_string_t character, const f_array_length_t width_max) {
     #ifndef _di_level_0_parameter_checking_
@@ -1023,6 +1120,10 @@ extern "C" {
 
     if (width == 1) {
       return F_status_is_error(F_complete_not_utf);
+    }
+
+    if (width != 3) {
+      return F_false;
     }
 
     f_utf_character_t character_utf = 0;

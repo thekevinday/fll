@@ -175,8 +175,8 @@ extern "C" {
  *   The number of bytes repesenting the character width.
  *
  * @return
- *   F_true if a UTF-8 control picture character.
- *   F_false if not a UTF-8 control picture character.
+ *   F_true if a UTF-8 combining character.
+ *   F_false if not a UTF-8 combining character.
  *
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
@@ -209,6 +209,52 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
   extern f_status_t private_f_utf_character_is_control(const f_utf_character_t character, const uint8_t width) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
+
+/**
+ * Private implementation of f_utf_character_is_control_code().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   F_true if a UTF-8 control character.
+ *   F_false if not a UTF-8 control character.
+ *
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_character_is_control_code()
+ * @see f_utf_is_control_code()
+ */
+#if !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
+  extern f_status_t private_f_utf_character_is_control_code(const f_utf_character_t character, const uint8_t width) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
+
+/**
+ * Private implementation of f_utf_character_is_control_format().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character to validate.
+ * @param width
+ *   The number of bytes repesenting the character width.
+ *
+ * @return
+ *   F_true if a UTF-8 control character.
+ *   F_false if not a UTF-8 control character.
+ *
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_character_is_control_format()
+ * @see f_utf_is_control_format()
+ */
+#if !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
+  extern f_status_t private_f_utf_character_is_control_format(const f_utf_character_t character, const uint8_t width) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
 
 /**
  * Private implementation of f_utf_character_is_control_picture().
