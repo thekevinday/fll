@@ -736,12 +736,7 @@ extern "C" {
           }
         }
         else if (width_utf == 2) {
-          if (characters.string[i] == 0xd89d0000) {
-            f_print_terminated("  ", main->output.to.stream);
-          }
-          else {
-            print = F_true;
-          }
+          print = F_true;
         }
         else if (width_utf == 3) {
           if (characters.string[i] >= 0xefbfb000 && characters.string[i] <= 0xefbfbc00) {
