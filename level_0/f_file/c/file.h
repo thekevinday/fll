@@ -1967,9 +1967,17 @@ extern "C" {
  * @param path
  *   The file path
  * @param mode
- *   The file modes do use when opening.
+ *   The file modes do use when opening, as an fopen() file mode string.
  *   Set to 0 to determine mode from file.flags (falling back to read only as a failsafe).
  *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
+ *
+ *   File Modes (fopen() file modes vs open file modes):
+ *     - "r":  O_RDONLY.
+ *     - "w":  O_WRONLY | O_CREAT | O_TRUNC.
+ *     - "a":  O_WRONLY | O_CREAT | O_APPEND.
+ *     - "r+": O_RDWR.
+ *     - "w+": O_RDWR | O_CREAT | O_TRUNC.
+ *     - "a+": O_RDWR | O_CREAT | O_APPEND.
  * @param file
  *   The file information.
  *   The file.stream is updated if necessary.

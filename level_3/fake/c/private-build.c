@@ -2580,7 +2580,7 @@ extern "C" {
         }
         else {
 
-          // replace any potential existing value.
+          // Replace any potential existing value.
           settings_single_destination[i]->used = 0;
 
           *status = f_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);

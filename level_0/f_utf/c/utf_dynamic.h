@@ -5,9 +5,9 @@
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * Defines dynamic (and static) string data.
+ * Defines dynamic (and static) UTF-8 string data.
  *
- * This is auto-included by string.h and should not need to be explicitly included.
+ * This is auto-included by utf.h and should not need to be explicitly included.
  */
 #ifndef _F_utf_string_dynamic_h
 #define _F_utf_string_dynamic_h
@@ -44,6 +44,13 @@ extern "C" {
 
   #define macro_f_utf_string_static_t_initialize(string, length) { string, length, length }
 #endif // _di_f_utf_string_static_t_
+
+/**
+ * Define a a global empty UTF-8 string.
+ */
+#ifndef _di_f_utf_string_static_empty_s_
+  const extern f_utf_string_static_t f_utf_string_static_empty_s;
+#endif // _di_f_utf_string_static_empty_s_
 
 /**
  * A string that supports contains a size attribute to handle dynamic allocations and deallocations.
@@ -124,10 +131,6 @@ extern "C" {
   #define macro_f_utf_string_dynamics_t_decrease_by(status, dynamics, amount) status = f_utf_string_dynamics_decrease_by(amount, &dynamics);
   #define macro_f_utf_string_dynamics_t_decimate_by(status, dynamics, amount) status = f_utf_string_dynamics_decimate_by(amount, &dynamics);
 #endif // _di_f_utf_string_dynamics_t_
-
-#ifndef _di_f_utf_string_static_empty_s_
-  const extern f_utf_string_static_t f_utf_string_static_empty_s;
-#endif // _di_f_utf_string_static_empty_s_
 
 /**
  * Resize the dynamic string.

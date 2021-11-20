@@ -399,6 +399,12 @@ extern "C" {
         case F_failure_not:
           *string = FL_status_string_failure_not;
           break;
+        case F_first:
+          *string = FL_status_string_first;
+          break;
+        case F_first_not:
+          *string = FL_status_string_first_not;
+          break;
         case F_fork:
           *string = FL_status_string_fork;
           break;
@@ -455,6 +461,12 @@ extern "C" {
           break;
         case F_interrupt_not:
           *string = FL_status_string_interrupt_not;
+          break;
+        case F_last:
+          *string = FL_status_string_last;
+          break;
+        case F_last_not:
+          *string = FL_status_string_last_not;
           break;
         case F_limit:
           *string = FL_status_string_limit;
@@ -522,6 +534,12 @@ extern "C" {
         case F_name_not:
           *string = FL_status_string_name_not;
           break;
+        case F_next:
+          *string = FL_status_string_next;
+          break;
+        case F_next_not:
+          *string = FL_status_string_next_not;
+          break;
         case F_nice:
           *string = FL_status_string_nice;
           break;
@@ -551,6 +569,12 @@ extern "C" {
           break;
         case F_parent_not:
           *string = FL_status_string_parent_not;
+          break;
+        case F_previous:
+          *string = FL_status_string_previous;
+          break;
+        case F_previous_not:
+          *string = FL_status_string_previous_not;
           break;
         case F_pipe:
           *string = FL_status_string_pipe;
@@ -719,6 +743,12 @@ extern "C" {
           break;
         case F_utf:
           *string = FL_status_string_utf;
+          break;
+        case F_utf_fragment:
+          *string = FL_status_string_utf_fragment;
+          break;
+        case F_utf_fragment_not:
+          *string = FL_status_string_utf_fragment_not;
           break;
         case F_utf_not:
           *string = FL_status_string_utf_not;

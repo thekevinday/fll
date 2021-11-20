@@ -117,7 +117,7 @@ extern "C" {
     f_array_length_t e2 = 0;
 
     uint8_t width = 0;
-    uint8_t width_max = 0;
+    f_array_length_t width_max = 0;
 
     f_status_t status = F_none;
 
@@ -340,14 +340,22 @@ extern "C" {
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
+    f_string_static_t debug1;
+    debug1.string = string1 + offset1;
+    debug1.used = (stop1 - offset1) + 1;
+
+    f_string_static_t debug2;
+    debug2.string = string2 + offset2;
+    debug2.used = (stop2 - offset2) + 1;
+
     uint8_t width = 0;
-    uint8_t width_max = 0;
+    f_array_length_t width_max = 0;
     f_status_t status = F_none;
 
-    // skip past leading whitespace in string1.
+    // Skip past leading whitespace in string1.
     for (; i1 < stop1; i1 += width) {
 
-      // skip past NULL in string1.
+      // Skip past NULL in string1.
       while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
@@ -367,10 +375,10 @@ extern "C" {
       width = macro_f_utf_byte_width(string1[i1]);
     } // for
 
-    // skip past leading whitespace in string2.
+    // Skip past leading whitespace in string2.
     for (; i2 < stop2; i2 += width) {
 
-      // skip past NULL in string2.
+      // Skip past NULL in string2.
       while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
@@ -394,14 +402,14 @@ extern "C" {
     f_array_length_t last2 = i2;
 
     {
-      // size1 and size2 are to represent to total number of characters after trim.
+      // Size1 and size2 are to represent to total number of characters after trim.
       f_array_length_t size1 = 0;
       f_array_length_t size2 = 0;
 
-      // determine where the last non-whitespace is in string1.
+      // Determine where the last non-whitespace is in string1.
       for (f_array_length_t j = i1; j < stop1; j += width) {
 
-        // skip past NULL in string1.
+        // Skip past NULL in string1.
         while (j < stop1 && !string1[j]) ++j;
         if (j == stop1) break;
 
@@ -424,10 +432,10 @@ extern "C" {
         }
       } // for
 
-      // determine where the last non-whitespace is in string2.
+      // Determine where the last non-whitespace is in string2.
       for (f_array_length_t j = i2; j < stop2; j += width) {
 
-        // skip past NULL in string2.
+        // Skip past NULL in string2.
         while (j < stop2 && !string2[j]) ++j;
         if (j == stop2) break;
 
@@ -457,11 +465,11 @@ extern "C" {
 
     for (; i1 < last1 && i2 < last2; ++i1, ++i2) {
 
-      // skip past NULL in string1.
+      // Skip past NULL in string1.
       while (i1 < last1 && !string1[i1]) ++i1;
       if (i1 == last1) break;
 
-      // skip past NULL in string2.
+      // Skip past NULL in string2.
       while (i2 < last2 && !string2[i2]) ++i2;
       if (i2 == last2) break;
 
@@ -470,18 +478,14 @@ extern "C" {
       }
     } // for
 
-    // only return F_equal_to if all remaining characters are NULL.
-    while (i1 < last1) {
-
+    // Only return F_equal_to if all remaining characters are NULL.
+    for (; i1 < last1; ++i1) {
       if (string1[i1] != 0) return F_equal_to_not;
-      ++i1;
-    } // while
+    } // for
 
-    while (i2 < last2) {
-
+    for (; i2 < last2; ++i2) {
       if (string2[i2] != 0) return F_equal_to_not;
-      ++i2;
-    } // while
+    } // for
 
     return F_equal_to;
   }

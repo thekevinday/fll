@@ -793,6 +793,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_first, length, FL_status_string_first_length) == F_equal_to) {
+        *code = F_first;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_first_not, length, FL_status_string_first_not_length) == F_equal_to) {
+        *code = F_first_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_fork, length, FL_status_string_fork_length) == F_equal_to) {
         *code = F_fork;
 
@@ -915,6 +927,18 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_known_not, length, FL_status_string_known_not_length) == F_equal_to) {
         *code = F_known_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_last, length, FL_status_string_last_length) == F_equal_to) {
+        *code = F_last;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_last_not, length, FL_status_string_last_not_length) == F_equal_to) {
+        *code = F_last_not;
 
         return F_none;
       }
@@ -1051,6 +1075,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_next, length, FL_status_string_next_length) == F_equal_to) {
+        *code = F_next;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_next_not, length, FL_status_string_next_not_length) == F_equal_to) {
+        *code = F_next_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_nice, length, FL_status_string_nice_length) == F_equal_to) {
         *code = F_nice;
 
@@ -1131,6 +1167,18 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_port_not, length, FL_status_string_port_not_length) == F_equal_to) {
         *code = F_port_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_previous, length, FL_status_string_previous_length) == F_equal_to) {
+        *code = F_previous;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_previous_not, length, FL_status_string_previous_not_length) == F_equal_to) {
+        *code = F_previous_not;
 
         return F_none;
       }
@@ -1431,6 +1479,18 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_utf, length, FL_status_string_utf_length) == F_equal_to) {
         *code = F_utf;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_utf_fragment, length, FL_status_string_utf_fragment_length) == F_equal_to) {
+        *code = F_utf_fragment;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_utf_fragment_not, length, FL_status_string_utf_fragment_not_length) == F_equal_to) {
+        *code = F_utf_fragment_not;
 
         return F_none;
       }

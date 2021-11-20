@@ -138,7 +138,7 @@ extern "C" {
     }
 
     uint8_t width = 0;
-    uint8_t width_max = 0;
+    f_array_length_t width_max = 0;
     uint8_t mode = 0;
     int8_t vector = 0; // 0 for assumed positive, 1 for explicit positive, -1 for negative.
     f_array_length_t j = 0;
@@ -300,7 +300,7 @@ extern "C" {
     }
 
     uint8_t width = 0;
-    uint8_t width_max = 0;
+    f_array_length_t width_max = 0;
     uint8_t mode = 0;
     f_array_length_t j = 0;
     f_array_length_t offset = 0;

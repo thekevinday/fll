@@ -1,6 +1,9 @@
 #include "utf8.h"
 #include "private-common.h"
+#include "private-print.h"
 #include "private-utf8.h"
+#include "private-utf8_binary.h"
+#include "private-utf8_codepoint.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,6 +66,9 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    utf8_data_t data = utf8_data_t_initialize;
+    data.main = main;
+
     {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, utf8_total_parameters_d);
 
@@ -96,6 +102,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
+          utf8_data_delete(&data);
           utf8_main_delete(main);
 
           return F_status_set_error(status);
@@ -114,6 +121,7 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
           utf8_main_delete(main);
+          utf8_data_delete(&data);
 
           return status;
         }
@@ -151,24 +159,25 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
+          utf8_data_delete(&data);
           utf8_main_delete(main);
 
           return status;
         }
 
         if (choice == utf8_parameter_from_binary) {
-          if (main->mode & utf8_mode_from_codepoint_d) {
-            main->mode -= utf8_mode_from_codepoint_d;
+          if (data.mode & utf8_mode_from_codepoint_d) {
+            data.mode -= utf8_mode_from_codepoint_d;
           }
 
-          main->mode |= utf8_mode_from_binary_d;
+          data.mode |= utf8_mode_from_binary_d;
         }
         else if (choice == utf8_parameter_from_codepoint) {
-          if (main->mode & utf8_mode_from_binary_d) {
-            main->mode -= utf8_mode_from_binary_d;
+          if (data.mode & utf8_mode_from_binary_d) {
+            data.mode -= utf8_mode_from_binary_d;
           }
 
-          main->mode |= utf8_mode_from_codepoint_d;
+          data.mode |= utf8_mode_from_codepoint_d;
         }
       }
 
@@ -183,24 +192,25 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
+          utf8_data_delete(&data);
           utf8_main_delete(main);
 
           return status;
         }
 
         if (choice == utf8_parameter_to_binary) {
-          if (main->mode & utf8_mode_to_codepoint_d) {
-            main->mode -= utf8_mode_to_codepoint_d;
+          if (data.mode & utf8_mode_to_codepoint_d) {
+            data.mode -= utf8_mode_to_codepoint_d;
           }
 
-          main->mode |= utf8_mode_to_binary_d;
+          data.mode |= utf8_mode_to_binary_d;
         }
         else if (choice == utf8_parameter_to_codepoint) {
-          if (main->mode & utf8_mode_to_binary_d) {
-            main->mode -= utf8_mode_to_binary_d;
+          if (data.mode & utf8_mode_to_binary_d) {
+            data.mode -= utf8_mode_to_binary_d;
           }
 
-          main->mode |= utf8_mode_to_codepoint_d;
+          data.mode |= utf8_mode_to_codepoint_d;
         }
       }
 
@@ -210,20 +220,24 @@ extern "C" {
     if (main->parameters[utf8_parameter_help].result == f_console_result_found) {
       utf8_print_help(main->output.to, main->context);
 
+      utf8_data_delete(&data);
       utf8_main_delete(main);
+
       return F_none;
     }
 
     if (main->parameters[utf8_parameter_version].result == f_console_result_found) {
       fll_program_print_version(main->output.to, utf8_version_s);
 
+      utf8_data_delete(&data);
       utf8_main_delete(main);
+
       return F_none;
     }
 
     if (main->parameters[utf8_parameter_from_binary].result == f_console_result_found) {
       if (main->parameters[utf8_parameter_from_codepoint].result == f_console_result_found) {
-        utf8_print_error_parameter_conflict(main, utf8_long_from_binary_s, utf8_long_from_codepoint_s);
+        utf8_print_error_parameter_conflict(&data, utf8_long_from_binary_s, utf8_long_from_codepoint_s);
 
         status = F_status_set_error(F_parameter);
       }
@@ -231,7 +245,7 @@ extern "C" {
 
     if (F_status_is_error_not(status) && main->parameters[utf8_parameter_to_binary].result == f_console_result_found) {
       if (main->parameters[utf8_parameter_to_codepoint].result == f_console_result_found) {
-        utf8_print_error_parameter_conflict(main, utf8_long_to_binary_s, utf8_long_to_codepoint_s);
+        utf8_print_error_parameter_conflict(&data, utf8_long_to_binary_s, utf8_long_to_codepoint_s);
 
         status = F_status_set_error(F_parameter);
       }
@@ -239,7 +253,7 @@ extern "C" {
 
     if (main->parameters[utf8_parameter_verify].result == f_console_result_found) {
       if (main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found) {
-        utf8_print_error_parameter_conflict(main, utf8_long_verify_s, utf8_long_strip_invalid_s);
+        utf8_print_error_parameter_conflict(&data, utf8_long_verify_s, utf8_long_strip_invalid_s);
 
         status = F_status_set_error(F_parameter);
       }
@@ -256,7 +270,7 @@ extern "C" {
 
           if (arguments->argv[index][0]) {
             if (!f_file_exists(arguments->argv[index])) {
-              utf8_print_error_parameter_file_not_found(main, F_true, arguments->argv[index]);
+              utf8_print_error_parameter_file_not_found(&data, F_true, arguments->argv[index]);
 
               if (F_status_is_error_not(status)) {
                 status = F_status_set_error(F_file_found_not);
@@ -264,7 +278,7 @@ extern "C" {
             }
           }
           else {
-            utf8_print_error_parameter_file_name_empty(main, index);
+            utf8_print_error_parameter_file_name_empty(&data, index);
 
             if (F_status_is_error_not(status)) {
               status = F_status_set_error(F_parameter);
@@ -273,7 +287,7 @@ extern "C" {
         } // for
       }
       else if (main->parameters[utf8_parameter_from_file].result == f_console_result_found) {
-        utf8_print_error_no_value(main, utf8_long_from_file_s);
+        utf8_print_error_no_value(&data, utf8_long_from_file_s);
 
         status = F_status_set_error(F_parameter);
       }
@@ -284,65 +298,84 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (main->parameters[utf8_parameter_to_file].result == f_console_result_additional) {
         if (main->parameters[utf8_parameter_to_file].values.used > 1) {
-          utf8_print_error_parameter_file_to_too_many(main);
+          utf8_print_error_parameter_file_to_too_many(&data);
 
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_array_length_t index = main->parameters[utf8_parameter_to_file].values.array[0];
+          data.file_name.string = arguments->argv[main->parameters[utf8_parameter_to_file].values.array[0]];
+          data.file_name.used = strnlen(data.file_name.string, PATH_MAX);
 
-          if (arguments->argv[index][0]) {
-            if (!f_file_exists(arguments->argv[index])) {
-              utf8_print_error_parameter_file_not_found(main, F_false, arguments->argv[index]);
+          if (data.file_name.used) {
+            status = f_file_stream_open(data.file_name.string, "a", &data.file);
 
-              status = F_status_set_error(F_file_found_not);
+            if (F_status_is_error(status)) {
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.file_name.string, "open", fll_error_file_type_file);
             }
           }
           else {
-            utf8_print_error_parameter_file_name_empty(main, index);
+            utf8_print_error_parameter_file_name_empty(&data, main->parameters[utf8_parameter_to_file].values.array[0]);
 
             status = F_status_set_error(F_parameter);
           }
         }
       }
       else if (main->parameters[utf8_parameter_to_file].result == f_console_result_found) {
-        utf8_print_error_no_value(main, utf8_long_to_file_s);
+        utf8_print_error_no_value(&data, utf8_long_to_file_s);
 
         status = F_status_set_error(F_parameter);
       }
       else {
-        main->destination = main->output.to;
+        data.file = main->output.to;
       }
     }
 
     if (F_status_is_error_not(status)) {
       if (main->parameters[utf8_parameter_from_file].result == f_console_result_none && !(main->process_pipe || main->remaining.used)) {
-        utf8_print_error_no_from(main);
+        utf8_print_error_no_from(&data);
 
         status = F_status_set_error(F_parameter);
       }
+
+      if (data.mode & utf8_mode_to_codepoint_d) {
+        if (main->parameters[utf8_parameter_verify].result == f_console_result_found) {
+          if (main->parameters[utf8_parameter_headers].result == f_console_result_found) {
+            data.prepend = "  ";
+          }
+          else {
+            data.prepend = f_string_space_s;
+          }
+
+          data.append = f_string_eol_s;
+        }
+        else {
+          data.prepend = f_string_space_s;
+        }
+      }
+
+      data.valid_not = main->output.set->error;
     }
 
     if (F_status_is_error_not(status)) {
       status = F_none;
 
       if (main->process_pipe) {
-        f_file_t file = f_file_t_initialize;
+        f_file_t file = macro_f_file_t_initialize(0, -1, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
         file.id = F_type_descriptor_input_d;
         file.stream = F_type_input_d;
 
-        utf8_print_section_header_pipe(main);
+        utf8_print_section_header_pipe(&data);
 
-        if (main->mode & utf8_mode_from_binary_d) {
-          status = utf8_process_file_binary(main, file);
+        if (data.mode & utf8_mode_from_binary_d) {
+          status = utf8_process_file_binary(&data, file);
         }
         else {
-          status = utf8_process_file_codepoint(main, file);
+          status = utf8_process_file_codepoint(&data, file);
         }
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), main->mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, 0, utf8_string_process_s, fll_error_file_type_pipe);
+          fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, 0, utf8_string_process_s, fll_error_file_type_pipe);
         }
       }
 
@@ -350,19 +383,18 @@ extern "C" {
         f_array_length_t i = 0;
         f_array_length_t index = 0;
 
-        f_file_t file = f_file_t_initialize;
-        file.size_read = 32768;
+        f_file_t file = macro_f_file_t_initialize(0, -1, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
         for (; i < main->parameters[utf8_parameter_from_file].values.used && status != F_signal; ++i) {
 
-          if (utf8_signal_received(main)) {
+          if (utf8_signal_received(&data)) {
             status = F_status_set_error(F_signal);
             break;
           }
 
           index = main->parameters[utf8_parameter_from_file].values.array[i];
 
-          utf8_print_section_header_file(main, arguments->argv[index]);
+          utf8_print_section_header_file(&data, arguments->argv[index]);
 
           status = f_file_stream_open(arguments->argv[index], 0, &file);
 
@@ -372,11 +404,11 @@ extern "C" {
             break;
           }
 
-          if (main->mode & utf8_mode_from_binary_d) {
-            status = utf8_process_file_binary(main, file);
+          if (data.mode & utf8_mode_from_binary_d) {
+            status = utf8_process_file_binary(&data, file);
           }
           else {
-            status = utf8_process_file_codepoint(main, file);
+            status = utf8_process_file_codepoint(&data, file);
           }
 
           f_file_stream_close(F_true, &file);
@@ -388,7 +420,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), main->mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, arguments->argv[index], utf8_string_process_s, fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, arguments->argv[index], utf8_string_process_s, fll_error_file_type_file);
 
             break;
           }
@@ -401,16 +433,16 @@ extern "C" {
 
         for (; F_status_is_error_not(status) && i < main->remaining.used; ++i) {
 
-          if (utf8_signal_received(main)) {
+          if (utf8_signal_received(&data)) {
             status = F_status_set_error(F_signal);
             break;
           }
 
           index = main->remaining.array[i];
 
-          utf8_print_section_header_parameter(main, index);
+          utf8_print_section_header_parameter(&data, index);
 
-          status = utf8_process_text(main, arguments->argv[index]);
+          status = utf8_process_text(&data, arguments->argv[index]);
 
           if (main->parameters[utf8_parameter_verify].result == f_console_result_found) {
             if (status == F_false) {
@@ -423,12 +455,17 @@ extern "C" {
 
     if (main->output.verbosity != f_console_verbosity_quiet) {
       if (F_status_set_fine(status) == F_interrupt) {
-        fflush(main->output.to.stream);
+        fflush(data.file.stream);
+
+        if (data.file.stream != main->output.to.stream) {
+          fflush(main->output.to.stream);
+        }
       }
 
       fll_print_terminated(f_string_eol_s, main->output.to.stream);
     }
 
+    utf8_data_delete(&data);
     utf8_main_delete(main);
 
     if (F_status_is_error(status)) {
@@ -448,14 +485,6 @@ extern "C" {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
-
-    macro_f_string_dynamic_t_delete_simple(main->buffer);
-    macro_f_string_dynamic_t_delete_simple(main->file_input);
-    macro_f_string_dynamic_t_delete_simple(main->file_output);
-    macro_f_string_dynamic_t_delete_simple(main->text);
-
-    macro_f_string_dynamic_t_delete_simple(main->separate_character);
-    macro_f_string_dynamic_t_delete_simple(main->separate_source);
 
     macro_f_array_lengths_t_delete_simple(main->remaining);
 

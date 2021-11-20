@@ -143,9 +143,12 @@ extern "C" {
 
   #define byte_dump_short_first_s       "f"
   #define byte_dump_short_last_s        "l"
-  #define byte_dump_short_text_s        "t"
-  #define byte_dump_short_width_s       "w"
+
+  #define byte_dump_short_narrow_s      "N"
   #define byte_dump_short_placeholder_s "p"
+  #define byte_dump_short_text_s        "t"
+  #define byte_dump_short_wide_s        "W"
+  #define byte_dump_short_width_s       "w"
 
   #define byte_dump_long_binary_s      "binary"
   #define byte_dump_long_decimal_s     "decimal"
@@ -154,16 +157,18 @@ extern "C" {
   #define byte_dump_long_octal_s       "octal"
   #define byte_dump_long_unicode_s     "unicode"
 
-  #define byte_dump_long_first_s "first" // first offset byte size.
-  #define byte_dump_long_last_s  "last"  // last offset byte size.
-  #define byte_dump_long_width_s "width" // number of characters to display per row.
+  #define byte_dump_long_first_s "first" // First offset byte size.
+  #define byte_dump_long_last_s  "last"  // Last offset byte size.
 
-  #define byte_dump_long_text_s        "text"        // display text
-  #define byte_dump_long_placeholder_s "placeholder" // display (colored) placeholders to signify codes that are UTF-8 fragments.
+  #define byte_dump_long_narrow_s      "narrow"      // Each character in the displyed text will take at least 1 columns.
+  #define byte_dump_long_placeholder_s "placeholder" // Display (colored) placeholders to signify codes that are UTF-8 fragments.
+  #define byte_dump_long_text_s        "text"        // Display text
+  #define byte_dump_long_wide_s        "wide"        // Each character in the displyed text will take at least 2 columns.
+  #define byte_dump_long_width_s       "width"       // Number of characters to display per row.
 
-  #define byte_dump_long_normal_s  "normal"  // use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
-  #define byte_dump_long_simple_s  "simple"  // use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
-  #define byte_dump_long_classic_s "classic" // use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
+  #define byte_dump_long_normal_s  "normal"  // Use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
+  #define byte_dump_long_simple_s  "simple"  // Use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
+  #define byte_dump_long_classic_s "classic" // Use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
 
   enum {
     byte_dump_parameter_help,
@@ -185,10 +190,12 @@ extern "C" {
 
     byte_dump_parameter_first,
     byte_dump_parameter_last,
-    byte_dump_parameter_width,
 
-    byte_dump_parameter_text,
+    byte_dump_parameter_narrow,
     byte_dump_parameter_placeholder,
+    byte_dump_parameter_text,
+    byte_dump_parameter_wide,
+    byte_dump_parameter_width,
 
     byte_dump_parameter_normal,
     byte_dump_parameter_simple,
@@ -214,15 +221,17 @@ extern "C" {
       f_console_parameter_t_initialize(byte_dump_short_unicode_s, byte_dump_long_unicode_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_first_s, byte_dump_long_first_s, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_last_s, byte_dump_long_last_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_width_s, byte_dump_long_width_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_text_s, byte_dump_long_text_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_narrow_s, byte_dump_long_narrow_s, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_placeholder_s, byte_dump_long_placeholder_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_text_s, byte_dump_long_text_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_wide_s, byte_dump_long_wide_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_width_s, byte_dump_long_width_s, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(0, byte_dump_long_normal_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(0, byte_dump_long_simple_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(0, byte_dump_long_classic_s, 0, 0, f_console_type_normal), \
     }
 
-  #define byte_dump_total_parameters_d 23
+  #define byte_dump_total_parameters_d 25
 #endif // _di_byte_dump_defines_
 
 #ifndef _di_byte_dump_main_t_

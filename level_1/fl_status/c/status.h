@@ -225,6 +225,8 @@ extern "C" {
     #define FL_status_string_exist_not         "F_exist_not"
     #define FL_status_string_failure           "F_failure"
     #define FL_status_string_failure_not       "F_failure_not"
+    #define FL_status_string_first             "F_first"
+    #define FL_status_string_first_not         "F_first_not"
     #define FL_status_string_fork              "F_fork"
     #define FL_status_string_fork_not          "F_fork_not"
     #define FL_status_string_format            "F_format"
@@ -246,6 +248,8 @@ extern "C" {
     #define FL_status_string_interrupt_not     "F_interrupt_not"
     #define FL_status_string_known             "F_known"
     #define FL_status_string_known_not         "F_known_not"
+    #define FL_status_string_last              "F_last"
+    #define FL_status_string_last_not          "F_last_not"
     #define FL_status_string_limit             "F_limit"
     #define FL_status_string_limit_not         "F_limit_not"
     #define FL_status_string_link              "F_link"
@@ -268,6 +272,8 @@ extern "C" {
     #define FL_status_string_mount_not         "F_mount_not"
     #define FL_status_string_name              "F_name"
     #define FL_status_string_name_not          "F_name_not"
+    #define FL_status_string_next              "F_next"
+    #define FL_status_string_next_not          "F_next_not"
     #define FL_status_string_nice              "F_nice"
     #define FL_status_string_nice_not          "F_nice_not"
     #define FL_status_string_optional          "F_optional"
@@ -278,6 +284,8 @@ extern "C" {
     #define FL_status_string_parameter_not     "F_parameter_not"
     #define FL_status_string_parent            "F_parent"
     #define FL_status_string_parent_not        "F_parent_not"
+    #define FL_status_string_previous          "F_previous"
+    #define FL_status_string_previous_not      "F_previous_not"
     #define FL_status_string_pipe              "F_pipe"
     #define FL_status_string_pipe_not          "F_pipe_not"
     #define FL_status_string_port              "F_port"
@@ -332,6 +340,8 @@ extern "C" {
     #define FL_status_string_user              "F_user"
     #define FL_status_string_user_not          "F_user_not"
     #define FL_status_string_utf               "F_utf"
+    #define FL_status_string_utf_fragment      "F_utf_fragment"
+    #define FL_status_string_utf_fragment_not  "F_utf_fragment_not"
     #define FL_status_string_utf_not           "F_utf_not"
     #define FL_status_string_valid             "F_valid"
     #define FL_status_string_valid_not         "F_valid_not"
@@ -408,6 +418,8 @@ extern "C" {
     #define FL_status_string_exist_not_length         11
     #define FL_status_string_failure_length           9
     #define FL_status_string_failure_not_length       13
+    #define FL_status_string_first_length             7
+    #define FL_status_string_first_not_length         11
     #define FL_status_string_fork_length              6
     #define FL_status_string_fork_not_length          10
     #define FL_status_string_format_length            8
@@ -429,6 +441,8 @@ extern "C" {
     #define FL_status_string_interrupt_not_length     15
     #define FL_status_string_known_length             7
     #define FL_status_string_known_not_length         11
+    #define FL_status_string_last_length              6
+    #define FL_status_string_last_not_length          10
     #define FL_status_string_limit_length             7
     #define FL_status_string_limit_not_length         11
     #define FL_status_string_link_length              6
@@ -451,6 +465,8 @@ extern "C" {
     #define FL_status_string_mount_not_length         11
     #define FL_status_string_name_length              6
     #define FL_status_string_name_not_length          10
+    #define FL_status_string_next_length              6
+    #define FL_status_string_next_not_length          10
     #define FL_status_string_nice_length              6
     #define FL_status_string_nice_not_length          10
     #define FL_status_string_optional_length          10
@@ -465,6 +481,8 @@ extern "C" {
     #define FL_status_string_pipe_not_length          10
     #define FL_status_string_port_length              6
     #define FL_status_string_port_not_length          10
+    #define FL_status_string_previous_length          10
+    #define FL_status_string_previous_not_length      14
     #define FL_status_string_processor_length         11
     #define FL_status_string_processor_not_length     15
     #define FL_status_string_prohibited_length        12
@@ -515,6 +533,8 @@ extern "C" {
     #define FL_status_string_user_length              6
     #define FL_status_string_user_not_length          10
     #define FL_status_string_utf_length               5
+    #define FL_status_string_utf_fragment_length      14
+    #define FL_status_string_utf_fragment_not_length  18
     #define FL_status_string_utf_not_length           9
     #define FL_status_string_valid_length             7
     #define FL_status_string_valid_not_length         11

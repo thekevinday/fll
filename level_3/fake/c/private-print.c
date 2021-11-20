@@ -335,7 +335,7 @@ extern "C" {
 
     fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[%S%S%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter, main->error.notable);
-    fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+    fl_print_format("%[' is specified, but no value is given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
     funlockfile(main->error.to.stream);
   }

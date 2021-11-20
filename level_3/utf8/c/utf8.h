@@ -16,10 +16,16 @@
 #ifndef _utf8_h
 
 // libc includes
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+// If limits.h does not provide PATH_MAX, define it instead of relying on <linux/limits.h>.
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif /* PATH_MAX */
 
 // fll-0 includes
 #include <fll/level_0/type.h>
@@ -31,6 +37,7 @@
 #include <fll/level_0/console.h>
 #include <fll/level_0/conversion.h>
 #include <fll/level_0/file.h>
+#include <fll/level_0/path.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
@@ -76,7 +83,7 @@ extern "C" {
  * Set to at least 4 to provide a UTF-8 friendly allocation step.
  */
 #ifndef _di_utf8_default_allocation_step_
-  #define utf8_default_allocation_step_d 4
+  #define utf8_default_allocation_step_d 16
 #endif // _di_utf8_default_allocation_step_
 
 #ifndef _di_utf8_defines_
@@ -175,6 +182,8 @@ extern "C" {
 #endif // _di_utf8_defines_
 
 /**
+ * Modes used to designate how to the input and output are to be processed.
+ *
  * utf8_mode_from_*:
  *   - binary:    The input source is binary.
  *   - codepoint: The input source is codepoint (U+XXXX or U+XXXXXX).
@@ -190,6 +199,18 @@ extern "C" {
   #define utf8_mode_to_codepoint_d   0x8
 #endif // _di_utf8_modes_
 
+/**
+ * The main program data.
+ *
+ * parameters:   The state of pre-defined parameters passed to the program.
+ * remaining:    The remaining, non-pre-defined parameters, passed to the program.
+ * process_pipe: Designate whether or not to process the input pipe.
+ * output:       The output file for general printing.
+ * error:        The output file for error printing.
+ * warning:      The output file for warning printing.
+ * signal:       The process signal management structure.
+ * context:      The color context.
+ */
 #ifndef _di_utf8_main_t_
   typedef struct {
     f_console_parameter_t parameters[utf8_total_parameters_d];
@@ -203,17 +224,6 @@ extern "C" {
 
     f_signal_t signal;
 
-    f_file_t destination;
-    uint8_t mode;
-
-    f_string_dynamic_t buffer;
-    f_string_dynamic_t file_input;
-    f_string_dynamic_t file_output;
-    f_string_dynamic_t text;
-
-    f_string_dynamic_t separate_character;
-    f_string_dynamic_t separate_source;
-
     f_color_context_t context;
   } utf8_main_t;
 
@@ -226,14 +236,6 @@ extern "C" {
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
       f_signal_t_initialize, \
-      f_file_t_initialize, \
-      utf8_mode_from_binary_d | utf8_mode_to_codepoint_d, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
       f_color_context_t_initialize, \
     }
 #endif // _di_utf8_main_t_

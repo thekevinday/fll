@@ -13,123 +13,91 @@ extern "C" {
 #endif
 
 /**
- * Print error message for when no sources are provided.
- *
- * @param main
- *   The main program data.
+ * private_utf8_codepoint_mode_*:
+ *   - ready:     The codepoint has yet to be processed, skip leading spaces until first 'U' is matched.
+ *   - begin:     The first 'U' is matched, look for the '+'.
+ *   - number:    The '+' is matched, process numbers.
+ *   - end:       The last number is reached (at either whitespace or EOS/EOF).
+ *   - bad:       This is not a valid codepoint.
+ *   - bad_begin: This is the beginning of an invalid codepoint.
+ *   - bad_end:   The end of bad is detected, which happens on whitespace or end of buffer.
  */
-#ifndef _di_utf8_print_error_no_from_
-  extern void utf8_print_error_no_from(utf8_main_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_error_no_from_
+#ifndef _di_utf8_codepoint_modes_
+  enum {
+    utf8_codepoint_mode_ready = 1,
+    utf8_codepoint_mode_begin,
+    utf8_codepoint_mode_number,
+    utf8_codepoint_mode_end,
+    utf8_codepoint_mode_bad,
+    utf8_codepoint_mode_bad_begin,
+    utf8_codepoint_mode_bad_end,
+  };
+#endif // _di__utf8_codepoint_modes_
 
 /**
- * Print error message for when no sources are provided.
+ * The program data.
  *
- * @param main
- *   The main program data.
- * @param parameter_1
- *   The long parameter name.
+ * main:      The main program data.
+ * file:      The output file for writing the processed data to (may potentially default to "output").
+ * mode:      The input/output mode (see utf8_modes).
+ * valid:     Designate the output context set for valid characters.
+ * valid_not: Designate the output context set for invalid characters.
+ * append:    A string to append. A value of NULL results in not appending.
+ * prepend:   A string to prepend. A value of NULL results in not prepending.
+ * file_name: The name of the file being output to for processed data (is empty if defaulting to "output").
+ * buffer:    A buffer to use for printing output (generally for storing a block of input from an input file).
+ * text:      A buffer for storing a series of characters for processing (generally for codepoint processing).
  */
-#ifndef _di_utf8_print_error_no_value_
-  extern void utf8_print_error_no_value(utf8_main_t * const main, const f_string_t parameter) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_error_no_value_
+#ifndef _di_utf8_data_t_
+  typedef struct {
+    utf8_main_t *main;
+
+    f_file_t file;
+    uint8_t mode;
+
+    f_color_set_t valid;
+    f_color_set_t valid_not;
+
+    f_string_t append;
+    f_string_t prepend;
+
+    f_string_static_t file_name;
+    f_string_dynamic_t buffer;
+    f_string_dynamic_t text;
+  } utf8_data_t;
+
+  #define utf8_data_t_initialize \
+    { \
+      0, \
+      f_file_t_initialize, \
+      utf8_mode_from_binary_d | utf8_mode_to_codepoint_d, \
+      f_color_set_t_initialize, \
+      f_color_set_t_initialize, \
+      f_string_t_initialize, \
+      f_string_t_initialize, \
+      f_string_static_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+    }
+#endif // _di_utf8_data_t_
 
 /**
- * Print error message for two parameters not being allowed to be used together.
+ * Check to see if a process signal is received.
  *
- * @param main
- *   The main program data.
- * @param first
- *   The long parameter name for the first parameter.
- * @param second
- *   The long parameter name for the second parameter.
- */
-#ifndef _di_utf8_print_error_parameter_conflict_
-  extern void utf8_print_error_parameter_conflict(utf8_main_t * const main, const f_string_t first, const f_string_t second) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_error_parameter_conflict_
-
-/**
- * Print error message for when the file parameter is an empty string.
+ * Only signals that are blocked via main.signal will be received.
  *
- * @param main
- *   The main program data.
- * @param index
- *   The index within the argv[] array where the empty string is found.
- */
-#ifndef _di_utf8_print_error_parameter_file_name_empty_
-  extern void utf8_print_error_parameter_file_name_empty(utf8_main_t * const main, const f_array_length_t index) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_error_parameter_file_name_empty_
-
-/**
- * Print error message for when no sources are provided in the main program parameters.
+ * @param data
+ *   The program data.
  *
- * @param main
- *   The main program data.
- * @param from
- *   If TRUE, then this is a from file (source file).
- *   If FALSE, then this is a to file (destination file).
- * @param name
- *   The file path name.
- */
-#ifndef _di_utf8_print_error_parameter_file_not_found_
-  extern void utf8_print_error_parameter_file_not_found(utf8_main_t * const main, const bool from, const f_string_t name) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_error_parameter_file_not_found_
-
-/**
- * Print error message for when too many 'to' destinations are specified.
+ * @return
+ *   A positive number representing a valid signal on signal received.
+ *   F_false on no signal received.
  *
- * @param main
- *   The main program data.
+ * @see f_signal_read()
  */
-#ifndef _di_utf8_print_error_parameter_file_to_too_many_
-  extern void utf8_print_error_parameter_file_to_too_many(utf8_main_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_error_parameter_file_to_too_many_
-
-/**
- * Print the input file section header.
- *
- * @param main
- *   The main program data.
- * @param name
- *   The name of the file.
- */
-#ifndef _di_utf8_print_section_header_file_
-  extern void utf8_print_section_header_file(utf8_main_t * const main, const f_string_t name) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_section_header_file_
-
-/**
- * Print the input parameter section header.
- *
- * @param main
- *   The main program data.
- * @param index
- *   The index position of the parameter.
- */
-#ifndef _di_utf8_print_section_header_parameter_
-  extern void utf8_print_section_header_parameter(utf8_main_t * const main, const f_array_length_t index) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_section_header_parameter_
-
-/**
- * Print the input pipe section header.
- *
- * @param main
- *   The main program data.
- */
-#ifndef _di_utf8_print_section_header_pipe_
-  extern void utf8_print_section_header_pipe(utf8_main_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_section_header_pipe_
-
-/**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param main
- *   The main program data.
- * @param signal
- *   The signal code received.
- */
-#ifndef _di_utf8_print_signal_received_
-  extern void utf8_print_signal_received(utf8_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_signal_received_
+#ifndef _di_utf8_signal_received_
+  extern f_status_t utf8_signal_received(utf8_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_utf8_signal_received_
 
 #ifdef __cplusplus
 } // extern "C"

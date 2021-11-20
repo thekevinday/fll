@@ -5,39 +5,38 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
+#if !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_wide_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
   f_status_t private_f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_character_t *character_utf) {
 
-    const uint8_t width = macro_f_utf_byte_width_is(*character);
-
-    if (!width) {
+    if (!macro_f_utf_byte_width_is(*character)) {
       *character_utf = macro_f_utf_character_t_from_char_1(character[0]);
 
       return F_none;
     }
-    else if (width == 1) {
-      return F_status_is_error(F_utf);
+
+    if (macro_f_utf_byte_width_is(*character) == 1) {
+      return F_status_set_error(F_utf_fragment);
     }
 
-    if (width > width_max) {
+    if (macro_f_utf_byte_width_is(*character) > width_max) {
       return F_status_set_error(F_failure);
     }
 
     *character_utf = macro_f_utf_character_t_from_char_1(character[0]);
 
-    if (width < 2) {
+    if (macro_f_utf_byte_width_is(*character) < 2) {
       return F_none;
     }
 
     *character_utf |= macro_f_utf_character_t_from_char_2(character[1]);
 
-    if (width == 2) {
+    if (macro_f_utf_byte_width_is(*character) == 2) {
       return F_none;
     }
 
     *character_utf |= macro_f_utf_character_t_from_char_3(character[2]);
 
-    if (width == 3) {
+    if (macro_f_utf_byte_width_is(*character) == 3) {
       return F_none;
     }
 
@@ -45,49 +44,49 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
+#endif // !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_wide_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
 
 #if !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
-  f_status_t private_f_utf_character_is_alpha(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_alpha(const f_utf_character_t character) {
 
-    if (private_f_utf_character_is_zero_width(character, width)) {
+    if (private_f_utf_character_is_zero_width(character)) {
       return F_false;
     }
 
     // is_control() handles both is_control_code() and is_control_format().
-    if (private_f_utf_character_is_control(character, width)) {
+    if (private_f_utf_character_is_control(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_control_picture(character, width)) {
+    if (private_f_utf_character_is_control_picture(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_combining(character, width)) {
+    if (private_f_utf_character_is_combining(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(character, width)) {
+    if (private_f_utf_character_is_whitespace(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace_modifier(character, width)) {
+    if (private_f_utf_character_is_whitespace_modifier(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_numeric(character, width)) {
+    if (private_f_utf_character_is_numeric(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_punctuation(character, width)) {
+    if (private_f_utf_character_is_punctuation(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_symbol(character, width)) {
+    if (private_f_utf_character_is_symbol(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_phonetic(character, width)) {
+    if (private_f_utf_character_is_phonetic(character)) {
       return F_false;
     }
 
@@ -96,46 +95,46 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
 
 #if !defined(_di_f_utf_character_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_digit_)
-  f_status_t private_f_utf_character_is_alpha_digit(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_alpha_digit(const f_utf_character_t character) {
 
-    if (private_f_utf_character_is_digit(character, width)) {
+    if (private_f_utf_character_is_digit(character)) {
       return F_true;
     }
 
-    if (private_f_utf_character_is_zero_width(character, width)) {
+    if (private_f_utf_character_is_zero_width(character)) {
       return F_false;
     }
 
     // is_control() handles both is_control_code() and is_control_format().
-    if (private_f_utf_character_is_control(character, width)) {
+    if (private_f_utf_character_is_control(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_control_picture(character, width)) {
+    if (private_f_utf_character_is_control_picture(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(character, width)) {
+    if (private_f_utf_character_is_whitespace(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace_modifier(character, width)) {
+    if (private_f_utf_character_is_whitespace_modifier(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_numeric(character, width)) {
+    if (private_f_utf_character_is_numeric(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_punctuation(character, width)) {
+    if (private_f_utf_character_is_punctuation(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_symbol(character, width)) {
+    if (private_f_utf_character_is_symbol(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_phonetic(character, width)) {
+    if (private_f_utf_character_is_phonetic(character)) {
       return F_false;
     }
 
@@ -144,42 +143,42 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_digit_)
 
 #if !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
-  f_status_t private_f_utf_character_is_alpha_numeric(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_alpha_numeric(const f_utf_character_t character) {
 
-    if (private_f_utf_character_is_numeric(character, width)) {
+    if (private_f_utf_character_is_numeric(character)) {
       return F_true;
     }
 
-    if (private_f_utf_character_is_zero_width(character, width)) {
+    if (private_f_utf_character_is_zero_width(character)) {
       return F_false;
     }
 
     // is_control() handles both is_control_code() and is_control_format().
-    if (private_f_utf_character_is_control(character, width)) {
+    if (private_f_utf_character_is_control(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_control_picture(character, width)) {
+    if (private_f_utf_character_is_control_picture(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(character, width)) {
+    if (private_f_utf_character_is_whitespace(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace_modifier(character, width)) {
+    if (private_f_utf_character_is_whitespace_modifier(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_punctuation(character, width)) {
+    if (private_f_utf_character_is_punctuation(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_symbol(character, width)) {
+    if (private_f_utf_character_is_symbol(character)) {
       return F_false;
     }
 
-    if (private_f_utf_character_is_phonetic(character, width)) {
+    if (private_f_utf_character_is_phonetic(character)) {
       return F_false;
     }
 
@@ -188,9 +187,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
 
 #if !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
-  f_status_t private_f_utf_character_is_ascii(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_ascii(const f_utf_character_t character) {
 
-    if (width < 2) {
+    if (macro_f_utf_character_t_width_is(character) < 2) {
       const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
       if (byte_first >= 0x00 && byte_first <= 0x7f) {
@@ -203,9 +202,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
 
 #if !defined(_di_f_utf_character_is_combining_) || !defined(_di_f_utf_is_combining_)
-  f_status_t private_f_utf_character_is_combining(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_combining(const f_utf_character_t character) {
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
 
       // Diacritical Marks: U+0300 to U+036F.
       if (character >= 0xcc800000 && character <= 0xcdaf0000) {
@@ -214,7 +213,8 @@ extern "C" {
 
       return F_false;
     }
-    else if (width == 3) {
+
+    if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // Diacritical Marks Extended: U+1AB0 to U+1AC0.
       if (character >= 0xe1aab000 && character <= 0xe1ab8000) {
@@ -247,9 +247,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_combining_) || !defined(_di_f_utf_is_combining_)
 
 #if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
-  f_status_t private_f_utf_character_is_control(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_control(const f_utf_character_t character) {
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
 
       // Control Codes.
 
@@ -280,7 +280,7 @@ extern "C" {
         return F_true;
       }
     }
-    else if (width == 3) {
+    else if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // Control Formats.
 
@@ -324,7 +324,7 @@ extern "C" {
         return F_true;
       }
     }
-    else if (width == 4) {
+    else if (macro_f_utf_character_t_width_is(character) == 4) {
 
       // Control Formats.
 
@@ -364,9 +364,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
 
 #if !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
-  f_status_t private_f_utf_character_is_control_code(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_control_code(const f_utf_character_t character) {
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
 
       // Latin-1 Supplement: U+0080 to U+009F.
       if (character >= 0xc2800000 && character <= 0xc29f0000) {
@@ -379,9 +379,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_contro_codel_)
 
 #if !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
-  f_status_t private_f_utf_character_is_control_format(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_control_format(const f_utf_character_t character) {
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
 
       // Latin-1 Supplement: U+00AD.
       if (character == 0xc2ad0000) {
@@ -403,7 +403,7 @@ extern "C" {
         return F_true;
       }
     }
-    else if (width == 3) {
+    else if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // Arabic Extended-A: U+08E2.
       if (character == 0xe0a3a200) {
@@ -445,7 +445,7 @@ extern "C" {
         return F_true;
       }
     }
-    else if (width == 4) {
+    else if (macro_f_utf_character_t_width_is(character) == 4) {
 
       // Kaithi: U+110BD, U+110CD.
       if (character == 0xf09182bd || character == 0xf091838d) {
@@ -483,9 +483,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
 
 #if !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
-  f_status_t private_f_utf_character_is_control_picture(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_control_picture(const f_utf_character_t character) {
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
       // Control Pictures: U+2400 to U+2426.
       if (character >= 0xe2908000 && character <= 0xe290a600) {
         return F_true;
@@ -502,9 +502,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
 
 #if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
-  f_status_t private_f_utf_character_is_digit(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_digit(const f_utf_character_t character) {
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
       uint16_t bytes = (uint16_t) ((character & 0xffff0000) >> 16);
 
       // Arabic: U+0660 to U+0669.
@@ -528,7 +528,7 @@ extern "C" {
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
       uint16_t bytes = (uint16_t) ((character & 0x00ffff00) >> 8);
 
       if (byte_first == 0xe0) {
@@ -711,7 +711,7 @@ extern "C" {
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_second = macro_f_utf_character_t_to_char_2(character);
 
-    if (width == 4) {
+    if (macro_f_utf_character_t_width_is(character) == 4) {
       uint16_t bytes = (uint16_t) ((character & 0xffff0000) >> 16);
 
       if (byte_first == 0xf0) {
@@ -875,9 +875,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
 
 #if !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
-  f_status_t private_f_utf_character_is_emoji(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_emoji(const f_utf_character_t character) {
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
 
       // Latin-1 Supplement: U+00A9, U+00AE.
       if (character == 0xc2a90000 || character == 0xc2ae0000) {
@@ -887,7 +887,7 @@ extern "C" {
       return F_false;
     }
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // General Punctuation: U+203C, U+2049.
       if (character == 0xe280bc00 || character == 0xe2818900) {
@@ -1122,7 +1122,7 @@ extern "C" {
       return F_false;
     }
 
-    if (width == 4) {
+    if (macro_f_utf_character_t_width_is(character) == 4) {
 
       // U+1F0CF to U+1F171.
       if (character >= 0xf09f8084 && character <= 0xf09f85b1) {
@@ -1365,23 +1365,23 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
 
 #if !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
-  f_status_t private_f_utf_character_is_numeric(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_numeric(const f_utf_character_t character) {
 
-    if (private_f_utf_character_is_digit(character, width)) {
+    if (private_f_utf_character_is_digit(character)) {
       return F_true;
     }
 
     // @todo add letter UTF-8 numbers.
     // @todo add other UTF-8 numbers.
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // Number Forms: U+2150 to U+218B.
       if (character >= 0xe2859000 && character <= 0xe2868b00) {
         return F_true;
       }
     }
-    else if (width == 4) {
+    else if (macro_f_utf_character_t_width_is(character) == 4) {
 
       // Coptic Epact Numbers: U+102E1 to U+102FB.
       if (character >= 0xf0908ba1 && character <= 0xf0908bbb) {
@@ -1394,9 +1394,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
 
 #if !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
-  f_status_t private_f_utf_character_is_phonetic(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_phonetic(const f_utf_character_t character) {
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // Phonetic Extensions: U+1D00 to U+1D7F.
       if (character >= 0xe1b48000 && character <= 0xe1b5bf00) {
@@ -1414,9 +1414,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
 
 #if !defined(_di_f_utf_character_is_private_) || !defined(_di_f_utf_is_private_)
-  f_status_t private_f_utf_character_is_private(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_private(const f_utf_character_t character) {
 
-    if (width < 3) {
+    if (macro_f_utf_character_t_width_is(character) < 3) {
       return F_false;
     }
 
@@ -1425,7 +1425,7 @@ extern "C" {
     const uint8_t byte_second = macro_f_utf_character_t_to_char_2(character);
     const uint8_t byte_third = macro_f_utf_character_t_to_char_3(character);
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
       if (byte_first >= 0xe0 && byte_first <= 0xef) {
         if (byte_second >= 0x80 && byte_second <= 0x8f) {
 
@@ -1441,7 +1441,7 @@ extern "C" {
 
     const uint8_t byte_fourth = macro_f_utf_character_t_to_char_4(character);
 
-    if (width == 4) {
+    if (macro_f_utf_character_t_width_is(character) == 4) {
       if (byte_first == 0xf3) {
         if (byte_second >= 0x80 && byte_second <= 0xbf) {
           if (byte_third >= 0x80 && byte_third <= 0xbf) {
@@ -1472,12 +1472,12 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_private_) || !defined(_di_f_utf_is_private_)
 
 #if !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
-  f_status_t private_f_utf_character_is_punctuation(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_punctuation(const f_utf_character_t character) {
 
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
 
       if (byte_first == 0xc2) {
         // Latin-1 Supplement: U+00A1, U+00A7, U+00B6, U+00B7.
@@ -1564,7 +1564,7 @@ extern "C" {
         }
       }
     }
-    else if (width == 3) {
+    else if (macro_f_utf_character_t_width_is(character) == 3) {
 
       if (byte_first == 0xe0) {
 
@@ -1899,7 +1899,7 @@ extern "C" {
         }
       }
     }
-    else if (width == 4) {
+    else if (macro_f_utf_character_t_width_is(character) == 4) {
       uint8_t byte_second = macro_f_utf_character_t_to_char_2(character);
 
       if (byte_first == 0xf0) {
@@ -2139,7 +2139,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
 
 #if !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
-  f_status_t private_f_utf_character_is_symbol(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_symbol(const f_utf_character_t character) {
 
     // reduce the number of checks by grouping checks by first byte.
     //const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
@@ -2151,7 +2151,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
 
 #if !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
-  f_status_t private_f_utf_character_is_unassigned(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_unassigned(const f_utf_character_t character) {
 
     // reduce the number of checks by grouping checks by first byte.
     //const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
@@ -2170,12 +2170,15 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
 
 #if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
-  f_status_t private_f_utf_character_is_valid(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_valid(const f_utf_character_t character) {
 
-    // reduce the number of checks by grouping checks by byte.
+    // @todo Check to see if this logic handles U+FDD0 to U+FDEF and any character ending in FFFE or FFFF.
+    // Codes U+FDD0 to U+FDEF are: 0xefb79000 to 0xefb7af00.
+
+    // Reduce the number of checks by grouping checks by byte.
     const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
-    if (width < 2) {
+    if (macro_f_utf_character_t_width_is(character) < 2) {
       if (byte_first >= 0x00 && byte_first <= 0x7f) {
         return F_true;
       }
@@ -2185,7 +2188,7 @@ extern "C" {
 
     const uint8_t byte_second = macro_f_utf_character_t_to_char_2(character);
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
       if (byte_first >= 0xc2 && byte_first <= 0xdf) {
         if (byte_second >= 0x80 && byte_second <= 0xbf) {
           return F_true;
@@ -2197,7 +2200,7 @@ extern "C" {
 
     const uint8_t byte_third = macro_f_utf_character_t_to_char_3(character);
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
       if (byte_first == 0xe0) {
         if (byte_second >= 0xa0 && byte_second <= 0xbf) {
           if (byte_third >= 0x80 && byte_third <= 0xbf) {
@@ -2231,7 +2234,7 @@ extern "C" {
 
     const uint8_t byte_fourth = macro_f_utf_character_t_to_char_4(character);
 
-    if (width == 4) {
+    if (macro_f_utf_character_t_width_is(character) == 4) {
       if (byte_first == 0xf0) {
         if (byte_second >= 0x90 && byte_second <= 0xbf) {
           if (byte_third >= 0x80 && byte_third <= 0xbf) {
@@ -2272,16 +2275,16 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
 
 #if !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
-  f_status_t private_f_utf_character_is_whitespace(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_whitespace(const f_utf_character_t character) {
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
 
       // Latin-1 Supplement: U+00A0.
       if (character == 0xc2a00000) {
         return F_true;
       }
     }
-    else if (width == 3) {
+    else if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // reduce the number of checks by grouping checks by first byte.
       const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
@@ -2312,9 +2315,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
 
 #if !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
-  f_status_t private_f_utf_character_is_whitespace_modifier(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_whitespace_modifier(const f_utf_character_t character) {
 
-    if (width == 2) {
+    if (macro_f_utf_character_t_width_is(character) == 2) {
 
       // Spacing Modifier Letters: U+02B0 to U+02FF.
       if (character >= 0xcab00000 && character <= 0xcbbf0000) {
@@ -2327,7 +2330,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
 
 #if !defined(_di_f_utf_character_is_whitespace_other_) || !defined(_di_f_utf_is_whitespace_other_)
-  f_status_t private_f_utf_character_is_whitespace_other(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_whitespace_other(const f_utf_character_t character) {
 
     // Ogham: U+1680 (isn't whitespace but is technically considered one: ( )).
     if (character == 0xe19a8000) {
@@ -2338,14 +2341,52 @@ extern "C" {
   }
 #endif // !defined(_di_f_utf_character_is_whitespace_other_) || !defined(_di_f_utf_is_whitespace_other_)
 
-#if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
-  f_status_t private_f_utf_character_is_word(const f_utf_character_t character, const uint8_t width, const bool strict) {
+#if !defined(_di_f_utf_character_is_wide_) || !defined(_di_f_utf_is_wide_)
+  f_status_t private_f_utf_character_is_wide(const f_utf_character_t character) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!character) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
-    if (private_f_utf_character_is_alpha_digit(character, width)) {
+    if (macro_f_utf_character_t_width_is(character) == 1) {
+      return F_status_set_error(F_utf_fragment);
+    }
+
+    /*if (macro_f_utf_character_t_width_is(character) == 2) {
+      return F_false;
+    }*/
+
+    // @todo there are 95360 WIDE characters...starting at U+1100 ending at U+2FA1D!
+
+    if (macro_f_utf_character_t_width_is(character) == 3) {
+
+      // CJK Symbols: U+3000.
+      if (character == 0xe3808000) {
+        return F_true;
+      }
+
+      // Half Width and Full Width Forms: U+FF01 to U+FF60.
+      if (character >= 0xefbc8100 && character <= 0xefbda000) {
+        return F_true;
+      }
+
+      // Half Width and Full Width Forms: U+FFE0 to U+FFE6.
+      if (character >= 0xefbfa000 && character <= 0xefbfa600) {
+        return F_true;
+      }
+    }
+
+    return F_false;
+  }
+#endif // !defined(_di_f_utf_character_is_wide_) || !defined(_di_f_utf_is_wide_)
+
+#if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+  f_status_t private_f_utf_character_is_word(const f_utf_character_t character, const bool strict) {
+
+    if (private_f_utf_character_is_alpha_digit(character)) {
       return F_true;
     }
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // reduce the number of checks by grouping checks by first byte.
       const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
@@ -2383,13 +2424,13 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
 
 #if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
-  f_status_t private_f_utf_character_is_word_dash(const f_utf_character_t character, const uint8_t width, const bool strict) {
+  f_status_t private_f_utf_character_is_word_dash(const f_utf_character_t character, const bool strict) {
 
-    if (private_f_utf_character_is_word(character, width, strict)) {
+    if (private_f_utf_character_is_word(character, strict)) {
       return F_true;
     }
 
-    if (width == 3) {
+    if (macro_f_utf_character_t_width_is(character) == 3) {
 
       // General Punctuation: U+2010, U+2011.
       if (character == 0xe2809000 || character == 0xe2809100) {
@@ -2402,9 +2443,9 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 #if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
-  f_status_t private_f_utf_character_is_word_dash_plus(const f_utf_character_t character, const uint8_t width, const bool strict) {
+  f_status_t private_f_utf_character_is_word_dash_plus(const f_utf_character_t character, const bool strict) {
 
-    if (private_f_utf_character_is_word_dash(character, width, strict)) {
+    if (private_f_utf_character_is_word_dash(character, strict)) {
       return F_true;
     }
 
@@ -2421,7 +2462,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 #if !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
-  f_status_t private_f_utf_character_is_zero_width(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_zero_width(const f_utf_character_t character) {
 
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
@@ -2451,491 +2492,6 @@ extern "C" {
     return F_false;
   }
 #endif // !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
-
-#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_triples_append_)
-  f_status_t private_f_utf_string_append(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
-
-    if (destination->used + length > destination->size) {
-      const f_status_t status = private_f_utf_string_dynamic_increase_by(length, destination);
-      if (F_status_is_error(status)) return status;
-    }
-
-    memcpy(destination->string + destination->used, source, length);
-    destination->used = destination->used + length;
-
-    return F_none;
-  }
-#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_triples_append_)
-
-#if !defined(_di_f_utf_string_append_assure_nulless_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mash_nulless_) || !defined(_di_f_utf_string_mash_nulless_)
-  f_status_t private_f_utf_string_append_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
-
-    if (destination->used + length > F_string_t_size_d) {
-      return F_status_set_error(F_string_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    f_array_length_t i = 0;
-    f_array_length_t first = 0;
-    f_array_length_t size = 0;
-
-    for (; i < length; ++i) {
-
-      if (source[i]) continue;
-
-      if (i && i > first) {
-        size = i - first;
-
-        if (destination->used + size > destination->size) {
-          status = private_f_utf_string_dynamic_increase_by(size, destination);
-          if (F_status_is_error(status)) return status;
-        }
-
-        memcpy(destination->string + destination->used, source + first, size);
-        destination->used = destination->used + size;
-      }
-
-      while (i + 1 < length && !source[i + 1]) {
-        ++i;
-      } // while
-
-      first = i + 1;
-    } // for
-
-    if (i > first) {
-      size = i - first;
-
-      if (destination->used + size > destination->size) {
-        status = private_f_utf_string_dynamic_increase_by(size, destination);
-        if (F_status_is_error(status)) return status;
-      }
-
-      memcpy(destination->string + destination->used, source + first, size);
-      destination->used = destination->used + size;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_f_utf_string_append_assure_nulless_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mash_nulless_) || !defined(_di_f_utf_string_mash_nulless_)
-
-#if !defined(_di_f_utf_string_dynamic_adjust_) || !defined(_di_f_utf_string_dynamic_decimate_by_) || !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
-  f_status_t private_f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t *dynamic) {
-
-    f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_utf_string_t), (void **) & dynamic->string);
-
-    if (F_status_is_error_not(status)) {
-      dynamic->size = length;
-
-      if (dynamic->used > dynamic->size) {
-        dynamic->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_dynamic_adjust_) || !defined(_di_f_utf_string_dynamic_decimate_by_) || !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
-
-#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
-  f_status_t private_f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic) {
-
-    if (dynamic->used + amount > dynamic->size) {
-      if (dynamic->used + amount > F_string_t_size_d) {
-        return F_status_set_error(F_string_too_large);
-      }
-
-      return private_f_utf_string_dynamic_resize(dynamic->used + amount, dynamic);
-    }
-
-    return F_data_not;
-  }
-#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
-
-#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_decrease_by_) || !defined(_di_f_utf_string_dynamic_increase_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_terminate_) || !defined(_di_f_utf_string_dynamic_terminate_after_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
-  f_status_t private_f_utf_string_dynamic_resize(const f_array_length_t length, f_utf_string_dynamic_t *dynamic) {
-
-    const f_status_t status = f_memory_resize(dynamic->size, length, sizeof(f_utf_string_t), (void **) & dynamic->string);
-
-    if (F_status_is_error_not(status)) {
-      dynamic->size = length;
-
-      if (dynamic->used > dynamic->size) {
-        dynamic->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_decrease_by_) || !defined(_di_f_utf_string_dynamic_increase_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_terminate_) || !defined(_di_f_utf_string_dynamic_terminate_after_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
-
-#if !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
-  f_status_t private_f_utf_string_dynamics_adjust(const f_array_length_t length, f_utf_string_dynamics_t *dynamics) {
-
-    if (dynamics->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < dynamics->size; ++i) {
-
-      status = private_f_utf_string_dynamic_adjust(0, &dynamics->array[i]);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_adjust(dynamics->size, length, sizeof(f_utf_string_dynamic_t), (void **) & dynamics->array);
-
-    if (F_status_is_error_not(status)) {
-      dynamics->size = length;
-
-      if (dynamics->used > dynamics->size) {
-        dynamics->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
-
-#if !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_)
-  f_status_t private_f_utf_string_dynamics_append(const f_utf_string_dynamics_t source, f_utf_string_dynamics_t *destination) {
-    f_status_t status = F_none;
-
-    if (destination->used + source.used > destination->size) {
-      status = private_f_utf_string_dynamics_adjust(destination->used + source.used, destination);
-      if (F_status_is_error(status)) return status;
-    }
-
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
-
-      destination->array[destination->used].used = 0;
-
-      if (source.array[i].used) {
-        status = private_f_utf_string_append(source.array[i].string, source.array[i].used, &destination->array[destination->used]);
-        if (F_status_is_error(status)) return status;
-      }
-    } // for
-
-    return F_none;
-  }
-#endif // !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_)
-
-#if !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_)
-  f_status_t private_f_utf_string_dynamics_resize(const f_array_length_t length, f_utf_string_dynamics_t *dynamics) {
-
-    if (dynamics->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < dynamics->size; ++i) {
-      status = private_f_utf_string_dynamic_resize(0, &dynamics->array[i]);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_resize(dynamics->size, length, sizeof(f_utf_string_dynamic_t), (void **) & dynamics->array);
-
-    if (F_status_is_error_not(status)) {
-      dynamics->size = length;
-
-      if (dynamics->used > dynamics->size) {
-        dynamics->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_)
-
-#if !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_decimate_by_)
-  f_status_t private_f_utf_string_map_multis_adjust(const f_array_length_t length, f_utf_string_map_multis_t *map_multis) {
-
-    if (map_multis->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < map_multis->size; ++i) {
-
-      status = private_f_utf_string_dynamic_adjust(0, &map_multis->array[i].name);
-      if (F_status_is_error(status)) return status;
-
-      status = private_f_utf_string_dynamics_adjust(0, &map_multis->array[i].value);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_adjust(map_multis->size, length, sizeof(f_utf_string_map_multi_t), (void **) & map_multis->array);
-
-    if (F_status_is_error_not(status)) {
-      map_multis->size = length;
-
-      if (map_multis->used > map_multis->size) {
-        map_multis->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_decimate_by_)
-
-#if !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_terminate_) || !defined(_di_f_utf_string_map_multis_terminate_after_)
-  f_status_t private_f_utf_string_map_multis_resize(const f_array_length_t length, f_utf_string_map_multis_t *map_multis) {
-
-    if (map_multis->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < map_multis->size; ++i) {
-
-      status = private_f_utf_string_dynamic_resize(0, &map_multis->array[i].name);
-      if (F_status_is_error(status)) return status;
-
-      status = private_f_utf_string_dynamics_resize(0, &map_multis->array[i].value);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_resize(map_multis->size, length, sizeof(f_utf_string_map_multi_t), (void **) & map_multis->array);
-
-    if (F_status_is_error_not(status)) {
-      map_multis->size = length;
-
-      if (map_multis->used > map_multis->size) {
-        map_multis->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_terminate_) || !defined(_di_f_utf_string_map_multis_terminate_after_)
-
-#if !defined(_di_f_utf_string_maps_adjust_) || !defined(_di_f_utf_string_maps_decimate_by_)
-  f_status_t private_f_utf_string_maps_adjust(const f_array_length_t length, f_utf_string_maps_t *maps) {
-
-    if (maps->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < maps->size; ++i) {
-
-      status = private_f_utf_string_dynamic_adjust(0, &maps->array[i].name);
-      if (F_status_is_error(status)) return status;
-
-      status = private_f_utf_string_dynamic_adjust(0, &maps->array[i].value);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_adjust(maps->size, length, sizeof(f_utf_string_map_t), (void **) & maps->array);
-
-    if (F_status_is_error_not(status)) {
-      maps->size = length;
-
-      if (maps->used > maps->size) {
-        maps->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_maps_adjust_) || !defined(_di_f_utf_string_maps_decimate_by_)
-
-#if !defined(_di_f_utf_string_maps_decrease_by_) || !defined(_di_f_utf_string_maps_increase_) || !defined(_di_f_utf_string_maps_increase_by_) || !defined(_di_f_utf_string_maps_terminate_) || !defined(_di_f_utf_string_maps_terminate_after_)
-  f_status_t private_f_utf_string_maps_resize(const f_array_length_t length, f_utf_string_maps_t *maps) {
-
-    if (maps->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < maps->size; ++i) {
-
-      status = private_f_utf_string_dynamic_resize(0, &maps->array[i].name);
-      if (F_status_is_error(status)) return status;
-
-      status = private_f_utf_string_dynamic_resize(0, &maps->array[i].value);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_resize(maps->size, length, sizeof(f_utf_string_map_t), (void **) & maps->array);
-
-    if (F_status_is_error_not(status)) {
-      maps->size = length;
-
-      if (maps->used > maps->size) {
-        maps->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_maps_decrease_by_) || !defined(_di_f_utf_string_maps_increase_) || !defined(_di_f_utf_string_maps_increase_by_) || !defined(_di_f_utf_string_maps_terminate_) || !defined(_di_f_utf_string_maps_terminate_after_)
-
-#if !defined(_di_f_utf_string_dynamic_mish_) || !defined(_di_f_utf_string_dynamic_partial_mish_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_) || !defined(_di_f_utf_string_dynamic_partial_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_assure_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_mish_) || !defined(_di_f_utf_string_prepend_assure_) || !defined(_di_f_utf_string_prepend_)
-  f_status_t private_f_utf_string_prepend(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
-
-    if (destination->used + length > F_string_t_size_d) {
-      return F_status_set_error(F_string_too_large);
-    }
-
-    if (destination->used + length > destination->size) {
-      const f_status_t status = private_f_utf_string_dynamic_increase_by(length, destination);
-      if (F_status_is_error(status)) return status;
-    }
-
-    if (destination->used) {
-      memmove(destination->string + length, destination->string, destination->used);
-      memcpy(destination->string, source, length);
-    }
-    else {
-      memcpy(destination->string, source, length);
-    }
-
-    destination->used = destination->used + length;
-    return F_none;
-  }
-#endif // !defined(_di_f_utf_string_dynamic_mish_) || !defined(_di_f_utf_string_dynamic_partial_mish_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_) || !defined(_di_f_utf_string_dynamic_partial_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_assure_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_mish_) || !defined(_di_f_utf_string_prepend_assure_) || !defined(_di_f_utf_string_prepend_)
-
-#if !defined(_di_f_utf_string_dynamic_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_mish_nulless_) || !defined(_di_f_utf_string_prepend_assure_nulless_) || !defined(_di_f_utf_string_prepend_nulless_)
-  f_status_t private_f_utf_string_prepend_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
-
-    if (destination->used + length > F_string_t_size_d) {
-      return F_status_set_error(F_string_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    f_array_length_t first = 0;
-    f_array_length_t offset = 0;
-
-    f_array_length_t size = 0;
-
-    for (f_array_length_t i = 0; i <= length; ++i) {
-
-      if (i == length) {
-        if (i > first) {
-          size = i - first;
-
-          if (destination->used + size > destination->size) {
-            status = private_f_utf_string_dynamic_increase_by(size, destination);
-            if (F_status_is_error(status)) return status;
-          }
-
-          memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
-          memcpy(destination->string + offset, source + first, size);
-
-          destination->used = destination->used + size;
-          offset += size;
-        }
-
-        break;
-      }
-
-      if (!source[i]) {
-        if (i > 0) {
-          if (i > first) {
-            size = i - first;
-
-            if (destination->used + size > destination->size) {
-              status = private_f_utf_string_dynamic_increase_by(size, destination);
-              if (F_status_is_error(status)) return status;
-            }
-
-            memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
-            memcpy(destination->string + offset, source + first, size);
-
-            destination->used = destination->used + size;
-            offset += size;
-          }
-        }
-
-        while (i + 1 < length && !source[i + 1]) {
-          ++i;
-        } // while
-
-        first = i + 1;
-        continue;
-      }
-    } // for
-
-    return F_none;
-  }
-#endif // !defined(_di_f_utf_string_dynamic_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_mish_nulless_) || !defined(_di_f_utf_string_prepend_assure_nulless_) || !defined(_di_f_utf_string_prepend_nulless_)
-
-#if !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
-  f_status_t private_f_utf_string_triples_adjust(const f_array_length_t length, f_utf_string_triples_t *triples) {
-
-    if (triples->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < triples->size; ++i) {
-
-      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].one);
-      if (F_status_is_error(status)) return status;
-
-      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].two);
-      if (F_status_is_error(status)) return status;
-
-      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].three);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_adjust(triples->size, length, sizeof(f_utf_string_triple_t), (void **) & triples->array);
-
-    if (F_status_is_error_not(status)) {
-      triples->size = length;
-
-      if (triples->used > triples->size) {
-        triples->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
-
-#if !defined(_di_f_utf_string_triples_decrease_) || !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
-  f_status_t private_f_utf_string_triples_resize(const f_array_length_t length, f_utf_string_triples_t *triples) {
-
-    if (triples->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < triples->size; ++i) {
-
-      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].one);
-      if (F_status_is_error(status)) return status;
-
-      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].two);
-      if (F_status_is_error(status)) return status;
-
-      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].three);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_resize(triples->size, length, sizeof(f_utf_string_triple_t), (void **) & triples->array);
-
-    if (F_status_is_error_not(status)) {
-      triples->size = length;
-
-      if (triples->used > triples->size) {
-        triples->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_utf_string_triples_decrease_) || !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
 
 #ifdef __cplusplus
 } // extern "C"

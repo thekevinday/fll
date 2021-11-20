@@ -225,6 +225,30 @@ extern "C" {
   #define macro_f_utf_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_utf_string_t), (void **) & string);
 #endif // _di_f_utf_string_t_
 
+/**
+ * Define unicode special character widths.
+ *
+ * F_utf_width_*:
+ *   - none:      Designate this is not a width value or has no width (aka: NULL).
+ *   - ambiguous: Characters appear in East Asian DBCS and in SBCS.
+ *   - full:      Wide character that has a equivilent to a narrow character.
+ *   - half:      Narrow character that has a equivilent to a wide character.
+ *   - narrow:    Narrow character, without a wide equivalent.
+ *   - nuetral:   Characters that do not appear in East Asian DBCS codes.
+ *   - wide:      Wide character, without a narrow equivalent.
+ */
+#ifndef _di_f_utf_widths_t_
+  enum {
+    F_utf_width_none_e,
+    F_utf_width_ambiguous_e,
+    F_utf_width_full_e,
+    F_utf_width_half_e,
+    F_utf_width_narrow_e,
+    F_utf_width_nuetral_e,
+    F_utf_width_wide_e,
+  };
+#endif // _di_f_utf_widths_t_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
