@@ -761,10 +761,98 @@ extern "C" {
         return F_true;
       }
 
-      // @todo continue here.
+      // Balinese: U+1B00 to U+1B03.
+      if (character >= 0xe1ac8000 && character <= 0xe1ac8300) {
+        return F_true;
+      }
 
-      // Diacritical Marks Supplement: U+1DC0 to U+1DF9.
-      if (character >= 0xe1b78000 && character <= 0xe1b7b900) {
+      // Balinese: U+1B34.
+      if (character == 0xe1acb400) {
+        return F_true;
+      }
+
+      // Balinese: U+1B36 to U+1B3A.
+      if (character >= 0xe1acb600 && character <= 0xe1acba00) {
+        return F_true;
+      }
+
+      // Balinese: U+1B3C, U+1B42.
+      if (character == 0xe1acbc00 || character == 0xe1ad8200) {
+        return F_true;
+      }
+
+      // Balinese: U+1B6B to U+1B73.
+      if (character >= 0xe1adab00 && character <= 0xe1adb300) {
+        return F_true;
+      }
+
+      // Sundanese: U+1B80 to U+1B81.
+      if (character >= 0xe1ae8000 && character <= 0xe1ae8100) {
+        return F_true;
+      }
+
+      // Sundanese: U+1BA2 to U+1BA5.
+      if (character >= 0xe1aea200 && character <= 0xe1aea500) {
+        return F_true;
+      }
+
+      // Sundanese: U+1BA8 to U+1BA9.
+      if (character >= 0xe1aea800 && character <= 0xe1aea900) {
+        return F_true;
+      }
+
+      // Sundanese: U+1BAB to U+1BAD.
+      if (character >= 0xe1aeab00 && character <= 0xe1aead00) {
+        return F_true;
+      }
+
+      // Batak: U+1BE6, U+1BE8, U+1BE9, U+1BED.
+      if (character == 0xe1afa600 || character == 0xe1afa800 || character == 0xe1afa900 || character == 0xe1afad00) {
+        return F_true;
+      }
+
+      // Batak: U+1BEF, U+1BF0, U+1BF1.
+      if (character == 0xe1afaf00 || character == 0xe1afb000 || character == 0xe1afb100) {
+        return F_true;
+      }
+
+      // Lepcha: U+1C2C to U+1C33.
+      if (character >= 0xe1b0ac00 && character <= 0xe1b0b300) {
+        return F_true;
+      }
+
+      // Lepcha: U+1C36 to U+1C37.
+      if (character >= 0xe1b0b600 && character <= 0xe1b0b700) {
+        return F_true;
+      }
+
+      // Vedic Extensions: U+1CD4 to U+1CD2.
+      if (character >= 0xe1b39400 && character <= 0xe1b39200) {
+        return F_true;
+      }
+
+      // Vedic Extensions: U+1CD0 to U+1CE0.
+      if (character >= 0xe1b39000 && character <= 0xe1b3a000) {
+        return F_true;
+      }
+
+      // Vedic Extensions: U+1CE2 to U+1CE8.
+      if (character >= 0xe1b3a200 && character <= 0xe1b3a800) {
+        return F_true;
+      }
+
+      // Vedic Extensions: U+1CED, U+1CF4, U+1CF8, U+1CF9.
+      if (character == 0xe1b3ad00 || character == 0xe1b3b400 || character == 0xe1b3b800 || character == 0xe1b3b900) {
+        return F_true;
+      }
+
+      // Vedic Extensions: U+1DC0 to U+1CE8.
+      if (character >= 0xe1b78000 && character <= 0xe1b3a800) {
+        return F_true;
+      }
+
+      // Diacritical Marks Supplement: U+1DC0 to U+1DFF.
+      if (character >= 0xe1b78000 && character <= 0xe1b7bf00) {
         return F_true;
       }
 
@@ -782,6 +870,133 @@ extern "C" {
       if (character >= 0xefb8a000 && character <= 0xefb8af00) {
         return F_true;
       }
+
+      // CJK Symbols and Punctuation: U+302A to U+302D.
+      if (character >= 0xe380aa00 && character <= 0xe380ad00) {
+        return F_true;
+      }
+
+      // Hiragana: U+3099, U+309A.
+      if (character == 0xe3829900 || character == 0xe3829a00) {
+        return F_true;
+      }
+
+      // Cyrillic Extended-B: U+3099.
+      if (character == 0xea99af00) {
+        return F_true;
+      }
+
+      // Cyrillic Extended-B: U+A674 to U+A69F.
+      if (character >= 0xea99b400 && character <= 0xea9a9f00) {
+        return F_true;
+      }
+
+      // Bamum: U+A6F0 to U+A6F1.
+      if (character >= 0xea9bb000 && character <= 0xea9bb100) {
+        return F_true;
+      }
+
+      // Syloti Nagri: U+A802, U+A806, U+A80B, U+A825.
+      if (character == 0xeaa08200 || character == 0xeaa08600 || character == 0xeaa08b00 || character == 0xeaa0a500) {
+        return F_true;
+      }
+
+      // Syloti Nagri: U+A826.
+      if (character == 0xeaa0a600) {
+        return F_true;
+      }
+
+      // Saurashtra: U+A8C4.
+      if (character == 0xeaa38400) {
+        return F_true;
+      }
+
+      // Devanagari Extended: U+A6F0 to U+A8F1.
+      if (character >= 0xeaa3a000 && character <= 0xeaa3b100) {
+        return F_true;
+      }
+
+      // Kayah Li: U+A926 to U+A92D.
+      if (character >= 0xeaa4a600 && character <= 0xeaa4ad00) {
+        return F_true;
+      }
+
+      // Rejang: U+A947 to U+A951.
+      if (character >= 0xeaa58700 && character <= 0xeaa59100) {
+        return F_true;
+      }
+
+      // Javanese: U+A980 to U+A982.
+      if (character >= 0xeaa68000 && character <= 0xeaa68200) {
+        return F_true;
+      }
+
+      // Javanese: U+A9B3.
+      if (character == 0xeaa6b300) {
+        return F_true;
+      }
+
+      // Javanese: U+A9B6 to U+A9B9.
+      if (character >= 0xeaa6b600 && character <= 0xeaa6b900) {
+        return F_true;
+      }
+
+      // Javanese: U+A9BC.
+      if (character == 0xeaa6bc00) {
+        return F_true;
+      }
+
+      // Myanmar Extended-B: U+A9E5.
+      if (character == 0xeaa7a500) {
+        return F_true;
+      }
+
+      // Cham: U+AA29 to U+AA2E.
+      if (character >= 0xeaa8a900 && character <= 0xeaa8ae00) {
+        return F_true;
+      }
+
+      // Cham: U+AA31 to U+AA32.
+      if (character >= 0xeaa8b100 && character <= 0xeaa8b200) {
+        return F_true;
+      }
+
+      // Cham: U+AA35 to U+AA36.
+      if (character >= 0xeaa8b500 && character <= 0xeaa8b600) {
+        return F_true;
+      }
+
+      // Cham: U+AA43, U+AA4C.
+      if (character == 0xeaa98300 || character == 0xeaa98c00) {
+        return F_true;
+      }
+
+      // Tai Viet: U+AA7C.
+      if (character == 0xeaa9bc00) {
+        return F_true;
+      }
+
+      // Tai Viet: U+AAB0.
+      if (character == 0xeaaab000) {
+        return F_true;
+      }
+
+      // Tai Viet: U+AAB2 to U+AAB4.
+      if (character >= 0xeaaab200 && character <= 0xeaaab400) {
+        return F_true;
+      }
+
+      // Tai Viet: U+AAB7 to U+AAB8.
+      if (character >= 0xeaaab700 && character <= 0xeaaab800) {
+        return F_true;
+      }
+
+      // Tai Viet: U+AABE to U+AABF.
+      if (character >= 0xeaaabe00 && character <= 0xeaaabf00) {
+        return F_true;
+      }
+
+      // @todo continue here.
     }
 
     return F_false;
