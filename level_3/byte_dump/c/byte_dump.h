@@ -93,6 +93,8 @@ extern "C" {
     byte_dump_presentation_classic,
   };
 
+  #define byte_dump_option_wide_d 0x1
+
   #define byte_dump_sequence_acknowledge_s               "␆"
   #define byte_dump_sequence_acknowledge_negative_s      "␕"
   #define byte_dump_sequence_backspace_s                 "␈"
@@ -252,6 +254,7 @@ extern "C" {
     uint8_t width;
     uint8_t mode;
     uint8_t presentation;
+    uint8_t options;
 
     f_color_context_t context;
   } byte_dump_main_t;
@@ -268,6 +271,7 @@ extern "C" {
       0, \
       0, \
       8, \
+      byte_dump_option_wide_d, \
       byte_dump_mode_hexidecimal, \
       byte_dump_presentation_normal, \
       f_color_context_t_initialize, \

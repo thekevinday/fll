@@ -212,6 +212,31 @@ extern "C" {
         }
       }
 
+      // Identify priority of narrow and wide parameters.
+      {
+        f_console_parameter_id_t ids[2] = { byte_dump_parameter_narrow, byte_dump_parameter_wide };
+        f_console_parameter_id_t choice = byte_dump_parameter_wide;
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
+
+        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
+          byte_dump_main_delete(main);
+          return F_status_set_error(status);
+        }
+
+        if (choice == byte_dump_parameter_narrow) {
+          if (main->options & byte_dump_option_wide_d) {
+            main->options -= byte_dump_option_wide_d;
+          }
+        }
+        else if (choice == byte_dump_parameter_wide) {
+          main->options |= byte_dump_option_wide_d;
+        }
+      }
+
       status = F_none;
     }
 
