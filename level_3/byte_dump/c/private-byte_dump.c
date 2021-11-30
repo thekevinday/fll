@@ -130,7 +130,13 @@ extern "C" {
 
         // At this point: an ASCII character is collected, the entire UTF-8 character sequence is collected, or an invalid UTF-8 was processed.
         if (!invalid[character_current] && width_utf > 1) {
-          if (f_utf_character_is_valid(characters.string[character_current]) == F_false) {
+          if (f_utf_character_is_valid(characters.string[character_current]) != F_true) {
+            found_invalid_utf = F_true;
+            invalid[character_current] = width_utf;
+          }
+          else if (f_utf_character_is_unassigned(characters.string[character_current]) == F_true) {
+
+            // Consider unassigned invalid.
             found_invalid_utf = F_true;
             invalid[character_current] = width_utf;
           }

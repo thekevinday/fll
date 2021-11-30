@@ -512,6 +512,8 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is a unassigned (well-formed) UTF-8 character.
  *
+ * The Private Use Area plane is not considered unassigned.
+ *
  * This does unassignedate if the UTF-8 character is a unassigned UTF-8 character.
  * To not do this, use f_utf_character_is().
  *
