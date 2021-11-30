@@ -211,8 +211,8 @@ extern "C" {
         return F_true;
       }
 
-      // Cyrillic: U+0483 to U+0487.
-      if (character >= 0xd2830000 && character <= 0xd2870000) {
+      // Cyrillic: U+0483 to U+0489.
+      if (character >= 0xd2830000 && character <= 0xd2890000) {
         return F_true;
       }
 
@@ -886,6 +886,11 @@ extern "C" {
         return F_true;
       }
 
+      // Cyrillic Extended-B: U+A66F to U+A672.
+      if (character >= 0xea99af00 && character <= 0xea99b200) {
+        return F_true;
+      }
+
       // Cyrillic Extended-B: U+A674 to U+A69F.
       if (character >= 0xea99b400 && character <= 0xea9a9f00) {
         return F_true;
@@ -996,7 +1001,337 @@ extern "C" {
         return F_true;
       }
 
-      // @todo continue here.
+      // Tai Viet: U+AAC1.
+      if (character == 0xeaab8100) {
+        return F_true;
+      }
+
+      // Meetei Mayek Extensions: U+AAEC, U+AAED, U+AAF6.
+      if (character == 0xeaabac00 || character == 0xeaabad00 || character == 0xeaabb600) {
+        return F_true;
+      }
+
+      // Meetei Mayek: U+ABE5, U+ABE8, U+ABED.
+      if (character == 0xeaafa500 || character == 0xeaafa800 || character == 0xeaafad00) {
+        return F_true;
+      }
+
+      // Alphabetic Presentation Forms: U+FB1E.
+      if (character == 0xefac9e00) {
+        return F_true;
+      }
+
+      // Variation Selectors: U+FE00 to U+FE0F.
+      if (character >= 0xefb88000 && character <= 0xefb88f00) {
+        return F_true;
+      }
+
+      // Variation Selectors: U+FE20 to U+FE0F.
+      if (character >= 0xefb88000 && character <= 0xefb88f00) {
+        return F_true;
+      }
+
+      // Combining Half Marks: U+FE20 to U+FE2F.
+      if (character >= 0xefb8a000 && character <= 0xefb8af00) {
+        return F_true;
+      }
+
+      return F_false;
+    }
+
+    // Phaistos Disc: U+101FD.
+    if (character == 0xf09087bd) {
+      return F_true;
+    }
+
+    // Coptic Epact Numbers: U+102E0.
+    if (character == 0xf0908ba0) {
+      return F_true;
+    }
+
+    // Old Permic: U+10376 to U+1037A.
+    if (character >= 0xf0908db6 && character <= 0xf0908dba) {
+      return F_true;
+    }
+
+    // Kharoshthi: U+10A01 to U+10A03.
+    if (character >= 0xf090a881 && character <= 0xf090a883) {
+      return F_true;
+    }
+
+    // Kharoshthi: U+10A01, U+10A03, U+10A05, U+10A06.
+    if (character == 0xf090a881 || character == 0xf090a883 || character == 0xf090a885 || character == 0xf090a886) {
+      return F_true;
+    }
+
+    // Kharoshthi: U+10A0C to U+10A0F.
+    if (character >= 0xf090a88c && character <= 0xf090a88f) {
+      return F_true;
+    }
+
+    // Kharoshthi: U+10A38 to U+10A3A.
+    if (character >= 0xf090a8b8 && character <= 0xf090a8ba) {
+      return F_true;
+    }
+
+    // Kharoshthi: U+10A3F.
+    if (character == 0xf090a8bf) {
+      return F_true;
+    }
+
+    // Manichaean: U+10AE5, U+10AE6.
+    if (character == 0xf090aba5 || character == 0xf090aba6) {
+      return F_true;
+    }
+
+    // Brahmi: U+11001.
+    if (character == 0xf0918081) {
+      return F_true;
+    }
+
+    // Brahmi: U+11038 to U+11046.
+    if (character >= 0xf09180b8 && character <= 0xf0918186) {
+      return F_true;
+    }
+
+    // Brahmi .. Kaithi: U+1107F to U+11081.
+    if (character >= 0xf09181bf && character <= 0xf0918281) {
+      return F_true;
+    }
+
+    // Kaithi: U+110B3 to U+110B6.
+    if (character >= 0xf09182b3 && character <= 0xf09182b6) {
+      return F_true;
+    }
+
+    // Kaithi: U+110B9, U+110BA.
+    if (character == 0xf09182b9 || character == 0xf09182ba) {
+      return F_true;
+    }
+
+    // Chakma: U+11100 to U+11102.
+    if (character >= 0xf0918480 && character <= 0xf0918482) {
+      return F_true;
+    }
+
+    // Chakma: U+11127 to U+1112B.
+    if (character >= 0xf09184a7 && character <= 0xf09184ab) {
+      return F_true;
+    }
+
+    // Chakma: U+1112D to U+11134.
+    if (character >= 0xf09184ad && character <= 0xf09184b4) {
+      return F_true;
+    }
+
+    // Mahajani: U+11173.
+    if (character == 0xf09185b3) {
+      return F_true;
+    }
+
+    // Sharada: U+11180 to U+11181.
+    if (character >= 0xf0918680 && character <= 0xf0918681) {
+      return F_true;
+    }
+
+    // Sharada: U+111B6 to U+111BE.
+    if (character >= 0xf09186b6 && character <= 0xf09186be) {
+      return F_true;
+    }
+
+    // Sharada: U+111CA to U+111CC.
+    if (character >= 0xf091878a && character <= 0xf091878c) {
+      return F_true;
+    }
+
+    // Sharada: U+111CA to U+111CC.
+    if (character >= 0xf091878a && character <= 0xf091878c) {
+      return F_true;
+    }
+
+    // Khojki: U+1122F to U+11231.
+    if (character >= 0xf09188af && character <= 0xf09188b1) {
+      return F_true;
+    }
+
+    // Khojki: U+11234, U+11236, U+11237.
+    if (character == 0xf09188b4 || character == 0xf09188b6 || character == 0xf09188b7) {
+      return F_true;
+    }
+
+    // Khudawadi: U+112DF, U+112DF.
+    if (character == 0xf0918b9f || character == 0xf0918b9f) {
+      return F_true;
+    }
+
+    // Khojki: U+112E3 to U+112EA.
+    if (character >= 0xf0918ba3 && character <= 0xf0918baa) {
+      return F_true;
+    }
+
+    // Grantha: U+11300, U+11301, U+1133C, U+11340.
+    if (character == 0xf0918c80 || character == 0xf0918c81 || character == 0xf0918cbc || character == 0xf0918d80) {
+      return F_true;
+    }
+
+    // Grantha: U+11366 to U+1136C.
+    if (character >= 0xf0918da6 && character <= 0xf0918dac) {
+      return F_true;
+    }
+
+    // Grantha: U+11370 to U+11374.
+    if (character >= 0xf0918db0 && character <= 0xf0918db4) {
+      return F_true;
+    }
+
+    // Tirhuta: U+114B3 to U+114B8.
+    if (character >= 0xf09192b3 && character <= 0xf09192b8) {
+      return F_true;
+    }
+
+    // Tirhuta: U+114BA, U+114BF, U+114C0, U+114C2.
+    if (character == 0xf09192ba || character == 0xf09192bf || character == 0xf0919380 || character == 0xf0919382) {
+      return F_true;
+    }
+
+    // Tirhuta: U+114C3.
+    if (character == 0xf0919383) {
+      return F_true;
+    }
+
+    // Siddham: U+115B2 to U+115B5.
+    if (character >= 0xf09196b2 && character <= 0xf09196b5) {
+      return F_true;
+    }
+
+    // Siddham: U+115BC to U+115BD.
+    if (character >= 0xf09196bc && character <= 0xf09196bd) {
+      return F_true;
+    }
+
+    // Siddham: U+115BF, U+115C0, U+115DC, U+115DD.
+    if (character == 0xf09196bf || character == 0xf0919780 || character == 0xf091979c || character == 0xf091979d) {
+      return F_true;
+    }
+
+    // Modi: U+11633 to U+1163A.
+    if (character >= 0xf09198b3 && character <= 0xf09198ba) {
+      return F_true;
+    }
+
+    // Modi: U+1163D to U+11640.
+    if (character >= 0xf09198bd && character <= 0xf0919980) {
+      return F_true;
+    }
+
+    // Takri: U+116AB, U+116AD.
+    if (character == 0xf0919aab || character == 0xf0919aad) {
+      return F_true;
+    }
+
+    // Takri: U+116B0 to U+116B5.
+    if (character >= 0xf0919ab0 && character <= 0xf0919ab5) {
+      return F_true;
+    }
+
+    // Takri: U+116B7.
+    if (character == 0xf0919ab7) {
+      return F_true;
+    }
+
+    // Ahom: U+1171D to U+1171F.
+    if (character >= 0xf0919c9d && character <= 0xf0919c9f) {
+      return F_true;
+    }
+
+    // Ahom: U+11722 to U+11725.
+    if (character >= 0xf0919ca2 && character <= 0xf0919ca5) {
+      return F_true;
+    }
+
+    // Ahom: U+11727 to U+1172B.
+    if (character >= 0xf0919ca7 && character <= 0xf0919cab) {
+      return F_true;
+    }
+
+    // Bassa Vah: U+16AF0 to U+16AF4.
+    if (character >= 0xf096abb0 && character <= 0xf096abb4) {
+      return F_true;
+    }
+
+    // Pahawh Hmong: U+16B30 to U+16B36.
+    if (character >= 0xf096acb0 && character <= 0xf096acb6) {
+      return F_true;
+    }
+
+    // Miao: U+16F8F to U+16F92.
+    if (character >= 0xf096be8f && character <= 0xf096be92) {
+      return F_true;
+    }
+
+    // Duployan: U+1BC9D to U+1BC9E.
+    if (character >= 0xf09bb29d && character <= 0xf09bb29e) {
+      return F_true;
+    }
+
+    // Musical Symbols: U+1D167 to U+1D169.
+    if (character >= 0xf09d85a7 && character <= 0xf09d85a9) {
+      return F_true;
+    }
+
+    // Musical Symbols: U+1D17B to U+1D182.
+    if (character >= 0xf09d85bb && character <= 0xf09d8682) {
+      return F_true;
+    }
+
+    // Musical Symbols: U+1D185 to U+1D18B.
+    if (character >= 0xf09d8685 && character <= 0xf09d868b) {
+      return F_true;
+    }
+
+    // Musical Symbols: U+1D1AA to U+1D1AD.
+    if (character >= 0xf09d86aa && character <= 0xf09d86ad) {
+      return F_true;
+    }
+
+    // Ancient Greek Musical Notation: U+1D242 to U+1D244.
+    if (character >= 0xf09d8982 && character <= 0xf09d8984) {
+      return F_true;
+    }
+
+    // Sutton SignWriting: U+1DA00 to U+1DA36.
+    if (character >= 0xf09da880 && character <= 0xf09da8b6) {
+      return F_true;
+    }
+
+    // Sutton SignWriting: U+1DA3B to U+1DA6C.
+    if (character >= 0xf09da8bb && character <= 0xf09da9ac) {
+      return F_true;
+    }
+
+    // Sutton SignWriting: U+1DA75, U+1DA84.
+    if (character == 0xf09da9b5 || character == 0xf09daa84) {
+      return F_true;
+    }
+
+    // Sutton SignWriting: U+1DA9B to U+1DA9F.
+    if (character >= 0xf09daa9b && character <= 0xf09daa9f) {
+      return F_true;
+    }
+
+    // Sutton SignWriting: U+1DAA1 to U+1DAAF.
+    if (character >= 0xf09daaa1 && character <= 0xf09daaaf) {
+      return F_true;
+    }
+
+    // Mende Kikakui: U+1E8D0 to U+1E8D6.
+    if (character >= 0xf09ea390 && character <= 0xf09ea396) {
+      return F_true;
+    }
+
+    // Variation Selectors Supplement: U+E0100 to U+E01EF.
+    if (character >= 0xf3a08480 && character <= 0xf3a087af) {
+      return F_true;
     }
 
     return F_false;
