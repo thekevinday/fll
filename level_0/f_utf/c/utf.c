@@ -1806,15 +1806,15 @@ extern "C" {
 
     f_array_length_t i = 0;
 
-    for (; i < length; ++i) {
-      if (!string[i]) continue;
-    } // for
+    while (i < length && !string[i]) {
+      ++i;
+    } // while
 
     if (i < length) {
-      if (string[i] == f_string_ascii_U_s[0] || string[i] == f_string_ascii_U_s[0]) {
-        for (; i < length; ++i) {
-          if (!string[i]) continue;
-        } // for
+      if (string[i] == f_string_ascii_u_s[0] || string[i] == f_string_ascii_U_s[0]) {
+        do {
+          ++i;
+        } while (i < length && !string[i]);
 
         if (i < length && string[i] == f_string_ascii_plus_s[0]) {
           ++i;
