@@ -24,7 +24,7 @@ build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 build_libraries_shared
 build_libraries_static
-build_sources_library utf.c utf-common.c utf_dynamic.c utf_map.c utf_string.c utf_triple.c private-utf.c private-utf_string.c
+build_sources_library utf.c utf-common.c utf_dynamic.c utf_map.c utf_string.c utf_triple.c private-utf.c private-utf-is_unassigned.c private-utf_string.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_program
