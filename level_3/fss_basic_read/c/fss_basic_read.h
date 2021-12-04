@@ -3,7 +3,7 @@
  *
  * Project: FSS
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * This is the FSS Basic Read program
  * This program utilizes the Featureless Linux Library.

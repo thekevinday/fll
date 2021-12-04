@@ -3,7 +3,7 @@
  *
  * Project: IKI Write
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  */
 #ifndef _PRIVATE_common_h
 #define _PRIVATE_common_h

@@ -3,7 +3,7 @@
  *
  * Project: Strings
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * Provides fss-specific status definitions.
  *

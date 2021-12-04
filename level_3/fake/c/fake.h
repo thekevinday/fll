@@ -3,7 +3,7 @@
  *
  * Project: Featureless Make
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * The Feautureless Make System (aka fake) used as a package build tool.
  *

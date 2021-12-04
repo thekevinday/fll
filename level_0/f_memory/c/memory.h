@@ -3,7 +3,7 @@
  *
  * Project: Memory
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * Provide means to use memory routines, with error checking.
  *

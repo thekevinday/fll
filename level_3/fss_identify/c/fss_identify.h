@@ -3,7 +3,7 @@
  *
  * Project: FSS Identify
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * This is the program is intended to be used to identify an FSS file or FSS data.
  *

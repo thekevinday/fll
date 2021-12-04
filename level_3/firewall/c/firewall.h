@@ -3,7 +3,7 @@
  *
  * Project: Firewall
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * This is the Kevux Operating System Firewall program.
  * This program utilizes the Featureless Linux Library.

@@ -3,7 +3,7 @@
  *
  * Project: UTF
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * Defines dynamic (and static) UTF-8 string data.
  *

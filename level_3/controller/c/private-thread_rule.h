@@ -3,7 +3,7 @@
  *
  * Project: Controller
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  */
 #ifndef _PRIVATE_thread_rule_h
 #define _PRIVATE_thread_rule_h

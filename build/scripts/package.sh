@@ -1,5 +1,5 @@
 #!/bin/bash
-# license: lgpl-2.1
+# license: lgpl-2.1-or-later
 # programmer: Kevin Day
 #
 # The purpose of this script is to create releases from the project source.

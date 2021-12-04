@@ -3,7 +3,7 @@
  *
  * Project: Featureless Make
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  */
 #ifndef _PRIVATE_build_h
 #define _PRIVATE_build_h

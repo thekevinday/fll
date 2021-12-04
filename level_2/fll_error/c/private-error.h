@@ -3,7 +3,7 @@
  *
  * Project: Error
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * These are provided for internal reduction in redundant code.
  * These should not be exposed/used outside of this project.

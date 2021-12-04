@@ -3,7 +3,7 @@
  *
  * Project: Utf
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * Provides UTF-8 character manipulation and processing capabilities.
  *

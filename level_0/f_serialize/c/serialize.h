@@ -3,7 +3,7 @@
  *
  * Project: Serialize
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * Provides string processing functionality for what is to be defined as a serialize string.
  * Serialized strings are strings that can hold multiple values in a single variable.

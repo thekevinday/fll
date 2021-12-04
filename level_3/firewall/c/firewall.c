@@ -2,7 +2,7 @@
  * FLL - Level 3
  * Project: Firewall
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  */
 #include "firewall.h"
 #include "private-common.h"

@@ -3,7 +3,7 @@
  *
  * Project: Environment
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * Provides environment processing functionality, such as environment variable handling.
  */

@@ -1,5 +1,5 @@
 #!/bin/bash
-# license: lgpl-2.1
+# license: lgpl-2.1-or-later
 # programmer: Kevin Day
 #
 # The purpose of this script is to provide an example on how to bootstrap this project using command line arguments.

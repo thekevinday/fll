@@ -1,5 +1,5 @@
 #!/bin/bash
-# license: lgpl-2.1
+# license: lgpl-2.1-or-later
 # programmer: Kevin Day
 #
 # The purpose of this script is to provide a simple bootstrap tool to compile any part of the FLL project.

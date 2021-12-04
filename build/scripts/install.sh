@@ -1,5 +1,5 @@
 #!/bin/bash
-# license: lgpl-2.1
+# license: lgpl-2.1-or-later
 # programmer: Kevin Day
 #
 # The purpose of this script is to provide a simple installer tool to copy any part of the FLL project onto a system.

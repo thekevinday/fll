@@ -3,7 +3,7 @@
  *
  * Project: Color
  * API Version: 0.5
- * Licenses: lgplv2.1
+ * Licenses: lgpl-2.1-or-later
  *
  * Provide basic color output support (linux & xterm).
  * This is the Featureless LINUX Library, so there is no support for non-linux colors at this time.
