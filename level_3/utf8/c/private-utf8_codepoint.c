@@ -32,7 +32,7 @@ extern "C" {
     if (*mode == utf8_codepoint_mode_end) {
       uint32_t codepoint = 0;
 
-      status = f_utf_unicode_string_from(data->text.string, data->text.used, &codepoint);
+      status = f_utf_unicode_string_to(data->text.string, data->text.used, &codepoint);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_utf) {
@@ -50,23 +50,16 @@ extern "C" {
           text.used = macro_f_utf_byte_width(codepoint);
           text.size = 5;
 
-          byte[0] = macro_f_utf_character_t_to_char_1(codepoint);
+          status = f_utf_unicode_from(codepoint, 4, &text.string);
 
-          if (text.used > 1) {
-            byte[1] = macro_f_utf_character_t_to_char_2(codepoint);
-
-            if (text.used > 2) {
-              byte[2] = macro_f_utf_character_t_to_char_3(codepoint);
-
-              if (text.used > 3) {
-                byte[3] = macro_f_utf_character_t_to_char_4(codepoint);
-              }
-            }
+          if (F_status_is_error(status)) {
+            utf8_print_error_decode(data, status, character);
           }
+          else {
+            status = F_none;
 
-          f_print_terminated(data->prepend, data->file.stream);
-          f_print_dynamic_raw(text, data->file.stream);
-          f_print_terminated(data->append, data->file.stream);
+            fl_print_format("%s%r%s", data->file.stream, data->prepend, text, data->append);
+          }
         }
         else {
           fl_print_format(codepoint < 0xffff ? "%sU+%04_U%s" : "%sU+%6_U%s", data->file.stream, data->prepend, codepoint, data->append);

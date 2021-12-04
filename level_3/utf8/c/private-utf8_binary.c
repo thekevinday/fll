@@ -35,9 +35,7 @@ extern "C" {
     }
     else if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
       if (data->mode & utf8_mode_to_binary_d) {
-        f_print_terminated(data->prepend, data->file.stream);
-        f_print_dynamic_raw(character, data->file.stream);
-        f_print_terminated(data->append, data->file.stream);
+        fl_print_format("%s%r%s", data->file.stream, data->prepend, character, data->append);
       }
       else {
         fl_print_format(codepoint < 0xffff ? "%sU+%04_U%s" : "%sU+%6_U%s", data->file.stream, data->prepend, codepoint, data->append);

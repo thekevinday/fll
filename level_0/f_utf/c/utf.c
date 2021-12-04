@@ -1798,8 +1798,60 @@ extern "C" {
   }
 #endif // _di_f_utf_unicode_from_
 
-#ifndef _di_f_utf_unicode_string_from_f_
-  f_status_t f_utf_unicode_string_from(const f_string_t string, const f_array_length_t length, uint32_t *unicode) {
+#ifndef _di_f_utf_unicode_to_
+  f_status_t f_utf_unicode_to(const f_string_t character, const f_array_length_t width_max, uint32_t *unicode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+      if (!unicode) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (macro_f_utf_byte_width_is(*character) == 1) {
+      return F_status_set_error(F_utf_fragment);
+    }
+
+    {
+      f_utf_character_t character_utf = 0;
+
+      const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
+      if (F_status_is_error(status)) return status;
+
+      if (private_f_utf_character_is_valid(character_utf) == F_false) {
+        return F_status_set_error(F_utf);
+      }
+    }
+
+    // U+0000 -> U+007F.
+    if (macro_f_utf_byte_width(*character) == 1) {
+      *unicode = ((uint8_t) character[0]) & 0x7f;
+    }
+
+    // U+0080 -> U+07FF.
+    else if (macro_f_utf_byte_width(*character) == 2) {
+      *unicode = (((uint8_t) character[0]) & 0x1f) << 6;
+      *unicode |= ((uint8_t) character[1]) & 0x3f;
+    }
+
+    // U+0800 -> U+FFFF.
+    else if (macro_f_utf_byte_width(*character) == 3) {
+      *unicode = (((uint8_t) character[0]) & 0xf) << 12;
+      *unicode |= (((uint8_t) character[1]) & 0x3f) << 6;
+      *unicode |= ((uint8_t) character[2]) & 0x3f;
+    }
+
+    // U+10000 -> U+10FFFF.
+    else if (macro_f_utf_byte_width(*character) == 4) {
+      *unicode = (((uint8_t) character[0]) & 0x7) << 18;
+      *unicode |= (((uint8_t) character[1]) & 0x3f) << 12;
+      *unicode |= (((uint8_t) character[2]) & 0x3f) << 6;
+      *unicode |= ((uint8_t) character[3]) & 0x3f;
+    }
+
+    return F_none;
+  }
+#endif // _di_f_utf_unicode_to_
+
+#ifndef _di_f_utf_unicode_string_to_f_
+  f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, uint32_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
       if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1858,59 +1910,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_utf_unicode_string_from_
-
-#ifndef _di_f_utf_unicode_to_
-  f_status_t f_utf_unicode_to(const f_string_t character, const f_array_length_t width_max, uint32_t *unicode) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-      if (!unicode) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (macro_f_utf_byte_width_is(*character) == 1) {
-      return F_status_set_error(F_utf_fragment);
-    }
-
-    {
-      f_utf_character_t character_utf = 0;
-
-      const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
-      if (F_status_is_error(status)) return status;
-
-      if (private_f_utf_character_is_valid(character_utf) == F_false) {
-        return F_status_set_error(F_utf);
-      }
-    }
-
-    // U+0000 -> U+007F.
-    if (macro_f_utf_byte_width(*character) == 1) {
-      *unicode = ((uint8_t) character[0]) & 0x7f;
-    }
-
-    // U+0080 -> U+07FF.
-    else if (macro_f_utf_byte_width(*character) == 2) {
-      *unicode = (((uint8_t) character[0]) & 0x1f) << 6;
-      *unicode |= ((uint8_t) character[1]) & 0x3f;
-    }
-
-    // U+0800 -> U+FFFF.
-    else if (macro_f_utf_byte_width(*character) == 3) {
-      *unicode = (((uint8_t) character[0]) & 0xf) << 12;
-      *unicode |= (((uint8_t) character[1]) & 0x3f) << 6;
-      *unicode |= ((uint8_t) character[2]) & 0x3f;
-    }
-
-    // U+10000 -> U+10FFFF.
-    else if (macro_f_utf_byte_width(*character) == 4) {
-      *unicode = (((uint8_t) character[0]) & 0x7) << 18;
-      *unicode |= (((uint8_t) character[1]) & 0x3f) << 12;
-      *unicode |= (((uint8_t) character[2]) & 0x3f) << 6;
-      *unicode |= ((uint8_t) character[3]) & 0x3f;
-    }
-
-    return F_none;
-  }
-#endif // _di_f_utf_unicode_to_
+#endif // _di_f_utf_unicode_string_to_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -14,9 +14,7 @@ extern "C" {
     }
 
     if (data->mode & utf8_mode_to_binary_d) {
-      fl_print_format("%s%[", data->file.stream, data->prepend, set);
-      f_print_dynamic_raw(character, data->file.stream);
-      fl_print_format("%s%]", data->file.stream, data->append, set);
+      fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, set, character, set, data->append);
     }
     else {
       fl_print_format("%s%[0x", data->file.stream, data->prepend, set);
@@ -25,7 +23,7 @@ extern "C" {
         fl_print_format("%04_uii", data->file.stream, (uint8_t) character.string[i]);
       } // for
 
-      fl_print_format("%s%]", data->file.stream, data->append, set);
+      fl_print_format("%]%s", data->file.stream, set, data->append);
     }
   }
 #endif // _di_utf8_print_character_
@@ -35,10 +33,10 @@ extern "C" {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet) return;
 
-    fl_print_format("%c%[%SFailed to decode character '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->context.set.error);
+    fl_print_format("%c%[%SFailed to decode character '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
     fl_print_format("%[%r%]", data->main->error.to.stream, data->main->context.set.notable, character, data->main->context.set.notable);
     fl_print_format("%[', error status code%] ", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
-    fl_print_format("%[%S%]", data->main->error.to.stream, data->main->context.set.notable, F_status_set_fine(status), data->main->context.set.notable);
+    fl_print_format("%[%ui%]", data->main->error.to.stream, data->main->context.set.notable, F_status_set_fine(status), data->main->context.set.notable);
     fl_print_format("%[.%]%c", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
   }
 #endif // _di_utf8_print_error_decode_
