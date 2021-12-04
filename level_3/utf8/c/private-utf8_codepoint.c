@@ -13,6 +13,7 @@ extern "C" {
   f_status_t utf8_convert_codepoint(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) {
 
     f_status_t status = F_none;
+    bool valid_not = F_false;
 
     if (*mode != utf8_codepoint_mode_end) {
       if (data->text.used + character.used >= data->text.size) {
@@ -35,14 +36,22 @@ extern "C" {
       status = f_utf_unicode_string_to(data->text.string, data->text.used, &codepoint);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_utf) {
-          utf8_print_character(data, data->text, data->valid_not);
+        if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_utf || F_status_set_fine(status) == F_valid_not) {
+          valid_not = F_true;
+
+          if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+            fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, data->valid_not, data->text, data->valid_not, data->append);
+          }
         }
         else {
-          utf8_print_error_decode(data, status, character);
+          if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+            utf8_print_error_decode(data, status, character);
+          }
+
+          return status;
         }
       }
-      else {
+      else if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
         if (data->mode & utf8_mode_to_binary_d) {
           char byte[5] = { 0, 0, 0, 0, 0 };
           f_string_static_t text = f_string_static_t_initialize;
@@ -69,11 +78,17 @@ extern "C" {
     else {
       status = F_none;
 
-      utf8_print_character(data, data->text, data->valid_not);
+      if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+        fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, data->valid_not, data->text, data->valid_not, data->append);
+      }
     }
 
     *mode = utf8_codepoint_mode_ready;
     data->text.used = 0;
+
+    if (valid_not || F_status_is_error(status)) {
+      return F_utf;
+    }
 
     return status;
   }

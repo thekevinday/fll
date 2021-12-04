@@ -112,6 +112,7 @@ extern "C" {
   #define utf8_short_from_file_s      "f"
 
   #define utf8_short_headers_s       "H"
+  #define utf8_short_separate_s      "S"
   #define utf8_short_strip_invalid_s "s"
   #define utf8_short_verify_s        "v"
 
@@ -124,6 +125,7 @@ extern "C" {
   #define utf8_long_from_file_s      "from_file"
 
   #define utf8_long_headers_s       "headers"
+  #define utf8_long_separate_s      "separate"
   #define utf8_long_strip_invalid_s "strip_invalid"
   #define utf8_long_verify_s        "verify"
 
@@ -147,6 +149,7 @@ extern "C" {
     utf8_parameter_from_file,
 
     utf8_parameter_headers,
+    utf8_parameter_separate,
     utf8_parameter_strip_invalid,
 
     utf8_parameter_to_binary,
@@ -171,6 +174,7 @@ extern "C" {
       f_console_parameter_t_initialize(utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_from_file_s, utf8_long_from_file_s, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_headers_s, utf8_long_headers_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(utf8_short_separate_s, utf8_long_headers_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_to_binary_s, utf8_long_to_binary_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, 0, 0, f_console_type_normal), \
@@ -178,7 +182,7 @@ extern "C" {
       f_console_parameter_t_initialize(utf8_short_verify_s, utf8_long_verify_s, 0, 0, f_console_type_normal), \
     }
 
-  #define utf8_total_parameters_d 18
+  #define utf8_total_parameters_d 19
 #endif // _di_utf8_defines_
 
 /**

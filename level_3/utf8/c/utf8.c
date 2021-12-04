@@ -41,7 +41,8 @@ extern "C" {
     f_print_character(f_string_eol_s[0], file.stream);
 
     fll_program_print_help_option(file, context, utf8_short_headers_s, utf8_long_headers_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Print headers for each section (pipe, file, or parameter).");
-    fll_program_print_help_option(file, context, utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Strip invalid Unicode characters.");
+    fll_program_print_help_option(file, context, utf8_short_separate_s, utf8_long_separate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Separate characters by newlines (implied when printing headers).");
+    fll_program_print_help_option(file, context, utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Strip invalid Unicode characters (do not print invalid sequences).");
     fll_program_print_help_option(file, context, utf8_short_verify_s, utf8_long_verify_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Only perform verification of valid sequences.");
 
     f_print_character(f_string_eol_s[0], file.stream);
@@ -53,7 +54,7 @@ extern "C" {
 
     fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When using the parameter '%[%s%s%]', only invalid data is printed and 0 is returned if valid or 1 is returned if invalid.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  When using the parameter '%[%s%s%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s[0]);
 
     funlockfile(file.stream);
 
@@ -251,14 +252,6 @@ extern "C" {
       }
     }
 
-    if (main->parameters[utf8_parameter_verify].result == f_console_result_found) {
-      if (main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found) {
-        utf8_print_error_parameter_conflict(&data, utf8_long_verify_s, utf8_long_strip_invalid_s);
-
-        status = F_status_set_error(F_parameter);
-      }
-    }
-
     if (F_status_is_error_not(status)) {
       if (main->parameters[utf8_parameter_from_file].result == f_console_result_additional) {
         f_array_length_t i = 0;
@@ -338,14 +331,8 @@ extern "C" {
       }
 
       if (data.mode & utf8_mode_to_codepoint_d) {
-        if (main->parameters[utf8_parameter_verify].result == f_console_result_found) {
-          if (main->parameters[utf8_parameter_headers].result == f_console_result_found) {
-            data.prepend = "  ";
-          }
-          else {
-            data.prepend = f_string_space_s;
-          }
-
+        if (main->parameters[utf8_parameter_separate].result == f_console_result_found || main->parameters[utf8_parameter_headers].result == f_console_result_found) {
+          data.prepend = "  ";
           data.append = f_string_eol_s;
         }
         else {
@@ -453,7 +440,7 @@ extern "C" {
       }
     }
 
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet && main->parameters[utf8_parameter_verify].result == f_console_result_none) {
       if (F_status_set_fine(status) == F_interrupt) {
         fflush(data.file.stream);
 

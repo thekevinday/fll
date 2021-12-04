@@ -13,6 +13,7 @@ extern "C" {
   f_status_t utf8_convert_binary(utf8_data_t * const data, const f_string_static_t character) {
 
     f_status_t status = F_none;
+    bool valid_not = F_false;
 
     uint32_t codepoint = 0;
 
@@ -24,11 +25,17 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_utf) {
-        utf8_print_character(data, character, data->valid_not);
+      if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_utf || F_status_set_fine(status) == F_valid_not) {
+        valid_not = F_true;
+
+        if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+          utf8_print_character(data, character, data->valid_not);
+        }
       }
       else {
-        utf8_print_error_decode(data, status, character);
+        if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+          utf8_print_error_decode(data, status, character);
+        }
 
         return status;
       }
@@ -42,7 +49,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error(status)) {
+    if (valid_not || F_status_is_error(status)) {
       return F_utf;
     }
 

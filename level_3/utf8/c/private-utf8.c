@@ -106,6 +106,7 @@ extern "C" {
         }
         else {
           mode_codepoint = utf8_codepoint_mode_bad_end;
+          valid = F_false;
         }
 
         character.used = 0;
@@ -121,7 +122,11 @@ extern "C" {
     }
 
     if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
-      f_print_terminated(f_string_eol_s, data->file.stream);
+
+      // When headers are printed, they are printed with a newline so only print this newline when separate is used without headers being printed.
+      if (data->main->parameters[utf8_parameter_headers].result == f_console_result_none && data->main->parameters[utf8_parameter_separate].result == f_console_result_found) {
+        f_print_terminated(f_string_eol_s, data->file.stream);
+      }
     }
 
     funlockfile(data->file.stream);

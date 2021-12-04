@@ -9,9 +9,7 @@ extern "C" {
 #ifndef _di_utf8_print_character_
   void utf8_print_character(utf8_data_t * const data, const f_string_static_t character, const f_color_set_t set) {
 
-    if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found || !character.used) {
-      return;
-    }
+    if (!character.used) return;
 
     if (data->mode & utf8_mode_to_binary_d) {
       fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, set, character, set, data->append);
@@ -124,8 +122,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_file_
   void utf8_print_section_header_file(utf8_data_t * const data, const f_string_t name) {
 
-    if (data->main->output.verbosity == f_console_verbosity_quiet) return;
     if (data->main->parameters[utf8_parameter_headers].result == f_console_result_none) return;
+    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
 
     flockfile(data->main->output.to.stream);
 
@@ -145,8 +143,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_parameter_
   void utf8_print_section_header_parameter(utf8_data_t * const data, const f_array_length_t index) {
 
-    if (data->main->output.verbosity == f_console_verbosity_quiet) return;
     if (data->main->parameters[utf8_parameter_headers].result == f_console_result_none) return;
+    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
 
     flockfile(data->main->output.to.stream);
 
@@ -160,8 +158,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_pipe_
   void utf8_print_section_header_pipe(utf8_data_t * const data) {
 
-    if (data->main->output.verbosity == f_console_verbosity_quiet) return;
     if (data->main->parameters[utf8_parameter_headers].result == f_console_result_none) return;
+    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
 
     fll_print_format("%c%[Pipe%]:%c", data->main->output.to.stream, f_string_eol_s[0], data->main->output.set->title, data->main->output.set->title, f_string_eol_s[0]);
   }
