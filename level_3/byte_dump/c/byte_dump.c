@@ -267,6 +267,7 @@ extern "C" {
         funlockfile(main->error.to.stream);
 
         byte_dump_main_delete(main);
+
         return F_status_set_error(status);
       }
       else if (main->parameters[byte_dump_parameter_width].result == f_console_result_additional) {
