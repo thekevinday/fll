@@ -3596,6 +3596,47 @@ extern "C" {
   }
 #endif // !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
 
+#if !defined(_di_f_utf_unicode_to_) || !defined(_di_f_utf_character_unicode_to_)
+  f_status_t private_f_utf_character_unicode_to(const f_utf_character_t character, uint32_t *unicode) {
+
+    if (macro_f_utf_character_t_width_is(character) == 1) {
+      return F_status_set_error(F_utf_fragment);
+    }
+
+    if (private_f_utf_character_is_valid(character) == F_false) {
+      return F_status_set_error(F_utf);
+    }
+
+    // U+0000 -> U+007F (ASCII).
+    if (macro_f_utf_character_t_width(character) == 1) {
+      *unicode = macro_f_utf_character_t_to_char_1(character) & 0x7f;
+    }
+
+    // U+0080 -> U+07FF.
+    else if (macro_f_utf_character_t_width(character) == 2) {
+      *unicode = (macro_f_utf_character_t_to_char_1(character) & 0x1f) << 6;
+      *unicode |= macro_f_utf_character_t_to_char_2(character) & 0x3f;
+    }
+
+    // U+0800 -> U+FFFF.
+    else if (macro_f_utf_character_t_width(character) == 3) {
+      *unicode = (macro_f_utf_character_t_to_char_1(character) & 0xf) << 12;
+      *unicode |= (macro_f_utf_character_t_to_char_2(character) & 0x3f) << 6;
+      *unicode |= macro_f_utf_character_t_to_char_3(character) & 0x3f;
+    }
+
+    // U+10000 -> U+10FFFF.
+    else if (macro_f_utf_character_t_width(character) == 4) {
+      *unicode = (macro_f_utf_character_t_to_char_1(character) & 0x7) << 18;
+      *unicode |= (macro_f_utf_character_t_to_char_2(character) & 0x3f) << 12;
+      *unicode |= (macro_f_utf_character_t_to_char_2(character) & 0x3f) << 6;
+      *unicode |= macro_f_utf_character_t_to_char_4(character) & 0x3f;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_utf_unicode_to_) || !defined(_di_f_utf_character_unicode_to_)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

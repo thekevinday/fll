@@ -720,41 +720,7 @@ extern "C" {
       if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // ASCII.
-    if (!macro_f_utf_character_t_width_is(character)) {
-      *unicode = macro_f_utf_character_t_to_char_1(character) & 0x7f;
-    }
-
-    if (macro_f_utf_character_t_width_is(character) == 1) {
-      return F_status_set_error(F_utf_fragment);
-    }
-
-    if (private_f_utf_character_is_valid(character) == F_false) {
-      return F_status_set_error(F_utf);
-    }
-
-    // U+0080 -> U+07FF.
-    if (macro_f_utf_character_t_width_is(character) == 2) {
-      *unicode = (macro_f_utf_character_t_to_char_1(character) & 0x1f) << 6;
-      *unicode |= macro_f_utf_character_t_to_char_2(character) & 0x3f;
-    }
-
-    // U+0800 -> U+FFFF.
-    else if (macro_f_utf_character_t_width_is(character) == 3) {
-      *unicode = (macro_f_utf_character_t_to_char_1(character) & 0xf) << 12;
-      *unicode |= (macro_f_utf_character_t_to_char_2(character) & 0x3f) << 6;
-      *unicode |= macro_f_utf_character_t_to_char_3(character) & 0x3f;
-    }
-
-    // U+10000 -> U+10FFFF.
-    else if (macro_f_utf_character_t_width_is(character) == 4) {
-      *unicode = (macro_f_utf_character_t_to_char_1(character) & 0x7) << 18;
-      *unicode |= (macro_f_utf_character_t_to_char_2(character) & 0x3f) << 12;
-      *unicode |= (macro_f_utf_character_t_to_char_2(character) & 0x3f) << 6;
-      *unicode |= macro_f_utf_character_t_to_char_4(character) & 0x3f;
-    }
-
-    return F_none;
+    return private_f_utf_character_unicode_to(character, unicode);
   }
 #endif // _di_f_utf_character_unicode_to_
 
@@ -800,6 +766,81 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_utf_character_unicode_from_
+
+#ifndef _di_f_utf_character_unicode_string_to_
+  f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_array_length_t length, uint32_t *unicode) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!string) return F_status_set_error(F_parameter);
+      if (!unicode) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_array_length_t i = 0;
+
+    while (i < length && !string[i]) {
+      ++i;
+    } // while
+
+    if (i < length) {
+      if (macro_f_utf_character_t_width_is(string[i])) {
+        i = length;
+      }
+      else {
+        if (macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_u_s[0] || macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_U_s[0]) {
+          do {
+            ++i;
+          } while (i < length && !string[i]);
+
+          if (i < length && !macro_f_utf_character_t_width_is(string[i]) && macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_plus_s[0]) {
+            ++i;
+          }
+          else {
+            i = length;
+          }
+        }
+        else {
+          i = length;
+        }
+      }
+    }
+
+    if (i == length) {
+      return F_status_set_error(F_valid_not);
+    }
+
+    uint32_t value = 0;
+    uint8_t character = 0;
+
+    for (; i < length; ++i) {
+
+      if (!string[i]) continue;
+
+      // Only ASCII character numbers are allowed to represent
+      if (macro_f_utf_character_t_width_is(string[i])) {
+        return F_status_set_error(F_valid_not);
+      }
+
+      value *= 16;
+      character = macro_f_utf_character_t_to_char_1(string[i]);
+
+      if (character > 0x2f && character < 0x3a) {
+        value += character - 0x30;
+      }
+      else if (character > 0x40 && character < 0x47) {
+        value += (character - 0x41) + 10;
+      }
+      else if (character > 0x60 && character < 0x67) {
+        value += (character - 0x61) + 10;
+      }
+      else {
+        return F_status_set_error(F_valid_not);
+      }
+    } // for
+
+    *unicode = value;
+
+    return F_none;
+  }
+#endif // _di_f_utf_character_unicode_string_to_
 
 #ifndef _di_f_utf_is_
   f_status_t f_utf_is(const f_string_t character) {
@@ -1806,48 +1847,14 @@ extern "C" {
       if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (macro_f_utf_byte_width_is(*character) == 1) {
-      return F_status_set_error(F_utf_fragment);
-    }
+    f_utf_character_t character_utf = 0;
 
     {
-      f_utf_character_t character_utf = 0;
-
       const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
-
-      if (private_f_utf_character_is_valid(character_utf) == F_false) {
-        return F_status_set_error(F_utf);
-      }
     }
 
-    // U+0000 -> U+007F.
-    if (macro_f_utf_byte_width(*character) == 1) {
-      *unicode = ((uint8_t) character[0]) & 0x7f;
-    }
-
-    // U+0080 -> U+07FF.
-    else if (macro_f_utf_byte_width(*character) == 2) {
-      *unicode = (((uint8_t) character[0]) & 0x1f) << 6;
-      *unicode |= ((uint8_t) character[1]) & 0x3f;
-    }
-
-    // U+0800 -> U+FFFF.
-    else if (macro_f_utf_byte_width(*character) == 3) {
-      *unicode = (((uint8_t) character[0]) & 0xf) << 12;
-      *unicode |= (((uint8_t) character[1]) & 0x3f) << 6;
-      *unicode |= ((uint8_t) character[2]) & 0x3f;
-    }
-
-    // U+10000 -> U+10FFFF.
-    else if (macro_f_utf_byte_width(*character) == 4) {
-      *unicode = (((uint8_t) character[0]) & 0x7) << 18;
-      *unicode |= (((uint8_t) character[1]) & 0x3f) << 12;
-      *unicode |= (((uint8_t) character[2]) & 0x3f) << 6;
-      *unicode |= ((uint8_t) character[3]) & 0x3f;
-    }
-
-    return F_none;
+    return private_f_utf_character_unicode_to(character_utf, unicode);
   }
 #endif // _di_f_utf_unicode_to_
 

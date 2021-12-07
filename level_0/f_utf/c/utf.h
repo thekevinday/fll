@@ -836,6 +836,33 @@ extern "C" {
 #endif // _di_f_utf_character_unicode_from_
 
 /**
+ * Convert a string of the format "U+FFFF" into the codepoint value.
+ *
+ * This ignores NULL characters.
+ * The string may only contain "U+" followed by a hexidecimal digit, upper or lower case.
+ * The "U+" prefix is optional.
+ * Only ASCII characters are allowed to represent the Unicode sequence string.
+ *
+ * @param string
+ *   The string representing a Unicode sequence.
+ * @param length
+ *   The maximum number of characters.
+ * @param unicode
+ *   A 32-bit integer representing the Unicode (such as U+0001).
+ *   Does not need to be interpretted like UTF-8, this is a number from 0 onto max supported Unicode integer value (U+10FFFF).
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) if width_max is not long enough to convert.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_valid_not (with error bit) if string is not a valid Unicode string.
+ */
+#ifndef _di_f_utf_character_unicode_string_to_
+  extern f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_array_length_t length, uint32_t *unicode);
+#endif // _di_f_utf_character_unicode_string_to_
+
+/**
  * Check to see if the entire byte block of the character is a non-ASCII UTF-8 character.
  *
  * This does not check the validity of the character, for that instead use f_utf_is_valid().
@@ -1672,7 +1699,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_valid_not (with error bit) if string is not a valid Unicode string.
  */
-#ifndef _di_f_utf_unicode_string_to_f_
+#ifndef _di_f_utf_unicode_string_to_
   extern f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, uint32_t *unicode);
 #endif // _di_f_utf_unicode_string_to_
 

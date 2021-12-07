@@ -633,6 +633,33 @@ extern "C" {
   extern f_status_t private_f_utf_character_is_zero_width(const f_utf_character_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
 
+/**
+ * Private implementation of f_utf_character_is_zero_width().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The (UTF-8) character to convert to the Unicode representation.
+ *   The f_utf_character_t is a 32-bit integer containing UTF-8 sequences, unchanged.
+ * @param unicode
+ *   A 32-bit integer representing the Unicode (such as U+0001).
+ *   Does not need to be interpretted like UTF-8, this is a number from 0 onto max supported Unicode integer value (U+10FFFF).
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) if width is not long enough to convert.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if unicode is an invalid Unicode character.
+ *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *
+ * @see f_utf_character_unicode_to()
+ * @see f_utf_unicode_to()
+ */
+#if !defined(_di_f_utf_character_unicode_to_) || !defined(_di_f_utf_unicode_to_)
+  extern f_status_t private_f_utf_character_unicode_to(const f_utf_character_t character, uint32_t *unicode) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_utf_character_unicode_to_) || !defined(_di_f_utf_unicode_to_)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
