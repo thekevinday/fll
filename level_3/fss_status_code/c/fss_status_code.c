@@ -190,13 +190,19 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
+        uint16_t signal_check = 0;
+
         flockfile(main->output.to.stream);
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          if (fss_status_code_signal_received(main)) {
-            status = F_status_set_error(F_interrupt);
-            break;
+          if (!((++signal_check) % fss_status_code_signal_check_d)) {
+            if (fss_status_code_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           status2 = fss_status_code_process_check(main, arguments->argv[main->remaining.array[i]]);
@@ -215,13 +221,19 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
+        uint16_t signal_check = 0;
+
         flockfile(main->output.to.stream);
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          if (fss_status_code_signal_received(main)) {
-            status = F_status_set_error(F_interrupt);
-            break;
+          if (!((++signal_check) % fss_status_code_signal_check_d)) {
+            if (fss_status_code_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           status2 = fss_status_code_process_number(main, arguments->argv[main->remaining.array[i]]);
@@ -240,13 +252,19 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
+        uint16_t signal_check = 0;
+
         flockfile(main->output.to.stream);
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          if (fss_status_code_signal_received(main)) {
-            status = F_status_set_error(F_interrupt);
-            break;
+          if (!((++signal_check) % fss_status_code_signal_check_d)) {
+            if (fss_status_code_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           status2 = fss_status_code_process_normal(main, arguments->argv[main->remaining.array[i]]);

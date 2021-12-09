@@ -87,6 +87,8 @@ extern "C" {
 #endif // _di_utf8_default_allocation_step_
 
 #ifndef _di_utf8_defines_
+  #define utf8_signal_check_d 10000
+
   #define utf8_string_from_s "from"
   #define utf8_string_to_s   "to"
 

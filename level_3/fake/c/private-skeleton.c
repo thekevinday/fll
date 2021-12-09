@@ -45,10 +45,6 @@ extern "C" {
 
       for (uint8_t i = 0; i < 20; ++i) {
 
-        if (fake_signal_received(main)) {
-          return F_status_set_error(F_interrupt);
-        }
-
         status = fake_skeleton_operate_directory_create(main, *parameters_value[i]);
 
         if (F_status_is_error(status)) {
@@ -64,10 +60,6 @@ extern "C" {
     f_string_dynamic_t content = f_string_dynamic_t_initialize;
 
     if (F_status_is_error_not(status)) {
-      if (fake_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
-      }
-
       content.string = fake_make_skeleton_content_defines_s;
       content.used = fake_make_skeleton_content_defines_s_length;
       content.size = content.used;
@@ -78,10 +70,6 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (fake_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
-      }
-
       content.string = fake_make_skeleton_content_dependencies_s;
       content.used = fake_make_skeleton_content_dependencies_s_length;
       content.size = content.used;
@@ -92,26 +80,14 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (fake_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
-      }
-
       status = fake_skeleton_operate_file_create(main, file_data_build_process_post, F_true, content);
     }
 
     if (F_status_is_error_not(status)) {
-      if (fake_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
-      }
-
       status = fake_skeleton_operate_file_create(main, file_data_build_process_pre, F_true, content);
     }
 
     if (F_status_is_error_not(status)) {
-      if (fake_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
-      }
-
       content.string = fake_make_skeleton_content_settings_s;
       content.used = fake_make_skeleton_content_settings_s_length;
       content.size = content.used;
@@ -122,18 +98,10 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (fake_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
-      }
-
       status = fake_skeleton_operate_file_create(main, main->file_documents_readme, F_false, content);
     }
 
     if (F_status_is_error_not(status)) {
-      if (fake_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
-      }
-
       content.string = fake_make_skeleton_content_fakefile_s;
       content.used = fake_make_skeleton_content_fakefile_s_length;
       content.size = content.used;

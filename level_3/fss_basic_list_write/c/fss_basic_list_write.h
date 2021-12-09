@@ -67,6 +67,8 @@ extern "C" {
 #endif // _di_fss_basic_list_write_program_name_
 
 #ifndef _di_fss_basic_list_write_defines_
+  #define fss_basic_list_write_signal_check_d 10000
+
   #define fss_basic_list_write_pipe_content_end_s    '\f'
   #define fss_basic_list_write_pipe_content_ignore_s '\v'
   #define fss_basic_list_write_pipe_content_start_s  '\b'

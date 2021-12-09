@@ -328,6 +328,11 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
+      if (!(i % fake_signal_check_short_d) && fake_signal_received(main)) {
+        *status = F_status_set_error(F_interrupt);
+        break;
+      }
+
       if (!files.array[i].used) continue;
 
       path_source.used = source.used;
@@ -343,11 +348,6 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-        break;
-      }
-
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_interrupt);
         break;
       }
 
@@ -461,11 +461,6 @@ extern "C" {
           break;
         }
 
-        if (fake_signal_received(main)) {
-          *status = F_status_set_error(F_interrupt);
-          break;
-        }
-
         *status = f_file_copy(path_source.string, destination_file.string, mode, F_file_default_read_size_d, F_false);
 
         if (F_status_is_error(*status)) {
@@ -549,12 +544,6 @@ extern "C" {
     for (uint8_t i = 0; i < 15; ++i) {
 
       if (!directorys[i]->used) continue;
-
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_interrupt);
-
-        return;
-      }
 
       // @todo implement this in a common function and use across project for creating parent directories.
       for (f_array_length_t j = 0; j < directorys[i]->used; ++j) {
@@ -788,47 +777,39 @@ extern "C" {
 
     int return_code = 0;
 
+    // Child processes should receive all signals, without blocking.
+    f_signal_how_t signals = f_signal_how_t_initialize;
+    f_signal_set_empty(&signals.block);
+    f_signal_set_fill(&signals.block_not);
+
+    fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(FL_execute_parameter_option_path_d, 0, &data_build.environment, &signals, 0);
+
+    *status = fll_execute_program(path.string, arguments, &parameter, 0, (void *) &return_code);
+
+    macro_f_string_dynamics_t_delete_simple(arguments);
+
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_interrupt);
-
-      macro_f_string_dynamic_t_delete_simple(path);
-      macro_f_string_dynamics_t_delete_simple(arguments);
     }
-    else {
-      // child processes should receive all signals, without blocking.
-      f_signal_how_t signals = f_signal_how_t_initialize;
-      f_signal_set_empty(&signals.block);
-      f_signal_set_fill(&signals.block_not);
+    else if (*status != F_child) {
+      if (F_status_is_error(*status)) {
+        if (F_status_set_fine(*status) == F_failure) {
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            flockfile(main->error.to.stream);
 
-      fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(FL_execute_parameter_option_path_d, 0, &data_build.environment, &signals, 0);
+            fl_print_format("%c%[%SFailed to execute script: '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
+            fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-      *status = fll_execute_program(path.string, arguments, &parameter, 0, (void *) &return_code);
-
-      macro_f_string_dynamics_t_delete_simple(arguments);
-
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_interrupt);
-      }
-      else if (*status != F_child) {
-        if (F_status_is_error(*status)) {
-          if (F_status_set_fine(*status) == F_failure) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
-              flockfile(main->error.to.stream);
-
-              fl_print_format("%c%[%SFailed to execute script: '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
-              fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
-
-              funlockfile(main->error.to.stream);
-            }
-          }
-          else {
-            fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_program", F_true);
+            funlockfile(main->error.to.stream);
           }
         }
         else {
-          fake_build_touch(main, file_stage, status);
+          fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_program", F_true);
         }
+      }
+      else {
+        fake_build_touch(main, file_stage, status);
       }
     }
 
@@ -1242,12 +1223,6 @@ extern "C" {
 
       parameter_file_path[parameter_file_path_length] = 0;
 
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_interrupt);
-
-        return 0;
-      }
-
       *status = f_file_link(parameter_file_name_major, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose) {
@@ -1277,12 +1252,6 @@ extern "C" {
 
       parameter_file_path[parameter_file_path_length] = 0;
 
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_interrupt);
-
-        return 0;
-      }
-
       *status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose) {
@@ -1311,12 +1280,6 @@ extern "C" {
 
         parameter_file_path[parameter_file_path_length] = 0;
 
-        if (fake_signal_received(main)) {
-          *status = F_status_set_error(F_interrupt);
-
-          return 0;
-        }
-
         *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
         if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose) {
@@ -1344,12 +1307,6 @@ extern "C" {
           memcpy(parameter_file_path + main->path_build_libraries_shared.used, parameter_file_name_micro, parameter_file_name_micro_length);
 
           parameter_file_path[parameter_file_path_length] = 0;
-
-          if (fake_signal_received(main)) {
-            *status = F_status_set_error(F_interrupt);
-
-            return 0;
-          }
 
           *status = f_file_link(parameter_file_name_nano, parameter_file_path);
 
@@ -1445,11 +1402,6 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "fake_build_get_file_name_without_extension", F_true);
-            break;
-          }
-
-          if (fake_signal_received(main)) {
-            *status = F_status_set_error(F_interrupt);
             break;
           }
 
@@ -1629,10 +1581,7 @@ extern "C" {
         *status = fake_file_buffer(main, main->file_data_build_settings.string, &buffer);
       }
 
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_interrupt);
-      }
-      else if (F_status_is_error_not(*status)) {
+      if (F_status_is_error_not(*status)) {
         f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
@@ -2171,7 +2120,7 @@ extern "C" {
         fll_error_print(main->error, F_status_set_fine(*status), function, F_true);
       }
     }
-    else if (!fake_signal_received(main)) {
+    else {
       const f_string_t settings_single_name[] = {
         fake_build_setting_name_build_compiler_s,
         fake_build_setting_name_build_indexer_s,
@@ -2919,10 +2868,6 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
     }
-
-    if (fake_signal_received(main)) {
-      *status = F_status_set_error(F_interrupt);
-    }
   }
 #endif // _di_fake_build_load_setting_defaults_
 
@@ -2933,6 +2878,8 @@ extern "C" {
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_interrupt);
+
+      return;
     }
 
     const f_string_t names[] = {
@@ -3127,11 +3074,6 @@ extern "C" {
           break;
         }
 
-        if (fake_signal_received(main)) {
-          *status = F_status_set_error(F_interrupt);
-          break;
-        }
-
         *status = f_file_name_directory(sources[i]->array[j].string, sources[i]->array[j].used, &destination_path);
 
         if (F_status_is_error(*status)) {
@@ -3158,11 +3100,6 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-            break;
-          }
-
-          if (fake_signal_received(main)) {
-            *status = F_status_set_error(F_interrupt);
             break;
           }
 
@@ -3675,14 +3612,14 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    f_mode_t mode = f_mode_t_initialize;
-
-    macro_f_mode_t_set_default_umask(mode, main->umask);
-
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_interrupt);
       return;
     }
+
+    f_mode_t mode = f_mode_t_initialize;
+
+    macro_f_mode_t_set_default_umask(mode, main->umask);
 
     *status = f_file_touch(file.string, mode.regular, F_false);
 

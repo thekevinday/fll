@@ -34,12 +34,6 @@ extern "C" {
       fflush(main->output.to.stream);
     }
 
-    if (fake_signal_received(main)) {
-      *status = F_status_set_error(F_interrupt);
-
-      return 0;
-    }
-
     int return_code = 0;
 
     if (program.used) {
@@ -960,8 +954,12 @@ extern "C" {
 
     fake_main_t *main = (fake_main_t *) state_ptr->custom;
 
-    if (fake_signal_received(main)) {
-      return F_status_set_error(F_interrupt);
+    if (!((++main->signal_check) % fake_signal_check_d)) {
+      if (fake_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
+
+      main->signal_check = 0;
     }
 
     return F_interrupt_not;
@@ -983,8 +981,12 @@ extern "C" {
 
     fake_main_t *main = (fake_main_t *) state_ptr->custom;
 
-    if (fake_signal_received(main)) {
-      return F_status_set_error(F_interrupt);
+    if (!((++main->signal_check) % fake_signal_check_d)) {
+      if (fake_signal_received(main)) {
+        return F_status_set_error(F_interrupt);
+      }
+
+      main->signal_check = 0;
     }
 
     return F_interrupt_not;
@@ -1032,10 +1034,6 @@ extern "C" {
     f_status_t status = F_none;
 
     for (uint8_t i = 0; i < 3; ++i) {
-
-      if (fake_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
-      }
 
       if (parameters_value[i]->used) {
         memset(&directory_stat, 0, sizeof(struct stat));

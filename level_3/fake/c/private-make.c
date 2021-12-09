@@ -286,7 +286,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < list_objects.used; ++i) {
 
-          if (fake_signal_received(main)) {
+          if (!(i % fake_signal_check_short_d) && fake_signal_received(main)) {
             *status = F_status_set_error(F_interrupt);
             break;
           }
@@ -653,10 +653,6 @@ extern "C" {
         }
       }
 
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_interrupt);
-      }
-
       if (F_status_is_error_not(*status) && data_make->setting_make.load_build) {
         f_string_static_t stub = f_string_static_t_initialize;
 
@@ -697,14 +693,8 @@ extern "C" {
 
       f_string_map_multis_t define = f_string_map_multis_t_initialize;
 
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_interrupt);
-      }
-      else {
-
-        // load the fakefile "settings" as if they are build "settings".
-        fake_build_load_setting_process(main, F_false, main->file_data_build_fakefile.string, data_make->buffer, settings.objects, settings.contents, &data_make->setting_build, status);
-      }
+      // load the fakefile "settings" as if they are build "settings".
+      fake_build_load_setting_process(main, F_false, main->file_data_build_fakefile.string, data_make->buffer, settings.objects, settings.contents, &data_make->setting_build, status);
 
       if (F_status_is_error_not(*status) && settings.objects.used) {
         const f_string_t settings_name[] = {
@@ -763,11 +753,6 @@ extern "C" {
 
             if (F_status_is_error(*status)) {
               fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-              break;
-            }
-
-            if (fake_signal_received(main)) {
-              *status = F_status_set_error(F_interrupt);
               break;
             }
 
@@ -1127,12 +1112,6 @@ extern "C" {
       fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
 
       return status;
-    }
-
-    if (fake_signal_received(main)) {
-      macro_fake_make_data_t_delete_simple(data_make);
-
-      return F_status_set_error(F_interrupt);
     }
 
     status = f_path_current(F_true, &data_make.path.stack.array[0]);
@@ -2183,7 +2162,7 @@ extern "C" {
       operation = 0;
       operation_name = 0;
 
-      if (fake_signal_received(main)) {
+      if (!(i % fake_signal_check_short_d) && fake_signal_received(main)) {
         *status = F_status_set_error(F_interrupt);
         break;
       }

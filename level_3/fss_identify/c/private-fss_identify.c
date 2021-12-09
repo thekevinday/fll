@@ -10,6 +10,7 @@ extern "C" {
   f_status_t fss_identify_load_line(fss_identify_main_t * const main, const f_file_t file, const f_string_t name, f_string_static_t *buffer, f_string_range_t *range) {
 
     f_status_t status = F_none;
+    uint16_t signal_check = 0;
 
     buffer->used = 0;
 
@@ -17,9 +18,13 @@ extern "C" {
     range->stop = 0;
 
     do {
-      if (fss_identify_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
-        break;
+      if (!((++signal_check) % fss_identify_signal_check_d)) {
+        if (fss_identify_signal_received(main)) {
+          status = F_status_set_error(F_interrupt);
+          break;
+        }
+
+        signal_check = 0;
       }
 
       if (buffer->used + file.size_read > buffer->size) {

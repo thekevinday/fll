@@ -76,6 +76,8 @@ extern "C" {
 #endif // _di_iki_read_program_name_
 
 #ifndef _di_iki_read_defines_
+  #define iki_read_signal_check_d 10000
+
   enum {
     iki_read_mode_content = 1,
     iki_read_mode_literal,

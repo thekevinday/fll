@@ -95,6 +95,8 @@ extern "C" {
 
   #define byte_dump_option_wide_d 0x1
 
+  #define byte_dump_signal_check_d 10000
+
   #define byte_dump_sequence_acknowledge_s               "␆"
   #define byte_dump_sequence_acknowledge_negative_s      "␕"
   #define byte_dump_sequence_backspace_s                 "␈"

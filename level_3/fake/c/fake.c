@@ -336,7 +336,7 @@ extern "C" {
         if (status == F_child) {
           break;
         }
-        else if (F_status_set_fine(status) == F_interrupt || fake_signal_received(main)) {
+        else if (F_status_set_fine(status) == F_interrupt || !(i % fake_signal_check_short_d) && fake_signal_received(main)) {
           status = F_status_set_error(F_interrupt);
           break;
         }

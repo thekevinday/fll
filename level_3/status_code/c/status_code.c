@@ -197,13 +197,19 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
+        uint16_t signal_check = 0;
+
         flockfile(main->output.to.stream);
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          if (status_code_signal_received(main)) {
-            status = F_status_set_error(F_signal);
-            break;
+          if (!((++signal_check) % status_code_signal_check_d)) {
+            if (status_code_signal_received(main)) {
+              status = F_status_set_error(F_signal);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           status2 = status_code_process_check(main, arguments->argv[main->remaining.array[i]]);
@@ -222,13 +228,19 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
+        uint16_t signal_check = 0;
+
         flockfile(main->output.to.stream);
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          if (status_code_signal_received(main)) {
-            status = F_status_set_error(F_signal);
-            break;
+          if (!((++signal_check) % status_code_signal_check_d)) {
+            if (status_code_signal_received(main)) {
+              status = F_status_set_error(F_signal);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           status2 = status_code_process_number(main, arguments->argv[main->remaining.array[i]]);
@@ -247,13 +259,19 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
+        uint16_t signal_check = 0;
+
         flockfile(main->output.to.stream);
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
-          if (status_code_signal_received(main)) {
-            status = F_status_set_error(F_signal);
-            break;
+          if (!((++signal_check) % status_code_signal_check_d)) {
+            if (status_code_signal_received(main)) {
+              status = F_status_set_error(F_signal);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           status2 = status_code_process_normal(main, arguments->argv[main->remaining.array[i]]);

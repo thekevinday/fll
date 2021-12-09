@@ -73,6 +73,8 @@ extern "C" {
 #endif // _di_fss_extended_list_read_program_name_
 
 #ifndef _di_fss_extended_list_read_defines_
+  #define fss_extended_list_read_signal_check_d 10000
+
   #define fss_extended_list_read_pipe_content_end    '\f'
   #define fss_extended_list_read_pipe_content_ignore '\v'
   #define fss_extended_list_read_pipe_content_start  '\b'

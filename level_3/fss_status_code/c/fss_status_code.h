@@ -68,6 +68,8 @@ extern "C" {
 #endif // _di_fss_status_code_program_name_
 
 #ifndef _di_fss_status_code_defines_
+  #define fss_status_code_signal_check_d 10000
+
   #define fss_status_code_short_is_fine_s    "f"
   #define fss_status_code_short_is_warning_s "w"
   #define fss_status_code_short_is_error_s   "e"

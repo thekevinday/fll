@@ -36,20 +36,18 @@ extern "C" {
 
     flockfile(data->file.stream);
 
-    while (*character.string && F_status_is_error_not(status)) {
+    for (uint16_t signal_check = 0; *character.string && F_status_is_error_not(status); ) {
 
-      status = utf8_signal_received(data);
+      if (!((++signal_check) % utf8_signal_check_d)) {
+        if (utf8_signal_received(data)) {
+          utf8_print_signal_received(data, status);
 
-      if (status) {
-        utf8_print_signal_received(data, status);
-
-        status = F_status_set_error(F_signal);
-        break;
-      }
-      else {
-        status = F_none;
+          status = F_status_set_error(F_signal);
+          break;
+        }
       }
 
+      status = F_none;
       character.used = macro_f_utf_byte_width(*character.string);
 
       // Re-adjust used if buffer ended before the character is supposed to end.
@@ -97,7 +95,7 @@ extern "C" {
       if (status == F_utf) {
         valid = F_false;
       }
-    } // while
+    } // for
 
     if (F_status_is_error_not(status) && !(data->mode & utf8_mode_from_binary_d)) {
       if (mode_codepoint != utf8_codepoint_mode_ready && mode_codepoint != utf8_codepoint_mode_end && mode_codepoint != utf8_codepoint_mode_bad_end) {

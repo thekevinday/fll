@@ -372,11 +372,15 @@ extern "C" {
 
         f_file_t file = macro_f_file_t_initialize(0, -1, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
-        for (; i < main->parameters[utf8_parameter_from_file].values.used && status != F_signal; ++i) {
+        for (uint16_t signal_check = 0; i < main->parameters[utf8_parameter_from_file].values.used && status != F_signal; ++i) {
 
-          if (utf8_signal_received(&data)) {
-            status = F_status_set_error(F_signal);
-            break;
+          if (!((++signal_check) % utf8_signal_check_d)) {
+            if (utf8_signal_received(&data)) {
+              status = F_status_set_error(F_signal);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           index = main->parameters[utf8_parameter_from_file].values.array[i];
@@ -418,11 +422,15 @@ extern "C" {
         f_array_length_t i = 0;
         f_array_length_t index = 0;
 
-        for (; F_status_is_error_not(status) && i < main->remaining.used; ++i) {
+        for (uint16_t signal_check = 0; F_status_is_error_not(status) && i < main->remaining.used; ++i) {
 
-          if (utf8_signal_received(&data)) {
-            status = F_status_set_error(F_signal);
-            break;
+          if (!((++signal_check) % utf8_signal_check_d)) {
+            if (utf8_signal_received(&data)) {
+              status = F_status_set_error(F_signal);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           index = main->remaining.array[i];

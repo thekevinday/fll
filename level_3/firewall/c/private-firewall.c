@@ -61,18 +61,20 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
     chain = firewall_chain_custom_id;
   }
 
-  for (; i < local.rule_objects.used; ++i) {
+  for (uint16_t signal_check = 0; i < local.rule_objects.used; ++i) {
 
-    status = firewall_signal_received(main);
+    if (!((++signal_check) % firewall_signal_check_d)) {
+      if (firewall_signal_received(main)) {
+        macro_f_string_dynamic_t_delete_simple(ip_list);
+        macro_f_string_dynamic_t_delete_simple(argument);
+        macro_f_string_dynamics_t_delete_simple(arguments);
+        macro_f_string_dynamic_t_delete_simple(device);
+        macro_f_string_dynamic_t_delete_simple(protocol);
 
-    if (status) {
-      macro_f_string_dynamic_t_delete_simple(ip_list);
-      macro_f_string_dynamic_t_delete_simple(argument);
-      macro_f_string_dynamics_t_delete_simple(arguments);
-      macro_f_string_dynamic_t_delete_simple(device);
-      macro_f_string_dynamic_t_delete_simple(protocol);
+        return F_status_set_error(F_interrupt);
+      }
 
-      return F_status_set_error(F_interrupt);
+      signal_check = 0;
     }
 
     length  = macro_firewall_structure_size(local.rule_objects, i);
@@ -335,18 +337,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
     }
 
     for (r = repeat; r > 0; --r) {
-
-      status = firewall_signal_received(main);
-
-      if (status) {
-        macro_f_string_dynamic_t_delete_simple(ip_list);
-        macro_f_string_dynamic_t_delete_simple(argument);
-        macro_f_string_dynamics_t_delete_simple(arguments);
-        macro_f_string_dynamic_t_delete_simple(device);
-        macro_f_string_dynamic_t_delete_simple(protocol);
-
-        return F_status_set_error(F_interrupt);
-      }
 
       // first add the program name
       f_string_dynamics_resize(0, &arguments);
@@ -939,17 +929,17 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
   reserved->has_stop = F_false;
   reserved->has_main = F_false;
 
-  while (i < local->chain_objects.used) {
+  for (uint16_t signal_check = 0; i < local->chain_objects.used; ) {
 
     new_chain = F_true;
     j = 0;
 
-    status = firewall_signal_received(main);
+    if (!((++signal_check) % firewall_signal_check_d)) {
+      if (firewall_signal_received(main)) {
+        macro_f_string_dynamics_t_delete_simple(arguments);
 
-    if (status) {
-      macro_f_string_dynamics_t_delete_simple(arguments);
-
-      return F_status_set_error(F_interrupt);
+        return F_status_set_error(F_interrupt);
+      }
     }
 
     // skip globally reserved chain name: main

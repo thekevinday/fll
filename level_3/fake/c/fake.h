@@ -240,6 +240,10 @@ extern "C" {
     fake_operation_skeleton,
   };
 
+  #define fake_signal_check_d 10000
+  #define fake_signal_check_tiny_d  4
+  #define fake_signal_check_short_d 16
+
   #define fake_operations_total_d    4
   #define fake_operations_initialize { 0, 0, 0, 0 }
 
@@ -396,6 +400,7 @@ extern "C" {
     f_signal_t signal;
 
     uint8_t operation;
+    uint16_t signal_check;
 
     mode_t umask;
     int child;
@@ -465,6 +470,7 @@ extern "C" {
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
       f_signal_t_initialize, \
+      0, \
       0, \
       0, \
       0, \

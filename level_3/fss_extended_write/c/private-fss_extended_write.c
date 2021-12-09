@@ -174,10 +174,14 @@ extern "C" {
     // 0x0 = start new object/content set, 0x1 = processing object, 0x2 = new individual content, 0x3 = processing content, 0x4 = end object/content set.
     uint8_t state = 0;
 
-    for (;;) {
+    for (uint16_t signal_check = 0; ; ) {
 
-      if (fss_extended_write_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
+      if (!((++signal_check) % fss_extended_write_signal_check_d)) {
+        if (fss_extended_write_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
+
+        signal_check = 0;
       }
 
       if (range.start > range.stop) {

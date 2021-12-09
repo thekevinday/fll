@@ -71,6 +71,8 @@ extern "C" {
 #endif // _di_fss_identify_program_name_
 
 #ifndef _di_fss_identify_defines_
+  #define fss_identify_signal_check_d 10000
+
   #define fss_identify_short_content_s "c"
   #define fss_identify_short_line_s    "l"
   #define fss_identify_short_name_s    "n"

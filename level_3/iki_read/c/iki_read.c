@@ -437,11 +437,15 @@ extern "C" {
         f_array_length_t total = 0;
         f_file_t file = f_file_t_initialize;
 
-        for (; i < main->remaining.used; ++i) {
+        for (uint16_t signal_check = 0; i < main->remaining.used; ++i) {
 
-          if (iki_read_signal_received(main)) {
-            status = F_status_set_error(F_interrupt);
-            break;
+          if (!((++signal_check) % iki_read_signal_check_d)) {
+            if (iki_read_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
+              break;
+            }
+
+            signal_check = 0;
           }
 
           macro_f_file_t_reset(file);

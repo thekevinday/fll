@@ -76,6 +76,8 @@ extern "C" {
 #endif // _di_iki_write_program_name_
 
 #ifndef _di_iki_write_defines_
+  #define iki_write_signal_check_d 10000
+
   #define iki_write_short_file_s    "f"
   #define iki_write_short_content_s "c"
   #define iki_write_short_double_s  "d"

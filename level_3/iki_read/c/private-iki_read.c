@@ -487,12 +487,16 @@ extern "C" {
 
       range.start = 0;
 
-      for (; i < main->parameters[iki_read_parameter_name].values.used; ++i) {
+      for (uint16_t signal_check = 0; i < main->parameters[iki_read_parameter_name].values.used; ++i) {
 
-        if (iki_read_signal_received(main)) {
-          macro_f_string_dynamic_t_delete_simple(name);
+        if (!((++signal_check) % iki_read_signal_check_d)) {
+          if (iki_read_signal_received(main)) {
+            macro_f_string_dynamic_t_delete_simple(name);
 
-          return F_status_set_error(F_interrupt);
+            return F_status_set_error(F_interrupt);
+          }
+
+          signal_check = 0;
         }
 
         index = main->parameters[iki_read_parameter_name].values.array[i];

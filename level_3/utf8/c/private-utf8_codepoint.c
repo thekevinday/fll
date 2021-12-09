@@ -189,6 +189,7 @@ extern "C" {
     f_status_t status = F_none;
     bool valid = F_true;
     bool next = F_true;
+    uint16_t signal_check = 0;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
@@ -203,17 +204,16 @@ extern "C" {
 
       for (i = 0; F_status_is_fine(status) && i < data->buffer.used; ) {
 
-        status = utf8_signal_received(data);
+        if (!((++signal_check) % utf8_signal_check_d)) {
+          if (utf8_signal_received(data)) {
+            utf8_print_signal_received(data, status);
 
-        if (status) {
-          utf8_print_signal_received(data, status);
+            status = F_status_set_error(F_signal);
+            break;
+          }
+        }
 
-          status = F_status_set_error(F_signal);
-          break;
-        }
-        else {
-          status = F_none;
-        }
+        status = F_none;
 
         // Get the current width only when processing a new block.
         if (next) {

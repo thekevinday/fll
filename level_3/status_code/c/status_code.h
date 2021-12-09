@@ -67,6 +67,8 @@ extern "C" {
 #endif // _di_status_code_program_name_
 
 #ifndef _di_status_code_defines_
+  #define status_code_signal_check_d 10000
+
   #define status_code_short_is_fine_s    "f"
   #define status_code_short_is_warning_s "w"
   #define status_code_short_is_error_s   "e"

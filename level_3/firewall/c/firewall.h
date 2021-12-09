@@ -93,6 +93,8 @@ extern "C" {
 #endif // _di_firewall_default_allocation_step_
 
 #ifndef _di_firewall_defines_
+  #define firewall_signal_check_d 10000
+
   #define firewall_tool_s            "tool"
   #define firewall_tool_iptables_s   "iptables"
   #define firewall_tool_ip6tables_s  "ip6tables"
