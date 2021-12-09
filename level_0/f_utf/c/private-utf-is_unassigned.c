@@ -45,11 +45,6 @@ extern "C" {
         return F_true;
       }
 
-      // Armenian: U+0530.
-      if (character == 0xd4b00000) {
-        return F_true;
-      }
-
       // Hebrew: U+0590.
       if (character == 0xd6900000) {
         return F_true;
@@ -212,6 +207,156 @@ extern "C" {
 
       // Gurmukhi: U+0A76 to U+0A7F.
       if (character >= 0xe0a9b600 && character <= 0xe0a9bf00) {
+        return F_true;
+      }
+
+      // Gujarati: U+0A80, U+0A84, U+0A8E, U+0A92.
+      if (character == 0xe0aa8000 || character == 0xe0aa8400 || character == 0xe0aa8e00 || character == 0xe0aa9200) {
+        return F_true;
+      }
+
+      // Gujarati: U+0AA9, U+0AB1, U+0AB4, U+0ABA.
+      if (character == 0xe0aaa900 || character == 0xe0aab100 || character == 0xe0aab400 || character == 0xe0aaba00) {
+        return F_true;
+      }
+
+      // Gujarati: U+0ABB, U+0AC6, U+0ACA.
+      if (character == 0xe0aabb00 || character == 0xe0ab8600 || character == 0xe0ab8a00) {
+        return F_true;
+      }
+
+      // Gujarati: U+0ACE to U+0ACF.
+      if (character >= 0xe0ab8e00 && character <= 0xe0ab8f00) {
+        return F_true;
+      }
+
+      // Gujarati: U+0AD1 to U+0ADF.
+      if (character >= 0xe0ab9100 && character <= 0xe0ab9f00) {
+        return F_true;
+      }
+
+      // Gujarati: U+0AE4 to U+0AE5.
+      if (character >= 0xe0aba400 && character <= 0xe0aba500) {
+        return F_true;
+      }
+
+      // Gujarati: U+0AF2 to U+0AF8.
+      if (character >= 0xe0abb200 && character <= 0xe0abb800) {
+        return F_true;
+      }
+
+      // Gujarati: U+0AFA to U+0AFF.
+      if (character >= 0xe0abba00 && character <= 0xe0abbf00) {
+        return F_true;
+      }
+
+      // Oriya: U+0B00, U+0B04, U+0B0D, U+0B0E.
+      if (character == 0xe0ac8000 || character == 0xe0ac8400 || character == 0xe0ac8d00 || character == 0xe0ac8e00) {
+        return F_true;
+      }
+
+      // Oriya: U+0B11, U+0B12, U+0B29, U+0B31.
+      if (character == 0xe0ac9100 || character == 0xe0ac9200 || character == 0xe0aca900 || character == 0xe0acb100) {
+        return F_true;
+      }
+
+      // Oriya: U+0B34, U+0B3A, U+0B3B, U+0B45.
+      if (character == 0xe0acb400 || character == 0xe0acba00 || character == 0xe0acbb00 || character == 0xe0ad8500) {
+        return F_true;
+      }
+
+      // Oriya: U+0B46, U+0B49, U+0B4A.
+      if (character == 0xe0ad8600 || character == 0xe0ad8900 || character == 0xe0ad8a00) {
+        return F_true;
+      }
+
+      // Oriya: U+0B4E to U+0B55.
+      if (character >= 0xe0ad8e00 && character <= 0xe0ad9500) {
+        return F_true;
+      }
+
+      // Oriya: U+0B58 to U+0B5B.
+      if (character >= 0xe0ad9800 && character <= 0xe0ad9b00) {
+        return F_true;
+      }
+
+      // Oriya: U+0B5E, U+0B64, U+0B65.
+      if (character == 0xe0ad9e00 || character == 0xe0ada400 || character == 0xe0ada500) {
+        return F_true;
+      }
+
+      // Oriya: U+0B78 to U+0B7F.
+      if (character >= 0xe0adb800 && character <= 0xe0adbf00) {
+        return F_true;
+      }
+
+      // Tamil: U+0B80, U+0B81, U+0B84.
+      if (character == 0xe0ae8000 || character == 0xe0ae8100 || character == 0xe0ae8400) {
+        return F_true;
+      }
+
+      // Tamil: U+0B8B to U+0B8D.
+      if (character >= 0xe0ae8b00 && character <= 0xe0ae8d00) {
+        return F_true;
+      }
+
+      // Tamil: U+0B91.
+      if (character == 0xe0ae9100) {
+        return F_true;
+      }
+
+      // Tamil: U+0B96 to U+0B98.
+      if (character >= 0xe0ae9600 && character <= 0xe0ae9800) {
+        return F_true;
+      }
+
+      // Tamil: U+0B9B, U+0B9D.
+      if (character == 0xe0ae9b00 || character == 0xe0ae9d00) {
+        return F_true;
+      }
+
+      // Tamil: U+0BA0 to U+0BA2.
+      if (character >= 0xe0aea000 && character <= 0xe0aea200) {
+        return F_true;
+      }
+
+      // Tamil: U+0BA5 to U+0BA7.
+      if (character >= 0xe0aea500 && character <= 0xe0aea700) {
+        return F_true;
+      }
+
+      // Tamil: U+0BAB to U+0BAD.
+      if (character >= 0xe0aeab00 && character <= 0xe0aead00) {
+        return F_true;
+      }
+
+      // Tamil: U+0BBA to U+0BBD.
+      if (character >= 0xe0aeba00 && character <= 0xe0aebd00) {
+        return F_true;
+      }
+
+      // Tamil: U+0BC3 to U+0BC5.
+      if (character >= 0xe0af8300 && character <= 0xe0af8500) {
+        return F_true;
+      }
+
+      // Tamil: U+0BC9, U+0BCE, U+0BCF.
+      if (character == 0xe0af8900 || character == 0xe0af8e00 || character == 0xe0af8f00) {
+        return F_true;
+      }
+
+      // Tamil: U+0BD1 to U+0BD6.
+      if (character >= 0xe0af9100 && character <= 0xe0af9600) {
+        return F_true;
+      }
+
+      // Tamil: U+0BD8 to U+0BE5.
+      if (character >= 0xe0af9800 && character <= 0xe0afa500) {
+        return F_true;
+      }
+
+      // Tamil: U+0BFB to U+0BFF.
+      if (character >= 0xe0afbb00 && character <= 0xe0afbf00) {
         return F_true;
       }
 
