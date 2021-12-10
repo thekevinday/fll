@@ -59,7 +59,7 @@ extern "C" {
           status = f_utf_unicode_from(codepoint, 4, &character.string);
 
           if (F_status_is_error(status)) {
-            utf8_print_error_decode(data, status, character);
+            utf8_print_error_encode(data, status, codepoint);
           }
           else {
             status = F_none;
@@ -251,7 +251,7 @@ extern "C" {
     } while (F_status_is_fine(status) && status != F_signal);
 
     // Handle last (incomplete) character when the buffer ended before the character is supposed to end.
-    if (status != F_signal && next == F_false) {
+    if (F_status_is_error_not(status) && status != F_signal && next == F_false) {
       character.used = j;
 
       if (data->mode & utf8_mode_from_binary_d) {

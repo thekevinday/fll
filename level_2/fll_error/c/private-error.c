@@ -108,7 +108,23 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_format("%c%[%SInvalid UTF-8 character", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
+        fl_print_format("%c%[%SInvalid UTF-8 character found", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
+
+        private_fll_error_print_function(print, function);
+
+        fl_print_format(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_utf_fragment) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SInvalid UTF-8 character (Fragment) found", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 

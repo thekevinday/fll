@@ -57,6 +57,12 @@ extern "C" {
       else {
         status = utf8_detect_codepoint(data, current, &mode_codepoint);
 
+        if (F_status_is_error(status)) {
+          fll_error_print(data->main->error, F_status_set_fine(status), "utf8_detect_codepoint", F_true);
+
+          break;
+        }
+
         if (F_status_is_fine(status) && status != F_next) {
           status = utf8_convert_codepoint(data, current, &mode_codepoint);
         }

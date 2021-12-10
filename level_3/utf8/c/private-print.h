@@ -58,11 +58,23 @@ extern "C" {
  * @param data
  *   The program data.
  * @param character
- *   The character block to print.
+ *   The character that is invalid.
  */
 #ifndef _di_utf8_print_error_decode_
   extern void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_error_decode_
+
+/**
+ * Print error message when attempt to encode the character failed.
+ *
+ * @param data
+ *   The program data.
+ * @param codepoint
+ *   The codepoint that is invalid.
+ */
+#ifndef _di_utf8_print_error_encode_
+  extern void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const uint32_t codepoint) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_error_encode_
 
 /**
  * Print error message for when no sources are provided.

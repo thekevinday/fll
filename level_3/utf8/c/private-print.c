@@ -53,13 +53,47 @@ extern "C" {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet) return;
 
-    fl_print_format("%c%[%SFailed to decode character '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
-    fl_print_format("%[%r%]", data->main->error.to.stream, data->main->context.set.notable, character, data->main->context.set.notable);
-    fl_print_format("%[', error status code%] ", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
-    fl_print_format("%[%ui%]", data->main->error.to.stream, data->main->context.set.notable, F_status_set_fine(status), data->main->context.set.notable);
-    fl_print_format("%[.%]%c", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
+    fl_print_format("%c%[%SFailed to decode character code '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
+
+    if (character.used) {
+      fl_print_format("%[0x", data->main->error.to.stream, data->main->context.set.notable);
+
+      for (uint8_t i = 0; i < character.used; ++i) {
+        fl_print_format("%02_uii", data->main->error.to.stream, (uint8_t) character.string[i]);
+      } // for
+
+      fl_print_format("%]", data->main->error.to.stream, data->main->context.set.notable);
+    }
+
+    if (F_status_set_fine(status) == F_utf) {
+      fl_print_format("%[', not a valid UTF-8 character sequence.%]%c", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
+    }
+    else {
+      fl_print_format("%[', error status code%] ", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
+      fl_print_format("%[%ui%]", data->main->error.to.stream, data->main->context.set.notable, F_status_set_fine(status), data->main->context.set.notable);
+      fl_print_format("%[.%]%c", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
+    }
   }
 #endif // _di_utf8_print_error_decode_
+
+#ifndef _di_utf8_print_error_encode_
+  void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const uint32_t codepoint) {
+
+    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
+
+    fl_print_format("%c%[%SFailed to encode Unicode codepoint '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
+    fl_print_format("%[U+%_U%]", data->main->error.to.stream, data->main->context.set.notable, codepoint, data->main->context.set.notable);
+
+    if (F_status_set_fine(status) == F_utf) {
+      fl_print_format("%[', not a valid Unicode codepoint.%]%c", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
+    }
+    else {
+      fl_print_format("%[', error status code%] ", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
+      fl_print_format("%[%ui%]", data->main->error.to.stream, data->main->context.set.notable, F_status_set_fine(status), data->main->context.set.notable);
+      fl_print_format("%[.%]%c", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
+    }
+  }
+#endif // _di_utf8_print_error_encode_
 
 #ifndef _di_utf8_print_error_no_from_
   void utf8_print_error_no_from(utf8_data_t * const data) {
