@@ -6,6 +6,13 @@
 extern "C" {
 #endif
 
+#ifndef _di_utf8_print_binary_
+  void utf8_print_binary(utf8_data_t * const data, const f_string_static_t character) {
+
+    fl_print_format("%s%r%s", data->file.stream, data->prepend, character, data->append);
+  }
+#endif // _di_utf8_print_binary_
+
 #ifndef _di_utf8_print_character_
   void utf8_print_character(utf8_data_t * const data, const f_string_static_t character, const f_color_set_t set) {
 
@@ -25,6 +32,21 @@ extern "C" {
     }
   }
 #endif // _di_utf8_print_character_
+
+#ifndef _di_utf8_print_codepoint_
+  void utf8_print_codepoint(utf8_data_t * const data, const uint32_t codepoint) {
+
+    if (codepoint < 0xffff) {
+      fl_print_format("%sU+%04_U%s", data->file.stream, data->prepend, codepoint, data->append);
+    }
+    else if (codepoint < 0x100000) {
+      fl_print_format("%sU+%05_U%s", data->file.stream, data->prepend, codepoint, data->append);
+    }
+    else {
+      fl_print_format("%sU+%06_U%s", data->file.stream, data->prepend, codepoint, data->append);
+    }
+  }
+#endif // _di_utf8_print_codepoint_
 
 #ifndef _di_utf8_print_error_decode_
   void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) {

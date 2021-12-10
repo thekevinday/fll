@@ -13,6 +13,19 @@ extern "C" {
 #endif
 
 /**
+ * Print the binary character (such as '豸').
+ *
+ * @param data
+ *   The program data.
+ * @param character
+ *   The character to print.
+ *   This is a string that represents a single character.
+ */
+#ifndef _di_utf8_print_binary_
+  extern void utf8_print_binary(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_binary_
+
+/**
  * Print the character either as a Unicode codeblock or as a binary.
  *
  * @param data
@@ -25,6 +38,19 @@ extern "C" {
 #ifndef _di_utf8_print_character_
   extern void utf8_print_character(utf8_data_t * const data, const f_string_static_t character, const f_color_set_t set) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_character_
+
+/**
+ * Print the codepoint number as a codepoint string (such as U+8C78).
+ *
+ * @param data
+ *   The program data.
+ * @param codepoint
+ *   The codepoint to print.
+ *   This is the code that represents a single character.
+ */
+#ifndef _di_utf8_print_codepoint_
+  extern void utf8_print_codepoint(utf8_data_t * const data, const uint32_t codepoint) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_codepoint_
 
 /**
  * Print error message when attempt to decode the character failed.

@@ -54,22 +54,22 @@ extern "C" {
       else if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
         if (data->mode & utf8_mode_to_binary_d) {
           char byte[5] = { 0, 0, 0, 0, 0 };
-          f_string_static_t text = macro_f_string_static_t_initialize(byte, 5);
+          f_string_static_t character = macro_f_string_static_t_initialize(byte, 5);
 
-          status = f_utf_unicode_from(codepoint, 4, &text.string);
+          status = f_utf_unicode_from(codepoint, 4, &character.string);
 
           if (F_status_is_error(status)) {
             utf8_print_error_decode(data, status, character);
           }
           else {
             status = F_none;
-            text.used = macro_f_utf_byte_width(text.string[0]);
+            character.used = macro_f_utf_byte_width(character.string[0]);
 
-            fl_print_format("%s%r%s", data->file.stream, data->prepend, text, data->append);
+            utf8_print_binary(data, character);
           }
         }
         else {
-          fl_print_format(codepoint < 0xffff ? "%sU+%04_U%s" : "%sU+%6_U%s", data->file.stream, data->prepend, codepoint, data->append);
+          utf8_print_codepoint(data, codepoint);
         }
       }
     }

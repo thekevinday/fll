@@ -42,10 +42,10 @@ extern "C" {
     }
     else if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
       if (data->mode & utf8_mode_to_binary_d) {
-        fl_print_format("%s%r%s", data->file.stream, data->prepend, character, data->append);
+        utf8_print_binary(data, character);
       }
       else {
-        fl_print_format(codepoint < 0xffff ? "%sU+%04_U%s" : "%sU+%6_U%s", data->file.stream, data->prepend, codepoint, data->append);
+        utf8_print_codepoint(data, codepoint);
       }
     }
 
