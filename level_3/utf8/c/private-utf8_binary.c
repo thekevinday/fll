@@ -129,7 +129,6 @@ extern "C" {
 
     // Handle last (incomplete) character when the buffer ended before the character is supposed to end.
     if (status != F_signal && next == F_false) {
-
       character.used = j;
 
       if (data->mode & utf8_mode_from_binary_d) {

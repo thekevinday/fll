@@ -52,6 +52,19 @@ extern "C" {
   extern f_status_t utf8_process_text(utf8_data_t * const data, const f_string_t text) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_text_
 
+/**
+ * Populate the text used and size based on the string.
+ *
+ * @param text
+ *   The character data.
+ *
+ *   The used represents the actual length of the character in bytes.
+ *   The size represents the expected length of the character in bytes.
+ */
+#ifndef _di_utf8_process_text_width_
+  extern void utf8_process_text_width(f_string_static_t *text) F_attribute_visibility_internal_d;
+#endif // _di_utf8_process_text_width_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

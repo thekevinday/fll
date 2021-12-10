@@ -54,10 +54,7 @@ extern "C" {
       else if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
         if (data->mode & utf8_mode_to_binary_d) {
           char byte[5] = { 0, 0, 0, 0, 0 };
-          f_string_static_t text = f_string_static_t_initialize;
-          text.string = byte;
-          text.used = macro_f_utf_byte_width(codepoint);
-          text.size = 5;
+          f_string_static_t text = macro_f_string_static_t_initialize(byte, 5);
 
           status = f_utf_unicode_from(codepoint, 4, &text.string);
 
@@ -66,6 +63,7 @@ extern "C" {
           }
           else {
             status = F_none;
+            text.used = macro_f_utf_byte_width(text.string[0]);
 
             fl_print_format("%s%r%s", data->file.stream, data->prepend, text, data->append);
           }
@@ -189,6 +187,7 @@ extern "C" {
     f_status_t status = F_none;
     bool valid = F_true;
     bool next = F_true;
+    uint8_t mode_codepoint = utf8_codepoint_mode_ready;
     uint16_t signal_check = 0;
 
     f_array_length_t i = 0;
@@ -226,7 +225,16 @@ extern "C" {
         } // for
 
         if (j == character.used) {
-          status = utf8_convert_binary(data, character);
+          if (data->mode & utf8_mode_from_binary_d) {
+            status = utf8_convert_binary(data, character);
+          }
+          else {
+            status = utf8_detect_codepoint(data, character, &mode_codepoint);
+
+            if (F_status_is_fine(status) && status != F_next) {
+              status = utf8_convert_codepoint(data, character, &mode_codepoint);
+            }
+          }
 
           if (status == F_utf) {
             valid = F_false;
@@ -246,7 +254,16 @@ extern "C" {
     if (status != F_signal && next == F_false) {
       character.used = j;
 
-      status = utf8_convert_binary(data, character);
+      if (data->mode & utf8_mode_from_binary_d) {
+        status = utf8_convert_binary(data, character);
+      }
+      else {
+        status = utf8_detect_codepoint(data, character, &mode_codepoint);
+
+        if (F_status_is_fine(status) && status != F_next) {
+          status = utf8_convert_codepoint(data, character, &mode_codepoint);
+        }
+      }
 
       if (status == F_utf) {
         valid = F_false;

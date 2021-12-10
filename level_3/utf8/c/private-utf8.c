@@ -32,11 +32,13 @@ extern "C" {
     bool valid = F_true;
     uint8_t mode_codepoint = utf8_codepoint_mode_ready;
 
-    f_string_static_t character = macro_f_string_static_t_initialize(text, 4);
+    f_string_static_t current = macro_f_string_static_t_initialize(text, 0);
+
+    utf8_process_text_width(&current);
 
     flockfile(data->file.stream);
 
-    for (uint16_t signal_check = 0; *character.string && F_status_is_error_not(status); ) {
+    for (uint16_t signal_check = 0; current.string[0] && F_status_is_error_not(status); ) {
 
       if (!((++signal_check) % utf8_signal_check_d)) {
         if (utf8_signal_received(data)) {
@@ -48,53 +50,24 @@ extern "C" {
       }
 
       status = F_none;
-      character.used = macro_f_utf_byte_width(*character.string);
-
-      // Re-adjust used if buffer ended before the character is supposed to end.
-      if (character.string[0]) {
-        if (character.used > 1) {
-          if (character.string[1]) {
-            if (character.used > 2) {
-              if (character.string[2]) {
-                if (character.used > 3) {
-                  if (character.string[3]) {
-                    character.used = 4;
-                  }
-                  else {
-                    character.used = 3;
-                  }
-                }
-              }
-              else {
-                character.used = 2;
-              }
-            }
-          }
-          else {
-            character.used = 1;
-          }
-        }
-      }
-      else {
-        character.used = 0;
-      }
 
       if (data->mode & utf8_mode_from_binary_d) {
-        status = utf8_convert_binary(data, character);
+        status = utf8_convert_binary(data, current);
       }
       else {
-        status = utf8_detect_codepoint(data, character, &mode_codepoint);
+        status = utf8_detect_codepoint(data, current, &mode_codepoint);
 
         if (F_status_is_fine(status) && status != F_next) {
-          status = utf8_convert_codepoint(data, character, &mode_codepoint);
+          status = utf8_convert_codepoint(data, current, &mode_codepoint);
         }
       }
-
-      character.string += character.used;
 
       if (status == F_utf) {
         valid = F_false;
       }
+
+      current.string += current.used;
+      utf8_process_text_width(&current);
     } // for
 
     if (F_status_is_error_not(status) && !(data->mode & utf8_mode_from_binary_d)) {
@@ -107,9 +80,9 @@ extern "C" {
           valid = F_false;
         }
 
-        character.used = 0;
+        current.used = 0;
 
-        status = utf8_convert_codepoint(data, character, &mode_codepoint);
+        status = utf8_convert_codepoint(data, current, &mode_codepoint);
       }
     }
 
@@ -132,6 +105,55 @@ extern "C" {
     return valid;
   }
 #endif // _di_utf8_process_text_
+
+#ifndef _di_utf8_process_text_width_
+  void utf8_process_text_width(f_string_static_t *text) {
+
+    if (!text->string[0]) {
+      return;
+    }
+
+    text->used = 0;
+    text->size = macro_f_utf_byte_width(text->string[0]);
+
+    if (text->size == 1) {
+      text->used = text->string[0] ? 1 : 0;
+    }
+    else if (text->used == 2) {
+      if (!text->string[0]) {
+        text->used = 1;
+      }
+      else {
+        text->used = text->string[1] ? 2 : 1;
+      }
+    }
+    else if (text->used == 3) {
+      if (!text->string[0]) {
+        text->used = 1;
+      }
+      else if (!text->string[1]) {
+        text->used = 2;
+      }
+      else {
+        text->used = text->string[2] ? 3 : 2;
+      }
+    }
+    else {
+      if (!text->string[0]) {
+        text->used = 1;
+      }
+      else if (!text->string[1]) {
+        text->used = 2;
+      }
+      else if (!text->string[2]) {
+        text->used = 3;
+      }
+      else {
+        text->used = text->string[3] ? 4 : 3;
+      }
+    }
+  }
+#endif // _di_utf8_process_text_width_
 
 #ifdef __cplusplus
 } // extern "C"
