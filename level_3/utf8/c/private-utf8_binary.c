@@ -25,17 +25,17 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_utf || F_status_set_fine(status) == F_valid_not) {
+      status = F_status_set_fine(status);
+
+      if (status == F_failure || status == F_utf || status == F_utf_fragment || status == F_valid_not) {
         valid_not = F_true;
 
-        if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
-          utf8_print_character(data, character, data->valid_not);
-        }
+        utf8_print_character_invalid(data, data->text);
       }
       else {
-        if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
-          utf8_print_error_decode(data, status, character);
-        }
+        status = F_status_set_error(status);
+
+        utf8_print_error_decode(data, status, character);
 
         return status;
       }
@@ -84,7 +84,7 @@ extern "C" {
           if (utf8_signal_received(data)) {
             utf8_print_signal_received(data, status);
 
-            status = F_status_set_error(F_signal);
+            status = F_signal;
             break;
           }
         }
@@ -149,7 +149,7 @@ extern "C" {
 
     data->buffer.used = 0;
 
-    if (F_status_is_error(status)) {
+    if (F_status_is_error(status) || status == F_signal) {
       return status;
     }
 

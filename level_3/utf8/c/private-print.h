@@ -40,6 +40,20 @@ extern "C" {
 #endif // _di_utf8_print_character_
 
 /**
+ * Print an invalid character either as a Unicode codeblock or as a binary.
+ *
+ * This handles whether or not the invalid character should be printed or not based on program parameters.
+ *
+ * @param data
+ *   The program data.
+ * @param character
+ *   The character block to print.
+ */
+#ifndef _di_utf8_print_character_invalid_
+  extern void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_character_invalid_
+
+/**
  * Print the codepoint number as a codepoint string (such as U+8C78).
  *
  * @param data

@@ -361,7 +361,7 @@ extern "C" {
           status = utf8_process_file_codepoint(&data, file);
         }
 
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment) {
           fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, 0, utf8_string_process_s, fll_error_file_type_pipe);
         }
       }
@@ -410,7 +410,7 @@ extern "C" {
             }
           }
 
-          if (F_status_is_error(status)) {
+          if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment) {
             fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, arguments->argv[index], utf8_string_process_s, fll_error_file_type_file);
 
             break;
@@ -449,7 +449,7 @@ extern "C" {
     }
 
     if (main->output.verbosity != f_console_verbosity_quiet && main->parameters[utf8_parameter_verify].result == f_console_result_none) {
-      if (F_status_set_fine(status) == F_interrupt) {
+      if (status == F_signal) {
         fflush(data.file.stream);
 
         if (data.file.stream != main->output.to.stream) {
@@ -463,7 +463,7 @@ extern "C" {
     utf8_data_delete(&data);
     utf8_main_delete(main);
 
-    if (F_status_is_error(status)) {
+    if (F_status_is_error(status) || status == F_signal) {
       return status;
     }
 

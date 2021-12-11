@@ -33,6 +33,17 @@ extern "C" {
   }
 #endif // _di_utf8_print_character_
 
+#ifndef _di_utf8_print_character_invalid_
+  void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) {
+
+    if (!character.used) return;
+    if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found) return;
+    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
+
+    utf8_print_character(data, character, data->valid_not);
+  }
+#endif // _di_utf8_print_character_invalid_
+
 #ifndef _di_utf8_print_codepoint_
   void utf8_print_codepoint(utf8_data_t * const data, const uint32_t codepoint) {
 
@@ -52,6 +63,8 @@ extern "C" {
   void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet) return;
+    if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found) return;
+    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
 
     fl_print_format("%c%[%SFailed to decode character code '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
 
@@ -67,6 +80,9 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_utf) {
       fl_print_format("%[', not a valid UTF-8 character sequence.%]%c", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
+    }
+    else if (F_status_set_fine(status) == F_utf_fragment) {
+      fl_print_format("%[', invalid UTF-8 fragment.%]%c", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);
     }
     else {
       fl_print_format("%[', error status code%] ", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s[0]);

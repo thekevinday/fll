@@ -36,17 +36,17 @@ extern "C" {
       status = f_utf_unicode_string_to(data->text.string, data->text.used, &codepoint);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_failure || F_status_set_fine(status) == F_utf || F_status_set_fine(status) == F_valid_not) {
+        status = F_status_set_fine(status);
+
+        if (status == F_failure || status == F_utf || status == F_utf_fragment || status == F_valid_not) {
           valid_not = F_true;
 
-          if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
-            fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, data->valid_not, data->text, data->valid_not, data->append);
-          }
+          utf8_print_character_invalid(data, data->text);
         }
         else {
-          if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
-            utf8_print_error_decode(data, status, character);
-          }
+          status = F_status_set_error(status);
+
+          utf8_print_error_decode(data, status, character);
 
           return status;
         }
@@ -76,9 +76,7 @@ extern "C" {
     else {
       status = F_none;
 
-      if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
-        fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, data->valid_not, data->text, data->valid_not, data->append);
-      }
+      utf8_print_character_invalid(data, data->text);
     }
 
     *mode = utf8_codepoint_mode_ready;
@@ -110,7 +108,15 @@ extern "C" {
     }
     else if (macro_f_utf_byte_width_is(*character.string)) {
       status = f_utf_is_whitespace(character.string, 4);
-      if (F_status_is_error(status)) return status;
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_utf_fragment) {
+          status = F_valid_not;
+        }
+        else {
+          return status;
+        }
+      }
 
       if (status == F_true) {
         status = F_space;
@@ -121,9 +127,16 @@ extern "C" {
     }
     else {
       if (character.string[0] < 0x30 || character.string[0] > 0x39 && character.string[0] < 0x41 || character.string[0] > 0x46 && character.string[0] < 0x61 || character.string[0] > 0x66) {
-
         status = f_utf_is_whitespace(character.string, 4);
-        if (F_status_is_error(status)) return status;
+
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_utf_fragment) {
+            status = F_valid_not;
+          }
+          else {
+            return status;
+          }
+        }
 
         if (status == F_true) {
           status = F_space;
@@ -207,7 +220,7 @@ extern "C" {
           if (utf8_signal_received(data)) {
             utf8_print_signal_received(data, status);
 
-            status = F_status_set_error(F_signal);
+            status = F_signal;
             break;
           }
         }
@@ -272,7 +285,7 @@ extern "C" {
 
     data->buffer.used = 0;
 
-    if (F_status_is_error(status)) {
+    if (F_status_is_error(status) || status == F_signal) {
       return status;
     }
 
