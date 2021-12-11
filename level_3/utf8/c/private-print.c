@@ -25,7 +25,7 @@ extern "C" {
       fl_print_format("%s%[0x", data->file.stream, data->prepend, set);
 
       for (uint8_t i = 0; i < character.used; ++i) {
-        fl_print_format("%04_uii", data->file.stream, (uint8_t) character.string[i]);
+        fl_print_format("%02_uii", data->file.stream, (uint8_t) character.string[i]);
       } // for
 
       fl_print_format("%]%s", data->file.stream, set, data->append);
