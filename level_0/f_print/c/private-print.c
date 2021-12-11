@@ -522,7 +522,7 @@ extern "C" {
       }
 
       // Print all NULL characters.
-      if (!string[i]) {
+      if (i < length && !string[i]) {
         start = i;
 
         do {
