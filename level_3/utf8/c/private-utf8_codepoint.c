@@ -68,8 +68,11 @@ extern "C" {
             utf8_print_binary(data, character);
           }
         }
-        else {
+        else if (data->mode & utf8_mode_to_codepoint_d) {
           utf8_print_codepoint(data, codepoint);
+        }
+        else {
+          utf8_print_combining_or_width(data, character);
         }
       }
     }

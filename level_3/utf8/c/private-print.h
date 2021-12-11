@@ -26,20 +26,6 @@ extern "C" {
 #endif // _di_utf8_print_binary_
 
 /**
- * Print the character either as a Unicode codeblock or as a binary.
- *
- * @param data
- *   The program data.
- * @param character
- *   The character block to print.
- * @param set
- *   The output context set.
- */
-#ifndef _di_utf8_print_character_
-  extern void utf8_print_character(utf8_data_t * const data, const f_string_static_t character, const f_color_set_t set) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_character_
-
-/**
  * Print an invalid character either as a Unicode codeblock or as a binary.
  *
  * This handles whether or not the invalid character should be printed or not based on program parameters.
@@ -48,6 +34,8 @@ extern "C" {
  *   The program data.
  * @param character
  *   The character block to print.
+ *
+ * @see utf8_print_combining_or_width()
  */
 #ifndef _di_utf8_print_character_invalid_
   extern void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
@@ -65,6 +53,20 @@ extern "C" {
 #ifndef _di_utf8_print_codepoint_
   extern void utf8_print_codepoint(utf8_data_t * const data, const uint32_t codepoint) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_codepoint_
+
+/**
+ * Print the width or combining state of the given character.
+ *
+ * @param data
+ *   The program data.
+ * @param character
+ *   The character block whose width or combining state is to be printed.
+ *
+ * @see utf8_print_width()
+ */
+#ifndef _di_utf8_print_combining_or_width_
+  extern void utf8_print_combining_or_width(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_combining_or_width_
 
 /**
  * Print error message when attempt to decode the character failed.
@@ -111,20 +113,6 @@ extern "C" {
 #ifndef _di_utf8_print_error_no_value_
   extern void utf8_print_error_no_value(utf8_data_t * const data, const f_string_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_error_no_value_
-
-/**
- * Print error message for two parameters not being allowed to be used together.
- *
- * @param data
- *   The program data.
- * @param first
- *   The long parameter name for the first parameter.
- * @param second
- *   The long parameter name for the second parameter.
- */
-#ifndef _di_utf8_print_error_parameter_conflict_
-  extern void utf8_print_error_parameter_conflict(utf8_data_t * const data, const f_string_t first, const f_string_t second) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_error_parameter_conflict_
 
 /**
  * Print error message for when the file parameter is an empty string.
@@ -208,6 +196,18 @@ extern "C" {
 #ifndef _di_utf8_print_signal_received_
   extern void utf8_print_signal_received(utf8_data_t * const data, const f_status_t signal) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_signal_received_
+
+/**
+ * Print the width of the given character.
+ *
+ * @param data
+ *   The program data.
+ * @param character
+ *   The character block whose width is to be printed.
+ */
+#ifndef _di_utf8_print_width_
+  extern void utf8_print_width(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_width_
 
 #ifdef __cplusplus
 } // extern "C"

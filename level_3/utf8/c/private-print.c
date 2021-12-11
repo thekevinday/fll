@@ -13,36 +13,32 @@ extern "C" {
   }
 #endif // _di_utf8_print_binary_
 
-#ifndef _di_utf8_print_character_
-  void utf8_print_character(utf8_data_t * const data, const f_string_static_t character, const f_color_set_t set) {
-
-    if (!character.used) return;
-
-    if (data->mode & utf8_mode_to_binary_d) {
-      fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, set, character, set, data->append);
-    }
-    else if (data->mode & utf8_mode_from_codepoint_d) {
-      fl_print_format("%s%[%Q%]%s", data->file.stream, data->prepend, set, character, set, data->append);
-    }
-    else {
-      fl_print_format("%s%[0x", data->file.stream, data->prepend, set);
-
-      for (uint8_t i = 0; i < character.used; ++i) {
-        fl_print_format("%02_uii", data->file.stream, (uint8_t) character.string[i]);
-      } // for
-
-      fl_print_format("%]%s", data->file.stream, set, data->append);
-    }
-  }
-#endif // _di_utf8_print_character_
-
 #ifndef _di_utf8_print_character_invalid_
   void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) {
 
     if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found) return;
     if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
 
-    utf8_print_character(data, character, data->valid_not);
+    if (!character.used) return;
+
+    if ((data->mode & utf8_mode_to_combining_d) || (data->mode & utf8_mode_to_width_d)) {
+      utf8_print_combining_or_width(data, character);
+    }
+    else if (data->mode & utf8_mode_to_binary_d) {
+      fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
+    }
+    else if (data->mode & utf8_mode_from_codepoint_d) {
+      fl_print_format("%s%[%Q%]%s", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
+    }
+    else {
+      fl_print_format("%s%[0x", data->file.stream, data->prepend, data->valid_not);
+
+      for (uint8_t i = 0; i < character.used; ++i) {
+        fl_print_format("%02_uii", data->file.stream, (uint8_t) character.string[i]);
+      } // for
+
+      fl_print_format("%]%s", data->file.stream, data->valid_not, data->append);
+    }
   }
 #endif // _di_utf8_print_character_invalid_
 
@@ -60,6 +56,40 @@ extern "C" {
     }
   }
 #endif // _di_utf8_print_codepoint_
+
+#ifndef _di_utf8_print_combining_or_width_
+  void utf8_print_combining_or_width(utf8_data_t * const data, const f_string_static_t character) {
+
+    f_status_t status = F_none;
+
+    if (data->mode & utf8_mode_to_combining_d) {
+      status = f_utf_is_combining(character.string, character.used);
+
+      if (status == F_true) {
+        fl_print_format("%s%s%s", data->file.stream, data->prepend, utf8_string_combining_is_s, data->append);
+      }
+      else if (status == F_false) {
+        status = f_utf_is_private(character.string, character.used);
+
+        if (status == F_true) {
+          fl_print_format("%s%s%s", data->file.stream, data->prepend, utf8_string_unknown_s, data->append);
+        }
+        else if (data->mode & utf8_mode_to_width_d) {
+          utf8_print_width(data, character);
+        }
+        else {
+          fl_print_format("%s%s%s", data->file.stream, data->prepend, utf8_string_combining_not_s, data->append);
+        }
+      }
+      else if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+        fl_print_format("%s%[%s%]%s", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
+      }
+    }
+    else if (data->mode & utf8_mode_to_width_d) {
+      utf8_print_width(data, character);
+    }
+  }
+#endif // _di_utf8_print_combining_or_width_
 
 #ifndef _di_utf8_print_error_decode_
   void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) {
@@ -136,23 +166,6 @@ extern "C" {
     funlockfile(data->main->error.to.stream);
   }
 #endif // _di_utf8_print_error_no_value_
-
-#ifndef _di_utf8_print_error_parameter_conflict_
-  void utf8_print_error_parameter_conflict(utf8_data_t * const data, const f_string_t first, const f_string_t second) {
-
-    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
-
-    flockfile(data->main->output.to.stream);
-
-    fl_print_format("%c%[%sThe parameter '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->error.context, data->main->error.prefix, data->main->error.context);
-    fl_print_format("%[%s%S%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, first, data->main->error.notable);
-    fl_print_format("%[' cannot be used with the parameter '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-    fl_print_format("%[%s%S%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, second, data->main->error.notable);
-    fl_print_format("%['.%]%c", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s[0]);
-
-    funlockfile(data->main->output.to.stream);
-  }
-#endif // _di_utf8_print_error_parameter_conflict_
 
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
   void utf8_print_error_parameter_file_name_empty(utf8_data_t * const data, const f_array_length_t index) {
@@ -256,6 +269,39 @@ extern "C" {
     funlockfile(data->main->warning.to.stream);
   }
 #endif // _di_utf8_print_signal_received_
+
+#ifndef _di_utf8_print_width_
+  void utf8_print_width(utf8_data_t * const data, const f_string_static_t character) {
+
+    f_status_t status = f_utf_is_wide(character.string, character.used);
+
+    if (status == F_true) {
+      fl_print_format("%s%s%s", data->file.stream, data->prepend, utf8_string_width_2_s, data->append);
+
+      return;
+    }
+
+    if (status == F_false) {
+      status = f_utf_is_graph(character.string, character.used);
+
+      if (status == F_true) {
+        fl_print_format("%s%s%s", data->file.stream, data->prepend, utf8_string_width_1_s, data->append);
+
+        return;
+      }
+
+      if (status == F_false) {
+        fl_print_format("%s%s%s", data->file.stream, data->prepend, utf8_string_width_0_s, data->append);
+
+        return;
+      }
+    }
+
+    if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+      fl_print_format("%s%[%s%]%s", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
+    }
+  }
+#endif // _di_utf8_print_width_
 
 #ifdef __cplusplus
 } // extern "C"

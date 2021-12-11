@@ -98,6 +98,14 @@ extern "C" {
   #define utf8_string_verified_valid_s     "Verified Valid"
   #define utf8_string_verified_valid_not_s "Verified Invalid"
 
+  #define utf8_string_combining_is_s  "C"
+  #define utf8_string_combining_not_s "N"
+  #define utf8_string_unknown_s       "?"
+
+  #define utf8_string_width_0_s "0"
+  #define utf8_string_width_1_s "1"
+  #define utf8_string_width_2_s "2"
+
   #define utf8_string_from_s_length 4
   #define utf8_string_to_s_length   2
 
@@ -106,6 +114,14 @@ extern "C" {
 
   #define utf8_string_verified_valid_s_length     14
   #define utf8_string_verified_valid_not_s_length 16
+
+  #define utf8_string_combining_is_s_length  1
+  #define utf8_string_combining_not_s_length 1
+  #define utf8_string_unknown_s_length       1
+
+  #define utf8_string_width_0_s_length 1
+  #define utf8_string_width_1_s_length 1
+  #define utf8_string_width_2_s_length 1
 
   #define utf8_character_valid_not_s "�"
 
@@ -120,7 +136,9 @@ extern "C" {
 
   #define utf8_short_to_binary_s    "B"
   #define utf8_short_to_codepoint_s "C"
+  #define utf8_short_to_combining_s "O"
   #define utf8_short_to_file_s      "F"
+  #define utf8_short_to_width_s     "W"
 
   #define utf8_long_from_binary_s    "from_binary"
   #define utf8_long_from_codepoint_s "from_codepoint"
@@ -133,7 +151,9 @@ extern "C" {
 
   #define utf8_long_to_binary_s    "to_binary"
   #define utf8_long_to_codepoint_s "to_codepoint"
+  #define utf8_long_to_combining_s "to_combining"
   #define utf8_long_to_file_s      "to_file"
+  #define utf8_long_to_width_s     "to_width"
 
   enum {
     utf8_parameter_help,
@@ -156,7 +176,9 @@ extern "C" {
 
     utf8_parameter_to_binary,
     utf8_parameter_to_codepoint,
+    utf8_parameter_to_combining,
     utf8_parameter_to_file,
+    utf8_parameter_to_width,
 
     utf8_parameter_verify,
   };
@@ -180,29 +202,35 @@ extern "C" {
       f_console_parameter_t_initialize(utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_to_binary_s, utf8_long_to_binary_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(utf8_short_to_combining_s, utf8_long_to_combining_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_to_file_s, utf8_long_to_file_s, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(utf8_short_to_width_s, utf8_long_to_width_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(utf8_short_verify_s, utf8_long_verify_s, 0, 0, f_console_type_normal), \
     }
 
-  #define utf8_total_parameters_d 19
+  #define utf8_total_parameters_d 21
 #endif // _di_utf8_defines_
 
 /**
  * Modes used to designate how to the input and output are to be processed.
  *
  * utf8_mode_from_*:
- *   - binary:    The input source is binary.
- *   - codepoint: The input source is codepoint (U+XXXX or U+XXXXXX).
+ *   - binary:    The input format is binary.
+ *   - codepoint: The input format is codepoint (U+XXXX or U+XXXXXX).
  *
  * utf8_mode_to_*:
- *   - binary:    The outout destination is binary.
- *   - codepoint: The outout destination is codepoint (U+XXXX or U+XXXXXX).
+ *   - binary:    The outout format is binary.
+ *   - codepoint: The outout format is codepoint (U+XXXX or U+XXXXXX).
+ *   - combining: The outout format is whether or not character is combining (may be used with "width").
+ *   - width:     The outout format is how wide the character is (may be used with "combining").
  */
 #ifndef _di_utf8_modes_
   #define utf8_mode_from_binary_d    0x1
   #define utf8_mode_from_codepoint_d 0x2
   #define utf8_mode_to_binary_d      0x4
   #define utf8_mode_to_codepoint_d   0x8
+  #define utf8_mode_to_combining_d   0x10
+  #define utf8_mode_to_width_d       0x20
 #endif // _di_utf8_modes_
 
 /**

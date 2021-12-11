@@ -36,7 +36,9 @@ extern "C" {
 
     fll_program_print_help_option(file, context, utf8_short_to_binary_s, utf8_long_to_binary_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The output format is binary (character data).");
     fll_program_print_help_option(file, context, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is codepoint (such as U+0000).");
+    fll_program_print_help_option(file, context, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is to print whether or not character is combining or not.");
     fll_program_print_help_option(file, context, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the output destination.");
+    fll_program_print_help_option(file, context, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    The output format is to print the width of a character (either 0, 1, or 2).");
 
     f_print_character(f_string_eol_s[0], file.stream);
 
@@ -45,16 +47,18 @@ extern "C" {
     fll_program_print_help_option(file, context, utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Strip invalid Unicode characters (do not print invalid sequences).");
     fll_program_print_help_option(file, context, utf8_short_verify_s, utf8_long_verify_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Only perform verification of valid sequences.");
 
-    f_print_character(f_string_eol_s[0], file.stream);
-    f_print_character(f_string_eol_s[0], file.stream);
-
     fll_program_print_help_usage(file, context, utf8_program_name_s, "filename(s)");
 
     fl_print_format("  The default behavior is to assume the expected input is binary from the command line to be output to the screen as codepoints.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
     fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When using the parameter '%[%s%s%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  When using the parameter '%[%s%s%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+
+    fl_print_format("  When using the parameter '%[%s%s%]' with the parameter ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_combining_s, context.set.notable);
+    fl_print_format("'%[%s%s%]', the ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_width_s, context.set.notable);
+    fl_print_format("'%[%s%]' character is printed to represent the combining and the digits are used to represent widths.%c", file.stream, context.set.notable, utf8_string_combining_is_s, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  The combining characters should be considered 1-width by themselves or 0-width when combined.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
     funlockfile(file.stream);
 
@@ -151,7 +155,7 @@ extern "C" {
 
       // Identify and prioritize from mode parameters.
       {
-        f_console_parameter_id_t ids[4] = { utf8_parameter_from_binary, utf8_parameter_from_codepoint };
+        f_console_parameter_id_t ids[2] = { utf8_parameter_from_binary, utf8_parameter_from_codepoint };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
 
@@ -184,9 +188,9 @@ extern "C" {
 
       // Identify and prioritize to mode parameters.
       {
-        f_console_parameter_id_t ids[4] = { utf8_parameter_to_binary, utf8_parameter_to_codepoint };
+        f_console_parameter_id_t ids[4] = { utf8_parameter_to_binary, utf8_parameter_to_codepoint, utf8_parameter_to_combining, utf8_parameter_to_width };
         f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -204,6 +208,14 @@ extern "C" {
             data.mode -= utf8_mode_to_codepoint_d;
           }
 
+          if (data.mode & utf8_mode_to_combining_d) {
+            data.mode -= utf8_mode_to_combining_d;
+          }
+
+          if (data.mode & utf8_mode_to_width_d) {
+            data.mode -= utf8_mode_to_width_d;
+          }
+
           data.mode |= utf8_mode_to_binary_d;
         }
         else if (choice == utf8_parameter_to_codepoint) {
@@ -211,7 +223,47 @@ extern "C" {
             data.mode -= utf8_mode_to_binary_d;
           }
 
+          if (data.mode & utf8_mode_to_combining_d) {
+            data.mode -= utf8_mode_to_combining_d;
+          }
+
+          if (data.mode & utf8_mode_to_width_d) {
+            data.mode -= utf8_mode_to_width_d;
+          }
+
           data.mode |= utf8_mode_to_codepoint_d;
+        }
+        else if (choice == utf8_parameter_to_combining) {
+          if (data.mode & utf8_mode_to_binary_d) {
+            data.mode -= utf8_mode_to_binary_d;
+          }
+
+          if (data.mode & utf8_mode_to_codepoint_d) {
+            data.mode -= utf8_mode_to_codepoint_d;
+          }
+
+          // --to_width may be specified with --to_combining.
+          if (main->parameters[utf8_parameter_to_width].result == f_console_result_found) {
+            data.mode |= utf8_mode_to_width_d;
+          }
+
+          data.mode |= utf8_mode_to_combining_d;
+        }
+        else if (choice == utf8_parameter_to_width) {
+          if (data.mode & utf8_mode_to_binary_d) {
+            data.mode -= utf8_mode_to_binary_d;
+          }
+
+          if (data.mode & utf8_mode_to_codepoint_d) {
+            data.mode -= utf8_mode_to_codepoint_d;
+          }
+
+          // --to_width may be specified with --to_combining.
+          if (main->parameters[utf8_parameter_to_combining].result == f_console_result_found) {
+            data.mode |= utf8_mode_to_combining_d;
+          }
+
+          data.mode |= utf8_mode_to_width_d;
         }
       }
 
@@ -314,7 +366,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (data.mode & utf8_mode_to_codepoint_d) {
+      if (!(data.mode & utf8_mode_to_binary_d)) {
         if (main->parameters[utf8_parameter_separate].result == f_console_result_found || main->parameters[utf8_parameter_headers].result == f_console_result_found) {
           data.prepend = "  ";
           data.append = f_string_eol_s;
