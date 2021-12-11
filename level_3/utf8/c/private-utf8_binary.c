@@ -30,7 +30,7 @@ extern "C" {
       if (status == F_failure || status == F_utf || status == F_utf_fragment || status == F_valid_not) {
         valid_not = F_true;
 
-        utf8_print_character_invalid(data, data->text);
+        utf8_print_character_invalid(data, character);
       }
       else {
         status = F_status_set_error(status);

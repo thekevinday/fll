@@ -18,11 +18,11 @@ extern "C" {
 
     if (!character.used) return;
 
-    if (data->mode & utf8_mode_from_codepoint_d) {
-      fl_print_format("%s%[%Q%]%s", data->file.stream, data->prepend, set, character, set, data->append);
-    }
-    else if (data->mode & utf8_mode_to_binary_d) {
+    if (data->mode & utf8_mode_to_binary_d) {
       fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, set, character, set, data->append);
+    }
+    else if (data->mode & utf8_mode_from_codepoint_d) {
+      fl_print_format("%s%[%Q%]%s", data->file.stream, data->prepend, set, character, set, data->append);
     }
     else {
       fl_print_format("%s%[0x", data->file.stream, data->prepend, set);
@@ -39,7 +39,6 @@ extern "C" {
 #ifndef _di_utf8_print_character_invalid_
   void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) {
 
-    if (!character.used) return;
     if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found) return;
     if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
 
