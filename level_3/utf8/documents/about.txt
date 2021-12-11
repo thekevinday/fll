@@ -1,0 +1,31 @@
+# fss-0002
+
+About utf8 Documentation:
+  The utf8 program is intended to provide simple support for identifying UTF-8 character sequences with regard to its Unicode codepoint designation.
+  Unicode codepoints may also be converted into their binary UTF-8 character sequence equivalents.
+
+  Basic support for identifying and validating is provided.
+
+  This is not intended to be an advanced UTF-8 processing program.
+  While this is an open option for future development, it is beyond the scope, time, and knowledge of the author (Kevin Day).
+
+  There is basic support for identifying character widths and combining characters.
+
+Printing a Complete Binary String:
+  The +q/++quiet must be used to suppress message output (this does not suppress output of processed data).
+
+  The +n/++no_color must be used to suppress printing the color context that is used for invalid sequences.
+
+  The -B/--to_binary must be used to print the binary string.
+
+  The -F/--to_file may optionally be used (and is recommended to be used) to send the output to a file rather than to the screen.
+
+  The -s/--strip_invalid must not be used as the binary string may contain invalid data that must be preserved for proper binary equivalence.
+
+  The -S/--separate must not be used to ensure the data is not separated by multiple lines.
+
+  The -H/--headers must not be used to ensure the processing headers are not printed.
+
+  The -v/--verify must no be used as this suppressed data output.
+
+  The -C/--to_codepoint must not be used as this prints Unicode codepoints rather than the binary string.

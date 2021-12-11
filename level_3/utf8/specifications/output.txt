@@ -1,0 +1,46 @@
+# fss-0002
+
+Output Specification:
+  The following output to modes are supported\:
+  - binary:    Print the binary character sequences.
+  - codepoint: Print the Unicode codepoints.
+  - combining: Print whether or not the character is a combining character.
+  - width:     Print the width of the character.
+
+Output to Binary:
+  The output is printed as raw UTF-8 character sequences without any special formatting.
+  May contain error data representing invalid characters (or codepoints).
+  Invalid characters (or codepoints) may be designated as an error using a context, such as a color context of "error".
+  All character codes, valid or not, may be printed as-is.
+  May not be combined with any other 'Output to' modes.
+
+Output to Codepoint:
+  Only upper case ASCII characters 'U', '+', '0' through '9', and 'A' through 'F' are allowed.
+  Always begins with 'U' and then '+'.
+  Is always separated by a single space (ASCII character 0x20) (optionally except for the final codepoint in a set which may be terminated by a new line or the end of a file).
+  May not contain non-ASCII values for designating characters (or codepoints) (which includes not allowing non-ASCII digits).
+  May not be combined with any other 'Output to' modes.
+
+Output to Combining:
+  A single character is used to represent combining, not-combinging, or unknown.
+  Is always separated by a single space (ASCII character 0x20) (optionally except for the final character in a set which may be terminated by a new line or the end of a file).
+  The upper case ASCII character 'C' is used to represent a combining character.
+  The upper case ASCII character 'N' is used to represent a non-combining character.
+  The ASCII '?' is used to represent either an invalid or an unknown character.
+  Invalid characters (or codepoints) may be designated as an error using a context, such as a color context of "error".
+  May not contain non-ASCII values for designating characters (or codepoints) (which includes not allowing non-ASCII digits).
+  May only be combined with 'Output to Width' mode.
+
+Output to Width:
+  A single character is used to represent width or unknown.
+  Is always separated by a single space (ASCII character 0x20) (optionally except for the final character in a set which may be terminated by a new line or the end of a file).
+  The ASCII character '0' is used to represent a 0-width character (generally this means a non-graph character).
+  The ASCII character '1' is used to represent a 1-width character.
+  The ASCII character '2' is used to represent a 2-width character.
+  The ASCII '?' is used to represent either an invalid or an unknown character.
+  Invalid characters (or codepoints) may be designated as an error using a context, such as a color context of "error".
+  May not contain non-ASCII values for designating characters (or codepoints) (which includes not allowing non-ASCII digits).
+  May only be combined with 'Output to Combining' mode.
+
+Output to Combining and Width:
+  When 'Output to Combining' is used with 'Output to Width', this operates exactly as 'Output to Width', except that when a valid combining character is detected, the ASCII 'C' character is used instead of the width.

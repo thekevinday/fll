@@ -1,0 +1,20 @@
+# fss-0002
+
+Output Documentation:
+  This program either outputs a binary string representing UTF-8 character sequences or a string representing Unicode codepoints.
+
+  When printing in binary string output, suppressing color, and suppressing any output messages, the output should only be an exact representation of the data.
+  Ideally, what this means is that the a binary program, such as /bin/bash can be used as input and this programs binary string output (with appropriate additional parameters) should be capable of printing output that is identical to the original input binary.
+
+  In the case of Unicode codepoints, each codepoint is represented with the ASCII character 'U' followed by the ASCII character '+' followed by four to 6 hexidecimal digits.
+  Unicode number equivalents are not supported nor are ever intended to be supported to ensure simplicity in the design.
+  This makes the Unicode sequence output scriptable and usable as a data store.
+
+  Any time any processed data fails to properly represent a valid Unicode sequence that sequence is printed exactly as is (when printing codepoints) or is printed as-is (when printing binary strings).
+  The invalid data is printed with a context, such as the error color context.
+  The color context may be suppressed by appropriate parameters.
+  The printing of invalid data may be suppressed by the appropraite parameters.
+  When printing from a binary string to a Unicode codepoint, invalid data is printed as '0x' followed by the hexidecimal digit representation (all lower case).
+
+  When printing combining or width, the private use area is considered unknown but is not considered an error.
+  Anything else that is unknown is considered an error.
