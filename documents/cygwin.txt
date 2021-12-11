@@ -7,8 +7,10 @@ The resulting binary could be transfered to another machine and runs if the cygw
 To compile the FLL, some functionality needs to be disabled.
 Fortunately, FLL is specifically designed to be hackable so the process is easier that it might otherwise be.
 
-For a monolithic build, compiled statically, add the following to "defines_all" in the "data/build/settings" file.
+For a monolithic build, compiled statically, add the following to "defines" in the "data/build/settings" file (of the packaged source).
   "-D_di_libcap_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_ -D_di_f_attribute_visibility_ -Df_attribute_visibility_hidden -Df_attribute_visibility_internal -Df_attribute_visibility_protected -Df_attribute_visibility_public"
+
+Before packaging "data/build/settings", the build settings files are either found inside the individual projects or under the build directory at the root of the source repository.
 
 The file level_1/fl_control_group/c/control_group.c (for function fl_control_group_apply()) had to have the following changed from:
       if (unshare(CLONE_NEWCGROUP) < 0) {
