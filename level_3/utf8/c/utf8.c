@@ -236,22 +236,6 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[utf8_parameter_from_binary].result == f_console_result_found) {
-      if (main->parameters[utf8_parameter_from_codepoint].result == f_console_result_found) {
-        utf8_print_error_parameter_conflict(&data, utf8_long_from_binary_s, utf8_long_from_codepoint_s);
-
-        status = F_status_set_error(F_parameter);
-      }
-    }
-
-    if (F_status_is_error_not(status) && main->parameters[utf8_parameter_to_binary].result == f_console_result_found) {
-      if (main->parameters[utf8_parameter_to_codepoint].result == f_console_result_found) {
-        utf8_print_error_parameter_conflict(&data, utf8_long_to_binary_s, utf8_long_to_codepoint_s);
-
-        status = F_status_set_error(F_parameter);
-      }
-    }
-
     if (F_status_is_error_not(status)) {
       if (main->parameters[utf8_parameter_from_file].result == f_console_result_additional) {
         f_array_length_t i = 0;
