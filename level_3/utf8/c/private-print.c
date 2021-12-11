@@ -18,7 +18,10 @@ extern "C" {
 
     if (!character.used) return;
 
-    if (data->mode & utf8_mode_to_binary_d) {
+    if (data->mode & utf8_mode_from_codepoint_d) {
+      fl_print_format("%s%[%Q%]%s", data->file.stream, data->prepend, set, character, set, data->append);
+    }
+    else if (data->mode & utf8_mode_to_binary_d) {
       fl_print_format("%s%[%r%]%s", data->file.stream, data->prepend, set, character, set, data->append);
     }
     else {
