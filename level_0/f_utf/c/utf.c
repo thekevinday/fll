@@ -1914,6 +1914,10 @@ extern "C" {
       }
     } // for
 
+    if (value > 0x10ffff) {
+      return F_status_set_error(F_valid_not);
+    }
+
     *unicode = value;
 
     return F_none;
