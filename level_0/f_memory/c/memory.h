@@ -6,10 +6,6 @@
  * Licenses: lgpl-2.1-or-later
  *
  * Provide means to use memory routines, with error checking.
- *
- * @todo consider adding f_memory_scramble() and f_memory_juggle().
- *       f_memory_scramble() is like f_destroy() but it writes random data instead of 0.
- *       f_memory_juggle() is like f_adjust() but it writes random data instead of 0.
  */
 #ifndef _F_memory_h
 #define _F_memory_h
@@ -163,6 +159,7 @@ extern "C" {
  *   F_memory_not (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see aligned_alloc()
  * @see posix_memalign()
  * @see memset()
  */

@@ -115,15 +115,29 @@ extern "C" {
       return F_data_not;
     }
 
-    const int result = posix_memalign(pointer, alignment, length);
+    #ifdef _f_memory_USE_posix_memalign_
+      const int result = posix_memalign(pointer, alignment, length);
 
-    if (result) {
-      if (result == EINVAL) {
+      if (result) {
+        if (result == EINVAL) {
+          return F_status_set_error(F_parameter);
+        }
+
+        return F_status_set_error(F_memory_not);
+      }
+    #else
+      void *result = aligned_alloc(alignment, length);
+
+      if (result) {
+        *pointer = result;
+      }
+      else if (errno == EINVAL) {
         return F_status_set_error(F_parameter);
       }
-
-      return F_status_set_error(F_memory_not);
-    }
+      else {
+        return F_status_set_error(F_memory_not);
+      }
+    #endif // _f_memory_USE_posix_memalign_
 
     // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
     // this is done to avoid problems with (void *) having arithmetic issues.
