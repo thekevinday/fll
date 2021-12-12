@@ -1201,6 +1201,30 @@ package_operation_copy_package() {
       return $failure
     fi
   fi
+
+  if [[ -d ${package}sources/tests/ ]] ; then
+    cp $verbose -R ${package}sources/tests/ ${package}
+
+    if [[ $? -ne 0 ]] ; then
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: Failed to move sources tests directory $c_notice${path_sources}sources/tests$c_error to $c_notice$package$c_error.$c_reset"
+      fi
+
+      let failure=1
+      return $failure
+    fi
+
+    rm $verbose -Rf ${package}sources/tests/
+
+    if [[ $? -ne 0 ]] ; then
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: Failed to remove sources tests directory $c_notice${path_sources}sources/tests$c_error to $c_notice$package$c_error.$c_reset"
+      fi
+
+      let failure=1
+      return $failure
+    fi
+  fi
 }
 
 package_operation_create_config_stubs() {
@@ -1571,6 +1595,19 @@ package_operation_monolithic() {
     fi
   fi
 
+  if [[ ! -d ${package}tests/ ]] ; then
+    mkdir $verbose ${package}tests/
+
+    if [[ $? -ne 0 ]] ; then
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}tests$c_error.$c_reset"
+      fi
+
+      package_cleanup
+      return 1
+    fi
+  fi
+
   for level in level_0 level_1 level_2 ; do
     for directory in $path_sources${level}/* ; do
       for subdirectory in $directory/* ; do
@@ -1663,6 +1700,17 @@ package_operation_monolithic() {
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
               echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/specifications$c_error.$c_reset"
+            fi
+
+            let failure=1
+            break
+          fi
+        elif [[ $pathname == "tests" ]] ; then
+          cp $verbose -R $subdirectory ${package}
+
+          if [[ $? -ne 0 ]] ; then
+            if [[ $verbosity != "quiet" ]] ; then
+              echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}tests$c_error.$c_reset"
             fi
 
             let failure=1
