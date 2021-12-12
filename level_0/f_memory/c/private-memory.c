@@ -17,7 +17,7 @@ extern "C" {
         if (length_new < length_old) {
 
           // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
-          // this is done to avoid problems with (void *) having arithmetic issues.
+          // This is done to avoid problems with (void *) having arithmetic issues.
           memset(((uint8_t *) *pointer) + length_new, 0, type_size * (length_old - length_new));
         }
       }
@@ -29,7 +29,7 @@ extern "C" {
           if (length_new > length_old) {
 
             // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
-            // this is done to avoid problems with (void *) having arithmetic issues.
+            // This is done to avoid problems with (void *) having arithmetic issues.
             memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
           }
 
@@ -43,7 +43,7 @@ extern "C" {
       else {
         free(*pointer);
 
-        // assure that the pointer is always 0 after deallocation.
+        // Assure that the pointer is always 0 after deallocation.
         *pointer = 0;
 
         return F_none;
@@ -53,8 +53,6 @@ extern "C" {
       *pointer = calloc(type_size, length_new);
 
       if (*pointer) {
-        memset(*pointer, 0, type_size * length_new);
-
         return F_none;
       }
     }
@@ -81,7 +79,7 @@ extern "C" {
           if (length_new > length_old) {
 
             // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
-            // this is done to avoid problems with (void *) having arithmetic issues.
+            // This is done to avoid problems with (void *) having arithmetic issues.
             memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
           }
 
@@ -95,7 +93,7 @@ extern "C" {
       else {
         free(*pointer);
 
-        // assure that the pointer is always 0 after deallocation.
+        // Assure that the pointer is always 0 after deallocation.
         *pointer = 0;
 
         return F_none;
@@ -105,8 +103,6 @@ extern "C" {
       *pointer = calloc(type_size, length_new);
 
       if (*pointer) {
-        memset(*pointer, 0, type_size * length_new);
-
         return F_none;
       }
     }

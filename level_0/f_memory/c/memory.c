@@ -26,7 +26,7 @@ extern "C" {
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // prevent double-frees.
+    // Prevent double-frees.
     if (!*pointer || !size) {
       return F_data_not;
     }
@@ -39,7 +39,7 @@ extern "C" {
 
     free(*pointer);
 
-    // it has been deallocated, so reset the pointer.
+    // It has been deallocated, so reset the pointer.
     *pointer = 0;
 
     return F_none;
@@ -53,7 +53,7 @@ extern "C" {
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // prevent double-frees.
+    // Prevent double-frees.
     if (!*pointer) {
       return F_data_not;
     }
@@ -66,7 +66,7 @@ extern "C" {
 
     free(*pointer);
 
-    // it has been deallocated, so reset the pointer.
+    // It has been deallocated, so reset the pointer.
     *pointer = 0;
 
     return F_none;
@@ -85,16 +85,9 @@ extern "C" {
       return F_data_not;
     }
 
-    // Some people use malloc(size * length) to produce the same results.
-    // This has been observed to sometimes causes an increase in L1/L2 cache misses (0.02% L1 increase, 0.01% L2 increase).
     *pointer = calloc(length, size);
 
     if (*pointer) {
-
-      // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
-      // this is done to avoid problems with (void *) having arithmetic issues.
-      memset(((uint8_t *) *pointer), 0, size * length);
-
       return F_none;
     }
 
@@ -110,7 +103,7 @@ extern "C" {
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // prevent double-allocations.
+    // Prevent double-allocations.
     if (*pointer || !length) {
       return F_data_not;
     }
@@ -139,8 +132,8 @@ extern "C" {
       }
     #endif // _f_memory_USE_posix_memalign_
 
-    // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
-    // this is done to avoid problems with (void *) having arithmetic issues.
+    // uint8_t * is of a data size of 1, casting it to uint8_t should result in a single-length increment.
+    // This is done to avoid problems with (void *) having arithmetic issues.
     memset(((uint8_t *) *pointer), 0, length);
 
     return F_none;
