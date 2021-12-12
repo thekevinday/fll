@@ -94,6 +94,20 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_failure) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
     if (status == F_file_close) {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
@@ -290,20 +304,6 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_read_only) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        flockfile(print.to.stream);
-
-        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_format("%[', %S is read only.%]%c", print.to.stream, print.context, type_name, print.context, f_string_eol_s[0]);
-
-        funlockfile(print.to.stream);
-      }
-
-      return F_false;
-    }
-
     if (status == F_file_seek) {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
@@ -339,6 +339,20 @@ extern "C" {
         fl_print_format("%c%[%SSynchronize failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
         fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
         fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_type_unknown) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SFailed to %S %S, the path '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[' is an unknown file type.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -395,20 +409,6 @@ extern "C" {
         fl_print_format("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
         fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
         fl_print_format("%[', write failure.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
-
-        funlockfile(print.to.stream);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_write_only) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        flockfile(print.to.stream);
-
-        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_format("%[', %S is write only.%]%c", print.to.stream, print.context, type_name, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -504,6 +504,34 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_read_only) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', %S is read only.%]%c", print.to.stream, print.context, type_name, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_write_only) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', %S is write only.%]%c", print.to.stream, print.context, type_name, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
     if (type == fll_error_file_type_file) {
       if (status == F_file_type_not_directory) {
         if (print.verbosity != f_console_verbosity_quiet) {
@@ -518,20 +546,35 @@ extern "C" {
 
         return F_false;
       }
-    }
 
-    if (status == F_failure) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        flockfile(print.to.stream);
+      if (status == F_file_type_directory) {
+        if (print.verbosity != f_console_verbosity_quiet) {
+          flockfile(print.to.stream);
 
-        fl_print_format("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SFailed to %S %S, the path '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+          fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+          fl_print_format("%[' is a directory.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
-        funlockfile(print.to.stream);
+          funlockfile(print.to.stream);
+        }
+
+        return F_false;
       }
+    }
+    else if (type == fll_error_file_type_directory) {
+      if (status == F_file_type_regular) {
+        if (print.verbosity != f_console_verbosity_quiet) {
+          flockfile(print.to.stream);
 
-      return F_false;
+          fl_print_format("%c%[%SFailed to %S %S, the path '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+          fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+          fl_print_format("%[' is a file.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+          funlockfile(print.to.stream);
+        }
+
+        return F_false;
+      }
     }
 
     if (type == fll_error_file_type_file || type == fll_error_file_type_directory) {
@@ -542,6 +585,20 @@ extern "C" {
           fl_print_format("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
           fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
           fl_print_format("%[' due to an invalid directory in the path.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+          funlockfile(print.to.stream);
+        }
+
+        return F_false;
+      }
+
+      if (status == F_file_type_pipe || status == F_file_type_socket) {
+        if (print.verbosity != f_console_verbosity_quiet) {
+          flockfile(print.to.stream);
+
+          fl_print_format("%c%[%SFailed to %S %S, the path '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+          fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+          fl_print_format("%[' is a %s.%]%c", print.to.stream, print.context, status == F_file_type_pipe ? "pipe" : "socket", print.context, f_string_eol_s[0]);
 
           funlockfile(print.to.stream);
         }
