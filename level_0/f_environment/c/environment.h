@@ -37,7 +37,7 @@ extern "C" {
  * @see clearenv()
  */
 #ifndef _di_f_environment_clear_
-  extern f_status_t f_environment_clear();
+  extern f_status_t f_environment_clear(void);
 #endif // _di_f_environment_clear_
 
 /**

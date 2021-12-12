@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_pipe_input_exists_
-  f_status_t f_pipe_input_exists() {
+  f_status_t f_pipe_input_exists(void) {
     struct stat st_info;
 
     if (fstat(F_type_descriptor_input_d, &st_info) != 0) {
@@ -21,7 +21,7 @@ extern "C" {
 #endif // _di_f_pipe_input_exists_
 
 #ifndef _di_f_pipe_warning_exists_
-  f_status_t f_pipe_warning_exists() {
+  f_status_t f_pipe_warning_exists(void) {
     struct stat st_info;
 
     if (fstat(F_type_descriptor_warning_d, &st_info) != 0) {
@@ -37,7 +37,7 @@ extern "C" {
 #endif // _di_f_pipe_warning_exists_
 
 #ifndef _di_f_pipe_error_exists_
-  f_status_t f_pipe_error_exists() {
+  f_status_t f_pipe_error_exists(void) {
     struct stat st_info;
 
     if (fstat(F_type_descriptor_error_d, &st_info) != 0) {
@@ -53,7 +53,7 @@ extern "C" {
 #endif // _di_f_pipe_error_exists_
 
 #ifndef _di_f_pipe_debug_exists_
-  f_status_t f_pipe_debug_exists() {
+  f_status_t f_pipe_debug_exists(void) {
     struct stat st_info;
 
     if (fstat(F_type_descriptor_debug_d, &st_info) != 0) {

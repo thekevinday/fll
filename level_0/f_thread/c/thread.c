@@ -878,7 +878,7 @@ extern "C" {
 #endif // _di_f_thread_barriers_resize_
 
 #ifndef _di_f_thread_caller_
-  f_thread_id_t f_thread_caller() {
+  f_thread_id_t f_thread_caller(void) {
     return pthread_self();
   }
 #endif // _di_f_thread_caller_
@@ -924,7 +924,7 @@ extern "C" {
 #endif // _di_f_thread_cancel_state_set_
 
 #ifndef _di_f_thread_cancel_test_
-  f_status_t f_thread_cancel_test() {
+  f_status_t f_thread_cancel_test(void) {
 
     pthread_testcancel();
 

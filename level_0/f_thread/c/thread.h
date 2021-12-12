@@ -1162,7 +1162,7 @@ extern "C" {
  * @see pthread_self()
  */
 #ifndef _di_f_thread_caller_
-  extern f_thread_id_t f_thread_caller();
+  extern f_thread_id_t f_thread_caller(void);
 #endif // _di_f_thread_caller_
 
 /**
@@ -1218,7 +1218,7 @@ extern "C" {
  * @see pthread_testcancel()
  */
 #ifndef _di_f_thread_cancel_test_
-  extern f_status_t f_thread_cancel_test();
+  extern f_status_t f_thread_cancel_test(void);
 #endif // _di_f_thread_cancel_test_
 
 /**

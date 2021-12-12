@@ -17,7 +17,7 @@ extern "C" {
   #endif // _di_f_capability_ambient_get_
 
   #ifndef _di_f_capability_ambient_reset_
-    f_status_t f_capability_ambient_reset() {
+    f_status_t f_capability_ambient_reset(void) {
       return F_status_set_error(F_implemented_not);
     }
   #endif // _di_f_capability_ambient_reset_
@@ -330,7 +330,7 @@ extern "C" {
   #endif // _di_f_capability_size_
 
   #ifndef _di_f_capability_supported_
-    bool f_capability_supported() {
+    bool f_capability_supported(void) {
       return F_false;
     }
   #endif // _di_f_capability_supported_
@@ -340,7 +340,7 @@ extern "C" {
 #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_supported_ambient_
-    bool f_capability_supported_ambient() {
+    bool f_capability_supported_ambient(void) {
       return F_false;
     }
   #endif // _di_f_capability_supported_ambient_
@@ -406,7 +406,7 @@ extern "C" {
   #endif // _di_f_capability_ambient_get_
 
   #ifndef _di_f_capability_ambient_reset_
-    f_status_t f_capability_ambient_reset() {
+    f_status_t f_capability_ambient_reset(void) {
 
       if (cap_reset_ambient() == -1) {
         // The documentation doesn't explicitly describe this for "reset" but it can be implicitly inferred because they say "..all of the setting functions..".
@@ -1010,7 +1010,7 @@ extern "C" {
   #endif // _di_f_capability_size_
 
   #ifndef _di_f_capability_supported_
-    bool f_capability_supported() {
+    bool f_capability_supported(void) {
       return F_true;
     }
   #endif // _di_f_capability_supported_
@@ -1020,7 +1020,7 @@ extern "C" {
 #if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_supported_ambient_
-    bool f_capability_supported_ambient() {
+    bool f_capability_supported_ambient(void) {
       return CAP_AMBIENT_SUPPORTED();
     }
   #endif // _di_f_capability_supported_ambient_

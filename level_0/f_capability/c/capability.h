@@ -87,7 +87,7 @@ extern "C" {
  * @see cap_reset_ambient()
  */
 #ifndef _di_f_capability_ambient_reset_
-  extern f_status_t f_capability_ambient_reset();
+  extern f_status_t f_capability_ambient_reset(void);
 #endif // _di_f_capability_ambient_reset_
 
 /**
@@ -869,7 +869,7 @@ extern "C" {
  *   FALSE otherwise.
  */
 #ifndef _di_f_capability_supported_
-  extern bool f_capability_supported();
+  extern bool f_capability_supported(void);
 #endif // _di_f_capability_supported_
 
 /**
@@ -901,7 +901,7 @@ extern "C" {
  * @see CAP_AMBIENT_SUPPORTED()
  */
 #ifndef _di_f_capability_supported_ambient_
-  extern bool f_capability_supported_ambient();
+  extern bool f_capability_supported_ambient(void);
 #endif // _di_f_capability_supported_ambient_
 
 /**

@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_environment_clear_
-  f_status_t f_environment_clear() {
+  f_status_t f_environment_clear(void) {
     if (!clearenv()) {
       return F_none;
     }
