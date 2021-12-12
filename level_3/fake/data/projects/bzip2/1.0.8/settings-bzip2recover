@@ -1,15 +1,15 @@
 # fss-0001
 #
-# This is designed for bzip2-1.0.8 as an example for compiling bzip2.
+# This is designed for compiling bzip2-1.0.8.
 #
-# To use this example do the following:
+# To use this do the following:
 #   1) download and extract bzip2-1.0.8.
 #   2) change into the extracted bzip2-1.0.8 directory.
 #   3) create the directory path "data/build/" within this bzip2-1.0.8 directory.
-#   4) copy this file (settings-example-bzip2) into the created directory path "data/build/".
-#   5) use the featureless make build operation to build, such as: "fake build -s settings-example-bzip2".
+#   4) copy this file (settings-bzip2recover) into the created directory path "data/build/".
+#   5) use the featureless make build operation to build, such as: "fake build -s settings-bzip2recover".
 
-project_name bzip2
+project_name bzip2recover
 
 version_major 1
 version_minor 0
@@ -22,8 +22,7 @@ build_indexer ar
 build_indexer_arguments rcs
 build_language c
 build_libraries -lc
-build_sources_program blocksort.c huffman.c crctable.c randtable.c compress.c decompress.c bzlib.c bzip2.c
-build_sources_headers bzlib.h
+build_sources_program bzip2recover.c
 build_script no
 
 path_sources

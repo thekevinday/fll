@@ -6,9 +6,9 @@
 # This assumes make and everything necessary to compile the linux kernel is available.
 #
 # To use this example do the following:
-#   1) download and extract the linux source, such as linux-5.8.8.
-#   2) change into the extracted source (linux-5.8.8) directory.
-#   3) run using this, such as: "fake make -f /path/to/fakefile-example-bzip2".
+#   1) Download and extract the linux source, such as linux-5.8.8.
+#   2) Change into the extracted source (linux-5.8.8) directory.
+#   3) Run using this, such as: "fake make -f /path/to/fakefile-example-linux_using_make".
 
 settings:
   load_build no
@@ -21,7 +21,6 @@ settings:
   parameter config defconfig
 
 main:
-
   print
   print Cleaning Linux kernel source.
   run make mrproper

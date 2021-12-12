@@ -1,0 +1,39 @@
+# fss-0001
+#
+# This is designed for compiling cmocka-1.1.5.
+#
+# To use this do the following:
+#   1) Download and extract cmocka-1.1.5.
+#   2) Change into the extracted cmocka-1.1.5 directory.
+#   3) Create the directory path "data/build/" within this cmocka-1.1.5 directory.
+#   4) Copy this file (settings) into the created directory path "data/build/".
+#   5) Use the featureless make build operation to build, such as: "fake build".
+#
+# This depends on a c-library with realtime and pthread support.
+
+project_name cmocka
+
+version_major 1
+version_minor 1
+version_micro 5
+version_file micro
+version_target major
+
+build_compiler gcc
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+build_libraries -pthread -lrt -lc
+build_sources_library src/cmocka.c
+build_sources_headers include/cmocka.h include/cmocka_pbc.h
+build_script no
+
+path_sources
+path_standard no
+
+defines -DHAVE_MALLOC_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_SIGNAL_H=1 -DHAVE_STRINGS_H=1 -DHAVE_GCC_THREAD_LOCAL_STORAGE=1 -DHAVE_CLOCK_REALTIME=1 -DHAVE_SIGLONGJMP=1 -DHAVE_STRSIGNAL=1
+
+flags -z now -g -fdiagnostics-color=always -Wall -Winline -O2 -Iinclude/ -std=gnu99
+flags -Wpedantic -Wall -Wshadow -Wmissing-prototypes -Wcast-align -Werror=address -Wstrict-prototypes -Werror=strict-prototypes -Wwrite-strings -Werror=write-strings -Werror-implicit-function-declaration -Wpointer-arith -Werror=pointer-arith -Wdeclaration-after-statement -Werror=declaration-after-statement -Wreturn-type -Werror=return-type -Wuninitialized -Werror=uninitialized -Wimplicit-fallthrough -Werror=strict-overflow -Wstrict-overflow=2 -Wno-format-zero-length -Wmissing-field-initializers -Wformat -Wformat-security -Werror=format-security
+flags -fno-common -fstack-protector-strong -fstack-clash-protection
+flags_library -fPIC

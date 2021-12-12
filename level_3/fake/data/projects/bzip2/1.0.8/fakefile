@@ -1,0 +1,39 @@
+# fss-0005 iki-0002
+#
+# This is designed for compiling bzip2-1.0.8.
+#
+# To use this do the following:
+#   1) Download and extract bzip2-1.0.8.
+#   2) Change into the extracted bzip2-1.0.8 directory.
+#   3) Create the directory path "data/build/" within this bzip2-1.0.8 directory.
+#   4) Copy the files fakefile-bzip2, settings-bzip2, and settings-bzip2recover) into the created directory path "data/build/".
+#   5) Use the featureless make build operation to make, such as: "fake make -f fakefile-bzip2".
+
+settings:
+  load_build no
+  fail exit
+
+  compiler gcc
+  indexer ar
+  indexer_arguments rcs
+
+main:
+  operate bzip2
+  operate bzip2recover
+  operate scripts
+
+bzip2:
+  print
+  print Building settings-bzip2.
+  build settings-bzip2
+
+bzip2recover:
+  print
+  print Building settings-bzip2recover.
+  build settings-bzip2recover
+
+scripts:
+  print
+  print copying bzip2 scripts.
+  touch directory build build/programs build/programs/scripts
+  copy bzdiff bzgrep build/programs/scripts

@@ -1,0 +1,36 @@
+# fss-0001
+#
+# This is designed for compiling bzip2-1.0.8.
+#
+# To use this do the following:
+#   1) Download and extract bzip2-1.0.8.
+#   2) Change into the extracted bzip2-1.0.8 directory.
+#   3) Create the directory path "data/build/" within this bzip2-1.0.8 directory.
+#   4) Copy this file (settings-bzip2) into the created directory path "data/build/".
+#   5) Use the featureless make build operation to build, such as: "fake build -s settings-bzip2".
+
+project_name bzip2
+
+version_major 1
+version_minor 0
+version_micro 8
+version_file micro
+version_target major
+
+build_compiler gcc
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+build_libraries -lc
+build_sources_program blocksort.c huffman.c crctable.c randtable.c compress.c decompress.c bzlib.c bzip2.c
+build_sources_headers bzlib.h
+build_script no
+
+path_sources
+path_standard no
+
+defines -D_FILE_OFFSET_BITS=64
+
+flags -z now -g -fdiagnostics-color=always -Wall -Winline -O2
+flags_library -fPIC
+flags_program -fPIE
