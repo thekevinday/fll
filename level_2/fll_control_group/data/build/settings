@@ -5,8 +5,8 @@ project_name fll_control_group
 version_major 0
 version_minor 5
 version_micro 7
-version_file minor
-version_target micro
+version_file micro
+version_target minor
 
 environment
 
