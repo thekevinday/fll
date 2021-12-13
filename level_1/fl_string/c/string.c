@@ -91,7 +91,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -112,7 +113,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -133,7 +135,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -155,7 +158,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -176,7 +180,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -197,7 +202,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -219,7 +225,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -240,7 +247,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -261,7 +269,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -283,7 +292,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -304,7 +314,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
@@ -325,7 +336,8 @@ extern "C" {
 
       return F_equal_to_not;
     }
-    else if (!string2.used || range2.start > range2.stop) {
+
+    if (!string2.used || range2.start > range2.stop) {
       return F_equal_to_not;
     }
 
