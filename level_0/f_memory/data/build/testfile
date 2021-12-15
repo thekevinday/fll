@@ -6,11 +6,7 @@ settings:
 
   environment LD_LIBRARY_PATH
 
-  parameter verbose +v
-  parameter verbose_fll +V
-
 main:
-
   build settings
 
   build settings-tests
