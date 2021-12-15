@@ -33,9 +33,7 @@ extern "C" {
             memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
           }
 
-          if (pointer != new_pointer) {
-            *pointer = new_pointer;
-          }
+          *pointer = new_pointer;
 
           return F_none;
         }
@@ -83,9 +81,7 @@ extern "C" {
             memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
           }
 
-          if (pointer != new_pointer) {
-            *pointer = new_pointer;
-          }
+          *pointer = new_pointer;
 
           return F_none;
         }
