@@ -178,8 +178,6 @@ extern "C" {
  *   The section name.
  * @param operation
  *   The operation being performed.
- * @param operation_name
- *   The operation name.
  * @param content
  *   The content array.
  * @param quoteds
@@ -194,7 +192,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(fake_main_t * const main, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_fss_content_t content, const f_fss_quotes_t quoteds, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_expand(fake_main_t * const main, const f_string_range_t section_name, const f_array_length_t operation, const f_fss_content_t content, const f_fss_quotes_t quoteds, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_
 
 /**
@@ -282,8 +280,6 @@ extern "C" {
  *   The section name.
  * @param operation
  *   The operation type.
- * @param operation_name
- *   The operation name.
  * @param arguments
  *   The expanded arguments.
  * @param success
@@ -306,7 +302,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_process_
-  extern int fake_make_operate_process(fake_main_t * const main, const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_make_operate_process(fake_main_t * const main, const f_string_range_t section_name, const uint8_t operation, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_
 
 /**
@@ -387,8 +383,6 @@ extern "C" {
  *   The section name.
  * @param operation
  *   The operation being performed.
- * @param operation_name
- *   The operation name.
  * @param arguments
  *   The expanded arguments.
  * @param operation_if
@@ -403,7 +397,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(fake_main_t * const main, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_validate(fake_main_t * const main, const f_string_range_t section_name, const f_array_length_t operation, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_validate_
 
 /**

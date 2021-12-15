@@ -602,7 +602,7 @@ extern "C" {
 
     *status = fll_execute_arguments_add(fake_other_operation_build_s, fake_other_operation_build_s_length, &arguments);
 
-    // ensure console color mode is passed to the scripts so that they can also react to color mode.
+    // Ensure console color mode is passed to the scripts so that they can also react to color mode.
     if (F_status_is_error_not(*status) && main->context.mode != F_color_mode_none_d) {
       char argument[3] = { f_console_symbol_short_disable_s[0], 0, 0 };
 
@@ -619,7 +619,7 @@ extern "C" {
       *status = fll_execute_arguments_add(argument, 2, &arguments);
     }
 
-    // ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
+    // Ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
     if (F_status_is_error_not(*status) && main->error.verbosity != f_console_verbosity_normal) {
       char argument[3] = { f_console_symbol_short_disable_s[0], 0, 0 };
 
@@ -1613,7 +1613,7 @@ extern "C" {
       macro_f_fss_contents_t_delete_simple(contents);
     }
 
-    // error when required settings are not specified.
+    // Error when required settings are not specified.
     if (F_status_is_error_not(*status)) {
       bool failed = F_false;
 
@@ -2194,215 +2194,215 @@ extern "C" {
       };
 
       bool * const settings_single_bool[] = {
-        0,
-        0,
-        0,
-        &setting->build_script,
-        &setting->build_shared,
-        &setting->build_static,
-        0,
-        &setting->path_headers_preserve,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        &setting->path_standard,
-        0,
-        0,
-        0,
-        &setting->search_exclusive,
-        &setting->search_shared,
-        &setting->search_static,
+        0,                               // build_compiler
+        0,                               // build_indexer
+        0,                               // build_language
+        &setting->build_script,          // build_script
+        &setting->build_shared,          // build_shared
+        &setting->build_static,          // build_static
+        0,                               // path_headers
+        &setting->path_headers_preserve, // path_headers_preserve
+        0,                               // path_language
+        0,                               // path_library_script
+        0,                               // path_library_shared
+        0,                               // path_library_static
+        0,                               // path_program_script
+        0,                               // path_program_shared
+        0,                               // path_program_static
+        0,                               // path_sources
+        &setting->path_standard,         // path_standard
+        0,                               // process_post
+        0,                               // process_pre
+        0,                               // project_name
+        &setting->search_exclusive,      // search_exclusive
+        &setting->search_shared,         // search_shared
+        &setting->search_static,         // search_static
       };
 
       f_string_dynamic_t * const settings_single_destination[] = {
-        &setting->build_compiler,
-        &setting->build_indexer,
-        0,
-        0,
-        0,
-        0,
-        &setting->path_headers,
-        0,
-        &setting->path_language,
-        &setting->path_library_script,
-        &setting->path_library_shared,
-        &setting->path_library_static,
-        &setting->path_program_script,
-        &setting->path_program_shared,
-        &setting->path_program_static,
-        &setting->path_sources,
-        0,
-        &setting->process_post,
-        &setting->process_pre,
-        &setting->project_name,
-        0,
-        0,
-        0,
-        0,
-        &setting->version_major,
-        &setting->version_major_prefix,
-        &setting->version_micro,
-        &setting->version_micro_prefix,
-        &setting->version_minor,
-        &setting->version_minor_prefix,
-        &setting->version_nano,
-        &setting->version_nano_prefix,
+        &setting->build_compiler,        // build_compiler
+        &setting->build_indexer,         // build_indexer
+        0,                               // build_language
+        0,                               // build_script
+        0,                               // build_shared
+        0,                               // build_static
+        &setting->path_headers,          // path_headers
+        0,                               // path_headers_preserve
+        &setting->path_language,         // path_language
+        &setting->path_library_script,   // path_library_script
+        &setting->path_library_shared,   // path_library_shared
+        &setting->path_library_static,   // path_library_static
+        &setting->path_program_script,   // path_program_script
+        &setting->path_program_shared,   // path_program_shared
+        &setting->path_program_static,   // path_program_static
+        &setting->path_sources,          // path_sources
+        0,                               // path_standard
+        &setting->process_post,          // process_post
+        &setting->process_pre,           // process_pre
+        &setting->project_name,          // project_name
+        0,                               // search_exclusive
+        0,                               // search_shared
+        0,                               // search_static
+        0,                               // version_file
+        &setting->version_major,         // version_major
+        &setting->version_major_prefix,  // version_major_prefix
+        &setting->version_micro,         // version_micro
+        &setting->version_micro_prefix,  // version_micro_prefix
+        &setting->version_minor,         // version_minor
+        &setting->version_minor_prefix,  // version_minor_prefix
+        &setting->version_nano,          // version_nano
+        &setting->version_nano_prefix,   // version_nano_prefix
       };
 
       uint8_t * const settings_single_language[] = {
-        0,
-        0,
-        &setting->build_language,
+        0,                               // build_compiler
+        0,                               // build_indexer
+        &setting->build_language,        // build_language
       };
 
       uint8_t * const settings_single_version[] = {
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        &setting->version_file,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        &setting->version_target,
+        0,                               // build_compiler
+        0,                               // build_indexer
+        0,                               // build_language
+        0,                               // build_script
+        0,                               // build_shared
+        0,                               // build_static
+        0,                               // path_headers
+        0,                               // path_headers_preserve
+        0,                               // path_language
+        0,                               // path_library_script
+        0,                               // path_library_shared
+        0,                               // path_library_static
+        0,                               // path_program_script
+        0,                               // path_program_shared
+        0,                               // path_program_static
+        0,                               // path_sources
+        0,                               // path_standard
+        0,                               // process_post
+        0,                               // process_pre
+        0,                               // project_name
+        0,                               // search_exclusive
+        0,                               // search_shared
+        0,                               // search_static
+        &setting->version_file,          // version_file
+        0,                               // version_major
+        0,                               // version_major_prefix
+        0,                               // version_micro
+        0,                               // version_micro_prefix
+        0,                               // version_minor
+        0,                               // version_minor_prefix
+        0,                               // version_nano
+        0,                               // version_nano_prefix
+        &setting->version_target,        // version_target
       };
 
       const uint8_t settings_single_version_default[] = {
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        fake_build_version_type_micro,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        fake_build_version_type_major,
+        0,                               // build_compiler
+        0,                               // build_indexer
+        0,                               // build_language
+        0,                               // build_script
+        0,                               // build_shared
+        0,                               // build_static
+        0,                               // path_headers
+        0,                               // path_headers_preserve
+        0,                               // path_language
+        0,                               // path_library_script
+        0,                               // path_library_shared
+        0,                               // path_library_static
+        0,                               // path_program_script
+        0,                               // path_program_shared
+        0,                               // path_program_static
+        0,                               // path_sources
+        0,                               // path_standard
+        0,                               // process_post
+        0,                               // process_pre
+        0,                               // project_name
+        0,                               // search_exclusive
+        0,                               // search_shared
+        0,                               // search_static
+        fake_build_version_type_micro,   // version_file
+        0,                               // version_major
+        0,                               // version_major_prefix
+        0,                               // version_micro
+        0,                               // version_micro_prefix
+        0,                               // version_minor
+        0,                               // version_minor_prefix
+        0,                               // version_nano
+        0,                               // version_nano_prefix
+        fake_build_version_type_major,   // version_target
       };
 
       const char *settings_single_version_default_name[] = {
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        fake_build_version_micro_s,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        fake_build_version_major_s,
+        0,                               // build_compiler
+        0,                               // build_indexer
+        0,                               // build_language
+        0,                               // build_script
+        0,                               // build_shared
+        0,                               // build_static
+        0,                               // path_headers
+        0,                               // path_headers_preserve
+        0,                               // path_language
+        0,                               // path_library_script
+        0,                               // path_library_shared
+        0,                               // path_library_static
+        0,                               // path_program_script
+        0,                               // path_program_shared
+        0,                               // path_program_static
+        0,                               // path_sources
+        0,                               // path_standard
+        0,                               // process_post
+        0,                               // process_pre
+        0,                               // project_name
+        0,                               // search_exclusive
+        0,                               // search_shared
+        0,                               // search_static
+        fake_build_version_micro_s,      // version_file
+        0,                               // version_major
+        0,                               // version_major_prefix
+        0,                               // version_micro
+        0,                               // version_micro_prefix
+        0,                               // version_minor
+        0,                               // version_minor_prefix
+        0,                               // version_nano
+        0,                               // version_nano_prefix
+        fake_build_version_major_s,      // version_target
       };
 
       // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", "micro", or "nano".
       const uint8_t settings_single_type[] = {
-        3,
-        3,
-        4,
-        1,
-        1,
-        1,
-        2,
-        1,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        1,
-        3,
-        3,
-        3,
-        1,
-        1,
-        1,
-        5,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        5,
+        3,                               // build_compiler
+        3,                               // build_indexer
+        4,                               // build_language
+        1,                               // build_script
+        1,                               // build_shared
+        1,                               // build_static
+        2,                               // path_headers
+        1,                               // path_headers_preserve
+        2,                               // path_language
+        2,                               // path_library_script
+        2,                               // path_library_shared
+        2,                               // path_library_static
+        2,                               // path_program_script
+        2,                               // path_program_shared
+        2,                               // path_program_static
+        2,                               // path_sources
+        1,                               // path_standard
+        3,                               // process_post
+        3,                               // process_pre
+        3,                               // project_name
+        1,                               // search_exclusive
+        1,                               // search_shared
+        1,                               // search_static
+        5,                               // version_file
+        3,                               // version_major
+        3,                               // version_major_prefix
+        3,                               // version_micro
+        3,                               // version_micro_prefix
+        3,                               // version_minor
+        3,                               // version_minor_prefix
+        3,                               // version_nano
+        3,                               // version_nano_prefix
+        5,                               // version_target
       };
 
       for (f_array_length_t i = 0; i < 33; ++i) {
@@ -2536,6 +2536,7 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+
             break;
           }
 
@@ -2544,6 +2545,7 @@ extern "C" {
 
             if (F_status_is_error(*status)) {
               fll_error_print(main->error, F_status_set_fine(*status), "f_string_append_assure", F_true);
+
               break;
             }
           }
@@ -2551,6 +2553,7 @@ extern "C" {
           *status = f_string_dynamic_terminate_after(settings_single_destination[i]);
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
+
             break;
           }
         }

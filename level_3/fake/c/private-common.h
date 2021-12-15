@@ -164,64 +164,64 @@ extern "C" {
   }
 
   #define macro_fake_build_setting_t_delete_simple(setting) \
-    macro_f_string_dynamic_t_delete_simple(setting.build_compiler); \
-    macro_f_string_dynamic_t_delete_simple(setting.build_indexer); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_headers); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_language); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_library_script); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_library_shared); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_library_static); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_program_script); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_program_shared); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_program_static); \
-    macro_f_string_dynamic_t_delete_simple(setting.path_sources); \
-    macro_f_string_dynamic_t_delete_simple(setting.process_post); \
-    macro_f_string_dynamic_t_delete_simple(setting.process_pre); \
-    macro_f_string_dynamic_t_delete_simple(setting.project_name); \
-    macro_f_string_dynamic_t_delete_simple(setting.version_major); \
-    macro_f_string_dynamic_t_delete_simple(setting.version_major_prefix); \
-    macro_f_string_dynamic_t_delete_simple(setting.version_micro); \
-    macro_f_string_dynamic_t_delete_simple(setting.version_micro_prefix); \
-    macro_f_string_dynamic_t_delete_simple(setting.version_minor); \
-    macro_f_string_dynamic_t_delete_simple(setting.version_minor_prefix); \
-    macro_f_string_dynamic_t_delete_simple(setting.version_nano); \
-    macro_f_string_dynamic_t_delete_simple(setting.version_nano_prefix); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_indexer_arguments); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_libraries); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_libraries_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_libraries_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_library); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_library_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_library_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_program); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_program_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_program_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_script); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_setting); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines_library); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines_library_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines_library_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines_program); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines_program_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines_program_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.defines_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.environment); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags_library); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags_library_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags_library_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags_program); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags_program_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags_program_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags_shared); \
-    macro_f_string_dynamics_t_delete_simple(setting.flags_static); \
-    macro_f_string_dynamics_t_delete_simple(setting.modes); \
-    macro_f_string_dynamics_t_delete_simple(setting.modes_default);
+    macro_f_string_dynamic_t_delete_simple(setting.build_compiler) \
+    macro_f_string_dynamic_t_delete_simple(setting.build_indexer) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_headers) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_language) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_library_script) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_library_shared) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_library_static) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_program_script) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_program_shared) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_program_static) \
+    macro_f_string_dynamic_t_delete_simple(setting.path_sources) \
+    macro_f_string_dynamic_t_delete_simple(setting.process_post) \
+    macro_f_string_dynamic_t_delete_simple(setting.process_pre) \
+    macro_f_string_dynamic_t_delete_simple(setting.project_name) \
+    macro_f_string_dynamic_t_delete_simple(setting.version_major) \
+    macro_f_string_dynamic_t_delete_simple(setting.version_major_prefix) \
+    macro_f_string_dynamic_t_delete_simple(setting.version_micro) \
+    macro_f_string_dynamic_t_delete_simple(setting.version_micro_prefix) \
+    macro_f_string_dynamic_t_delete_simple(setting.version_minor) \
+    macro_f_string_dynamic_t_delete_simple(setting.version_minor_prefix) \
+    macro_f_string_dynamic_t_delete_simple(setting.version_nano) \
+    macro_f_string_dynamic_t_delete_simple(setting.version_nano_prefix) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_indexer_arguments) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_libraries) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_libraries_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_libraries_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_library) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_library_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_library_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_program) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_program_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_program_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_script) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_setting) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_library) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_library_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_library_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_program) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_program_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_program_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.environment) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags_library) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags_library_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags_library_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags_program) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags_program_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags_program_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags_shared) \
+    macro_f_string_dynamics_t_delete_simple(setting.flags_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.modes) \
+    macro_f_string_dynamics_t_delete_simple(setting.modes_default) \
 
   #define FAKE_build_setting_name_build_compiler_s               "build_compiler"
   #define FAKE_build_setting_name_build_language_s               "build_language"
@@ -481,19 +481,19 @@ extern "C" {
   #define fake_build_stage_total_d 13
 
   #define macro_fake_build_stage_t_delete_simple(stage) \
-    macro_f_string_dynamic_t_delete_simple(stage.file_libraries_script); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_libraries_shared); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_libraries_static); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_objects_static); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_process_post); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_process_pre); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_programs_script); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_programs_shared); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_programs_static); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_skeleton); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_sources_headers); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_sources_script); \
-    macro_f_string_dynamic_t_delete_simple(stage.file_sources_settings);
+    macro_f_string_dynamic_t_delete_simple(stage.file_libraries_script) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_libraries_shared) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_libraries_static) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_objects_static) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_process_post) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_process_pre) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_programs_script) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_programs_shared) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_programs_static) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_skeleton) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_sources_headers) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_sources_script) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_sources_settings)
 
   #define FAKE_build_stage_built_s            ".built"
   #define FAKE_build_stage_libraries_script_s "libraries_script"
@@ -1041,17 +1041,17 @@ extern "C" {
   }
 
   #define macro_fake_make_parameter_delete_simple(parameter) \
-    macro_f_string_dynamics_t_delete_simple(parameter.build); \
-    macro_f_string_dynamics_t_delete_simple(parameter.color); \
-    macro_f_string_dynamics_t_delete_simple(parameter.data); \
-    macro_f_string_dynamics_t_delete_simple(parameter.define); \
-    macro_f_string_dynamics_t_delete_simple(parameter.fakefile); \
-    macro_f_string_dynamics_t_delete_simple(parameter.mode); \
-    macro_f_string_dynamics_t_delete_simple(parameter.process); \
-    macro_f_string_dynamics_t_delete_simple(parameter.settings); \
-    macro_f_string_dynamics_t_delete_simple(parameter.sources); \
-    macro_f_string_dynamics_t_delete_simple(parameter.verbosity); \
-    macro_f_string_dynamics_t_delete_simple(parameter.work);
+    macro_f_string_dynamics_t_delete_simple(parameter.build) \
+    macro_f_string_dynamics_t_delete_simple(parameter.color) \
+    macro_f_string_dynamics_t_delete_simple(parameter.data) \
+    macro_f_string_dynamics_t_delete_simple(parameter.define) \
+    macro_f_string_dynamics_t_delete_simple(parameter.fakefile) \
+    macro_f_string_dynamics_t_delete_simple(parameter.mode) \
+    macro_f_string_dynamics_t_delete_simple(parameter.process) \
+    macro_f_string_dynamics_t_delete_simple(parameter.settings) \
+    macro_f_string_dynamics_t_delete_simple(parameter.sources) \
+    macro_f_string_dynamics_t_delete_simple(parameter.verbosity) \
+    macro_f_string_dynamics_t_delete_simple(parameter.work)
 #endif // _di_fake_make_parameter_t_
 
 #ifndef _di_fake_make_path_t_
@@ -1108,12 +1108,12 @@ extern "C" {
   #define macro_fake_make_data_t_delete_simple(structure) \
     macro_fake_build_setting_t_delete_simple(structure.setting_build) \
     macro_fake_make_setting_t_delete_simple(structure.setting_make) \
-    macro_f_string_maps_t_delete_simple(structure.environment); \
+    macro_f_string_maps_t_delete_simple(structure.environment) \
     macro_fake_make_parameter_delete_simple(structure.parameter) \
     macro_fake_make_path_delete_simple(structure.path) \
     macro_f_fss_nameds_t_delete_simple(structure.fakefile) \
-    macro_f_string_dynamic_t_delete_simple(structure.buffer); \
-    macro_f_string_dynamic_t_delete_simple(structure.path_cache);
+    macro_f_string_dynamic_t_delete_simple(structure.buffer) \
+    macro_f_string_dynamic_t_delete_simple(structure.path_cache)
 #endif // _di_fake_make_data_t_
 
 #ifndef _di_fake_skeleton_content_
