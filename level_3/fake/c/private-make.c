@@ -203,6 +203,8 @@ extern "C" {
       return;
     }
 
+    data_make->fakefile.used = 0;
+
     *status = fake_file_buffer(main, main->file_data_build_fakefile.string, &data_make->buffer);
     if (F_status_is_error(*status)) return;
 
@@ -270,7 +272,9 @@ extern "C" {
       const f_string_range_t name_settings_range = macro_f_string_range_t_initialize(fake_make_section_settings_s_length);
       const f_string_range_t name_main_range = macro_f_string_range_t_initialize(fake_make_section_main_s_length);
 
-      macro_f_fss_nameds_t_resize((*status), data_make->fakefile, list_objects.used);
+      if (list_objects.used > data_make->fakefile.size) {
+        macro_f_fss_nameds_t_resize((*status), data_make->fakefile, list_objects.used);
+      }
 
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "macro_f_fss_nameds_t_resize", F_true);
