@@ -245,9 +245,10 @@ extern "C" {
         }
       }
 
+      macro_f_fss_delimits_t_delete_simple(delimits);
+      macro_f_fss_comments_t_delete_simple(comments);
+
       if (F_status_is_error(*status)) {
-        macro_f_fss_delimits_t_delete_simple(delimits);
-        macro_f_fss_comments_t_delete_simple(comments);
         macro_f_fss_objects_t_delete_simple(list_objects);
         macro_f_fss_contents_t_delete_simple(list_contents);
 
