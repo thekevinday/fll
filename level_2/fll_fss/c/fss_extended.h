@@ -117,8 +117,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors (with error bit) from: fl_fss_extended_content_write_string().
- *   Errors (with error bit) from: fl_fss_extended_object_write_string().
+ *   Errors (with error bit) from: fl_fss_extended_content_write().
+ *   Errors (with error bit) from: fl_fss_extended_object_write().
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
  */
 #ifndef _di_fll_fss_extended_write_string_

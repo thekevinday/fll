@@ -162,7 +162,7 @@ extern "C" {
     f_status_t status = 0;
     f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
-    status = fl_fss_basic_object_write_string(object, quote, f_fss_complete_full, state, &range, destination);
+    status = fl_fss_basic_object_write(object, quote, f_fss_complete_full, state, &range, destination);
 
     if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;
@@ -173,7 +173,7 @@ extern "C" {
         range.start = 0;
         range.stop = content.used - 1;
 
-        status = fl_fss_basic_content_write_string(content, f_fss_complete_full, state, &range, destination);
+        status = fl_fss_basic_content_write(content, f_fss_complete_full, state, &range, destination);
         if (F_status_is_error(status)) return status;
       }
       else {

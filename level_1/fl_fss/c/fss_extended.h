@@ -188,9 +188,9 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_is_space().
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
-#ifndef _di_fl_fss_extended_object_write_string_
-  extern f_status_t fl_fss_extended_object_write_string(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
-#endif // _di_fl_fss_extended_object_write_string_
+#ifndef _di_fl_fss_extended_object_write_
+  extern f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
+#endif // _di_fl_fss_extended_object_write_
 
 /**
  * Write an fss-0001 content from a given string.
@@ -243,9 +243,9 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_is_space().
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
-#ifndef _di_fl_fss_extended_content_write_string_
-  extern f_status_t fl_fss_extended_content_write_string(const f_string_static_t content, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
-#endif // _di_fl_fss_extended_content_write_string_
+#ifndef _di_fl_fss_extended_content_write_
+  extern f_status_t fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
+#endif // _di_fl_fss_extended_content_write_
 
 #ifdef __cplusplus
 } // extern "C"

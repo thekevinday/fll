@@ -42,12 +42,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_fss_is_space().
  *
- * @see fl_fss_basic_object_write_string()
- * @see fl_fss_extended_object_write_string()
+ * @see fl_fss_basic_object_write()
+ * @see fl_fss_extended_object_write()
  */
-#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
   extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
 
 /**
  * Add all bytes to destination until stop point, buffer end, or EOL.
@@ -75,14 +75,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_dynamic_increase().
  *
- * @see fl_fss_basic_list_content_write_string()
- * @see fl_fss_embedded_list_content_write_string()
- * @see fl_fss_extended_list_content_write_string()
+ * @see fl_fss_basic_list_content_write()
+ * @see fl_fss_embedded_list_content_write()
+ * @see fl_fss_extended_list_content_write()
  * @see f_string_dynamic_increase()
  */
-#if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_content_write_string_)
+#if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
   extern f_status_t private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_content_write_string_)
+#endif // !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
 
 /**
  * Trim a given object used by the basic list and extended list object write functions.
@@ -108,12 +108,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_fss_is_space().
  *
- * @see fl_fss_basic_list_object_write_string()
- * @see fl_fss_extended_list_object_write_string()
+ * @see fl_fss_basic_list_object_write()
+ * @see fl_fss_extended_list_object_write()
  */
-#if !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
+#if !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
   extern f_status_t private_fl_fss_basic_list_write_object_trim(const f_array_length_t used_start, f_state_t state, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
+#endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
 
 /**
  * Private implementation of fl_fss_basic_object_read().
@@ -186,7 +186,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
 
 /**
- * Private implementation of fl_fss_basic_object_write_string().
+ * Private implementation of fl_fss_basic_object_write().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -234,13 +234,13 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
  *
- * @see fl_fss_basic_object_write_string()
- * @see fl_fss_extended_object_write_string()
- * @see fl_fss_extended_content_write_string()
+ * @see fl_fss_basic_object_write()
+ * @see fl_fss_extended_object_write()
+ * @see fl_fss_extended_content_write()
  */
-#if !defined(fl_fss_basic_object_write_string) || !defined(fl_fss_extended_object_write_string) || !defined(_di_fl_fss_extended_content_write_string_)
+#if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
   extern f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quoted, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(fl_fss_basic_object_write_string) || !defined(fl_fss_extended_object_write_string) || !defined(_di_fl_fss_extended_content_write_string_)
+#endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
 
 #ifdef __cplusplus
 } // extern "C"
