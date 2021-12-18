@@ -57,6 +57,8 @@ extern "C" {
  *   The vocabulary name list to store the found vocabulary names.
  * @param content
  *   The content list to store the content associated with the found vocabulary names.
+ * @param delimits
+ *   A delimits array representing where delimits exist within the buffer.
  *
  * @return
  *   F_none on success and an IKI vocabulary name was found.
@@ -65,15 +67,15 @@ extern "C" {
  *   F_data_not_eos on success and EOS was reached, but there were no IKI vocabularie names found.
  *   F_data_not_stop on success and stop point was reached, but there were no IKI vocabularie names found.
  *
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if a string length is too large to store in the buffer.
  *
+ *   Success from: f_iki_read().
  *   Errors (with error bit) from: f_iki_read().
+ *
+ * @see f_iki_read()
  */
 #ifndef _di_fl_iki_read_
-  extern f_status_t fl_iki_read(f_state_t state, f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content);
+  extern f_status_t fl_iki_read(f_state_t state, f_string_static_t * const buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_iki_delimits_t *delimits);
 #endif // _di_fl_iki_read_
 
 #ifdef __cplusplus

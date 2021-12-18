@@ -1233,15 +1233,16 @@ extern "C" {
       }
     }
 
-    const f_string_static_t vocabulary_define = macro_f_string_static_t_initialize(iki_vocabulary_0002_define_s, IKI_vocabulary_0002_define_s_length);
-    const f_string_static_t vocabulary_parameter = macro_f_string_static_t_initialize(iki_vocabulary_0002_parameter_s, IKI_vocabulary_0002_parameter_s_length);
+    const f_string_static_t vocabulary_define = macro_f_string_static_t_initialize(F_iki_vocabulary_0002_define_s, F_iki_vocabulary_0002_define_s_length);
+    const f_string_static_t vocabulary_parameter = macro_f_string_static_t_initialize(F_iki_vocabulary_0002_parameter_s, F_iki_vocabulary_0002_parameter_s_length);
 
-    const f_string_range_t range_define = macro_f_string_range_t_initialize(IKI_vocabulary_0002_define_s_length);
-    const f_string_range_t range_parameter = macro_f_string_range_t_initialize(IKI_vocabulary_0002_parameter_s_length);
+    const f_string_range_t range_define = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_define_s_length);
+    const f_string_range_t range_parameter = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_parameter_s_length);
 
     f_iki_variable_t iki_variable = f_iki_variable_t_initialize;
     f_iki_vocabulary_t iki_vocabulary = f_iki_vocabulary_t_initialize;
     f_iki_content_t iki_content = f_iki_content_t_initialize;
+    f_iki_delimits_t iki_delimits = f_iki_delimits_t_initialize;
 
     f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_iki, 0, (void *) &main, 0);
 
@@ -1312,7 +1313,7 @@ extern "C" {
 
       used_arguments = arguments->used;
 
-      *status = fl_iki_read(state, &data_make->buffer, &range, &iki_variable, &iki_vocabulary, &iki_content);
+      *status = fl_iki_read(state, &data_make->buffer, &range, &iki_variable, &iki_vocabulary, &iki_content, &iki_delimits);
 
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) != F_interrupt) {
@@ -1321,6 +1322,10 @@ extern "C" {
 
         break;
       }
+
+      for (k = 0; k < iki_delimits.used; ++k) {
+        data_make->buffer.string[iki_delimits.array[k]] = f_iki_syntax_placeholder_s[0];
+      } // for
 
       if (arguments->used >= arguments->size) {
         *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, arguments);
@@ -1593,11 +1598,13 @@ extern "C" {
       macro_f_iki_variable_t_delete_simple(iki_variable);
       macro_f_iki_vocabulary_t_delete_simple(iki_vocabulary);
       macro_f_iki_content_t_delete_simple(iki_content);
+      macro_f_iki_delimits_t_delete_simple(iki_delimits);
     } // for
 
     macro_f_iki_variable_t_delete_simple(iki_variable);
     macro_f_iki_vocabulary_t_delete_simple(iki_vocabulary);
     macro_f_iki_content_t_delete_simple(iki_content);
+    macro_f_iki_delimits_t_delete_simple(iki_delimits);
   }
 #endif // _di_fake_make_operate_expand_
 

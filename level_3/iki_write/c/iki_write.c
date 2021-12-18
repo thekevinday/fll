@@ -261,18 +261,18 @@ extern "C" {
       }
     }
 
-    uint8_t quote = F_iki_syntax_quote_double_s;
+    uint8_t quote = f_iki_syntax_quote_double_s[0];
 
     if (F_status_is_error_not(status)) {
       if (main->parameters[iki_write_parameter_double].result == f_console_result_found) {
         if (main->parameters[iki_write_parameter_single].result == f_console_result_found) {
           if (main->parameters[iki_write_parameter_double].location < main->parameters[iki_write_parameter_single].location) {
-            quote = F_iki_syntax_quote_single_s;
+            quote = f_iki_syntax_quote_single_s[0];
           }
         }
       }
       else if (main->parameters[iki_write_parameter_single].result == f_console_result_found) {
-        quote = F_iki_syntax_quote_single_s;
+        quote = f_iki_syntax_quote_single_s[0];
       }
     }
 

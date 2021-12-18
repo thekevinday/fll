@@ -28,10 +28,10 @@ extern "C" {
         }
 
         for (j = 0; j < delimits; ++j) {
-          escaped->string[escaped->used++] = F_iki_syntax_slash_s;
+          escaped->string[escaped->used++] = F_iki_syntax_slash_s[0];
         } // for
 
-        escaped->string[escaped->used++] = F_iki_syntax_slash_s;
+        escaped->string[escaped->used++] = F_iki_syntax_slash_s[0];
         escaped->string[escaped->used++] = quote;
 
         delimits = 0;
@@ -42,7 +42,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         }
 
-        if (content.string[i] == F_iki_syntax_slash_s) {
+        if (content.string[i] == F_iki_syntax_slash_s[0]) {
           ++delimits;
         }
         else {
@@ -61,7 +61,7 @@ extern "C" {
       }
 
       for (j = 0; j < delimits; ++j) {
-        escaped->string[escaped->used++] = F_iki_syntax_slash_s;
+        escaped->string[escaped->used++] = F_iki_syntax_slash_s[0];
       } // for
     }
 
@@ -94,7 +94,7 @@ extern "C" {
 
         return F_status_set_error(F_syntax);
       }
-      else if (content.string[i] == F_iki_syntax_slash_s) {
+      else if (content.string[i] == F_iki_syntax_slash_s[0]) {
         delimits = 1;
 
         if (i + 1 < content.used) {
@@ -118,14 +118,14 @@ extern "C" {
               }
 
               for (j = 0; j < delimits; ++j) {
-                unescaped->string[unescaped->used++] = F_iki_syntax_slash_s;
+                unescaped->string[unescaped->used++] = F_iki_syntax_slash_s[0];
               } // for
 
               delimits = 0;
               unescaped->string[unescaped->used++] = quote;
               break;
             }
-            else if (content.string[j] == F_iki_syntax_slash_s) {
+            else if (content.string[j] == F_iki_syntax_slash_s[0]) {
               ++delimits;
             }
             else if (content.string[j]) {
@@ -165,7 +165,7 @@ extern "C" {
           }
 
           for (j = 0; j < delimits; ++j) {
-            unescaped->string[unescaped->used++] = F_iki_syntax_slash_s;
+            unescaped->string[unescaped->used++] = F_iki_syntax_slash_s[0];
           } // for
 
           break;

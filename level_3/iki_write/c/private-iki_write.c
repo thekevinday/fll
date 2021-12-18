@@ -56,7 +56,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    fl_print_format("%Q%c%c%Q%c", output.stream, object, F_iki_syntax_separator_s, quote, *escaped, quote);
+    fl_print_format("%Q%c%c%Q%c", output.stream, object, f_iki_syntax_separator_s[0], quote, *escaped, quote);
 
     return F_none;
   }

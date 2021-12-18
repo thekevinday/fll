@@ -25,6 +25,38 @@ extern "C" {
 #endif // _di_iki_read_common_
 
 /**
+ * Provide a structure for containing processed IKI data.
+ *
+ * variable:   The variable ranges.
+ * vocabulary: The vocabulary ranges.
+ * content:    The content ranges.
+ * delimits:   The delimited locations.
+ */
+#ifndef _di_iki_data_
+  typedef struct {
+    f_iki_variable_t variable;
+    f_iki_vocabulary_t vocabulary;
+    f_iki_content_t content;
+    f_iki_delimits_t delimits;
+  } iki_data_t;
+
+  #define iki_data_t_initialize \
+    { \
+      f_iki_variable_t_initialize, \
+      f_iki_vocabulary_t_initialize, \
+      f_iki_content_t_initialize, \
+      f_iki_delimits_t_initialize, \
+    }
+
+  #define macro_iki_data_t_delete_simple(data) \
+    macro_f_iki_variable_t_delete_simple(data.variable) \
+    macro_f_iki_vocabulary_t_delete_simple(data.vocabulary) \
+    macro_f_iki_content_t_delete_simple(data.content) \
+    macro_f_iki_delimits_t_delete_simple(data.delimits)
+
+#endif // _di_iki_data_
+
+/**
  * Print a message about a process signal being recieved, such as an interrupt signal.
  *
  * @param main

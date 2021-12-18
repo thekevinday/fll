@@ -20,60 +20,132 @@ extern "C" {
  * IKI-specific syntax.
  */
 #ifndef _di_f_iki_syntax_
-  #define F_iki_syntax_separator_s   ':'
-  #define F_iki_syntax_placeholder_s  0
-  #define F_iki_syntax_quote_double_s '"'
-  #define F_iki_syntax_quote_single_s '\''
-  #define F_iki_syntax_slash_s        '\\'
+  #define F_iki_syntax_separator_s    ":"
+  #define F_iki_syntax_placeholder_s  ""
+  #define F_iki_syntax_quote_double_s "\""
+  #define F_iki_syntax_quote_single_s "\'"
+  #define F_iki_syntax_slash_s        "\\"
+
+  #define F_iki_syntax_separator_s_length    1
+  #define F_iki_syntax_placeholder_s_length  1
+  #define F_iki_syntax_quote_double_s_length 1
+  #define F_iki_syntax_quote_single_s_length 1
+  #define F_iki_syntax_slash_s_length        1
+
+  extern const f_string_t f_iki_syntax_separator_s;
+  extern const f_string_t f_iki_syntax_placeholder_s;
+  extern const f_string_t f_iki_syntax_quote_double_s;
+  extern const f_string_t f_iki_syntax_quote_single_s;
+  extern const f_string_t f_iki_syntax_slash_s;
 #endif //_di_f_iki_syntax_
 
-#ifndef _di_iki_vocabulary_0001_s_
-  #define IKI_vocabulary_0001_address_s  "address"
-  #define IKI_vocabulary_0001_code_s     "code"
-  #define IKI_vocabulary_0001_email_s    "email"
-  #define IKI_vocabulary_0001_name_s     "name"
-  #define IKI_vocabulary_0001_phone_s    "phone"
-  #define IKI_vocabulary_0001_quote_s    "quote"
-  #define IKI_vocabulary_0001_uri_s      "uri"
-  #define IKI_vocabulary_0001_url_s      "url"
-  #define IKI_vocabulary_0001_urn_s      "urn"
-  #define IKI_vocabulary_0001_variable_s "var"
+#ifndef _di_iki_vocabulary_0001_
+  #define F_iki_vocabulary_0001_address_s  "address"
+  #define F_iki_vocabulary_0001_code_s     "code"
+  #define F_iki_vocabulary_0001_email_s    "email"
+  #define F_iki_vocabulary_0001_name_s     "name"
+  #define F_iki_vocabulary_0001_phone_s    "phone"
+  #define F_iki_vocabulary_0001_quote_s    "quote"
+  #define F_iki_vocabulary_0001_uri_s      "uri"
+  #define F_iki_vocabulary_0001_url_s      "url"
+  #define F_iki_vocabulary_0001_urn_s      "urn"
+  #define F_iki_vocabulary_0001_variable_s "var"
 
-  #define IKI_vocabulary_0001_address_s_length  7
-  #define IKI_vocabulary_0001_code_s_length     4
-  #define IKI_vocabulary_0001_email_s_length    5
-  #define IKI_vocabulary_0001_name_s_length     4
-  #define IKI_vocabulary_0001_phone_s_length    5
-  #define IKI_vocabulary_0001_quote_s_length    5
-  #define IKI_vocabulary_0001_uri_s_length      3
-  #define IKI_vocabulary_0001_url_s_length      3
-  #define IKI_vocabulary_0001_urn_s_length      3
-  #define IKI_vocabulary_0001_variable_s_length 3
+  #define F_iki_vocabulary_0001_address_s_length  7
+  #define F_iki_vocabulary_0001_code_s_length     4
+  #define F_iki_vocabulary_0001_email_s_length    5
+  #define F_iki_vocabulary_0001_name_s_length     4
+  #define F_iki_vocabulary_0001_phone_s_length    5
+  #define F_iki_vocabulary_0001_quote_s_length    5
+  #define F_iki_vocabulary_0001_uri_s_length      3
+  #define F_iki_vocabulary_0001_url_s_length      3
+  #define F_iki_vocabulary_0001_urn_s_length      3
+  #define F_iki_vocabulary_0001_variable_s_length 3
 
-  extern const f_string_t iki_vocabulary_0001_address_s;
-  extern const f_string_t iki_vocabulary_0001_code_s;
-  extern const f_string_t iki_vocabulary_0001_email_s;
-  extern const f_string_t iki_vocabulary_0001_name_s;
-  extern const f_string_t iki_vocabulary_0001_phone_s;
-  extern const f_string_t iki_vocabulary_0001_quote_s;
-  extern const f_string_t iki_vocabulary_0001_uri_s;
-  extern const f_string_t iki_vocabulary_0001_url_s;
-  extern const f_string_t iki_vocabulary_0001_urn_s;
-  extern const f_string_t iki_vocabulary_0001_variable_s;
-#endif // _di_iki_vocabulary_0001_s_
+  extern const f_string_t f_iki_vocabulary_0001_address_s;
+  extern const f_string_t f_iki_vocabulary_0001_code_s;
+  extern const f_string_t f_iki_vocabulary_0001_email_s;
+  extern const f_string_t f_iki_vocabulary_0001_name_s;
+  extern const f_string_t f_iki_vocabulary_0001_phone_s;
+  extern const f_string_t f_iki_vocabulary_0001_quote_s;
+  extern const f_string_t f_iki_vocabulary_0001_uri_s;
+  extern const f_string_t f_iki_vocabulary_0001_url_s;
+  extern const f_string_t f_iki_vocabulary_0001_urn_s;
+  extern const f_string_t f_iki_vocabulary_0001_variable_s;
+#endif // _di_iki_vocabulary_0001_
 
-#ifndef _di_iki_vocabulary_0002_s_
-  #define IKI_vocabulary_0002_define_s    "define"
-  #define IKI_vocabulary_0002_parameter_s "parameter"
+#ifndef _di_iki_vocabulary_0002_
+  #define F_iki_vocabulary_0002_define_s    "define"
+  #define F_iki_vocabulary_0002_parameter_s "parameter"
 
-  #define IKI_vocabulary_0002_define_s_length    6
-  #define IKI_vocabulary_0002_parameter_s_length 9
+  #define F_iki_vocabulary_0002_define_s_length    6
+  #define F_iki_vocabulary_0002_parameter_s_length 9
 
-  extern const f_string_t iki_vocabulary_0002_define_s;
-  extern const f_string_t iki_vocabulary_0002_parameter_s;
-#endif // _di_iki_vocabulary_0002_s_
+  extern const f_string_t f_iki_vocabulary_0002_define_s;
+  extern const f_string_t f_iki_vocabulary_0002_parameter_s;
+#endif // _di_iki_vocabulary_0002_
 
 // @todo consider IKI-0003 = vocabulary based on context from HTML5 and accessibility-related?
+
+/**
+ * Designate an iki delimit location.
+ */
+#ifndef _di_f_iki_delimit_t_
+  typedef f_array_length_t f_iki_delimit_t;
+#endif // _di_f_iki_delimit_t_
+
+/**
+ * An array of f_iki_delimit_t.
+ *
+ * array: The array of iki quote.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_iki_delimits_t_
+  typedef f_array_lengths_t f_iki_delimits_t;
+
+  #define f_iki_delimits_t_initialize f_array_lengths_t_initialize
+
+  #define macro_f_iki_delimits_t_clear(delimits) macro_f_array_lengths_t_clear(delimits)
+
+  #define macro_f_iki_delimits_t_resize(status, delimits, length) macro_f_array_lengths_t_resize(status, delimits, length)
+  #define macro_f_iki_delimits_t_adjust(status, delimits, length) macro_f_array_lengths_t_adjust(status, delimits, length)
+
+  #define macro_f_iki_delimits_t_delete_simple(delimits)  macro_f_array_lengths_t_delete_simple(delimits)
+  #define macro_f_iki_delimits_t_destroy_simple(delimits) macro_f_array_lengths_t_destroy_simple(delimits)
+
+  #define macro_f_iki_delimits_t_increase(status, step, delimits)      macro_f_array_lengths_t_increase(status, step, delimits)
+  #define macro_f_iki_delimits_t_increase_by(status, delimits, amount) macro_f_array_lengths_t_increase_by(status, delimits, amount)
+  #define macro_f_iki_delimits_t_decrease_by(status, delimits, amount) macro_f_array_lengths_t_decrease_by(status, delimits, amount)
+  #define macro_f_iki_delimits_t_decimate_by(status, delimits, amount) macro_f_array_lengths_t_decimate_by(status, delimits, amount)
+#endif // _di_f_iki_delimits_t_
+
+/**
+ * An array of f_iki_delimits_t.
+ *
+ * array: The array of iki quotes.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_iki_delimitss_t_
+  typedef f_array_lengthss_t f_iki_delimitss_t;
+
+  #define f_iki_delimitss_t_initialize f_array_lengthss_t_initialize
+
+  #define macro_f_iki_delimitss_t_clear(delimitss) macro_f_array_lengthss_t_clear(delimitss)
+
+  #define macro_f_iki_delimitss_t_resize(status, delimitss, length) macro_f_array_lengthss_t_resize(status, delimitss, length)
+  #define macro_f_iki_delimitss_t_adjust(status, delimitss, length) macro_f_array_lengthss_t_adjust(status, delimitss, length)
+
+  #define macro_f_iki_delimitss_t_delete_simple(delimitss)  macro_f_array_lengthss_t_delete_simple(delimitss)
+  #define macro_f_iki_delimitss_t_destroy_simple(delimitss) macro_f_array_lengthss_t_destroy_simple(delimitss)
+
+  #define macro_f_iki_delimitss_t_increase(status, step, delimitss)      macro_f_array_lengthss_t_increase(status, step, delimitss)
+  #define macro_f_iki_delimitss_t_increase_by(status, delimitss, amount) macro_f_array_lengthss_t_increase_by(status, delimitss, amount)
+  #define macro_f_iki_delimitss_t_decrease_by(status, delimitss, amount) macro_f_array_lengthss_t_decrease_by(status, delimitss, amount)
+  #define macro_f_iki_delimitss_t_decimate_by(status, delimitss, amount) macro_f_array_lengthss_t_decimate_by(status, delimitss, amount)
+#endif // _di_f_iki_delimitss_t_
+
 
 /**
  * This holds an array of string ranges that represent the entire vocabulary name, content, and syntax.
@@ -94,6 +166,7 @@ extern "C" {
 
   #define macro_f_iki_variable_t_delete_simple(variable)  macro_f_string_ranges_t_delete_simple(variable)
   #define macro_f_iki_variable_t_destroy_simple(variable) macro_f_string_ranges_t_destroy_simple(variable)
+
 #endif // _di_iki_variable_t_
 
 /**
@@ -190,125 +263,6 @@ extern "C" {
 #ifndef _di_f_iki_default_allocation_step_
   #define F_iki_default_allocation_step_d 4
 #endif // _di_f_iki_default_allocation_step_
-
-/**
- * Reallocate delimits array if necessary for appending a new delimit.
- *
- * state:    The state.
- * status:   The return status to use.
- * delimits: The delimit array to conditionally reallocate.
- */
-#ifndef _di_macro_f_iki_allocate_delimits_if_necessary_
-  #define macro_f_iki_allocate_delimits_if_necessary(state, status, delimits) \
-    status = F_none; \
-    if (delimits.used == delimits.size) { \
-      if (delimits.used + state.step_small > F_array_length_t_size_d) { \
-        if (delimits.used == F_array_length_t_size_d) { \
-          status = F_status_set_error(F_string_too_large); \
-        } \
-        else { \
-          macro_f_array_lengths_t_resize(status, delimits, delimits.size + 1); \
-        } \
-      } \
-      else { \
-        macro_f_array_lengths_t_resize(status, delimits, delimits.size + state.step_small); \
-      } \
-    }
-#endif // _di_macro_f_iki_allocate_delimits_if_necessary_
-
-/**
- * Reallocate delimits array if necessary for appending a new ranges.
- *
- * state:  The state.
- * status: The return status to use.
- * ranges: The delimit array to conditionally reallocate.
- */
-#ifndef _di_macro_f_iki_allocate_ranges_if_necessary_
-  #define macro_f_iki_allocate_ranges_if_necessary(state, status, ranges) \
-    status = F_none; \
-    if (ranges.used == ranges.size) { \
-      if (ranges.used + state.step_small > F_array_length_t_size_d) { \
-        if (ranges.used == F_array_length_t_size_d) { \
-          status = F_status_set_error(F_string_too_large); \
-        } \
-        else { \
-          macro_f_string_ranges_t_resize(status, ranges, ranges.size + 1); \
-        } \
-      } \
-      else { \
-        macro_f_string_ranges_t_resize(status, ranges, ranges.size + state.step_small); \
-      } \
-    }
-#endif // _di_macro_f_iki_allocate_ranges_if_necessary_
-
-/**
- * Determine what the max width is based on the buffer and the range.
- *
- * buffer:    (A pointer) The buffer to determine width against.
- * range:     (A pointer) The range within that buffer to determine against.
- * width_max: The determined width max.
- */
-#ifndef _di_macro_f_iki_determine_width_max_
-  #define macro_f_iki_determine_width_max(buffer, range, width_max) \
-    width_max = (range->stop - range->start) + 1; \
-    if (width_max > buffer->used - range->start) { \
-      width_max = buffer->used - range->start; \
-    }
-#endif // _di_macro_f_iki_determine_width_max_
-
-/**
- * Seek until whitespace is found or not found.
- *
- * This will ignore the delimit placeholder.
- *
- * status:    The return status to use.
- * buffer:    (A pointer) The buffer to seek through.
- * range:     (A pointer) The range within that buffer to seek through.
- * width_max: The width_max variable to use fo calculating width_max.
- * condition: Set to TRUE to seek until whitespace is found and FALSE to seek until non-whitespace.
- */
-#ifndef _di_macro_f_iki_seek_whitespace_
-  #define macro_f_iki_seek_whitespace(status, buffer, range, width_max, condition) \
-    while (range->start <= range->stop && range->start < buffer->used) { \
-      if (buffer->string[range->start] == F_iki_syntax_placeholder_s) { \
-        ++range->start; \
-        continue; \
-      } \
-      macro_f_iki_determine_width_max(buffer, range, width_max); \
-      status = f_utf_is_whitespace(buffer->string + range->start, width_max); \
-      if (status == condition) break; \
-      else if (F_status_is_error(status)) break; \
-      status = f_utf_buffer_increment(*buffer, range, 1); \
-      if (F_status_is_error(status)) break; \
-    }
-#endif // _di_macro_f_iki_seek_whitespace_
-
-/**
- * Seek until a word, dash, or plus is found or not found.
- *
- * This will ignore the delimit placeholder.
- *
- * status:    The return status to use.
- * buffer:    (A pointer) The buffer to seek through.
- * range:     (A pointer) The range within that buffer to seek through.
- * width_max: The width_max variable to use fo calculating width_max.
- * condition: Set to TRUE to seek until a word character, dash character, or plus character is found and FALSE to seek until the opposite is found.
- */
-#ifndef _di_macro_f_iki_seek_word_dash_plus_
-  #define macro_f_iki_seek_word_dash_plus(status, buffer, range, width_max, condition) \
-    while (range->start <= range->stop && range->start < buffer->used) { \
-      if (buffer->string[range->start] == F_iki_syntax_placeholder_s) { \
-        ++range->start; \
-        continue; \
-      } \
-      macro_f_iki_determine_width_max(buffer, range, width_max); \
-      status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false); \
-      if (status == condition) break; \
-      else if (F_status_is_error(status)) break; \
-      status = f_utf_buffer_increment(*buffer, range, 1); \
-      if (F_status_is_error(status)) break; \
-    }
-#endif // _di_macro_f_iki_seek_word_dash_plus_
 
 #ifdef __cplusplus
 } // extern "C"
