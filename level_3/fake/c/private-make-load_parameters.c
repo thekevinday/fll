@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_load_parameters_
-  void fake_make_load_parameters(fake_main_t * const main, fake_make_data_t *data_make, f_status_t *status) {
+  void fake_make_load_parameters(fake_main_t * const main, fake_make_data_t * const data_make, f_status_t *status) {
 
     if (F_status_is_error(*status)) return;
 

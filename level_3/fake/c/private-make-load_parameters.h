@@ -29,7 +29,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_load_parameters_
-  extern void fake_make_load_parameters(fake_main_t * const main, fake_make_data_t *data_make, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_make_load_parameters(fake_main_t * const main, fake_make_data_t * const data_make, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_parameters_
 
 #ifdef __cplusplus
