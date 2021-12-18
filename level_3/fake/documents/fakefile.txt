@@ -67,7 +67,7 @@ Fakefile Documentation:
       The first Content value represents the IKI variable name.
       All Content values after the first represent the values the matching IKI variable is replaced with.
 
-      The parameter variable name "return" is used to store the return result of an "run" or "shell" operation.
+      The parameter variable name "return" is used to store the return result of a "run" or "shell" operation.
       Setting this here only sets the default "return" parameter variable value.
 
   - main\:
@@ -348,28 +348,36 @@ Fakefile Documentation:
     The parameter object represents a variable that is to be substituted.
     The value represents the variable name and is case-sensitive.
     This IKI variable gets substituted with the value defined in the "settings" list or NULL if not defined.
+    The value may contain an additional ":option" or ":value" at the end of the name to designate getting only part of the parameter.
 
     The following are reserved parameter variable names\:
     - build\:
       This variable holds the "build" program parameters, such as "-b build/".
+      This supports both ":option" and ":value".
 
     - color\:
       This variable holds the color related program parameters, such as "+n".
+      This supports both ":option" and ":value" (value is always an empty string).
 
     - data\:
       This variable holds the "data" program parameters, such as "-D data/".
+      This supports both ":option" and ":value".
 
     - define\:
       This variable holds the "data" program parameters, such as "-d define/".
+      This supports both ":option" and ":value".
 
     - fakefile\:
       This variable holds the "fakefile" program parameters, such as "-f fakefile".
+      This supports both ":option" and ":value".
 
     - mode\:
       This variable holds the "fakefile" program parameters, such as "-m monolithic".
+      This supports both ":option" and ":value".
 
     - process\:
       This variable holds the "process" program parameters, such as "-p process_name".
+      This supports both ":option" and ":value".
 
     - return\:
       This variable holds the return status from a previously run user-space applications, which happens with the "run" and "shell" section operations.
@@ -377,12 +385,23 @@ Fakefile Documentation:
 
     - settings\:
       This variable holds the "settings" program parameters, such as "-s settings".
+      This supports both ":option" and ":value".
 
     - sources\:
       This variable holds the "data" program parameters, such as "-S sources/".
+      This supports both ":option" and ":value".
 
     - verbosity\:
       This variable holds the verbosity related program parameters, such as "+V".
+      This supports both ":option" and ":value" (value is always an empty string).
 
     - work\:
       This variable holds the "work" program parameters, such as "-w work/".
+      This supports both ":option" and ":value".
+
+    An example of getting just the ":option" or ":value" part of a parameter for the "work" parameters:
+    - work:option\:
+      This variable holds the option part of the "work" program parameters, such as "-w".
+
+    - work:value\:
+      This variable holds the value part of the "work" program parameters, such as "work/".

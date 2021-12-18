@@ -19,6 +19,7 @@ Fakefile Specification:
   The IKI-0002 vocabulary context is further clarified as follows\:
   - define: the value must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
   - parameter: the value is a case-sensitive variable name.
+    - Many parameters also support ":option" and ":value" appended at the end of the value.
 
   The reserved Section Objects are\:
   - settings: contains a list of Settings Objects and Content in FSS-0001 (Extended) format.

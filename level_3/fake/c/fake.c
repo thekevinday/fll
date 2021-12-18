@@ -251,6 +251,7 @@ extern "C" {
       fake_print_help(main->output.to, main->context);
 
       fake_main_delete(main);
+
       return F_none;
     }
 
@@ -258,6 +259,7 @@ extern "C" {
       fll_program_print_version(main->output.to, fake_program_version_s);
 
       fake_main_delete(main);
+
       return F_none;
     }
 

@@ -986,6 +986,9 @@ extern "C" {
   #define FAKE_make_parameter_variable_verbosity_s "verbosity"
   #define FAKE_make_parameter_variable_work_s      "work"
 
+  #define fake_make_parameter_iki_option_s ":option"
+  #define fake_make_parameter_iki_value_s  ":value"
+
   #define fake_make_parameter_variable_build_s_length     5
   #define fake_make_parameter_variable_color_s_length     5
   #define fake_make_parameter_variable_data_s_length      4
@@ -999,6 +1002,9 @@ extern "C" {
   #define fake_make_parameter_variable_verbosity_s_length 9
   #define fake_make_parameter_variable_work_s_length      4
 
+  #define fake_make_parameter_iki_option_s_length 7
+  #define fake_make_parameter_iki_value_s_length  6
+
   extern const f_string_t fake_make_parameter_variable_build_s;
   extern const f_string_t fake_make_parameter_variable_color_s;
   extern const f_string_t fake_make_parameter_variable_data_s;
@@ -1011,6 +1017,32 @@ extern "C" {
   extern const f_string_t fake_make_parameter_variable_sources_s;
   extern const f_string_t fake_make_parameter_variable_verbosity_s;
   extern const f_string_t fake_make_parameter_variable_work_s;
+
+  extern const f_string_t fake_make_parameter_variable_option_build_s;
+  extern const f_string_t fake_make_parameter_variable_option_color_s;
+  extern const f_string_t fake_make_parameter_variable_option_data_s;
+  extern const f_string_t fake_make_parameter_variable_option_define_s;
+  extern const f_string_t fake_make_parameter_variable_option_fakefile_s;
+  extern const f_string_t fake_make_parameter_variable_option_mode_s;
+  extern const f_string_t fake_make_parameter_variable_option_process_s;
+  extern const f_string_t fake_make_parameter_variable_option_return_s;
+  extern const f_string_t fake_make_parameter_variable_option_settings_s;
+  extern const f_string_t fake_make_parameter_variable_option_sources_s;
+  extern const f_string_t fake_make_parameter_variable_option_verbosity_s;
+  extern const f_string_t fake_make_parameter_variable_option_work_s;
+
+  extern const f_string_t fake_make_parameter_variable_value_build_s;
+  extern const f_string_t fake_make_parameter_variable_value_color_s;
+  extern const f_string_t fake_make_parameter_variable_value_data_s;
+  extern const f_string_t fake_make_parameter_variable_value_define_s;
+  extern const f_string_t fake_make_parameter_variable_value_fakefile_s;
+  extern const f_string_t fake_make_parameter_variable_value_mode_s;
+  extern const f_string_t fake_make_parameter_variable_value_process_s;
+  extern const f_string_t fake_make_parameter_variable_value_return_s;
+  extern const f_string_t fake_make_parameter_variable_value_settings_s;
+  extern const f_string_t fake_make_parameter_variable_value_sources_s;
+  extern const f_string_t fake_make_parameter_variable_value_verbosity_s;
+  extern const f_string_t fake_make_parameter_variable_value_work_s;
 
   typedef struct {
     f_string_dynamics_t build;
@@ -1080,6 +1112,8 @@ extern "C" {
     f_string_maps_t environment;
 
     fake_make_parameter_t parameter;
+    fake_make_parameter_t parameter_option;
+    fake_make_parameter_t parameter_value;
     fake_make_path_t path; // @todo review this, check if path.current is used anymore.
 
     fl_print_t error;
@@ -1097,6 +1131,8 @@ extern "C" {
     fake_make_setting_t_initialize, \
     f_string_maps_t_initialize, \
     fake_make_parameter_t_initialize, \
+    fake_make_parameter_t_initialize, \
+    fake_make_parameter_t_initialize, \
     fake_make_path_t_initialize, \
     fl_print_t_initialize, \
     f_fss_nameds_t_initialize, \
@@ -1110,6 +1146,8 @@ extern "C" {
     macro_fake_make_setting_t_delete_simple(structure.setting_make) \
     macro_f_string_maps_t_delete_simple(structure.environment) \
     macro_fake_make_parameter_delete_simple(structure.parameter) \
+    macro_fake_make_parameter_delete_simple(structure.parameter_option) \
+    macro_fake_make_parameter_delete_simple(structure.parameter_value) \
     macro_fake_make_path_delete_simple(structure.path) \
     macro_f_fss_nameds_t_delete_simple(structure.fakefile) \
     macro_f_string_dynamic_t_delete_simple(structure.buffer) \
