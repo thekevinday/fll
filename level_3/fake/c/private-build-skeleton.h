@@ -1,0 +1,42 @@
+/**
+ * FLL - Level 3
+ *
+ * Project: Featureless Make
+ * API Version: 0.5
+ * Licenses: lgpl-2.1-or-later
+ */
+#ifndef _PRIVATE_build_skeleton_h
+#define _PRIVATE_build_skeleton_h
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * Create all of the base directories inside the build directory.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_build
+ *   The build data.
+ * @param mode
+ *   The directory mode.
+ * @param file_stage
+ *   The specific stage file path.
+ * @param status
+ *   The return status.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_skeleton_
+  extern void fake_build_skeleton(fake_main_t * const main, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
+#endif // _di_fake_build_skeleton_
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#endif // _PRIVATE_build_skeleton_h
