@@ -107,10 +107,6 @@ extern "C" {
       }
     }
 
-    if (data_make.path.current.stream) {
-      f_file_stream_close(F_true, &data_make.path.current);
-    }
-
     {
       f_status_t status_path = f_path_change_at(data_make.path.top.id);
 
