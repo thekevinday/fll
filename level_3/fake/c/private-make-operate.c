@@ -2205,46 +2205,7 @@ extern "C" {
       }
 
       if (*operation_if == fake_make_operation_if_type_if_defined) {
-
-        if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, arguments.array[1], fake_make_operation_argument_environment_s_length) == F_equal_to) {
-          *operation_if = fake_make_operation_if_type_true_next;
-
-          for (f_array_length_t i = 2; i < arguments.used; ++i) {
-
-            if (f_environment_exists(arguments.array[i].string) != F_true) {
-              *operation_if = fake_make_operation_if_type_false_next;
-              break;
-            }
-          } // for
-        }
-        else if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter_s, arguments.array[1], fake_make_operation_argument_parameter_s_length) == F_equal_to) {
-          if (!data_make->setting_make.parameter.used) {
-            *operation_if = fake_make_operation_if_type_false_next;
-            return 0;
-          }
-
-          f_array_length_t i = 2;
-          f_array_length_t j = 0;
-          bool missed = F_true;
-
-          *operation_if = fake_make_operation_if_type_true_next;
-
-          for (; i < arguments.used; ++i, missed = F_true) {
-
-            for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
-
-              if (fl_string_dynamic_compare(arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
-                missed = F_false;
-                break;
-              }
-            } // for
-
-            if (missed) {
-              *operation_if = fake_make_operation_if_type_false_next;
-              break;
-            }
-          } // for
-        }
+        fake_make_operate_process_type_if_defined(main, data_make, arguments, operation_if);
 
         return 0;
       }
@@ -2993,6 +2954,180 @@ extern "C" {
     return status;
   }
 #endif // _di_fake_make_operate_process_execute_
+
+#ifndef _di_fake_make_operate_process_type_if_defined_
+  void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) {
+
+    const f_string_t reserved_name[] = {
+      fake_make_parameter_variable_build_s,
+      fake_make_parameter_variable_color_s,
+      fake_make_parameter_variable_data_s,
+      fake_make_parameter_variable_define_s,
+      fake_make_parameter_variable_fakefile_s,
+      fake_make_parameter_variable_mode_s,
+      fake_make_parameter_variable_process_s,
+      fake_make_parameter_variable_settings_s,
+      fake_make_parameter_variable_sources_s,
+      fake_make_parameter_variable_verbosity_s,
+      fake_make_parameter_variable_work_s,
+      fake_make_parameter_variable_option_build_s,
+      fake_make_parameter_variable_option_color_s,
+      fake_make_parameter_variable_option_data_s,
+      fake_make_parameter_variable_option_define_s,
+      fake_make_parameter_variable_option_fakefile_s,
+      fake_make_parameter_variable_option_mode_s,
+      fake_make_parameter_variable_option_process_s,
+      fake_make_parameter_variable_option_settings_s,
+      fake_make_parameter_variable_option_sources_s,
+      fake_make_parameter_variable_option_verbosity_s,
+      fake_make_parameter_variable_option_work_s,
+      fake_make_parameter_variable_value_build_s,
+      fake_make_parameter_variable_value_color_s,
+      fake_make_parameter_variable_value_data_s,
+      fake_make_parameter_variable_value_define_s,
+      fake_make_parameter_variable_value_fakefile_s,
+      fake_make_parameter_variable_value_mode_s,
+      fake_make_parameter_variable_value_process_s,
+      fake_make_parameter_variable_value_settings_s,
+      fake_make_parameter_variable_value_sources_s,
+      fake_make_parameter_variable_value_verbosity_s,
+      fake_make_parameter_variable_value_work_s,
+    };
+
+    const f_array_length_t reserved_length[] = {
+      fake_make_parameter_variable_build_s_length,
+      fake_make_parameter_variable_color_s_length,
+      fake_make_parameter_variable_data_s_length,
+      fake_make_parameter_variable_define_s_length,
+      fake_make_parameter_variable_fakefile_s_length,
+      fake_make_parameter_variable_mode_s_length,
+      fake_make_parameter_variable_process_s_length,
+      fake_make_parameter_variable_settings_s_length,
+      fake_make_parameter_variable_sources_s_length,
+      fake_make_parameter_variable_verbosity_s_length,
+      fake_make_parameter_variable_work_s_length,
+      fake_make_parameter_variable_build_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_color_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_data_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_define_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_fakefile_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_mode_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_process_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_settings_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_sources_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_verbosity_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_work_s_length + fake_make_parameter_iki_option_s_length,
+      fake_make_parameter_variable_build_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_color_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_data_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_define_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_fakefile_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_mode_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_process_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_settings_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_sources_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_verbosity_s_length + fake_make_parameter_iki_value_s_length,
+      fake_make_parameter_variable_work_s_length + fake_make_parameter_iki_value_s_length,
+    };
+
+    const bool reserved_defined[] = {
+      main->path_build.used,
+      F_true,
+      main->path_data.used,
+      main->define.used,
+      main->fakefile.used,
+      main->mode.used,
+      main->process.used,
+      main->settings.used,
+      main->path_sources.used,
+      F_true,
+      main->path_work.used,
+      main->parameters[fake_parameter_path_build].result == f_console_result_additional,
+      main->parameters[fake_parameter_light].result == f_console_result_found || main->parameters[fake_parameter_dark].result == f_console_result_found || main->parameters[fake_parameter_no_color].result == f_console_result_found,
+      main->parameters[fake_parameter_path_data].result == f_console_result_additional,
+      main->parameters[fake_parameter_define].result == f_console_result_additional,
+      main->parameters[fake_parameter_fakefile].result == f_console_result_additional,
+      main->parameters[fake_parameter_mode].result == f_console_result_additional,
+      main->parameters[fake_parameter_process].result == f_console_result_additional,
+      main->parameters[fake_parameter_settings].result == f_console_result_additional,
+      main->parameters[fake_parameter_path_sources].result == f_console_result_additional,
+      main->parameters[fake_parameter_verbosity_quiet].result == f_console_result_found || main->parameters[fake_parameter_verbosity_normal].result == f_console_result_found || main->parameters[fake_parameter_verbosity_verbose].result == f_console_result_found || main->parameters[fake_parameter_verbosity_debug].result == f_console_result_found,
+      main->parameters[fake_parameter_path_work].result == f_console_result_additional,
+      data_make->parameter_value.build.used,
+      data_make->parameter_value.color.used,
+      data_make->parameter_value.data.used,
+      data_make->parameter_value.define.used,
+      data_make->parameter_value.fakefile.used,
+      data_make->parameter_value.mode.used,
+      data_make->parameter_value.process.used,
+      data_make->parameter_value.settings.used,
+      data_make->parameter_value.sources.used,
+      data_make->parameter_value.verbosity.used,
+      data_make->parameter_value.work.used,
+    };
+
+    if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, arguments.array[1], fake_make_operation_argument_environment_s_length) == F_equal_to) {
+      *operation_if = fake_make_operation_if_type_true_next;
+
+      for (f_array_length_t i = 2; i < arguments.used; ++i) {
+
+        if (f_environment_exists(arguments.array[i].string) != F_true) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      } // for
+    }
+    else if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter_s, arguments.array[1], fake_make_operation_argument_parameter_s_length) == F_equal_to) {
+
+      f_array_length_t i = 2;
+      f_array_length_t j = 0;
+
+      // 0 = unknown, 1 = fail, 2 = pass.
+      uint8_t result = 0;
+
+      *operation_if = fake_make_operation_if_type_true_next;
+
+      // Multiple properties may pass and so if any of them fail, then they all fail.
+      for (; i < arguments.used; ++i) {
+
+        for (j = 0; j < 33; ++j) {
+
+          if (fl_string_dynamic_compare_string(reserved_name[j], arguments.array[i], reserved_length[j]) == F_equal_to) {
+            result = reserved_defined[j] ? 2 : 1;
+
+            break;
+          }
+        } // for
+
+        if (!result) {
+          for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
+
+            if (fl_string_dynamic_compare(arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
+              result = 2;
+
+              break;
+            }
+          } // for
+        }
+
+        if (result < 2) {
+          result = 1;
+
+          break;
+        }
+
+        if (i + 1 < arguments.used) {
+          result = 0;
+        }
+      } // for
+
+      if (result < 2) {
+        *operation_if = fake_make_operation_if_type_false_next;
+      }
+    }
+  }
+#endif // fake_make_operate_process_type_if_defined
 
 #ifndef _di_fake_make_operate_process_return_
   void fake_make_operate_process_return(fake_main_t * const main, const int return_code, fake_make_data_t *data_make, f_status_t *status) {

@@ -169,71 +169,96 @@ Fakefile Documentation:
 
       conditions\:
         == "left" "right"\:
-          compare all parameters to be equal.
-          requires 2 or more after the "==".
-          for example, "if == 'a' 'b' 'c' 'd'" would test: 'a' == 'b' && 'b' == 'c' && 'c' == 'd'.
-          this performs only string-based comparisons.
+          Compare all parameters to be equal.
+          Requires 2 or more after the "==".
+          For example, "if == 'a' 'b' 'c' 'd'" would test: 'a' == 'b' && 'b' == 'c' && 'c' == 'd'.
+          This performs only string-based comparisons.
 
         > "left string" "right string"\:
-          compare "left" to "right" for greater than.
-          requires 2 or more after the ">".
-          for example, "if > 0 1 2 3" would test: 0 > 1 && 1 > 2 && 2 > 3.
-          this performs only number-based comparisons.
+          Compare "left" to "right" for greater than.
+          Requires 2 or more after the ">".
+          For example, "if > 0 1 2 3" would test: 0 > 1 && 1 > 2 && 2 > 3.
+          This performs only number-based comparisons.
 
         < "left string" "right string"\:
-          compare "left" to "right" for less than.
-          requires 2 or more after the ">".
-          for example, "if < 0 1 2 3" would test: 0 < 1 && 1 < 2 && 2 < 3.
-          this performs only number-based comparisons.
+          Compare "left" to "right" for less than.
+          Requires 2 or more after the ">".
+          For example, "if < 0 1 2 3" would test: 0 < 1 && 1 < 2 && 2 < 3.
+          This performs only number-based comparisons.
 
         >= "left string" "right string"\:
-          compare "left" to "right" for greater than or equal to.
-          requires 2 or more after the ">=".
-          for example, "if >= 0 1 2 3" would test: 0 >= 1 && 1 >= 2 && 2 >= 3.
-          this performs only number-based comparisons.
+          Compare "left" to "right" for greater than or equal to.
+          Requires 2 or more after the ">=".
+          For example, "if >= 0 1 2 3" would test: 0 >= 1 && 1 >= 2 && 2 >= 3.
+          This performs only number-based comparisons.
 
         <= "left string" "right string"\:
-          compare "left" to "right" for less than or equal to.
-          requires 2 or more after the ">=".
-          for example, "if <= 0 1 2 3" would test: 0 <= 1 && 1 <= 2 && 2 <= 3.
-          this performs only number-based comparisons.
+          Compare "left" to "right" for less than or equal to.
+          Requires 2 or more after the ">=".
+          For example, "if <= 0 1 2 3" would test: 0 <= 1 && 1 <= 2 && 2 <= 3.
+          This performs only number-based comparisons.
 
         <> "left" "right"\:
-          compare all parameters to be not equal.
-          requires 2 or more after the "==".
-          for example, "if <> 'a' 'b' 'c'" would test: 'a' <> 'b' && 'b' <> 'c' && 'a' <> 'c'.
-          this performs only string-based comparisons.
+          Compare all parameters to be not equal.
+          Requires 2 or more after the "==".
+          For example, "if <> 'a' 'b' 'c'" would test: 'a' <> 'b' && 'b' <> 'c' && 'a' <> 'c'.
+          This performs only string-based comparisons.
 
         exists "file path"\:
-          test if file exists.
-          for example, "if exists "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
+          Test if file exists.
+          For example, "if exists "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
 
         is block character directory fifo link regular socket for "file path"\:
-          test if one or more files exist and if each file is any of the given types followed by "for" to designate where the the file paths begin.
-          for example, "if is regular directory for "a.txt" "b.txt" would test if both the file a.txt and b.txt exist and are either of type "regular" or type "directory".
+          Test if one or more files exist and if each file is any of the given types followed by "for" to designate where the the file paths begin.
+          For example, "if is regular directory for "a.txt" "b.txt" would test if both the file a.txt and b.txt exist and are either of type "regular" or type "directory".
 
         fail\:
-          test if the previous section operation failed.
+          Test if the previous section operation failed.
 
         succeed\:
-          test if the previous section operation succeeded.
+          Test if the previous section operation succeeded.
 
         mode is/has "some mode" "some file"\:
-          test if one or more files has the exact mode ("is") or has at least the given modes ("has").
-          for example, "if mode is u+r a.txt b.txt" would test if both file a.txt and b.txt only have owner set to read.
-          for example, "if mode has u+r a.txt b.txt" would test if both file a.txt and b.txt has owner set to read, and all other modes can be anything.
+          Test if one or more files has the exact mode ("is") or has at least the given modes ("has").
+          For example, "if mode is u+r a.txt b.txt" would test if both file a.txt and b.txt only have owner set to read.
+          For example, "if mode has u+r a.txt b.txt" would test if both file a.txt and b.txt has owner set to read, and all other modes can be anything.
 
         owner "some mode" "some file"\:
-          test if one or more files has the given owner.
-          for example, "if owner me a.txt b.txt" would test if both file a.txt and b.txt have an owner named "me".
+          Test if one or more files has the given owner.
+          For example, "if owner me a.txt b.txt" would test if both file a.txt and b.txt have an owner named "me".
 
         group "some mode" "some file"\:
-          for example, "if owner we a.txt b.txt" would test if both file a.txt and b.txt have a group named "we".
+          For example, "if owner we a.txt b.txt" would test if both file a.txt and b.txt have a group named "we".
 
         defined parameter/environment "some define name"\:
-          test if one or more names are defined as a "parameter" or an "environment" variable.
-          for example, "if defined parameter verbose silent" would test if both the "verbose" and the "silent" variables are defined via the "parameter" setting.
-          for example, "if defined environment PWD SHELL" would test if both the "PWD" and the "SHELL" variables are defined via the "environment" variables.
+          Test if one or more names are defined as a "parameter" or an "environment" variable.
+          For example, "if defined parameter verbose silent" would test if both the "verbose" and the "silent" variables are defined via the "parameter" setting.
+          For example, "if defined environment PWD SHELL" would test if both the "PWD" and the "SHELL" variables are defined via the "environment" variables.
+
+          Reserved parameters that represent program arguments, three forms are available.
+          For example, the program argument -w/--work has the reserved word "work" and has three forms:
+          1) "work".
+          2) "work:option".
+          3) "work:value".
+
+          In the case of form 1, the "if defined parameter work" would be true if the argument is passed to the program or a default is provided.
+          In the case of form 2, the "if defined parameter work:option" would be true if the argument is passed to the program.
+          In the case of form 3, the "if defined parameter work:value" would be true if the argument is passed to the program and has a non-zero value.
+
+          Some reserved parameters, such as the "verbosity", has no "value" and in this case would always return false for "if defined parameter verbosity:value".
+
+          The following are reserved parameters:
+          - build: Associated with -b/--build parameter.
+          - color: Associated with +d/++dark, +l/++light, and +n/++no_color parameters.
+          - data: Associated with -D/--data parameter.
+          - define: Associated with -d/--define parameter.
+          - fakefile: Associated with -f/--fakefile parameter.
+          - mode: Associated with -m/--mode parameter and possibly with the build settings default mode "modes_default".
+          - process: Associated with -p/--process parameter.
+          - settings: Associated with -s/--settings parameter.
+          - sources: Associated with -S/--sources parameter.
+          - verbosity: Associated with +q/++quiet, +N/++normal, +V/++verbose, and +D/++debug parameters.
+          - work: Associated with -w/--work parameter.
 
     - index\:
       Execute the linker program, such as "ar".
