@@ -522,18 +522,18 @@ extern "C" {
 
     if (*status == F_none) {
       const int total_build_libraries = setting->build_libraries.used;
+      const f_string_dynamics_t *modes = &setting->modes_default;
 
       f_string_dynamic_t settings_mode_name_dynamic[fake_build_setting_total_d];
       f_string_t settings_mode_names[fake_build_setting_total_d];
       f_array_length_t setting_mode_lengths[fake_build_setting_total_d];
 
-      const f_string_dynamics_t *modes = &setting->modes_default;
       bool found = F_false;
 
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      // if any mode is specified, the entire defaults is replaced.
+      // If any mode is specified, the entire defaults is replaced.
       if (main->mode.used) {
         modes = &main->mode;
       }
@@ -546,6 +546,7 @@ extern "C" {
 
           if (fl_string_dynamic_compare_trim(modes->array[i], setting->modes.array[j]) == F_equal_to) {
             found = F_true;
+
             break;
           }
         } // for
@@ -565,6 +566,7 @@ extern "C" {
 
           error_printed = F_true;
           *status = F_status_set_error(F_parameter);
+
           break;
         }
 
@@ -576,7 +578,7 @@ extern "C" {
 
           setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
 
-          macro_f_string_dynamic_t_resize(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
+          *status = f_string_dynamic_resize(setting_mode_lengths[j], &settings_mode_name_dynamic[j]);
 
           if (F_status_is_error(*status)) {
             function = "macro_f_string_dynamic_t_resize";

@@ -810,20 +810,20 @@ extern "C" {
     }
     else {
       if (data_build.setting.build_sources_headers.used) {
-        const f_string_static_t *path_sources = &main->path_sources;
+        f_string_static_t path_sources = main->path_sources;
 
         if (data_build.setting.path_standard) {
-          path_sources = &main->path_sources_c;
+          path_sources = main->path_sources_c;
 
           if (data_build.setting.build_language == fake_build_language_type_cpp) {
-            path_sources = &main->path_sources_cpp;
+            path_sources = main->path_sources_cpp;
           }
         }
         else if (main->parameters[fake_parameter_path_sources].result != f_console_result_additional) {
-          path_sources = &data_build.setting.path_sources;
+          path_sources = data_build.setting.path_sources;
         }
 
-        const f_array_length_t path_sources_base_length = path_sources->used;
+        const f_array_length_t path_sources_base_length = path_sources.used;
 
         f_string_static_t path_headers = f_string_static_t_initialize;
         f_array_length_t directory_headers_length = main->path_build_includes.used + data_build.setting.path_headers.used;
@@ -842,14 +842,14 @@ extern "C" {
         path_headers.used = directory_headers_length;
         path_headers.size = directory_headers_length + 1;
 
-        fake_build_copy(main, mode, "header files", *path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+        fake_build_copy(main, mode, "header files", path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
 
         if (data_build.setting.build_shared) {
-          fake_build_copy(main, mode, "shared header files", *path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+          fake_build_copy(main, mode, "shared header files", path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
         }
 
         if (data_build.setting.build_static) {
-          fake_build_copy(main, mode, "static header files", *path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+          fake_build_copy(main, mode, "static header files", path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
         }
       }
 

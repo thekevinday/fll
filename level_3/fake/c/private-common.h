@@ -221,7 +221,7 @@ extern "C" {
     macro_f_string_dynamics_t_delete_simple(setting.flags_shared) \
     macro_f_string_dynamics_t_delete_simple(setting.flags_static) \
     macro_f_string_dynamics_t_delete_simple(setting.modes) \
-    macro_f_string_dynamics_t_delete_simple(setting.modes_default) \
+    macro_f_string_dynamics_t_delete_simple(setting.modes_default)
 
   #define FAKE_build_setting_name_build_compiler_s               "build_compiler"
   #define FAKE_build_setting_name_build_language_s               "build_language"
