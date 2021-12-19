@@ -191,8 +191,20 @@ extern "C" {
  *   Additional arguments relating to the string.
  *
  * @return
- *   The number of 1-byte characters processed from the string.
- *   Any error will will result in the current count at the time of the error to be returned.
+ *   F_none on success.
+ *
+ *   F_eos (with error bit) on EOS reached.
+ *   F_output (with error bit) on failure to print to the output file.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_valid_not (with error bit) on invalid syntax (such as terminating the string on a single '%').
+ *
+ *   Errors (with error bit) from: f_conversion_number_signed_print().
+ *   Errors (with error bit) from: f_conversion_number_unsigned_print().
+ *   Errors (with error bit) from: f_print_dynamic().
+ *   Errors (with error bit) from: f_print_dynamic_raw().
+ *   Errors (with error bit) from: f_print_dynamic_safely().
+ *   Errors (with error bit) from: f_print_safely().
+ *   Errors (with error bit) from: f_print_terminated().
  *
  * @see fprintf()
  * @see fputc_unlocked()
@@ -289,14 +301,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_eos (with error bit) on EOS reached.
  *   F_output (with error bit) on failure to print to the output file.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_valid_not (with error bit) on invalid syntax (such as terminating the string on a single '%').
- *
- *   Success from: f_print_dynamic().
- *   Success from: f_print_dynamic_raw().
- *   Success from: f_print_dynamic_safely().
- *   Success from: f_print_safely().
- *   Success from: f_print_terminated().
  *
  *   Errors (with error bit) from: f_conversion_number_signed_print().
  *   Errors (with error bit) from: f_conversion_number_unsigned_print().

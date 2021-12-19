@@ -8,8 +8,8 @@ extern "C" {
 #ifndef _di_fl_print_format_
   f_status_t fl_print_format(const f_string_t string, FILE *stream, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (!string) return 0;
-      if (!stream) return 0;
+      if (!string) return F_status_set_error(F_parameter);
+      if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
@@ -18,10 +18,10 @@ extern "C" {
 
     va_start(ap, stream);
 
-    for (f_string_t current = string; *current; current += 1) {
+    for (f_string_t current = string; *current; ++current) {
 
       if (*current == f_string_ascii_percent_s[0]) {
-        current += 1;
+        ++current;
 
         current = private_fl_print_format_convert(current, stream, &ap, &status);
         if (F_status_is_error(status)) break;
@@ -35,7 +35,9 @@ extern "C" {
 
     va_end(ap);
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // _di_fl_print_format_
 
@@ -53,17 +55,17 @@ extern "C" {
 #ifndef _di_fl_print_string_va_
   f_status_t fl_print_string_va(const f_string_t string, FILE *stream, va_list *ap) {
     #ifndef _di_level_1_parameter_checking_
-      if (!string) return 0;
-      if (!stream) return 0;
-      if (!ap) return 0;
+      if (!string) return F_status_set_error(F_parameter);
+      if (!stream) return F_status_set_error(F_parameter);
+      if (!ap) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 
-    for (f_string_t current = string; *current; current += 1) {
+    for (f_string_t current = string; *current; ++current) {
 
       if (*current == f_string_ascii_percent_s[0]) {
-        current += 1;
+        ++current;
 
         current = private_fl_print_format_convert(current, stream, ap, &status);
         if (F_status_is_error(status)) break;
@@ -75,7 +77,9 @@ extern "C" {
       }
     } // for
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // _di_fl_print_string_va_
 
