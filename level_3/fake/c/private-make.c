@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_assure_inside_project_
-  f_status_t fake_make_assure_inside_project(fake_main_t * const main, const f_string_static_t path, fake_make_data_t *data_make) {
+  f_status_t fake_make_assure_inside_project(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_static_t path) {
 
     data_make->path_cache.used = 0;
 
@@ -196,7 +196,7 @@ extern "C" {
 #endif // _di_fake_make_get_id_owner_
 
 #ifndef _di_fake_make_path_relative_
-  f_status_t fake_make_path_relative(fake_main_t * const main, const f_string_static_t path, fake_make_data_t *data_make) {
+  f_status_t fake_make_path_relative(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_static_t path) {
 
     data_make->path_cache.used = 0;
 

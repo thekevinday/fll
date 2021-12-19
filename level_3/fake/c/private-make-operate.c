@@ -100,7 +100,7 @@ extern "C" {
     }
 
     {
-      const int result = fake_make_operate_section(main, data_make.main, &data_make, &section_stack, &status);
+      const int result = fake_make_operate_section(main, &data_make, data_make.main, &section_stack, &status);
 
       if (status == F_child) {
         main->child = result;
@@ -533,7 +533,7 @@ extern "C" {
             if (F_status_is_error(*status)) break;
 
             if (unmatched) {
-              *status = fake_make_operate_expand_build(main, quotes.array[i], iki_content.array[j], data_make, arguments);
+              *status = fake_make_operate_expand_build(main, data_make, quotes.array[i], iki_content.array[j], arguments);
 
               if (F_status_is_error(*status)) {
                 fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_build", F_true);
@@ -623,7 +623,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_
 
 #ifndef _di_fake_make_operate_expand_build_
-  f_status_t fake_make_operate_expand_build(fake_main_t * const main, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) {
+  f_status_t fake_make_operate_expand_build(fake_main_t * const main, fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) {
 
     f_status_t status = F_none;
     f_string_dynamic_t value = f_string_dynamic_t_initialize;
@@ -1023,7 +1023,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_environment_
 
 #ifndef _di_fake_make_operate_section_
-  int fake_make_operate_section(fake_main_t * const main, const f_array_length_t id_section, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
+  int fake_make_operate_section(fake_main_t * const main, fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t *section_stack, f_status_t *status) {
 
     if (F_status_is_error(*status) || *status == F_child) return main->child;
 
@@ -1232,7 +1232,7 @@ extern "C" {
         operation_if = fake_make_operation_if_type_false_always;
       }
 
-      fake_make_operate_validate(main, section->name, operation, arguments, &operation_if, data_make, section_stack, status);
+      fake_make_operate_validate(main, data_make, section->name, operation, arguments, &operation_if, section_stack, status);
 
       if (F_status_is_error_not(*status)) {
         if (operation_if == fake_make_operation_if_type_false) {
@@ -1251,7 +1251,7 @@ extern "C" {
           continue;
         }
 
-        const int result = fake_make_operate_process(main, section->name, operation, arguments, success, &operation_if, data_make, section_stack, status);
+        const int result = fake_make_operate_process(main, data_make, section->name, operation, arguments, success, &operation_if, section_stack, status);
 
         if (*status == F_child) {
           f_string_dynamics_resize(0, &arguments);
@@ -1408,7 +1408,7 @@ extern "C" {
 #endif // _di_fake_make_operate_section_
 
 #ifndef _di_fake_make_operate_process_
-  int fake_make_operate_process(fake_main_t * const main, const f_string_range_t section_name, const uint8_t operation, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
+  int fake_make_operate_process(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const uint8_t operation, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, f_array_lengths_t *section_stack, f_status_t *status) {
 
     if (*status == F_child) return main->child;
 
@@ -1423,7 +1423,7 @@ extern "C" {
         return result;
       }
 
-      fake_make_operate_process_return(main, result, data_make, status);
+      fake_make_operate_process_return(main, data_make, result, status);
 
       return 0;
     }
@@ -1463,10 +1463,10 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_make_operate_process_return(main, 1, data_make, status);
+        fake_make_operate_process_return(main, data_make, 1, status);
       }
       else {
-        fake_make_operate_process_return(main, 0, data_make, status);
+        fake_make_operate_process_return(main, data_make, 0, status);
       }
 
       return 0;
@@ -1480,10 +1480,10 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_make_operate_process_return(main, 1, data_make, status);
+        fake_make_operate_process_return(main, data_make, 1, status);
       }
       else {
-        fake_make_operate_process_return(main, 0, data_make, status);
+        fake_make_operate_process_return(main, data_make, 0, status);
       }
 
       return 0;
@@ -1586,7 +1586,7 @@ extern "C" {
         return result;
       }
 
-      fake_make_operate_process_return(main, result, data_make, status);
+      fake_make_operate_process_return(main, data_make, result, status);
 
       return 0;
     }
@@ -1879,7 +1879,7 @@ extern "C" {
 
       for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
-        status_file = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+        status_file = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
         if (F_status_is_error(status_file)) {
           *status = status_file;
@@ -1919,7 +1919,7 @@ extern "C" {
 
       for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
-        status_file = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+        status_file = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
         if (F_status_is_error(status_file)) {
           *status = status_file;
@@ -2576,7 +2576,7 @@ extern "C" {
         return 0;
       }
 
-      const int result = fake_make_operate_section(main, id_section, data_make, section_stack, status);
+      const int result = fake_make_operate_section(main, data_make, id_section, section_stack, status);
 
       // Ensure that a break only happens within its active operation stack.
       if (*status == F_signal_abort) {
@@ -2599,7 +2599,7 @@ extern "C" {
 
       for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
-        status_file = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+        status_file = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
         if (F_status_is_error(status_file)) {
           *status = status_file;
@@ -2635,7 +2635,7 @@ extern "C" {
 
       for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
-        status_file = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+        status_file = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
         if (F_status_is_error(status_file)) {
           *status = status_file;
@@ -2674,7 +2674,7 @@ extern "C" {
       }
 
       if (main->error.verbosity == f_console_verbosity_verbose) {
-        *status = fake_make_path_relative(main, data_make->path.stack.array[data_make->path.stack.used - 1], data_make);
+        *status = fake_make_path_relative(main, data_make, data_make->path.stack.array[data_make->path.stack.used - 1]);
 
         if (F_status_is_error(*status)) {
           fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_path_relative", F_true);
@@ -2709,13 +2709,13 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_run) {
-      *status = fake_make_operate_process_run(main, arguments, F_false, data_make);
+      *status = fake_make_operate_process_run(main, data_make, arguments, F_false);
 
       return 0;
     }
 
     if (operation == fake_make_operation_type_shell) {
-      *status = fake_make_operate_process_run(main, arguments, F_true, data_make);
+      *status = fake_make_operate_process_run(main, data_make, arguments, F_true);
 
       return 0;
     }
@@ -2728,17 +2728,17 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_make_operate_process_return(main, 1, data_make, status);
+        fake_make_operate_process_return(main, data_make, 1, status);
       }
       else {
-        fake_make_operate_process_return(main, 0, data_make, status);
+        fake_make_operate_process_return(main, data_make, 0, status);
       }
 
       return 0;
     }
 
     if (operation == fake_make_operation_type_to) {
-      *status = fake_make_assure_inside_project(main, arguments.array[0], data_make);
+      *status = fake_make_assure_inside_project(main, data_make, arguments.array[0]);
 
       if (F_status_is_error(*status)) {
         fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string);
@@ -2781,7 +2781,7 @@ extern "C" {
         }
 
         if (main->error.verbosity == f_console_verbosity_verbose) {
-          *status = fake_make_path_relative(main, data_make->path.stack.array[data_make->path.stack.used], data_make);
+          *status = fake_make_path_relative(main, data_make, data_make->path.stack.array[data_make->path.stack.used]);
 
           if (F_status_is_error(*status)) {
 
@@ -2868,7 +2868,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_
 
 #ifndef _di_fake_make_operate_process_execute_
-  f_status_t fake_make_operate_process_execute(fake_main_t * const main, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) {
+  f_status_t fake_make_operate_process_execute(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) {
 
     if (fake_signal_received(main)) {
       return F_status_set_error(F_interrupt);
@@ -2949,7 +2949,7 @@ extern "C" {
       }
     }
 
-    fake_make_operate_process_return(main, return_code, data_make, &status);
+    fake_make_operate_process_return(main, data_make, return_code, &status);
 
     return status;
   }
@@ -3130,7 +3130,7 @@ extern "C" {
 #endif // fake_make_operate_process_type_if_defined
 
 #ifndef _di_fake_make_operate_process_return_
-  void fake_make_operate_process_return(fake_main_t * const main, const int return_code, fake_make_data_t *data_make, f_status_t *status) {
+  void fake_make_operate_process_return(fake_main_t * const main, fake_make_data_t * const data_make, const int return_code, f_status_t *status) {
 
     f_status_t status2 = F_none;
 
@@ -3206,7 +3206,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_return_
 
 #ifndef _di_fake_make_operate_process_run_
-  f_status_t fake_make_operate_process_run(fake_main_t * const main, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) {
+  f_status_t fake_make_operate_process_run(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_statics_t arguments, const bool as_shell) {
 
     const f_string_static_t *program = &arguments.array[0];
 
@@ -3247,7 +3247,7 @@ extern "C" {
       } // for
     }
 
-    status = fake_make_operate_process_execute(main, *program, args, as_shell, data_make);
+    status = fake_make_operate_process_execute(main, data_make, *program, args, as_shell);
 
     f_string_dynamics_resize(0, &args);
 
@@ -3256,7 +3256,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_run_
 
 #ifndef _di_fake_make_operate_validate_
-  void fake_make_operate_validate(fake_main_t * const main, const f_string_range_t section_name, const f_array_length_t operation, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
+  void fake_make_operate_validate(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_string_dynamics_t arguments, uint8_t *operation_if, f_array_lengths_t *section_stack, f_status_t *status) {
 
     if (F_status_is_error(*status)) return;
 
@@ -3405,7 +3405,7 @@ extern "C" {
       if (arguments.used > 1) {
         for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
-          *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+          *status = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
             fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
@@ -3520,7 +3520,7 @@ extern "C" {
       if (arguments.used > 1) {
         for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
-          *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+          *status = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
             fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
@@ -3610,7 +3610,7 @@ extern "C" {
       if (arguments.used) {
         for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
-          *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+          *status = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
             fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
@@ -4068,7 +4068,7 @@ extern "C" {
             if (i < arguments.used) {
               for (f_status_t status_file = F_none; i < arguments.used; ++i) {
 
-                status_file = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+                status_file = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
                 if (F_status_is_error(status_file)) {
                   fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
@@ -4228,7 +4228,7 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
       else if (arguments.used == 2) {
-        *status = fake_make_assure_inside_project(main, arguments.array[0], data_make);
+        *status = fake_make_assure_inside_project(main, data_make, arguments.array[0]);
 
         if (F_status_is_error(*status)) {
           fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string);
@@ -4238,7 +4238,7 @@ extern "C" {
           }
         }
 
-        *status = fake_make_assure_inside_project(main, arguments.array[1], data_make);
+        *status = fake_make_assure_inside_project(main, data_make, arguments.array[1]);
 
         if (F_status_is_error(*status)) {
           fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[1].string);
@@ -4263,7 +4263,7 @@ extern "C" {
       if (arguments.used > 1) {
         for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
-          *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+          *status = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
             fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
@@ -4491,7 +4491,7 @@ extern "C" {
 
         for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
-          *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
+          *status = fake_make_assure_inside_project(main, data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
             fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);

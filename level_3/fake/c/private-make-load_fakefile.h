@@ -19,7 +19,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param main_make
+ * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param status
  *   The return status.
@@ -41,7 +41,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param main_make
+ * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param object
  *   The setting object.
@@ -59,7 +59,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param main_make
+ * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param object
  *   The setting object.
@@ -77,7 +77,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param main_make
+ * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param settings
  *   The settings data.
@@ -104,7 +104,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param main_make
+ * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param content
  *   The setting content.
@@ -131,7 +131,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param main_make
+ * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param object
  *   The setting object.
@@ -149,7 +149,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param main_make
+ * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param object
  *   The setting object.
@@ -170,7 +170,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param main_make
+ * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param object
  *   The setting object.
