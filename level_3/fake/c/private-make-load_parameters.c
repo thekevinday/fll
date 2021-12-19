@@ -18,10 +18,10 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (main->context.mode != F_color_mode_none_d) {
-      *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->parameter.color);
+      *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->parameter.color);
 
       if (F_status_is_error_not(*status)) {
-        *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->parameter_option.color);
+        *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->parameter_option.color);
       }
 
       if (F_status_is_error(*status)) {
@@ -86,10 +86,10 @@ extern "C" {
     }
 
     if (main->error.verbosity != f_console_verbosity_normal) {
-      *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->parameter.verbosity);
+      *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->parameter.verbosity);
 
       if (F_status_is_error_not(*status)) {
-        *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->parameter_option.verbosity);
+        *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->parameter_option.verbosity);
       }
 
       if (F_status_is_error(*status)) {
@@ -196,7 +196,7 @@ extern "C" {
         for (j = 0; j < source[i]->used; ++j) {
 
           if (destination[i]->used + 2 > destination[i]->size) {
-            *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, destination[i]);
+            *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
 
             if (F_status_is_error(*status)) {
               fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -205,10 +205,10 @@ extern "C" {
             }
           }
 
-          *status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination_option[i]);
+          *status = f_string_dynamics_increase(fake_default_allocation_small_d, destination_option[i]);
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination_value[i]);
+            *status = f_string_dynamics_increase(fake_default_allocation_small_d, destination_value[i]);
           }
 
           if (F_status_is_error(*status)) {
@@ -245,7 +245,7 @@ extern "C" {
           ++destination[i]->used;
           ++destination_option[i]->used;
 
-          *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, destination[i]);
+          *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -339,7 +339,7 @@ extern "C" {
         }
 
         if (destination[i]->used + 2 > destination[i]->size) {
-          *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, destination[i]);
+          *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -348,10 +348,10 @@ extern "C" {
           }
         }
 
-        *status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination_option[i]);
+        *status = f_string_dynamics_increase(fake_default_allocation_small_d, destination_option[i]);
 
         if (F_status_is_error_not(*status)) {
-          *status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination_value[i]);
+          *status = f_string_dynamics_increase(fake_default_allocation_small_d, destination_value[i]);
         }
 
         if (F_status_is_error(*status)) {
@@ -388,7 +388,7 @@ extern "C" {
         ++destination[i]->used;
         ++destination_option[i]->used;
 
-        *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, destination[i]);
+        *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);

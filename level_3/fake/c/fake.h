@@ -115,7 +115,8 @@ extern "C" {
 
 #ifndef _di_fake_default_allocation_step_
   // Set to at least 4 to provide a UTF-8 friendly allocation step.
-  #define fake_default_allocation_step_d 4
+  #define fake_default_allocation_small_d 4
+  #define fake_default_allocation_large_d 64
 #endif // _di_fake_default_allocation_step_
 
 /**
