@@ -893,7 +893,7 @@ extern "C" {
         return F_status_set_error(F_syntax);
       }
     }
-    else if (string[0] == f_string_ascii_u_s[0] || string[0] == f_string_ascii_g_s[0] || string[0] == f_string_ascii_i_s[0] || string[0] == f_string_ascii_a_s[0]) {
+    else if (string[0] == f_string_ascii_u_s[0] || string[0] == f_string_ascii_g_s[0] || string[0] == f_string_ascii_o_s[0] || string[0] == f_string_ascii_a_s[0]) {
       syntax = 1;
     }
     else if (string[0] == f_string_ascii_0_s[0] || string[0] == f_string_ascii_1_s[0] || string[0] == f_string_ascii_2_s[0] || string[0] == f_string_ascii_3_s[0] || string[0] == f_string_ascii_4_s[0] || string[0] == f_string_ascii_5_s[0] || string[0] == f_string_ascii_6_s[0] || string[0] == f_string_ascii_7_s[0]) {
