@@ -167,70 +167,46 @@ Fakefile Documentation:
 
       The Content represents a set of conditions to perform.
 
+      For all conditions that rely on numbers, only whole numbers are (currently) supported.
+
       conditions\:
-        == "left" "right"\:
+        - == "left" "right"\:
           Compare all parameters to be equal.
           Requires 2 or more after the "==".
           For example, "if == 'a' 'b' 'c' 'd'" would test: 'a' == 'b' && 'b' == 'c' && 'c' == 'd'.
           This performs only string-based comparisons.
 
-        > "left string" "right string"\:
+        - > "left string" "right string"\:
           Compare "left" to "right" for greater than.
           Requires 2 or more after the ">".
           For example, "if > 0 1 2 3" would test: 0 > 1 && 1 > 2 && 2 > 3.
           This performs only number-based comparisons.
 
-        < "left string" "right string"\:
+        - < "left string" "right string"\:
           Compare "left" to "right" for less than.
           Requires 2 or more after the ">".
           For example, "if < 0 1 2 3" would test: 0 < 1 && 1 < 2 && 2 < 3.
           This performs only number-based comparisons.
 
-        >= "left string" "right string"\:
+        - >= "left string" "right string"\:
           Compare "left" to "right" for greater than or equal to.
           Requires 2 or more after the ">=".
           For example, "if >= 0 1 2 3" would test: 0 >= 1 && 1 >= 2 && 2 >= 3.
           This performs only number-based comparisons.
 
-        <= "left string" "right string"\:
+        - <= "left string" "right string"\:
           Compare "left" to "right" for less than or equal to.
           Requires 2 or more after the ">=".
           For example, "if <= 0 1 2 3" would test: 0 <= 1 && 1 <= 2 && 2 <= 3.
           This performs only number-based comparisons.
 
-        <> "left" "right"\:
+        - <> "left" "right"\:
           Compare all parameters to be not equal.
           Requires 2 or more after the "==".
           For example, "if <> 'a' 'b' 'c'" would test: 'a' <> 'b' && 'b' <> 'c' && 'a' <> 'c'.
           This performs only string-based comparisons.
 
-        exists "file path"\:
-          Test if file exists.
-          For example, "if exists "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
-
-        is block character directory fifo link regular socket for "file path"\:
-          Test if one or more files exist and if each file is any of the given types followed by "for" to designate where the the file paths begin.
-          For example, "if is regular directory for "a.txt" "b.txt" would test if both the file a.txt and b.txt exist and are either of type "regular" or type "directory".
-
-        fail\:
-          Test if the previous section operation failed.
-
-        succeed\:
-          Test if the previous section operation succeeded.
-
-        mode is/has "some mode" "some file"\:
-          Test if one or more files has the exact mode ("is") or has at least the given modes ("has").
-          For example, "if mode is u+r a.txt b.txt" would test if both file a.txt and b.txt only have owner set to read.
-          For example, "if mode has u+r a.txt b.txt" would test if both file a.txt and b.txt has owner set to read, and all other modes can be anything.
-
-        owner "some mode" "some file"\:
-          Test if one or more files has the given owner.
-          For example, "if owner me a.txt b.txt" would test if both file a.txt and b.txt have an owner named "me".
-
-        group "some mode" "some file"\:
-          For example, "if owner we a.txt b.txt" would test if both file a.txt and b.txt have a group named "we".
-
-        defined parameter/environment "some define name"\:
+        - defined parameter/environment "some define name"\:
           Test if one or more names are defined as a "parameter" or an "environment" variable.
           For example, "if defined parameter verbose silent" would test if both the "verbose" and the "silent" variables are defined via the "parameter" setting.
           For example, "if defined environment PWD SHELL" would test if both the "PWD" and the "SHELL" variables are defined via the "environment" variables.
@@ -259,6 +235,48 @@ Fakefile Documentation:
           - sources: Associated with -S/--sources parameter.
           - verbosity: Associated with +q/++quiet, +N/++normal, +V/++verbose, and +D/++debug parameters.
           - work: Associated with -w/--work parameter.
+
+        - exists "file path"\:
+          Test if file exists.
+          For example, "if exists "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
+
+        - fail\:
+          Test if the previous section operation failed.
+
+        - group "some mode" "some file"\:
+          For example, "if group friends a.txt b.txt" would test if both file a.txt and b.txt have a group named "we".
+
+        - is block character directory fifo link regular socket for "file path"\:
+          Test if one or more files exist and if each file is any of the given types followed by "for" to designate where the the file paths begin.
+          For example, "if is regular directory for "a.txt" "b.txt" would test if both the file a.txt and b.txt exist and are either of type "regular" or type "directory".
+
+        - mode is/has "some mode" "some file"\:
+          Test if one or more files has the exact mode ("is") or has at least the given modes ("has").
+          For example, "if mode is u+r a.txt b.txt" would test if both file a.txt and b.txt only have owner set to read.
+          For example, "if mode has u+r a.txt b.txt" would test if both file a.txt and b.txt has owner set to read, and all other modes can be anything.
+
+        - not\:
+          Perform the test expecting a false result rather than a true result.
+          This is to be immediately followed by a valid if condition as well as all appropriate valid content associated with that if condition.
+
+          Only the following if conditions are supported\:
+          - defined.
+          - exists.
+          - group.
+          - is.
+          - mode.
+          - owner.
+
+          Examples\:
+          - "if not defined parameter work"
+          - "if not exists documentation.txt"
+
+        - owner "some mode" "some file"\:
+          Test if one or more files has the given owner.
+          For example, "if owner me a.txt b.txt" would test if both file a.txt and b.txt have an owner named "me".
+
+        - succeed\:
+          Test if the previous section operation succeeded.
 
     - index\:
       Execute the linker program, such as "ar".
@@ -303,6 +321,12 @@ Fakefile Documentation:
 
     - owners\:
       Identical to owner operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
+
+    - parameter\:
+      This represents an variable defined within the scope of the fakefile.
+      This is not exported as an environment variable and is therefore not visible to any executed programs or scripts.
+      This replaces the value of any existing parameter variable with this name.
+      The reserved parameter variable names (see IKI vocabulary context section below) may not be changed by this.
 
     - pop\:
       Pop a directory path of the path stack, thereby changing to the previous directory on the stack.

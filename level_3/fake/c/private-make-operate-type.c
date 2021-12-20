@@ -78,252 +78,10 @@ extern "C" {
   }
 #endif // _di_fake_make_operate_process_type_groups_
 
-#ifndef _di_fake_make_operate_process_type_if_group_
-  f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) {
-
-    f_status_t status = F_none;
-    uid_t id = 0;
-
-    status = fake_make_get_id_group(main, data_make->error, arguments.array[1], &id);
-    if (F_status_is_error(status)) return status;
-
-    uid_t id_file = 0;
-
-    *operation_if = fake_make_operation_if_type_true_next;
-
-    for (f_array_length_t i = 2; i < arguments.used; ++i, id_file = 0) {
-
-      status = f_file_group_read(arguments.array[i].string, &id_file);
-
-      if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
-
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_group_read", F_true, arguments.array[i].string, "get group of", fll_error_file_type_file);
-
-        break;
-      }
-
-      if (id != id_file) {
-        *operation_if = fake_make_operation_if_type_false_next;
-
-        break;
-      }
-    } // for
-
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
-  }
-#endif // _di_fake_make_operate_process_type_if_group_
-
-#ifndef _di_fake_make_operate_process_type_if_mode_
-  f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) {
-
-    f_status_t status = F_none;
-    f_file_mode_t mode_rule = 0;
-    mode_t mode_match = 0;
-    bool is = F_false;
-
-    if (fl_string_dynamic_compare_string(fake_make_operation_argument_is_s, arguments.array[1], fake_make_operation_argument_is_s_length) == F_equal_to) {
-      is = F_true;
-    }
-
-    {
-      uint8_t mode_replace = 0;
-
-      status = fake_make_get_id_mode(main, data_make->error, arguments.array[2], &mode_rule, &mode_replace);
-
-      if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
-
-        return status;
-      }
-
-      status = f_file_mode_to_mode(mode_rule, &mode_match);
-
-      if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
-
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_file_mode_to_mode", F_true);
-
-        return status;
-      }
-    }
-
-    mode_t mode_file = 0;
-
-    *operation_if = fake_make_operation_if_type_true_next;
-
-    for (f_array_length_t i = 3; i < arguments.used; ++i, mode_file = 0) {
-
-      status = f_file_mode_read(arguments.array[i].string, &mode_file);
-
-      if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
-
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file);
-
-        break;
-      }
-
-      if (is) {
-        if (mode_match != (mode_file & F_file_mode_all_d)) {
-          *operation_if = fake_make_operation_if_type_false_next;
-
-          break;
-        }
-      }
-      else {
-        if (!(mode_match & mode_file)) {
-          *operation_if = fake_make_operation_if_type_false_next;
-
-          break;
-        }
-      }
-    } // for
-
-    return F_none;
-  }
-#endif // _di_fake_make_operate_process_type_if_mode_
-
-#ifndef _di_fake_make_operate_process_type_if_owner_
-  f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) {
-
-    f_status_t status = F_none;
-    uid_t id = 0;
-
-    status = fake_make_get_id_owner(main, data_make->error, arguments.array[1], &id);
-    if (F_status_is_error(status)) return status;
-
-    uid_t id_file = 0;
-
-    *operation_if = fake_make_operation_if_type_true_next;
-
-    for (f_array_length_t i = 2; i < arguments.used; ++i, id_file = 0) {
-
-      status = f_file_owner_read(arguments.array[i].string, &id_file);
-
-      if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
-
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_owner_read", F_true, arguments.array[i].string, "get owner of", fll_error_file_type_file);
-
-        break;
-      }
-
-      if (id != id_file) {
-        *operation_if = fake_make_operation_if_type_false_next;
-
-        break;
-      }
-    } // for
-
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
-  }
-#endif // _di_fake_make_operate_process_type_if_owner_
-
-#ifndef _di_fake_make_operate_process_type_if_is_
-  f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) {
-
-    f_status_t status = F_none;
-
-    // block     = 0x1 (0000 0001) link    = 0x10 (0001 0000)
-    // character = 0x2 (0000 0010) regular = 0x20 (0010 0000)
-    // directory = 0x4 (0000 0100) socket  = 0x40 (0100 0000)
-    // fifo      = 0x8 (0000 1000) invalid = 0x80 (1000 0000)
-    uint8_t type = 0;
-
-    f_array_length_t i = 1;
-
-    status = F_none;
-
-    for (; i < arguments.used; ++i) {
-
-      if (fl_string_dynamic_compare_string(fake_make_operation_argument_if_is_for_s, arguments.array[i], fake_make_operation_argument_if_is_for_s_length) == F_equal_to) {
-        ++i;
-
-        break;
-      }
-
-      if (fl_string_dynamic_compare_string(F_file_type_name_block_s, arguments.array[i], F_file_type_name_block_s_length) == F_equal_to) {
-        type |= 0x1;
-      }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_character_s, arguments.array[i], F_file_type_name_character_s_length) == F_equal_to) {
-        type |= 0x2;
-      }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_directory_s, arguments.array[i], F_file_type_name_directory_s_length) == F_equal_to) {
-        type |= 0x4;
-      }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_fifo_s, arguments.array[i], F_file_type_name_fifo_s_length) == F_equal_to) {
-        type |= 0x8;
-      }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_link_s, arguments.array[i], F_file_type_name_link_s_length) == F_equal_to) {
-        type |= 0x10;
-      }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_regular_s, arguments.array[i], F_file_type_name_regular_s_length) == F_equal_to) {
-        type |= 0x20;
-      }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_socket_s, arguments.array[i], F_file_type_name_socket_s_length) == F_equal_to) {
-        type |= 0x40;
-      }
-    } // for
-
-    uint8_t type_file = 0;
-    mode_t mode_file = 0;
-
-    *operation_if = fake_make_operation_if_type_true_next;
-
-    for (; i < arguments.used; ++i, mode_file = 0) {
-
-      status = f_file_mode_read(arguments.array[i].string, &mode_file);
-
-      if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
-
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file);
-
-        break;
-      }
-
-      if (macro_f_file_type_is_block(mode_file)) {
-        type_file = 0x1;
-      }
-      else if (macro_f_file_type_is_character(mode_file)) {
-        type_file = 0x2;
-      }
-      else if (macro_f_file_type_is_directory(mode_file)) {
-        type_file = 0x4;
-      }
-      else if (macro_f_file_type_is_fifo(mode_file)) {
-        type_file = 0x8;
-      }
-      else if (macro_f_file_type_is_link(mode_file)) {
-        type_file = 0x10;
-      }
-      else if (macro_f_file_type_is_regular(mode_file)) {
-        type_file = 0x20;
-      }
-      else if (macro_f_file_type_is_socket(mode_file)) {
-        type_file = 0x40;
-      }
-
-      if (!(type & type_file)) {
-        *operation_if = fake_make_operation_if_type_false_next;
-
-        break;
-      }
-    } // for
-
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
-  }
-#endif // _di_fake_make_operate_process_type_if_is_
-
 #ifndef _di_fake_make_operate_process_type_if_defined_
-  void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) {
+  void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+
+    const f_string_static_t argument = if_not ? arguments.array[2] : arguments.array[1];
 
     const f_string_t reserved_name[] = {
       fake_make_parameter_variable_build_s,
@@ -433,68 +191,236 @@ extern "C" {
       data_make->parameter_value.work.used,
     };
 
-    if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, arguments.array[1], fake_make_operation_argument_environment_s_length) == F_equal_to) {
+    if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, argument, fake_make_operation_argument_environment_s_length) == F_equal_to) {
       *operation_if = fake_make_operation_if_type_true_next;
 
-      for (f_array_length_t i = 2; i < arguments.used; ++i) {
+      if (if_not) {
+        for (f_array_length_t i = 3; i < arguments.used; ++i) {
 
-        if (f_environment_exists(arguments.array[i].string) != F_true) {
-          *operation_if = fake_make_operation_if_type_false_next;
-
-          break;
-        }
-      } // for
-    }
-    else if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter_s, arguments.array[1], fake_make_operation_argument_parameter_s_length) == F_equal_to) {
-
-      f_array_length_t i = 2;
-      f_array_length_t j = 0;
-
-      // 0 = unknown, 1 = fail, 2 = pass.
-      uint8_t result = 0;
-
-      *operation_if = fake_make_operation_if_type_true_next;
-
-      // Multiple properties may pass and so if any of them fail, then they all fail.
-      for (; i < arguments.used; ++i) {
-
-        for (j = 0; j < 33; ++j) {
-
-          if (fl_string_dynamic_compare_string(reserved_name[j], arguments.array[i], reserved_length[j]) == F_equal_to) {
-            result = reserved_defined[j] ? 2 : 1;
+          if (f_environment_exists(arguments.array[i].string) == F_true) {
+            *operation_if = fake_make_operation_if_type_false_next;
 
             break;
           }
         } // for
+      }
+      else {
+        for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
-        if (!result) {
-          for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
+          if (f_environment_exists(arguments.array[i].string) != F_true) {
+            *operation_if = fake_make_operation_if_type_false_next;
 
-            if (fl_string_dynamic_compare(arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
-              result = 2;
+            break;
+          }
+        } // for
+      }
 
-              break;
-            }
-          } // for
-        }
+      return;
+    }
 
-        if (result < 2) {
-          result = 1;
+    f_array_length_t i = if_not ? 3 : 2;
+    f_array_length_t j = 0;
+
+    // 0 = unknown, 1 = fail, 2 = pass.
+    uint8_t result = 0;
+
+    *operation_if = fake_make_operation_if_type_true_next;
+
+    // Multiple properties may pass and so if any of them fail, then they all fail.
+    for (; i < arguments.used; ++i) {
+
+      for (j = 0; j < 33; ++j) {
+
+        if (fl_string_dynamic_compare_string(reserved_name[j], arguments.array[i], reserved_length[j]) == F_equal_to) {
+          result = reserved_defined[j] ? 2 : 1;
 
           break;
         }
-
-        if (i + 1 < arguments.used) {
-          result = 0;
-        }
       } // for
 
+      if (!result) {
+        for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
+
+          if (fl_string_dynamic_compare(arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
+            result = 2;
+
+            break;
+          }
+        } // for
+      }
+
       if (result < 2) {
+        result = 1;
+
+        break;
+      }
+
+      if (i + 1 < arguments.used) {
+        result = 0;
+      }
+    } // for
+
+    if (if_not) {
+      if (result < 2) {
+        *operation_if = fake_make_operation_if_type_true_next;
+      }
+      else {
         *operation_if = fake_make_operation_if_type_false_next;
       }
     }
+    else if (result < 2) {
+      *operation_if = fake_make_operation_if_type_false_next;
+    }
   }
 #endif // _di_fake_make_operate_process_type_if_defined_
+
+#ifndef _di_fake_make_operate_process_type_if_exists_
+  f_status_t fake_make_operate_process_type_if_exists(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+
+    f_status_t status = F_none;
+
+    *operation_if = fake_make_operation_if_type_true_next;
+
+    for (f_array_length_t i = if_not ? 2 : 1; i < arguments.used; ++i) {
+
+      status = f_file_exists(arguments.array[i].string);
+
+      if (F_status_is_error(status)) {
+        *operation_if = fake_make_operation_if_type_false_always_next;
+
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i].string, "find", fll_error_file_type_file);
+
+        break;
+      }
+
+      if (if_not) {
+        if (status == F_true) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      }
+      else {
+        if (status == F_false) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      }
+    } // for
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_if_exists_
+
+#ifndef _di_fake_make_operate_process_type_if_is_
+  f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+
+    f_status_t status = F_none;
+
+    // block     = 0x1 (0000 0001) link    = 0x10 (0001 0000)
+    // character = 0x2 (0000 0010) regular = 0x20 (0010 0000)
+    // directory = 0x4 (0000 0100) socket  = 0x40 (0100 0000)
+    // fifo      = 0x8 (0000 1000) invalid = 0x80 (1000 0000)
+    uint8_t type = 0;
+
+    f_array_length_t i = if_not ? 2 : 1;
+
+    status = F_none;
+
+    for (; i < arguments.used; ++i) {
+
+      if (fl_string_dynamic_compare_string(fake_make_operation_argument_if_is_for_s, arguments.array[i], fake_make_operation_argument_if_is_for_s_length) == F_equal_to) {
+        ++i;
+
+        break;
+      }
+
+      if (fl_string_dynamic_compare_string(F_file_type_name_block_s, arguments.array[i], F_file_type_name_block_s_length) == F_equal_to) {
+        type |= 0x1;
+      }
+      else if (fl_string_dynamic_compare_string(F_file_type_name_character_s, arguments.array[i], F_file_type_name_character_s_length) == F_equal_to) {
+        type |= 0x2;
+      }
+      else if (fl_string_dynamic_compare_string(F_file_type_name_directory_s, arguments.array[i], F_file_type_name_directory_s_length) == F_equal_to) {
+        type |= 0x4;
+      }
+      else if (fl_string_dynamic_compare_string(F_file_type_name_fifo_s, arguments.array[i], F_file_type_name_fifo_s_length) == F_equal_to) {
+        type |= 0x8;
+      }
+      else if (fl_string_dynamic_compare_string(F_file_type_name_link_s, arguments.array[i], F_file_type_name_link_s_length) == F_equal_to) {
+        type |= 0x10;
+      }
+      else if (fl_string_dynamic_compare_string(F_file_type_name_regular_s, arguments.array[i], F_file_type_name_regular_s_length) == F_equal_to) {
+        type |= 0x20;
+      }
+      else if (fl_string_dynamic_compare_string(F_file_type_name_socket_s, arguments.array[i], F_file_type_name_socket_s_length) == F_equal_to) {
+        type |= 0x40;
+      }
+    } // for
+
+    uint8_t type_file = 0;
+    mode_t mode_file = 0;
+
+    *operation_if = fake_make_operation_if_type_true_next;
+
+    for (; i < arguments.used; ++i, mode_file = 0) {
+
+      status = f_file_mode_read(arguments.array[i].string, &mode_file);
+
+      if (F_status_is_error(status)) {
+        *operation_if = fake_make_operation_if_type_false_always_next;
+
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file);
+
+        break;
+      }
+
+      if (macro_f_file_type_is_block(mode_file)) {
+        type_file = 0x1;
+      }
+      else if (macro_f_file_type_is_character(mode_file)) {
+        type_file = 0x2;
+      }
+      else if (macro_f_file_type_is_directory(mode_file)) {
+        type_file = 0x4;
+      }
+      else if (macro_f_file_type_is_fifo(mode_file)) {
+        type_file = 0x8;
+      }
+      else if (macro_f_file_type_is_link(mode_file)) {
+        type_file = 0x10;
+      }
+      else if (macro_f_file_type_is_regular(mode_file)) {
+        type_file = 0x20;
+      }
+      else if (macro_f_file_type_is_socket(mode_file)) {
+        type_file = 0x40;
+      }
+
+      if (if_not) {
+        if (type & type_file) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      }
+      else {
+        if (!(type & type_file)) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      }
+    } // for
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_if_is_
 
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
   f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) {
@@ -652,6 +578,188 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_make_operate_process_type_if_greater_if_lesser_
+
+#ifndef _di_fake_make_operate_process_type_if_group_
+  f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+
+    f_status_t status = F_none;
+    uid_t id = 0;
+
+    status = fake_make_get_id_group(main, data_make->error, arguments.array[if_not ? 2 : 1], &id);
+    if (F_status_is_error(status)) return status;
+
+    uid_t id_file = 0;
+
+    *operation_if = fake_make_operation_if_type_true_next;
+
+    for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
+
+      status = f_file_group_read(arguments.array[i].string, &id_file);
+
+      if (F_status_is_error(status)) {
+        *operation_if = fake_make_operation_if_type_false_always_next;
+
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_group_read", F_true, arguments.array[i].string, "get group of", fll_error_file_type_file);
+
+        break;
+      }
+
+      if (if_not) {
+        if (id == id_file) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      }
+      else {
+        if (id != id_file) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      }
+    } // for
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_if_group_
+
+#ifndef _di_fake_make_operate_process_type_if_mode_
+  f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+
+    f_status_t status = F_none;
+    f_file_mode_t mode_rule = 0;
+    mode_t mode_match = 0;
+    bool is = F_false;
+
+    if (fl_string_dynamic_compare_string(fake_make_operation_argument_is_s, arguments.array[if_not ? 2 : 1], fake_make_operation_argument_is_s_length) == F_equal_to) {
+      is = F_true;
+    }
+
+    {
+      uint8_t mode_replace = 0;
+
+      status = fake_make_get_id_mode(main, data_make->error, arguments.array[if_not ? 3 : 2], &mode_rule, &mode_replace);
+
+      if (F_status_is_error(status)) {
+        *operation_if = fake_make_operation_if_type_false_always_next;
+
+        return status;
+      }
+
+      status = f_file_mode_to_mode(mode_rule, &mode_match);
+
+      if (F_status_is_error(status)) {
+        *operation_if = fake_make_operation_if_type_false_always_next;
+
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_file_mode_to_mode", F_true);
+
+        return status;
+      }
+    }
+
+    mode_t mode_file = 0;
+
+    *operation_if = fake_make_operation_if_type_true_next;
+
+    for (f_array_length_t i = if_not ? 4 : 3; i < arguments.used; ++i, mode_file = 0) {
+
+      status = f_file_mode_read(arguments.array[i].string, &mode_file);
+
+      if (F_status_is_error(status)) {
+        *operation_if = fake_make_operation_if_type_false_always_next;
+
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file);
+
+        break;
+      }
+
+      if (if_not) {
+        if (is) {
+          if (mode_match == (mode_file & F_file_mode_all_d)) {
+            *operation_if = fake_make_operation_if_type_false_next;
+
+            break;
+          }
+        }
+        else {
+          if (mode_match & mode_file) {
+            *operation_if = fake_make_operation_if_type_false_next;
+
+            break;
+          }
+        }
+      }
+      else {
+        if (is) {
+          if (mode_match != (mode_file & F_file_mode_all_d)) {
+            *operation_if = fake_make_operation_if_type_false_next;
+
+            break;
+          }
+        }
+        else {
+          if (!(mode_match & mode_file)) {
+            *operation_if = fake_make_operation_if_type_false_next;
+
+            break;
+          }
+        }
+      }
+    } // for
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_if_mode_
+
+#ifndef _di_fake_make_operate_process_type_if_owner_
+  f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+
+    f_status_t status = F_none;
+    uid_t id = 0;
+
+    status = fake_make_get_id_owner(main, data_make->error, arguments.array[if_not ? 2 : 1], &id);
+    if (F_status_is_error(status)) return status;
+
+    uid_t id_file = 0;
+
+    *operation_if = fake_make_operation_if_type_true_next;
+
+    for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
+
+      status = f_file_owner_read(arguments.array[i].string, &id_file);
+
+      if (F_status_is_error(status)) {
+        *operation_if = fake_make_operation_if_type_false_always_next;
+
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_owner_read", F_true, arguments.array[i].string, "get owner of", fll_error_file_type_file);
+
+        break;
+      }
+
+      if (if_not) {
+        if (id == id_file) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      }
+      else {
+        if (id != id_file) {
+          *operation_if = fake_make_operation_if_type_false_next;
+
+          break;
+        }
+      }
+    } // for
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_if_owner_
 
 #ifndef _di_fake_make_operate_process_type_modes_
   f_status_t fake_make_operate_process_type_modes(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) {
@@ -822,6 +930,102 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_make_operate_process_type_owners_
+
+#ifndef _di_fake_make_operate_process_type_parameter_
+  f_status_t fake_make_operate_process_type_parameter(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) {
+
+    f_status_t status = F_none;
+
+    bool found = F_false;
+    f_array_length_t i = 0;
+
+    for (; i < data_make->setting_make.parameter.used; ++i) {
+
+      if (fl_string_dynamic_compare(arguments.array[0], data_make->setting_make.parameter.array[i].name) == F_equal_to) {
+        found = F_true;
+
+        break;
+      }
+    } // for
+
+    if (found) {
+      for (f_array_length_t j = 0; j < data_make->setting_make.parameter.array[i].value.size; ++j) {
+
+        status = f_string_dynamic_resize(0, &data_make->setting_make.parameter.array[i].value.array[j]);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true);
+
+          return status;
+        }
+      } // for
+
+      if (data_make->setting_make.parameter.array[i].value.size) {
+        status = f_string_dynamics_resize(0, &data_make->setting_make.parameter.array[i].value);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamics_resize", F_true);
+
+          return status;
+        }
+      }
+    }
+    else {
+      status = f_string_map_multis_resize(F_memory_default_allocation_small_d, &data_make->setting_make.parameter);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_map_multis_resize", F_true);
+
+        return status;
+      }
+
+      status = f_string_dynamic_append(arguments.array[0], &data_make->setting_make.parameter.array[data_make->setting_make.parameter.used].name);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+
+        return status;
+      }
+
+      status = f_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[data_make->setting_make.parameter.used].name);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+
+        return status;
+      }
+
+      i = data_make->setting_make.parameter.used++;
+    }
+
+    data_make->setting_make.parameter.array[i].value.used = 0;
+
+    if (arguments.used > 1) {
+      status = f_string_dynamics_resize(arguments.used - 1, &data_make->setting_make.parameter.array[i].value);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamics_resize", F_true);
+
+        return status;
+      }
+
+      for (f_array_length_t j = 0; j < data_make->setting_make.parameter.array[i].value.size; ++j) {
+
+        status = f_string_dynamic_append(arguments.array[j + 1], &data_make->setting_make.parameter.array[i].value.array[j]);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+
+          return status;
+        }
+
+        ++data_make->setting_make.parameter.array[i].value.used;
+      } // for
+    }
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_parameter_
 
 #ifndef _di_fake_make_operate_process_type_pop_
   f_status_t fake_make_operate_process_type_pop(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) {

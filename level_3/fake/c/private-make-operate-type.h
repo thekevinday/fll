@@ -191,112 +191,6 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_groups_
 
 /**
- * Perform the if group operation process.
- *
- * @param main
- *   The main program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
- * @param arguments
- *   The arguments for the run or shell operation.
- * @param operation_if
- *   The if-condition status for the current operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_file_group_read().
- *
- *   Errors (with error bit) from: fake_make_get_id_group().
- *
- * @see f_file_group_read()
- *
- * @see fake_make_get_id_group()
- */
-#ifndef _di_fake_make_operate_process_type_if_group_
-  extern f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_if_group_
-
-/**
- * Perform the if  operation process.
- *
- * @param main
- *   The main program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
- * @param arguments
- *   The arguments for the run or shell operation.
- * @param operation_if
- *   The if-condition status for the current operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_file_mode_read().
- *   Errors (with error bit) from: f_file_mode_to_mode().
- *
- *   Errors (with error bit) from: fake_make_get_id_mode().
- *
- * @see f_file_mode_read()
- * @see f_file_mode_to_mode()
- *
- * @see fake_make_get_id_mode()
- */
-#ifndef _di_fake_make_operate_process_type_if_mode_
-  extern f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_if_mode_
-
-/**
- * Perform the if owner operation process.
- *
- * @param main
- *   The main program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
- * @param arguments
- *   The arguments for the run or shell operation.
- * @param operation_if
- *   The if-condition status for the current operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_file_owner_read().
- *
- *   Errors (with error bit) from: fake_make_get_id_owner().
- *
- * @see f_file_owner_read()
- *
- * @see fake_make_get_id_owner()
- */
-#ifndef _di_fake_make_operate_process_type_if_owner_
-  extern f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_if_owner_
-
-/**
- * Perform the if is operation process.
- *
- * @param main
- *   The main program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
- * @param arguments
- *   The arguments for the run or shell operation.
- * @param operation_if
- *   The if-condition status for the current operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_file_mode_read().
- *
- * @see f_file_mode_read()
- */
-#ifndef _di_fake_make_operate_process_type_if_is_
-  extern f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_if_is_
-
-/**
  * Perform the if defined operation process.
  *
  * @param main
@@ -305,12 +199,39 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
+ * @param if_not
+ *   When TRUE, perform the if not is.
+ *   When FALSE, perform the if is.
  * @param operation_if
  *   The if-condition status for the current operation.
  */
 #ifndef _di_fake_make_operate_process_type_if_defined_
-  extern void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_defined_
+
+/**
+ * Perform the if exists operation process.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param if_not
+ *   When TRUE, perform the if not is.
+ *   When FALSE, perform the if is.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_exists().
+ *
+ * @see f_file_exists()
+ */
+#ifndef _di_fake_make_operate_process_type_if_exists_
+  extern f_status_t fake_make_operate_process_type_if_exists(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_if_exists_
 
 /**
  * Perform the if >, >=, <, and <= operation processes.
@@ -334,6 +255,124 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
   extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_greater_if_lesser_
+
+/**
+ * Perform the if group operation process.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ * @param if_not
+ *   When TRUE, perform the if not is.
+ *   When FALSE, perform the if is.
+ * @param operation_if
+ *   The if-condition status for the current operation.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_group_read().
+ *
+ *   Errors (with error bit) from: fake_make_get_id_group().
+ *
+ * @see f_file_group_read()
+ *
+ * @see fake_make_get_id_group()
+ */
+#ifndef _di_fake_make_operate_process_type_if_group_
+  extern f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_if_group_
+
+/**
+ * Perform the if is operation process.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ * @param if_not
+ *   When TRUE, perform the if not is.
+ *   When FALSE, perform the if is.
+ * @param operation_if
+ *   The if-condition status for the current operation.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_mode_read().
+ *
+ * @see f_file_mode_read()
+ */
+#ifndef _di_fake_make_operate_process_type_if_is_
+  extern f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_if_is_
+
+/**
+ * Perform the if  operation process.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ * @param if_not
+ *   When TRUE, perform the if not is.
+ *   When FALSE, perform the if is.
+ * @param operation_if
+ *   The if-condition status for the current operation.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_mode_read().
+ *   Errors (with error bit) from: f_file_mode_to_mode().
+ *
+ *   Errors (with error bit) from: fake_make_get_id_mode().
+ *
+ * @see f_file_mode_read()
+ * @see f_file_mode_to_mode()
+ *
+ * @see fake_make_get_id_mode()
+ */
+#ifndef _di_fake_make_operate_process_type_if_mode_
+  extern f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_if_mode_
+
+/**
+ * Perform the if owner operation process.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ * @param if_not
+ *   When TRUE, perform the if not is.
+ *   When FALSE, perform the if is.
+ * @param operation_if
+ *   The if-condition status for the current operation.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_owner_read().
+ *
+ *   Errors (with error bit) from: fake_make_get_id_owner().
+ *
+ * @see f_file_owner_read()
+ *
+ * @see fake_make_get_id_owner()
+ */
+#ifndef _di_fake_make_operate_process_type_if_owner_
+  extern f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_if_owner_
 
 /**
  * Perform the mode operation process.
@@ -446,6 +485,33 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_owners_
   extern f_status_t fake_make_operate_process_type_owners(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_owners_
+
+/**
+ * Perform the parameter operation process.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and optionally build settings file.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_string_map_multis_resize().
+ *
+ * @see f_string_dynamic_resize()
+ * @see f_string_dynamic_terminate_after()
+ * @see f_string_dynamics_resize()
+ * @see f_string_map_multis_resize()
+ */
+#ifndef _di_fake_make_operate_process_type_parameter_
+  extern f_status_t fake_make_operate_process_type_parameter(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_parameter_
 
 /**
  * Perform the pop operation process.

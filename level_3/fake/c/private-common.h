@@ -707,69 +707,71 @@ extern "C" {
 #endif // _di_fake_make_setting_t_
 
 #ifndef _di_fake_make_operation_
-  #define FAKE_make_operation_break_s    "break"
-  #define FAKE_make_operation_build_s    "build"
-  #define FAKE_make_operation_clean_s    "clean"
-  #define FAKE_make_operation_clone_s    "clone"
-  #define FAKE_make_operation_compile_s  "compile"
-  #define FAKE_make_operation_copy_s     "copy"
-  #define FAKE_make_operation_define_s   "define"
-  #define FAKE_make_operation_delete_s   "delete"
-  #define FAKE_make_operation_deletes_s  "deletes"
-  #define FAKE_make_operation_else_s     "else"
-  #define FAKE_make_operation_exit_s     "exit"
-  #define FAKE_make_operation_fail_s     "fail"
-  #define FAKE_make_operation_group_s    "group"
-  #define FAKE_make_operation_groups_s   "groups"
-  #define FAKE_make_operation_if_s       "if"
-  #define FAKE_make_operation_index_s    "index"
-  #define FAKE_make_operation_link_s     "link"
-  #define FAKE_make_operation_mode_s     "mode"
-  #define FAKE_make_operation_modes_s    "modes"
-  #define FAKE_make_operation_move_s     "move"
-  #define FAKE_make_operation_operate_s  "operate"
-  #define FAKE_make_operation_owner_s    "owner"
-  #define FAKE_make_operation_owners_s   "owners"
-  #define FAKE_make_operation_pop_s      "pop"
-  #define FAKE_make_operation_print_s    "print"
-  #define FAKE_make_operation_run_s      "run"
-  #define FAKE_make_operation_shell_s    "shell"
-  #define FAKE_make_operation_skeleton_s "skeleton"
-  #define FAKE_make_operation_to_s       "to"
-  #define FAKE_make_operation_top_s      "top"
-  #define FAKE_make_operation_touch_s    "touch"
+  #define FAKE_make_operation_break_s     "break"
+  #define FAKE_make_operation_build_s     "build"
+  #define FAKE_make_operation_clean_s     "clean"
+  #define FAKE_make_operation_clone_s     "clone"
+  #define FAKE_make_operation_compile_s   "compile"
+  #define FAKE_make_operation_copy_s      "copy"
+  #define FAKE_make_operation_define_s    "define"
+  #define FAKE_make_operation_delete_s    "delete"
+  #define FAKE_make_operation_deletes_s   "deletes"
+  #define FAKE_make_operation_else_s      "else"
+  #define FAKE_make_operation_exit_s      "exit"
+  #define FAKE_make_operation_fail_s      "fail"
+  #define FAKE_make_operation_group_s     "group"
+  #define FAKE_make_operation_groups_s    "groups"
+  #define FAKE_make_operation_if_s        "if"
+  #define FAKE_make_operation_index_s     "index"
+  #define FAKE_make_operation_link_s      "link"
+  #define FAKE_make_operation_mode_s      "mode"
+  #define FAKE_make_operation_modes_s     "modes"
+  #define FAKE_make_operation_move_s      "move"
+  #define FAKE_make_operation_operate_s   "operate"
+  #define FAKE_make_operation_owner_s     "owner"
+  #define FAKE_make_operation_owners_s    "owners"
+  #define FAKE_make_operation_parameter_s "parameter"
+  #define FAKE_make_operation_pop_s       "pop"
+  #define FAKE_make_operation_print_s     "print"
+  #define FAKE_make_operation_run_s       "run"
+  #define FAKE_make_operation_shell_s     "shell"
+  #define FAKE_make_operation_skeleton_s  "skeleton"
+  #define FAKE_make_operation_to_s        "to"
+  #define FAKE_make_operation_top_s       "top"
+  #define FAKE_make_operation_touch_s     "touch"
 
-  #define fake_make_operation_break_s_length    5
-  #define fake_make_operation_build_s_length    5
-  #define fake_make_operation_clean_s_length    5
-  #define fake_make_operation_clone_s_length    5
-  #define fake_make_operation_compile_s_length  7
-  #define fake_make_operation_copy_s_length     4
-  #define fake_make_operation_define_s_length   6
-  #define fake_make_operation_delete_s_length   6
-  #define fake_make_operation_deletes_s_length  7
-  #define fake_make_operation_else_s_length     4
-  #define fake_make_operation_exit_s_length     4
-  #define fake_make_operation_fail_s_length     4
-  #define fake_make_operation_group_s_length    5
-  #define fake_make_operation_groups_s_length   6
-  #define fake_make_operation_if_s_length       2
-  #define fake_make_operation_index_s_length    5
-  #define fake_make_operation_link_s_length     4
-  #define fake_make_operation_mode_s_length     4
-  #define fake_make_operation_modes_s_length    5
-  #define fake_make_operation_move_s_length     4
-  #define fake_make_operation_operate_s_length  7
-  #define fake_make_operation_owner_s_length    5
-  #define fake_make_operation_owners_s_length   6
-  #define fake_make_operation_pop_s_length      3
-  #define fake_make_operation_print_s_length    5
-  #define fake_make_operation_run_s_length      3
-  #define fake_make_operation_shell_s_length    5
-  #define fake_make_operation_skeleton_s_length 8
-  #define fake_make_operation_to_s_length       2
-  #define fake_make_operation_top_s_length      3
-  #define fake_make_operation_touch_s_length    5
+  #define fake_make_operation_break_s_length     5
+  #define fake_make_operation_build_s_length     5
+  #define fake_make_operation_clean_s_length     5
+  #define fake_make_operation_clone_s_length     5
+  #define fake_make_operation_compile_s_length   7
+  #define fake_make_operation_copy_s_length      4
+  #define fake_make_operation_define_s_length    6
+  #define fake_make_operation_delete_s_length    6
+  #define fake_make_operation_deletes_s_length   7
+  #define fake_make_operation_else_s_length      4
+  #define fake_make_operation_exit_s_length      4
+  #define fake_make_operation_fail_s_length      4
+  #define fake_make_operation_group_s_length     5
+  #define fake_make_operation_groups_s_length    6
+  #define fake_make_operation_if_s_length        2
+  #define fake_make_operation_index_s_length     5
+  #define fake_make_operation_link_s_length      4
+  #define fake_make_operation_mode_s_length      4
+  #define fake_make_operation_modes_s_length     5
+  #define fake_make_operation_move_s_length      4
+  #define fake_make_operation_operate_s_length   7
+  #define fake_make_operation_owner_s_length     5
+  #define fake_make_operation_owners_s_length    6
+  #define fake_make_operation_parameter_s_length 9
+  #define fake_make_operation_pop_s_length       3
+  #define fake_make_operation_print_s_length     5
+  #define fake_make_operation_run_s_length       3
+  #define fake_make_operation_shell_s_length     5
+  #define fake_make_operation_skeleton_s_length  8
+  #define fake_make_operation_to_s_length        2
+  #define fake_make_operation_top_s_length       3
+  #define fake_make_operation_touch_s_length     5
 
   extern const f_string_t fake_make_operation_break_s;
   extern const f_string_t fake_make_operation_build_s;
@@ -794,6 +796,7 @@ extern "C" {
   extern const f_string_t fake_make_operation_operate_s;
   extern const f_string_t fake_make_operation_owner_s;
   extern const f_string_t fake_make_operation_owners_s;
+  extern const f_string_t fake_make_operation_parameter_s;
   extern const f_string_t fake_make_operation_pop_s;
   extern const f_string_t fake_make_operation_print_s;
   extern const f_string_t fake_make_operation_run_s;
@@ -827,6 +830,7 @@ extern "C" {
     fake_make_operation_type_operate,
     fake_make_operation_type_owner,
     fake_make_operation_type_owners,
+    fake_make_operation_type_parameter,
     fake_make_operation_type_pop,
     fake_make_operation_type_print,
     fake_make_operation_type_run,
@@ -837,7 +841,7 @@ extern "C" {
     fake_make_operation_type_touch,
   };
 
-  #define fake_make_operation_total_d 31
+  #define fake_make_operation_total_d 32
 
   #define FAKE_make_operation_argument_environment_s "environment"
   #define FAKE_make_operation_argument_failure_s     "failure"
@@ -900,6 +904,7 @@ extern "C" {
   #define FAKE_make_operation_argument_if_less_s          "<"
   #define FAKE_make_operation_argument_if_less_equal_s    "<="
   #define FAKE_make_operation_argument_if_mode_s          "mode"
+  #define FAKE_make_operation_argument_if_not_s           "not"
   #define FAKE_make_operation_argument_if_owner_s         "owner"
   #define FAKE_make_operation_argument_if_success_s       "success"
 
@@ -916,6 +921,7 @@ extern "C" {
   #define fake_make_operation_argument_if_less_s_length          1
   #define fake_make_operation_argument_if_less_equal_s_length    2
   #define fake_make_operation_argument_if_mode_s_length          4
+  #define fake_make_operation_argument_if_not_s_length           3
   #define fake_make_operation_argument_if_owner_s_length         5
   #define fake_make_operation_argument_if_success_s_length       7
 
@@ -932,6 +938,7 @@ extern "C" {
   extern const f_string_t fake_make_operation_argument_if_less_s;
   extern const f_string_t fake_make_operation_argument_if_less_equal_s;
   extern const f_string_t fake_make_operation_argument_if_mode_s;
+  extern const f_string_t fake_make_operation_argument_if_not_s;
   extern const f_string_t fake_make_operation_argument_if_owner_s;
   extern const f_string_t fake_make_operation_argument_if_success_s;
 
@@ -957,6 +964,13 @@ extern "C" {
     fake_make_operation_if_type_if_less,
     fake_make_operation_if_type_if_less_equal,
     fake_make_operation_if_type_if_mode,
+    fake_make_operation_if_type_if_not,
+    fake_make_operation_if_type_if_not_defined,
+    fake_make_operation_if_type_if_not_exists,
+    fake_make_operation_if_type_if_not_group,
+    fake_make_operation_if_type_if_not_is,
+    fake_make_operation_if_type_if_not_mode,
+    fake_make_operation_if_type_if_not_owner,
     fake_make_operation_if_type_if_owner,
     fake_make_operation_if_type_if_success,
     fake_make_operation_if_type_true,

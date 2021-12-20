@@ -10,9 +10,6 @@ settings:
 
   environment
 
-  parameter verbose +v
-  parameter verbose_fll +V
-
 main:
 
   build

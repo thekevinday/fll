@@ -27,13 +27,13 @@ Fakefile Specification:
 
   The Settings Objects are\:
   - compiler: Only one Content, which must only be a valid filename.
-  - define: First Content represents variable name (case-sensitive), remaining Content represents varaiable value for IKI substitution.
+  - define: First Content represents variable name (case-sensitive), remaining Content represents the value.
   - environment: Zero or more Content representing valid environment variable names (alpha-numeric with underscore, but cannot begin with a number).
   - fail: Only one Content, which must be either "exit", "warn" or "ignore" (quotes not required) (case-sensitive).
   - indexer: Only one Content, which must only be a valid filename.
   - indexer_arguments: Zero or more arguments supported by the indexer specified in "build_indexer".
   - load_build: Only one Content, which must be either "yes" or "no" (quotes not required) (case-sensitive).
-  - parameter: First Content represents variable name (case-sensitive), remaining Content represents varaiable value for IKI substitution.
+  - parameter: First Content represents variable name (case-sensitive), remaining Content represents the value.
 
   The build settings may also be specified in the Settings Section.
 
@@ -44,7 +44,7 @@ Fakefile Specification:
   - clone: Two or more Content representing paths to files.
   - compile: One or more Content as parameters to compiler.
   - copy: Two or more Content representing paths to files.
-  - define: Two or more Content.
+  - define: First Content represents variable name (case-sensitive), remaining Content represents the value.
   - delete: One or more Content representing paths to files.
   - deletes: One or more Content representing paths to files.
   - else: Zero Content.
@@ -61,6 +61,7 @@ Fakefile Specification:
   - operate: One Content. First Content is the name of a valid Section Object, except for the reserved Section Objects.
   - owner: Two or more Content. First Content is group name or number, remaining Content are paths to files.
   - owners: Two or more Content. First Content is group name or number, remaining Content are paths to files.
+  - parameter: First Content represents variable name (case-sensitive), remaining Content represents the value.
   - pop: Zero Content.
   - print: Zero or more Content.
   - run: One or more Content. First Content is the name of the program (or script) and all remaining Content are passed as arguments to the named program (or script).
@@ -82,6 +83,7 @@ Fakefile Specification:
   - group: First Content is the name of a group. Second or more Content are paths to files.
   - is: First Content is a list of "block", "character", "directory", "fifo", "link", "regular" , or "socket" followed by "for" and then the Remaining Content that are paths to files.
   - mode: First Content is either "is" or "has". Second Content is a valid file mode. Third or more Content are paths to files.
+  - not: First Content is one of "defined", "exists", "group", "is", "mode", or "owner" and all remaining Content are based on the First Content's "if" Section Operation Content rules.
   - owner: First Content is the name of an owner. Second or more Content are paths to files.
   - success: has no other Content.
 
