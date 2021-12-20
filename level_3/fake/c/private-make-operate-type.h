@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * Perform the clone operation process.
+ * Perform the copy and clone operation processes.
  *
  * @param main
  *   The main program data.
@@ -21,45 +21,27 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
+ * @param clone
+ *   If TRUE, perform a copy that is a clone (preserved timestamps, roles, and permissions).
+ *   If FALSE, perforrm a normaly copy without preserving properties.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_directory_is().
+ *   Errors (with error bit) from: f_file_clone().
+ *   Errors (with error bit) from: f_file_copy()
+ *   Errors (with error bit) from: fl_directory_clone()..
+ *   Errors (with error bit) from: fl_directory_copy().
  *
- * @see f_path_change()
- * @see f_string_dynamic_resize()
- *
- * @see fake_make_path_relative()
- */
-#ifndef _di_fake_make_operate_process_type_clone_
-  extern f_status_t fake_make_operate_process_type_clone(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type__
-
-/**
- * Perform the copy operation process.
- *
- * @param main
- *   The main program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
- * @param arguments
- *   The arguments for the run or shell operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *
- * @see f_path_change()
- * @see f_string_dynamic_resize()
- *
- * @see fake_make_path_relative()
+ * @see f_directory_is()
+ * @see f_file_clone()
+ * @see f_file_copy()
+ * @see fl_directory_clone()
+ * @see fl_directory_copy()
  */
 #ifndef _di_fake_make_operate_process_type_copy_
-  extern f_status_t fake_make_operate_process_type_copy(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_copy(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool clone) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_copy_
 
 /**
@@ -78,42 +60,19 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_file_remove().
+ *   Errors (with error bit) from: f_file_stat().
+ *   Errors (with error bit) from: f_directory_remove().
+ *   Errors (with error bit) from: f_directory_remove_custom().
  *
- * @see f_path_change()
- * @see f_string_dynamic_resize()
- *
- * @see fake_make_path_relative()
+ * @see f_file_remove()
+ * @see f_file_stat()
+ * @see f_directory_remove()
+ * @see f_directory_remove_custom()
  */
 #ifndef _di_fake_make_operate_process_type_deletes_
   extern f_status_t fake_make_operate_process_type_deletes(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_deletes_
-
-/**
- * Perform the exit operation process.
- *
- * @param main
- *   The main program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
- * @param arguments
- *   The arguments for the run or shell operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *
- * @see f_path_change()
- * @see f_string_dynamic_resize()
- *
- * @see fake_make_path_relative()
- */
-#ifndef _di_fake_make_operate_process_type_exit_
-  extern f_status_t fake_make_operate_process_type_exit(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_exit_
 
 /**
  * Perform the fail operation process.
@@ -124,24 +83,13 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *
- * @see f_path_change()
- * @see f_string_dynamic_resize()
- *
- * @see fake_make_path_relative()
  */
 #ifndef _di_fake_make_operate_process_type_fail_
-  extern f_status_t fake_make_operate_process_type_fail(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_process_type_fail(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_fail_
 
 /**
- * Perform the group operation process.
+ * Perform the group and groups operation processes.
  *
  * @param main
  *   The main program data.
@@ -149,45 +97,28 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
+ * @param all
+ *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
+ *   If FALSE, then only apply to the given path.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: ().
+ *   Errors (with error bit) from: ().
+ *   Errors (with error bit) from: ().
  *
- * @see f_path_change()
- * @see f_string_dynamic_resize()
+ *   Errors (with error bit) from: fake_make_get_id_group().
  *
- * @see fake_make_path_relative()
- */
-#ifndef _di_fake_make_operate_process_type_group_
-  extern f_status_t fake_make_operate_process_type_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_group_
-
-/**
- * Perform the groups operation process.
+ * @see ()
+ * @see ()
+ * @see ()
  *
- * @param main
- *   The main program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
- * @param arguments
- *   The arguments for the run or shell operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *
- * @see f_path_change()
- * @see f_string_dynamic_resize()
- *
- * @see fake_make_path_relative()
+ * @see fake_make_assure_inside_project()
+ * @see fake_make_get_id_group()
  */
 #ifndef _di_fake_make_operate_process_type_groups_
-  extern f_status_t fake_make_operate_process_type_groups(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_groups(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_groups_
 
 /**
