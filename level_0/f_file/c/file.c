@@ -911,7 +911,7 @@ extern "C" {
       f_file_mode_t mode_umask = 0;
       f_file_mode_t what = 0;
 
-      // translate the umask into an f_file_mode_t umask equivalent.
+      // Translate the umask into an f_file_mode_t umask equivalent.
       if (umask & F_file_mode_special_set_user_d) {
         mode_umask = F_file_mode_t_block_special_d & F_file_mode_t_mask_bit_set_owner_d;
       }
@@ -1057,10 +1057,12 @@ extern "C" {
               on = 0;
               how = 0;
               mode_mask = 0;
+
               break;
             }
             else {
               syntax = 0;
+
               break;
             }
 
@@ -1075,6 +1077,8 @@ extern "C" {
           if (how > 3) {
             *mode -= *mode & mode_umask;
           }
+
+          if (!string[i]) break;
         }
         else {
           syntax = 0;
@@ -1110,11 +1114,10 @@ extern "C" {
         *replace = F_file_mode_t_replace_standard_d | F_file_mode_t_replace_directory_d;
       }
 
-      if (string[i] == f_string_ascii_0_s[0]) {
-        for (; string[i] == f_string_ascii_0_s[0]; ++i) {
-          // seek past leading '0's.
-        } // for
-      }
+      // Seek past leading '0's.
+      while (string[i] == f_string_ascii_0_s[0]) {
+        ++i;
+      } // while
 
       if (string[i]) {
         f_array_length_t j = 0;
@@ -1126,11 +1129,11 @@ extern "C" {
           }
 
           if (string[i] == f_string_ascii_0_s[0]) {
-            // already is a zero.
+            // Already is a zero.
           }
           else if (string[i] == f_string_ascii_1_s[0] || string[i] == f_string_ascii_2_s[0] || string[i] == f_string_ascii_3_s[0] || string[i] == f_string_ascii_4_s[0] || string[i] == f_string_ascii_5_s[0] || string[i] == f_string_ascii_6_s[0] || string[i] == f_string_ascii_7_s[0]) {
 
-            // this assumes ASCII/UTF-8.
+            // This assumes ASCII/UTF-8.
             if (how == 3) {
               *mode |= (string[i + j] - 0x30) << 4;
             }
@@ -1140,7 +1143,7 @@ extern "C" {
           }
           else {
 
-            // designate that this is invalid.
+            // Designate that this is invalid.
             j = 4;
             break;
           }
@@ -1151,7 +1154,7 @@ extern "C" {
         }
         else if (how == 2) {
 
-          // if there are only '0's then the standard and setuid/setgid/sticky bits are to be replaced.
+          // If there are only '0's then the standard and setuid/setgid/sticky bits are to be replaced.
           if (!*mode) {
             *replace = F_file_mode_t_replace_standard_d | F_file_mode_t_replace_special_d;
           }
