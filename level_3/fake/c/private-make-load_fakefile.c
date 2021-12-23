@@ -6,7 +6,7 @@
 #include "private-clean.h"
 #include "private-make.h"
 #include "private-make-load_fakefile.h"
-#include "private-make-operate.h"
+#include "private-make-operate_validate.h"
 #include "private-print.h"
 #include "private-skeleton.h"
 

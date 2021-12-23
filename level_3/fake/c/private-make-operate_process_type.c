@@ -4,10 +4,8 @@
 #include "private-build.h"
 #include "private-clean.h"
 #include "private-make.h"
-#include "private-make-load_parameters.h"
-#include "private-make-load_fakefile.h"
 #include "private-make-operate.h"
-#include "private-make-operate-type.h"
+#include "private-make-operate_process_type.h"
 #include "private-print.h"
 #include "private-skeleton.h"
 
