@@ -46,7 +46,7 @@ extern "C" {
 extern int setup(void **state);
 
 /**
- * Pefom any setdown operations.
+ * Peform any setdown operations.
  *
  * @param state
  *   The test state.
