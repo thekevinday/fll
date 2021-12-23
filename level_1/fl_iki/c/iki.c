@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_iki_read_
-  f_status_t fl_iki_read(f_state_t state, f_string_static_t * const buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_iki_delimits_t *delimits) {
+  f_status_t fl_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_iki_delimits_t *delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);

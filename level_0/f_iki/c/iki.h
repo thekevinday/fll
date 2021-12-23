@@ -159,7 +159,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if a string length is too large to store in the buffer.
  */
 #ifndef _di_f_iki_read_
-  extern f_status_t f_iki_read(f_state_t state, f_string_static_t * const buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_iki_delimits_t *delimits);
+  extern f_status_t f_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_iki_delimits_t *delimits);
 #endif // _di_f_iki_read_
 
 #ifdef __cplusplus
