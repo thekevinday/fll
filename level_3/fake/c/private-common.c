@@ -258,7 +258,7 @@ extern "C" {
 #ifndef _di_fake_signal_received_
   f_status_t fake_signal_received(fake_main_t * const main) {
 
-    if (!main->signal.id) {
+    if (main->signal.id == -1) {
       return F_false;
     }
 

@@ -60,6 +60,9 @@ extern "C" {
  * @param signal
  *   The signal settings.
  *
+ *   If signal.id is -1, then a new file descriptor is created.
+ *   Otherwise, signal.id is used as the file descriptor.
+ *
  * @return
  *   F_none on success but no signal found.
  *   F_device (with error bit) if could not mount the internal inode device.

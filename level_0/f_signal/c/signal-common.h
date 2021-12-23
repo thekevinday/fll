@@ -30,13 +30,13 @@ extern "C" {
     sigset_t set;
   } f_signal_t;
 
-  #define f_signal_t_initialize {0, 0, { 0 } }
+  #define f_signal_t_initialize {0, -1, { 0 } }
 
   #define macro_f_signal_t_initialize(flags, id, set) { flags, id, set }
 
   #define macro_f_signal_t_clear(signal) \
     signal.flags = 0; \
-    signal.id = 0; \
+    signal.id = -1; \
     signal.set[0] = 0;
 #endif // _di_f_signal_t_
 

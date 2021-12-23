@@ -35,7 +35,7 @@ extern "C" {
       if (!signal) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    int result = signalfd(-1, &signal->set, signal->flags);
+    const int result = signalfd(signal->id, &signal->set, signal->flags);
 
     if (result < 0) {
       if (errno == EINVAL) return F_status_set_error(F_parameter);

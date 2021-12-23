@@ -96,7 +96,7 @@ void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f
 #ifndef _di_firewall_signal_received_
   f_status_t firewall_signal_received(firewall_main_t * const main) {
 
-    if (!main->signal.id) {
+    if (main->signal.id == -1) {
       return F_false;
     }
 

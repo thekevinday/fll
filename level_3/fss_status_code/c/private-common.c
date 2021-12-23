@@ -26,7 +26,7 @@ extern "C" {
 #ifndef _di_fss_status_code_signal_received_
   f_status_t fss_status_code_signal_received(fss_status_code_main_t * const main) {
 
-    if (!main->signal.id) {
+    if (main->signal.id == -1) {
       return F_false;
     }
 

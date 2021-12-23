@@ -35,7 +35,7 @@ extern "C" {
 #ifndef _di_fss_identify_signal_received_
   f_status_t fss_identify_signal_received(fss_identify_main_t * const main) {
 
-    if (!main->signal.id) {
+    if (main->signal.id == -1) {
       return F_false;
     }
 

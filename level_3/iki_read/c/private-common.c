@@ -26,7 +26,7 @@ extern "C" {
 #ifndef _di_iki_read_signal_received_
   f_status_t iki_read_signal_received(iki_read_main_t * const main) {
 
-    if (!main->signal.id) {
+    if (main->signal.id == -1) {
       return F_false;
     }
 

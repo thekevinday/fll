@@ -26,7 +26,7 @@ extern "C" {
 #ifndef _di_byte_dump_signal_received_
   f_status_t byte_dump_signal_received(byte_dump_main_t * const main) {
 
-    if (!main->signal.id) {
+    if (main->signal.id == -1) {
       return F_false;
     }
 
