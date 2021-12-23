@@ -707,6 +707,7 @@ extern "C" {
 #endif // _di_fake_make_setting_t_
 
 #ifndef _di_fake_make_operation_
+  #define FAKE_make_operation_and_s       "and"
   #define FAKE_make_operation_break_s     "break"
   #define FAKE_make_operation_build_s     "build"
   #define FAKE_make_operation_clean_s     "clean"
@@ -728,6 +729,7 @@ extern "C" {
   #define FAKE_make_operation_modes_s     "modes"
   #define FAKE_make_operation_move_s      "move"
   #define FAKE_make_operation_operate_s   "operate"
+  #define FAKE_make_operation_or_s        "or"
   #define FAKE_make_operation_owner_s     "owner"
   #define FAKE_make_operation_owners_s    "owners"
   #define FAKE_make_operation_parameter_s "parameter"
@@ -740,6 +742,7 @@ extern "C" {
   #define FAKE_make_operation_top_s       "top"
   #define FAKE_make_operation_touch_s     "touch"
 
+  #define fake_make_operation_and_s_length       3
   #define fake_make_operation_break_s_length     5
   #define fake_make_operation_build_s_length     5
   #define fake_make_operation_clean_s_length     5
@@ -761,6 +764,7 @@ extern "C" {
   #define fake_make_operation_modes_s_length     5
   #define fake_make_operation_move_s_length      4
   #define fake_make_operation_operate_s_length   7
+  #define fake_make_operation_or_s_length        2
   #define fake_make_operation_owner_s_length     5
   #define fake_make_operation_owners_s_length    6
   #define fake_make_operation_parameter_s_length 9
@@ -773,6 +777,7 @@ extern "C" {
   #define fake_make_operation_top_s_length       3
   #define fake_make_operation_touch_s_length     5
 
+  extern const f_string_t fake_make_operation_and_s;
   extern const f_string_t fake_make_operation_break_s;
   extern const f_string_t fake_make_operation_build_s;
   extern const f_string_t fake_make_operation_clean_s;
@@ -794,6 +799,7 @@ extern "C" {
   extern const f_string_t fake_make_operation_modes_s;
   extern const f_string_t fake_make_operation_move_s;
   extern const f_string_t fake_make_operation_operate_s;
+  extern const f_string_t fake_make_operation_or_s;
   extern const f_string_t fake_make_operation_owner_s;
   extern const f_string_t fake_make_operation_owners_s;
   extern const f_string_t fake_make_operation_parameter_s;
@@ -807,7 +813,8 @@ extern "C" {
   extern const f_string_t fake_make_operation_touch_s;
 
   enum {
-    fake_make_operation_type_break = 1,
+    fake_make_operation_type_and = 1,
+    fake_make_operation_type_break,
     fake_make_operation_type_build,
     fake_make_operation_type_clean,
     fake_make_operation_type_clone,
@@ -828,6 +835,7 @@ extern "C" {
     fake_make_operation_type_modes,
     fake_make_operation_type_move,
     fake_make_operation_type_operate,
+    fake_make_operation_type_or,
     fake_make_operation_type_owner,
     fake_make_operation_type_owners,
     fake_make_operation_type_parameter,
@@ -841,7 +849,7 @@ extern "C" {
     fake_make_operation_type_touch,
   };
 
-  #define fake_make_operation_total_d 32
+  #define fake_make_operation_total_d 34
 
   #define FAKE_make_operation_argument_environment_s "environment"
   #define FAKE_make_operation_argument_failure_s     "failure"
@@ -943,15 +951,9 @@ extern "C" {
   extern const f_string_t fake_make_operation_argument_if_success_s;
 
   enum {
-    fake_make_operation_if_type_else_false = 1,
-    fake_make_operation_if_type_else_false_next,
-    fake_make_operation_if_type_else_false_next_always,
-    fake_make_operation_if_type_else_true,
-    fake_make_operation_if_type_else_true_next,
-    fake_make_operation_if_type_false,
-    fake_make_operation_if_type_false_always,
-    fake_make_operation_if_type_false_always_next,
-    fake_make_operation_if_type_false_next,
+    fake_make_operation_if_type_done = 1,
+    fake_make_operation_if_type_else,
+    fake_make_operation_if_type_if,
     fake_make_operation_if_type_if_defined,
     fake_make_operation_if_type_if_equal,
     fake_make_operation_if_type_if_equal_not,
@@ -973,8 +975,6 @@ extern "C" {
     fake_make_operation_if_type_if_not_owner,
     fake_make_operation_if_type_if_owner,
     fake_make_operation_if_type_if_success,
-    fake_make_operation_if_type_true,
-    fake_make_operation_if_type_true_next,
   };
 
   enum {
@@ -1165,6 +1165,54 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(structure.buffer) \
     macro_f_string_dynamic_t_delete_simple(structure.path_cache)
 #endif // _di_fake_make_data_t_
+
+/**
+ * A structure for managing the operation and if-condition states.
+ *
+ * block:              The operation type representing the block (either "if" or "else").
+ * block_result:       The result of the block.
+ * condition:          The current if-condition type.
+ * condition_result:   The result of the currently processed condition.
+ * operation:          The current operation type.
+ * operation_previous: The previous operation type.
+ */
+#ifndef _di_fake_state_process_t_
+  typedef struct {
+    uint8_t block;
+    uint8_t block_result;
+    uint8_t condition;
+    uint8_t condition_result;
+    uint8_t operation;
+    uint8_t operation_previous;
+  } fake_state_process_t;
+
+  #define fake_state_process_t_initialize { \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+  }
+#endif // _di_fake_state_process_t_
+
+/**
+ * Designate that the if state is true, false, or undefined (none).
+ *
+ * fake_condition_result_*:
+ * - none:  The result of the if-condition is not set.
+ * - false: The result of the if-condition is false.
+ * - true:  The result of the if-condition is true.
+ * - done:  The if-condition is done and should no longer be processed.
+ */
+#ifndef _di_fake_condition_result_
+  enum {
+    fake_condition_result_none = 0,
+    fake_condition_result_false,
+    fake_condition_result_true,
+    fake_condition_result_done,
+  };
+#endif // _di_fake_condition_result_
 
 #ifndef _di_fake_skeleton_content_
   #define FAKE_make_skeleton_content_defines_s      "# fss-0000\n\n"

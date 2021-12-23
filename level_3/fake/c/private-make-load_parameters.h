@@ -18,7 +18,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param status
  *   The return status.
  *

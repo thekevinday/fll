@@ -18,7 +18,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param clone
@@ -50,7 +50,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param all
@@ -80,7 +80,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  */
@@ -94,7 +94,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param all
@@ -104,15 +104,14 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: ().
- *   Errors (with error bit) from: ().
- *   Errors (with error bit) from: ().
+ *   Errors (with error bit) from: f_file_role_change().
+ *   Errors (with error bit) from: fll_file_role_change_all().
  *
+ *   Errors (with error bit) from: fake_make_assure_inside_project().
  *   Errors (with error bit) from: fake_make_get_id_group().
  *
- * @see ()
- * @see ()
- * @see ()
+ * @see f_file_role_change()
+ * @see fll_file_role_change_all()
  *
  * @see fake_make_assure_inside_project()
  * @see fake_make_get_id_group()
@@ -127,17 +126,17 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
- * @param operation_if
- *   The if-condition status for the current operation.
+ * @param state_process
+ *   The operation process state.
  */
 #ifndef _di_fake_make_operate_process_type_if_defined_
-  extern void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_defined_
 
 /**
@@ -146,12 +145,14 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
  * @param arguments
  *   The arguments for the run or shell operation.
+ * @param state_process
+ *   The operation process state.
  *
  * @return
  *   F_none on success.
@@ -161,7 +162,7 @@ extern "C" {
  * @see f_file_exists()
  */
 #ifndef _di_fake_make_operate_process_type_if_exists_
-  extern f_status_t fake_make_operate_process_type_if_exists(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_exists(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_exists_
 
 /**
@@ -170,11 +171,11 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
- * @param operation_if
- *   The if-condition status for the current operation.
+ * @param state_process
+ *   The operation process state.
  *
  * @return
  *   F_none on success.
@@ -184,7 +185,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
-  extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_greater_if_lesser_
 
 /**
@@ -193,14 +194,14 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
- * @param operation_if
- *   The if-condition status for the current operation.
+ * @param state_process
+ *   The operation process state.
  *
  * @return
  *   F_none on success.
@@ -214,7 +215,7 @@ extern "C" {
  * @see fake_make_get_id_group()
  */
 #ifndef _di_fake_make_operate_process_type_if_group_
-  extern f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_group_
 
 /**
@@ -223,14 +224,14 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
- * @param operation_if
- *   The if-condition status for the current operation.
+ * @param state_process
+ *   The operation process state.
  *
  * @return
  *   F_none on success.
@@ -240,7 +241,7 @@ extern "C" {
  * @see f_file_mode_read()
  */
 #ifndef _di_fake_make_operate_process_type_if_is_
-  extern f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_is_
 
 /**
@@ -249,14 +250,14 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
- * @param operation_if
- *   The if-condition status for the current operation.
+ * @param state_process
+ *   The operation process state.
  *
  * @return
  *   F_none on success.
@@ -272,7 +273,7 @@ extern "C" {
  * @see fake_make_get_id_mode()
  */
 #ifndef _di_fake_make_operate_process_type_if_mode_
-  extern f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_mode_
 
 /**
@@ -281,14 +282,14 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
- * @param operation_if
- *   The if-condition status for the current operation.
+ * @param state_process
+ *   The operation process state.
  *
  * @return
  *   F_none on success.
@@ -302,7 +303,7 @@ extern "C" {
  * @see fake_make_get_id_owner()
  */
 #ifndef _di_fake_make_operate_process_type_if_owner_
-  extern f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_owner_
 
 /**
@@ -311,7 +312,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  *
@@ -336,7 +337,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param all
@@ -368,7 +369,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  *
@@ -391,7 +392,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  * @param all
@@ -423,7 +424,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  *
@@ -453,7 +454,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  *
@@ -478,7 +479,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  *
@@ -508,7 +509,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  *
@@ -531,7 +532,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_make
- *   All make related setting data, including data from the fakefile and optionally build settings file.
+ *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  *

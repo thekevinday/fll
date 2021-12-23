@@ -39,6 +39,11 @@ extern "C" {
  * @return
  *   F_true is returned if the status code has no print message.
  *   F_false is returned on successful print of known errors.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_operation_file_
   extern bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_t operation, const f_string_t source, const f_string_t destination, const f_string_t how, const bool fallback) F_attribute_visibility_internal_d;
@@ -63,6 +68,11 @@ extern "C" {
  * @return
  *   F_true is returned if the status code has no print message.
  *   F_false is returned on successful print of known errors.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_fss_
   extern bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_t path_file, const f_string_range_t range, const bool fallback) F_attribute_visibility_internal_d;
@@ -75,6 +85,11 @@ extern "C" {
  *   The main program data.
  * @param parameter
  *   The parameter name.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_missing_value_
   extern void fake_print_error_parameter_missing_value(fake_main_t * const main, const f_string_t parameter) F_attribute_visibility_internal_d;
@@ -87,10 +102,39 @@ extern "C" {
  *   The main program data.
  * @param parameter
  *   The parameter name.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_too_many_
   extern void fake_print_error_parameter_too_many(fake_main_t * const main, const f_string_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_parameter_too_many_
+
+/**
+ * Print an error message for when there are more arguments are required (such as to a fakefile operation).
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @see fll_print_format()
+ */
+#ifndef _di_fake_print_error_requires_more_arguments_
+  extern void fake_print_error_requires_more_arguments(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_print_error_requires_more_arguments_
+
+/**
+ * Print an error message for when there are too many arguments passed (such as to a fakefile operation).
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @see fll_print_format()
+ */
+#ifndef _di_fake_print_error_too_many_arguments_
+  extern void fake_print_error_too_many_arguments(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_print_error_too_many_arguments_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation failed.
@@ -105,6 +149,11 @@ extern "C" {
  *   The range within the buffer representing the section name.
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_failed_
   extern void fake_print_message_section_operation_failed(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) F_attribute_visibility_internal_d;
@@ -123,6 +172,12 @@ extern "C" {
  *   The name of the function where the error happened.
  * @param path
  *   The path that is outside of the project path.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
+ * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_outside_
   extern void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) F_attribute_visibility_internal_d;
@@ -142,6 +197,12 @@ extern "C" {
  *   Set to 0 to disable.
  * @param path
  *   The path to the directory.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
+ * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
   extern void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) F_attribute_visibility_internal_d;
@@ -162,6 +223,11 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  * @param stack_max
  *   The max stack depth.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_stack_max_
   extern void fake_print_message_section_operation_stack_max(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) F_attribute_visibility_internal_d;
@@ -180,6 +246,11 @@ extern "C" {
  *   The range within the buffer representing the section name.
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_unknown_
   extern void fake_print_message_section_operation_unknown(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) F_attribute_visibility_internal_d;
@@ -192,6 +263,11 @@ extern "C" {
  *   The main program data.
  * @param signal
  *   The signal received.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_signal_received_
   extern void fake_print_signal_received(fake_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
@@ -210,6 +286,11 @@ extern "C" {
  *   The range within the buffer representing the object.
  * @param settings_name
  *   The name of the setting that has an invalid value.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_empty_
   extern void fake_print_warning_settings_content_empty(fake_main_t * const main, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_t settings_name) F_attribute_visibility_internal_d;
@@ -230,6 +311,11 @@ extern "C" {
  *   The range within the buffer representing the content.
  * @param settings_name
  *   The name of the setting that has an invalid value.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_invalid_
   extern void fake_print_warning_settings_content_invalid(fake_main_t * const main, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_t settings_name) F_attribute_visibility_internal_d;
@@ -246,6 +332,11 @@ extern "C" {
  *   The buffer containing the loaded file content.
  * @param name_object
  *   The name of the object.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_multiple_
   extern void fake_print_warning_settings_content_multiple(fake_main_t * const main, const f_string_t path_file, const f_string_t name_object) F_attribute_visibility_internal_d;
@@ -264,6 +355,11 @@ extern "C" {
  *   A label describing what this object belongs to.
  * @param name_object
  *   The name of the object.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_object_multiple_
   extern void fake_print_warning_settings_object_multiple(fake_main_t * const main, const f_string_t path_file, const f_string_t label, const f_string_t name_object) F_attribute_visibility_internal_d;

@@ -1066,6 +1066,7 @@ extern "C" {
     }
 
     const f_string_t operations_name[] = {
+      fake_make_operation_and_s,
       fake_make_operation_break_s,
       fake_make_operation_build_s,
       fake_make_operation_clean_s,
@@ -1087,6 +1088,7 @@ extern "C" {
       fake_make_operation_modes_s,
       fake_make_operation_move_s,
       fake_make_operation_operate_s,
+      fake_make_operation_or_s,
       fake_make_operation_owner_s,
       fake_make_operation_owners_s,
       fake_make_operation_parameter_s,
@@ -1101,6 +1103,7 @@ extern "C" {
     };
 
     const f_array_length_t operations_length[] = {
+      fake_make_operation_and_s_length,
       fake_make_operation_break_s_length,
       fake_make_operation_build_s_length,
       fake_make_operation_clean_s_length,
@@ -1122,6 +1125,7 @@ extern "C" {
       fake_make_operation_modes_s_length,
       fake_make_operation_move_s_length,
       fake_make_operation_operate_s_length,
+      fake_make_operation_or_s_length,
       fake_make_operation_owner_s_length,
       fake_make_operation_owners_s_length,
       fake_make_operation_parameter_s_length,
@@ -1136,6 +1140,7 @@ extern "C" {
     };
 
     const uint8_t operations_type[] = {
+      fake_make_operation_type_and,
       fake_make_operation_type_break,
       fake_make_operation_type_build,
       fake_make_operation_type_clean,
@@ -1157,6 +1162,7 @@ extern "C" {
       fake_make_operation_type_modes,
       fake_make_operation_type_move,
       fake_make_operation_type_operate,
+      fake_make_operation_type_or,
       fake_make_operation_type_owner,
       fake_make_operation_type_owners,
       fake_make_operation_type_parameter,
@@ -1170,18 +1176,14 @@ extern "C" {
       fake_make_operation_type_touch,
     };
 
-    uint8_t operation = 0;
-    uint8_t operations[section->objects.used];
-    uint8_t operation_if = 0;
-
+    fake_state_process_t state_process = fake_state_process_t_initialize;
     bool success = F_true;
+    int result;
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
-
-    memset(operations, 0, section->objects.used);
 
     for (i = 0; i < section->objects.used; ++i, *status = F_none) {
 
@@ -1190,7 +1192,10 @@ extern "C" {
       } // for
 
       arguments.used = 0;
-      operation = 0;
+      state_process.condition = 0;
+      state_process.condition_result = 0;
+      state_process.operation_previous = state_process.operation;
+      state_process.operation = 0;
 
       if (!(i % fake_signal_check_short_d) && fake_signal_received(main)) {
         *status = F_status_set_error(F_interrupt);
@@ -1201,18 +1206,18 @@ extern "C" {
       for (j = 0; j < fake_make_operation_total_d; ++j) {
 
         if (fl_string_dynamic_partial_compare_string(operations_name[j], data_make->buffer, operations_length[j], section->objects.array[i]) == F_equal_to) {
-          operation = operations_type[j];
+          state_process.operation = operations_type[j];
 
           break;
         }
       } // for
 
-      if (!operation) {
+      if (!state_process.operation) {
         fake_print_message_section_operation_unknown(main, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
 
         *status = F_status_set_error(F_valid_not);
       }
-      else if (operation == fake_make_operation_type_operate) {
+      else if (state_process.operation == fake_make_operation_type_operate) {
         if (section_stack->used == fake_make_section_stack_max_d) {
           fake_print_message_section_operation_stack_max(main, data_make->error, data_make->buffer, section->name, section->objects.array[i], fake_make_section_stack_max_d);
 
@@ -1221,103 +1226,86 @@ extern "C" {
       }
 
       if (F_status_is_error_not(*status)) {
-        operations[i] = operation;
-
-        fake_make_operate_expand(main, data_make, section->name, operation, section->contents.array[i], section->quotess.array[i], &arguments, status);
+        fake_make_operate_expand(main, data_make, section->name, state_process.operation, section->contents.array[i], section->quotess.array[i], &arguments, status);
       }
-
-      if (operation_if == fake_make_operation_if_type_true_next) {
-        operation_if = fake_make_operation_if_type_true;
-      }
-      else if (operation_if == fake_make_operation_if_type_false_next) {
-        operation_if = fake_make_operation_if_type_false;
-      }
-      else if (operation_if == fake_make_operation_if_type_false_always_next) {
-        operation_if = fake_make_operation_if_type_false_always;
-      }
-
-      fake_make_operate_validate(main, data_make, section->name, operation, arguments, &operation_if, section_stack, status);
 
       if (F_status_is_error_not(*status)) {
-        if (operation_if == fake_make_operation_if_type_false) {
-          operation_if = fake_make_operation_if_type_else_true_next;
+        fake_make_operate_validate(main, data_make, section->name, arguments, &state_process, section_stack, status);
+      }
 
-          continue;
+      // Block is set to the synthetic done type when an if-condition completes in order to inform any subsequent else condition.
+      // If there is no follow-up else condition, then reset the block (there is no condition block at this point).
+      if (state_process.block == fake_make_operation_if_type_done) {
+        if (state_process.operation != fake_make_operation_type_else) {
+          state_process.block = 0;
+          state_process.block_result = 0;
         }
-        else if (operation_if == fake_make_operation_if_type_false_always) {
-          operation_if = fake_make_operation_if_type_else_false_next_always;
+      }
 
-          continue;
+      if (F_status_is_error(*status)) {
+        if (state_process.block) {
+
+          // Reset the block information for a completely processed block.
+          if (state_process.block == fake_make_operation_if_type_done && state_process.operation != fake_make_operation_type_else) {
+            state_process.block = 0;
+            state_process.block_result = 0;
+          }
+
+          // Always set the condition result to done on error for unfinished blocks as there is no way to determine truth at this point.
+          else {
+            state_process.block_result = fake_condition_result_done;
+          }
         }
-        else if (operation_if == fake_make_operation_if_type_else_false) {
-          operation_if = 0;
+      }
+      else {
+        if (!(state_process.operation == fake_make_operation_type_if || state_process.operation == fake_make_operation_type_else || state_process.operation == fake_make_operation_type_and || state_process.operation == fake_make_operation_type_or)) {
 
-          continue;
+          // Only process a non-if-condition operation following an if condition, if the block result is true.
+          if (state_process.block == fake_make_operation_if_type_if) {
+            if (state_process.block_result != fake_condition_result_true) {
+              state_process.block = fake_make_operation_if_type_done;
+
+              success = F_true;
+
+              continue;
+            }
+          }
+
+          // Only process a non-if-condition operation following an else condition, if the block result is false.
+          else if (state_process.block == fake_make_operation_if_type_else) {
+            if (state_process.block_result != fake_condition_result_false) {
+              state_process.block = 0;
+              state_process.block_result = 0;
+
+              success = F_true;
+
+              continue;
+            }
+          }
         }
 
-        const int result = fake_make_operate_process(main, data_make, section->name, operation, arguments, success, &operation_if, section_stack, status);
+        result = fake_make_operate_process(main, data_make, section->name, arguments, success, &state_process, section_stack, status);
 
         if (*status == F_child) {
           f_string_dynamics_resize(0, &arguments);
 
           return result;
         }
-      }
-      else {
-        if (operation == fake_make_operation_type_if) {
-          switch (operation_if) {
-            case fake_make_operation_if_type_if_defined:
-            case fake_make_operation_if_type_if_equal:
-            case fake_make_operation_if_type_if_equal_not:
-            case fake_make_operation_if_type_if_exists:
-            case fake_make_operation_if_type_if_failure:
-            case fake_make_operation_if_type_if_greater:
-            case fake_make_operation_if_type_if_greater_equal:
-            case fake_make_operation_if_type_if_group:
-            case fake_make_operation_if_type_if_is:
-            case fake_make_operation_if_type_if_less:
-            case fake_make_operation_if_type_if_less_equal:
-            case fake_make_operation_if_type_if_mode:
-            case fake_make_operation_if_type_if_not:
-            case fake_make_operation_if_type_if_not_defined:
-            case fake_make_operation_if_type_if_not_exists:
-            case fake_make_operation_if_type_if_not_group:
-            case fake_make_operation_if_type_if_not_is:
-            case fake_make_operation_if_type_if_not_mode:
-            case fake_make_operation_if_type_if_not_owner:
-            case fake_make_operation_if_type_if_owner:
-            case fake_make_operation_if_type_if_success:
-              operation_if = 0;
-              break;
-          }
-        }
 
-        if (operation_if == fake_make_operation_if_type_false) {
-          operation_if = fake_make_operation_if_type_else_true_next;
-        }
-        else if (operation_if == fake_make_operation_if_type_false_always) {
-          operation_if = fake_make_operation_if_type_else_false_next_always;
-        }
-        else if (operation_if == fake_make_operation_if_type_else_false) {
-          operation_if = 0;
+        // When done processing an operation within a block, continue onto next block stage or exit the block.
+        if (!(state_process.operation == fake_make_operation_type_if || state_process.operation == fake_make_operation_type_else || state_process.operation == fake_make_operation_type_and || state_process.operation == fake_make_operation_type_or)) {
+
+          if (state_process.block == fake_make_operation_if_type_if) {
+            state_process.block = fake_make_operation_if_type_done;
+          }
+          else if (state_process.block == fake_make_operation_if_type_else) {
+            state_process.block = 0;
+            state_process.block_result = 0;
+          }
         }
       }
 
       if (F_status_set_fine(*status) == F_interrupt) break;
-
-      if (operation_if == fake_make_operation_if_type_else_true || operation_if == fake_make_operation_if_type_else_false) {
-
-        // No else condition provided, so clear the operation_if state.
-        if (operation != fake_make_operation_type_else) {
-          operation_if = 0;
-        }
-      }
-      else if (operation_if == fake_make_operation_if_type_true) {
-        operation_if = fake_make_operation_if_type_else_false_next;
-      }
-      else if (operation_if == fake_make_operation_if_type_false_always) {
-        operation_if = fake_make_operation_if_type_else_false_next_always;
-      }
 
       if (F_status_is_error(*status)) {
         success = F_false;
@@ -1349,8 +1337,6 @@ extern "C" {
         }
 
         if (data_make->setting_make.fail == fake_make_operation_fail_type_exit) {
-          operation_if = 0;
-
           break;
         }
       }
@@ -1363,7 +1349,7 @@ extern "C" {
       else if (*status == F_signal_quit) {
         success = F_true;
 
-        // F_signal_abort is used by the exit section operation.
+        // F_signal_quit is used by the exit section operation.
         if (!section_stack->used) {
           *status = F_none;
         }
@@ -1381,15 +1367,20 @@ extern "C" {
       return 0;
     }
 
-    if (i == section->objects.used && (operation_if == fake_make_operation_if_type_true_next || operation_if == fake_make_operation_if_type_false_next || operation_if == fake_make_operation_if_type_else_true || operation_if == fake_make_operation_if_type_else_false)) {
-
+    if (i == section->objects.used && F_status_is_error_not(*status) && state_process.condition) {
       if (main->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
 
         fl_print_format("%c%[%SIncomplete '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
 
-        if (operation_if == fake_make_operation_if_type_true_next || operation_if == fake_make_operation_if_type_false_next) {
+        if (state_process.condition == fake_make_operation_type_if) {
           fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
+        }
+        else if (state_process.condition == fake_make_operation_type_and) {
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
+        }
+        else if (state_process.condition == fake_make_operation_type_or) {
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
         }
         else {
           fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
@@ -1419,11 +1410,11 @@ extern "C" {
 #endif // _di_fake_make_operate_section_
 
 #ifndef _di_fake_make_operate_process_
-  int fake_make_operate_process(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const uint8_t operation, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, f_array_lengths_t *section_stack, f_status_t *status) {
+  int fake_make_operate_process(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, const bool success, fake_state_process_t *state_process, f_array_lengths_t *section_stack, f_status_t *status) {
 
     if (*status == F_child) return main->child;
 
-    if (operation == fake_make_operation_type_index) {
+    if (state_process->operation == fake_make_operation_type_index) {
       const f_status_t result = fake_execute(main, data_make->environment, data_make->setting_build.build_indexer, arguments, status);
 
       if (F_status_is_error(*status)) {
@@ -1439,7 +1430,7 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_break) {
+    if (state_process->operation == fake_make_operation_type_break) {
 
       if (!arguments.used || fl_string_dynamic_compare_string(fake_make_operation_argument_success_s, arguments.array[0], fake_make_operation_argument_success_s_length) == F_equal_to) {
         *status = F_signal_abort;
@@ -1464,7 +1455,7 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_build) {
+    if (state_process->operation == fake_make_operation_type_build) {
       f_string_static_t stub = f_string_static_t_initialize;
 
       *status = fake_build_operate(arguments.used ? arguments.array[0] : stub, main);
@@ -1478,7 +1469,7 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_clean) {
+    if (state_process->operation == fake_make_operation_type_clean) {
       *status = fake_clean_operate(main);
 
       if (F_status_set_fine(*status) == F_interrupt) {
@@ -1490,13 +1481,13 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_clone) {
+    if (state_process->operation == fake_make_operation_type_clone) {
       *status = fake_make_operate_process_type_copy(main, data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_compile) {
+    if (state_process->operation == fake_make_operation_type_compile) {
       const int result = fake_execute(main, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
 
       if (F_status_is_error(*status)) {
@@ -1512,13 +1503,13 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_copy) {
+    if (state_process->operation == fake_make_operation_type_copy) {
       *status = fake_make_operate_process_type_copy(main, data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_define) {
+    if (state_process->operation == fake_make_operation_type_define) {
 
       if (arguments.used > 1) {
         *status = f_environment_set(arguments.array[0].string, arguments.array[1].string, F_true);
@@ -1537,32 +1528,27 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_delete) {
+    if (state_process->operation == fake_make_operation_type_delete) {
       *status = fake_make_operate_process_type_deletes(main, data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_deletes) {
+    if (state_process->operation == fake_make_operation_type_deletes) {
       *status = fake_make_operate_process_type_deletes(main, data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_else) {
+    if (state_process->operation == fake_make_operation_type_else) {
 
-      if (*operation_if == fake_make_operation_if_type_else_false_next || *operation_if == fake_make_operation_if_type_else_false_next_always) {
-        *operation_if = fake_make_operation_if_type_else_false;
-      }
-      else if (*operation_if != fake_make_operation_if_type_else_true_next) {
-        *operation_if = fake_make_operation_if_type_else_true;
-      }
+      // Setup the block so that subsequent operations can know the current block and the result (which is preserved across to the else condition).
+      state_process->block = fake_make_operation_if_type_else;
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_exit) {
-
+    if (state_process->operation == fake_make_operation_type_exit) {
       if (!arguments.used || fl_string_dynamic_compare_string(fake_make_operation_argument_success_s, arguments.array[0], fake_make_operation_argument_success_s_length) == F_equal_to) {
         *status = F_signal_quit;
       }
@@ -1590,100 +1576,73 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_fail) {
+    if (state_process->operation == fake_make_operation_type_fail) {
       fake_make_operate_process_type_fail(main, data_make, arguments);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_group) {
+    if (state_process->operation == fake_make_operation_type_group) {
       *status = fake_make_operate_process_type_groups(main, data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_groups) {
+    if (state_process->operation == fake_make_operation_type_groups) {
       *status = fake_make_operate_process_type_groups(main, data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_if) {
-      if (*operation_if == fake_make_operation_if_type_if_success) {
+    if (state_process->operation == fake_make_operation_type_if || state_process->operation == fake_make_operation_type_and || state_process->operation == fake_make_operation_type_or) {
+      if (state_process->condition == fake_make_operation_if_type_if_success) {
         if (success) {
-          *operation_if = fake_make_operation_if_type_true_next;
+          state_process->condition_result = fake_condition_result_true;
         }
         else {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
         }
-
-        return 0;
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_defined) {
-        fake_make_operate_process_type_if_defined(main, data_make, arguments, F_false, operation_if);
-
-        return 0;
+      else if (state_process->condition == fake_make_operation_if_type_if_defined) {
+        fake_make_operate_process_type_if_defined(main, data_make, arguments, F_false, state_process);
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_exists) {
-        *status = fake_make_operate_process_type_if_exists(main, data_make, arguments, F_false, operation_if);
-
-        return 0;
+      else if (state_process->condition == fake_make_operation_if_type_if_exists) {
+        *status = fake_make_operate_process_type_if_exists(main, data_make, arguments, F_false, state_process);
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_failure) {
+      else if (state_process->condition == fake_make_operation_if_type_if_failure) {
         if (success) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
         }
         else {
-          *operation_if = fake_make_operation_if_type_true_next;
+          state_process->condition_result = fake_condition_result_true;
         }
-
-        return 0;
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_group) {
-        *status = fake_make_operate_process_type_if_group(main, data_make, arguments, F_false, operation_if);
-
-        return 0;
+      else if (state_process->condition == fake_make_operation_if_type_if_group) {
+        *status = fake_make_operate_process_type_if_group(main, data_make, arguments, F_false, state_process);
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_is) {
-        *status = fake_make_operate_process_type_if_is(main, data_make, arguments, F_false, operation_if);
-
-        return 0;
+      else if (state_process->condition == fake_make_operation_if_type_if_is) {
+        *status = fake_make_operate_process_type_if_is(main, data_make, arguments, F_false, state_process);
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_mode) {
-        *status = fake_make_operate_process_type_if_mode(main, data_make, arguments, F_false, operation_if);
-
-        return 0;
+      else if (state_process->condition == fake_make_operation_if_type_if_mode) {
+        *status = fake_make_operate_process_type_if_mode(main, data_make, arguments, F_false, state_process);
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_not_defined) {
-        fake_make_operate_process_type_if_defined(main, data_make, arguments, F_true, operation_if);
-
-        return 0;
+      else if (state_process->condition == fake_make_operation_if_type_if_not_defined) {
+        fake_make_operate_process_type_if_defined(main, data_make, arguments, F_true, state_process);
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_equal) {
-        *operation_if = fake_make_operation_if_type_true_next;
+      else if (state_process->condition == fake_make_operation_if_type_if_equal) {
+        state_process->condition_result = fake_condition_result_true;
 
         for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
           if (fl_string_dynamic_compare(arguments.array[1], arguments.array[i]) == F_equal_to_not) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
         } // for
-
-        return 0;
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_equal_not) {
-        *operation_if = fake_make_operation_if_type_true_next;
+      else if (state_process->condition == fake_make_operation_if_type_if_equal_not) {
+        state_process->condition_result = fake_condition_result_true;
 
         f_array_length_t i = 1;
         f_array_length_t j = 0;
@@ -1693,63 +1652,63 @@ extern "C" {
           for (j = i + 1; j < arguments.used; ++j) {
 
             if (fl_string_dynamic_compare(arguments.array[i], arguments.array[j]) == F_equal_to) {
-              *operation_if = fake_make_operation_if_type_false_next;
+              state_process->condition_result = fake_condition_result_false;
               i = arguments.used;
 
               break;
             }
           } // for
         } // for
-
-        return 0;
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_greater || state_process->condition == fake_make_operation_if_type_if_greater_equal || state_process->condition == fake_make_operation_if_type_if_less || state_process->condition == fake_make_operation_if_type_if_less_equal) {
+        *status = fake_make_operate_process_type_if_greater_if_lesser(main, data_make, arguments, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_not_exists) {
+        *status = fake_make_operate_process_type_if_exists(main, data_make, arguments, F_true, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_not_group) {
+        *status = fake_make_operate_process_type_if_group(main, data_make, arguments, F_true, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_not_is) {
+        *status = fake_make_operate_process_type_if_is(main, data_make, arguments, F_true, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_not_mode) {
+        *status = fake_make_operate_process_type_if_mode(main, data_make, arguments, F_true, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_not_owner) {
+        *status = fake_make_operate_process_type_if_owner(main, data_make, arguments, F_true, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_owner) {
+        *status = fake_make_operate_process_type_if_owner(main, data_make, arguments, F_false, state_process);
       }
 
-      if (*operation_if == fake_make_operation_if_type_if_greater || *operation_if == fake_make_operation_if_type_if_greater_equal || *operation_if == fake_make_operation_if_type_if_less || *operation_if == fake_make_operation_if_type_if_less_equal) {
-        *status = fake_make_operate_process_type_if_greater_if_lesser(main, data_make, arguments, operation_if);
+      // Setup the block for subsequent operations.
+      state_process->block = fake_make_operation_if_type_if;
 
-        return 0;
+      if (state_process->condition_result == fake_condition_result_done || state_process->operation == fake_make_operation_type_if) {
+        state_process->block_result = state_process->condition_result;
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_not_exists) {
-        *status = fake_make_operate_process_type_if_exists(main, data_make, arguments, F_true, operation_if);
-
-        return 0;
+      else if (state_process->operation == fake_make_operation_type_or) {
+        if (state_process->block_result == fake_condition_result_true || state_process->condition_result == fake_condition_result_true) {
+          state_process->block_result = fake_condition_result_true;
+        }
+        else {
+          state_process->block_result = fake_condition_result_false;
+        }
       }
-
-      if (*operation_if == fake_make_operation_if_type_if_not_group) {
-        *status = fake_make_operate_process_type_if_group(main, data_make, arguments, F_true, operation_if);
-
-        return 0;
-      }
-
-      if (*operation_if == fake_make_operation_if_type_if_not_is) {
-        *status = fake_make_operate_process_type_if_is(main, data_make, arguments, F_true, operation_if);
-
-        return 0;
-      }
-
-      if (*operation_if == fake_make_operation_if_type_if_not_mode) {
-        *status = fake_make_operate_process_type_if_mode(main, data_make, arguments, F_true, operation_if);
-
-        return 0;
-      }
-
-      if (*operation_if == fake_make_operation_if_type_if_not_owner) {
-        *status = fake_make_operate_process_type_if_owner(main, data_make, arguments, F_true, operation_if);
-
-        return 0;
-      }
-
-      if (*operation_if == fake_make_operation_if_type_if_owner) {
-        *status = fake_make_operate_process_type_if_owner(main, data_make, arguments, F_false, operation_if);
-
-        return 0;
+      else {
+        if (state_process->block_result == fake_condition_result_true && state_process->condition_result == fake_condition_result_true) {
+          state_process->block_result = fake_condition_result_true;
+        }
+        else {
+          state_process->block_result = fake_condition_result_false;
+        }
       }
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_link) {
+    if (state_process->operation == fake_make_operation_type_link) {
       *status = f_file_link(arguments.array[0].string, arguments.array[1].string);
 
       if (F_status_is_error(*status)) {
@@ -1767,25 +1726,25 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_mode) {
+    if (state_process->operation == fake_make_operation_type_mode) {
       *status = fake_make_operate_process_type_modes(main, data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_modes) {
+    if (state_process->operation == fake_make_operation_type_modes) {
       *status = fake_make_operate_process_type_modes(main, data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_move) {
+    if (state_process->operation == fake_make_operation_type_move) {
       *status = fake_make_operate_process_type_move(main, data_make, arguments);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_operate) {
+    if (state_process->operation == fake_make_operation_type_operate) {
       f_array_length_t id_section = 0;
 
       for (; id_section < data_make->fakefile.used; ++id_section) {
@@ -1801,7 +1760,7 @@ extern "C" {
 
       const int result = fake_make_operate_section(main, data_make, id_section, section_stack, status);
 
-      // Ensure that a break only happens within its active operation stack.
+      // Ensure that a break only happens within its active state_process->operation stack.
       if (*status == F_signal_abort) {
         *status = F_none;
       }
@@ -1812,31 +1771,31 @@ extern "C" {
       return result;
     }
 
-    if (operation == fake_make_operation_type_owner) {
+    if (state_process->operation == fake_make_operation_type_owner) {
       *status = fake_make_operate_process_type_owners(main, data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_owners) {
+    if (state_process->operation == fake_make_operation_type_owners) {
       *status = fake_make_operate_process_type_owners(main, data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_parameter) {
+    if (state_process->operation == fake_make_operation_type_parameter) {
       *status = fake_make_operate_process_type_parameter(main, data_make, arguments);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_pop) {
+    if (state_process->operation == fake_make_operation_type_pop) {
       *status = fake_make_operate_process_type_pop(main, data_make, arguments);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_print) {
+    if (state_process->operation == fake_make_operation_type_print) {
       flockfile(main->output.to.stream);
 
       for (f_array_length_t i = 0; i < arguments.used; ++i) {
@@ -1856,19 +1815,19 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_run) {
+    if (state_process->operation == fake_make_operation_type_run) {
       *status = fake_make_operate_process_run(main, data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_shell) {
+    if (state_process->operation == fake_make_operation_type_shell) {
       *status = fake_make_operate_process_run(main, data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_skeleton) {
+    if (state_process->operation == fake_make_operation_type_skeleton) {
       *status = fake_skeleton_operate(main);
 
       if (F_status_set_fine(*status) == F_interrupt) {
@@ -1880,19 +1839,19 @@ extern "C" {
       return 0;
     }
 
-    if (operation == fake_make_operation_type_to) {
+    if (state_process->operation == fake_make_operation_type_to) {
       *status = fake_make_operate_process_type_to(main, data_make, arguments);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_top) {
+    if (state_process->operation == fake_make_operation_type_top) {
       *status = fake_make_operate_process_type_top(main, data_make, arguments);
 
       return 0;
     }
 
-    if (operation == fake_make_operation_type_touch) {
+    if (state_process->operation == fake_make_operation_type_touch) {
       *status = fake_make_operate_process_type_touch(main, data_make, arguments);
     }
 
@@ -2112,19 +2071,17 @@ extern "C" {
 #endif // _di_fake_make_operate_process_run_
 
 #ifndef _di_fake_make_operate_validate_
-  void fake_make_operate_validate(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_string_dynamics_t arguments, uint8_t *operation_if, f_array_lengths_t *section_stack, f_status_t *status) {
+  void fake_make_operate_validate(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, fake_state_process_t *state_process, f_array_lengths_t *section_stack, f_status_t *status) {
 
     if (F_status_is_error(*status)) return;
 
-    if (operation == fake_make_operation_type_index || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
+    if (state_process->operation == fake_make_operation_type_index || state_process->operation == fake_make_operation_type_run || state_process->operation == fake_make_operation_type_shell) {
       if (!arguments.used) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
-      else if (operation == fake_make_operation_type_index) {
+      else if (state_process->operation == fake_make_operation_type_index) {
         if (!data_make->setting_build.build_indexer.used) {
           if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
             flockfile(data_make->error.to.stream);
@@ -2143,11 +2100,9 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_break) {
+    if (state_process->operation == fake_make_operation_type_break) {
       if (arguments.used > 1) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_too_many_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2173,11 +2128,9 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_build) {
+    if (state_process->operation == fake_make_operation_type_build) {
       if (arguments.used > 1) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_too_many_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2235,15 +2188,13 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_clean || operation == fake_make_operation_type_pop || operation == fake_make_operation_type_top || operation == fake_make_operation_type_skeleton) {
+    if (state_process->operation == fake_make_operation_type_clean || state_process->operation == fake_make_operation_type_pop || state_process->operation == fake_make_operation_type_top || state_process->operation == fake_make_operation_type_skeleton) {
       if (arguments.used) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_too_many_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
-      else if (operation == fake_make_operation_type_pop) {
+      else if (state_process->operation == fake_make_operation_type_pop) {
         if (data_make->path.stack.used == 1) {
 
           if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
@@ -2257,7 +2208,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_clone) {
+    if (state_process->operation == fake_make_operation_type_clone) {
       if (arguments.used > 1) {
         for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
@@ -2291,7 +2242,7 @@ extern "C" {
 
         if (arguments.used > 2) {
 
-          // the last file must be a directory.
+          // The last file must be a directory.
           f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
 
           if (status_file == F_false || status_file == F_file_found_not) {
@@ -2314,7 +2265,7 @@ extern "C" {
         }
         else {
 
-          // when the first file is a directory, then the second, if it exists, must also be a directory.
+          // When the first file is a directory, then the second, if it exists, must also be a directory.
           f_status_t status_file = f_directory_is(arguments.array[0].string);
 
           if (status_file == F_true) {
@@ -2337,9 +2288,7 @@ extern "C" {
         }
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2347,11 +2296,9 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_compile) {
+    if (state_process->operation == fake_make_operation_type_compile) {
       if (!arguments.used) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2372,7 +2319,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_copy) {
+    if (state_process->operation == fake_make_operation_type_copy) {
       if (arguments.used > 1) {
         for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
@@ -2406,7 +2353,7 @@ extern "C" {
 
         if (arguments.used > 2) {
 
-          // the last file must be a directory.
+          // The last file must be a directory.
           f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
 
           if (status_file == F_false || status_file == F_file_found_not) {
@@ -2429,7 +2376,7 @@ extern "C" {
         }
         else {
 
-          // when the first file is a directory, then the second, if it exists, must also be a directory.
+          // When the first file is a directory, then the second, if it exists, must also be a directory.
           f_status_t status_file = f_directory_is(arguments.array[0].string);
 
           if (status_file == F_true) {
@@ -2452,9 +2399,7 @@ extern "C" {
         }
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2462,7 +2407,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_define) {
+    if (state_process->operation == fake_make_operation_type_define) {
       if (arguments.used) {
         *status = fake_make_operate_validate_define_name(arguments.array[0]);
 
@@ -2488,9 +2433,7 @@ extern "C" {
         }
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2498,7 +2441,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_delete || operation == fake_make_operation_type_deletes) {
+    if (state_process->operation == fake_make_operation_type_delete || state_process->operation == fake_make_operation_type_deletes) {
       if (arguments.used) {
         for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
@@ -2514,9 +2457,7 @@ extern "C" {
         } // for
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2524,69 +2465,71 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_else) {
-      if (*operation_if == fake_make_operation_if_type_else_true || *operation_if == fake_make_operation_if_type_else_false) {
+    if (state_process->operation == fake_make_operation_type_else) {
+      if (state_process->block == fake_make_operation_if_type_else) {
         if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
           flockfile(data_make->error.to.stream);
 
-          fl_print_format("%c%[%SMust not be used after another '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
-          fl_print_format("%[else%]", data_make->error.to.stream, data_make->error.notable, data_make->error.notable);
+          fl_print_format("%c%[%SMust not be used immediately after another '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
           fl_print_format("%[' section operation.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
           funlockfile(data_make->error.to.stream);
         }
 
         *status = F_status_set_error(F_failure);
-        *operation_if = 0;
 
         return;
       }
 
-      if (*operation_if == fake_make_operation_if_type_true || *operation_if == fake_make_operation_if_type_false || *operation_if == fake_make_operation_if_type_false_always) {
+      if (state_process->operation_previous == fake_make_operation_type_if || state_process->operation_previous == fake_make_operation_type_and || state_process->operation_previous == fake_make_operation_type_or) {
         if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
           flockfile(data_make->error.to.stream);
 
-          fl_print_format("%c%[%SMust not be used inside an '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
-          fl_print_format("%[if%]", data_make->error.to.stream, data_make->error.notable, data_make->error.notable);
+          fl_print_format("%c%[%SMust not be used immediately after an '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
+          fl_print_format("%[', '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
+          fl_print_format("%[', or '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
           fl_print_format("%[' section operation.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
           funlockfile(data_make->error.to.stream);
         }
 
         *status = F_status_set_error(F_failure);
-        *operation_if = 0;
 
         return;
       }
 
-      if (*operation_if != fake_make_operation_if_type_else_true_next && *operation_if != fake_make_operation_if_type_else_false_next && *operation_if != fake_make_operation_if_type_else_false_next_always) {
+      if (state_process->block != fake_make_operation_if_type_done) {
         if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas no preceding if condition.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SHas no preceding '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
+          fl_print_format("%[', '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
+          fl_print_format("%[', or '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
+          fl_print_format("%[' section operation.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
         }
 
         *status = F_status_set_error(F_failure);
-        *operation_if = 0;
 
         return;
       }
 
       if (arguments.used) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_too_many_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
-        *operation_if = 0;
       }
 
       return;
     }
 
-    if (operation == fake_make_operation_type_exit) {
+    if (state_process->operation == fake_make_operation_type_exit) {
       if (arguments.used > 1) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_too_many_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2611,7 +2554,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_fail) {
+    if (state_process->operation == fake_make_operation_type_fail) {
       if (arguments.used) {
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit_s, arguments.array[0], fake_make_operation_argument_exit_s_length) == F_equal_to_not) {
           if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn_s, arguments.array[0], fake_make_operation_argument_warn_s_length) == F_equal_to_not) {
@@ -2632,9 +2575,7 @@ extern "C" {
         }
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -2642,7 +2583,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_group || operation == fake_make_operation_type_groups || operation == fake_make_operation_type_mode || operation == fake_make_operation_type_modes || operation == fake_make_operation_type_owner || operation == fake_make_operation_type_owners) {
+    if (state_process->operation == fake_make_operation_type_group || state_process->operation == fake_make_operation_type_groups || state_process->operation == fake_make_operation_type_mode || state_process->operation == fake_make_operation_type_modes || state_process->operation == fake_make_operation_type_owner || state_process->operation == fake_make_operation_type_owners) {
       if (arguments.used > 1) {
         f_status_t status_file = F_none;
 
@@ -2675,31 +2616,55 @@ extern "C" {
         return;
       }
 
-      if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-        fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-      }
+      fake_print_error_requires_more_arguments(data_make);
 
       *status = F_status_set_error(F_failure);
 
       return;
     }
 
-    if (operation == fake_make_operation_type_if) {
-      if (*operation_if == fake_make_operation_if_type_true || *operation_if == fake_make_operation_if_type_false || *operation_if == fake_make_operation_if_type_false_always) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          flockfile(data_make->error.to.stream);
+    if (state_process->operation == fake_make_operation_type_if || state_process->operation == fake_make_operation_type_and || state_process->operation == fake_make_operation_type_or) {
+      if (state_process->operation == fake_make_operation_type_if) {
+        if (state_process->block == fake_make_operation_type_if) {
+          if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
+            flockfile(data_make->error.to.stream);
 
-          fl_print_format("%c%[%SMust not be used after another '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
-          fl_print_format("%[if%]", data_make->error.to.stream, data_make->error.notable, data_make->error.notable);
-          fl_print_format("%[' section operation.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SMust not be used immediately after another '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+            fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
+            fl_print_format("%[', '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+            fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
+            fl_print_format("%[', or '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+            fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
+            fl_print_format("%[' section operation.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
-          funlockfile(data_make->error.to.stream);
+            funlockfile(data_make->error.to.stream);
+          }
+
+          *status = F_status_set_error(F_failure);
+
+          return;
         }
+      }
+      else {
+        if (!(state_process->operation_previous == fake_make_operation_type_if || state_process->operation_previous == fake_make_operation_type_and || state_process->operation_previous == fake_make_operation_type_or)) {
+          if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
+            flockfile(data_make->error.to.stream);
 
-        *status = F_status_set_error(F_failure);
-        *operation_if = 0;
+            fl_print_format("%c%[%SMay only be used immediately after another '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+            fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
+            fl_print_format("%[', '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+            fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
+            fl_print_format("%[', or '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+            fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
+            fl_print_format("%[' section operation.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
-        return;
+            funlockfile(data_make->error.to.stream);
+          }
+
+          *status = F_status_set_error(F_failure);
+
+          return;
+        }
       }
 
       if (arguments.used) {
@@ -2717,12 +2682,12 @@ extern "C" {
           fake_make_operation_argument_if_less_equal_s,
           fake_make_operation_argument_if_mode_s,
           fake_make_operation_argument_if_not_s,
-          fake_make_operation_argument_if_defined_s, // if not defined, represented by just "defined".
-          fake_make_operation_argument_if_exists_s,  // if not exists, represented by just "exists".
-          fake_make_operation_argument_if_group_s,   // if not group, represented by just "group".
-          fake_make_operation_argument_if_is_s,      // if not is, represented by just "is".
-          fake_make_operation_argument_if_mode_s,    // if not mode, represented by just "mode".
-          fake_make_operation_argument_if_owner_s,   // if not owner, represented by just "owner".
+          fake_make_operation_argument_if_defined_s, // If not defined, represented by just "defined".
+          fake_make_operation_argument_if_exists_s,  // If not exists, represented by just "exists".
+          fake_make_operation_argument_if_group_s,   // If not group, represented by just "group".
+          fake_make_operation_argument_if_is_s,      // If not is, represented by just "is".
+          fake_make_operation_argument_if_mode_s,    // If not mode, represented by just "mode".
+          fake_make_operation_argument_if_owner_s,   // If not owner, represented by just "owner".
           fake_make_operation_argument_if_owner_s,
           fake_make_operation_argument_if_success_s,
         };
@@ -2837,6 +2802,17 @@ extern "C" {
 
         f_array_length_t i = 0;
         f_array_length_t j = 0;
+        f_string_t if_and_or;
+
+        if (state_process->operation == fake_make_operation_type_and) {
+          if_and_or = fake_make_operation_and_s;
+        }
+        else if (state_process->operation == fake_make_operation_type_or) {
+          if_and_or = fake_make_operation_or_s;
+        }
+        else {
+          if_and_or = fake_make_operation_if_s;
+        }
 
         for (; i < 21; ++i) {
 
@@ -2844,7 +2820,7 @@ extern "C" {
           if (i > 12 && i < 19) continue;
 
           if (fl_string_dynamic_compare_string(if_type_strings[i], arguments.array[0], if_type_lengths[i]) == F_equal_to) {
-            *operation_if = if_type_codes[i];
+            state_process->condition = if_type_codes[i];
 
             break;
           }
@@ -2854,7 +2830,7 @@ extern "C" {
           if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
             flockfile(data_make->error.to.stream);
 
-            fl_print_format("%c%[%SUnsupported if type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+            fl_print_format("%c%[%SUnsupported '%s' type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, if_and_or, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[0], data_make->error.notable);
             fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
@@ -2862,20 +2838,16 @@ extern "C" {
           }
 
           *status = F_status_set_error(F_failure);
-          *operation_if = fake_make_operation_if_type_false_always_next;
 
           return;
         }
 
         // Identify and convert to the appropriate if not condition.
-        if (*operation_if == fake_make_operation_if_type_if_not) {
+        if (state_process->condition == fake_make_operation_if_type_if_not) {
           if (arguments.used < 2) {
-            if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-              fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-            }
+            fake_print_error_requires_more_arguments(data_make);
 
             *status = F_status_set_error(F_failure);
-            *operation_if = fake_make_operation_if_type_false_always_next;
 
             return;
           }
@@ -2883,7 +2855,7 @@ extern "C" {
           for (; j < 6; ++j) {
 
             if (fl_string_dynamic_compare_string(if_not_type_strings[j], arguments.array[1], if_not_type_lengths[j]) == F_equal_to) {
-              *operation_if = if_not_type_codes[j];
+              state_process->condition = if_not_type_codes[j];
 
               break;
             }
@@ -2893,7 +2865,7 @@ extern "C" {
             if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
-              fl_print_format("%c%[%SUnsupported if not type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+              fl_print_format("%c%[%SUnsupported '%s' not type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, if_and_or, data_make->error.context);
               fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[0], data_make->error.notable);
               fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
@@ -2901,7 +2873,6 @@ extern "C" {
             }
 
             *status = F_status_set_error(F_failure);
-            *operation_if = fake_make_operation_if_type_false_always_next;
 
             return;
           }
@@ -2911,71 +2882,65 @@ extern "C" {
         }
 
         if (j == 6 && arguments.used >= if_type_minimum[i] || arguments.used >= if_not_type_minimum[j]) {
-          if (*operation_if == fake_make_operation_if_type_if_success || *operation_if == fake_make_operation_if_type_if_failure) {
+          if (state_process->condition == fake_make_operation_if_type_if_success || state_process->condition == fake_make_operation_if_type_if_failure) {
+
+            // The success and failure operations minimum is also the maximum.
             if (arguments.used > if_type_minimum[i]) {
-              if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-                fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-              }
+              fake_print_error_too_many_arguments(data_make);
 
               *status = F_status_set_error(F_failure);
-              *operation_if = fake_make_operation_if_type_false_always_next;
             }
 
             return;
           }
 
-          if (*operation_if == fake_make_operation_if_type_if_defined || *operation_if == fake_make_operation_if_type_if_not_defined) {
-            if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, j == 6 ? arguments.array[1] : arguments.array[2], fake_make_operation_argument_environment_s_length) == F_equal_to_not) {
-              if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter_s, j == 6 ? arguments.array[1] : arguments.array[2], fake_make_operation_argument_parameter_s_length) == F_equal_to_not) {
+          if (state_process->condition == fake_make_operation_if_type_if_defined || state_process->condition == fake_make_operation_if_type_if_not_defined) {
+            if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, arguments.array[1], fake_make_operation_argument_environment_s_length) == F_equal_to_not) {
+              if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter_s, arguments.array[1], fake_make_operation_argument_parameter_s_length) == F_equal_to_not) {
                 if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
                   flockfile(data_make->error.to.stream);
 
                   fl_print_format("%c%[%SUnsupported define type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
-                  fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, j == 6 ? arguments.array[1] : arguments.array[2], data_make->error.notable);
+                  fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
                   fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
                   funlockfile(data_make->error.to.stream);
                 }
 
                 *status = F_status_set_error(F_failure);
-                *operation_if = fake_make_operation_if_type_false_always_next;
               }
             }
 
             return;
           }
-          else if (*operation_if == fake_make_operation_if_type_if_equal || *operation_if == fake_make_operation_if_type_if_equal_not) {
+          else if (state_process->condition == fake_make_operation_if_type_if_equal || state_process->condition == fake_make_operation_if_type_if_equal_not) {
             if (arguments.used < 3) {
-              if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-                fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-              }
+              fake_print_error_requires_more_arguments(data_make);
 
               *status = F_status_set_error(F_failure);
-              *operation_if = fake_make_operation_if_type_false_always_next;
             }
 
             return;
           }
-          else if (*operation_if == fake_make_operation_if_type_if_exists || *operation_if == fake_make_operation_if_type_if_not_exists) {
+          else if (state_process->condition == fake_make_operation_if_type_if_exists || state_process->condition == fake_make_operation_if_type_if_not_exists) {
             return;
           }
-          else if (*operation_if == fake_make_operation_if_type_if_group || *operation_if == fake_make_operation_if_type_if_is || *operation_if == fake_make_operation_if_type_if_mode || *operation_if > fake_make_operation_if_type_if_not_exists && *operation_if < fake_make_operation_if_type_if_success) {
+          else if (state_process->condition == fake_make_operation_if_type_if_group || state_process->condition == fake_make_operation_if_type_if_is || state_process->condition == fake_make_operation_if_type_if_mode || state_process->condition > fake_make_operation_if_type_if_not_exists && state_process->condition < fake_make_operation_if_type_if_success) {
 
-            if (*operation_if == fake_make_operation_if_type_if_mode || *operation_if == fake_make_operation_if_type_if_not_mode) {
-              if (fl_string_dynamic_compare_string(fake_make_operation_argument_is_s, j == 6 ? arguments.array[1] : arguments.array[2], fake_make_operation_argument_is_s_length) == F_equal_to_not) {
-                if (fl_string_dynamic_compare_string(fake_make_operation_argument_has_s, j == 6 ? arguments.array[1] : arguments.array[2], fake_make_operation_argument_has_s_length) == F_equal_to_not) {
+            if (state_process->condition == fake_make_operation_if_type_if_mode || state_process->condition == fake_make_operation_if_type_if_not_mode) {
+              if (fl_string_dynamic_compare_string(fake_make_operation_argument_is_s, arguments.array[1], fake_make_operation_argument_is_s_length) == F_equal_to_not) {
+                if (fl_string_dynamic_compare_string(fake_make_operation_argument_has_s, arguments.array[1], fake_make_operation_argument_has_s_length) == F_equal_to_not) {
                   if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
                     flockfile(data_make->error.to.stream);
 
                     fl_print_format("%c%[%SUnsupported %smode type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, j == 6 ? "" : "not ", data_make->error.context);
-                    fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, j == 6 ? arguments.array[1] : arguments.array[2], data_make->error.notable);
+                    fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
                     fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
                     funlockfile(data_make->error.to.stream);
                   }
 
                   *status = F_status_set_error(F_failure);
-                  *operation_if = fake_make_operation_if_type_false_always_next;
 
                   return;
                 }
@@ -2985,29 +2950,19 @@ extern "C" {
               uint8_t replace = 0;
 
               *status = fake_make_get_id_mode(main, data_make->error, j == 6 ? arguments.array[2] : arguments.array[3], &mode_rule, &replace);
-
-              if (F_status_is_error(*status)) {
-                *operation_if = fake_make_operation_if_type_false_always_next;
-
-                return;
-              }
+              if (F_status_is_error(*status)) return;
 
               i = j == 6 ? 3 : 4;
             }
-            else if (*operation_if == fake_make_operation_if_type_if_group || *operation_if == fake_make_operation_if_type_if_not_group) {
+            else if (state_process->condition == fake_make_operation_if_type_if_group || state_process->condition == fake_make_operation_if_type_if_not_group) {
               gid_t id = 0;
 
               *status = fake_make_get_id_group(main, data_make->error, j == 6 ? arguments.array[1] : arguments.array[2], &id);
-
-              if (F_status_is_error(*status)) {
-                *operation_if = fake_make_operation_if_type_false_always_next;
-
-                return;
-              }
+              if (F_status_is_error(*status)) return;
 
               i = j == 6 ? 2 : 3;
             }
-            else if (*operation_if == fake_make_operation_if_type_if_is || *operation_if == fake_make_operation_if_type_if_not_is) {
+            else if (state_process->condition == fake_make_operation_if_type_if_is || state_process->condition == fake_make_operation_if_type_if_not_is) {
 
               // block     = 0x1 (0000 0001) link    = 0x10 (0001 0000)
               // character = 0x2 (0000 0010) regular = 0x20 (0010 0000)
@@ -3061,21 +3016,15 @@ extern "C" {
 
               if (type_file & 0x80) {
                 *status = F_status_set_error(F_failure);
-                *operation_if = fake_make_operation_if_type_false_always_next;
 
                 return;
               }
             }
-            else if (*operation_if == fake_make_operation_if_type_if_owner || *operation_if == fake_make_operation_if_type_if_not_owner) {
+            else if (state_process->condition == fake_make_operation_if_type_if_owner || state_process->condition == fake_make_operation_if_type_if_not_owner) {
               uid_t id = 0;
 
-              *status = fake_make_get_id_owner(main, data_make->error, j == 6 ? arguments.array[1] : arguments.array[2], &id);
-
-              if (F_status_is_error(*status)) {
-                *operation_if = fake_make_operation_if_type_false_always_next;
-
-                return;
-              }
+              *status = fake_make_get_id_owner(main, data_make->error, arguments.array[1], &id);
+              if (F_status_is_error(*status)) return;
 
               i = j == 6 ? 2 : 3;
             }
@@ -3088,19 +3037,16 @@ extern "C" {
                 if (F_status_is_error(status_file)) {
                   fake_print_message_section_operation_path_outside(main, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
 
-                  *operation_if = fake_make_operation_if_type_false_always_next;
-
                   if (F_status_is_error_not(*status)) {
                     if (F_status_set_fine(status_file) == F_false) {
                       *status = F_status_set_error(F_failure);
-                      *operation_if = fake_make_operation_if_type_false_always_next;
                     }
                     else {
                       *status = status_file;
                     }
                   }
                 }
-                else if (*operation_if != fake_make_operation_if_type_if_exists && *operation_if != fake_make_operation_if_type_if_is) {
+                else if (state_process->condition != fake_make_operation_if_type_if_exists && state_process->condition != fake_make_operation_if_type_if_is) {
 
                   // The existence tests do not need to happen here for *_if_exists and *_if_is as those two types will handle performing them during the process stage.
                   status_file = f_file_exists(arguments.array[i].string);
@@ -3112,26 +3058,19 @@ extern "C" {
                   if (F_status_is_error(status_file)) {
                     fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_file_exists", F_true, arguments.array[i].string, "find", fll_error_file_type_file);
 
-                    *operation_if = fake_make_operation_if_type_false_always_next;
-
                     if (F_status_is_error_not(*status)) {
                       *status = F_status_set_error(status_file);
                     }
                   }
                 }
               } // for
-
-              return;
             }
           }
-          else if (*operation_if == fake_make_operation_if_type_if_greater || *operation_if == fake_make_operation_if_type_if_greater_equal || *operation_if == fake_make_operation_if_type_if_less || *operation_if == fake_make_operation_if_type_if_less_equal) {
+          else if (state_process->condition == fake_make_operation_if_type_if_greater || state_process->condition == fake_make_operation_if_type_if_greater_equal || state_process->condition == fake_make_operation_if_type_if_less || state_process->condition == fake_make_operation_if_type_if_less_equal) {
             if (arguments.used < 3) {
-              if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-                fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-              }
+              fake_print_error_requires_more_arguments(data_make);
 
               *status = F_status_set_error(F_failure);
-              *operation_if = fake_make_operation_if_type_false_always_next;
 
               return;
             }
@@ -3169,7 +3108,6 @@ extern "C" {
 
               if (F_status_is_error(status_number)) {
                 *status = F_status_set_error(F_failure);
-                *operation_if = fake_make_operation_if_type_false_always_next;
 
                 if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
                   flockfile(data_make->error.to.stream);
@@ -3189,27 +3127,22 @@ extern "C" {
                 }
               }
             } // for
-
-            return;
           }
         }
+
+        return;
       }
 
-      if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-        fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-      }
+      fake_print_error_requires_more_arguments(data_make);
 
       *status = F_status_set_error(F_failure);
-      *operation_if = fake_make_operation_if_type_false_always_next;
 
       return;
     }
 
-    if (operation == fake_make_operation_type_link) {
+    if (state_process->operation == fake_make_operation_type_link) {
       if (arguments.used > 2) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_too_many_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3235,9 +3168,7 @@ extern "C" {
         }
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3245,7 +3176,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_move) {
+    if (state_process->operation == fake_make_operation_type_move) {
       if (arguments.used > 1) {
         for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
@@ -3279,7 +3210,7 @@ extern "C" {
 
         if (arguments.used > 2) {
 
-          // the last file must be a directory.
+          // The last file must be a directory.
           f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
 
           if (status_file == F_false || status_file == F_file_found_not) {
@@ -3302,7 +3233,7 @@ extern "C" {
         }
         else {
 
-          // when the first file is a directory, then the second, if it exists, must also be a directory.
+          // When the first file is a directory, then the second, if it exists, must also be a directory.
           f_status_t status_file = f_directory_is(arguments.array[0].string);
 
           if (status_file == F_true) {
@@ -3325,9 +3256,7 @@ extern "C" {
         }
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3335,11 +3264,9 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_operate) {
+    if (state_process->operation == fake_make_operation_type_operate) {
       if (arguments.used > 1) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_too_many_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3383,9 +3310,7 @@ extern "C" {
         }
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3393,7 +3318,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_parameter) {
+    if (state_process->operation == fake_make_operation_type_parameter) {
       if (arguments.used) {
         const f_string_t reserved_name[] = {
           fake_make_parameter_variable_build_s,
@@ -3479,9 +3404,7 @@ extern "C" {
         } // for
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3489,11 +3412,9 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_to) {
+    if (state_process->operation == fake_make_operation_type_to) {
       if (arguments.used > 1) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_too_many_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3542,9 +3463,7 @@ extern "C" {
         }
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3552,7 +3471,7 @@ extern "C" {
       return;
     }
 
-    if (operation == fake_make_operation_type_touch) {
+    if (state_process->operation == fake_make_operation_type_touch) {
       if (arguments.used > 1) {
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_file_s, arguments.array[0], fake_make_operation_argument_file_s_length) == F_equal_to_not) {
           if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory_s, arguments.array[0], fake_make_operation_argument_directory_s_length) == F_equal_to_not) {
@@ -3585,9 +3504,7 @@ extern "C" {
         } // for
       }
       else {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-          fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
-        }
+        fake_print_error_requires_more_arguments(data_make);
 
         *status = F_status_set_error(F_failure);
       }
@@ -3596,6 +3513,7 @@ extern "C" {
     }
 
     // Note: there is nothing to validate for fake_make_operation_type_print.
+    return;
   }
 #endif // _di_fake_make_operate_validate_
 

@@ -316,7 +316,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_groups_
 
 #ifndef _di_fake_make_operate_process_type_if_defined_
-  void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+  void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     const f_string_static_t argument = if_not ? arguments.array[2] : arguments.array[1];
 
@@ -429,13 +429,13 @@ extern "C" {
     };
 
     if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, argument, fake_make_operation_argument_environment_s_length) == F_equal_to) {
-      *operation_if = fake_make_operation_if_type_true_next;
+      state_process->condition_result = fake_condition_result_true;
 
       if (if_not) {
         for (f_array_length_t i = 3; i < arguments.used; ++i) {
 
           if (f_environment_exists(arguments.array[i].string) == F_true) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
@@ -445,7 +445,7 @@ extern "C" {
         for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
           if (f_environment_exists(arguments.array[i].string) != F_true) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
@@ -461,7 +461,7 @@ extern "C" {
     // 0 = unknown, 1 = fail, 2 = pass.
     uint8_t result = 0;
 
-    *operation_if = fake_make_operation_if_type_true_next;
+    state_process->condition_result = fake_condition_result_true;
 
     // Multiple properties may pass and so if any of them fail, then they all fail.
     for (; i < arguments.used; ++i) {
@@ -499,31 +499,31 @@ extern "C" {
 
     if (if_not) {
       if (result < 2) {
-        *operation_if = fake_make_operation_if_type_true_next;
+        state_process->condition_result = fake_condition_result_true;
       }
       else {
-        *operation_if = fake_make_operation_if_type_false_next;
+        state_process->condition_result = fake_condition_result_false;
       }
     }
     else if (result < 2) {
-      *operation_if = fake_make_operation_if_type_false_next;
+      state_process->condition_result = fake_condition_result_false;
     }
   }
 #endif // _di_fake_make_operate_process_type_if_defined_
 
 #ifndef _di_fake_make_operate_process_type_if_exists_
-  f_status_t fake_make_operate_process_type_if_exists(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+  f_status_t fake_make_operate_process_type_if_exists(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     f_status_t status = F_none;
 
-    *operation_if = fake_make_operation_if_type_true_next;
+    state_process->condition_result = fake_condition_result_true;
 
     for (f_array_length_t i = if_not ? 2 : 1; i < arguments.used; ++i) {
 
       status = f_file_exists(arguments.array[i].string);
 
       if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
+        state_process->condition_result = fake_condition_result_done;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i].string, "find", fll_error_file_type_file);
 
@@ -532,14 +532,14 @@ extern "C" {
 
       if (if_not) {
         if (status == F_true) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
 
           break;
         }
       }
       else {
         if (status == F_false) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
 
           break;
         }
@@ -553,7 +553,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_if_exists_
 
 #ifndef _di_fake_make_operate_process_type_if_is_
-  f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+  f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     f_status_t status = F_none;
 
@@ -601,14 +601,14 @@ extern "C" {
     uint8_t type_file = 0;
     mode_t mode_file = 0;
 
-    *operation_if = fake_make_operation_if_type_true_next;
+    state_process->condition_result = fake_condition_result_true;
 
     for (; i < arguments.used; ++i, mode_file = 0) {
 
       status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
       if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
+        state_process->condition_result = fake_condition_result_done;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file);
 
@@ -639,14 +639,14 @@ extern "C" {
 
       if (if_not) {
         if (type & type_file) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
 
           break;
         }
       }
       else {
         if (!(type & type_file)) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
 
           break;
         }
@@ -660,7 +660,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_if_is_
 
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
-  f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, uint8_t *operation_if) {
+  f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, fake_state_process_t *state_process) {
 
     f_status_t status = F_none;
 
@@ -673,9 +673,7 @@ extern "C" {
 
     f_array_length_t i = 1;
 
-    const uint8_t type_if = *operation_if;
-
-    *operation_if = fake_make_operation_if_type_true_next;
+    state_process->condition_result = fake_condition_result_true;
 
     // @fixme This needs to handle converting numbers with decimals (like 1.01), perhaps operate on them as strings or provide a special processor.
     range.start = 0;
@@ -726,62 +724,62 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        if (type_if == fake_make_operation_if_type_if_greater) {
+        if (state_process->condition == fake_make_operation_if_type_if_greater) {
 
           if (is_negative_left == is_negative_right) {
             if (!(number_left > number_right)) {
-              *operation_if = fake_make_operation_if_type_false_next;
+              state_process->condition_result = fake_condition_result_false;
 
               break;
             }
           }
           else if (!is_negative_left && is_negative_right) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
         }
-        else if (type_if == fake_make_operation_if_type_if_greater_equal) {
+        else if (state_process->condition == fake_make_operation_if_type_if_greater_equal) {
 
           if (is_negative_left == is_negative_right) {
             if (!(number_left >= number_right)) {
-              *operation_if = fake_make_operation_if_type_false_next;
+              state_process->condition_result = fake_condition_result_false;
 
               break;
             }
           }
           else if (!is_negative_left && is_negative_right) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
         }
-        else if (type_if == fake_make_operation_if_type_if_less) {
+        else if (state_process->condition == fake_make_operation_if_type_if_less) {
 
           if (is_negative_left == is_negative_right) {
             if (!(number_left < number_right)) {
-              *operation_if = fake_make_operation_if_type_false_next;
+              state_process->condition_result = fake_condition_result_false;
 
               break;
             }
           }
           else if (is_negative_left && !is_negative_right) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
         }
-        else if (type_if == fake_make_operation_if_type_if_less_equal) {
+        else if (state_process->condition == fake_make_operation_if_type_if_less_equal) {
 
           if (is_negative_left == is_negative_right) {
             if (!(number_left <= number_right)) {
-              *operation_if = fake_make_operation_if_type_false_next;
+              state_process->condition_result = fake_condition_result_false;
 
               break;
             }
           }
           else if (is_negative_left && !is_negative_right) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
@@ -790,7 +788,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      *operation_if = fake_make_operation_if_type_false_always_next;
+      state_process->condition_result = fake_condition_result_done;
 
       if (main->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
@@ -817,7 +815,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_if_greater_if_lesser_
 
 #ifndef _di_fake_make_operate_process_type_if_group_
-  f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+  f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     f_status_t status = F_none;
     uid_t id = 0;
@@ -827,14 +825,14 @@ extern "C" {
 
     uid_t id_file = 0;
 
-    *operation_if = fake_make_operation_if_type_true_next;
+    state_process->condition_result = fake_condition_result_true;
 
     for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
 
       status = f_file_group_read(arguments.array[i].string, &id_file);
 
       if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
+        state_process->condition_result = fake_condition_result_done;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_group_read", F_true, arguments.array[i].string, "get group of", fll_error_file_type_file);
 
@@ -843,14 +841,14 @@ extern "C" {
 
       if (if_not) {
         if (id == id_file) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
 
           break;
         }
       }
       else {
         if (id != id_file) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
 
           break;
         }
@@ -864,7 +862,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_if_group_
 
 #ifndef _di_fake_make_operate_process_type_if_mode_
-  f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+  f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     f_status_t status = F_none;
     f_file_mode_t mode_rule = 0;
@@ -881,7 +879,7 @@ extern "C" {
       status = fake_make_get_id_mode(main, data_make->error, arguments.array[if_not ? 3 : 2], &mode_rule, &mode_replace);
 
       if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
+        state_process->condition_result = fake_condition_result_done;
 
         return status;
       }
@@ -889,7 +887,7 @@ extern "C" {
       status = f_file_mode_to_mode(mode_rule, &mode_match);
 
       if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
+        state_process->condition_result = fake_condition_result_done;
 
         fll_error_print(data_make->error, F_status_set_fine(status), "f_file_mode_to_mode", F_true);
 
@@ -899,14 +897,14 @@ extern "C" {
 
     mode_t mode_file = 0;
 
-    *operation_if = fake_make_operation_if_type_true_next;
+    state_process->condition_result = fake_condition_result_true;
 
     for (f_array_length_t i = if_not ? 4 : 3; i < arguments.used; ++i, mode_file = 0) {
 
       status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
       if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
+        state_process->condition_result = fake_condition_result_done;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file);
 
@@ -916,14 +914,14 @@ extern "C" {
       if (if_not) {
         if (is) {
           if (mode_match == (mode_file & F_file_mode_all_d)) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
         }
         else {
           if (mode_match & mode_file) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
@@ -932,14 +930,14 @@ extern "C" {
       else {
         if (is) {
           if (mode_match != (mode_file & F_file_mode_all_d)) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
         }
         else {
           if (!(mode_match & mode_file)) {
-            *operation_if = fake_make_operation_if_type_false_next;
+            state_process->condition_result = fake_condition_result_false;
 
             break;
           }
@@ -952,7 +950,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_if_mode_
 
 #ifndef _di_fake_make_operate_process_type_if_owner_
-  f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, uint8_t *operation_if) {
+  f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     f_status_t status = F_none;
     uid_t id = 0;
@@ -962,14 +960,14 @@ extern "C" {
 
     uid_t id_file = 0;
 
-    *operation_if = fake_make_operation_if_type_true_next;
+    state_process->condition_result = fake_condition_result_true;
 
     for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
 
       status = f_file_owner_read(arguments.array[i].string, &id_file);
 
       if (F_status_is_error(status)) {
-        *operation_if = fake_make_operation_if_type_false_always_next;
+        state_process->condition_result = fake_condition_result_done;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_owner_read", F_true, arguments.array[i].string, "get owner of", fll_error_file_type_file);
 
@@ -978,14 +976,14 @@ extern "C" {
 
       if (if_not) {
         if (id == id_file) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
 
           break;
         }
       }
       else {
         if (id != id_file) {
-          *operation_if = fake_make_operation_if_type_false_next;
+          state_process->condition_result = fake_condition_result_false;
 
           break;
         }

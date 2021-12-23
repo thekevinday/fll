@@ -140,6 +140,7 @@ extern "C" {
 #endif // _di_fake_make_setting_t_
 
 #ifndef _di_fake_make_operation_
+  const f_string_t fake_make_operation_and_s = FAKE_make_operation_and_s;
   const f_string_t fake_make_operation_break_s = FAKE_make_operation_break_s;
   const f_string_t fake_make_operation_build_s = FAKE_make_operation_build_s;
   const f_string_t fake_make_operation_clean_s = FAKE_make_operation_clean_s;
@@ -161,6 +162,7 @@ extern "C" {
   const f_string_t fake_make_operation_modes_s = FAKE_make_operation_modes_s;
   const f_string_t fake_make_operation_move_s = FAKE_make_operation_move_s;
   const f_string_t fake_make_operation_operate_s = FAKE_make_operation_operate_s;
+  const f_string_t fake_make_operation_or_s = FAKE_make_operation_or_s;
   const f_string_t fake_make_operation_owner_s = FAKE_make_operation_owner_s;
   const f_string_t fake_make_operation_owners_s = FAKE_make_operation_owners_s;
   const f_string_t fake_make_operation_parameter_s = FAKE_make_operation_parameter_s;

@@ -356,6 +356,26 @@ extern "C" {
   }
 #endif // _di_fake_print_error_parameter_too_many_
 
+#ifndef _di_fake_print_error_requires_more_arguments_
+  void fake_print_error_requires_more_arguments(fake_make_data_t * const data_make) {
+
+    if (data_make->error.verbosity == f_console_verbosity_quiet) return;
+    if (!data_make->error.to.stream) return;
+
+    fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
+  }
+#endif // _di_fake_print_error_requires_more_arguments_
+
+#ifndef _di_fake_print_error_too_many_arguments_
+  void fake_print_error_too_many_arguments(fake_make_data_t * const data_make) {
+
+    if (data_make->error.verbosity == f_console_verbosity_quiet) return;
+    if (!data_make->error.to.stream) return;
+
+    fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
+  }
+#endif // _di_fake_print_error_too_many_arguments_
+
 #ifndef _di_fake_print_message_section_operation_failed_
   void fake_print_message_section_operation_failed(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 

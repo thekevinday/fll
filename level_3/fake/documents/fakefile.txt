@@ -75,6 +75,14 @@ Fakefile Documentation:
     This is processed top-down until the end of the list is reached.
 
     The following operations are available\:
+    - and\:
+      A special type of an "if" operation.
+      May only be specified following a valid "if", "and", or "or" operation.
+      This is executed only if the previous "if" operation result is true.
+
+      When executed, this performs the test and returns true or false as appropriate.
+      When not executed, this passes through the result of the previous "if", "and", or "or" operation.
+
     - build\:
       Run the fake build operation as if "fake build" was run instead of "fake make".
       Command line arguments are automatically passed to the fake build operation.
@@ -313,6 +321,14 @@ Fakefile Documentation:
       Recursion is prohibited, a Section that is already on the operation stack may not be called again.
       Once the operation is off the stack, it can then be called again.
 
+    - or\:
+      A special type of an "if" operation.
+      May only be specified following a valid "if", "and", or "or" operation.
+      This is executed only if the previous "if" operation result is false.
+
+      When executed, this performs the test and returns true or false as appropriate.
+      When not executed, this passes through the result of the previous "if", "and", or "or" operation.
+
     - owner\:
       Change the owner role for a given file.
 
@@ -323,7 +339,7 @@ Fakefile Documentation:
       Identical to owner operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
 
     - parameter\:
-      This represents an variable defined within the scope of the fakefile.
+      This represents a variable defined within the scope of the fakefile.
       This is not exported as an environment variable and is therefore not visible to any executed programs or scripts.
       This replaces the value of any existing parameter variable with this name.
       The reserved parameter variable names (see IKI vocabulary context section below) may not be changed by this.
@@ -356,7 +372,6 @@ Fakefile Documentation:
     - shell\:
       Manually execute a remote program or script using a specific path to the program or script.
       This does not require the program to exist in PATH, but the path to the program or script must be relative to the project path.
-      @todo consider relaxing this restriction on the relativeness of the path, possibly adding a configurable setting to allow enabling/disabling this restriction.
 
       The first Content represents the program or script name.
       All Content after the first are passed to the program or script when running.
