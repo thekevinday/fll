@@ -17,8 +17,6 @@ extern "C" {
  *
  * This will process any additional files as necessary, such as the build settings file.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param status
@@ -33,14 +31,12 @@ extern "C" {
  * @see fake_build_load_setting()
  */
 #ifndef _di_fake_make_load_fakefile_
-  extern void fake_make_load_fakefile(fake_main_t * const main, fake_make_data_t * const data_make, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_
 
 /**
  * Load the fakefile setting "build".
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param object
@@ -51,14 +47,12 @@ extern "C" {
  *   Boolean designating whether or not build is matched and processed.
  */
 #ifndef _di_fake_make_load_fakefile_setting_build_
-  extern void fake_make_load_fakefile_setting_build(fake_main_t * const main, fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, bool *unmatched_build) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, bool *unmatched_build) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_build_
 
 /**
  * Load the fakefile setting "compiler".
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param object
@@ -69,7 +63,7 @@ extern "C" {
  *   A pointer to the range that representing the compiler setting within the buffer.
  */
 #ifndef _di_fake_make_load_fakefile_setting_compiler_
-  extern void fake_make_load_fakefile_setting_compiler(fake_main_t * const main, fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_compiler) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_compiler(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_compiler) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_compiler_
 
 /**
@@ -102,8 +96,6 @@ extern "C" {
 /**
  * Load the fakefile setting "environment".
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param content
@@ -123,14 +115,12 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_load_fakefile_setting_environment_
-  extern f_status_t fake_make_load_fakefile_setting_environment(fake_main_t * const main, fake_make_data_t * const data_make, f_fss_content_t * const content) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_fss_content_t * const content) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_environment_
 
 /**
  * Load the fakefile setting "fail".
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param object
@@ -141,14 +131,12 @@ extern "C" {
  *   Boolean designating whether or not fail is matched and processed.
  */
 #ifndef _di_fake_make_load_fakefile_setting_fail_
-  extern void fake_make_load_fakefile_setting_fail(fake_main_t * const main, fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, bool *unmatched_fail) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, bool *unmatched_fail) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_fail_
 
 /**
  * Load the fakefile setting "indexer".
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param object
@@ -159,7 +147,7 @@ extern "C" {
  *   A pointer to the range that representing the indexer setting within the buffer.
  */
 #ifndef _di_fake_make_load_fakefile_setting_indexer_
-  extern void fake_make_load_fakefile_setting_indexer(fake_main_t * const main, fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_indexer) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_indexer(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_indexer) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_indexer_
 
 /**
@@ -168,8 +156,6 @@ extern "C" {
  * This only processes special "parameter" settings, namely "return".
  * For all other "parameter" settings, see fake_make_load_fakefile_setting_define_and_parameter().
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param object
@@ -191,7 +177,7 @@ extern "C" {
  * @see fake_make_load_fakefile_setting_define_and_parameter()
  */
 #ifndef _di_fake_make_load_fakefile_setting_parameter_
-  extern f_status_t fake_make_load_fakefile_setting_parameter(fake_main_t * const main, fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_parameter_
 
 #ifdef __cplusplus

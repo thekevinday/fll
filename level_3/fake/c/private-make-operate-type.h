@@ -15,8 +15,6 @@ extern "C" {
 /**
  * Perform the copy and clone operation processes.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -41,14 +39,12 @@ extern "C" {
  * @see fl_directory_copy()
  */
 #ifndef _di_fake_make_operate_process_type_copy_
-  extern f_status_t fake_make_operate_process_type_copy(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool clone) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_copy(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool clone) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_copy_
 
 /**
  * Perform the delete and deletes operation processes.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -71,28 +67,24 @@ extern "C" {
  * @see f_directory_remove_custom()
  */
 #ifndef _di_fake_make_operate_process_type_deletes_
-  extern f_status_t fake_make_operate_process_type_deletes(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_deletes(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_deletes_
 
 /**
  * Perform the fail operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
  *   The arguments for the run or shell operation.
  */
 #ifndef _di_fake_make_operate_process_type_fail_
-  extern void fake_make_operate_process_type_fail(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_process_type_fail(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_fail_
 
 /**
  * Perform the group and groups operation processes.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -117,14 +109,12 @@ extern "C" {
  * @see fake_make_get_id_group()
  */
 #ifndef _di_fake_make_operate_process_type_groups_
-  extern f_status_t fake_make_operate_process_type_groups(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_groups(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_groups_
 
 /**
  * Perform the if defined operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -136,14 +126,12 @@ extern "C" {
  *   The operation process state.
  */
 #ifndef _di_fake_make_operate_process_type_if_defined_
-  extern void fake_make_operate_process_type_if_defined(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_process_type_if_defined(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_defined_
 
 /**
  * Perform the if exists operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param if_not
@@ -162,14 +150,12 @@ extern "C" {
  * @see f_file_exists()
  */
 #ifndef _di_fake_make_operate_process_type_if_exists_
-  extern f_status_t fake_make_operate_process_type_if_exists(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_exists(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_exists_
 
 /**
  * Perform the if >, >=, <, and <= operation processes.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -185,14 +171,12 @@ extern "C" {
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
-  extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_greater_if_lesser_
 
 /**
  * Perform the if group operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -215,14 +199,12 @@ extern "C" {
  * @see fake_make_get_id_group()
  */
 #ifndef _di_fake_make_operate_process_type_if_group_
-  extern f_status_t fake_make_operate_process_type_if_group(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_group(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_group_
 
 /**
  * Perform the if is operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -241,14 +223,12 @@ extern "C" {
  * @see f_file_mode_read()
  */
 #ifndef _di_fake_make_operate_process_type_if_is_
-  extern f_status_t fake_make_operate_process_type_if_is(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_is(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_is_
 
 /**
  * Perform the if  operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -273,14 +253,12 @@ extern "C" {
  * @see fake_make_get_id_mode()
  */
 #ifndef _di_fake_make_operate_process_type_if_mode_
-  extern f_status_t fake_make_operate_process_type_if_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_mode(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_mode_
 
 /**
  * Perform the if owner operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -303,39 +281,12 @@ extern "C" {
  * @see fake_make_get_id_owner()
  */
 #ifndef _di_fake_make_operate_process_type_if_owner_
-  extern f_status_t fake_make_operate_process_type_if_owner(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_owner(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_owner_
-
-/**
- * Perform the mode operation process.
- *
- * @param main
- *   The main program data.
- * @param data_make
- *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the run or shell operation.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *
- * @see f_path_change()
- * @see f_string_dynamic_resize()
- *
- * @see fake_make_path_relative()
- */
-#ifndef _di_fake_make_operate_process_type_mode_
-  extern f_status_t fake_make_operate_process_type_mode(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_mode_
 
 /**
  * Perform the mode and modes operation processes.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -360,14 +311,12 @@ extern "C" {
  * @see fake_make_get_id_mode()
  */
 #ifndef _di_fake_make_operate_process_type_modes_
-  extern f_status_t fake_make_operate_process_type_modes(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_modes(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_modes_
 
 /**
  * Perform the move operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -383,14 +332,12 @@ extern "C" {
  * @see fll_file_move()
  */
 #ifndef _di_fake_make_operate_process_type_move_
-  extern f_status_t fake_make_operate_process_type_move(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_move(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_move_
 
 /**
  * Perform the owner and owners operation processes.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -415,14 +362,12 @@ extern "C" {
  * @see fake_make_get_id_owner()
  */
 #ifndef _di_fake_make_operate_process_type_owners_
-  extern f_status_t fake_make_operate_process_type_owners(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_owners(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_owners_
 
 /**
  * Perform the parameter operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -442,7 +387,7 @@ extern "C" {
  * @see f_string_map_multis_resize()
  */
 #ifndef _di_fake_make_operate_process_type_parameter_
-  extern f_status_t fake_make_operate_process_type_parameter(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_parameter(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_parameter_
 
 /**
@@ -451,8 +396,6 @@ extern "C" {
  * Only call this function if the data_make.path.stack.used is greater than 1.
  * This does not validate the size of the stack.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -470,14 +413,12 @@ extern "C" {
  * @see fake_make_path_relative()
  */
 #ifndef _di_fake_make_operate_process_type_pop_
-  extern f_status_t fake_make_operate_process_type_pop(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_pop(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_pop_
 
 /**
  * Perform the to operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -500,14 +441,12 @@ extern "C" {
  * @see fake_make_path_relative()
  */
 #ifndef _di_fake_make_operate_process_type_to_
-  extern f_status_t fake_make_operate_process_type_to(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_to(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_to_
 
 /**
  * Perform the top operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -523,14 +462,12 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_fake_make_operate_process_type_top_
-  extern f_status_t fake_make_operate_process_type_top(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_top(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_top_
 
 /**
  * Perform the touch operation process.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -546,7 +483,7 @@ extern "C" {
  * @see f_file_touch()
  */
 #ifndef _di_fake_make_operate_process_type_touch_
-  extern f_status_t fake_make_operate_process_type_touch(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_touch(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_touch_
 
 #ifdef __cplusplus

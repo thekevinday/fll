@@ -15,8 +15,6 @@ extern "C" {
 /**
  * Assure that a path is within the project root path.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   The data_make.path_cache will be updated to reflect the full path to this file.
@@ -30,7 +28,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_assure_inside_project_
-  extern f_status_t fake_make_assure_inside_project(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_static_t path) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_assure_inside_project(fake_make_data_t * const data_make, const f_string_static_t path) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_assure_inside_project_
 
 /**
@@ -106,8 +104,6 @@ extern "C" {
 /**
  * Get a path, relative to the project root.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   The relative path is stored in data_make.path_cache.
@@ -118,7 +114,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_path_relative_
-  extern f_status_t fake_make_path_relative(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_static_t path) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_path_relative(fake_make_data_t * const data_make, const f_string_static_t path) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_path_relative_
 
 #ifdef __cplusplus

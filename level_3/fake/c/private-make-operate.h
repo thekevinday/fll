@@ -37,8 +37,6 @@ extern "C" {
  *
  * This prints errors via data_make.error.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param section_name
@@ -57,14 +55,12 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_fss_content_t content, const f_fss_quotes_t quoteds, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_fss_content_t content, const f_fss_quotes_t quoteds, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_
 
 /**
  * Perform the expand operation, specifically for the environment variables.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param quoted
@@ -81,14 +77,12 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_environment_
-  extern f_status_t fake_make_operate_expand_environment(fake_main_t * const main, fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_environment_
 
 /**
  * Perform the expand operation, specifically for the build settings.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param quoted
@@ -105,14 +99,12 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_build_
-  extern f_status_t fake_make_operate_expand_build(fake_main_t * const main, fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_build_
 
 /**
  * Perform the make operations within the given section.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param id_section
@@ -133,14 +125,12 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_section_
-  int fake_make_operate_section(fake_main_t * const main, fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
+  int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_section_
 
 /**
  * Perform a specific make operation within the given section.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param section_name
@@ -165,14 +155,12 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_process_
-  extern int fake_make_operate_process(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, const bool success, fake_state_process_t *state_process, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, const bool success, fake_state_process_t *state_process, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_
 
 /**
  * Execute either the run operation or the shell operation.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param program
@@ -191,7 +179,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_execute_
-  extern f_status_t fake_make_operate_process_execute(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_execute_
 
 /**
@@ -199,8 +187,6 @@ extern "C" {
  *
  * The return value is stored in: data_make.setting_make.parameter.array[0].value.array[0].
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param return_code
@@ -221,14 +207,12 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_fake_make_operate_process_return_
-  extern f_status_t fake_make_operate_process_return(fake_main_t * const main, fake_make_data_t * const data_make, const int return_code) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_return_
 
 /**
  * Execute either the run operation or the shell operation.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
@@ -241,7 +225,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_run_
-  extern f_status_t fake_make_operate_process_run(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_statics_t arguments, const bool as_shell) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_run(fake_make_data_t * const data_make, const f_string_statics_t arguments, const bool as_shell) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_run_
 
 /**
@@ -250,8 +234,6 @@ extern "C" {
  * This performs pre-operation validations.
  * Additional issues may occure when running operations that are not detected nor detectable by this.
  *
- * @param main
- *   The main program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param section_name
@@ -269,7 +251,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(fake_main_t * const main, fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, fake_state_process_t *state_process, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, fake_state_process_t *state_process, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_validate_
 
 /**

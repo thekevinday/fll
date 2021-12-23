@@ -1135,7 +1135,9 @@ extern "C" {
     f_string_dynamic_t buffer;
     f_string_dynamic_t path_cache;
 
-    f_array_length_t main;
+    f_array_length_t id_main;
+
+    fake_main_t *main;
   } fake_make_data_t;
 
   #define fake_make_data_t_initialize { \
@@ -1150,6 +1152,7 @@ extern "C" {
     f_fss_nameds_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
+    0, \
     0, \
   }
 
