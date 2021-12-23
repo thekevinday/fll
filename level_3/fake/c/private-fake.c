@@ -497,13 +497,13 @@ extern "C" {
       return F_interrupt_not;
     }
 
-    f_state_t *state_ptr = (f_state_t *) state;
+    f_state_t * const state_ptr = (f_state_t *) state;
 
     if (!state_ptr->custom) {
       return F_interrupt_not;
     }
 
-    fake_main_t *main = (fake_main_t *) state_ptr->custom;
+    fake_main_t * const main = (fake_main_t *) state_ptr->custom;
 
     if (!((++main->signal_check) % fake_signal_check_d)) {
       if (fake_signal_received(main)) {
@@ -524,13 +524,13 @@ extern "C" {
       return F_interrupt_not;
     }
 
-    f_state_t *state_ptr = (f_state_t *) state;
+    f_state_t * const state_ptr = (f_state_t *) state;
 
     if (!state_ptr->custom) {
       return F_interrupt_not;
     }
 
-    fake_main_t *main = (fake_main_t *) state_ptr->custom;
+    fake_main_t * const main = (fake_main_t *) state_ptr->custom;
 
     if (!((++main->signal_check) % fake_signal_check_d)) {
       if (fake_signal_received(main)) {
