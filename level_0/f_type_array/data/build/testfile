@@ -1,0 +1,27 @@
+# fss-0005 iki-0002
+
+settings:
+  load_build yes
+  fail exit
+
+  environment LD_LIBRARY_PATH
+
+main:
+  build settings
+  build settings-tests
+
+  if exists build/programs/shared/test-f_type_array
+    shell build/programs/shared/test-f_type_array
+
+  if exists build/programs/static/test-f_type_array
+    run build/programs/static/test-f_type_array
+
+  if not exists build/programs/shared/test-f_type_array
+  and not exists build/programs/static/test-f_type_array
+    operate not_created
+
+not_created:
+  print
+  print Faled to test due to being unable to find either a shared or static test binary to perform tests.
+
+  exit failure

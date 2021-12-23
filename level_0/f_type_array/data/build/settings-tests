@@ -1,0 +1,54 @@
+# fss-0001
+
+project_name test-f_type_array
+
+version_major 0
+version_file major
+version_target major
+
+modes individual level monolithic
+modes_default individual
+
+build_compiler gcc
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+build_libraries -lc -lcmocka
+build_libraries-individual -lf_memory -lf_type_array
+build_libraries-level -lfll_0
+build_libraries-monolithic -lfll
+build_sources_program test-type_array-array_lengths_adjust.c test-type_array-array_lengths_append.c test-type_array-array_lengths_decimate_by.c test-type_array-array_lengths_decrease_by.c test-type_array-array_lengths_increase.c test-type_array-array_lengths_increase_by.c test-type_array-array_lengths_resize.c
+build_sources_program test-type_array-array_lengthss_adjust.c test-type_array-array_lengthss_append.c test-type_array-array_lengthss_decimate_by.c test-type_array-array_lengthss_decrease_by.c test-type_array-array_lengthss_increase.c test-type_array-array_lengthss_increase_by.c test-type_array-array_lengthss_resize.c
+build_sources_program test-type_array-fll_ids_adjust.c test-type_array-fll_ids_append.c test-type_array-fll_ids_decimate_by.c test-type_array-fll_ids_decrease_by.c test-type_array-fll_ids_increase.c test-type_array-fll_ids_increase_by.c test-type_array-fll_ids_resize.c
+build_sources_program test-type_array-fll_idss_adjust.c test-type_array-fll_idss_append.c test-type_array-fll_idss_decimate_by.c test-type_array-fll_idss_decrease_by.c test-type_array-fll_idss_increase.c test-type_array-fll_idss_increase_by.c test-type_array-fll_idss_resize.c
+build_sources_program test-type_array-cells_adjust.c test-type_array-cells_append.c test-type_array-cells_decimate_by.c test-type_array-cells_decrease_by.c test-type_array-cells_increase.c test-type_array-cells_increase_by.c test-type_array-cells_resize.c
+build_sources_program test-type_array-states_adjust.c test-type_array-states_append.c test-type_array-states_decimate_by.c test-type_array-states_decrease_by.c test-type_array-states_increase.c test-type_array-states_increase_by.c test-type_array-states_resize.c
+build_sources_program test-type_array-statess_adjust.c test-type_array-statess_append.c test-type_array-statess_decimate_by.c test-type_array-statess_decrease_by.c test-type_array-statess_increase.c test-type_array-statess_increase_by.c test-type_array-statess_resize.c
+build_sources_program test-type_array-cellss_adjust.c test-type_array-cellss_append.c test-type_array-cellss_decimate_by.c test-type_array-cellss_decrease_by.c test-type_array-cellss_increase.c test-type_array-cellss_increase_by.c test-type_array-cellss_resize.c
+build_sources_program test-type_array-statuss_adjust.c test-type_array-statuss_append.c test-type_array-statuss_decimate_by.c test-type_array-statuss_decrease_by.c test-type_array-statuss_increase.c test-type_array-statuss_increase_by.c test-type_array-statuss_resize.c
+build_sources_program test-type_array-statusss_adjust.c test-type_array-statusss_append.c test-type_array-statusss_decimate_by.c test-type_array-statusss_decrease_by.c test-type_array-statusss_increase.c test-type_array-statusss_increase_by.c test-type_array-statusss_resize.c
+
+build_sources_program test-type_array.c
+build_script no
+build_shared yes
+build_static no
+
+path_headers tests/c
+path_headers_preserve no
+path_sources tests/c
+path_standard no
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+defines -Ibuild/includes
+defines_static -Lbuild/libraries/static
+defines_shared -Lbuild/libraries/shared
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags_program -fPIE
+flags_program_shared
+flags_program_static
+flags_shared
+flags_static
