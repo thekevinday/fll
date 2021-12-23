@@ -6,7 +6,7 @@ version_major 0
 version_file major
 version_target major
 
-modes individual
+modes individual level monolithic
 modes_default individual
 
 build_compiler gcc
@@ -15,6 +15,8 @@ build_indexer_arguments rcs
 build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory
+build_libraries-level -lfll_0
+build_libraries-monolithic -lfll
 build_sources_program test-memory-adjust.c test-memory-delete.c test-memory-destroy.c test-memory-new_aligned.c test-memory-new.c test-memory-resize.c test-memory.c
 build_script no
 build_shared yes

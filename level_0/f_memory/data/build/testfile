@@ -8,13 +8,22 @@ settings:
 
 main:
   build settings
-
   build settings-tests
 
   define LD_LIBRARY_PATH build/libraries/shared
 
   if exists build/programs/shared/test-f_memory
-  run build/programs/shared/test-f_memory
+    shell build/programs/shared/test-f_memory
 
   if exists build/programs/static/test-f_memory
-  run build/programs/static/test-f_memory
+    shell build/programs/static/test-f_memory
+
+  if not exists build/programs/shared/test-f_memory
+  and not exists build/programs/static/test-f_memory
+    operate not_created
+
+not_created:
+  print
+  print Faled to test due to being unable to find either a shared or static test binary to perform tests.
+
+  exit failure
