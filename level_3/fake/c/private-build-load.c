@@ -114,7 +114,7 @@ extern "C" {
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
         {
-          f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) &main, 0);
+          f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) main, 0);
 
           *status = fll_fss_extended_read(buffer, state, &range, &objects, &contents, 0, 0, &delimits, 0);
         }

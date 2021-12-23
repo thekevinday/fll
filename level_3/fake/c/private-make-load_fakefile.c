@@ -53,7 +53,7 @@ extern "C" {
       f_fss_comments_t comments = f_fss_comments_t_initialize;
 
       {
-        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) &main, 0);
+        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) main, 0);
 
         *status = fll_fss_basic_list_read(data_make->buffer, state, &range, &list_objects, &list_contents, &delimits, 0, &comments);
       }
@@ -86,7 +86,7 @@ extern "C" {
 
       f_fss_set_t settings = f_fss_set_t_initialize;
 
-      f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) &main, 0);
+      f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) main, 0);
 
       const f_string_static_t name_settings = macro_f_string_static_t_initialize(fake_make_section_settings_s, fake_make_section_settings_s_length);
       const f_string_static_t name_main = macro_f_string_static_t_initialize(fake_make_section_main_s, fake_make_section_main_s_length);
