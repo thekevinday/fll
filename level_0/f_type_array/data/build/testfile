@@ -14,7 +14,7 @@ main:
     shell build/programs/shared/test-f_type_array
 
   if exists build/programs/static/test-f_type_array
-    run build/programs/static/test-f_type_array
+    shell build/programs/static/test-f_type_array
 
   if not exists build/programs/shared/test-f_type_array
   and not exists build/programs/static/test-f_type_array
