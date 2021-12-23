@@ -1296,7 +1296,6 @@ extern "C" {
 
         // When done processing an operation within a block, continue onto next block stage or exit the block.
         if (!(state_process.operation == fake_make_operation_type_if || state_process.operation == fake_make_operation_type_else || state_process.operation == fake_make_operation_type_and || state_process.operation == fake_make_operation_type_or)) {
-
           if (state_process.block == fake_make_operation_if_type_if) {
             state_process.block = fake_make_operation_if_type_done;
           }
