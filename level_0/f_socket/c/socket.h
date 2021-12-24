@@ -29,7 +29,7 @@
 #include <fll/level_0/socket-common.h>
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 /**
@@ -94,7 +94,7 @@ extern "C"{
  *   The ID of a socket.
  * @param action
  *   The action to perform on close.
- *   f_socket_close_fast calls close().
+ *   f_socket_close_fast_e calls close().
  *
  * @return
  *   F_none on success.

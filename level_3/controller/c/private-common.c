@@ -431,7 +431,7 @@ extern "C" {
           return status;
         }
         else {
-          for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size; ++i) {
+          for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
             process->rule.status[i] = F_known_not;
           } // for
         }

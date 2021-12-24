@@ -9,7 +9,7 @@ extern "C" {
 #ifndef _di_fss_extended_write_error_parameter_at_least_once_print_
   void fss_extended_write_error_parameter_at_least_once(fss_extended_write_main_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -30,7 +30,7 @@ extern "C" {
 #ifndef _di_fss_extended_write_error_parameter_value_missing_print_
   void fss_extended_write_error_parameter_value_missing_print(fss_extended_write_main_t * const main, const f_string_t symbol, const f_string_t parameter) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -47,7 +47,7 @@ extern "C" {
 #ifndef _di_fss_extended_write_error_parameter_unsupported_eol_print_
   void fss_extended_write_error_parameter_unsupported_eol_print(fss_extended_write_main_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -69,7 +69,7 @@ extern "C" {
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
-      uint8_t complete = f_fss_complete_none;
+      uint8_t complete = f_fss_complete_none_e;
 
       if (object->used) {
         range.start = 0;
@@ -81,11 +81,11 @@ extern "C" {
       }
 
       if (contents && contents->used) {
-        if (main->parameters[fss_extended_write_parameter_trim].result == f_console_result_found) {
-          complete = f_fss_complete_full_trim;
+        if (main->parameters[fss_extended_write_parameter_trim_e].result == f_console_result_found_e) {
+          complete = f_fss_complete_full_trim_e;
         }
         else {
-          complete = f_fss_complete_full;
+          complete = f_fss_complete_full_e;
         }
       }
 
@@ -117,7 +117,7 @@ extern "C" {
             range.stop = 0;
           }
 
-          status = fl_fss_extended_content_write(contents->array[i], quote, i + 1 < contents->used ? f_fss_complete_next : f_fss_complete_end, state, &range, buffer);
+          status = fl_fss_extended_content_write(contents->array[i], quote, i + 1 < contents->used ? f_fss_complete_next_e : f_fss_complete_end_e, state, &range, buffer);
 
           if (F_status_set_fine(status) == F_none_eol) {
             fss_extended_write_error_parameter_unsupported_eol_print(main);

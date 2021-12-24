@@ -125,7 +125,7 @@ extern "C" {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_embedded_list_read_total_parameters_d);
 
       {
-        f_console_parameter_id_t ids[3] = { fss_embedded_list_read_parameter_no_color, fss_embedded_list_read_parameter_light, fss_embedded_list_read_parameter_dark };
+        f_console_parameter_id_t ids[3] = { fss_embedded_list_read_parameter_no_color_e, fss_embedded_list_read_parameter_light_e, fss_embedded_list_read_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -158,7 +158,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { fss_embedded_list_read_parameter_verbosity_quiet, fss_embedded_list_read_parameter_verbosity_normal, fss_embedded_list_read_parameter_verbosity_verbose, fss_embedded_list_read_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { fss_embedded_list_read_parameter_verbosity_quiet_e, fss_embedded_list_read_parameter_verbosity_normal_e, fss_embedded_list_read_parameter_verbosity_verbose_e, fss_embedded_list_read_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -169,47 +169,47 @@ extern "C" {
           return status;
         }
 
-        if (choice == fss_embedded_list_read_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == fss_embedded_list_read_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == fss_embedded_list_read_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == fss_embedded_list_read_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == fss_embedded_list_read_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == fss_embedded_list_read_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == fss_embedded_list_read_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == fss_embedded_list_read_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    if (main->parameters[fss_embedded_list_read_parameter_help].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_help_e].result == f_console_result_found_e) {
       fss_embedded_list_read_print_help(main->output.to, main->context);
 
       fss_embedded_list_read_main_delete(main);
       return F_none;
     }
 
-    if (main->parameters[fss_embedded_list_read_parameter_version].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, fss_embedded_list_read_program_version_s);
 
       fss_embedded_list_read_main_delete(main);
       return F_none;
     }
 
-    if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
-      if (main->parameters[fss_embedded_list_read_parameter_columns].result == f_console_result_found) {
+    if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
+      if (main->parameters[fss_embedded_list_read_parameter_columns_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -225,7 +225,7 @@ extern "C" {
     }
 
     if (main->remaining.used > 0 || main->process_pipe) {
-      if (main->parameters[fss_embedded_list_read_parameter_at].result == f_console_result_found) {
+      if (main->parameters[fss_embedded_list_read_parameter_at_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -237,7 +237,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_depth].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_depth_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -249,7 +249,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_line].result == f_console_result_additional) {
+      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -261,7 +261,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_name].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_name_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -273,7 +273,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_select].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_select_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -285,8 +285,8 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (main->parameters[fss_embedded_list_read_parameter_line].result == f_console_result_additional) {
-        if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
+      if (main->parameters[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
+        if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -301,8 +301,8 @@ extern "C" {
         }
       }
 
-      if (main->parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-        if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
+      if (main->parameters[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
+        if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -318,7 +318,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        if (main->parameters[fss_embedded_list_read_parameter_delimit].result == f_console_result_found) {
+        if (main->parameters[fss_embedded_list_read_parameter_delimit_e].result == f_console_result_found_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -329,8 +329,8 @@ extern "C" {
 
           status = F_status_set_error(F_parameter);
         }
-        else if (main->parameters[fss_embedded_list_read_parameter_delimit].result == f_console_result_additional) {
-          const f_array_length_t location = main->parameters[fss_embedded_list_read_parameter_delimit].values.array[0];
+        else if (main->parameters[fss_embedded_list_read_parameter_delimit_e].result == f_console_result_additional_e) {
+          const f_array_length_t location = main->parameters[fss_embedded_list_read_parameter_delimit_e].values.array[0];
           f_array_length_t length = strnlen(arguments->argv[location], f_console_parameter_size);
 
           if (length == 0) {
@@ -345,22 +345,22 @@ extern "C" {
             status = F_status_set_error(F_parameter);
           }
           else if (fl_string_compare(arguments->argv[location], fss_embedded_list_read_delimit_mode_name_none_s, length, fss_embedded_list_read_delimit_mode_name_none_s_length) == F_equal_to) {
-            main->delimit_mode = fss_embedded_list_read_delimit_mode_none;
+            main->delimit_mode = fss_embedded_list_read_delimit_mode_none_e;
           }
           else if (fl_string_compare(arguments->argv[location], fss_embedded_list_read_delimit_mode_name_all_s, length, fss_embedded_list_read_delimit_mode_name_all_s_length) == F_equal_to) {
-            main->delimit_mode = fss_embedded_list_read_delimit_mode_all;
+            main->delimit_mode = fss_embedded_list_read_delimit_mode_all_e;
           }
           else {
-            main->delimit_mode = fss_embedded_list_read_delimit_mode_depth;
+            main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_e;
 
             if (arguments->argv[location][length - 1] == fss_embedded_list_read_delimit_mode_name_greater_s[0]) {
-              main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_greater;
+              main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_greater_e;
 
               // shorten the length to better convert the remainder to a number.
               --length;
             }
             else if (arguments->argv[location][length - 1] == fss_embedded_list_read_delimit_mode_name_lesser_s[0]) {
-              main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_lesser;
+              main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_lesser_e;
 
               // shorten the length to better convert the remainder to a number.
               --length;
@@ -398,7 +398,7 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_select].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && main->parameters[fss_embedded_list_read_parameter_select_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -418,13 +418,13 @@ extern "C" {
         status = f_file_read(file, &main->buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_pipe);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_pipe_e);
         }
         else {
           status = fss_embedded_list_read_main_process_file(main, arguments, "-", depths, &objects_delimits, &contents_delimits, &comments);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, "-", "read", fll_error_file_type_pipe);
+            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, "-", "read", fll_error_file_type_pipe_e);
           }
         }
 
@@ -448,14 +448,14 @@ extern "C" {
           main->quantity.total = original_size;
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file_e);
             break;
           }
 
           if (!main->quantity.total) {
             status = f_file_size_by_id(file.id, &main->quantity.total);
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
 
               f_file_stream_close(F_true, &file);
               break;
@@ -463,7 +463,7 @@ extern "C" {
 
             // Skip past empty files.
             if (!main->quantity.total) {
-              if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
+              if (main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
                 fll_print_format("0%c", main->output.to.stream, f_string_eol_s[0]);
               }
 
@@ -477,14 +477,14 @@ extern "C" {
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
             break;
           }
 
           status = fss_embedded_list_read_main_process_file(main, arguments, arguments->argv[main->remaining.array[i]], depths, &objects_delimits, &contents_delimits, &comments);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
             break;
           }
 
@@ -509,7 +509,7 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_set_fine(status) == F_interrupt) {
         fflush(main->output.to.stream);
 

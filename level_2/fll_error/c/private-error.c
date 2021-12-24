@@ -9,7 +9,7 @@ extern "C" {
   f_status_t private_fll_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback) {
 
     if (status == F_access_denied) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SAccess denied", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -25,7 +25,7 @@ extern "C" {
     }
 
     if (status == F_array_too_large) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SMaximum array length reached", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -41,7 +41,7 @@ extern "C" {
     }
 
     if (status == F_buffer_too_large) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SMaximum buffer length reached", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -57,7 +57,7 @@ extern "C" {
     }
 
     if (status == F_memory_not) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SUnable to allocate memory", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -73,7 +73,7 @@ extern "C" {
     }
 
     if (status == F_parameter) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SInvalid parameter", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -89,7 +89,7 @@ extern "C" {
     }
 
     if (status == F_string_too_large) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SMaximum string length reached", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -105,7 +105,7 @@ extern "C" {
     }
 
     if (status == F_utf) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SInvalid UTF-8 character found", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -121,7 +121,7 @@ extern "C" {
     }
 
     if (status == F_utf_fragment) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SInvalid UTF-8 character (Fragment) found", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -137,7 +137,7 @@ extern "C" {
     }
 
     if (status == F_complete_not_utf || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SInvalid (incomplete) UTF-8 character found", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -161,7 +161,7 @@ extern "C" {
     }
 
     if (status == F_failure) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SFailure", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -177,7 +177,7 @@ extern "C" {
     }
 
     if (status == F_signal) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SSignal received", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -193,7 +193,7 @@ extern "C" {
     }
 
     if (status == F_interrupt) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%SInterrupt signal received", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
@@ -208,8 +208,8 @@ extern "C" {
       return F_false;
     }
 
-    if (fallback && print.verbosity != f_console_verbosity_quiet) {
-      if (print.verbosity != f_console_verbosity_quiet) {
+    if (fallback && print.verbosity != f_console_verbosity_quiet_e) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
         fl_print_format("%c%[%S(%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);

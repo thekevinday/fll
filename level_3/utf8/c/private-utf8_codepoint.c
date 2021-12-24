@@ -15,7 +15,7 @@ extern "C" {
     f_status_t status = F_none;
     bool valid_not = F_false;
 
-    if (*mode != utf8_codepoint_mode_end) {
+    if (*mode != utf8_codepoint_mode_end_e) {
       if (data->text.used + character.used >= data->text.size) {
         status = f_string_dynamic_increase_by(utf8_default_allocation_step_d, &data->text);
         if (F_status_is_error(status)) return status;
@@ -26,11 +26,11 @@ extern "C" {
       } // for
     }
 
-    if (!(*mode == utf8_codepoint_mode_end || *mode == utf8_codepoint_mode_bad_end)) {
+    if (!(*mode == utf8_codepoint_mode_end_e || *mode == utf8_codepoint_mode_bad_end_e)) {
       return F_none;
     }
 
-    if (*mode == utf8_codepoint_mode_end) {
+    if (*mode == utf8_codepoint_mode_end_e) {
       uint32_t codepoint = 0;
 
       status = f_utf_unicode_string_to(data->text.string, data->text.used, &codepoint);
@@ -51,7 +51,7 @@ extern "C" {
           return status;
         }
       }
-      else if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+      else if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
         if (data->mode & utf8_mode_to_binary_d) {
           char byte[5] = { 0, 0, 0, 0, 0 };
           f_string_static_t character = macro_f_string_static_t_initialize(byte, 5);
@@ -82,7 +82,7 @@ extern "C" {
       utf8_print_character_invalid(data, character);
     }
 
-    *mode = utf8_codepoint_mode_ready;
+    *mode = utf8_codepoint_mode_ready_e;
     data->text.used = 0;
 
     if (valid_not || F_status_is_error(status)) {
@@ -151,44 +151,44 @@ extern "C" {
     }
 
     if (status == F_valid_not) {
-      if (*mode != utf8_codepoint_mode_bad) {
-        if (*mode == utf8_codepoint_mode_bad_begin) {
-          *mode = utf8_codepoint_mode_bad;
+      if (*mode != utf8_codepoint_mode_bad_e) {
+        if (*mode == utf8_codepoint_mode_bad_begin_e) {
+          *mode = utf8_codepoint_mode_bad_e;
         }
         else {
-          *mode = utf8_codepoint_mode_bad_begin;
+          *mode = utf8_codepoint_mode_bad_begin_e;
         }
       }
     }
     else {
-      if (*mode == utf8_codepoint_mode_bad) {
+      if (*mode == utf8_codepoint_mode_bad_e) {
         if (status == F_space) {
-          *mode = utf8_codepoint_mode_bad_end;
+          *mode = utf8_codepoint_mode_bad_end_e;
         }
       }
-      else if (*mode == utf8_codepoint_mode_ready) {
+      else if (*mode == utf8_codepoint_mode_ready_e) {
         if (status == F_space) {
           status = F_next;
         }
         else if (character.string[0] == f_string_ascii_u_s[0] || character.string[0] == f_string_ascii_U_s[0]) {
-          *mode = utf8_codepoint_mode_begin;
+          *mode = utf8_codepoint_mode_begin_e;
           data->text.used = 0;
         }
         else {
-          *mode = utf8_codepoint_mode_bad;
+          *mode = utf8_codepoint_mode_bad_e;
         }
       }
-      else if (*mode == utf8_codepoint_mode_begin) {
+      else if (*mode == utf8_codepoint_mode_begin_e) {
         if (character.string[0] == f_string_ascii_plus_s[0]) {
-          *mode = utf8_codepoint_mode_number;
+          *mode = utf8_codepoint_mode_number_e;
         }
         else {
-          *mode = utf8_codepoint_mode_bad;
+          *mode = utf8_codepoint_mode_bad_e;
         }
       }
-      else if (*mode == utf8_codepoint_mode_number) {
+      else if (*mode == utf8_codepoint_mode_number_e) {
         if (status == F_space) {
-          *mode = utf8_codepoint_mode_end;
+          *mode = utf8_codepoint_mode_end_e;
         }
       }
     }
@@ -203,7 +203,7 @@ extern "C" {
     f_status_t status = F_none;
     bool valid = F_true;
     bool next = F_true;
-    uint8_t mode_codepoint = utf8_codepoint_mode_ready;
+    uint8_t mode_codepoint = utf8_codepoint_mode_ready_e;
     uint16_t signal_check = 0;
 
     f_array_length_t i = 0;

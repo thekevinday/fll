@@ -53,7 +53,7 @@ extern "C" {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, firewall_total_parameters_d);
 
       {
-        f_console_parameter_id_t ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
+        f_console_parameter_id_t ids[3] = { firewall_parameter_no_color_e, firewall_parameter_light_e, firewall_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -87,7 +87,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { firewall_parameter_verbosity_quiet, firewall_parameter_verbosity_normal, firewall_parameter_verbosity_verbose, firewall_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { firewall_parameter_verbosity_quiet_e, firewall_parameter_verbosity_normal_e, firewall_parameter_verbosity_verbose_e, firewall_parameter_verbosity_debug_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
         f_console_parameter_id_t choice = 0;
 
@@ -99,32 +99,32 @@ extern "C" {
           return status;
         }
 
-        if (choice == firewall_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == firewall_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == firewall_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == firewall_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == firewall_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == firewall_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == firewall_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == firewall_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    if (main->parameters[firewall_parameter_help].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_help_e].result == f_console_result_found_e) {
       firewall_print_help(main->output.to, main->context);
 
       firewall_main_delete(main);
@@ -132,7 +132,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[firewall_parameter_version].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, firewall_version_s);
 
       firewall_main_delete(main);
@@ -144,55 +144,55 @@ extern "C" {
     bool found_command = F_false;
     unsigned int command = 0;
 
-    if (main->parameters[firewall_parameter_command_start].result == f_console_result_found) {
-      command = firewall_parameter_command_start;
+    if (main->parameters[firewall_parameter_command_start_e].result == f_console_result_found_e) {
+      command = firewall_parameter_command_start_e;
       found_command = F_true;
     }
 
-    if (main->parameters[firewall_parameter_command_stop].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_stop_e].result == f_console_result_found_e) {
       if (found_command) {
-        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_stop].values.array[0]) {
-          command = firewall_parameter_command_stop;
+        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_stop_e].values.array[0]) {
+          command = firewall_parameter_command_stop_e;
         }
       }
       else {
-        command = firewall_parameter_command_stop;
+        command = firewall_parameter_command_stop_e;
         found_command = F_true;
       }
     }
 
-    if (main->parameters[firewall_parameter_command_restart].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_restart_e].result == f_console_result_found_e) {
       if (found_command) {
-        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_restart].values.array[0]) {
-          command = firewall_parameter_command_restart;
+        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_restart_e].values.array[0]) {
+          command = firewall_parameter_command_restart_e;
         }
       }
       else {
-        command = firewall_parameter_command_restart;
+        command = firewall_parameter_command_restart_e;
         found_command = F_true;
       }
     }
 
-    if (main->parameters[firewall_parameter_command_lock].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_lock_e].result == f_console_result_found_e) {
       if (found_command) {
-        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_lock].values.array[0]) {
-          command = firewall_parameter_command_lock;
+        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_lock_e].values.array[0]) {
+          command = firewall_parameter_command_lock_e;
         }
       }
       else {
-        command = firewall_parameter_command_lock;
+        command = firewall_parameter_command_lock_e;
         found_command = F_true;
       }
     }
 
-    if (main->parameters[firewall_parameter_command_show].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_show_e].result == f_console_result_found_e) {
       if (found_command) {
-        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_show].values.array[0]) {
-          command = firewall_parameter_command_show;
+        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_show_e].values.array[0]) {
+          command = firewall_parameter_command_show_e;
         }
       }
       else {
-        command = firewall_parameter_command_show;
+        command = firewall_parameter_command_show_e;
         found_command = F_true;
       }
     }
@@ -202,7 +202,7 @@ extern "C" {
       firewall_reserved_chains_t reserved = firewall_reserved_chains_t_initialize;
       f_string_range_t input = f_string_range_t_initialize;
 
-      if (command == firewall_parameter_command_show) {
+      if (command == firewall_parameter_command_show_e) {
 
         // Warning: these are hardcoded print commands (I am not certain how I am going to implement external 'show' rules as the default-firewall setting file is the wrong place to put this)
         bool show_nat = F_true;
@@ -388,7 +388,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);
 
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           if (status == F_memory_not) {
             firewall_print_error_on_allocation_failure(main->error);
           }
@@ -426,7 +426,7 @@ extern "C" {
         } // for
       }
 
-      if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart || command == firewall_parameter_command_lock) {
+      if (command == firewall_parameter_command_stop_e || command == firewall_parameter_command_restart_e || command == firewall_parameter_command_lock_e) {
         status = firewall_buffer_rules(main, network_path_s firewall_file_other_s, F_false, &local);
 
         if (F_status_is_error(status)) {
@@ -454,7 +454,7 @@ extern "C" {
           } // for
         }
 
-        if (command == firewall_parameter_command_lock) {
+        if (command == firewall_parameter_command_lock_e) {
           if (reserved.has_lock) {
             status = firewall_delete_chains(main);
 
@@ -485,7 +485,7 @@ extern "C" {
             return status;
           }
           else {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
+            if (main->error.verbosity != f_console_verbosity_quiet_e) {
               fll_print_format("%c%[%sFailed to perform lock request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path_s firewall_file_other_s, main->error.context, f_string_eol_s[0]);
             }
 
@@ -496,7 +496,7 @@ extern "C" {
           }
         }
 
-        if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart) {
+        if (command == firewall_parameter_command_stop_e || command == firewall_parameter_command_restart_e) {
           if (reserved.has_stop) {
             status = firewall_delete_chains(main);
 
@@ -522,7 +522,7 @@ extern "C" {
 
             status = firewall_process_rules(main, &input, &local);
 
-            if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
+            if (F_status_is_error(status) || command == firewall_parameter_command_stop_e) {
               firewall_delete_local_data(&local);
               firewall_main_delete(main);
 
@@ -530,7 +530,7 @@ extern "C" {
             }
           }
           else {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
+            if (main->error.verbosity != f_console_verbosity_quiet_e) {
               fll_print_format("%c%[%sFailed to perform stop request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path_s firewall_file_other_s, main->error.context, f_string_eol_s[0]);
             }
 
@@ -544,7 +544,7 @@ extern "C" {
         firewall_delete_local_data(&local);
       }
 
-      if (command == firewall_parameter_command_start || command == firewall_parameter_command_restart) {
+      if (command == firewall_parameter_command_start_e || command == firewall_parameter_command_restart_e) {
         status = firewall_buffer_rules(main, network_path_s firewall_file_first_s, F_false, &local);
 
         if (F_status_is_error(status)) {
@@ -554,7 +554,7 @@ extern "C" {
           return status;
         }
 
-        if (command == firewall_parameter_command_start) {
+        if (command == firewall_parameter_command_start_e) {
           status = firewall_delete_chains(main);
 
           if (F_status_is_error_not(status)) {
@@ -594,7 +594,7 @@ extern "C" {
 
           status = firewall_process_rules(main, &input, &local);
 
-          if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
+          if (F_status_is_error(status) || command == firewall_parameter_command_stop_e) {
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
 
@@ -640,7 +640,7 @@ extern "C" {
 
             firewall_delete_local_data(&local);
 
-            if (status == F_file_found_not || status == F_file_open || status == F_file_descriptor || status == FL_fss_found_object_content_not) {
+            if (status == F_file_found_not || status == F_file_open || status == F_file_descriptor || status == F_fss_found_object_content_not) {
               status = F_status_set_error(status);
               continue;
             }
@@ -675,7 +675,7 @@ extern "C" {
 
             status = firewall_process_rules(main, &input, &local);
 
-            if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
+            if (F_status_is_error(status) || command == firewall_parameter_command_stop_e) {
               firewall_delete_local_data(&local);
               firewall_main_delete(main);
 
@@ -722,7 +722,7 @@ extern "C" {
 
           status = firewall_process_rules(main, &input, &local);
 
-          if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
+          if (F_status_is_error(status) || command == firewall_parameter_command_stop_e) {
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
 
@@ -737,14 +737,14 @@ extern "C" {
       firewall_delete_local_data(&local);
     }
     else {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         fll_print_format("%c%[%sYou did not pass a command.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
       }
 
       status = F_status_set_error(F_parameter);
     }
 
-    if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_set_fine(status) == F_interrupt) {
         fflush(main->output.to.stream);
 

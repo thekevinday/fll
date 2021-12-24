@@ -24,7 +24,7 @@ extern "C" {
       return status;
     }
 
-    if (status == FL_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
+    if (status == F_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
       delimits->used = delimits_used;
 
       return status;
@@ -51,7 +51,7 @@ extern "C" {
     if (status == F_none_eol) {
       ++range->start;
 
-      return FL_fss_found_content_not;
+      return F_fss_found_content_not;
     }
 
     if (status == F_none_eos) {
@@ -73,7 +73,7 @@ extern "C" {
 
       status = private_fl_fss_basic_read(buffer, F_false, state, range, &content_partial, &quoted, delimits);
 
-      if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
+      if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
 
         if (found->used + 1 > found->size) {
           macro_f_string_ranges_t_increase(status_allocate, state.step_small, (*found));
@@ -99,9 +99,9 @@ extern "C" {
 
         content_found = 1;
 
-        if (status == FL_fss_found_object_content_not) break;
+        if (status == F_fss_found_object_content_not) break;
       }
-      else if (status == FL_fss_found_object_not) {
+      else if (status == F_fss_found_object_not) {
         break;
       }
       else if (status == F_data_not_eos) {
@@ -138,10 +138,10 @@ extern "C" {
         return status;
       }
 
-      return FL_fss_found_content;
+      return F_fss_found_content;
     }
 
-    return FL_fss_found_content_not;
+    return F_fss_found_content_not;
   }
 #endif // _di_fl_fss_extended_content_read_
 
@@ -166,11 +166,11 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
       destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
     }
 
-    if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
+    if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
       if (status == F_none_stop || status == F_none_eos || status == F_data_not_stop || status == F_data_not_eos) {
         f_status_t status2 = F_none;
 
-        if (complete == f_fss_complete_full_trim) {
+        if (complete == f_fss_complete_full_trim_e) {
           status2 = private_fl_fss_basic_write_object_trim(quote ? quote : F_fss_delimit_quote_double_s, used_start, state, destination);
           if (F_status_is_error(status2)) return status2;
         }
@@ -206,11 +206,11 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
       destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
 
       // content should be terminated, even if empty.
-      if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_next) {
+      if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_next_e) {
         destination->string[destination->used++] = f_fss_extended_next_s[0];
       }
 
-      if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
+      if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
         destination->string[destination->used++] = f_fss_extended_close_s[0];
       }
 
@@ -225,11 +225,11 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
       const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
-      if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_next) {
+      if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_next_e) {
         destination->string[destination->used++] = f_fss_extended_next_s[0];
       }
 
-      if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
+      if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
         destination->string[destination->used++] = f_fss_extended_close_s[0];
       }
     }

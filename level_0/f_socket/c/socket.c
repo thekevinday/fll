@@ -1,7 +1,7 @@
 #include "socket.h"
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #ifndef _di_f_socket_file_bind_
@@ -55,11 +55,11 @@ extern "C"{
   f_status_t f_socket_close_client(const int id, const unsigned short action) {
     int result = 0;
 
-    if (action == f_socket_close_fast) {
+    if (action == f_socket_close_fast_e) {
       result = close(id);
     }
     else {
-      if (action == f_socket_close_read || action == f_socket_close_write || action == f_socket_close_read_write) {
+      if (action == f_socket_close_read_e || action == f_socket_close_write_e || action == f_socket_close_read_write_e) {
         result = shutdown(id, action);
       }
       else {

@@ -30,7 +30,7 @@ extern "C" {
 
     f_status_t status = F_none;
     bool valid = F_true;
-    uint8_t mode_codepoint = utf8_codepoint_mode_ready;
+    uint8_t mode_codepoint = utf8_codepoint_mode_ready_e;
 
     f_string_static_t current = macro_f_string_static_t_initialize(text, 0);
 
@@ -77,12 +77,12 @@ extern "C" {
     } // for
 
     if (F_status_is_error_not(status) && !(data->mode & utf8_mode_from_binary_d)) {
-      if (mode_codepoint != utf8_codepoint_mode_ready && mode_codepoint != utf8_codepoint_mode_end && mode_codepoint != utf8_codepoint_mode_bad_end) {
-        if (mode_codepoint == utf8_codepoint_mode_number) {
-          mode_codepoint = utf8_codepoint_mode_end;
+      if (mode_codepoint != utf8_codepoint_mode_ready_e && mode_codepoint != utf8_codepoint_mode_end_e && mode_codepoint != utf8_codepoint_mode_bad_end_e) {
+        if (mode_codepoint == utf8_codepoint_mode_number_e) {
+          mode_codepoint = utf8_codepoint_mode_end_e;
         }
         else {
-          mode_codepoint = utf8_codepoint_mode_bad_end;
+          mode_codepoint = utf8_codepoint_mode_bad_end_e;
           valid = F_false;
         }
 
@@ -98,10 +98,10 @@ extern "C" {
       return status;
     }
 
-    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
 
       // When headers are printed, they are printed with a newline so only print this newline when separate is used without headers being printed.
-      if (data->main->parameters[utf8_parameter_headers].result == f_console_result_none && data->main->parameters[utf8_parameter_separate].result == f_console_result_found) {
+      if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e && data->main->parameters[utf8_parameter_separate_e].result == f_console_result_found_e) {
         f_print_terminated(f_string_eol_s, data->file.stream);
       }
     }

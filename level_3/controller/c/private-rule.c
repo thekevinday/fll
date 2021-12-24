@@ -21,12 +21,12 @@ extern "C" {
     f_string_static_t buffer = f_string_static_t_initialize;
 
     switch (type) {
-      case controller_rule_action_method_extended:
+      case controller_rule_action_method_extended_e:
         buffer.string = controller_rule_action_method_string_extended_s;
         buffer.used = controller_rule_action_method_string_extended_s_length;
         break;
 
-      case controller_rule_action_method_extended_list:
+      case controller_rule_action_method_extended_list_e:
         buffer.string = controller_rule_action_method_string_extended_list_s;
         buffer.used = controller_rule_action_method_string_extended_list_s_length;
         break;
@@ -138,43 +138,43 @@ extern "C" {
 #ifndef _di_controller_rule_action_type_to_action_execute_type_
   uint8_t controller_rule_action_type_to_action_execute_type(const uint8_t type) {
 
-    if (type == controller_rule_action_type_freeze) {
-      return controller_rule_action_type_execute_freeze;
+    if (type == controller_rule_action_type_freeze_e) {
+      return controller_rule_action_type_execute_freeze_e;
     }
 
-    if (type == controller_rule_action_type_kill) {
-      return controller_rule_action_type_execute_kill;
+    if (type == controller_rule_action_type_kill_e) {
+      return controller_rule_action_type_execute_kill_e;
     }
 
-    if (type == controller_rule_action_type_pause) {
-      return controller_rule_action_type_execute_pause;
+    if (type == controller_rule_action_type_pause_e) {
+      return controller_rule_action_type_execute_pause_e;
     }
 
-    if (type == controller_rule_action_type_reload) {
-      return controller_rule_action_type_execute_reload;
+    if (type == controller_rule_action_type_reload_e) {
+      return controller_rule_action_type_execute_reload_e;
     }
 
-    if (type == controller_rule_action_type_restart) {
-      return controller_rule_action_type_execute_restart;
+    if (type == controller_rule_action_type_restart_e) {
+      return controller_rule_action_type_execute_restart_e;
     }
 
-    if (type == controller_rule_action_type_resume) {
-      return controller_rule_action_type_execute_resume;
+    if (type == controller_rule_action_type_resume_e) {
+      return controller_rule_action_type_execute_resume_e;
     }
 
-    if (type == controller_rule_action_type_start) {
-      return controller_rule_action_type_execute_start;
+    if (type == controller_rule_action_type_start_e) {
+      return controller_rule_action_type_execute_start_e;
     }
 
-    if (type == controller_rule_action_type_stop) {
-      return controller_rule_action_type_execute_stop;
+    if (type == controller_rule_action_type_stop_e) {
+      return controller_rule_action_type_execute_stop_e;
     }
 
-    if (type == controller_rule_action_type_thaw) {
-      return controller_rule_action_type_execute_thaw;
+    if (type == controller_rule_action_type_thaw_e) {
+      return controller_rule_action_type_execute_thaw_e;
     }
 
-    return controller_rule_action_type_execute__enum_size;
+    return controller_rule_action_type_execute__enum_size_e;
   }
 #endif // _di_controller_rule_action_type_to_action_execute_type_
 
@@ -184,72 +184,72 @@ extern "C" {
     f_string_static_t buffer = f_string_static_t_initialize;
 
     switch (type) {
-      case controller_rule_action_type_freeze:
+      case controller_rule_action_type_freeze_e:
         buffer.string = controller_freeze_s;
         buffer.used = controller_freeze_s_length;
         break;
 
-      case controller_rule_action_type_group:
+      case controller_rule_action_type_group_e:
         buffer.string = controller_group_s;
         buffer.used = controller_group_s_length;
         break;
 
-      case controller_rule_action_type_kill:
+      case controller_rule_action_type_kill_e:
         buffer.string = controller_kill_s;
         buffer.used = controller_kill_s_length;
         break;
 
-      case controller_rule_action_type_pause:
+      case controller_rule_action_type_pause_e:
         buffer.string = controller_pause_s;
         buffer.used = controller_pause_s_length;
         break;
 
-      case controller_rule_action_type_pid_file:
+      case controller_rule_action_type_pid_file_e:
         buffer.string = controller_pid_file_s;
         buffer.used = controller_pid_file_s_length;
         break;
 
-      case controller_rule_action_type_rerun:
+      case controller_rule_action_type_rerun_e:
         buffer.string = controller_rerun_s;
         buffer.used = controller_rerun_s_length;
         break;
 
-      case controller_rule_action_type_reload:
+      case controller_rule_action_type_reload_e:
         buffer.string = controller_reload_s;
         buffer.used = controller_reload_s_length;
         break;
 
-      case controller_rule_action_type_restart:
+      case controller_rule_action_type_restart_e:
         buffer.string = controller_restart_s;
         buffer.used = controller_restart_s_length;
         break;
 
-      case controller_rule_action_type_resume:
+      case controller_rule_action_type_resume_e:
         buffer.string = controller_resume_s;
         buffer.used = controller_resume_s_length;
         break;
 
-      case controller_rule_action_type_start:
+      case controller_rule_action_type_start_e:
         buffer.string = controller_start_s;
         buffer.used = controller_start_s_length;
         break;
 
-      case controller_rule_action_type_stop:
+      case controller_rule_action_type_stop_e:
         buffer.string = controller_stop_s;
         buffer.used = controller_stop_s_length;
         break;
 
-      case controller_rule_action_type_thaw:
+      case controller_rule_action_type_thaw_e:
         buffer.string = controller_thaw_s;
         buffer.used = controller_thaw_s_length;
         break;
 
-      case controller_rule_action_type_user:
+      case controller_rule_action_type_user_e:
         buffer.string = controller_user_s;
         buffer.used = controller_user_s_length;
         break;
 
-      case controller_rule_action_type_with:
+      case controller_rule_action_type_with_e:
         buffer.string = controller_with_s;
         buffer.used = controller_with_s_length;
         break;
@@ -267,47 +267,47 @@ extern "C" {
     f_string_static_t buffer = f_string_static_t_initialize;
 
     switch (type) {
-      case controller_rule_action_type_execute_freeze:
+      case controller_rule_action_type_execute_freeze_e:
         buffer.string = controller_freeze_s;
         buffer.used = controller_freeze_s_length;
         break;
 
-      case controller_rule_action_type_execute_kill:
+      case controller_rule_action_type_execute_kill_e:
         buffer.string = controller_kill_s;
         buffer.used = controller_kill_s_length;
         break;
 
-      case controller_rule_action_type_execute_pause:
+      case controller_rule_action_type_execute_pause_e:
         buffer.string = controller_pause_s;
         buffer.used = controller_pause_s_length;
         break;
 
-      case controller_rule_action_type_execute_reload:
+      case controller_rule_action_type_execute_reload_e:
         buffer.string = controller_reload_s;
         buffer.used = controller_reload_s_length;
         break;
 
-      case controller_rule_action_type_execute_restart:
+      case controller_rule_action_type_execute_restart_e:
         buffer.string = controller_restart_s;
         buffer.used = controller_restart_s_length;
         break;
 
-      case controller_rule_action_type_execute_resume:
+      case controller_rule_action_type_execute_resume_e:
         buffer.string = controller_resume_s;
         buffer.used = controller_resume_s_length;
         break;
 
-      case controller_rule_action_type_execute_start:
+      case controller_rule_action_type_execute_start_e:
         buffer.string = controller_start_s;
         buffer.used = controller_start_s_length;
         break;
 
-      case controller_rule_action_type_execute_stop:
+      case controller_rule_action_type_execute_stop_e:
         buffer.string = controller_stop_s;
         buffer.used = controller_stop_s_length;
         break;
 
-      case controller_rule_action_type_execute_thaw:
+      case controller_rule_action_type_execute_thaw_e:
         buffer.string = controller_thaw_s;
         buffer.used = controller_thaw_s_length;
         break;
@@ -324,7 +324,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (method == controller_rule_action_method_extended_list) {
+    if (method == controller_rule_action_method_extended_list_e) {
       cache->comments.used = 0;
       cache->delimits.used = 0;
       cache->content_action.used = 0;
@@ -345,7 +345,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         controller_print_error(global.main->error, F_status_set_fine(status), "fl_fss_extended_list_content_read", F_true, global.thread);
       }
-      else if (status == FL_fss_found_content) {
+      else if (status == F_fss_found_content) {
         status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
 
         if (F_status_is_error(status)) {
@@ -354,7 +354,7 @@ extern "C" {
         else {
 
           // "script" and "utility" types use the entire content and can be directly passed through.
-          if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
+          if (item->type == controller_rule_item_type_script_e || item->type == controller_rule_item_type_utility_e) {
             actions->array[actions->used].parameters.used = 0;
 
             status = f_string_dynamics_increase(controller_common_allocation_small_d, &actions->array[actions->used].parameters);
@@ -467,13 +467,13 @@ extern "C" {
       if (F_status_is_error(status)) {
         controller_print_error(global.main->error, F_status_set_fine(status), "fll_fss_extended_content_read", F_true, global.thread);
       }
-      else if (status == FL_fss_found_content) {
+      else if (status == F_fss_found_content) {
         status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
 
         if (F_status_is_error(status)) {
           controller_print_error(global.main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, global.thread);
         }
-        else if (type == controller_rule_action_type_pid_file) {
+        else if (type == controller_rule_action_type_pid_file_e) {
           item->pid_file.used = 0;
 
           status = fl_string_dynamic_rip(cache->buffer_item, cache->content_action.array[0], &item->pid_file);
@@ -489,41 +489,41 @@ extern "C" {
             }
           }
         }
-        else if (type == controller_rule_action_type_rerun) {
+        else if (type == controller_rule_action_type_rerun_e) {
           uint8_t type_rerun = 0;
 
           if (cache->content_action.used) {
             if (fl_string_dynamic_partial_compare_string(controller_freeze_s, cache->buffer_item, controller_freeze_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_freeze;
+              type_rerun = controller_rule_action_type_execute_freeze_e;
             }
             if (fl_string_dynamic_partial_compare_string(controller_kill_s, cache->buffer_item, controller_kill_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_kill;
+              type_rerun = controller_rule_action_type_execute_kill_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_pause_s, cache->buffer_item, controller_pause_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_pause;
+              type_rerun = controller_rule_action_type_execute_pause_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_reload_s, cache->buffer_item, controller_reload_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_reload;
+              type_rerun = controller_rule_action_type_execute_reload_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_restart_s, cache->buffer_item, controller_restart_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_restart;
+              type_rerun = controller_rule_action_type_execute_restart_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_resume_s, cache->buffer_item, controller_resume_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_resume;
+              type_rerun = controller_rule_action_type_execute_resume_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_start_s, cache->buffer_item, controller_start_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_start;
+              type_rerun = controller_rule_action_type_execute_start_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_stop_s, cache->buffer_item, controller_stop_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_stop;
+              type_rerun = controller_rule_action_type_execute_stop_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_thaw_s, cache->buffer_item, controller_thaw_s_length, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_thaw;
+              type_rerun = controller_rule_action_type_execute_thaw_e;
             }
           }
 
           if (!type_rerun) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet) {
+            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%c%[%SRule item action '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -563,7 +563,7 @@ extern "C" {
             }
           }
           else {
-            if (global.main->error.verbosity != f_console_verbosity_quiet) {
+            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%c%[%SRule item action '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -595,7 +595,7 @@ extern "C" {
               item->reruns[type_rerun].is |= rerun_item == &item->reruns[type_rerun].failure ? controller_rule_rerun_is_failure_reset_d : controller_rule_rerun_is_success_reset_d;
             }
             else {
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%c%[%SRule item action '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -613,7 +613,7 @@ extern "C" {
             }
           } // for
         }
-        else if (type == controller_rule_action_type_with) {
+        else if (type == controller_rule_action_type_with_e) {
 
           for (f_array_length_t i = 0; i < cache->content_action.used; ++i) {
 
@@ -637,7 +637,7 @@ extern "C" {
               }
             }
             else {
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%c%[%SUnknown value '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -655,7 +655,7 @@ extern "C" {
             }
           } // for
         }
-        else if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
+        else if (item->type == controller_rule_item_type_script_e || item->type == controller_rule_item_type_utility_e) {
           status = f_string_dynamics_increase(controller_common_allocation_small_d, &actions->array[actions->used].parameters);
 
           if (F_status_is_error(status)) {
@@ -721,7 +721,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status) && status == F_data_not) {
-      if (global.main->warning.verbosity == f_console_verbosity_debug) {
+      if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
         controller_lock_print(global.main->warning.to, global.thread);
 
         fl_print_format("%c%[%SAction is empty, nothing to do.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
@@ -758,7 +758,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      if (global.main->error.verbosity != f_console_verbosity_quiet) {
+      if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
         status = F_status_set_fine(status);
 
         if (status != F_valid_not && status != F_number && status != F_number_decimal && status != F_number_overflow && status != F_number_underflow && status != F_number_negative) {
@@ -813,7 +813,7 @@ extern "C" {
     macro_f_control_group_t_delete_simple(destination->control_group)
     f_capability_delete(&destination->capability);
 
-    for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size; ++i) {
+    for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
       destination->status[i] = source.status[i];
     } // for
 
@@ -984,7 +984,7 @@ extern "C" {
         status = f_string_dynamic_terminate_after(&item_destination->pid_file);
         if (F_status_is_error(status)) return status;
 
-        for (j = 0; j < controller_rule_action_type_execute__enum_size; ++j) {
+        for (j = 0; j < controller_rule_action_type_execute__enum_size_e; ++j) {
           item_destination->reruns[j].is = item_source->reruns[j].is;
           item_destination->reruns[j].failure.count = item_source->reruns[j].failure.count;
           item_destination->reruns[j].failure.delay = item_source->reruns[j].failure.delay;
@@ -1056,7 +1056,7 @@ extern "C" {
         status = fll_control_group_prepare(process->rule.control_group);
 
         if (F_status_is_error(status)) {
-          controller_print_error_file(global.main->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, process->rule.control_group.path.string, "prepare control groups for", fll_error_file_type_directory, global.thread);
+          controller_print_error_file(global.main->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, process->rule.control_group.path.string, "prepare control groups for", fll_error_file_type_directory_e, global.thread);
 
           return status;
         }
@@ -1097,7 +1097,7 @@ extern "C" {
 
     for (i = 0; i < process->rule.items.used && controller_thread_is_enabled_process(process, global.thread); ++i) {
 
-      if (process->rule.items.array[i].type == controller_rule_item_type_setting) continue;
+      if (process->rule.items.array[i].type == controller_rule_item_type_setting_e) continue;
 
       for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
 
@@ -1120,7 +1120,7 @@ extern "C" {
           execute_set.parameter.option |= FL_execute_parameter_option_session_d;
         }
 
-        if (process->rule.items.array[i].type == controller_rule_item_type_command) {
+        if (process->rule.items.array[i].type == controller_rule_item_type_command_e) {
           for (;;) {
 
             status = controller_rule_execute_foreground(process->rule.items.array[i].type, 0, process->rule.items.array[i].actions.array[j].parameters, options, &execute_set, process);
@@ -1148,7 +1148,7 @@ extern "C" {
             success = F_true;
           }
         }
-        else if (process->rule.items.array[i].type == controller_rule_item_type_script) {
+        else if (process->rule.items.array[i].type == controller_rule_item_type_script_e) {
           execute_set.parameter.data = &process->rule.items.array[i].actions.array[j].parameters.array[0];
 
           for (;;) {
@@ -1178,7 +1178,7 @@ extern "C" {
             success = F_true;
           }
         }
-        else if (process->rule.items.array[i].type == controller_rule_item_type_service) {
+        else if (process->rule.items.array[i].type == controller_rule_item_type_service_e) {
           if (process->rule.items.array[i].pid_file.used) {
             for (;;) {
 
@@ -1214,7 +1214,7 @@ extern "C" {
             controller_rule_action_print_error_missing_pid(global.main->error, process->rule.alias.string);
           }
         }
-        else if (process->rule.items.array[i].type == controller_rule_item_type_utility) {
+        else if (process->rule.items.array[i].type == controller_rule_item_type_utility_e) {
           if (process->rule.items.array[i].pid_file.used) {
             execute_set.parameter.data = &process->rule.items.array[i].actions.array[j].parameters.array[0];
 
@@ -1253,7 +1253,7 @@ extern "C" {
           }
         }
         else {
-          if (global.main->warning.verbosity == f_console_verbosity_debug) {
+          if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
             controller_lock_print(global.main->warning.to, global.thread);
 
             fl_print_format("%c%[%SAction type is unknown, ignoring.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
@@ -1348,7 +1348,7 @@ extern "C" {
     }
 
     if (options & controller_process_option_simulate_d) {
-      if (main->output.verbosity != f_console_verbosity_quiet) {
+      if (main->output.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(main->output.to, thread);
 
         fl_print_format("%cSimulating execution of '%[", main->output.to.stream, f_string_eol_s[0], main->context.set.title);
@@ -1514,7 +1514,7 @@ extern "C" {
       status = F_status_set_fine(status);
 
       if ((WIFEXITED(process->result) && WEXITSTATUS(process->result)) || status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_item_print_error_execute(type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, status, process);
+        controller_rule_item_print_error_execute(type == controller_rule_item_type_script_e, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, status, process);
       }
       else {
         controller_print_error(main->error, F_status_set_fine(status), "fll_execute_program", F_true, thread);
@@ -1584,13 +1584,13 @@ extern "C" {
     status = f_file_exists(pid_file.string);
 
     if (F_status_is_error(status)) {
-      controller_print_error_file(main->error, F_status_set_fine(status), "f_file_exists", F_true, pid_file.string, "find", fll_error_file_type_file, thread);
+      controller_print_error_file(main->error, F_status_set_fine(status), "f_file_exists", F_true, pid_file.string, "find", fll_error_file_type_file_e, thread);
 
       return status;
     }
 
     if (status == F_true) {
-      controller_print_error_file(main->error, F_file_found, "f_file_exists", F_true, pid_file.string, "find", fll_error_file_type_file, thread);
+      controller_print_error_file(main->error, F_file_found, "f_file_exists", F_true, pid_file.string, "find", fll_error_file_type_file_e, thread);
 
       return F_status_set_error(F_file_found);
     }
@@ -1604,7 +1604,7 @@ extern "C" {
     }
 
     if (options & controller_process_option_simulate_d) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(main->error.to, thread);
 
         fl_print_format("%cSimulating execution of '%[", main->error.to.stream, f_string_eol_s[0], main->context.set.title);
@@ -1770,7 +1770,7 @@ extern "C" {
       status = F_status_set_fine(status);
 
       if ((WIFEXITED(process->result) && WEXITSTATUS(process->result)) || status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_item_print_error_execute(type == controller_rule_item_type_utility, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, status, process);
+        controller_rule_item_print_error_execute(type == controller_rule_item_type_utility_e, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, status, process);
       }
       else {
         controller_print_error(main->error, F_status_set_fine(status), "fll_execute_program", F_true, thread);
@@ -1796,7 +1796,7 @@ extern "C" {
       if (!controller_thread_is_enabled_process(process, thread)) return -2;
 
       if (!rerun_item->max || rerun_item->count < rerun_item->max) {
-        if (main->error.verbosity == f_console_verbosity_debug) {
+        if (main->error.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(main->output.to, thread);
 
           fl_print_format("%cRe-running '", main->output.to.stream, f_string_eol_s[0]);
@@ -1934,7 +1934,7 @@ extern "C" {
         break;
       }
 
-      if (status == FL_fss_found_object) {
+      if (status == F_fss_found_object) {
         multiple = F_true;
       }
       else {
@@ -1953,7 +1953,7 @@ extern "C" {
 
         // Nothing of importance here, so continue onto the next line.
         // @todo present an error if this line is anything but whitespace.
-        if (status != FL_fss_found_object) continue;
+        if (status != F_fss_found_object) continue;
       }
 
       status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
@@ -1981,49 +1981,49 @@ extern "C" {
       }
 
       if (fl_string_dynamic_compare_string(controller_freeze_s, cache->action.name_action, controller_freeze_s_length) == F_equal_to) {
-        type = controller_rule_action_type_freeze;
+        type = controller_rule_action_type_freeze_e;
       }
       else if (fl_string_dynamic_compare_string(controller_group_s, cache->action.name_action, controller_group_s_length) == F_equal_to) {
-        type = controller_rule_action_type_group;
+        type = controller_rule_action_type_group_e;
       }
       else if (fl_string_dynamic_compare_string(controller_kill_s, cache->action.name_action, controller_kill_s_length) == F_equal_to) {
-        type = controller_rule_action_type_kill;
+        type = controller_rule_action_type_kill_e;
       }
       else if (fl_string_dynamic_compare_string(controller_pause_s, cache->action.name_action, controller_pause_s_length) == F_equal_to) {
-        type = controller_rule_action_type_pause;
+        type = controller_rule_action_type_pause_e;
       }
       else if (fl_string_dynamic_compare_string(controller_pid_file_s, cache->action.name_action, controller_pid_file_s_length) == F_equal_to) {
-        type = controller_rule_action_type_pid_file;
+        type = controller_rule_action_type_pid_file_e;
       }
       else if (fl_string_dynamic_compare_string(controller_reload_s, cache->action.name_action, controller_reload_s_length) == F_equal_to) {
-        type = controller_rule_action_type_reload;
+        type = controller_rule_action_type_reload_e;
       }
       else if (fl_string_dynamic_compare_string(controller_rerun_s, cache->action.name_action, controller_rerun_s_length) == F_equal_to) {
-        type = controller_rule_action_type_rerun;
+        type = controller_rule_action_type_rerun_e;
       }
       else if (fl_string_dynamic_compare_string(controller_restart_s, cache->action.name_action, controller_restart_s_length) == F_equal_to) {
-        type = controller_rule_action_type_restart;
+        type = controller_rule_action_type_restart_e;
       }
       else if (fl_string_dynamic_compare_string(controller_resume_s, cache->action.name_action, controller_resume_s_length) == F_equal_to) {
-        type = controller_rule_action_type_resume;
+        type = controller_rule_action_type_resume_e;
       }
       else if (fl_string_dynamic_compare_string(controller_start_s, cache->action.name_action, controller_start_s_length) == F_equal_to) {
-        type = controller_rule_action_type_start;
+        type = controller_rule_action_type_start_e;
       }
       else if (fl_string_dynamic_compare_string(controller_stop_s, cache->action.name_action, controller_stop_s_length) == F_equal_to) {
-        type = controller_rule_action_type_stop;
+        type = controller_rule_action_type_stop_e;
       }
       else if (fl_string_dynamic_compare_string(controller_thaw_s, cache->action.name_action, controller_thaw_s_length) == F_equal_to) {
-        type = controller_rule_action_type_thaw;
+        type = controller_rule_action_type_thaw_e;
       }
       else if (fl_string_dynamic_compare_string(controller_user_s, cache->action.name_action, controller_user_s_length) == F_equal_to) {
-        type = controller_rule_action_type_user;
+        type = controller_rule_action_type_user_e;
       }
       else if (fl_string_dynamic_compare_string(controller_with_s, cache->action.name_action, controller_with_s_length) == F_equal_to) {
-        type = controller_rule_action_type_with;
+        type = controller_rule_action_type_with_e;
       }
       else {
-        if (global.main->warning.verbosity == f_console_verbosity_debug) {
+        if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global.main->warning.to, global.thread);
 
           fl_print_format("%c%[%SUnknown rule item action '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
@@ -2039,9 +2039,9 @@ extern "C" {
       }
 
       if (multiple) {
-        if (type == controller_rule_action_type_group || type == controller_rule_action_type_pid_file || type == controller_rule_action_type_user) {
+        if (type == controller_rule_action_type_group_e || type == controller_rule_action_type_pid_file_e || type == controller_rule_action_type_user_e) {
 
-          if (global.main->error.verbosity != f_console_verbosity_quiet) {
+          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(global.main->error.to, global.thread);
 
             fl_print_format("%c%[%SFSS Extended List is not allowed for the rule item action '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -2055,10 +2055,10 @@ extern "C" {
           break;
         }
 
-        method = controller_rule_action_method_extended_list;
+        method = controller_rule_action_method_extended_list_e;
       }
       else {
-        method = controller_rule_action_method_extended;
+        method = controller_rule_action_method_extended_e;
       }
 
       status = controller_rule_actions_increase_by(controller_common_allocation_small_d, &item->actions);
@@ -2082,27 +2082,27 @@ extern "C" {
     f_string_static_t buffer = f_string_static_t_initialize;
 
     switch (type) {
-      case controller_rule_item_type_command:
+      case controller_rule_item_type_command_e:
         buffer.string = controller_command_s;
         buffer.used = controller_command_s_length;
         break;
 
-      case controller_rule_item_type_script:
+      case controller_rule_item_type_script_e:
         buffer.string = controller_script_s;
         buffer.used = controller_script_s_length;
         break;
 
-      case controller_rule_item_type_service:
+      case controller_rule_item_type_service_e:
         buffer.string = controller_service_s;
         buffer.used = controller_service_s_length;
         break;
 
-      case controller_rule_item_type_setting:
+      case controller_rule_item_type_setting_e:
         buffer.string = controller_setting_s;
         buffer.used = controller_setting_s_length;
         break;
 
-      case controller_rule_item_type_utility:
+      case controller_rule_item_type_utility_e:
         buffer.string = controller_utility_s;
         buffer.used = controller_utility_s_length;
         break;
@@ -2141,82 +2141,82 @@ extern "C" {
     f_string_static_t buffer = f_string_static_t_initialize;
 
     switch (type) {
-      case controller_resource_limit_type_as:
+      case controller_resource_limit_type_as_e:
         buffer.string = controller_as_s;
         buffer.used = controller_as_s_length;
         break;
 
-      case controller_resource_limit_type_core:
+      case controller_resource_limit_type_core_e:
         buffer.string = controller_core_s;
         buffer.used = controller_core_s_length;
         break;
 
-      case controller_resource_limit_type_cpu:
+      case controller_resource_limit_type_cpu_e:
         buffer.string = controller_cpu_s;
         buffer.used = controller_cpu_s_length;
         break;
 
-      case controller_resource_limit_type_data:
+      case controller_resource_limit_type_data_e:
         buffer.string = controller_data_s;
         buffer.used = controller_data_s_length;
         break;
 
-      case controller_resource_limit_type_fsize:
+      case controller_resource_limit_type_fsize_e:
         buffer.string = controller_fsize_s;
         buffer.used = controller_fsize_s_length;
         break;
 
-      case controller_resource_limit_type_locks:
+      case controller_resource_limit_type_locks_e:
         buffer.string = controller_locks_s;
         buffer.used = controller_locks_s_length;
         break;
 
-      case controller_resource_limit_type_memlock:
+      case controller_resource_limit_type_memlock_e:
         buffer.string = controller_memlock_s;
         buffer.used = controller_memlock_s_length;
         break;
 
-      case controller_resource_limit_type_msgqueue:
+      case controller_resource_limit_type_msgqueue_e:
         buffer.string = controller_msgqueue_s;
         buffer.used = controller_msgqueue_s_length;
         break;
 
-      case controller_resource_limit_type_nice:
+      case controller_resource_limit_type_nice_e:
         buffer.string = controller_nice_s;
         buffer.used = controller_nice_s_length;
         break;
 
-      case controller_resource_limit_type_nofile:
+      case controller_resource_limit_type_nofile_e:
         buffer.string = controller_nofile_s;
         buffer.used = controller_nofile_s_length;
         break;
 
-      case controller_resource_limit_type_nproc:
+      case controller_resource_limit_type_nproc_e:
         buffer.string = controller_nproc_s;
         buffer.used = controller_nproc_s_length;
         break;
 
-      case controller_resource_limit_type_rss:
+      case controller_resource_limit_type_rss_e:
         buffer.string = controller_rss_s;
         buffer.used = controller_rss_s_length;
         break;
 
-      case controller_resource_limit_type_rtprio:
+      case controller_resource_limit_type_rtprio_e:
         buffer.string = controller_rtprio_s;
         buffer.used = controller_rtprio_s_length;
         break;
 
-      case controller_resource_limit_type_rttime:
+      case controller_resource_limit_type_rttime_e:
         buffer.string = controller_rttime_s;
         buffer.used = controller_rttime_s_length;
         break;
 
-      case controller_resource_limit_type_sigpending:
+      case controller_resource_limit_type_sigpending_e:
         buffer.string = controller_sigpending_s;
         buffer.used = controller_sigpending_s_length;
         break;
 
-      case controller_resource_limit_type_stack:
+      case controller_resource_limit_type_stack_e:
         buffer.string = controller_stack_s;
         buffer.used = controller_stack_s_length;
         break;
@@ -2232,19 +2232,19 @@ extern "C" {
   f_status_t controller_rule_process(const controller_global_t global, controller_process_t *process) {
 
     switch (process->action) {
-      case controller_rule_action_type_freeze:
-      case controller_rule_action_type_kill:
-      case controller_rule_action_type_pause:
-      case controller_rule_action_type_reload:
-      case controller_rule_action_type_restart:
-      case controller_rule_action_type_resume:
-      case controller_rule_action_type_start:
-      case controller_rule_action_type_stop:
-      case controller_rule_action_type_thaw:
+      case controller_rule_action_type_freeze_e:
+      case controller_rule_action_type_kill_e:
+      case controller_rule_action_type_pause_e:
+      case controller_rule_action_type_reload_e:
+      case controller_rule_action_type_restart_e:
+      case controller_rule_action_type_resume_e:
+      case controller_rule_action_type_start_e:
+      case controller_rule_action_type_stop_e:
+      case controller_rule_action_type_thaw_e:
         break;
 
       default:
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
           fl_print_format("%c%[%SUnsupported action type '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -2375,7 +2375,7 @@ extern "C" {
 
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 controller_rule_item_print_error_rule_not_loaded(global.main->error, dynamics[i]->array[j].string);
@@ -2449,7 +2449,7 @@ extern "C" {
               }
             }
             else {
-              if (global.main->warning.verbosity == f_console_verbosity_debug) {
+              if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
                 controller_lock_print(global.main->warning.to, global.thread);
 
                 controller_rule_item_print_error_need_want_wish(global.main->warning, strings[i], dynamics[i]->array[j].string, "was not found");
@@ -2490,7 +2490,7 @@ extern "C" {
 
               status = status_lock;
             }
-            else if (dependency->state == controller_process_state_active || dependency->state == controller_process_state_busy) {
+            else if (dependency->state == controller_process_state_active_e || dependency->state == controller_process_state_busy_e) {
               f_thread_unlock(&dependency->lock);
 
               status = controller_process_wait(global, dependency);
@@ -2515,7 +2515,7 @@ extern "C" {
 
                 options_process = 0;
 
-                if (global.main->parameters[controller_parameter_simulate].result == f_console_result_found) {
+                if (global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
                   options_process |= controller_process_option_simulate_d;
                 }
 
@@ -2548,7 +2548,7 @@ extern "C" {
                     }
                   }
                   else {
-                    if (global.main->warning.verbosity == f_console_verbosity_debug) {
+                    if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
                       controller_lock_print(global.main->warning.to, global.thread);
 
                       controller_rule_item_print_error_need_want_wish(global.main->warning, strings[i], alias_other_buffer, "failed during execution");
@@ -2610,7 +2610,7 @@ extern "C" {
                 }
               }
               else {
-                if (global.main->warning.verbosity == f_console_verbosity_debug) {
+                if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
                   controller_lock_print(global.main->warning.to, global.thread);
 
                   controller_rule_item_print_error_need_want_wish(global.main->warning, strings[i], alias_other_buffer, "is in a failed state");
@@ -2673,7 +2673,7 @@ extern "C" {
         } // for
 
         if (missing) {
-          if (global.main->error.verbosity != f_console_verbosity_quiet) {
+          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(global.main->error.to, global.thread);
 
             if (process->rule.items.used) {
@@ -2825,12 +2825,12 @@ extern "C" {
     {
       f_array_length_t at = 0;
 
-      status = controller_process_prepare(type != controller_process_type_exit, action, alias_rule, global, &at);
+      status = controller_process_prepare(type != controller_process_type_exit_e, action, alias_rule, global, &at);
 
       if (F_status_is_error(status)) {
         f_thread_unlock(&global.thread->lock.process);
 
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
           controller_rule_item_print_error_rule_not_loaded(global.main->error, alias_rule.string);
@@ -2870,7 +2870,7 @@ extern "C" {
       f_thread_unlock(&global.thread->lock.process);
 
       // if the process is already running, then there is nothing to do.
-      if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+      if (process->state == controller_process_state_active_e || process->state == controller_process_state_busy_e) {
         f_thread_unlock(&process->lock);
         f_thread_unlock(&process->active);
 
@@ -2878,7 +2878,7 @@ extern "C" {
       }
 
       // the thread is done, so close the thread.
-      if (process->state == controller_process_state_done) {
+      if (process->state == controller_process_state_done_e) {
         controller_thread_join(&process->id_thread);
 
         f_thread_mutex_lock(&process->wait_lock);
@@ -2901,7 +2901,7 @@ extern "C" {
       return status_lock;
     }
 
-    process->state = controller_process_state_active;
+    process->state = controller_process_state_active_e;
     process->action = action;
     process->options = options;
     process->type = type;
@@ -2970,7 +2970,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (process->action && (options_force & controller_process_option_asynchronous_d)) {
-        if (process->type == controller_process_type_exit) {
+        if (process->type == controller_process_type_exit_e) {
           status = f_thread_create(0, &process->id_thread, controller_thread_process_other, (void *) process);
         }
         else {
@@ -2992,7 +2992,7 @@ extern "C" {
       }
     }
 
-    if (!action || F_status_is_error(status) && (process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+    if (!action || F_status_is_error(status) && (process->state == controller_process_state_active_e || process->state == controller_process_state_busy_e)) {
       {
         status_lock = controller_lock_write_process(process, global.thread, &process->lock);
 
@@ -3006,10 +3006,10 @@ extern "C" {
       }
 
       if (!action || (options_force & controller_process_option_asynchronous_d)) {
-        process->state = controller_process_state_done;
+        process->state = controller_process_state_done_e;
       }
       else {
-        process->state = controller_process_state_idle;
+        process->state = controller_process_state_idle_e;
       }
 
       f_thread_mutex_lock(&process->wait_lock);
@@ -3136,7 +3136,7 @@ extern "C" {
         for (f_array_length_t i = 0; i < process->stack.used && controller_thread_is_enabled_process(process, global.thread); ++i) {
 
           if (process->stack.array[i] == id_rule) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet) {
+            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%c%[%SThe rule '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -3214,7 +3214,7 @@ extern "C" {
 
       status = F_status_set_error(F_found_not);
 
-      if (global.main->error.verbosity != f_console_verbosity_quiet) {
+      if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(global.main->error.to, global.thread);
 
         controller_rule_item_print_error_rule_not_loaded(global.main->error, process->rule.alias.string);
@@ -3283,10 +3283,10 @@ extern "C" {
     }
 
     if (options_force & controller_process_option_asynchronous_d) {
-      process->state = controller_process_state_done;
+      process->state = controller_process_state_done_e;
     }
     else {
-      process->state = controller_process_state_idle;
+      process->state = controller_process_state_idle_e;
     }
 
     process->stack.used = used_original_stack;
@@ -3317,7 +3317,7 @@ extern "C" {
 
     bool for_item = F_true;
 
-    for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size; ++i) {
+    for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
       rule->status[i] = F_known_not;
     } // for
 
@@ -3495,19 +3495,19 @@ extern "C" {
             rule->items.array[rule->items.used].type = 0;
           }
           else if (fl_string_dynamic_compare_string(controller_command_s, cache->action.name_item, controller_command_s_length) == F_equal_to) {
-            rule->items.array[rule->items.used].type = controller_rule_item_type_command;
+            rule->items.array[rule->items.used].type = controller_rule_item_type_command_e;
           }
           else if (fl_string_dynamic_compare_string(controller_script_s, cache->action.name_item, controller_script_s_length) == F_equal_to) {
-            rule->items.array[rule->items.used].type = controller_rule_item_type_script;
+            rule->items.array[rule->items.used].type = controller_rule_item_type_script_e;
           }
           else if (fl_string_dynamic_compare_string(controller_service_s, cache->action.name_item, controller_service_s_length) == F_equal_to) {
-            rule->items.array[rule->items.used].type = controller_rule_item_type_service;
+            rule->items.array[rule->items.used].type = controller_rule_item_type_service_e;
           }
           else if (fl_string_dynamic_compare_string(controller_utility_s, cache->action.name_item, controller_utility_s_length) == F_equal_to) {
-            rule->items.array[rule->items.used].type = controller_rule_item_type_utility;
+            rule->items.array[rule->items.used].type = controller_rule_item_type_utility_e;
           }
           else {
-            if (global.main->warning.verbosity == f_console_verbosity_debug) {
+            if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
               controller_lock_print(global.main->warning.to, global.thread);
 
               fl_print_format("%c%[%SUnknown rule item '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
@@ -3541,7 +3541,7 @@ extern "C" {
             // initialize the item with settings.
             rule->items.array[rule->items.used].with = 0;
 
-            if (entry->session == controller_entry_session_new) {
+            if (entry->session == controller_entry_session_new_e) {
               rule->items.array[rule->items.used].with |= controller_with_session_new_d;
             }
             else {
@@ -3667,56 +3667,56 @@ extern "C" {
       empty_disallow = F_true;
 
       if (fl_string_dynamic_compare_string(controller_affinity_s, cache->action.name_item, controller_affinity_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_affinity;
+        type = controller_rule_setting_type_affinity_e;
       }
       else if (fl_string_dynamic_compare_string(controller_capability_s, cache->action.name_item, controller_capability_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_capability;
+        type = controller_rule_setting_type_capability_e;
       }
       else if (fl_string_dynamic_compare_string(controller_control_group_s, cache->action.name_item, controller_control_group_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_control_group;
+        type = controller_rule_setting_type_control_group_e;
       }
       else if (fl_string_dynamic_compare_string(controller_define_s, cache->action.name_item, controller_define_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_define;
+        type = controller_rule_setting_type_define_e;
       }
       else if (fl_string_dynamic_compare_string(controller_environment_s, cache->action.name_item, controller_environment_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_environment;
+        type = controller_rule_setting_type_environment_e;
         empty_disallow = F_false;
       }
       else if (fl_string_dynamic_compare_string(controller_group_s, cache->action.name_item, controller_group_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_group;
+        type = controller_rule_setting_type_group_e;
       }
       else if (fl_string_dynamic_compare_string(controller_limit_s, cache->action.name_item, controller_limit_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_limit;
+        type = controller_rule_setting_type_limit_e;
       }
       else if (fl_string_dynamic_compare_string(controller_name_s, cache->action.name_item, controller_name_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_name;
+        type = controller_rule_setting_type_name_e;
       }
       else if (fl_string_dynamic_compare_string(controller_nice_s, cache->action.name_item, controller_nice_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_nice;
+        type = controller_rule_setting_type_nice_e;
       }
       else if (fl_string_dynamic_compare_string(controller_on_s, cache->action.name_item, controller_on_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_on;
+        type = controller_rule_setting_type_on_e;
       }
       else if (fl_string_dynamic_compare_string(controller_parameter_s, cache->action.name_item, controller_parameter_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_parameter;
+        type = controller_rule_setting_type_parameter_e;
       }
       else if (fl_string_dynamic_compare_string(controller_path_s, cache->action.name_item, controller_path_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_path;
+        type = controller_rule_setting_type_path_e;
       }
       else if (fl_string_dynamic_compare_string(controller_scheduler_s, cache->action.name_item, controller_scheduler_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_scheduler;
+        type = controller_rule_setting_type_scheduler_e;
       }
       else if (fl_string_dynamic_compare_string(controller_script_s, cache->action.name_item, controller_script_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_script;
+        type = controller_rule_setting_type_script_e;
       }
       else if (fl_string_dynamic_compare_string(controller_timeout_s, cache->action.name_item, controller_timeout_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_timeout;
+        type = controller_rule_setting_type_timeout_e;
       }
       else if (fl_string_dynamic_compare_string(controller_user_s, cache->action.name_item, controller_user_s_length) == F_equal_to) {
-        type = controller_rule_setting_type_user;
+        type = controller_rule_setting_type_user_e;
       }
       else {
-        if (global.main->warning.verbosity == f_console_verbosity_debug) {
+        if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
 
           // get the current line number within the settings item.
           cache->action.line_item = line_item;
@@ -3779,7 +3779,7 @@ extern "C" {
       }
       else {
         if (empty_disallow) {
-          if (global.main->warning.verbosity == f_console_verbosity_debug) {
+          if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3800,7 +3800,7 @@ extern "C" {
         }
       }
 
-      if (type == controller_rule_setting_type_affinity) {
+      if (type == controller_rule_setting_type_affinity_e) {
         // @todo use sched_getaffinity() to get the available cpus and do not add an invalid cpu to the affinity array.
 
         if (!cache->content_actions.array[i].used) {
@@ -3894,7 +3894,7 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_define || type == controller_rule_setting_type_parameter) {
+      if (type == controller_rule_setting_type_define_e || type == controller_rule_setting_type_parameter_e) {
 
         if (cache->content_actions.array[i].used != 2) {
           controller_rule_setting_read_print_error(global.main->error, "requires exactly two Content", i, line_item, global.thread, cache);
@@ -3906,10 +3906,10 @@ extern "C" {
           continue;
         }
 
-        if (type == controller_rule_setting_type_define) {
+        if (type == controller_rule_setting_type_define_e) {
           setting_maps = &rule->define;
         }
-        else if (type == controller_rule_setting_type_parameter) {
+        else if (type == controller_rule_setting_type_parameter_e) {
           setting_maps = &rule->parameter;
         }
 
@@ -4000,14 +4000,14 @@ extern "C" {
           continue;
         }
 
-        controller_rule_setting_read_print_value(global, type == controller_rule_setting_type_define ? controller_define_s : controller_parameter_s, 0, setting_maps->array[setting_maps->used].name, 0);
+        controller_rule_setting_read_print_value(global, type == controller_rule_setting_type_define_e ? controller_define_s : controller_parameter_s, 0, setting_maps->array[setting_maps->used].name, 0);
 
         ++setting_maps->used;
 
         continue;
       }
 
-      if (type == controller_rule_setting_type_control_group) {
+      if (type == controller_rule_setting_type_control_group_e) {
         if (cache->content_actions.array[i].used < 2 || rule->has & controller_rule_has_control_group_d) {
           controller_rule_setting_read_print_error(global.main->error, "requires two or more Content", i, line_item, global.thread, cache);
 
@@ -4096,7 +4096,7 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_limit) {
+      if (type == controller_rule_setting_type_limit_e) {
         if (cache->content_actions.array[i].used != 3) {
           controller_rule_setting_read_print_error(global.main->error, "requires three Content", i, line_item, global.thread, cache);
 
@@ -4108,55 +4108,55 @@ extern "C" {
         }
 
         if (fl_string_dynamic_partial_compare_string(controller_as_s, cache->buffer_item, controller_as_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_as;
+          type = controller_resource_limit_type_as_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_core_s, cache->buffer_item, controller_core_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_core;
+          type = controller_resource_limit_type_core_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_cpu_s, cache->buffer_item, controller_cpu_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_cpu;
+          type = controller_resource_limit_type_cpu_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_data_s, cache->buffer_item, controller_data_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_data;
+          type = controller_resource_limit_type_data_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_fsize_s, cache->buffer_item, controller_fsize_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_fsize;
+          type = controller_resource_limit_type_fsize_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_locks_s, cache->buffer_item, controller_locks_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_locks;
+          type = controller_resource_limit_type_locks_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_memlock_s, cache->buffer_item, controller_memlock_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_memlock;
+          type = controller_resource_limit_type_memlock_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_msgqueue_s, cache->buffer_item, controller_msgqueue_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_msgqueue;
+          type = controller_resource_limit_type_msgqueue_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_nice_s, cache->buffer_item, controller_nice_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_nice;
+          type = controller_resource_limit_type_nice_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_nofile_s, cache->buffer_item, controller_nofile_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_nofile;
+          type = controller_resource_limit_type_nofile_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_nproc_s, cache->buffer_item, controller_nproc_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_nproc;
+          type = controller_resource_limit_type_nproc_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_rss_s, cache->buffer_item, controller_rss_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_rss;
+          type = controller_resource_limit_type_rss_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_rtprio_s, cache->buffer_item, controller_rtprio_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_rtprio;
+          type = controller_resource_limit_type_rtprio_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_rttime_s, cache->buffer_item, controller_rttime_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_rttime;
+          type = controller_resource_limit_type_rttime_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_sigpending_s, cache->buffer_item, controller_sigpending_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_sigpending;
+          type = controller_resource_limit_type_sigpending_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_stack_s, cache->buffer_item, controller_stack_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          type = controller_resource_limit_type_stack;
+          type = controller_resource_limit_type_stack_e;
         }
         else {
-          if (global.main->error.verbosity == f_console_verbosity_debug) {
+          if (global.main->error.verbosity == f_console_verbosity_debug_e) {
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -4185,7 +4185,7 @@ extern "C" {
         for (j = 0; j < rule->limits.used; ++j) {
 
           if (type == rule->limits.array[j].type) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet) {
+            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
               // get the current line number within the settings item.
               cache->action.line_item = line_item;
@@ -4302,15 +4302,15 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_name || type == controller_rule_setting_type_path || type == controller_rule_setting_type_script) {
+      if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_path_e || type == controller_rule_setting_type_script_e) {
 
-        if (type == controller_rule_setting_type_name) {
+        if (type == controller_rule_setting_type_name_e) {
           setting_value = &rule->name;
         }
-        else if (type == controller_rule_setting_type_path) {
+        else if (type == controller_rule_setting_type_path_e) {
           setting_value = &rule->path;
         }
-        else if (type == controller_rule_setting_type_script) {
+        else if (type == controller_rule_setting_type_script_e) {
           setting_value = &rule->script;
         }
 
@@ -4324,7 +4324,7 @@ extern "C" {
           continue;
         }
 
-        if (type == controller_rule_setting_type_name || type == controller_rule_setting_type_script) {
+        if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_script_e) {
           status = controller_dynamic_rip_nulless_terminated(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
           if (F_status_is_error(status)) {
@@ -4353,7 +4353,7 @@ extern "C" {
           status = controller_validate_has_graph(*setting_value);
 
           if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet) {
+            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
               // get the current line number within the settings item.
               cache->action.line_item = line_item;
@@ -4363,7 +4363,7 @@ extern "C" {
             }
 
             if (status == F_false) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%c%[%SRule setting has an invalid name '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -4396,9 +4396,9 @@ extern "C" {
             continue;
           }
 
-          controller_rule_setting_read_print_value(global, type == controller_rule_setting_type_name ? controller_name_s : controller_script_s, 0, *setting_value, 0);
+          controller_rule_setting_read_print_value(global, type == controller_rule_setting_type_name_e ? controller_name_s : controller_script_s, 0, *setting_value, 0);
         }
-        else if (type == controller_rule_setting_type_path) {
+        else if (type == controller_rule_setting_type_path_e) {
           status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
           if (F_status_is_error(status)) {
@@ -4441,7 +4441,7 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_scheduler) {
+      if (type == controller_rule_setting_type_scheduler_e) {
 
         if (cache->content_actions.array[i].used < 1 || cache->content_actions.array[i].used > 2 || rule->has & controller_rule_has_scheduler_d) {
           controller_rule_setting_read_print_error(global.main->error, "requires either one or two Content", i, line_item, global.thread, cache);
@@ -4507,7 +4507,7 @@ extern "C" {
             status = F_status_set_fine(status);
 
             if ((zero_only && number) || (!zero_only && (number < 1 || number > 99)) || status == F_data_not || status == F_number || status == F_number_overflow || status == F_number_negative || status == F_number_positive) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
                 // get the current line number within the settings item.
                 cache->action.line_item = line_item;
@@ -4563,7 +4563,7 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_timeout) {
+      if (type == controller_rule_setting_type_timeout_e) {
         if (cache->content_actions.array[i].used != 2) {
           controller_rule_setting_read_print_error(global.main->error, "requires exactly two Content", i, line_item, global.thread, cache);
 
@@ -4586,7 +4586,7 @@ extern "C" {
           timeout_code = controller_rule_timeout_code_stop_d;
         }
         else {
-          if (global.main->error.verbosity != f_console_verbosity_quiet) {
+          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -4660,7 +4660,7 @@ extern "C" {
             rule->timeout_stop = number;
           }
 
-          if (global.main->error.verbosity == f_console_verbosity_debug || (global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
+          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
             f_string_t name_sub = controller_stop_s;
 
             if (timeout_code == controller_rule_timeout_code_kill_d) {
@@ -4686,8 +4686,8 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_capability || type == controller_rule_setting_type_nice || type == controller_rule_setting_type_user) {
-        if (cache->content_actions.array[i].used != 1 || type == controller_rule_setting_type_capability && rule->capability || type == controller_rule_setting_type_group && (rule->has & controller_rule_has_group_d) || type == controller_rule_setting_type_nice && (rule->has & controller_rule_has_nice_d) || type == controller_rule_setting_type_user && (rule->has & controller_rule_has_user_d)) {
+      if (type == controller_rule_setting_type_capability_e || type == controller_rule_setting_type_nice_e || type == controller_rule_setting_type_user_e) {
+        if (cache->content_actions.array[i].used != 1 || type == controller_rule_setting_type_capability_e && rule->capability || type == controller_rule_setting_type_group_e && (rule->has & controller_rule_has_group_d) || type == controller_rule_setting_type_nice_e && (rule->has & controller_rule_has_nice_d) || type == controller_rule_setting_type_user_e && (rule->has & controller_rule_has_user_d)) {
           controller_rule_setting_read_print_error(global.main->error, "requires exactly one Content", i, line_item, global.thread, cache);
 
           if (F_status_is_error_not(status_return)) {
@@ -4697,7 +4697,7 @@ extern "C" {
           continue;
         }
 
-        if (type == controller_rule_setting_type_capability) {
+        if (type == controller_rule_setting_type_capability_e) {
           cache->action.generic.used = 0;
 
           status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
@@ -4790,7 +4790,7 @@ extern "C" {
 
           controller_rule_setting_read_print_value(global, controller_capability_s, 0, cache->action.generic, 0);
         }
-        else if (type == controller_rule_setting_type_nice) {
+        else if (type == controller_rule_setting_type_nice_e) {
           f_number_signed_t number = 0;
 
           status = fl_conversion_string_to_number_signed(cache->buffer_item.string, cache->content_actions.array[i].array[0], &number);
@@ -4808,7 +4808,7 @@ extern "C" {
             status = F_status_set_fine(status);
 
             if (number < -20 || number > 19 || status == F_data_not || status == F_number || status == F_number_overflow || status == F_number_underflow || status == F_number_decimal) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
                 // get the current line number within the settings item.
                 cache->action.line_item = line_item;
@@ -4848,7 +4848,7 @@ extern "C" {
             rule->nice = number;
             rule->has |= controller_rule_has_nice_d;
 
-            if (global.main->parameters[controller_parameter_simulate].result == f_console_result_found || global.main->error.verbosity == f_console_verbosity_verbose) {
+            if (global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global.main->error.verbosity == f_console_verbosity_verbose_e) {
               cache->action.generic.used = 0;
 
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
@@ -4889,7 +4889,7 @@ extern "C" {
             }
           }
         }
-        else if (type == controller_rule_setting_type_user) {
+        else if (type == controller_rule_setting_type_user_e) {
           uid_t number = 0;
 
           status = controller_get_id_user(cache->buffer_item, cache->content_actions.array[i].array[0], cache, &number);
@@ -4927,7 +4927,7 @@ extern "C" {
             rule->user = number;
             rule->has |= controller_rule_has_user_d;
 
-            if (global.main->error.verbosity == f_console_verbosity_debug || (global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
+            if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
               cache->action.generic.used = 0;
 
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
@@ -4944,7 +4944,7 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_group) {
+      if (type == controller_rule_setting_type_group_e) {
         if (!cache->content_actions.array[i].used) {
           controller_rule_setting_read_print_error(global.main->error, "requires one or more Content", i, line_item, global.thread, cache);
 
@@ -5033,7 +5033,7 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_environment) {
+      if (type == controller_rule_setting_type_environment_e) {
         setting_values = &rule->environment;
 
         for (j = 0; j < cache->content_actions.array[i].used; ++j) {
@@ -5112,7 +5112,7 @@ extern "C" {
             cache->action.line_action = ++cache->action.line_item;
 
             if (status == F_false) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%c%[%SRule setting has an invalid environment variable name '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -5154,7 +5154,7 @@ extern "C" {
           controller_rule_setting_read_print_values(global, controller_environment_s, i, cache);
         }
         else {
-          if (global.main->error.verbosity == f_console_verbosity_debug || (global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
+          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
             controller_lock_print(global.main->output.to, global.thread);
 
             fl_print_format("%cProcessing rule item action '%[%s%]' setting value to an empty set.%c", global.main->output.to.stream, f_string_eol_s[0], global.main->context.set.title, controller_environment_s, global.main->context.set.title, f_string_eol_s[0]);
@@ -5178,34 +5178,34 @@ extern "C" {
       }
 
       if (fl_string_dynamic_partial_compare_string(controller_freeze_s, cache->buffer_item, controller_freeze_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_freeze;
+        action = controller_rule_action_type_freeze_e;
       }
       else if (fl_string_dynamic_partial_compare_string(controller_kill_s, cache->buffer_item, controller_kill_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_kill;
+        action = controller_rule_action_type_kill_e;
       }
       else if (fl_string_dynamic_partial_compare_string(controller_pause_s, cache->buffer_item, controller_pause_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_pause;
+        action = controller_rule_action_type_pause_e;
       }
       else if (fl_string_dynamic_partial_compare_string(controller_reload_s, cache->buffer_item, controller_reload_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_reload;
+        action = controller_rule_action_type_reload_e;
       }
       else if (fl_string_dynamic_partial_compare_string(controller_restart_s, cache->buffer_item, controller_restart_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_restart;
+        action = controller_rule_action_type_restart_e;
       }
       else if (fl_string_dynamic_partial_compare_string(controller_resume_s, cache->buffer_item, controller_resume_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_resume;
+        action = controller_rule_action_type_resume_e;
       }
       else if (fl_string_dynamic_partial_compare_string(controller_start_s, cache->buffer_item, controller_start_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_start;
+        action = controller_rule_action_type_start_e;
       }
       else if (fl_string_dynamic_partial_compare_string(controller_stop_s, cache->buffer_item, controller_stop_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_stop;
+        action = controller_rule_action_type_stop_e;
       }
       else if (fl_string_dynamic_partial_compare_string(controller_thaw_s, cache->buffer_item, controller_thaw_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-        action = controller_rule_action_type_thaw;
+        action = controller_rule_action_type_thaw_e;
       }
       else {
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
           // get the current line number within the settings item.
           cache->action.line_item = line_item;
@@ -5256,7 +5256,7 @@ extern "C" {
           setting_values = &rule->ons.array[j].wish;
         }
         else {
-          if (global.main->error.verbosity != f_console_verbosity_quiet) {
+          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -5358,7 +5358,7 @@ extern "C" {
 
       if (fl_string_dynamic_partial_compare_string(cache->buffer_item.string, cache->buffer_path, cache->buffer_item.used, cache->content_actions.array[i].array[1]) == F_equal_to_not) {
 
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
           fl_print_format("%c%[%SThe rule item action third parameter '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -5383,7 +5383,7 @@ extern "C" {
         ++rule->ons.used;
       }
 
-      if (global.main->error.verbosity == f_console_verbosity_debug || (global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
+      if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
         controller_lock_print(global.main->output.to, global.thread);
 
         fl_print_format("%cProcessing rule item action '%[%S%]', adding ", global.main->output.to.stream, f_string_eol_s[0], global.main->context.set.title, controller_on_s, global.main->context.set.title);
@@ -5413,19 +5413,19 @@ extern "C" {
     const controller_main_t *main = global.main;
 
     switch (action) {
-      case controller_rule_action_type_freeze:
-      case controller_rule_action_type_kill:
-      case controller_rule_action_type_pause:
-      case controller_rule_action_type_reload:
-      case controller_rule_action_type_restart:
-      case controller_rule_action_type_resume:
-      case controller_rule_action_type_start:
-      case controller_rule_action_type_stop:
-      case controller_rule_action_type_thaw:
+      case controller_rule_action_type_freeze_e:
+      case controller_rule_action_type_kill_e:
+      case controller_rule_action_type_pause_e:
+      case controller_rule_action_type_reload_e:
+      case controller_rule_action_type_restart_e:
+      case controller_rule_action_type_resume_e:
+      case controller_rule_action_type_start_e:
+      case controller_rule_action_type_stop_e:
+      case controller_rule_action_type_thaw_e:
         break;
 
       default:
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, global.thread);
 
           fl_print_format("%c%[%SUnsupported action type '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
@@ -5647,31 +5647,31 @@ extern "C" {
       {
         f_string_t action = "";
 
-        if (rule.ons.array[i].action == controller_rule_action_type_freeze) {
+        if (rule.ons.array[i].action == controller_rule_action_type_freeze_e) {
           action = controller_freeze_s;
         }
-        else if (rule.ons.array[i].action == controller_rule_action_type_kill) {
+        else if (rule.ons.array[i].action == controller_rule_action_type_kill_e) {
           action = controller_kill_s;
         }
-        else if (rule.ons.array[i].action == controller_rule_action_type_pause) {
+        else if (rule.ons.array[i].action == controller_rule_action_type_pause_e) {
           action = controller_pause_s;
         }
-        else if (rule.ons.array[i].action == controller_rule_action_type_reload) {
+        else if (rule.ons.array[i].action == controller_rule_action_type_reload_e) {
           action = controller_reload_s;
         }
-        else if (rule.ons.array[i].action == controller_rule_action_type_restart) {
+        else if (rule.ons.array[i].action == controller_rule_action_type_restart_e) {
           action = controller_restart_s;
         }
-        else if (rule.ons.array[i].action == controller_rule_action_type_resume) {
+        else if (rule.ons.array[i].action == controller_rule_action_type_resume_e) {
           action = controller_resume_s;
         }
-        else if (rule.ons.array[i].action == controller_rule_action_type_start) {
+        else if (rule.ons.array[i].action == controller_rule_action_type_start_e) {
           action = controller_start_s;
         }
-        else if (rule.ons.array[i].action == controller_rule_action_type_stop) {
+        else if (rule.ons.array[i].action == controller_rule_action_type_stop_e) {
           action = controller_stop_s;
         }
-        else if (rule.ons.array[i].action == controller_rule_action_type_thaw) {
+        else if (rule.ons.array[i].action == controller_rule_action_type_thaw_e) {
           action = controller_thaw_s;
         }
 
@@ -5757,7 +5757,7 @@ extern "C" {
           fl_print_format("    %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_action_s, main->context.set.important, f_string_eol_s[0]);
           fl_print_format("      %[%s%] %q%c", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s[0]);
 
-          if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
+          if (item->type == controller_rule_item_type_script_e || item->type == controller_rule_item_type_utility_e) {
             fl_print_format("      %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s[0]);
 
             parameter = &action->parameters.array[0];
@@ -5795,7 +5795,7 @@ extern "C" {
 
         // rerun.
         fl_print_format("    %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_rerun_s, main->context.set.important, f_string_eol_s[0]);
-        for (j = 0; j < controller_rule_action_type_execute__enum_size; ++j) {
+        for (j = 0; j < controller_rule_action_type_execute__enum_size_e; ++j) {
 
           for (k = 0; k < 2; ++k) {
             if (!k && (item->reruns[j].is & controller_rule_rerun_is_failure_d)) {
@@ -5811,39 +5811,39 @@ extern "C" {
 
             fl_print_format("      %[", main->output.to.stream, main->context.set.important);
             switch (j) {
-              case controller_rule_action_type_execute_freeze:
+              case controller_rule_action_type_execute_freeze_e:
                 f_print_terminated(controller_freeze_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_kill:
+              case controller_rule_action_type_execute_kill_e:
                 f_print_terminated(controller_kill_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_pause:
+              case controller_rule_action_type_execute_pause_e:
                 f_print_terminated(controller_pause_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_reload:
+              case controller_rule_action_type_execute_reload_e:
                 f_print_terminated(controller_reload_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_restart:
+              case controller_rule_action_type_execute_restart_e:
                 f_print_terminated(controller_restart_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_resume:
+              case controller_rule_action_type_execute_resume_e:
                 f_print_terminated(controller_resume_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_start:
+              case controller_rule_action_type_execute_start_e:
                 f_print_terminated(controller_start_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_stop:
+              case controller_rule_action_type_execute_stop_e:
                 f_print_terminated(controller_stop_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_thaw:
+              case controller_rule_action_type_execute_thaw_e:
                 f_print_terminated(controller_thaw_s, main->output.to.stream);
                 break;
 
@@ -6026,9 +6026,9 @@ extern "C" {
         }
       }
 
-      if (!process_list[i]->state || process_list[i]->state == controller_process_state_idle || process_list[i]->state == controller_process_state_done) {
+      if (!process_list[i]->state || process_list[i]->state == controller_process_state_idle_e || process_list[i]->state == controller_process_state_done_e) {
 
-        if (process_list[i]->state == controller_process_state_done) {
+        if (process_list[i]->state == controller_process_state_done_e) {
           f_thread_unlock(&process_list[i]->lock);
 
           if (caller) {
@@ -6046,14 +6046,14 @@ extern "C" {
             return status_lock;
           }
 
-          if (process_list[i]->state == controller_process_state_done) {
+          if (process_list[i]->state == controller_process_state_done_e) {
             f_thread_unlock(&process_list[i]->active);
 
             if (f_thread_lock_write_try(&process_list[i]->active) == F_none) {
 
               controller_thread_join(&process_list[i]->id_thread);
 
-              process_list[i]->state = controller_process_state_idle;
+              process_list[i]->state = controller_process_state_idle_e;
 
               f_thread_unlock(&process_list[i]->active);
 
@@ -6110,7 +6110,7 @@ extern "C" {
         continue;
       }
 
-      if (!controller_rule_status_is_error(process_list[i]->action, process_list[i]->rule) && (process_list[i]->state == controller_process_state_active || process_list[i]->state == controller_process_state_busy)) {
+      if (!controller_rule_status_is_error(process_list[i]->action, process_list[i]->rule) && (process_list[i]->state == controller_process_state_active_e || process_list[i]->state == controller_process_state_busy_e)) {
         f_thread_unlock(&process_list[i]->lock);
 
         status = controller_process_wait(global, process_list[i]);
@@ -6189,7 +6189,7 @@ extern "C" {
 #ifndef _di_controller_rule_wait_all_process_type_
   f_status_t controller_rule_wait_all_process_type(const uint8_t type, const controller_global_t global, const bool required, controller_process_t *caller) {
 
-    return controller_rule_wait_all(type != controller_process_type_exit, global, required, caller);
+    return controller_rule_wait_all(type != controller_process_type_exit_e, global, required, caller);
   }
 #endif // _di_controller_rule_wait_all_process_type_
 

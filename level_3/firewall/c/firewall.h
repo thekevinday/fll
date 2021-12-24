@@ -220,64 +220,64 @@ extern "C" {
   #define firewall_chain_delete_command_s_length 2
 
   enum {
-    firewall_program_none = 1,
-    firewall_program_iptables,
-    firewall_program_ip6tables,
-    firewall_program_ip46tables,
-    firewall_program_ipset,
+    firewall_program_none_e = 1,
+    firewall_program_iptables_e,
+    firewall_program_ip6tables_e,
+    firewall_program_ip46tables_e,
+    firewall_program_ipset_e,
   };
 
   enum {
-    firewall_parameter_help,
-    firewall_parameter_light,
-    firewall_parameter_dark,
-    firewall_parameter_no_color,
-    firewall_parameter_verbosity_quiet,
-    firewall_parameter_verbosity_normal,
-    firewall_parameter_verbosity_verbose,
-    firewall_parameter_verbosity_debug,
-    firewall_parameter_version,
+    firewall_parameter_help_e,
+    firewall_parameter_light_e,
+    firewall_parameter_dark_e,
+    firewall_parameter_no_color_e,
+    firewall_parameter_verbosity_quiet_e,
+    firewall_parameter_verbosity_normal_e,
+    firewall_parameter_verbosity_verbose_e,
+    firewall_parameter_verbosity_debug_e,
+    firewall_parameter_version_e,
 
-    firewall_parameter_command_start,
-    firewall_parameter_command_stop,
-    firewall_parameter_command_restart,
-    firewall_parameter_command_lock,
-    firewall_parameter_command_show,
+    firewall_parameter_command_start_e,
+    firewall_parameter_command_stop_e,
+    firewall_parameter_command_restart_e,
+    firewall_parameter_command_lock_e,
+    firewall_parameter_command_show_e,
 
-    firewall_direction_input_id,
-    firewall_direction_output_id,
-    firewall_direction_none_id,
+    firewall_direction_input_id_e,
+    firewall_direction_output_id_e,
+    firewall_direction_none_id_e,
 
-    firewall_chain_forward_id,
-    firewall_chain_custom_id,
-    firewall_chain_input_id,
-    firewall_chain_none_id,
-    firewall_chain_output_id,
-    firewall_chain_postrouting_id,
-    firewall_chain_prerouting_id,
+    firewall_chain_forward_id_e,
+    firewall_chain_custom_id_e,
+    firewall_chain_input_id_e,
+    firewall_chain_none_id_e,
+    firewall_chain_output_id_e,
+    firewall_chain_postrouting_id_e,
+    firewall_chain_prerouting_id_e,
 
-    firewall_action_append_id,
-    firewall_action_insert_id,
-    firewall_action_policy_id,
-    firewall_action_none_id,
+    firewall_action_append_id_e,
+    firewall_action_insert_id_e,
+    firewall_action_policy_id_e,
+    firewall_action_none_id_e,
   };
 
   #define firewall_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_start_s, F_false, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_stop_s, F_false, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_restart_s, F_false, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_lock_s, F_false, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, firewall_command_show_s, F_false, f_console_type_other), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_start_s, F_false, f_console_type_other_e), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_stop_s, F_false, f_console_type_other_e), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_restart_s, F_false, f_console_type_other_e), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_lock_s, F_false, f_console_type_other_e), \
+      f_console_parameter_t_initialize(0, 0, firewall_command_show_s, F_false, f_console_type_other_e), \
     }
 
   #define firewall_total_parameters_d 14

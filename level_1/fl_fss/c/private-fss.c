@@ -287,7 +287,7 @@ extern "C" {
       // move the start position to after the EOL.
       ++range->start;
 
-      return FL_fss_found_object_not;
+      return F_fss_found_object_not;
     }
 
     if (status == F_none_eos) {
@@ -328,7 +328,7 @@ extern "C" {
       // move the start position to after the EOL.
       ++range->start;
 
-      return FL_fss_found_object_not;
+      return F_fss_found_object_not;
     }
 
     // handle quoted support.
@@ -380,10 +380,10 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             if (buffer.string[range->start] == f_fss_eol_s[0]) {
-              return FL_fss_found_object_content_not;
+              return F_fss_found_object_content_not;
             }
 
-            return FL_fss_found_object;
+            return F_fss_found_object;
           }
 
           break;
@@ -463,13 +463,13 @@ extern "C" {
         // move the start position to after the EOL.
         ++range->start;
 
-        return FL_fss_found_object_content_not;
+        return F_fss_found_object_content_not;
       }
 
       status = f_utf_buffer_increment(buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
-      return FL_fss_found_object;
+      return F_fss_found_object;
     }
     else {
       f_array_length_t first_slash = 0;
@@ -562,10 +562,10 @@ extern "C" {
             if (status == F_true) {
               if (quote) {
                 if (quote_found == F_fss_delimit_quote_single_s) {
-                  *quote = f_fss_quote_type_single;
+                  *quote = f_fss_quote_type_single_e;
                 }
                 else if (quote_found == F_fss_delimit_quote_double_s) {
-                  *quote = f_fss_quote_type_double;
+                  *quote = f_fss_quote_type_double_e;
                 }
               }
 
@@ -640,7 +640,7 @@ extern "C" {
                   status = f_utf_buffer_increment(buffer, range, 1);
                   if (F_status_is_error(status)) return status;
 
-                  return FL_fss_found_object_not;
+                  return F_fss_found_object_not;
                 }
 
                 if (buffer.string[range->start] == f_fss_eol_s[0]) {
@@ -649,7 +649,7 @@ extern "C" {
                   // move the start position to after the EOL.
                   ++range->start;
 
-                  return FL_fss_found_object_content_not;
+                  return F_fss_found_object_content_not;
                 }
 
                 found->stop = location - 1;
@@ -657,7 +657,7 @@ extern "C" {
                 status = f_utf_buffer_increment(buffer, range, 1);
                 if (F_status_is_error(status)) return status;
 
-                return FL_fss_found_object;
+                return F_fss_found_object;
               }
               else {
                 macro_f_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
@@ -718,10 +718,10 @@ extern "C" {
           if (status == F_true) {
             if (quote) {
               if (quote_found == F_fss_delimit_quote_single_s) {
-                *quote = f_fss_quote_type_single;
+                *quote = f_fss_quote_type_single_e;
               }
               else if (quote_found == F_fss_delimit_quote_double_s) {
-                *quote = f_fss_quote_type_double;
+                *quote = f_fss_quote_type_double_e;
               }
             }
 
@@ -745,7 +745,7 @@ extern "C" {
                 // move the start position to after the EOL.
                 ++range->start;
 
-                return FL_fss_found_object_content_not;
+                return F_fss_found_object_content_not;
               }
 
               status = f_fss_is_space(buffer, *range);
@@ -755,7 +755,7 @@ extern "C" {
                 status = f_utf_buffer_increment(buffer, range, 1);
                 if (F_status_is_error(status)) return status;
 
-                return FL_fss_found_object;
+                return F_fss_found_object;
               }
 
               if (buffer.string[range->start] != F_fss_delimit_placeholder_s) {
@@ -789,7 +789,7 @@ extern "C" {
                 status = f_utf_buffer_increment(buffer, range, 1);
                 if (F_status_is_error(status)) return status;
 
-                return FL_fss_found_object_not;
+                return F_fss_found_object_not;
               }
 
               status = f_utf_buffer_increment(buffer, range, 1);
@@ -814,7 +814,7 @@ extern "C" {
           // move the start position to after the EOL.
           ++range->start;
 
-          return FL_fss_found_object_not;
+          return F_fss_found_object_not;
         }
 
         status = f_utf_buffer_increment(buffer, range, 1);
@@ -841,7 +841,7 @@ extern "C" {
     // move the start position to after the EOL.
     ++range->start;
 
-    return FL_fss_found_object_not;
+    return F_fss_found_object_not;
   }
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_)
 

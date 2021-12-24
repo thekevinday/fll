@@ -362,22 +362,22 @@ extern "C" {
  */
 #ifndef _di_controller_resource_limit_t_
   enum {
-    controller_resource_limit_type_as = RLIMIT_AS,
-    controller_resource_limit_type_core = RLIMIT_CORE,
-    controller_resource_limit_type_cpu = RLIMIT_CPU,
-    controller_resource_limit_type_data = RLIMIT_DATA,
-    controller_resource_limit_type_fsize = RLIMIT_FSIZE,
-    controller_resource_limit_type_locks = RLIMIT_LOCKS,
-    controller_resource_limit_type_memlock = RLIMIT_MEMLOCK,
-    controller_resource_limit_type_msgqueue = RLIMIT_MSGQUEUE,
-    controller_resource_limit_type_nice = RLIMIT_NICE,
-    controller_resource_limit_type_nofile = RLIMIT_NOFILE,
-    controller_resource_limit_type_nproc = RLIMIT_NPROC,
-    controller_resource_limit_type_rss = RLIMIT_RSS,
-    controller_resource_limit_type_rtprio = RLIMIT_RTPRIO,
-    controller_resource_limit_type_rttime = RLIMIT_RTTIME,
-    controller_resource_limit_type_sigpending = RLIMIT_SIGPENDING,
-    controller_resource_limit_type_stack = RLIMIT_STACK,
+    controller_resource_limit_type_as_e = RLIMIT_AS,
+    controller_resource_limit_type_core_e = RLIMIT_CORE,
+    controller_resource_limit_type_cpu_e = RLIMIT_CPU,
+    controller_resource_limit_type_data_e = RLIMIT_DATA,
+    controller_resource_limit_type_fsize_e = RLIMIT_FSIZE,
+    controller_resource_limit_type_locks_e = RLIMIT_LOCKS,
+    controller_resource_limit_type_memlock_e = RLIMIT_MEMLOCK,
+    controller_resource_limit_type_msgqueue_e = RLIMIT_MSGQUEUE,
+    controller_resource_limit_type_nice_e = RLIMIT_NICE,
+    controller_resource_limit_type_nofile_e = RLIMIT_NOFILE,
+    controller_resource_limit_type_nproc_e = RLIMIT_NPROC,
+    controller_resource_limit_type_rss_e = RLIMIT_RSS,
+    controller_resource_limit_type_rtprio_e = RLIMIT_RTPRIO,
+    controller_resource_limit_type_rttime_e = RLIMIT_RTTIME,
+    controller_resource_limit_type_sigpending_e = RLIMIT_SIGPENDING,
+    controller_resource_limit_type_stack_e = RLIMIT_STACK,
   };
 #endif // _di_controller_resource_limit_t_
 
@@ -652,44 +652,44 @@ extern "C" {
   #define controller_rule_action_method_string_extended_list_s_length 24
 
   enum {
-    controller_rule_action_method_extended = 1,
-    controller_rule_action_method_extended_list,
+    controller_rule_action_method_extended_e = 1,
+    controller_rule_action_method_extended_list_e,
   };
 
   enum {
-    controller_rule_action_type_freeze = 1,
-    controller_rule_action_type_group,
-    controller_rule_action_type_kill,
-    controller_rule_action_type_pause,
-    controller_rule_action_type_pid_file,
-    controller_rule_action_type_reload,
-    controller_rule_action_type_rerun,
-    controller_rule_action_type_restart,
-    controller_rule_action_type_resume,
-    controller_rule_action_type_start,
-    controller_rule_action_type_stop,
-    controller_rule_action_type_thaw,
-    controller_rule_action_type_user,
-    controller_rule_action_type_with,
+    controller_rule_action_type_freeze_e = 1,
+    controller_rule_action_type_group_e,
+    controller_rule_action_type_kill_e,
+    controller_rule_action_type_pause_e,
+    controller_rule_action_type_pid_file_e,
+    controller_rule_action_type_reload_e,
+    controller_rule_action_type_rerun_e,
+    controller_rule_action_type_restart_e,
+    controller_rule_action_type_resume_e,
+    controller_rule_action_type_start_e,
+    controller_rule_action_type_stop_e,
+    controller_rule_action_type_thaw_e,
+    controller_rule_action_type_user_e,
+    controller_rule_action_type_with_e,
 
     // designate the largest value in the enum, the '__' is intended.
-    controller_rule_action_type__enum_size,
+    controller_rule_action_type__enum_size_e,
   };
 
   // Execute type starts at 0 because it is intended to be used as an index within a static array.
   enum {
-    controller_rule_action_type_execute_freeze = 0,
-    controller_rule_action_type_execute_kill,
-    controller_rule_action_type_execute_pause,
-    controller_rule_action_type_execute_reload,
-    controller_rule_action_type_execute_restart,
-    controller_rule_action_type_execute_resume,
-    controller_rule_action_type_execute_start,
-    controller_rule_action_type_execute_stop,
-    controller_rule_action_type_execute_thaw,
+    controller_rule_action_type_execute_freeze_e = 0,
+    controller_rule_action_type_execute_kill_e,
+    controller_rule_action_type_execute_pause_e,
+    controller_rule_action_type_execute_reload_e,
+    controller_rule_action_type_execute_restart_e,
+    controller_rule_action_type_execute_resume_e,
+    controller_rule_action_type_execute_start_e,
+    controller_rule_action_type_execute_stop_e,
+    controller_rule_action_type_execute_thaw_e,
 
     // designate the largest value in the enum, the '__' is intended.
-    controller_rule_action_type_execute__enum_size,
+    controller_rule_action_type_execute__enum_size_e,
   };
 
   typedef struct {
@@ -748,11 +748,11 @@ extern "C" {
  */
 #ifndef _di_controller_rule_item_t_
   enum {
-    controller_rule_item_type_command = 1,
-    controller_rule_item_type_script,
-    controller_rule_item_type_service,
-    controller_rule_item_type_setting,
-    controller_rule_item_type_utility,
+    controller_rule_item_type_command_e = 1,
+    controller_rule_item_type_script_e,
+    controller_rule_item_type_service_e,
+    controller_rule_item_type_setting_e,
+    controller_rule_item_type_utility_e,
   };
 
   typedef struct {
@@ -761,7 +761,7 @@ extern "C" {
     f_array_length_t line;
 
     f_string_dynamic_t pid_file;
-    controller_rule_rerun_t reruns[controller_rule_action_type_execute__enum_size];
+    controller_rule_rerun_t reruns[controller_rule_action_type_execute__enum_size_e];
     controller_rule_actions_t actions;
   } controller_rule_item_t;
 
@@ -909,22 +909,22 @@ extern "C" {
  */
 #ifndef _di_controller_rule_t_
   enum {
-    controller_rule_setting_type_affinity = 1,
-    controller_rule_setting_type_capability,
-    controller_rule_setting_type_control_group,
-    controller_rule_setting_type_define,
-    controller_rule_setting_type_environment,
-    controller_rule_setting_type_group,
-    controller_rule_setting_type_limit,
-    controller_rule_setting_type_name,
-    controller_rule_setting_type_nice,
-    controller_rule_setting_type_on,
-    controller_rule_setting_type_parameter,
-    controller_rule_setting_type_path,
-    controller_rule_setting_type_scheduler,
-    controller_rule_setting_type_script,
-    controller_rule_setting_type_timeout,
-    controller_rule_setting_type_user,
+    controller_rule_setting_type_affinity_e = 1,
+    controller_rule_setting_type_capability_e,
+    controller_rule_setting_type_control_group_e,
+    controller_rule_setting_type_define_e,
+    controller_rule_setting_type_environment_e,
+    controller_rule_setting_type_group_e,
+    controller_rule_setting_type_limit_e,
+    controller_rule_setting_type_name_e,
+    controller_rule_setting_type_nice_e,
+    controller_rule_setting_type_on_e,
+    controller_rule_setting_type_parameter_e,
+    controller_rule_setting_type_path_e,
+    controller_rule_setting_type_scheduler_e,
+    controller_rule_setting_type_script_e,
+    controller_rule_setting_type_timeout_e,
+    controller_rule_setting_type_user_e,
   };
 
   // bitwise codes representing properties on controller_rule_t that have been found in the rule file.
@@ -941,7 +941,7 @@ extern "C" {
   #define controller_rule_timeout_code_stop_d  3
 
   typedef struct {
-    f_status_t status[controller_rule_action_type__enum_size];
+    f_status_t status[controller_rule_action_type__enum_size_e];
 
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
@@ -1118,16 +1118,16 @@ extern "C" {
   #define controller_process_option_wait_d         0x10
 
   enum {
-    controller_process_state_idle = 1,
-    controller_process_state_busy,
-    controller_process_state_active,
-    controller_process_state_done,
+    controller_process_state_idle_e = 1,
+    controller_process_state_busy_e,
+    controller_process_state_active_e,
+    controller_process_state_done_e,
   };
 
   enum {
-    controller_process_type_entry = 1,
-    controller_process_type_exit,
-    controller_process_type_control,
+    controller_process_type_entry_e = 1,
+    controller_process_type_exit_e,
+    controller_process_type_control_e,
   };
 
   typedef struct {
@@ -1239,21 +1239,21 @@ extern "C" {
  */
 #ifndef _di_controller_entry_action_t_
   enum {
-    controller_entry_action_type_consider = 1,
-    controller_entry_action_type_execute,
-    controller_entry_action_type_failsafe,
-    controller_entry_action_type_freeze,
-    controller_entry_action_type_item,
-    controller_entry_action_type_kill,
-    controller_entry_action_type_pause,
-    controller_entry_action_type_ready,
-    controller_entry_action_type_reload,
-    controller_entry_action_type_restart,
-    controller_entry_action_type_resume,
-    controller_entry_action_type_start,
-    controller_entry_action_type_stop,
-    controller_entry_action_type_timeout,
-    controller_entry_action_type_thaw,
+    controller_entry_action_type_consider_e = 1,
+    controller_entry_action_type_execute_e,
+    controller_entry_action_type_failsafe_e,
+    controller_entry_action_type_freeze_e,
+    controller_entry_action_type_item_e,
+    controller_entry_action_type_kill_e,
+    controller_entry_action_type_pause_e,
+    controller_entry_action_type_ready_e,
+    controller_entry_action_type_reload_e,
+    controller_entry_action_type_restart_e,
+    controller_entry_action_type_resume_e,
+    controller_entry_action_type_start_e,
+    controller_entry_action_type_stop_e,
+    controller_entry_action_type_timeout_e,
+    controller_entry_action_type_thaw_e,
   };
 
   #define controller_entry_rule_code_asynchronous_d 0x1
@@ -1389,20 +1389,20 @@ extern "C" {
  */
 #ifndef _di_controller_entry_t_
   enum {
-    controller_entry_pid_disable = 0,
-    controller_entry_pid_require,
-    controller_entry_pid_ready,
+    controller_entry_pid_disable_e = 0,
+    controller_entry_pid_require_e,
+    controller_entry_pid_ready_e,
   };
 
   enum {
-    controller_entry_show_normal = 0,
-    controller_entry_show_init,
+    controller_entry_show_normal_e = 0,
+    controller_entry_show_init_e,
   };
 
   enum {
-    controller_entry_session_none = 0,
-    controller_entry_session_new,
-    controller_entry_session_same,
+    controller_entry_session_none_e = 0,
+    controller_entry_session_new_e,
+    controller_entry_session_same_e,
   };
 
   typedef struct {
@@ -1421,9 +1421,9 @@ extern "C" {
 
   #define controller_entry_t_initialize { \
     F_known_not, \
-    controller_entry_pid_require, \
-    controller_entry_session_none, \
-    controller_entry_show_normal, \
+    controller_entry_pid_require_e, \
+    controller_entry_session_none_e, \
+    controller_entry_show_normal_e, \
     0, \
     0, \
     0, \
@@ -1458,17 +1458,17 @@ extern "C" {
  */
 #ifndef _di_controller_setting_t
   enum {
-    controller_setting_ready_no = 0,
-    controller_setting_ready_wait,
-    controller_setting_ready_yes,
-    controller_setting_ready_done,
-    controller_setting_ready_fail,
-    controller_setting_ready_abort,
+    controller_setting_ready_no_e = 0,
+    controller_setting_ready_wait_e,
+    controller_setting_ready_yes_e,
+    controller_setting_ready_done_e,
+    controller_setting_ready_fail_e,
+    controller_setting_ready_abort_e,
   };
 
   enum {
-    controller_setting_mode_service = 0,
-    controller_setting_mode_program,
+    controller_setting_mode_service_e = 0,
+    controller_setting_mode_program_e,
   };
 
   typedef struct {
@@ -1577,20 +1577,20 @@ extern "C" {
    *   - exit_execute: Cancellation is explicitly called due to an "execute" Item Action during Exit.
    */
   enum {
-    controller_thread_enabled_not = 0,
-    controller_thread_enabled,
-    controller_thread_enabled_execute,
-    controller_thread_enabled_exit,
-    controller_thread_enabled_exit_execute,
-    controller_thread_enabled_exit_ready,
+    controller_thread_enabled_not_e = 0,
+    controller_thread_enabled_e,
+    controller_thread_enabled_execute_e,
+    controller_thread_enabled_exit_e,
+    controller_thread_enabled_exit_execute_e,
+    controller_thread_enabled_exit_ready_e,
   };
 
   enum {
-    controller_thread_cancel_signal = 0,
-    controller_thread_cancel_call,
-    controller_thread_cancel_execute,
-    controller_thread_cancel_exit,
-    controller_thread_cancel_exit_execute,
+    controller_thread_cancel_signal_e = 0,
+    controller_thread_cancel_call_e,
+    controller_thread_cancel_execute_e,
+    controller_thread_cancel_exit_e,
+    controller_thread_cancel_exit_execute_e,
   };
 
   typedef struct {
@@ -1610,7 +1610,7 @@ extern "C" {
   } controller_thread_t;
 
   #define controller_thread_t_initialize { \
-    controller_thread_enabled, \
+    controller_thread_enabled_e, \
     0, \
     F_none, \
     f_thread_id_t_initialize, \

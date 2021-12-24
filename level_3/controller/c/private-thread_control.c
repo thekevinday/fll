@@ -14,7 +14,7 @@ extern "C" {
 
     controller_global_t *global = (controller_global_t *) arguments;
 
-    if (global->thread->enabled != controller_thread_enabled) return 0;
+    if (global->thread->enabled != controller_thread_enabled_e) return 0;
 
     return 0;
   }

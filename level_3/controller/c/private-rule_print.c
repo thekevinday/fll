@@ -10,7 +10,7 @@ extern "C" {
 #ifndef _di_controller_rule_print_error_
   void controller_rule_print_error(const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
 
     // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
@@ -29,7 +29,7 @@ extern "C" {
 #ifndef _di_controller_rule_print_error_cache_
   void controller_rule_print_error_cache(const fl_print_t print, const controller_cache_action_t cache, const bool item) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%c%[%SWhile processing ", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
@@ -60,7 +60,7 @@ extern "C" {
 #ifndef _di_controller_rule_item_print_error_
   void controller_rule_item_print_error(const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
 
     // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
@@ -77,7 +77,7 @@ extern "C" {
 #ifndef _di_controller_rule_item_print_error_execute_
   void controller_rule_item_print_error_execute(const bool script_is, const f_string_t name, const f_status_t status, controller_process_t * const process) {
 
-    if (((controller_main_t *) process->main_data)->error.verbosity != f_console_verbosity_quiet) {
+    if (((controller_main_t *) process->main_data)->error.verbosity != f_console_verbosity_quiet_e) {
       fl_print_t * const print = &((controller_main_t *) process->main_data)->error;
 
       controller_lock_print(print->to, (controller_thread_t *) process->main_thread);
@@ -226,7 +226,7 @@ extern "C" {
 #ifndef _di_controller_rule_action_print_error_missing_pid_
   void controller_rule_action_print_error_missing_pid(const fl_print_t print, const f_string_t alias) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%c%[%SThe rule '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
     fl_print_format("%[%S%]", print.to.stream, print.notable, alias, print.notable);
@@ -237,7 +237,7 @@ extern "C" {
 #ifndef _di_controller_rule_item_print_error_need_want_wish_
   void controller_rule_item_print_error_need_want_wish(const fl_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%c%[%SThe %s rule '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, need_want_wish, print.context);
     fl_print_format("%[%S%]", print.to.stream, print.notable, value, print.notable);
@@ -248,7 +248,7 @@ extern "C" {
 #ifndef _di_controller_rule_item_print_error_rule_not_loaded_
   void controller_rule_item_print_error_rule_not_loaded(const fl_print_t print, const f_string_t alias) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%c%[%SThe rule '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
     fl_print_format("%[%S%]", print.to.stream, print.notable, alias, print.notable);
@@ -259,7 +259,7 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_error_
   void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     // get the current line number within the settings item.
     cache->action.line_item = line_item;
@@ -280,7 +280,7 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_error_with_range_
   void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     // get the current line number within the settings item.
     cache->action.line_item = line_item;
@@ -303,7 +303,7 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_value_
   void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug && !(global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
+    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
       return;
     }
 
@@ -328,7 +328,7 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_values_
   void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t *cache) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug && !(global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
+    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
       return;
     }
 

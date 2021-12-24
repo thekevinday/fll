@@ -19,15 +19,15 @@ extern "C" {
   f_status_t controller_entry_action_type_is_rule(uint8_t type) {
 
     switch (type) {
-      case controller_entry_action_type_freeze:
-      case controller_entry_action_type_kill:
-      case controller_entry_action_type_pause:
-      case controller_entry_action_type_reload:
-      case controller_entry_action_type_restart:
-      case controller_entry_action_type_resume:
-      case controller_entry_action_type_start:
-      case controller_entry_action_type_stop:
-      case controller_entry_action_type_thaw:
+      case controller_entry_action_type_freeze_e:
+      case controller_entry_action_type_kill_e:
+      case controller_entry_action_type_pause_e:
+      case controller_entry_action_type_reload_e:
+      case controller_entry_action_type_restart_e:
+      case controller_entry_action_type_resume_e:
+      case controller_entry_action_type_start_e:
+      case controller_entry_action_type_stop_e:
+      case controller_entry_action_type_thaw_e:
         return F_true;
     }
 
@@ -41,77 +41,77 @@ extern "C" {
     f_string_static_t buffer = f_string_static_t_initialize;
 
     switch (type) {
-      case controller_entry_action_type_consider:
+      case controller_entry_action_type_consider_e:
         buffer.string = controller_consider_s;
         buffer.used = controller_consider_s_length;
         break;
 
-      case controller_entry_action_type_execute:
+      case controller_entry_action_type_execute_e:
         buffer.string = controller_execute_s;
         buffer.used = controller_execute_s_length;
         break;
 
-      case controller_entry_action_type_failsafe:
+      case controller_entry_action_type_failsafe_e:
         buffer.string = controller_failsafe_s;
         buffer.used = controller_failsafe_s_length;
         break;
 
-      case controller_entry_action_type_freeze:
+      case controller_entry_action_type_freeze_e:
         buffer.string = controller_freeze_s;
         buffer.used = controller_freeze_s_length;
         break;
 
-      case controller_entry_action_type_item:
+      case controller_entry_action_type_item_e:
         buffer.string = controller_item_s;
         buffer.used = controller_item_s_length;
         break;
 
-      case controller_entry_action_type_kill:
+      case controller_entry_action_type_kill_e:
         buffer.string = controller_kill_s;
         buffer.used = controller_kill_s_length;
         break;
 
-      case controller_entry_action_type_pause:
+      case controller_entry_action_type_pause_e:
         buffer.string = controller_pause_s;
         buffer.used = controller_pause_s_length;
         break;
 
-      case controller_entry_action_type_ready:
+      case controller_entry_action_type_ready_e:
         buffer.string = controller_ready_s;
         buffer.used = controller_ready_s_length;
         break;
 
-      case controller_entry_action_type_reload:
+      case controller_entry_action_type_reload_e:
         buffer.string = controller_reload_s;
         buffer.used = controller_reload_s_length;
         break;
 
-      case controller_entry_action_type_restart:
+      case controller_entry_action_type_restart_e:
         buffer.string = controller_restart_s;
         buffer.used = controller_restart_s_length;
         break;
 
-      case controller_entry_action_type_resume:
+      case controller_entry_action_type_resume_e:
         buffer.string = controller_resume_s;
         buffer.used = controller_resume_s_length;
         break;
 
-      case controller_entry_action_type_start:
+      case controller_entry_action_type_start_e:
         buffer.string = controller_start_s;
         buffer.used = controller_start_s_length;
         break;
 
-      case controller_entry_action_type_stop:
+      case controller_entry_action_type_stop_e:
         buffer.string = controller_stop_s;
         buffer.used = controller_stop_s_length;
         break;
 
-      case controller_entry_action_type_thaw:
+      case controller_entry_action_type_thaw_e:
         buffer.string = controller_thaw_s;
         buffer.used = controller_thaw_s_length;
         break;
 
-      case controller_entry_action_type_timeout:
+      case controller_entry_action_type_timeout_e:
         buffer.string = controller_timeout_s;
         buffer.used = controller_timeout_s_length;
         break;
@@ -127,32 +127,32 @@ extern "C" {
   uint8_t controller_entry_action_type_to_rule_action_type(uint8_t type) {
 
     switch (type) {
-      case controller_entry_action_type_freeze:
-        return controller_rule_action_type_freeze;
+      case controller_entry_action_type_freeze_e:
+        return controller_rule_action_type_freeze_e;
 
-      case controller_entry_action_type_kill:
-        return controller_rule_action_type_kill;
+      case controller_entry_action_type_kill_e:
+        return controller_rule_action_type_kill_e;
 
-      case controller_entry_action_type_pause:
-        return controller_rule_action_type_pause;
+      case controller_entry_action_type_pause_e:
+        return controller_rule_action_type_pause_e;
 
-      case controller_entry_action_type_reload:
-        return controller_rule_action_type_reload;
+      case controller_entry_action_type_reload_e:
+        return controller_rule_action_type_reload_e;
 
-      case controller_entry_action_type_restart:
-        return controller_rule_action_type_restart;
+      case controller_entry_action_type_restart_e:
+        return controller_rule_action_type_restart_e;
 
-      case controller_entry_action_type_resume:
-        return controller_rule_action_type_resume;
+      case controller_entry_action_type_resume_e:
+        return controller_rule_action_type_resume_e;
 
-      case controller_entry_action_type_start:
-        return controller_rule_action_type_start;
+      case controller_entry_action_type_start_e:
+        return controller_rule_action_type_start_e;
 
-      case controller_entry_action_type_stop:
-        return controller_rule_action_type_stop;
+      case controller_entry_action_type_stop_e:
+        return controller_rule_action_type_stop_e;
 
-      case controller_entry_action_type_thaw:
-        return controller_rule_action_type_thaw;
+      case controller_entry_action_type_thaw_e:
+        return controller_rule_action_type_thaw_e;
     }
 
     return 0;
@@ -252,52 +252,52 @@ extern "C" {
       }
 
       if (fl_string_dynamic_compare_string(controller_consider_s, cache->action.name_action, controller_consider_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_consider;
+        actions->array[actions->used].type = controller_entry_action_type_consider_e;
       }
       else if (fl_string_dynamic_compare_string(controller_execute_s, cache->action.name_action, controller_execute_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_execute;
+        actions->array[actions->used].type = controller_entry_action_type_execute_e;
       }
       else if (fl_string_dynamic_compare_string(controller_failsafe_s, cache->action.name_action, controller_failsafe_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_failsafe;
+        actions->array[actions->used].type = controller_entry_action_type_failsafe_e;
       }
       else if (fl_string_dynamic_compare_string(controller_freeze_s, cache->action.name_action, controller_freeze_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_freeze;
+        actions->array[actions->used].type = controller_entry_action_type_freeze_e;
       }
       else if (fl_string_dynamic_compare_string(controller_item_s, cache->action.name_action, controller_item_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_item;
+        actions->array[actions->used].type = controller_entry_action_type_item_e;
       }
       else if (fl_string_dynamic_compare_string(controller_kill_s, cache->action.name_action, controller_kill_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_kill;
+        actions->array[actions->used].type = controller_entry_action_type_kill_e;
       }
       else if (fl_string_dynamic_compare_string(controller_pause_s, cache->action.name_action, controller_pause_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_pause;
+        actions->array[actions->used].type = controller_entry_action_type_pause_e;
       }
       else if (fl_string_dynamic_compare_string(controller_ready_s, cache->action.name_action, controller_ready_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_ready;
+        actions->array[actions->used].type = controller_entry_action_type_ready_e;
       }
       else if (fl_string_dynamic_compare_string(controller_reload_s, cache->action.name_action, controller_reload_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_reload;
+        actions->array[actions->used].type = controller_entry_action_type_reload_e;
       }
       else if (fl_string_dynamic_compare_string(controller_restart_s, cache->action.name_action, controller_restart_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_restart;
+        actions->array[actions->used].type = controller_entry_action_type_restart_e;
       }
       else if (fl_string_dynamic_compare_string(controller_resume_s, cache->action.name_action, controller_resume_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_resume;
+        actions->array[actions->used].type = controller_entry_action_type_resume_e;
       }
       else if (fl_string_dynamic_compare_string(controller_start_s, cache->action.name_action, controller_start_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_start;
+        actions->array[actions->used].type = controller_entry_action_type_start_e;
       }
       else if (fl_string_dynamic_compare_string(controller_stop_s, cache->action.name_action, controller_stop_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_stop;
+        actions->array[actions->used].type = controller_entry_action_type_stop_e;
       }
       else if (fl_string_dynamic_compare_string(controller_thaw_s, cache->action.name_action, controller_thaw_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_thaw;
+        actions->array[actions->used].type = controller_entry_action_type_thaw_e;
       }
       else if (fl_string_dynamic_compare_string(controller_timeout_s, cache->action.name_action, controller_timeout_s_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_timeout;
+        actions->array[actions->used].type = controller_entry_action_type_timeout_e;
       }
       else {
-        if (global.main->warning.verbosity == f_console_verbosity_debug) {
+        if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global.main->warning.to, global.thread);
 
           fl_print_format("%c%[%SUnknown %s item action '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
@@ -312,27 +312,27 @@ extern "C" {
         continue;
       }
 
-      if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
+      if (action->type == controller_entry_action_type_consider_e || controller_entry_action_type_is_rule(action->type)) {
         allocate = cache->content_actions.array[i].used;
         at_least = 2;
         at_most = allocate;
       }
-      else if (action->type == controller_entry_action_type_execute) {
+      else if (action->type == controller_entry_action_type_execute_e) {
         allocate = cache->content_actions.array[i].used;
         at_least = 1;
         at_most = allocate;
       }
-      else if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
+      else if (action->type == controller_entry_action_type_failsafe_e || action->type == controller_entry_action_type_item_e) {
         allocate = 1;
         at_least = 1;
         at_most = 1;
       }
-      else if (action->type == controller_entry_action_type_timeout) {
+      else if (action->type == controller_entry_action_type_timeout_e) {
         allocate = 2;
         at_least = 2;
         at_most = 2;
       }
-      else if (action->type == controller_entry_action_type_ready) {
+      else if (action->type == controller_entry_action_type_ready_e) {
         allocate = 1;
         at_least = 0;
         at_most = 1;
@@ -341,7 +341,7 @@ extern "C" {
       if (cache->content_actions.array[i].used < at_least || cache->content_actions.array[i].used > at_most) {
         action->status = F_status_set_error(F_parameter);
 
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           f_thread_mutex_lock(&global.thread->lock.print);
 
           flockfile(global.main->error.to.stream);
@@ -356,7 +356,7 @@ extern "C" {
 
           fl_print_format("%]%[%un%]", global.main->error.to.stream, global.main->error.context, global.main->error.notable, at_least, global.main->error.notable);
 
-          if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
+          if (action->type == controller_entry_action_type_consider_e || controller_entry_action_type_is_rule(action->type)) {
             fl_print_format("%[ or more parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
           }
           else {
@@ -424,7 +424,7 @@ extern "C" {
         } // for
 
         if (F_status_is_error_not(action->status)) {
-          if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
+          if (action->type == controller_entry_action_type_consider_e || controller_entry_action_type_is_rule(action->type)) {
             if (action->parameters.array[0].used) {
 
               // force the path to be canonical (removing all '../' parts).
@@ -452,7 +452,7 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%c%[%SThe %s item action must not have an empty string for a path (the first parameter).%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s[0]);
               }
             }
@@ -479,7 +479,7 @@ extern "C" {
               else {
                 if (fl_string_dynamic_compare(action->parameters.array[1], cache->buffer_path) == F_equal_to_not) {
 
-                  if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                  if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                     status = f_string_dynamic_terminate_after(&cache->buffer_path);
 
                     if (F_status_is_error(status)) {
@@ -520,7 +520,7 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%c%[%SThe %s item action must not have an empty string for a rule name (the second parameter).%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s[0]);
               }
             }
@@ -545,7 +545,7 @@ extern "C" {
                   }
                 }
 
-                if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(global.main->error.to.stream);
 
                   fl_print_format("%c%[%SThe %s item action third parameter (and beyond) must be one of '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -563,7 +563,7 @@ extern "C" {
               }
             } // for
           }
-          else if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
+          else if (action->type == controller_entry_action_type_failsafe_e || action->type == controller_entry_action_type_item_e) {
             if (fl_string_dynamic_compare_string(controller_main_s, action->parameters.array[0], controller_main_s_length) == F_equal_to) {
               action->status = F_status_set_error(F_supported_not);
 
@@ -571,7 +571,7 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 flockfile(global.main->error.to.stream);
 
                 fl_print_format("%c%[%SThe %s item action may not specify the reserved item '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -582,7 +582,7 @@ extern "C" {
               }
             }
           }
-          else if (action->type == controller_entry_action_type_timeout) {
+          else if (action->type == controller_entry_action_type_timeout_e) {
 
             if (fl_string_dynamic_compare_string(controller_kill_s, action->parameters.array[0], controller_kill_s_length) == F_equal_to) {
               action->code = controller_entry_timeout_code_kill_d;
@@ -600,7 +600,7 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 flockfile(global.main->error.to.stream);
 
                 fl_print_format("%c%[%SThe %s item action must have one of '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -639,7 +639,7 @@ extern "C" {
                   break;
                 }
 
-                if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(global.main->error.to.stream);
 
                   fl_print_format("%c%[%SThe %s item action parameter '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -651,7 +651,7 @@ extern "C" {
               }
             }
           }
-          else if (action->type == controller_entry_action_type_ready) {
+          else if (action->type == controller_entry_action_type_ready_e) {
             if (action->parameters.used) {
               if (fl_string_dynamic_compare_string(controller_wait_s, action->parameters.array[0], controller_wait_s_length) == F_equal_to) {
                 action->code |= controller_entry_rule_code_wait_d;
@@ -659,7 +659,7 @@ extern "C" {
               else {
                 action->status = F_status_set_error(F_supported_not);
 
-                if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(global.main->error.to.stream);
 
                   fl_print_format("%c%[%SThe %s item action may only have '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -707,7 +707,7 @@ extern "C" {
     // This effectively sets the read for an entry and resets the ready for an exit.
     // @todo should there be a ready_exit instead?
     // @todo the global.setting->ready in this function may need mutex lock protection.
-    global.setting->ready = controller_setting_ready_no;
+    global.setting->ready = controller_setting_ready_no_e;
 
     cache->ats.used = 0;
 
@@ -757,10 +757,10 @@ extern "C" {
           return status2;
         }
 
-        if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_ready) {
+        if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_ready_e) {
 
-          if (global.setting->ready == controller_setting_ready_wait) {
-            if (global.main->warning.verbosity == f_console_verbosity_debug) {
+          if (global.setting->ready == controller_setting_ready_wait_e) {
+            if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
               controller_lock_print(global.main->warning.to, global.thread);
 
               fl_print_format("%c%[%SMultiple '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
@@ -773,10 +773,10 @@ extern "C" {
             }
           }
           else {
-            global.setting->ready = controller_setting_ready_wait;
+            global.setting->ready = controller_setting_ready_wait_e;
           }
         }
-        else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
+        else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item_e) {
           error_has = F_false;
 
           // "main" is not allowed to be used for an "item" and "setting" is not an executable "item".
@@ -796,7 +796,7 @@ extern "C" {
               for (j = 2; j < cache->ats.used; j += 2) {
 
                 if (cache->ats.array[j] == i) {
-                  if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                  if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                     controller_lock_print(global.main->error.to, global.thread);
 
                     fl_print_format("%c%[%SThe %s item named '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, is_entry ? controller_entry_s : controller_exit_s, global.main->error.prefix, global.main->error.context);
@@ -858,7 +858,7 @@ extern "C" {
 
           if (error_has || i >= entry->items.used) {
             if (i >= entry->items.used) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%c%[%SThe %s item named '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, is_entry ? controller_entry_s : controller_exit_s, global.main->error.prefix, global.main->error.context);
@@ -914,8 +914,8 @@ extern "C" {
     }
 
     // if ready was never found in the entry, then default to always ready.
-    if (global.setting->ready == controller_setting_ready_no) {
-      global.setting->ready = controller_setting_ready_yes;
+    if (global.setting->ready == controller_setting_ready_no_e) {
+      global.setting->ready = controller_setting_ready_yes_e;
     }
 
     return status;
@@ -977,8 +977,8 @@ extern "C" {
       return status;
     }
 
-    if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || global->main->error.verbosity == f_console_verbosity_debug) {
-      if (global->main->error.verbosity != f_console_verbosity_quiet) {
+    if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
+      if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(global->main->output.to, global->thread);
 
         fl_print_format("%cProcessing %s%s item '", global->main->output.to.stream, f_string_eol_s[0], failsafe ? "failsafe " : "", is_entry ? controller_entry_s : controller_exit_s);
@@ -1008,8 +1008,8 @@ extern "C" {
         }
 
         if (F_status_is_error(entry_action->status)) {
-          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found) {
-            if (global->main->error.verbosity != f_console_verbosity_quiet) {
+          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
+            if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
               fl_print_format("%cThe %s item action '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
@@ -1031,7 +1031,7 @@ extern "C" {
             }
           }
           else {
-            if ((entry_action->code & controller_entry_rule_code_require_d) && global->main->error.verbosity != f_console_verbosity_quiet || !(entry_action->code & controller_entry_rule_code_require_d) && (global->main->warning.verbosity == f_console_verbosity_verbose || global->main->warning.verbosity == f_console_verbosity_debug)) {
+            if ((entry_action->code & controller_entry_rule_code_require_d) && global->main->error.verbosity != f_console_verbosity_quiet_e || !(entry_action->code & controller_entry_rule_code_require_d) && (global->main->warning.verbosity == f_console_verbosity_verbose_e || global->main->warning.verbosity == f_console_verbosity_debug_e)) {
               fl_print_t *output = 0;
 
               if (entry_action->code & controller_entry_rule_code_require_d) {
@@ -1084,10 +1084,10 @@ extern "C" {
           continue;
         }
 
-        if (entry_action->type == controller_entry_action_type_ready) {
-          if ((entry_action->code & controller_entry_rule_code_wait_d) || global->setting->ready == controller_setting_ready_wait) {
-            if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || global->main->error.verbosity == f_console_verbosity_debug || entry->show == controller_entry_show_init) {
-              if (global->main->output.verbosity != f_console_verbosity_quiet) {
+        if (entry_action->type == controller_entry_action_type_ready_e) {
+          if ((entry_action->code & controller_entry_rule_code_wait_d) || global->setting->ready == controller_setting_ready_wait_e) {
+            if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || entry->show == controller_entry_show_init_e) {
+              if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->output.to, global->thread);
 
                 fl_print_format("%cWaiting before processing %s item action '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
@@ -1098,15 +1098,15 @@ extern "C" {
               }
             }
 
-            if (global->main->parameters[controller_parameter_validate].result == f_console_result_none) {
+            if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
               status = controller_rule_wait_all(is_entry, *global, F_false, process);
               if (F_status_is_error(status)) return status;
             }
           }
 
-          if (global->setting->ready == controller_setting_ready_yes) {
-            if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || global->main->error.verbosity == f_console_verbosity_debug) {
-              if (global->main->output.verbosity != f_console_verbosity_quiet) {
+          if (global->setting->ready == controller_setting_ready_yes_e) {
+            if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
+              if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->output.to, global->thread);
 
                 fl_print_format("%cIgnoring %s item action '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
@@ -1118,7 +1118,7 @@ extern "C" {
             }
           }
           else {
-            if (!failsafe && (global->main->error.verbosity == f_console_verbosity_verbose || entry->show == controller_entry_show_init) && global->main->parameters[controller_parameter_simulate].result == f_console_result_none) {
+            if (!failsafe && (global->main->error.verbosity == f_console_verbosity_verbose_e || entry->show == controller_entry_show_init_e) && global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e) {
               fl_print_format("%cState is now '%[%s%]'.%c", global->main->output.to.stream, f_string_eol_s[0], global->main->context.set.notable, controller_ready_s, global->main->context.set.notable, f_string_eol_s[0]);
             }
 
@@ -1126,11 +1126,11 @@ extern "C" {
             if (F_status_is_error(status)) return status;
           }
         }
-        else if (entry_action->type == controller_entry_action_type_item) {
+        else if (entry_action->type == controller_entry_action_type_item_e) {
           if (entry_action->number == 0 || entry_action->number >= entry->items.used || failsafe && entry_action->number == global->setting->failsafe_item_id) {
 
             // This should not happen if the pre-process is working as intended, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
-            if (global->main->error.verbosity != f_console_verbosity_quiet) {
+            if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->error.to, global->thread);
 
               fl_print_format("%c%[Invalid %s item index '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, is_entry ? controller_entry_s : controller_exit_s, global->main->error.context);
@@ -1176,8 +1176,8 @@ extern "C" {
             return status;
           }
 
-          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || global->main->error.verbosity == f_console_verbosity_debug) {
-            if (global->main->output.verbosity != f_console_verbosity_quiet) {
+          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
+            if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
               fl_print_format("%cProcessing %s item '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
@@ -1191,7 +1191,7 @@ extern "C" {
           // exit inner loop to force restarting and start processing the requested item.
           break;
         }
-        else if (entry_action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(entry_action->type)) {
+        else if (entry_action->type == controller_entry_action_type_consider_e || controller_entry_action_type_is_rule(entry_action->type)) {
           status_lock = controller_lock_write(is_entry, global->thread, &global->thread->lock.rule);
 
           if (F_status_is_error(status_lock)) {
@@ -1230,14 +1230,14 @@ extern "C" {
 
           f_thread_unlock(&global->thread->lock.rule);
 
-          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || global->main->error.verbosity == f_console_verbosity_debug || (entry->show == controller_entry_show_init && entry_action->type != controller_entry_action_type_consider)) {
-            if (global->main->output.verbosity != f_console_verbosity_quiet) {
+          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || (entry->show == controller_entry_show_init_e && entry_action->type != controller_entry_action_type_consider_e)) {
+            if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
-              fl_print_format("%c%s %s item rule ", global->main->output.to.stream, f_string_eol_s[0], entry_action->type == controller_entry_action_type_consider ? "Considering" : "Processing", is_entry ? controller_entry_s : controller_exit_s);
+              fl_print_format("%c%s %s item rule ", global->main->output.to.stream, f_string_eol_s[0], entry_action->type == controller_entry_action_type_consider_e ? "Considering" : "Processing", is_entry ? controller_entry_s : controller_exit_s);
               fl_print_format("'%[%Q%]'", global->main->output.to.stream, global->main->context.set.title, alias_rule, global->main->context.set.title);
 
-              if (entry->show == controller_entry_show_init && global->main->parameters[controller_parameter_simulate].result == f_console_result_none) {
+              if (entry->show == controller_entry_show_init_e && global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e) {
                 fl_print_format(" [%[%s%]]", global->main->output.to.stream, global->main->context.set.notable, entry_action->code == controller_entry_rule_code_asynchronous_d ? controller_asynchronous_s : controller_synchronous_s, global->main->context.set.notable);
 
                 if (entry_action->code == controller_entry_rule_code_wait_d) {
@@ -1310,7 +1310,7 @@ extern "C" {
             }
 
             if (F_status_is_error(status)) {
-              if (global->main->error.verbosity != f_console_verbosity_quiet) {
+              if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->error.to, global->thread);
 
                 controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
@@ -1321,7 +1321,7 @@ extern "C" {
               // Designate the action as failed.
               entry_action->status = F_status_set_error(F_failure);
 
-              if (global->main->parameters[controller_parameter_simulate].result == f_console_result_none) {
+              if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e) {
                 f_thread_unlock(&global->thread->lock.rule);
 
                 if (entry_action->code & controller_entry_rule_code_require_d) {
@@ -1343,7 +1343,7 @@ extern "C" {
             options_force = 0;
             options_process = 0;
 
-            if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found) {
+            if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
               options_process |= controller_process_option_simulate_d;
             }
 
@@ -1355,32 +1355,32 @@ extern "C" {
               options_process |= controller_process_option_wait_d;
             }
 
-            if (global->main->parameters[controller_parameter_validate].result == f_console_result_found) {
+            if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_found_e) {
               options_process |= controller_process_option_validate_d;
             }
 
             if (entry_action->code & controller_entry_rule_code_asynchronous_d) {
-              if (global->main->parameters[controller_parameter_validate].result == f_console_result_none) {
+              if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
                 options_force |= controller_process_option_asynchronous_d;
               }
 
               options_process |= controller_process_option_asynchronous_d;
             }
 
-            status = controller_rule_process_begin(options_force, alias_rule, controller_entry_action_type_to_rule_action_type(entry_action->type), options_process, is_entry ? controller_process_type_entry : controller_process_type_exit, stack, *global, *cache);
+            status = controller_rule_process_begin(options_force, alias_rule, controller_entry_action_type_to_rule_action_type(entry_action->type), options_process, is_entry ? controller_process_type_entry_e : controller_process_type_exit_e, stack, *global, *cache);
 
             if (F_status_set_fine(status) == F_memory_not || status == F_child || F_status_set_fine(status) == F_interrupt) {
               break;
             }
 
-            if (F_status_is_error(status) && global->main->parameters[controller_parameter_simulate].result == f_console_result_none && (entry_action->code & controller_entry_rule_code_require_d)) {
+            if (F_status_is_error(status) && global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e && (entry_action->code & controller_entry_rule_code_require_d)) {
               return F_status_set_error(F_require);
             }
           }
         }
-        else if (entry_action->type == controller_entry_action_type_execute) {
-          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || global->main->error.verbosity == f_console_verbosity_debug || entry->show == controller_entry_show_init) {
-            if (global->main->output.verbosity != f_console_verbosity_quiet) {
+        else if (entry_action->type == controller_entry_action_type_execute_e) {
+          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || entry->show == controller_entry_show_init_e) {
+            if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
               fl_print_format("%c%s is executing '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
@@ -1400,16 +1400,16 @@ extern "C" {
             }
           }
 
-          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found) {
+          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
             return F_execute;
           }
 
-          controller_thread_process_cancel(is_entry, is_entry ? controller_thread_cancel_execute : controller_thread_cancel_exit_execute, global, process);
+          controller_thread_process_cancel(is_entry, is_entry ? controller_thread_cancel_execute_e : controller_thread_cancel_exit_execute_e, global, process);
 
           int result = 0;
           int option = FL_execute_parameter_option_path_d;
 
-          if (entry->session == controller_entry_session_new) {
+          if (entry->session == controller_entry_session_new_e) {
             option |= FL_execute_parameter_option_session_d;
           }
 
@@ -1417,7 +1417,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_file_found_not) {
-              if (global->main->error.verbosity != f_console_verbosity_quiet) {
+              if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->error.to, global->thread);
 
                 fl_print_format("%c%[%SExecution failed, unable to find program or script '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, global->main->error.context);
@@ -1436,7 +1436,7 @@ extern "C" {
             return F_status_set_error(F_execute);
           }
           else if (result != 0) {
-            if (global->main->error.verbosity != f_console_verbosity_quiet) {
+            if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->error.to, global->thread);
 
               fl_print_format("%c%[%SExecution failed with return value of '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, global->main->error.context);
@@ -1453,7 +1453,7 @@ extern "C" {
 
           return F_execute;
         }
-        else if (entry_action->type == controller_entry_action_type_timeout) {
+        else if (entry_action->type == controller_entry_action_type_timeout_e) {
           const f_string_t suffix = " MegaTime (milliseconds)";
 
           if (entry_action->code == controller_entry_timeout_code_kill_d) {
@@ -1472,10 +1472,10 @@ extern "C" {
             controller_entry_preprocess_print_simulate_setting_value(is_entry, *global, controller_timeout_s, controller_stop_s, entry->items.array[global->setting->failsafe_item_id].name, suffix);
           }
         }
-        else if (entry_action->type == controller_entry_action_type_failsafe) {
+        else if (entry_action->type == controller_entry_action_type_failsafe_e) {
 
           if (failsafe) {
-            if (global->main->warning.verbosity == f_console_verbosity_debug) {
+            if (global->main->warning.verbosity == f_console_verbosity_debug_e) {
               controller_lock_print(global->main->warning.to, global->thread);
 
               fl_print_format("%c%[%SFailsafe may not be specified when running in failsafe, ignoring.%]%c", global->main->warning.to.stream, f_string_eol_s[0], global->main->warning.context, global->main->warning.prefix ? global->main->warning.prefix : f_string_empty_s, global->main->warning.context, f_string_eol_s[0]);
@@ -1489,7 +1489,7 @@ extern "C" {
             if (entry_action->number == 0 || entry_action->number >= entry->items.used) {
 
               // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
-              if (global->main->error.verbosity != f_console_verbosity_quiet) {
+              if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->error.to, global->thread);
 
                 fl_print_format("%c%[%SInvalid %s item index '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, is_entry ? controller_entry_s : controller_exit_s, global->main->error.context);
@@ -1562,7 +1562,7 @@ extern "C" {
     }
 
     // check to see if any required processes failed, but do not do this if already operating in failsafe.
-    if (F_status_is_error_not(status) && !failsafe && global->main->parameters[controller_parameter_validate].result == f_console_result_none) {
+    if (F_status_is_error_not(status) && !failsafe && global->main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
       const f_status_t status_wait = controller_rule_wait_all(is_entry, *global, F_true, 0);
 
       if (F_status_is_error(status_wait)) {
@@ -1574,7 +1574,7 @@ extern "C" {
       }
     }
 
-    if ((global->main->parameters[controller_parameter_simulate].result == f_console_result_found && global->main->error.verbosity != f_console_verbosity_quiet) || global->main->error.verbosity == f_console_verbosity_verbose) {
+    if ((global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e && global->main->error.verbosity != f_console_verbosity_quiet_e) || global->main->error.verbosity == f_console_verbosity_verbose_e) {
       controller_lock_print(global->main->output.to, global->thread);
 
       fl_print_format("%cDone processing %s item '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
@@ -1604,10 +1604,10 @@ extern "C" {
     entry->items.used = 0;
 
     if (global.main->as_init) {
-      entry->session = controller_entry_session_new;
+      entry->session = controller_entry_session_new_e;
     }
     else {
-      entry->session = controller_entry_session_same;
+      entry->session = controller_entry_session_same_e;
     }
 
     cache->action.line_action = 0;
@@ -1676,7 +1676,7 @@ extern "C" {
         }
       }
       else {
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
           fll_print_format("%c%[%SThe %s file is empty.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s[0]);
@@ -1756,7 +1756,7 @@ extern "C" {
           for (j = (code & 0x1) ? 1 : 0; j < entry->items.used; ++j) {
 
             if (fl_string_dynamic_compare(entry->items.array[j].name, cache->action.name_item) == F_equal_to) {
-              if (global.main->warning.verbosity == f_console_verbosity_debug) {
+              if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
                 controller_lock_print(global.main->warning.to, global.thread);
 
                 fl_print_format("%c%[%SIgnoring duplicate %s item '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
@@ -1839,7 +1839,7 @@ extern "C" {
           cache->action.name_item.used = 0;
 
           if (!(code & 0x1)) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet) {
+            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%c%[%SThe required %s item '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -1873,7 +1873,7 @@ extern "C" {
                 // only process actions that don't already have an error.
                 if (F_status_is_error(action->status)) continue;
 
-                if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
+                if (action->type == controller_entry_action_type_failsafe_e || action->type == controller_entry_action_type_item_e) {
                   missing |= 0x1;
 
                   for (k = 0; k < entry->items.used; ++k) {
@@ -1900,7 +1900,7 @@ extern "C" {
                       break;
                     }
 
-                    if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                    if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                       controller_lock_print(global.main->error.to, global.thread);
 
                       fl_print_format("%c%[%SThe required %s item '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -2006,10 +2006,10 @@ extern "C" {
         }
 
         if (fl_string_dynamic_partial_compare_string(controller_service_s, cache->buffer_file, controller_service_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          global.setting->mode = controller_setting_mode_service;
+          global.setting->mode = controller_setting_mode_service_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_program_s, cache->buffer_file, controller_program_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          global.setting->mode = controller_setting_mode_program;
+          global.setting->mode = controller_setting_mode_program_e;
         }
         else {
           controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);
@@ -2025,13 +2025,13 @@ extern "C" {
         }
 
         if (fl_string_dynamic_partial_compare_string(controller_disable_s, cache->buffer_file, controller_disable_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          entry->pid = controller_entry_pid_disable;
+          entry->pid = controller_entry_pid_disable_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_ready_s, cache->buffer_file, controller_ready_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          entry->pid = controller_entry_pid_ready;
+          entry->pid = controller_entry_pid_ready_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_require_s, cache->buffer_file, controller_require_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          entry->pid = controller_entry_pid_require;
+          entry->pid = controller_entry_pid_require_e;
         }
         else {
           controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);
@@ -2047,10 +2047,10 @@ extern "C" {
         }
 
         if (fl_string_dynamic_partial_compare_string(controller_new_s, cache->buffer_file, controller_new_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          entry->session = controller_entry_session_new;
+          entry->session = controller_entry_session_new_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_same_s, cache->buffer_file, controller_same_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          entry->session = controller_entry_session_same;
+          entry->session = controller_entry_session_same_e;
         }
         else {
           controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);
@@ -2066,10 +2066,10 @@ extern "C" {
         }
 
         if (fl_string_dynamic_partial_compare_string(controller_normal_s, cache->buffer_file, controller_normal_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          entry->show = controller_entry_show_normal;
+          entry->show = controller_entry_show_normal_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_init_s, cache->buffer_file, controller_init_s_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          entry->show = controller_entry_show_init;
+          entry->show = controller_entry_show_init_e;
         }
         else {
           controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);
@@ -2078,7 +2078,7 @@ extern "C" {
         }
       }
       else {
-        if (global.main->warning.verbosity == f_console_verbosity_debug) {
+        if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
           controller_entry_settings_read_print_setting_unknown_action(is_entry, global, *cache);
         }
 

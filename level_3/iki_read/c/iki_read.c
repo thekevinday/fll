@@ -74,7 +74,7 @@ extern "C" {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, iki_read_total_parameters_d);
 
       {
-        f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color, iki_read_parameter_light, iki_read_parameter_dark };
+        f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color_e, iki_read_parameter_light_e, iki_read_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -102,7 +102,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
-          if (main->error.verbosity == f_console_verbosity_verbose) {
+          if (main->error.verbosity == f_console_verbosity_verbose_e) {
             fll_print_character(f_string_eol_s[0], main->error.to.stream);
           }
 
@@ -114,7 +114,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { iki_read_parameter_verbosity_quiet, iki_read_parameter_verbosity_normal, iki_read_parameter_verbosity_verbose, iki_read_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { iki_read_parameter_verbosity_quiet_e, iki_read_parameter_verbosity_normal_e, iki_read_parameter_verbosity_verbose_e, iki_read_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -128,32 +128,32 @@ extern "C" {
           return status;
         }
 
-        if (choice == iki_read_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == iki_read_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == iki_read_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == iki_read_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == iki_read_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == iki_read_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == iki_read_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == iki_read_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    if (main->parameters[iki_read_parameter_help].result == f_console_result_found) {
+    if (main->parameters[iki_read_parameter_help_e].result == f_console_result_found_e) {
       iki_read_print_help(main->output.to, main->context);
 
       iki_read_main_delete(main);
@@ -161,7 +161,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[iki_read_parameter_version].result == f_console_result_found) {
+    if (main->parameters[iki_read_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, iki_read_program_version_s);
 
       iki_read_main_delete(main);
@@ -170,8 +170,8 @@ extern "C" {
     }
 
     if (main->remaining.used > 0 || main->process_pipe) {
-      if (main->parameters[iki_read_parameter_at].result == f_console_result_found) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_read_parameter_at_e].result == f_console_result_found_e) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -183,8 +183,8 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[iki_read_parameter_at].result == f_console_result_additional) {
-        const f_array_length_t index = main->parameters[iki_read_parameter_at].values.array[main->parameters[iki_read_parameter_at].values.used - 1];
+      else if (main->parameters[iki_read_parameter_at_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters[iki_read_parameter_at_e].values.array[main->parameters[iki_read_parameter_at_e].values.used - 1];
         const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -199,8 +199,8 @@ extern "C" {
 
         main->at = number;
 
-        if (main->parameters[iki_read_parameter_whole].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->parameters[iki_read_parameter_whole_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -216,8 +216,8 @@ extern "C" {
         }
       }
 
-      if (main->parameters[iki_read_parameter_line].result == f_console_result_found) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_read_parameter_line_e].result == f_console_result_found_e) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -229,8 +229,8 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[iki_read_parameter_line].result == f_console_result_additional) {
-        const f_array_length_t index = main->parameters[iki_read_parameter_line].values.array[main->parameters[iki_read_parameter_line].values.used - 1];
+      else if (main->parameters[iki_read_parameter_line_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters[iki_read_parameter_line_e].values.array[main->parameters[iki_read_parameter_line_e].values.used - 1];
         const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -246,8 +246,8 @@ extern "C" {
         main->line = number;
       }
 
-      if (main->parameters[iki_read_parameter_name].result == f_console_result_found) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_read_parameter_name_e].result == f_console_result_found_e) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -260,9 +260,9 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (main->parameters[iki_read_parameter_substitute].result != f_console_result_none) {
-        if (main->parameters[iki_read_parameter_substitute].result == f_console_result_found || main->parameters[iki_read_parameter_substitute].values.used % 3 != 0) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_read_parameter_substitute_e].result != f_console_result_none_e) {
+        if (main->parameters[iki_read_parameter_substitute_e].result == f_console_result_found_e || main->parameters[iki_read_parameter_substitute_e].values.used % 3 != 0) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -275,8 +275,8 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        if (main->parameters[iki_read_parameter_total].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->parameters[iki_read_parameter_total_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -292,9 +292,9 @@ extern "C" {
         }
       }
 
-      if (main->parameters[iki_read_parameter_literal].result == f_console_result_found) {
-        if (main->parameters[iki_read_parameter_object].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_read_parameter_literal_e].result == f_console_result_found_e) {
+        if (main->parameters[iki_read_parameter_object_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -309,8 +309,8 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        if (main->parameters[iki_read_parameter_content].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->parameters[iki_read_parameter_content_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -325,8 +325,8 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        if (main->parameters[iki_read_parameter_total].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->parameters[iki_read_parameter_total_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -341,11 +341,11 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        main->mode = iki_read_mode_literal;
+        main->mode = iki_read_mode_literal_e;
       }
-      else if (main->parameters[iki_read_parameter_object].result == f_console_result_found) {
-        if (main->parameters[iki_read_parameter_content].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+      else if (main->parameters[iki_read_parameter_object_e].result == f_console_result_found_e) {
+        if (main->parameters[iki_read_parameter_content_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -360,8 +360,8 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        if (main->parameters[iki_read_parameter_total].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->parameters[iki_read_parameter_total_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -376,19 +376,19 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        main->mode = iki_read_mode_object;
+        main->mode = iki_read_mode_object_e;
       }
-      else if (main->parameters[iki_read_parameter_total].result == f_console_result_found) {
-        main->mode = iki_read_mode_total;
+      else if (main->parameters[iki_read_parameter_total_e].result == f_console_result_found_e) {
+        main->mode = iki_read_mode_total_e;
       }
       else {
         // this is the default behavior, so there is no reason to check for the -c/--content parameter.
-        main->mode = iki_read_mode_content;
+        main->mode = iki_read_mode_content_e;
       }
 
-      if (main->parameters[iki_read_parameter_whole].result == f_console_result_found) {
-        if (main->parameters[iki_read_parameter_total].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_read_parameter_whole_e].result == f_console_result_found_e) {
+        if (main->parameters[iki_read_parameter_total_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -405,7 +405,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           fll_print_character(f_string_eol_s[0], main->error.to.stream);
         }
 
@@ -422,7 +422,7 @@ extern "C" {
         status = f_file_read(file, &main->buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, "-", "process", fll_error_file_type_file);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, "-", "process", fll_error_file_type_file_e);
         }
         else {
           status = iki_read_process_buffer(main, arguments, "-");
@@ -454,14 +454,14 @@ extern "C" {
           status = f_file_open(arguments->argv[main->remaining.array[i]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->remaining.array[i]], "process", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->remaining.array[i]], "process", fll_error_file_type_file_e);
             break;
           }
 
           status = f_file_size_by_id(file.id, &total);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "process", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "process", fll_error_file_type_file_e);
 
             f_file_stream_close(F_true, &file);
             break;
@@ -478,7 +478,7 @@ extern "C" {
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->remaining.array[i]], "process", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->remaining.array[i]], "process", fll_error_file_type_file_e);
             break;
           }
 
@@ -491,7 +491,7 @@ extern "C" {
       }
     }
     else {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         fll_print_format("%c%[%sYou failed to specify one or more files.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
       }
 
@@ -499,7 +499,7 @@ extern "C" {
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status) || !main->mode) {
         if (F_status_set_fine(status) == F_interrupt) {
           fflush(main->output.to.stream);

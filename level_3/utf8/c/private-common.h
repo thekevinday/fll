@@ -24,13 +24,13 @@ extern "C" {
  */
 #ifndef _di_utf8_codepoint_modes_
   enum {
-    utf8_codepoint_mode_ready = 1,
-    utf8_codepoint_mode_begin,
-    utf8_codepoint_mode_number,
-    utf8_codepoint_mode_end,
-    utf8_codepoint_mode_bad,
-    utf8_codepoint_mode_bad_begin,
-    utf8_codepoint_mode_bad_end,
+    utf8_codepoint_mode_ready_e = 1,
+    utf8_codepoint_mode_begin_e,
+    utf8_codepoint_mode_number_e,
+    utf8_codepoint_mode_end_e,
+    utf8_codepoint_mode_bad_e,
+    utf8_codepoint_mode_bad_begin_e,
+    utf8_codepoint_mode_bad_end_e,
   };
 #endif // _di__utf8_codepoint_modes_
 

@@ -27,20 +27,20 @@ extern "C" {
 
 
     if (F_status_set_fine(*status) == F_interrupt) {
-      entry->setting->ready = controller_setting_ready_abort;
+      entry->setting->ready = controller_setting_ready_abort_e;
     }
     else if (F_status_is_error(*status)) {
-      entry->setting->ready = controller_setting_ready_fail;
+      entry->setting->ready = controller_setting_ready_fail_e;
     }
     else if (*status != F_child) {
       *status = controller_entry_preprocess(F_true, *entry->global, cache);
     }
 
     if (F_status_is_error_not(*status) && *status != F_child) {
-      if (main->parameters[controller_parameter_validate].result == f_console_result_none || main->parameters[controller_parameter_simulate].result == f_console_result_found) {
+      if (main->parameters[controller_parameter_validate_e].result == f_console_result_none_e || main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
 
-        if (entry->setting->entry.pid == controller_entry_pid_require && f_file_exists(entry->setting->path_pid.string) == F_true) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (entry->setting->entry.pid == controller_entry_pid_require_e && f_file_exists(entry->setting->path_pid.string) == F_true) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, entry->global->thread);
 
             fl_print_format("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
@@ -50,14 +50,14 @@ extern "C" {
             controller_unlock_print_flush(main->error.to, entry->global->thread);
           }
 
-          entry->setting->ready = controller_setting_ready_fail;
+          entry->setting->ready = controller_setting_ready_fail_e;
           *status = F_status_set_error(F_available_not);
         }
         else {
           *status = controller_entry_process(F_false, F_true, entry->global, cache);
 
           if (F_status_is_error(*status)) {
-            entry->setting->ready = controller_setting_ready_fail;
+            entry->setting->ready = controller_setting_ready_fail_e;
 
             if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->global->setting->failsafe_enabled) {
               const uint8_t original_enabled = entry->global->thread->enabled;
@@ -66,7 +66,7 @@ extern "C" {
               *status = f_thread_mutex_lock(&entry->global->thread->lock.alert);
 
               if (F_status_is_error_not(*status)) {
-                entry->global->thread->enabled = controller_thread_enabled;
+                entry->global->thread->enabled = controller_thread_enabled_e;
 
                 f_thread_mutex_unlock(&entry->global->thread->lock.alert);
               }
@@ -79,7 +79,7 @@ extern "C" {
               const f_status_t status_failsafe = controller_entry_process(F_true, F_true, entry->global, cache);
 
               if (F_status_is_error(status_failsafe)) {
-                if (main->error.verbosity != f_console_verbosity_quiet) {
+                if (main->error.verbosity != f_console_verbosity_quiet_e) {
                   controller_lock_print(main->error.to, entry->global->thread);
 
                   fl_print_format("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
@@ -107,10 +107,10 @@ extern "C" {
             }
           }
           else if (F_status_set_fine(*status) == F_interrupt) {
-            entry->setting->ready = controller_setting_ready_abort;
+            entry->setting->ready = controller_setting_ready_abort_e;
           }
           else if (*status != F_child) {
-            entry->setting->ready = controller_setting_ready_done;
+            entry->setting->ready = controller_setting_ready_done_e;
           }
         }
       }
@@ -151,25 +151,25 @@ extern "C" {
     *status = controller_entry_read(F_false, *entry->global, cache);
 
     if (F_status_set_fine(*status) == F_interrupt) {
-      entry->setting->ready = controller_setting_ready_abort;
+      entry->setting->ready = controller_setting_ready_abort_e;
     }
     else if (F_status_is_error(*status)) {
-      entry->setting->ready = controller_setting_ready_fail;
+      entry->setting->ready = controller_setting_ready_fail_e;
     }
     else if (*status == F_file_found_not) {
-      entry->setting->ready = controller_setting_ready_done;
+      entry->setting->ready = controller_setting_ready_done_e;
     }
     else if (*status != F_child) {
       *status = controller_entry_preprocess(F_false, *entry->global, cache);
     }
 
     if (F_status_is_error_not(*status) && *status != F_child && *status != F_file_found_not) {
-      if (main->parameters[controller_parameter_validate].result == f_console_result_none || main->parameters[controller_parameter_simulate].result == f_console_result_found) {
+      if (main->parameters[controller_parameter_validate_e].result == f_console_result_none_e || main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
 
         *status = controller_entry_process(F_false, F_false, entry->global, cache);
 
         if (F_status_is_error(*status)) {
-          entry->setting->ready = controller_setting_ready_fail;
+          entry->setting->ready = controller_setting_ready_fail_e;
 
           if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->global->setting->failsafe_enabled) {
 
@@ -180,7 +180,7 @@ extern "C" {
               *status = f_thread_mutex_lock(&entry->global->thread->lock.alert);
 
               if (F_status_is_error_not(*status)) {
-                entry->global->thread->enabled = controller_thread_enabled_exit;
+                entry->global->thread->enabled = controller_thread_enabled_exit_e;
 
                 f_thread_mutex_unlock(&entry->global->thread->lock.alert);
               }
@@ -194,7 +194,7 @@ extern "C" {
             const f_status_t status_failsafe = controller_entry_process(F_true, F_false, entry->global, cache);
 
             if (F_status_is_error(status_failsafe)) {
-              if (main->error.verbosity != f_console_verbosity_quiet) {
+              if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(main->error.to, entry->global->thread);
 
                 fl_print_format("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
@@ -222,10 +222,10 @@ extern "C" {
           }
         }
         else if (F_status_set_fine(*status) == F_interrupt) {
-          entry->setting->ready = controller_setting_ready_abort;
+          entry->setting->ready = controller_setting_ready_abort_e;
         }
         else if (*status != F_child) {
-          entry->setting->ready = controller_setting_ready_done;
+          entry->setting->ready = controller_setting_ready_done_e;
         }
       }
     }
@@ -244,7 +244,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(f_thread_mutex_lock(&entry->global->thread->lock.alert))) {
-      entry->global->thread->enabled = controller_thread_enabled_not;
+      entry->global->thread->enabled = controller_thread_enabled_not_e;
 
       f_thread_mutex_unlock(&entry->global->thread->lock.alert);
     }

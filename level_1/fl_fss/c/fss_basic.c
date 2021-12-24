@@ -42,7 +42,7 @@ extern "C" {
     if (status == F_none_eol) {
       ++range->start;
 
-      return FL_fss_found_content_not;
+      return F_fss_found_content_not;
     }
 
     if (status == F_none_eos) {
@@ -88,7 +88,7 @@ extern "C" {
     status = f_utf_buffer_increment(buffer, range, 1);
     if (F_status_is_error(status)) return status;
 
-    return FL_fss_found_content;
+    return F_fss_found_content;
   }
 #endif // _di_fl_fss_basic_content_read_
 
@@ -118,11 +118,11 @@ extern "C" {
       destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
     }
 
-    if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
+    if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
       if (status == F_none_stop || status == F_none_eos || status == F_data_not_stop || status == F_data_not_eos) {
         f_status_t status2 = F_none;
 
-        if (complete == f_fss_complete_full_trim) {
+        if (complete == f_fss_complete_full_trim_e) {
           status2 = private_fl_fss_basic_write_object_trim(quote ? quote : F_fss_delimit_quote_double_s, destination_used, state, destination);
 
           if (F_status_is_error(status2)) {
@@ -166,7 +166,7 @@ extern "C" {
     if (range->start > range->stop || range->start >= content.used) {
 
       // content should be terminated, even if empty.
-      if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
+      if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
         status = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status)) return status;
 
@@ -209,7 +209,7 @@ extern "C" {
       destination->string[destination->used++] = content.string[range->start];
     } // for
 
-    if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
+    if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
       destination->string[destination->used++] = f_fss_basic_close_s[0];
     }
 

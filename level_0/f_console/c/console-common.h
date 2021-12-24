@@ -20,18 +20,32 @@ extern "C" {
  * Result values that represent the type of command found.
  *
  * Here "empty" refers to '-', or '++', in that they only have the symbols (whereas '-x', or '++x' would not be empty).
+ *
+ * Historically, a "-" is used as a parameter.
+ * To be consistent with the historical use, "-" is referred to as "enable" and "+" is referred to as disable (which is the opposite of the usual mathematical interpetation of those symbols).
+ *
+ * f_console_*:
+ * - none:                A basic parameter without any prefixes attached.
+ * - short_enable:        An "enable" short parameter: "-".
+ * - short_disable:       An "disable" short parameter: "+".
+ * - long_enable:         An "enable" long parameter: "--".
+ * - long_disable:        An "disable" long parameter: "++".
+ * - empty_short_enable:  A "-" by itself, considered an "enable".
+ * - empty_short_disable: A "+" by itself, considered an "disable".
+ * - empty_long_enable:   A "--" by itself, considered an "enable".
+ * - empty_long_disable:  A "++" by itself, considered an "disable".
  */
 #ifndef _di_f_console_ids_
   enum {
-    f_console_none = 1,
-    f_console_short_enable,
-    f_console_short_disable,
-    f_console_long_enable,
-    f_console_long_disable,
-    f_console_empty_short_enable,
-    f_console_empty_short_disable,
-    f_console_empty_long_enable,
-    f_console_empty_long_disable,
+    f_console_none_e = 1,
+    f_console_short_enable_e,
+    f_console_short_disable_e,
+    f_console_long_enable_e,
+    f_console_long_disable_e,
+    f_console_empty_short_enable_e,
+    f_console_empty_short_disable_e,
+    f_console_empty_long_enable_e,
+    f_console_empty_long_disable_e,
   };
 #endif // _di_f_console_ids_
 
@@ -179,10 +193,12 @@ extern "C" {
 /**
  * Provide console type enumerations:
  *
+ * f_console_result_*:
  * - none:   Parameter not found.
  * - found:  Parameter found.
  * - values: Parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
  *
+ * f_console_type_*:
  * - normal:  Parameters using minus sign, such as '--help'.
  * - inverse: Parameters using plus sign, such as '++version'.
  * - other:   Parameters using neither minus nor plus sign, such as 'build'.
@@ -191,15 +207,15 @@ extern "C" {
   typedef uint16_t f_console_id_t;
 
   enum {
-    f_console_result_none = 1,
-    f_console_result_found,
-    f_console_result_additional,
+    f_console_result_none_e = 1,
+    f_console_result_found_e,
+    f_console_result_additional_e,
   };
 
   enum {
-    f_console_type_normal = 1,
-    f_console_type_inverse,
-    f_console_type_other,
+    f_console_type_normal_e = 1,
+    f_console_type_inverse_e,
+    f_console_type_other_e,
   };
 #endif // _di_f_console_types_t_
 
@@ -207,13 +223,19 @@ extern "C" {
  * Provide the standard verbosity codes.
  *
  * Intended to be used for the basic/standard verbosity modes for all programs following this practice.
+ *
+ * f_console_verbosity_*:
+ * - quiet:   Verbosity is set to quiet.
+ * - normal:  Verbosity is set to normal.
+ * - verbose: Verbosity is set to verbose.
+ * - debug:   Verbosity is set to debug.
  */
 #ifndef _di_f_console_verbosity_
   enum {
-    f_console_verbosity_quiet = 1,
-    f_console_verbosity_normal,
-    f_console_verbosity_verbose,
-    f_console_verbosity_debug,
+    f_console_verbosity_quiet_e = 1,
+    f_console_verbosity_normal_e,
+    f_console_verbosity_verbose_e,
+    f_console_verbosity_debug_e,
   };
 #endif // _di_f_console_verbosity_
 
@@ -256,7 +278,7 @@ extern "C" {
     f_array_lengths_t values;
   } f_console_parameter_t;
 
-  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value) { symbol_short, symbol_long, symbol_other, has_values, type_value, f_console_result_none, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
+  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value) { symbol_short, symbol_long, symbol_other, has_values, type_value, f_console_result_none_e, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
 
   #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value, result, location, location_sub, locations, locations_sub, values) { symbol_short, symbol_long, symbol_other, has_values, type_value, result, total, location, location_sub, locations, locations_sub, values }
 #endif // _di_f_console_parameter_t_

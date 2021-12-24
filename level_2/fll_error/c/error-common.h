@@ -18,12 +18,17 @@ extern "C" {
 
 /**
  * Error file types.
+ *
+ * fll_error_file_type_*:
+ * - file:      File error.
+ * - directory: Directory error.
+ * - pipe:      Pipe error.
  */
 #ifndef _di_fll_error_file_type_
   enum {
-    fll_error_file_type_file = 1,
-    fll_error_file_type_directory,
-    fll_error_file_type_pipe,
+    fll_error_file_type_file_e = 1,
+    fll_error_file_type_directory_e,
+    fll_error_file_type_pipe_e,
   };
 
   #define FLL_error_file_type_directory_s "directory"

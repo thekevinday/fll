@@ -79,7 +79,7 @@ extern "C" {
 
       // Identify priority of color parameters.
       {
-        f_console_parameter_id_t ids[3] = { utf8_parameter_no_color, utf8_parameter_light, utf8_parameter_dark };
+        f_console_parameter_id_t ids[3] = { utf8_parameter_no_color_e, utf8_parameter_light_e, utf8_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -116,7 +116,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { utf8_parameter_verbosity_quiet, utf8_parameter_verbosity_normal, utf8_parameter_verbosity_verbose, utf8_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { utf8_parameter_verbosity_quiet_e, utf8_parameter_verbosity_normal_e, utf8_parameter_verbosity_verbose_e, utf8_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -131,31 +131,31 @@ extern "C" {
           return status;
         }
 
-        if (choice == utf8_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == utf8_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == utf8_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == utf8_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == utf8_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == utf8_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == utf8_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == utf8_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       // Identify and prioritize from mode parameters.
       {
-        f_console_parameter_id_t ids[2] = { utf8_parameter_from_binary, utf8_parameter_from_codepoint };
+        f_console_parameter_id_t ids[2] = { utf8_parameter_from_binary_e, utf8_parameter_from_codepoint_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
 
@@ -170,14 +170,14 @@ extern "C" {
           return status;
         }
 
-        if (choice == utf8_parameter_from_binary) {
+        if (choice == utf8_parameter_from_binary_e) {
           if (data.mode & utf8_mode_from_codepoint_d) {
             data.mode -= utf8_mode_from_codepoint_d;
           }
 
           data.mode |= utf8_mode_from_binary_d;
         }
-        else if (choice == utf8_parameter_from_codepoint) {
+        else if (choice == utf8_parameter_from_codepoint_e) {
           if (data.mode & utf8_mode_from_binary_d) {
             data.mode -= utf8_mode_from_binary_d;
           }
@@ -188,7 +188,7 @@ extern "C" {
 
       // Identify and prioritize to mode parameters.
       {
-        f_console_parameter_id_t ids[4] = { utf8_parameter_to_binary, utf8_parameter_to_codepoint, utf8_parameter_to_combining, utf8_parameter_to_width };
+        f_console_parameter_id_t ids[4] = { utf8_parameter_to_binary_e, utf8_parameter_to_codepoint_e, utf8_parameter_to_combining_e, utf8_parameter_to_width_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -203,7 +203,7 @@ extern "C" {
           return status;
         }
 
-        if (choice == utf8_parameter_to_binary) {
+        if (choice == utf8_parameter_to_binary_e) {
           if (data.mode & utf8_mode_to_codepoint_d) {
             data.mode -= utf8_mode_to_codepoint_d;
           }
@@ -218,7 +218,7 @@ extern "C" {
 
           data.mode |= utf8_mode_to_binary_d;
         }
-        else if (choice == utf8_parameter_to_codepoint) {
+        else if (choice == utf8_parameter_to_codepoint_e) {
           if (data.mode & utf8_mode_to_binary_d) {
             data.mode -= utf8_mode_to_binary_d;
           }
@@ -233,7 +233,7 @@ extern "C" {
 
           data.mode |= utf8_mode_to_codepoint_d;
         }
-        else if (choice == utf8_parameter_to_combining) {
+        else if (choice == utf8_parameter_to_combining_e) {
           if (data.mode & utf8_mode_to_binary_d) {
             data.mode -= utf8_mode_to_binary_d;
           }
@@ -243,13 +243,13 @@ extern "C" {
           }
 
           // --to_width may be specified with --to_combining.
-          if (main->parameters[utf8_parameter_to_width].result == f_console_result_found) {
+          if (main->parameters[utf8_parameter_to_width_e].result == f_console_result_found_e) {
             data.mode |= utf8_mode_to_width_d;
           }
 
           data.mode |= utf8_mode_to_combining_d;
         }
-        else if (choice == utf8_parameter_to_width) {
+        else if (choice == utf8_parameter_to_width_e) {
           if (data.mode & utf8_mode_to_binary_d) {
             data.mode -= utf8_mode_to_binary_d;
           }
@@ -259,7 +259,7 @@ extern "C" {
           }
 
           // --to_width may be specified with --to_combining.
-          if (main->parameters[utf8_parameter_to_combining].result == f_console_result_found) {
+          if (main->parameters[utf8_parameter_to_combining_e].result == f_console_result_found_e) {
             data.mode |= utf8_mode_to_combining_d;
           }
 
@@ -270,7 +270,7 @@ extern "C" {
       status = F_none;
     }
 
-    if (main->parameters[utf8_parameter_help].result == f_console_result_found) {
+    if (main->parameters[utf8_parameter_help_e].result == f_console_result_found_e) {
       utf8_print_help(main->output.to, main->context);
 
       utf8_data_delete(&data);
@@ -279,7 +279,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[utf8_parameter_version].result == f_console_result_found) {
+    if (main->parameters[utf8_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, utf8_version_s);
 
       utf8_data_delete(&data);
@@ -289,13 +289,13 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[utf8_parameter_from_file].result == f_console_result_additional) {
+      if (main->parameters[utf8_parameter_from_file_e].result == f_console_result_additional_e) {
         f_array_length_t i = 0;
         f_array_length_t index = 0;
 
-        for (; i < main->parameters[utf8_parameter_from_file].values.used; ++i) {
+        for (; i < main->parameters[utf8_parameter_from_file_e].values.used; ++i) {
 
-          index = main->parameters[utf8_parameter_from_file].values.array[i];
+          index = main->parameters[utf8_parameter_from_file_e].values.array[i];
 
           if (arguments->argv[index][0]) {
             if (!f_file_exists(arguments->argv[index])) {
@@ -315,7 +315,7 @@ extern "C" {
           }
         } // for
       }
-      else if (main->parameters[utf8_parameter_from_file].result == f_console_result_found) {
+      else if (main->parameters[utf8_parameter_from_file_e].result == f_console_result_found_e) {
         utf8_print_error_no_value(&data, utf8_long_from_file_s);
 
         status = F_status_set_error(F_parameter);
@@ -325,31 +325,31 @@ extern "C" {
     bool valid = F_true;
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[utf8_parameter_to_file].result == f_console_result_additional) {
-        if (main->parameters[utf8_parameter_to_file].values.used > 1) {
+      if (main->parameters[utf8_parameter_to_file_e].result == f_console_result_additional_e) {
+        if (main->parameters[utf8_parameter_to_file_e].values.used > 1) {
           utf8_print_error_parameter_file_to_too_many(&data);
 
           status = F_status_set_error(F_parameter);
         }
         else {
-          data.file_name.string = arguments->argv[main->parameters[utf8_parameter_to_file].values.array[0]];
+          data.file_name.string = arguments->argv[main->parameters[utf8_parameter_to_file_e].values.array[0]];
           data.file_name.used = strnlen(data.file_name.string, PATH_MAX);
 
           if (data.file_name.used) {
             status = f_file_stream_open(data.file_name.string, "a", &data.file);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.file_name.string, "open", fll_error_file_type_file);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.file_name.string, "open", fll_error_file_type_file_e);
             }
           }
           else {
-            utf8_print_error_parameter_file_name_empty(&data, main->parameters[utf8_parameter_to_file].values.array[0]);
+            utf8_print_error_parameter_file_name_empty(&data, main->parameters[utf8_parameter_to_file_e].values.array[0]);
 
             status = F_status_set_error(F_parameter);
           }
         }
       }
-      else if (main->parameters[utf8_parameter_to_file].result == f_console_result_found) {
+      else if (main->parameters[utf8_parameter_to_file_e].result == f_console_result_found_e) {
         utf8_print_error_no_value(&data, utf8_long_to_file_s);
 
         status = F_status_set_error(F_parameter);
@@ -360,14 +360,14 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[utf8_parameter_from_file].result == f_console_result_none && !(main->process_pipe || main->remaining.used)) {
+      if (main->parameters[utf8_parameter_from_file_e].result == f_console_result_none_e && !(main->process_pipe || main->remaining.used)) {
         utf8_print_error_no_from(&data);
 
         status = F_status_set_error(F_parameter);
       }
 
       if (!(data.mode & utf8_mode_to_binary_d)) {
-        if (main->parameters[utf8_parameter_separate].result == f_console_result_found || main->parameters[utf8_parameter_headers].result == f_console_result_found) {
+        if (main->parameters[utf8_parameter_separate_e].result == f_console_result_found_e || main->parameters[utf8_parameter_headers_e].result == f_console_result_found_e) {
           data.prepend = "  ";
           data.append = f_string_eol_s;
         }
@@ -398,17 +398,17 @@ extern "C" {
         }
 
         if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment) {
-          fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, 0, utf8_string_process_s, fll_error_file_type_pipe);
+          fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, 0, utf8_string_process_s, fll_error_file_type_pipe_e);
         }
       }
 
-      if (F_status_is_error_not(status) && status != F_signal && main->parameters[utf8_parameter_from_file].result == f_console_result_additional) {
+      if (F_status_is_error_not(status) && status != F_signal && main->parameters[utf8_parameter_from_file_e].result == f_console_result_additional_e) {
         f_array_length_t i = 0;
         f_array_length_t index = 0;
 
         f_file_t file = macro_f_file_t_initialize(0, -1, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
-        for (uint16_t signal_check = 0; i < main->parameters[utf8_parameter_from_file].values.used && status != F_signal; ++i) {
+        for (uint16_t signal_check = 0; i < main->parameters[utf8_parameter_from_file_e].values.used && status != F_signal; ++i) {
 
           if (!((++signal_check) % utf8_signal_check_d)) {
             if (utf8_signal_received(&data)) {
@@ -419,14 +419,14 @@ extern "C" {
             signal_check = 0;
           }
 
-          index = main->parameters[utf8_parameter_from_file].values.array[i];
+          index = main->parameters[utf8_parameter_from_file_e].values.array[i];
 
           utf8_print_section_header_file(&data, arguments->argv[index]);
 
           status = f_file_stream_open(arguments->argv[index], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[index], utf8_string_open_s, fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[index], utf8_string_open_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -440,14 +440,14 @@ extern "C" {
 
           f_file_stream_close(F_true, &file);
 
-          if (main->parameters[utf8_parameter_verify].result == f_console_result_found) {
+          if (main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) {
             if (status == F_false) {
               valid = F_false;
             }
           }
 
           if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment) {
-            fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, arguments->argv[index], utf8_string_process_s, fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, arguments->argv[index], utf8_string_process_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -475,7 +475,7 @@ extern "C" {
 
           status = utf8_process_text(&data, arguments->argv[index]);
 
-          if (main->parameters[utf8_parameter_verify].result == f_console_result_found) {
+          if (main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) {
             if (status == F_false) {
               valid = F_false;
             }
@@ -484,7 +484,7 @@ extern "C" {
       }
     }
 
-    if (main->output.verbosity != f_console_verbosity_quiet && main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e && main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
       if (status == F_signal) {
         fflush(data.file.stream);
 

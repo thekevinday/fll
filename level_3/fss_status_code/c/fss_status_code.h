@@ -27,20 +27,20 @@
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
+#include <fll/level_0/status_string.h>
 
 // fll-1 includes
 #include <fll/level_1/console.h>
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/print.h>
-#include <fll/level_1/status.h>
 #include <fll/level_1/string.h>
 
 // fll-2 includes
 #include <fll/level_2/error.h>
-#include <fll/level_2/fss_status.h>
+#include <fll/level_2/fss_status_string.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
-#include <fll/level_2/status.h>
+#include <fll/level_2/status_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -81,37 +81,37 @@ extern "C" {
   #define fss_status_code_long_number_s     "number"
 
   enum {
-    fss_status_code_parameter_help,
-    fss_status_code_parameter_light,
-    fss_status_code_parameter_dark,
-    fss_status_code_parameter_no_color,
-    fss_status_code_parameter_verbosity_quiet,
-    fss_status_code_parameter_verbosity_normal,
-    fss_status_code_parameter_verbosity_verbose,
-    fss_status_code_parameter_verbosity_debug,
-    fss_status_code_parameter_version,
+    fss_status_code_parameter_help_e,
+    fss_status_code_parameter_light_e,
+    fss_status_code_parameter_dark_e,
+    fss_status_code_parameter_no_color_e,
+    fss_status_code_parameter_verbosity_quiet_e,
+    fss_status_code_parameter_verbosity_normal_e,
+    fss_status_code_parameter_verbosity_verbose_e,
+    fss_status_code_parameter_verbosity_debug_e,
+    fss_status_code_parameter_version_e,
 
-    fss_status_code_parameter_is_fine,
-    fss_status_code_parameter_is_warning,
-    fss_status_code_parameter_is_error,
-    fss_status_code_parameter_number,
+    fss_status_code_parameter_is_fine_e,
+    fss_status_code_parameter_is_warning_e,
+    fss_status_code_parameter_is_error_e,
+    fss_status_code_parameter_number_e,
   };
 
   #define fss_status_code_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_status_code_short_is_fine_s, fss_status_code_long_is_fine_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_status_code_short_is_warning_s, fss_status_code_long_is_warning_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_status_code_short_is_error_s, fss_status_code_long_is_error_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_status_code_short_number_s, fss_status_code_long_number_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(fss_status_code_short_is_fine_s, fss_status_code_long_is_fine_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_status_code_short_is_warning_s, fss_status_code_long_is_warning_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_status_code_short_is_error_s, fss_status_code_long_is_error_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_status_code_short_number_s, fss_status_code_long_number_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define fss_status_code_total_parameters_d 13

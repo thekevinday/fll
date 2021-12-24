@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fll_status
+project_name fll_fss_status_string
 
 version_major 0
 version_minor 5
@@ -21,16 +21,16 @@ build_indexer ar
 build_indexer_arguments rcs
 build_language c
 build_libraries -lc
-build_libraries-individual -lfl_status -lfl_string -lf_conversion -lf_memory -lf_string -lf_utf
+build_libraries-individual -lfl_string -lf_conversion -lf_fss -lf_memory -lf_status_string -lf_string -lf_type_array -lf_utf
 build_libraries_shared
 build_libraries_static
-build_sources_library status.c
+build_sources_library fss_status_string.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers status.h
+build_sources_headers fss_status_string.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script

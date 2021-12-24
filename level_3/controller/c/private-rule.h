@@ -88,7 +88,7 @@ extern "C" {
  * @return
  *   The converted action type, converted into an action execute type.
  *
- *   The code controller_rule_action_type_execute__enum_size is returned for unknown types.
+ *   The code controller_rule_action_type_execute__enum_size_e is returned for unknown types.
  *
  */
 #ifndef _di_controller_rule_action_type_to_action_execute_type_
@@ -204,13 +204,13 @@ extern "C" {
  *   The action to perform based on the action type codes.
  *
  *   Only subset of the action type codes are supported:
- *   - controller_rule_action_type_kill
- *   - controller_rule_action_type_pause
- *   - controller_rule_action_type_reload
- *   - controller_rule_action_type_restart
- *   - controller_rule_action_type_resume
- *   - controller_rule_action_type_start
- *   - controller_rule_action_type_stop
+ *   - controller_rule_action_type_kill_e
+ *   - controller_rule_action_type_pause_e
+ *   - controller_rule_action_type_reload_e
+ *   - controller_rule_action_type_restart_e
+ *   - controller_rule_action_type_resume_e
+ *   - controller_rule_action_type_start_e
+ *   - controller_rule_action_type_stop_e
  * @param options
  *   Process options to consider when executing.
  *   If bit controller_process_option_simulate_d, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
@@ -528,7 +528,7 @@ extern "C" {
  * @param options
  *   The process options to pass to the process.
  * @param type
- *   The process type, such as controller_process_type_entry.
+ *   The process type, such as controller_process_type_entry_e.
  * @param stack
  *   A stack representing the processes already running in this rule process dependency tree.
  *   This is used to prevent circular dependencies.

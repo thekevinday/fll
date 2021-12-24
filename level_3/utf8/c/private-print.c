@@ -16,8 +16,8 @@ extern "C" {
 #ifndef _di_utf8_print_character_invalid_
   void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) {
 
-    if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found) return;
-    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
+    if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
+    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     if (!character.used) return;
 
@@ -81,7 +81,7 @@ extern "C" {
           fl_print_format("%s%s%s", data->file.stream, data->prepend, utf8_string_combining_not_s, data->append);
         }
       }
-      else if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+      else if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_none_e && data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
         fl_print_format("%s%[%s%]%s", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
       }
     }
@@ -94,9 +94,9 @@ extern "C" {
 #ifndef _di_utf8_print_error_decode_
   void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
-    if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_found) return;
-    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
+    if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
+    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     fl_print_format("%c%[%SFailed to decode character code '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
 
@@ -127,7 +127,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_encode_
   void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const uint32_t codepoint) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%c%[%SFailed to encode Unicode codepoint '%]", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
     fl_print_format("%[U+%_U%]", data->main->error.to.stream, data->main->context.set.notable, codepoint, data->main->context.set.notable);
@@ -146,7 +146,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_no_from_
   void utf8_print_error_no_from(utf8_data_t * const data) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     fll_print_format("%c%[%sNo from sources are specified, please pipe data, designate a file, or add parameters.%]%c", data->main->error.to.stream, f_string_eol_s[0], data->main->error.context, data->main->error.prefix, data->main->error.context, f_string_eol_s[0]);
   }
@@ -155,7 +155,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_no_value_
   void utf8_print_error_no_value(utf8_data_t * const data, const f_string_t parameter) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(data->main->error.to.stream);
 
@@ -170,7 +170,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
   void utf8_print_error_parameter_file_name_empty(utf8_data_t * const data, const f_array_length_t index) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(data->main->error.to.stream);
 
@@ -185,7 +185,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_not_found_
   void utf8_print_error_parameter_file_not_found(utf8_data_t * const data, const bool from, const f_string_t name) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(data->main->error.to.stream);
 
@@ -200,7 +200,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_to_too_many_
   void utf8_print_error_parameter_file_to_too_many(utf8_data_t * const data) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     fll_print_format("%c%[%SToo many %s files specified, there may only be one to file.%]%c", data->main->error.to.stream, f_string_eol_s[0], data->main->context.set.error, data->main->error.prefix, utf8_string_to_s, data->main->context.set.error, f_string_eol_s[0]);
   }
@@ -209,8 +209,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_file_
   void utf8_print_section_header_file(utf8_data_t * const data, const f_string_t name) {
 
-    if (data->main->parameters[utf8_parameter_headers].result == f_console_result_none) return;
-    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
+    if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e) return;
+    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     flockfile(data->main->output.to.stream);
 
@@ -230,8 +230,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_parameter_
   void utf8_print_section_header_parameter(utf8_data_t * const data, const f_array_length_t index) {
 
-    if (data->main->parameters[utf8_parameter_headers].result == f_console_result_none) return;
-    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
+    if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e) return;
+    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     flockfile(data->main->output.to.stream);
 
@@ -245,8 +245,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_pipe_
   void utf8_print_section_header_pipe(utf8_data_t * const data) {
 
-    if (data->main->parameters[utf8_parameter_headers].result == f_console_result_none) return;
-    if (data->main->parameters[utf8_parameter_verify].result == f_console_result_found) return;
+    if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e) return;
+    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     fll_print_format("%c%[Pipe%]:%c", data->main->output.to.stream, f_string_eol_s[0], data->main->output.set->title, data->main->output.set->title, f_string_eol_s[0]);
   }
@@ -255,7 +255,7 @@ extern "C" {
 #ifndef _di_utf8_print_signal_received_
   void utf8_print_signal_received(utf8_data_t * const data, const f_status_t signal) {
 
-    if (data->main->warning.verbosity != f_console_verbosity_verbose) return;
+    if (data->main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(data->main->warning.to.stream);
@@ -297,7 +297,7 @@ extern "C" {
       }
     }
 
-    if (data->main->parameters[utf8_parameter_strip_invalid].result == f_console_result_none && data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+    if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_none_e && data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
       fl_print_format("%s%[%s%]%s", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
     }
   }

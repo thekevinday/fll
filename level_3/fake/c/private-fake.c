@@ -15,7 +15,7 @@ extern "C" {
 
     if (F_status_is_error(*status)) return 1;
 
-    if (main->error.verbosity == f_console_verbosity_verbose) {
+    if (main->error.verbosity == f_console_verbosity_verbose_e) {
       flockfile(main->output.to.stream);
 
       f_print_dynamic(program, main->output.to.stream);
@@ -69,7 +69,7 @@ extern "C" {
       return_code = 1;
 
       if (F_status_set_fine(*status) == F_file_found_not) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SFailed to find program '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -116,7 +116,7 @@ extern "C" {
            macro_f_string_dynamic_t_resize((status), (*buffer), size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file_e);
 
             macro_f_string_dynamic_t_delete_simple((*buffer));
 
@@ -142,7 +142,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
+      fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file_e);
 
       macro_f_string_dynamic_t_delete_simple((*buffer));
     }
@@ -160,9 +160,9 @@ extern "C" {
 
     {
       const uint8_t parameters_id[] = {
-        fake_parameter_fakefile,
-        fake_parameter_process,
-        fake_parameter_settings,
+        fake_parameter_fakefile_e,
+        fake_parameter_process_e,
+        fake_parameter_settings_e,
       };
 
       const f_string_t parameters_name[] = {
@@ -197,12 +197,12 @@ extern "C" {
 
       for (uint8_t i = 0; i < 3; ++i) {
 
-        if (main->parameters[parameters_id[i]].result == f_console_result_found) {
+        if (main->parameters[parameters_id[i]].result == f_console_result_found_e) {
           fake_print_error_parameter_missing_value(main, parameters_name[i]);
 
           return F_status_set_error(F_parameter);
         }
-        else if (main->parameters[parameters_id[i]].result == f_console_result_additional) {
+        else if (main->parameters[parameters_id[i]].result == f_console_result_additional_e) {
           if (main->parameters[parameters_id[i]].locations.used > 1) {
             fake_print_error_parameter_too_many(main, parameters_name[i]);
 
@@ -224,7 +224,7 @@ extern "C" {
                 status = f_utf_is_word_dash_plus(arguments->argv[location] + j, width_max, F_false);
 
                 if (F_status_is_error(status)) {
-                  if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+                  if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
                     flockfile(main->error.to.stream);
 
                     fl_print_format("%c%[%SFailed to process the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -238,7 +238,7 @@ extern "C" {
                 }
 
                 if (status == F_false) {
-                  if (main->error.verbosity != f_console_verbosity_quiet) {
+                  if (main->error.verbosity != f_console_verbosity_quiet_e) {
                     flockfile(main->error.to.stream);
 
                     fl_print_format("%c%[%SThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -259,7 +259,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               if (status == F_status_set_error(F_string_too_large)) {
-                if (main->error.verbosity != f_console_verbosity_quiet) {
+                if (main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(main->error.to.stream);
 
                   fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -281,7 +281,7 @@ extern "C" {
           }
 
           if (length == 0 || status == F_data_not) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
+            if (main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -307,7 +307,7 @@ extern "C" {
       } // for
     }
 
-    if (main->parameters[fake_parameter_define].result == f_console_result_found) {
+    if (main->parameters[fake_parameter_define_e].result == f_console_result_found_e) {
       fake_print_error_parameter_missing_value(main, fake_long_define_s);
 
       return F_status_set_error(F_parameter);
@@ -315,10 +315,10 @@ extern "C" {
 
     {
       const uint8_t parameters_id[] = {
-        fake_parameter_path_build,
-        fake_parameter_path_data,
-        fake_parameter_path_sources,
-        fake_parameter_path_work,
+        fake_parameter_path_build_e,
+        fake_parameter_path_data_e,
+        fake_parameter_path_sources_e,
+        fake_parameter_path_work_e,
       };
 
       const f_string_t parameters_name[] = {
@@ -351,12 +351,12 @@ extern "C" {
 
       for (uint8_t i = 0; i < 4; ++i) {
 
-        if (main->parameters[parameters_id[i]].result == f_console_result_found) {
+        if (main->parameters[parameters_id[i]].result == f_console_result_found_e) {
           fake_print_error_parameter_missing_value(main, parameters_name[i]);
 
           return F_status_set_error(F_parameter);
         }
-        else if (main->parameters[parameters_id[i]].result == f_console_result_additional) {
+        else if (main->parameters[parameters_id[i]].result == f_console_result_additional_e) {
           if (main->parameters[parameters_id[i]].values.used > 1) {
             fake_print_error_parameter_too_many(main, parameters_name[i]);
 
@@ -366,7 +366,7 @@ extern "C" {
           status = fl_console_parameter_to_string_dynamic_directory(arguments->argv[main->parameters[parameters_id[i]].values.array[0]], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(main->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(main->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%SFailed to process parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -383,7 +383,7 @@ extern "C" {
            macro_f_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(main->error, F_status_set_fine(status), " macro_f_string_dynamic_t_resize", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(main->error, F_status_set_fine(status), " macro_f_string_dynamic_t_resize", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%SFailed to load default for the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -402,11 +402,11 @@ extern "C" {
       } // for
     }
 
-    if (main->parameters[fake_parameter_define].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters[fake_parameter_define].values, &main->define);
+    if (main->parameters[fake_parameter_define_e].result == f_console_result_additional_e) {
+      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters[fake_parameter_define_e].values, &main->define);
 
       if (F_status_is_error(status)) {
-        if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+        if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SFailed to process the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -420,15 +420,15 @@ extern "C" {
       }
     }
 
-    if (main->parameters[fake_parameter_mode].result == f_console_result_found) {
+    if (main->parameters[fake_parameter_mode_e].result == f_console_result_found_e) {
       fake_print_error_parameter_missing_value(main, fake_long_mode_s);
       return F_status_set_error(F_parameter);
     }
-    else if (main->parameters[fake_parameter_mode].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters[fake_parameter_mode].values, &main->mode);
+    else if (main->parameters[fake_parameter_mode_e].result == f_console_result_additional_e) {
+      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters[fake_parameter_mode_e].values, &main->mode);
 
       if (F_status_is_error(status)) {
-        if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+        if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SFailed to process the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -454,7 +454,7 @@ extern "C" {
           status = f_utf_is_word_dash_plus(main->mode.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%SFailed to process the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -468,7 +468,7 @@ extern "C" {
           }
 
           if (status == F_false) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
+            if (main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%SThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -595,7 +595,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) != F_directory_found_not || parameters_required[i]) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i]->string, "access", fll_error_file_type_directory);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i]->string, "access", fll_error_file_type_directory_e);
 
             return status;
           }

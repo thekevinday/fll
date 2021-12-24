@@ -66,7 +66,7 @@ extern "C" {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_identify_total_parameters_d);
 
       {
-        f_console_parameter_id_t ids[3] = { fss_identify_parameter_no_color, fss_identify_parameter_light, fss_identify_parameter_dark };
+        f_console_parameter_id_t ids[3] = { fss_identify_parameter_no_color_e, fss_identify_parameter_light_e, fss_identify_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -92,7 +92,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
             fll_print_character(f_string_eol_s[0], main->error.to.stream);
           }
@@ -105,7 +105,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { fss_identify_parameter_verbosity_quiet, fss_identify_parameter_verbosity_normal, fss_identify_parameter_verbosity_verbose, fss_identify_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { fss_identify_parameter_verbosity_quiet_e, fss_identify_parameter_verbosity_normal_e, fss_identify_parameter_verbosity_verbose_e, fss_identify_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -117,32 +117,32 @@ extern "C" {
           return status;
         }
 
-        if (choice == fss_identify_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == fss_identify_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == fss_identify_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == fss_identify_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == fss_identify_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == fss_identify_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == fss_identify_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == fss_identify_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    if (main->parameters[fss_identify_parameter_help].result == f_console_result_found) {
+    if (main->parameters[fss_identify_parameter_help_e].result == f_console_result_found_e) {
       fss_identify_print_help(main->output.to, main->context);
 
       fss_identify_main_delete(main);
@@ -150,7 +150,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[fss_identify_parameter_version].result == f_console_result_found) {
+    if (main->parameters[fss_identify_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, fss_identify_program_version);
 
       fss_identify_main_delete(main);
@@ -161,7 +161,7 @@ extern "C" {
     fss_identify_data_t data = fss_identify_data_t_initialize;
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_identify_parameter_line].result == f_console_result_found) {
+      if (main->parameters[fss_identify_parameter_line_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -172,8 +172,8 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[fss_identify_parameter_line].result == f_console_result_additional) {
-        const f_array_length_t index = main->parameters[fss_identify_parameter_line].values.array[main->parameters[fss_identify_parameter_line].values.used - 1];
+      else if (main->parameters[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters[fss_identify_parameter_line_e].values.array[main->parameters[fss_identify_parameter_line_e].values.used - 1];
         const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], f_console_parameter_size));
 
         status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &data.line);
@@ -184,8 +184,8 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status) && main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
-      if (main->parameters[fss_identify_parameter_object].result == f_console_result_found) {
+    if (F_status_is_error_not(status) && main->parameters[fss_identify_parameter_total_e].result == f_console_result_found_e) {
+      if (main->parameters[fss_identify_parameter_object_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -198,7 +198,7 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[fss_identify_parameter_content].result == f_console_result_found) {
+      else if (main->parameters[fss_identify_parameter_content_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -214,7 +214,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_identify_parameter_name].result == f_console_result_found) {
+      if (main->parameters[fss_identify_parameter_name_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -225,8 +225,8 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[fss_identify_parameter_name].result == f_console_result_additional) {
-        const f_array_length_t index = main->parameters[fss_identify_parameter_name].values.array[main->parameters[fss_identify_parameter_name].values.used - 1];
+      else if (main->parameters[fss_identify_parameter_name_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters[fss_identify_parameter_name_e].values.array[main->parameters[fss_identify_parameter_name_e].values.used - 1];
         const f_array_length_t length = strnlen(arguments->argv[index], f_console_parameter_size);
         const f_string_range_t range = macro_f_string_range_t_initialize(length);
 
@@ -312,7 +312,7 @@ extern "C" {
           signal_check = 0;
         }
 
-        if (main->parameters[fss_identify_parameter_line].result == f_console_result_additional) {
+        if (main->parameters[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
           if (data.current > data.line) break;
         }
 
@@ -323,7 +323,7 @@ extern "C" {
         status = f_file_stream_open(arguments->argv[main->remaining.array[i]], 0, &file);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file_e);
         }
         else {
           status = fss_identify_load_line(main, file, arguments->argv[main->remaining.array[i]], &buffer, &range);
@@ -342,13 +342,13 @@ extern "C" {
     f_string_dynamic_resize(0, &buffer);
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
+      if (main->parameters[fss_identify_parameter_total_e].result == f_console_result_found_e) {
         fll_print_format("%ul%c", main->output.to.stream, data.total, f_string_eol_s[0]);
       }
     }
 
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_interrupt) {
           fflush(main->output.to.stream);

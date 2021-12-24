@@ -40,7 +40,7 @@ extern "C" {
         return status;
       }
     }
-    else if (data->main->parameters[utf8_parameter_verify].result == f_console_result_none) {
+    else if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
       if (data->mode & utf8_mode_to_binary_d) {
         utf8_print_binary(data, character);
       }
@@ -67,7 +67,7 @@ extern "C" {
 
     bool valid = F_true;
     bool next = F_true;
-    uint8_t mode_codepoint = utf8_codepoint_mode_ready;
+    uint8_t mode_codepoint = utf8_codepoint_mode_ready_e;
     uint16_t signal_check = 0;
 
     f_array_length_t i = 0;

@@ -68,7 +68,7 @@ extern "C" {
           return F_status_set_error(status);
         }
         else if (status == F_exist_not) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%SThe group name '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -88,7 +88,7 @@ extern "C" {
       return F_status_set_error(status);
     }
     else if (number > F_type_size_32_unsigned_d) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SThe number '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -116,7 +116,7 @@ extern "C" {
     f_status_t status = f_file_mode_from_string(buffer.string, main->umask, mode, replace);
 
     if (F_status_is_error(status)) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         if (F_status_set_fine(status) == F_syntax) {
           flockfile(main->error.to.stream);
 
@@ -159,7 +159,7 @@ extern "C" {
           return F_status_set_error(status);
         }
         else if (status == F_exist_not) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%SThe user '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -179,7 +179,7 @@ extern "C" {
       return F_status_set_error(status);
     }
     else if (number > F_type_size_32_unsigned_d) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SThe number '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);

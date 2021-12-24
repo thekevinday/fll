@@ -100,7 +100,7 @@ extern "C" {
 #ifndef _di_controller_process_prepare_process_type_
   f_status_t controller_process_prepare_process_type(const uint8_t type, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) {
 
-    return controller_process_prepare(type != controller_process_type_exit, action, alias, global, id);
+    return controller_process_prepare(type != controller_process_type_exit_e, action, alias, global, id);
   }
 #endif // _di_controller_process_prepare_process_type_
 
@@ -152,7 +152,7 @@ extern "C" {
         break;
       }
 
-      if (!controller_rule_status_is_available(process->action, process->rule) && !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+      if (!controller_rule_status_is_available(process->action, process->rule) && !(process->state == controller_process_state_active_e || process->state == controller_process_state_busy_e)) {
         f_thread_unlock(&process->lock);
 
         return F_none;

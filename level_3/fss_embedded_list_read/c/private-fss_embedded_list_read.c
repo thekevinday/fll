@@ -11,7 +11,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    const f_array_length_t values_total = main->parameters[fss_embedded_list_read_parameter_depth].values.used + main->parameters[fss_embedded_list_read_parameter_at].values.used + main->parameters[fss_embedded_list_read_parameter_name].values.used;
+    const f_array_length_t values_total = main->parameters[fss_embedded_list_read_parameter_depth_e].values.used + main->parameters[fss_embedded_list_read_parameter_at_e].values.used + main->parameters[fss_embedded_list_read_parameter_name_e].values.used;
 
     f_array_length_t values_order[values_total];
     f_array_length_t values_type[values_total];
@@ -26,73 +26,73 @@ extern "C" {
       f_array_length_t k = 0;
       f_array_length_t l = 0;
 
-      for (; j < main->parameters[fss_embedded_list_read_parameter_depth].values.used; ++j) {
+      for (; j < main->parameters[fss_embedded_list_read_parameter_depth_e].values.used; ++j) {
 
-        values_order[i] = main->parameters[fss_embedded_list_read_parameter_depth].values.array[j];
-        values_type[i++] = fss_embedded_list_read_parameter_depth;
+        values_order[i] = main->parameters[fss_embedded_list_read_parameter_depth_e].values.array[j];
+        values_type[i++] = fss_embedded_list_read_parameter_depth_e;
       } // for
 
       if (i) {
-        for (j = 0; j < main->parameters[fss_embedded_list_read_parameter_at].values.used; ++j) {
+        for (j = 0; j < main->parameters[fss_embedded_list_read_parameter_at_e].values.used; ++j) {
 
           for (k = 0; k < i; ++k) {
 
-            if (values_order[k] > main->parameters[fss_embedded_list_read_parameter_at].values.array[j]) {
+            if (values_order[k] > main->parameters[fss_embedded_list_read_parameter_at_e].values.array[j]) {
               for (l = i; l > k; --l) {
                 values_order[l] = values_order[l - 1];
                 values_type[l] = values_type[l - 1];
               } // for
 
-              values_order[k] = main->parameters[fss_embedded_list_read_parameter_at].values.array[j];
-              values_type[k] = fss_embedded_list_read_parameter_at;
+              values_order[k] = main->parameters[fss_embedded_list_read_parameter_at_e].values.array[j];
+              values_type[k] = fss_embedded_list_read_parameter_at_e;
               i++;
               break;
             }
           } // for
 
           if (k == i) {
-            values_order[i] = main->parameters[fss_embedded_list_read_parameter_at].values.array[j];
-            values_type[i++] = fss_embedded_list_read_parameter_at;
+            values_order[i] = main->parameters[fss_embedded_list_read_parameter_at_e].values.array[j];
+            values_type[i++] = fss_embedded_list_read_parameter_at_e;
           }
         } // for
       }
       else {
-        for (; j < main->parameters[fss_embedded_list_read_parameter_at].values.used; ++j) {
+        for (; j < main->parameters[fss_embedded_list_read_parameter_at_e].values.used; ++j) {
 
-          values_order[i] = main->parameters[fss_embedded_list_read_parameter_at].values.array[j];
-          values_type[i++] = fss_embedded_list_read_parameter_at;
+          values_order[i] = main->parameters[fss_embedded_list_read_parameter_at_e].values.array[j];
+          values_type[i++] = fss_embedded_list_read_parameter_at_e;
         } // for
       }
 
       if (i) {
-        for (j = 0; j < main->parameters[fss_embedded_list_read_parameter_name].values.used; ++j) {
+        for (j = 0; j < main->parameters[fss_embedded_list_read_parameter_name_e].values.used; ++j) {
 
           for (k = 0; k < i; ++k) {
 
-            if (values_order[k] > main->parameters[fss_embedded_list_read_parameter_name].values.array[j]) {
+            if (values_order[k] > main->parameters[fss_embedded_list_read_parameter_name_e].values.array[j]) {
               for (l = i; l > k; --l) {
                 values_order[l] = values_order[l - 1];
                 values_type[l] = values_type[l - 1];
               } // for
 
-              values_order[k] = main->parameters[fss_embedded_list_read_parameter_name].values.array[j];
-              values_type[k] = fss_embedded_list_read_parameter_name;
+              values_order[k] = main->parameters[fss_embedded_list_read_parameter_name_e].values.array[j];
+              values_type[k] = fss_embedded_list_read_parameter_name_e;
               i++;
               break;
             }
           } // for
 
           if (k == i) {
-            values_order[i] = main->parameters[fss_embedded_list_read_parameter_name].values.array[j];
-            values_type[i++] = fss_embedded_list_read_parameter_name;
+            values_order[i] = main->parameters[fss_embedded_list_read_parameter_name_e].values.array[j];
+            values_type[i++] = fss_embedded_list_read_parameter_name_e;
           }
         } // for
       }
       else {
-        for (; j < main->parameters[fss_embedded_list_read_parameter_name].values.used; ++j) {
+        for (; j < main->parameters[fss_embedded_list_read_parameter_name_e].values.used; ++j) {
 
-          values_order[i] = main->parameters[fss_embedded_list_read_parameter_name].values.array[j];
-          values_type[i++] = fss_embedded_list_read_parameter_name;
+          values_order[i] = main->parameters[fss_embedded_list_read_parameter_name_e].values.array[j];
+          values_type[i++] = fss_embedded_list_read_parameter_name_e;
         } // for
       }
     }
@@ -100,8 +100,8 @@ extern "C" {
     {
       i = 1;
 
-      if (main->parameters[fss_embedded_list_read_parameter_depth].result == f_console_result_additional) {
-        i = main->parameters[fss_embedded_list_read_parameter_depth].values.used + 1;
+      if (main->parameters[fss_embedded_list_read_parameter_depth_e].result == f_console_result_additional_e) {
+        i = main->parameters[fss_embedded_list_read_parameter_depth_e].values.used + 1;
       }
 
       macro_fss_embedded_list_read_depths_t_resize(status, (*depths), i);
@@ -129,7 +129,7 @@ extern "C" {
           return F_status_set_error(F_interrupt);
         }
 
-        if (values_type[i] == fss_embedded_list_read_parameter_depth || values_type[i] == fss_embedded_list_read_parameter_at) {
+        if (values_type[i] == fss_embedded_list_read_parameter_depth_e || values_type[i] == fss_embedded_list_read_parameter_at_e) {
           const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[values_order[i]]));
 
           status = fl_conversion_string_to_number_unsigned(arguments->argv[values_order[i]], range, &number);
@@ -141,7 +141,7 @@ extern "C" {
           }
         }
 
-        if (values_type[i] == fss_embedded_list_read_parameter_depth) {
+        if (values_type[i] == fss_embedded_list_read_parameter_depth_e) {
 
           if (first_depth) {
             if (i && number) {
@@ -160,15 +160,15 @@ extern "C" {
             depths->array[depths->used].value_at = 0;
           }
         }
-        else if (values_type[i] == fss_embedded_list_read_parameter_at) {
+        else if (values_type[i] == fss_embedded_list_read_parameter_at_e) {
           depths->array[depths->used].index_at = values_order[i];
           depths->array[depths->used].value_at = number;
         }
-        else if (values_type[i] == fss_embedded_list_read_parameter_name) {
+        else if (values_type[i] == fss_embedded_list_read_parameter_name_e) {
           depths->array[depths->used].index_name = values_order[i];
           depths->array[depths->used].value_name.used = 0;
 
-          if (main->parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
+          if (main->parameters[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
             status = fl_string_rip(arguments->argv[values_order[i]], strnlen(arguments->argv[values_order[i]], f_console_parameter_size), &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
@@ -247,14 +247,14 @@ extern "C" {
       status = fll_fss_embedded_list_read(main->buffer, state, &input, &main->nest, objects_delimits, contents_delimits, comments);
 
       if (F_status_is_error(status)) {
-        // @todo detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
-        fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_embedded_list_read", F_true, filename, "process", fll_error_file_type_file);
+        // @todo detect and replace fll_error_file_type_file_e with fll_error_file_type_pipe_e as appropriate.
+        fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_embedded_list_read", F_true, filename, "process", fll_error_file_type_file_e);
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         macro_f_fss_nest_t_delete_simple(main->nest);
         macro_f_string_dynamic_t_delete_simple(main->buffer);
 
-        if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
+        if (main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
           fll_print_format("0%c", main->output.to.stream, f_string_eol_s[0]);
 
           return F_none;
@@ -283,7 +283,7 @@ extern "C" {
 
     // Requested depths cannot be greater than contents depth.
     if (depths.used > main->nest.used) {
-      if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
+      if (main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
         fll_print_format("0%c", main->output.to.stream, f_string_eol_s[0]);
 
         return F_none;
@@ -295,8 +295,8 @@ extern "C" {
     {
       f_number_unsigned_t select = 0;
 
-      if (main->parameters[fss_embedded_list_read_parameter_select].result == f_console_result_additional) {
-        const f_array_length_t index = main->parameters[fss_embedded_list_read_parameter_select].values.array[main->parameters[fss_embedded_list_read_parameter_select].values.used - 1];
+      if (main->parameters[fss_embedded_list_read_parameter_select_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters[fss_embedded_list_read_parameter_select_e].values.array[main->parameters[fss_embedded_list_read_parameter_select_e].values.used - 1];
         const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
         status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &select);
@@ -316,8 +316,8 @@ extern "C" {
 
     f_array_length_t line = 0;
 
-    if (main->parameters[fss_embedded_list_read_parameter_line].result == f_console_result_additional) {
-      const f_array_length_t index = main->parameters[fss_embedded_list_read_parameter_line].values.array[main->parameters[fss_embedded_list_read_parameter_line].values.used - 1];
+    if (main->parameters[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
+      const f_array_length_t index = main->parameters[fss_embedded_list_read_parameter_line_e].values.array[main->parameters[fss_embedded_list_read_parameter_line_e].values.used - 1];
       const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &line);
@@ -334,7 +334,7 @@ extern "C" {
     const fss_embedded_list_read_skip_t parents = fss_embedded_list_read_skip_t_initialize;
 
 
-    if (main->parameters[fss_embedded_list_read_parameter_raw].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_raw_e].result == f_console_result_found_e) {
       f_fss_delimits_t except_none = f_fss_delimits_t_initialize;
 
       return fss_embedded_list_read_main_process_for_depth(main, arguments, filename, depths, 0, line, parents, &except_none, &except_none);
@@ -386,7 +386,7 @@ extern "C" {
         if (depths.array[depths_index].value_at < items->used && !skip[depths.array[depths_index].value_at]) {
           if (depths.array[depths_index].index_name) {
 
-            if (main->parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
+            if (main->parameters[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
 
               if (fl_string_dynamic_partial_compare_except_trim_dynamic(depths.array[depths_index].value_name, main->buffer, items->array[depths.array[depths_index].value_at].object, except_none, *objects_delimits) != F_equal_to) {
                 skip[depths.array[depths_index].value_at] = F_true;
@@ -401,7 +401,7 @@ extern "C" {
         }
       }
       else {
-        if (main->parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
+        if (main->parameters[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
           for (i = 0; i < items->used; ++i) {
 
             if (skip[i]) continue;
@@ -494,8 +494,8 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    if (main->parameters[fss_embedded_list_read_parameter_object].result == f_console_result_found) {
-      if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_object_e].result == f_console_result_found_e) {
+      if (main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
         f_array_length_t total = 0;
 
         for (i = 0; i < items->used; ++i) {
@@ -511,7 +511,7 @@ extern "C" {
 
       f_status_t (*print_object)(const f_string_static_t, const f_string_range_t, const f_array_lengths_t, FILE *) = &f_print_except_dynamic_partial;
 
-      if (main->parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
+      if (main->parameters[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
         print_object = &fl_print_trim_except_dynamic_partial;
       }
 
@@ -523,7 +523,7 @@ extern "C" {
 
         print_object(main->buffer, items->array[i].object, *objects_delimits, main->output.to.stream);
 
-        if (main->parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
+        if (main->parameters[fss_embedded_list_read_parameter_content_e].result == f_console_result_found_e) {
           fss_embedded_list_read_print_object_end(main);
 
           if (items->array[i].content.used) {
@@ -542,11 +542,11 @@ extern "C" {
     // process contents.
     bool include_empty = 0;
 
-    if (main->parameters[fss_embedded_list_read_parameter_empty].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_empty_e].result == f_console_result_found_e) {
       include_empty = 1;
     }
 
-    if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
       f_array_length_t total = 0;
 
       for (i = 0; i < items->used; ++i) {
@@ -580,7 +580,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[fss_embedded_list_read_parameter_line].result == f_console_result_additional) {
+    if (main->parameters[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
       f_array_length_t line_current = 0;
 
       flockfile(main->output.to.stream);
@@ -658,7 +658,7 @@ extern "C" {
 
       f_print_except_dynamic_partial(main->buffer, items->array[i].content.array[0], *contents_delimits, main->output.to.stream);
 
-      if (main->parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
+      if (main->parameters[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
         f_print_character(fss_embedded_list_read_pipe_content_end_s, main->output.to.stream);
       }
     } // for
@@ -672,11 +672,11 @@ extern "C" {
 #ifndef _di_fss_embedded_list_read_print_object_end_
   void fss_embedded_list_read_print_object_end(fss_embedded_list_read_main_t * const main) {
 
-    if (main->parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_embedded_list_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
-      if (main->parameters[fss_embedded_list_read_parameter_object].result == f_console_result_found && main->parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
+      if (main->parameters[fss_embedded_list_read_parameter_object_e].result == f_console_result_found_e && main->parameters[fss_embedded_list_read_parameter_content_e].result == f_console_result_found_e) {
         f_print_character(f_fss_embedded_list_open_s[0], main->output.to.stream);
         f_print_character(f_fss_embedded_list_open_end_s[0], main->output.to.stream);
       }
@@ -690,7 +690,7 @@ extern "C" {
 #ifndef _di_fss_embedded_list_read_print_content_ignore_
   void fss_embedded_list_read_print_content_ignore(fss_embedded_list_read_main_t * const main) {
 
-    if (main->parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_embedded_list_read_pipe_content_ignore_s, main->output.to.stream);
     }
   }
@@ -699,11 +699,11 @@ extern "C" {
 #ifndef _di_fss_embedded_list_read_print_set_end_
   void fss_embedded_list_read_print_set_end(fss_embedded_list_read_main_t * const main) {
 
-    if (main->parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
+    if (main->parameters[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_embedded_list_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
-      if (main->parameters[fss_embedded_list_read_parameter_object].result == f_console_result_found && main->parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
+      if (main->parameters[fss_embedded_list_read_parameter_object_e].result == f_console_result_found_e && main->parameters[fss_embedded_list_read_parameter_content_e].result == f_console_result_found_e) {
         f_print_character(f_fss_embedded_list_close_s[0], main->output.to.stream);
         f_print_character(f_fss_embedded_list_close_end_s[0], main->output.to.stream);
       }
@@ -719,18 +719,18 @@ extern "C" {
 
     if (!main->nest.used) return;
 
-    if ((!objects_delimits->used && !contents_delimits->used) || main->delimit_mode == fss_embedded_list_read_delimit_mode_all) return;
+    if ((!objects_delimits->used && !contents_delimits->used) || main->delimit_mode == fss_embedded_list_read_delimit_mode_all_e) return;
 
-    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_lesser && main->nest.used < main->delimit_depth) return;
-    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_greater && main->delimit_depth == 0) return;
+    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_lesser_e && main->nest.used < main->delimit_depth) return;
+    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_greater_e && main->delimit_depth == 0) return;
 
-    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_none) {
+    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_none_e) {
       objects_delimits->used = 0;
       contents_delimits->used = 0;
       return;
     }
 
-    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth || main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_greater) {
+    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_e || main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_greater_e) {
       if (main->delimit_depth >= main->nest.used) {
         objects_delimits->used = 0;
         contents_delimits->used = 0;
@@ -750,7 +750,7 @@ extern "C" {
     objects_delimits->used = 0;
     contents_delimits->used = 0;
 
-    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth) {
+    if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_e) {
 
       // only depth 0 objects are stored in objects_delimits.
       if (main->delimit_depth) {
@@ -764,7 +764,7 @@ extern "C" {
     }
     else {
 
-      if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_lesser) {
+      if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_lesser_e) {
 
         // only depth 0 objects are stored in objects_delimits.
         fss_embedded_list_read_process_delimits_objects(main, 0, original_objects_delimits, original_objects_used, objects_delimits);
@@ -776,7 +776,7 @@ extern "C" {
           fss_embedded_list_read_process_delimits_contents(main, i, original_contents_delimits, original_contents_used, contents_delimits);
         } // for
       }
-      else if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_greater) {
+      else if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_greater_e) {
         for (f_array_length_t i = main->delimit_depth; i < main->nest.used; ++i) {
 
           fss_embedded_list_read_process_delimits_objects(main, i, original_contents_delimits, original_contents_used, contents_delimits);

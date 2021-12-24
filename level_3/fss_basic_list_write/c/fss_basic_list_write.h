@@ -32,12 +32,10 @@
 #include <fll/level_1/console.h>
 #include <fll/level_1/fss_basic_list.h>
 #include <fll/level_1/print.h>
-#include <fll/level_1/status.h>
 #include <fll/level_1/string.h>
 
 // fll-2 includes
 #include <fll/level_2/error.h>
-#include <fll/level_2/fss_status.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
@@ -94,47 +92,47 @@ extern "C" {
   #define fss_basic_list_write_long_trim_s    "trim"
 
   enum {
-    fss_basic_list_write_parameter_help,
-    fss_basic_list_write_parameter_light,
-    fss_basic_list_write_parameter_dark,
-    fss_basic_list_write_parameter_no_color,
-    fss_basic_list_write_parameter_verbosity_quiet,
-    fss_basic_list_write_parameter_verbosity_normal,
-    fss_basic_list_write_parameter_verbosity_verbose,
-    fss_basic_list_write_parameter_verbosity_debug,
-    fss_basic_list_write_parameter_version,
+    fss_basic_list_write_parameter_help_e,
+    fss_basic_list_write_parameter_light_e,
+    fss_basic_list_write_parameter_dark_e,
+    fss_basic_list_write_parameter_no_color_e,
+    fss_basic_list_write_parameter_verbosity_quiet_e,
+    fss_basic_list_write_parameter_verbosity_normal_e,
+    fss_basic_list_write_parameter_verbosity_verbose_e,
+    fss_basic_list_write_parameter_verbosity_debug_e,
+    fss_basic_list_write_parameter_version_e,
 
-    fss_basic_list_write_parameter_file,
-    fss_basic_list_write_parameter_content,
-    fss_basic_list_write_parameter_double,
-    fss_basic_list_write_parameter_ignore,
-    fss_basic_list_write_parameter_object,
-    fss_basic_list_write_parameter_partial,
-    fss_basic_list_write_parameter_prepend,
-    fss_basic_list_write_parameter_single,
-    fss_basic_list_write_parameter_trim,
+    fss_basic_list_write_parameter_file_e,
+    fss_basic_list_write_parameter_content_e,
+    fss_basic_list_write_parameter_double_e,
+    fss_basic_list_write_parameter_ignore_e,
+    fss_basic_list_write_parameter_object_e,
+    fss_basic_list_write_parameter_partial_e,
+    fss_basic_list_write_parameter_prepend_e,
+    fss_basic_list_write_parameter_single_e,
+    fss_basic_list_write_parameter_trim_e,
   };
 
   #define fss_basic_list_write_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_file_s, fss_basic_list_write_long_file_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_content_s, fss_basic_list_write_long_content_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_double_s, fss_basic_list_write_long_double_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_ignore_s, fss_basic_list_write_long_ignore_s, 0, 2, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_object_s, fss_basic_list_write_long_object_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_partial_s, fss_basic_list_write_long_partial_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_prepend_s, fss_basic_list_write_long_prepend_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_single_s, fss_basic_list_write_long_single_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_write_short_trim_s, fss_basic_list_write_long_trim_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, F_false, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_file_s, fss_basic_list_write_long_file_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_content_s, fss_basic_list_write_long_content_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_double_s, fss_basic_list_write_long_double_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_ignore_s, fss_basic_list_write_long_ignore_s, 0, 2, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_object_s, fss_basic_list_write_long_object_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_partial_s, fss_basic_list_write_long_partial_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_prepend_s, fss_basic_list_write_long_prepend_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_single_s, fss_basic_list_write_long_single_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_write_short_trim_s, fss_basic_list_write_long_trim_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define fss_basic_list_write_total_parameters_d 18

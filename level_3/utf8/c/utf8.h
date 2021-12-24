@@ -156,56 +156,56 @@ extern "C" {
   #define utf8_long_to_width_s     "to_width"
 
   enum {
-    utf8_parameter_help,
-    utf8_parameter_light,
-    utf8_parameter_dark,
-    utf8_parameter_no_color,
-    utf8_parameter_verbosity_quiet,
-    utf8_parameter_verbosity_normal,
-    utf8_parameter_verbosity_verbose,
-    utf8_parameter_verbosity_debug,
-    utf8_parameter_version,
+    utf8_parameter_help_e,
+    utf8_parameter_light_e,
+    utf8_parameter_dark_e,
+    utf8_parameter_no_color_e,
+    utf8_parameter_verbosity_quiet_e,
+    utf8_parameter_verbosity_normal_e,
+    utf8_parameter_verbosity_verbose_e,
+    utf8_parameter_verbosity_debug_e,
+    utf8_parameter_version_e,
 
-    utf8_parameter_from_binary,
-    utf8_parameter_from_codepoint,
-    utf8_parameter_from_file,
+    utf8_parameter_from_binary_e,
+    utf8_parameter_from_codepoint_e,
+    utf8_parameter_from_file_e,
 
-    utf8_parameter_headers,
-    utf8_parameter_separate,
-    utf8_parameter_strip_invalid,
+    utf8_parameter_headers_e,
+    utf8_parameter_separate_e,
+    utf8_parameter_strip_invalid_e,
 
-    utf8_parameter_to_binary,
-    utf8_parameter_to_codepoint,
-    utf8_parameter_to_combining,
-    utf8_parameter_to_file,
-    utf8_parameter_to_width,
+    utf8_parameter_to_binary_e,
+    utf8_parameter_to_codepoint_e,
+    utf8_parameter_to_combining_e,
+    utf8_parameter_to_file_e,
+    utf8_parameter_to_width_e,
 
-    utf8_parameter_verify,
+    utf8_parameter_verify_e,
   };
 
   #define utf8_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(utf8_short_from_binary_s, utf8_long_from_binary_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_from_file_s, utf8_long_from_file_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_headers_s, utf8_long_headers_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_separate_s, utf8_long_headers_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_to_binary_s, utf8_long_to_binary_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_to_combining_s, utf8_long_to_combining_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_to_file_s, utf8_long_to_file_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_to_width_s, utf8_long_to_width_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(utf8_short_verify_s, utf8_long_verify_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(utf8_short_from_binary_s, utf8_long_from_binary_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_from_file_s, utf8_long_from_file_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_headers_s, utf8_long_headers_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_separate_s, utf8_long_headers_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_to_binary_s, utf8_long_to_binary_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_to_combining_s, utf8_long_to_combining_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_to_file_s, utf8_long_to_file_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_to_width_s, utf8_long_to_width_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(utf8_short_verify_s, utf8_long_verify_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define utf8_total_parameters_d 21

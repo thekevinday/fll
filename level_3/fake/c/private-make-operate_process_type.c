@@ -26,7 +26,7 @@ extern "C" {
     f_mode_t mode = f_mode_t_initialize;
 
     if (clone) {
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         recurse.output = data_make->main->output.to;
         recurse.verbose = fake_verbose_print_clone;
       }
@@ -34,7 +34,7 @@ extern "C" {
     else {
       macro_f_mode_t_set_default_umask(mode, data_make->main->umask);
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         recurse.output = data_make->main->output.to;
         recurse.verbose = fake_verbose_print_copy;
       }
@@ -47,7 +47,7 @@ extern "C" {
       status = f_directory_is(arguments.array[1].string);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory_e);
 
         return F_status_set_error(F_failure);
       }
@@ -87,7 +87,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status_file)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status_file), clone ? "fl_directory_clone" : "fl_directory_copy", F_true, arguments.array[i].string, clone ? "clone" : "copy", fll_error_file_type_directory);
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), clone ? "fl_directory_clone" : "fl_directory_copy", F_true, arguments.array[i].string, clone ? "clone" : "copy", fll_error_file_type_directory_e);
 
           status = F_status_set_error(F_failure);
         }
@@ -101,11 +101,11 @@ extern "C" {
         }
 
         if (F_status_is_error(status_file)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status_file), clone ? "f_file_clone" : "f_file_copy", F_true, arguments.array[i].string, clone ? "clone" : "copy", fll_error_file_type_file);
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), clone ? "f_file_clone" : "f_file_copy", F_true, arguments.array[i].string, clone ? "clone" : "copy", fll_error_file_type_file_e);
 
           status = F_status_set_error(F_failure);
         }
-        else if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+        else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
           flockfile(data_make->main->output.to.stream);
 
           fl_print_format("%c%s '%[%Q%]' to '", data_make->main->output.to.stream, f_string_eol_s[0], clone ? "Cloned" : "Copied", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
@@ -115,7 +115,7 @@ extern "C" {
         }
       }
       else if (F_status_is_error(status_file)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[i].string, "identify", fll_error_file_type_directory);
+        fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[i].string, "identify", fll_error_file_type_directory_e);
 
         return F_status_set_error(F_failure);
       }
@@ -143,7 +143,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          if (data_make->main->warning.verbosity == f_console_verbosity_verbose) {
+          if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(data_make->main->warning.to.stream);
 
             fl_print_format("%c%[%SThe file '%]", data_make->main->warning.to.stream, data_make->main->warning.prefix, f_string_eol_s[0]);
@@ -156,13 +156,13 @@ extern "C" {
           status = F_none;
         }
         else {
-          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stat", F_true, arguments.array[i].string, "delete", fll_error_file_type_file);
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stat", F_true, arguments.array[i].string, "delete", fll_error_file_type_file_e);
 
           return status;
         }
       }
       else if (macro_f_file_type_is_directory(file_stat.st_mode)) {
-        if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+        if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
           status = f_directory_remove_custom(arguments.array[i].string, recursion_max, F_false, fake_clean_remove_recursively_verbosely);
         }
         else {
@@ -170,7 +170,7 @@ extern "C" {
         }
 
         if (F_status_set_fine(status) == F_file_found_not) {
-          if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+          if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
             fll_print_format("%cThe directory '%[%Q%]' does not exist.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
           }
 
@@ -178,11 +178,11 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_remove", F_true, arguments.array[i].string, "delete", fll_error_file_type_directory);
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_remove", F_true, arguments.array[i].string, "delete", fll_error_file_type_directory_e);
 
           return status;
         }
-        else if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+        else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
           fll_print_format("%cRemoved '%[%Q%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
         }
       }
@@ -190,7 +190,7 @@ extern "C" {
         status = f_file_remove(arguments.array[i].string);
 
         if (F_status_set_fine(status) == F_file_found_not) {
-          if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+          if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
             fll_print_format("%cThe file '%[%Q%]' does not exist.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
           }
 
@@ -198,12 +198,12 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_remove", F_true, arguments.array[i].string, "delete", fll_error_file_type_file);
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_remove", F_true, arguments.array[i].string, "delete", fll_error_file_type_file_e);
 
           return status;
         }
 
-        if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+        if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
           fll_print_format("%cRemoved '%[%Q%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
         }
       }
@@ -217,7 +217,7 @@ extern "C" {
   void fake_make_operate_process_type_fail(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) {
 
     if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit_s, arguments.array[0], fake_make_operation_argument_exit_s_length) == F_equal_to) {
-      data_make->setting_make.fail = fake_make_operation_fail_type_exit;
+      data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
       data_make->error.prefix = fl_print_error_s;
       data_make->error.suffix = 0;
       data_make->error.context = data_make->main->context.set.error;
@@ -227,7 +227,7 @@ extern "C" {
       data_make->error.set = &data_make->main->context.set;
     }
     else if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn_s, arguments.array[0], fake_make_operation_argument_warn_s_length) == F_equal_to) {
-      data_make->setting_make.fail = fake_make_operation_fail_type_warn;
+      data_make->setting_make.fail = fake_make_operation_fail_type_warn_e;
       data_make->error.prefix = fl_print_warning_s;
       data_make->error.suffix = 0;
       data_make->error.context = data_make->main->context.set.warning;
@@ -237,20 +237,20 @@ extern "C" {
       data_make->error.set = &data_make->main->context.set;
     }
     else {
-      data_make->setting_make.fail = fake_make_operation_fail_type_ignore;
+      data_make->setting_make.fail = fake_make_operation_fail_type_ignore_e;
       data_make->error.to.stream = 0;
       data_make->error.to.id = -1;
     }
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
       flockfile(data_make->main->output.to.stream);
 
       f_print_terminated("Set failure state to '", data_make->main->output.to.stream);
 
-      if (data_make->setting_make.fail == fake_make_operation_fail_type_exit) {
+      if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) {
         fl_print_format("%[%s%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_exit_s, data_make->main->context.set.notable);
       }
-      else if (data_make->setting_make.fail == fake_make_operation_fail_type_warn) {
+      else if (data_make->setting_make.fail == fake_make_operation_fail_type_warn_e) {
         fl_print_format("%[%s%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_warn_s, data_make->main->context.set.notable);
       }
       else {
@@ -297,9 +297,9 @@ extern "C" {
       if (F_status_is_error(status_file)) {
         status = status_file;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i].string, "change group of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i].string, "change group of", fll_error_file_type_file_e);
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("%s group of '%[%s%]", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
@@ -402,17 +402,17 @@ extern "C" {
       data_make->main->path_sources.used,
       F_true,
       data_make->main->path_work.used,
-      data_make->main->parameters[fake_parameter_path_build].result == f_console_result_additional,
-      data_make->main->parameters[fake_parameter_light].result == f_console_result_found || data_make->main->parameters[fake_parameter_dark].result == f_console_result_found || data_make->main->parameters[fake_parameter_no_color].result == f_console_result_found,
-      data_make->main->parameters[fake_parameter_path_data].result == f_console_result_additional,
-      data_make->main->parameters[fake_parameter_define].result == f_console_result_additional,
-      data_make->main->parameters[fake_parameter_fakefile].result == f_console_result_additional,
-      data_make->main->parameters[fake_parameter_mode].result == f_console_result_additional,
-      data_make->main->parameters[fake_parameter_process].result == f_console_result_additional,
-      data_make->main->parameters[fake_parameter_settings].result == f_console_result_additional,
-      data_make->main->parameters[fake_parameter_path_sources].result == f_console_result_additional,
-      data_make->main->parameters[fake_parameter_verbosity_quiet].result == f_console_result_found || data_make->main->parameters[fake_parameter_verbosity_normal].result == f_console_result_found || data_make->main->parameters[fake_parameter_verbosity_verbose].result == f_console_result_found || data_make->main->parameters[fake_parameter_verbosity_debug].result == f_console_result_found,
-      data_make->main->parameters[fake_parameter_path_work].result == f_console_result_additional,
+      data_make->main->parameters[fake_parameter_path_build_e].result == f_console_result_additional_e,
+      data_make->main->parameters[fake_parameter_light_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_dark_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_no_color_e].result == f_console_result_found_e,
+      data_make->main->parameters[fake_parameter_path_data_e].result == f_console_result_additional_e,
+      data_make->main->parameters[fake_parameter_define_e].result == f_console_result_additional_e,
+      data_make->main->parameters[fake_parameter_fakefile_e].result == f_console_result_additional_e,
+      data_make->main->parameters[fake_parameter_mode_e].result == f_console_result_additional_e,
+      data_make->main->parameters[fake_parameter_process_e].result == f_console_result_additional_e,
+      data_make->main->parameters[fake_parameter_settings_e].result == f_console_result_additional_e,
+      data_make->main->parameters[fake_parameter_path_sources_e].result == f_console_result_additional_e,
+      data_make->main->parameters[fake_parameter_verbosity_quiet_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_verbosity_normal_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_verbosity_verbose_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_verbosity_debug_e].result == f_console_result_found_e,
+      data_make->main->parameters[fake_parameter_path_work_e].result == f_console_result_additional_e,
       data_make->parameter_value.build.used,
       data_make->parameter_value.color.used,
       data_make->parameter_value.data.used,
@@ -427,13 +427,13 @@ extern "C" {
     };
 
     if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, argument, fake_make_operation_argument_environment_s_length) == F_equal_to) {
-      state_process->condition_result = fake_condition_result_true;
+      state_process->condition_result = fake_condition_result_true_e;
 
       if (if_not) {
         for (f_array_length_t i = 3; i < arguments.used; ++i) {
 
           if (f_environment_exists(arguments.array[i].string) == F_true) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
@@ -443,7 +443,7 @@ extern "C" {
         for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
           if (f_environment_exists(arguments.array[i].string) != F_true) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
@@ -459,7 +459,7 @@ extern "C" {
     // 0 = unknown, 1 = fail, 2 = pass.
     uint8_t result = 0;
 
-    state_process->condition_result = fake_condition_result_true;
+    state_process->condition_result = fake_condition_result_true_e;
 
     // Multiple properties may pass and so if any of them fail, then they all fail.
     for (; i < arguments.used; ++i) {
@@ -497,14 +497,14 @@ extern "C" {
 
     if (if_not) {
       if (result < 2) {
-        state_process->condition_result = fake_condition_result_true;
+        state_process->condition_result = fake_condition_result_true_e;
       }
       else {
-        state_process->condition_result = fake_condition_result_false;
+        state_process->condition_result = fake_condition_result_false_e;
       }
     }
     else if (result < 2) {
-      state_process->condition_result = fake_condition_result_false;
+      state_process->condition_result = fake_condition_result_false_e;
     }
   }
 #endif // _di_fake_make_operate_process_type_if_defined_
@@ -514,30 +514,30 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    state_process->condition_result = fake_condition_result_true;
+    state_process->condition_result = fake_condition_result_true_e;
 
     for (f_array_length_t i = if_not ? 2 : 1; i < arguments.used; ++i) {
 
       status = f_file_exists(arguments.array[i].string);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done;
+        state_process->condition_result = fake_condition_result_done_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i].string, "find", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i].string, "find", fll_error_file_type_file_e);
 
         break;
       }
 
       if (if_not) {
         if (status == F_true) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
       }
       else {
         if (status == F_false) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
@@ -599,16 +599,16 @@ extern "C" {
     uint8_t type_file = 0;
     mode_t mode_file = 0;
 
-    state_process->condition_result = fake_condition_result_true;
+    state_process->condition_result = fake_condition_result_true_e;
 
     for (; i < arguments.used; ++i, mode_file = 0) {
 
       status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done;
+        state_process->condition_result = fake_condition_result_done_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file_e);
 
         break;
       }
@@ -637,14 +637,14 @@ extern "C" {
 
       if (if_not) {
         if (type & type_file) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
       }
       else {
         if (!(type & type_file)) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
@@ -671,7 +671,7 @@ extern "C" {
 
     f_array_length_t i = 1;
 
-    state_process->condition_result = fake_condition_result_true;
+    state_process->condition_result = fake_condition_result_true_e;
 
     // @fixme This needs to handle converting numbers with decimals (like 1.01), perhaps operate on them as strings or provide a special processor.
     range.start = 0;
@@ -722,62 +722,62 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        if (state_process->condition == fake_make_operation_if_type_if_greater) {
+        if (state_process->condition == fake_make_operation_if_type_if_greater_e) {
 
           if (is_negative_left == is_negative_right) {
             if (!(number_left > number_right)) {
-              state_process->condition_result = fake_condition_result_false;
+              state_process->condition_result = fake_condition_result_false_e;
 
               break;
             }
           }
           else if (!is_negative_left && is_negative_right) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
         }
-        else if (state_process->condition == fake_make_operation_if_type_if_greater_equal) {
+        else if (state_process->condition == fake_make_operation_if_type_if_greater_equal_e) {
 
           if (is_negative_left == is_negative_right) {
             if (!(number_left >= number_right)) {
-              state_process->condition_result = fake_condition_result_false;
+              state_process->condition_result = fake_condition_result_false_e;
 
               break;
             }
           }
           else if (!is_negative_left && is_negative_right) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
         }
-        else if (state_process->condition == fake_make_operation_if_type_if_less) {
+        else if (state_process->condition == fake_make_operation_if_type_if_less_e) {
 
           if (is_negative_left == is_negative_right) {
             if (!(number_left < number_right)) {
-              state_process->condition_result = fake_condition_result_false;
+              state_process->condition_result = fake_condition_result_false_e;
 
               break;
             }
           }
           else if (is_negative_left && !is_negative_right) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
         }
-        else if (state_process->condition == fake_make_operation_if_type_if_less_equal) {
+        else if (state_process->condition == fake_make_operation_if_type_if_less_equal_e) {
 
           if (is_negative_left == is_negative_right) {
             if (!(number_left <= number_right)) {
-              state_process->condition_result = fake_condition_result_false;
+              state_process->condition_result = fake_condition_result_false_e;
 
               break;
             }
           }
           else if (is_negative_left && !is_negative_right) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
@@ -786,9 +786,9 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      state_process->condition_result = fake_condition_result_done;
+      state_process->condition_result = fake_condition_result_done_e;
 
-      if (data_make->main->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
+      if (data_make->main->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
 
         if ((i == 1 && number_left > F_number_t_size_unsigned_d) || (i > 1 && number_right > F_number_t_size_unsigned_d)) {
@@ -823,30 +823,30 @@ extern "C" {
 
     uid_t id_file = 0;
 
-    state_process->condition_result = fake_condition_result_true;
+    state_process->condition_result = fake_condition_result_true_e;
 
     for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
 
       status = f_file_group_read(arguments.array[i].string, &id_file);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done;
+        state_process->condition_result = fake_condition_result_done_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_group_read", F_true, arguments.array[i].string, "get group of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_group_read", F_true, arguments.array[i].string, "get group of", fll_error_file_type_file_e);
 
         break;
       }
 
       if (if_not) {
         if (id == id_file) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
       }
       else {
         if (id != id_file) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
@@ -877,7 +877,7 @@ extern "C" {
       status = fake_make_get_id_mode(data_make->main, data_make->error, arguments.array[if_not ? 3 : 2], &mode_rule, &mode_replace);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done;
+        state_process->condition_result = fake_condition_result_done_e;
 
         return status;
       }
@@ -885,7 +885,7 @@ extern "C" {
       status = f_file_mode_to_mode(mode_rule, &mode_match);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done;
+        state_process->condition_result = fake_condition_result_done_e;
 
         fll_error_print(data_make->error, F_status_set_fine(status), "f_file_mode_to_mode", F_true);
 
@@ -895,16 +895,16 @@ extern "C" {
 
     mode_t mode_file = 0;
 
-    state_process->condition_result = fake_condition_result_true;
+    state_process->condition_result = fake_condition_result_true_e;
 
     for (f_array_length_t i = if_not ? 4 : 3; i < arguments.used; ++i, mode_file = 0) {
 
       status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done;
+        state_process->condition_result = fake_condition_result_done_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file_e);
 
         break;
       }
@@ -912,14 +912,14 @@ extern "C" {
       if (if_not) {
         if (is) {
           if (mode_match == (mode_file & F_file_mode_all_d)) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
         }
         else {
           if (mode_match & mode_file) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
@@ -928,14 +928,14 @@ extern "C" {
       else {
         if (is) {
           if (mode_match != (mode_file & F_file_mode_all_d)) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
         }
         else {
           if (!(mode_match & mode_file)) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
@@ -958,30 +958,30 @@ extern "C" {
 
     uid_t id_file = 0;
 
-    state_process->condition_result = fake_condition_result_true;
+    state_process->condition_result = fake_condition_result_true_e;
 
     for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
 
       status = f_file_owner_read(arguments.array[i].string, &id_file);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done;
+        state_process->condition_result = fake_condition_result_done_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_owner_read", F_true, arguments.array[i].string, "get owner of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_owner_read", F_true, arguments.array[i].string, "get owner of", fll_error_file_type_file_e);
 
         break;
       }
 
       if (if_not) {
         if (id == id_file) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
       }
       else {
         if (id != id_file) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
@@ -1013,7 +1013,7 @@ extern "C" {
       status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file_e);
 
         break;
       }
@@ -1021,7 +1021,7 @@ extern "C" {
       status = f_file_mode_determine(mode_file, mode_rule, replace, macro_f_file_type_is_directory(mode_file), &mode);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_determine", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_determine", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file_e);
 
         break;
       }
@@ -1034,12 +1034,12 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_mode_set_all" : "f_file_mode_set", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_mode_set_all" : "f_file_mode_set", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file_e);
 
         break;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         fll_print_format("Changed mode of '%Q' to %#@u.%c", data_make->main->output.to.stream, arguments.array[i], mode, f_string_eol_s[0]);
       }
     } // for
@@ -1062,7 +1062,7 @@ extern "C" {
 
     f_array_length_t destination_length = 0;
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
       recurse.output = data_make->main->output.to;
       recurse.verbose = fake_verbose_print_move;
     }
@@ -1074,7 +1074,7 @@ extern "C" {
       status_file = f_directory_is(arguments.array[1].string);
 
       if (F_status_is_error(status_file)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory_e);
 
         return F_status_set_error(F_failure);
       }
@@ -1106,7 +1106,7 @@ extern "C" {
       status_file = fll_file_move(arguments.array[i].string, destination, arguments.array[i].used, destination_length, recurse);
 
       if (F_status_is_error(status_file)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "fll_file_move", F_true, arguments.array[i].string, "move", fll_error_file_type_directory);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "fll_file_move", F_true, arguments.array[i].string, "move", fll_error_file_type_directory_e);
 
         status = F_status_set_error(F_failure);
       }
@@ -1151,9 +1151,9 @@ extern "C" {
       if (F_status_is_error(status_file)) {
         status = status_file;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i].string, "change owner of", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i].string, "change owner of", fll_error_file_type_file_e);
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         fll_print_format("%s owner of '%Q' to %u.%c", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", arguments.array[i], id, f_string_eol_s[0]);
       }
     } // for
@@ -1277,7 +1277,7 @@ extern "C" {
       return 0;
     }
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
       status = fake_make_path_relative(data_make, data_make->path.stack.array[data_make->path.stack.used - 1]);
 
       // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
@@ -1342,7 +1342,7 @@ extern "C" {
         return status;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         status = fake_make_path_relative(data_make, data_make->path.stack.array[data_make->path.stack.used]);
 
         // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
@@ -1377,7 +1377,7 @@ extern "C" {
       }
     }
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
       fll_print_format("Changed to project path ''.%c", data_make->main->output.to.stream, f_string_eol_s[0]);
     }
 
@@ -1407,10 +1407,10 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (F_status_is_error_not(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
-            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_touch", F_true, data_make->path_cache.string, "touch", fll_error_file_type_file);
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_touch", F_true, data_make->path_cache.string, "touch", fll_error_file_type_file_e);
           }
           else {
-            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_touch", F_true, arguments.array[i].string, "touch", fll_error_file_type_file);
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_touch", F_true, arguments.array[i].string, "touch", fll_error_file_type_file_e);
           }
 
           break;
@@ -1421,17 +1421,17 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (F_status_is_error_not(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
-            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_touch", F_true, data_make->path_cache.string, "touch", fll_error_file_type_directory);
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_touch", F_true, data_make->path_cache.string, "touch", fll_error_file_type_directory_e);
           }
           else {
-            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_touch", F_true, arguments.array[i].string, "touch", fll_error_file_type_directory);
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_touch", F_true, arguments.array[i].string, "touch", fll_error_file_type_directory_e);
           }
 
           break;
         }
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         fll_print_format("Touched '%[%Q%]'.%c", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
       }
     } // for

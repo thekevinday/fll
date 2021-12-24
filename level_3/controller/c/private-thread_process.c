@@ -54,20 +54,20 @@ extern "C" {
     f_status_t status = f_thread_mutex_lock(&global->thread->lock.alert);
 
     if (F_status_is_error(status)) {
-      global->thread->enabled = controller_thread_enabled_not;
+      global->thread->enabled = controller_thread_enabled_not_e;
     }
     else {
-      if (by == controller_thread_cancel_execute) {
-        global->thread->enabled = controller_thread_enabled_execute;
+      if (by == controller_thread_cancel_execute_e) {
+        global->thread->enabled = controller_thread_enabled_execute_e;
       }
-      else if (by == controller_thread_cancel_exit) {
-        global->thread->enabled = controller_thread_enabled_not;
+      else if (by == controller_thread_cancel_exit_e) {
+        global->thread->enabled = controller_thread_enabled_not_e;
       }
-      else if (by == controller_thread_cancel_exit_execute) {
-        global->thread->enabled = controller_thread_enabled_exit_execute;
+      else if (by == controller_thread_cancel_exit_execute_e) {
+        global->thread->enabled = controller_thread_enabled_exit_execute_e;
       }
       else {
-        global->thread->enabled = controller_thread_enabled_exit;
+        global->thread->enabled = controller_thread_enabled_exit_e;
       }
 
       f_thread_mutex_unlock(&global->thread->lock.alert);
@@ -91,7 +91,7 @@ extern "C" {
     }
 
     // the sigtimedwait() function that is run inside of signal must be interrupted via the f_thread_cancel().
-    if (by != controller_thread_cancel_signal && global->thread->id_signal) {
+    if (by != controller_thread_cancel_signal_e && global->thread->id_signal) {
       f_thread_cancel(global->thread->id_signal);
       f_thread_join(global->thread->id_signal, 0);
 
@@ -106,7 +106,7 @@ extern "C" {
       process = global->thread->processs.array[i];
 
       // do not cancel exit processes, when not performing "execute" during exit.
-      if (process->type == controller_process_type_exit && global->thread->enabled != controller_thread_enabled_exit_execute) {
+      if (process->type == controller_process_type_exit_e && global->thread->enabled != controller_thread_enabled_exit_execute_e) {
         continue;
       }
 
@@ -137,7 +137,7 @@ extern "C" {
       process = global->thread->processs.array[i];
 
       // do not cancel exit processes, when not performing "execute" during exit.
-      if (process->type == controller_process_type_exit && global->thread->enabled != controller_thread_enabled_exit_execute) continue;
+      if (process->type == controller_process_type_exit_e && global->thread->enabled != controller_thread_enabled_exit_execute_e) continue;
 
       do {
         if (!process->id_thread) break;
@@ -200,7 +200,7 @@ extern "C" {
       process = global->thread->processs.array[i];
 
       // do not kill exit processes, when not performing "execute" during exit.
-      if (process->type == controller_process_type_exit && global->thread->enabled != controller_thread_enabled_exit_execute) continue;
+      if (process->type == controller_process_type_exit_e && global->thread->enabled != controller_thread_enabled_exit_execute_e) continue;
 
       if (process->id_thread) {
         if (process->childs.used) {
@@ -252,11 +252,11 @@ extern "C" {
 #ifndef _di_controller_thread_process_exit_
   void controller_thread_process_exit(controller_global_t *global) {
 
-    if (global->thread->enabled != controller_thread_enabled_exit) {
+    if (global->thread->enabled != controller_thread_enabled_exit_e) {
       return;
     }
 
-    if (global->setting->ready == controller_setting_ready_done) {
+    if (global->setting->ready == controller_setting_ready_done_e) {
 
       // the exit processing runs using the entry thread.
       if (global->thread->id_entry) {
@@ -276,17 +276,17 @@ extern "C" {
       f_status_t status = f_thread_create(0, &global->thread->id_entry, &controller_thread_exit, (void *) &entry);
 
       if (F_status_is_error(status)) {
-        if (global->main->error.verbosity != f_console_verbosity_quiet) {
+        if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_print_error(global->main->error, F_status_set_fine(status), "f_thread_create", F_true, global->thread);
         }
 
         if (F_status_is_error_not(f_thread_mutex_lock(&global->thread->lock.alert))) {
-          global->thread->enabled = controller_thread_enabled_not;
+          global->thread->enabled = controller_thread_enabled_not_e;
 
           f_thread_mutex_unlock(&global->thread->lock.alert);
         }
         else {
-          global->thread->enabled = controller_thread_enabled_not;
+          global->thread->enabled = controller_thread_enabled_not_e;
         }
       }
       else {
@@ -296,7 +296,7 @@ extern "C" {
           status = f_thread_mutex_lock(&global->thread->lock.alert);
 
           if (F_status_is_error(status)) {
-            global->thread->enabled = controller_thread_enabled_not;
+            global->thread->enabled = controller_thread_enabled_not_e;
 
             break;
           }
@@ -307,16 +307,16 @@ extern "C" {
 
           f_thread_mutex_unlock(&global->thread->lock.alert);
 
-        } while (F_status_is_error_not(status) && global->thread->enabled == controller_thread_enabled_exit);
+        } while (F_status_is_error_not(status) && global->thread->enabled == controller_thread_enabled_exit_e);
 
         if (F_status_is_error(status)) {
           if (F_status_is_error_not(f_thread_mutex_lock(&global->thread->lock.alert))) {
-            global->thread->enabled = controller_thread_enabled_not;
+            global->thread->enabled = controller_thread_enabled_not_e;
 
             f_thread_mutex_unlock(&global->thread->lock.alert);
           }
           else {
-            global->thread->enabled = controller_thread_enabled_not;
+            global->thread->enabled = controller_thread_enabled_not_e;
           }
         }
       }
@@ -329,16 +329,16 @@ extern "C" {
         global->thread->id_signal = 0;
       }
 
-      controller_thread_process_cancel(F_false, controller_thread_cancel_exit, global, 0);
+      controller_thread_process_cancel(F_false, controller_thread_cancel_exit_e, global, 0);
     }
     else {
       if (F_status_is_error_not(f_thread_mutex_lock(&global->thread->lock.alert))) {
-        global->thread->enabled = controller_thread_enabled_not;
+        global->thread->enabled = controller_thread_enabled_not_e;
 
         f_thread_mutex_unlock(&global->thread->lock.alert);
       }
       else {
-        global->thread->enabled = controller_thread_enabled_not;
+        global->thread->enabled = controller_thread_enabled_not_e;
       }
     }
   }

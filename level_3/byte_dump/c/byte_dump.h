@@ -78,19 +78,34 @@ extern "C" {
   #define byte_dump_default_allocation_step_d 4
 #endif // _di_byte_dump_default_allocation_step_
 
+/**
+ * Byte Dump defines.
+ *
+ * byte_dump_mode_*:
+ * - hexidecimal: Display using hexidecimal notation (base 16).
+ * - duodecimal:  Display using duodecimal notation (base 12).
+ * - octal:       Display using octal notation (base 8).
+ * - binary:      Display using binary notation (base 2).
+ * - decimal:     Display using decimal notation (base 10).
+ *
+ * byte_dump_presentation_*:
+ * - normal:  Normal presentation mode.
+ * - simple:  Simple presentation mode.
+ * - classic: Classic presentation mode.
+ */
 #ifndef _di_byte_dump_defines_
   enum {
-    byte_dump_mode_hexidecimal = 1,
-    byte_dump_mode_duodecimal,
-    byte_dump_mode_octal,
-    byte_dump_mode_binary,
-    byte_dump_mode_decimal,
+    byte_dump_mode_hexidecimal_e = 1,
+    byte_dump_mode_duodecimal_e,
+    byte_dump_mode_octal_e,
+    byte_dump_mode_binary_e,
+    byte_dump_mode_decimal_e,
   };
 
   enum {
-    byte_dump_presentation_normal = 1,
-    byte_dump_presentation_simple,
-    byte_dump_presentation_classic,
+    byte_dump_presentation_normal_e = 1,
+    byte_dump_presentation_simple_e,
+    byte_dump_presentation_classic_e,
   };
 
   #define byte_dump_option_wide_d 0x1
@@ -175,64 +190,64 @@ extern "C" {
   #define byte_dump_long_classic_s "classic" // Use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
 
   enum {
-    byte_dump_parameter_help,
-    byte_dump_parameter_light,
-    byte_dump_parameter_dark,
-    byte_dump_parameter_no_color,
-    byte_dump_parameter_verbosity_quiet,
-    byte_dump_parameter_verbosity_normal,
-    byte_dump_parameter_verbosity_verbose,
-    byte_dump_parameter_verbosity_debug,
-    byte_dump_parameter_version,
+    byte_dump_parameter_help_e,
+    byte_dump_parameter_light_e,
+    byte_dump_parameter_dark_e,
+    byte_dump_parameter_no_color_e,
+    byte_dump_parameter_verbosity_quiet_e,
+    byte_dump_parameter_verbosity_normal_e,
+    byte_dump_parameter_verbosity_verbose_e,
+    byte_dump_parameter_verbosity_debug_e,
+    byte_dump_parameter_version_e,
 
-    byte_dump_parameter_binary,
-    byte_dump_parameter_decimal,
-    byte_dump_parameter_duodecimal,
-    byte_dump_parameter_hexidecimal,
-    byte_dump_parameter_octal,
-    byte_dump_parameter_unicode,
+    byte_dump_parameter_binary_e,
+    byte_dump_parameter_decimal_e,
+    byte_dump_parameter_duodecimal_e,
+    byte_dump_parameter_hexidecimal_e,
+    byte_dump_parameter_octal_e,
+    byte_dump_parameter_unicode_e,
 
-    byte_dump_parameter_first,
-    byte_dump_parameter_last,
+    byte_dump_parameter_first_e,
+    byte_dump_parameter_last_e,
 
-    byte_dump_parameter_narrow,
-    byte_dump_parameter_placeholder,
-    byte_dump_parameter_text,
-    byte_dump_parameter_wide,
-    byte_dump_parameter_width,
+    byte_dump_parameter_narrow_e,
+    byte_dump_parameter_placeholder_e,
+    byte_dump_parameter_text_e,
+    byte_dump_parameter_wide_e,
+    byte_dump_parameter_width_e,
 
-    byte_dump_parameter_normal,
-    byte_dump_parameter_simple,
-    byte_dump_parameter_classic,
+    byte_dump_parameter_normal_e,
+    byte_dump_parameter_simple_e,
+    byte_dump_parameter_classic_e,
   };
 
   #define byte_dump_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(byte_dump_short_binary_s, byte_dump_long_binary_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_decimal_s, byte_dump_long_decimal_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_duodecimal_s, byte_dump_long_duodecimal_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_hexidecimal_s, byte_dump_long_hexidecimal_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_octal_s, byte_dump_long_octal_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_unicode_s, byte_dump_long_unicode_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_first_s, byte_dump_long_first_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_last_s, byte_dump_long_last_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_narrow_s, byte_dump_long_narrow_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_placeholder_s, byte_dump_long_placeholder_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_text_s, byte_dump_long_text_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_wide_s, byte_dump_long_wide_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(byte_dump_short_width_s, byte_dump_long_width_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, byte_dump_long_normal_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, byte_dump_long_simple_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, byte_dump_long_classic_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(byte_dump_short_binary_s, byte_dump_long_binary_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_decimal_s, byte_dump_long_decimal_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_duodecimal_s, byte_dump_long_duodecimal_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_hexidecimal_s, byte_dump_long_hexidecimal_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_octal_s, byte_dump_long_octal_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_unicode_s, byte_dump_long_unicode_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_first_s, byte_dump_long_first_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_last_s, byte_dump_long_last_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_narrow_s, byte_dump_long_narrow_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_placeholder_s, byte_dump_long_placeholder_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_text_s, byte_dump_long_text_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_wide_s, byte_dump_long_wide_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(byte_dump_short_width_s, byte_dump_long_width_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, byte_dump_long_normal_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, byte_dump_long_simple_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, byte_dump_long_classic_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define byte_dump_total_parameters_d 25
@@ -274,8 +289,8 @@ extern "C" {
       0, \
       8, \
       byte_dump_option_wide_d, \
-      byte_dump_mode_hexidecimal, \
-      byte_dump_presentation_normal, \
+      byte_dump_mode_hexidecimal_e, \
+      byte_dump_presentation_normal_e, \
       f_color_context_t_initialize, \
     }
 #endif // _di_byte_dump_main_t_

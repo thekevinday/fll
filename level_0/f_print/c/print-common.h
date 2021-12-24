@@ -164,7 +164,7 @@ extern "C" {
 /**
  * Provide type format flags.
  *
- * @todo There may be support in the future for min/max type sizes, such that "%n" = min, "%m" = max, and "%niii" = min int8_t.
+ * @todo There may or may not be support in the future for min/max type sizes, such that "%n" = min, "%m" = max, and "%niii" = min int8_t.
  *
  * f_print_format_type_*:
  * - character:                "c",          Type is a 1-byte unsigned character.
@@ -197,31 +197,31 @@ extern "C" {
  */
 #ifndef _di_f_print_format_type_
   enum {
-    f_print_format_type_character = 1,
-    f_print_format_type_character_safe,
-    f_print_format_type_color_after,
-    f_print_format_type_color_before,
-    f_print_format_type_double_32,
-    f_print_format_type_double_64,
-    f_print_format_type_signed_8,
-    f_print_format_type_signed_16,
-    f_print_format_type_signed_32,
-    f_print_format_type_signed_64,
-    f_print_format_type_signed_128,
-    f_print_format_type_signed_number,
-    f_print_format_type_size,
-    f_print_format_type_string,
-    f_print_format_type_string_safe,
-    f_print_format_type_string_static,
-    f_print_format_type_string_static_raw,
-    f_print_format_type_string_static_safe,
-    f_print_format_type_string_static_safe_raw, // @todo not yet implemented.
-    f_print_format_type_unsigned_8,
-    f_print_format_type_unsigned_16,
-    f_print_format_type_unsigned_32,
-    f_print_format_type_unsigned_64,
-    f_print_format_type_unsigned_128,
-    f_print_format_type_unsigned_number,
+    f_print_format_type_character_e = 1,
+    f_print_format_type_character_safe_e,
+    f_print_format_type_color_after_e,
+    f_print_format_type_color_before_e,
+    f_print_format_type_double_32_e,
+    f_print_format_type_double_64_e,
+    f_print_format_type_signed_8_e,
+    f_print_format_type_signed_16_e,
+    f_print_format_type_signed_32_e,
+    f_print_format_type_signed_64_e,
+    f_print_format_type_signed_128_e,
+    f_print_format_type_signed_number_e,
+    f_print_format_type_size_e,
+    f_print_format_type_string_e,
+    f_print_format_type_string_safe_e,
+    f_print_format_type_string_static_e,
+    f_print_format_type_string_static_raw_e,
+    f_print_format_type_string_static_safe_e,
+    f_print_format_type_string_static_safe_raw_e, // @todo not yet implemented.
+    f_print_format_type_unsigned_8_e,
+    f_print_format_type_unsigned_16_e,
+    f_print_format_type_unsigned_32_e,
+    f_print_format_type_unsigned_64_e,
+    f_print_format_type_unsigned_128_e,
+    f_print_format_type_unsigned_number_e,
   };
 #endif // _di_f_print_format_type_
 

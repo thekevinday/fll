@@ -78,7 +78,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) on identifying the return code as an error code and fail mode is set to fake_make_operation_fail_type_exit.
+ *   F_failure (with error bit) on identifying the return code as an error code and fail mode is set to fake_make_operation_fail_type_exit_e.
  *
  *   Errors (with error bit) from: f_conversion_number_signed_to_string().
  *   Errors (with error bit) from: f_string_append().

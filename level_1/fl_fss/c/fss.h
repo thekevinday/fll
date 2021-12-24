@@ -21,9 +21,6 @@
 #include <fll/level_0/file.h>
 #include <fll/level_0/fss.h>
 
-// fll-1 includes
-#include <fll/level_1/fss_status.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

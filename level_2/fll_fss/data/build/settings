@@ -21,16 +21,16 @@ build_indexer ar
 build_indexer_arguments rcs
 build_language c
 build_libraries -lc
-build_libraries-individual -lfl_conversion -lfl_fss -lfl_status -lfl_string -lf_conversion -lf_file -lf_fss -lf_memory -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lfl_conversion -lfl_fss -lfl_string -lf_conversion -lf_file -lf_fss -lf_memory -lf_status_string -lf_string -lf_type_array -lf_utf
 build_libraries_shared
 build_libraries_static
-build_sources_library fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_status.c
+build_sources_library fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status.h
+build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script

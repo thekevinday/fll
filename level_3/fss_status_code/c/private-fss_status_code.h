@@ -50,10 +50,10 @@ extern "C" {
  *   F_data_not if string is empty.
  *
  *   Errors (with error bit) from: fl_console_parameter_to_number_unsigned().
- *   Errors (with error bit) from: fll_fss_status_from_string().
+ *   Errors (with error bit) from: fll_fss_status_string_from().
  *
  * @see fl_console_parameter_to_number_unsigned()
- * @see fll_fss_status_from_string()
+ * @see fll_fss_status_string_from()
  */
 #ifndef _di_fss_status_code_process_number_
   extern f_status_t fss_status_code_process_number(fss_status_code_main_t * const main, const f_string_t value) F_attribute_visibility_internal_d;
@@ -76,10 +76,10 @@ extern "C" {
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fll_fss_status_from_string().
+ *   Errors (with error bit) from: fll_fss_status_string_from().
  *   Errors (with error bit) from: fss_status_code_convert_number().
  *
- * @see fll_fss_status_from_string()
+ * @see fll_fss_status_string_from()
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_fss_status_code_process_normal_

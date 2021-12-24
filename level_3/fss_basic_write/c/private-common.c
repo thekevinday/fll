@@ -8,7 +8,7 @@ extern "C" {
 #ifndef _di_fss_basic_write_print_signal_received_
   void fss_basic_write_print_signal_received(fss_basic_write_main_t * const main, const f_status_t signal) {
 
-    if (main->warning.verbosity != f_console_verbosity_verbose) return;
+    if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(main->warning.to.stream);

@@ -31,7 +31,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (!data_make->buffer.used) {
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->warning.to.stream);
 
         fl_print_format("%c%[%SThe fakefile '%]", data_make->main->warning.to.stream, f_string_eol_s[0], data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
@@ -198,7 +198,7 @@ extern "C" {
       }
 
       if (missing_main) {
-        if (data_make->main->error.verbosity != f_console_verbosity_quiet) {
+        if (data_make->main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(data_make->main->error.to.stream);
 
           fl_print_format("%c%[%SThe fakefile '%]", data_make->main->error.to.stream, f_string_eol_s[0], data_make->main->error.context, data_make->main->error.prefix, data_make->main->error.context);
@@ -259,7 +259,7 @@ extern "C" {
 
       data_make->setting_make.parameter.array[0].value.used = 1;
       data_make->setting_make.load_build = F_true;
-      data_make->setting_make.fail = fake_make_operation_fail_type_exit;
+      data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
 
       if (settings.objects.used) {
         bool unmatched_fail = F_true;
@@ -476,7 +476,7 @@ extern "C" {
           }
         }
         else {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%SInvalid characters in the define setting name '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -560,7 +560,7 @@ extern "C" {
           // Set the terminating NULL to not being normally included.
           --data_make->setting_build.environment.array[data_make->setting_build.environment.used++].used;
         }
-        else if (data_make->main->warning.verbosity == f_console_verbosity_verbose) {
+        else if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
           flockfile(data_make->main->warning.to.stream);
 
           fl_print_format("%c%[%SThe environment name '%]", data_make->main->warning.to.stream, f_string_eol_s[0], data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
@@ -570,7 +570,7 @@ extern "C" {
           funlockfile(data_make->main->warning.to.stream);
         }
       }
-      else if (data_make->main->warning.verbosity == f_console_verbosity_verbose) {
+      else if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->warning.to.stream);
 
         fl_print_format("%c%[%SThe environment name '%]", data_make->main->warning.to.stream, f_string_eol_s[0], data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
@@ -597,13 +597,13 @@ extern "C" {
     if (*unmatched_fail) {
       if (content->used) {
         if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_exit_s, data_make->buffer, fake_make_operation_argument_exit_s_length, content->array[0]) == F_equal_to) {
-          data_make->setting_make.fail = fake_make_operation_fail_type_exit;
+          data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
         }
         else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_warn_s, data_make->buffer, fake_make_operation_argument_warn_s_length, content->array[0]) == F_equal_to) {
-          data_make->setting_make.fail = fake_make_operation_fail_type_warn;
+          data_make->setting_make.fail = fake_make_operation_fail_type_warn_e;
         }
         else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_ignore_s, data_make->buffer, fake_make_operation_argument_ignore_s_length, content->array[0]) == F_equal_to) {
-          data_make->setting_make.fail = fake_make_operation_fail_type_ignore;
+          data_make->setting_make.fail = fake_make_operation_fail_type_ignore_e;
         }
         else {
           fake_print_warning_settings_content_invalid(data_make->main, data_make->main->file_data_build_fakefile.string, data_make->buffer, *object, content->array[0], fake_make_section_settings_s);

@@ -125,7 +125,7 @@ extern "C" {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_basic_read_total_parameters_d);
 
       {
-        f_console_parameter_id_t ids[3] = { fss_basic_read_parameter_no_color, fss_basic_read_parameter_light, fss_basic_read_parameter_dark };
+        f_console_parameter_id_t ids[3] = { fss_basic_read_parameter_no_color_e, fss_basic_read_parameter_light_e, fss_basic_read_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -159,7 +159,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { fss_basic_read_parameter_verbosity_quiet, fss_basic_read_parameter_verbosity_normal, fss_basic_read_parameter_verbosity_verbose, fss_basic_read_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { fss_basic_read_parameter_verbosity_quiet_e, fss_basic_read_parameter_verbosity_normal_e, fss_basic_read_parameter_verbosity_verbose_e, fss_basic_read_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -171,39 +171,39 @@ extern "C" {
           return status;
         }
 
-        if (choice == fss_basic_read_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == fss_basic_read_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == fss_basic_read_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == fss_basic_read_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == fss_basic_read_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == fss_basic_read_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == fss_basic_read_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == fss_basic_read_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    if (main->parameters[fss_basic_read_parameter_help].result == f_console_result_found) {
+    if (main->parameters[fss_basic_read_parameter_help_e].result == f_console_result_found_e) {
       fss_basic_read_print_help(main->output.to, main->context);
 
       fss_basic_read_main_delete(main);
       return status;
     }
 
-    if (main->parameters[fss_basic_read_parameter_version].result == f_console_result_found) {
+    if (main->parameters[fss_basic_read_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, fss_basic_read_program_version_s);
 
       fss_basic_read_main_delete(main);
@@ -221,12 +221,12 @@ extern "C" {
     if (main->remaining.used || main->process_pipe) {
       {
         const f_array_length_t parameter_code[] = {
-          fss_basic_read_parameter_at,
-          fss_basic_read_parameter_depth,
-          fss_basic_read_parameter_line,
-          fss_basic_read_parameter_select,
-          fss_basic_read_parameter_name,
-          fss_basic_read_parameter_delimit,
+          fss_basic_read_parameter_at_e,
+          fss_basic_read_parameter_depth_e,
+          fss_basic_read_parameter_line_e,
+          fss_basic_read_parameter_select_e,
+          fss_basic_read_parameter_name_e,
+          fss_basic_read_parameter_delimit_e,
         };
 
         const f_string_t parameter_name[] = {
@@ -253,7 +253,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < 6; ++i) {
 
-          if (main->parameters[parameter_code[i]].result == f_console_result_found) {
+          if (main->parameters[parameter_code[i]].result == f_console_result_found_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -268,13 +268,13 @@ extern "C" {
         } // for
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_columns].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_columns_e].result == f_console_result_found_e) {
         const f_array_length_t parameter_code[] = {
-          fss_basic_read_parameter_depth,
-          fss_basic_read_parameter_line,
-          fss_basic_read_parameter_pipe,
-          fss_basic_read_parameter_select,
-          fss_basic_read_parameter_total,
+          fss_basic_read_parameter_depth_e,
+          fss_basic_read_parameter_line_e,
+          fss_basic_read_parameter_pipe_e,
+          fss_basic_read_parameter_select_e,
+          fss_basic_read_parameter_total_e,
         };
 
         const f_string_t parameter_name[] = {
@@ -286,11 +286,11 @@ extern "C" {
         };
 
         const uint8_t parameter_match[] = {
-          f_console_result_additional,
-          f_console_result_additional,
-          f_console_result_found,
-          f_console_result_additional,
-          f_console_result_found,
+          f_console_result_additional_e,
+          f_console_result_additional_e,
+          f_console_result_found_e,
+          f_console_result_additional_e,
+          f_console_result_found_e,
         };
 
         for (f_array_length_t i = 0; i < 5; ++i) {
@@ -312,8 +312,8 @@ extern "C" {
         } // for
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
-        if (main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_pipe_e].result == f_console_result_found_e) {
+        if (main->parameters[fss_basic_read_parameter_total_e].result == f_console_result_found_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -326,7 +326,7 @@ extern "C" {
 
           status = F_status_set_error(F_parameter);
         }
-        else if (main->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
+        else if (main->parameters[fss_basic_read_parameter_line_e].result == f_console_result_additional_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -341,21 +341,21 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_delimit].result == f_console_result_additional) {
+      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_delimit_e].result == f_console_result_additional_e) {
         f_array_length_t location = 0;
         f_array_length_t length = 0;
 
         // Set the value to 0 to allow for detecting mode based on what is provided.
         data.delimit_mode = 0;
 
-        for (f_array_length_t i = 0; i < main->parameters[fss_basic_read_parameter_delimit].values.used; ++i) {
+        for (f_array_length_t i = 0; i < main->parameters[fss_basic_read_parameter_delimit_e].values.used; ++i) {
 
           if (fss_basic_read_signal_received(main)) {
             status = F_status_set_error(F_interrupt);
             break;
           }
 
-          location = main->parameters[fss_basic_read_parameter_delimit].values.array[i];
+          location = main->parameters[fss_basic_read_parameter_delimit_e].values.array[i];
           length = strnlen(arguments->argv[location], f_console_parameter_size);
 
           if (!length) {
@@ -371,34 +371,34 @@ extern "C" {
             break;
           }
           else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_none_s, length, fss_basic_read_delimit_mode_name_none_s_length) == F_equal_to) {
-            data.delimit_mode = fss_basic_read_delimit_mode_none;
+            data.delimit_mode = fss_basic_read_delimit_mode_none_e;
           }
           else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_all_s, length, fss_basic_read_delimit_mode_name_all_s_length) == F_equal_to) {
-            data.delimit_mode = fss_basic_read_delimit_mode_all;
+            data.delimit_mode = fss_basic_read_delimit_mode_all_e;
           }
           else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_object_s, length, fss_basic_read_delimit_mode_name_object_s_length) == F_equal_to) {
             switch (data.delimit_mode) {
               case 0:
-                data.delimit_mode = fss_basic_read_delimit_mode_object;
+                data.delimit_mode = fss_basic_read_delimit_mode_object_e;
                 break;
 
-              case fss_basic_read_delimit_mode_none:
-              case fss_basic_read_delimit_mode_all:
-              case fss_basic_read_delimit_mode_content_greater_object:
-              case fss_basic_read_delimit_mode_content_lesser_object:
-              case fss_basic_read_delimit_mode_object:
+              case fss_basic_read_delimit_mode_none_e:
+              case fss_basic_read_delimit_mode_all_e:
+              case fss_basic_read_delimit_mode_content_greater_object_e:
+              case fss_basic_read_delimit_mode_content_lesser_object_e:
+              case fss_basic_read_delimit_mode_object_e:
                 break;
 
-              case fss_basic_read_delimit_mode_content:
-                data.delimit_mode = fss_basic_read_delimit_mode_content_object;
+              case fss_basic_read_delimit_mode_content_e:
+                data.delimit_mode = fss_basic_read_delimit_mode_content_object_e;
                 break;
 
-              case fss_basic_read_delimit_mode_content_greater:
-                data.delimit_mode = fss_basic_read_delimit_mode_content_greater_object;
+              case fss_basic_read_delimit_mode_content_greater_e:
+                data.delimit_mode = fss_basic_read_delimit_mode_content_greater_object_e;
                 break;
 
-              case fss_basic_read_delimit_mode_content_lesser:
-                data.delimit_mode = fss_basic_read_delimit_mode_content_lesser_object;
+              case fss_basic_read_delimit_mode_content_lesser_e:
+                data.delimit_mode = fss_basic_read_delimit_mode_content_lesser_object_e;
                 break;
 
               default:
@@ -407,19 +407,19 @@ extern "C" {
           }
           else {
             if (!data.delimit_mode) {
-              data.delimit_mode = fss_basic_read_delimit_mode_content;
+              data.delimit_mode = fss_basic_read_delimit_mode_content_e;
             }
-            else if (data.delimit_mode == fss_basic_read_delimit_mode_object) {
-              data.delimit_mode = fss_basic_read_delimit_mode_content_object;
+            else if (data.delimit_mode == fss_basic_read_delimit_mode_object_e) {
+              data.delimit_mode = fss_basic_read_delimit_mode_content_object_e;
             }
 
             if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_greater_s[0]) {
-              if (!(data.delimit_mode == fss_basic_read_delimit_mode_none || data.delimit_mode == fss_basic_read_delimit_mode_all)) {
-                if (data.delimit_mode == fss_basic_read_delimit_mode_content_object) {
-                  data.delimit_mode = fss_basic_read_delimit_mode_content_greater_object;
+              if (!(data.delimit_mode == fss_basic_read_delimit_mode_none_e || data.delimit_mode == fss_basic_read_delimit_mode_all_e)) {
+                if (data.delimit_mode == fss_basic_read_delimit_mode_content_object_e) {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_greater_object_e;
                 }
                 else {
-                  data.delimit_mode = fss_basic_read_delimit_mode_content_greater;
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_greater_e;
                 }
               }
 
@@ -427,12 +427,12 @@ extern "C" {
               --length;
             }
             else if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_lesser_s[0]) {
-              if (!(data.delimit_mode == fss_basic_read_delimit_mode_none || data.delimit_mode == fss_basic_read_delimit_mode_all)) {
-                if (data.delimit_mode == fss_basic_read_delimit_mode_content_object) {
-                  data.delimit_mode = fss_basic_read_delimit_mode_content_lesser_object;
+              if (!(data.delimit_mode == fss_basic_read_delimit_mode_none_e || data.delimit_mode == fss_basic_read_delimit_mode_all_e)) {
+                if (data.delimit_mode == fss_basic_read_delimit_mode_content_object_e) {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_lesser_object_e;
                 }
                 else {
-                  data.delimit_mode = fss_basic_read_delimit_mode_content_lesser;
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_lesser_e;
                 }
               }
 
@@ -456,13 +456,13 @@ extern "C" {
             }
 
             // There can be nothing smaller than 0, so replace '0-' logic with just '0' logic.
-            if (data.delimit_mode == fss_basic_read_delimit_mode_content_lesser || data.delimit_mode == fss_basic_read_delimit_mode_content_lesser_object) {
+            if (data.delimit_mode == fss_basic_read_delimit_mode_content_lesser_e || data.delimit_mode == fss_basic_read_delimit_mode_content_lesser_object_e) {
               if (!data.delimit_depth) {
-                if (data.delimit_mode == fss_basic_read_delimit_mode_content_lesser) {
-                  data.delimit_mode = fss_basic_read_delimit_mode_content;
+                if (data.delimit_mode == fss_basic_read_delimit_mode_content_lesser_e) {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_e;
                 }
                 else {
-                  data.delimit_mode = fss_basic_read_delimit_mode_content_object;
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_object_e;
                 }
               }
             }
@@ -471,7 +471,7 @@ extern "C" {
 
         // Guarantee the default value is "all".
         if (!data.delimit_mode) {
-          data.delimit_mode = fss_basic_read_delimit_mode_all;
+          data.delimit_mode = fss_basic_read_delimit_mode_all_e;
         }
       }
 
@@ -481,7 +481,7 @@ extern "C" {
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
       if (F_status_is_error_not(status) && data.depths.array[0].depth > 0) {
-        if (main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
+        if (main->parameters[fss_basic_read_parameter_total_e].result == f_console_result_found_e) {
           fss_basic_read_print_zero(main);
         }
 
@@ -491,7 +491,7 @@ extern "C" {
         return F_none;
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_select].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_select_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -523,7 +523,7 @@ extern "C" {
         status = f_file_stream_read(file, &data.buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, "-", "read", fll_error_file_type_pipe);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, "-", "read", fll_error_file_type_pipe_e);
         }
         else if (data.buffer.used) {
           data.files.array[0].range.stop = data.buffer.used - 1;
@@ -533,7 +533,7 @@ extern "C" {
           status = f_string_append_assure(f_string_eol_s, 1, &data.buffer);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe_e);
           }
         }
         else {
@@ -559,7 +559,7 @@ extern "C" {
           status = f_file_stream_open(arguments->argv[main->remaining.array[i]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file_e);
 
             break;
           }
@@ -568,7 +568,7 @@ extern "C" {
           status = f_file_size_by_id(file.id, &size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
 
             break;
           }
@@ -577,7 +577,7 @@ extern "C" {
             status = f_string_dynamic_resize(data.buffer.size + size_file, &data.buffer);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
 
               break;
             }
@@ -585,7 +585,7 @@ extern "C" {
             status = f_file_stream_read(file, &data.buffer);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
 
               break;
             }
@@ -598,7 +598,7 @@ extern "C" {
               status = f_string_append_assure(f_string_eol_s, 1, &data.buffer);
 
               if (F_status_is_error(status)) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe);
+                fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe_e);
               }
             }
           }
@@ -623,7 +623,7 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_set_fine(status) == F_interrupt) {
         fflush(main->output.to.stream);
 

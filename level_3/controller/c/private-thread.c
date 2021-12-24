@@ -23,24 +23,24 @@ extern "C" {
 
     const controller_global_t *global = (controller_global_t *) arguments;
 
-    if (global->thread->enabled != controller_thread_enabled) return 0;
+    if (global->thread->enabled != controller_thread_enabled_e) return 0;
 
-    const struct timespec delay = controller_time_seconds(global->main->parameters[controller_parameter_simulate].result == f_console_result_found ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d);
+    const struct timespec delay = controller_time_seconds(global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d);
 
     f_status_t status = F_none;
 
-    while (global->thread->enabled == controller_thread_enabled) {
+    while (global->thread->enabled == controller_thread_enabled_e) {
 
       controller_time_sleep_nanoseconds(global->main, global->setting, delay);
 
-      if (global->thread->enabled != controller_thread_enabled) break;
+      if (global->thread->enabled != controller_thread_enabled_e) break;
 
       if (f_thread_lock_write_try(&global->thread->lock.process) == F_none) {
         controller_process_t *process = 0;
 
         f_array_length_t i = 0;
 
-        for (; i < global->thread->processs.size && global->thread->enabled == controller_thread_enabled; ++i) {
+        for (; i < global->thread->processs.size && global->thread->enabled == controller_thread_enabled_e; ++i) {
 
           if (!global->thread->processs.array[i]) continue;
 
@@ -59,7 +59,7 @@ extern "C" {
           }
 
           // if process is active or busy, then do not attempt to clean it.
-          if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+          if (process->state == controller_process_state_active_e || process->state == controller_process_state_busy_e) {
             f_thread_unlock(&process->active);
             f_thread_unlock(&process->lock);
 
@@ -101,7 +101,7 @@ extern "C" {
                 continue;
               }
 
-              process->state = controller_process_state_idle;
+              process->state = controller_process_state_idle_e;
               process->id_thread = 0;
 
               f_thread_mutex_lock(&process->wait_lock);
@@ -158,7 +158,7 @@ extern "C" {
   f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t *thread) {
 
     if (is_normal) {
-      return thread->enabled == controller_thread_enabled;
+      return thread->enabled == controller_thread_enabled_e;
     }
 
     return thread->enabled;
@@ -175,7 +175,7 @@ extern "C" {
 #ifndef _di_controller_thread_is_enabled_process_type_
   f_status_t controller_thread_is_enabled_process_type(const uint8_t type, controller_thread_t *thread) {
 
-    return controller_thread_is_enabled(type != controller_process_type_exit, thread);
+    return controller_thread_is_enabled(type != controller_process_type_exit_e, thread);
   }
 #endif // _di_controller_thread_is_enabled_process_type_
 
@@ -191,7 +191,7 @@ extern "C" {
     status = controller_lock_create(&thread.lock);
 
     if (F_status_is_error(status)) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         fll_error_print(main->error, status, "controller_lock_create", F_true);
       }
     }
@@ -210,16 +210,16 @@ extern "C" {
     if (F_status_is_error(status)) {
       thread.id_signal = 0;
 
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_print_error(main->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
       }
     }
     else {
-      if (main->parameters[controller_parameter_daemon].result == f_console_result_found) {
-        setting->ready = controller_setting_ready_done;
+      if (main->parameters[controller_parameter_daemon_e].result == f_console_result_found_e) {
+        setting->ready = controller_setting_ready_done_e;
 
         if (f_file_exists(setting->path_pid.string) == F_true) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, &thread);
 
             fl_print_format("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
@@ -229,7 +229,7 @@ extern "C" {
             controller_unlock_print_flush(main->error.to, &thread);
           }
 
-          setting->ready = controller_setting_ready_abort;
+          setting->ready = controller_setting_ready_abort_e;
           status = F_status_set_error(F_available_not);
         }
       }
@@ -239,7 +239,7 @@ extern "C" {
         status = f_thread_create(0, &thread.id_entry, &controller_thread_entry, (void *) &entry);
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_print_error(main->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
           }
         }
@@ -253,13 +253,13 @@ extern "C" {
     }
 
     // only make the rule and control threads available once any/all pre-processing and are completed.
-    if (F_status_is_error_not(status) && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled) {
-      if (main->parameters[controller_parameter_validate].result == f_console_result_none) {
+    if (F_status_is_error_not(status) && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled_e) {
+      if (main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
 
         // wait for the entry thread to complete before starting the rule thread.
         controller_thread_join(&thread.id_rule);
 
-        if (thread.enabled && setting->mode == controller_setting_mode_service) {
+        if (thread.enabled && setting->mode == controller_setting_mode_service_e) {
           status = f_thread_create(0, &thread.id_rule, &controller_thread_rule, (void *) &global);
 
           if (F_status_is_error(status)) {
@@ -279,7 +279,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             thread.id_cleanup = 0;
 
-            if (main->error.verbosity != f_console_verbosity_quiet) {
+            if (main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_print_error(main->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
             }
           }
@@ -293,17 +293,17 @@ extern "C" {
       return F_child;
     }
 
-    if (F_status_is_error_not(status) && status != F_failure && main->parameters[controller_parameter_validate].result == f_console_result_none && controller_thread_is_enabled(F_true, &thread)) {
+    if (F_status_is_error_not(status) && status != F_failure && main->parameters[controller_parameter_validate_e].result == f_console_result_none_e && controller_thread_is_enabled(F_true, &thread)) {
 
-      if (setting->mode == controller_setting_mode_service) {
+      if (setting->mode == controller_setting_mode_service_e) {
         controller_thread_join(&thread.id_signal);
       }
-      else if (setting->mode == controller_setting_mode_program) {
+      else if (setting->mode == controller_setting_mode_program_e) {
         status = controller_rule_wait_all(F_true, global, F_false, 0);
       }
     }
 
-    controller_thread_process_cancel(F_true, controller_thread_cancel_call, &global, 0);
+    controller_thread_process_cancel(F_true, controller_thread_cancel_call_e, &global, 0);
 
     controller_thread_process_exit(&global);
 
@@ -327,7 +327,7 @@ extern "C" {
     if (F_status_set_fine(status) == F_interrupt) {
       controller_print_signal_received(main, thread.signal);
 
-      if (main->output.verbosity != f_console_verbosity_quiet) {
+      if (main->output.verbosity != f_console_verbosity_quiet_e) {
         fll_print_terminated(f_string_eol_s, main->output.to.stream);
       }
 

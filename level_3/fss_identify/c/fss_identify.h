@@ -86,39 +86,39 @@ extern "C" {
   #define fss_identify_long_total_s   "total"
 
   enum {
-    fss_identify_parameter_help,
-    fss_identify_parameter_light,
-    fss_identify_parameter_dark,
-    fss_identify_parameter_no_color,
-    fss_identify_parameter_verbosity_quiet,
-    fss_identify_parameter_verbosity_normal,
-    fss_identify_parameter_verbosity_verbose,
-    fss_identify_parameter_verbosity_debug,
-    fss_identify_parameter_version,
+    fss_identify_parameter_help_e,
+    fss_identify_parameter_light_e,
+    fss_identify_parameter_dark_e,
+    fss_identify_parameter_no_color_e,
+    fss_identify_parameter_verbosity_quiet_e,
+    fss_identify_parameter_verbosity_normal_e,
+    fss_identify_parameter_verbosity_verbose_e,
+    fss_identify_parameter_verbosity_debug_e,
+    fss_identify_parameter_version_e,
 
-    fss_identify_parameter_content,
-    fss_identify_parameter_line,
-    fss_identify_parameter_name,
-    fss_identify_parameter_object,
-    fss_identify_parameter_total,
+    fss_identify_parameter_content_e,
+    fss_identify_parameter_line_e,
+    fss_identify_parameter_name_e,
+    fss_identify_parameter_object_e,
+    fss_identify_parameter_total_e,
   };
 
   #define fss_identify_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_identify_short_content_s, fss_identify_long_content_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_line_s, fss_identify_long_line_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_name_s, fss_identify_long_name_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_object_s, fss_identify_long_object_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_total_s, fss_identify_long_total_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(fss_identify_short_content_s, fss_identify_long_content_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_identify_short_line_s, fss_identify_long_line_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_identify_short_name_s, fss_identify_long_name_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_identify_short_object_s, fss_identify_long_object_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_identify_short_total_s, fss_identify_long_total_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define fss_identify_total_parameters_d 14

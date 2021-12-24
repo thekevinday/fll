@@ -67,7 +67,7 @@ extern "C" {
 #ifndef _di_controller_lock_read_process_type_
   f_status_t controller_lock_read_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) {
 
-    return controller_lock_read(type != controller_process_type_exit, thread, lock);
+    return controller_lock_read(type != controller_process_type_exit_e, thread, lock);
   }
 #endif // _di_controller_lock_read_process_type_
 
@@ -108,7 +108,7 @@ extern "C" {
 #ifndef _di_controller_lock_write_process_type_
   f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) {
 
-    return controller_lock_write(type != controller_process_type_exit, thread, lock);
+    return controller_lock_write(type != controller_process_type_exit_e, thread, lock);
   }
 #endif // _di_controller_lock_write_process_type_
 

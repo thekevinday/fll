@@ -31,10 +31,10 @@ extern "C" {
       }
 
       if (data_make->main->context.mode == F_color_mode_no_color_d) {
-        if (data_make->main->parameters[fake_parameter_no_color].type == f_console_type_normal) {
+        if (data_make->main->parameters[fake_parameter_no_color_e].type == f_console_type_normal_e) {
           *status = f_string_append(f_console_symbol_short_enable_s, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_no_color].type == f_console_type_inverse) {
+        else if (data_make->main->parameters[fake_parameter_no_color_e].type == f_console_type_inverse_e) {
           *status = f_string_append(f_console_symbol_short_disable_s, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -43,10 +43,10 @@ extern "C" {
         }
       }
       else if (data_make->main->context.mode == F_color_mode_dark_d) {
-        if (data_make->main->parameters[fake_parameter_dark].type == f_console_type_normal) {
+        if (data_make->main->parameters[fake_parameter_dark_e].type == f_console_type_normal_e) {
           *status = f_string_append(f_console_symbol_short_enable_s, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_dark].type == f_console_type_inverse) {
+        else if (data_make->main->parameters[fake_parameter_dark_e].type == f_console_type_inverse_e) {
           *status = f_string_append(f_console_symbol_short_disable_s, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -55,10 +55,10 @@ extern "C" {
         }
       }
       else {
-        if (data_make->main->parameters[fake_parameter_light].type == f_console_type_normal) {
+        if (data_make->main->parameters[fake_parameter_light_e].type == f_console_type_normal_e) {
           *status = f_string_append(f_console_symbol_short_enable_s, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_light].type == f_console_type_inverse) {
+        else if (data_make->main->parameters[fake_parameter_light_e].type == f_console_type_inverse_e) {
           *status = f_string_append(f_console_symbol_short_disable_s, 1, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -85,7 +85,7 @@ extern "C" {
       ++data_make->parameter_option.color.used;
     }
 
-    if (data_make->main->error.verbosity != f_console_verbosity_normal) {
+    if (data_make->main->error.verbosity != f_console_verbosity_normal_e) {
       *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->parameter.verbosity);
 
       if (F_status_is_error_not(*status)) {
@@ -98,11 +98,11 @@ extern "C" {
         return;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_quiet) {
-        if (data_make->main->parameters[fake_parameter_verbosity_quiet].type == f_console_type_normal) {
+      if (data_make->main->error.verbosity == f_console_verbosity_quiet_e) {
+        if (data_make->main->parameters[fake_parameter_verbosity_quiet_e].type == f_console_type_normal_e) {
           *status = f_string_append(f_console_symbol_short_enable_s, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_verbosity_quiet].type == f_console_type_inverse) {
+        else if (data_make->main->parameters[fake_parameter_verbosity_quiet_e].type == f_console_type_inverse_e) {
           *status = f_string_append(f_console_symbol_short_disable_s, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -110,11 +110,11 @@ extern "C" {
           *status = f_string_append(f_console_standard_short_quiet_s, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
-        if (data_make->main->parameters[fake_parameter_verbosity_verbose].type == f_console_type_normal) {
+      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+        if (data_make->main->parameters[fake_parameter_verbosity_verbose_e].type == f_console_type_normal_e) {
           *status = f_string_append(f_console_symbol_short_enable_s, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_verbosity_verbose].type == f_console_type_inverse) {
+        else if (data_make->main->parameters[fake_parameter_verbosity_verbose_e].type == f_console_type_inverse_e) {
           *status = f_string_append(f_console_symbol_short_disable_s, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -123,10 +123,10 @@ extern "C" {
         }
       }
       else {
-        if (data_make->main->parameters[fake_parameter_verbosity_debug].type == f_console_type_normal) {
+        if (data_make->main->parameters[fake_parameter_verbosity_debug_e].type == f_console_type_normal_e) {
           *status = f_string_append(f_console_symbol_short_enable_s, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_verbosity_debug].type == f_console_type_inverse) {
+        else if (data_make->main->parameters[fake_parameter_verbosity_debug_e].type == f_console_type_inverse_e) {
           *status = f_string_append(f_console_symbol_short_disable_s, 1, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -160,8 +160,8 @@ extern "C" {
       };
 
       const f_console_parameter_t *console[] = {
-        &data_make->main->parameters[fake_parameter_define],
-        &data_make->main->parameters[fake_parameter_mode],
+        &data_make->main->parameters[fake_parameter_define_e],
+        &data_make->main->parameters[fake_parameter_mode_e],
       };
 
       const f_string_dynamics_t *source[] = {
@@ -189,7 +189,7 @@ extern "C" {
 
       for (; i < 2; ++i) {
 
-        if (console[i]->result == f_console_result_none) {
+        if (console[i]->result == f_console_result_none_e) {
           continue;
         }
 
@@ -217,10 +217,10 @@ extern "C" {
             return;
           }
 
-          if (console[i]->type == f_console_type_normal) {
+          if (console[i]->type == f_console_type_normal_e) {
             *status = f_string_append(f_console_symbol_short_enable_s, 1, &destination[i]->array[destination[i]->used]);
           }
-          else if (console[i]->type == f_console_type_inverse) {
+          else if (console[i]->type == f_console_type_inverse_e) {
             *status = f_string_append(f_console_symbol_short_disable_s, 1, &destination[i]->array[destination[i]->used]);
           }
 
@@ -283,13 +283,13 @@ extern "C" {
       };
 
       const f_console_parameter_t *console[] = {
-        &data_make->main->parameters[fake_parameter_fakefile],
-        &data_make->main->parameters[fake_parameter_path_build],
-        &data_make->main->parameters[fake_parameter_path_data],
-        &data_make->main->parameters[fake_parameter_path_sources],
-        &data_make->main->parameters[fake_parameter_path_work],
-        &data_make->main->parameters[fake_parameter_process],
-        &data_make->main->parameters[fake_parameter_settings],
+        &data_make->main->parameters[fake_parameter_fakefile_e],
+        &data_make->main->parameters[fake_parameter_path_build_e],
+        &data_make->main->parameters[fake_parameter_path_data_e],
+        &data_make->main->parameters[fake_parameter_path_sources_e],
+        &data_make->main->parameters[fake_parameter_path_work_e],
+        &data_make->main->parameters[fake_parameter_process_e],
+        &data_make->main->parameters[fake_parameter_settings_e],
       };
 
       const f_string_dynamic_t *source[] = {
@@ -334,7 +334,7 @@ extern "C" {
 
       for (uint8_t i = 0; i < 7; ++i) {
 
-        if (console[i]->result == f_console_result_none) {
+        if (console[i]->result == f_console_result_none_e) {
           continue;
         }
 
@@ -360,10 +360,10 @@ extern "C" {
           return;
         }
 
-        if (console[i]->type == f_console_type_normal) {
+        if (console[i]->type == f_console_type_normal_e) {
           *status = f_string_append(f_console_symbol_short_enable_s, 1, &destination[i]->array[destination[i]->used]);
         }
-        else if (console[i]->type == f_console_type_inverse) {
+        else if (console[i]->type == f_console_type_inverse_e) {
           *status = f_string_append(f_console_symbol_short_disable_s, 1, &destination[i]->array[destination[i]->used]);
         }
 

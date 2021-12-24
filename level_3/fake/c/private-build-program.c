@@ -27,7 +27,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
     if (!data_build.setting.build_sources_program.used) return 0;
 
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
       fll_print_format("%c%[Compiling shared program.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
     }
 
@@ -39,11 +39,11 @@ extern "C" {
       if (data_build.setting.path_standard) {
         path_sources = &main->path_sources_c;
 
-        if (data_build.setting.build_language == fake_build_language_type_cpp) {
+        if (data_build.setting.build_language == fake_build_language_type_cpp_e) {
           path_sources = &main->path_sources_cpp;
         }
       }
-      else if (main->parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+      else if (main->parameters[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
         path_sources = &data_build.setting.path_sources;
       }
 
@@ -145,7 +145,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
     if (!data_build.setting.build_sources_program.used) return 0;
 
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
       fll_print_format("%c%[Compiling static program.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
     }
 
@@ -157,11 +157,11 @@ extern "C" {
       if (data_build.setting.path_standard) {
         path_sources = &main->path_sources_c;
 
-        if (data_build.setting.build_language == fake_build_language_type_cpp) {
+        if (data_build.setting.build_language == fake_build_language_type_cpp_e) {
           path_sources = &main->path_sources_cpp;
         }
       }
-      else if (main->parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+      else if (main->parameters[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
         path_sources = &data_build.setting.path_sources;
       }
 

@@ -9,7 +9,7 @@ extern "C" {
 #ifndef _di_fss_basic_write_error_parameter_same_times_print_
   void fss_basic_write_error_parameter_same_times_print(fss_basic_write_main_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -30,7 +30,7 @@ extern "C" {
 #ifndef _di_fss_basic_write_error_parameter_value_missing_print_
   void fss_basic_write_error_parameter_value_missing_print(fss_basic_write_main_t * const main, const f_string_t symbol, const f_string_t parameter) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -47,7 +47,7 @@ extern "C" {
 #ifndef _di_fss_basic_write_error_parameter_unsupported_eol_print_
   void fss_basic_write_error_parameter_unsupported_eol_print(fss_basic_write_main_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -69,7 +69,7 @@ extern "C" {
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
-      uint8_t complete = f_fss_complete_none;
+      uint8_t complete = f_fss_complete_none_e;
 
       if (object->used) {
         range.start = 0;
@@ -81,11 +81,11 @@ extern "C" {
       }
 
       if (content) {
-        if (main->parameters[fss_basic_write_parameter_trim].result == f_console_result_found) {
-          complete = f_fss_complete_full_trim;
+        if (main->parameters[fss_basic_write_parameter_trim_e].result == f_console_result_found_e) {
+          complete = f_fss_complete_full_trim_e;
         }
         else {
-          complete = f_fss_complete_full;
+          complete = f_fss_complete_full_e;
         }
       }
 
@@ -114,7 +114,7 @@ extern "C" {
         range.stop = 0;
       }
 
-      status = fl_fss_basic_content_write(*content, object ? f_fss_complete_full : f_fss_complete_none, state, &range, buffer);
+      status = fl_fss_basic_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, state, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
         fss_basic_write_error_parameter_unsupported_eol_print(main);
@@ -264,7 +264,7 @@ extern "C" {
           for (; range.start <= range.stop; ++range.start) {
 
             if (block.string[range.start] == fss_basic_write_pipe_content_start_s) {
-              if (main->error.verbosity != f_console_verbosity_quiet) {
+              if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%c%[%sThis standard only supports one content per object.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
               }
 

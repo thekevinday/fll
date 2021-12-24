@@ -38,10 +38,10 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (range->start >= range->stop || range->start >= buffer.used) {
-          if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
+          if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
 
             // extended list requires content closure, so this could be an error.
-            return FL_fss_found_object_content_not;
+            return F_fss_found_object_content_not;
           }
 
           if (found_data) {
@@ -60,18 +60,18 @@ extern "C" {
           }
         }
 
-        if (status == FL_fss_found_object) {
+        if (status == F_fss_found_object) {
           found_data = F_true;
 
           status = fl_fss_embedded_list_content_read(buffer, state, range, nest, contents_delimits ? contents_delimits : objects_delimits, comments);
           break;
         }
-        else if (status == FL_fss_found_object_content_not) {
+        else if (status == F_fss_found_object_content_not) {
           found_data = F_true;
           break;
         }
 
-      } while (status == FL_fss_found_object_not);
+      } while (status == F_fss_found_object_not);
 
       if (status == F_none_eos || status == F_none_stop) {
         return status;
@@ -106,7 +106,7 @@ extern "C" {
 
         return status;
       }
-      else if (status != FL_fss_found_object && status != FL_fss_found_content && status != FL_fss_found_content_not && status != FL_fss_found_object_content_not) {
+      else if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not) {
         return status;
       }
       else if (range->start >= range->stop || range->start >= buffer.used) {
@@ -134,7 +134,7 @@ extern "C" {
     f_status_t status = 0;
     f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
-    status = fl_fss_embedded_list_object_write(object, f_fss_complete_full, state, &range, destination);
+    status = fl_fss_embedded_list_object_write(object, f_fss_complete_full_e, state, &range, destination);
 
     if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;
@@ -150,7 +150,7 @@ extern "C" {
         range.stop = 0;
       }
 
-      status = fl_fss_embedded_list_content_write(content, f_fss_complete_full, content_prepend, ignore, state, &range, destination);
+      status = fl_fss_embedded_list_content_write(content, f_fss_complete_full_e, content_prepend, ignore, state, &range, destination);
     }
 
     return status;

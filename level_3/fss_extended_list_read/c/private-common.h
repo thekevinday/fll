@@ -189,7 +189,7 @@ extern "C" {
   #define fss_extended_list_read_data_t_initialize \
     { \
       0, \
-      fss_extended_list_read_delimit_mode_all, \
+      fss_extended_list_read_delimit_mode_all_e, \
       0, \
       0, \
       0, \

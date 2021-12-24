@@ -14,7 +14,7 @@ extern "C" {
   bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_t operation, const f_string_t how, const f_string_t source, const f_string_t destination, const bool fallback) {
 
     if (status == F_file_found_not) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SFailed to find '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -36,7 +36,7 @@ extern "C" {
     }
 
     if (status == F_parameter) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SInvalid parameter when calling '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -58,7 +58,7 @@ extern "C" {
     }
 
     if (status == F_name) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SInvalid name for '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -78,7 +78,7 @@ extern "C" {
     }
 
     if (status == F_memory_not) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SUnable to allocate memory, while trying to %S '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -98,7 +98,7 @@ extern "C" {
     }
 
     if (status == F_number_overflow) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SOverflow while trying to %S '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -118,7 +118,7 @@ extern "C" {
     }
 
     if (status == F_directory) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SInvalid directory while trying to %S '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -138,7 +138,7 @@ extern "C" {
     }
 
     if (status == F_access_denied) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SAccess denied while trying to %S '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -158,7 +158,7 @@ extern "C" {
     }
 
     if (status == F_loop) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SLoop while trying to %S '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -178,7 +178,7 @@ extern "C" {
     }
 
     if (status == F_prohibited) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SProhibited by system while trying to %S '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -198,7 +198,7 @@ extern "C" {
     }
 
     if (status == F_directory_found_not) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SFailed to %S '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -218,7 +218,7 @@ extern "C" {
     }
 
     if (status == F_failure) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SFailed to %S '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -237,7 +237,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(main->error, status, function, F_false) == F_known_not && fallback && main->error.verbosity != f_console_verbosity_quiet) {
+    if (fll_error_print(main->error, status, function, F_false) == F_known_not && fallback && main->error.verbosity != f_console_verbosity_quiet_e) {
       flockfile(main->error.to.stream);
 
       fl_print_format("%c%[UNKNOWN %s(%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, operation, main->error.context);
@@ -263,7 +263,7 @@ extern "C" {
   bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_t path_file, const f_string_range_t range, const bool fallback) {
 
     if (status == F_file_found_not) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SOccurred on invalid UTF-8 character at stop position (at '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -279,7 +279,7 @@ extern "C" {
     }
 
     if (status == F_complete_not_utf || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SOccurred on invalid UTF-8 character at %s (at '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, status == F_complete_not_utf_eos ? "end of string" : "stop point of string", main->error.context);
@@ -295,7 +295,7 @@ extern "C" {
     }
 
     if (status == F_complete_not_utf_stop) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%SOccurred on invalid UTF-8 character at stop point of string (at '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -310,7 +310,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(main->error, status, function, F_false) == F_known_not && fallback && main->error.verbosity != f_console_verbosity_quiet) {
+    if (fll_error_print(main->error, status, function, F_false) == F_known_not && fallback && main->error.verbosity != f_console_verbosity_quiet_e) {
       flockfile(main->error.to.stream);
 
       fl_print_format("%c%[UNKNOWN %s(%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -329,7 +329,7 @@ extern "C" {
 #ifndef _di_fake_print_error_parameter_missing_value_
   void fake_print_error_parameter_missing_value(fake_main_t * const main, const f_string_t parameter) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) return;
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->error.to.stream);
 
@@ -344,7 +344,7 @@ extern "C" {
 #ifndef _di_fake_print_error_parameter_too_many_
   void fake_print_error_parameter_too_many(fake_main_t * const main, const f_string_t parameter) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) return;
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->error.to.stream);
 
@@ -359,7 +359,7 @@ extern "C" {
 #ifndef _di_fake_print_error_requires_more_arguments_
   void fake_print_error_requires_more_arguments(fake_make_data_t * const data_make) {
 
-    if (data_make->error.verbosity == f_console_verbosity_quiet) return;
+    if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
     if (!data_make->error.to.stream) return;
 
     fll_print_format("%c%[%SRequires more arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
@@ -369,7 +369,7 @@ extern "C" {
 #ifndef _di_fake_print_error_too_many_arguments_
   void fake_print_error_too_many_arguments(fake_make_data_t * const data_make) {
 
-    if (data_make->error.verbosity == f_console_verbosity_quiet) return;
+    if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
     if (!data_make->error.to.stream) return;
 
     fll_print_format("%c%[%SHas too many arguments.%]%c", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s[0]);
@@ -379,7 +379,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_failed_
   void fake_print_message_section_operation_failed(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
+    if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
 
@@ -402,7 +402,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_path_outside_
   void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
+    if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     flockfile(main->error.to.stream);
 
@@ -412,7 +412,7 @@ extern "C" {
       fl_print_format("%[' is outside the project root.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
     }
     else {
-      fll_error_file_print(main->error, F_status_set_fine(status), function, F_true, path, "determine real path of", fll_error_file_type_file);
+      fll_error_file_print(main->error, F_status_set_fine(status), function, F_true, path, "determine real path of", fll_error_file_type_file_e);
     }
 
     funlockfile(main->error.to.stream);
@@ -422,7 +422,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
   void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
+    if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     if (status == F_array_too_large) {
       flockfile(main->error.to.stream);
@@ -441,7 +441,7 @@ extern "C" {
       funlockfile(main->error.to.stream);
     }
     else {
-      fll_error_file_print(print, status, function, F_true, path, "change path to", fll_error_file_type_directory);
+      fll_error_file_print(print, status, function, F_true, path, "change path to", fll_error_file_type_directory_e);
     }
   }
 #endif // _di_fake_print_message_section_operation_path_stack_max_
@@ -449,7 +449,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_stack_max_
   void fake_print_message_section_operation_stack_max(fake_main_t * const main, fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
+    if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
 
@@ -474,7 +474,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_unknown_
   void fake_print_message_section_operation_unknown(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
+    if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
 
@@ -497,7 +497,7 @@ extern "C" {
 #ifndef _di_fake_print_signal_received_
   void fake_print_signal_received(fake_main_t * const main, const f_status_t signal) {
 
-    if (main->warning.verbosity != f_console_verbosity_verbose) return;
+    if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(main->warning.to.stream);
@@ -515,7 +515,7 @@ extern "C" {
 #ifndef _di_fake_print_warning_settings_content_empty_
   void fake_print_warning_settings_content_empty(fake_main_t * const main, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_t settings_name) {
 
-    if (main->warning.verbosity == f_console_verbosity_quiet) return;
+    if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->warning.to.stream);
 
@@ -534,7 +534,7 @@ extern "C" {
 #ifndef _di_fake_print_warning_settings_content_invalid_
   void fake_print_warning_settings_content_invalid(fake_main_t * const main, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_t settings_name) {
 
-    if (main->warning.verbosity == f_console_verbosity_quiet) return;
+    if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->warning.to.stream);
 
@@ -555,7 +555,7 @@ extern "C" {
 #ifndef _di_fake_print_warning_settings_content_multiple_
   void fake_print_warning_settings_content_multiple(fake_main_t * const main, const f_string_t path_file, const f_string_t name_object) {
 
-    if (main->warning.verbosity == f_console_verbosity_quiet) return;
+    if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->warning.to.stream);
 
@@ -572,7 +572,7 @@ extern "C" {
 #ifndef _di_fake_print_warning_settings_object_multiple_
   void fake_print_warning_settings_object_multiple(fake_main_t * const main, const f_string_t path_file, const f_string_t label, const f_string_t name_object) {
 
-    if (main->warning.verbosity == f_console_verbosity_quiet) return;
+    if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->warning.to.stream);
 

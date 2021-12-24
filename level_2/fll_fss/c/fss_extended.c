@@ -50,7 +50,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (range->start >= range->stop || range->start >= buffer.used) {
-          if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
+          if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
             ++objects->used;
 
             if (objects_quoted) {
@@ -69,7 +69,7 @@ extern "C" {
               ++contents_quoted->used;
             }
 
-            return FL_fss_found_object_content_not;
+            return F_fss_found_object_content_not;
           }
 
           if (found_data) {
@@ -87,7 +87,7 @@ extern "C" {
           return F_data_not_stop;
         }
 
-        if (status == FL_fss_found_object) {
+        if (status == F_fss_found_object) {
           found_data = F_true;
 
           if (contents_quoted) {
@@ -102,12 +102,12 @@ extern "C" {
 
           break;
         }
-        else if (status == FL_fss_found_object_content_not) {
+        else if (status == F_fss_found_object_content_not) {
           found_data = F_true;
           break;
         }
 
-      } while (status == FL_fss_found_object_not);
+      } while (status == F_fss_found_object_not);
 
       if (status == F_none_eos || status == F_none_stop) {
         contents->array[contents->used].used++;
@@ -141,13 +141,13 @@ extern "C" {
 
         return status;
       }
-      else if (status != FL_fss_found_object && status != FL_fss_found_content && status != FL_fss_found_content_not && status != FL_fss_found_object_content_not && status != F_terminated_not_group) {
+      else if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not && status != F_terminated_not_group) {
         return status;
       }
       else if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
-        if (status == FL_fss_found_object || status == FL_fss_found_content || status == FL_fss_found_content_not || status == FL_fss_found_object_content_not || status == F_terminated_not_group) {
+        if (status == F_fss_found_object || status == F_fss_found_content || status == F_fss_found_content_not || status == F_fss_found_object_content_not || status == F_terminated_not_group) {
           ++objects->used;
           ++contents->used;
 
@@ -201,19 +201,19 @@ extern "C" {
     f_status_t status = 0;
     f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
-    status = fl_fss_extended_object_write(object, quote, f_fss_complete_full, state, &range, destination);
+    status = fl_fss_extended_object_write(object, quote, f_fss_complete_full_e, state, &range, destination);
 
     if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;
     }
 
     if (status == F_none || status == F_none_stop || status == F_none_eos || status == F_none_eol) {
-      uint8_t complete = f_fss_complete_next;
+      uint8_t complete = f_fss_complete_next_e;
 
       for (f_array_length_t i = 0; i < contents.used; ++i) {
 
         if (i + 1 == contents.used) {
-          complete = f_fss_complete_end;
+          complete = f_fss_complete_end_e;
         }
 
         if (contents.array[i].used) {

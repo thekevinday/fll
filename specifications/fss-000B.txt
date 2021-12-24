@@ -1,4 +1,6 @@
 # fss-0002
 
-Featureless Settings Specification: 000C - Simple List:
+Featureless Settings Specification: 000B - Simple List:
   This might be similar to fss-0008 - Embedded List, except it is an fss-0003 Extended List with a (non-recursive) fss-0002 Basic List inside the Content.
+
+  TODO: further document this.

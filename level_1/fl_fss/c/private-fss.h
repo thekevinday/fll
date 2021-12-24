@@ -152,8 +152,8 @@ extern "C" {
  *   The caller is expected to decide if and when to process them.
  *
  * @return
- *   FL_fss_found_object on success and object was found (start location is at end of object).
- *   FL_fss_found_object_not on success and no object was found (start location is after character designating this is not an object).
+ *   F_fss_found_object on success and object was found (start location is at end of object).
+ *   F_fss_found_object_not on success and no object was found (start location is after character designating this is not an object).
  *   F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
  *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).

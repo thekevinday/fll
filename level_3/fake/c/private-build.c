@@ -303,7 +303,7 @@ extern "C" {
     f_string_dynamic_t destination_file = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_directory = f_string_dynamic_t_initialize;
 
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
       fll_print_format("%c%[Copying %S.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, label, main->context.set.important, f_string_eol_s[0]);
     }
 
@@ -320,7 +320,7 @@ extern "C" {
 
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
-    if (main->error.verbosity == f_console_verbosity_verbose) {
+    if (main->error.verbosity == f_console_verbosity_verbose_e) {
       recurse.output.stream = main->output.to.stream;
       recurse.output.id = main->output.to.id;
       recurse.output.flag = main->output.to.flag;
@@ -385,7 +385,7 @@ extern "C" {
         *status = fl_directory_copy(path_source.string, destination_directory.string, path_source.used, destination_directory.used, mode, recurse);
 
         if (F_status_is_error(*status)) {
-          if (main->error.verbosity == f_console_verbosity_verbose) {
+          if (main->error.verbosity == f_console_verbosity_verbose_e) {
             for (f_array_length_t j = 0; j < failures.used; ++j) {
               fake_print_error_build_operation_file(main, F_status_set_fine(*status), "fl_directory_copy", "copy directory", "to", path_source.string, destination_directory.string, F_true);
             } // for
@@ -396,7 +396,7 @@ extern "C" {
 
             break;
           }
-          else if (main->error.verbosity != f_console_verbosity_quiet) {
+          else if (main->error.verbosity != f_console_verbosity_quiet_e) {
             fake_print_error_build_operation_file(main, F_status_set_fine(*status), "fl_directory_copy", "copy directory", "to", path_source.string, destination_directory.string, F_true);
           }
 
@@ -439,7 +439,7 @@ extern "C" {
           *status = fl_directory_create(destination_directory.string, destination_directory.used, F_file_mode_all_rwx_d);
 
           if (F_status_is_error(*status)) {
-            fll_error_file_print(main->error, F_status_set_fine(*status), "fl_directory_create", F_true, destination_directory.string, "create", fll_error_file_type_directory);
+            fll_error_file_print(main->error, F_status_set_fine(*status), "fl_directory_create", F_true, destination_directory.string, "create", fll_error_file_type_directory_e);
             break;
           }
 
@@ -473,12 +473,12 @@ extern "C" {
           break;
         }
 
-        if (main->error.verbosity == f_console_verbosity_verbose) {
+        if (main->error.verbosity == f_console_verbosity_verbose_e) {
           fll_print_format("Copied file '%Q' to '%Q'.%c", main->output.to.stream, path_source, destination_file, f_string_eol_s[0]);
         }
       }
       else if (F_status_is_error(*status)) {
-        fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_is", F_true, path_source.string, "create", fll_error_file_type_file);
+        fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_is", F_true, path_source.string, "create", fll_error_file_type_file_e);
         break;
       }
 
@@ -524,16 +524,16 @@ extern "C" {
     }
 
     // Ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
-    if (F_status_is_error_not(*status) && main->error.verbosity != f_console_verbosity_normal) {
+    if (F_status_is_error_not(*status) && main->error.verbosity != f_console_verbosity_normal_e) {
       char argument[3] = { f_console_symbol_short_disable_s[0], 0, 0 };
 
-      if (main->error.verbosity == f_console_verbosity_quiet) {
+      if (main->error.verbosity == f_console_verbosity_quiet_e) {
         argument[1] = f_console_standard_short_quiet_s[0];
       }
-      else if (main->error.verbosity == f_console_verbosity_verbose) {
+      else if (main->error.verbosity == f_console_verbosity_verbose_e) {
         argument[1] = f_console_standard_short_verbose_s[0];
       }
-      else if (main->error.verbosity == f_console_verbosity_debug) {
+      else if (main->error.verbosity == f_console_verbosity_debug_e) {
         argument[1] = f_console_standard_short_debug_s[0];
       }
 
@@ -698,7 +698,7 @@ extern "C" {
     else if (*status != F_child) {
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_failure) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%SFailed to execute script: '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -778,7 +778,7 @@ extern "C" {
     fake_build_load_setting(main, setting_file, &data_build.setting, &status);
 
     if (F_status_is_fine(status)) {
-      if (main->output.verbosity != f_console_verbosity_quiet) {
+      if (main->output.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->output.to.stream);
 
         fl_print_format("%c%[Building project%] ", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
@@ -799,7 +799,7 @@ extern "C" {
 
     fake_build_copy(main, mode, "setting files", main->path_data_settings, main->path_build_settings, data_build.setting.build_sources_setting, stage.file_sources_settings, 0, &status);
 
-    if (data_build.setting.build_language == fake_build_language_type_bash) {
+    if (data_build.setting.build_language == fake_build_language_type_bash_e) {
       fake_build_library_script(main, data_build, mode, stage.file_libraries_script, &status);
 
       fake_build_program_script(main, data_build, mode, stage.file_programs_script, &status);
@@ -815,11 +815,11 @@ extern "C" {
         if (data_build.setting.path_standard) {
           path_sources = main->path_sources_c;
 
-          if (data_build.setting.build_language == fake_build_language_type_cpp) {
+          if (data_build.setting.build_language == fake_build_language_type_cpp_e) {
             path_sources = main->path_sources_cpp;
           }
         }
-        else if (main->parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+        else if (main->parameters[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
           path_sources = data_build.setting.path_sources;
         }
 
@@ -898,7 +898,7 @@ extern "C" {
     *status = f_file_touch(file.string, mode.regular, F_false);
 
     if (F_status_is_error(*status)) {
-      fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_touch", F_true, file.string, "touch", fll_error_file_type_file);
+      fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_touch", F_true, file.string, "touch", fll_error_file_type_file_e);
     }
   }
 #endif // _di_fake_build_touch_

@@ -27,7 +27,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
       fll_print_format("%c%[Compiling shared library.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
     }
 
@@ -39,11 +39,11 @@ extern "C" {
       if (data_build.setting.path_standard) {
         path_sources = &main->path_sources_c;
 
-        if (data_build.setting.build_language == fake_build_language_type_cpp) {
+        if (data_build.setting.build_language == fake_build_language_type_cpp_e) {
           path_sources = &main->path_sources_cpp;
         }
       }
-      else if (main->parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+      else if (main->parameters[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
         path_sources = &data_build.setting.path_sources;
       }
 
@@ -258,29 +258,29 @@ extern "C" {
       f_array_length_t parameter_linker_length = fake_build_parameter_library_shared_prefix_s_length;
       f_array_length_t parameter_file_path_length = main->path_build_libraries_shared.used;
 
-      if (data_build.setting.version_file == fake_build_version_type_major) {
+      if (data_build.setting.version_file == fake_build_version_type_major_e) {
         parameter_file_path_length += parameter_file_name_major_length;
       }
-      else if (data_build.setting.version_file == fake_build_version_type_minor) {
+      else if (data_build.setting.version_file == fake_build_version_type_minor_e) {
         parameter_file_path_length += parameter_file_name_minor_length;
       }
-      else if (data_build.setting.version_file == fake_build_version_type_micro) {
+      else if (data_build.setting.version_file == fake_build_version_type_micro_e) {
         parameter_file_path_length += parameter_file_name_micro_length;
       }
-      else if (data_build.setting.version_file == fake_build_version_type_nano) {
+      else if (data_build.setting.version_file == fake_build_version_type_nano_e) {
         parameter_file_path_length += parameter_file_name_nano_length;
       }
 
-      if (data_build.setting.version_target == fake_build_version_type_major) {
+      if (data_build.setting.version_target == fake_build_version_type_major_e) {
         parameter_linker_length += parameter_file_name_major_length;
       }
-      else if (data_build.setting.version_target == fake_build_version_type_minor) {
+      else if (data_build.setting.version_target == fake_build_version_type_minor_e) {
         parameter_linker_length += parameter_file_name_minor_length;
       }
-      else if (data_build.setting.version_target == fake_build_version_type_micro) {
+      else if (data_build.setting.version_target == fake_build_version_type_micro_e) {
         parameter_linker_length += parameter_file_name_micro_length;
       }
-      else if (data_build.setting.version_target == fake_build_version_type_nano) {
+      else if (data_build.setting.version_target == fake_build_version_type_nano_e) {
         parameter_linker_length += parameter_file_name_nano_length;
       }
 
@@ -290,29 +290,29 @@ extern "C" {
       memcpy(parameter_linker, fake_build_parameter_library_shared_prefix_s, fake_build_parameter_library_shared_prefix_s_length);
       memcpy(parameter_file_path, main->path_build_libraries_shared.string, main->path_build_libraries_shared.used);
 
-      if (data_build.setting.version_file == fake_build_version_type_major) {
+      if (data_build.setting.version_file == fake_build_version_type_major_e) {
         memcpy(parameter_file_path + main->path_build_libraries_shared.used, parameter_file_name_major, parameter_file_name_major_length);
       }
-      else if (data_build.setting.version_file == fake_build_version_type_minor) {
+      else if (data_build.setting.version_file == fake_build_version_type_minor_e) {
         memcpy(parameter_file_path + main->path_build_libraries_shared.used, parameter_file_name_minor, parameter_file_name_minor_length);
       }
-      else if (data_build.setting.version_file == fake_build_version_type_micro) {
+      else if (data_build.setting.version_file == fake_build_version_type_micro_e) {
         memcpy(parameter_file_path + main->path_build_libraries_shared.used, parameter_file_name_micro, parameter_file_name_micro_length);
       }
-      else if (data_build.setting.version_file == fake_build_version_type_nano) {
+      else if (data_build.setting.version_file == fake_build_version_type_nano_e) {
         memcpy(parameter_file_path + main->path_build_libraries_shared.used, parameter_file_name_nano, parameter_file_name_nano_length);
       }
 
-      if (data_build.setting.version_target == fake_build_version_type_major) {
+      if (data_build.setting.version_target == fake_build_version_type_major_e) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_s_length, parameter_file_name_major, parameter_file_name_major_length);
       }
-      else if (data_build.setting.version_target == fake_build_version_type_minor) {
+      else if (data_build.setting.version_target == fake_build_version_type_minor_e) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_s_length, parameter_file_name_minor, parameter_file_name_minor_length);
       }
-      else if (data_build.setting.version_target == fake_build_version_type_micro) {
+      else if (data_build.setting.version_target == fake_build_version_type_micro_e) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_s_length, parameter_file_name_micro, parameter_file_name_micro_length);
       }
-      else if (data_build.setting.version_target == fake_build_version_type_nano) {
+      else if (data_build.setting.version_target == fake_build_version_type_nano_e) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_s_length, parameter_file_name_nano, parameter_file_name_nano_length);
       }
 
@@ -373,23 +373,23 @@ extern "C" {
 
       *status = f_file_link(parameter_file_name_major, parameter_file_path);
 
-      if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose) {
+      if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
         fll_print_format("Linked file '%S' to '%S'.%c", main->output.to.stream, parameter_file_path, parameter_file_name_major, f_string_eol_s[0]);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
-          fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
+          fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file_e);
 
           return 0;
         }
 
-        fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_major, "link", fll_error_file_type_file);
+        fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_major, "link", fll_error_file_type_file_e);
 
         return 0;
       }
     }
 
-    if (data_build.setting.version_file != fake_build_version_type_major && parameter_file_name_major_length) {
+    if (data_build.setting.version_file != fake_build_version_type_major_e && parameter_file_name_major_length) {
 
       f_array_length_t parameter_file_path_length = main->path_build_libraries_shared.used + parameter_file_name_major_length;
 
@@ -402,22 +402,22 @@ extern "C" {
 
       *status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
-      if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose) {
+      if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
         fll_print_format("Linked file '%S' to '%S'.%c", main->output.to.stream, parameter_file_path, parameter_file_name_minor, f_string_eol_s[0]);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
-          fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
+          fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file_e);
 
           return 0;
         }
 
-        fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_minor, "link", fll_error_file_type_file);
+        fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_minor, "link", fll_error_file_type_file_e);
 
         return 0;
       }
 
-      if (data_build.setting.version_file != fake_build_version_type_minor && parameter_file_name_minor_length) {
+      if (data_build.setting.version_file != fake_build_version_type_minor_e && parameter_file_name_minor_length) {
 
         f_array_length_t parameter_file_path_length = main->path_build_libraries_shared.used + parameter_file_name_minor_length;
 
@@ -430,22 +430,22 @@ extern "C" {
 
         *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
-        if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose) {
+        if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
           fll_print_format("Linked file '%S' to '%S'.%c", main->output.to.stream, parameter_file_path, parameter_file_name_micro, f_string_eol_s[0]);
         }
         else if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_file_found) {
-            fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file_e);
 
             return 0;
           }
 
-          fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_micro, "link", fll_error_file_type_file);
+          fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_micro, "link", fll_error_file_type_file_e);
 
           return 0;
         }
 
-        if (data_build.setting.version_file != fake_build_version_type_micro && parameter_file_name_micro_length) {
+        if (data_build.setting.version_file != fake_build_version_type_micro_e && parameter_file_name_micro_length) {
 
           f_array_length_t parameter_file_path_length = main->path_build_libraries_shared.used + parameter_file_name_micro_length;
 
@@ -458,17 +458,17 @@ extern "C" {
 
           *status = f_file_link(parameter_file_name_nano, parameter_file_path);
 
-          if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose) {
+          if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
             fll_print_format("Linked file '%S' to '%S'.%c", main->output.to.stream, parameter_file_path, parameter_file_name_nano, f_string_eol_s[0]);
           }
           else if (F_status_is_error(*status)) {
             if (F_status_set_fine(*status) == F_file_found) {
-              fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
+              fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file_e);
 
               return 0;
             }
 
-            fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_nano, "link", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_nano, "link", fll_error_file_type_file_e);
 
             return 0;
           }
@@ -488,7 +488,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
       fll_print_format("%c%[Compiling static library.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
     }
 

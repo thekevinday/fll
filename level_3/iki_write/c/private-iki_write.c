@@ -10,7 +10,7 @@ extern "C" {
   f_status_t iki_write_process(iki_write_main_t * const main, const f_file_t output, const f_string_static_t object, const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *escaped) {
 
     if (!object.used) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe object is missing, it must not have a length of %]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -26,7 +26,7 @@ extern "C" {
     f_status_t status = f_iki_object_is(object);
 
     if (status == F_false) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe object '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);

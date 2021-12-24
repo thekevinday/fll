@@ -65,7 +65,7 @@ extern "C" {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_basic_write_total_parameters_d);
 
       {
-        f_console_parameter_id_t ids[3] = { fss_basic_write_parameter_no_color, fss_basic_write_parameter_light, fss_basic_write_parameter_dark };
+        f_console_parameter_id_t ids[3] = { fss_basic_write_parameter_no_color_e, fss_basic_write_parameter_light_e, fss_basic_write_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -98,7 +98,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { fss_basic_write_parameter_verbosity_quiet, fss_basic_write_parameter_verbosity_normal, fss_basic_write_parameter_verbosity_verbose, fss_basic_write_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { fss_basic_write_parameter_verbosity_quiet_e, fss_basic_write_parameter_verbosity_normal_e, fss_basic_write_parameter_verbosity_verbose_e, fss_basic_write_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -109,39 +109,39 @@ extern "C" {
           return status;
         }
 
-        if (choice == fss_basic_write_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == fss_basic_write_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == fss_basic_write_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == fss_basic_write_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == fss_basic_write_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == fss_basic_write_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == fss_basic_write_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == fss_basic_write_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    if (main->parameters[fss_basic_write_parameter_help].result == f_console_result_found) {
+    if (main->parameters[fss_basic_write_parameter_help_e].result == f_console_result_found_e) {
       fss_basic_write_print_help(main->output.to, main->context);
 
       fss_basic_write_main_delete(main);
       return status;
     }
 
-    if (main->parameters[fss_basic_write_parameter_version].result == f_console_result_found) {
+    if (main->parameters[fss_basic_write_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, fss_basic_write_program_version_s);
 
       fss_basic_write_main_delete(main);
@@ -155,9 +155,9 @@ extern "C" {
     output.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_basic_write_parameter_file].result == f_console_result_additional) {
-        if (main->parameters[fss_basic_write_parameter_file].values.used > 1) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[fss_basic_write_parameter_file_e].result == f_console_result_additional_e) {
+        if (main->parameters[fss_basic_write_parameter_file_e].values.used > 1) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -170,41 +170,41 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_array_length_t location = main->parameters[fss_basic_write_parameter_file].values.array[0];
+          const f_array_length_t location = main->parameters[fss_basic_write_parameter_file_e].values.array[0];
 
           output.id = -1;
           output.stream = 0;
           status = f_file_stream_open(arguments->argv[location], 0, &output);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], "open", fll_error_file_type_file_e);
           }
         }
       }
-      else if (main->parameters[fss_basic_write_parameter_file].result == f_console_result_found) {
+      else if (main->parameters[fss_basic_write_parameter_file_e].result == f_console_result_found_e) {
         fss_basic_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_basic_write_long_file_s);
         status = F_status_set_error(F_parameter);
       }
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_basic_write_parameter_object].locations.used || main->parameters[fss_basic_write_parameter_content].locations.used) {
-        if (main->parameters[fss_basic_write_parameter_object].locations.used) {
-          if (main->parameters[fss_basic_write_parameter_object].locations.used != main->parameters[fss_basic_write_parameter_object].values.used) {
+      if (main->parameters[fss_basic_write_parameter_object_e].locations.used || main->parameters[fss_basic_write_parameter_content_e].locations.used) {
+        if (main->parameters[fss_basic_write_parameter_object_e].locations.used) {
+          if (main->parameters[fss_basic_write_parameter_object_e].locations.used != main->parameters[fss_basic_write_parameter_object_e].values.used) {
             fss_basic_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_basic_write_long_object_s);
             status = F_status_set_error(F_parameter);
           }
-          else if (main->parameters[fss_basic_write_parameter_content].locations.used != main->parameters[fss_basic_write_parameter_content].values.used) {
+          else if (main->parameters[fss_basic_write_parameter_content_e].locations.used != main->parameters[fss_basic_write_parameter_content_e].values.used) {
             fss_basic_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_basic_write_long_content_s);
             status = F_status_set_error(F_parameter);
           }
-          else if (main->parameters[fss_basic_write_parameter_object].locations.used != main->parameters[fss_basic_write_parameter_content].locations.used && main->parameters[fss_basic_write_parameter_partial].result == f_console_result_none) {
+          else if (main->parameters[fss_basic_write_parameter_object_e].locations.used != main->parameters[fss_basic_write_parameter_content_e].locations.used && main->parameters[fss_basic_write_parameter_partial_e].result == f_console_result_none_e) {
             fss_basic_write_error_parameter_same_times_print(main);
             status = F_status_set_error(F_parameter);
           }
-          else if (main->parameters[fss_basic_write_parameter_content].locations.used && main->parameters[fss_basic_write_parameter_partial].locations.used) {
-            if (main->parameters[fss_basic_write_parameter_content].result == f_console_result_additional) {
-              if (main->error.verbosity != f_console_verbosity_quiet) {
+          else if (main->parameters[fss_basic_write_parameter_content_e].locations.used && main->parameters[fss_basic_write_parameter_partial_e].locations.used) {
+            if (main->parameters[fss_basic_write_parameter_content_e].result == f_console_result_additional_e) {
+              if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 flockfile(main->error.to.stream);
 
                 fl_print_format("%c%[%sThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -223,20 +223,20 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            if (main->parameters[fss_basic_write_parameter_content].result == f_console_result_additional) {
+            if (main->parameters[fss_basic_write_parameter_content_e].result == f_console_result_additional_e) {
               f_array_length_t location_object = 0;
               f_array_length_t location_content = 0;
               f_array_length_t location_sub_object = 0;
               f_array_length_t location_sub_content = 0;
 
-              for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].locations.used; ++i) {
-                location_object = main->parameters[fss_basic_write_parameter_object].locations.array[i];
-                location_content = main->parameters[fss_basic_write_parameter_content].locations.array[i];
-                location_sub_object = main->parameters[fss_basic_write_parameter_object].locations_sub.array[i];
-                location_sub_content = main->parameters[fss_basic_write_parameter_content].locations_sub.array[i];
+              for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object_e].locations.used; ++i) {
+                location_object = main->parameters[fss_basic_write_parameter_object_e].locations.array[i];
+                location_content = main->parameters[fss_basic_write_parameter_content_e].locations.array[i];
+                location_sub_object = main->parameters[fss_basic_write_parameter_object_e].locations_sub.array[i];
+                location_sub_content = main->parameters[fss_basic_write_parameter_content_e].locations_sub.array[i];
 
                 if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
-                  if (main->error.verbosity != f_console_verbosity_quiet) {
+                  if (main->error.verbosity != f_console_verbosity_quiet_e) {
                     flockfile(main->error.to.stream);
 
                     fl_print_format("%c%[%sEach '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -255,19 +255,19 @@ extern "C" {
             }
           }
         }
-        else if (main->parameters[fss_basic_write_parameter_content].locations.used) {
-          if (main->parameters[fss_basic_write_parameter_content].locations.used != main->parameters[fss_basic_write_parameter_content].values.used) {
+        else if (main->parameters[fss_basic_write_parameter_content_e].locations.used) {
+          if (main->parameters[fss_basic_write_parameter_content_e].locations.used != main->parameters[fss_basic_write_parameter_content_e].values.used) {
             fss_basic_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_basic_write_long_content_s);
             status = F_status_set_error(F_parameter);
           }
-          else if (!main->parameters[fss_basic_write_parameter_partial].locations.used) {
+          else if (!main->parameters[fss_basic_write_parameter_partial_e].locations.used) {
             fss_basic_write_error_parameter_same_times_print(main);
             status = F_status_set_error(F_parameter);
           }
         }
       }
       else if (!main->process_pipe) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThis requires either piped data or the use of the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -283,8 +283,8 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->process_pipe) {
-        if (main->parameters[fss_basic_write_parameter_partial].result == f_console_result_found) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->parameters[fss_basic_write_parameter_partial_e].result == f_console_result_found_e) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThis '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -300,8 +300,8 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_basic_write_parameter_prepend].result == f_console_result_found) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[fss_basic_write_parameter_prepend_e].result == f_console_result_found_e) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -313,8 +313,8 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[fss_basic_write_parameter_prepend].result == f_console_result_additional) {
-        const f_array_length_t index = main->parameters[fss_basic_write_parameter_prepend].values.array[main->parameters[fss_basic_write_parameter_prepend].values.used - 1];
+      else if (main->parameters[fss_basic_write_parameter_prepend_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters[fss_basic_write_parameter_prepend_e].values.array[main->parameters[fss_basic_write_parameter_prepend_e].values.used - 1];
         const f_array_length_t length = strnlen(arguments->argv[index], f_console_parameter_size);
 
         // Even though this standard does not utilize this parameter, provide the validation for consistency.
@@ -328,7 +328,7 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             if (status == F_false) {
-              if (main->error.verbosity != f_console_verbosity_quiet) {
+              if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 flockfile(main->error.to.stream);
 
                 fl_print_format("%c%[%sThe value for the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -344,7 +344,7 @@ extern "C" {
           } // for
         }
         else {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThe value for the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -360,8 +360,8 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_basic_write_parameter_ignore].result == f_console_result_found) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[fss_basic_write_parameter_ignore_e].result == f_console_result_found_e) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -373,9 +373,9 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[fss_basic_write_parameter_ignore].result == f_console_result_additional) {
-        const f_array_length_t total_locations = main->parameters[fss_basic_write_parameter_ignore].locations.used;
-        const f_array_length_t total_arguments = main->parameters[fss_basic_write_parameter_ignore].values.used;
+      else if (main->parameters[fss_basic_write_parameter_ignore_e].result == f_console_result_additional_e) {
+        const f_array_length_t total_locations = main->parameters[fss_basic_write_parameter_ignore_e].locations.used;
+        const f_array_length_t total_arguments = main->parameters[fss_basic_write_parameter_ignore_e].values.used;
 
         if (total_locations * 2 > total_arguments) {
           flockfile(main->error.to.stream);
@@ -394,14 +394,14 @@ extern "C" {
     f_fss_quote_t quote = F_fss_delimit_quote_double_s;
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_basic_write_parameter_double].result == f_console_result_found) {
-        if (main->parameters[fss_basic_write_parameter_single].result == f_console_result_found) {
-          if (main->parameters[fss_basic_write_parameter_double].location < main->parameters[fss_basic_write_parameter_single].location) {
+      if (main->parameters[fss_basic_write_parameter_double_e].result == f_console_result_found_e) {
+        if (main->parameters[fss_basic_write_parameter_single_e].result == f_console_result_found_e) {
+          if (main->parameters[fss_basic_write_parameter_double_e].location < main->parameters[fss_basic_write_parameter_single_e].location) {
             quote = F_fss_delimit_quote_single_s;
           }
         }
       }
-      else if (main->parameters[fss_basic_write_parameter_single].result == f_console_result_found) {
+      else if (main->parameters[fss_basic_write_parameter_single_e].result == f_console_result_found_e) {
         quote = F_fss_delimit_quote_single_s;
       }
     }
@@ -417,7 +417,7 @@ extern "C" {
         status = fss_basic_write_process_pipe(main, output, quote, &buffer);
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sWhile processing the '%]%[input pipe%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, main->error.notable, main->error.notable);
@@ -429,18 +429,18 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        if (main->parameters[fss_basic_write_parameter_partial].result == f_console_result_found) {
-          if (main->parameters[fss_basic_write_parameter_object].result == f_console_result_additional) {
+        if (main->parameters[fss_basic_write_parameter_partial_e].result == f_console_result_found_e) {
+          if (main->parameters[fss_basic_write_parameter_object_e].result == f_console_result_additional_e) {
             content.used = 0;
 
-            for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].values.used; ++i) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object_e].values.used; ++i) {
 
               if (fss_basic_write_signal_received(main)) {
                 status = F_status_set_error(F_interrupt);
                 break;
               }
 
-              object.string = arguments->argv[main->parameters[fss_basic_write_parameter_object].values.array[i]];
+              object.string = arguments->argv[main->parameters[fss_basic_write_parameter_object_e].values.array[i]];
               object.used = strnlen(object.string, f_console_parameter_size);
               object.size = object.used;
 
@@ -451,14 +451,14 @@ extern "C" {
           else {
             object.used = 0;
 
-            for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_content].values.used; ++i) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_content_e].values.used; ++i) {
 
               if (fss_basic_write_signal_received(main)) {
                 status = F_status_set_error(F_interrupt);
                 break;
               }
 
-              content.string = arguments->argv[main->parameters[fss_basic_write_parameter_content].values.array[i]];
+              content.string = arguments->argv[main->parameters[fss_basic_write_parameter_content_e].values.array[i]];
               content.used = strnlen(content.string, f_console_parameter_size);
               content.size = content.used;
 
@@ -468,18 +468,18 @@ extern "C" {
           }
         }
         else {
-          for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].values.used; ++i) {
+          for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object_e].values.used; ++i) {
 
             if (fss_basic_write_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
               break;
             }
 
-            object.string = arguments->argv[main->parameters[fss_basic_write_parameter_object].values.array[i]];
+            object.string = arguments->argv[main->parameters[fss_basic_write_parameter_object_e].values.array[i]];
             object.used = strnlen(object.string, f_console_parameter_size);
             object.size = object.used;
 
-            content.string = arguments->argv[main->parameters[fss_basic_write_parameter_content].values.array[i]];
+            content.string = arguments->argv[main->parameters[fss_basic_write_parameter_content_e].values.array[i]];
             content.used = strnlen(content.string, f_console_parameter_size);
             content.size = content.used;
 
@@ -489,7 +489,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sWhile processing the '%]%[input arguments%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, main->error.notable, main->error.notable);
@@ -498,7 +498,7 @@ extern "C" {
             funlockfile(main->error.to.stream);
           }
         }
-        else if (main->error.verbosity != f_console_verbosity_quiet && main->parameters[fss_basic_write_parameter_file].result == f_console_result_none) {
+        else if (main->error.verbosity != f_console_verbosity_quiet_e && main->parameters[fss_basic_write_parameter_file_e].result == f_console_result_none_e) {
 
           // ensure there is always a newline at the end, unless in quiet mode.
           fll_print_character(f_string_eol_s[0], main->error.to.stream);
@@ -517,14 +517,14 @@ extern "C" {
       content.size = 0;
     }
 
-    if (main->parameters[fss_basic_write_parameter_file].result == f_console_result_additional) {
+    if (main->parameters[fss_basic_write_parameter_file_e].result == f_console_result_additional_e) {
       if (output.id != -1) {
         f_file_stream_close(F_true, &output);
       }
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
         fll_print_character(f_string_eol_s[0], main->error.to.stream);
       }

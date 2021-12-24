@@ -52,7 +52,7 @@ extern "C" {
 
     if (environment->used + data_build.setting.environment.used > environment->size) {
       if (environment->used + data_build.setting.environment.used > f_environment_max_length) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SThe values for the setting '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -552,7 +552,7 @@ extern "C" {
         } // for
 
         if (found == F_false) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%SThe specified mode '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -637,7 +637,7 @@ extern "C" {
 
     if (F_status_is_error(*status)) {
       if (*status == F_status_set_error(F_string_too_large)) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           funlockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SA setting in the file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -851,7 +851,7 @@ extern "C" {
         0,                               // search_exclusive
         0,                               // search_shared
         0,                               // search_static
-        fake_build_version_type_micro,   // version_file
+        fake_build_version_type_micro_e,   // version_file
         0,                               // version_major
         0,                               // version_major_prefix
         0,                               // version_micro
@@ -860,7 +860,7 @@ extern "C" {
         0,                               // version_minor_prefix
         0,                               // version_nano
         0,                               // version_nano_prefix
-        fake_build_version_type_major,   // version_target
+        fake_build_version_type_major_e,   // version_target
       };
 
       const char *settings_single_version_default_name[] = {
@@ -941,7 +941,7 @@ extern "C" {
         if (!settings_single_source[i]->used) continue;
 
         if (settings_single_source[i]->used > 1) {
-          if (main->warning.verbosity == f_console_verbosity_verbose) {
+          if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
             fl_print_format("%c%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
@@ -966,7 +966,7 @@ extern "C" {
           else {
             *settings_single_bool[i] = F_true;
 
-            if (main->warning.verbosity == f_console_verbosity_verbose) {
+            if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
               fl_print_format("%c%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
@@ -987,18 +987,18 @@ extern "C" {
         }
         else if (settings_single_type[i] == 4) {
           if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_bash_s, settings_single_source[i]->array[0].used, fake_build_language_bash_s_length) == F_equal_to) {
-            *settings_single_language[i] = fake_build_language_type_bash;
+            *settings_single_language[i] = fake_build_language_type_bash_e;
           }
           else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_c_s, settings_single_source[i]->array[0].used, fake_build_language_c_s_length) == F_equal_to) {
-            *settings_single_language[i] = fake_build_language_type_c;
+            *settings_single_language[i] = fake_build_language_type_c_e;
           }
           else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_cpp_s, settings_single_source[i]->array[0].used, fake_build_language_cpp_s_length) == F_equal_to) {
-            *settings_single_language[i] = fake_build_language_type_cpp;
+            *settings_single_language[i] = fake_build_language_type_cpp_e;
           }
           else {
-            *settings_single_language[i] = fake_build_language_type_c;
+            *settings_single_language[i] = fake_build_language_type_c_e;
 
-            if (main->warning.verbosity == f_console_verbosity_verbose) {
+            if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
               fl_print_format("%c%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
@@ -1021,21 +1021,21 @@ extern "C" {
         }
         else if (settings_single_type[i] == 5) {
           if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_major_s, settings_single_source[i]->array[0].used, fake_build_version_major_s_length) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_major;
+            *settings_single_version[i] = fake_build_version_type_major_e;
           }
           else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor_s, settings_single_source[i]->array[0].used, fake_build_version_minor_s_length) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_minor;
+            *settings_single_version[i] = fake_build_version_type_minor_e;
           }
           else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro_s, settings_single_source[i]->array[0].used, fake_build_version_micro_s_length) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_micro;
+            *settings_single_version[i] = fake_build_version_type_micro_e;
           }
           else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_nano_s, settings_single_source[i]->array[0].used, fake_build_version_nano_s_length) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_nano;
+            *settings_single_version[i] = fake_build_version_type_nano_e;
           }
           else {
             *settings_single_version[i] = settings_single_version_default[i];
 
-            if (main->warning.verbosity == f_console_verbosity_verbose) {
+            if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
               fl_print_format("%c%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
@@ -1092,9 +1092,9 @@ extern "C" {
 
       if (F_status_is_error_not(*status)) {
         if (checks && !setting->version_file) {
-          setting->version_file = fake_build_version_type_micro;
+          setting->version_file = fake_build_version_type_micro_e;
 
-          if (main->warning.verbosity == f_console_verbosity_verbose) {
+          if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
             fl_print_format("%c%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
@@ -1110,9 +1110,9 @@ extern "C" {
         }
 
         if (checks && !setting->version_target) {
-          setting->version_target = fake_build_version_type_major;
+          setting->version_target = fake_build_version_type_major_e;
 
-          if (main->warning.verbosity == f_console_verbosity_verbose) {
+          if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
             fl_print_format("%c%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
@@ -1199,7 +1199,7 @@ extern "C" {
             for (j = 0; j < 2; ++j) {
 
               if (setting_target[j] && i + 1 <= setting_target[j]) {
-                if (main->error.verbosity != f_console_verbosity_quiet) {
+                if (main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(main->error.to.stream);
 
                   fl_print_format("%c%[%SWhen the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -1313,9 +1313,9 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     // Override setting file when any of these are specified in the command line.
-    if (main->parameters[fake_parameter_shared_disabled].result == f_console_result_found) {
-      if (main->parameters[fake_parameter_shared_enabled].result == f_console_result_found) {
-        if (main->parameters[fake_parameter_shared_enabled].location > main->parameters[fake_parameter_shared_disabled].location) {
+    if (main->parameters[fake_parameter_shared_disabled_e].result == f_console_result_found_e) {
+      if (main->parameters[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
+        if (main->parameters[fake_parameter_shared_enabled_e].location > main->parameters[fake_parameter_shared_disabled_e].location) {
           setting->build_shared = F_true;
           setting->search_shared = F_true;
         }
@@ -1324,7 +1324,7 @@ extern "C" {
           setting->search_shared = F_false;
         }
 
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SThe parameters '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -1343,14 +1343,14 @@ extern "C" {
         setting->search_shared = F_false;
       }
     }
-    else if (main->parameters[fake_parameter_shared_enabled].result == f_console_result_found) {
+    else if (main->parameters[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
       setting->build_shared = F_true;
       setting->search_shared = F_true;
     }
 
-    if (main->parameters[fake_parameter_static_disabled].result == f_console_result_found) {
-      if (main->parameters[fake_parameter_static_enabled].result == f_console_result_found) {
-        if (main->parameters[fake_parameter_static_enabled].location > main->parameters[fake_parameter_static_disabled].location) {
+    if (main->parameters[fake_parameter_static_disabled_e].result == f_console_result_found_e) {
+      if (main->parameters[fake_parameter_static_enabled_e].result == f_console_result_found_e) {
+        if (main->parameters[fake_parameter_static_enabled_e].location > main->parameters[fake_parameter_static_disabled_e].location) {
           setting->build_static = F_true;
           setting->search_static = F_true;
         }
@@ -1359,7 +1359,7 @@ extern "C" {
           setting->search_static = F_false;
         }
 
-        if (main->error.verbosity == f_console_verbosity_verbose) {
+        if (main->error.verbosity == f_console_verbosity_verbose_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SThe parameters '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -1378,14 +1378,14 @@ extern "C" {
         setting->search_static = F_false;
       }
     }
-    else if (main->parameters[fake_parameter_static_enabled].result == f_console_result_found) {
+    else if (main->parameters[fake_parameter_static_enabled_e].result == f_console_result_found_e) {
       setting->build_static = F_true;
       setting->search_static = F_true;
     }
 
-    if (setting->build_language == fake_build_language_type_c || setting->build_language == fake_build_language_type_cpp) {
+    if (setting->build_language == fake_build_language_type_c_e || setting->build_language == fake_build_language_type_cpp_e) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%SThe build settings '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -1393,7 +1393,7 @@ extern "C" {
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
           fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_static_s, main->error.notable);
           fl_print_format("%[' cannot both be false when using the language '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_language == fake_build_language_type_c ? fake_build_language_c_s : fake_build_language_cpp_s, main->error.notable);
+          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, main->error.notable);
           fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);

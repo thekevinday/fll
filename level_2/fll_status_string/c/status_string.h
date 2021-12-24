@@ -7,8 +7,8 @@
  *
  * Provides status code functions, such as those that translate status codes into strings.
  */
-#ifndef _FLL_status_h
-#define _FLL_status_h
+#ifndef _FLL_status_string_h
+#define _FLL_status_string_h
 
 // fll-0 includes
 #include <fll/level_0/type.h>
@@ -17,10 +17,10 @@
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
 #include <fll/level_0/conversion.h>
+#include <fll/level_0/status_string.h>
 
 // fll-1 includes
 #include <fll/level_1/string.h>
-#include <fll/level_1/status.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,12 +47,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_conversion_character_is_decimal().
  */
-#ifndef _di_fll_status_from_string_
-  extern f_status_t fll_status_from_string(const f_string_t string, f_status_t *code);
-#endif // _di_fll_status_to_string_
+#ifndef _di_fll_status_string_from_
+  extern f_status_t fll_status_string_from(const f_string_t string, f_status_t *code);
+#endif // _di_fll_status_string_to_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _FLL_status_h
+#endif // _FLL_status_string_h

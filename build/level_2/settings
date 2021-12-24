@@ -25,14 +25,14 @@ build_libraries-level -lfll_1 -lfll_0
 build_libraries-level_threadless -lfll_1 -lfll_0
 build_libraries_shared
 build_libraries_static
-build_sources_library control_group.c error.c error-common.c private-error.c execute.c private-execute.c file.c private-file.c fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_status.c iki.c private-iki.c path.c print.c program.c status.c
+build_sources_library control_group.c error.c error-common.c private-error.c execute.c private-execute.c file.c private-file.c fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_status_string.c iki.c private-iki.c path.c print.c program.c status_string.c
 build_sources_library-level
 build_sources_library_shared
 build_sources_library_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers control_group.h error.h error-common.h execute.h file.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status.h iki.h path.h print.h program.h status.h
+build_sources_headers control_group.h error.h error-common.h execute.h file.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status_string.h iki.h path.h print.h program.h status_string.h
 build_sources_headers-level
 build_sources_headers_shared
 build_sources_headers_static

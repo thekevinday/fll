@@ -200,9 +200,9 @@ extern "C" {
 
 #ifndef _di_fake_build_language_
   enum {
-    fake_build_language_type_bash = 1,
-    fake_build_language_type_c,
-    fake_build_language_type_cpp,
+    fake_build_language_type_bash_e = 1,
+    fake_build_language_type_c_e,
+    fake_build_language_type_cpp_e,
   };
 
   #define fake_build_language_bash_s "bash"
@@ -216,10 +216,10 @@ extern "C" {
 
 #ifndef _di_fake_build_version_
   enum {
-    fake_build_version_type_major = 1,
-    fake_build_version_type_minor,
-    fake_build_version_type_micro,
-    fake_build_version_type_nano,
+    fake_build_version_type_major_e = 1,
+    fake_build_version_type_minor_e,
+    fake_build_version_type_micro_e,
+    fake_build_version_type_nano_e,
   };
 
   #define fake_build_version_major_s "major"
@@ -235,13 +235,13 @@ extern "C" {
 
 #ifndef _di_fake_defines_
   enum {
-    fake_operation_build = 1,
-    fake_operation_clean,
-    fake_operation_make,
-    fake_operation_skeleton,
+    fake_operation_build_e = 1,
+    fake_operation_clean_e,
+    fake_operation_make_e,
+    fake_operation_skeleton_e,
   };
 
-  #define fake_signal_check_d 10000
+  #define fake_signal_check_d       10000
   #define fake_signal_check_tiny_d  4
   #define fake_signal_check_short_d 16
 
@@ -318,70 +318,70 @@ extern "C" {
   #define fake_other_operation_skeleton_s_length 8
 
   enum {
-    fake_parameter_help,
-    fake_parameter_light,
-    fake_parameter_dark,
-    fake_parameter_no_color,
-    fake_parameter_verbosity_quiet,
-    fake_parameter_verbosity_normal,
-    fake_parameter_verbosity_verbose,
-    fake_parameter_verbosity_debug,
-    fake_parameter_version,
+    fake_parameter_help_e,
+    fake_parameter_light_e,
+    fake_parameter_dark_e,
+    fake_parameter_no_color_e,
+    fake_parameter_verbosity_quiet_e,
+    fake_parameter_verbosity_normal_e,
+    fake_parameter_verbosity_verbose_e,
+    fake_parameter_verbosity_debug_e,
+    fake_parameter_version_e,
 
-    fake_parameter_define,
-    fake_parameter_fakefile,
-    fake_parameter_mode,
-    fake_parameter_process,
-    fake_parameter_settings,
+    fake_parameter_define_e,
+    fake_parameter_fakefile_e,
+    fake_parameter_mode_e,
+    fake_parameter_process_e,
+    fake_parameter_settings_e,
 
-    fake_parameter_path_build,
-    fake_parameter_path_data,
-    fake_parameter_path_sources,
-    fake_parameter_path_work,
+    fake_parameter_path_build_e,
+    fake_parameter_path_data_e,
+    fake_parameter_path_sources_e,
+    fake_parameter_path_work_e,
 
-    fake_parameter_documents_disabled,
-    fake_parameter_documents_enabled,
-    fake_parameter_shared_disabled,
-    fake_parameter_shared_enabled,
-    fake_parameter_static_disabled,
-    fake_parameter_static_enabled,
+    fake_parameter_documents_disabled_e,
+    fake_parameter_documents_enabled_e,
+    fake_parameter_shared_disabled_e,
+    fake_parameter_shared_enabled_e,
+    fake_parameter_static_disabled_e,
+    fake_parameter_static_enabled_e,
 
-    fake_parameter_operation_build,
-    fake_parameter_operation_clean,
-    fake_parameter_operation_make,
-    fake_parameter_operation_skeleton,
+    fake_parameter_operation_build_e,
+    fake_parameter_operation_clean_e,
+    fake_parameter_operation_make_e,
+    fake_parameter_operation_skeleton_e,
   };
 
   #define fake_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fake_short_define_s, fake_long_define_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fake_short_fakefile_s, fake_long_fakefile_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fake_short_mode_s, fake_long_mode_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fake_short_process_s, fake_long_process_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fake_short_settings_s, fake_long_settings_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fake_short_path_build_s, fake_long_path_build_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fake_short_path_data_s, fake_long_path_data_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fake_short_path_sources_s, fake_long_path_sources_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fake_short_path_work_s, fake_long_path_work_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, fake_long_documents_disabled_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, fake_long_documents_enabled_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, fake_long_shared_disabled_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, fake_long_shared_enabled_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, fake_long_static_disabled_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, fake_long_static_enabled_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(0, 0, fake_other_operation_build_s, 0, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, fake_other_operation_clean_s, 0, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, fake_other_operation_make_s, 0, f_console_type_other), \
-      f_console_parameter_t_initialize(0, 0, fake_other_operation_skeleton_s, 0, f_console_type_other), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(fake_short_define_s, fake_long_define_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fake_short_fakefile_s, fake_long_fakefile_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fake_short_mode_s, fake_long_mode_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fake_short_process_s, fake_long_process_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fake_short_settings_s, fake_long_settings_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fake_short_path_build_s, fake_long_path_build_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fake_short_path_data_s, fake_long_path_data_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fake_short_path_sources_s, fake_long_path_sources_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fake_short_path_work_s, fake_long_path_work_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, fake_long_documents_disabled_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, fake_long_documents_enabled_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, fake_long_shared_disabled_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, fake_long_shared_enabled_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, fake_long_static_disabled_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, fake_long_static_enabled_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(0, 0, fake_other_operation_build_s, 0, f_console_type_other_e), \
+      f_console_parameter_t_initialize(0, 0, fake_other_operation_clean_s, 0, f_console_type_other_e), \
+      f_console_parameter_t_initialize(0, 0, fake_other_operation_make_s, 0, f_console_type_other_e), \
+      f_console_parameter_t_initialize(0, 0, fake_other_operation_skeleton_s, 0, f_console_type_other_e), \
     }
 
   #define fake_total_parameters_d 28

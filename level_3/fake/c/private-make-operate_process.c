@@ -19,7 +19,7 @@ extern "C" {
 
     if (*status == F_child) return data_make->main->child;
 
-    if (state_process->operation == fake_make_operation_type_index) {
+    if (state_process->operation == fake_make_operation_type_index_e) {
       const f_status_t result = fake_execute(data_make->main, data_make->environment, data_make->setting_build.build_indexer, arguments, status);
 
       if (F_status_is_error(*status)) {
@@ -35,7 +35,7 @@ extern "C" {
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_break) {
+    if (state_process->operation == fake_make_operation_type_break_e) {
       if (!arguments.used || fl_string_dynamic_compare_string(fake_make_operation_argument_success_s, arguments.array[0], fake_make_operation_argument_success_s_length) == F_equal_to) {
         *status = F_signal_abort;
       }
@@ -46,7 +46,7 @@ extern "C" {
         return 0;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("%cBreaking as '", data_make->main->output.to.stream, f_string_eol_s[0]);
@@ -59,7 +59,7 @@ extern "C" {
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_build) {
+    if (state_process->operation == fake_make_operation_type_build_e) {
       f_string_static_t stub = f_string_static_t_initialize;
 
       *status = fake_build_operate(arguments.used ? arguments.array[0] : stub, data_make->main);
@@ -73,7 +73,7 @@ extern "C" {
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_clean) {
+    if (state_process->operation == fake_make_operation_type_clean_e) {
       *status = fake_clean_operate(data_make->main);
 
       if (F_status_set_fine(*status) == F_interrupt) {
@@ -85,13 +85,13 @@ extern "C" {
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_clone) {
+    if (state_process->operation == fake_make_operation_type_clone_e) {
       *status = fake_make_operate_process_type_copy(data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_compile) {
+    if (state_process->operation == fake_make_operation_type_compile_e) {
       const int result = fake_execute(data_make->main, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
 
       if (F_status_is_error(*status)) {
@@ -107,13 +107,13 @@ extern "C" {
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_copy) {
+    if (state_process->operation == fake_make_operation_type_copy_e) {
       *status = fake_make_operate_process_type_copy(data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_define) {
+    if (state_process->operation == fake_make_operation_type_define_e) {
 
       if (arguments.used > 1) {
         *status = f_environment_set(arguments.array[0].string, arguments.array[1].string, F_true);
@@ -125,34 +125,34 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "f_environment_set", F_true);
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         fll_print_format("%cDefined environment variable '%[%Q%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[0], data_make->main->context.set.notable, f_string_eol_s[0]);
       }
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_delete) {
+    if (state_process->operation == fake_make_operation_type_delete_e) {
       *status = fake_make_operate_process_type_deletes(data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_deletes) {
+    if (state_process->operation == fake_make_operation_type_deletes_e) {
       *status = fake_make_operate_process_type_deletes(data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_else) {
+    if (state_process->operation == fake_make_operation_type_else_e) {
 
       // Setup the block so that subsequent operations can know the current block and the result (which is preserved across to the else condition).
-      state_process->block = fake_make_operation_if_type_else;
+      state_process->block = fake_make_operation_if_type_else_e;
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_exit) {
+    if (state_process->operation == fake_make_operation_type_exit_e) {
       if (!arguments.used || fl_string_dynamic_compare_string(fake_make_operation_argument_success_s, arguments.array[0], fake_make_operation_argument_success_s_length) == F_equal_to) {
         *status = F_signal_quit;
       }
@@ -160,7 +160,7 @@ extern "C" {
         *status = F_status_set_error(F_signal_quit);
 
         // Forcing exit forces fail mode.
-        data_make->setting_make.fail = fake_make_operation_fail_type_exit;
+        data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
         data_make->error.prefix = fl_print_error_s;
         data_make->error.suffix = 0;
         data_make->error.context = data_make->main->context.set.error;
@@ -173,80 +173,80 @@ extern "C" {
         return 0;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         fll_print_format("%cExiting as '%[%S%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success_s, data_make->main->context.set.notable, f_string_eol_s[0]);
       }
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_fail) {
+    if (state_process->operation == fake_make_operation_type_fail_e) {
       fake_make_operate_process_type_fail(data_make, arguments);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_group) {
+    if (state_process->operation == fake_make_operation_type_group_e) {
       *status = fake_make_operate_process_type_groups(data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_groups) {
+    if (state_process->operation == fake_make_operation_type_groups_e) {
       *status = fake_make_operate_process_type_groups(data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_if || state_process->operation == fake_make_operation_type_and || state_process->operation == fake_make_operation_type_or) {
-      if (state_process->condition == fake_make_operation_if_type_if_success) {
+    if (state_process->operation == fake_make_operation_type_if_e || state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_or_e) {
+      if (state_process->condition == fake_make_operation_if_type_if_success_e) {
         if (success) {
-          state_process->condition_result = fake_condition_result_true;
+          state_process->condition_result = fake_condition_result_true_e;
         }
         else {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
         }
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_defined) {
+      else if (state_process->condition == fake_make_operation_if_type_if_defined_e) {
         fake_make_operate_process_type_if_defined(data_make, arguments, F_false, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_exists) {
+      else if (state_process->condition == fake_make_operation_if_type_if_exists_e) {
         *status = fake_make_operate_process_type_if_exists(data_make, arguments, F_false, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_failure) {
+      else if (state_process->condition == fake_make_operation_if_type_if_failure_e) {
         if (success) {
-          state_process->condition_result = fake_condition_result_false;
+          state_process->condition_result = fake_condition_result_false_e;
         }
         else {
-          state_process->condition_result = fake_condition_result_true;
+          state_process->condition_result = fake_condition_result_true_e;
         }
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_group) {
+      else if (state_process->condition == fake_make_operation_if_type_if_group_e) {
         *status = fake_make_operate_process_type_if_group(data_make, arguments, F_false, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_is) {
+      else if (state_process->condition == fake_make_operation_if_type_if_is_e) {
         *status = fake_make_operate_process_type_if_is(data_make, arguments, F_false, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_mode) {
+      else if (state_process->condition == fake_make_operation_if_type_if_mode_e) {
         *status = fake_make_operate_process_type_if_mode(data_make, arguments, F_false, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_not_defined) {
+      else if (state_process->condition == fake_make_operation_if_type_if_not_defined_e) {
         fake_make_operate_process_type_if_defined(data_make, arguments, F_true, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_equal) {
-        state_process->condition_result = fake_condition_result_true;
+      else if (state_process->condition == fake_make_operation_if_type_if_equal_e) {
+        state_process->condition_result = fake_condition_result_true_e;
 
         for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
           if (fl_string_dynamic_compare(arguments.array[1], arguments.array[i]) == F_equal_to_not) {
-            state_process->condition_result = fake_condition_result_false;
+            state_process->condition_result = fake_condition_result_false_e;
 
             break;
           }
         } // for
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_equal_not) {
-        state_process->condition_result = fake_condition_result_true;
+      else if (state_process->condition == fake_make_operation_if_type_if_equal_not_e) {
+        state_process->condition_result = fake_condition_result_true_e;
 
         f_array_length_t i = 1;
         f_array_length_t j = 0;
@@ -256,7 +256,7 @@ extern "C" {
           for (j = i + 1; j < arguments.used; ++j) {
 
             if (fl_string_dynamic_compare(arguments.array[i], arguments.array[j]) == F_equal_to) {
-              state_process->condition_result = fake_condition_result_false;
+              state_process->condition_result = fake_condition_result_false_e;
               i = arguments.used;
 
               break;
@@ -264,61 +264,61 @@ extern "C" {
           } // for
         } // for
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_greater || state_process->condition == fake_make_operation_if_type_if_greater_equal || state_process->condition == fake_make_operation_if_type_if_less || state_process->condition == fake_make_operation_if_type_if_less_equal) {
+      else if (state_process->condition == fake_make_operation_if_type_if_greater_e || state_process->condition == fake_make_operation_if_type_if_greater_equal_e || state_process->condition == fake_make_operation_if_type_if_less_e || state_process->condition == fake_make_operation_if_type_if_less_equal_e) {
         *status = fake_make_operate_process_type_if_greater_if_lesser(data_make, arguments, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_not_exists) {
+      else if (state_process->condition == fake_make_operation_if_type_if_not_exists_e) {
         *status = fake_make_operate_process_type_if_exists(data_make, arguments, F_true, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_not_group) {
+      else if (state_process->condition == fake_make_operation_if_type_if_not_group_e) {
         *status = fake_make_operate_process_type_if_group(data_make, arguments, F_true, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_not_is) {
+      else if (state_process->condition == fake_make_operation_if_type_if_not_is_e) {
         *status = fake_make_operate_process_type_if_is(data_make, arguments, F_true, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_not_mode) {
+      else if (state_process->condition == fake_make_operation_if_type_if_not_mode_e) {
         *status = fake_make_operate_process_type_if_mode(data_make, arguments, F_true, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_not_owner) {
+      else if (state_process->condition == fake_make_operation_if_type_if_not_owner_e) {
         *status = fake_make_operate_process_type_if_owner(data_make, arguments, F_true, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_owner) {
+      else if (state_process->condition == fake_make_operation_if_type_if_owner_e) {
         *status = fake_make_operate_process_type_if_owner(data_make, arguments, F_false, state_process);
       }
 
       // Setup the block for subsequent operations.
-      state_process->block = fake_make_operation_if_type_if;
+      state_process->block = fake_make_operation_if_type_if_e;
 
-      if (state_process->condition_result == fake_condition_result_done || state_process->operation == fake_make_operation_type_if) {
+      if (state_process->condition_result == fake_condition_result_done_e || state_process->operation == fake_make_operation_type_if_e) {
         state_process->block_result = state_process->condition_result;
       }
-      else if (state_process->operation == fake_make_operation_type_or) {
-        if (state_process->block_result == fake_condition_result_true || state_process->condition_result == fake_condition_result_true) {
-          state_process->block_result = fake_condition_result_true;
+      else if (state_process->operation == fake_make_operation_type_or_e) {
+        if (state_process->block_result == fake_condition_result_true_e || state_process->condition_result == fake_condition_result_true_e) {
+          state_process->block_result = fake_condition_result_true_e;
         }
         else {
-          state_process->block_result = fake_condition_result_false;
+          state_process->block_result = fake_condition_result_false_e;
         }
       }
       else {
-        if (state_process->block_result == fake_condition_result_true && state_process->condition_result == fake_condition_result_true) {
-          state_process->block_result = fake_condition_result_true;
+        if (state_process->block_result == fake_condition_result_true_e && state_process->condition_result == fake_condition_result_true_e) {
+          state_process->block_result = fake_condition_result_true_e;
         }
         else {
-          state_process->block_result = fake_condition_result_false;
+          state_process->block_result = fake_condition_result_false_e;
         }
       }
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_link) {
+    if (state_process->operation == fake_make_operation_type_link_e) {
       *status = f_file_link(arguments.array[0].string, arguments.array[1].string);
 
       if (F_status_is_error(*status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_link", F_true, arguments.array[1].string, "create link", fll_error_file_type_file);
+        fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_link", F_true, arguments.array[1].string, "create link", fll_error_file_type_file_e);
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[1], data_make->main->context.set.notable);
@@ -330,25 +330,25 @@ extern "C" {
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_mode) {
+    if (state_process->operation == fake_make_operation_type_mode_e) {
       *status = fake_make_operate_process_type_modes(data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_modes) {
+    if (state_process->operation == fake_make_operation_type_modes_e) {
       *status = fake_make_operate_process_type_modes(data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_move) {
+    if (state_process->operation == fake_make_operation_type_move_e) {
       *status = fake_make_operate_process_type_move(data_make, arguments);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_operate) {
+    if (state_process->operation == fake_make_operation_type_operate_e) {
       f_array_length_t id_section = 0;
 
       for (; id_section < data_make->fakefile.used; ++id_section) {
@@ -375,31 +375,31 @@ extern "C" {
       return result;
     }
 
-    if (state_process->operation == fake_make_operation_type_owner) {
+    if (state_process->operation == fake_make_operation_type_owner_e) {
       *status = fake_make_operate_process_type_owners(data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_owners) {
+    if (state_process->operation == fake_make_operation_type_owners_e) {
       *status = fake_make_operate_process_type_owners(data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_parameter) {
+    if (state_process->operation == fake_make_operation_type_parameter_e) {
       *status = fake_make_operate_process_type_parameter(data_make, arguments);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_pop) {
+    if (state_process->operation == fake_make_operation_type_pop_e) {
       *status = fake_make_operate_process_type_pop(data_make, arguments);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_print) {
+    if (state_process->operation == fake_make_operation_type_print_e) {
       flockfile(data_make->main->output.to.stream);
 
       for (f_array_length_t i = 0; i < arguments.used; ++i) {
@@ -419,19 +419,19 @@ extern "C" {
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_run) {
+    if (state_process->operation == fake_make_operation_type_run_e) {
       *status = fake_make_operate_process_run(data_make, arguments, F_false);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_shell) {
+    if (state_process->operation == fake_make_operation_type_shell_e) {
       *status = fake_make_operate_process_run(data_make, arguments, F_true);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_skeleton) {
+    if (state_process->operation == fake_make_operation_type_skeleton_e) {
       *status = fake_skeleton_operate(data_make->main);
 
       if (F_status_set_fine(*status) == F_interrupt) {
@@ -443,19 +443,19 @@ extern "C" {
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_to) {
+    if (state_process->operation == fake_make_operation_type_to_e) {
       *status = fake_make_operate_process_type_to(data_make, arguments);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_top) {
+    if (state_process->operation == fake_make_operation_type_top_e) {
       *status = fake_make_operate_process_type_top(data_make, arguments);
 
       return 0;
     }
 
-    if (state_process->operation == fake_make_operation_type_touch) {
+    if (state_process->operation == fake_make_operation_type_touch_e) {
       *status = fake_make_operate_process_type_touch(data_make, arguments);
     }
 
@@ -489,7 +489,7 @@ extern "C" {
       return status;
     }
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose) {
+    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
       flockfile(data_make->main->output.to.stream);
 
       f_print_dynamic_safely(program, data_make->main->output.to.stream);
@@ -530,7 +530,7 @@ extern "C" {
       }
 
       if (F_status_set_fine(status) == F_file_found_not) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
+        if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
           flockfile(data_make->error.to.stream);
 
           fl_print_format("%c%[%SFailed to find program '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
@@ -606,7 +606,7 @@ extern "C" {
       return status;
     }
 
-    if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
+    if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
       flockfile(data_make->error.to.stream);
 
       fl_print_format("%c%[%SFailed with return code %]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
@@ -616,7 +616,7 @@ extern "C" {
       funlockfile(data_make->error.to.stream);
     }
 
-    if (data_make->setting_make.fail == fake_make_operation_fail_type_exit) {
+    if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) {
       return F_status_set_error(F_failure);
     }
 

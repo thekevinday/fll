@@ -93,7 +93,7 @@ extern "C" {
 
       // Load all parameters and identify priority of color parameters.
       {
-        f_console_parameter_id_t ids[3] = { fake_parameter_no_color, fake_parameter_light, fake_parameter_dark };
+        f_console_parameter_id_t ids[3] = { fake_parameter_no_color_e, fake_parameter_light_e, fake_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -128,7 +128,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { fake_parameter_verbosity_quiet, fake_parameter_verbosity_normal, fake_parameter_verbosity_verbose, fake_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { fake_parameter_verbosity_quiet_e, fake_parameter_verbosity_normal_e, fake_parameter_verbosity_verbose_e, fake_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -141,36 +141,36 @@ extern "C" {
           return status;
         }
 
-        if (choice == fake_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == fake_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == fake_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == fake_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == fake_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == fake_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == fake_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == fake_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    f_array_length_t operations_length = main->parameters[fake_parameter_operation_build].locations.used;
+    f_array_length_t operations_length = main->parameters[fake_parameter_operation_build_e].locations.used;
 
-    operations_length += main->parameters[fake_parameter_operation_clean].locations.used;
-    operations_length += main->parameters[fake_parameter_operation_make].locations.used;
-    operations_length += main->parameters[fake_parameter_operation_skeleton].locations.used;
+    operations_length += main->parameters[fake_parameter_operation_clean_e].locations.used;
+    operations_length += main->parameters[fake_parameter_operation_make_e].locations.used;
+    operations_length += main->parameters[fake_parameter_operation_skeleton_e].locations.used;
 
     uint8_t operations[operations_length];
     f_string_t operations_name = 0;
@@ -182,17 +182,17 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t k = 0;
 
-      for (; i < main->parameters[fake_parameter_operation_build].locations.used; ++i, ++locations_length) {
+      for (; i < main->parameters[fake_parameter_operation_build_e].locations.used; ++i, ++locations_length) {
 
-        operations[locations_length] = fake_operation_build;
-        locations[locations_length] = main->parameters[fake_parameter_operation_build].locations.array[i];
+        operations[locations_length] = fake_operation_build_e;
+        locations[locations_length] = main->parameters[fake_parameter_operation_build_e].locations.array[i];
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_clean].locations.used; ++i) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_clean_e].locations.used; ++i) {
 
         for (j = 0; j < locations_length; ++j) {
 
-          if (main->parameters[fake_parameter_operation_clean].locations.array[i] < locations[j]) {
+          if (main->parameters[fake_parameter_operation_clean_e].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; --k) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
@@ -202,16 +202,16 @@ extern "C" {
           }
         } // for
 
-        locations[j] = main->parameters[fake_parameter_operation_clean].locations.array[i];
-        operations[j] = fake_operation_clean;
+        locations[j] = main->parameters[fake_parameter_operation_clean_e].locations.array[i];
+        operations[j] = fake_operation_clean_e;
         ++locations_length;
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_make].locations.used; ++i) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_make_e].locations.used; ++i) {
 
         for (j = 0; j < locations_length; ++j) {
 
-          if (main->parameters[fake_parameter_operation_make].locations.array[i] < locations[j]) {
+          if (main->parameters[fake_parameter_operation_make_e].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; --k) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
@@ -221,16 +221,16 @@ extern "C" {
           }
         } // for
 
-        locations[j] = main->parameters[fake_parameter_operation_make].locations.array[i];
-        operations[j] = fake_operation_make;
+        locations[j] = main->parameters[fake_parameter_operation_make_e].locations.array[i];
+        operations[j] = fake_operation_make_e;
         ++locations_length;
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_skeleton].locations.used; ++i) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_skeleton_e].locations.used; ++i) {
 
         for (j = 0; j < locations_length; ++j) {
 
-          if (main->parameters[fake_parameter_operation_skeleton].locations.array[i] < locations[j]) {
+          if (main->parameters[fake_parameter_operation_skeleton_e].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; --k) {
 
               locations[k] = locations[k - 1];
@@ -241,15 +241,15 @@ extern "C" {
           }
         } // for
 
-        locations[j] = main->parameters[fake_parameter_operation_skeleton].locations.array[i];
-        operations[j] = fake_operation_skeleton;
+        locations[j] = main->parameters[fake_parameter_operation_skeleton_e].locations.array[i];
+        operations[j] = fake_operation_skeleton_e;
         ++locations_length;
       } // for
     }
 
     status = F_none;
 
-    if (main->parameters[fake_parameter_help].result == f_console_result_found) {
+    if (main->parameters[fake_parameter_help_e].result == f_console_result_found_e) {
       fake_print_help(main->output.to, main->context);
 
       fake_main_delete(main);
@@ -257,7 +257,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[fake_parameter_version].result == f_console_result_found) {
+    if (main->parameters[fake_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, fake_program_version_s);
 
       fake_main_delete(main);
@@ -284,20 +284,20 @@ extern "C" {
 
         main->operation = operations[i];
 
-        if (main->operation == fake_operation_build) {
+        if (main->operation == fake_operation_build_e) {
           operations_name = fake_other_operation_build_s;
         }
-        else if (main->operation == fake_operation_clean) {
+        else if (main->operation == fake_operation_clean_e) {
           operations_name = fake_other_operation_clean_s;
         }
-        else if (main->operation == fake_operation_make) {
+        else if (main->operation == fake_operation_make_e) {
           operations_name = fake_other_operation_make_s;
         }
-        else if (main->operation == fake_operation_skeleton) {
+        else if (main->operation == fake_operation_skeleton_e) {
           operations_name = fake_other_operation_skeleton_s;
         }
 
-        if (main->operation == fake_operation_build) {
+        if (main->operation == fake_operation_build_e) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, main);
             validate_parameter_directories = F_false;
@@ -309,7 +309,7 @@ extern "C" {
             status = fake_build_operate(stub, main);
           }
         }
-        else if (main->operation == fake_operation_clean) {
+        else if (main->operation == fake_operation_clean_e) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, main);
             validate_parameter_directories = F_false;
@@ -319,7 +319,7 @@ extern "C" {
             status = fake_clean_operate(main);
           }
         }
-        else if (main->operation == fake_operation_make) {
+        else if (main->operation == fake_operation_make_e) {
           if (validate_parameter_directories) {
             status = fake_validate_parameter_directories(arguments, main);
             validate_parameter_directories = F_false;
@@ -333,7 +333,7 @@ extern "C" {
             }
           }
         }
-        else if (main->operation == fake_operation_skeleton) {
+        else if (main->operation == fake_operation_skeleton_e) {
           status = fake_skeleton_operate(main);
         }
 
@@ -345,7 +345,7 @@ extern "C" {
           break;
         }
         else if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%SThe operation '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -359,7 +359,7 @@ extern "C" {
         }
       } // for
 
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_interrupt) {
             fflush(main->output.to.stream);
@@ -373,7 +373,7 @@ extern "C" {
       }
     }
     else {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         fll_print_format("%c%[%SYou failed to specify an operation.%]%c%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0], f_string_eol_s[0]);
       }
 

@@ -89,7 +89,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      if (global.main->error.verbosity != f_console_verbosity_quiet) {
+      if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_print_error(global.main->error, F_status_set_fine(status), "f_string_append", F_true, global.thread);
       }
 
@@ -99,7 +99,7 @@ extern "C" {
     status = f_string_dynamic_terminate_after(&cache->action.name_file);
 
     if (F_status_is_error(status)) {
-      if (global.main->error.verbosity != f_console_verbosity_quiet) {
+      if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_print_error(global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, global.thread);
       }
 
@@ -127,16 +127,16 @@ extern "C" {
         return F_file_found_not;
       }
 
-      if (global.main->error.verbosity != f_console_verbosity_quiet) {
-        controller_print_error_file(global.main->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file, global.thread);
+      if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+        controller_print_error_file(global.main->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file_e, global.thread);
       }
     }
     else {
       status = f_file_stream_read(file, &cache->buffer_file);
 
       if (F_status_is_error(status)) {
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
-          controller_print_error_file(global.main->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file, global.thread);
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+          controller_print_error_file(global.main->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file_e, global.thread);
         }
       }
     }
@@ -149,8 +149,8 @@ extern "C" {
       status = f_file_stat(path, F_true, &stat_file);
 
       if (F_status_is_error(status)) {
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
-          controller_print_error_file(global.main->error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file, global.thread);
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+          controller_print_error_file(global.main->error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file_e, global.thread);
         }
       }
       else {
@@ -399,7 +399,7 @@ extern "C" {
   f_status_t controller_perform_ready(const bool is_entry, controller_global_t global, controller_cache_t *cache) {
 
     // Only create pid file when not in validate mode.
-    if (!is_entry || global.setting->entry.pid == controller_entry_pid_disable || global.main->parameters[controller_parameter_validate].result != f_console_result_none || !global.setting->path_pid.used) {
+    if (!is_entry || global.setting->entry.pid == controller_entry_pid_disable_e || global.main->parameters[controller_parameter_validate_e].result != f_console_result_none_e || !global.setting->path_pid.used) {
       return F_none;
     }
 
@@ -410,10 +410,10 @@ extern "C" {
 
       // Always return immediately on memory errors.
       if (F_status_set_fine(status) == F_memory_not) {
-        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
-          controller_print_error_file(global.main->error, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file, 0);
+          controller_print_error_file(global.main->error, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file_e, 0);
 
           flockfile(global.main->error.to.stream);
 
@@ -425,7 +425,7 @@ extern "C" {
         return status;
       }
 
-      if (global.main->warning.verbosity == f_console_verbosity_debug) {
+      if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
         controller_lock_print(global.main->warning.to, global.thread);
 
         if (F_status_set_fine(status) == F_read_only) {
@@ -434,7 +434,7 @@ extern "C" {
           fl_print_format("%[' could not be written because the destination is read only.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
         }
         else {
-          controller_print_error_file(global.main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file, 0);
+          controller_print_error_file(global.main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file_e, 0);
         }
 
         controller_entry_print_error_cache(is_entry, global.main->warning, cache->action);

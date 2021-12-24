@@ -31,7 +31,7 @@ extern "C" {
         status = f_string_dynamic_resize(buffer->size + file.size_read, buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, name ? name : "-", "read", name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
           return status;
         }
@@ -40,7 +40,7 @@ extern "C" {
       status = f_file_stream_read_block(file, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, name ? name : "-", "read", name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
         return status;
       }
@@ -67,15 +67,15 @@ extern "C" {
 
     flockfile(main->output.to.stream);
 
-    if (main->parameters[fss_identify_parameter_object].result == f_console_result_found || main->parameters[fss_identify_parameter_content].result != f_console_result_found) {
+    if (main->parameters[fss_identify_parameter_object_e].result == f_console_result_found_e || main->parameters[fss_identify_parameter_content_e].result != f_console_result_found_e) {
       f_print(id.name, id.used, main->output.to.stream);
 
-      if (main->parameters[fss_identify_parameter_object].result != f_console_result_found || main->parameters[fss_identify_parameter_content].result == f_console_result_found) {
+      if (main->parameters[fss_identify_parameter_object_e].result != f_console_result_found_e || main->parameters[fss_identify_parameter_content_e].result == f_console_result_found_e) {
         f_print_terminated(f_fss_type_header_part5_s, main->output.to.stream);
       }
     }
 
-    if (main->parameters[fss_identify_parameter_object].result != f_console_result_found || main->parameters[fss_identify_parameter_content].result == f_console_result_found) {
+    if (main->parameters[fss_identify_parameter_object_e].result != f_console_result_found_e || main->parameters[fss_identify_parameter_content_e].result == f_console_result_found_e) {
       fl_print_format("%04_ui", main->output.to.stream, id.type);
     }
 
@@ -94,14 +94,14 @@ extern "C" {
     status = fll_fss_identify(buffer.string, range, &ids);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, name ? name : "-", "read", name ? fll_error_file_type_file : fll_error_file_type_pipe);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, name ? name : "-", "read", name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
       f_type_fll_ids_resize(0, &ids);
 
       return status;
     }
 
-    if (main->parameters[fss_identify_parameter_line].result == f_console_result_additional) {
+    if (main->parameters[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
 
       for (f_array_length_t i = 0; i < ids.used; ++i, ++data->current) {
 
@@ -112,7 +112,7 @@ extern "C" {
             }
           }
 
-          if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
+          if (main->parameters[fss_identify_parameter_total_e].result == f_console_result_found_e) {
             ++data->total;
           }
           else {
@@ -125,7 +125,7 @@ extern "C" {
         }
       } // for
     }
-    else if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
+    else if (main->parameters[fss_identify_parameter_total_e].result == f_console_result_found_e) {
       if (data->name.used) {
 
         for (f_array_length_t i = 0; i < ids.used; ++i, ++data->current) {

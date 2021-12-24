@@ -24,7 +24,7 @@ extern "C" {
       // move the start position to after the EOL.
       ++range->start;
 
-      return FL_fss_found_object_not;
+      return F_fss_found_object_not;
     }
 
     if (status == F_none_eos) {
@@ -55,7 +55,7 @@ extern "C" {
       // move the start position to after the EOL.
       ++range->start;
 
-      return FL_fss_found_object_not;
+      return F_fss_found_object_not;
     }
 
     f_array_length_t slash_first = 0;
@@ -166,12 +166,12 @@ extern "C" {
               found->stop = stop;
               range->start = start + 1;
 
-              return FL_fss_found_object;
+              return F_fss_found_object;
             }
 
             range->start = start + 1;
 
-            return FL_fss_found_object_not;
+            return F_fss_found_object_not;
           }
         }
         else if (graph_first && buffer.string[range->start] == f_fss_comment_s[0]) {
@@ -227,7 +227,7 @@ extern "C" {
           status = f_utf_buffer_increment(buffer, range, 1);
           if (F_status_is_error(status)) break;
 
-          return FL_fss_found_object;
+          return F_fss_found_object;
         }
 
         continue;
@@ -265,7 +265,7 @@ extern "C" {
     // move the start position to after the EOL.
     ++range->start;
 
-    return FL_fss_found_object_not;
+    return F_fss_found_object_not;
   }
 #endif // _di_fl_fss_basic_list_object_read_
 
@@ -388,7 +388,7 @@ extern "C" {
               found->array[found->used++].stop = newline_last;
               range->start = newline_last + 1;
 
-              return FL_fss_found_content;
+              return F_fss_found_content;
             }
 
             macro_f_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
@@ -465,14 +465,14 @@ extern "C" {
 
           if (newline_last == found->array[found->used].start && buffer.string[found->array[found->used].start] != f_fss_eol_s[0]) {
             range->start = newline_last;
-            return FL_fss_found_content_not;
+            return F_fss_found_content_not;
           }
           else {
             range->start = newline_last + 1;
             found->array[found->used++].stop = newline_last;
           }
 
-          return FL_fss_found_content;
+          return F_fss_found_content;
         }
 
         if (buffer.string[range->start] == f_fss_eol_s[0]) {
@@ -535,7 +535,7 @@ extern "C" {
 
     private_macro_fl_fss_content_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
 
-    return FL_fss_found_content;
+    return F_fss_found_content;
   }
 #endif // _di_fl_fss_basic_list_content_read_
 
@@ -549,13 +549,13 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_stop || status == F_none_eos) {
-      if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
+      if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
         const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
         destination->string[destination->used++] = f_fss_basic_list_open_s[0];
 
-        if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
+        if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
           destination->string[destination->used++] = f_fss_basic_list_open_end_s[0];
         }
       }
@@ -717,8 +717,8 @@ extern "C" {
       return status;
     }
 
-    if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
-      if (complete == f_fss_complete_full_trim) {
+    if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
+      if (complete == f_fss_complete_full_trim_e) {
         status = private_fl_fss_basic_list_write_object_trim(used_start, state, destination);
 
         if (F_status_is_error(status)) {
@@ -738,7 +738,7 @@ extern "C" {
 
       destination->string[destination->used++] = f_fss_basic_list_open_s[0];
 
-      if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
+      if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
         destination->string[destination->used++] = f_fss_basic_list_open_end_s[0];
       }
     }
@@ -766,7 +766,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_stop || status == F_none_eos) {
-      if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
+      if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
         const f_status_t status_allocation = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
@@ -962,7 +962,7 @@ extern "C" {
       return status;
     }
 
-    if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
+    if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
       status = f_string_dynamic_increase(state.step_large, destination);
       if (F_status_is_error(status)) return status;
 

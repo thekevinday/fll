@@ -56,7 +56,7 @@ extern "C" {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, iki_write_total_parameters_d);
 
       {
-        f_console_parameter_id_t ids[3] = { iki_write_parameter_no_color, iki_write_parameter_light, iki_write_parameter_dark };
+        f_console_parameter_id_t ids[3] = { iki_write_parameter_no_color_e, iki_write_parameter_light_e, iki_write_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -82,7 +82,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
             f_print_character(f_string_eol_s[0], main->error.to.stream);
           }
@@ -95,7 +95,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { iki_write_parameter_verbosity_quiet, iki_write_parameter_verbosity_normal, iki_write_parameter_verbosity_verbose, iki_write_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { iki_write_parameter_verbosity_quiet_e, iki_write_parameter_verbosity_normal_e, iki_write_parameter_verbosity_verbose_e, iki_write_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -107,32 +107,32 @@ extern "C" {
           return status;
         }
 
-        if (choice == iki_write_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == iki_write_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == iki_write_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == iki_write_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == iki_write_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == iki_write_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == iki_write_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == iki_write_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    if (main->parameters[iki_write_parameter_help].result == f_console_result_found) {
+    if (main->parameters[iki_write_parameter_help_e].result == f_console_result_found_e) {
       iki_write_print_help(main->output.to, main->context);
 
       iki_write_main_delete(main);
@@ -140,7 +140,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[iki_write_parameter_version].result == f_console_result_found) {
+    if (main->parameters[iki_write_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, iki_write_program_version_s);
 
       iki_write_main_delete(main);
@@ -155,9 +155,9 @@ extern "C" {
     file.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[iki_write_parameter_file].result == f_console_result_additional) {
-        if (main->parameters[iki_write_parameter_file].values.used > 1) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_write_parameter_file_e].result == f_console_result_additional_e) {
+        if (main->parameters[iki_write_parameter_file_e].values.used > 1) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -170,7 +170,7 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_array_length_t location = main->parameters[iki_write_parameter_file].values.array[0];
+          const f_array_length_t location = main->parameters[iki_write_parameter_file_e].values.array[0];
 
           file.id = -1;
           file.stream = 0;
@@ -178,12 +178,12 @@ extern "C" {
           status = f_file_stream_open(arguments->argv[location], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], "open", fll_error_file_type_file_e);
           }
         }
       }
-      else if (main->parameters[iki_write_parameter_file].result == f_console_result_found) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+      else if (main->parameters[iki_write_parameter_file_e].result == f_console_result_found_e) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -197,8 +197,8 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status) && main->parameters[iki_write_parameter_object].result == f_console_result_found) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (F_status_is_error_not(status) && main->parameters[iki_write_parameter_object_e].result == f_console_result_found_e) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -211,8 +211,8 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    if (F_status_is_error_not(status) && main->parameters[iki_write_parameter_content].result == f_console_result_found) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (F_status_is_error_not(status) && main->parameters[iki_write_parameter_content_e].result == f_console_result_found_e) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -226,8 +226,8 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status) && !main->process_pipe) {
-      if (main->parameters[iki_write_parameter_object].result != f_console_result_additional && main->parameters[iki_write_parameter_content].result != f_console_result_additional) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_write_parameter_object_e].result != f_console_result_additional_e && main->parameters[iki_write_parameter_content_e].result != f_console_result_additional_e) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sNo main provided, either pipe the main or use the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -244,8 +244,8 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[iki_write_parameter_object].values.used != main->parameters[iki_write_parameter_content].values.used) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (main->parameters[iki_write_parameter_object_e].values.used != main->parameters[iki_write_parameter_content_e].values.used) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%c%[%sThe parameters '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -264,14 +264,14 @@ extern "C" {
     uint8_t quote = f_iki_syntax_quote_double_s[0];
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[iki_write_parameter_double].result == f_console_result_found) {
-        if (main->parameters[iki_write_parameter_single].result == f_console_result_found) {
-          if (main->parameters[iki_write_parameter_double].location < main->parameters[iki_write_parameter_single].location) {
+      if (main->parameters[iki_write_parameter_double_e].result == f_console_result_found_e) {
+        if (main->parameters[iki_write_parameter_single_e].result == f_console_result_found_e) {
+          if (main->parameters[iki_write_parameter_double_e].location < main->parameters[iki_write_parameter_single_e].location) {
             quote = f_iki_syntax_quote_single_s[0];
           }
         }
       }
-      else if (main->parameters[iki_write_parameter_single].result == f_console_result_found) {
+      else if (main->parameters[iki_write_parameter_single_e].result == f_console_result_found_e) {
         quote = f_iki_syntax_quote_single_s[0];
       }
     }
@@ -312,14 +312,14 @@ extern "C" {
             status_pipe = f_file_read(pipe, &buffer);
 
             if (F_status_is_error(status_pipe)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_to", F_true, "-", "read", fll_error_file_type_pipe);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_to", F_true, "-", "read", fll_error_file_type_pipe_e);
 
               status = F_status_set_error(F_pipe);
               break;
             }
 
             if (!buffer.used) {
-              if (main->error.verbosity != f_console_verbosity_quiet) {
+              if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%c%[%sThe pipe has no main.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
               }
 
@@ -346,7 +346,7 @@ extern "C" {
           }
 
           if (object_ended && previous == range.start) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
+            if (main->error.verbosity != f_console_verbosity_quiet_e) {
               fll_print_format("%c%[%sThe pipe has incorrectly placed newlines.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
             }
 
@@ -403,7 +403,7 @@ extern "C" {
         } // for
 
         if (F_status_is_error_not(status) && object_ended) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             fll_print_format("%c%[%sThe pipe has an object without content.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
           }
 
@@ -420,7 +420,7 @@ extern "C" {
         f_string_static_t content = f_string_static_t_initialize;
         uint16_t signal_check = 0;
 
-        for (f_array_length_t i = 0; i < main->parameters[iki_write_parameter_object].values.used; ++i) {
+        for (f_array_length_t i = 0; i < main->parameters[iki_write_parameter_object_e].values.used; ++i) {
 
           if (!((++signal_check) % iki_write_signal_check_d)) {
             if (iki_write_signal_received(main)) {
@@ -431,11 +431,11 @@ extern "C" {
             signal_check = 0;
           }
 
-          object.string = arguments->argv[main->parameters[iki_write_parameter_object].values.array[i]];
+          object.string = arguments->argv[main->parameters[iki_write_parameter_object_e].values.array[i]];
           object.used = strnlen(object.string, f_console_parameter_size);
           object.size = object.used;
 
-          content.string = arguments->argv[main->parameters[iki_write_parameter_content].values.array[i]];
+          content.string = arguments->argv[main->parameters[iki_write_parameter_content_e].values.array[i]];
           content.used = strnlen(content.string, f_console_parameter_size);
           content.size = content.used;
 
@@ -446,7 +446,7 @@ extern "C" {
         } // for
 
         // ensure there is always a newline at the end, unless in quiet mode.
-        if (F_status_is_error_not(status) && main->error.verbosity != f_console_verbosity_quiet && main->parameters[iki_write_parameter_file].result == f_console_result_none) {
+        if (F_status_is_error_not(status) && main->error.verbosity != f_console_verbosity_quiet_e && main->parameters[iki_write_parameter_file_e].result == f_console_result_none_e) {
           fll_print_character(f_string_eol_s[0], file.stream);
         }
       }
@@ -454,14 +454,14 @@ extern "C" {
       macro_f_string_dynamic_t_delete_simple(escaped);
     }
 
-    if (main->parameters[iki_write_parameter_file].result == f_console_result_additional) {
+    if (main->parameters[iki_write_parameter_file_e].result == f_console_result_additional_e) {
       if (file.id != -1) {
         f_file_stream_close(F_true, &file);
       }
     }
 
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (main->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_interrupt) {
           fflush(main->output.to.stream);

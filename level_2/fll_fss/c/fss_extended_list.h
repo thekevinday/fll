@@ -11,16 +11,16 @@
 #define _FLL_fss_extended_list_h
 
 // fll-0 includes
+#include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
-#include <fll/level_0/fss.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
-#include <fll/level_0/type.h>
+#include <fll/level_0/utf.h>
+#include <fll/level_0/fss.h>
 
 // fll-1 includes
 #include <fll/level_1/fss.h>
 #include <fll/level_1/fss_extended_list.h>
-#include <fll/level_1/fss_status.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -66,7 +66,7 @@ extern "C" {
  *   F_data_not_eol if there is no data to write and EOL was reached (@todo review related code and detemine what this is doing).
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
- *   FL_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
+ *   F_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
  *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.

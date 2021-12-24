@@ -11,35 +11,37 @@ extern "C" {
 
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fss_status_code_convert_number(main, value, &number);
-    if (F_status_is_error(status)) return status;
+    {
+      const f_status_t status = fss_status_code_convert_number(main, value, &number);
+      if (F_status_is_error(status)) return status;
+    }
 
-    if (main->parameters[fss_status_code_parameter_is_error].result == f_console_result_found) {
+    if (main->parameters[fss_status_code_parameter_is_error_e].result == f_console_result_found_e) {
       if (F_status_is_error(number)) {
-        f_print_terminated(FL_status_string_true, main->output.to.stream);
+        f_print_terminated(f_status_true_s, main->output.to.stream);
       }
       else {
-        f_print_terminated(FL_status_string_false, main->output.to.stream);
+        f_print_terminated(f_status_false_s, main->output.to.stream);
       }
 
       f_print_character(f_string_eol_s[0], main->output.to.stream);
     }
-    else if (main->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found) {
+    else if (main->parameters[fss_status_code_parameter_is_warning_e].result == f_console_result_found_e) {
       if (F_status_is_warning(number)) {
-        f_print_terminated(FL_status_string_true, main->output.to.stream);
+        f_print_terminated(f_status_true_s, main->output.to.stream);
       }
       else {
-        f_print_terminated(FL_status_string_false, main->output.to.stream);
+        f_print_terminated(f_status_false_s, main->output.to.stream);
       }
 
       f_print_character(f_string_eol_s[0], main->output.to.stream);
     }
-    else if (main->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
+    else if (main->parameters[fss_status_code_parameter_is_fine_e].result == f_console_result_found_e) {
       if (F_status_is_fine(number)) {
-        f_print_terminated(FL_status_string_true, main->output.to.stream);
+        f_print_terminated(f_status_true_s, main->output.to.stream);
       }
       else {
-        f_print_terminated(FL_status_string_false, main->output.to.stream);
+        f_print_terminated(f_status_false_s, main->output.to.stream);
       }
 
       f_print_character(f_string_eol_s[0], main->output.to.stream);
@@ -76,11 +78,11 @@ extern "C" {
 
     f_status_t code = F_none;
 
-    status = fll_fss_status_from_string(value, &code);
+    status = fll_fss_status_string_from(value, &code);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
-        status = fll_status_from_string(value, &code);
+        status = fll_status_string_from(value, &code);
       }
 
       if (F_status_is_error(status)) {
@@ -118,7 +120,7 @@ extern "C" {
     const f_status_t code = (f_status_t) number;
     f_string_t string = 0;
 
-    status = fll_fss_status_to_string(code, &string);
+    status = fll_fss_status_string_to(code, &string);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {

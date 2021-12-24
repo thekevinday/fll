@@ -204,54 +204,54 @@ extern "C" {
 
       while (cell.column < main->width) {
 
-        if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+        if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
           f_print_terminated("         ", main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_hexidecimal) {
+        else if (main->mode == byte_dump_mode_hexidecimal_e) {
           f_print_terminated("   ", main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_duodecimal) {
+        else if (main->mode == byte_dump_mode_duodecimal_e) {
           f_print_terminated("    ", main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_octal) {
+        else if (main->mode == byte_dump_mode_octal_e) {
           f_print_terminated("    ", main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_binary) {
+        else if (main->mode == byte_dump_mode_binary_e) {
           f_print_terminated("         ", main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_decimal) {
+        else if (main->mode == byte_dump_mode_decimal_e) {
           f_print_terminated("    ", main->output.to.stream);
         }
 
         ++cell.column;
 
         if (cell.column < main->width) {
-          if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+          if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
             if (!(cell.column % 4)) {
               f_print_character(f_string_space_s[0], main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_hexidecimal) {
+          else if (main->mode == byte_dump_mode_hexidecimal_e) {
             if (!(cell.column % 8)) {
               f_print_character(f_string_space_s[0], main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_duodecimal) {
+          else if (main->mode == byte_dump_mode_duodecimal_e) {
             if (!(cell.column % 6)) {
               f_print_character(f_string_space_s[0], main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_octal) {
+          else if (main->mode == byte_dump_mode_octal_e) {
             if (!(cell.column % 6)) {
               f_print_character(f_string_space_s[0], main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_binary) {
+          else if (main->mode == byte_dump_mode_binary_e) {
             if (!(cell.column % 6)) {
               f_print_character(f_string_space_s[0], main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_decimal) {
+          else if (main->mode == byte_dump_mode_decimal_e) {
             if (!(cell.column % 6)) {
               f_print_character(f_string_space_s[0], main->output.to.stream);
             }
@@ -259,7 +259,7 @@ extern "C" {
         }
       } // while
 
-      if (main->parameters[byte_dump_parameter_text].result == f_console_result_found) {
+      if (main->parameters[byte_dump_parameter_text_e].result == f_console_result_found_e) {
         byte_dump_print_text(main, characters, invalid, &previous, &offset);
       }
       else {
@@ -334,22 +334,22 @@ extern "C" {
         // Pad the buffer with spaces to hide any skipped bytes (skipped via --first).
         while (offset_to_print && cell->column < main->width) {
 
-          if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+          if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
             f_print_terminated("         ", main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_hexidecimal) {
+          else if (main->mode == byte_dump_mode_hexidecimal_e) {
             f_print_terminated("   ", main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_duodecimal) {
+          else if (main->mode == byte_dump_mode_duodecimal_e) {
             f_print_terminated("    ", main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_octal) {
+          else if (main->mode == byte_dump_mode_octal_e) {
             f_print_terminated("    ", main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_binary) {
+          else if (main->mode == byte_dump_mode_binary_e) {
             f_print_terminated("         ", main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_decimal) {
+          else if (main->mode == byte_dump_mode_decimal_e) {
             f_print_terminated("    ", main->output.to.stream);
           }
 
@@ -357,32 +357,32 @@ extern "C" {
           ++cell->column;
 
           if (cell->column < main->width) {
-            if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+            if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
               if (!(cell->column % 4)) {
                 f_print_character(f_string_space_s[0], main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_hexidecimal) {
+            else if (main->mode == byte_dump_mode_hexidecimal_e) {
               if (!(cell->column % 8)) {
                 f_print_character(f_string_space_s[0], main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_duodecimal) {
+            else if (main->mode == byte_dump_mode_duodecimal_e) {
               if (!(cell->column % 6)) {
                 f_print_character(f_string_space_s[0], main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_octal) {
+            else if (main->mode == byte_dump_mode_octal_e) {
               if (!(cell->column % 6)) {
                 f_print_character(f_string_space_s[0], main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_binary) {
+            else if (main->mode == byte_dump_mode_binary_e) {
               if (!(cell->column % 4)) {
                 f_print_character(f_string_space_s[0], main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_decimal) {
+            else if (main->mode == byte_dump_mode_decimal_e) {
               if (!(cell->column % 6)) {
                 f_print_character(f_string_space_s[0], main->output.to.stream);
               }
@@ -393,7 +393,7 @@ extern "C" {
     }
 
     if (cell->column < main->width) {
-      if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found && !invalid[character_current]) {
+      if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e && !invalid[character_current]) {
         if (byte_current == 1) {
           uint32_t unicode = 0;
 
@@ -438,8 +438,8 @@ extern "C" {
         }
       }
       else {
-        if (main->mode == byte_dump_mode_hexidecimal) {
-          if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+        if (main->mode == byte_dump_mode_hexidecimal_e) {
+          if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
             f_print_terminated("      ", main->output.to.stream);
           }
 
@@ -450,8 +450,8 @@ extern "C" {
             fl_print_format(" %02_uii", main->output.to.stream, (uint8_t) byte);
           }
         }
-        else if (main->mode == byte_dump_mode_duodecimal) {
-          if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+        else if (main->mode == byte_dump_mode_duodecimal_e) {
+          if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
             f_print_terminated("   ", main->output.to.stream);
           }
 
@@ -462,8 +462,8 @@ extern "C" {
             fl_print_format(" %03&uii", main->output.to.stream, (uint8_t) byte);
           }
         }
-        else if (main->mode == byte_dump_mode_octal) {
-          if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+        else if (main->mode == byte_dump_mode_octal_e) {
+          if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
             f_print_terminated("     ", main->output.to.stream);
           }
 
@@ -474,7 +474,7 @@ extern "C" {
             fl_print_format(" %03@uii", main->output.to.stream, (uint8_t) byte);
           }
         }
-        else if (main->mode == byte_dump_mode_binary) {
+        else if (main->mode == byte_dump_mode_binary_e) {
           if (invalid[character_current]) {
             fl_print_format(" %[%08!uii%]", main->output.to.stream, main->context.set.error, (uint8_t) byte, main->context.set.error);
           }
@@ -482,8 +482,8 @@ extern "C" {
             fl_print_format(" %08!uii", main->output.to.stream, (uint8_t) byte);
           }
         }
-        else if (main->mode == byte_dump_mode_decimal) {
-          if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+        else if (main->mode == byte_dump_mode_decimal_e) {
+          if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
             f_print_terminated("     ", main->output.to.stream);
           }
 
@@ -508,7 +508,7 @@ extern "C" {
 
       reset = F_true;
 
-      if (main->parameters[byte_dump_parameter_text].result == f_console_result_found) {
+      if (main->parameters[byte_dump_parameter_text_e].result == f_console_result_found_e) {
         byte_dump_print_text(main, characters, invalid, previous, offset);
       }
       else {
@@ -528,32 +528,32 @@ extern "C" {
       }
     }
     else {
-      if (main->parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+      if (main->parameters[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
         if (!(cell->column % 4)) {
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_hexidecimal) {
+      else if (main->mode == byte_dump_mode_hexidecimal_e) {
         if (!(cell->column % 8)) {
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_duodecimal) {
+      else if (main->mode == byte_dump_mode_duodecimal_e) {
         if (!(cell->column % 6)) {
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_octal) {
+      else if (main->mode == byte_dump_mode_octal_e) {
         if (!(cell->column % 6)) {
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_binary) {
+      else if (main->mode == byte_dump_mode_binary_e) {
         if (!(cell->column % 4)) {
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_decimal) {
+      else if (main->mode == byte_dump_mode_decimal_e) {
         if (!(cell->column % 6)) {
           f_print_character(f_string_space_s[0], main->output.to.stream);
         }
@@ -577,7 +577,7 @@ extern "C" {
     fl_print_format("  %[%s%] ", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable);
 
     if (*offset) {
-      if (main->parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+      if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
         while (*offset && at < main->width) {
 
           f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
@@ -591,7 +591,7 @@ extern "C" {
         } // while
       }
       else {
-        if (main->parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+        if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           for (; *offset && at < main->width; --(*offset), ++at) {
 
             fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
@@ -623,13 +623,13 @@ extern "C" {
       }
 
       if (previous->bytes) {
-        if (main->parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+        if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           for (; at < previous->bytes && at < main->width; ++at) {
 
             if (previous->invalid) {
               fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
             }
-            else if (main->parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+            else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
               f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
             }
             else {
@@ -675,7 +675,7 @@ extern "C" {
         }
       }
       else if (f_utf_character_is_control(characters.string[i]) == F_true) {
-        if (main->presentation == byte_dump_presentation_normal) {
+        if (main->presentation == byte_dump_presentation_normal_e) {
           fl_print_format("%[%[", main->output.to.stream, main->context.set.notable, main->context.set.warning);
 
           if (width_utf) {
@@ -717,7 +717,7 @@ extern "C" {
           }
         }
         else {
-          if (main->presentation == byte_dump_presentation_simple) {
+          if (main->presentation == byte_dump_presentation_simple_e) {
             f_print_character(f_string_space_s[0], main->output.to.stream);
 
             if (width_utf > 1) {
@@ -732,7 +732,7 @@ extern "C" {
               }
             }
           }
-          else if (main->presentation == byte_dump_presentation_classic) {
+          else if (main->presentation == byte_dump_presentation_classic_e) {
             f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
 
             if (width_utf > 1) {
@@ -754,7 +754,7 @@ extern "C" {
         }
       }
       else if (f_utf_character_is_whitespace(characters.string[i]) == F_true) {
-        if (main->parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+        if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
           f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
         }
         else {
@@ -766,10 +766,10 @@ extern "C" {
         }
       }
       else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
-        if (main->presentation == byte_dump_presentation_classic) {
+        if (main->presentation == byte_dump_presentation_classic_e) {
           f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
         }
-        else if (main->parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+        else if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           fl_print_format("%[%[%s%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning, main->context.set.notable);
         }
         else {
@@ -877,11 +877,11 @@ extern "C" {
 
       // Print placeholders when using UTF-8 characters to simulate the spaces bytes used for the character.
       if (width_utf > 1 && at + 1 < main->width) {
-        if (main->parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+        if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           if (invalid[i]) {
             fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
           }
-          else if (main->parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+          else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
             f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
           }
           else {
@@ -899,11 +899,11 @@ extern "C" {
         ++at;
 
         if (width_utf > 2 && at + 1 < main->width) {
-          if (main->parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+          if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
             if (invalid[i]) {
               fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
             }
-            else if (main->parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+            else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
               f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
             }
             else {
@@ -921,11 +921,11 @@ extern "C" {
           ++at;
 
           if (width_utf > 3 && at + 1 < main->width) {
-            if (main->parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+            if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
               if (invalid[i]) {
                 fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
               }
-              else if (main->parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+              else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
                 f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
               }
               else {
@@ -947,13 +947,13 @@ extern "C" {
     } // for
 
     // Print placeholder for the remaining parts of the line.
-    if (main->parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+    if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
       for (; at < main->width; ++at) {
 
         if (invalid[at]) {
           fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
         }
-        else if (main->parameters[byte_dump_parameter_classic].result == f_console_result_found) {
+        else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
           f_print_character(f_string_ascii_period_s[0], main->output.to.stream);
         }
         else {

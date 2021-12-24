@@ -36,9 +36,9 @@ extern "C" {
  * @param by
  *   Designate the way in which the cancellation should operate.
  *
- *   If controller_thread_cancel_signal, then this was called from within the signal handling thread, so do not cancel the signal thread.
- *   If controller_thread_cancel_call, then this was not called from within the signal handling thread, so cancel the signal thread.
- *   If controller_thread_cancel_execute, then this was called from within the Entry/Exit for executing a process, so cancel the signal thread but not the Entry thread.
+ *   If controller_thread_cancel_signal_e, then this was called from within the signal handling thread, so do not cancel the signal thread.
+ *   If controller_thread_cancel_call_e, then this was not called from within the signal handling thread, so cancel the signal thread.
+ *   If controller_thread_cancel_execute_e, then this was called from within the Entry/Exit for executing a process, so cancel the signal thread but not the Entry thread.
  * @param global
  *   The global thread data.
  * @param caller

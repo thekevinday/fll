@@ -13,7 +13,7 @@ extern "C" {
     const f_array_length_t length = strnlen(input, 3);
 
     if (!length) {
-      *result = f_console_none;
+      *result = f_console_none_e;
 
       return F_data_not;
     }
@@ -22,27 +22,27 @@ extern "C" {
       if (length > 1) {
         if (input[1] == f_console_symbol_short_enable_s[0]) {
           if (length > 2) {
-            *result = f_console_long_enable;
+            *result = f_console_long_enable_e;
           }
-          else *result = f_console_empty_long_enable;
+          else *result = f_console_empty_long_enable_e;
         }
-        else *result = f_console_short_enable;
+        else *result = f_console_short_enable_e;
       }
-      else *result = f_console_empty_short_enable;
+      else *result = f_console_empty_short_enable_e;
     }
     else if (input[0] == f_console_symbol_short_disable_s[0]) {
       if (length > 1) {
         if (input[1] == f_console_symbol_short_disable_s[0]) {
           if (length > 2) {
-            *result = f_console_long_disable;
+            *result = f_console_long_disable_e;
           }
-          else *result = f_console_empty_long_disable;
+          else *result = f_console_empty_long_disable_e;
         }
-        else *result = f_console_short_disable;
+        else *result = f_console_short_disable_e;
       }
-      else *result = f_console_empty_short_disable;
+      else *result = f_console_empty_short_disable_e;
     }
-    else *result = f_console_none;
+    else *result = f_console_none_e;
 
     return F_none;
   }
@@ -67,9 +67,9 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t values = 0;
 
-    uint8_t console_short = f_console_none;
-    uint8_t console_long = f_console_none;
-    uint8_t console_type = f_console_type_normal;
+    uint8_t console_short = f_console_none_e;
+    uint8_t console_long = f_console_none_e;
+    uint8_t console_type = f_console_type_normal_e;
 
     f_array_lengths_t needs_value = f_array_lengths_t_initialize;
 
@@ -90,7 +90,7 @@ extern "C" {
           return status;
         }
 
-        parameters.parameter[i].result = f_console_result_additional;
+        parameters.parameter[i].result = f_console_result_additional_e;
         parameters.parameter[i].values.array[parameters.parameter[i].values.used++] = location;
 
         --needs_value.used;
@@ -109,11 +109,11 @@ extern "C" {
       argument_length = strnlen(arguments.argv[location], f_console_parameter_size);
 
       // process the current parameter.
-      if (result == f_console_short_enable || result == f_console_short_disable) {
+      if (result == f_console_short_enable_e || result == f_console_short_disable_e) {
         increment_by = 1;
         sub_location = 1;
       }
-      else if (result == f_console_long_enable || result == f_console_long_disable) {
+      else if (result == f_console_long_enable_e || result == f_console_long_disable_e) {
         increment_by = argument_length;
         sub_location = 2;
       }
@@ -123,23 +123,23 @@ extern "C" {
       }
 
       // Handle the normal commands.
-      if (result == f_console_short_enable || result == f_console_long_enable) {
-        console_short = f_console_short_enable;
-        console_long = f_console_long_enable;
-        console_type = f_console_type_normal;
+      if (result == f_console_short_enable_e || result == f_console_long_enable_e) {
+        console_short = f_console_short_enable_e;
+        console_long = f_console_long_enable_e;
+        console_type = f_console_type_normal_e;
       }
-      else if (result == f_console_short_disable || result == f_console_long_disable) {
-        console_short = f_console_short_disable;
-        console_long = f_console_long_disable;
-        console_type = f_console_type_inverse;
+      else if (result == f_console_short_disable_e || result == f_console_long_disable_e) {
+        console_short = f_console_short_disable_e;
+        console_long = f_console_long_disable_e;
+        console_type = f_console_type_inverse_e;
       }
       else {
-        console_short = f_console_none;
+        console_short = f_console_none_e;
       }
 
       found = F_false;
 
-      if (console_short != f_console_none) {
+      if (console_short != f_console_none_e) {
 
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
         while (sub_location < argument_length) {
@@ -220,7 +220,7 @@ extern "C" {
 
             parameters.parameter[i].locations.array[parameters.parameter[i].locations.used++] = location;
 
-            parameters.parameter[i].result = f_console_result_found;
+            parameters.parameter[i].result = f_console_result_found_e;
             parameters.parameter[i].location = location;
             parameters.parameter[i].location_sub = 0;
 
@@ -257,7 +257,7 @@ extern "C" {
       else {
         for (i = 0; i < parameters.used; ++i) {
 
-          if (parameters.parameter[i].type != f_console_type_other) continue;
+          if (parameters.parameter[i].type != f_console_type_other_e) continue;
 
           if (!parameters.parameter[i].symbol_other) continue;
 
@@ -282,7 +282,7 @@ extern "C" {
           parameters.parameter[i].locations.array[parameters.parameter[i].locations.used++] = location;
           parameters.parameter[i].locations_sub.array[parameters.parameter[i].locations_sub.used++] = 0;
 
-          parameters.parameter[i].result = f_console_result_found;
+          parameters.parameter[i].result = f_console_result_found_e;
           parameters.parameter[i].location = location;
           parameters.parameter[i].location_sub = 0;
 
@@ -363,7 +363,7 @@ extern "C" {
         return F_status_set_error(F_parameter);
       }
 
-      if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
+      if (parameters.parameter[choices.id[i]].result == f_console_result_found_e) {
         if (parameters.parameter[choices.id[i]].location < location) {
           location = parameters.parameter[choices.id[i]].location;
           location_sub = parameters.parameter[choices.id[i]].location_sub;
@@ -412,7 +412,7 @@ extern "C" {
         return F_status_set_error(F_parameter);
       }
 
-      if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
+      if (parameters.parameter[choices.id[i]].result == f_console_result_found_e) {
         if (parameters.parameter[choices.id[i]].location > location) {
           location = parameters.parameter[choices.id[i]].location;
           location_sub = parameters.parameter[choices.id[i]].location_sub;

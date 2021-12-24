@@ -44,7 +44,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (range->start >= range->stop || range->start >= buffer.used) {
-          if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
+          if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
             ++objects->used;
 
             if (objects_quoted) {
@@ -56,7 +56,7 @@ extern "C" {
 
             ++contents->used;
 
-            return FL_fss_found_object_content_not;
+            return F_fss_found_object_content_not;
           }
 
           if (found_data) {
@@ -75,7 +75,7 @@ extern "C" {
           }
         }
 
-        if (status == FL_fss_found_object) {
+        if (status == F_fss_found_object) {
           found_data = F_true;
 
           status = fl_fss_basic_content_read(buffer, state, range, &contents->array[contents->used], contents_delimits ? contents_delimits : objects_delimits);
@@ -83,7 +83,7 @@ extern "C" {
 
           break;
         }
-        else if (status == FL_fss_found_object_content_not) {
+        else if (status == F_fss_found_object_content_not) {
           found_data = F_true;
 
           macro_f_fss_content_t_increase(status2, F_fss_default_allocation_step_small_d, contents->array[contents->used])
@@ -91,7 +91,7 @@ extern "C" {
 
           break;
         }
-      } while (status == FL_fss_found_object_not);
+      } while (status == F_fss_found_object_not);
 
       if (status == F_none_eos || status == F_none_stop) {
         ++contents->array[contents->used].used;
@@ -119,12 +119,12 @@ extern "C" {
 
         return status;
       }
-      else if (status != FL_fss_found_object && status != FL_fss_found_content && status != FL_fss_found_content_not && status != FL_fss_found_object_content_not) {
+      else if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not) {
         return status;
       }
       // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
       else if (range->start >= range->stop || range->start >= buffer.used) {
-        if (status == FL_fss_found_object || status == FL_fss_found_content || status == FL_fss_found_content_not || status == FL_fss_found_object_content_not) {
+        if (status == F_fss_found_object || status == F_fss_found_content || status == F_fss_found_content_not || status == F_fss_found_object_content_not) {
           ++objects->used;
           ++contents->used;
 
@@ -162,7 +162,7 @@ extern "C" {
     f_status_t status = 0;
     f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
-    status = fl_fss_basic_object_write(object, quote, f_fss_complete_full, state, &range, destination);
+    status = fl_fss_basic_object_write(object, quote, f_fss_complete_full_e, state, &range, destination);
 
     if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;
@@ -173,7 +173,7 @@ extern "C" {
         range.start = 0;
         range.stop = content.used - 1;
 
-        status = fl_fss_basic_content_write(content, f_fss_complete_full, state, &range, destination);
+        status = fl_fss_basic_content_write(content, f_fss_complete_full_e, state, &range, destination);
         if (F_status_is_error(status)) return status;
       }
       else {

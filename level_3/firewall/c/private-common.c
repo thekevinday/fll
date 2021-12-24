@@ -7,7 +7,7 @@ extern "C" {
 
 void firewall_print_debug_tool(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) {
 
-  if (output.verbosity != f_console_verbosity_debug) return;
+  if (output.verbosity != f_console_verbosity_debug_e) return;
 
   flockfile(output.to.stream);
 
@@ -24,28 +24,28 @@ void firewall_print_debug_tool(const fl_print_t output, const f_string_t tool, c
 
 void firewall_print_error_on_allocation_failure(const fl_print_t output) {
 
-  if (output.verbosity == f_console_verbosity_quiet) return;
+  if (output.verbosity == f_console_verbosity_quiet_e) return;
 
   fll_print_format("%c%[%sUnable to allocate memory.%]%c", output.to.stream, f_string_eol_s[0], output.context, output.prefix, output.context, f_string_eol_s[0]);
 }
 
 void firewall_print_error_on_invalid_parameter(const fl_print_t output, const f_string_t function) {
 
-  if (output.verbosity == f_console_verbosity_quiet) return;
+  if (output.verbosity == f_console_verbosity_quiet_e) return;
 
   fll_print_format("%c%[%sInvalid parameter when calling %S().%]%c", output.to.stream, f_string_eol_s[0], output.context, output.prefix, function, output.context, f_string_eol_s[0]);
 }
 
 void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_t filename) {
 
-  if (output.verbosity == f_console_verbosity_quiet) return;
+  if (output.verbosity == f_console_verbosity_quiet_e) return;
 
   fll_print_format("%c%[%sInvalid parameter when calling %S() for the file '%S'.%]%c", output.to.stream, f_string_eol_s[0], output.context, output.prefix, function, filename, output.context, f_string_eol_s[0]);
 }
 
 void firewall_print_error_on_operation(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) {
 
-  if (output.verbosity == f_console_verbosity_quiet) return;
+  if (output.verbosity == f_console_verbosity_quiet_e) return;
 
   flockfile(output.to.stream);
 
@@ -63,14 +63,14 @@ void firewall_print_error_on_operation(const fl_print_t output, const f_string_t
 
 void firewall_print_error_on_unhandled(const fl_print_t output, const f_string_t function, const f_status_t status) {
 
-  if (output.verbosity == f_console_verbosity_quiet) return;
+  if (output.verbosity == f_console_verbosity_quiet_e) return;
 
   fll_print_format("%c%[%sAn unhandled error (%ui) has occurred while calling %S().%]%c", output.to.stream, f_string_eol_s[0], output.context, output.prefix, status, function, output.context, f_string_eol_s[0]);
 }
 
 void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_t filename) {
 
-  if (output.verbosity == f_console_verbosity_quiet) return;
+  if (output.verbosity == f_console_verbosity_quiet_e) return;
 
   fll_print_format("%c%[%sAn unhandled error (%ui) has occurred while calling %S() for the file '%S'.%]%c", output.to.stream, f_string_eol_s[0], output.context, output.prefix, status, function, filename, output.context, f_string_eol_s[0]);
 }
@@ -78,7 +78,7 @@ void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f
 #ifndef _di_firewall_print_signal_received_
   void firewall_print_signal_received(firewall_main_t * const main, const f_status_t signal) {
 
-    if (main->warning.verbosity != f_console_verbosity_verbose) return;
+    if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(main->warning.to.stream);

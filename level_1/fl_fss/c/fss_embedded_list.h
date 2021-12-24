@@ -15,17 +15,17 @@
 #include <string.h>
 
 // fll-0 includes
+
+#include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
-#include <fll/level_0/fss.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
-#include <fll/level_0/type.h>
 #include <fll/level_0/utf.h>
+#include <fll/level_0/fss.h>
 
 // fll-1 includes
 #include <fll/level_1/fss.h>
 #include <fll/level_1/fss_basic.h>
-#include <fll/level_1/fss_status.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,8 +58,8 @@ extern "C" {
  *   A delimits array representing where delimits exist within the buffer.
  *
  * @return
- *   FL_fss_found_object on success and object was found (start location is at end of object).
- *   FL_fss_found_object_not on success and no object was found (start location is after character designating this is not an object).
+ *   F_fss_found_object on success and object was found (start location is at end of object).
+ *   F_fss_found_object_not on success and no object was found (start location is after character designating this is not an object).
  *   F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
  *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
@@ -121,8 +121,8 @@ extern "C" {
  *   The comment range will include the trailing newline.
  *
  * @return
- *   FL_fss_found_content on success and content was found (start location is at end of content).
- *   FL_fss_found_content_not on success and no content was found (start location is after character designating this is not a content).
+ *   F_fss_found_content on success and content was found (start location is at end of content).
+ *   F_fss_found_content_not on success and no content was found (start location is after character designating this is not a content).
  *   F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
  *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
@@ -160,10 +160,10 @@ extern "C" {
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
  * @param complete
- *   If f_fss_complete_none, then only the object name is written.
- *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object.
- *   If f_fss_complete_full_trim, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object.
- *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object.
+ *   If f_fss_complete_none_e, then only the object name is written.
+ *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this object.
+ *   If f_fss_complete_full_trim_e, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object.
+ *   If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this object.
  *   If f_fss_complete_partial_tim, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object.
  * @param state
  *   A state for handling interrupts during long running operations.
@@ -210,11 +210,11 @@ extern "C" {
  * @param content
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
  * @param complete
- *   If f_fss_complete_none, then only the content is written.
- *   If f_fss_complete_next, then the content followed by any appropriate "next" character separating one content from the next, if applicable.
- *   If f_fss_complete_end, then the content followed by any appropriate "end" character designating the last content for some object, printing final newline, if applicable.
- *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this content, except for the final newline.
- *   If f_fss_complete_full, this will write any appropriate open and close aspects of this content, including the final newline.
+ *   If f_fss_complete_none_e, then only the content is written.
+ *   If f_fss_complete_next_e, then the content followed by any appropriate "next" character separating one content from the next, if applicable.
+ *   If f_fss_complete_end_e, then the content followed by any appropriate "end" character designating the last content for some object, printing final newline, if applicable.
+ *   If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this content, except for the final newline.
+ *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this content, including the final newline.
  * @param prepend
  *   A string of whitespace to prepend at the start of each line.
  *   This should only be whitespace, anything else could product invalid content.

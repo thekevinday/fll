@@ -98,24 +98,40 @@ extern "C" {
 #endif //_di_f_fss_delimiters_
 
 /**
- * Codes for every FSS standard.
+ * Codes for every known FSS standard.
+ *
+ * f_fss_*:
+ * - basic:                    FSS-0000: Basic.
+ * - extended:                 FSS-0001: Extended.
+ * - basic_list:               FSS-0002: Basic List.
+ * - extended_list:            FSS-0003: Extended List.
+ * - very_basic_list:          FSS-0004: Very Basic List.
+ * - somewhat_basic_list:      FSS-0005: Somewhat Basic List.
+ * - somewhat_extended_list:   FSS-0006: Somewhat Extended List.
+ * - very_extended_list:       FSS-0007: Very Extended List.
+ * - embedded_list:            FSS-0008: Embedded List.
+ * - reverse_mapping:          FSS-0009: Reverse Mapping.
+ * - extended_reverse_mapping: FSS-000A: Extended Reverse Mapping.
+ * - simple_list:              FSS-000B: Simple List.
+ * - iki_text:                 FSS-000C: IKI Text.
+ * - basic_rule:               FSS-000D: Basic Rule.
  */
 #ifndef _di_f_fss_codes_
   enum {
-    f_fss_basic = 1,
-    f_fss_extended,
-    f_fss_basic_list,
-    f_fss_extended_list,
-    f_fss_very_basic_list,
-    f_fss_somewhat_basic_list,
-    f_fss_somewhat_extended_list,
-    f_fss_very_extended_list,
-    f_fss_embeded_list,
-    f_fss_reverse_mapping,
-    f_fss_extended_reverse_mapping,
-    f_fss_simple_list,
-    f_fss_iki_text,
-    f_fss_basic_rule,
+    f_fss_basic_e = 1,
+    f_fss_extended_e,
+    f_fss_basic_list_e,
+    f_fss_extended_list_e,
+    f_fss_very_basic_list_e,
+    f_fss_somewhat_basic_list_e,
+    f_fss_somewhat_extended_list_e,
+    f_fss_very_extended_list_e,
+    f_fss_embedded_list_e,
+    f_fss_reverse_mapping_e,
+    f_fss_extended_reverse_mapping_e,
+    f_fss_simple_list_e,
+    f_fss_iki_text_e,
+    f_fss_basic_rule_e,
   };
 #endif // _di_f_fss_codes_
 
@@ -127,25 +143,57 @@ extern "C" {
  *
  * Only "next" and "end" are only meaningful for a Content and will be treated as "none" for an Object.
  *
- * none:         Disable completeness.
- * end:          Complete as if this is the final piece of a set (such as FSS-0001, adding terminating EOL).
- * full:         Complete and add terminating EOL, where applicable.
- * full_trim:    Complete and add terminating EOL but remove any leading or trailing whitespace, where applicable.
- * next:         Complete as if this is a piece of a set (such as FSS-0001, adding a separating space).
- * partial:      Complete, but do not add terminating EOL, where applicable.
- * partial_trim: Complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
+ * f_fss_complete_*:
+ * - none:         Disable completeness.
+ * - end:          Complete as if this is the final piece of a set (such as FSS-0001, adding terminating EOL).
+ * - full:         Complete and add terminating EOL, where applicable.
+ * - full_trim:    Complete and add terminating EOL but remove any leading or trailing whitespace, where applicable.
+ * - next:         Complete as if this is a piece of a set (such as FSS-0001, adding a separating space).
+ * - partial:      Complete, but do not add terminating EOL, where applicable.
+ * - partial_trim: Complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
  */
 #ifndef _di_f_fss_complete_
   enum {
-    f_fss_complete_none = 1,
-    f_fss_complete_end,
-    f_fss_complete_full,
-    f_fss_complete_full_trim,
-    f_fss_complete_next,
-    f_fss_complete_partial,
-    f_fss_complete_partial_trim,
+    f_fss_complete_none_e = 1,
+    f_fss_complete_end_e,
+    f_fss_complete_full_e,
+    f_fss_complete_full_trim_e,
+    f_fss_complete_next_e,
+    f_fss_complete_partial_e,
+    f_fss_complete_partial_trim_e,
   };
 #endif // _di_f_fss_complete_
+
+/**
+ * FSS-specific Status codes.
+ */
+enum {
+  F_fss_status_code_first = F_status_code_last + 1,
+
+  #ifndef _di_F_fss_status_error_
+    F_fss_format,
+    F_fss_format_eos,
+  #endif // _di_F_fss_status_error_
+
+  #ifndef _di_F_fss_status_warning_
+    F_fss_accepted_invalid,
+    F_fss_accepted_invalid_eos,
+  #endif // _di_F_fss_status_warning_
+
+  #ifndef _di_F_fss_status_success_
+    F_fss_found_content,
+    F_fss_found_object,
+    F_fss_found_object_content_not,
+    F_fss_found_content_not,
+    F_fss_found_object_not,
+  #endif // _di_F_fss_status_success_
+
+  #ifndef _di_F_fss_status_codes_
+    F_fss_found_comment,
+  #endif // _di_F_fss_status_codes_
+
+  F_fss_status_code_last,
+}; // enum
 
 /**
  * Default allocation steps.

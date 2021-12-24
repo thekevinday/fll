@@ -26,7 +26,7 @@ extern "C" {
 #ifndef _di_controller_entry_preprocess_print_simulate_setting_value_
   void controller_entry_preprocess_print_simulate_setting_value(const bool is_entry, const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug && !(global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
+    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
       return;
     }
 
@@ -54,7 +54,7 @@ extern "C" {
 #ifndef _di_controller_entry_print_error_
   void controller_entry_print_error(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
 
     // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
@@ -103,7 +103,7 @@ extern "C" {
 #ifndef _di_controller_entry_settings_read_print_setting_requires_exactly_
   void controller_entry_settings_read_print_setting_requires_exactly(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_number_unsigned_t total) {
 
-    if (global.main->error.verbosity == f_console_verbosity_quiet) return;
+    if (global.main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     controller_lock_print(global.main->error.to, global.thread);
 
@@ -122,7 +122,7 @@ extern "C" {
 #ifndef _di_controller_entry_settings_read_print_setting_unknown_action_
   void controller_entry_settings_read_print_setting_unknown_action(const bool is_entry, const controller_global_t global, const controller_cache_t cache) {
 
-    if (global.main->warning.verbosity != f_console_verbosity_debug) return;
+    if (global.main->warning.verbosity != f_console_verbosity_debug_e) return;
 
     controller_lock_print(global.main->warning.to, global.thread);
 
@@ -139,7 +139,7 @@ extern "C" {
 #ifndef _di_controller_entry_settings_read_print_setting_unknown_action_value_
   void controller_entry_settings_read_print_setting_unknown_action_value(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_array_length_t index) {
 
-    if (global.main->warning.verbosity != f_console_verbosity_debug) return;
+    if (global.main->warning.verbosity != f_console_verbosity_debug_e) return;
 
     controller_lock_print(global.main->warning.to, global.thread);
 

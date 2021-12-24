@@ -30,7 +30,7 @@ build_sources_library_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status.h
+build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script

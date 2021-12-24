@@ -18,18 +18,27 @@ extern "C" {
 
 /**
  * Provide a typedef of cap_t such that if _di_libcap_ is defined then a stub is used in its place.
+ *
+ * f_capability_value_type_*:
+ * - effective:   Specify "effective" capability.
+ * - permitted:   Specify "permitted" capability.
+ * - inheritable: Specify "inheritable" capability.
+ *
+ * f_capability_flag_type_*:
+ * - clear: Clear (remove) the capability.
+ * - set:   Set the capability.
  */
 #ifndef _di_f_capability_t_
 
   enum {
-    f_capability_value_type_effective = 0,
-    f_capability_value_type_permitted,
-    f_capability_value_type_inheritable,
+    f_capability_value_type_effective_e = 0,
+    f_capability_value_type_permitted_e,
+    f_capability_value_type_inheritable_e,
   };
 
   enum {
-    f_capability_flag_type_clear = 0,
-    f_capability_flag_type_set,
+    f_capability_flag_type_clear_e = 0,
+    f_capability_flag_type_set_e,
   };
 
   // provide stubs in the event that libcap is disabled.

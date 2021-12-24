@@ -91,39 +91,39 @@ extern "C" {
   #define iki_write_long_single_s  "single"
 
   enum {
-    iki_write_parameter_help,
-    iki_write_parameter_light,
-    iki_write_parameter_dark,
-    iki_write_parameter_no_color,
-    iki_write_parameter_verbosity_quiet,
-    iki_write_parameter_verbosity_normal,
-    iki_write_parameter_verbosity_verbose,
-    iki_write_parameter_verbosity_debug,
-    iki_write_parameter_version,
+    iki_write_parameter_help_e,
+    iki_write_parameter_light_e,
+    iki_write_parameter_dark_e,
+    iki_write_parameter_no_color_e,
+    iki_write_parameter_verbosity_quiet_e,
+    iki_write_parameter_verbosity_normal_e,
+    iki_write_parameter_verbosity_verbose_e,
+    iki_write_parameter_verbosity_debug_e,
+    iki_write_parameter_version_e,
 
-    iki_write_parameter_file,
-    iki_write_parameter_content,
-    iki_write_parameter_double,
-    iki_write_parameter_object,
-    iki_write_parameter_single,
+    iki_write_parameter_file_e,
+    iki_write_parameter_content_e,
+    iki_write_parameter_double_e,
+    iki_write_parameter_object_e,
+    iki_write_parameter_single_e,
   };
 
   #define iki_write_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(iki_write_short_file_s, iki_write_long_file_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(iki_write_short_content_s, iki_write_long_content_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(iki_write_short_double_s, iki_write_long_double_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(iki_write_short_object_s, iki_write_long_object_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(iki_write_short_single_s, iki_write_long_single_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(iki_write_short_file_s, iki_write_long_file_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(iki_write_short_content_s, iki_write_long_content_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(iki_write_short_double_s, iki_write_long_double_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(iki_write_short_object_s, iki_write_long_object_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(iki_write_short_single_s, iki_write_long_single_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define iki_write_total_parameters_d 14

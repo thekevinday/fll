@@ -16,7 +16,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
       fll_print_format("%c%[Compiling static objects.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
     }
 
@@ -33,11 +33,11 @@ extern "C" {
     if (data_build.setting.path_standard) {
       path_sources = &main->path_sources_c;
 
-      if (data_build.setting.build_language == fake_build_language_type_cpp) {
+      if (data_build.setting.build_language == fake_build_language_type_cpp_e) {
         path_sources = &main->path_sources_cpp;
       }
     }
-    else if (main->parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+    else if (main->parameters[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
       path_sources = &data_build.setting.path_sources;
     }
 
@@ -108,7 +108,7 @@ extern "C" {
           *status = f_directory_exists(destination_path.string);
 
           if (*status == F_false) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
+            if (main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
               fl_print_format("%c%[%SThe path '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
@@ -136,18 +136,18 @@ extern "C" {
                 funlockfile(main->error.to.stream);
               }
               else {
-                fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_create", F_true, destination_path.string, "create", fll_error_file_type_directory);
+                fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_create", F_true, destination_path.string, "create", fll_error_file_type_directory_e);
               }
 
               break;
             }
 
-            if (main->error.verbosity == f_console_verbosity_verbose) {
+            if (main->error.verbosity == f_console_verbosity_verbose_e) {
               fll_print_format("Directory '%Q' created.%c", main->output.to.stream, destination_path, f_string_eol_s[0]);
             }
           }
           else if (F_status_is_error(*status)) {
-            fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_exists", F_true, destination_path.string, "create", fll_error_file_type_directory);
+            fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_exists", F_true, destination_path.string, "create", fll_error_file_type_directory_e);
 
             break;
           }

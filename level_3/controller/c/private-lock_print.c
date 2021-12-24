@@ -12,7 +12,7 @@ extern "C" {
     // A signal is not an error.
     if (status == F_interrupt) return;
 
-    if (print.verbosity != f_console_verbosity_quiet) {
+    if (print.verbosity != f_console_verbosity_quiet_e) {
       controller_lock_print(print.to, thread);
 
       fl_print_format("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);

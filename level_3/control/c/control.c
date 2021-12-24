@@ -40,7 +40,7 @@ extern "C" {
       const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, control_total_parameters_d);
 
       {
-        f_console_parameter_id_t ids[3] = { control_parameter_no_color, control_parameter_light, control_parameter_dark };
+        f_console_parameter_id_t ids[3] = { control_parameter_no_color_e, control_parameter_light_e, control_parameter_dark_e };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
@@ -66,7 +66,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (main->error.verbosity != f_console_verbosity_quiet_e) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
             fll_print_terminated(f_string_eol_s, main->error.to.stream);
           }
@@ -79,7 +79,7 @@ extern "C" {
 
       // Identify priority of verbosity related parameters.
       {
-        f_console_parameter_id_t ids[4] = { control_parameter_verbosity_quiet, control_parameter_verbosity_normal, control_parameter_verbosity_verbose, control_parameter_verbosity_debug };
+        f_console_parameter_id_t ids[4] = { control_parameter_verbosity_quiet_e, control_parameter_verbosity_normal_e, control_parameter_verbosity_verbose_e, control_parameter_verbosity_debug_e };
         f_console_parameter_id_t choice = 0;
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -91,32 +91,32 @@ extern "C" {
           return status;
         }
 
-        if (choice == control_parameter_verbosity_quiet) {
-          main->output.verbosity = f_console_verbosity_quiet;
-          main->error.verbosity = f_console_verbosity_quiet;
-          main->warning.verbosity = f_console_verbosity_quiet;
+        if (choice == control_parameter_verbosity_quiet_e) {
+          main->output.verbosity = f_console_verbosity_quiet_e;
+          main->error.verbosity = f_console_verbosity_quiet_e;
+          main->warning.verbosity = f_console_verbosity_quiet_e;
         }
-        else if (choice == control_parameter_verbosity_normal) {
-          main->output.verbosity = f_console_verbosity_normal;
-          main->error.verbosity = f_console_verbosity_normal;
-          main->warning.verbosity = f_console_verbosity_normal;
+        else if (choice == control_parameter_verbosity_normal_e) {
+          main->output.verbosity = f_console_verbosity_normal_e;
+          main->error.verbosity = f_console_verbosity_normal_e;
+          main->warning.verbosity = f_console_verbosity_normal_e;
         }
-        else if (choice == control_parameter_verbosity_verbose) {
-          main->output.verbosity = f_console_verbosity_verbose;
-          main->error.verbosity = f_console_verbosity_verbose;
-          main->warning.verbosity = f_console_verbosity_verbose;
+        else if (choice == control_parameter_verbosity_verbose_e) {
+          main->output.verbosity = f_console_verbosity_verbose_e;
+          main->error.verbosity = f_console_verbosity_verbose_e;
+          main->warning.verbosity = f_console_verbosity_verbose_e;
         }
-        else if (choice == control_parameter_verbosity_debug) {
-          main->output.verbosity = f_console_verbosity_debug;
-          main->error.verbosity = f_console_verbosity_debug;
-          main->warning.verbosity = f_console_verbosity_debug;
+        else if (choice == control_parameter_verbosity_debug_e) {
+          main->output.verbosity = f_console_verbosity_debug_e;
+          main->error.verbosity = f_console_verbosity_debug_e;
+          main->warning.verbosity = f_console_verbosity_debug_e;
         }
       }
 
       status = F_none;
     }
 
-    if (main->parameters[control_parameter_help].result == f_console_result_found) {
+    if (main->parameters[control_parameter_help_e].result == f_console_result_found_e) {
       control_print_help(main->output.to, main->context);
 
       control_main_delete(main);
@@ -124,7 +124,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[control_parameter_version].result == f_console_result_found) {
+    if (main->parameters[control_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, control_program_version_s);
 
       control_main_delete(main);
@@ -135,7 +135,7 @@ extern "C" {
     // @todo
 
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_interrupt) {
           fflush(main->output.to.stream);

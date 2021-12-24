@@ -110,57 +110,57 @@ extern "C" {
   #define fss_basic_list_long_trim_s    "trim"
 
   enum {
-    fss_basic_list_read_parameter_help,
-    fss_basic_list_read_parameter_light,
-    fss_basic_list_read_parameter_dark,
-    fss_basic_list_read_parameter_no_color,
-    fss_basic_list_read_parameter_verbosity_quiet,
-    fss_basic_list_read_parameter_verbosity_normal,
-    fss_basic_list_read_parameter_verbosity_verbose,
-    fss_basic_list_read_parameter_verbosity_debug,
-    fss_basic_list_read_parameter_version,
+    fss_basic_list_read_parameter_help_e,
+    fss_basic_list_read_parameter_light_e,
+    fss_basic_list_read_parameter_dark_e,
+    fss_basic_list_read_parameter_no_color_e,
+    fss_basic_list_read_parameter_verbosity_quiet_e,
+    fss_basic_list_read_parameter_verbosity_normal_e,
+    fss_basic_list_read_parameter_verbosity_verbose_e,
+    fss_basic_list_read_parameter_verbosity_debug_e,
+    fss_basic_list_read_parameter_version_e,
 
-    fss_basic_list_read_parameter_at,
-    fss_basic_list_read_parameter_content,
-    fss_basic_list_read_parameter_columns,
-    fss_basic_list_read_parameter_delimit,
-    fss_basic_list_read_parameter_depth,
-    fss_basic_list_read_parameter_empty,
-    fss_basic_list_read_parameter_line,
-    fss_basic_list_read_parameter_name,
-    fss_basic_list_read_parameter_object,
-    fss_basic_list_read_parameter_pipe,
-    fss_basic_list_read_parameter_raw,
-    fss_basic_list_read_parameter_select,
-    fss_basic_list_read_parameter_total,
-    fss_basic_list_read_parameter_trim,
+    fss_basic_list_read_parameter_at_e,
+    fss_basic_list_read_parameter_content_e,
+    fss_basic_list_read_parameter_columns_e,
+    fss_basic_list_read_parameter_delimit_e,
+    fss_basic_list_read_parameter_depth_e,
+    fss_basic_list_read_parameter_empty_e,
+    fss_basic_list_read_parameter_line_e,
+    fss_basic_list_read_parameter_name_e,
+    fss_basic_list_read_parameter_object_e,
+    fss_basic_list_read_parameter_pipe_e,
+    fss_basic_list_read_parameter_raw_e,
+    fss_basic_list_read_parameter_select_e,
+    fss_basic_list_read_parameter_total_e,
+    fss_basic_list_read_parameter_trim_e,
   };
 
   #define fss_basic_list_read_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, F_false, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(fss_basic_list_short_at_s, fss_basic_list_long_at_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_content_s, fss_basic_list_long_content_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_columns_s, fss_basic_list_long_columns_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_delimit_s, fss_basic_list_long_delimit_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_depth_s, fss_basic_list_long_depth_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_empty_s, fss_basic_list_long_empty_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_line_s, fss_basic_list_long_line_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_name_s, fss_basic_list_long_name_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_object_s, fss_basic_list_long_object_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_pipe_s, fss_basic_list_long_pipe_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_raw_s, fss_basic_list_long_raw_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_select_s, fss_basic_list_long_select_s, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_total_s, fss_basic_list_long_total_s, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_basic_list_short_trim_s, fss_basic_list_long_trim_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, F_false, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_at_s, fss_basic_list_long_at_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_content_s, fss_basic_list_long_content_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_columns_s, fss_basic_list_long_columns_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_delimit_s, fss_basic_list_long_delimit_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_depth_s, fss_basic_list_long_depth_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_empty_s, fss_basic_list_long_empty_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_line_s, fss_basic_list_long_line_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_name_s, fss_basic_list_long_name_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_object_s, fss_basic_list_long_object_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_pipe_s, fss_basic_list_long_pipe_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_raw_s, fss_basic_list_long_raw_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_select_s, fss_basic_list_long_select_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_total_s, fss_basic_list_long_total_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_short_trim_s, fss_basic_list_long_trim_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define fss_basic_list_total_parameters_d 23
@@ -193,15 +193,15 @@ extern "C" {
   #define fss_basic_list_read_delimit_mode_name_lesser_s_length  1
 
   enum {
-    fss_basic_list_read_delimit_mode_none = 1,
-    fss_basic_list_read_delimit_mode_all,
-    fss_basic_list_read_delimit_mode_content,
-    fss_basic_list_read_delimit_mode_content_greater,
-    fss_basic_list_read_delimit_mode_content_greater_object,
-    fss_basic_list_read_delimit_mode_content_lesser,
-    fss_basic_list_read_delimit_mode_content_lesser_object,
-    fss_basic_list_read_delimit_mode_content_object,
-    fss_basic_list_read_delimit_mode_object,
+    fss_basic_list_read_delimit_mode_none_e = 1,
+    fss_basic_list_read_delimit_mode_all_e,
+    fss_basic_list_read_delimit_mode_content_e,
+    fss_basic_list_read_delimit_mode_content_greater_e,
+    fss_basic_list_read_delimit_mode_content_greater_object_e,
+    fss_basic_list_read_delimit_mode_content_lesser_e,
+    fss_basic_list_read_delimit_mode_content_lesser_object_e,
+    fss_basic_list_read_delimit_mode_content_object_e,
+    fss_basic_list_read_delimit_mode_object_e,
   };
 #endif // _di_fss_basic_list_read_delimit_modes_
 

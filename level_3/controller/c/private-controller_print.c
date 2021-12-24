@@ -10,7 +10,7 @@ extern "C" {
 #ifndef _di_controller_print_error_
   void controller_print_error(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
 
     // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
@@ -29,7 +29,7 @@ extern "C" {
 #ifndef _di_controller_print_error_file_
   void controller_print_error_file(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) {
 
-    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
     if (thread) {
@@ -47,7 +47,7 @@ extern "C" {
 #ifndef _di_controller_print_signal_received_
   void controller_print_signal_received(controller_main_t * const main, const f_status_t signal) {
 
-    if (main->warning.verbosity != f_console_verbosity_verbose) return;
+    if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(main->warning.to.stream);

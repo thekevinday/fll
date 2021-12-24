@@ -13,18 +13,24 @@
 #define _F_socket_common_h
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 /**
  * Socket Types.
+ *
+ * f_socket_close_*:
+ * - fast:       Fast Socket close, as in close().
+ * - read:       Read close, as in shutdown(, SHUT_RD).
+ * - write:      Write close, as in shutdown(, SHUT_WR).
+ * - read_write: Read/Write close, as in shutdown(, SHUT_RDWR).
  */
 #ifndef _di_f_socket_types_
   enum {
-    f_socket_close_fast = 1,   // As in close();
-    f_socket_close_read,       // As in shutdown(, SHUT_RD);
-    f_socket_close_write,      // As in shutdown(, SHUT_WR);
-    f_socket_close_read_write, // As in shutdown(, SHUT_RDWR);
+    f_socket_close_fast_e = 1,
+    f_socket_close_read_e,
+    f_socket_close_write_e,
+    f_socket_close_read_write_e,
   };
 #endif // _di_f_socket_types_
 

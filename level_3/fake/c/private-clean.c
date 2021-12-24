@@ -15,7 +15,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (main->output.verbosity != f_console_verbosity_quiet) {
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
       flockfile(main->output.to.stream);
 
       fl_print_format("%c%[Deleting all files within build directory '%]", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
@@ -29,7 +29,7 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    if (main->error.verbosity == f_console_verbosity_verbose) {
+    if (main->error.verbosity == f_console_verbosity_verbose_e) {
       status = f_directory_remove_custom(main->path_build.string, F_directory_descriptors_max_d, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
@@ -37,7 +37,7 @@ extern "C" {
     }
 
     if (F_status_set_fine(status) == F_file_found_not) {
-      if (main->error.verbosity == f_console_verbosity_verbose) {
+      if (main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(main->output.to.stream);
 
         f_print_terminated("The build directory '", main->output.to.stream);
@@ -51,7 +51,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "f_directory_remove", F_true, main->path_build.string, "remove", fll_error_file_type_directory);
+      fll_error_file_print(main->error, F_status_set_fine(status), "f_directory_remove", F_true, main->path_build.string, "remove", fll_error_file_type_directory_e);
 
       return status;
     }

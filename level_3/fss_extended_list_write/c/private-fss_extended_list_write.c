@@ -9,7 +9,7 @@ extern "C" {
 #ifndef _di_fss_extended_list_write_error_parameter_same_times_print_
   void fss_extended_list_write_error_parameter_same_times_print(fss_extended_list_write_main_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -30,7 +30,7 @@ extern "C" {
 #ifndef _di_fss_extended_list_write_error_parameter_unsupported_eol_print_
   void fss_extended_list_write_error_parameter_unsupported_eol_print(fss_extended_list_write_main_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -47,7 +47,7 @@ extern "C" {
 #ifndef _di_fss_extended_list_write_error_parameter_value_missing_print_
   void fss_extended_list_write_error_parameter_value_missing_print(fss_extended_list_write_main_t * const main, const f_string_t symbol, const f_string_t parameter) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet) {
+    if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
     }
 
@@ -69,7 +69,7 @@ extern "C" {
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
-      uint8_t complete = f_fss_complete_none;
+      uint8_t complete = f_fss_complete_none_e;
 
       if (object->used) {
         range.start = 0;
@@ -81,11 +81,11 @@ extern "C" {
       }
 
       if (content) {
-        if (main->parameters[fss_extended_list_write_parameter_trim].result == f_console_result_found) {
-          complete = f_fss_complete_full_trim;
+        if (main->parameters[fss_extended_list_write_parameter_trim_e].result == f_console_result_found_e) {
+          complete = f_fss_complete_full_trim_e;
         }
         else {
-          complete = f_fss_complete_full;
+          complete = f_fss_complete_full_e;
         }
       }
 
@@ -108,7 +108,7 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      status = fl_fss_extended_list_content_write(*content, object ? f_fss_complete_full : f_fss_complete_none, &main->prepend, ignore, state, &range, buffer);
+      status = fl_fss_extended_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, &main->prepend, ignore, state, &range, buffer);
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "fl_fss_extended_list_content_write", F_true);
@@ -256,7 +256,7 @@ extern "C" {
           for (; range.start <= range.stop; ++range.start) {
 
             if (block.string[range.start] == fss_extended_list_write_pipe_content_start_s) {
-              if (main->error.verbosity != f_console_verbosity_quiet) {
+              if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%c%[%sThis standard only supports one content per object.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
               }
 
@@ -354,13 +354,13 @@ extern "C" {
 
     range.start = 0;
 
-    for (; i < main->parameters[fss_extended_list_write_parameter_ignore].locations.used; ++i) {
+    for (; i < main->parameters[fss_extended_list_write_parameter_ignore_e].locations.used; ++i) {
 
       if (fss_extended_list_write_signal_received(main)) {
         return F_status_set_error(F_interrupt);
       }
 
-      l = main->parameters[fss_extended_list_write_parameter_ignore].locations.array[i];
+      l = main->parameters[fss_extended_list_write_parameter_ignore_e].locations.array[i];
 
       if (l < contents.array[location]) continue;
       if (location + 1 < contents.used && l > contents.array[location + 1]) continue;
@@ -386,7 +386,7 @@ extern "C" {
         }
       }
 
-      index = main->parameters[fss_extended_list_write_parameter_ignore].values.array[i * 2];
+      index = main->parameters[fss_extended_list_write_parameter_ignore_e].values.array[i * 2];
 
       range.start = 0;
       range.stop = strnlen(arguments->argv[index], f_console_parameter_size) - 1;
@@ -406,7 +406,7 @@ extern "C" {
 
       ignore->array[ignore->used].start = number;
 
-      index = main->parameters[fss_extended_list_write_parameter_ignore].values.array[(i * 2) + 1];
+      index = main->parameters[fss_extended_list_write_parameter_ignore_e].values.array[(i * 2) + 1];
 
       range.start = 0;
       range.stop = strnlen(arguments->argv[index], f_console_parameter_size) - 1;
