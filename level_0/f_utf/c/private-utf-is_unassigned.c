@@ -360,7 +360,497 @@ extern "C" {
         return F_true;
       }
 
-      // @todo
+      // Telegu: U+0C04, U+0C0D, U+0C11, U+0C29.
+      if (character == 0xe0b08400 || character == 0xe0b08d00 || character == 0xe0b09100 || character == 0xe0b0a900) {
+        return F_true;
+      }
+
+      // Telegu: U+0C3A to U+0C3C.
+      if (character >= 0xe0b0ba00 && character <= 0xe0b0bc00) {
+        return F_true;
+      }
+
+      // Telegu: U+0C45, U+0C49.
+      if (character == 0xe0b18500 || character == 0xe0b18900) {
+        return F_true;
+      }
+
+      // Telegu: U+0C4E to U+0C54.
+      if (character >= 0xe0b18e00 && character <= 0xe0b19400) {
+        return F_true;
+      }
+
+      // Telegu: U+0C5B to U+0C5F.
+      if (character >= 0xe0b19b00 && character <= 0xe0b19f00) {
+        return F_true;
+      }
+
+      // Telegu: U+0C64 to U+0C65.
+      if (character >= 0xe0b1a400 && character <= 0xe0b1a500) {
+        return F_true;
+      }
+
+      // Telegu: U+0C70 to U+0C77.
+      if (character >= 0xe0b1b000 && character <= 0xe0b1b700) {
+        return F_true;
+      }
+
+      // Kannada: U+0C80, U+0C84, U+0C8D, U+0C91.
+      if (character == 0xe0b28000 || character == 0xe0b28400 || character == 0xe0b28d00 || character == 0xe0b29100) {
+        return F_true;
+      }
+
+      // Kannada: U+0CA9, U+0CB4, U+0CBA, U+0CBB.
+      if (character == 0xe0b2a900 || character == 0xe0b2b400 || character == 0xe0b2ba00 || character == 0xe0b2bb00) {
+        return F_true;
+      }
+
+      // Kannada: U+0CC5, U+0CC9.
+      if (character == 0xe0b38500 || character == 0xe0b38900) {
+        return F_true;
+      }
+
+      // Kannada: U+0CCE to U+0CD4.
+      if (character >= 0xe0b38e00 && character <= 0xe0b39400) {
+        return F_true;
+      }
+
+      // Kannada: U+0CD7 to U+0CDD.
+      if (character >= 0xe0b39700 && character <= 0xe0b39d00) {
+        return F_true;
+      }
+
+      // Kannada: U+0CDF, U+0CE4, U+0CE5, U+0CF0.
+      if (character == 0xe0b39f00 || character == 0xe0b3a400 || character == 0xe0b3a500 || character == 0xe0b3b000) {
+        return F_true;
+      }
+
+      // Kannada: U+0CF3 to U+0CFF.
+      if (character >= 0xe0b3b300 && character <= 0xe0b3bf00) {
+        return F_true;
+      }
+
+      // Malayalam: U+0D00, U+0D04, U+0D0D, U+0D11.
+      if (character == 0xe0b48000 || character == 0xe0b48400 || character == 0xe0b48d00 || character == 0xe0b49100) {
+        return F_true;
+      }
+
+      // Malayalam: U+0D3B, U+0D3C, U+0D45, U+0D49.
+      if (character == 0xe0b4bb00 || character == 0xe0b4bc00 || character == 0xe0b58500 || character == 0xe0b58900) {
+        return F_true;
+      }
+
+      // Malayalam: U+0D4F to U+0D56.
+      if (character >= 0xe0b58f00 && character <= 0xe0b59600) {
+        return F_true;
+      }
+
+      // Malayalam: U+0D58 to U+0D5E.
+      if (character >= 0xe0b59800 && character <= 0xe0b59e00) {
+        return F_true;
+      }
+
+      // Malayalam: U+0D64, U+0D65.
+      if (character == 0xe0b5a400 || character == 0xe0b5a500) {
+        return F_true;
+      }
+
+      // Malayalam: U+0D76 to U+0D78.
+      if (character >= 0xe0b5b600 && character <= 0xe0b5b800) {
+        return F_true;
+      }
+
+      // Sinhala: U+0D80, U+0D81, U+0D84.
+      if (character == 0xe0b68000 || character == 0xe0b68100 || character == 0xe0b68400) {
+        return F_true;
+      }
+
+      // Sinhala: U+0D97 to U+0D99.
+      if (character >= 0xe0b69700 && character <= 0xe0b69900) {
+        return F_true;
+      }
+
+      // Sinhala: U+0DB2, U+0DBC, U+0DBE, U+0DBF.
+      if (character == 0xe0b6b200 || character == 0xe0b6bc00 || character == 0xe0b6be00 || character == 0xe0b6bf00) {
+        return F_true;
+      }
+
+      // Sinhala: U+0DC7 to U+0DC9.
+      if (character >= 0xe0b78700 && character <= 0xe0b78900) {
+        return F_true;
+      }
+
+      // Sinhala: U+0DCB to U+0DCE.
+      if (character >= 0xe0b78b00 && character <= 0xe0b78e00) {
+        return F_true;
+      }
+
+      // Sinhala: U+0DD5, U+0DD7.
+      if (character == 0xe0b79500 || character == 0xe0b79700) {
+        return F_true;
+      }
+
+      // Sinhala: U+0DE0 to U+0DE5.
+      if (character >= 0xe0b7a000 && character <= 0xe0b7a500) {
+        return F_true;
+      }
+
+      // Sinhala: U+0DF0 to U+0DF1.
+      if (character >= 0xe0b7b000 && character <= 0xe0b7b100) {
+        return F_true;
+      }
+
+      // Sinhala: U+0DF5 to U+0DFF.
+      if (character >= 0xe0b7b500 && character <= 0xe0b7bf00) {
+        return F_true;
+      }
+
+      // Thai: U+0E00.
+      if (character == 0xe0b88000) {
+        return F_true;
+      }
+
+      // Thai: U+0E3B to U+0E3E.
+      if (character >= 0xe0b8bb00 && character <= 0xe0b8be00) {
+        return F_true;
+      }
+
+      // Thai: U+0E5C to U+0E7F.
+      if (character >= 0xe0b99c00 && character <= 0xe0b9bf00) {
+        return F_true;
+      }
+
+      // Lao: U+0E80, U+0E83, U+0E85, U+0E86.
+      if (character == 0xe0ba8000 || character == 0xe0ba8300 || character == 0xe0ba8500 || character == 0xe0ba8600) {
+        return F_true;
+      }
+
+      // Lao: U+0E89, U+0E8B, U+0E8C.
+      if (character == 0xe0ba8900 || character == 0xe0ba8b00 || character == 0xe0ba8c00) {
+        return F_true;
+      }
+
+      // Lao: U+0E8E to U+0E93.
+      if (character >= 0xe0ba8e00 && character <= 0xe0ba9300) {
+        return F_true;
+      }
+
+      // Lao: U+0E98, U+0EA0, U+0EA4, U+0EA6.
+      if (character == 0xe0ba9800 || character == 0xe0baa000 || character == 0xe0baa400 || character == 0xe0baa600) {
+        return F_true;
+      }
+
+      // Lao: U+0EA8, U+0EA9, U+0EAC, U+0EBA.
+      if (character == 0xe0baa800 || character == 0xe0baa900 || character == 0xe0baac00 || character == 0xe0baba00) {
+        return F_true;
+      }
+
+      // Lao: U+0EBE, U+0EBF, U+0EC5, U+0EC7.
+      if (character == 0xe0babe00 || character == 0xe0babf00 || character == 0xe0bb8500 || character == 0xe0bb8700) {
+        return F_true;
+      }
+
+      // Lao: U+0ECE, U+0ECF, U+0EDA, U+0EDB.
+      if (character == 0xe0bb8e00 || character == 0xe0bb8f00 || character == 0xe0bb9a00 || character == 0xe0bb9b00) {
+        return F_true;
+      }
+
+      // Lao: U+0EE0 to U+0EFF.
+      if (character >= 0xe0bba000 && character <= 0xe0bbbf00) {
+        return F_true;
+      }
+
+      // Tibetan: U+0F48.
+      if (character == 0xe0bd8800) {
+        return F_true;
+      }
+
+      // Tibetan: U+0F6D to U+0F70.
+      if (character >= 0xe0bdad00 && character <= 0xe0bdb000) {
+        return F_true;
+      }
+
+      // Tibetan: U+0F98, U+0FBD, U+0FCD.
+      if (character == 0xe0be9800 || character == 0xe0bebd00 || character == 0xe0bf8d00) {
+        return F_true;
+      }
+
+      // Tibetan: U+0FDB to U+0FFF.
+      if (character >= 0xe0bf9b00 && character <= 0xe0bfbf00) {
+        return F_true;
+      }
+
+      // Georgian: U+10C6.
+      if (character == 0xe1838600) {
+        return F_true;
+      }
+
+      // Georgian: U+10C8 to U+10CC.
+      if (character >= 0xe1838800 && character <= 0xe1838c00) {
+        return F_true;
+      }
+
+      // Georgian: U+10CE to U+10CF.
+      if (character >= 0xe1838e00 && character <= 0xe1838f00) {
+        return F_true;
+      }
+
+      // Ethiopic: U+1249, U+124E, U+124F, U+1257.
+      if (character == 0xe1898900 || character == 0xe1898e00 || character == 0xe1898f00 || character == 0xe1899700) {
+        return F_true;
+      }
+
+      // Ethiopic: U+1259, U+125E, U+125F, U+1289.
+      if (character == 0xe1899900 || character == 0xe1899e00 || character == 0xe1899f00 || character == 0xe18a8900) {
+        return F_true;
+      }
+
+      // Ethiopic: U+128E, U+128F, U+12B1, U+12B6.
+      if (character == 0xe18a8e00 || character == 0xe18a8f00 || character == 0xe18ab100 || character == 0xe18ab600) {
+        return F_true;
+      }
+
+      // Ethiopic: U+12B7, U+12BF, U+12C1, U+12C6.
+      if (character == 0xe18ab700 || character == 0xe18abf00 || character == 0x8e18b8100 || character == 0xe18b8600) {
+        return F_true;
+      }
+
+      // Ethiopic: U+12C7, U+12D7, U+1311, U+1316.
+      if (character == 0xe18b8700 || character == 0xe18b9700 || character == 0xe18c9100 || character == 0xe18c9600) {
+        return F_true;
+      }
+
+      // Ethiopic: U+1317, U+135B, U+135C.
+      if (character == 0xe18c9700 || character == 0xe18d9b00 || character == 0xe18d9c00) {
+        return F_true;
+      }
+
+      // Ethiopic: U+137D to U+137F.
+      if (character >= 0xe18dbd00 && character <= 0xe18dbf00) {
+        return F_true;
+      }
+
+      // Ethiopic Supplement: U+139A to U+139F.
+      if (character >= 0xe18e9a00 && character <= 0xe18e9f00) {
+        return F_true;
+      }
+
+      // Cherokee: U+13F6 to U+13F7.
+      if (character >= 0xe18fb600 && character <= 0xe18fb700) {
+        return F_true;
+      }
+
+      // Cherokee: U+13FE to U+13FF.
+      if (character >= 0xe18fbe00 && character <= 0xe18fbf00) {
+        return F_true;
+      }
+
+      // Ogham: U+169D to U+169F.
+      if (character >= 0xe19a9d00 && character <= 0xe19a9f00) {
+        return F_true;
+      }
+
+      // Runic: U+16F9 to U+16FF.
+      if (character >= 0xe19bb900 && character <= 0xe19bbf00) {
+        return F_true;
+      }
+
+      // Tagalog: U+170D.
+      if (character == 0xe19c8d00) {
+        return F_true;
+      }
+
+      // Tagalog: U+1715 to U+171F.
+      if (character >= 0xe19c9500 && character <= 0xe19c9f00) {
+        return F_true;
+      }
+
+      // Hanunoo: U+1737 to U+173F.
+      if (character >= 0xe19cb700 && character <= 0xe19cbf00) {
+        return F_true;
+      }
+
+      // Buhid: U+1754 to U+175F.
+      if (character >= 0xe19d9400 && character <= 0xe19d9f00) {
+        return F_true;
+      }
+
+      // Tagbanwa: U+176D, U+1771.
+      if (character == 0xe19dad00 || character == 0xe19db100) {
+        return F_true;
+      }
+
+      // Tagbanwa: U+1774 to U+177F.
+      if (character >= 0xe19db400 && character <= 0xe19dbf00) {
+        return F_true;
+      }
+
+      // Khmer: U+17DE to U+17DF.
+      if (character >= 0xe19f9e00 && character <= 0xe19f9f00) {
+        return F_true;
+      }
+
+      // Khmer: U+17EA to U+17EF.
+      if (character >= 0xe19faa00 && character <= 0xe19faf00) {
+        return F_true;
+      }
+
+      // Khmer: U+17FA to U+17FF.
+      if (character >= 0xe19fba00 && character <= 0xe19fbf00) {
+        return F_true;
+      }
+
+      // Mongolian: U+180F.
+      if (character == 0xe1a08f00) {
+        return F_true;
+      }
+
+      // Mongolian: U+181A to U+181F.
+      if (character >= 0xe1a09a00 && character <= 0xe1a09f00) {
+        return F_true;
+      }
+
+      // Mongolian: U+1878 to U+187F.
+      if (character >= 0xe1a1b800 && character <= 0xe1a1bf00) {
+        return F_true;
+      }
+
+      // Mongolian: U+18AB to U+18AF.
+      if (character >= 0xe1a2ab00 && character <= 0xe1a2af00) {
+        return F_true;
+      }
+
+      // Unified Canadian Aboriginal Syllabics Extended: U+18F6 to U+18FF.
+      if (character >= 0xe1a3b600 && character <= 0xe1a3bf00) {
+        return F_true;
+      }
+
+      // Limbu: U+191F.
+      if (character == 0xe1a49f00) {
+        return F_true;
+      }
+
+      // Limbu: U+192C to U+192F.
+      if (character >= 0xe1a4ac00 && character <= 0xe1a4af00) {
+        return F_true;
+      }
+
+      // Limbu: U+193C to U+193F.
+      if (character >= 0xe1a4bc00 && character <= 0xe1a4bf00) {
+        return F_true;
+      }
+
+      // Limbu: U+1941 to U+1943.
+      if (character >= 0xe1a58100 && character <= 0xe1a58300) {
+        return F_true;
+      }
+
+      // Tai Le: U+196E to U+196F.
+      if (character >= 0xe1a5ae00 && character <= 0xe1a5af00) {
+        return F_true;
+      }
+
+      // Tai Le: U+1975 to U+197F.
+      if (character >= 0xe1a5b500 && character <= 0xe1a5bf00) {
+        return F_true;
+      }
+
+      // New Tai Lue: U+19AC to U+19AF.
+      if (character >= 0xe1a6ac00 && character <= 0xe1a6af00) {
+        return F_true;
+      }
+
+      // New Tai Lue: U+19CA to U+19CF.
+      if (character >= 0xe1a78a00 && character <= 0xe1a78f00) {
+        return F_true;
+      }
+
+      // New Tai Lue: U+19DB to U+19DD.
+      if (character >= 0xe1a79b00 && character <= 0xe1a79d00) {
+        return F_true;
+      }
+
+      // Buginese: U+1A1C to U+1A1D.
+      if (character >= 0xe1a89c00 && character <= 0xe1a89d00) {
+        return F_true;
+      }
+
+      // Tai Tham: U+1A5F.
+      if (character == 0xe1a99f00) {
+        return F_true;
+      }
+
+      // Tai Tham: U+1A7D to U+1A7E.
+      if (character >= 0xe1a9bd00 && character <= 0xe1a9be00) {
+        return F_true;
+      }
+
+      // Tai Tham: U+1A8A to U+1A8F.
+      if (character >= 0xe1aa8a00 && character <= 0xe1aa8f00) {
+        return F_true;
+      }
+
+      // Tai Tham: U+1A9A to U+1A9F.
+      if (character >= 0xe1aa9a00 && character <= 0xe1aa9f00) {
+        return F_true;
+      }
+
+      // Tai Tham: U+1AAE to U+1AAF.
+      if (character >= 0xe1aaae00 && character <= 0xe1aaaf00) {
+        return F_true;
+      }
+
+      // Combining Diacritical Marks Extended: U+1ABF to U+1AFF.
+      if (character >= 0xe1aabf00 && character <= 0xe1abbf00) {
+        return F_true;
+      }
+
+      // Balinese: U+1B4C to U+1B4F.
+      if (character >= 0xe1ad8c00 && character <= 0xe1ad8f00) {
+        return F_true;
+      }
+
+      // Balinese: U+1B7D to U+1B7F.
+      if (character >= 0xe1adbd00 && character <= 0xe1adbf00) {
+        return F_true;
+      }
+
+      // Batak: U+1BF4 to U+1BFB.
+      if (character >= 0xe1afb400 && character <= 0xe1afbb00) {
+        return F_true;
+      }
+
+      // Lepcha: U+1C38 to U+1C3A.
+      if (character >= 0xe1b0b800 && character <= 0xe1b0ba00) {
+        return F_true;
+      }
+
+      // Lepcha: U+1C4A to U+1C4C.
+      if (character >= 0xe1b18a00 && character <= 0xe1b18c00) {
+        return F_true;
+      }
+
+      // Sundanese Supplement: U+1CC8 to U+1CCF.
+      if (character >= 0xe1b38800 && character <= 0xe1b38f00) {
+        return F_true;
+      }
+
+      // Vedic Extensions: U+1CF7.
+      if (character == 0xe1b3b700) {
+        return F_true;
+      }
+
+      // Vedic Extensions: U+1CFA to U+1CFF.
+      if (character >= 0xe1b3ba00 && character <= 0xe1b3bf00) {
+        return F_true;
+      }
+
+      // Combining Diacritical Marks Supplement: U+1DF6 to U+1DFB.
+      if (character >= 0xe1b7b600 && character <= 0xe1b7bb00) {
+        return F_true;
+      }
+
+      // @todo: continue from Greek Extended until Specials.
 
       return F_false;
     }
