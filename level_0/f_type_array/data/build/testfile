@@ -10,6 +10,11 @@ main:
   build settings
   build settings-tests
 
+  if defined environment LD_LIBRARY_PATH
+    define LD_LIBRARY_PATH build/libraries/shared:define:"LD_LIBRARY_PATH"
+  else
+    define LD_LIBRARY_PATH build/libraries/shared
+
   if exists build/programs/shared/test-f_type_array
     shell build/programs/shared/test-f_type_array
 
