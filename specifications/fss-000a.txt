@@ -1,15 +1,17 @@
 # fss-0002
 
-Featureless Settings Specification: 0001 - Extended:
-  Each Object starts at the beginning of a line and whitespace to the left of the Object is not treated as an object.
+Featureless Settings Specification: 000A - Extended Reverse Mapping:
+  This is based off of fss-0001 Extended, except the Object is at the end of the line.
+
+  Each Object starts at the end of a line and whitespace to the left of the Object is not treated as an object.
   Whitespace separates an Object from the Content.
   An Object may be followed by a newline, in which case means that the Object has no Content.
   If only printing whitespace follows a valid Object, that Object is considered to have no Content.
 
   Content exists on the same line as the Object.
   Content is represented as multiple Content columns.
-  Content columns are whitespace separated parts within the Content and terminated by a newline.
-  Any number of Content columns may exist in the Content until the newline is reached.
+  Content columns are whitespace separated parts within the Content is terminated by the start of the Object.
+  Any number of Content columns may exist in the Content until the Object is reached.
 
   Key\:
     \s = whitespace, except newline.
@@ -23,15 +25,15 @@ Featureless Settings Specification: 0001 - Extended:
   Before Structure\:
 
   Structure\:
-    \s*\q+\s+(\s*\q+)*\s*\n
+    \s*(\s*\q+)*\s+\q+\s*\n
 
   After Structure\:
 
   Example\:
-    # fss-0001
+    # fss-000a
     # valid comments are ignored.
-    "The Object" Content "content 2" content_3.
-    Second object set.
+    Content "content 2" content_3. "The Object"
+    object set. Second
 
   Objects would be\:
     1) The Object

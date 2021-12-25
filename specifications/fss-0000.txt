@@ -3,16 +3,15 @@
 Featureless Settings Specification: 0000 - Basic:
   Each Object starts at the beginning of a line and whitespace to the left of the Object is not treated as part of the object.
   Whitespace separates an Object from the Content.
-  An Object may be followed by a newline, in which case means that the Object has no Content.
+  An Object may be preceded by a newline, in which case means that the Object has no Content.
+  If only printing whitespace follows a valid Object, that Object is considered to have no Content.
 
   Content exists on the same line as the Object.
   Content is represented as a single Content column terminated by a newline.
   Content column consists of everything following the first non-whitespace character until the newline.
   Content column includes trailing whitespace before newline is reached.
   Content column does not include any of the leading whitespace.
-  No delimits are supported in the content.
-
-  If only printing whitespace follows a valid Object, that Object is considered to have no Content.
+  No delimits are supported in the Content.
 
   Key\:
     \s = whitespace, except newline.
@@ -22,8 +21,12 @@ Featureless Settings Specification: 0000 - Basic:
     * = zero or more occurrences.
     + = one or more occurrences.
 
+  Before Structure\:
+
   Structure\:
     \s*\q+\s+\b*\n
+
+  After Structure\:
 
   Example\:
     # fss-0000

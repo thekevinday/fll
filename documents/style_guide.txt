@@ -1,0 +1,177 @@
+# fss-0002
+
+Style Guide:
+  The Featureless Linux Library uses a set of styles and practices designed in hopes to communicate both explicitly and implicitly multiple meanings and contexts.
+  The idea is that code should be readable like a story rather than be a mash of characters jumbled together into as few lines as possible.
+  This design has a tendency to go against the norm given that longer lines (such as 120 characters or more) may be common.
+
+  There are general style guides used in everything and there are more specific and context-explicit styles used in special cases.
+
+General Style Guides:
+  - Naming Structure.
+  - Commas in Sets.
+
+Specific Style Guides:
+  - Return Code Names.
+  - Global String Constant Names.
+  - Enumeration Names.
+  - Define Names.
+  - Type Definition names.
+  - Function Names.
+  - File Names.
+
+Naming Structure:
+  All files, programs, functions, and comments that have specific meaning follow this general naming structure.
+  This structure may be similar to camel-casing or snake-casing, but it is not nor is it intended to match them.
+
+  These special names may only contain word characters, underscore "_", and dash "-".
+
+  The underscore "_" and dash "-" are explicitly intended to communicate separation of context or not.
+  The underscore character represents a space separating multiple words, logic, concepts, or ideas represented by the previous words and should share meaning.
+  The dash character represents a break in the words, logic, concepts, or ideas.
+
+  Limitations in the software may restrict the use of these and the following also apply\:
+  - In the event that a dash cannot be used, fall back to an underscore.
+  - In the event that an underscore cannot be used, fall back to a dash.
+  - In the event that both underscore and dash cannot be used, it is fine to have neither.
+  - For software that uses plus "+", it may become necessary to replace the dash with the plus, but this should be avoided.
+  - Other language-specific (compiler languages, spoken languages, written languages, etc..) restrictions may apply that prevent or alter this style.
+
+  In general, these special names should always be lower case and this is encouraged.
+  The use of upper case is not forbidden and is encouraged to be used for special communication or language-specific purposes.
+
+  Consider the following to better understand how and when to use the underscore and dash to implicitly communicate context\:
+  Take the words "my", "red", "cat", "dog", and "apple".
+
+  If you wanted to communicate that the structure of a document is focused on "my red X", then you can use the following naming structure to communicate this\:
+  1) my_red-cat, my_red-dog, my_red-apple.
+
+  If you wanted, instead, to communicate that the structure is focused on "my X", then you can use the following naming structure to communicate this\:
+  2) my-red_cat, my-red_dog, my-red_apple.
+
+  By following this logic, another person can more easily identify your logic and make changes or fixes.
+  Let us say that somebody wants to add "happy" to the context\:
+
+  1) This can become: my_red-happy_cat, my_red-happy_dog, my_red-apple.
+  2) This can become: my-happy_cat, my-happy_dog, my-red_apple.
+
+  The person who added "happy" might have fixed a situation where there is no red cat or dog and while understanding that there is no happy apple.
+  However, in case (1) because "my_red" is grouped together by the underscore, it is clear that there is a "my_red" must be preserved and there is red cat and red dog, so happy is added to the cat and dog but not the apple without removing the "red".
+
+Commas in Sets:
+  In english, the more grammatically correct way to write lists is to have commas except for the last item in the set.
+  This makes hacking and patching more difficult, even if only slightly.
+
+  This project requires that, so long as it is allowed by the language (in terms of valid syntax, etc..), items in a list must always end in a comma.
+
+  Example Grammatically Correct Way\:
+  - char list[] = {
+      'a',
+      'b',
+      'c'
+    };
+
+  Example FLL Correct Way\:
+  - char list[] = {
+      'a',
+      'b',
+      'c',
+    };
+
+Return Code Names:
+  The return code names are C-language specific names used by this project as the status or return codes for functions and programs.
+  To uniquely identify these, they follow the naming structure "(A)_(b)", where "(A)" is replaced with an upper-case character representing the project level (or name) and "(b)" is replaced with the lower-case status code name using words that are underscore separated.
+
+  These are enumerations but they do not follow the enumeration style guide and are an exception to it.
+
+  Examples\:
+  - F_none
+  - F_signal_file_size_limit
+
+Global String Constant Names:
+  The C-language specific global names are used in two ways\:
+  1) Via a define (macro).
+  2) As a variable at the global scope.
+
+  When used as a define, these follow the naming structure "(A)_(b)_s" or "(a)_(b)_s", where "(A)" is replaced with an upper-case character representing the project level, "(a)" is a lower-case alternative of "(A)" and "(b)" is replaced with the lower-case name using words that are underscore separated.
+
+  When used as a variable these follow the naming structure "(a)_(b)_s", where "(a)" is replaced with an lower-case character representing the project level (or name) and "(b)" is replaced with the lower-case name using words that are underscore separated.
+
+  The trailing "_s" designates that this is a string.
+
+  In general, the defines are always using the upper-case variant and the variable are always using the lower-case.
+  This separation allows for a define and a variable to both exist simultaneously without naming conflict.
+  This is used extensively to define strings in this practice such that a define exists while a variable is provided.
+
+  A special case define that describes the length of the string is of the forms: (A)_(b)_s_length or "(a)_(b)_s_length".
+
+  Examples\:
+  - F_file_open_mode_truncate_s: as a define, such as: #define F_file_open_mode_truncate_s "w".
+  - f_file_open_mode_truncate_s: as a variable, such as: extern const f_string_t f_file_open_mode_truncate_s;.
+  - FAKE_build_setting_name_build_compiler_s: as a define.
+  - fake_build_setting_name_build_compiler_s: as a variable.
+  - fake_build_setting_name_build_compiler_s_length: for describing the length of the string represented by fake_build_setting_name_build_compiler_s.
+
+Enumeration Names:
+  The C-language specific enumeration names follow the naming structure "(b)_e", where "(b)" is replaced with the lower-case name using words that are underscore separated.
+
+  The trailing "_e" designates that this is an enumeration.
+
+  Examples\:
+  - f_console_verbosity_quiet_e
+  - f_fss_basic_e
+  - fss_extended_list_read_parameter_at_e
+
+Define Names:
+  The C-language specific define names (also known as macro names) follow the naming structure "(A)_(b)_d", where "(A)" is replaced with an upper-case character representing the project level and "(b)" is replaced with the lower-case name using words that are underscore separated.
+
+  The trailing "_d" designates that this is a define (a macro).
+
+  Examples\:
+  - F_file_mode_special_sticky_d
+  - F_attribute_visibility_internal_d
+  - FL_diectory_recurse_depth_max_d
+
+Type Definition names:
+  The C-language specific type definition names follow the naming structure "(a)_(b)_t", where "(a)" is replaced with an lower-case character representing the project level and "(b)" is replaced with the lower-case name using words that are underscore separated.
+
+  The trailing "_t" designates that this is a type definition.
+
+  In addition to the type definition, special defines (macros) are provided that are specific to type definitions are an exception to the Define Names rules.
+  - Each type definition should have an initializer and that initializer name follows the naming structure "(a)_(b)_t_initialize" where "_initialize" is appended to the type definition name.
+
+  - Each type definition may have special defines (macros) used as functions for helping with special operations such as complex initialization, allocation, and deallocation.
+    These special case defines are an exception to the Define Name rules and follow the naming structure "macro_(a)_(b)_t_(c)" where "macro_" is prepended to the type definition name and the (c) is just like (b) but is used to communicate the special purpose.
+
+  Examples\:
+  - f_string_static_t
+  - f_status_t
+  - macro_f_account_t_clear
+  - macro_f_string_dynamic_t_resize
+
+Function Names:
+  The C-language specific function names follow the naming structure "(a)_(b)" or "private_(a)_(b)", where "(a)" is replaced with an lower-case character representing the project level (or name) and "(b)" is replaced with the lower-case name using words that are underscore separated.
+
+  The leading "private_" is used to designate that this is a private function.
+
+  In addition, special practices are followed.
+    - For FLL projects, each project has a level.
+      Each project within some level is prepended to functions with their level representation characters of: "F" (level 0), "FL" (level 1), and "FLL" (level 2).
+
+    - For programs, each program has a project name.
+      The program name, or a short alias of the program name, is prepended to functions.
+
+    - For programs, the "main" function does not do this and is always called "main" without modification.
+
+  Examples\:
+  - f_fss_basic_e
+  - fl_conversion_string_to_binary_signed
+  - fake_print_help
+
+File Names:
+  The C-language specific file names follow the naming structure "(c-)(b)(-c)" where "(b)" is replaced with the lower-case name using words that are underscore separated and "(c-)" and "(-c)" are just like "(b)" except there may be any number of these (or none at all) and the dash "-" is used to separate context as per the General Naming Structure.
+
+  In addition, special practices are followed:
+  - private-(c-)(b)(-c): "private-" is prepended to all source and header files intended to be private (aka: not intended to be exposed via the API or ABI).
+
+  - (c-)(b)(-c)-common: "-common" is appended to all files used as a common include for standard practice data such as global strings, define strings, type definitions, and memory allocation or deallocation functions.

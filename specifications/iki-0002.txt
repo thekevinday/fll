@@ -4,9 +4,14 @@ IKI Specification: 0002 - Simple Script:
   This specification provides a small set of vocabulary names meant to be used for substitution in simple scripts.
 
   This specification only loosely defines the vocabulary context.
-  Flexibility on interpretation is intended so that the context can be more fine-tuned for a given script design.
+  This vocabulary may be further extended but must at least support the taxonomy defined here.
+  Flexibility on interpretation is intended so that the context can be more fine-tuned and customized.
+
+  The taxonomy for the "context", "define", and "parameter" are intentionally not defined here and left open.
+  One utilizing this should document the taxonomy for each of these as desired.
 
   Vocabulary\:
+  - context: intended to be used for printing (or tagging) context codes before and after text, such as with color context.
   - define: intended to be used for global properties, much like a C/C++ #define.
   - parameter: intended to be used for parameters or variables.
 

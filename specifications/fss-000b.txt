@@ -1,0 +1,46 @@
+# fss-0002
+
+Featureless Settings Specification: 000B - Simple List:
+  This might be similar to fss-0008 - Embedded List, except it is an fss-0003 Extended List with a (non-recursive) fss-0002 Basic List inside the Content.
+
+  See the fss-0002.txt and fss-0003.txt specification files for details on the syntax rules.
+
+  Example\:
+    # fss-000b
+    # valid comments are ignored.
+    "The Object" {
+      Does not need to be quoted.
+      This: does not need to be delimited.
+      \}
+    }
+
+    Second {
+      Nested Example.
+
+      Third:
+        Fourth:
+          There is parallel to Second rather than nested within Second.
+    }
+
+  Outer Objects would be\:
+    1) "The Object"
+    2) Second
+
+  Inner Objects (depth 1) would be\:
+    2.1) Third
+    2.2) Fourth
+
+  Inner Contents (depth 0) would be\:
+    1.1.1) Does not need to be quoted.
+           This: does not need to be delimited.
+           }
+
+    2.1.1) Nested Example.
+
+           Third:
+             Fourth:
+               There is parallel to Second rather than nested within Second.
+
+  Inner Contents (depth 1) would be\:
+    2.1.1.1)
+    2.2.1.1) There is parallel to Second rather than nested within Second.

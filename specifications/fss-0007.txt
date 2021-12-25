@@ -3,4 +3,61 @@
 Featureless Settings Specification: 0007 - Very Extended List:
   This is a fss-0003 Extended List whose Content is then processed as fss-0001 Extended.
 
-  TODO: further document this.
+  All Extended List (fss-0003) escapes are applied before any Extended (fss-0001) is identified.
+
+  See the fss-0001.txt and fss-0003.txt specification files for details on the syntax rules.
+
+  Example\:
+    # fss-0007
+    # valid comments are ignored.
+    "The Object" {
+      Does not need to be quoted.
+      This: does not need to be delimited.
+      \}
+    }
+
+    Second {
+      Continues until EOS/EOF.
+      All whitespace, including newline (and leading whitespace) is "part of content."
+      # Valid comments are still ignored.
+    }
+
+  Outer Objects would be\:
+    1) "The Object"
+    2) Second
+
+  Inner Objects would be\:
+    1.1) Does
+    1.2) This\:
+    1.3) }
+
+    2.1) Continues
+    2.2) All
+
+  Inner Contents would be\:
+    1.1.1) not
+    1.1.2) need
+    1.1.3) to
+    1.1.4) be
+    1.1.5) quoted.
+
+    1.2.1) does
+    1.2.2) not
+    1.2.3) need
+    1.2.4) to
+    1.2.5) be
+    1.2.6) delimited.
+
+    1.3.1)
+
+    2.1.1) until
+    2.1.2) EOS/EOF.
+
+    2.2.1) whitespace,
+    2.2.2) including
+    2.2.3) newline
+    2.2.4) (and
+    2.2.5) leading
+    2.2.6) whitespace)
+    2.2.7) is
+    2.2.8) part of content.

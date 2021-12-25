@@ -1,37 +1,23 @@
-This file contains FLL-wide todo notes.
+# fss-0002
 
-- Custom language support needs to be looked into to allow for the project to support multiple languages.
-  Given that this project focuses on KISS principles, the project is targeted towards programs for specific users.
-  In which case, the language can be hardcoded in as a single language.
-  Later versions after this first locale support will then consider supporting multiple languages not necessarily compiled in.
+FLL-wide To Do Notes:
+  - Research/Implement optimizaton by using pointers to reduce the complexity of processing multi-depth structures, such as fss_nest:
+    this:
+      nests->array[nests->used].array[index].array[0] = xxx;
+    could become:
+      *current = nests->array[nests->used].array[index].array;
+      current->array[0] = xxx;
+    The idea is that in the first case, thee is a lot more dereferencing needing to be performed whereas the second case, the massive dereferencing happens only the first time and then all subsequent calls have simpler dereferencing.
 
-- consider updating byte_dump to support multiple --first and multiple parameters such all --first parameters are effectively added together.
-  What this does is allow skipping a file using counters greater than the max_int size.
-  The --last position, should therefore be rewritten to be relative to the --first position.
-  alternatively, implement a --skip parameter that skips past the max_int number of bytes X number of times (--skip X) would skip X*max_int bytes.
-  alternatively, implement support for specifying metric unit symbols (such as 100m for 100 megabytes).
+   * Programs to create:
+   * - document: the documentation is built/processed/generated.
+   * - finish: the project is installed.
+   * - coverage: the project has tests run against it.
 
-- Research/Implement optimizaton by using pointers to reduce the complexity of processing multi-depth structures, such as fss_nest:
-  this:
-    nests->array[nests->used].array[index].array[0] = xxx;
-  could become:
-    *current = nests->array[nests->used].array[index].array;
-    current->array[0] = xxx;
-  The idea is that in the first case, thee is a lot more dereferencing needing to be performed whereas the second case, the massive dereferencing happens only the first time and then all subsequent calls have simpler dereferencing.
+  - F_STATUS_XX could be the error code for the program on exit, such that +s, ++status is a new standard parameter for specifying the variable name.
+    Variable name will be made uppercase and will be only alphabetic or underscore.
 
- * Programs to create:
- * - document: the documentation is built/processed/generated.
- * - finish: the project is installed.
- * - coverage: the project has tests run against it.
+  Go back through all existing f_file and f_directory code, updating return codes and respective documentation.
+  Update f_utf_file and create a f_utf_directory?
 
-- F_STATUS_XX could be the error code for the program on exit, such that +s, ++status is a new standard parameter for specifying the variable name.
-  Variable name will be made uppercase and will be only alphabetic or underscore.
-
-Go back through all existing f_file and f_directory code, updating return codes and respective documentation.
-Update f_utf_file and create a f_utf_directory?
-
-The f_conversion project:
-- needs to have its parameter orders corrected.
-- needs to follow the private-conversion.? design.
-
-fix recursive functions to be consistent and all have max recursion lengths just like the *_all() file functions.
+  Fix recursive functions to be consistent and all have max recursion lengths just like the *_all() file functions.

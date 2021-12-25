@@ -1,33 +1,36 @@
-The following are a collection of informal notes on getting this to compile and run under Windows using Cygwin.
-I may formalize this at a later point in time.
+# fss-0002
 
-I have tested and was able to successfully (statically) compile and run FLL+Byte Dump under Cygwin.
-The resulting binary could be transfered to another machine and runs if the cygwin.dll is copied with it (placed along the byte_dump.exe).
+Cygwin:
+  The following are a collection of informal notes on getting this to compile and run under Windows using Cygwin.
+  I may formalize this at a later point in time.
 
-To compile the FLL, some functionality needs to be disabled.
-Fortunately, FLL is specifically designed to be hackable so the process is easier that it might otherwise be.
+  I have tested and was able to successfully (statically) compile and run FLL+Byte Dump under Cygwin.
+  The resulting binary could be transfered to another machine and runs if the cygwin.dll is copied with it (placed along the byte_dump.exe).
 
-For a monolithic build, compiled statically, add the following to "defines" in the "data/build/settings" file (of the packaged source).
-  "-D_di_libcap_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_ -D_di_f_attribute_visibility_ -Df_attribute_visibility_hidden -Df_attribute_visibility_internal -Df_attribute_visibility_protected -Df_attribute_visibility_public"
+  To compile the FLL, some functionality needs to be disabled.
+  Fortunately, FLL is specifically designed to be hackable so the process is easier that it might otherwise be.
 
-Before packaging "data/build/settings", the build settings files are either found inside the individual projects or under the build directory at the root of the source repository.
+  For a monolithic build, compiled statically, add the following to "defines" in the "data/build/settings" file (of the packaged source).
+    "-D_di_libcap_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_ -D_di_f_attribute_visibility_ -Df_attribute_visibility_hidden -Df_attribute_visibility_internal -Df_attribute_visibility_protected -Df_attribute_visibility_public"
 
-The file level_1/fl_control_group/c/control_group.c (for function fl_control_group_apply()) had to have the following changed from:
-      if (unshare(CLONE_NEWCGROUP) < 0) {
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-        if (errno == ENOSPC) return F_status_set_error(F_space_not);
-        if (errno == EPERM) return F_status_set_error(F_prohibited);
+  Before packaging "data/build/settings", the build settings files are either found inside the individual projects or under the build directory at the root of the source repository.
 
-        return F_status_set_error(F_failure);
-      }
-to:
-      return F_status_set_error(F_supported_not);
+  The file level_1/fl_control_group/c/control_group.c (for function fl_control_group_apply()) had to have the following changed from:
+        if (unshare(CLONE_NEWCGROUP) < 0) {
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+          if (errno == ENOSPC) return F_status_set_error(F_space_not);
+          if (errno == EPERM) return F_status_set_error(F_prohibited);
 
-There may have been other things to disable that I forgot to document.
+          return F_status_set_error(F_failure);
+        }
+  to:
+        return F_status_set_error(F_supported_not);
 
-I do not believe I had to make any changes to compile byte_dump.
+  There may have been other things to disable that I forgot to document.
 
-Compiling byte_dump statically against the FLL library is a bit inefficient in that it contains the entire FLL library.
-The byte_dump program only needs a portion of it.
-I may need to provide a list of everything that can be disabled to provide a smaller and more optimal byte_dump binary.
+  I do not believe I had to make any changes to compile byte_dump.
+
+  Compiling byte_dump statically against the FLL library is a bit inefficient in that it contains the entire FLL library.
+  The byte_dump program only needs a portion of it.
+  I may need to provide a list of everything that can be disabled to provide a smaller and more optimal byte_dump binary.

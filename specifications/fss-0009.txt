@@ -3,4 +3,43 @@
 Featureless Settings Specification: 0009 - Reverse Mapping:
   This is based off of fss-0000 Basic, except the Object is at the end of the line.
 
-  TODO: further document this.
+  Each Object starts at the end of a line and whitespace to the left of the Object is not treated as part of the object.
+  Whitespace separates an Object from the Content.
+  An Object may be preceded by a newline, in which case means that the Object has no Content.
+  If only printing whitespace precedes a valid Object, that Object is considered to have no Content.
+
+  Content exists on the same line as the Object.
+  Content is represented as a single Content column that begins at a newline.
+  Content column consists of everything following the first non-whitespace character at the start of the line until the Object is reached.
+  Content column includes trailing whitespace before newline is reached.
+  Content column does not include any of the whitespace between the last non-whitespace character and the start of the Object.
+  No delimits are supported in the Content.
+
+  Key\:
+    \s = whitespace, except newline.
+    \b = either whitespace or printable, except newline.
+    \q = non-whitespace or quoted whitespace with no whitespace outside of the quotes.
+    \n = newline.
+    * = zero or more occurrences.
+    + = one or more occurrences.
+
+  Before Structure\:
+
+  Structure\:
+    \s*\b*\s+\q+\s*\n
+
+  After Structure\:
+
+  Example\:
+    # fss-0009
+    # valid comments are ignored.
+    Content from newline. "The Object"
+    object set. Second
+
+  Object would be\:
+    1) The Object
+    2) Second
+
+  Content would be\:
+    1.1) Content from newline.
+    2.1) object set.

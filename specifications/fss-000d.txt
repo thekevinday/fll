@@ -1,27 +1,27 @@
 # fss-0002
 
 Featureless Settings Specification: 000D - Basic Rule:
-  This is a special case that follows FSS-0002 (Basic List), and different FSS formats inside this Basic List.
+  This is a special case that follows fss-0002 (Basic List), and different FSS formats inside this Basic List.
   This Basic List is considered the "Outer List" and the Content of this Outer List is considered the "Inner Content".
 
-  The Inner Content may be any of the following FSS formats: FSS-0000 (Basic), FSS-0001 (Extended), and FSS-0003 (Extended List).
+  The Inner Content may be any of the following FSS formats: fss-0000 (Basic), fss-0001 (Extended), and fss-0003 (Extended List).
   The way in which each format is determined is first to see if the Inner Content Object would be a valid Extended List Object.
   If the Inner Content Object is not a valid Extended List Object, then check to see if it is an Basic/Extended Object.
 
   The FSS Basic and FSS Extended Objects have the same format for Object names but the FSS Extended List Object is slightly different.
   Anything that would match an FSS Extended List Object must therefore be an FSS Extended List Object.
 
-  This supports the use of IKI-0000 (Unrestricted) but only within the Content of the outermost Basic List.
-  Furthermore, should there be a Basic List that defines IKI names and values, then that Basic List must not support IKI substitution.
+  This supports the use of iki-0000 (Unrestricted) but only within the Content of the outermost Basic List.
+  That is to say, the IKI is only processed once.
   Additional restrictions on the use of IKI syntax is allowed if explicitly defined in the implementing specification.
-  This additional restriction may also include using a more restrictive IKI syntax, such as "IKI-0001 (Basic IKI)".
+  This additional restriction may also include using a more restrictive IKI syntax, such as "iki-0001 (Basic IKI)".
 
   Anything implementing this specification may impose its own restrictions on when to determine if the Inner Content is what FSS format, based on Object names.
 
-  See the appropriate specifications for the Key/Structure/Example documentation for the respective FSS-0000 (Basic), FSS-0001 (Extended), and FSS-0003 (Extended List).
+  See the fss-0000.txt, fss-0001.txt and fss-0003.txt specification files for details on the syntax rules.
 
   Example\:
-
+    # fss-000d
     main:
       name "Boot Devices"
 
@@ -73,4 +73,3 @@ Featureless Settings Specification: 000D - Basic Rule:
     2.1.2) ip link set lo down;
     3.1.1) mount -a -O no_netdev
     3.1.2) umount -arf -O no_netdev
-

@@ -7,7 +7,7 @@ Featureless Settings Specification: 0003 - Extended List:
   Non-whitespace may not follow the open-brace of a valid Object.
 
   Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until a non-delimited close-brace (}).
-  Any Content column that could be interpreted as an end of content must be delimited if it should be part of the Content.
+  Any Content column that could be interpreted as an end of Content must be delimited if it should be part of the Content.
   Whitespace may follow a valid close-brace but a terminating newline must be present to designate a valid end of Content.
 
   There is no single-quote or double-quote delimitation in this specification.
@@ -29,8 +29,12 @@ Featureless Settings Specification: 0003 - Extended List:
     \n = newline.
     * = 0 or more occurrences.
 
+  Before Structure\:
+
   Structure\:
     \s*\o\l*{\s*\n\c*\n\s*}\s*\n
+
+  After Structure\:
 
   Example\:
     # fss-0003
@@ -40,9 +44,10 @@ Featureless Settings Specification: 0003 - Extended List:
       This: does not need to be delimited.
       \}
     }
+
     Second {
       Continues until EOS/EOF.
-      All whitespace, including newline (and leading whitespace) is part of content.
+      All whitespace, including newline (and leading whitespace) is "part of content."
       # Valid comments are still ignored.
     }
 
@@ -51,8 +56,8 @@ Featureless Settings Specification: 0003 - Extended List:
     2) Second
 
   Contents would be\:
-    1.1)  Does not need to be quoted.
-          This: does not need to be delimited.
-          }
-    2.1)  Continues until EOS/EOF.
-          All whitespace, including newline (and leading whitespace) is part of content.
+    1.1) Does not need to be quoted.
+         This: does not need to be delimited.
+         }
+    2.1) Continues until EOS/EOF.
+         All whitespace, including newline (and leading whitespace) is "part of content."

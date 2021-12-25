@@ -1,21 +1,24 @@
-One of the objectives of this project is to make as much, if not all, of the functions available for use.
+# fss-0002
 
-Another of the objectives is to design each function to operate in isolation to another function.
-There is some flexibility in regards to this when it comes to individual projects.
+Private Functions:
+  One of the objectives of this project is to make as much, if not all, of the functions available for use.
 
-Such a design has advantages and disadvantages.
+  Another of the objectives is to design each function to operate in isolation to another function.
+  There is some flexibility in regards to this when it comes to individual projects.
 
-One of those disadvantages is possible redundant code.
-The c-programming language does not have private functions by any normal means.
-The use of the f_gcc_attribute_visibility_internal helps simulate private functions.
-Such functionality only works in supporting GCC compilers.
+  Such a design has advantages and disadvantages.
 
-These synthetic private functions are implemented as an exception to the objectives for maintainability and redundancy purposes.
-Such implementations should be kept to a bare minimum.
+  One of those disadvantages is possible redundant code.
+  The c-programming language does not have private functions by any normal means.
+  The use of the f_gcc_attribute_visibility_internal helps simulate private functions.
+  Such functionality only works in supporting GCC compilers.
 
-Functions defined as private will not be normally exposed through the public headers files.
-Such functions will be prefixed with 'private_'.
+  These synthetic private functions are implemented as an exception to the objectives for maintainability and redundancy purposes.
+  Such implementations should be kept to a bare minimum.
 
-The header files and source files for these private functions will be prefixed with "private-".
-Normally, this product uses underscores for names, but, as a special name, the dash "-" is used.
-Normally, the names begin with the project name (such as directory_type.h instead of type_directory.h), but as a special case to further separate private files, this is prefixed onto source files (such as private-directory.h).
+  Functions defined as private will not be normally exposed through the public headers files.
+  Such functions will be prefixed with 'private_'.
+
+  The header files and source files for these private functions will be prefixed with "private-".
+  Normally, this product uses underscores for names, but, as a special name, the dash "-" is used.
+  Normally, the names begin with the project name (such as directory_type.h instead of type_directory.h), but as a special case to further separate private files, this is prefixed onto source files (such as private-directory.h).

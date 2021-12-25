@@ -3,4 +3,54 @@
 Featureless Settings Specification: 0008 - Embedded List:
   This is a fss-0003 Extended List whose Content is then recursively processed as fss-0003 Extended List.
 
-  TODO: further document this.
+  See the fss-0003.txt specification file for details on the syntax rules.
+
+  Example\:
+    # fss-0008
+    # valid comments are ignored.
+    "The Object" {
+      Does not need to be quoted.
+      This: does not need to be delimited.
+      \}
+    }
+
+    Second {
+      Nested Example.
+
+      Third {
+        Fourth {
+          This is nested Content.
+        }
+      }
+    }
+
+  Outer Objects would be\:
+    1) "The Object"
+    2) Second
+
+  Inner Objects (depth 1) would be\:
+    2.1) Third
+
+  Inner Objects (depth 2) would be\:
+    2.1.1) Fourth
+
+  Inner Contents (depth 0) would be\:
+    1.1.1) Does not need to be quoted.
+           This: does not need to be delimited.
+           }
+
+    2.1.1) Nested Example.
+
+           Third {
+             Fourth {
+               This is nested Content.
+             }
+           }
+
+  Inner Contents (depth 1) would be\:
+    2.1.1.1) Fourth {
+               This is nested Content.
+             }
+
+  Inner Contents (depth 2) would be\:
+    2.1.1.1.1) This is nested Content.

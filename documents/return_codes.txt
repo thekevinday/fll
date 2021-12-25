@@ -19,7 +19,7 @@ Implicit Return Types for f_status_t:
     Any function must therefore support returning F_implemented_not.
 
     There are some projects that can be enabled/disabled such as f_capability and f_threads.
-    These may explicitly document returning F_implemented_not.
+    These should explicitly document returning F_implemented_not.
 
 Common Return Types for f_status_t:
   There are some f_status_t return types that are not required to be returned but are used quite often that they might seem required.

@@ -1,4 +1,4 @@
-# fss-002
+# fss-0002
 
 Threads Documentation:
   With the inclusion of the f_thread project, the Featureless Linux Library supports and uses threads by default.
@@ -58,3 +58,8 @@ Thread Cancellation Problems:
   Therefore, avoid using any design or functions that may force or require the use of pthread_testcancel() but when forced to be very careful to clear up resources and locks to make sure that if a cancellation occurs that nothing bad can happen.
   A better approach would be to use timed checks on some variable shared between all affected functions and scopes that designates cancellation.
   That way when a cancellation is reseived through the custom variable, the functions can actually handle the situation, safely and properly, before cancelling.
+
+C/C++ Standard:
+  Newer C/C++ standards provide thread support.
+  This is ideally much better than POSIX in that it will be more portable.
+  At this time, most C/C++ compilers do not implement this thread support.

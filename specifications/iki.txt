@@ -8,8 +8,8 @@ IKI Specifications:
   The variable name is considered the "Object".
   The variable variable is considered the "Content".
 
-  The IKI format will use IKI-0000 to represent an IKI with no explicitly defined vocabulary.
-  Whereas IKI-0001 and beyond represent a specific IKI vocabulary.
+  The IKI format will use iki-0000 to represent an IKI with no explicitly defined vocabulary.
+  Whereas iki-0001 and beyond represent a specific IKI vocabulary.
 
   Whitespace, non-word (and non "_", "-", "+") character punctuations, or the start of file must exist before any valid variable name.
   Whitespace and non-word (and non "_", "-", "+") character punctuations may not exist as part of the variable name.

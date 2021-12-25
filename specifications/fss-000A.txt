@@ -1,6 +1,0 @@
-# fss-0002
-
-Featureless Settings Specification: 000A - Extended Reverse Mapping:
-  This is based off of fss-0001 Extended, except the Object is at the end of the line.
-
-  TODO: further document this.
