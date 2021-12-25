@@ -27,6 +27,7 @@ extern "C" {
 #endif // _di_iki_vocabulary_0001_s_
 
 #ifndef _di_iki_vocabulary_0002_s_
+  const f_string_t f_iki_vocabulary_0002_context_s = F_iki_vocabulary_0002_context_s;
   const f_string_t f_iki_vocabulary_0002_define_s = F_iki_vocabulary_0002_define_s;
   const f_string_t f_iki_vocabulary_0002_parameter_s = F_iki_vocabulary_0002_parameter_s;
 #endif // _di_iki_vocabulary_0002_s_

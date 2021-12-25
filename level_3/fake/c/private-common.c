@@ -257,6 +257,18 @@ extern "C" {
   const f_string_t fake_make_skeleton_content_settings_s = FAKE_make_skeleton_content_settings_s;
 #endif // _di_fake_skeleton_content_
 
+#ifndef _di_fake_make_context_
+  const f_string_t fake_make_context_reset_s = FAKE_make_context_reset_s;
+  const f_string_t fake_make_context_warning_s = FAKE_make_context_warning_s;
+  const f_string_t fake_make_context_error_s = FAKE_make_context_error_s;
+  const f_string_t fake_make_context_title_s = FAKE_make_context_title_s;
+  const f_string_t fake_make_context_notable_s = FAKE_make_context_notable_s;
+  const f_string_t fake_make_context_important_s = FAKE_make_context_important_s;
+  const f_string_t fake_make_context_standout_s = FAKE_make_context_standout_s;
+  const f_string_t fake_make_context_success_s = FAKE_make_context_success_s;
+  const f_string_t fake_make_context_normal_s = FAKE_make_context_normal_s;
+#endif // _di_fake_make_context_
+
 #ifndef _di_fake_signal_received_
   f_status_t fake_signal_received(fake_main_t * const main) {
 

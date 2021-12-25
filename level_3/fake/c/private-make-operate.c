@@ -152,9 +152,11 @@ extern "C" {
       return;
     }
 
+    const f_string_static_t vocabulary_context = macro_f_string_static_t_initialize(F_iki_vocabulary_0002_context_s, F_iki_vocabulary_0002_context_s_length);
     const f_string_static_t vocabulary_define = macro_f_string_static_t_initialize(F_iki_vocabulary_0002_define_s, F_iki_vocabulary_0002_define_s_length);
     const f_string_static_t vocabulary_parameter = macro_f_string_static_t_initialize(F_iki_vocabulary_0002_parameter_s, F_iki_vocabulary_0002_parameter_s_length);
 
+    const f_string_range_t range_context = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_context_s_length);
     const f_string_range_t range_define = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_define_s_length);
     const f_string_range_t range_parameter = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_parameter_s_length);
 
@@ -168,9 +170,10 @@ extern "C" {
     f_string_range_t range = f_string_range_t_initialize;
     f_string_map_multis_t *parameter = &data_make->setting_make.parameter;
 
+    // 1 = is parameter, 2 = is defined, 3 = is context.
+    uint8_t is = 0;
+
     bool unmatched = F_true;
-    bool parameter_is = F_false;
-    bool define_is = F_false;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
@@ -334,8 +337,7 @@ extern "C" {
 
         for (j = 0, previous = iki_variable.array[0].start; j < iki_variable.used; ++j) {
 
-          parameter_is = F_false;
-          define_is = F_false;
+          is = 0;
 
           if (previous + 1 < iki_variable.array[j].start) {
             range.start = previous + 1;
@@ -353,13 +355,20 @@ extern "C" {
           *status = fl_string_dynamic_partial_compare(vocabulary_define, data_make->buffer, range_define, iki_vocabulary.array[j]);
 
           if (*status == F_equal_to) {
-            define_is = F_true;
+            is = 2;
           }
           else if (*status == F_equal_to_not) {
             *status = fl_string_dynamic_partial_compare(vocabulary_parameter, data_make->buffer, range_parameter, iki_vocabulary.array[j]);
 
             if (*status == F_equal_to) {
-              parameter_is = F_true;
+              is = 1;
+            }
+            else if (*status == F_equal_to_not) {
+              *status = fl_string_dynamic_partial_compare(vocabulary_context, data_make->buffer, range_context, iki_vocabulary.array[j]);
+
+              if (*status == F_equal_to) {
+                is = 3;
+              }
             }
           }
 
@@ -369,7 +378,7 @@ extern "C" {
             break;
           }
 
-          if (parameter_is) {
+          if (is == 1) {
             unmatched = F_true;
 
             // Check against reserved parameter names and if matches use them instead.
@@ -547,11 +556,22 @@ extern "C" {
               }
             }
           }
-          else if (define_is && data_make->setting_make.load_build) {
-            *status = fake_make_operate_expand_environment(data_make, quotes.array[i], iki_content.array[j], arguments);
+          else if (is == 2) {
+            if (data_make->setting_make.load_build) {
+              *status = fake_make_operate_expand_environment(data_make, quotes.array[i], iki_content.array[j], arguments);
+
+              if (F_status_is_error(*status)) {
+                fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_environment", F_true);
+
+                break;
+              }
+            }
+          }
+          else if (is == 3) {
+            *status = fake_make_operate_expand_context(data_make, quotes.array[i], iki_content.array[j], arguments);
 
             if (F_status_is_error(*status)) {
-              fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_environment", F_true);
+              fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_context", F_true);
 
               break;
             }
@@ -960,13 +980,89 @@ extern "C" {
 
     macro_f_string_dynamic_t_delete_simple(value);
 
-    if (F_status_is_error_not(status)) {
-      return F_true;
-    }
+    if (F_status_is_error(status)) return status;
 
-    return status;
+    return F_true;
   }
 #endif // _di_fake_make_operate_expand_build_
+
+#ifndef _di_fake_make_operate_expand_context_
+  f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) {
+
+    f_status_t status = F_none;
+    const f_string_static_t *context = 0;
+
+    const f_string_t context_name[] = {
+      fake_make_context_reset_s,
+      fake_make_context_warning_s,
+      fake_make_context_error_s,
+      fake_make_context_title_s,
+      fake_make_context_notable_s,
+      fake_make_context_important_s,
+      fake_make_context_standout_s,
+      fake_make_context_success_s,
+      fake_make_context_normal_s,
+    };
+
+    const f_array_length_t context_length[] = {
+      fake_make_context_reset_s_length,
+      fake_make_context_warning_s_length,
+      fake_make_context_error_s_length,
+      fake_make_context_title_s_length,
+      fake_make_context_notable_s_length,
+      fake_make_context_important_s_length,
+      fake_make_context_standout_s_length,
+      fake_make_context_success_s_length,
+      fake_make_context_normal_s_length,
+    };
+
+    const f_color_set_t context_value[] = {
+      data_make->main->context.set.reset,
+      data_make->main->context.set.warning,
+      data_make->main->context.set.error,
+      data_make->main->context.set.title,
+      data_make->main->context.set.notable,
+      data_make->main->context.set.important,
+      data_make->main->context.set.standout,
+      data_make->main->context.set.success,
+      data_make->main->context.set.normal,
+    };
+
+    for (f_array_length_t i = 0; i < 9; ++i) {
+
+      if (fl_string_dynamic_partial_compare_string(context_name[i], data_make->buffer, context_length[i], range_name) == F_equal_to) {
+        context = context_value[i].before;
+
+        break;
+      }
+    } // for
+
+    if (context) {
+      if (quoted) {
+        status = f_string_dynamic_append_nulless(*context, &arguments->array[arguments->used]);
+      }
+      else {
+        status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, arguments);
+
+        if (F_status_is_error_not(status)) {
+          status = f_string_dynamic_append_nulless(*context, &arguments->array[arguments->used]);
+
+          if (F_status_is_error_not(status)) {
+            status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
+
+            if (F_status_is_error_not(status)) {
+              ++arguments->used;
+            }
+          }
+        }
+      }
+
+      if (F_status_is_error(status)) return status;
+    }
+
+    return F_true;
+  }
+#endif // _di_fake_make_operate_expand_context_
 
 #ifndef _di_fake_make_operate_expand_environment_
   f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) {
@@ -1019,11 +1115,9 @@ extern "C" {
 
     macro_f_string_dynamic_t_delete_simple(value);
 
-    if (F_status_is_error_not(status)) {
-      return F_true;
-    }
+    if (F_status_is_error(status)) return status;
 
-    return status;
+    return F_true;
   }
 #endif // _di_fake_make_operate_expand_environment_
 

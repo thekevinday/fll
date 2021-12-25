@@ -17,8 +17,9 @@ Fakefile Specification:
   The reserved Settings Section does not support IKI variable substitution.
 
   The IKI-0002 vocabulary context is further clarified as follows\:
-  - define: the value must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-  - parameter: the value is a case-sensitive variable name.
+  - context: The value is case-sensitive variable name.
+  - define: The value must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+  - parameter: The value is a case-sensitive variable name.
     - Many parameters also support ":option" and ":value" appended at the end of the value.
 
   The reserved Section Objects are\:

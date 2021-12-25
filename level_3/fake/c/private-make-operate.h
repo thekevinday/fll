@@ -59,6 +59,30 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_
 
 /**
+ * Perform the expand operation, specifically for the context variables.
+ *
+ * Unknown or unsupported context variables are expanded into an empty string.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param quoted
+ *   The quoted associated with the content.
+ * @param range_name
+ *   The range representing the variable content name string within the data_make->buffer.
+ * @param arguments
+ *   The expanded arguments.
+ *
+ * @return
+ *   F_true on success and match expanded.
+ *   F_false on no matches to expand.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_expand_context_
+  extern f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_expand_context_
+
+/**
  * Perform the expand operation, specifically for the environment variables.
  *
  * @param data_make

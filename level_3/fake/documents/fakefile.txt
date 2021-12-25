@@ -402,14 +402,26 @@ Fakefile Documentation:
       The remaining Content must be a path to the file.
 
   The IKI vocabulary context is supported and is further clarified as follows\:
+  - context\:
+    The context Object represents a name representing simple context or complex combination of context.
+    Context should wrap some text such that if some text begins with some context, the context should be reset at the end.
+    The most basic context is color context, such as: context:"notice" This is emphasized text context:"reset".
+
+    The use of IKI in this way is acceptable but it is not perfect.
+    IKI is not designed to be a replacement to markup.
+    The markup <strong>Example</strong> vs the IKI context:"notable" Example context:"notable" has obvious differences in the spaces.
+    The IKI by design cannot be used like this: context:"notable"Examplecontext:"notable".
+
+    This context will respect the programs ++light, ++dark, and ++no_color parameters.
+
   - define\:
-    The define object represents environment variables passed to the program or created by the program.
+    The define Object represents environment variables passed to the program or created by the program.
     The value represents the environment variable name and is case-sensitive.
     This IKI variable gets substituted with the environment variable's value or NULL if not defined.
     The "settings" list supports declaring custom environment variables (which overwrite any existing environment variable with the same name).
 
   - parameter\:
-    The parameter object represents a variable that is to be substituted.
+    The parameter Object represents a variable that is to be substituted.
     The value represents the variable name and is case-sensitive.
     This IKI variable gets substituted with the value defined in the "settings" list or NULL if not defined.
     The value may contain an additional ":option" or ":value" at the end of the name to designate getting only part of the parameter.

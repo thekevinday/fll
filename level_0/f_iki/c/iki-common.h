@@ -75,12 +75,15 @@ extern "C" {
 #endif // _di_iki_vocabulary_0001_
 
 #ifndef _di_iki_vocabulary_0002_
+  #define F_iki_vocabulary_0002_context_s   "context"
   #define F_iki_vocabulary_0002_define_s    "define"
   #define F_iki_vocabulary_0002_parameter_s "parameter"
 
+  #define F_iki_vocabulary_0002_context_s_length   7
   #define F_iki_vocabulary_0002_define_s_length    6
   #define F_iki_vocabulary_0002_parameter_s_length 9
 
+  extern const f_string_t f_iki_vocabulary_0002_context_s;
   extern const f_string_t f_iki_vocabulary_0002_define_s;
   extern const f_string_t f_iki_vocabulary_0002_parameter_s;
 #endif // _di_iki_vocabulary_0002_
