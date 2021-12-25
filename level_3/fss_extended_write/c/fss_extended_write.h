@@ -46,7 +46,7 @@ extern "C" {
 #ifndef _di_fss_extended_write_program_version_
   #define fss_extended_write_program_version_major_s F_string_ascii_0_s
   #define fss_extended_write_program_version_minor_s F_string_ascii_5_s
-  #define fss_extended_write_program_version_micro_s F_string_ascii_7_s
+  #define fss_extended_write_program_version_micro_s F_string_ascii_8_s
 
   #ifndef fss_extended_write_program_version_nano_prefix_s
     #define fss_extended_write_program_version_nano_prefix_s

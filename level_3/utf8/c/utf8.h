@@ -61,7 +61,7 @@ extern "C" {
 #ifndef _di_utf8_program_version_
   #define utf8_program_version_major_s F_string_ascii_0_s
   #define utf8_program_version_minor_s F_string_ascii_5_s
-  #define utf8_program_version_micro_s F_string_ascii_7_s
+  #define utf8_program_version_micro_s F_string_ascii_8_s
 
   #ifndef utf8_program_version_nano_prefix_s
     #define utf8_program_version_nano_prefix_s

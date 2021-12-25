@@ -44,19 +44,19 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_list_write_program_version_
-  #define fss_basic_list_write_program_version_major F_string_ascii_0_s
-  #define fss_basic_list_write_program_version_minor F_string_ascii_5_s
-  #define fss_basic_list_write_program_version_micro F_string_ascii_7_s
+  #define fss_basic_list_write_program_version_major_s F_string_ascii_0_s
+  #define fss_basic_list_write_program_version_minor_s F_string_ascii_5_s
+  #define fss_basic_list_write_program_version_micro_s F_string_ascii_8_s
 
-  #ifndef fss_basic_list_write_program_version_nano_prefix
-    #define fss_basic_list_write_program_version_nano_prefix
+  #ifndef fss_basic_list_write_program_version_nano_prefix_s
+    #define fss_basic_list_write_program_version_nano_prefix_s
   #endif
 
-  #ifndef fss_basic_list_write_program_version_nano
-    #define fss_basic_list_write_program_version_nano
+  #ifndef fss_basic_list_write_program_version_nano_s
+    #define fss_basic_list_write_program_version_nano_s
   #endif
 
-  #define fss_basic_list_write_program_version_s fss_basic_list_write_program_version_major F_string_ascii_period_s fss_basic_list_write_program_version_minor F_string_ascii_period_s fss_basic_list_write_program_version_micro fss_basic_list_write_program_version_nano_prefix fss_basic_list_write_program_version_nano
+  #define fss_basic_list_write_program_version_s fss_basic_list_write_program_version_major_s F_string_ascii_period_s fss_basic_list_write_program_version_minor_s F_string_ascii_period_s fss_basic_list_write_program_version_micro_s fss_basic_list_write_program_version_nano_prefix_s fss_basic_list_write_program_version_nano_s
 #endif // _di_fss_basic_list_write_program_version_
 
 #ifndef _di_fss_basic_list_write_program_name_

@@ -8,7 +8,7 @@
 #
 # This only accepts two arguments, followed by two optional arguments (first two are required and in the specified order):
 # 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", or "fake-monolithic".
-# 2) The version number of the project, such as "0.5.7".
+# 2) The version number of the project, such as "0.5.8".
 # 3) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
 # 4) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
 #

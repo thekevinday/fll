@@ -4,7 +4,7 @@ project_name fl_string
 
 version_major 0
 version_minor 5
-version_micro 7
+version_micro 8
 version_file micro
 version_target minor
 
