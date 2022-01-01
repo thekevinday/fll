@@ -113,7 +113,7 @@ extern "C" {
       return F_status_set_error(F_parameter);
     }
 
-    f_status_t status = f_file_mode_from_string(buffer.string, main->umask, mode, replace);
+    const f_status_t status = f_file_mode_from_string(buffer.string, main->umask, mode, replace);
 
     if (F_status_is_error(status)) {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
