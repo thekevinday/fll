@@ -275,7 +275,7 @@ extern "C" {
 /**
  * File mode related functionality.
  *
- * There are two types of file modes the f_file_mode_t macros associate with.
+ * There are two types of file modes that the f_file_mode_t macros are associated with.
  *
  * The first type is the traditional mode type, associated with mode_t.
  *
@@ -295,6 +295,8 @@ extern "C" {
  */
 #ifndef _di_f_file_mode_
   typedef uint32_t f_file_mode_t;
+
+  #define f_file_mode_t_initialize 0
 
   #define F_file_mode_t_block_special_d 0x77000000 // 0111 0111 0000 0000 0000 0000 0000 0000
   #define F_file_mode_t_block_owner_d   0x00ff0000 // 0000 0000 1111 1111 0000 0000 0000 0000
@@ -325,7 +327,7 @@ extern "C" {
   #define F_file_mode_t_replace_other_d    0x18 // 0001 1000
   #define F_file_mode_t_replace_standard_d 0x7  // 0000 0111
 
-  // file permission modes (mode_t).
+  // File permission modes (mode_t).
   #define F_file_mode_owner_rwx_d S_IRWXU
   #define F_file_mode_owner_r_d   S_IRUSR
   #define F_file_mode_owner_w_d   S_IWUSR
@@ -356,16 +358,16 @@ extern "C" {
   #define F_file_mode_all_w_d   (F_file_mode_owner_w_d | F_file_mode_group_w_d | F_file_mode_world_w_d)
   #define F_file_mode_all_x_d   (F_file_mode_owner_x_d | F_file_mode_group_x_d | F_file_mode_world_x_d)
 
-  // file mode set-uid/set-gid/sticky-bits and all bits (mode_t).
+  // File mode set-uid/set-gid/sticky-bits and all bits (mode_t).
   #define F_file_mode_special_set_user_d  S_ISUID
   #define F_file_mode_special_set_group_d S_ISGID
   #define F_file_mode_special_sticky_d    S_ISVTX
   #define F_file_mode_special_all_d       (S_ISUID | S_ISGID | S_ISVTX)
 
-  // all permissions modes and special modes (mode_t).
+  // All permissions modes and special modes (mode_t).
   #define F_file_mode_all_d (F_file_mode_special_all_d | F_file_mode_all_rwx_d)
 
-  // special file mode combinations (mode_t).
+  // Special file mode combinations (mode_t).
   #define F_file_mode_user_access_d    (F_file_mode_owner_rwx_d | F_file_mode_group_rwx_d | F_file_mode_world_x_d)
   #define F_file_mode_user_directory_d (F_file_mode_owner_rwx_d | F_file_mode_group_rwx_d)
   #define F_file_mode_user_file_d      (F_file_mode_owner_rw_d | F_file_mode_group_rw_d)

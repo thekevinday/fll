@@ -22,25 +22,30 @@ extern "C" {
  * fll_error_file_type_*:
  * - file:      File error.
  * - directory: Directory error.
+ * - path:      Path error.
  * - pipe:      Pipe error.
  */
 #ifndef _di_fll_error_file_type_
   enum {
     fll_error_file_type_file_e = 1,
     fll_error_file_type_directory_e,
+    fll_error_file_type_path_e,
     fll_error_file_type_pipe_e,
   };
 
   #define FLL_error_file_type_directory_s "directory"
   #define FLL_error_file_type_file_s      "file"
+  #define FLL_error_file_type_path_s      "path"
   #define FLL_error_file_type_pipe_s      "pipe"
 
   #define FLL_error_file_type_directory_s_length 9
   #define FLL_error_file_type_file_s_length      4
+  #define FLL_error_file_type_path_s_length      4
   #define FLL_error_file_type_pipe_s_length      4
 
   extern const f_string_t fll_error_file_type_directory_s;
   extern const f_string_t fll_error_file_type_file_s;
+  extern const f_string_t fll_error_file_type_path_s;
   extern const f_string_t fll_error_file_type_pipe_s;
 #endif // _di_fll_error_file_type_
 

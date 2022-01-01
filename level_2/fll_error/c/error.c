@@ -20,6 +20,9 @@ extern "C" {
     if (type == fll_error_file_type_directory_e) {
       type_name = FLL_error_file_type_directory_s;
     }
+    else if (type == fll_error_file_type_path_e) {
+      type_name = FLL_error_file_type_path_s;
+    }
     else if (type == fll_error_file_type_pipe_e) {
       type_name = FLL_error_file_type_pipe_s;
     }
@@ -577,7 +580,7 @@ extern "C" {
       }
     }
 
-    if (type == fll_error_file_type_file_e || type == fll_error_file_type_directory_e) {
+    if (type == fll_error_file_type_file_e || type == fll_error_file_type_directory_e || type == fll_error_file_type_path_e) {
       if (status == F_directory_found_not) {
         if (print.verbosity != f_console_verbosity_quiet_e) {
           flockfile(print.to.stream);

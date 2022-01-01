@@ -17,6 +17,12 @@ extern "C" {
     }
 
     if (close(*id) < 0) {
+
+      // According to man pages, retrying close() after another close on error is invalid on Linux because Linux releases the descriptor before stages that cause failures.
+      if (errno != EBADF && errno != EINTR) {
+        *id = -1;
+      }
+
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EIO) return F_status_set_error(F_input_output);
@@ -27,6 +33,7 @@ extern "C" {
     }
 
     *id = -1;
+
     return F_none;
   }
 #endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)

@@ -56,6 +56,22 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_file_found_not) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SFile not found", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
+
+        private_fll_error_print_function(print, function);
+
+        fl_print_format(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
     if (status == F_memory_not) {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
