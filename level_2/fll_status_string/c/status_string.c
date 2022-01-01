@@ -649,6 +649,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_domain_s, length, F_status_domain_s_length) == F_equal_to) {
+        *code = F_domain;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_domain_not_s, length, F_status_domain_not_s_length) == F_equal_to) {
+        *code = F_domain_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_done_s, length, F_status_done_s_length) == F_equal_to) {
         *code = F_done;
 
@@ -789,6 +801,18 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_failure_not_s, length, F_status_failure_not_s_length) == F_equal_to) {
         *code = F_failure_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_family_s, length, F_status_family_s_length) == F_equal_to) {
+        *code = F_family;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_family_not_s, length, F_status_family_not_s_length) == F_equal_to) {
+        *code = F_family_not;
 
         return F_none;
       }
@@ -1203,6 +1227,30 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_prohibited_not_s, length, F_status_prohibited_not_s_length) == F_equal_to) {
         *code = F_prohibited_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_property_s, length, F_status_property_s_length) == F_equal_to) {
+        *code = F_property;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_property_not_s, length, F_status_property_not_s_length) == F_equal_to) {
+        *code = F_property_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_protocol_s, length, F_status_protocol_s_length) == F_equal_to) {
+        *code = F_protocol;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_protocol_not_s, length, F_status_protocol_not_s_length) == F_equal_to) {
+        *code = F_protocol_not;
 
         return F_none;
       }

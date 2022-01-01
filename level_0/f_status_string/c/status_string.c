@@ -115,6 +115,8 @@ extern "C" {
     const f_string_t f_status_device_not_s = F_status_device_not_s;
     const f_string_t f_status_disable_s = F_status_disable_s;
     const f_string_t f_status_disable_not_s = F_status_disable_not_s;
+    const f_string_t f_status_domain_s = F_status_domain_s;
+    const f_string_t f_status_domain_not_s = F_status_domain_not_s;
     const f_string_t f_status_done_s = F_status_done_s;
     const f_string_t f_status_done_not_s = F_status_done_not_s;
     const f_string_t f_status_dummy_s = F_status_dummy_s;
@@ -139,6 +141,8 @@ extern "C" {
     const f_string_t f_status_exist_not_s = F_status_exist_not_s;
     const f_string_t f_status_failure_s = F_status_failure_s;
     const f_string_t f_status_failure_not_s = F_status_failure_not_s;
+    const f_string_t f_status_family_s = F_status_family_s;
+    const f_string_t f_status_family_not_s = F_status_family_not_s;
     const f_string_t f_status_first_s = F_status_first_s;
     const f_string_t f_status_first_not_s = F_status_first_not_s;
     const f_string_t f_status_fork_s = F_status_fork_s;
@@ -198,16 +202,20 @@ extern "C" {
     const f_string_t f_status_parameter_not_s = F_status_parameter_not_s;
     const f_string_t f_status_parent_s = F_status_parent_s;
     const f_string_t f_status_parent_not_s = F_status_parent_not_s;
-    const f_string_t f_status_previous_s = F_status_previous_s;
-    const f_string_t f_status_previous_not_s = F_status_previous_not_s;
     const f_string_t f_status_pipe_s = F_status_pipe_s;
     const f_string_t f_status_pipe_not_s = F_status_pipe_not_s;
     const f_string_t f_status_port_s = F_status_port_s;
     const f_string_t f_status_port_not_s = F_status_port_not_s;
+    const f_string_t f_status_previous_s = F_status_previous_s;
+    const f_string_t f_status_previous_not_s = F_status_previous_not_s;
     const f_string_t f_status_processor_s = F_status_processor_s;
     const f_string_t f_status_processor_not_s = F_status_processor_not_s;
     const f_string_t f_status_prohibited_s = F_status_prohibited_s;
     const f_string_t f_status_prohibited_not_s = F_status_prohibited_not_s;
+    const f_string_t f_status_property_s = F_status_property_s;
+    const f_string_t f_status_property_not_s = F_status_property_not_s;
+    const f_string_t f_status_protocol_s = F_status_protocol_s;
+    const f_string_t f_status_protocol_not_s = F_status_protocol_not_s;
     const f_string_t f_status_range_s = F_status_range_s;
     const f_string_t f_status_range_not_s = F_status_range_not_s;
     const f_string_t f_status_read_s = F_status_read_s;
@@ -936,6 +944,14 @@ extern "C" {
           *string = f_status_disable_not_s;
           break;
 
+        case F_domain:
+          *string = f_status_domain_s;
+          break;
+
+        case F_domain_not:
+          *string = f_status_domain_not_s;
+          break;
+
         case F_done:
           *string = f_status_done_s;
           break;
@@ -1030,6 +1046,14 @@ extern "C" {
 
         case F_failure_not:
           *string = f_status_failure_not_s;
+          break;
+
+        case F_family:
+          *string = f_status_family_s;
+          break;
+
+        case F_family_not:
+          *string = f_status_family_not_s;
           break;
 
         case F_first:
@@ -1260,14 +1284,6 @@ extern "C" {
           *string = f_status_parent_not_s;
           break;
 
-        case F_previous:
-          *string = f_status_previous_s;
-          break;
-
-        case F_previous_not:
-          *string = f_status_previous_not_s;
-          break;
-
         case F_pipe:
           *string = f_status_pipe_s;
           break;
@@ -1284,6 +1300,14 @@ extern "C" {
           *string = f_status_port_not_s;
           break;
 
+        case F_previous:
+          *string = f_status_previous_s;
+          break;
+
+        case F_previous_not:
+          *string = f_status_previous_not_s;
+          break;
+
         case F_processor:
           *string = f_status_processor_s;
           break;
@@ -1298,6 +1322,22 @@ extern "C" {
 
         case F_prohibited_not:
           *string = f_status_prohibited_not_s;
+          break;
+
+        case F_property:
+          *string = f_status_property_s;
+          break;
+
+        case F_property_not:
+          *string = f_status_property_not_s;
+          break;
+
+        case F_protocol:
+          *string = f_status_protocol_s;
+          break;
+
+        case F_protocol_not:
+          *string = f_status_protocol_not_s;
           break;
 
         case F_range:

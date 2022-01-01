@@ -268,6 +268,8 @@ extern "C" {
     #define F_status_device_not_s        "F_device_not"
     #define F_status_disable_s           "F_disable"
     #define F_status_disable_not_s       "F_disable_not"
+    #define F_status_domain_s            "F_domain"
+    #define F_status_domain_not_s        "F_domain_not"
     #define F_status_done_s              "F_done"
     #define F_status_done_not_s          "F_done_not"
     #define F_status_dummy_s             "F_dummy"
@@ -292,6 +294,8 @@ extern "C" {
     #define F_status_exist_not_s         "F_exist_not"
     #define F_status_failure_s           "F_failure"
     #define F_status_failure_not_s       "F_failure_not"
+    #define F_status_family_s            "F_family"
+    #define F_status_family_not_s        "F_family_not"
     #define F_status_first_s             "F_first"
     #define F_status_first_not_s         "F_first_not"
     #define F_status_fork_s              "F_fork"
@@ -351,16 +355,20 @@ extern "C" {
     #define F_status_parameter_not_s     "F_parameter_not"
     #define F_status_parent_s            "F_parent"
     #define F_status_parent_not_s        "F_parent_not"
-    #define F_status_previous_s          "F_previous"
-    #define F_status_previous_not_s      "F_previous_not"
     #define F_status_pipe_s              "F_pipe"
     #define F_status_pipe_not_s          "F_pipe_not"
     #define F_status_port_s              "F_port"
     #define F_status_port_not_s          "F_port_not"
+    #define F_status_previous_s          "F_previous"
+    #define F_status_previous_not_s      "F_previous_not"
     #define F_status_processor_s         "F_processor"
     #define F_status_processor_not_s     "F_processor_not"
     #define F_status_prohibited_s        "F_prohibited"
     #define F_status_prohibited_not_s    "F_prohibited_not"
+    #define F_status_property_s          "F_property"
+    #define F_status_property_not_s      "F_property_not"
+    #define F_status_protocol_s          "F_protocol"
+    #define F_status_protocol_not_s      "F_protocol_not"
     #define F_status_range_s             "F_range"
     #define F_status_range_not_s         "F_range_not"
     #define F_status_read_s              "F_read"
@@ -461,6 +469,8 @@ extern "C" {
     #define F_status_device_not_s_length        12
     #define F_status_disable_s_length           9
     #define F_status_disable_not_s_length       13
+    #define F_status_domain_s_length            8
+    #define F_status_domain_not_s_length        12
     #define F_status_done_s_length              6
     #define F_status_done_not_s_length          10
     #define F_status_dummy_s_length             7
@@ -485,6 +495,8 @@ extern "C" {
     #define F_status_exist_not_s_length         11
     #define F_status_failure_s_length           9
     #define F_status_failure_not_s_length       13
+    #define F_status_family_s_length            8
+    #define F_status_family_not_s_length        12
     #define F_status_first_s_length             7
     #define F_status_first_not_s_length         11
     #define F_status_fork_s_length              6
@@ -554,6 +566,10 @@ extern "C" {
     #define F_status_processor_not_s_length     15
     #define F_status_prohibited_s_length        12
     #define F_status_prohibited_not_s_length    16
+    #define F_status_property_s_length          10
+    #define F_status_property_not_s_length      14
+    #define F_status_protocol_s_length          10
+    #define F_status_protocol_not_s_length      14
     #define F_status_range_s_length             7
     #define F_status_range_not_s_length         11
     #define F_status_read_s_length              6
@@ -654,6 +670,8 @@ extern "C" {
     extern const f_string_t f_status_device_not_s;
     extern const f_string_t f_status_disable_s;
     extern const f_string_t f_status_disable_not_s;
+    extern const f_string_t f_status_domain_s;
+    extern const f_string_t f_status_domain_not_s;
     extern const f_string_t f_status_done_s;
     extern const f_string_t f_status_done_not_s;
     extern const f_string_t f_status_dummy_s;
@@ -678,6 +696,8 @@ extern "C" {
     extern const f_string_t f_status_exist_not_s;
     extern const f_string_t f_status_failure_s;
     extern const f_string_t f_status_failure_not_s;
+    extern const f_string_t f_status_family_s;
+    extern const f_string_t f_status_family_not_s;
     extern const f_string_t f_status_first_s;
     extern const f_string_t f_status_first_not_s;
     extern const f_string_t f_status_fork_s;
@@ -747,6 +767,10 @@ extern "C" {
     extern const f_string_t f_status_processor_not_s;
     extern const f_string_t f_status_prohibited_s;
     extern const f_string_t f_status_prohibited_not_s;
+    extern const f_string_t f_status_property_s;
+    extern const f_string_t f_status_property_not_s;
+    extern const f_string_t f_status_protocol_s;
+    extern const f_string_t f_status_protocol_not_s;
     extern const f_string_t f_status_range_s;
     extern const f_string_t f_status_range_not_s;
     extern const f_string_t f_status_read_s;
