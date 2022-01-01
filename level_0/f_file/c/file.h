@@ -1905,7 +1905,7 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_file_close (with error bit) if fclose() failed for any other reason.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_overflow (with error bit) if the write exceeds some implementation defined maximum file size.
  *   F_file_synchronize (with error bit) on flush failure.
  *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
@@ -1946,7 +1946,7 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_lock (with error bit) if failed to lock, such as lock table is full or too many open segments.

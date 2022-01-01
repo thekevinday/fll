@@ -46,7 +46,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_open_max (with error bit) too many open files.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
@@ -73,7 +73,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_open_max (with error bit) too many open files.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
@@ -100,7 +100,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_open_max (with error bit) too many open files.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
@@ -127,7 +127,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_open_max (with error bit) too many open files.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
@@ -154,7 +154,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_open_max (with error bit) too many open files.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.

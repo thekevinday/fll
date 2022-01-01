@@ -66,7 +66,7 @@ extern "C" {
  * @return
  *   F_none on success but no signal found.
  *   F_device (with error bit) if could not mount the internal inode device.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.

@@ -326,7 +326,7 @@ extern "C" {
  *   F_directory_stream (with error bit) on directory stream error.
  *   F_directory_supported_not (with error bit) on directory file descriptor not supported.
  *   F_failure (with error bit) if failed to read directory information.
- *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_open_max (with error bit) too many open files.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
