@@ -94,8 +94,9 @@ extern "C" {
 
 #ifndef _di_f_path_is_
   f_status_t f_path_is(const f_string_t path, const f_array_length_t length) {
+
     if (!path || !length) {
-      return F_false;
+      return F_data_not;
     }
 
     for (f_array_length_t i = 0; i < length; ++i) {
@@ -108,6 +109,68 @@ extern "C" {
     return F_false;
   }
 #endif // _di_f_path_is_
+
+#ifndef _di_f_path_is_relative_
+  f_status_t f_path_is_relative(const f_string_t path, const f_array_length_t length) {
+
+    if (!path || !length) {
+      return F_data_not;
+    }
+
+    f_array_length_t i = 0;
+
+    for (; i < length; ++i) {
+      if (path[i]) break;
+    } // for
+
+    if (path[i] == f_path_separator_s[0]) {
+      return F_false;
+    }
+
+    return F_true;
+  }
+#endif // _di_f_path_is_relative_
+
+#ifndef _di_f_path_is_relative_current_
+  f_status_t f_path_is_relative_current(const f_string_t path, const f_array_length_t length) {
+
+    if (!path || !length) {
+      return F_data_not;
+    }
+
+    f_array_length_t i = 0;
+
+    for (; i < length; ++i) {
+      if (path[i]) break;
+    } // for
+
+    if (path[i] == f_path_separator_s[0]) {
+      return F_false;
+    }
+
+    if (path[i] == f_path_separator_current_s[0]) {
+      for (; i < length; ++i) {
+        if (path[i]) break;
+      } // for
+
+      if (path[i] == f_path_separator_s[0]) {
+        return F_true;
+      }
+
+      if (path[i] == f_path_separator_current_s[0]) {
+        for (; i < length; ++i) {
+          if (path[i]) break;
+        } // for
+
+        if (path[i] == f_path_separator_s[0]) {
+          return F_true;
+        }
+      }
+    }
+
+    return F_false;
+  }
+#endif // _di_f_path_is_relative_current_
 
 #ifndef _di_f_path_real_
   f_status_t f_path_real(const f_string_t path, f_string_dynamic_t *real) {

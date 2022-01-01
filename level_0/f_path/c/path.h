@@ -121,21 +121,72 @@ extern "C" {
 /**
  * Identify whether or not a string represents a path string.
  *
+ * This does not check to see if the path exists or not.
+ * This does not stop on NULL (NULL characters are ignored).
+ *
  * A string without any path parts that could be a path is not considered a path by this function.
  * That is to say "my_file.txt" is not a path string but "./my_file.txt" is a path string.
  *
  * @param path
- *   The string that may or may not represent a path..
+ *   The string that may or may not represent a path.
  * @param length
- *   Length of the path string.
+ *   Length of the string.
  *
  * @return
- *   F_true if this string is a path string.
- *   F_false if this string is not a path string.
+ *   F_true if the string is a path string.
+ *   F_false if the string is not a path string.
+ *   F_data_not if the string has a length of 0 or the string is NULL.
  */
 #ifndef _di_f_path_is_
   extern f_status_t f_path_is(const f_string_t path, const f_array_length_t length);
 #endif // _di_f_path_is_
+
+/**
+ * Identify whether or not a string represents a relative path string.
+ *
+ * This does not check to see if the path exists or not.
+ * This does not stop on NULL (NULL characters are ignored).
+ *
+ * A string without any path parts that could be a path is considered a relative path by this function.
+ * That is to say "my_file.txt" is a relative path string.
+ *
+ * @param path
+ *   The string that may or may not represent a relative path.
+ * @param length
+ *   Length of the path string.
+ *
+ * @return
+ *   F_true if the string is a relative path string.
+ *   F_false if the string is not a relative path string.
+ *   F_data_not if the string has a length of 0 or the string is NULL.
+ */
+#ifndef _di_f_path_is_relative_
+  extern f_status_t f_path_is_relative(const f_string_t path, const f_array_length_t length);
+#endif // _di_f_path_is_relative_
+
+/**
+ * Identify whether or not a string explicitly represents a relative path string to the current working directory.
+ *
+ * This does not check to see if the path exists or not.
+ * This does not stop on NULL (NULL characters are ignored).
+ *
+ * A string that is explicitly relative to the current working directory must begin with one of "./" or "../".
+ *
+ * This does not return true for paths that are implicitly relative, such as "abc".
+ *
+ * @param path
+ *   The string that may or may not represent a relative path.
+ * @param length
+ *   Length of the path string.
+ *
+ * @return
+ *   F_true if the string is a relative path string.
+ *   F_false if the string is not a relative path string.
+ *   F_data_not if the string has a length of 0 or the string is NULL.
+ */
+#ifndef _di_f_path_is_relative_current_
+  extern f_status_t f_path_is_relative_current(const f_string_t path, const f_array_length_t length);
+#endif // _di_f_path_is_relative_current_
 
 /**
  * Get the real path for the given path.

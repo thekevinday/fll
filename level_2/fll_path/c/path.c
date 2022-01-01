@@ -35,7 +35,7 @@ extern "C" {
       at = 0;
     }
 
-    status = f_string_append_assure("/", 1, canonical);
+    status = f_string_append_assure(f_path_separator_s, 1, canonical);
     if (F_status_is_error(status)) return status;
 
     for (; path[at]; ++at) {
@@ -78,9 +78,7 @@ extern "C" {
           }
         }
         else {
-          ++size_chunk;
-
-          if (size_chunk) {
+          if (++size_chunk) {
             status = f_string_append(path + position, size_chunk, canonical);
             if (F_status_is_error(status)) return status;
           }
@@ -128,9 +126,9 @@ extern "C" {
       }
     }
 
-    // assure there is no trailing forward slash, unless it is the first slash.
+    // Assure there is no trailing forward slash, unless it is the first slash.
     if (canonical->used > 1 && canonical->string[canonical->used - 1] == f_path_separator_s[0]) {
-      canonical->used--;
+      --canonical->used;
     }
 
     status = f_string_dynamic_terminate_after(canonical);

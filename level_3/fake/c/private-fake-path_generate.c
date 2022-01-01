@@ -194,11 +194,11 @@ extern "C" {
     }
 
     // When custom fakefile or settings are used and they are paths to a file, remove the default path.
-    if (f_path_is(main->fakefile.string, main->fakefile.used)) {
+    if (f_path_is(main->fakefile.string, main->fakefile.used) == F_true) {
       main->file_data_build_fakefile.used = 0;
     }
 
-    if (f_path_is(main->settings.string, main->settings.used)) {
+    if (f_path_is(main->settings.string, main->settings.used) == F_true) {
       main->file_data_build_settings.used = 0;
     }
 
