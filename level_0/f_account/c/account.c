@@ -175,7 +175,7 @@ extern "C" {
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
-    // note: pointer seems pointless except that it is used to determine if the name was found.
+    // Note: pointer seems pointless except that it is used to determine if the name was found.
     struct group grp;
     struct group *pointer;
 
@@ -186,7 +186,7 @@ extern "C" {
         length = F_account_pwd_length_fallback_first_d;
       }
 
-      // must be set to 0 to avoid problems due to the design of getgrnam()/getgrnam_r().
+      // Must be set to 0 to avoid problems due to the design of getgrnam()/getgrnam_r().
       errno = 0;
 
       char buffer[length];
@@ -252,7 +252,7 @@ extern "C" {
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
-    // note: pointer seems pointless except that it is used to determine if the name was found.
+    // Note: pointer seems pointless except that it is used to determine if the name was found.
     struct passwd password;
     struct passwd *pointer = 0;
 
@@ -263,7 +263,7 @@ extern "C" {
         length = F_account_pwd_length_fallback_first_d;
       }
 
-      // must be set to 0 to avoid problems due to the design of getpwnam()/getpwnam_r().
+      // Must be set to 0 to avoid problems due to the design of getpwnam()/getpwnam_r().
       errno = 0;
 
       char buffer[length];
