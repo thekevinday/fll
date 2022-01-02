@@ -433,6 +433,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_abort_s, length, F_status_abort_s_length) == F_equal_to) {
+        *code = F_abort;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_abort_not_s, length, F_status_abort_not_s_length) == F_equal_to) {
+        *code = F_abort_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_absolute_s, length, F_status_absolute_s_length) == F_equal_to) {
         *code = F_absolute;
 
@@ -465,6 +477,18 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_ascii_not_s, length, F_status_ascii_not_s_length) == F_equal_to) {
         *code = F_ascii_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_begin_s, length, F_status_begin_s_length) == F_equal_to) {
+        *code = F_begin;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_begin_not_s, length, F_status_begin_not_s_length) == F_equal_to) {
+        *code = F_begin_not;
 
         return F_none;
       }
@@ -529,14 +553,20 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_compare(string, f_status_connected_s, length, F_status_connected_s_length) == F_equal_to) {
-        *code = F_connected;
+      if (fl_string_compare(string, f_status_connect_s, length, F_status_connect_s_length) == F_equal_to) {
+        *code = F_connect;
 
         return F_none;
       }
 
-      if (fl_string_compare(string, f_status_connected_not_s, length, F_status_connected_not_s_length) == F_equal_to) {
-        *code = F_connected_not;
+      if (fl_string_compare(string, f_status_connect_not_s, length, F_status_connect_not_s_length) == F_equal_to) {
+        *code = F_connect_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_connect_refuse_s, length, F_status_connect_refuse_s_length) == F_equal_to) {
+        *code = F_connect_refuse;
 
         return F_none;
       }
@@ -549,6 +579,18 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_container_not_s, length, F_status_container_not_s_length) == F_equal_to) {
         *code = F_container_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_continue_s, length, F_status_continue_s_length) == F_equal_to) {
+        *code = F_continue;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_continue_not_s, length, F_status_continue_not_s_length) == F_equal_to) {
+        *code = F_continue_not;
 
         return F_none;
       }
@@ -717,6 +759,18 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_encoding_not_s, length, F_status_encoding_not_s_length) == F_equal_to) {
         *code = F_encoding_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_end_s, length, F_status_end_s_length) == F_equal_to) {
+        *code = F_end;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_end_not_s, length, F_status_end_not_s_length) == F_equal_to) {
+        *code = F_end_not;
 
         return F_none;
       }
@@ -1123,14 +1177,14 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_compare(string, f_status_optional_s, length, F_status_optional_s_length) == F_equal_to) {
-        *code = F_optional;
+      if (fl_string_compare(string, f_status_option_s, length, F_status_option_s_length) == F_equal_to) {
+        *code = F_option;
 
         return F_none;
       }
 
-      if (fl_string_compare(string, f_status_optional_not_s, length, F_status_optional_not_s_length) == F_equal_to) {
-        *code = F_optional_not;
+      if (fl_string_compare(string, f_status_option_not_s, length, F_status_option_not_s_length) == F_equal_to) {
+        *code = F_option_not;
 
         return F_none;
       }
@@ -1215,6 +1269,18 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_processor_not_s, length, F_status_processor_not_s_length) == F_equal_to) {
         *code = F_processor_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_progress_s, length, F_status_progress_s_length) == F_equal_to) {
+        *code = F_progress;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_progress_not_s, length, F_status_progress_not_s_length) == F_equal_to) {
+        *code = F_progress_not;
 
         return F_none;
       }
@@ -1405,6 +1471,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_start_s, length, F_status_start_s_length) == F_equal_to) {
+        *code = F_start;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_start_not_s, length, F_status_start_not_s_length) == F_equal_to) {
+        *code = F_start_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_stop_s, length, F_status_stop_s_length) == F_equal_to) {
         *code = F_stop;
 
@@ -1413,6 +1491,18 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_stop_not_s, length, F_status_stop_not_s_length) == F_equal_to) {
         *code = F_stop_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_stream_s, length, F_status_stream_s_length) == F_equal_to) {
+        *code = F_stream;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_stream_not_s, length, F_status_stream_not_s_length) == F_equal_to) {
+        *code = F_stream_not;
 
         return F_none;
       }
@@ -1501,6 +1591,12 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_time_out_s, length, F_status_time_out_s_length) == F_equal_to) {
+        *code = F_time_out;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_too_large_s, length, F_status_too_large_s_length) == F_equal_to) {
         *code = F_too_large;
 
@@ -1509,6 +1605,18 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_too_small_s, length, F_status_too_small_s_length) == F_equal_to) {
         *code = F_too_small;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_type_s, length, F_status_type_s_length) == F_equal_to) {
+        *code = F_type;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_type_not_s, length, F_status_type_not_s_length) == F_equal_to) {
+        *code = F_type_not;
 
         return F_none;
       }
@@ -1765,6 +1873,80 @@ extern "C" {
         return F_none;
       }
     #endif // _di_F_status_busy_
+
+    #ifndef _di_F_status_network_
+      if (fl_string_compare(string, f_status_network_s, length, F_status_network_s_length) == F_equal_to) {
+        *code = F_network;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_busy_s, length, F_status_network_busy_s_length) == F_equal_to) {
+        *code = F_network_busy;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_busy_not_s, length, F_status_network_busy_not_s_length) == F_equal_to) {
+        *code = F_network_busy_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_found_s, length, F_status_network_found_s_length) == F_equal_to) {
+        *code = F_network_found;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_found_not_s, length, F_status_network_found_not_s_length) == F_equal_to) {
+        *code = F_network_found_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_lost_s, length, F_status_network_lost_s_length) == F_equal_to) {
+        *code = F_network_lost;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_lost_not_s, length, F_status_network_lost_not_s_length) == F_equal_to) {
+        *code = F_network_lost_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_not_s, length, F_status_network_not_s_length) == F_equal_to) {
+        *code = F_network_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_reach_s, length, F_status_network_reach_s_length) == F_equal_to) {
+        *code = F_network_reach;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_reach_not_s, length, F_status_network_reach_not_s_length) == F_equal_to) {
+        *code = F_network_reach_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_time_s, length, F_status_network_time_s_length) == F_equal_to) {
+        *code = F_network_time;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_time_not_s, length, F_status_network_time_not_s_length) == F_equal_to) {
+        *code = F_network_time_not;
+
+        return F_none;
+      }
+    #endif // _di_F_status_network_
 
     #ifndef _di_F_status_number_
       if (fl_string_compare(string, f_status_number_s, length, F_status_number_s_length) == F_equal_to) {

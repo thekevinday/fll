@@ -232,12 +232,16 @@ extern "C" {
 
   #ifndef _di_F_status_basic_
     #define F_status_none_s              "F_none"
+    #define F_status_abort_s             "F_abort"
+    #define F_status_abort_not_s         "F_abort_not"
     #define F_status_absolute_s          "F_absolute"
     #define F_status_absolute_not_s      "F_absolute_not"
     #define F_status_address_s           "F_address"
     #define F_status_address_not_s       "F_address_not"
     #define F_status_ascii_s             "F_ascii"
     #define F_status_ascii_not_s         "F_ascii_not"
+    #define F_status_begin_s             "F_begin"
+    #define F_status_begin_not_s         "F_begin_not"
     #define F_status_block_s             "F_block"
     #define F_status_block_not_s         "F_block_not"
     #define F_status_bound_s             "F_bound"
@@ -248,10 +252,13 @@ extern "C" {
     #define F_status_child_not_s         "F_child_not"
     #define F_status_complete_s          "F_complete"
     #define F_status_complete_not_s      "F_complete_not"
-    #define F_status_connected_s         "F_connected"
-    #define F_status_connected_not_s     "F_connected_not"
+    #define F_status_connect_s           "F_connect"
+    #define F_status_connect_not_s       "F_connect_not"
+    #define F_status_connect_refuse_s    "F_connect_refuse"
     #define F_status_container_s         "F_container"
     #define F_status_container_not_s     "F_container_not"
+    #define F_status_continue_s          "F_continue"
+    #define F_status_continue_not_s      "F_continue_not"
     #define F_status_control_s           "F_control"
     #define F_status_control_not_s       "F_control_not"
     #define F_status_control_group_s     "F_control_group"
@@ -280,6 +287,8 @@ extern "C" {
     #define F_status_enable_not_s        "F_enable_not"
     #define F_status_encoding_s          "F_encoding"
     #define F_status_encoding_not_s      "F_encoding_not"
+    #define F_status_end_s               "F_end"
+    #define F_status_end_not_s           "F_end_not"
     #define F_status_eoa_s               "F_eoa"
     #define F_status_eoa_not_s           "F_eoa_not"
     #define F_status_eof_s               "F_eof"
@@ -347,8 +356,8 @@ extern "C" {
     #define F_status_next_not_s          "F_next_not"
     #define F_status_nice_s              "F_nice"
     #define F_status_nice_not_s          "F_nice_not"
-    #define F_status_optional_s          "F_optional"
-    #define F_status_optional_not_s      "F_optional_not"
+    #define F_status_option_s            "F_option"
+    #define F_status_option_not_s        "F_option_not"
     #define F_status_output_s            "F_output"
     #define F_status_output_not_s        "F_output_not"
     #define F_status_parameter_s         "F_parameter"
@@ -363,6 +372,8 @@ extern "C" {
     #define F_status_previous_not_s      "F_previous_not"
     #define F_status_processor_s         "F_processor"
     #define F_status_processor_not_s     "F_processor_not"
+    #define F_status_progress_s          "F_progress"
+    #define F_status_progress_not_s      "F_progress_not"
     #define F_status_prohibited_s        "F_prohibited"
     #define F_status_prohibited_not_s    "F_prohibited_not"
     #define F_status_property_s          "F_property"
@@ -394,8 +405,12 @@ extern "C" {
     #define F_status_signal_not_s        "F_signal_not"
     #define F_status_space_s             "F_space"
     #define F_status_space_not_s         "F_space_not"
+    #define F_status_start_s             "F_start"
+    #define F_status_start_not_s         "F_start_not"
     #define F_status_stop_s              "F_stop"
     #define F_status_stop_not_s          "F_stop_not"
+    #define F_status_stream_s            "F_stream"
+    #define F_status_stream_not_s        "F_stream_not"
     #define F_status_string_s            "F_string"
     #define F_status_string_not_s        "F_string_not"
     #define F_status_string_too_large_s  "F_string_too_large"
@@ -406,8 +421,11 @@ extern "C" {
     #define F_status_thread_not_s        "F_thread_not"
     #define F_status_time_s              "F_time"
     #define F_status_time_not_s          "F_time_not"
+    #define F_status_time_out_s          "F_time_out"
     #define F_status_too_large_s         "F_too_large"
     #define F_status_too_small_s         "F_too_small"
+    #define F_status_type_s              "F_type"
+    #define F_status_type_not_s          "F_type_not"
     #define F_status_success_s           "F_success"
     #define F_status_success_not_s       "F_success_not"
     #define F_status_supported_s         "F_supported"
@@ -433,12 +451,16 @@ extern "C" {
     #define F_status_write_only_s        "F_write_only"
 
     #define F_status_none_s_length              6
+    #define F_status_abort_s_length             7
+    #define F_status_abort_not_s_length         11
     #define F_status_absolute_s_length          10
     #define F_status_absolute_not_s_length      14
     #define F_status_address_s_length           9
     #define F_status_address_not_s_length       13
     #define F_status_ascii_s_length             7
     #define F_status_ascii_not_s_length         11
+    #define F_status_begin_s_length             7
+    #define F_status_begin_not_s_length         11
     #define F_status_block_s_length             7
     #define F_status_block_not_s_length         11
     #define F_status_bound_s_length             7
@@ -449,10 +471,13 @@ extern "C" {
     #define F_status_child_not_s_length         11
     #define F_status_complete_s_length          10
     #define F_status_complete_not_s_length      14
-    #define F_status_connected_s_length         11
-    #define F_status_connected_not_s_length     15
+    #define F_status_connect_s_length           9
+    #define F_status_connect_not_s_length       13
+    #define F_status_connect_refuse_s_length    16
     #define F_status_container_s_length         11
     #define F_status_container_not_s_length     15
+    #define F_status_continue_s_length          10
+    #define F_status_continue_not_s_length      14
     #define F_status_control_s_length           9
     #define F_status_control_not_s_length       13
     #define F_status_control_group_s_length     15
@@ -481,6 +506,8 @@ extern "C" {
     #define F_status_enable_not_s_length        12
     #define F_status_encoding_s_length          10
     #define F_status_encoding_not_s_length      14
+    #define F_status_end_s_length               5
+    #define F_status_end_not_s_length           9
     #define F_status_eoa_s_length               5
     #define F_status_eoa_not_s_length           9
     #define F_status_eof_s_length               5
@@ -548,8 +575,8 @@ extern "C" {
     #define F_status_next_not_s_length          10
     #define F_status_nice_s_length              6
     #define F_status_nice_not_s_length          10
-    #define F_status_optional_s_length          10
-    #define F_status_optional_not_s_length      14
+    #define F_status_option_s_length            8
+    #define F_status_option_not_s_length        12
     #define F_status_output_s_length            8
     #define F_status_output_not_s_length        12
     #define F_status_parameter_s_length         11
@@ -564,6 +591,8 @@ extern "C" {
     #define F_status_previous_not_s_length      14
     #define F_status_processor_s_length         11
     #define F_status_processor_not_s_length     15
+    #define F_status_progress_s_length          10
+    #define F_status_progress_not_s_length      14
     #define F_status_prohibited_s_length        12
     #define F_status_prohibited_not_s_length    16
     #define F_status_property_s_length          10
@@ -595,8 +624,12 @@ extern "C" {
     #define F_status_signal_not_s_length        12
     #define F_status_space_s_length             7
     #define F_status_space_not_s_length         11
+    #define F_status_start_s_length             7
+    #define F_status_start_not_s_length         11
     #define F_status_stop_s_length              6
     #define F_status_stop_not_s_length          10
+    #define F_status_stream_s_length            8
+    #define F_status_stream_not_s_length        12
     #define F_status_string_s_length            8
     #define F_status_string_not_s_length        12
     #define F_status_string_too_large_s_length  18
@@ -611,8 +644,11 @@ extern "C" {
     #define F_status_thread_not_s_length        12
     #define F_status_time_s_length              6
     #define F_status_time_not_s_length          10
+    #define F_status_time_out_s_length          10
     #define F_status_too_large_s_length         11
     #define F_status_too_small_s_length         11
+    #define F_status_type_s_length              6
+    #define F_status_type_not_s_length          10
     #define F_status_user_s_length              6
     #define F_status_user_not_s_length          10
     #define F_status_utf_s_length               5
@@ -634,12 +670,16 @@ extern "C" {
     #define F_status_write_only_s_length        12
 
     extern const f_string_t f_status_none_s;
+    extern const f_string_t f_status_abort_s;
+    extern const f_string_t f_status_abort_not_s;
     extern const f_string_t f_status_absolute_s;
     extern const f_string_t f_status_absolute_not_s;
     extern const f_string_t f_status_address_s;
     extern const f_string_t f_status_address_not_s;
     extern const f_string_t f_status_ascii_s;
     extern const f_string_t f_status_ascii_not_s;
+    extern const f_string_t f_status_begin_s;
+    extern const f_string_t f_status_begin_not_s;
     extern const f_string_t f_status_block_s;
     extern const f_string_t f_status_block_not_s;
     extern const f_string_t f_status_bound_s;
@@ -650,10 +690,13 @@ extern "C" {
     extern const f_string_t f_status_child_not_s;
     extern const f_string_t f_status_complete_s;
     extern const f_string_t f_status_complete_not_s;
-    extern const f_string_t f_status_connected_s;
-    extern const f_string_t f_status_connected_not_s;
+    extern const f_string_t f_status_connect_s;
+    extern const f_string_t f_status_connect_not_s;
+    extern const f_string_t f_status_connect_refuse_s;
     extern const f_string_t f_status_container_s;
     extern const f_string_t f_status_container_not_s;
+    extern const f_string_t f_status_continue_s;
+    extern const f_string_t f_status_continue_not_s;
     extern const f_string_t f_status_control_s;
     extern const f_string_t f_status_control_not_s;
     extern const f_string_t f_status_control_group_s;
@@ -682,6 +725,8 @@ extern "C" {
     extern const f_string_t f_status_enable_not_s;
     extern const f_string_t f_status_encoding_s;
     extern const f_string_t f_status_encoding_not_s;
+    extern const f_string_t f_status_end_s;
+    extern const f_string_t f_status_end_not_s;
     extern const f_string_t f_status_eoa_s;
     extern const f_string_t f_status_eoa_not_s;
     extern const f_string_t f_status_eof_s;
@@ -749,8 +794,8 @@ extern "C" {
     extern const f_string_t f_status_next_not_s;
     extern const f_string_t f_status_nice_s;
     extern const f_string_t f_status_nice_not_s;
-    extern const f_string_t f_status_optional_s;
-    extern const f_string_t f_status_optional_not_s;
+    extern const f_string_t f_status_option_s;
+    extern const f_string_t f_status_option_not_s;
     extern const f_string_t f_status_output_s;
     extern const f_string_t f_status_output_not_s;
     extern const f_string_t f_status_parameter_s;
@@ -765,6 +810,8 @@ extern "C" {
     extern const f_string_t f_status_port_not_s;
     extern const f_string_t f_status_processor_s;
     extern const f_string_t f_status_processor_not_s;
+    extern const f_string_t f_status_progress_s;
+    extern const f_string_t f_status_progress_not_s;
     extern const f_string_t f_status_prohibited_s;
     extern const f_string_t f_status_prohibited_not_s;
     extern const f_string_t f_status_property_s;
@@ -796,8 +843,12 @@ extern "C" {
     extern const f_string_t f_status_signal_not_s;
     extern const f_string_t f_status_space_s;
     extern const f_string_t f_status_space_not_s;
+    extern const f_string_t f_status_start_s;
+    extern const f_string_t f_status_start_not_s;
     extern const f_string_t f_status_stop_s;
     extern const f_string_t f_status_stop_not_s;
+    extern const f_string_t f_status_stream_s;
+    extern const f_string_t f_status_stream_not_s;
     extern const f_string_t f_status_string_s;
     extern const f_string_t f_status_string_not_s;
     extern const f_string_t f_status_string_too_large_s;
@@ -808,8 +859,11 @@ extern "C" {
     extern const f_string_t f_status_thread_not_s;
     extern const f_string_t f_status_time_s;
     extern const f_string_t f_status_time_not_s;
+    extern const f_string_t f_status_time_out_s;
     extern const f_string_t f_status_too_large_s;
     extern const f_string_t f_status_too_small_s;
+    extern const f_string_t f_status_type_s;
+    extern const f_string_t f_status_type_not_s;
     extern const f_string_t f_status_success_s;
     extern const f_string_t f_status_success_not_s;
     extern const f_string_t f_status_supported_s;
@@ -915,6 +969,47 @@ extern "C" {
     extern const f_string_t f_status_busy_process_s;
     extern const f_string_t f_status_busy_socket_s;
   #endif // _di_F_status_busy_
+
+  #ifndef _di_F_status_network_
+    #define F_status_network_s           "F_network"
+    #define F_status_network_busy_s      "F_network_busy"
+    #define F_status_network_busy_not_s  "F_network_busy_not"
+    #define F_status_network_found_s     "F_network_found"
+    #define F_status_network_found_not_s "F_network_found_not"
+    #define F_status_network_lost_s      "F_network_lost"
+    #define F_status_network_lost_not_s  "F_network_lost_not"
+    #define F_status_network_not_s       "F_network_not"
+    #define F_status_network_reach_s     "F_network_reach"
+    #define F_status_network_reach_not_s "F_network_reach_not"
+    #define F_status_network_time_s      "F_network_time"
+    #define F_status_network_time_not_s  "F_network_time_not"
+
+    #define F_status_network_s_length           9
+    #define F_status_network_busy_s_length      14
+    #define F_status_network_busy_not_s_length  18
+    #define F_status_network_found_s_length     15
+    #define F_status_network_found_not_s_length 19
+    #define F_status_network_lost_s_length      14
+    #define F_status_network_lost_not_s_length  18
+    #define F_status_network_not_s_length       13
+    #define F_status_network_reach_s_length     15
+    #define F_status_network_reach_not_s_length 19
+    #define F_status_network_time_s_length      14
+    #define F_status_network_time_not_s_length  18
+
+    extern const f_string_t f_status_network_s;
+    extern const f_string_t f_status_network_busy_s;
+    extern const f_string_t f_status_network_busy_not_s;
+    extern const f_string_t f_status_network_found_s;
+    extern const f_string_t f_status_network_found_not_s;
+    extern const f_string_t f_status_network_lost_s;
+    extern const f_string_t f_status_network_lost_not_s;
+    extern const f_string_t f_status_network_not_s;
+    extern const f_string_t f_status_network_reach_s;
+    extern const f_string_t f_status_network_reach_not_s;
+    extern const f_string_t f_status_network_time_s;
+    extern const f_string_t f_status_network_time_not_s;
+  #endif // _di_F_status_network_
 
   #ifndef _di_F_status_number_
     #define F_status_number_s                "F_number"

@@ -79,12 +79,16 @@ extern "C" {
 
   #ifndef _di_F_status_basic_
     const f_string_t f_status_none_s = F_status_none_s;
+    const f_string_t f_status_abort_s = F_status_abort_s;
+    const f_string_t f_status_abort_not_s = F_status_abort_not_s;
     const f_string_t f_status_absolute_s = F_status_absolute_s;
     const f_string_t f_status_absolute_not_s = F_status_absolute_not_s;
     const f_string_t f_status_address_s = F_status_address_s;
     const f_string_t f_status_address_not_s = F_status_address_not_s;
     const f_string_t f_status_ascii_s = F_status_ascii_s;
     const f_string_t f_status_ascii_not_s = F_status_ascii_not_s;
+    const f_string_t f_status_begin_s = F_status_begin_s;
+    const f_string_t f_status_begin_not_s = F_status_begin_not_s;
     const f_string_t f_status_block_s = F_status_block_s;
     const f_string_t f_status_block_not_s = F_status_block_not_s;
     const f_string_t f_status_bound_s = F_status_bound_s;
@@ -95,10 +99,13 @@ extern "C" {
     const f_string_t f_status_child_not_s = F_status_child_not_s;
     const f_string_t f_status_complete_s = F_status_complete_s;
     const f_string_t f_status_complete_not_s = F_status_complete_not_s;
-    const f_string_t f_status_connected_s = F_status_connected_s;
-    const f_string_t f_status_connected_not_s = F_status_connected_not_s;
+    const f_string_t f_status_connect_s = F_status_connect_s;
+    const f_string_t f_status_connect_not_s = F_status_connect_not_s;
+    const f_string_t f_status_connect_refuse_s = F_status_connect_refuse_s;
     const f_string_t f_status_container_s = F_status_container_s;
     const f_string_t f_status_container_not_s = F_status_container_not_s;
+    const f_string_t f_status_continue_s = F_status_continue_s;
+    const f_string_t f_status_continue_not_s = F_status_continue_not_s;
     const f_string_t f_status_control_s = F_status_control_s;
     const f_string_t f_status_control_not_s = F_status_control_not_s;
     const f_string_t f_status_control_group_s = F_status_control_group_s;
@@ -127,6 +134,8 @@ extern "C" {
     const f_string_t f_status_enable_not_s = F_status_enable_not_s;
     const f_string_t f_status_encoding_s = F_status_encoding_s;
     const f_string_t f_status_encoding_not_s = F_status_encoding_not_s;
+    const f_string_t f_status_end_s = F_status_end_s;
+    const f_string_t f_status_end_not_s = F_status_end_not_s;
     const f_string_t f_status_eoa_s = F_status_eoa_s;
     const f_string_t f_status_eoa_not_s = F_status_eoa_not_s;
     const f_string_t f_status_eof_s = F_status_eof_s;
@@ -194,8 +203,8 @@ extern "C" {
     const f_string_t f_status_next_not_s = F_status_next_not_s;
     const f_string_t f_status_nice_s = F_status_nice_s;
     const f_string_t f_status_nice_not_s = F_status_nice_not_s;
-    const f_string_t f_status_optional_s = F_status_optional_s;
-    const f_string_t f_status_optional_not_s = F_status_optional_not_s;
+    const f_string_t f_status_option_s = F_status_option_s;
+    const f_string_t f_status_option_not_s = F_status_option_not_s;
     const f_string_t f_status_output_s = F_status_output_s;
     const f_string_t f_status_output_not_s = F_status_output_not_s;
     const f_string_t f_status_parameter_s = F_status_parameter_s;
@@ -210,6 +219,8 @@ extern "C" {
     const f_string_t f_status_previous_not_s = F_status_previous_not_s;
     const f_string_t f_status_processor_s = F_status_processor_s;
     const f_string_t f_status_processor_not_s = F_status_processor_not_s;
+    const f_string_t f_status_progress_s = F_status_progress_s;
+    const f_string_t f_status_progress_not_s = F_status_progress_not_s;
     const f_string_t f_status_prohibited_s = F_status_prohibited_s;
     const f_string_t f_status_prohibited_not_s = F_status_prohibited_not_s;
     const f_string_t f_status_property_s = F_status_property_s;
@@ -241,8 +252,12 @@ extern "C" {
     const f_string_t f_status_signal_not_s = F_status_signal_not_s;
     const f_string_t f_status_space_s = F_status_space_s;
     const f_string_t f_status_space_not_s = F_status_space_not_s;
+    const f_string_t f_status_start_s = F_status_start_s;
+    const f_string_t f_status_start_not_s = F_status_start_not_s;
     const f_string_t f_status_stop_s = F_status_stop_s;
     const f_string_t f_status_stop_not_s = F_status_stop_not_s;
+    const f_string_t f_status_stream_s = F_status_stream_s;
+    const f_string_t f_status_stream_not_s = F_status_stream_not_s;
     const f_string_t f_status_string_s = F_status_string_s;
     const f_string_t f_status_string_not_s = F_status_string_not_s;
     const f_string_t f_status_string_too_large_s = F_status_string_too_large_s;
@@ -253,8 +268,11 @@ extern "C" {
     const f_string_t f_status_thread_not_s = F_status_thread_not_s;
     const f_string_t f_status_time_s = F_status_time_s;
     const f_string_t f_status_time_not_s = F_status_time_not_s;
+    const f_string_t f_status_time_out_s = F_status_time_out_s;
     const f_string_t f_status_too_large_s = F_status_too_large_s;
     const f_string_t f_status_too_small_s = F_status_too_small_s;
+    const f_string_t f_status_type_s = F_status_type_s;
+    const f_string_t f_status_type_not_s = F_status_type_not_s;
     const f_string_t f_status_success_s = F_status_success_s;
     const f_string_t f_status_success_not_s = F_status_success_not_s;
     const f_string_t f_status_supported_s = F_status_supported_s;
@@ -310,6 +328,21 @@ extern "C" {
     const f_string_t f_status_busy_process_s = F_status_busy_process_s;
     const f_string_t f_status_busy_socket_s = F_status_busy_socket_s;
   #endif // _di_F_status_busy_
+
+  #ifndef _di_F_status_network_
+    const f_string_t f_status_network_s = F_status_network_s;
+    const f_string_t f_status_network_busy_s = F_status_network_busy_s;
+    const f_string_t f_status_network_busy_not_s = F_status_network_busy_not_s;
+    const f_string_t f_status_network_found_s = F_status_network_found_s;
+    const f_string_t f_status_network_found_not_s = F_status_network_found_not_s;
+    const f_string_t f_status_network_lost_s = F_status_network_lost_s;
+    const f_string_t f_status_network_lost_not_s = F_status_network_lost_not_s;
+    const f_string_t f_status_network_not_s = F_status_network_not_s;
+    const f_string_t f_status_network_reach_s = F_status_network_reach_s;
+    const f_string_t f_status_network_reach_not_s = F_status_network_reach_not_s;
+    const f_string_t f_status_network_time_s = F_status_network_time_s;
+    const f_string_t f_status_network_time_not_s = F_status_network_time_not_s;
+  #endif // _di_F_status_network_
 
   #ifndef _di_F_status_number_
     const f_string_t f_status_number_s = F_status_number_s;
@@ -800,6 +833,14 @@ extern "C" {
           *string = f_status_none_s;
           break;
 
+        case F_abort:
+          *string = f_status_abort_s;
+          break;
+
+        case F_abort_not:
+          *string = f_status_abort_not_s;
+          break;
+
         case F_absolute:
           *string = f_status_absolute_s;
           break;
@@ -822,6 +863,14 @@ extern "C" {
 
         case F_ascii_not:
           *string = f_status_ascii_not_s;
+          break;
+
+        case F_begin:
+          *string = f_status_begin_s;
+          break;
+
+        case F_begin_not:
+          *string = f_status_begin_not_s;
           break;
 
         case F_block:
@@ -864,12 +913,24 @@ extern "C" {
           *string = f_status_complete_not_s;
           break;
 
-        case F_connected:
-          *string = f_status_connected_s;
+        case F_connect:
+          *string = f_status_connect_s;
           break;
 
-        case F_connected_not:
-          *string = f_status_connected_not_s;
+        case F_connect_not:
+          *string = f_status_connect_not_s;
+          break;
+
+        case F_connect_refuse:
+          *string = f_status_connect_refuse_s;
+          break;
+
+        case F_continue:
+          *string = f_status_continue_s;
+          break;
+
+        case F_continue_not:
+          *string = f_status_continue_not_s;
           break;
 
         case F_container:
@@ -990,6 +1051,14 @@ extern "C" {
 
         case F_encoding_not:
           *string = f_status_encoding_not_s;
+          break;
+
+        case F_end:
+          *string = f_status_end_s;
+          break;
+
+        case F_end_not:
+          *string = f_status_end_not_s;
           break;
 
         case F_eoa:
@@ -1252,12 +1321,12 @@ extern "C" {
           *string = f_status_nice_not_s;
           break;
 
-        case F_optional:
-          *string = f_status_optional_s;
+        case F_option:
+          *string = f_status_option_s;
           break;
 
-        case F_optional_not:
-          *string = f_status_optional_not_s;
+        case F_option_not:
+          *string = f_status_option_not_s;
           break;
 
         case F_output:
@@ -1314,6 +1383,14 @@ extern "C" {
 
         case F_processor_not:
           *string = f_status_processor_not_s;
+          break;
+
+        case F_progress:
+          *string = f_status_progress_s;
+          break;
+
+        case F_progress_not:
+          *string = f_status_progress_not_s;
           break;
 
         case F_prohibited:
@@ -1440,12 +1517,28 @@ extern "C" {
           *string = f_status_space_not_s;
           break;
 
+        case F_start:
+          *string = f_status_start_s;
+          break;
+
+        case F_start_not:
+          *string = f_status_start_not_s;
+          break;
+
         case F_stop:
           *string = f_status_stop_s;
           break;
 
         case F_stop_not:
           *string = f_status_stop_not_s;
+          break;
+
+        case F_stream:
+          *string = f_status_stream_s;
+          break;
+
+        case F_stream_not:
+          *string = f_status_stream_not_s;
           break;
 
         case F_string:
@@ -1488,12 +1581,24 @@ extern "C" {
           *string = f_status_time_not_s;
           break;
 
+        case F_time_out:
+          *string = f_status_time_out_s;
+          break;
+
         case F_too_large:
           *string = f_status_too_large_s;
           break;
 
         case F_too_small:
           *string = f_status_too_small_s;
+          break;
+
+        case F_type:
+          *string = f_status_type_s;
+          break;
+
+        case F_type_not:
+          *string = f_status_type_not_s;
           break;
 
         case F_known:
@@ -1690,6 +1795,56 @@ extern "C" {
           *string = f_status_busy_socket_s;
           break;
       #endif // _di_F_status_busy_
+
+      #ifndef _di_F_status_network_
+        case F_network:
+          *string = f_status_network_s;
+          break;
+
+        case F_network_busy:
+          *string = f_status_network_busy_s;
+          break;
+
+        case F_network_busy_not:
+          *string = f_status_network_busy_not_s;
+          break;
+
+        case F_network_found:
+          *string = f_status_network_found_s;
+          break;
+
+        case F_network_found_not:
+          *string = f_status_network_found_not_s;
+          break;
+
+        case F_network_lost:
+          *string = f_status_network_lost_s;
+          break;
+
+        case F_network_lost_not:
+          *string = f_status_network_lost_not_s;
+          break;
+
+        case F_network_not:
+          *string = f_status_network_not_s;
+          break;
+
+        case F_network_reach:
+          *string = f_status_network_reach_s;
+          break;
+
+        case F_network_reach_not:
+          *string = f_status_network_reach_not_s;
+          break;
+
+        case F_network_time:
+          *string = f_status_network_time_s;
+          break;
+
+        case F_network_time_not:
+          *string = f_status_network_time_not_s;
+          break;
+      #endif // _di_F_status_network_
 
       #ifndef _di_F_status_number_
         case F_number:
