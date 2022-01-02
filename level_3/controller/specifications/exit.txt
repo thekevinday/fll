@@ -14,9 +14,9 @@ Exit Specification:
     - Each Action Content are the "Action Parameters".
 
   The Items:
-    "main": required.
+    - "main": required.
 
-    "setting": optional, Actions may be one of:
+    - "setting": optional, Actions may be one of:
       - "pid": Exactly one Content that is one of "disable", "require", or "ready".
       - "session": Exactly one Content that is one of  "new" or "same".
       - "show": Exactly one Content that is one of  "normal" or "init".
@@ -24,7 +24,7 @@ Exit Specification:
     The Exit file may have any other valid Item Objects, but only the above are reserved.
 
     The Actions\:
-      "consider": One or more Content.
+      - "consider": One or more Content.
         The first Content that is the relative file path (without any leading/trailing slashes and without file extension).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -32,9 +32,9 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "failsafe": One Content that is a valid Object name, except for the reserved "main".
+      - "failsafe": One Content that is a valid Object name, except for the reserved "main".
 
-      "freeze": Two or more Content.
+      - "freeze": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -42,9 +42,9 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "item": One Content that is a valid Object name, except for the reserved "main".
+      - "item": One Content that is a valid Object name, except for the reserved "main".
 
-      "kill": Two or more Content.
+      - "kill": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -52,7 +52,7 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "pause": Two or more Content.
+      - "pause": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -60,11 +60,11 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "ready": Zero or One Content.
+      - "ready": Zero or One Content.
         The first may only be one of\:
         - "wait"
 
-      "reload": Two or more Content.
+      - "reload": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -72,7 +72,7 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "restart": Two or more Content.
+      - "restart": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -80,7 +80,7 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "resume": Two or more Content.
+      - "resume": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -88,7 +88,7 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "start": Two or more Content.
+      - "start": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -96,7 +96,7 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "stop": Two or more Content.
+      - "stop": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -104,7 +104,7 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "thaw": Two or more Content.
+      - "thaw": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -112,7 +112,7 @@ Exit Specification:
           - "require"
           - "wait"
 
-      "timeout": Two Content.
+      - "timeout": Two Content.
         The first being one of\:
           - "start"
           - "stop"

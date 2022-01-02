@@ -1,31 +1,31 @@
 # fss-0002
 
 Exit Documentation:
-  This describes the intent and purpose of the Exit file settings.
+  This describes the intent and purpose of an Exit file.
 
   An Exit file, such as "default.exit", is intended to store a set of rules in which the controller will process on execution.
   These are used to run some set of commands, such as shutting down a system.
 
-  The "setting" Item Object\:
+  - The "setting" Item Object\:
     Represents settings and is not an "item" that can be executed.
     A number of settings are supported, but if this Item Object is not specified, then defaults are used.
     The following settings are available: "pid" and "show".
 
-    The "pid" setting\:
+    - The "pid" setting\:
       Represents how the entry pid file is generated or not.
       The following modes are supported: "disable", "require", and "ready".
       For "disable", not pid file representing the entry is created.
       For "require", check to see if the PID file exists for an entry at startup and then when "ready" create a pid file, display error on pid file already exists or on failure and then fail.
       For "ready", when "ready" create a pid file, display error on failure and then fail (does not check if PID file exists).
 
-    The "show" setting\:
+    - The "show" setting\:
       Represents the way entry processing presents information to the screen.
       This applies only to the entry and rule processing itself and does not handle the output of programs and scripts being executed by some entry or rule.
       The following show options are supported: "normal" and "init".
       For "normal", will not report the start or stop of some entry or rule execution but will report any errors or warnings as appropriate.
       For "init", will report when starting programs and may include reporting success and failure status.
 
-  The "main" Item Object\:
+  - The "main" Item Object\:
     Is always executed first (Therefore "main" is both reserved and required).
     All other Basic List Objects are not executed unless either an "item" or a "failsafe" specifies a valid Item name.
     Execution of all Items are top-down.
@@ -33,78 +33,78 @@ Exit Documentation:
     Each "item" supports the following Action Names: "consider", "execute", "failsafe", "freeze", "item", "kill", "pause", "reload", "restart", "ready", "resume", "start", "stop", and "timeout".
     Of those types, the following are considered a "rule" Action: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
 
-    The "consider" Item Action\:
+    - The "consider" Item Action\:
       A special case of a "rule" Action.
       All Action Parameters are the same as with the "rule" Action Parameters.
       The difference is that "consider" is only processed (instead of being processed and executed) and when some "rule" Action designates that this consideration is required (via "need"), wanted (via "want"), or wished for (via "wish") from the within the Rule file.
       If this is determined to be executed, then this is immediately executed when needed, wanted or wished for and applies all properties as appropriate (such as "asynchronous", for example).
       If this is determined not to be executed, then this "consider" is ignored as if it was never there in the first place.
 
-    The "execute" Item Action\:
+    - The "execute" Item Action\:
       Execute into the specified program.
       On successfull execution, the controller program will no longer be running and will be replaced with the designated program.
       This Item Action is only supported when operating in "program" mode.
 
-    The "failsafe" Item Action\:
+    - The "failsafe" Item Action\:
       Accepts only a valid Item Name in which will be executed when a failure is detected.
       Only a single "failsafe" Item Action may function at a time.
       Each successive "failsafe" Item Action specified replaces the previously defined "failsafe" Item Action (in a top-down manner).
       When operating in "failsafe", the "require" Item Action is ignored (given that it is meaningless once operating in "failsafe" mode).
 
-    The "freeze" Item Action\:
+    - The "freeze" Item Action\:
       A "rule" Action for freezing some Control Group.
       This Item Action will process the "freeze" inner Content of the named Rule.
       This is specific to Control Groups and is not yet fully implemented.
       Once implemented this documentation will need to be updated and clarified.
 
-    The "item" Item Action\:
+    - The "item" Item Action\:
       Accepts only a valid Item Name in which will be immediately executed.
       Any valid Item Name, except for the reserved "main", may be used.
 
-    The "kill" Item Action\:
+    - The "kill" Item Action\:
       A "rule" Action for forcibly terminating some process.
       This Item Action will process the "kill" inner Content of the named Rule.
 
-    The "pause" Item Action\:
+    - The "pause" Item Action\:
       A "rule" Action for pausing some process.
       This Item Action will process the "pause" inner Content of the named Rule.
 
-    The "reload" Item Action\:
+    - The "reload" Item Action\:
       A "rule" Action for pausing some process.
       This Item Action will process the "reload" inner Content of the named Rule.
 
-    The "restart" Item Action\:
+    - The "restart" Item Action\:
       A "rule" Action for pausing some process.
       This Item Action will process the "restart" inner Content of the named Rule.
 
-    The "resume" Item Action\:
+    - The "resume" Item Action\:
       A "rule" Action for pausing some process.
       This Item Action will process the "resume" inner Content of the named Rule.
 
-    The "ready" Action\:
+    - The "ready" Action\:
       Instructs the controller program when it is safe to perform normal tasks, such as creating the pid file.
       When not specified, the state is always assumed to be ready.
       For example, the controller program may be used as a full blown "init" replacement and therefore may need to mount the /var/run/ directory.
       If the pid file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is ready.
-      This could be a problem, such as on a read-only filesystem the pid creation fails and controller bails out on error.
+      This could be a problem, such as on a read-only file system the pid creation fails and controller bails out on error.
       Adding "ready" essentially specifies a point in time in the Entry in which things are expected to be safe for such basic operations.
       When the optional "wait" is provided, then "ready" will wait for all currently started asynchronous processes to complete before operating.
 
-    The "start" Item Action\:
+    - The "start" Item Action\:
       A "rule" Action for pausing some process.
       This Item Action will process the "start" inner Content of the named Rule.
 
-    The "stop" Item Action\:
+    - The "stop" Item Action\:
       A "rule" Action for pausing some process.
       This Item Action will process the "stop" inner Content of the named Rule.
 
-    The "thaw" Item Action\:
+    - The "thaw" Item Action\:
       A "rule" Action for unfreezing some Control Group.
       This Item Action will process the "thaw" inner Content of the named Rule.
       This is specific to Control Groups and is not yet fully implemented.
       Once implemented this documentation will need to be updated and clarified.
 
-    The "timeout" Item Action\:
+    - The "timeout" Item Action\:
       Provides default global settings for each of the three special situations: "start", "stop", and "kill".
       Each of these may only have a single one exist at a time (one "start", one "stop", and one "kill").
       Each successive "timeout" Item Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).
@@ -120,15 +120,17 @@ Exit Rule Documentation:
   These are: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
 
   The "rule" Actions immediately execute a named rule file.
-  The first Action Parameter represents the rule directory, which is a relative directory path the rule file is to be found.
-    - Do not include leading or trailing slashes.
-    - This is relative to the settings rules directory.
-  The second Action Parameter represents the basename for the rule file, without the file extension.
-    - This must not have any directory paths.
-  The remaining Action Parameters may be specified in any order\:
-    - "asynchronous": Designates that execution will not block (wait).
-    - "require": Designates that this rule must succeed or trigger execution of failsafe.
-    - "wait": Designates that this rule will not execute until all other Actions before this (including "asynchronous" ones) finish executing (in a top-down manner).
+    - The first Action Parameter represents the rule directory, which is a relative directory path the rule file is to be found.
+      - Do not include leading or trailing slashes.
+      - This is relative to the settings rules directory.
+
+    - The second Action Parameter represents the basename for the rule file, without the file extension.
+      - This must not have any directory paths.
+
+    - The remaining Action Parameters may be specified in any order\:
+      - "asynchronous": Designates that execution will not block (wait).
+      - "require": Designates that this rule must succeed or trigger execution of failsafe.
+      - "wait": Designates that this rule will not execute until all other Actions before this (including "asynchronous" ones) finish executing (in a top-down manner).
 
   The full path to the "rule" is relative to the settings, such that if the controller rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a rule basename of "[basename]", the resulting path would be: "/etc/controller/rules/[directory]/[basename].rule"
 

@@ -89,7 +89,7 @@ extern "C" {
         fl_print_format("%[' failed due to a failure to setup the '%]%[", print->to.stream, print->context, print->context, print->notable);
 
         if (status == F_control_group) {
-          f_print_terminated(controller_control_group_s, print->to.stream);
+          f_print_terminated(controller_cgroup_s, print->to.stream);
         }
         else if (status == F_limit) {
           f_print_terminated(controller_limit_s, print->to.stream);
@@ -257,11 +257,11 @@ extern "C" {
 #endif // _di_controller_rule_item_print_error_rule_not_loaded_
 
 #ifndef _di_controller_rule_setting_read_print_error_
-  void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) {
+  void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    // get the current line number within the settings item.
+    // Get the current line number within the settings item.
     cache->action.line_item = line_item;
     f_fss_count_lines(cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item);
 
@@ -278,11 +278,11 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_print_error_
 
 #ifndef _di_controller_rule_setting_read_print_error_with_range_
-  void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) {
+  void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    // get the current line number within the settings item.
+    // Get the current line number within the settings item.
     cache->action.line_item = line_item;
     f_fss_count_lines(cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item);
 
@@ -290,7 +290,7 @@ extern "C" {
 
     controller_lock_print(print.to, thread);
 
-    fl_print_format("%c%[%SRule setting %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, before, print.context);
+    fl_print_format("%c%[%SRule setting%S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, before, print.context);
     fl_print_format("%[%/Q%]", print.to.stream, print.notable, cache->buffer_item, range, print.notable);
     fl_print_format("%['%S.%]%c", print.to.stream, print.context, after, print.context, f_string_eol_s[0]);
 
@@ -326,7 +326,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_print_value_
 
 #ifndef _di_controller_rule_setting_read_print_values_
-  void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t *cache) {
+  void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t * const cache) {
 
     if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
       return;

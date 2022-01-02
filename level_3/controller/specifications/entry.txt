@@ -14,18 +14,29 @@ Entry Specification:
     - Each Action Content are the "Action Parameters".
 
   The Items:
-    "main": required.
+    - "main": required.
 
-    "setting": optional, Actions may be one of:
+    - "command": optional.
+       Any valid Object represents a command name with\:
+         The first Content represents the file path (without any leading/trailing slashes and without file extension).
+         The second Content represent the basename of the command file.
+
+    - "setting": optional, Actions may be one of\:
       - "mode": Exactly one Content that is one of "program" or "service".
       - "pid": Exactly one Content that is one of "disable", "require", or "ready".
-      - "session": Exactly one Content that is one of  "new" or "same".
-      - "show": Exactly one Content that is one of  "normal" or "init".
+      - "session": Exactly one Content that is one of "new" or "same".
+      - "show": Exactly one Content that is one of "normal" or "init".
+      - "control": One to two Content.
+        The first Content is a relative or absolute path to a socket file.
+        The second Content an optional "readonly".
+      - "control_group": Exactly one Content that is a group name or group id.
+      - "control_mode": Exactly one Content that is a valid file mode.
+      - "control_user": Exactly one Content that is a user name or user id.
 
     The Entry file may have any other valid Item Objects, but only the above are reserved.
 
     The Actions\:
-      "consider": One or more Content.
+      - "consider": One or more Content.
         The first Content is the relative file path (without any leading/trailing slashes and without file extension).
         The second Content is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -33,13 +44,13 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "execute": One or more Content.
+      - "execute": One or more Content.
         The first Content is the program name or full path to the program (the program may be a script).
         All remaining Content are passed as parameters to the program being executed.
 
-      "failsafe": One Content that is a valid Object name, except for the reserved "main".
+      - "failsafe": One Content that is a valid Object name, except for the reserved "main".
 
-      "freeze": Two or more Content.
+      - "freeze": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -47,9 +58,9 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "item": One Content that is a valid Object name, except for the reserved "main".
+      - "item": One Content that is a valid Object name, except for the reserved "main".
 
-      "kill": Two or more Content.
+      - "kill": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -57,7 +68,7 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "pause": Two or more Content.
+      - "pause": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -65,11 +76,11 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "ready": Zero or One Content.
+      - "ready": Zero or One Content.
         The first may only be one of\:
         - "wait"
 
-      "reload": Two or more Content.
+      - "reload": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -77,7 +88,7 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "restart": Two or more Content.
+      - "restart": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -85,7 +96,7 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "resume": Two or more Content.
+      - "resume": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -93,7 +104,7 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "start": Two or more Content.
+      - "start": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -101,7 +112,7 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "stop": Two or more Content.
+      - "stop": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -109,7 +120,7 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "thaw": Two or more Content.
+      - "thaw": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
@@ -117,7 +128,7 @@ Entry Specification:
           - "require"
           - "wait"
 
-      "timeout": Two Content.
+      - "timeout": Two Content.
         The first being one of\:
           - "start"
           - "stop"

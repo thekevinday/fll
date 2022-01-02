@@ -59,6 +59,7 @@
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
+#include <fll/level_0/socket.h>
 
 // fll-1 includes
 #include <fll/level_1/console.h>
@@ -148,7 +149,7 @@ extern "C" {
   #define controller_path_settings_s_length 10
   #define controller_path_suffix_s_length   4
 
-  #define controller_short_control_s         "c"
+  #define controller_short_cgroup_s          "c"
   #define controller_short_daemon_s          "d"
   #define controller_short_init_s            "I"
   #define controller_short_interruptible_s   "i"
@@ -158,7 +159,7 @@ extern "C" {
   #define controller_short_uninterruptible_s "U"
   #define controller_short_validate_s        "v"
 
-  #define controller_long_control_s         "control"
+  #define controller_long_cgroup_s          "cgroup"
   #define controller_long_daemon_s          "daemon"
   #define controller_long_init_s            "init"
   #define controller_long_interruptible_s   "interruptible"
@@ -179,7 +180,7 @@ extern "C" {
     controller_parameter_verbosity_debug_e,
     controller_parameter_version_e,
 
-    controller_parameter_control_e,
+    controller_parameter_cgroup_e,
     controller_parameter_daemon_e,
     controller_parameter_init_e,
     controller_parameter_interruptible_e,
@@ -201,7 +202,7 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(controller_short_control_s, controller_long_control_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(controller_short_cgroup_s, controller_long_cgroup_s, 0, 1, f_console_type_normal_e), \
       f_console_parameter_t_initialize(controller_short_daemon_s, controller_long_daemon_s, 0, 0, f_console_type_normal_e), \
       f_console_parameter_t_initialize(controller_short_init_s, controller_long_init_s, 0, 0, f_console_type_normal_e), \
       f_console_parameter_t_initialize(controller_short_interruptible_s, controller_long_interruptible_s, 0, 0, f_console_type_normal_e), \

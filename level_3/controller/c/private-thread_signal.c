@@ -33,7 +33,7 @@ extern "C" {
         if (information.si_signo == F_signal_interrupt || information.si_signo == F_signal_abort || information.si_signo == F_signal_quit || information.si_signo == F_signal_termination) {
           global->thread->signal = information.si_signo;
 
-          controller_thread_process_cancel(is_normal, controller_thread_cancel_signal_e, global, 0);
+          controller_thread_process_cancel(*global, is_normal, controller_thread_cancel_signal_e, 0);
 
           break;
         }

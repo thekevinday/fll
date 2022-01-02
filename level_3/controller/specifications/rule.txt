@@ -31,7 +31,7 @@ Rule Specification:
   The "setting" Rule Type has the following FSS-0001 (Extended)\:
     - "affinity": One or more Content, each must be a 0 or greater whole number.
     - "capability": One Content representing capabilities.
-    - "control_group": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
+    - "cgroup": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid cgroup (control group) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
     - "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     - "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     - "group": One or more Content representing group names or group ids.

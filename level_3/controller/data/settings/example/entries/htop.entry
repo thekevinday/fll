@@ -3,6 +3,11 @@
 setting:
   mode program
 
+  control htop.socket
+  control_user 0
+  control_group 0
+  control_mode ug+rwx,o-rwx
+
 main:
   failsafe start_top
 

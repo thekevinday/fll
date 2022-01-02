@@ -172,11 +172,11 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_setting_read_print_error_
-  extern void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern void controller_rule_setting_read_print_error(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_error_
 
 /**
- * Print a message about a rule setting problem, with additional messages about value.
+ * Print a message about a rule setting problem, with additional messages about the value.
  *
  * This is intended to be explicitly called by controller_rule_setting_read().
  * This is intended only to be used for simple messages.
@@ -184,11 +184,11 @@ extern "C" {
  * @param print
  *   The error or warning output structure.
  * @param before
- *   The string to append to the message being printed (before the value).
+ *   The string to add to the message being printed (before the value).
  * @param range
  *   The range within the cache item buffer representing the value.
  * @param after
- *   The string to append to the message being printed (after the value).
+ *   The string to add to the message being printed (after the value).
  * @param index
  *   The position in the object actions cache representing the object.
  * @param line_item
@@ -201,7 +201,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_setting_read_print_error_with_range_
-  extern void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern void controller_rule_setting_read_print_error_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t * const thread, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_error_with_range_
 
 /**
@@ -238,7 +238,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_rule_setting_read_print_values_
-  extern void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_values_
 
 #ifdef __cplusplus

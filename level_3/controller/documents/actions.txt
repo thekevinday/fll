@@ -10,7 +10,7 @@ Actions Documentation:
   These actions should be usable by any "control" program that communicates with this "controller" program.
   Should any "control" or "controller" program implementation not support any particular Action for any reason, one should report that the Action is unsupported.
 
-  Freeze Action\:
+  - Freeze Action\:
     The Freeze Action is an extension of a Control Group.
     This is internal to the "controller" program and is not customizable via any Rule file.
     For a customizable "freeze"-like capability, look into the Pause and Resume Actions.
@@ -24,42 +24,42 @@ Actions Documentation:
     This must not attempt to freeze (or unfreeze) the Control Group that the "controller" belongs to.
     Therefore, if a Rule does not specify a Control Group, then it is likely that the Freeze Action will be unsupported for that Rule/Control Group.
 
-  Kill Action\:
+  - Kill Action\:
     Forcefully terminate some process controlled by the "controller".
     This action cannot be blocked and it is recommended to use a Stop Action instead for a more proper termination.
 
-  Pause Action\:
+  - Pause Action\:
     The Pause Action will pause (or freeze) the process controlled by the Rule.
     Although similar to the Freeze Action, this is intended to communicate to an individual process and inform to Pause.
     This is complemented by the Resume Action.
 
-  Restart Action\:
+  - Restart Action\:
     The Restart Action will either perform a Stop Action and then a Restart Action or it will perform the Restart Action designated in some Rule file.
     Ideally this should inform some process to perform its own restart routines.
 
-  Resume Action\:
+  - Resume Action\:
     The Resume Action will unpause (or unfreeze) the process controlled by the Rule.
     Although similar to the Thaw Action, this is intended to communicate to an individual process and inform to Resume.
     This is complemented by the Pause Action.
 
-  Reload Action\:
+  - Reload Action\:
     The Reload Action will perform the Reload Action designated in some Rule file.
     Ideally this should inform some process to perform its own reload routines.
     Many programs often differentiate the concept "reload" from the concept "restart" in that the program remains running during a "reload".
 
-  Start Action\:
+  - Start Action\:
     The Start Action will perform the Start Action designated in some Rule file.
     This action should be used to start some program or script.
     This is the action called by Entry file.
     This is complemented by the Stop Action.
 
-  Stop Action\:
+  - Stop Action\:
     The Stop Action will perform the Stop Action designated in some Rule file.
     This action should be used to stop some program or script.
     This is the action called for all running controlled processes on shutdown.
     This is complemented by the Start Action.
 
-  Thaw Action\:
+  - Thaw Action\:
     The Thaw Action is an extension of a Control Group.
     This is internal to the "controller" program and is not customizable via any Rule file.
     For a customizable "thaw"-like capability, look into the "pause" and "resume" Actions.

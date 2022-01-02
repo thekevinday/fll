@@ -24,12 +24,14 @@ extern "C" {
  * @see controller_rule_process_do()
  */
 #ifndef _di_controller_thread_process_
-  extern void controller_thread_process(const bool is_normal, controller_process_t *process) F_attribute_visibility_internal_d;
+  extern void controller_thread_process(const bool is_normal, controller_process_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_
 
 /**
  * Cancel all process threads.
  *
+ * @param global
+ *   The global thread data.
  * @param is_normal
  *   If TRUE, then process as if this operates during a normal operation (entry and control).
  *   If FALSE, then process as if this operates during a an exit operation.
@@ -39,14 +41,12 @@ extern "C" {
  *   If controller_thread_cancel_signal_e, then this was called from within the signal handling thread, so do not cancel the signal thread.
  *   If controller_thread_cancel_call_e, then this was not called from within the signal handling thread, so cancel the signal thread.
  *   If controller_thread_cancel_execute_e, then this was called from within the Entry/Exit for executing a process, so cancel the signal thread but not the Entry thread.
- * @param global
- *   The global thread data.
  * @param caller
  *   (optional) The process that is calling the cancel so that this process itself does not get cancelled.
  *   Set to NULL to not use.
  */
 #ifndef _di_controller_thread_process_cancel_
-  extern void controller_thread_process_cancel(const bool is_normal, const uint8_t by, controller_global_t *global, controller_process_t *caller) F_attribute_visibility_internal_d;
+  extern void controller_thread_process_cancel(const controller_global_t global, const bool is_normal, const uint8_t by, controller_process_t * const caller) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_cancel_
 
 /**

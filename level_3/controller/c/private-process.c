@@ -32,7 +32,7 @@ extern "C" {
 #endif // _di_controller_process_find_
 
 #ifndef _di_controller_process_prepare_
-  f_status_t controller_process_prepare(const bool is_normal, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) {
+  f_status_t controller_process_prepare(const controller_global_t global, const bool is_normal, const uint8_t action, const f_string_static_t alias, f_array_length_t *id) {
 
     f_status_t status = F_none;
 
@@ -98,14 +98,14 @@ extern "C" {
 #endif // _di_controller_process_prepare_
 
 #ifndef _di_controller_process_prepare_process_type_
-  f_status_t controller_process_prepare_process_type(const uint8_t type, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) {
+  f_status_t controller_process_prepare_process_type(const controller_global_t global, const uint8_t type, const uint8_t action, const f_string_static_t alias, f_array_length_t *id) {
 
-    return controller_process_prepare(type != controller_process_type_exit_e, action, alias, global, id);
+    return controller_process_prepare(global, type != controller_process_type_exit_e, action, alias, id);
   }
 #endif // _di_controller_process_prepare_process_type_
 
 #ifndef _di_controller_process_wait_
-  f_status_t controller_process_wait(const controller_global_t global, controller_process_t *process) {
+  f_status_t controller_process_wait(const controller_global_t global, controller_process_t * const process) {
 
     if (!controller_thread_is_enabled_process(process, global.thread)) {
       return F_status_set_error(F_interrupt);

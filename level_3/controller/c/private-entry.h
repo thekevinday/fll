@@ -57,13 +57,13 @@ extern "C" {
 /**
  * Read the entry list, extracting all items and values.
  *
+ * @param global
+ *   The global data.
  * @param is_entry
  *   If TRUE, then this loads as an entry.
  *   If FALSE, then this loads as an exit.
  * @param content_range
  *   The range in the list buffer representing the content.
- * @param global
- *   The global data.
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param actions
@@ -91,17 +91,17 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_status_t controller_entry_actions_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_actions_read(const controller_global_t global, const bool is_entry, const f_string_range_t content_range, controller_cache_t * const cache, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_actions_read_
 
 /**
  * Pre-process all items for the loaded entry.
  *
+ * @param global
+ *   The global data.
  * @param is_entry
  *   If TRUE, then this operate as an entry.
  *   If FALSE, then this operate as an exit.
- * @param global
- *   The global data.
  * @param cache
  *   The main/global cache to use.
  *
@@ -122,20 +122,20 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_entry_preprocess_
-  extern f_status_t controller_entry_preprocess(const bool is_entry, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_preprocess(const controller_global_t global, const bool is_entry, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_preprocess_
 
 /**
  * Process (execute) all Items for the loaded Entry or Exit.
  *
+ * @param global
+ *   The global data.
  * @param failsafe
  *   If TRUE, operate in failsafe mode (starts at designated failsafe Item).
  *   If FALSE, operate in normal mode (starts at "main" Item).
  * @param is_entry
  *   If TRUE, then this operate as an entry.
  *   If FALSE, then this operate as an exit.
- * @param global
- *   The global data.
  * @param cache
  *   The main/global cache to use.
  *
@@ -156,17 +156,17 @@ extern "C" {
  * @see controller_dynamic_append_terminated()
  */
 #ifndef _di_controller_entry_process_
-  extern f_status_t controller_entry_process(const bool failsafe, const bool is_entry, controller_global_t *global, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_process(const controller_global_t global, const bool failsafe, const bool is_entry, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_process_
 
 /**
  * Read the entry, extracting all lists.
  *
+ * @param global
+ *   The global data.
  * @param is_entry
  *   If TRUE, then this loads as an entry.
  *   If FALSE, then this loads as an exit.
- * @param global
- *   The global data.
  * @param cache
  *   The cache for the specific thread.
  *   This should be the cache global.thread->asynchronouss.array[global.id].cache.
@@ -202,24 +202,24 @@ extern "C" {
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
-  extern f_status_t controller_entry_read(const bool is_entry, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_read(const controller_global_t global, const bool is_entry, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_read_
 
 /**
  * Read the entry settings, loading all settings.
  *
+ * @param global
+ *   The global data.
  * @param is_entry
  *   If TRUE, then this loads as an entry.
  *   If FALSE, then this loads as an exit.
  * @param content_range
  *   The range in the list buffer representing the content.
- * @param global
- *   The global data.
  * @param cache
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_entry_settings_read_
-  extern f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_settings_read(const controller_global_t global, const bool is_entry, const f_string_range_t content_range, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_
 
 #ifdef __cplusplus

@@ -7,6 +7,15 @@ setting:
   pid ready
   show init
 
+  control init.socket
+  control_user 0
+  control_group 0
+  control_mode ug+rwx,o-rwx
+
+task:
+  reboot system reboot
+  shutdown system shutdown
+
 main:
   timeout start 7
   timeout stop 7
@@ -24,7 +33,7 @@ boot:
   start boot root require
   start boot proc asynchronous require
   start boot devices asynchronous require
-  start boot filesystem asynchronous
+  start boot file system asynchronous
   start boot modules wait
 
   start service logger

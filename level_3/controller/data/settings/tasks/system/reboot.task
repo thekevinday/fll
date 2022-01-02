@@ -1,0 +1,95 @@
+# fss-000d
+#
+# Task for rebooting the system.
+#
+# Todo: the idea here is that the controller program supports time based triggers triggers, which includes having status and being able to be canceled.
+# Todo: Another idea here is reboot is a separate program that goes into the background like a server when given an "in" or "on", has a status, and can be canceled.
+
+setting:
+  name "Reboot System"
+  environment PATH
+  script sh
+
+argument:
+  in time unit
+  on date
+  status
+  cancel
+
+help:
+  This task reboots the system after stopping all controlled processes.
+
+  When no parameters are specified, the reboot happens immediately.
+
+  The following parameters are available:
+    - in [time] [unit]: Reboot after so many units of time have passed.
+    - on [date]: Reboot when a given date and time is reached.
+    - status: Get the current state of the reboot process.
+    - cancel: Cancel the current reboot process, if active.
+
+help in:
+  Reboot after a specified amount of time is reached.
+
+  This acts as a timeout that begins immediately upon execution.
+  Once the timeout is reached, reboot is performed.
+
+  This command requires two additional parameters:
+  1) A whole number representing the time.
+  2) A unit of measurement, which must be one of:
+    - millisecond.
+    - second.
+    - minute.
+    - hour.
+    - day.
+    - week.
+    - month.
+    - year.
+    - gigatime.
+    - megatime.
+    - kilotime.
+    - decatime.
+    - time.
+    - gigaepochtime.
+    - megaepochtime.
+    - kiloepochtime.
+    - decaepochtime.
+    - epochtime.
+
+help on:
+  Reboot when the specified date is reached.
+
+  This acts as a trigger that waits for the given date and time of the system clock to be reached.
+  If the clock is changed to on or after the specified date, this trigger is executed.
+
+  This command requires one additional parameter:
+  1) A date in ISO-8601 format.
+
+  The date must be in ISO-8601 format, which looks like: "2006-08-14T02:34:56-06:00".
+  The timezone offset is optional and if it is not provided, UTC is assumed.
+  TODO: support Time units and date times: "2017:0000".
+
+  Both reboot "on" and reboot "in" may be specified.
+  In which case the first one to happen will result in the reboot.
+
+help status:
+  Get whether the reboot is in progress or not and the current settings, if any.
+
+help cancel:
+  Cancel an existing reboot process, if it is not too late.
+
+script:
+  in {
+    reboot in argument:"time" argument:"unit"
+  }
+
+  on {
+    reboot on argument:"date"
+  }
+
+  status {
+    reboot status
+  }
+
+  cancel {
+    reboot cancel
+  }

@@ -1,7 +1,7 @@
 # fss-0005
-
-setting:
-  mode program
+#
+# This example shows how htop can be started during the exit process rather than the entry.
+# See the htop-alternate.entry example.
 
 main:
   failsafe "start top"

@@ -46,19 +46,19 @@ extern "C" {
 
           process = global->thread->processs.array[i];
 
-          // if "active" has a read lock, then do not attempt to clean it.
+          // If "active" has a read lock, then do not attempt to clean it.
           if (f_thread_lock_write_try(&process->active) != F_none) {
             continue;
           }
 
-          // if "lock" has a read or write lock, then do not attempt to clean it.
+          // If "lock" has a read or write lock, then do not attempt to clean it.
           if (f_thread_lock_write_try(&process->lock) != F_none) {
             f_thread_unlock(&process->active);
 
             continue;
           }
 
-          // if process is active or busy, then do not attempt to clean it.
+          // If process is active or busy, then do not attempt to clean it.
           if (process->state == controller_process_state_active_e || process->state == controller_process_state_busy_e) {
             f_thread_unlock(&process->active);
             f_thread_unlock(&process->lock);
@@ -66,7 +66,7 @@ extern "C" {
             continue;
           }
 
-          // if process has a PID file, then it is running in the background, only cleanup if the PID file no longer exists.
+          // If process has a PID file, then it is running in the background, only cleanup if the PID file no longer exists.
           if (process->path_pids.used) {
             f_array_length_t j = 0;
 
@@ -87,7 +87,7 @@ extern "C" {
 
           f_thread_unlock(&process->lock);
 
-          // close any still open thread.
+          // Close any still open thread.
           if (process->id_thread) {
             status = f_thread_join(process->id_thread, 0);
 
@@ -117,11 +117,11 @@ extern "C" {
             }
           }
 
-          // deallocate dynamic portions of the structure that are only ever needed while the process is running.
+          // Deallocate dynamic portions of the structure that are only ever needed while the process is running.
           controller_cache_delete_simple(&process->cache);
           f_type_array_lengths_resize(0, &process->stack);
 
-          // shrink the childs array.
+          // Shrink the childs array.
           if (process->childs.used) {
             for (; process->childs.used; --process->childs.used) {
               if (process->childs.array[process->childs.used]) break;
@@ -132,13 +132,13 @@ extern "C" {
             }
           }
 
-          // deallocate the PID files.
+          // Deallocate the PID files.
           if (process->path_pids.used) {
             process->path_pids.used = 0;
             f_string_dynamics_resize(0, &process->path_pids);
           }
 
-          // deallocate any rules in the space that is declared to be unused.
+          // Deallocate any rules in the space that is declared to be unused.
           if (i >= global->thread->processs.used) {
             controller_rule_delete_simple(&process->rule);
           }
@@ -187,7 +187,7 @@ extern "C" {
     controller_thread_t thread = controller_thread_t_initialize;
     controller_global_t global = macro_controller_global_t_initialize(main, setting, &thread);
 
-    // the global locks must be initialized, but only once, so initialize immediately upon allocation.
+    // The global locks must be initialized, but only once, so initialize immediately upon allocation.
     status = controller_lock_create(&thread.lock);
 
     if (F_status_is_error(status)) {
@@ -252,11 +252,11 @@ extern "C" {
       }
     }
 
-    // only make the rule and control threads available once any/all pre-processing and are completed.
+    // Only make the rule and control threads available once any/all pre-processing and are completed.
     if (F_status_is_error_not(status) && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled_e) {
       if (main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
 
-        // wait for the entry thread to complete before starting the rule thread.
+        // Wait for the entry thread to complete before starting the rule thread.
         controller_thread_join(&thread.id_rule);
 
         if (thread.enabled && setting->mode == controller_setting_mode_service_e) {
@@ -299,11 +299,11 @@ extern "C" {
         controller_thread_join(&thread.id_signal);
       }
       else if (setting->mode == controller_setting_mode_program_e) {
-        status = controller_rule_wait_all(F_true, global, F_false, 0);
+        status = controller_rule_wait_all(global, F_true, F_false, 0);
       }
     }
 
-    controller_thread_process_cancel(F_true, controller_thread_cancel_call_e, &global, 0);
+    controller_thread_process_cancel(global, F_true, controller_thread_cancel_call_e, 0);
 
     controller_thread_process_exit(&global);
 

@@ -1,17 +1,17 @@
 # fss-0002
 
 Rule Documentation:
-  This describes the intent and purpose of the rule file settings.
+  This describes the intent and purpose of a Rule file.
 
-  A rule file, such as "ssh.rule", is intended to designate what to execute.
+  A Rule file, such as "ssh.rule", is intended to designate what to execute.
 
   The rule file is read top-down, except for the outer most list "setting", which is intended to store setting data for this rule.
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
-  The "setting" Rule Type has the following FSS-0001 (Extended) Content\:
+  - The "setting" Rule Type has the following FSS-0001 (Extended) Content\:
     - "affinity": Define one or more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
     - "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
-    - "control_group": Define a control group (cgroup) in which everything within this rule executes under.
+    - "cgroup": Define a cgroup (control group) in which everything within this rule executes under.
     - "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule. @todo make sure this is implemented.
     - "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
     - "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
@@ -26,41 +26,41 @@ Rule Documentation:
     - "timeout": A set of timeouts to wait for in which to perform a set action or to consider failure.
     - "user": A single user name or ID to execute as.
 
-  In the case of "capability"\:
+  - In the case of "capability"\:
     If the user the controller program is run as does not have the desired capabilities already, they cannot be added.
     This essentially maintains or reduces the capabilities already available.
     Due to capabilities only being a draft in the POSIX standard, one may expect "capabilities" support may not be available and in such a case this setting will do nothing.
     If the dependent project (f_capability) does not have libcap support enabled, then capabilities will be unsupported by the compilation of this project.
 
-  In the case of "control"\:
+  - In the case of "control"\:
     The first argument is either "existing" or "new", where for "existing" the process is run inside the existing control used by the parent and when "new" the process is executed within a new control group namespace entirely.
 
-  In the case of "group" and "user"\:
+  - In the case of "group" and "user"\:
     Only users and groups that the user the controller program is being run as is allowed to use may be used.
 
-  In the case of "limit"\:
+  - In the case of "limit"\:
     The first parameter must be one of: "as", "core", "cpu", "data", "fsize", "locks", "memlock", "msgqueue", "nice", "nofile", "nproc", "rss", "rtprio", "rttime", "sigpending", or "stack".
     The second parameter repesents the soft limit.
     The third parameter represents the hard limit.
     This may be specified multiply times, but only once for each type.
 
-  In the case of "on"\:
+  - In the case of "on"\:
     The first parameter represents the Action the dependency exists under and must be one of: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", or "thaw".
     The second parameter represents how the dependency is required and must be one of: "need", "want", or "wish".
     The third parameter is a partial path to the rule file.
     The fourth parameter represents the name of the rule file.
 
-    In the case of the second parameter\:
-      A "need" designates that the dependent rule is required to be executed (must exist and must succeed).
-      A "want" designates that the dependent rule is to be executed (may exist and if it does, then it must succeed).
-      A "wish" designates that the dependent rule is to be executed (may exist and if it does, but it does not need to succeed).
+    - In the case of the second parameter\:
+      - A "need" designates that the dependent rule is required to be executed (must exist and must succeed).
+      - A "want" designates that the dependent rule is to be executed (may exist and if it does, then it must succeed).
+      - A "wish" designates that the dependent rule is to be executed (may exist and if it does, but it does not need to succeed).
 
       In the case of "want" and "wish", if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
 
-  In the case of "path"\:
+  - In the case of "path"\:
     When specified, the PATH environment variable is automatically added to the "environment" setting.
 
-  In the case of "parameter"\:
+  - In the case of "parameter"\:
     IKI variables are expanded in a pre-process manner and will be removed prior to any execution.
     Any IKI variables referencing an undefined parameter will be fully removed.
     These parameters are only exposed in the specific rule file in which they are defined and cannot be shared between rules.
@@ -68,13 +68,13 @@ Rule Documentation:
     These IKI variables are only substituted within a Rule Item's Content (and not within a Rule Setting nor within a Rule Item's Object).
     Note: IKI variables are not yet implemented.
 
-  In the case of "scheduler"\:
+  - In the case of "scheduler"\:
     The valid range of the priority number is dependent on the scheduler.
     For example, non-real-time schedulers (such as "idle") only support a value of 0 whereas real-time schedulers (such as "fifo") only support an inclusive range of 1 to 99.
     Supported non-real-time schedulers are: "batch", "idle", and "other" (aka: normal/default).
     Supported real-time schedulers are: "deadline", "fifo", "round_robin".
 
-  In the case of "timeout"\:
+  - In the case of "timeout"\:
     The "timeout" Item Action provides default global settings for each of the three special situations: "kill", "start", and "stop".
     Each of these may only have a single one exist at a time (one "kill", one "start", one "stop", and one "wait").
     Each successive "timeout" Item Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).
@@ -107,21 +107,24 @@ Rule Documentation:
     Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
 
   Thee are additional Rule Actions not used to execute ("pid_file", "rerun", and "with")\:
-    The "pid_file" Object's Content designates the path to the PID file created by the called program.
+    - The "pid_file" Object's Content designates the path to the PID file created by the called program.
 
-    The "rerun" Object's Content designates how to re-run a given execution Rule type.
-    The first Content represents the execution type, which may be one of: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
-    The second Content represents when to run this re-run is triggered, which is either "success" (return code of 0) or "failure" (return code is not 0).
-    The third Content and more represent additional options for fine tuning how the re-run is perforrmed\:
-      When "delay", followed by a number of MegaTime (MT) (equivalent to milliseconds) in which to wait before attempting the re-run.
-      When "max", followed by a positive number or the number 0 designating the maximum number of re-runs to perform.
-      When "reset", the "max" re-run counter is reset for the opposite re-run when this re-run is triggered, such as\:
-        A "rerun start success reset" and a "rerun failure max 10", the failure counter would reset to 0 when the "success" re-run is performed and not when the "failure" re-run is performed.
-      A "max" of 0 designates that the re-run will happen infinitely.
+    - The "rerun" Object's Content designates how to re-run a given execution Rule type.
+      - The first Content represents the execution type, which may be one of: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
 
-    The "with" Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
-    The following flags are supported:
-      - "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
-                   When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").
-      - "session_new": Execute in a new session setting the process group to the executed process' id (making the executed process a "controlling terminal").
-      - "session_same": Execute in the same session where the process group is set to the parent process id.
+      - The second Content represents when to run this re-run is triggered, which is either "success" (return code of 0) or "failure" (return code is not 0).
+
+      - The third Content and more represent additional options for fine tuning how the re-run is perforrmed\:
+        When "delay", followed by a number of MegaTime (MT) (equivalent to milliseconds) in which to wait before attempting the re-run.
+        When "max", followed by a positive number or the number 0 designating the maximum number of re-runs to perform.
+        When "reset", the "max" re-run counter is reset for the opposite re-run when this re-run is triggered, such as\:
+          A "rerun start success reset" and a "rerun failure max 10", the failure counter would reset to 0 when the "success" re-run is performed and not when the "failure" re-run is performed.
+
+        A "max" of 0 designates that the re-run will happen infinitely.
+
+    - The "with" Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
+      The following flags are supported:
+        - "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
+                     When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").
+        - "session_new": Execute in a new session setting the process group to the executed process' id (making the executed process a "controlling terminal").
+        - "session_same": Execute in the same session where the process group is set to the parent process id.

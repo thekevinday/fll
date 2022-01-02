@@ -23,8 +23,7 @@ extern "C" {
     controller_cache_t *cache = &entry->global->thread->cache;
     f_status_t *status = &entry->global->thread->status;
 
-    *status = controller_entry_read(F_true, *entry->global, cache);
-
+    *status = controller_entry_read(*entry->global, F_true, cache);
 
     if (F_status_set_fine(*status) == F_interrupt) {
       entry->setting->ready = controller_setting_ready_abort_e;
@@ -33,7 +32,7 @@ extern "C" {
       entry->setting->ready = controller_setting_ready_fail_e;
     }
     else if (*status != F_child) {
-      *status = controller_entry_preprocess(F_true, *entry->global, cache);
+      *status = controller_entry_preprocess(*entry->global, F_true, cache);
     }
 
     if (F_status_is_error_not(*status) && *status != F_child) {
@@ -54,7 +53,7 @@ extern "C" {
           *status = F_status_set_error(F_available_not);
         }
         else {
-          *status = controller_entry_process(F_false, F_true, entry->global, cache);
+          *status = controller_entry_process(*entry->global, F_false, F_true, cache);
 
           if (F_status_is_error(*status)) {
             entry->setting->ready = controller_setting_ready_fail_e;
@@ -62,7 +61,7 @@ extern "C" {
             if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->global->setting->failsafe_enabled) {
               const uint8_t original_enabled = entry->global->thread->enabled;
 
-              // restore operating mode so that the failsafe can execute.
+              // Restore operating mode so that the failsafe can execute.
               *status = f_thread_mutex_lock(&entry->global->thread->lock.alert);
 
               if (F_status_is_error_not(*status)) {
@@ -71,12 +70,12 @@ extern "C" {
                 f_thread_mutex_unlock(&entry->global->thread->lock.alert);
               }
 
-              // restart the signal thread to allow for signals while operating the failsafe Items.
+              // Restart the signal thread to allow for signals while operating the failsafe Items.
               if (!entry->global->thread->id_signal) {
                 f_thread_create(0, &entry->global->thread->id_signal, &controller_thread_signal_normal, (void *) entry->global);
               }
 
-              const f_status_t status_failsafe = controller_entry_process(F_true, F_true, entry->global, cache);
+              const f_status_t status_failsafe = controller_entry_process(*entry->global, F_true, F_true, cache);
 
               if (F_status_is_error(status_failsafe)) {
                 if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -93,7 +92,7 @@ extern "C" {
               }
               else {
 
-                // restore operating mode to value prior to failsafe mode.
+                // Restore operating mode to value prior to failsafe mode.
                 *status = f_thread_mutex_lock(&entry->global->thread->lock.alert);
 
                 if (F_status_is_error_not(*status)) {
@@ -148,7 +147,7 @@ extern "C" {
     controller_cache_t *cache = &entry->global->thread->cache;
     f_status_t *status = &entry->global->thread->status;
 
-    *status = controller_entry_read(F_false, *entry->global, cache);
+    *status = controller_entry_read(*entry->global, F_false, cache);
 
     if (F_status_set_fine(*status) == F_interrupt) {
       entry->setting->ready = controller_setting_ready_abort_e;
@@ -160,13 +159,13 @@ extern "C" {
       entry->setting->ready = controller_setting_ready_done_e;
     }
     else if (*status != F_child) {
-      *status = controller_entry_preprocess(F_false, *entry->global, cache);
+      *status = controller_entry_preprocess(*entry->global, F_false, cache);
     }
 
     if (F_status_is_error_not(*status) && *status != F_child && *status != F_file_found_not) {
       if (main->parameters[controller_parameter_validate_e].result == f_console_result_none_e || main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
 
-        *status = controller_entry_process(F_false, F_false, entry->global, cache);
+        *status = controller_entry_process(*entry->global, F_false, F_false, cache);
 
         if (F_status_is_error(*status)) {
           entry->setting->ready = controller_setting_ready_fail_e;
@@ -175,7 +174,7 @@ extern "C" {
 
             const uint8_t original_enabled = entry->global->thread->enabled;
 
-            // restore operating mode so that the failsafe can execute.
+            // Restore operating mode so that the failsafe can execute.
             if (F_status_set_fine(*status) == F_execute) {
               *status = f_thread_mutex_lock(&entry->global->thread->lock.alert);
 
@@ -185,13 +184,13 @@ extern "C" {
                 f_thread_mutex_unlock(&entry->global->thread->lock.alert);
               }
 
-              // restart the signal thread to allow for signals while operating the failsafe Items.
+              // Restart the signal thread to allow for signals while operating the failsafe Items.
               if (!entry->global->thread->id_signal) {
                 f_thread_create(0, &entry->global->thread->id_signal, &controller_thread_signal_other, (void *) entry->global);
               }
             }
 
-            const f_status_t status_failsafe = controller_entry_process(F_true, F_false, entry->global, cache);
+            const f_status_t status_failsafe = controller_entry_process(*entry->global, F_true, F_false, cache);
 
             if (F_status_is_error(status_failsafe)) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -208,7 +207,7 @@ extern "C" {
             }
             else {
 
-              // restore operating mode to value prior to failsafe mode.
+              // Restore operating mode to value prior to failsafe mode.
               *status = f_thread_mutex_lock(&entry->global->thread->lock.alert);
 
               if (F_status_is_error_not(*status)) {

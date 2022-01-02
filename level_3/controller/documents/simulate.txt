@@ -6,18 +6,18 @@ Simulate Documentation:
   The "controller" program is designed to support being run as an alternative to an init program (such as Sysvinit or SystemD).
   To help prevent problems, simulation and validation functionality is provided.
 
-  The "validate" functionality\:
+  - The "validate" functionality\:
     By itself will simply check the syntax of the Entry and Rule files (for Rule files specified in the Entry or Exit file).
     Errors are reported and nothing is executed.
     The "controller" program will return 0 on validation success and 1 on validation failure.
 
-  The "simulate" functionality\:
+  - The "simulate" functionality\:
     By itself will perform a simulated execution of all Rules designated by an Entry or Exit file.
     The simulation is not a true simulation in that no program is ever called to perform any operations.
     Furthermore, any "script" specified inside a Rule is only simulated as a whole and not its individual parts.
     Once the Entry file is finished executing, the "simulate" will continue to run waiting on "control" commands.
 
-  The "simulate" with "validate" functionality\:
+  - The "simulate" with "validate" functionality\:
     Will perform similar to "validate" functionality except that additional information of the Rules to be executed will be printed.
     There will be neither execution nor simulated execution of any Rule when both "simulate" and "validate" are used together.
 

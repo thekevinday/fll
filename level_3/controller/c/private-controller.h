@@ -33,7 +33,7 @@ extern "C" {
 #endif // _di_controller_range_after_number_sign_
 
 /**
- * Rip a string fromt he source and then add a NULL after the end of the string.
+ * Rip a string from the source and then add a NULL after the end of the string.
  *
  * @param source
  *   The string to copy from.
@@ -100,6 +100,8 @@ extern "C" {
 /**
  * Load a file from the controller settings directory.
  *
+ * @param global
+ *   The global data.
  * @param required
  *   If TRUE, the file is required to exist and will throw an error if not found.
  *   If FALSE, the file is not required to exist and will return without error if not found.
@@ -113,8 +115,6 @@ extern "C" {
  *   The length of the prefix path.
  * @param path_suffix_length
  *   The length of the suffix path.
- * @param global
- *   The global data.
  * @param cache
  *   The following within the cache is updated:
  *   - name_file: The partial path of the file is inserted.
@@ -138,7 +138,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_file_load_
-  extern f_status_t controller_file_load(const bool required, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_file_load(const controller_global_t global, const bool required, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_file_load_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_controller_get_id_user_
-  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) F_attribute_visibility_internal_d;
+  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, uid_t *id) F_attribute_visibility_internal_d;
 #endif // _di_controller_get_id_user_
 
 /**
@@ -261,7 +261,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_controller_get_id_group_
-  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) F_attribute_visibility_internal_d;
+  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, gid_t *id) F_attribute_visibility_internal_d;
 #endif // _di_controller_get_id_group_
 
 /**
@@ -271,11 +271,11 @@ extern "C" {
  *
  * This does not do any locking or unlocking for the setting data, be sure to lock appropriately before and after calling this.
  *
+ * @param global
+ *   The global data.
  * @param is_entry
  *   If TRUE, then this operate as an entry.
  *   If FALSE, then this operate as an exit.
- * @param global
- *   The global data.
  * @param cache
  *   The cache.
  *
@@ -287,7 +287,7 @@ extern "C" {
  * @see controller_file_pid_create()
  */
 #ifndef _di_controller_perform_ready_
-  extern f_status_t controller_perform_ready(const bool is_entry, controller_global_t global, controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_perform_ready(const controller_global_t global, const bool is_entry, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_perform_ready_
 
 /**

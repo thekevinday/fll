@@ -22,6 +22,8 @@ extern "C" {
  *
  * This requires that a global.thread->lock.process lock be set on process->lock before being called.
  *
+ * @param global
+ *   The global data.
  * @param is_normal
  *   If TRUE, then process as if this operates during a normal operation (entry and control).
  *   If FALSE, then process as if this operates during a an exit operation.
@@ -29,8 +31,6 @@ extern "C" {
  *   The Rule Action to use.
  * @param alias
  *   The Rule alias to use.
- * @param global
- *   The global data.
  * @param id
  *   (optional) The process ID when found or created.
  *   Set to NULL to not use.
@@ -53,7 +53,7 @@ extern "C" {
  * @see controller_lock_write()
  */
 #ifndef _di_controller_process_prepare_
-  extern f_status_t controller_process_prepare(const bool is_normal, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) F_attribute_visibility_internal_d;
+  extern f_status_t controller_process_prepare(const controller_global_t global, const bool is_normal, const uint8_t action, const f_string_static_t alias, f_array_length_t *id) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_prepare_
 
 /**
@@ -66,14 +66,14 @@ extern "C" {
  *
  * This requires that a global.thread->lock.process lock be set on process->lock before being called.
  *
+ * @param global
+ *   The global data.
  * @param type
  *   The process type to use when checking if thread is enabled.
  * @param action
  *   The Rule Action to use.
  * @param alias
  *   The Rule alias to use.
- * @param global
- *   The global data.
  * @param id
  *   (optional) The process ID when found or created.
  *   Set to NULL to not use.
@@ -86,7 +86,7 @@ extern "C" {
  * @see controller_process_prepare()
  */
 #ifndef _di_controller_process_prepare_process_type_
-  extern f_status_t controller_process_prepare_process_type(const uint8_t type, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) F_attribute_visibility_internal_d;
+  extern f_status_t controller_process_prepare_process_type(const controller_global_t global, const uint8_t type, const uint8_t action, const f_string_static_t alias, f_array_length_t *id) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_prepare_process_type_
 
 /**
@@ -136,7 +136,7 @@ extern "C" {
  * @see f_thread_condition_wait_timed()
  */
 #ifndef _di_controller_process_wait_
-  extern f_status_t controller_process_wait(const controller_global_t global, controller_process_t *process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_process_wait(const controller_global_t global, controller_process_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_wait_
 
 #ifdef __cplusplus
