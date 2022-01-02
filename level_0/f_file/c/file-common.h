@@ -321,9 +321,9 @@ extern "C" {
   #define F_file_mode_t_mask_bit_sticky_d       0x11000000 // 0001 0001 0000 0000 0000 0000 0000 0000
   #define F_file_mode_t_mask_bit_write_d        0x00222222 // 0000 0000 0010 0010 0010 0010 0010 0010
 
-  #define F_file_mode_t_replace_owner_d     0x1  // 0000 0001
+  #define F_file_mode_t_replace_world_d     0x1  // 0000 0001
   #define F_file_mode_t_replace_group_d     0x2  // 0000 0010
-  #define F_file_mode_t_replace_world_d     0x4  // 0000 0100
+  #define F_file_mode_t_replace_owner_d     0x4  // 0000 0100
   #define F_file_mode_t_replace_special_d   0x8  // 0000 1000
   #define F_file_mode_t_replace_directory_d 0x10 // 0001 0000
 

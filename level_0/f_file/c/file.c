@@ -734,7 +734,6 @@ extern "C" {
       *mode |= mode_file & F_file_mode_group_rwx_d;
 
       if (mode_change & F_file_mode_t_block_group_d) {
-
         if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_subtract_d) {
           if (*mode & F_file_mode_group_r_d) {
             *mode -= F_file_mode_group_r_d;
@@ -793,7 +792,6 @@ extern "C" {
     change = mode_change & F_file_mode_t_block_world_d;
 
     if (mode_replace & F_file_mode_t_replace_world_d) {
-
       if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_add_d) {
         *mode |= F_file_mode_world_r_d;
       }
@@ -815,7 +813,6 @@ extern "C" {
       *mode |= mode_file & F_file_mode_world_rwx_d;
 
       if (mode_change & F_file_mode_t_block_world_d) {
-
         if (change & F_file_mode_t_mask_bit_read_d & F_file_mode_t_mask_how_subtract_d) {
           if (*mode & F_file_mode_world_r_d) {
             *mode -= F_file_mode_world_r_d;
@@ -885,12 +882,10 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     uint8_t syntax = 0;
-
-    *mode = 0;
-    *replace = 0;
+    uint8_t replace_result = 0;
+    f_file_mode_t mode_result = 0;
 
     if (string[0] == f_string_ascii_plus_s[0] || string[0] == f_string_ascii_minus_s[0] || string[0] == f_string_ascii_equal_s[0]) {
-
       if (string[1] == f_string_ascii_r_s[0] || f_string_ascii_w_s[0] || f_string_ascii_x_s[0] || f_string_ascii_X_s[0] || f_string_ascii_s_s[0] ||f_string_ascii_t_s[0]) {
         syntax = 1;
       }
@@ -913,7 +908,7 @@ extern "C" {
 
     if (syntax == 1) {
       uint8_t on = 0; // 1 = user, 2 = group, 4 = world/sticky, 7 = all.
-      uint8_t how = 0; // 1 = add, 2 = replace, 3 = subtract.
+      uint8_t how = 0; // 1 = add, 2 = replace, 3 = subtract, 4 = add when no "on", 5 = replace when no "on", and 6 = subtract when no "on".
 
       f_file_mode_t mode_mask = 0;
       f_file_mode_t mode_umask = 0;
@@ -970,17 +965,17 @@ extern "C" {
 
       for (f_array_length_t i = 0; syntax && string[i]; ++i) {
 
-        if (string[i] == f_string_ascii_o_s[0]) {
+        if (string[i] == f_string_ascii_u_s[0]) {
           on |= 1;
-          mode_mask |= F_file_mode_t_block_world_d;
+          mode_mask |= F_file_mode_t_block_owner_d;
         }
         else if (string[i] == f_string_ascii_g_s[0]) {
           on |= 2;
           mode_mask |= F_file_mode_t_block_group_d;
         }
-        else if (string[i] == f_string_ascii_u_s[0]) {
+        else if (string[i] == f_string_ascii_o_s[0]) {
           on |= 4;
-          mode_mask |= F_file_mode_t_block_owner_d;
+          mode_mask |= F_file_mode_t_block_world_d;
         }
         else if (string[i] == f_string_ascii_a_s[0]) {
           on = 7;
@@ -996,22 +991,22 @@ extern "C" {
           else {
             how = on ? 2 : 5;
 
-            // clear by mask to prepare for replacement, which includes clearing the special block.
+            // Clear by mask to prepare for replacement, which includes clearing the special block.
             mode_mask |= F_file_mode_t_block_special_d;
-            *mode -= (*mode) & mode_mask;
+            mode_result -= mode_result & mode_mask;
 
-            *replace |= F_file_mode_t_replace_special_d;
+            replace_result |= F_file_mode_t_replace_special_d;
 
             if (mode_mask & F_file_mode_t_block_owner_d) {
-              *replace |= F_file_mode_t_replace_owner_d;
+              replace_result |= F_file_mode_t_replace_owner_d;
             }
 
             if (mode_mask & F_file_mode_t_block_group_d) {
-              *replace |= F_file_mode_t_replace_group_d;
+              replace_result |= F_file_mode_t_replace_group_d;
             }
 
             if (mode_mask & F_file_mode_t_block_world_d) {
-              *replace |= F_file_mode_t_replace_world_d;
+              replace_result |= F_file_mode_t_replace_world_d;
             }
           }
 
@@ -1019,6 +1014,8 @@ extern "C" {
             on = 7;
             mode_mask = F_file_mode_t_block_all_d;
           }
+
+          what = 0;
 
           for (++i; string[i]; ++i) {
 
@@ -1037,7 +1034,7 @@ extern "C" {
             else if (string[i] == f_string_ascii_s_s[0]) {
               mode_mask |= F_file_mode_t_block_special_d;
 
-              if (on & 4) {
+              if (on & 1) {
                 what = F_file_mode_t_mask_bit_set_owner_d;
               }
               else if (on & 2) {
@@ -1050,7 +1047,7 @@ extern "C" {
             else if (string[i] == f_string_ascii_t_s[0]) {
               mode_mask |= F_file_mode_t_block_special_d;
 
-              if (on & 1) {
+              if (on & 4) {
                 what = F_file_mode_t_mask_bit_sticky_d;
               }
               else {
@@ -1059,7 +1056,7 @@ extern "C" {
             }
             else if (string[i] == f_string_ascii_comma_s[0]) {
               if (how > 3) {
-                *mode -= *mode & mode_umask;
+                mode_result -= mode_result & mode_umask;
               }
 
               on = 0;
@@ -1068,22 +1065,63 @@ extern "C" {
 
               break;
             }
+            else if (string[i] == f_string_ascii_plus_s[0] || string[i] == f_string_ascii_minus_s[0] || string[i] == f_string_ascii_equal_s[0]) {
+              what = 0;
+
+              if (string[i] == f_string_ascii_plus_s[0]) {
+                how = on ? 1 : 4;
+              }
+              else if (string[i] == f_string_ascii_minus_s[0]) {
+                how = on ? 3 : 6;
+              }
+              else {
+                how = on ? 2 : 5;
+
+                // Clear by mask to prepare for replacement, which includes clearing the special block.
+                mode_mask |= F_file_mode_t_block_special_d;
+                mode_result -= mode_result & mode_mask;
+
+                replace_result |= F_file_mode_t_replace_special_d;
+
+                if (mode_mask & F_file_mode_t_block_owner_d) {
+                  replace_result |= F_file_mode_t_replace_owner_d;
+                }
+
+                if (mode_mask & F_file_mode_t_block_group_d) {
+                  replace_result |= F_file_mode_t_replace_group_d;
+                }
+
+                if (mode_mask & F_file_mode_t_block_world_d) {
+                  replace_result |= F_file_mode_t_replace_world_d;
+                }
+              }
+            }
             else {
               syntax = 0;
 
               break;
             }
 
-            if (how == 1 || how == 2 || how == 4 || how == 5) {
-              *mode |= what & mode_mask & F_file_mode_t_mask_how_add_d;
-            }
-            else if (how == 3 || how == 6) {
-              *mode |= what & mode_mask & F_file_mode_t_mask_how_subtract_d;
+            if (what) {
+              if (how == 1 || how == 2 || how == 4 || how == 5) {
+                mode_result |= what & mode_mask & F_file_mode_t_mask_how_add_d;
+
+                if (mode_result & what & mode_mask & F_file_mode_t_mask_how_subtract_d) {
+                  mode_result -= mode_result & what & mode_mask & F_file_mode_t_mask_how_subtract_d;
+                }
+              }
+              else if (how == 3 || how == 6) {
+                mode_result |= what & mode_mask & F_file_mode_t_mask_how_subtract_d;
+
+                if (mode_result & what & mode_mask & F_file_mode_t_mask_how_add_d) {
+                  mode_result -= mode_result & what & mode_mask & F_file_mode_t_mask_how_add_d;
+                }
+              }
             }
           } // for
 
           if (how > 3) {
-            *mode -= *mode & mode_umask;
+            mode_result -= mode_result & mode_umask;
           }
 
           if (!string[i]) break;
@@ -1098,9 +1136,11 @@ extern "C" {
       // 1 = add, 2 = replace, 3 = subtract.
       uint8_t how = 0;
 
-      f_array_length_t i = 0;
+      // 0 = none, 0x1 = leading zero.
+      uint8_t option = 0;
 
-      *replace = 0;
+      f_array_length_t i = 0;
+      f_array_length_t j = 0;
 
       if (string[0] == f_string_ascii_plus_s[0]) {
         how = 1;
@@ -1114,12 +1154,12 @@ extern "C" {
         how = 2;
         i = 1;
 
-        *replace = F_file_mode_t_replace_standard_d;
+        replace_result = F_file_mode_t_replace_standard_d;
       }
       else {
         how = 2;
 
-        *replace = F_file_mode_t_replace_standard_d | F_file_mode_t_replace_directory_d;
+        replace_result = F_file_mode_t_replace_standard_d | F_file_mode_t_replace_directory_d;
       }
 
       // Seek past leading '0's.
@@ -1133,7 +1173,7 @@ extern "C" {
         for (; string[i + j] && j < 4; ++j) {
 
           if (j) {
-            *mode <<= 8;
+            mode_result <<= 8;
           }
 
           if (string[i] == f_string_ascii_0_s[0]) {
@@ -1143,10 +1183,10 @@ extern "C" {
 
             // This assumes ASCII/UTF-8.
             if (how == 3) {
-              *mode |= (string[i + j] - 0x30) << 4;
+              mode_result |= (string[i + j] - 0x30) << 4;
             }
             else {
-              *mode |= string[i + j] - 0x30;
+              mode_result |= string[i + j] - 0x30;
             }
           }
           else {
@@ -1163,19 +1203,19 @@ extern "C" {
         else if (how == 2) {
 
           // If there are only '0's then the standard and setuid/setgid/sticky bits are to be replaced.
-          if (!*mode) {
-            *replace = F_file_mode_t_replace_standard_d | F_file_mode_t_replace_special_d;
+          if (!mode_result) {
+            replace_result = F_file_mode_t_replace_standard_d | F_file_mode_t_replace_special_d;
           }
         }
       }
     }
 
     if (syntax) {
+      *mode = mode_result;
+      *replace = replace_result;
+
       return F_none;
     }
-
-    *mode = 0;
-    *replace = 0;
 
     return F_status_set_error(F_syntax);
   }
@@ -1275,7 +1315,7 @@ extern "C" {
       *to |= F_file_mode_group_r_d;
     }
 
-    if (add & F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_write_d) {
+    if (add & F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_read_d) {
       *to |= F_file_mode_world_r_d;
     }
 
