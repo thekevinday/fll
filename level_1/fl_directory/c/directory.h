@@ -113,14 +113,14 @@ extern "C" {
  *   F_directory_link_max (with error bit) max links limit reached or exceeded.
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_prohibited (with error bit) if file system does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_failure (with error bit) for any other error.
  *
  * @see f_directory_create()

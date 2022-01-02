@@ -40,7 +40,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but no descriptor was provided to close.
  *   F_descriptor (with error bit) if id is an invalid descriptor.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_parameter (with error bit) if a parameter is invalid.

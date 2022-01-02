@@ -60,14 +60,14 @@ extern "C" {
  *   F_directory_link_max (with error bit) max links limit reached or exceeded.
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_prohibited (with error bit) if file system does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_failure (with error bit) for any other error.
  *
  * @see mkdir()
@@ -95,14 +95,14 @@ extern "C" {
  *   F_directory_link_max (with error bit) max links limit reached or exceeded.
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_prohibited (with error bit) if file system does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_failure (with error bit) for any other error.
  *
  * @see mkdirat()
@@ -280,9 +280,9 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_prohibited (with error bit) if file system does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *
  * @see open()
  */
@@ -322,9 +322,9 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_prohibited (with error bit) if file system does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *
  * @see openat()
  */
@@ -361,7 +361,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_prohibited (with error bit) if file system does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
  *
@@ -404,7 +404,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_prohibited (with error bit) if file system does not allow for removing.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
  *
@@ -430,21 +430,21 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perform write.
+ *   F_busy (with error bit) if file system is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_reached (with error bit) quota reached of file system is out of space.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
- *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_prohibited (with error bit) if file system does not allow for creating or linking.
+ *   F_read_only (with error bit) if file system is read-only.
  *   F_search (with error bit) if search permission is denied for one of the paths to the file.
  *   F_failure (with error bit) for any other error.
  *
@@ -473,21 +473,21 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if filesystem is too busy to perform write.
+ *   F_busy (with error bit) if file system is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path (when calling utimensat()).
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
- *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
- *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
+ *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
+ *   F_filesystem_quota_reached (with error bit) quota reached of file system is out of space.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if filesystem does not allow for creating or linking.
- *   F_read_only (with error bit) if filesystem is read-only.
+ *   F_prohibited (with error bit) if file system does not allow for creating or linking.
+ *   F_read_only (with error bit) if file system is read-only.
  *   F_search (with error bit) if search permission is denied for one of the paths to the file.
  *   F_failure (with error bit) for any other error.
  *

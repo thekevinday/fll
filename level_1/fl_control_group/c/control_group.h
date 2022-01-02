@@ -9,7 +9,7 @@
  *
  * It appears that the control group, as documented in the Linux kernel, is changed via the sysfs instead of system calls.
  * If there are system calls to set the control group for a given process then this will need to be updated to utilize that.
- * Until then, this is an implementation that helps facilitate writing to the sysfs filesystem for adding a process to a particular control group.
+ * Until then, this is an implementation that helps facilitate writing to the sysfs file system for adding a process to a particular control group.
  *
  * This is intended to be used with Control Groups (cgroups) Version 2.
  */
