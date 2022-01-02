@@ -17,12 +17,16 @@ extern "C" {
 #endif
 
 /**
- * Provide common file-typ specific data types.
+ * Provide file defaults.
+ *
+ * F_file_default_*:
+ *   - read_size:  Default read size in bytes.
+ *   - write_size: Default write size in bytes.
  */
-#ifndef _di_f_file_types_
-  #define F_file_default_read_size_d  8192 // default to 8k read sizes. // @fixme rename and move into _di_f_file_type_
-  #define F_file_default_write_size_d 8192 // default to 8k write sizes. // @fixme rename and move into _di_f_file_type_
-#endif // _di_f_file_types_
+#ifndef _di_f_file_defaults_
+  #define F_file_default_read_size_d  8192
+  #define F_file_default_write_size_d 8192
+#endif // _di_f_file_defaults_
 
 /**
  * Provide macros for file-seek operations.
@@ -30,11 +34,11 @@ extern "C" {
  * The fseek() function parameters can be confusing, so provide a hopefully more readibly code via these macros.
  *
  * macro_f_file_seek_*:
- * - begin: sets the file pointer from this many bytes from the beginning of the file.
- * - data:  sets the file pointer from this many bytes from the end of the file, relative to the next data.
- * - end:   sets the file pointer from this many bytes from the end of the file.
- * - hole:  sets the file pointer from this many bytes from the end of the file, relative to the next hole.
- * - to:    sets the file pointer from this many bytes relative to the current position.
+ *   - begin: sets the file pointer from this many bytes from the beginning of the file.
+ *   - data:  sets the file pointer from this many bytes from the end of the file, relative to the next data.
+ *   - end:   sets the file pointer from this many bytes from the end of the file.
+ *   - hole:  sets the file pointer from this many bytes from the end of the file, relative to the next hole.
+ *   - to:    sets the file pointer from this many bytes relative to the current position.
  */
 #ifndef _di_f_file_seeks_
   #define macro_f_file_seek_begin(file, bytes) fseek(file, bytes, SEEK_SET)

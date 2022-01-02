@@ -84,14 +84,22 @@ extern "C" {
 #endif // _di_f_file_clone_
 
 #ifndef _di_f_file_close_
-  f_status_t f_file_close(int *id) {
-    return private_f_file_close(F_false, id);
+  f_status_t f_file_close(int * const id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!id) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_close(id, F_false);
   }
 #endif // _di_f_file_close_
 
 #ifndef _di_f_file_close_flush_
-  f_status_t f_file_close_flush(int *id) {
-    return private_f_file_close(F_true, id);
+  f_status_t f_file_close_flush(int * const id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!id) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_file_close(id, F_true);
   }
 #endif // _di_f_file_close_flush_
 
@@ -1893,7 +1901,7 @@ extern "C" {
     }
 
     if (complete) {
-      return private_f_file_close(F_true, &file->id);
+      return private_f_file_close(&file->id, F_true);
     }
 
     return F_none;

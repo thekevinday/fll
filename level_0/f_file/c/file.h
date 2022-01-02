@@ -145,7 +145,7 @@ extern "C" {
  * @see fclose()
  */
 #ifndef _di_f_file_close_
-  extern f_status_t f_file_close(int *id);
+  extern f_status_t f_file_close(int * const id);
 #endif // _di_f_file_close_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  * @see fclose()
  */
 #ifndef _di_f_file_close_flush_
-  extern f_status_t f_file_close_flush(int *id);
+  extern f_status_t f_file_close_flush(int * const id);
 #endif // _di_f_file_close_flush_
 
 /**

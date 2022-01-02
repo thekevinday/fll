@@ -20,11 +20,12 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
+ * @param id
+ *   The file descriptor.
+ *   The value gets set to -1.
  * @param flush
  *   If TRUE, then perform flush before closing.
  *   If FALSE, then do not perform flush before closing.
- * @param id
- *   The file descriptor.
  *
  * @return
  *   F_none on success.
@@ -43,7 +44,7 @@ extern "C" {
  * @see f_file_stream_close()
  */
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  extern f_status_t private_f_file_close(const bool flush, int *id) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_close(int * const id, const bool flush) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
 
 /**
