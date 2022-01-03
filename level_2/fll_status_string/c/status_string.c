@@ -481,6 +481,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_atomic_s, length, F_status_atomic_s_length) == F_equal_to) {
+        *code = F_atomic;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_atomic_not_s, length, F_status_atomic_not_s_length) == F_equal_to) {
+        *code = F_atomic_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_begin_s, length, F_status_begin_s_length) == F_equal_to) {
         *code = F_begin;
 
@@ -567,6 +579,12 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_connect_refuse_s, length, F_status_connect_refuse_s_length) == F_equal_to) {
         *code = F_connect_refuse;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_connect_reset_s, length, F_status_connect_reset_s_length) == F_equal_to) {
+        *code = F_connect_reset;
 
         return F_none;
       }
@@ -1105,6 +1123,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_message_s, length, F_status_message_s_length) == F_equal_to) {
+        *code = F_message;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_message_not_s, length, F_status_message_not_s_length) == F_equal_to) {
+        *code = F_message_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_minor_s, length, F_status_minor_s_length) == F_equal_to) {
         *code = F_minor;
 
@@ -1443,6 +1473,18 @@ extern "C" {
 
       if (fl_string_compare(string, f_status_schedule_not_s, length, F_status_schedule_not_s_length) == F_equal_to) {
         *code = F_schedule_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_size_s, length, F_status_size_s_length) == F_equal_to) {
+        *code = F_size;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_size_not_s, length, F_status_size_not_s_length) == F_equal_to) {
+        *code = F_size_not;
 
         return F_none;
       }
@@ -1893,6 +1935,30 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_network_client_s, length, F_status_network_client_s_length) == F_equal_to) {
+        *code = F_network_client;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_client_not_s, length, F_status_network_client_not_s_length) == F_equal_to) {
+        *code = F_network_client_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_device_s, length, F_status_network_device_s_length) == F_equal_to) {
+        *code = F_network_device;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_device_not_s, length, F_status_network_device_not_s_length) == F_equal_to) {
+        *code = F_network_device_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_network_found_s, length, F_status_network_found_s_length) == F_equal_to) {
         *code = F_network_found;
 
@@ -1929,8 +1995,44 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_network_reach_client_s, length, F_status_network_reach_client_s_length) == F_equal_to) {
+        *code = F_network_reach_client;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_reach_client_not_s, length, F_status_network_reach_client_not_s_length) == F_equal_to) {
+        *code = F_network_reach_client_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_network_reach_not_s, length, F_status_network_reach_not_s_length) == F_equal_to) {
         *code = F_network_reach_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_reach_server_s, length, F_status_network_reach_server_s_length) == F_equal_to) {
+        *code = F_network_reach_server;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_reach_server_not_s, length, F_status_network_reach_server_not_s_length) == F_equal_to) {
+        *code = F_network_reach_server_not;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_server_s, length, F_status_network_server_s_length) == F_equal_to) {
+        *code = F_network_server;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_network_server_not_s, length, F_status_network_server_not_s_length) == F_equal_to) {
+        *code = F_network_server_not;
 
         return F_none;
       }

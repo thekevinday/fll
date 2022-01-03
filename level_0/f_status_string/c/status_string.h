@@ -240,6 +240,8 @@ extern "C" {
     #define F_status_address_not_s       "F_address_not"
     #define F_status_ascii_s             "F_ascii"
     #define F_status_ascii_not_s         "F_ascii_not"
+    #define F_status_atomic_s            "F_atomic"
+    #define F_status_atomic_not_s        "F_atomic_not"
     #define F_status_begin_s             "F_begin"
     #define F_status_begin_not_s         "F_begin_not"
     #define F_status_block_s             "F_block"
@@ -255,6 +257,7 @@ extern "C" {
     #define F_status_connect_s           "F_connect"
     #define F_status_connect_not_s       "F_connect_not"
     #define F_status_connect_refuse_s    "F_connect_refuse"
+    #define F_status_connect_reset_s     "F_connect_reset"
     #define F_status_container_s         "F_container"
     #define F_status_container_not_s     "F_container_not"
     #define F_status_continue_s          "F_continue"
@@ -344,6 +347,8 @@ extern "C" {
     #define F_status_maybe_not_s         "F_maybe_not"
     #define F_status_memory_s            "F_memory"
     #define F_status_memory_not_s        "F_memory_not"
+    #define F_status_message_s           "F_message"
+    #define F_status_message_not_s       "F_message_not"
     #define F_status_minor_s             "F_minor"
     #define F_status_minor_not_s         "F_minor_not"
     #define F_status_moderate_s          "F_moderate"
@@ -401,6 +406,8 @@ extern "C" {
     #define F_status_search_not_s        "F_search_not"
     #define F_status_schedule_s          "F_schedule"
     #define F_status_schedule_not_s      "F_schedule_not"
+    #define F_status_size_s              "F_size"
+    #define F_status_size_not_s          "F_size_not"
     #define F_status_signal_s            "F_signal"
     #define F_status_signal_not_s        "F_signal_not"
     #define F_status_space_s             "F_space"
@@ -459,6 +466,8 @@ extern "C" {
     #define F_status_address_not_s_length       13
     #define F_status_ascii_s_length             7
     #define F_status_ascii_not_s_length         11
+    #define F_status_atomic_s_length            8
+    #define F_status_atomic_not_s_length        12
     #define F_status_begin_s_length             7
     #define F_status_begin_not_s_length         11
     #define F_status_block_s_length             7
@@ -474,6 +483,7 @@ extern "C" {
     #define F_status_connect_s_length           9
     #define F_status_connect_not_s_length       13
     #define F_status_connect_refuse_s_length    16
+    #define F_status_connect_reset_s_length     15
     #define F_status_container_s_length         11
     #define F_status_container_not_s_length     15
     #define F_status_continue_s_length          10
@@ -563,6 +573,8 @@ extern "C" {
     #define F_status_maybe_not_s_length         11
     #define F_status_memory_s_length            8
     #define F_status_memory_not_s_length        12
+    #define F_status_message_s_length           9
+    #define F_status_message_not_s_length       13
     #define F_status_minor_s_length             7
     #define F_status_minor_not_s_length         11
     #define F_status_moderate_s_length          10
@@ -620,6 +632,8 @@ extern "C" {
     #define F_status_search_not_s_length        12
     #define F_status_schedule_s_length          10
     #define F_status_schedule_not_s_length      14
+    #define F_status_size_s_length              6
+    #define F_status_size_not_s_length          10
     #define F_status_signal_s_length            8
     #define F_status_signal_not_s_length        12
     #define F_status_space_s_length             7
@@ -678,6 +692,8 @@ extern "C" {
     extern const f_string_t f_status_address_not_s;
     extern const f_string_t f_status_ascii_s;
     extern const f_string_t f_status_ascii_not_s;
+    extern const f_string_t f_status_atomic_s;
+    extern const f_string_t f_status_atomic_not_s;
     extern const f_string_t f_status_begin_s;
     extern const f_string_t f_status_begin_not_s;
     extern const f_string_t f_status_block_s;
@@ -693,6 +709,7 @@ extern "C" {
     extern const f_string_t f_status_connect_s;
     extern const f_string_t f_status_connect_not_s;
     extern const f_string_t f_status_connect_refuse_s;
+    extern const f_string_t f_status_connect_reset_s;
     extern const f_string_t f_status_container_s;
     extern const f_string_t f_status_container_not_s;
     extern const f_string_t f_status_continue_s;
@@ -782,6 +799,8 @@ extern "C" {
     extern const f_string_t f_status_maybe_not_s;
     extern const f_string_t f_status_memory_s;
     extern const f_string_t f_status_memory_not_s;
+    extern const f_string_t f_status_message_s;
+    extern const f_string_t f_status_message_not_s;
     extern const f_string_t f_status_minor_s;
     extern const f_string_t f_status_minor_not_s;
     extern const f_string_t f_status_moderate_s;
@@ -839,6 +858,8 @@ extern "C" {
     extern const f_string_t f_status_search_not_s;
     extern const f_string_t f_status_schedule_s;
     extern const f_string_t f_status_schedule_not_s;
+    extern const f_string_t f_status_size_s;
+    extern const f_string_t f_status_size_not_s;
     extern const f_string_t f_status_signal_s;
     extern const f_string_t f_status_signal_not_s;
     extern const f_string_t f_status_space_s;
@@ -971,42 +992,72 @@ extern "C" {
   #endif // _di_F_status_busy_
 
   #ifndef _di_F_status_network_
-    #define F_status_network_s           "F_network"
-    #define F_status_network_busy_s      "F_network_busy"
-    #define F_status_network_busy_not_s  "F_network_busy_not"
-    #define F_status_network_found_s     "F_network_found"
-    #define F_status_network_found_not_s "F_network_found_not"
-    #define F_status_network_lost_s      "F_network_lost"
-    #define F_status_network_lost_not_s  "F_network_lost_not"
-    #define F_status_network_not_s       "F_network_not"
-    #define F_status_network_reach_s     "F_network_reach"
-    #define F_status_network_reach_not_s "F_network_reach_not"
-    #define F_status_network_time_s      "F_network_time"
-    #define F_status_network_time_not_s  "F_network_time_not"
+    #define F_status_network_s                  "F_network"
+    #define F_status_network_busy_s             "F_network_busy"
+    #define F_status_network_busy_not_s         "F_network_busy_not"
+    #define F_status_network_client_s           "F_network_client"
+    #define F_status_network_client_not_s       "F_network_client_not"
+    #define F_status_network_device_s           "F_network_device"
+    #define F_status_network_device_not_s       "F_network_device_not"
+    #define F_status_network_found_s            "F_network_found"
+    #define F_status_network_found_not_s        "F_network_found_not"
+    #define F_status_network_lost_s             "F_network_lost"
+    #define F_status_network_lost_not_s         "F_network_lost_not"
+    #define F_status_network_not_s              "F_network_not"
+    #define F_status_network_reach_s            "F_network_reach"
+    #define F_status_network_reach_client_s     "F_network_reach_client"
+    #define F_status_network_reach_client_not_s "F_network_reach_client_not"
+    #define F_status_network_reach_not_s        "F_network_reach_not"
+    #define F_status_network_reach_server_s     "F_network_reach_server"
+    #define F_status_network_reach_server_not_s "F_network_reach_server_not"
+    #define F_status_network_server_s           "F_network_server"
+    #define F_status_network_server_not_s       "F_network_server_not"
+    #define F_status_network_time_s             "F_network_time"
+    #define F_status_network_time_not_s         "F_network_time_not"
 
-    #define F_status_network_s_length           9
-    #define F_status_network_busy_s_length      14
-    #define F_status_network_busy_not_s_length  18
-    #define F_status_network_found_s_length     15
-    #define F_status_network_found_not_s_length 19
-    #define F_status_network_lost_s_length      14
-    #define F_status_network_lost_not_s_length  18
-    #define F_status_network_not_s_length       13
-    #define F_status_network_reach_s_length     15
-    #define F_status_network_reach_not_s_length 19
-    #define F_status_network_time_s_length      14
-    #define F_status_network_time_not_s_length  18
+    #define F_status_network_s_length                  9
+    #define F_status_network_busy_s_length             14
+    #define F_status_network_busy_not_s_length         18
+    #define F_status_network_client_s_length           16
+    #define F_status_network_client_not_s_length       20
+    #define F_status_network_device_s_length           16
+    #define F_status_network_device_not_s_length       20
+    #define F_status_network_found_s_length            15
+    #define F_status_network_found_not_s_length        19
+    #define F_status_network_lost_s_length             14
+    #define F_status_network_lost_not_s_length         18
+    #define F_status_network_not_s_length              13
+    #define F_status_network_reach_s_length            15
+    #define F_status_network_reach_client_s_length     22
+    #define F_status_network_reach_client_not_s_length 26
+    #define F_status_network_reach_not_s_length        19
+    #define F_status_network_reach_server_s_length     22
+    #define F_status_network_reach_server_not_s_length 26
+    #define F_status_network_server_s_length           16
+    #define F_status_network_server_not_s_length       20
+    #define F_status_network_time_s_length             14
+    #define F_status_network_time_not_s_length         18
 
     extern const f_string_t f_status_network_s;
     extern const f_string_t f_status_network_busy_s;
     extern const f_string_t f_status_network_busy_not_s;
+    extern const f_string_t f_status_network_client_s;
+    extern const f_string_t f_status_network_client_not_s;
+    extern const f_string_t f_status_network_device_s;
+    extern const f_string_t f_status_network_device_not_s;
     extern const f_string_t f_status_network_found_s;
     extern const f_string_t f_status_network_found_not_s;
     extern const f_string_t f_status_network_lost_s;
     extern const f_string_t f_status_network_lost_not_s;
     extern const f_string_t f_status_network_not_s;
     extern const f_string_t f_status_network_reach_s;
+    extern const f_string_t f_status_network_reach_client_s;
+    extern const f_string_t f_status_network_reach_client_not_s;
     extern const f_string_t f_status_network_reach_not_s;
+    extern const f_string_t f_status_network_reach_server_s;
+    extern const f_string_t f_status_network_reach_server_not_s;
+    extern const f_string_t f_status_network_server_s;
+    extern const f_string_t f_status_network_server_not_s;
     extern const f_string_t f_status_network_time_s;
     extern const f_string_t f_status_network_time_not_s;
   #endif // _di_F_status_network_

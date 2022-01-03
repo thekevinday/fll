@@ -5,22 +5,30 @@ extern "C" {
 #endif
 
 #ifndef _di_f_socket_accept_
-  f_status_t f_socket_accept(f_socket_t * const socket) {
+  f_status_t f_socket_accept(f_socket_t * const socket, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (accept(socket->id, socket->address, &socket->length) < 0) {
+    const int result = accept(id, socket->address, &socket->length);
+
+    if (result == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EHOSTDOWN) return F_status_set_error(F_network_client_not);
+      if (errno == EHOSTUNREACH) return F_status_set_error(F_network_reach_client_not);
       if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
+      if (errno == ENETDOWN) return F_status_set_error(F_network_not);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
+      if (errno == ENETUNREACH) return F_status_set_error(F_network_reach_not);
       if (errno == ENOBUFS) return F_status_set_error(F_buffer_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENONET) return F_status_set_error(F_network_device_not);
+      if (errno == ENOPROTOOPT) return F_status_set_error(F_option_not);
       if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
       if (errno == EOPNOTSUPP) return F_status_set_error(F_stream_not);
       if (errno == EPROTO) return F_status_set_error(F_protocol);
@@ -32,6 +40,8 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
+    socket->id = result;
+
     return F_none;
   }
 #endif // _di_f_socket_accept_
@@ -39,7 +49,7 @@ extern "C" {
 #ifndef _di_f_socket_bind_
   f_status_t f_socket_bind(const f_socket_t socket) {
 
-    if (bind(socket.id, socket.address, socket.length) < 0) {
+    if (bind(socket.id, socket.address, socket.length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -70,7 +80,7 @@ extern "C" {
 
     strncpy(((struct sockaddr_un *) socket.address)->sun_path, socket.name, sizeof(((struct sockaddr_un *) socket.address)->sun_path) - 1);
 
-    if (bind(socket.id, socket.address, sizeof(struct sockaddr_un)) < 0) {
+    if (bind(socket.id, socket.address, sizeof(struct sockaddr_un)) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -95,7 +105,6 @@ extern "C" {
 
     if (connect(socket.id, socket.address, socket.length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
       if (errno == EAFNOSUPPORT) return F_status_set_error(F_domain_not);
@@ -108,6 +117,7 @@ extern "C" {
       if (errno == EISCONN) return F_status_set_error(F_connect);
       if (errno == ENETUNREACH) return F_status_set_error(F_network_reach_not);
       if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EPROTONOSUPPORT) return F_status_set_error(F_protocol_not);
       if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
 
@@ -193,7 +203,7 @@ extern "C" {
       return F_status_set_error(F_supported_not);
     }
 
-    if (result < 0) {
+    if (result == -1) {
 
       // According to man pages, retrying close() after another close on error is invalid on Linux because Linux releases the descriptor before stages that cause failures.
       if (errno != EBADF && errno != EINTR) {
@@ -224,7 +234,7 @@ extern "C" {
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (listen(socket->id, max_backlog) < 0) {
+    if (listen(socket->id, max_backlog) == -1) {
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
@@ -238,14 +248,14 @@ extern "C" {
 #endif // _di_f_socket_listen_
 
 #ifndef _di_f_socket_option_get_
-  f_status_t f_socket_option_get(f_socket_t * const socket, const int level, const int type, void *value, socklen_t *length) {
+  f_status_t f_socket_option_get(f_socket_t * const socket, const int level, const int option, void *value, socklen_t *length) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!value) return F_status_set_error(F_parameter);
       if (!length) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (getsockopt(socket->id, level, type, value, length) < 0) {
+    if (getsockopt(socket->id, level, option, value, length) == -1) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_value);
@@ -260,13 +270,13 @@ extern "C" {
 #endif // _di_f_socket_option_get_
 
 #ifndef _di_f_socket_option_set_
-  f_status_t f_socket_option_set(f_socket_t * const socket, const int level, const int type, const void *value, const socklen_t length) {
+  f_status_t f_socket_option_set(f_socket_t * const socket, const int level, const int option, const void *value, const socklen_t length) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!value) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (setsockopt(socket->id, level, type, value, length) < 0) {
+    if (setsockopt(socket->id, level, option, value, length) == -1) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_value);
@@ -279,6 +289,167 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_socket_option_set_
+
+#ifndef _di_f_socket_read_
+  f_status_t f_socket_read(f_socket_t * const socket, const int flags, void *buffer, size_t *length) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+      if (!length) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const ssize_t result = recvfrom(socket->id, buffer, *length, flags, socket->address, &socket->length);
+
+    if (result < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EALREADY) return F_status_set_error(F_complete_not);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == ECONNREFUSED) return F_status_set_error(F_connect_refuse);
+      if (errno == ECONNRESET) return F_status_set_error(F_connect_reset);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_address_not);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTCONN) return F_status_set_error(F_connect_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_option_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe);
+      if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
+
+      return F_status_set_error(F_failure);
+    }
+
+    *length = (size_t) result;
+
+    return F_none;
+  }
+#endif // _di_f_socket_read_
+
+#ifndef _di_f_socket_read_message_
+  f_status_t f_socket_read_message(f_socket_t * const socket, const int flags, struct msghdr *header, size_t *length) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+      if (!header) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const ssize_t result = recvmsg(socket->id, header, flags);
+
+    if (result < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EALREADY) return F_status_set_error(F_complete_not);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == ECONNREFUSED) return F_status_set_error(F_connect_refuse);
+      if (errno == ECONNRESET) return F_status_set_error(F_connect_reset);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_address_not);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTCONN) return F_status_set_error(F_connect_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_option_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe);
+      if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
+
+
+      return F_status_set_error(F_failure);
+    }
+
+    if (length) {
+      *length = (size_t) result;
+    }
+
+    return F_none;
+  }
+#endif // _di_f_socket_read_message_
+
+#ifndef _di_f_socket_write_
+  f_status_t f_socket_write(f_socket_t * const socket, const int flags, void *buffer, size_t *length) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
+      if (!length) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const ssize_t result = sendto(socket->id, buffer, *length, flags, socket->address, socket->length);
+
+    if (result < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EALREADY) return F_status_set_error(F_complete_not);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == ECONNREFUSED) return F_status_set_error(F_connect_refuse);
+      if (errno == ECONNRESET) return F_status_set_error(F_connect_reset);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_address_not);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EISCONN) return F_status_set_error(F_connect);
+      if (errno == EMSGSIZE) return F_status_set_error(F_size);
+      if (errno == ENOBUFS) return F_status_set_error(F_buffer_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTCONN) return F_status_set_error(F_connect_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_option_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe);
+      if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
+
+      return F_status_set_error(F_failure);
+    }
+
+    *length = (size_t) result;
+
+    return F_none;
+  }
+#endif // _di_f_socket_write_
+
+#ifndef _di_f_socket_write_message_
+  f_status_t f_socket_write_message(f_socket_t * const socket, const int flags, struct msghdr *header, size_t *length) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+      if (!header) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const ssize_t result = sendmsg(socket->id, header, flags);
+
+    if (result < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+      if (errno == EALREADY) return F_status_set_error(F_complete_not);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == ECONNREFUSED) return F_status_set_error(F_connect_refuse);
+      if (errno == ECONNRESET) return F_status_set_error(F_connect_reset);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_address_not);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EISCONN) return F_status_set_error(F_connect);
+      if (errno == EMSGSIZE) return F_status_set_error(F_size);
+      if (errno == ENOBUFS) return F_status_set_error(F_buffer_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTCONN) return F_status_set_error(F_connect_not);
+      if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_option_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe);
+      if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
+
+      return F_status_set_error(F_failure);
+    }
+
+    if (length) {
+      *length = (size_t) result;
+    }
+
+    return F_none;
+  }
+#endif // _di_f_socket_write_message_
 
 #ifdef __cplusplus
 } // extern "C"

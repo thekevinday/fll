@@ -87,6 +87,8 @@ extern "C" {
     const f_string_t f_status_address_not_s = F_status_address_not_s;
     const f_string_t f_status_ascii_s = F_status_ascii_s;
     const f_string_t f_status_ascii_not_s = F_status_ascii_not_s;
+    const f_string_t f_status_atomic_s = F_status_atomic_s;
+    const f_string_t f_status_atomic_not_s = F_status_atomic_not_s;
     const f_string_t f_status_begin_s = F_status_begin_s;
     const f_string_t f_status_begin_not_s = F_status_begin_not_s;
     const f_string_t f_status_block_s = F_status_block_s;
@@ -102,6 +104,7 @@ extern "C" {
     const f_string_t f_status_connect_s = F_status_connect_s;
     const f_string_t f_status_connect_not_s = F_status_connect_not_s;
     const f_string_t f_status_connect_refuse_s = F_status_connect_refuse_s;
+    const f_string_t f_status_connect_reset_s = F_status_connect_reset_s;
     const f_string_t f_status_container_s = F_status_container_s;
     const f_string_t f_status_container_not_s = F_status_container_not_s;
     const f_string_t f_status_continue_s = F_status_continue_s;
@@ -191,6 +194,8 @@ extern "C" {
     const f_string_t f_status_maybe_not_s = F_status_maybe_not_s;
     const f_string_t f_status_memory_s = F_status_memory_s;
     const f_string_t f_status_memory_not_s = F_status_memory_not_s;
+    const f_string_t f_status_message_s = F_status_message_s;
+    const f_string_t f_status_message_not_s = F_status_message_not_s;
     const f_string_t f_status_minor_s = F_status_minor_s;
     const f_string_t f_status_minor_not_s = F_status_minor_not_s;
     const f_string_t f_status_moderate_s = F_status_moderate_s;
@@ -248,6 +253,8 @@ extern "C" {
     const f_string_t f_status_search_not_s = F_status_search_not_s;
     const f_string_t f_status_schedule_s = F_status_schedule_s;
     const f_string_t f_status_schedule_not_s = F_status_schedule_not_s;
+    const f_string_t f_status_size_s = F_status_size_s;
+    const f_string_t f_status_size_not_s = F_status_size_not_s;
     const f_string_t f_status_signal_s = F_status_signal_s;
     const f_string_t f_status_signal_not_s = F_status_signal_not_s;
     const f_string_t f_status_space_s = F_status_space_s;
@@ -333,13 +340,23 @@ extern "C" {
     const f_string_t f_status_network_s = F_status_network_s;
     const f_string_t f_status_network_busy_s = F_status_network_busy_s;
     const f_string_t f_status_network_busy_not_s = F_status_network_busy_not_s;
+    const f_string_t f_status_network_client_s = F_status_network_client_s;
+    const f_string_t f_status_network_client_not_s = F_status_network_client_not_s;
+    const f_string_t f_status_network_device_s = F_status_network_device_s;
+    const f_string_t f_status_network_device_not_s = F_status_network_device_not_s;
     const f_string_t f_status_network_found_s = F_status_network_found_s;
     const f_string_t f_status_network_found_not_s = F_status_network_found_not_s;
     const f_string_t f_status_network_lost_s = F_status_network_lost_s;
     const f_string_t f_status_network_lost_not_s = F_status_network_lost_not_s;
     const f_string_t f_status_network_not_s = F_status_network_not_s;
     const f_string_t f_status_network_reach_s = F_status_network_reach_s;
+    const f_string_t f_status_network_reach_client_s = F_status_network_reach_client_s;
+    const f_string_t f_status_network_reach_client_not_s = F_status_network_reach_client_not_s;
     const f_string_t f_status_network_reach_not_s = F_status_network_reach_not_s;
+    const f_string_t f_status_network_reach_server_s = F_status_network_reach_server_s;
+    const f_string_t f_status_network_reach_server_not_s = F_status_network_reach_server_not_s;
+    const f_string_t f_status_network_server_s = F_status_network_server_s;
+    const f_string_t f_status_network_server_not_s = F_status_network_server_not_s;
     const f_string_t f_status_network_time_s = F_status_network_time_s;
     const f_string_t f_status_network_time_not_s = F_status_network_time_not_s;
   #endif // _di_F_status_network_
@@ -865,6 +882,14 @@ extern "C" {
           *string = f_status_ascii_not_s;
           break;
 
+        case F_atomic:
+          *string = f_status_atomic_s;
+          break;
+
+        case F_atomic_not:
+          *string = f_status_atomic_not_s;
+          break;
+
         case F_begin:
           *string = f_status_begin_s;
           break;
@@ -923,6 +948,10 @@ extern "C" {
 
         case F_connect_refuse:
           *string = f_status_connect_refuse_s;
+          break;
+
+        case F_connect_reset:
+          *string = f_status_connect_reset_s;
           break;
 
         case F_continue:
@@ -1273,6 +1302,14 @@ extern "C" {
           *string = f_status_memory_not_s;
           break;
 
+        case F_message:
+          *string = f_status_message_s;
+          break;
+
+        case F_message_not:
+          *string = f_status_message_not_s;
+          break;
+
         case F_minor:
           *string = f_status_minor_s;
           break;
@@ -1499,6 +1536,14 @@ extern "C" {
 
         case F_schedule_not:
           *string = f_status_schedule_not_s;
+          break;
+
+        case F_size:
+          *string = f_status_size_s;
+          break;
+
+        case F_size_not:
+          *string = f_status_size_not_s;
           break;
 
         case F_signal:
@@ -1809,6 +1854,22 @@ extern "C" {
           *string = f_status_network_busy_not_s;
           break;
 
+        case F_network_client:
+          *string = f_status_network_client_s;
+          break;
+
+        case F_network_client_not:
+          *string = f_status_network_client_not_s;
+          break;
+
+        case F_network_device:
+          *string = f_status_network_device_s;
+          break;
+
+        case F_network_device_not:
+          *string = f_status_network_device_not_s;
+          break;
+
         case F_network_found:
           *string = f_status_network_found_s;
           break;
@@ -1833,8 +1894,32 @@ extern "C" {
           *string = f_status_network_reach_s;
           break;
 
+        case F_network_reach_client:
+          *string = f_status_network_reach_client_s;
+          break;
+
+        case F_network_reach_client_not:
+          *string = f_status_network_reach_client_not_s;
+          break;
+
         case F_network_reach_not:
           *string = f_status_network_reach_not_s;
+          break;
+
+        case F_network_reach_server:
+          *string = f_status_network_reach_server_s;
+          break;
+
+        case F_network_reach_server_not:
+          *string = f_status_network_reach_server_not_s;
+          break;
+
+        case F_network_server:
+          *string = f_status_network_server_s;
+          break;
+
+        case F_network_server_not:
+          *string = f_status_network_server_not_s;
           break;
 
         case F_network_time:
