@@ -44,6 +44,7 @@ extern "C" {
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see close()
@@ -69,6 +70,7 @@ extern "C" {
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see signalfd()
@@ -101,6 +103,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_input_output (with error bit) on I/O error.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see poll()
@@ -125,6 +128,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to send signals to the given process.
  *   F_found_not (with error bit) if the given process was not found.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see kill()
@@ -145,6 +149,7 @@ extern "C" {
  *   F_none on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see sigaddset()
@@ -165,6 +170,7 @@ extern "C" {
  *   F_none on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see sigdelset()
@@ -183,6 +189,7 @@ extern "C" {
  *   F_none on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see sigemptyset()
@@ -201,6 +208,7 @@ extern "C" {
  *   F_none on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see sigfillset()
@@ -228,6 +236,7 @@ extern "C" {
  *   F_none on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see sigprocmask()
@@ -253,6 +262,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if the max signals is reached.
  *   F_supported_not (with error bit) if this action is not supported by the current OS.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see sigqueue()
@@ -274,6 +284,7 @@ extern "C" {
  *   F_false if signal is not found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) for any other error.
  *
  * @see sigismember()
@@ -281,6 +292,55 @@ extern "C" {
 #ifndef _di_f_signal_set_has_
   extern f_status_t f_signal_set_has(const int signal, const sigset_t *set);
 #endif // _di_f_signal_set_has_
+
+/**
+ * Wait until any signal in a set of signals is received.
+ *
+ * @param set
+ *   The set of signals to wait for.
+ * @param information
+ *   (optional) The resulting signal information.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none if signal is found.
+ *
+ *   F_interrupt (with error bit) if interrupted by a signal other than one specified in the signal set.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see sigwaitinfo()
+ */
+#ifndef _di_f_signal_wait_
+  extern f_status_t f_signal_wait(const sigset_t *set, siginfo_t *information);
+#endif // _di_f_signal_wait_
+
+/**
+ * Wait until any signal in a set of signals is received until the given time out is reached.
+ *
+ * @param set
+ *   The set of signals to wait for.
+ * @param timeout
+ *   The amount of time to wait.
+ * @param information
+ *   (optional) The resulting signal information.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none if signal is found before time out.
+ *   F_time_out if no signal is find by the time out.
+ *
+ *   F_interrupt (with error bit) if interrupted by a signal other than one specified in the signal set.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see sigtimedwait()
+ */
+#ifndef _di_f_signal_wait_until_
+  extern f_status_t f_signal_wait_until(const sigset_t *set, const struct timespec *timeout, siginfo_t *information);
+#endif // _di_f_signal_wait_until_
 
 #ifdef __cplusplus
 } // extern "C"

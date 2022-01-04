@@ -287,7 +287,7 @@ extern "C" {
  * @see shutdown()
  */
 #ifndef _di_f_socket_disconnect_
-  extern f_status_t f_socket_disconnect(f_socket_t * const socket, const unsigned short action);
+  extern f_status_t f_socket_disconnect(f_socket_t * const socket, const uint8_t action);
 #endif // _di_f_socket_disconnect_
 
 /**
@@ -388,6 +388,7 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.size_read is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
  * @param flags
  *   Read flags.
  * @param buffer
@@ -474,6 +475,7 @@ extern "C" {
  * @param socket
  *   The socket structure.
  *   The socket.id must represent a valid socket file descriptor.
+ *   The socket.size_write is used to represent the buffer size in buffer and must not be larger than the actual size of the buffer.
  * @param flags
  *   Read flags.
  * @param buffer

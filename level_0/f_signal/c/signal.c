@@ -25,6 +25,7 @@ extern "C" {
     }
 
     signal->id = 0;
+
     return F_none;
   }
 #endif // _di_f_signal_close_
@@ -48,6 +49,7 @@ extern "C" {
     }
 
     signal->id = result;
+
     return F_none;
   }
 #endif // _di_f_signal_open_
@@ -229,6 +231,35 @@ extern "C" {
     return result ? F_true : F_false;
   }
 #endif // _di_f_signal_set_has_
+
+#ifndef _di_f_signal_wait_
+  f_status_t f_signal_wait(const sigset_t *set, siginfo_t *information) {
+
+    if (sigwaitinfo(set, information) < 0) {
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_signal_wait_
+
+#ifndef _di_f_signal_wait_until_
+  f_status_t f_signal_wait_until(const sigset_t *set, const struct timespec *timeout, siginfo_t *information) {
+
+    if (sigtimedwait(set, information, timeout) < 0) {
+      if (errno == EAGAIN) return F_time_out;
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_signal_wait_until_
 
 #ifdef __cplusplus
 } // extern "C"

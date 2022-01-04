@@ -186,7 +186,7 @@ extern "C" {
 #endif // _di_f_socket_create_pair_
 
 #ifndef _di_f_socket_disconnect_
-  f_status_t f_socket_disconnect(f_socket_t * const socket, const unsigned short action) {
+  f_status_t f_socket_disconnect(f_socket_t * const socket, const uint8_t action) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -196,8 +196,14 @@ extern "C" {
     if (action == f_socket_close_fast_e) {
       result = close(socket->id);
     }
-    else if (action == f_socket_close_read_e || action == f_socket_close_write_e || action == f_socket_close_read_write_e) {
-      result = shutdown(socket->id, action);
+    else if (action == f_socket_close_read_e) {
+      result = shutdown(socket->id, SHUT_RD);
+    }
+    else if (action == f_socket_close_write_e) {
+      result = shutdown(socket->id, SHUT_WR);
+    }
+    else if (action == f_socket_close_read_write_e) {
+      result = shutdown(socket->id, SHUT_RDWR);
     }
     else {
       return F_status_set_error(F_supported_not);
@@ -298,7 +304,7 @@ extern "C" {
       if (!length) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = recvfrom(socket->id, buffer, *length, flags, socket->address, &socket->length);
+    const ssize_t result = recvfrom(socket->id, buffer, socket->size_read, flags, socket->address, &socket->length);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -376,7 +382,7 @@ extern "C" {
       if (!length) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const ssize_t result = sendto(socket->id, buffer, *length, flags, socket->address, socket->length);
+    const ssize_t result = sendto(socket->id, buffer, socket->size_write, flags, socket->address, socket->length);
 
     if (result < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);

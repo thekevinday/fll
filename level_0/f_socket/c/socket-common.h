@@ -34,8 +34,8 @@ extern "C" {
  * f_socket_close_*:
  * - fast:       Fast Socket close, as in close().
  * - read:       Read close, as in shutdown(, SHUT_RD).
- * - write:      Write close, as in shutdown(, SHUT_WR).
  * - read_write: Read/Write close, as in shutdown(, SHUT_RDWR).
+ * - write:      Write close, as in shutdown(, SHUT_WR).
  */
 #ifndef _di_f_socket_closes_
   enum {
