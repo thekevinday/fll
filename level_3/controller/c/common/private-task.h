@@ -242,7 +242,7 @@ extern "C" {
  * @see f_string_dynamics_resize()
  */
 #ifndef _di_controller_task_action_delete_simple_
-  extern void controller_task_action_delete_simple(controller_task_action_t *action) F_attribute_visibility_internal_d;
+  extern void controller_task_action_delete_simple(controller_task_action_t * const action) F_attribute_visibility_internal_d;
 #endif // _di_controller_task_action_delete_simple_
 
 /**
@@ -276,7 +276,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_controller_task_actions_increase_by_
-  extern f_status_t controller_task_actions_increase_by(const f_array_length_t amount, controller_task_actions_t *actions) F_attribute_visibility_internal_d;
+  extern f_status_t controller_task_actions_increase_by(const f_array_length_t amount, controller_task_actions_t * const actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_task_actions_increase_by_
 
 /**
@@ -299,7 +299,7 @@ extern "C" {
  * @see controller_task_items_delete_simple()
  */
 #ifndef _di_controller_task_delete_simple_
-  extern void controller_task_delete_simple(controller_task_t *task) F_attribute_visibility_internal_d;
+  extern void controller_task_delete_simple(controller_task_t * const task) F_attribute_visibility_internal_d;
 #endif // _di_controller_task_delete_simple_
 
 /**
@@ -311,7 +311,7 @@ extern "C" {
  * @see controller_tasks_resize()
  */
 #ifndef _di_controller_tasks_delete_simple_
-  extern void controller_tasks_delete_simple(controller_tasks_t *tasks) F_attribute_visibility_internal_d;
+  extern void controller_tasks_delete_simple(controller_tasks_t * const tasks) F_attribute_visibility_internal_d;
 #endif // _di_controller_tasks_delete_simple_
 
 /**
@@ -334,7 +334,7 @@ extern "C" {
  * @see controller_tasks_resize()
  */
 #ifndef _di_controller_tasks_increase_
-  extern f_status_t controller_tasks_increase(controller_tasks_t *tasks) F_attribute_visibility_internal_d;
+  extern f_status_t controller_tasks_increase(controller_tasks_t * const tasks) F_attribute_visibility_internal_d;
 #endif // _di_controller_task_increase_
 
 /**
@@ -354,7 +354,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_tasks_resize_
-  extern f_status_t controller_tasks_resize(const f_array_length_t length, controller_tasks_t *tasks) F_attribute_visibility_internal_d;
+  extern f_status_t controller_tasks_resize(const f_array_length_t length, controller_tasks_t * const tasks) F_attribute_visibility_internal_d;
 #endif // _di_controller_tasks_resize_
 
 #ifdef __cplusplus

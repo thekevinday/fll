@@ -247,7 +247,7 @@ extern "C" {
  * @see f_string_dynamics_resize()
  */
 #ifndef _di_controller_entry_action_delete_simple_
-  extern void controller_entry_action_delete_simple(controller_entry_action_t *action) F_attribute_visibility_internal_d;
+  extern void controller_entry_action_delete_simple(controller_entry_action_t * const action) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_action_delete_simple_
 
 /**
@@ -260,7 +260,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_entry_actions_delete_simple_
-  extern void controller_entry_actions_delete_simple(controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
+  extern void controller_entry_actions_delete_simple(controller_entry_actions_t * const actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_actions_delete_simple_
 
 /**
@@ -282,7 +282,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_actions_increase_by_
-  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t * const actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_actions_increase_by_
 
 /**
@@ -294,7 +294,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_entry_item_delete_simple_
-  extern void controller_entry_item_delete_simple(controller_entry_item_t *item) F_attribute_visibility_internal_d;
+  extern void controller_entry_item_delete_simple(controller_entry_item_t * const item) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_item_delete_simple_
 
 /**
@@ -307,7 +307,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_entry_items_delete_simple_
-  extern void controller_entry_items_delete_simple(controller_entry_items_t *items) F_attribute_visibility_internal_d;
+  extern void controller_entry_items_delete_simple(controller_entry_items_t * const items) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_items_delete_simple_
 
 /**
@@ -329,7 +329,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_items_increase_by_
-  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t * const items) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_items_increase_by_
 
 #ifdef __cplusplus

@@ -17,6 +17,8 @@ extern "C" {
  *
  * This is essentially a wrapper to fll_error_print() that includes locking.
  *
+ * @param thread
+ *   The thread data.
  * @param print
  *   Designates how printing is to be performed.
  * @param cache
@@ -29,8 +31,6 @@ extern "C" {
  *   Set to 0 to disable.
  * @param fallback
  *   Set to F_true to print the fallback error message for unknown errors.
- * @param thread
- *   The thread data.
  * @param item
  *   If TRUE, then this error is associated with an item.
  *   If FALSE, then this error is associated with a rule setting.
@@ -39,7 +39,7 @@ extern "C" {
  * @see controller_rule_print_error_cache()
  */
 #ifndef _di_controller_rule_print_error_
-  extern void controller_rule_print_error(const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern void controller_rule_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_print_error_
 
 /**
@@ -72,6 +72,8 @@ extern "C" {
  *
  * This is explicitly intended to be used in addition to the error message.
  *
+ * @param thread
+ *   The thread data.
  * @param print
  *   The error or warning print structure.
  * @param cache
@@ -81,13 +83,11 @@ extern "C" {
  *   If FALSE, then this error is associated with a rule setting.
  * @param status
  *   The status code representing the failure (without the error bit set).
- * @param thread
- *   The thread data.
  *
  * @see controller_rule_print_error_cache()
  */
 #ifndef _di_controller_rule_item_print_error_
-  extern void controller_rule_item_print_error(const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern void controller_rule_item_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_print_error_
 
 /**

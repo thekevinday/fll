@@ -124,7 +124,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_cache_action_delete_simple_
-  extern void controller_cache_action_delete_simple(controller_cache_action_t *cache) F_attribute_visibility_internal_d;
+  extern void controller_cache_action_delete_simple(controller_cache_action_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_cache_action_delete_simple_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  * @see f_string_rangess_resize()
  */
 #ifndef _di_controller_cache_delete_simple_
-  extern void controller_cache_delete_simple(controller_cache_t *cache) F_attribute_visibility_internal_d;
+  extern void controller_cache_delete_simple(controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_cache_delete_simple_
 
 #ifdef __cplusplus

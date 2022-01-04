@@ -6,14 +6,14 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_rule_action_delete_simple_
-  void controller_rule_action_delete_simple(controller_rule_action_t *action) {
+  void controller_rule_action_delete_simple(controller_rule_action_t * const action) {
 
     f_string_dynamics_resize(0, &action->parameters);
   }
 #endif // _di_controller_rule_action_delete_simple_
 
 #ifndef _di_controller_rule_actions_delete_simple_
-  void controller_rule_actions_delete_simple(controller_rule_actions_t *actions) {
+  void controller_rule_actions_delete_simple(controller_rule_actions_t * const actions) {
 
     actions->used = actions->size;
 
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_controller_rule_actions_delete_simple_
 
 #ifndef _di_controller_rule_actions_increase_by_
-  f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) {
+  f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t * const actions) {
 
     if (actions->used + amount > actions->size) {
       if (actions->used + amount > F_array_length_t_size_d) {
@@ -75,7 +75,7 @@ extern "C" {
 #endif // _di_controller_rule_delete_simple_
 
 #ifndef _di_controller_rule_item_delete_simple_
-  void controller_rule_item_delete_simple(controller_rule_item_t *item) {
+  void controller_rule_item_delete_simple(controller_rule_item_t * const item) {
 
     f_string_dynamic_resize(0, &item->pid_file);
 
@@ -84,7 +84,7 @@ extern "C" {
 #endif // _di_controller_rule_item_delete_simple_
 
 #ifndef _di_controller_rule_items_delete_simple_
-  void controller_rule_items_delete_simple(controller_rule_items_t *items) {
+  void controller_rule_items_delete_simple(controller_rule_items_t * const items) {
 
     items->used = items->size;
 
@@ -98,7 +98,7 @@ extern "C" {
 #endif // _di_controller_rule_items_delete_simple_
 
 #ifndef _di_controller_rule_on_delete_simple_
-  void controller_rule_on_delete_simple(controller_rule_on_t *on) {
+  void controller_rule_on_delete_simple(controller_rule_on_t * const on) {
 
     f_string_dynamics_resize(0, &on->need);
     f_string_dynamics_resize(0, &on->want);
@@ -107,7 +107,7 @@ extern "C" {
 #endif // _di_controller_rule_on_delete_simple_
 
 #ifndef _di_controller_rule_ons_delete_simple_
-  void controller_rule_ons_delete_simple(controller_rule_ons_t *ons) {
+  void controller_rule_ons_delete_simple(controller_rule_ons_t * const ons) {
 
     ons->used = ons->size;
 
@@ -121,7 +121,7 @@ extern "C" {
 #endif // _di_controller_rule_ons_delete_simple_
 
 #ifndef _di_controller_rule_ons_increase_
-  f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) {
+  f_status_t controller_rule_ons_increase(controller_rule_ons_t * const ons) {
 
     if (ons->used + 1 > ons->size) {
       f_array_length_t size = ons->used + controller_common_allocation_small_d;
@@ -142,7 +142,7 @@ extern "C" {
 #endif // _di_controller_rule_ons_increase_
 
 #ifndef _di_controller_rule_ons_resize_
-  f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t *ons) {
+  f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t * const ons) {
 
     for (f_array_length_t i = length; i < ons->size; ++i) {
       controller_rule_on_delete_simple(&ons->array[i]);
@@ -163,14 +163,14 @@ extern "C" {
 #endif // _di_controller_rule_ons_resize_
 
 #ifndef _di_controller_rules_delete_simple_
-  void controller_rules_delete_simple(controller_rules_t *rules) {
+  void controller_rules_delete_simple(controller_rules_t * const rules) {
 
     controller_rules_resize(0, rules);
   }
 #endif // _di_controller_rules_delete_simple_
 
 #ifndef _di_controller_rules_increase_
-  f_status_t controller_rules_increase(controller_rules_t *rules) {
+  f_status_t controller_rules_increase(controller_rules_t * const rules) {
 
     if (rules->used + 1 > rules->size) {
       f_array_length_t size = rules->used + controller_common_allocation_small_d;
@@ -191,7 +191,7 @@ extern "C" {
 #endif // _di_controller_rules_increase_
 
 #ifndef _di_controller_rules_resize_
-  f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t *rules) {
+  f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t * const rules) {
 
     for (f_array_length_t i = length; i < rules->size; ++i) {
       controller_rule_delete_simple(&rules->array[i]);

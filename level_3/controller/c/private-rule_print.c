@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_rule_print_error_
-  void controller_rule_print_error(const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) {
+  void controller_rule_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
@@ -58,7 +58,7 @@ extern "C" {
 #endif // _di_controller_rule_print_error_cache_
 
 #ifndef _di_controller_rule_item_print_error_
-  void controller_rule_item_print_error(const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) {
+  void controller_rule_item_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;

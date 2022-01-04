@@ -6,14 +6,14 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_entry_action_delete_simple_
-  void controller_entry_action_delete_simple(controller_entry_action_t *action) {
+  void controller_entry_action_delete_simple(controller_entry_action_t * const action) {
 
     f_string_dynamics_resize(0, &action->parameters);
   }
 #endif // _di_controller_entry_action_delete_simple_
 
 #ifndef _di_controller_entry_actions_delete_simple_
-  void controller_entry_actions_delete_simple(controller_entry_actions_t *actions) {
+  void controller_entry_actions_delete_simple(controller_entry_actions_t * const actions) {
 
     actions->used = actions->size;
 
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_controller_entry_actions_delete_simple_
 
 #ifndef _di_controller_entry_actions_increase_by_
-  f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) {
+  f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t * const actions) {
 
     if (actions->used + amount > actions->size) {
       if (actions->used + amount > F_array_length_t_size_d) {
@@ -48,7 +48,7 @@ extern "C" {
 #endif // _di_controller_entry_actions_increase_by_
 
 #ifndef _di_controller_entry_item_delete_simple_
-  void controller_entry_item_delete_simple(controller_entry_item_t *item) {
+  void controller_entry_item_delete_simple(controller_entry_item_t * const item) {
 
     f_string_dynamic_resize(0, &item->name);
 
@@ -57,7 +57,7 @@ extern "C" {
 #endif // _di_controller_entry_item_delete_simple_
 
 #ifndef _di_controller_entry_items_delete_simple_
-  void controller_entry_items_delete_simple(controller_entry_items_t *items) {
+  void controller_entry_items_delete_simple(controller_entry_items_t * const items) {
 
     items->used = items->size;
 
@@ -71,7 +71,7 @@ extern "C" {
 #endif // _di_controller_entry_items_delete_simple_
 
 #ifndef _di_controller_entry_items_increase_by_
-  f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) {
+  f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t * const items) {
 
     if (items->used + amount > items->size) {
       if (items->used + amount > F_array_length_t_size_d) {

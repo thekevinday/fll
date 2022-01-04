@@ -28,7 +28,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_rule_
-  extern void * controller_thread_rule(void *arguments) F_attribute_visibility_internal_d;
+  extern void * controller_thread_rule(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_rule_
 
 #ifdef __cplusplus

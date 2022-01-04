@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_pids_increase_
-  f_status_t controller_pids_increase(controller_pids_t *pids) {
+  f_status_t controller_pids_increase(controller_pids_t * const pids) {
 
     if (pids->used + 1 > pids->size) {
       f_array_length_t size = pids->used + controller_common_allocation_small_d;
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_controller_pids_increase_
 
 #ifndef _di_controller_pids_resize_
-  f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t *pids) {
+  f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t * const pids) {
 
     f_status_t status = F_none;
 
@@ -46,7 +46,7 @@ extern "C" {
 #endif // _di_controller_pids_resize_
 
 #ifndef _di_controller_process_delete_simple_
-  void controller_process_delete_simple(controller_process_t *process) {
+  void controller_process_delete_simple(controller_process_t * const process) {
 
     if (process->id_thread) {
       f_thread_signal(process->id_thread, F_signal_kill);
@@ -72,14 +72,14 @@ extern "C" {
 #endif // _di_controller_process_delete_simple_
 
 #ifndef _di_controller_processs_delete_simple_
-  void controller_processs_delete_simple(controller_processs_t *processs) {
+  void controller_processs_delete_simple(controller_processs_t * const processs) {
 
     controller_processs_resize(0, processs);
   }
 #endif // _di_controller_processs_delete_simple_
 
 #ifndef _di_controller_processs_increase_
-  f_status_t controller_processs_increase(controller_processs_t *processs) {
+  f_status_t controller_processs_increase(controller_processs_t * const processs) {
 
     if (processs->used + 1 > processs->size) {
       f_array_length_t size = processs->used + controller_common_allocation_small_d;
@@ -100,7 +100,7 @@ extern "C" {
 #endif // _di_controller_processs_increase_
 
 #ifndef _di_controller_processs_resize_
-  f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t *processs) {
+  f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t * const processs) {
 
     f_status_t status = F_none;
 

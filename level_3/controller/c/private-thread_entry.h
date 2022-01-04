@@ -26,7 +26,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_entry_
-  extern void * controller_thread_entry(void *arguments) F_attribute_visibility_internal_d;
+  extern void * controller_thread_entry(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_entry_
 
 /**
@@ -46,7 +46,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_exit_
-  extern void * controller_thread_exit(void *arguments) F_attribute_visibility_internal_d;
+  extern void * controller_thread_exit(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_exit_
 
 #ifdef __cplusplus

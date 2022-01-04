@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_task_action_delete_simple_
-  void controller_task_action_delete_simple(controller_task_action_t *action) {
+  void controller_task_action_delete_simple(controller_task_action_t * const action) {
 
     f_string_dynamic_resize(0, &action->help);
     f_string_dynamics_resize(0, &action->parameters);
@@ -14,7 +14,7 @@ extern "C" {
 #endif // _di_controller_task_action_delete_simple_
 
 #ifndef _di_controller_task_actions_delete_simple_
-  void controller_task_actions_delete_simple(controller_task_actions_t *actions) {
+  void controller_task_actions_delete_simple(controller_task_actions_t * const actions) {
 
     actions->used = actions->size;
 
@@ -28,7 +28,7 @@ extern "C" {
 #endif // _di_controller_task_actions_delete_simple_
 
 #ifndef _di_controller_task_actions_increase_by_
-  f_status_t controller_task_actions_increase_by(const f_array_length_t amount, controller_task_actions_t *actions) {
+  f_status_t controller_task_actions_increase_by(const f_array_length_t amount, controller_task_actions_t * const actions) {
 
     if (actions->used + amount > actions->size) {
       if (actions->used + amount > F_array_length_t_size_d) {
@@ -77,14 +77,14 @@ extern "C" {
 #endif // _di_controller_task_delete_simple_
 
 #ifndef _di_controller_tasks_delete_simple_
-  void controller_tasks_delete_simple(controller_tasks_t *tasks) {
+  void controller_tasks_delete_simple(controller_tasks_t * const tasks) {
 
     controller_tasks_resize(0, tasks);
   }
 #endif // _di_controller_tasks_delete_simple_
 
 #ifndef _di_controller_tasks_increase_
-  f_status_t controller_tasks_increase(controller_tasks_t *tasks) {
+  f_status_t controller_tasks_increase(controller_tasks_t * const tasks) {
 
     if (tasks->used + 1 > tasks->size) {
       f_array_length_t size = tasks->used + controller_common_allocation_small_d;
@@ -105,7 +105,7 @@ extern "C" {
 #endif // _di_controller_tasks_increase_
 
 #ifndef _di_controller_tasks_resize_
-  f_status_t controller_tasks_resize(const f_array_length_t length, controller_tasks_t *tasks) {
+  f_status_t controller_tasks_resize(const f_array_length_t length, controller_tasks_t * const tasks) {
 
     for (f_array_length_t i = length; i < tasks->size; ++i) {
       controller_task_delete_simple(&tasks->array[i]);

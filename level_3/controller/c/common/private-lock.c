@@ -42,7 +42,7 @@ extern "C" {
 #endif // _di_controller_lock_delete_rw_
 
 #ifndef _di_controller_lock_delete_simple_
-  void controller_lock_delete_simple(controller_lock_t *lock) {
+  void controller_lock_delete_simple(controller_lock_t * const lock) {
 
     controller_lock_delete_mutex(&lock->print);
     controller_lock_delete_mutex(&lock->alert);

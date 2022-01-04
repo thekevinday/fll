@@ -332,7 +332,7 @@ extern "C" {
  *   -2 to designate exit due to signal/disabled thread.
  */
 #ifndef _di_controller_rule_execute_rerun_
-  extern int8_t controller_rule_execute_rerun(const uint8_t action, controller_process_t * const process, controller_rule_item_t *item) F_attribute_visibility_internal_d;
+  extern int8_t controller_rule_execute_rerun(const uint8_t action, controller_process_t * const process, controller_rule_item_t * const item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_rerun_
 
 /**
@@ -360,7 +360,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_id_construct_
-  extern f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *alias) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t * const alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_id_construct_
 
 /**
@@ -428,7 +428,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_item_read_
-  extern f_status_t controller_rule_item_read(const controller_global_t global, const bool is_normal, controller_cache_t * const cache, controller_rule_item_t *item) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_item_read(const controller_global_t global, const bool is_normal, controller_cache_t * const cache, controller_rule_item_t * const item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_read_
 
 /**
@@ -464,7 +464,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rule_items_increase_by_
-  extern f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t *items) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t * const items) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_items_increase_by_
 
 /**
@@ -661,7 +661,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_signed()
  */
 #ifndef _di_controller_rule_action_read_rerun_number_
-  extern f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_array_length_t *index, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_array_length_t * const index, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_read_rerun_number_
 
 /**
@@ -704,7 +704,7 @@ extern "C" {
  * @see fll_path_canonical()
  */
 #ifndef _di_controller_rule_setting_read_
-  extern f_status_t controller_rule_setting_read(const controller_global_t global, const bool is_normal, const controller_setting_t setting, controller_cache_t *const cache, controller_rule_t * const rule) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_setting_read(const controller_global_t global, const bool is_normal, const controller_setting_t setting, controller_cache_t * const cache, controller_rule_t * const rule) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_
 
 /**

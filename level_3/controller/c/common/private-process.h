@@ -187,7 +187,7 @@ extern "C" {
  * @see controller_pids_resize()
  */
 #ifndef _di_controller_pids_increase_
-  extern f_status_t controller_pids_increase(controller_pids_t *pids) F_attribute_visibility_internal_d;
+  extern f_status_t controller_pids_increase(controller_pids_t * const pids) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -207,7 +207,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_pids_resize_
-  extern f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t *pids) F_attribute_visibility_internal_d;
+  extern f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t * const pids) F_attribute_visibility_internal_d;
 #endif // _di_controller_pids_resize_
 
 /**
@@ -221,7 +221,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_process_delete_simple_
-  extern void controller_process_delete_simple(controller_process_t *process) F_attribute_visibility_internal_d;
+  extern void controller_process_delete_simple(controller_process_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_process_delete_simple_
 
 /**
@@ -233,7 +233,7 @@ extern "C" {
  * @see controller_processs_resize()
  */
 #ifndef _di_controller_processs_delete_simple_
-  extern void controller_processs_delete_simple(controller_processs_t *processs) F_attribute_visibility_internal_d;
+  extern void controller_processs_delete_simple(controller_processs_t * const processs) F_attribute_visibility_internal_d;
 #endif // _di_controller_processs_delete_simple_
 
 /**
@@ -256,7 +256,7 @@ extern "C" {
  * @see controller_processs_resize()
  */
 #ifndef _di_controller_processs_increase_
-  extern f_status_t controller_processs_increase(controller_processs_t *processs) F_attribute_visibility_internal_d;
+  extern f_status_t controller_processs_increase(controller_processs_t * const processs) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -281,7 +281,7 @@ extern "C" {
  * @see f_thread_lock_create()
  */
 #ifndef _di_controller_processs_resize_
-  extern f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t *processs) F_attribute_visibility_internal_d;
+  extern f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t * const processs) F_attribute_visibility_internal_d;
 #endif // _di_controller_processs_resize_
 
 #ifdef __cplusplus

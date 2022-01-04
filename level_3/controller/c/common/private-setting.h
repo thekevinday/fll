@@ -121,7 +121,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_setting_delete_simple_
-  extern void controller_setting_delete_simple(controller_setting_t *setting) F_attribute_visibility_internal_d;
+  extern void controller_setting_delete_simple(controller_setting_t * const setting) F_attribute_visibility_internal_d;
 #endif // _di_controller_setting_delete_simple_
 
 #ifdef __cplusplus

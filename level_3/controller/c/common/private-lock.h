@@ -78,7 +78,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_lock_delete_simple_
-  extern void controller_lock_delete_simple(controller_lock_t *lock) F_attribute_visibility_internal_d;
+  extern void controller_lock_delete_simple(controller_lock_t * const lock) F_attribute_visibility_internal_d;
 #endif // _di_controller_lock_delete_simple_
 
 #ifdef __cplusplus

@@ -23,6 +23,7 @@ extern "C" {
 #include "common/private-setting.h"
 #include "common/private-thread.h"
 #include "common/private-state.h"
+#include "common/private-control.h"
 
 /**
  * All special strings used within this program.

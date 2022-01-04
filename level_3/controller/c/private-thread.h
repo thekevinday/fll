@@ -23,7 +23,7 @@ extern "C" {
  *   0, always.
  */
 #ifndef _di_controller_thread_cleanup_
-  extern void * controller_thread_cleanup(void *arguments) F_attribute_visibility_internal_d;
+  extern void * controller_thread_cleanup(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_cleanup_
 
 /**
@@ -40,7 +40,7 @@ extern "C" {
  *   FALSE when disabled.
  */
 #ifndef _di_controller_thread_is_enabled_
-  extern f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t * const thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_is_enabled_
 
 /**
@@ -58,7 +58,7 @@ extern "C" {
  * @see controller_thread_is_enabled_process_type()
  */
 #ifndef _di_controller_thread_is_enabled_process_
-  extern f_status_t controller_thread_is_enabled_process(controller_process_t * const process, controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_is_enabled_process(controller_process_t * const process, controller_thread_t * const thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_is_enabled_process_
 
 /**
@@ -76,7 +76,7 @@ extern "C" {
  * @see controller_thread_is_enabled()
  */
 #ifndef _di_controller_thread_is_enabled_process_type_
-  extern f_status_t controller_thread_is_enabled_process_type(const uint8_t type, controller_thread_t *thread) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_is_enabled_process_type(const uint8_t type, controller_thread_t * const thread) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_is_enabled_process_type_
 
 /**
@@ -95,7 +95,7 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  */
 #ifndef _di_controller_thread_main_
-  extern f_status_t controller_thread_main(controller_main_t *main, controller_setting_t *setting) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_main(controller_main_t * const main, controller_setting_t * const setting) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_main_
 
 /***
@@ -116,7 +116,7 @@ extern "C" {
  * @see f_thread_join()
  */
 #ifndef _di_controller_thread_join_
-  extern f_status_t controller_thread_join(f_thread_id_t *id) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_join(f_thread_id_t * const id) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_join_
 
 #ifdef __cplusplus

@@ -15,14 +15,14 @@ extern "C" {
 /**
  * Thread for handling signals/interrupts.
  *
+ * @param global
+ *   The global data.
  * @param is_normal
  *   If TRUE, then process as if this operates during a normal operation (entry and control).
  *   If FALSE, then process as if this operates during a an exit operation.
- * @param global
- *   The global data.
  */
 #ifndef _di_controller_thread_signal_
-  extern void controller_thread_signal(const bool is_normal, controller_global_t *global) F_attribute_visibility_internal_d;
+  extern void controller_thread_signal(controller_global_t * const global, const bool is_normal) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_
 
 /**
@@ -39,7 +39,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupted.
  */
 #ifndef _di_controller_thread_signal_state_fss_
-  extern f_status_t controller_thread_signal_state_fss(void *state, void *internal) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_signal_state_fss(void * const state, void * const internal) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_state_fss_
 
 /**
@@ -56,7 +56,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupted.
  */
 #ifndef _di_controller_thread_signal_state_iki_
-  extern f_status_t controller_thread_signal_state_iki(void *state, void *internal) F_attribute_visibility_internal_d;
+  extern f_status_t controller_thread_signal_state_iki(void * const state, void * const internal) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_state_iki_
 
 /**
@@ -74,7 +74,7 @@ extern "C" {
  * @see controller_thread_signal()
  */
 #ifndef _di_controller_thread_signal_normal_
-  extern void * controller_thread_signal_normal(void *arguments) F_attribute_visibility_internal_d;
+  extern void * controller_thread_signal_normal(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_normal_
 
 /**
@@ -92,7 +92,7 @@ extern "C" {
  * @see controller_thread_signal()
  */
 #ifndef _di_controller_thread_signal_other_
-  extern void * controller_thread_signal_other(void *arguments) F_attribute_visibility_internal_d;
+  extern void * controller_thread_signal_other(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_signal_other_
 
 #ifdef __cplusplus

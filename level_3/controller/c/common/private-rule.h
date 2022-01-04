@@ -507,7 +507,7 @@ extern "C" {
  * @see f_string_dynamics_resize()
  */
 #ifndef _di_controller_rule_action_delete_simple_
-  extern void controller_rule_action_delete_simple(controller_rule_action_t *action) F_attribute_visibility_internal_d;
+  extern void controller_rule_action_delete_simple(controller_rule_action_t * const action) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_delete_simple_
 
 /**
@@ -520,7 +520,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_actions_delete_simple_
-  extern void controller_rule_actions_delete_simple(controller_rule_actions_t *actions) F_attribute_visibility_internal_d;
+  extern void controller_rule_actions_delete_simple(controller_rule_actions_t * const actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_actions_delete_simple_
 
 /**
@@ -540,7 +540,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_controller_rule_actions_increase_by_
-  extern f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t * const actions) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_actions_increase_by_
 
 /**
@@ -562,7 +562,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_delete_simple_
-  extern void controller_rule_delete_simple(controller_rule_t *rule) F_attribute_visibility_internal_d;
+  extern void controller_rule_delete_simple(controller_rule_t * const rule) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_delete_simple_
 
 /**
@@ -574,7 +574,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_item_delete_simple_
-  extern void controller_rule_item_delete_simple(controller_rule_item_t *item) F_attribute_visibility_internal_d;
+  extern void controller_rule_item_delete_simple(controller_rule_item_t * const item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_delete_simple_
 
 /**
@@ -587,7 +587,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_items_delete_simple_
-  extern void controller_rule_items_delete_simple(controller_rule_items_t *items) F_attribute_visibility_internal_d;
+  extern void controller_rule_items_delete_simple(controller_rule_items_t * const items) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_items_delete_simple_
 
 /**
@@ -599,7 +599,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_on_delete_simple_
-  extern void controller_rule_on_delete_simple(controller_rule_on_t *on) F_attribute_visibility_internal_d;
+  extern void controller_rule_on_delete_simple(controller_rule_on_t * const on) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_on_delete_simple_
 
 /**
@@ -612,7 +612,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_ons_delete_simple_
-  extern void controller_rule_ons_delete_simple(controller_rule_ons_t *ons) F_attribute_visibility_internal_d;
+  extern void controller_rule_ons_delete_simple(controller_rule_ons_t * const ons) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_ons_delete_simple_
 
 /**
@@ -635,7 +635,7 @@ extern "C" {
  * @see controller_rule_ons_resize()
  */
 #ifndef _di_controller_rule_ons_increase_
-  extern f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_ons_increase(controller_rule_ons_t * const ons) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -655,7 +655,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rule_ons_resize_
-  extern f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t *ons) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t * const ons) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_ons_resize_
 
 /**
@@ -667,7 +667,7 @@ extern "C" {
  * @see controller_rules_resize()
  */
 #ifndef _di_controller_rules_delete_simple_
-  extern void controller_rules_delete_simple(controller_rules_t *rules) F_attribute_visibility_internal_d;
+  extern void controller_rules_delete_simple(controller_rules_t * const rules) F_attribute_visibility_internal_d;
 #endif // _di_controller_rules_delete_simple_
 
 /**
@@ -690,7 +690,7 @@ extern "C" {
  * @see controller_rules_resize()
  */
 #ifndef _di_controller_rules_increase_
-  extern f_status_t controller_rules_increase(controller_rules_t *rules) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rules_increase(controller_rules_t * const rules) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -710,7 +710,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rules_resize_
-  extern f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t *rules) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t * const rules) F_attribute_visibility_internal_d;
 #endif // _di_controller_rules_resize_
 
 #ifdef __cplusplus

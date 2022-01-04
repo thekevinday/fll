@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_cache_action_delete_simple_
-  void controller_cache_action_delete_simple(controller_cache_action_t *cache) {
+  void controller_cache_action_delete_simple(controller_cache_action_t * const cache) {
 
     f_string_dynamic_resize(0, &cache->name_action);
     f_string_dynamic_resize(0, &cache->name_file);
@@ -16,7 +16,7 @@ extern "C" {
 #endif // _di_controller_cache_action_delete_simple_
 
 #ifndef _di_controller_cache_delete_simple_
-  void controller_cache_delete_simple(controller_cache_t *cache) {
+  void controller_cache_delete_simple(controller_cache_t * const cache) {
 
     macro_f_array_lengths_t_delete_simple(cache->ats)
     macro_f_array_lengths_t_delete_simple(cache->stack)

@@ -207,7 +207,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_conversion_string_to_decimal_unsigned()
  */
 #ifndef _di_controller_file_pid_read_
-  f_status_t controller_file_pid_read(const f_string_static_t path, pid_t *pid) F_attribute_visibility_internal_d;
+  f_status_t controller_file_pid_read(const f_string_static_t path, pid_t * const pid) F_attribute_visibility_internal_d;
 #endif // _di_controller_file_pid_read_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_controller_get_id_user_
-  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, uid_t *id) F_attribute_visibility_internal_d;
+  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, uid_t * const id) F_attribute_visibility_internal_d;
 #endif // _di_controller_get_id_user_
 
 /**
@@ -261,7 +261,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_controller_get_id_group_
-  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, gid_t *id) F_attribute_visibility_internal_d;
+  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, gid_t * const id) F_attribute_visibility_internal_d;
 #endif // _di_controller_get_id_group_
 
 /**
@@ -273,11 +273,11 @@ extern "C" {
  *
  * @param global
  *   The global data.
+ * @param cache
+ *   The cache.
  * @param is_entry
  *   If TRUE, then this operate as an entry.
  *   If FALSE, then this operate as an exit.
- * @param cache
- *   The cache.
  *
  * @return
  *   F_none on success.
@@ -287,7 +287,7 @@ extern "C" {
  * @see controller_file_pid_create()
  */
 #ifndef _di_controller_perform_ready_
-  extern f_status_t controller_perform_ready(const controller_global_t global, const bool is_entry, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_perform_ready(const controller_global_t *global, controller_cache_t * const cache, const bool is_entry) F_attribute_visibility_internal_d;
 #endif // _di_controller_perform_ready_
 
 /**
@@ -353,11 +353,6 @@ extern "C" {
 /**
  * Sleep for a given number of nanoseconds.
  *
- * The nanosleep() function handles signals within itself.
- * Temporarily unblock signals so that the nanosleep can receive the signal and then restore the signals once done.
- *
- * The signals will not be unblocked when in uninterruptible mode.
- *
  * @param main
  *   The main program data.
  * @param setting
@@ -366,10 +361,9 @@ extern "C" {
  *   The number of nanoseconds to sleep.
  *
  * @return
- *   The results of nanosleep().
+ *   The result of nanosleep().
  *
  * @see nanosleep()
- * @see controller_time_milliseconds()
  */
 #ifndef _di_controller_time_sleep_nanoseconds_
   extern int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_setting_t * const setting, struct timespec time) F_attribute_visibility_internal_d;

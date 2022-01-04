@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_thread_entry_
-  void * controller_thread_entry(void *arguments) {
+  void * controller_thread_entry(void * const arguments) {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
@@ -53,7 +53,7 @@ extern "C" {
           *status = F_status_set_error(F_available_not);
         }
         else {
-          *status = controller_entry_process(*entry->global, F_false, F_true, cache);
+          *status = controller_entry_process(entry->global, cache, F_false, F_true);
 
           if (F_status_is_error(*status)) {
             entry->setting->ready = controller_setting_ready_fail_e;
@@ -75,7 +75,7 @@ extern "C" {
                 f_thread_create(0, &entry->global->thread->id_signal, &controller_thread_signal_normal, (void *) entry->global);
               }
 
-              const f_status_t status_failsafe = controller_entry_process(*entry->global, F_true, F_true, cache);
+              const f_status_t status_failsafe = controller_entry_process(entry->global, cache, F_true, F_true);
 
               if (F_status_is_error(status_failsafe)) {
                 if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -137,7 +137,7 @@ extern "C" {
 #endif // _di_controller_thread_entry_
 
 #ifndef _di_controller_thread_exit_
-  void * controller_thread_exit(void *arguments) {
+  void * controller_thread_exit(void * const arguments) {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
@@ -165,7 +165,7 @@ extern "C" {
     if (F_status_is_error_not(*status) && *status != F_child && *status != F_file_found_not) {
       if (main->parameters[controller_parameter_validate_e].result == f_console_result_none_e || main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
 
-        *status = controller_entry_process(*entry->global, F_false, F_false, cache);
+        *status = controller_entry_process(entry->global, cache, F_false, F_false);
 
         if (F_status_is_error(*status)) {
           entry->setting->ready = controller_setting_ready_fail_e;
@@ -190,7 +190,7 @@ extern "C" {
               }
             }
 
-            const f_status_t status_failsafe = controller_entry_process(*entry->global, F_true, F_false, cache);
+            const f_status_t status_failsafe = controller_entry_process(entry->global, cache, F_true, F_false);
 
             if (F_status_is_error(status_failsafe)) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {

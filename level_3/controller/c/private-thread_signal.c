@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_thread_signal_
-  void controller_thread_signal(const bool is_normal, controller_global_t *global) {
+  void controller_thread_signal(controller_global_t * const global, const bool is_normal) {
 
     if (!controller_thread_is_enabled(is_normal, global->thread)) return;
 
@@ -43,7 +43,7 @@ extern "C" {
 #endif // _di_controller_thread_signal_
 
 #ifndef _di_controller_thread_signal_state_fss_
-  f_status_t controller_thread_signal_state_fss(void *state, void *internal) {
+  f_status_t controller_thread_signal_state_fss(void * const state, void * const internal) {
 
     if (!state) {
       return F_interrupt_not;
@@ -71,7 +71,7 @@ extern "C" {
 #endif // _di_controller_thread_signal_state_fss_
 
 #ifndef _di_controller_thread_signal_state_iki_
-  f_status_t controller_thread_signal_state_iki(void *state, void *internal) {
+  f_status_t controller_thread_signal_state_iki(void * const state, void * const internal) {
 
     if (!state) {
       return F_interrupt_not;
@@ -99,22 +99,22 @@ extern "C" {
 #endif // _di_controller_thread_signal_state_iki_
 
 #ifndef _di_controller_thread_signal_normal_
-  void * controller_thread_signal_normal(void *arguments) {
+  void * controller_thread_signal_normal(void * const arguments) {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
-    controller_thread_signal(F_true, (controller_global_t *) arguments);
+    controller_thread_signal((controller_global_t *) arguments, F_true);
 
     return 0;
   }
 #endif // _di_controller_thread_signal_normal_
 
 #ifndef _di_controller_thread_signal_other_
-  void * controller_thread_signal_other(void *arguments) {
+  void * controller_thread_signal_other(void * const arguments) {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
-    controller_thread_signal(F_false, (controller_global_t *) arguments);
+    controller_thread_signal((controller_global_t *) arguments, F_false);
 
     return 0;
   }

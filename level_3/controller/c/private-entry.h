@@ -130,14 +130,14 @@ extern "C" {
  *
  * @param global
  *   The global data.
+ * @param cache
+ *   The main/global cache to use.
  * @param failsafe
  *   If TRUE, operate in failsafe mode (starts at designated failsafe Item).
  *   If FALSE, operate in normal mode (starts at "main" Item).
  * @param is_entry
  *   If TRUE, then this operate as an entry.
  *   If FALSE, then this operate as an exit.
- * @param cache
- *   The main/global cache to use.
  *
  * @return
  *   F_none on success.
@@ -156,7 +156,7 @@ extern "C" {
  * @see controller_dynamic_append_terminated()
  */
 #ifndef _di_controller_entry_process_
-  extern f_status_t controller_entry_process(const controller_global_t global, const bool failsafe, const bool is_entry, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_process(const controller_global_t *global, controller_cache_t * const cache, const bool failsafe, const bool is_entry) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_process_
 
 /**

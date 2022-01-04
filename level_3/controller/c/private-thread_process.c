@@ -177,6 +177,7 @@ extern "C" {
                   time.tv_nsec = controller_thread_exit_process_cancel_wait_d;
 
                   nanosleep(&time, 0);
+
                   continue;
                 }
                 else {
@@ -250,7 +251,7 @@ extern "C" {
 #endif // _di_controller_thread_process_cancel_
 
 #ifndef _di_controller_thread_process_exit_
-  void controller_thread_process_exit(controller_global_t *global) {
+  void controller_thread_process_exit(controller_global_t * const global) {
 
     if (global->thread->enabled != controller_thread_enabled_exit_e) {
       return;
@@ -277,7 +278,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
-          controller_print_error(global->main->error, F_status_set_fine(status), "f_thread_create", F_true, global->thread);
+          controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_thread_create", F_true);
         }
 
         if (F_status_is_error_not(f_thread_mutex_lock(&global->thread->lock.alert))) {
@@ -345,7 +346,7 @@ extern "C" {
 #endif // _di_controller_thread_process_exit_
 
 #ifndef _di_controller_thread_process_normal_
-  void * controller_thread_process_normal(void *arguments) {
+  void * controller_thread_process_normal(void * const arguments) {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
@@ -356,7 +357,7 @@ extern "C" {
 #endif // _di_controller_thread_process_normal_
 
 #ifndef _di_controller_thread_process_other_
-  void * controller_thread_process_other(void *arguments) {
+  void * controller_thread_process_other(void * const arguments) {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 

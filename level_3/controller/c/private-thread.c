@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_thread_cleanup_
-  void * controller_thread_cleanup(void *arguments) {
+  void * controller_thread_cleanup(void * const arguments) {
 
     f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
@@ -31,7 +31,7 @@ extern "C" {
 
     while (global->thread->enabled == controller_thread_enabled_e) {
 
-      controller_time_sleep_nanoseconds(global->main, global->setting, delay);
+      nanosleep(&delay, 0);
 
       if (global->thread->enabled != controller_thread_enabled_e) break;
 
@@ -155,7 +155,7 @@ extern "C" {
 #endif // _di_controller_thread_cleanup_
 
 #ifndef _di_controller_thread_is_enabled_
-  f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t *thread) {
+  f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t * const thread) {
 
     if (is_normal) {
       return thread->enabled == controller_thread_enabled_e;
@@ -166,21 +166,21 @@ extern "C" {
 #endif // _di_controller_thread_is_enabled_
 
 #ifndef _di_controller_thread_is_enabled_process_
-  f_status_t controller_thread_is_enabled_process(controller_process_t * const process, controller_thread_t *thread) {
+  f_status_t controller_thread_is_enabled_process(controller_process_t * const process, controller_thread_t * const thread) {
 
     return controller_thread_is_enabled_process_type(process->type, thread);
   }
 #endif // _di_controller_thread_is_enabled_process_
 
 #ifndef _di_controller_thread_is_enabled_process_type_
-  f_status_t controller_thread_is_enabled_process_type(const uint8_t type, controller_thread_t *thread) {
+  f_status_t controller_thread_is_enabled_process_type(const uint8_t type, controller_thread_t * const thread) {
 
     return controller_thread_is_enabled(type != controller_process_type_exit_e, thread);
   }
 #endif // _di_controller_thread_is_enabled_process_type_
 
 #ifndef _di_controller_thread_main_
-  f_status_t controller_thread_main(controller_main_t *main, controller_setting_t *setting) {
+  f_status_t controller_thread_main(controller_main_t * const main, controller_setting_t * const setting) {
 
     f_status_t status = F_none;
 
@@ -199,7 +199,7 @@ extern "C" {
       status = controller_processs_increase(&thread.processs);
 
       if (F_status_is_error(status)) {
-        controller_print_error(main->error, F_status_set_fine(status), "controller_processs_increase", F_true, &thread);
+        controller_print_error(&thread, main->error, F_status_set_fine(status), "controller_processs_increase", F_true);
       }
     }
 
@@ -211,7 +211,7 @@ extern "C" {
       thread.id_signal = 0;
 
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        controller_print_error(main->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
+        controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
       }
     }
     else {
@@ -240,7 +240,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            controller_print_error(main->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
+            controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
           }
         }
         else {
@@ -266,13 +266,6 @@ extern "C" {
             thread.id_rule = 0;
           }
           else {
-            status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &global);
-          }
-
-          if (F_status_is_error(status)) {
-            thread.id_control = 0;
-          }
-          else {
             status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &global);
           }
 
@@ -280,7 +273,7 @@ extern "C" {
             thread.id_cleanup = 0;
 
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
-              controller_print_error(main->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
+              controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
             }
           }
         }
@@ -307,14 +300,21 @@ extern "C" {
 
     controller_thread_process_exit(&global);
 
+    if (thread.id_listen) {
+      f_thread_cancel(thread.id_listen);
+    }
+
     if (thread.id_signal) f_thread_join(thread.id_signal, 0);
     if (thread.id_cleanup) f_thread_join(thread.id_cleanup, 0);
     if (thread.id_control) f_thread_join(thread.id_control, 0);
+    if (thread.id_listen) f_thread_join(thread.id_listen, 0);
     if (thread.id_entry) f_thread_join(thread.id_entry, 0);
     if (thread.id_rule) f_thread_join(thread.id_rule, 0);
 
     thread.id_cleanup = 0;
     thread.id_control = 0;
+    thread.id_listen = 0;
+    thread.id_entry = 0;
     thread.id_rule = 0;
     thread.id_signal = 0;
 
@@ -339,7 +339,7 @@ extern "C" {
 #endif // _di_controller_thread_main_
 
 #ifndef _di_controller_thread_join_
-  f_status_t controller_thread_join(f_thread_id_t *id) {
+  f_status_t controller_thread_join(f_thread_id_t * const id) {
 
     if (!id || !*id) return F_data_not;
 

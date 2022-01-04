@@ -56,7 +56,7 @@ extern "C" {
  *   The global thread data.
  */
 #ifndef _di_controller_thread_process_exit_
-  extern void controller_thread_process_exit(controller_global_t *global) F_attribute_visibility_internal_d;
+  extern void controller_thread_process_exit(controller_global_t * const global) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_exit_
 
 /**
@@ -72,7 +72,7 @@ extern "C" {
  * @see controller_thread_process()
  */
 #ifndef _di_controller_thread_process_normal_
-  extern void * controller_thread_process_normal(void *arguments) F_attribute_visibility_internal_d;
+  extern void * controller_thread_process_normal(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_normal_
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  * @see controller_thread_process()
  */
 #ifndef _di_controller_thread_process_other_
-  extern void * controller_thread_process_other(void *arguments) F_attribute_visibility_internal_d;
+  extern void * controller_thread_process_other(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_other_
 
 #ifdef __cplusplus

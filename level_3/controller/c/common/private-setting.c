@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_setting_delete_simple_
-  void controller_setting_delete_simple(controller_setting_t *setting) {
+  void controller_setting_delete_simple(controller_setting_t * const setting) {
 
     f_string_dynamic_resize(0, &setting->path_control);
     f_string_dynamic_resize(0, &setting->path_cgroup);
