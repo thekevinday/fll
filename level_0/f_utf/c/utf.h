@@ -512,9 +512,9 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is a unassigned (well-formed) UTF-8 character.
  *
- * The Private Use Area plane is not considered unassigned.
+ * The Surrogates and Private Use are not considered unassigned.
  *
- * This does unassignedate if the UTF-8 character is a unassigned UTF-8 character.
+ * This does validate if the UTF-8 character is a unassigned UTF-8 character.
  * To not do this, use f_utf_character_is().
  *
  * @param character
@@ -1284,6 +1284,27 @@ extern "C" {
 #endif // _di_f_utf_is_punctuation_
 
 /**
+ * Check to see if the entire byte block of the character is a surrogate UTF-8 character.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 symbol character.
+ *   F_false if not a UTF-8 symbol character.
+ *
+ *   F_utf (with error bit) if unicode is an invalid Unicode character.
+ *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_surrogate_
+  extern f_status_t f_utf_is_surrogate(const f_string_t character, const f_array_length_t width_max);
+#endif // _di_f_utf_is_surrogate_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 symbol character.
  *
  * @todo Incomplete, UTF-8 codes not yet checked!
@@ -1308,8 +1329,6 @@ extern "C" {
 
 /**
  * Check to see if the entire byte block of the character is a unassigned UTF-8 character.
- *
- * Unassigned as of Unicode version 13.0.
  *
  * @param character
  *   The character to validate.

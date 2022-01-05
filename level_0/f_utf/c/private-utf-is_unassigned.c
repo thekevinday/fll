@@ -850,7 +850,500 @@ extern "C" {
         return F_true;
       }
 
-      // @todo: continue from Greek Extended until Specials.
+      // Greek Extended: U+1F16, U+1F17, U+1F1E, U+1F1F.
+      if (character == 0xe1bc9600 || character == 0xe1bc9700 || character == 0xe1bc9e00 || character == 0xe1bc9f00) {
+        return F_true;
+      }
+
+      // Greek Extended: U+1F46, U+1F47, U+1F4E, U+1F4F.
+      if (character == 0xe1bd8600 || character == 0xe1bd8700 || character == 0xe1bd8e00 || character == 0xe1bd8f00) {
+        return F_true;
+      }
+
+      // Greek Extended: U+1F58, U+1F5A, U+1F5C, U+1F5E.
+      if (character == 0xe1bd9800 || character == 0xe1bd9a00 || character == 0xe1bd9c00 || character == 0xe1bd9e00) {
+        return F_true;
+      }
+
+      // Greek Extended: U+1F7E, U+1F7F, U+1FB5, U+1FC5.
+      if (character == 0xe1bdbe00 || character == 0xe1bdbf00 || character == 0xe1beb500 || character == 0xe1bf8500) {
+        return F_true;
+      }
+
+      // Greek Extended: U+1FD4, U+1FD5, U+1FDC, U+1FF0.
+      if (character == 0xe1bf9400 || character == 0xe1bf9500 || character == 0xe1bf9c00 || character == 0xe1bfb000) {
+        return F_true;
+      }
+
+      // Greek Extended: U+1FF1, U+1FF5, U+1FFF.
+      if (character == 0xe1bfb100 || character == 0xe1bfb500 || character == 0xe1bfbf00) {
+        return F_true;
+      }
+
+      // General Punctuation: U+2065.
+      if (character == 0xe281a500) {
+        return F_true;
+      }
+
+      // Superscripts and Subscripts: U+2072, U+2073, U+208F.
+      if (character == 0xe281b200 || character == 0xe281b300 || character == 0xe2828f00) {
+        return F_true;
+      }
+
+      // Superscripts and Subscripts: U+209D to U+209F.
+      if (character >= 0xe2829d00 && character <= 0xe2829f00) {
+        return F_true;
+      }
+
+      // Currency Symbols: U+20BF to U+20CF.
+      if (character >= 0xe282bf00 && character <= 0xe2838f00) {
+        return F_true;
+      }
+
+      // Combining Diacritical Marks for Symbols: U+20F1 to U+20FF.
+      if (character >= 0xe283b100 && character <= 0xe283bf00) {
+        return F_true;
+      }
+
+      // Number Forms: U+218C to U+218F.
+      if (character >= 0xe2868c00 && character <= 0xe2868f00) {
+        return F_true;
+      }
+
+      // Miscellaneous Technical: U+23FB to U+23FF.
+      if (character >= 0xe28fbb00 && character <= 0xe28fbf00) {
+        return F_true;
+      }
+
+      // Control Pictures: U+2427 to U+243F.
+      if (character >= 0xe290a700 && character <= 0xe290bf00) {
+        return F_true;
+      }
+
+      // Optical Character Recognition: U+244B to U+245F.
+      if (character >= 0xe2918b00 && character <= 0xe2919f00) {
+        return F_true;
+      }
+
+      // Miscellaneous Symbols and Arrows: U+2B74, U+2B75, U+2B96, U+2B97.
+      if (character == 0xe2adb400 || character == 0xe2adb500 || character == 0xe2ae9600 || character == 0xe2ae9700) {
+        return F_true;
+      }
+
+      // Miscellaneous Symbols and Arrows: U+2BBA to U+2BBC.
+      if (character >= 0xe2aeba00 && character <= 0xe2aebc00) {
+        return F_true;
+      }
+
+      // Miscellaneous Symbols and Arrows: U+2BC9.
+      if (character == 0xe2af8900) {
+        return F_true;
+      }
+
+      // Miscellaneous Symbols and Arrows: U+2BD2 to U+2BEB.
+      if (character >= 0xe2af9200 && character <= 0xe2afab00) {
+        return F_true;
+      }
+
+      // Miscellaneous Symbols and Arrows: U+2BF0 to U+2BFF.
+      if (character >= 0xe2afb000 && character <= 0xe2afbf00) {
+        return F_true;
+      }
+
+      // Glagolitic: U+2C5F.
+      if (character == 0xe2b19f00) {
+        return F_true;
+      }
+
+      // Coptic: U+2CF4 to U+2CF8.
+      if (character >= 0xe2b3b400 && character <= 0xe2b3b800) {
+        return F_true;
+      }
+
+      // Georgian Supplement: U+2D26.
+      if (character == 0xe2b4a600) {
+        return F_true;
+      }
+
+      // Georgian Supplement: U+2D28 to U+2D2C.
+      if (character >= 0xe2b4a800 && character <= 0xe2b4ac00) {
+        return F_true;
+      }
+
+      // Georgian Supplement: U+2D2E to U+2D2F.
+      if (character >= 0xe2b4ae00 && character <= 0xe2b4af00) {
+        return F_true;
+      }
+
+      // Tifinagh: U+2D68 to U+2D6E.
+      if (character >= 0xe2b5a800 && character <= 0xe2b5ae00) {
+        return F_true;
+      }
+
+      // Tifinagh: U+2D71 to U+2D7E.
+      if (character >= 0xe2b5b100 && character <= 0xe2b5be00) {
+        return F_true;
+      }
+
+      // Ethiopic Extended: U+2D97 to U+2D9F.
+      if (character >= 0xe2b69700 && character <= 0xe2b69f00) {
+        return F_true;
+      }
+
+      // Ethiopic Extended: U+2DA7, U+2DAF, U+2DB7, U+2DBF.
+      if (character == 0xe2b6a700 || character == 0xe2b6af00 || character == 0xe2b6b700 || character == 0xe2b6bf00) {
+        return F_true;
+      }
+
+      // Ethiopic Extended: U+2DC7, U+2DCF, U+2DD7, U+2DDF.
+      if (character == 0xe2b78700 || character == 0xe2b78f00 || character == 0xe2b79700 || character == 0xe2b79f00) {
+        return F_true;
+      }
+
+      // Supplemental Punctuation: U+2E43 to U+2E7F.
+      if (character >= 0xe2b98300 && character <= 0xe2b9bf00) {
+        return F_true;
+      }
+
+      // CJK Radicals Supplement: U+2E9A.
+      if (character == 0xe2ba9a00) {
+        return F_true;
+      }
+
+      // CJK Radicals Supplement: U+2EF4 to U+2EFF.
+      if (character >= 0xe2bbb400 && character <= 0xe2bbbf00) {
+        return F_true;
+      }
+
+      // Kangxi Radicals: U+2FD6 to U+2FDF.
+      if (character >= 0xe2bf9600 && character <= 0xe2bf9f00) {
+        return F_true;
+      }
+
+      // Ideographic Description Characters: U+2FFC to U+2FFF.
+      if (character >= 0xe2bfbc00 && character <= 0xe2bfbf00) {
+        return F_true;
+      }
+
+      // Hiragana: U+3040, U+3097, U+3098.
+      if (character == 0xe3818000 || character == 0xe3829700 || character == 0xe3829800) {
+        return F_true;
+      }
+
+      // Bopomofo: U+3100 to U+3104.
+      if (character >= 0xe3848000 && character <= 0xe3848400) {
+        return F_true;
+      }
+
+      // Bopomofo: U+312E to U+312F.
+      if (character >= 0xe384ae00 && character <= 0xe384af00) {
+        return F_true;
+      }
+
+      // Hangul Compatibility Jamo: U+3130 or U+318F.
+      if (character == 0xe384b000 || character == 0xe3868f00) {
+        return F_true;
+      }
+
+      // Bopomofo Extended: U+31BB to U+31BF.
+      if (character >= 0xe386bb00 && character <= 0xe386bf00) {
+        return F_true;
+      }
+
+      // CJK Strokes: U+31E4 to U+31EF.
+      if (character >= 0xe387a400 && character <= 0xe387af00) {
+        return F_true;
+      }
+
+      // Enclosed CJK Letters and Months: U+321F, U+32FF.
+      if (character == 0xe3889f00 || character == 0xe38bbf00) {
+        return F_true;
+      }
+
+      // CJK Unified Ideographs Extension A: U+4DB6 to U+4DBF.
+      if (character >= 0xe4b6b600 && character <= 0xe4b6bf00) {
+        return F_true;
+      }
+
+      // CJK Unified Ideographs: U+9FD6 to U+9FFF.
+      if (character >= 0xe9bf9600 && character <= 0xe9bfbf00) {
+        return F_true;
+      }
+
+      // Yi Syllables: U+A48D to U+A48F.
+      if (character >= 0xea928d00 && character <= 0xea928f00) {
+        return F_true;
+      }
+
+      // Yi Radicals: U+A4C7 to U+A4CF.
+      if (character >= 0xea938700 && character <= 0xea938f00) {
+        return F_true;
+      }
+
+      // Vai: U+A62C to U+A63F.
+      if (character >= 0xea98ac00 && character <= 0xea98bf00) {
+        return F_true;
+      }
+
+      // Bamum: U+A6F8 to U+A6FF.
+      if (character >= 0xea9bb800 && character <= 0xea9bbf00) {
+        return F_true;
+      }
+
+      // Latin Extended-D: U+A7AE to U+A7AF.
+      if (character >= 0xea9eae00 && character <= 0xea9eaf00) {
+        return F_true;
+      }
+
+      // Latin Extended-D: U+A7B8 to U+A7F6.
+      if (character >= 0xea9eb800 && character <= 0xea9fb600) {
+        return F_true;
+      }
+
+      // Syloti Nagri: U+A82C to U+A82F.
+      if (character >= 0xeaa0ac00 && character <= 0xeaa0af00) {
+        return F_true;
+      }
+
+      // Common Indic Number Forms: U+A83A to U+A83F.
+      if (character >= 0xeaa0ba00 && character <= 0xeaa0bf00) {
+        return F_true;
+      }
+
+      // Phags-pa: U+A878 to U+A87F.
+      if (character >= 0xeaa1b800 && character <= 0xeaa1bf00) {
+        return F_true;
+      }
+
+      // Saurashtra: U+A8C5 to U+A8CD.
+      if (character >= 0xeaa38500 && character <= 0xeaa38d00) {
+        return F_true;
+      }
+
+      // Saurashtra: U+A8DA to U+A8DF.
+      if (character >= 0xeaa39a00 && character <= 0xeaa39f00) {
+        return F_true;
+      }
+
+      // Devanagari Extended: U+A8FE to U+A8FF.
+      if (character >= 0xeaa3be00 && character <= 0xeaa3bf00) {
+        return F_true;
+      }
+
+      // Rejang: U+A954 to U+A95E.
+      if (character >= 0xeaa59400 && character <= 0xeaa59e00) {
+        return F_true;
+      }
+
+      // Hangul Jamo Extended-A: U+A97D to U+A97F.
+      if (character >= 0xeaa5bd00 && character <= 0xeaa5bf00) {
+        return F_true;
+      }
+
+      // Javanese: U+A9CE.
+      if (character == 0xeaa78e00) {
+        return F_true;
+      }
+
+      // Javanese: U+A9DA to U+A9DD.
+      if (character >= 0xeaa79a00 && character <= 0xeaa79d00) {
+        return F_true;
+      }
+
+      // Myanmar Extended-B: U+A9FF.
+      if (character == 0xeaa7bf00) {
+        return F_true;
+      }
+
+      // Cham: U+AA37 to U+AA3F.
+      if (character >= 0xeaa8b700 && character <= 0xeaa8bf00) {
+        return F_true;
+      }
+
+      // Cham: U+AA4E to U+AA4F.
+      if (character >= 0xeaa98e00 && character <= 0xeaa98f00) {
+        return F_true;
+      }
+
+      // Cham: U+AA5A to U+AA5B.
+      if (character >= 0xeaa99a00 && character <= 0xeaa99b00) {
+        return F_true;
+      }
+
+      // Tai Viet: U+AAC3 to U+AADA.
+      if (character >= 0xeaab8300 && character <= 0xeaab9a00) {
+        return F_true;
+      }
+
+      // Meetei Mayek Extensions: U+AAF7 to U+AAFF.
+      if (character >= 0xeaabb700 && character <= 0xeaabbf00) {
+        return F_true;
+      }
+
+      // Ethiopic Extended-A: U+AB00, U+AB07, U+AB08, U+AB0F.
+      if (character == 0xeaac8000 || character == 0xeaac8700 || character == 0xeaac8800 || character == 0xeaac8f00) {
+        return F_true;
+      }
+
+      // Ethiopic Extended-A: U+AB10.
+      if (character == 0xeaac9000) {
+        return F_true;
+      }
+
+      // Ethiopic Extended-A: U+AB17 to U+AB1F.
+      if (character >= 0xeaac9700 && character <= 0xeaac9f00) {
+        return F_true;
+      }
+
+      // Ethiopic Extended-A: U+AB27, U+AB2F.
+      if (character == 0xeaaca700 || character == 0xeaacaf00) {
+        return F_true;
+      }
+
+      // Latin Extended-E: U+AB66 to U+AB6F.
+      if (character >= 0xeaada600 && character <= 0xeaadaf00) {
+        return F_true;
+      }
+
+      // Meetei Mayek: U+ABEE to U+ABEF.
+      if (character >= 0xeaafae00 && character <= 0xeaafaf00) {
+        return F_true;
+      }
+
+      // Meetei Mayek: U+ABFA to U+ABFF.
+      if (character >= 0xeaafba00 && character <= 0xeaafbf00) {
+        return F_true;
+      }
+
+      // Hangul Syllables: U+D7A4 to U+D7AF.
+      if (character >= 0xed9ea400 && character <= 0xed9eaf00) {
+        return F_true;
+      }
+
+      // Hangul Jamo Extended-B: U+D7C7 to U+D7CA.
+      if (character >= 0xed9f8700 && character <= 0xed9f8a00) {
+        return F_true;
+      }
+
+      // Hangul Jamo Extended-B: U+D7FC to U+D7FF.
+      if (character >= 0xed9fbc00 && character <= 0xed9fbf00) {
+        return F_true;
+      }
+
+      // CJK Compatibility Ideographs: U+FA6E to U+FA6F.
+      if (character >= 0xefa9ae00 && character <= 0xefa9af00) {
+        return F_true;
+      }
+
+      // CJK Compatibility Ideographs: U+FADA to U+FAFF.
+      if (character >= 0xefab9a00 && character <= 0xefabbf00) {
+        return F_true;
+      }
+
+      // Alphabetic Presentation Forms: U+FB07 to U+FB12.
+      if (character >= 0xefac8700 && character <= 0xefac9200) {
+        return F_true;
+      }
+
+      // Alphabetic Presentation Forms: U+FB18 to U+FB1C.
+      if (character >= 0xefac9800 && character <= 0xefac9c00) {
+        return F_true;
+      }
+
+      // Alphabetic Presentation Forms: U+FB37, U+FB3D, U+FB3F, U+FB42.
+      if (character == 0xefacb700 || character == 0xefacbd00 || character == 0xefacbf00 || character == 0xefad8200) {
+        return F_true;
+      }
+
+      // Alphabetic Presentation Forms: U+FB45.
+      if (character == 0xefad8500) {
+        return F_true;
+      }
+
+      // Arabic Presentation Forms-A: U+FBC2 to U+FBD2.
+      if (character >= 0xefaf8200 && character <= 0xefaf9200) {
+        return F_true;
+      }
+
+      // Arabic Presentation Forms-A: U+FD40 to U+FD4F.
+      if (character >= 0xefb58000 && character <= 0xefb58f00) {
+        return F_true;
+      }
+
+      // Arabic Presentation Forms-A: U+FD90 to U+FD91.
+      if (character >= 0xefb69000 && character <= 0xefb69100) {
+        return F_true;
+      }
+
+      // Arabic Presentation Forms-A: U+FDC8 to U+FDCF.
+      if (character >= 0xefb78800 && character <= 0xefb78f00) {
+        return F_true;
+      }
+
+      // Arabic Presentation Forms-A: U+FDFE to U+FDFF.
+      if (character >= 0xefb7be00 && character <= 0xefb7bf00) {
+        return F_true;
+      }
+
+      // Vertical Forms: U+FE1A to U+FE1F.
+      if (character >= 0xefb89a00 && character <= 0xefb89f00) {
+        return F_true;
+      }
+
+      // Small Form Variants: U+FE53, U+FE67.
+      if (character == 0xefb99300 || character == 0xefb9a700) {
+        return F_true;
+      }
+
+      // Small Form Variants: U+FE6C to U+FE6F.
+      if (character >= 0xefb9ac00 && character <= 0xefb9af00) {
+        return F_true;
+      }
+
+      // Arabic Presentation Forms-B: U+FE75, U+FEFD, U+FEFE.
+      if (character == 0xefb9b500 || character == 0xefbbbd00 || character == 0xefbbbe00) {
+        return F_true;
+      }
+
+      // Halfwidth and Fullwidth Forms: U+FF00.
+      if (character == 0xefbc8000) {
+        return F_true;
+      }
+
+      // Halfwidth and Fullwidth Forms: U+FFBF to U+FFC1.
+      if (character >= 0xefbebf00 && character <= 0xefbf8100) {
+        return F_true;
+      }
+
+      // Halfwidth and Fullwidth Forms: U+FFC8 to U+FFC9.
+      if (character >= 0xefbf8800 && character <= 0xefbf8900) {
+        return F_true;
+      }
+
+      // Halfwidth and Fullwidth Forms: U+FFD0 to U+FFD1.
+      if (character >= 0xefbf9000 && character <= 0xefbf9100) {
+        return F_true;
+      }
+
+      // Halfwidth and Fullwidth Forms: U+FFD8 to U+FFD9.
+      if (character >= 0xefbf9800 && character <= 0xefbf9900) {
+        return F_true;
+      }
+
+      // Halfwidth and Fullwidth Forms: U+FFDD to U+FFDF.
+      if (character >= 0xefbf9d00 && character <= 0xefbf9f00) {
+        return F_true;
+      }
+
+      // Halfwidth and Fullwidth Forms: U+FFE7, U+FFEF.
+      if (character == 0xefbfa700 || character == 0xefbfaf00) {
+        return F_true;
+      }
+
+      // Specials: U+FFF0 to U+FFF8.
+      if (character >= 0xefb000 && character <= 0xefbfb800) {
+        return F_true;
+      }
 
       return F_false;
     }
