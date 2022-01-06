@@ -711,8 +711,6 @@ extern "C" {
   } f_int32s_t;
 
   #define f_int32s_t_initialize { 0, 0, 0 }
-
-  #define macro_f_int32s_t_initialize(structure)
 #endif // _di_int32s_t_
 
 /**

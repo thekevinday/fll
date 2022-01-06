@@ -1685,12 +1685,12 @@ extern "C" {
 #endif // _di_f_type_array_lengthss_resize_
 
 /**
- * Resize the string int8s array.
+ * Resize the int8s array.
  *
  * @param length
  *   The new size to use.
  * @param int8s
- *   The string int8s array to resize.
+ *   The int8s array to resize.
  *
  * @return
  *   F_none on success.
@@ -1724,7 +1724,7 @@ extern "C" {
 #endif // _di_f_type_int8s_append_
 
 /**
- * Resize the string int8s array to a smaller size.
+ * Resize the int8s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -1733,7 +1733,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int8s
- *   The string int8s array to resize.
+ *   The int8s array to resize.
  *
  * @return
  *   F_none on success.
@@ -1747,7 +1747,7 @@ extern "C" {
 #endif // _di_f_type_int8s_decimate_by_
 
 /**
- * Resize the string int8s array to a smaller size.
+ * Resize the int8s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -1756,7 +1756,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int8s
- *   The string int8s array to resize.
+ *   The int8s array to resize.
  *
  * @return
  *   F_none on success.
@@ -1770,7 +1770,7 @@ extern "C" {
 #endif // _di_f_type_int8s_decrease_by_
 
 /**
- * Increase the size of the string int8s array, but only if necesary.
+ * Increase the size of the int8s array, but only if necesary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -1779,7 +1779,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int8s
- *   The string int8s array to resize.
+ *   The int8s array to resize.
  *
  * @return
  *   F_none on success.
@@ -1795,7 +1795,7 @@ extern "C" {
 #endif // _di_f_type_int8s_increase_
 
 /**
- * Resize the string int8s array to a larger size.
+ * Resize the int8s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -1804,7 +1804,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int8s
- *   The string int8s array to resize.
+ *   The int8s array to resize.
  *
  * @return
  *   F_none on success.
@@ -1820,12 +1820,12 @@ extern "C" {
 #endif // _di_f_type_int8s_increase_by_
 
 /**
- * Resize the string int8s array.
+ * Resize the int8s array.
  *
  * @param length
  *   The new size to use.
  * @param int8s
- *   The string int8s array to adjust.
+ *   The int8s array to adjust.
  *
  * @return
  *   F_none on success.
@@ -1839,12 +1839,12 @@ extern "C" {
 #endif // _di_f_type_int8s_resize_
 
 /**
- * Resize the string int8ss array.
+ * Resize the int8ss array.
  *
  * @param length
  *   The new size to use.
  * @param int8ss
- *   The string int8ss array to resize.
+ *   The int8ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -1879,12 +1879,12 @@ extern "C" {
 #endif // _di_f_type_int8ss_append_
 
 /**
- * Resize the string int8ss array.
+ * Resize the int8ss array.
  *
  * @param length
  *   The new size to use.
  * @param int8ss
- *   The string int8ss array to resize.
+ *   The int8ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -1899,7 +1899,7 @@ extern "C" {
 #endif // _di_f_type_int8ss_adjust_
 
 /**
- * Resize the string int8ss array to a smaller size.
+ * Resize the int8ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -1908,7 +1908,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int8ss
- *   The string int8ss array to resize.
+ *   The int8ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -1923,7 +1923,7 @@ extern "C" {
 #endif // _di_f_type_int8ss_decimate_by_
 
 /**
- * Resize the string int8ss array to a smaller size.
+ * Resize the int8ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -1932,7 +1932,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int8ss
- *   The string int8ss array to resize.
+ *   The int8ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -1947,7 +1947,7 @@ extern "C" {
 #endif // _di_f_type_int8ss_decrease_by_
 
 /**
- * Increase the size of the string int8ss array, but only if necessary.
+ * Increase the size of the int8ss array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -1956,7 +1956,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int8ss
- *   The string int8ss array to resize.
+ *   The int8ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -1972,7 +1972,7 @@ extern "C" {
 #endif // _di_f_type_int8ss_increase_
 
 /**
- * Resize the string int8ss array to a larger size.
+ * Resize the int8ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -1981,7 +1981,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int8ss
- *   The string int8ss array to resize.
+ *   The int8ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -1997,12 +1997,12 @@ extern "C" {
 #endif // _di_f_type_int8ss_increase_by_
 
 /**
- * Resize the string int8ss array.
+ * Resize the int8ss array.
  *
  * @param length
  *   The new size to use.
  * @param int8ss
- *   The string int8ss array to adjust.
+ *   The int8ss array to adjust.
  *
  * @return
  *   F_none on success.
@@ -2349,12 +2349,12 @@ extern "C" {
 #endif // _di_f_type_uint8ss_resize_
 
 /**
- * Resize the string int16s array.
+ * Resize the int16s array.
  *
  * @param length
  *   The new size to use.
  * @param int16s
- *   The string int16s array to resize.
+ *   The int16s array to resize.
  *
  * @return
  *   F_none on success.
@@ -2388,7 +2388,7 @@ extern "C" {
 #endif // _di_f_type_int16s_append_
 
 /**
- * Resize the string int16s array to a smaller size.
+ * Resize the int16s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -2397,7 +2397,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int16s
- *   The string int16s array to resize.
+ *   The int16s array to resize.
  *
  * @return
  *   F_none on success.
@@ -2411,7 +2411,7 @@ extern "C" {
 #endif // _di_f_type_int16s_decimate_by_
 
 /**
- * Resize the string int16s array to a smaller size.
+ * Resize the int16s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -2420,7 +2420,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int16s
- *   The string int16s array to resize.
+ *   The int16s array to resize.
  *
  * @return
  *   F_none on success.
@@ -2434,7 +2434,7 @@ extern "C" {
 #endif // _di_f_type_int16s_decrease_by_
 
 /**
- * Increase the size of the string int16s array, but only if necesary.
+ * Increase the size of the int16s array, but only if necesary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -2443,7 +2443,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int16s
- *   The string int16s array to resize.
+ *   The int16s array to resize.
  *
  * @return
  *   F_none on success.
@@ -2459,7 +2459,7 @@ extern "C" {
 #endif // _di_f_type_int16s_increase_
 
 /**
- * Resize the string int16s array to a larger size.
+ * Resize the int16s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -2468,7 +2468,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int16s
- *   The string int16s array to resize.
+ *   The int16s array to resize.
  *
  * @return
  *   F_none on success.
@@ -2484,12 +2484,12 @@ extern "C" {
 #endif // _di_f_type_int16s_increase_by_
 
 /**
- * Resize the string int16s array.
+ * Resize the int16s array.
  *
  * @param length
  *   The new size to use.
  * @param int16s
- *   The string int16s array to adjust.
+ *   The int16s array to adjust.
  *
  * @return
  *   F_none on success.
@@ -2503,12 +2503,12 @@ extern "C" {
 #endif // _di_f_type_int16s_resize_
 
 /**
- * Resize the string int16ss array.
+ * Resize the int16ss array.
  *
  * @param length
  *   The new size to use.
  * @param int16ss
- *   The string int16ss array to resize.
+ *   The int16ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -2543,12 +2543,12 @@ extern "C" {
 #endif // _di_f_type_int16ss_append_
 
 /**
- * Resize the string int16ss array.
+ * Resize the int16ss array.
  *
  * @param length
  *   The new size to use.
  * @param int16ss
- *   The string int16ss array to resize.
+ *   The int16ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -2563,7 +2563,7 @@ extern "C" {
 #endif // _di_f_type_int16ss_adjust_
 
 /**
- * Resize the string int16ss array to a smaller size.
+ * Resize the int16ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -2572,7 +2572,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int16ss
- *   The string int16ss array to resize.
+ *   The int16ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -2587,7 +2587,7 @@ extern "C" {
 #endif // _di_f_type_int16ss_decimate_by_
 
 /**
- * Resize the string int16ss array to a smaller size.
+ * Resize the int16ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -2596,7 +2596,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int16ss
- *   The string int16ss array to resize.
+ *   The int16ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -2611,7 +2611,7 @@ extern "C" {
 #endif // _di_f_type_int16ss_decrease_by_
 
 /**
- * Increase the size of the string int16ss array, but only if necessary.
+ * Increase the size of the int16ss array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -2620,7 +2620,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int16ss
- *   The string int16ss array to resize.
+ *   The int16ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -2636,7 +2636,7 @@ extern "C" {
 #endif // _di_f_type_int16ss_increase_
 
 /**
- * Resize the string int16ss array to a larger size.
+ * Resize the int16ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -2645,7 +2645,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int16ss
- *   The string int16ss array to resize.
+ *   The int16ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -2661,12 +2661,12 @@ extern "C" {
 #endif // _di_f_type_int16ss_increase_by_
 
 /**
- * Resize the string int16ss array.
+ * Resize the int16ss array.
  *
  * @param length
  *   The new size to use.
  * @param int16ss
- *   The string int16ss array to adjust.
+ *   The int16ss array to adjust.
  *
  * @return
  *   F_none on success.
@@ -3013,12 +3013,12 @@ extern "C" {
 #endif // _di_f_type_uint16ss_resize_
 
 /**
- * Resize the string int32s array.
+ * Resize the int32s array.
  *
  * @param length
  *   The new size to use.
  * @param int32s
- *   The string int32s array to resize.
+ *   The int32s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3052,7 +3052,7 @@ extern "C" {
 #endif // _di_f_type_int32s_append_
 
 /**
- * Resize the string int32s array to a smaller size.
+ * Resize the int32s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -3061,7 +3061,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int32s
- *   The string int32s array to resize.
+ *   The int32s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3075,7 +3075,7 @@ extern "C" {
 #endif // _di_f_type_int32s_decimate_by_
 
 /**
- * Resize the string int32s array to a smaller size.
+ * Resize the int32s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -3084,7 +3084,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int32s
- *   The string int32s array to resize.
+ *   The int32s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3098,7 +3098,7 @@ extern "C" {
 #endif // _di_f_type_int32s_decrease_by_
 
 /**
- * Increase the size of the string int32s array, but only if necesary.
+ * Increase the size of the int32s array, but only if necesary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -3107,7 +3107,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int32s
- *   The string int32s array to resize.
+ *   The int32s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3123,7 +3123,7 @@ extern "C" {
 #endif // _di_f_type_int32s_increase_
 
 /**
- * Resize the string int32s array to a larger size.
+ * Resize the int32s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -3132,7 +3132,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int32s
- *   The string int32s array to resize.
+ *   The int32s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3148,12 +3148,12 @@ extern "C" {
 #endif // _di_f_type_int32s_increase_by_
 
 /**
- * Resize the string int32s array.
+ * Resize the int32s array.
  *
  * @param length
  *   The new size to use.
  * @param int32s
- *   The string int32s array to adjust.
+ *   The int32s array to adjust.
  *
  * @return
  *   F_none on success.
@@ -3167,12 +3167,12 @@ extern "C" {
 #endif // _di_f_type_int32s_resize_
 
 /**
- * Resize the string int32ss array.
+ * Resize the int32ss array.
  *
  * @param length
  *   The new size to use.
  * @param int32ss
- *   The string int32ss array to resize.
+ *   The int32ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3207,12 +3207,12 @@ extern "C" {
 #endif // _di_f_type_int32ss_append_
 
 /**
- * Resize the string int32ss array.
+ * Resize the int32ss array.
  *
  * @param length
  *   The new size to use.
  * @param int32ss
- *   The string int32ss array to resize.
+ *   The int32ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3227,7 +3227,7 @@ extern "C" {
 #endif // _di_f_type_int32ss_adjust_
 
 /**
- * Resize the string int32ss array to a smaller size.
+ * Resize the int32ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -3236,7 +3236,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int32ss
- *   The string int32ss array to resize.
+ *   The int32ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3251,7 +3251,7 @@ extern "C" {
 #endif // _di_f_type_int32ss_decimate_by_
 
 /**
- * Resize the string int32ss array to a smaller size.
+ * Resize the int32ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -3260,7 +3260,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int32ss
- *   The string int32ss array to resize.
+ *   The int32ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3275,7 +3275,7 @@ extern "C" {
 #endif // _di_f_type_int32ss_decrease_by_
 
 /**
- * Increase the size of the string int32ss array, but only if necessary.
+ * Increase the size of the int32ss array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -3284,7 +3284,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int32ss
- *   The string int32ss array to resize.
+ *   The int32ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3300,7 +3300,7 @@ extern "C" {
 #endif // _di_f_type_int32ss_increase_
 
 /**
- * Resize the string int32ss array to a larger size.
+ * Resize the int32ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -3309,7 +3309,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int32ss
- *   The string int32ss array to resize.
+ *   The int32ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3325,12 +3325,12 @@ extern "C" {
 #endif // _di_f_type_int32ss_increase_by_
 
 /**
- * Resize the string int32ss array.
+ * Resize the int32ss array.
  *
  * @param length
  *   The new size to use.
  * @param int32ss
- *   The string int32ss array to adjust.
+ *   The int32ss array to adjust.
  *
  * @return
  *   F_none on success.
@@ -3677,12 +3677,12 @@ extern "C" {
 #endif // _di_f_type_uint32ss_resize_
 
 /**
- * Resize the string int64s array.
+ * Resize the int64s array.
  *
  * @param length
  *   The new size to use.
  * @param int64s
- *   The string int64s array to resize.
+ *   The int64s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3716,7 +3716,7 @@ extern "C" {
 #endif // _di_f_type_int64s_append_
 
 /**
- * Resize the string int64s array to a smaller size.
+ * Resize the int64s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -3725,7 +3725,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int64s
- *   The string int64s array to resize.
+ *   The int64s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3739,7 +3739,7 @@ extern "C" {
 #endif // _di_f_type_int64s_decimate_by_
 
 /**
- * Resize the string int64s array to a smaller size.
+ * Resize the int64s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -3748,7 +3748,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int64s
- *   The string int64s array to resize.
+ *   The int64s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3762,7 +3762,7 @@ extern "C" {
 #endif // _di_f_type_int64s_decrease_by_
 
 /**
- * Increase the size of the string int64s array, but only if necesary.
+ * Increase the size of the int64s array, but only if necesary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -3771,7 +3771,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int64s
- *   The string int64s array to resize.
+ *   The int64s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3787,7 +3787,7 @@ extern "C" {
 #endif // _di_f_type_int64s_increase_
 
 /**
- * Resize the string int64s array to a larger size.
+ * Resize the int64s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -3796,7 +3796,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int64s
- *   The string int64s array to resize.
+ *   The int64s array to resize.
  *
  * @return
  *   F_none on success.
@@ -3812,12 +3812,12 @@ extern "C" {
 #endif // _di_f_type_int64s_increase_by_
 
 /**
- * Resize the string int64s array.
+ * Resize the int64s array.
  *
  * @param length
  *   The new size to use.
  * @param int64s
- *   The string int64s array to adjust.
+ *   The int64s array to adjust.
  *
  * @return
  *   F_none on success.
@@ -3831,12 +3831,12 @@ extern "C" {
 #endif // _di_f_type_int64s_resize_
 
 /**
- * Resize the string int64ss array.
+ * Resize the int64ss array.
  *
  * @param length
  *   The new size to use.
  * @param int64ss
- *   The string int64ss array to resize.
+ *   The int64ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3871,12 +3871,12 @@ extern "C" {
 #endif // _di_f_type_int64ss_append_
 
 /**
- * Resize the string int64ss array.
+ * Resize the int64ss array.
  *
  * @param length
  *   The new size to use.
  * @param int64ss
- *   The string int64ss array to resize.
+ *   The int64ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3891,7 +3891,7 @@ extern "C" {
 #endif // _di_f_type_int64ss_adjust_
 
 /**
- * Resize the string int64ss array to a smaller size.
+ * Resize the int64ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -3900,7 +3900,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int64ss
- *   The string int64ss array to resize.
+ *   The int64ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3915,7 +3915,7 @@ extern "C" {
 #endif // _di_f_type_int64ss_decimate_by_
 
 /**
- * Resize the string int64ss array to a smaller size.
+ * Resize the int64ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -3924,7 +3924,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int64ss
- *   The string int64ss array to resize.
+ *   The int64ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3939,7 +3939,7 @@ extern "C" {
 #endif // _di_f_type_int64ss_decrease_by_
 
 /**
- * Increase the size of the string int64ss array, but only if necessary.
+ * Increase the size of the int64ss array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -3948,7 +3948,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int64ss
- *   The string int64ss array to resize.
+ *   The int64ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3964,7 +3964,7 @@ extern "C" {
 #endif // _di_f_type_int64ss_increase_
 
 /**
- * Resize the string int64ss array to a larger size.
+ * Resize the int64ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -3973,7 +3973,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int64ss
- *   The string int64ss array to resize.
+ *   The int64ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -3989,12 +3989,12 @@ extern "C" {
 #endif // _di_f_type_int64ss_increase_by_
 
 /**
- * Resize the string int64ss array.
+ * Resize the int64ss array.
  *
  * @param length
  *   The new size to use.
  * @param int64ss
- *   The string int64ss array to adjust.
+ *   The int64ss array to adjust.
  *
  * @return
  *   F_none on success.
@@ -4341,12 +4341,12 @@ extern "C" {
 #endif // _di_f_type_uint64ss_resize_
 
 /**
- * Resize the string int128s array.
+ * Resize the int128s array.
  *
  * @param length
  *   The new size to use.
  * @param int128s
- *   The string int128s array to resize.
+ *   The int128s array to resize.
  *
  * @return
  *   F_none on success.
@@ -4380,7 +4380,7 @@ extern "C" {
 #endif // _di_f_type_int128s_append_
 
 /**
- * Resize the string int128s array to a smaller size.
+ * Resize the int128s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -4389,7 +4389,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int128s
- *   The string int128s array to resize.
+ *   The int128s array to resize.
  *
  * @return
  *   F_none on success.
@@ -4403,7 +4403,7 @@ extern "C" {
 #endif // _di_f_type_int128s_decimate_by_
 
 /**
- * Resize the string int128s array to a smaller size.
+ * Resize the int128s array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -4412,7 +4412,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int128s
- *   The string int128s array to resize.
+ *   The int128s array to resize.
  *
  * @return
  *   F_none on success.
@@ -4426,7 +4426,7 @@ extern "C" {
 #endif // _di_f_type_int128s_decrease_by_
 
 /**
- * Increase the size of the string int128s array, but only if necesary.
+ * Increase the size of the int128s array, but only if necesary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -4435,7 +4435,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int128s
- *   The string int128s array to resize.
+ *   The int128s array to resize.
  *
  * @return
  *   F_none on success.
@@ -4451,7 +4451,7 @@ extern "C" {
 #endif // _di_f_type_int128s_increase_
 
 /**
- * Resize the string int128s array to a larger size.
+ * Resize the int128s array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -4460,7 +4460,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int128s
- *   The string int128s array to resize.
+ *   The int128s array to resize.
  *
  * @return
  *   F_none on success.
@@ -4476,12 +4476,12 @@ extern "C" {
 #endif // _di_f_type_int128s_increase_by_
 
 /**
- * Resize the string int128s array.
+ * Resize the int128s array.
  *
  * @param length
  *   The new size to use.
  * @param int128s
- *   The string int128s array to adjust.
+ *   The int128s array to adjust.
  *
  * @return
  *   F_none on success.
@@ -4495,12 +4495,12 @@ extern "C" {
 #endif // _di_f_type_int128s_resize_
 
 /**
- * Resize the string int128ss array.
+ * Resize the int128ss array.
  *
  * @param length
  *   The new size to use.
  * @param int128ss
- *   The string int128ss array to resize.
+ *   The int128ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -4535,12 +4535,12 @@ extern "C" {
 #endif // _di_f_type_int128ss_append_
 
 /**
- * Resize the string int128ss array.
+ * Resize the int128ss array.
  *
  * @param length
  *   The new size to use.
  * @param int128ss
- *   The string int128ss array to resize.
+ *   The int128ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -4555,7 +4555,7 @@ extern "C" {
 #endif // _di_f_type_int128ss_adjust_
 
 /**
- * Resize the string int128ss array to a smaller size.
+ * Resize the int128ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -4564,7 +4564,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param int128ss
- *   The string int128ss array to resize.
+ *   The int128ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -4579,7 +4579,7 @@ extern "C" {
 #endif // _di_f_type_int128ss_decimate_by_
 
 /**
- * Resize the string int128ss array to a smaller size.
+ * Resize the int128ss array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -4588,7 +4588,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param int128ss
- *   The string int128ss array to resize.
+ *   The int128ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -4603,7 +4603,7 @@ extern "C" {
 #endif // _di_f_type_int128ss_decrease_by_
 
 /**
- * Increase the size of the string int128ss array, but only if necessary.
+ * Increase the size of the int128ss array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -4612,7 +4612,7 @@ extern "C" {
  *   The allocation step to use.
  *   Must be greater than 0.
  * @param int128ss
- *   The string int128ss array to resize.
+ *   The int128ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -4628,7 +4628,7 @@ extern "C" {
 #endif // _di_f_type_int128ss_increase_
 
 /**
- * Resize the string int128ss array to a larger size.
+ * Resize the int128ss array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
@@ -4637,7 +4637,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param int128ss
- *   The string int128ss array to resize.
+ *   The int128ss array to resize.
  *
  * @return
  *   F_none on success.
@@ -4653,12 +4653,12 @@ extern "C" {
 #endif // _di_f_type_int128ss_increase_by_
 
 /**
- * Resize the string int128ss array.
+ * Resize the int128ss array.
  *
  * @param length
  *   The new size to use.
  * @param int128ss
- *   The string int128ss array to adjust.
+ *   The int128ss array to adjust.
  *
  * @return
  *   F_none on success.
