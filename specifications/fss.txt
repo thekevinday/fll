@@ -27,22 +27,22 @@ Featureless Settings Specifications:
   For example, in fss-000 (Basic) the entire Content may be further represented as a single column.
   For example, in fss-001 (Extended) the entire Content may be further represented as multiple columns.
 
-  In all cases, specifications that separate Objects from Contents using whitespace, the first whitespace separating the Object and Content must not be considered part of the Object nor part of the Content.
-  All spaces after the first separating whitespace is generally ignored until the first non-whitespace character is found, unless otherwise specified.
+  In all cases, specifications that separate Objects from Contents using white space, the first white space separating the Object and Content must not be considered part of the Object nor part of the Content.
+  All spaces after the first separating white space is generally ignored until the first non white space character is found, unless otherwise specified.
 
   Unless otherwise specified, all specifications are newline sensitive ('\n' only).
   Newline characters are only '\n' and are never anything else ('\r' is not considered newline in any manner).
   Whitespaces characters that are printable, such as tabs and spaces, must be considered the same type for the purposes of parsing.
-  Non-printing whitespaces characters (zero-width characters) are ignored, are treated as placeholders for processing, or are considered part of the appropriate character if they are Unicode combining characters (this includes zero-width punctutations characters and similar).
+  Non-printing white spaces characters (zero-width characters) are ignored, are treated as placeholders for processing, or are considered part of the appropriate character if they are Unicode combining characters (this includes zero-width punctutations characters and similar).
   In terms of processing, it is recommended that the NULL character is not considered the end of a string, but this is only a suggestion.
 
   Unless otherwise specified, newlines designate the potential start (or end) of an Object or Content.
 
-  Unless otherwise specified, whitespace may exist to the left of the start of Objects.
-  Unless otherwise specified, whitespace may exist to the right of the end of Objects, but only if that given Object is properly quoted and the whitespace is after the terminating quote but before any Content.
+  Unless otherwise specified, white space may exist to the left of the start of Objects.
+  Unless otherwise specified, white space may exist to the right of the end of Objects, but only if that given Object is properly quoted and the white space is after the terminating quote but before any Content.
 
-  Unless otherwise specified, whitespace immediately both before (and after, outside of the terminating quote) an Object is not considered part of the Object.
-  This simplifies identifying the object, use quoted Objects to support whitespace before/after an object for styling purposes.
+  Unless otherwise specified, white space immediately both before (and after, outside of the terminating quote) an Object is not considered part of the Object.
+  This simplifies identifying the object, use quoted Objects to support white space before/after an object for styling purposes.
 
   Unless otherwise specified, quotes may only be either a single quote (') or a double quote (") and only a backslash '\' may be used as a delimiter.
   For example, fss-0000 (Basic)\:
@@ -57,12 +57,12 @@ Featureless Settings Specifications:
   Such as these following three lines\:
     "Object 1" "This is a single quoted Content." \"Additional unquoted Content."
     Object_2 This is multiple" Contents and the trailing quote does not need to be delimited.
-    "Object \"3" 'Wouldn't require delimits if no whitespace or end of string after.'
+    "Object \"3" 'Wouldn't require delimits if no white space or end of string after.'
 
   Unlike this specification, a more traditional delimit process would have the above three lines instead represented as\:
     "Object 1" "This is a single quoted Content." \"Additional unquoted Content.\"
     Object_2 This is multiple\" Contents and the trailing quote does not need to be delimited.
-    "Object \\"3" 'Wouldn\'t require delimits if no whitespace or end of string after.'
+    "Object \\"3" 'Wouldn\'t require delimits if no white space or end of string after.'
 
   These examples would resolve as follows\:
     1) Object\:
@@ -92,23 +92,25 @@ Featureless Settings Specifications:
     3) Object\:
       - Object \"3
        Content\:
-      - Wouldn't require delimits if no whitespace or end of string after.
+      - Wouldn't require delimits if no white space or end of string after.
 
   All specifications are expected to support or be of the character encoding UTF-8; however, there is no imposed restriction on supporting or using any other encoding.
   Those encodings must only support the appropriate characters required by a given standard for differentiating Objects, Contents, and delimits.
   All specifications do assume ASCII and Unicode support.
 
-  Unless otherwise specified, comments are designated by the pound symbol '#' but only if only whitespace is to the left of the pound or the pound '#' is at the start of the line.
+  Unless otherwise specified, comments are designated by the pound symbol '#' but only if only white space is to the left of the pound or the pound '#' is at the start of the line.
   There is no support for inline comments.
   Unless otherwise specified, the start comment may be delimited by '\' in the same manner as Objects and Contents are.
   This delimit only applies to the start of a comment (the pound '#' character) as there is no terminating character for a comment (other than a newline '\n').
+  A line containing a valid comment is in its entirety ignored.
+  This means that if there is white space before the designation symbol (the pound '#' character) then that white space is ignored.
 
   Unless otherwise specified, all designation characters MUST represent ASCII codes.
   With designation characters being any character code used to designate how to identify an Object or Content (such as a colon ':' at the end of a basic list).
   This keeps the processing and logic simple and safe, for both UTF-8 and ASCII.
-  Whitespace used for designation characters MUST include support for UTF-8 whitespace characters, unless otherwise specified.
-  However, these whitespace used as a designation character, must be printing whitespace that are not combining whitespace characters.
-  Any visible/graph character that is considered a whitespace (such as U+1680 ' ') is not to be considered a whitespace, unless otherwise specified.
+  Whitespace used for designation characters MUST include support for UTF-8 white space characters, unless otherwise specified.
+  However, these white space used as a designation character, must be printing white space that are not combining white space characters.
+  Any visible/graph character that is considered a white space (such as U+1680 ' ') is not to be considered a white space, unless otherwise specified.
 
   When used for syntax matching purposes, zero-width Unicode characters are only to be considered zero-width unless otherwise specified.
   For example, the "invisible plus" character (U+2064) is not to be considered as a plus.
@@ -121,7 +123,7 @@ Featureless Settings Specifications:
   One such example is in the case of a URL, where the name could be used to trick a person (http://this-site.com/ vs http://this‐site.com/).
   This (potential insecure behavior) is allowed in general because a well written program would be able to detect and communicate the possible misunderstanding and thereby avoid mistakes without imposing any character restrictions.
 
-  This is a common behavior for security reasons, each character used for any special purposes must be visibly distinct, with whitespace and non-printing characters as the exception to the words "visibly distinct".
+  This is a common behavior for security reasons, each character used for any special purposes must be visibly distinct, with white space and non-printing characters as the exception to the words "visibly distinct".
 
   The follow specifications are defined in this project.
   Each of these specifications has a common name associated with the specification number.

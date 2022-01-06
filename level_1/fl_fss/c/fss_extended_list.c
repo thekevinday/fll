@@ -21,7 +21,7 @@ extern "C" {
 
     if (status == F_none_eol) {
 
-      // move the start position to after the EOL.
+      // Move the start position to after the EOL.
       ++range->start;
 
       return F_fss_found_object_not;
@@ -35,19 +35,19 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    // return found nothing if this line only contains whitespace and delimit placeholders.
+    // Return found nothing if this line only contains whitespace and delimit placeholders.
     if (buffer.string[range->start] == f_fss_eol_s[0]) {
 
-      // move the start position to after the EOL.
+      // Move the start position to after the EOL.
       ++range->start;
 
       return F_fss_found_object_not;
     }
 
-    // begin the search.
+    // Begin the search.
     found->start = range->start;
 
-    // ignore all comment lines.
+    // Ignore all comment lines.
     if (buffer.string[range->start] == f_fss_comment_s[0]) {
       status = f_fss_seek_to_eol(buffer, range);
 
@@ -65,7 +65,7 @@ extern "C" {
         return F_data_not_stop;
       }
 
-      // move the start position to after the EOL.
+      // Move the start position to after the EOL.
       ++range->start;
 
       return F_fss_found_object_not;
@@ -78,7 +78,7 @@ extern "C" {
 
     bool graph_first = F_true;
 
-    // identify where the object ends.
+    // Identify where the object ends.
     while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol_s[0]) {
 
       if (state.interrupt) {
@@ -86,6 +86,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_interrupt) {
           status = F_status_set_error(F_interrupt);
+
           break;
         }
       }
@@ -104,6 +105,7 @@ extern "C" {
 
             if (F_status_set_fine(status) == F_interrupt) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
           }
@@ -130,6 +132,7 @@ extern "C" {
 
               if (F_status_set_fine(status) == F_interrupt) {
                 status = F_status_set_error(F_interrupt);
+
                 break;
               }
             }
@@ -160,8 +163,7 @@ extern "C" {
 
                 if (buffer.string[range->start] == F_fss_delimit_slash_s) {
                   if (slash_count % 2 == 1) {
-                    delimits->array[delimits->used] = range->start;
-                    ++delimits->used;
+                    delimits->array[delimits->used++] = range->start;
                   }
 
                   --slash_count;
@@ -180,13 +182,14 @@ extern "C" {
             }
 
             range->start = start + 1;
+
             return F_fss_found_object_not;
           }
         }
         else if (graph_first && buffer.string[range->start] == f_fss_comment_s[0]) {
           graph_first = F_false;
 
-          // comments may only have whitespace before the '#', therefore only the first slash needs to be delimited.
+          // Comments may only have whitespace before the '#', therefore only the first slash needs to be delimited.
           macro_f_fss_delimits_t_increase(status, state.step_small, (*delimits));
           if (F_status_is_error(status)) break;
 
@@ -213,6 +216,7 @@ extern "C" {
 
             if (F_status_set_fine(status) == F_interrupt) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
           }
@@ -235,7 +239,7 @@ extern "C" {
         if (buffer.string[range->start] == f_fss_eol_s[0]) {
           found->stop = stop;
 
-          // move the start position to after the EOL.
+          // Move the start position to after the EOL.
           ++range->start;
 
           return F_fss_found_object;
@@ -262,7 +266,7 @@ extern "C" {
       return status;
     }
 
-    // seek to the end of the line when no valid object is found.
+    // Seek to the end of the line when no valid object is found.
     while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol_s[0]) {
 
       if (state.interrupt) {
@@ -270,6 +274,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_interrupt) {
           status = F_status_set_error(F_interrupt);
+
           break;
         }
       }
@@ -324,7 +329,7 @@ extern "C" {
     f_array_length_t slash_count = 0;
     f_array_length_t start = 0;
 
-    // identify where the content ends.
+    // Identify where the content ends.
     while (range->start <= range->stop && range->start < buffer.used) {
 
       if (state.interrupt) {
@@ -332,6 +337,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_interrupt) {
           status = F_status_set_error(F_interrupt);
+
           break;
         }
       }
@@ -359,6 +365,7 @@ extern "C" {
 
             if (F_status_set_fine(status) == F_interrupt) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
           }
@@ -387,6 +394,7 @@ extern "C" {
 
               if (F_status_set_fine(status) == F_interrupt) {
                 status = F_status_set_error(F_interrupt);
+
                 break;
               }
             }
@@ -409,6 +417,7 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             delimits->array[delimits->used++] = slash_first;
+
             continue;
           }
         }
@@ -435,6 +444,7 @@ extern "C" {
 
             if (F_status_set_fine(status) == F_interrupt) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
           }
@@ -454,7 +464,7 @@ extern "C" {
 
         if (range->start > range->stop || range->start >= buffer.used) break;
 
-        // found a valid content close, set stop point to last newline.
+        // Found a valid content close, set stop point to last newline.
         if (buffer.string[range->start] == f_fss_eol_s[0]) {
           ++range->start;
 
@@ -475,7 +485,7 @@ extern "C" {
       }
 
       if (buffer.string[range->start] == f_fss_comment_s[0]) {
-        start = range->start;
+        start = newline_last + 1;
 
         status = f_fss_seek_to_eol(buffer, range);
         if (F_status_is_error(status)) break;
@@ -492,6 +502,7 @@ extern "C" {
 
         comments->array[comments->used].start = start;
         comments->array[comments->used++].stop = range->start++;
+
         continue;
       }
 
@@ -542,7 +553,7 @@ extern "C" {
       return status;
     }
 
-    // ensure that there is room for a slash delimit, the object open character, and the end of line character.
+    // Ensure that there is room for a slash delimit, the object open character, and the end of line character.
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 3, destination);
     if (F_status_is_error(status)) return status;
 
@@ -555,7 +566,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    // find the first graph character.
+    // Find the first graph character.
     while (range->start <= range->stop && range->start < object.used) {
 
       if (state.interrupt) {
@@ -563,17 +574,19 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_interrupt) {
           status = F_status_set_error(F_interrupt);
+
           break;
         }
       }
 
       if (object.string[range->start] == f_fss_comment_s[0]) {
 
-        // when a comment is found, escape it.
+        // When a comment is found, escape it.
         status = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status)) break;
 
         destination->string[destination->used++] = F_fss_delimit_slash_s;
+
         break;
       }
 
@@ -582,10 +595,11 @@ extern "C" {
 
       if (status == F_true) break;
 
-      // objects will not have leading whitespaces, but having this does not result in an invalid object, so just write the provided spaces.
+      // Objects will not have leading whitespaces, but having this does not result in an invalid object, so just write the provided spaces.
       if (object.string[range->start] != F_fss_delimit_placeholder_s) {
         if (object.string[range->start] == f_fss_eol_s[0]) {
           status = F_status_set_error(F_none_eol);
+
           break;
         }
 
@@ -621,6 +635,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_interrupt) {
           status = F_status_set_error(F_interrupt);
+
           break;
         }
       }
@@ -635,6 +650,7 @@ extern "C" {
 
             if (F_status_set_fine(status) == F_interrupt) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
           }
@@ -652,7 +668,7 @@ extern "C" {
 
         if (range->start > range->stop || range->start >= object.used) {
 
-          // slashes at the end of the object must be delimited to avoid delimiting the object close character.
+          // Slashes at the end of the object must be delimited to avoid delimiting the object close character.
           slash_count *= 2;
         }
 
@@ -665,6 +681,7 @@ extern "C" {
 
         if (range->start > range->stop || range->start >= object.used) {
           ends_on_space = F_false;
+
           break;
         }
       }
@@ -672,6 +689,7 @@ extern "C" {
       if (object.string[range->start] != F_fss_delimit_placeholder_s) {
         if (object.string[range->start] == f_fss_eol_s[0]) {
           status = F_status_set_error(F_none_eol);
+
           break;
         }
 
@@ -696,6 +714,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       destination->used = used_start;
+
       return status;
     }
 
@@ -709,7 +728,7 @@ extern "C" {
           return status;
         }
 
-        // prevent a space from being added post-trimming.
+        // Prevent a space from being added post-trimming.
         ends_on_space = F_true;
       }
 
@@ -773,7 +792,7 @@ extern "C" {
       return status;
     }
 
-    // ensure that there is room for a slash delimit and possibly the end of content characters.
+    // Ensure that there is room for a slash delimit and possibly the end of content characters.
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 3, destination);
     if (F_status_is_error(status)) return status;
 
@@ -799,6 +818,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_interrupt) {
           status = F_status_set_error(F_interrupt);
+
           break;
         }
       }
@@ -863,7 +883,7 @@ extern "C" {
             continue;
           }
 
-          // increase by character at "start" and possible newline.
+          // Increase by character at "start" and possible newline.
           status = f_string_dynamic_increase_by(2, destination);
           if (F_status_is_error(status)) break;
 
@@ -878,6 +898,7 @@ extern "C" {
           }
 
           range->start = start + 1;
+
           continue;
         }
       }
@@ -923,7 +944,7 @@ extern "C" {
             }
           }
 
-          // increase by slash and extended list close.
+          // Increase by slash and extended list close.
           status = f_string_dynamic_increase_by(2, destination);
           if (F_status_is_error(status)) break;
 
@@ -943,6 +964,7 @@ extern "C" {
 
         destination->string[destination->used++] = content.string[start];
         range->start = start + 1;
+
         continue;
       }
       else if (content.string[range->start] == f_fss_comment_s[0] && !has_graph) {

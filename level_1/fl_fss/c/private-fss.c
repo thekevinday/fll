@@ -15,7 +15,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    // if there are any spaces, then this will be quoted so find the first non-placeholder character.
+    // If there are any spaces, then this will be quoted so find the first non-placeholder character.
     for (; destination_range.start < destination->used; ++destination_range.start) {
 
       if (state.interrupt) {
@@ -67,7 +67,7 @@ extern "C" {
         } // for
       } // for
 
-      // find the last quote.
+      // Find the last quote.
       for (destination_range.start = destination->used - 1; destination_range.start > front; --destination_range.start) {
 
         if (state.interrupt) {
@@ -106,7 +106,7 @@ extern "C" {
 
         status = f_fss_is_space(*destination, destination_range);
 
-        // when going backwards, getting incomplete UTF-8 sequences is not an error.
+        // When going backwards, getting incomplete UTF-8 sequences is not an error.
         if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
         if (F_status_is_error(status)) {
@@ -124,7 +124,7 @@ extern "C" {
         } // for
       } // for
 
-      // if there is no whitespace between the quotes, post-trimming, then remove the quotes.
+      // If there is no whitespace between the quotes, post-trimming, then remove the quotes.
       for (destination_range.start = front; destination_range.start < rear; ++destination_range.start) {
 
         if (state.interrupt) {
@@ -284,7 +284,7 @@ extern "C" {
 
     if (status == F_none_eol) {
 
-      // move the start position to after the EOL.
+      // Move the start position to after the EOL.
       ++range->start;
 
       return F_fss_found_object_not;
@@ -298,10 +298,10 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    // begin the search.
+    // Begin the search.
     found->start = range->start;
 
-    // ignore all comment lines.
+    // Ignore all comment lines.
     if (object_as && buffer.string[range->start] == f_fss_comment_s[0]) {
 
       while (buffer.string[range->start] != f_fss_eol_s[0]) {
@@ -325,20 +325,20 @@ extern "C" {
         }
       } // while
 
-      // move the start position to after the EOL.
+      // Move the start position to after the EOL.
       ++range->start;
 
       return F_fss_found_object_not;
     }
 
-    // handle quoted support.
+    // Handle quoted support.
     char quote_found = 0;
 
     if (quote) {
       *quote = 0;
     }
 
-    // identify where the object begins.
+    // Identify where the object begins.
     if (buffer.string[range->start] == F_fss_delimit_slash_s) {
       f_array_length_t first_slash = range->start;
 
@@ -372,7 +372,7 @@ extern "C" {
           status = f_fss_is_space(buffer, *range);
           if (F_status_is_error(status)) break;
 
-          // found the end of the object while processing the slash for potential delimits.
+          // Found the end of the object while processing the slash for potential delimits.
           if (status == F_true) {
             found->stop = range->start - 1;
 
@@ -409,8 +409,8 @@ extern "C" {
 
       if (buffer.string[range->start] == F_fss_delimit_quote_single_s || buffer.string[range->start] == F_fss_delimit_quote_double_s || (object_as && buffer.string[range->start] == f_fss_comment_s[0])) {
 
-        // only the first slash before a quoted needs to be escaped (or not) as once there is a slash before a quoted, this cannot ever be a quote object.
-        // this simplifies the number of slashes needed.
+        // Only the first slash before a quoted needs to be escaped (or not) as once there is a slash before a quoted, this cannot ever be a quote object.
+        // This simplifies the number of slashes needed.
         macro_f_fss_delimits_t_increase(status, state.step_small, (*delimits));
         if (F_status_is_error(status)) return status;
 
@@ -430,7 +430,7 @@ extern "C" {
       found->start = range->start;
     }
 
-    // identify where the object ends.
+    // Identify where the object ends.
     if (!quote_found) {
       status = F_none;
 
@@ -460,7 +460,7 @@ extern "C" {
 
       if (buffer.string[range->start] == f_fss_eol_s[0]) {
 
-        // move the start position to after the EOL.
+        // Move the start position to after the EOL.
         ++range->start;
 
         return F_fss_found_object_content_not;
@@ -534,7 +534,7 @@ extern "C" {
           if (buffer.string[range->start] == quote_found) {
             location = range->start;
 
-            // check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted and delimits do not apply.
+            // Check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted and delimits do not apply.
             if (range->start + 1 <= range->stop && range->start + 1 < buffer.used) {
               ++range->start;
 
@@ -646,7 +646,7 @@ extern "C" {
                 if (buffer.string[range->start] == f_fss_eol_s[0]) {
                   found->stop = location - 1;
 
-                  // move the start position to after the EOL.
+                  // Move the start position to after the EOL.
                   ++range->start;
 
                   return F_fss_found_object_content_not;
@@ -688,7 +688,7 @@ extern "C" {
         }
         else if (buffer.string[range->start] == quote_found) {
 
-          // check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted.
+          // Check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted.
           location = range->start;
 
           if (range->start + 1 <= range->stop && range->start + 1 < buffer.used) {
@@ -742,7 +742,7 @@ extern "C" {
 
               if (buffer.string[range->start] == f_fss_eol_s[0]) {
 
-                // move the start position to after the EOL.
+                // Move the start position to after the EOL.
                 ++range->start;
 
                 return F_fss_found_object_content_not;
@@ -811,7 +811,7 @@ extern "C" {
         }
         else if (buffer.string[range->start] == f_fss_eol_s[0]) {
 
-          // move the start position to after the EOL.
+          // Move the start position to after the EOL.
           ++range->start;
 
           return F_fss_found_object_not;
@@ -834,11 +834,11 @@ extern "C" {
       }
     }
 
-    // seek to the EOL when no valid object is found.
+    // Seek to the EOL when no valid object is found.
     status = f_fss_seek_to_eol(buffer, range);
     if (F_status_is_error(status)) return status;
 
-    // move the start position to after the EOL.
+    // Move the start position to after the EOL.
     ++range->start;
 
     return F_fss_found_object_not;
@@ -859,7 +859,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    // ensure that there is room for the potential start and stop quotes, a potential delimit at start, and the potential object open character.
+    // Ensure that there is room for the potential start and stop quotes, a potential delimit at start, and the potential object open character.
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 4, destination);
     if (F_status_is_error(status)) return status;
 
@@ -873,11 +873,11 @@ extern "C" {
     f_array_length_t item_total = 0;
     f_array_length_t i = 0;
 
-    // use placeholders for potential quote and potential delimited quote to avoid doing things such as memmove().
+    // Use placeholders for potential quote and potential delimited quote to avoid doing things such as memmove().
     destination->string[destination->used++] = F_fss_delimit_placeholder_s;
     destination->string[destination->used++] = F_fss_delimit_placeholder_s;
 
-    // if there is an initial quote, then this must be quoted and the existing quote must be delimited.
+    // If there is an initial quote, then this must be quoted and the existing quote must be delimited.
     if (object.string[input_start] == quote) {
       quoted = F_true;
     }
@@ -923,10 +923,10 @@ extern "C" {
 
         if (range->start > range->stop || range->start >= object.used) {
 
-          // slashes before the final quote must be escaped when quoted, add the delimit slashes.
+          // Slashes before the final quote must be escaped when quoted, add the delimit slashes.
           if (quoted) {
 
-            // if this is the first quote, then only a single delimit slash is needed.
+            // If this is the first quote, then only a single delimit slash is needed.
             if (item_first == input_start) {
               status = f_string_dynamic_increase(state.step_large, destination);
               if (F_status_is_error(status)) break;
@@ -988,7 +988,7 @@ extern "C" {
             status = f_string_dynamic_increase_by(item_total, destination);
             if (F_status_is_error(status)) break;
 
-            // add the slashes that delimit the slashes.
+            // Add the slashes that delimit the slashes.
             if (item_first == input_start) {
               status = f_string_dynamic_increase(state.step_large, destination);
               if (F_status_is_error(status)) break;
@@ -1022,7 +1022,7 @@ extern "C" {
         }
         else if (object_as && object.string[range->start] == f_fss_comment_s[0]) {
 
-          // only the first slash needs to be escaped for a comment, and then only if not quoted.
+          // Only the first slash needs to be escaped for a comment, and then only if not quoted.
           if (item_first == input_start) {
             commented = F_true;
           }
@@ -1041,7 +1041,7 @@ extern "C" {
         }
         else {
 
-          // if any space is found, then this must be quoted.
+          // If any space is found, then this must be quoted.
           status = f_fss_is_space(object, *range);
           if (F_status_is_error(status)) break;
 
@@ -1054,7 +1054,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(item_total + width, destination);
           if (F_status_is_error(status)) break;
 
-          // there is nothing to delimit, so all slashes should be printed as is.
+          // There is nothing to delimit, so all slashes should be printed as is.
           for (i = 0; i < item_total; ++i) {
             destination->string[destination->used++] = F_fss_delimit_slash_s;
           } // for
@@ -1070,7 +1070,7 @@ extern "C" {
       else if (object.string[range->start] == quote) {
         item_first = range->start++;
 
-        // the very first quote, must be escaped, when quoting is disabled.
+        // The very first quote, must be escaped, when quoting is disabled.
         if (item_first == input_start) {
           status = f_string_dynamic_increase(state.step_large, destination);
           if (F_status_is_error(status)) break;
@@ -1096,11 +1096,11 @@ extern "C" {
 
           destination->string[destination->used++] = quote;
 
-          // the next quote must also be checked, so do not increment.
+          // The next quote must also be checked, so do not increment.
           continue;
         }
 
-        // if any space is found, then this must be quoted.
+        // If any space is found, then this must be quoted.
         status = f_fss_is_space(object, *range);
         if (F_status_is_error(status)) break;
 
@@ -1188,7 +1188,7 @@ extern "C" {
           if (object.string[i] != F_fss_delimit_placeholder_s) break;
         } // for
 
-        // only when followed by a space must the start quote be delimited.
+        // Only when followed by a space must the start quote be delimited.
         if (i <= range->stop && i < object.used) {
           f_string_range_t range_i = *range;
 
