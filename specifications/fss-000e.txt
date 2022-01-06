@@ -11,10 +11,13 @@ Featureless Settings Specification: 000e - Payload:
   The header's Content is of type fss-0001 Extended.
   The payload's Content is of any type including raw binary data.
 
-  The payload is recommended to be the last list Object in the file.
+  The payload is required to be the last list Object in the file.
   The payload is recommended to have its size designated in some manner in the "header".
-  The designated size is sugggested to use the fss-0001 Object "length".
+  The designated size is recommended to use the fss-0001 Object "length".
   The payload may contain anything, including NULL characters.
+  The payload is terminated by the EOF (end of file) character or when a designated "length" is reached.
+  Nothing in the payload may be considered a valid list Object and therefore there will be no escaping allowed.
+  Comments are not considered comments inside the payload and are considered part of the payload.
 
   Other than the reserved list Objects "header" and "payload" any other valid Object may be specified.
 
