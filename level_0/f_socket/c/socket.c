@@ -228,7 +228,9 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    socket->id = -1;
+    if (action == f_socket_close_fast_e) {
+      socket->id = -1;
+    }
 
     return F_none;
   }

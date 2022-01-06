@@ -258,7 +258,21 @@ extern "C" {
 /**
  * Terminate a socket connection.
  *
- * To properly close a UNIX socket, call f_file_close() and f_file_remove().
+ * The shutdown() call is used for all actions, except f_socket_close_fast_e.
+ * When shutdown() is called, a proper network disconnection process is initiated.
+ * The network connection will properly send the FIN packets.
+ * The shutdown() also allows current buffers to be properly flushed.
+ * The file descriptor is not closed.
+ * The remaining buffer can still be processed.
+ * Be sure to call either this function again with f_socket_close_fast_e or call f_file_close() directly.
+ *
+ * When action is f_socket_close_fast_e, then close() is called.
+ * What happens then is that rather than waiting for FIN a RST is immediately sent (RST is sent only if connection is still active).
+ * All buffers are discarded.
+ * The connection is immediately removed.
+ * Thus, f_socket_close_fast_e (calling close()) on a socket results in bad network practice.
+ *
+ * In the above cases, whether or not a RST or FIN are sent is also dependent on whether the f_socket_option_linger_d is used (SO_LINGER).
  *
  * @param socket
  *   The socket structure.
