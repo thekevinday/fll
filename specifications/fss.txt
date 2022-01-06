@@ -139,3 +139,4 @@ Featureless Settings Specifications:
   - fss-000b: Simple List
   - fss-000c: Iki Text
   - fss-000d: Basic Rule
+  - fss-000e: Payload
