@@ -98,23 +98,41 @@ extern "C" {
 #endif //_di_f_fss_delimiters_
 
 /**
+ * Provide strings used by FSS.
+ *
+ * F_fss_string_*:
+ *   - header:  String representing the header Object name.
+ *   - payload: String representing the payload Object name.
+ */
+#ifndef _di_f_fss_strings_
+  #define F_fss_string_header_s  "header"
+  #define F_fss_string_payload_s "payload"
+
+  #define F_fss_string_header_s_length  6
+  #define F_fss_string_payload_s_length 7
+
+  extern const f_string_t f_fss_string_header_s;
+  extern const f_string_t f_fss_string_payload_s;
+#endif // _di_f_fss_strings_
+
+/**
  * Codes for every known FSS standard.
  *
  * f_fss_*:
- * - basic:                    FSS-0000: Basic.
- * - extended:                 FSS-0001: Extended.
- * - basic_list:               FSS-0002: Basic List.
- * - extended_list:            FSS-0003: Extended List.
- * - very_basic_list:          FSS-0004: Very Basic List.
- * - somewhat_basic_list:      FSS-0005: Somewhat Basic List.
- * - somewhat_extended_list:   FSS-0006: Somewhat Extended List.
- * - very_extended_list:       FSS-0007: Very Extended List.
- * - embedded_list:            FSS-0008: Embedded List.
- * - reverse_mapping:          FSS-0009: Reverse Mapping.
- * - extended_reverse_mapping: FSS-000A: Extended Reverse Mapping.
- * - simple_list:              FSS-000B: Simple List.
- * - iki_text:                 FSS-000C: IKI Text.
- * - basic_rule:               FSS-000D: Basic Rule.
+ *   - basic:                    FSS-0000: Basic.
+ *   - extended:                 FSS-0001: Extended.
+ *   - basic_list:               FSS-0002: Basic List.
+ *   - extended_list:            FSS-0003: Extended List.
+ *   - very_basic_list:          FSS-0004: Very Basic List.
+ *   - somewhat_basic_list:      FSS-0005: Somewhat Basic List.
+ *   - somewhat_extended_list:   FSS-0006: Somewhat Extended List.
+ *   - very_extended_list:       FSS-0007: Very Extended List.
+ *   - embedded_list:            FSS-0008: Embedded List.
+ *   - reverse_mapping:          FSS-0009: Reverse Mapping.
+ *   - extended_reverse_mapping: FSS-000A: Extended Reverse Mapping.
+ *   - simple_list:              FSS-000B: Simple List.
+ *   - iki_text:                 FSS-000C: IKI Text.
+ *   - basic_rule:               FSS-000D: Basic Rule.
  */
 #ifndef _di_f_fss_codes_
   enum {
@@ -144,13 +162,13 @@ extern "C" {
  * Only "next" and "end" are only meaningful for a Content and will be treated as "none" for an Object.
  *
  * f_fss_complete_*:
- * - none:         Disable completeness.
- * - end:          Complete as if this is the final piece of a set (such as FSS-0001, adding terminating EOL).
- * - full:         Complete and add terminating EOL, where applicable.
- * - full_trim:    Complete and add terminating EOL but remove any leading or trailing whitespace, where applicable.
- * - next:         Complete as if this is a piece of a set (such as FSS-0001, adding a separating space).
- * - partial:      Complete, but do not add terminating EOL, where applicable.
- * - partial_trim: Complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
+ *   - none:         Disable completeness.
+ *   - end:          Complete as if this is the final piece of a set (such as FSS-0001, adding terminating EOL).
+ *   - full:         Complete and add terminating EOL, where applicable.
+ *   - full_trim:    Complete and add terminating EOL but remove any leading or trailing whitespace, where applicable.
+ *   - next:         Complete as if this is a piece of a set (such as FSS-0001, adding a separating space).
+ *   - partial:      Complete, but do not add terminating EOL, where applicable.
+ *   - partial_trim: Complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
  */
 #ifndef _di_f_fss_complete_
   enum {
@@ -205,6 +223,22 @@ enum {
   #define F_fss_default_allocation_step_small_d F_memory_default_allocation_small_d
   #define F_fss_default_allocation_step_large_d F_memory_default_allocation_large_d
 #endif // _di_f_fss_default_allocation_step_
+
+/**
+ * Common FSS defaults.
+ *
+ * F_fss_default_*:
+ *   - block_size_huge:   The "huge" size in blocks to process for an FSS related task.
+ *   - block_size_normal: The "normal" size in blocks to process for an FSS related task.
+ *   - block_size_small:  The "small" size in blocks to process for an FSS related task.
+ *   - block_size_tiny:   The "tiny" size in blocks to process for an FSS related task.
+ */
+#ifndef _di_f_fss_defaults_
+  #define F_fss_default_block_size_huge_d   65536
+  #define F_fss_default_block_size_normal_d 16384
+  #define F_fss_default_block_size_small_d  4096
+  #define F_fss_default_block_size_tiny_d   512
+#endif // _di_f_fss_defaults_
 
 /**
  * This is a range that represents an object.

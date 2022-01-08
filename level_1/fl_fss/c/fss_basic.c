@@ -53,7 +53,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    macro_f_fss_content_t_increase(status, state.step_small, (*found))
+    status = f_string_ranges_increase(state.step_small, found);
     if (F_status_is_error(status)) return status;
 
     found->array[found->used].start = range->start;

@@ -18,6 +18,7 @@ Featureless Settings Specification: 000e - Payload:
   The payload is terminated by the EOF (end of file) character or when a designated "length" is reached.
   Nothing in the payload may be considered a valid list Object and therefore there will be no escaping allowed.
   Comments are not considered comments inside the payload and are considered part of the payload.
+  The payload may be empty (length may be zero), but the list Object "payload" must still exist.
 
   Other than the reserved list Objects "header" and "payload" any other valid Object may be specified.
 

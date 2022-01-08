@@ -290,7 +290,7 @@ extern "C" {
 
     private_macro_fl_fss_content_with_comments_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
 
-    macro_f_fss_content_t_increase(status, state.step_small, (*found))
+    status = f_string_ranges_increase(state.step_small, found);
     if (F_status_is_error(status)) return status;
 
     found->array[found->used].start = range->start;

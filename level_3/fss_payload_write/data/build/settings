@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fll_fss
+project_name fss_payload_write
 
 version_major 0
 version_minor 5
@@ -13,24 +13,26 @@ environment
 process_pre
 process_post
 
-modes individual
-modes_default individual
+modes individual level monolithic
+modes_default monolithic
 
 build_compiler gcc
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
 build_libraries -lc
-build_libraries-individual -lfl_conversion -lfl_fss -lfl_string -lf_conversion -lf_file -lf_fss -lf_memory -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_print -lfll_program -lfl_console -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lfl_string -lf_color -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-level -lfll_2 -lfll_1 -lfll_0
+build_libraries-monolithic -lfll
 build_libraries_shared
 build_libraries_static
-build_sources_library fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_payload.c
+build_sources_library fss_payload_write.c private-common.c private-fss_payload_write.c
 build_sources_library_shared
 build_sources_library_static
-build_sources_program
+build_sources_program main.c
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_payload.h
+build_sources_headers fss_payload_write.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script
@@ -39,7 +41,7 @@ build_script yes
 build_shared yes
 build_static no
 
-path_headers fll/level_2
+path_headers program/fss_payload_write
 path_headers_preserve no
 path_library_script script
 path_library_shared shared
@@ -54,7 +56,8 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-defines
+#defines -D_di_libcap_ -D_di_thread_support_
+defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
 defines_library
 defines_library_shared
 defines_library_static
