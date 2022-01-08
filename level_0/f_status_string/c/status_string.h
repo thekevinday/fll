@@ -246,6 +246,8 @@ extern "C" {
     #define F_status_begin_not_s         "F_begin_not"
     #define F_status_block_s             "F_block"
     #define F_status_block_not_s         "F_block_not"
+    #define F_status_body_s              "F_body"
+    #define F_status_body_not_s          "F_body_not"
     #define F_status_bound_s             "F_bound"
     #define F_status_bound_not_s         "F_bound_not"
     #define F_status_capability_s        "F_capability"
@@ -260,6 +262,8 @@ extern "C" {
     #define F_status_connect_reset_s     "F_connect_reset"
     #define F_status_container_s         "F_container"
     #define F_status_container_not_s     "F_container_not"
+    #define F_status_content_s           "F_content"
+    #define F_status_content_not_s       "F_content_not"
     #define F_status_continue_s          "F_continue"
     #define F_status_continue_not_s      "F_continue_not"
     #define F_status_control_s           "F_control"
@@ -310,6 +314,8 @@ extern "C" {
     #define F_status_family_not_s        "F_family_not"
     #define F_status_first_s             "F_first"
     #define F_status_first_not_s         "F_first_not"
+    #define F_status_footer_s            "F_footer"
+    #define F_status_footer_not_s        "F_footer_not"
     #define F_status_fork_s              "F_fork"
     #define F_status_fork_not_s          "F_fork_not"
     #define F_status_format_s            "F_format"
@@ -320,6 +326,8 @@ extern "C" {
     #define F_status_full_not_s          "F_full_not"
     #define F_status_group_s             "F_group"
     #define F_status_group_not_s         "F_group_not"
+    #define F_status_header_s            "F_header"
+    #define F_status_header_not_s        "F_header_not"
     #define F_status_ignore_s            "F_ignore"
     #define F_status_ignore_not_s        "F_ignore_not"
     #define F_status_implemented_s       "F_implemented"
@@ -361,14 +369,20 @@ extern "C" {
     #define F_status_next_not_s          "F_next_not"
     #define F_status_nice_s              "F_nice"
     #define F_status_nice_not_s          "F_nice_not"
+    #define F_status_object_s            "F_object"
+    #define F_status_object_not_s        "F_object_not"
     #define F_status_option_s            "F_option"
     #define F_status_option_not_s        "F_option_not"
     #define F_status_output_s            "F_output"
     #define F_status_output_not_s        "F_output_not"
+    #define F_status_packet_s            "F_packet"
+    #define F_status_packet_not_s        "F_packet_not"
     #define F_status_parameter_s         "F_parameter"
     #define F_status_parameter_not_s     "F_parameter_not"
     #define F_status_parent_s            "F_parent"
     #define F_status_parent_not_s        "F_parent_not"
+    #define F_status_payload_s           "F_payload"
+    #define F_status_payload_not_s       "F_payload_not"
     #define F_status_pipe_s              "F_pipe"
     #define F_status_pipe_not_s          "F_pipe_not"
     #define F_status_port_s              "F_port"
@@ -472,6 +486,8 @@ extern "C" {
     #define F_status_begin_not_s_length         11
     #define F_status_block_s_length             7
     #define F_status_block_not_s_length         11
+    #define F_status_body_s_length              6
+    #define F_status_body_not_s_length          10
     #define F_status_bound_s_length             7
     #define F_status_bound_not_s_length         11
     #define F_status_capability_s_length        12
@@ -486,6 +502,8 @@ extern "C" {
     #define F_status_connect_reset_s_length     15
     #define F_status_container_s_length         11
     #define F_status_container_not_s_length     15
+    #define F_status_content_s_length           9
+    #define F_status_content_not_s_length       13
     #define F_status_continue_s_length          10
     #define F_status_continue_not_s_length      14
     #define F_status_control_s_length           9
@@ -536,6 +554,8 @@ extern "C" {
     #define F_status_family_not_s_length        12
     #define F_status_first_s_length             7
     #define F_status_first_not_s_length         11
+    #define F_status_footer_s_length            8
+    #define F_status_footer_not_s_length        12
     #define F_status_fork_s_length              6
     #define F_status_fork_not_s_length          10
     #define F_status_format_s_length            8
@@ -546,6 +566,8 @@ extern "C" {
     #define F_status_full_not_s_length          10
     #define F_status_group_s_length             7
     #define F_status_group_not_s_length         11
+    #define F_status_header_s_length            8
+    #define F_status_header_not_s_length        12
     #define F_status_ignore_s_length            8
     #define F_status_ignore_not_s_length        12
     #define F_status_implemented_s_length       13
@@ -587,14 +609,20 @@ extern "C" {
     #define F_status_next_not_s_length          10
     #define F_status_nice_s_length              6
     #define F_status_nice_not_s_length          10
+    #define F_status_object_s_length            8
+    #define F_status_object_not_s_length        12
     #define F_status_option_s_length            8
     #define F_status_option_not_s_length        12
     #define F_status_output_s_length            8
     #define F_status_output_not_s_length        12
+    #define F_status_packet_s_length            8
+    #define F_status_packet_not_s_length        12
     #define F_status_parameter_s_length         11
     #define F_status_parameter_not_s_length     15
     #define F_status_parent_s_length            8
     #define F_status_parent_not_s_length        12
+    #define F_status_payload_s_length           9
+    #define F_status_payload_not_s_length       13
     #define F_status_pipe_s_length              6
     #define F_status_pipe_not_s_length          10
     #define F_status_port_s_length              6
@@ -698,6 +726,8 @@ extern "C" {
     extern const f_string_t f_status_begin_not_s;
     extern const f_string_t f_status_block_s;
     extern const f_string_t f_status_block_not_s;
+    extern const f_string_t f_status_body_s;
+    extern const f_string_t f_status_body_not_s;
     extern const f_string_t f_status_bound_s;
     extern const f_string_t f_status_bound_not_s;
     extern const f_string_t f_status_capability_s;
@@ -712,6 +742,8 @@ extern "C" {
     extern const f_string_t f_status_connect_reset_s;
     extern const f_string_t f_status_container_s;
     extern const f_string_t f_status_container_not_s;
+    extern const f_string_t f_status_content_s;
+    extern const f_string_t f_status_content_not_s;
     extern const f_string_t f_status_continue_s;
     extern const f_string_t f_status_continue_not_s;
     extern const f_string_t f_status_control_s;
@@ -762,6 +794,8 @@ extern "C" {
     extern const f_string_t f_status_family_not_s;
     extern const f_string_t f_status_first_s;
     extern const f_string_t f_status_first_not_s;
+    extern const f_string_t f_status_footer_s;
+    extern const f_string_t f_status_footer_not_s;
     extern const f_string_t f_status_fork_s;
     extern const f_string_t f_status_fork_not_s;
     extern const f_string_t f_status_format_s;
@@ -772,6 +806,8 @@ extern "C" {
     extern const f_string_t f_status_full_not_s;
     extern const f_string_t f_status_group_s;
     extern const f_string_t f_status_group_not_s;
+    extern const f_string_t f_status_header_s;
+    extern const f_string_t f_status_header_not_s;
     extern const f_string_t f_status_ignore_s;
     extern const f_string_t f_status_ignore_not_s;
     extern const f_string_t f_status_implemented_s;
@@ -813,14 +849,20 @@ extern "C" {
     extern const f_string_t f_status_next_not_s;
     extern const f_string_t f_status_nice_s;
     extern const f_string_t f_status_nice_not_s;
+    extern const f_string_t f_status_object_s;
+    extern const f_string_t f_status_object_not_s;
     extern const f_string_t f_status_option_s;
     extern const f_string_t f_status_option_not_s;
     extern const f_string_t f_status_output_s;
     extern const f_string_t f_status_output_not_s;
+    extern const f_string_t f_status_packet_s;
+    extern const f_string_t f_status_packet_not_s;
     extern const f_string_t f_status_parameter_s;
     extern const f_string_t f_status_parameter_not_s;
     extern const f_string_t f_status_parent_s;
     extern const f_string_t f_status_parent_not_s;
+    extern const f_string_t f_status_payload_s;
+    extern const f_string_t f_status_payload_not_s;
     extern const f_string_t f_status_previous_s;
     extern const f_string_t f_status_previous_not_s;
     extern const f_string_t f_status_pipe_s;

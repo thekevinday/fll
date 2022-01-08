@@ -93,6 +93,8 @@ extern "C" {
     const f_string_t f_status_begin_not_s = F_status_begin_not_s;
     const f_string_t f_status_block_s = F_status_block_s;
     const f_string_t f_status_block_not_s = F_status_block_not_s;
+    const f_string_t f_status_body_s = F_status_body_s;
+    const f_string_t f_status_body_not_s = F_status_body_not_s;
     const f_string_t f_status_bound_s = F_status_bound_s;
     const f_string_t f_status_bound_not_s = F_status_bound_not_s;
     const f_string_t f_status_capability_s = F_status_capability_s;
@@ -107,6 +109,8 @@ extern "C" {
     const f_string_t f_status_connect_reset_s = F_status_connect_reset_s;
     const f_string_t f_status_container_s = F_status_container_s;
     const f_string_t f_status_container_not_s = F_status_container_not_s;
+    const f_string_t f_status_content_s = F_status_content_s;
+    const f_string_t f_status_content_not_s = F_status_content_not_s;
     const f_string_t f_status_continue_s = F_status_continue_s;
     const f_string_t f_status_continue_not_s = F_status_continue_not_s;
     const f_string_t f_status_control_s = F_status_control_s;
@@ -157,6 +161,8 @@ extern "C" {
     const f_string_t f_status_family_not_s = F_status_family_not_s;
     const f_string_t f_status_first_s = F_status_first_s;
     const f_string_t f_status_first_not_s = F_status_first_not_s;
+    const f_string_t f_status_footer_s = F_status_footer_s;
+    const f_string_t f_status_footer_not_s = F_status_footer_not_s;
     const f_string_t f_status_fork_s = F_status_fork_s;
     const f_string_t f_status_fork_not_s = F_status_fork_not_s;
     const f_string_t f_status_format_s = F_status_format_s;
@@ -167,6 +173,8 @@ extern "C" {
     const f_string_t f_status_full_not_s = F_status_full_not_s;
     const f_string_t f_status_group_s = F_status_group_s;
     const f_string_t f_status_group_not_s = F_status_group_not_s;
+    const f_string_t f_status_header_s = F_status_header_s;
+    const f_string_t f_status_header_not_s = F_status_header_not_s;
     const f_string_t f_status_ignore_s = F_status_ignore_s;
     const f_string_t f_status_ignore_not_s = F_status_ignore_not_s;
     const f_string_t f_status_implemented_s = F_status_implemented_s;
@@ -208,14 +216,20 @@ extern "C" {
     const f_string_t f_status_next_not_s = F_status_next_not_s;
     const f_string_t f_status_nice_s = F_status_nice_s;
     const f_string_t f_status_nice_not_s = F_status_nice_not_s;
+    const f_string_t f_status_object_s = F_status_object_s;
+    const f_string_t f_status_object_not_s = F_status_object_not_s;
     const f_string_t f_status_option_s = F_status_option_s;
     const f_string_t f_status_option_not_s = F_status_option_not_s;
     const f_string_t f_status_output_s = F_status_output_s;
     const f_string_t f_status_output_not_s = F_status_output_not_s;
+    const f_string_t f_status_packet_s = F_status_packet_s;
+    const f_string_t f_status_packet_not_s = F_status_packet_not_s;
     const f_string_t f_status_parameter_s = F_status_parameter_s;
     const f_string_t f_status_parameter_not_s = F_status_parameter_not_s;
     const f_string_t f_status_parent_s = F_status_parent_s;
     const f_string_t f_status_parent_not_s = F_status_parent_not_s;
+    const f_string_t f_status_payload_s = F_status_payload_s;
+    const f_string_t f_status_payload_not_s = F_status_payload_not_s;
     const f_string_t f_status_pipe_s = F_status_pipe_s;
     const f_string_t f_status_pipe_not_s = F_status_pipe_not_s;
     const f_string_t f_status_port_s = F_status_port_s;
@@ -906,6 +920,14 @@ extern "C" {
           *string = f_status_block_not_s;
           break;
 
+        case F_body:
+          *string = f_status_body_s;
+          break;
+
+        case F_body_not:
+          *string = f_status_body_not_s;
+          break;
+
         case F_bound:
           *string = f_status_bound_s;
           break;
@@ -952,6 +974,14 @@ extern "C" {
 
         case F_connect_reset:
           *string = f_status_connect_reset_s;
+          break;
+
+        case F_content:
+          *string = f_status_content_s;
+          break;
+
+        case F_content_not:
+          *string = f_status_content_not_s;
           break;
 
         case F_continue:
@@ -1162,6 +1192,14 @@ extern "C" {
           *string = f_status_first_not_s;
           break;
 
+        case F_footer:
+          *string = f_status_footer_s;
+          break;
+
+        case F_footer_not:
+          *string = f_status_footer_not_s;
+          break;
+
         case F_fork:
           *string = f_status_fork_s;
           break;
@@ -1200,6 +1238,14 @@ extern "C" {
 
         case F_group_not:
           *string = f_status_group_not_s;
+          break;
+
+        case F_header:
+          *string = f_status_header_s;
+          break;
+
+        case F_header_not:
+          *string = f_status_header_not_s;
           break;
 
         case F_ignore:
@@ -1358,6 +1404,14 @@ extern "C" {
           *string = f_status_nice_not_s;
           break;
 
+        case F_object:
+          *string = f_status_object_s;
+          break;
+
+        case F_object_not:
+          *string = f_status_object_not_s;
+          break;
+
         case F_option:
           *string = f_status_option_s;
           break;
@@ -1374,6 +1428,14 @@ extern "C" {
           *string = f_status_output_not_s;
           break;
 
+        case F_packet:
+          *string = f_status_packet_s;
+          break;
+
+        case F_packet_not:
+          *string = f_status_packet_not_s;
+          break;
+
         case F_parameter:
           *string = f_status_parameter_s;
           break;
@@ -1388,6 +1450,14 @@ extern "C" {
 
         case F_parent_not:
           *string = f_status_parent_not_s;
+          break;
+
+        case F_payload:
+          *string = f_status_payload_s;
+          break;
+
+        case F_payload_not:
+          *string = f_status_payload_not_s;
           break;
 
         case F_pipe:
