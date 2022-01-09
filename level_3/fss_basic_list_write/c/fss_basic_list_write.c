@@ -1,6 +1,6 @@
 #include "fss_basic_list_write.h"
 #include "private-common.h"
-#include "private-fss_basic_list_write.h"
+#include "private-write.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,6 +1,6 @@
 #include "iki_read.h"
 #include "private-common.h"
-#include "private-iki_read.h"
+#include "private-read.h"
 
 #ifdef __cplusplus
 extern "C" {

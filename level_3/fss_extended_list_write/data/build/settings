@@ -26,7 +26,7 @@ build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_libraries_shared
 build_libraries_static
-build_sources_library fss_extended_list_write.c private-common.c private-fss_extended_list_write.c
+build_sources_library fss_extended_list_write.c private-common.c private-write.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_program main.c

@@ -1,6 +1,6 @@
 #include "fss_identify.h"
 #include "private-common.h"
-#include "private-fss_identify.h"
+#include "private-identify.h"
 
 #ifdef __cplusplus
 extern "C" {
