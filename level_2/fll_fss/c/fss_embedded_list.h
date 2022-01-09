@@ -126,7 +126,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: fl_fss_embedded_list_content_write().
  *   Errors (with error bit) from: fl_fss_embedded_list_object_write().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *
+ * @see fl_fss_embedded_list_content_write()
+ * @see fl_fss_embedded_list_object_write()
  */
 #ifndef _di_fll_fss_embedded_list_write_string_
   extern f_status_t fll_fss_embedded_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_state_t state, f_string_dynamic_t *destination);

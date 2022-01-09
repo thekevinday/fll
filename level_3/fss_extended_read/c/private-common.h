@@ -154,17 +154,17 @@ extern "C" {
  * delimits_content: The positions within the buffer representing Content character delimits.
  */
 #ifndef _di_fss_extended_read_data_t_
-  #define fss_extended_read_data_option_at      0x1
-  #define fss_extended_read_data_option_columns 0x2
-  #define fss_extended_read_data_option_content 0x4
-  #define fss_extended_read_data_option_empty   0x8
-  #define fss_extended_read_data_option_line    0x10
-  #define fss_extended_read_data_option_name    0x20
-  #define fss_extended_read_data_option_object  0x40
-  #define fss_extended_read_data_option_raw     0x80
-  #define fss_extended_read_data_option_select  0x100
-  #define fss_extended_read_data_option_total   0x200
-  #define fss_extended_read_data_option_trim    0x400
+  #define fss_extended_read_data_option_at_d      0x1
+  #define fss_extended_read_data_option_columns_d 0x2
+  #define fss_extended_read_data_option_content_d 0x4
+  #define fss_extended_read_data_option_empty_d   0x8
+  #define fss_extended_read_data_option_line_d    0x10
+  #define fss_extended_read_data_option_name_d    0x20
+  #define fss_extended_read_data_option_object_d  0x40
+  #define fss_extended_read_data_option_raw_d     0x80
+  #define fss_extended_read_data_option_select_d  0x100
+  #define fss_extended_read_data_option_total_d   0x200
+  #define fss_extended_read_data_option_trim_d    0x400
 
   typedef struct {
     uint16_t option;

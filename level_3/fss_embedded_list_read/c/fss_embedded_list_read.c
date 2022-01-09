@@ -119,6 +119,7 @@ extern "C" {
 
 #ifndef _di_fss_embedded_list_read_main_
   f_status_t fss_embedded_list_read_main(fss_embedded_list_read_main_t * const main, const f_console_arguments_t *arguments) {
+
     f_status_t status = F_none;
 
     {
@@ -166,6 +167,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_embedded_list_read_main_delete(main);
+
           return status;
         }
 
@@ -198,6 +200,7 @@ extern "C" {
       fss_embedded_list_read_print_help(main->output.to, main->context);
 
       fss_embedded_list_read_main_delete(main);
+
       return F_none;
     }
 
@@ -205,6 +208,7 @@ extern "C" {
       fll_program_print_version(main->output.to, fss_embedded_list_read_program_version_s);
 
       fss_embedded_list_read_main_delete(main);
+
       return F_none;
     }
 
@@ -449,6 +453,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file_e);
+
             break;
           }
 
@@ -458,6 +463,7 @@ extern "C" {
               fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
 
               f_file_stream_close(F_true, &file);
+
               break;
             }
 
@@ -468,6 +474,7 @@ extern "C" {
               }
 
               f_file_stream_close(F_true, &file);
+
               continue;
             }
           }
@@ -478,6 +485,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
+
             break;
           }
 
@@ -485,6 +493,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
+
             break;
           }
 

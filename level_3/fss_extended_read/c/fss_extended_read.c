@@ -219,6 +219,9 @@ extern "C" {
     data.files.array = files_array;
     data.files.used = 1;
     data.files.size = main->remaining.used + 1;
+    data.files.array[0].name = "(pipe)";
+    data.files.array[0].range.start = 1;
+    data.files.array[0].range.stop = 0;
 
     if (main->remaining.used || main->process_pipe) {
       {
@@ -375,6 +378,7 @@ extern "C" {
             funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
+
             break;
           }
           else if (fl_string_compare(arguments->argv[location], fss_extended_read_delimit_mode_name_none, length, fss_extended_read_delimit_mode_name_none_length) == F_equal_to) {
@@ -458,6 +462,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_delimit_s, arguments->argv[location]);
+
               break;
             }
 
@@ -523,7 +528,6 @@ extern "C" {
         file.id = F_type_descriptor_input_d;
         file.stream = F_type_input_d;
 
-        data.files.array[0].name = 0;
         data.files.array[0].range.start = 0;
 
         status = f_file_stream_read(file, &data.buffer);
@@ -600,7 +604,8 @@ extern "C" {
 
               break;
             }
-            else if (data.buffer.used > data.files.array[data.files.used].range.start) {
+
+            if (data.buffer.used > data.files.array[data.files.used].range.start) {
               data.files.array[data.files.used].name = arguments->argv[main->remaining.array[i]];
               data.files.array[data.files.used++].range.stop = data.buffer.used - 1;
 

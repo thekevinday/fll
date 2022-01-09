@@ -19,7 +19,7 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    // determine the linear order in which all of the three parameter values are to be applied.
+    // Determine the linear order in which all of the three parameter values are to be applied.
     if (values_total) {
       memset(values_order, 0, values_total);
 
@@ -46,6 +46,7 @@ extern "C" {
               values_order[k] = main->parameters[fss_embedded_list_read_parameter_at_e].values.array[j];
               values_type[k] = fss_embedded_list_read_parameter_at_e;
               i++;
+
               break;
             }
           } // for
@@ -78,6 +79,7 @@ extern "C" {
               values_order[k] = main->parameters[fss_embedded_list_read_parameter_name_e].values.array[j];
               values_type[k] = fss_embedded_list_read_parameter_name_e;
               i++;
+
               break;
             }
           } // for
@@ -273,8 +275,9 @@ extern "C" {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      // comments are not to be part of the file, so remove them.
+      // Comments are not to be part of the file, so remove them.
       for (; i < comments->used; ++i) {
+
         for (j = comments->array[i].start; j <= comments->array[i].stop; ++j) {
           main->buffer.string[j] = F_fss_delimit_placeholder_s;
         } // for
@@ -351,7 +354,7 @@ extern "C" {
 
     bool skip[items->used];
 
-    // setup defaults to be not skipped unless any given parent is skipped.
+    // Setup defaults to be not skipped unless any given parent is skipped.
     memset(skip, F_false, sizeof(skip) * items->used);
 
     if (parents.used) {
@@ -439,7 +442,7 @@ extern "C" {
       }
     }
 
-    // if the current depth is not the final depth, then recurse into the next depth.
+    // If the current depth is not the final depth, then recurse into the next depth.
     if (depths_index + 1 < depths.used) {
       bool skip_next[main->nest.depth[depths.array[depths_index + 1].depth - 1].used];
 
@@ -490,7 +493,7 @@ extern "C" {
       return fss_embedded_list_read_main_process_for_depth(main, arguments, filename, depths, depths_index + 1, line, parents_next, objects_delimits, contents_delimits);
     }
 
-    // process objects.
+    // Process objects.
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
@@ -539,7 +542,7 @@ extern "C" {
       return F_none;
     }
 
-    // process contents.
+    // Process contents.
     bool include_empty = 0;
 
     if (main->parameters[fss_embedded_list_read_parameter_empty_e].result == f_console_result_found_e) {
@@ -593,6 +596,7 @@ extern "C" {
           if (include_empty) {
             if (line_current == line) {
               fss_embedded_list_read_print_set_end(main);
+
               break;
             }
 
@@ -612,6 +616,7 @@ extern "C" {
 
               if (line_current == line) {
                 ++j;
+
                 break;
               }
             }
@@ -627,6 +632,7 @@ extern "C" {
 
             if (main->buffer.string[j] == f_string_eol_s[0]) {
               f_print_character(f_string_eol_s[0], main->output.to.stream);
+
               break;
             }
 
@@ -727,6 +733,7 @@ extern "C" {
     if (main->delimit_mode == fss_embedded_list_read_delimit_mode_none_e) {
       objects_delimits->used = 0;
       contents_delimits->used = 0;
+
       return;
     }
 
@@ -734,6 +741,7 @@ extern "C" {
       if (main->delimit_depth >= main->nest.used) {
         objects_delimits->used = 0;
         contents_delimits->used = 0;
+
         return;
       }
     }
@@ -752,7 +760,7 @@ extern "C" {
 
     if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_e) {
 
-      // only depth 0 objects are stored in objects_delimits.
+      // Only depth 0 objects are stored in objects_delimits.
       if (main->delimit_depth) {
         fss_embedded_list_read_process_delimits_objects(main, main->delimit_depth, original_contents_delimits, original_contents_used, contents_delimits);
       }
@@ -763,7 +771,6 @@ extern "C" {
       fss_embedded_list_read_process_delimits_contents(main, main->delimit_depth, original_contents_delimits, original_contents_used, contents_delimits);
     }
     else {
-
       if (main->delimit_mode == fss_embedded_list_read_delimit_mode_depth_lesser_e) {
 
         // only depth 0 objects are stored in objects_delimits.

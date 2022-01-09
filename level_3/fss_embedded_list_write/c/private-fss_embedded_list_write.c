@@ -130,6 +130,7 @@ extern "C" {
     fll_print_dynamic(*buffer, output.stream);
 
     buffer->used = 0;
+
     return status;
   }
 #endif // _di_fss_embedded_list_write_process_
@@ -179,6 +180,7 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status_pipe), "f_file_read_block", F_true);
 
           status_pipe = F_status_set_error(F_pipe);
+
           break;
         }
 
@@ -204,6 +206,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
             break;
           }
         }
@@ -213,12 +216,14 @@ extern "C" {
           if (block.string[range.start] == fss_embedded_list_write_pipe_content_start_s) {
             state = 0x2;
             ++range.start;
+
             break;
           }
 
           if (block.string[range.start] == fss_embedded_list_write_pipe_content_end_s) {
             state = 0x3;
             ++range.start;
+
             break;
           }
 
@@ -232,10 +237,10 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        // if the start of content was not found, then fetch the next block.
+        // If the start of content was not found, then fetch the next block.
         if (state == 0x1) continue;
 
-        // if the end of the current block is reached, fetch the next block.
+        // If the end of the current block is reached, fetch the next block.
         if (range.start > range.stop) continue;
       }
 
@@ -248,13 +253,12 @@ extern "C" {
         }
 
         if (total) {
-          if (content.used + total > content.size) {
-            status = f_string_dynamic_increase_by(total, &content);
+          status = f_string_dynamic_increase_by(total, &content);
 
-            if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
-              break;
-            }
+          if (F_status_is_error(status)) {
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
+            break;
           }
 
           for (; range.start <= range.stop; ++range.start) {
@@ -265,12 +269,14 @@ extern "C" {
               }
 
               status = F_status_set_error(F_supported_not);
+
               break;
             }
 
             if (block.string[range.start] == fss_embedded_list_write_pipe_content_end_s) {
               state = 0x3;
               ++range.start;
+
               break;
             }
 
@@ -287,6 +293,7 @@ extern "C" {
                         fll_error_print(main->error, F_string_too_large, "fss_embedded_list_write_process_pipe", F_true);
 
                         status = F_status_set_error(F_string_too_large);
+
                         break;
                       }
 
@@ -298,6 +305,7 @@ extern "C" {
 
                     if (F_status_is_error(status)) {
                       fll_error_print(main->error, F_string_too_large, "fss_embedded_list_write_process_pipe", F_true);
+
                       break;
                     }
                   }
@@ -331,7 +339,7 @@ extern "C" {
       }
     } // for
 
-    // if the pipe ended before finishing, then attempt to wrap up.
+    // If the pipe ended before finishing, then attempt to wrap up.
     if (F_status_is_error_not(status) && status_pipe == F_none_eof && state) {
       status = fss_embedded_list_write_process(main, output, quote, &object, &content, ignore, buffer);
     }
@@ -339,6 +347,7 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(block);
     macro_f_string_dynamic_t_delete_simple(object);
     macro_f_string_dynamic_t_delete_simple(content);
+
     return status;
   }
 #endif // _di_fss_embedded_list_write_process_pipe_
@@ -373,6 +382,7 @@ extern "C" {
         if (ignore->size + F_fss_default_allocation_step_d > F_array_length_t_size_d) {
           if (ignore->size + 1 > F_array_length_t_size_d) {
             fll_error_print(main->error, F_string_too_large, "fss_embedded_list_write_process_parameter_ignore", F_true);
+
             return F_status_set_error(F_string_too_large);
           }
 

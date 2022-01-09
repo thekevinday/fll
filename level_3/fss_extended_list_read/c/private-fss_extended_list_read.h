@@ -242,7 +242,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_print_zero_
 
 /**
- * Perform the basic read processing on the buffer.
+ * Perform the extended list read processing on the buffer.
  *
  * This will print an error message on error.
  *
@@ -287,24 +287,6 @@ extern "C" {
 #endif // _di_fss_extended_list_read_process_at_
 
 /**
- * Process based on columns parameter.
- *
- * @param main
- *   The main program data.
- * @param data
- *   The program data.
- * @param names
- *   An array of booleans representing whether or not some Object name is to be used.
- *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_fss_extended_list_read_process_columns_
-  extern f_status_t fss_extended_list_read_process_columns(fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
-#endif // _di_fss_extended_list_read_process_columns_
-
-/**
  * Process based on at parameter for some line.
  *
  * @param main
@@ -326,6 +308,24 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_process_at_line_
   extern f_status_t fss_extended_list_read_process_at_line(fss_extended_list_read_main_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_extended_list_read_data_t *data, f_array_length_t *line) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_list_read_process_at_line_
+
+/**
+ * Process based on columns parameter.
+ *
+ * @param main
+ *   The main program data.
+ * @param data
+ *   The program data.
+ * @param names
+ *   An array of booleans representing whether or not some Object name is to be used.
+ *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_fss_extended_list_read_process_columns_
+  extern f_status_t fss_extended_list_read_process_columns(fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+#endif // _di_fss_extended_list_read_process_columns_
 
 /**
  * Process based on line parameter.

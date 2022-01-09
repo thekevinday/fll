@@ -112,7 +112,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments->argv[position_depth], range, &data->depths.array[i].depth);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_list_long_depth_s, arguments->argv[position_depth]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_list_read_long_depth_s, arguments->argv[position_depth]);
 
           return status;
         }
@@ -136,7 +136,7 @@ extern "C" {
           status = fl_conversion_string_to_number_unsigned(arguments->argv[data->depths.array[i].index_at], range, &data->depths.array[i].value_at);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_list_long_at_s, arguments->argv[data->depths.array[i].index_at]);
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_list_read_long_at_s, arguments->argv[data->depths.array[i].index_at]);
 
             return status;
           }
@@ -191,7 +191,7 @@ extern "C" {
             fl_print_format("%c%[%sThe value '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_long_depth_s, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
             fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -204,7 +204,7 @@ extern "C" {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_long_depth_s, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
             fl_print_format("%[' may not have the value '%]", main->error.to.stream, main->error.context, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' before the value '%]", main->error.to.stream, main->error.context, main->error.context);
@@ -233,6 +233,11 @@ extern "C" {
       }
     } // for
 
+    // When stopped after the end of the buffer, the last file in the list is the correct file.
+    if (at > files.array[files.used - 1].range.stop) {
+      return files.array[files.used - 1].name;
+    }
+
     return "";
   }
 #endif // _di_fss_basic_list_read_file_identify_
@@ -251,11 +256,12 @@ extern "C" {
     if (F_status_is_error(status)) {
       const f_string_t file_name = fss_basic_list_read_file_identify(input.start, data->files);
 
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, file_name ? file_name : "-", "process", fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, file_name, "process", fll_error_file_type_file_e);
 
       return status;
     }
-    else if (status == F_data_not_stop || status == F_data_not_eos) {
+
+    if (status == F_data_not_stop || status == F_data_not_eos) {
       if (data->option & fss_basic_list_read_data_option_total_d) {
         flockfile(main->output.to.stream);
 
@@ -355,7 +361,7 @@ extern "C" {
   void fss_basic_list_read_print_content_ignore(fss_basic_list_read_main_t * const main) {
 
     if (main->parameters[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_character(fss_basic_list_pipe_content_ignore_s, main->output.to.stream);
+      f_print_character(fss_basic_list_read_pipe_content_ignore_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_basic_list_read_print_content_ignore_
@@ -364,7 +370,7 @@ extern "C" {
   void fss_basic_list_read_print_object_end(fss_basic_list_read_main_t * const main) {
 
     if (main->parameters[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_character(fss_basic_list_pipe_content_start_s, main->output.to.stream);
+      f_print_character(fss_basic_list_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
       if (main->parameters[fss_basic_list_read_parameter_content_e].result == f_console_result_found_e) {
@@ -382,13 +388,14 @@ extern "C" {
   void fss_basic_list_read_print_set_end(fss_basic_list_read_main_t * const main) {
 
     if (main->parameters[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_character(fss_basic_list_pipe_content_end_s, main->output.to.stream);
+      f_print_character(fss_basic_list_read_pipe_content_end_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_basic_list_read_print_set_end_
 
 #ifndef _di_fss_basic_list_read_print_one_
   void fss_basic_list_read_print_one(fss_basic_list_read_main_t * const main) {
+
     f_print_character(f_string_ascii_1_s[0], main->output.to.stream);
     f_print_character(f_string_eol_s[0], main->output.to.stream);
   }
@@ -396,6 +403,7 @@ extern "C" {
 
 #ifndef _di_fss_basic_list_read_print_zero_
   void fss_basic_list_read_print_zero(fss_basic_list_read_main_t * const main) {
+
     f_print_character(f_string_ascii_0_s[0], main->output.to.stream);
     f_print_character(f_string_eol_s[0], main->output.to.stream);
   }
@@ -557,45 +565,6 @@ extern "C" {
   }
 #endif // _di_fss_basic_list_read_process_at_
 
-#ifndef _di_fss_basic_list_read_process_columns_
-  f_status_t fss_basic_list_read_process_columns(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) {
-
-    if (!(data->option & fss_basic_list_read_data_option_content_d)) {
-      flockfile(main->output.to.stream);
-
-      fss_basic_list_read_print_zero(main);
-
-      funlockfile(main->output.to.stream);
-
-      return F_none;
-    }
-
-    f_array_length_t max = 0;
-    uint16_t signal_check = 0;
-
-    for (f_array_length_t at = 0; at < data->contents.used; ++at) {
-
-      if (!names[at]) continue;
-
-      if (!((++signal_check) % fss_basic_list_read_signal_check_d)) {
-        if (fss_basic_list_read_signal_received(main)) {
-          return F_status_set_error(F_interrupt);
-        }
-
-        signal_check = 0;
-      }
-
-      if (data->contents.array[at].used > max) {
-        max = data->contents.array[at].used;
-      }
-    } // for
-
-    fll_print_format("%ul%c", main->output.to.stream, max, f_string_eol_s[0]);
-
-    return F_none;
-  }
-#endif // _di_fss_basic_list_read_process_columns_
-
 #ifndef _di_fss_basic_list_read_process_at_line_
   f_status_t fss_basic_list_read_process_at_line(fss_basic_list_read_main_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_basic_list_read_data_t *data, f_array_length_t *line) {
 
@@ -700,6 +669,45 @@ extern "C" {
   }
 #endif // _di_fss_basic_list_read_process_at_line_
 
+#ifndef _di_fss_basic_list_read_process_columns_
+  f_status_t fss_basic_list_read_process_columns(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) {
+
+    if (!(data->option & fss_basic_list_read_data_option_content_d)) {
+      flockfile(main->output.to.stream);
+
+      fss_basic_list_read_print_zero(main);
+
+      funlockfile(main->output.to.stream);
+
+      return F_none;
+    }
+
+    f_array_length_t max = 0;
+    uint16_t signal_check = 0;
+
+    for (f_array_length_t at = 0; at < data->contents.used; ++at) {
+
+      if (!names[at]) continue;
+
+      if (!((++signal_check) % fss_basic_list_read_signal_check_d)) {
+        if (fss_basic_list_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
+
+        signal_check = 0;
+      }
+
+      if (data->contents.array[at].used > max) {
+        max = data->contents.array[at].used;
+      }
+    } // for
+
+    fll_print_format("%ul%c", main->output.to.stream, max, f_string_eol_s[0]);
+
+    return F_none;
+  }
+#endif // _di_fss_basic_list_read_process_columns_
+
 #ifndef _di_fss_basic_list_read_process_line_
   f_status_t fss_basic_list_read_process_line(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) {
 
@@ -786,7 +794,7 @@ extern "C" {
     if (main->parameters[fss_basic_list_read_parameter_line_e].result == f_console_result_additional_e) {
       data->option |= fss_basic_list_read_data_option_line_d;
 
-      status = fss_basic_list_read_load_number(main, fss_basic_list_read_parameter_line_e, fss_basic_list_long_line_s, arguments, &data->line);
+      status = fss_basic_list_read_load_number(main, fss_basic_list_read_parameter_line_e, fss_basic_list_read_long_line_s, arguments, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
@@ -805,7 +813,7 @@ extern "C" {
     if (main->parameters[fss_basic_list_read_parameter_select_e].result == f_console_result_additional_e) {
       data->option |= fss_basic_list_read_data_option_select_d;
 
-      status = fss_basic_list_read_load_number(main, fss_basic_list_read_parameter_select_e, fss_basic_list_long_select_s, arguments, &data->select);
+      status = fss_basic_list_read_load_number(main, fss_basic_list_read_parameter_select_e, fss_basic_list_read_long_select_s, arguments, &data->select);
       if (F_status_is_error(status)) return status;
     }
 

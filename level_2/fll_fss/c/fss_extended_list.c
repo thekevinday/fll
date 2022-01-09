@@ -36,7 +36,7 @@ extern "C" {
           if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
             ++objects->used;
 
-            macro_f_fss_content_t_increase(status2, F_fss_default_allocation_step_small_d, contents->array[contents->used])
+            status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;
@@ -71,7 +71,7 @@ extern "C" {
         else if (status == F_fss_found_object_content_not) {
           found_data = F_true;
 
-          macro_f_fss_content_t_increase(status2, F_fss_default_allocation_step_small_d, contents->array[contents->used])
+          status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
           if (F_status_is_error(status2)) return status2;
 
           break;

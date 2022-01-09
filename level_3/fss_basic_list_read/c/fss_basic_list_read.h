@@ -75,39 +75,39 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_defines_
   #define fss_basic_list_read_signal_check_d 10000
 
-  #define fss_basic_list_pipe_content_end_s    '\f'
-  #define fss_basic_list_pipe_content_ignore_s '\v'
-  #define fss_basic_list_pipe_content_start_s  '\b'
+  #define fss_basic_list_read_pipe_content_end_s    '\f'
+  #define fss_basic_list_read_pipe_content_ignore_s '\v'
+  #define fss_basic_list_read_pipe_content_start_s  '\b'
 
-  #define fss_basic_list_short_at_s      "a"
-  #define fss_basic_list_short_content_s "c"
-  #define fss_basic_list_short_columns_s "C"
-  #define fss_basic_list_short_delimit_s "D"
-  #define fss_basic_list_short_depth_s   "d"
-  #define fss_basic_list_short_empty_s   "e"
-  #define fss_basic_list_short_line_s    "l"
-  #define fss_basic_list_short_name_s    "n"
-  #define fss_basic_list_short_object_s  "o"
-  #define fss_basic_list_short_pipe_s    "p"
-  #define fss_basic_list_short_raw_s     "R"
-  #define fss_basic_list_short_select_s  "s"
-  #define fss_basic_list_short_total_s   "t"
-  #define fss_basic_list_short_trim_s    "T"
+  #define fss_basic_list_read_short_at_s      "a"
+  #define fss_basic_list_read_short_content_s "c"
+  #define fss_basic_list_read_short_columns_s "C"
+  #define fss_basic_list_read_short_delimit_s "D"
+  #define fss_basic_list_read_short_depth_s   "d"
+  #define fss_basic_list_read_short_empty_s   "e"
+  #define fss_basic_list_read_short_line_s    "l"
+  #define fss_basic_list_read_short_name_s    "n"
+  #define fss_basic_list_read_short_object_s  "o"
+  #define fss_basic_list_read_short_pipe_s    "p"
+  #define fss_basic_list_read_short_raw_s     "R"
+  #define fss_basic_list_read_short_select_s  "s"
+  #define fss_basic_list_read_short_total_s   "t"
+  #define fss_basic_list_read_short_trim_s    "T"
 
-  #define fss_basic_list_long_at_s      "at"
-  #define fss_basic_list_long_content_s "content"
-  #define fss_basic_list_long_columns_s "columns"
-  #define fss_basic_list_long_delimit_s "delimit"
-  #define fss_basic_list_long_depth_s   "depth"
-  #define fss_basic_list_long_empty_s   "empty"
-  #define fss_basic_list_long_line_s    "line"
-  #define fss_basic_list_long_name_s    "name"
-  #define fss_basic_list_long_object_s  "object"
-  #define fss_basic_list_long_pipe_s    "pipe"
-  #define fss_basic_list_long_raw_s     "raw"
-  #define fss_basic_list_long_select_s  "select"
-  #define fss_basic_list_long_total_s   "total"
-  #define fss_basic_list_long_trim_s    "trim"
+  #define fss_basic_list_read_long_at_s      "at"
+  #define fss_basic_list_read_long_content_s "content"
+  #define fss_basic_list_read_long_columns_s "columns"
+  #define fss_basic_list_read_long_delimit_s "delimit"
+  #define fss_basic_list_read_long_depth_s   "depth"
+  #define fss_basic_list_read_long_empty_s   "empty"
+  #define fss_basic_list_read_long_line_s    "line"
+  #define fss_basic_list_read_long_name_s    "name"
+  #define fss_basic_list_read_long_object_s  "object"
+  #define fss_basic_list_read_long_pipe_s    "pipe"
+  #define fss_basic_list_read_long_raw_s     "raw"
+  #define fss_basic_list_read_long_select_s  "select"
+  #define fss_basic_list_read_long_total_s   "total"
+  #define fss_basic_list_read_long_trim_s    "trim"
 
   enum {
     fss_basic_list_read_parameter_help_e,
@@ -147,20 +147,20 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_at_s, fss_basic_list_long_at_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_content_s, fss_basic_list_long_content_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_columns_s, fss_basic_list_long_columns_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_delimit_s, fss_basic_list_long_delimit_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_depth_s, fss_basic_list_long_depth_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_empty_s, fss_basic_list_long_empty_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_line_s, fss_basic_list_long_line_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_name_s, fss_basic_list_long_name_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_object_s, fss_basic_list_long_object_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_pipe_s, fss_basic_list_long_pipe_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_raw_s, fss_basic_list_long_raw_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_select_s, fss_basic_list_long_select_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_total_s, fss_basic_list_long_total_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fss_basic_list_short_trim_s, fss_basic_list_long_trim_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_at_s, fss_basic_list_read_long_at_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_content_s, fss_basic_list_read_long_content_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_columns_s, fss_basic_list_read_long_columns_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_delimit_s, fss_basic_list_read_long_delimit_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_depth_s, fss_basic_list_read_long_depth_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_empty_s, fss_basic_list_read_long_empty_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_line_s, fss_basic_list_read_long_line_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_name_s, fss_basic_list_read_long_name_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_object_s, fss_basic_list_read_long_object_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_pipe_s, fss_basic_list_read_long_pipe_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_raw_s, fss_basic_list_read_long_raw_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_select_s, fss_basic_list_read_long_select_s, 0, 1, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_total_s, fss_basic_list_read_long_total_s, 0, 0, f_console_type_normal_e), \
+      f_console_parameter_t_initialize(fss_basic_list_read_short_trim_s, fss_basic_list_read_long_trim_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define fss_basic_list_total_parameters_d 23

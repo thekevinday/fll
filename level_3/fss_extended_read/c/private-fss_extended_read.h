@@ -238,7 +238,7 @@ extern "C" {
 #endif // _di_fss_extended_read_print_zero_
 
 /**
- * Perform the basic read processing on the buffer.
+ * Perform the extended read processing on the buffer.
  *
  * This will print an error message on error.
  *

@@ -186,6 +186,7 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status_pipe), "f_file_read_block", F_true);
 
           status_pipe = F_status_set_error(F_pipe);
+
           break;
         }
 
@@ -208,6 +209,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
             break;
           }
         }
@@ -217,17 +219,20 @@ extern "C" {
           if (block.string[range.start] == fss_basic_write_pipe_content_start_s) {
             state = 0x2;
             ++range.start;
+
             break;
           }
 
           if (block.string[range.start] == fss_basic_write_pipe_content_end_s) {
             state = 0x3;
             ++range.start;
+
             break;
           }
 
           if (block.string[range.start] == fss_basic_write_pipe_content_ignore_s) {
-            // this is not used by objects.
+
+            // This is not used by objects.
             continue;
           }
 
@@ -236,10 +241,10 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        // if the start of content was not found, then fetch the next block.
+        // If the start of content was not found, then fetch the next block.
         if (state == 0x1) continue;
 
-        // if the end of the current block is reached, fetch the next block.
+        // If the end of the current block is reached, fetch the next block.
         if (range.start > range.stop) continue;
       }
 
@@ -252,13 +257,12 @@ extern "C" {
         }
 
         if (total) {
-          if (content.used + total > content.size) {
-            status = f_string_dynamic_increase_by(total, &content);
+          status = f_string_dynamic_increase_by(total, &content);
 
-            if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
-              break;
-            }
+          if (F_status_is_error(status)) {
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
+            break;
           }
 
           for (; range.start <= range.stop; ++range.start) {
@@ -269,17 +273,20 @@ extern "C" {
               }
 
               status = F_status_set_error(F_supported_not);
+
               break;
             }
 
             if (block.string[range.start] == fss_basic_write_pipe_content_end_s) {
               state = 0x3;
               ++range.start;
+
               break;
             }
 
             if (block.string[range.start] == fss_basic_write_pipe_content_ignore_s) {
-              // this is not used by this program.
+
+              // This is not used by this program.
               continue;
             }
 
@@ -308,7 +315,7 @@ extern "C" {
       }
     } // for
 
-    // if the pipe ended before finishing, then attempt to wrap up.
+    // If the pipe ended before finishing, then attempt to wrap up.
     if (F_status_is_error_not(status) && status_pipe == F_none_eof && state) {
       status = fss_basic_write_process(main, output, quote, &object, &content, buffer);
     }

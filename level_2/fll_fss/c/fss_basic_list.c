@@ -36,7 +36,7 @@ extern "C" {
           if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
             ++objects->used;
 
-            macro_f_fss_content_t_increase(status2, F_fss_default_allocation_step_small_d, contents->array[contents->used])
+            status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;
@@ -51,13 +51,12 @@ extern "C" {
 
             return F_none_stop;
           }
-          else {
-            if (range->start >= buffer.used) {
-              return F_data_not_eos;
-            }
 
-            return F_data_not_stop;
+          if (range->start >= buffer.used) {
+            return F_data_not_eos;
           }
+
+          return F_data_not_stop;
         }
 
         if (status == F_fss_found_object) {
@@ -68,10 +67,11 @@ extern "C" {
 
           break;
         }
-        else if (status == F_fss_found_object_content_not) {
+
+        if (status == F_fss_found_object_content_not) {
           found_data = F_true;
 
-          macro_f_fss_content_t_increase(status2, F_fss_default_allocation_step_small_d, contents->array[contents->used])
+          status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
           if (F_status_is_error(status2)) return status2;
 
           break;
@@ -85,7 +85,8 @@ extern "C" {
 
         return status;
       }
-      else if (status == F_data_not_eos || status == F_data_not_stop) {
+
+      if (status == F_data_not_eos || status == F_data_not_stop) {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (objects->used > initial_used) {
@@ -100,10 +101,12 @@ extern "C" {
 
         return status;
       }
-      else if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not) {
+
+      if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not) {
         return status;
       }
-      else if (range->start >= range->stop || range->start >= buffer.used) {
+
+      if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (status == F_fss_found_object || status == F_fss_found_content || status == F_fss_found_content_not || status == F_fss_found_object_content_not) {

@@ -167,7 +167,8 @@ extern "C" {
 
           return F_status_set_error(F_parameter);
         }
-        else if (data->depths.array[i].depth > data->depths.array[j].depth) {
+
+        if (data->depths.array[i].depth > data->depths.array[j].depth) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
@@ -201,6 +202,11 @@ extern "C" {
       }
     } // for
 
+    // When stopped after the end of the buffer, the last file in the list is the correct file.
+    if (at > files.array[files.used - 1].range.stop) {
+      return files.array[files.used - 1].name;
+    }
+
     return "";
   }
 #endif // _di_fss_basic_read_file_identify_
@@ -219,12 +225,13 @@ extern "C" {
     if (F_status_is_error(status)) {
       const f_string_t file_name = fss_basic_read_file_identify(input.start, data->files);
 
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_basic_read", F_true, file_name ? file_name : "-", "process", fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_basic_read", F_true, file_name, "process", fll_error_file_type_file_e);
 
       return status;
     }
-    else if (status == F_data_not_stop || status == F_data_not_eos) {
-      if (data->option & fss_basic_read_data_option_total) {
+
+    if (status == F_data_not_stop || status == F_data_not_eos) {
+      if (data->option & fss_basic_read_data_option_total_d) {
         fss_basic_read_print_zero(main);
 
         return F_none;
@@ -266,12 +273,12 @@ extern "C" {
       return;
     }
 
-    if ((data->option & fss_basic_read_data_option_object) || (data->option & fss_basic_read_data_option_content) && (data->contents.array[at].used || (data->option & fss_basic_read_data_option_empty))) {
+    if ((data->option & fss_basic_read_data_option_object_d) || (data->option & fss_basic_read_data_option_content_d) && (data->contents.array[at].used || (data->option & fss_basic_read_data_option_empty_d))) {
       flockfile(main->output.to.stream);
 
-      if (data->option & fss_basic_read_data_option_object) {
-        if (data->option & fss_basic_read_data_option_trim) {
-          if (data->option & fss_basic_read_data_option_raw) {
+      if (data->option & fss_basic_read_data_option_object_d) {
+        if (data->option & fss_basic_read_data_option_trim_d) {
+          if (data->option & fss_basic_read_data_option_raw_d) {
             if (data->quotes.array[at]) {
               f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
             }
@@ -287,7 +294,7 @@ extern "C" {
           }
         }
         else {
-          if (data->option & fss_basic_read_data_option_raw) {
+          if (data->option & fss_basic_read_data_option_raw_d) {
             if (data->quotes.array[at]) {
               f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
             }
@@ -303,13 +310,13 @@ extern "C" {
           }
         }
 
-        if (data->option & fss_basic_read_data_option_content) {
+        if (data->option & fss_basic_read_data_option_content_d) {
           fss_basic_read_print_object_end(main);
         }
       }
 
-      if ((data->option & fss_basic_read_data_option_content) && data->contents.array[at].used) {
-        if (data->option & fss_basic_read_data_option_raw) {
+      if ((data->option & fss_basic_read_data_option_content_d) && data->contents.array[at].used) {
+        if (data->option & fss_basic_read_data_option_raw_d) {
           f_print_dynamic_partial(data->buffer, data->contents.array[at].array[0], main->output.to.stream);
         }
         else {
@@ -338,6 +345,7 @@ extern "C" {
 
 #ifndef _di_fss_basic_read_print_one_
   void fss_basic_read_print_one(fss_basic_read_main_t * const main) {
+
     f_print_character(f_string_ascii_1_s[0], main->output.to.stream);
     f_print_character(f_string_eol_s[0], main->output.to.stream);
   }
@@ -357,6 +365,7 @@ extern "C" {
 
 #ifndef _di_fss_basic_read_print_zero_
   void fss_basic_read_print_zero(fss_basic_read_main_t * const main) {
+
     f_print_character(f_string_ascii_0_s[0], main->output.to.stream);
     f_print_character(f_string_eol_s[0], main->output.to.stream);
   }
@@ -369,7 +378,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     // This standard does not support multiple content groups.
-    if ((data->option & fss_basic_read_data_option_select) && data->select) {
+    if ((data->option & fss_basic_read_data_option_select_d) && data->select) {
       if (main->parameters[fss_basic_read_parameter_total_e].result == f_console_result_found_e) {
         flockfile(main->output.to.stream);
 
@@ -393,15 +402,15 @@ extern "C" {
       return fss_basic_read_process_at(main, data, names);
     }
 
-    if (data->option & fss_basic_read_data_option_columns) {
+    if (data->option & fss_basic_read_data_option_columns_d) {
       return fss_basic_read_process_columns(main, data, names);
     }
 
-    if (data->option & fss_basic_read_data_option_total) {
+    if (data->option & fss_basic_read_data_option_total_d) {
       return fss_basic_read_process_total(main, data, names);
     }
 
-    if (data->option & fss_basic_read_data_option_line) {
+    if (data->option & fss_basic_read_data_option_line_d) {
       return fss_basic_read_process_line(main, data, names);
     }
 
@@ -423,7 +432,7 @@ extern "C" {
   f_status_t fss_basic_read_process_at(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
-      if (data->option & (fss_basic_read_data_option_columns | fss_basic_read_data_option_total)) {
+      if (data->option & (fss_basic_read_data_option_columns_d | fss_basic_read_data_option_total_d)) {
         flockfile(main->output.to.stream);
 
         fss_basic_read_print_zero(main);
@@ -435,9 +444,9 @@ extern "C" {
     }
 
     // This standard only has one line per Content; therefore, any line value greater than 0 equates to no line to print.
-    if (data->option & fss_basic_read_data_option_line) {
+    if (data->option & fss_basic_read_data_option_line_d) {
       if (data->line) {
-        if (data->option & fss_basic_read_data_option_total) {
+        if (data->option & fss_basic_read_data_option_total_d) {
           flockfile(main->output.to.stream);
 
           fss_basic_read_print_zero(main);
@@ -463,12 +472,12 @@ extern "C" {
       }
 
       if (at == data->depths.array[0].value_at) {
-        if (data->option & fss_basic_read_data_option_line) {
+        if (data->option & fss_basic_read_data_option_line_d) {
 
           // This standard only supports one line per Object so when using "--at", the only valid line is line 0.
           if (data->line) break;
 
-          if (data->option & fss_basic_read_data_option_total) {
+          if (data->option & fss_basic_read_data_option_total_d) {
             flockfile(main->output.to.stream);
 
             fss_basic_read_print_one(main);
@@ -479,10 +488,10 @@ extern "C" {
             fss_basic_read_print_at(main, i, *delimits, except_none, data);
           }
         }
-        else if (data->option & fss_basic_read_data_option_columns) {
+        else if (data->option & fss_basic_read_data_option_columns_d) {
           fll_print_format("%ul%c", main->output.to.stream, data->contents.array[i].used, f_string_eol_s[0]);
         }
-        else if (data->option & fss_basic_read_data_option_total) {
+        else if (data->option & fss_basic_read_data_option_total_d) {
           flockfile(main->output.to.stream);
 
           if (data->contents.array[i].used) {
@@ -504,7 +513,7 @@ extern "C" {
       ++at;
     } // for
 
-    if (data->option & fss_basic_read_data_option_total) {
+    if (data->option & fss_basic_read_data_option_total_d) {
       flockfile(main->output.to.stream);
 
       fss_basic_read_print_zero(main);
@@ -519,7 +528,7 @@ extern "C" {
 #ifndef _di_fss_basic_read_process_columns_
   f_status_t fss_basic_read_process_columns(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) {
 
-    if (!(data->option & fss_basic_read_data_option_content)) {
+    if (!(data->option & fss_basic_read_data_option_content_d)) {
       flockfile(main->output.to.stream);
 
       fss_basic_read_print_zero(main);
@@ -566,9 +575,9 @@ extern "C" {
         return F_status_set_error(F_interrupt);
       }
 
-      if (!(data->option & fss_basic_read_data_option_object) && (data->option & fss_basic_read_data_option_content)) {
+      if (!(data->option & fss_basic_read_data_option_object_d) && (data->option & fss_basic_read_data_option_content_d)) {
         if (!data->contents.array[i].used) {
-          if (data->option & fss_basic_read_data_option_empty) {
+          if (data->option & fss_basic_read_data_option_empty_d) {
             if (line == data->line) {
               flockfile(main->output.to.stream);
 
@@ -609,7 +618,7 @@ extern "C" {
 
       memset(names, F_false, sizeof(bool) * data->objects.used);
 
-      if (data->option & fss_basic_read_data_option_trim) {
+      if (data->option & fss_basic_read_data_option_trim_d) {
         for (i = 0; i < data->objects.used; ++i) {
 
           if (fl_string_dynamic_partial_compare_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits) == F_equal_to) {
@@ -640,58 +649,58 @@ extern "C" {
     f_status_t status = F_none;
 
     if (main->parameters[fss_basic_read_parameter_at_e].result == f_console_result_additional_e) {
-      data->option |= fss_basic_read_data_option_at;
+      data->option |= fss_basic_read_data_option_at_d;
     }
 
     if (main->parameters[fss_basic_read_parameter_columns_e].result == f_console_result_found_e) {
-      data->option |= fss_basic_read_data_option_columns;
+      data->option |= fss_basic_read_data_option_columns_d;
     }
 
     if (main->parameters[fss_basic_read_parameter_content_e].result == f_console_result_found_e) {
-      data->option |= fss_basic_read_data_option_content;
+      data->option |= fss_basic_read_data_option_content_d;
     }
 
     if (main->parameters[fss_basic_read_parameter_empty_e].result == f_console_result_found_e) {
-      data->option |= fss_basic_read_data_option_empty;
+      data->option |= fss_basic_read_data_option_empty_d;
     }
 
     if (main->parameters[fss_basic_read_parameter_line_e].result == f_console_result_additional_e) {
-      data->option |= fss_basic_read_data_option_line;
+      data->option |= fss_basic_read_data_option_line_d;
 
       status = fss_basic_read_load_number(main, fss_basic_read_parameter_line_e, fss_basic_read_long_line_s, arguments, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
     if (main->parameters[fss_basic_read_parameter_name_e].result == f_console_result_additional_e) {
-      data->option |= fss_basic_read_data_option_name;
+      data->option |= fss_basic_read_data_option_name_d;
     }
 
     if (main->parameters[fss_basic_read_parameter_object_e].result == f_console_result_found_e) {
-      data->option |= fss_basic_read_data_option_object;
+      data->option |= fss_basic_read_data_option_object_d;
     }
 
     if (main->parameters[fss_basic_read_parameter_raw_e].result == f_console_result_found_e) {
-      data->option |= fss_basic_read_data_option_raw;
+      data->option |= fss_basic_read_data_option_raw_d;
     }
 
     if (main->parameters[fss_basic_read_parameter_select_e].result == f_console_result_additional_e) {
-      data->option |= fss_basic_read_data_option_select;
+      data->option |= fss_basic_read_data_option_select_d;
 
       status = fss_basic_read_load_number(main, fss_basic_read_parameter_select_e, fss_basic_read_long_select_s, arguments, &data->select);
       if (F_status_is_error(status)) return status;
     }
 
     if (main->parameters[fss_basic_read_parameter_total_e].result == f_console_result_found_e) {
-      data->option |= fss_basic_read_data_option_total;
+      data->option |= fss_basic_read_data_option_total_d;
     }
 
     if (main->parameters[fss_basic_read_parameter_trim_e].result == f_console_result_found_e) {
-      data->option |= fss_basic_read_data_option_trim;
+      data->option |= fss_basic_read_data_option_trim_d;
     }
 
     // Default to content if neither Object nor Content is explicitly requested.
-    if (!(data->option & (fss_basic_read_data_option_content | fss_basic_read_data_option_object))) {
-      data->option |= fss_basic_read_data_option_content;
+    if (!(data->option & (fss_basic_read_data_option_content_d | fss_basic_read_data_option_object_d))) {
+      data->option |= fss_basic_read_data_option_content_d;
     }
 
     return F_none;
@@ -711,8 +720,8 @@ extern "C" {
         return F_status_set_error(F_interrupt);
       }
 
-      if (!(data->option & fss_basic_read_data_option_object) && data->option & fss_basic_read_data_option_content) {
-        if (!(data->contents.array[i].used || (data->option & fss_basic_read_data_option_empty))) {
+      if (!(data->option & fss_basic_read_data_option_object_d) && data->option & fss_basic_read_data_option_content_d) {
+        if (!(data->contents.array[i].used || (data->option & fss_basic_read_data_option_empty_d))) {
           continue;
         }
       }
@@ -722,7 +731,7 @@ extern "C" {
 
     flockfile(main->output.to.stream);
 
-    if (data->option & fss_basic_read_data_option_line) {
+    if (data->option & fss_basic_read_data_option_line_d) {
       if (data->line < total) {
         fss_basic_read_print_one(main);
       }

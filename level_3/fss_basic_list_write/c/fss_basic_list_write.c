@@ -25,7 +25,7 @@ extern "C" {
 
     f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(file, context, fss_basic_list_write_short_file_s, fss_basic_list_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send file to.");
+    fll_program_print_help_option(file, context, fss_basic_list_write_short_file_s, fss_basic_list_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
     fll_program_print_help_option(file, context, fss_basic_list_write_short_content_s, fss_basic_list_write_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to file.");
     fll_program_print_help_option(file, context, fss_basic_list_write_short_double_s, fss_basic_list_write_long_double_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
     fll_program_print_help_option(file, context, fss_basic_list_write_short_ignore_s, fss_basic_list_write_long_ignore_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a Content.");
@@ -92,6 +92,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_basic_list_write_main_delete(main);
+
           return F_status_set_error(status);
         }
       }
@@ -106,6 +107,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_basic_list_write_main_delete(main);
+
           return status;
         }
 
@@ -138,6 +140,7 @@ extern "C" {
       fss_basic_list_write_print_help(main->output.to, main->context);
 
       fss_basic_list_write_main_delete(main);
+
       return status;
     }
 
@@ -145,6 +148,7 @@ extern "C" {
       fll_program_print_version(main->output.to, fss_basic_list_write_program_version_s);
 
       fss_basic_list_write_main_delete(main);
+
       return status;
     }
 
@@ -251,6 +255,7 @@ extern "C" {
                   }
 
                   status = F_status_set_error(F_parameter);
+
                   break;
                 }
               } // for
@@ -343,6 +348,7 @@ extern "C" {
               }
 
               status = F_status_set_error(F_parameter);
+
               break;
             }
           } // for
@@ -440,6 +446,7 @@ extern "C" {
 
               if (fss_basic_list_write_signal_received(main)) {
                 status = F_status_set_error(F_interrupt);
+
                 break;
               }
 
@@ -456,6 +463,7 @@ extern "C" {
 
               if (fss_basic_list_write_signal_received(main)) {
                 status = F_status_set_error(F_interrupt);
+
                 break;
               }
 
@@ -473,6 +481,7 @@ extern "C" {
 
             if (fss_basic_list_write_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
 
@@ -501,14 +510,14 @@ extern "C" {
         }
         else if (main->error.verbosity != f_console_verbosity_quiet_e && main->parameters[fss_basic_list_write_parameter_file_e].result == f_console_result_none_e) {
 
-          // ensure there is always a newline at the end, unless in quiet mode.
-          fll_print_character(f_string_eol_s[0], main->error.to.stream);
+          // Ensure there is always a newline at the end, unless in quiet mode.
+          fll_print_character(f_string_eol_s[0], main->output.to.stream);
         }
       }
 
       macro_f_string_dynamic_t_delete_simple(escaped);
 
-      // object and content, though being a "dynamic" type, is being used statically, so clear them up to avoid invalid free().
+      // Object and content, though being a "dynamic" type, is being used statically, so clear them up to avoid invalid free().
       object.string = 0;
       object.used = 0;
       object.size = 0;
@@ -524,7 +533,7 @@ extern "C" {
       }
     }
 
-    // ensure a newline is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
         fll_print_character(f_string_eol_s[0], main->error.to.stream);

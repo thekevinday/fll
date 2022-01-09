@@ -152,6 +152,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_extended_list_read_main_delete(main);
+
           return F_status_set_error(status);
         }
       }
@@ -166,6 +167,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_extended_list_read_main_delete(main);
+
           return status;
         }
 
@@ -198,6 +200,7 @@ extern "C" {
       fss_extended_list_read_print_help(main->output.to, main->context);
 
       fss_extended_list_read_main_delete(main);
+
       return status;
     }
 
@@ -205,6 +208,7 @@ extern "C" {
       fll_program_print_version(main->output.to, fss_extended_list_read_program_version_s);
 
       fss_extended_list_read_main_delete(main);
+
       return status;
     }
 
@@ -215,6 +219,9 @@ extern "C" {
     data.files.array = files_array;
     data.files.used = 1;
     data.files.size = main->remaining.used + 1;
+    data.files.array[0].name = "(pipe)";
+    data.files.array[0].range.start = 1;
+    data.files.array[0].range.stop = 0;
 
     if (main->remaining.used || main->process_pipe) {
       {
@@ -261,6 +268,7 @@ extern "C" {
             funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
+
             break;
           }
         } // for
@@ -305,6 +313,7 @@ extern "C" {
             funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
+
             break;
           }
         } // for
@@ -350,6 +359,7 @@ extern "C" {
 
           if (fss_extended_list_read_signal_received(main)) {
             status = F_status_set_error(F_interrupt);
+
             break;
           }
 
@@ -366,6 +376,7 @@ extern "C" {
             funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
+
             break;
           }
           else if (fl_string_compare(arguments->argv[location], fss_extended_list_read_delimit_mode_name_none_s, length, fss_extended_list_read_delimit_mode_name_none_s_length) == F_equal_to) {
@@ -515,7 +526,6 @@ extern "C" {
         file.id = F_type_descriptor_input_d;
         file.stream = F_type_input_d;
 
-        data.files.array[0].name = 0;
         data.files.array[0].range.start = 0;
 
         status = f_file_stream_read(file, &data.buffer);
@@ -547,6 +557,7 @@ extern "C" {
 
           if (fss_extended_list_read_signal_received(main)) {
             status = F_status_set_error(F_interrupt);
+
             break;
           }
 
