@@ -7,19 +7,19 @@ settings:
   environment LD_LIBRARY_PATH
 
 main:
-  build settings
+  build settings-mocks
   build settings-tests
 
   operate ld_library_path
 
-  if exists build/programs/shared/test-f_memory
-    shell build/programs/shared/test-f_memory
+  if exists build/programs/shared/test-f_capability
+    shell build/programs/shared/test-f_capability
 
-  if exists build/programs/static/test-f_memory
-    shell build/programs/static/test-f_memory
+  if exists build/programs/static/test-f_capability
+    shell build/programs/static/test-f_capability
 
-  if not exists build/programs/shared/test-f_memory
-  and not exists build/programs/static/test-f_memory
+  if not exists build/programs/shared/test-f_capability
+  and not exists build/programs/static/test-f_capability
     operate not_created
 
 not_created:

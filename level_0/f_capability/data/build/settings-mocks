@@ -1,0 +1,119 @@
+# fss-0001
+#
+# The -Wl,--wrap does not work across shared files.
+# Therefore, this file is a work-around to inject the mocks into the library for testing purposes.
+# This should exaclty match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
+#
+
+project_name f_capability
+
+version_major 0
+version_minor 5
+version_micro 8
+version_file micro
+version_target minor
+
+environment
+
+process_pre
+process_post
+
+modes individual
+modes_default individual
+
+build_compiler gcc
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+build_libraries -lc -lcap
+build_libraries-individual -lf_memory -lf_string -lf_type_array
+build_libraries_shared
+build_libraries_static
+build_sources_library capability.c ../../tests/c/mock-capability.c
+build_sources_library_shared
+build_sources_library_static
+build_sources_program
+build_sources_program_shared
+build_sources_program_static
+build_sources_headers capability.h capability-common.h
+build_sources_headers_shared
+build_sources_headers_static
+build_sources_script
+build_sources_setting
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll/level_0
+path_headers_preserve no
+path_library_script script
+path_library_shared shared
+path_library_static static
+path_program_script script
+path_program_shared shared
+path_program_static static
+path_sources
+path_standard yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+#defines -D_di_libcap_
+defines -D_libcap_legacy_only_
+defines_library
+defines_library_shared
+defines_library_static
+defines_program
+defines_program_shared
+defines_program_static
+defines_static
+defines_shared
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags_library -fPIC
+flags_library_shared
+flags_library_static
+flags_program -fPIE
+flags_program_shared
+flags_program_static
+flags_shared
+flags_static
+
+# Inject mocks.
+flags -Wl,--wrap=cap_get_ambient
+flags -Wl,--wrap=cap_clear
+flags -Wl,--wrap=cap_clear_flag
+flags -Wl,--wrap=cap_compare
+flags -Wl,--wrap=cap_copy_ext
+flags -Wl,--wrap=cap_copy_int
+flags -Wl,--wrap=cap_drop_bound
+flags -Wl,--wrap=cap_dup
+flags -Wl,--wrap=cap_free
+flags -Wl,--wrap=cap_from_name
+flags -Wl,--wrap=cap_from_text
+flags -Wl,--wrap=cap_get_bound
+flags -Wl,--wrap=cap_get_fd
+flags -Wl,--wrap=cap_get_file
+flags -Wl,--wrap=cap_get_flag
+flags -Wl,--wrap=cap_get_mode
+flags -Wl,--wrap=cap_get_pid
+flags -Wl,--wrap=cap_get_proc
+flags -Wl,--wrap=cap_set_mode
+flags -Wl,--wrap=cap_get_nsowner
+flags -Wl,--wrap=cap_get_secbits
+flags -Wl,--wrap=cap_init
+flags -Wl,--wrap=cap_mode_name
+flags -Wl,--wrap=cap_reset_ambient
+flags -Wl,--wrap=cap_set_ambient
+flags -Wl,--wrap=cap_set_fd
+flags -Wl,--wrap=cap_set_file
+flags -Wl,--wrap=cap_set_flag
+flags -Wl,--wrap=cap_set_nsowner
+flags -Wl,--wrap=cap_set_proc
+flags -Wl,--wrap=cap_set_secbits
+flags -Wl,--wrap=cap_setgroups
+flags -Wl,--wrap=cap_setuid
+flags -Wl,--wrap=cap_size
+flags -Wl,--wrap=cap_to_name
+flags -Wl,--wrap=cap_to_text
