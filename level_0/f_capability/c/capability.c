@@ -52,6 +52,12 @@ extern "C" {
     }
   #endif // _di_f_capability_clear_flag_
 
+  #ifndef _di_f_capability_compare_
+    f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags) {
+      return F_status_set_error(F_implemented_not);
+    }
+  #endif // _di_f_capability_compare_
+
   #ifndef _di_f_capability_copy_
     f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination) {
       #ifndef _di_level_0_parameter_checking_
@@ -61,16 +67,6 @@ extern "C" {
       return F_status_set_error(F_implemented_not);
     }
   #endif // _di_f_capability_copy_
-
-  #ifndef _di_f_capability_compare_
-    f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags) {
-      #ifndef _di_level_0_parameter_checking_
-        if (!flags) return F_status_set_error(F_parameter);
-      #endif // _di_level_0_parameter_checking_
-
-      return F_status_set_error(F_implemented_not);
-    }
-  #endif // _di_f_capability_compare_
 
   #ifndef _di_f_capability_copy_external_
     f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void *external, ssize_t *size) {
@@ -409,6 +405,7 @@ extern "C" {
     f_status_t f_capability_ambient_reset(void) {
 
       if (cap_reset_ambient() == -1) {
+
         // The documentation doesn't explicitly describe this for "reset" but it can be implicitly inferred because they say "..all of the setting functions..".
         if (errno == EINVAL) return F_status_set_error(F_parameter);
         if (errno == ENOMEM) return F_status_set_error(F_memory_not);
@@ -423,9 +420,6 @@ extern "C" {
 
   #ifndef _di_f_capability_ambient_set_
     f_status_t f_capability_ambient_set(const f_capability_value_t value, const f_capability_flag_value_t value_flag) {
-      #ifndef _di_level_0_parameter_checking_
-        if (!value_flag) return F_status_set_error(F_parameter);
-      #endif // _di_level_0_parameter_checking_
 
       if (cap_set_ambient(value, value_flag) == -1) {
         if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -477,6 +471,33 @@ extern "C" {
     }
   #endif // _di_f_capability_clear_flag_
 
+  #ifndef _di_f_capability_compare_
+    f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags) {
+
+      if (flags) {
+        *flags = 0;
+      }
+
+      const int result = cap_compare(capability1, capability2);
+
+      if (result == -1) {
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+        return F_status_set_error(F_failure);
+      }
+
+      if (result) {
+        if (flags) {
+          *flags = result;
+        }
+
+        return F_equal_to_not;
+      }
+
+      return F_equal_to;
+    }
+  #endif // _di_f_capability_compare_
+
   #ifndef _di_f_capability_copy_
     f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination) {
       #ifndef _di_level_0_parameter_checking_
@@ -495,32 +516,6 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
   #endif // _di_f_capability_copy_
-
-  #ifndef _di_f_capability_compare_
-    f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags) {
-      if (*flags) {
-        *flags = 0;
-      }
-
-      const int result = cap_compare(capability1, capability2);
-
-      if (result == -1) {
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-
-        return F_status_set_error(F_failure);
-      }
-
-      if (result) {
-        if (*flags) {
-          *flags = result;
-        }
-
-        return F_equal_to_not;
-      }
-
-      return F_equal_to;
-    }
-  #endif // _di_f_capability_compare_
 
   #ifndef _di_f_capability_copy_external_
     f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void *external, ssize_t *size) {
@@ -571,7 +566,7 @@ extern "C" {
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      if (cap_free(*capability) == -1) {
+      if (cap_free((void *) *capability) == -1) {
         if (errno == EINVAL) return F_status_set_error(F_parameter);
         if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
@@ -869,12 +864,12 @@ extern "C" {
 #ifndef _di_libcap_
 
   #ifndef _di_f_capability_process_bound_drop_
-    f_status_t f_capability_process_bound_drop(f_capability_value_t code, int *bound) {
+    f_status_t f_capability_process_bound_drop(f_capability_value_t value, int *bound) {
       #ifndef _di_level_0_parameter_checking_
         if (!bound) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      *bound = cap_drop_bound(code);
+      *bound = cap_drop_bound(value);
 
       if (*bound == -1) {
         if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -889,12 +884,12 @@ extern "C" {
   #endif // _di_f_capability_process_bound_drop_
 
   #ifndef _di_f_capability_process_bound_get_
-    f_status_t f_capability_process_bound_get(f_capability_value_t code, int *bound) {
+    f_status_t f_capability_process_bound_get(f_capability_value_t value, int *bound) {
       #ifndef _di_level_0_parameter_checking_
         if (!bound) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      *bound = cap_get_bound(code);
+      *bound = cap_get_bound(value);
 
       if (*bound == -1) {
         return F_status_set_error(F_known_not);
@@ -1021,7 +1016,12 @@ extern "C" {
 
   #ifndef _di_f_capability_supported_ambient_
     bool f_capability_supported_ambient(void) {
-      return CAP_AMBIENT_SUPPORTED();
+
+      if (CAP_AMBIENT_SUPPORTED()) {
+        return F_true;
+      }
+
+      return F_false;
     }
   #endif // _di_f_capability_supported_ambient_
 
@@ -1031,7 +1031,12 @@ extern "C" {
 
   #ifndef _di_f_capability_supported_code_
     bool f_capability_supported_code(const f_capability_value_t code) {
-      return CAP_IS_SUPPORTED(code);
+
+      if (CAP_IS_SUPPORTED(code)) {
+        return F_true;
+      }
+
+      return F_false;
     }
   #endif // _di_f_capability_supported_code_
 

@@ -10,19 +10,19 @@
 #ifndef _TEST__F_memory_h
 #define _TEST__F_memory_h
 
-// libc includes
+// libc includes.
 #include <stdarg.h>
 #include <stddef.h>
 #include <setjmp.h>
 #include <stdint.h>
 
-// cmocka includes
+// cmocka includes.
 #include <cmocka.h>
 
-// fll-0 includes
+// fll-0 includes.
 #include <fll/level_0/memory.h>
 
-// test includes
+// test includes.
 #include "test-memory-adjust.h"
 #include "test-memory-delete.h"
 #include "test-memory-destroy.h"

@@ -158,30 +158,6 @@ extern "C" {
 #endif // _di_f_capability_clear_flag_
 
 /**
- * Copy the capability structure.
- *
- * @param source
- *   The capability to copy from.
- * @param destination
- *   The capability to copy to.
- *   This must be freed via f_capability_delete() when finished with.
- *
- * @return
- *   F_none on success.
- *
- *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
- *   F_memory_not (with error bit) if a out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   F_failure (with error bit) on any other failure.
- *
- * @see cap_dup()
- */
-#ifndef _di_f_capability_copy_
-  extern f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination);
-#endif // _di_f_capability_copy_
-
-/**
  * Compare two capability structures.
  *
  * @param capability1
@@ -206,6 +182,30 @@ extern "C" {
 #ifndef _di_f_capability_compare_
   extern f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags);
 #endif // _di_f_capability_compare_
+
+/**
+ * Copy the capability structure.
+ *
+ * @param source
+ *   The capability to copy from.
+ * @param destination
+ *   The capability to copy to.
+ *   This must be freed via f_capability_delete() when finished with.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other failure.
+ *
+ * @see cap_dup()
+ */
+#ifndef _di_f_capability_copy_
+  extern f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination);
+#endif // _di_f_capability_copy_
 
 /**
  * Copy an internally represented capability into an externally represented capability.
@@ -266,6 +266,7 @@ extern "C" {
  *
  * @param capability
  *   The capability to delete.
+ *   Pointer address is set to 0 on success.
  *
  * @return
  *   F_none on success.
@@ -685,7 +686,7 @@ extern "C" {
  *
  * This will lower the specified bounding set capability if appropriate permission exist (the  prevailing  effective capability set must have a raised CAP_SETPCAP).
  *
- * @param code
+ * @param value
  *   The capability code to get the bound for.
  * @param bound
  *   The determined bound value.
@@ -703,13 +704,13 @@ extern "C" {
  * @see cap_drop_bound()
  */
 #ifndef _di_f_capability_process_bound_drop_
-  extern f_status_t f_capability_process_bound_drop(f_capability_value_t code, int *bound);
+  extern f_status_t f_capability_process_bound_drop(f_capability_value_t value, int *bound);
 #endif // _di_f_capability_process_bound_drop_
 
 /**
  * Get the bound for the process.
  *
- * @param code
+ * @param value
  *   The capability code to get the bound for.
  * @param bound
  *   The determined bound value.
@@ -726,7 +727,7 @@ extern "C" {
  * @see cap_get_bound()
  */
 #ifndef _di_f_capability_process_bound_get_
-  extern f_status_t f_capability_process_bound_get(f_capability_value_t code, int *bound);
+  extern f_status_t f_capability_process_bound_get(f_capability_value_t value, int *bound);
 #endif // _di_f_capability_process_bound_get_
 
 /**

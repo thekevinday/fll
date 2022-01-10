@@ -26,18 +26,25 @@ extern "C" {
 #endif
 
 /**
- * Compiler-specific attribute visibility features.
+ * Compiler-specific attribute features.
  *
  * Use these macros for visibility-specific tweaks so that if these are not supported by any given compiler, then they can be easily disabled.
  *
- * F_attribute_visibility_internal_d provides a way to make some functions effectively private.
+ * F_attribute_*:
+ *   - visibility_hidden:    Visibility is hidden.
+ *   - visibility_internal:  Visibility is private.
+ *   - visibility_protected: Visibility is protected.
+ *   - visibility_public:    Visibility is public.
+ *   - weak:                 Designate symbol is weak rather than global.
  */
-#ifndef _di_f_attribute_visibility_
+#ifndef _di_compiler_attributes_
   #define F_attribute_visibility_hidden_d    __attribute__((visibility("hidden")))
   #define F_attribute_visibility_internal_d  __attribute__((visibility("internal")))
   #define F_attribute_visibility_protected_d __attribute__((visibility("protected")))
   #define F_attribute_visibility_public_d    __attribute__((visibility("default")))
-#endif // _di_f_attribute_visibility_
+
+  #define F_attribute_weak_d __attribute__((weak))
+#endif // _di_compiler_attributes_
 
 /**
  * A status intended to be used as the return value status of some function or operation.
