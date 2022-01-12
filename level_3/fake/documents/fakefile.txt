@@ -248,7 +248,7 @@ Fakefile Documentation:
           Test if file exists.
           For example, "if exists "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
 
-        - fail\:
+        - failure\:
           Test if the previous section operation failed.
 
         - group "some mode" "some file"\:

@@ -1276,6 +1276,7 @@ extern "C" {
 
     fake_state_process_t state_process = fake_state_process_t_initialize;
     bool success = F_true;
+    bool success_block = F_true;
     int result;
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -1336,11 +1337,19 @@ extern "C" {
         if (state_process.operation != fake_make_operation_type_else_e) {
           state_process.block = 0;
           state_process.block_result = 0;
+
+          // When the block ends and the block success is false, pass the failure to the success variable so that "failure" conditions can catch this.
+          if (success && !success_block) {
+            success = F_false;
+          }
+
+          success_block = F_true;
         }
       }
 
       if (F_status_is_error(*status)) {
         if (state_process.block || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e) {
+          success_block = F_false;
 
           // Setting error result informs the post-process that the operate process is not run due to an error during the pre-process.
           if (state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e || state_process.operation == fake_make_operation_type_else_e) {
@@ -1357,8 +1366,9 @@ extern "C" {
           return result;
         }
 
-        if (state_process.block && F_status_is_error(result)) {
+        if (state_process.block && F_status_is_error(*status)) {
           state_process.block_result == fake_condition_result_error_e;
+          success_block = F_false;
         }
       }
 
@@ -1368,10 +1378,18 @@ extern "C" {
           if (state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_else_e) {
             state_process.block = 0;
             state_process.block_result = 0;
+
+            // When the block ends and the block success is false, pass the failure to the success variable so that "failure" conditions can catch this.
+            if (success && !success_block) {
+              success = F_false;
+            }
+
+            success_block = F_true;
           }
           else if (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e) {
             if (state_process.block_result == fake_condition_result_error_e) {
               state_process.block_result = fake_condition_result_false_e;
+              success_block = F_false;
             }
           }
           else {
@@ -1382,6 +1400,10 @@ extern "C" {
             else if (state_process.block_result == fake_condition_result_false_e || state_process.block_result == fake_condition_result_error_e) {
               state_process.block = fake_state_process_block_next_e;
               state_process.block_result = fake_condition_result_false_e;
+
+              if (state_process.block_result == fake_condition_result_error_e) {
+                success_block = F_false;
+              }
             }
             else {
               state_process.block = fake_state_process_block_skip_e;
@@ -1416,6 +1438,13 @@ extern "C" {
           else {
             state_process.block = 0;
             state_process.block_result = 0;
+
+            // When the block ends and the block success is false, pass the failure to the success variable so that "failure" conditions can catch this.
+            if (success && !success_block) {
+              success = F_false;
+            }
+
+            success_block = F_true;
           }
         }
       }
@@ -1423,6 +1452,7 @@ extern "C" {
         if (state_process.block_result == fake_condition_result_error_e) {
           state_process.block = fake_state_process_block_if_skip_e;
           state_process.block_result = fake_condition_result_false_e;
+          success_block = F_false;
         }
         else {
           state_process.block = fake_state_process_block_if_e;
@@ -1486,6 +1516,13 @@ extern "C" {
         }
 
         break;
+      }
+      else if (*status == F_failure) {
+
+        // When F_failure (without the error bit) is returned, an error occured but the exit mode is not set to exit.
+        // Record the success state and set the status to F_none.
+        *status = F_none;
+        success = F_false;
       }
       else {
         success = F_true;

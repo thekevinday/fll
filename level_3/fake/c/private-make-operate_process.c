@@ -644,7 +644,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    return F_none;
+    return F_failure;
   }
 #endif // _di_fake_make_operate_process_return_
 
