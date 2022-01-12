@@ -1331,9 +1331,8 @@ extern "C" {
         fake_make_operate_validate(data_make, section->name, arguments, &state_process, section_stack, status);
       }
 
-      // Block is set to the synthetic done type when an if-condition completes in order to inform any subsequent else condition.
-      // If there is no follow-up else condition, then reset the block (there is no condition block at this point).
-      if (state_process.block == fake_make_operation_if_type_done_e) {
+      // If next or skip is designated and the next operation is not an "else", then this is no longer in the condition block.
+      if (state_process.block == fake_state_process_block_next_e || state_process.block == fake_state_process_block_skip_e) {
         if (state_process.operation != fake_make_operation_type_else_e) {
           state_process.block = 0;
           state_process.block_result = 0;
@@ -1341,47 +1340,15 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        if (state_process.block) {
+        if (state_process.block || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e) {
 
-          // Reset the block information for a completely processed block.
-          if (state_process.block == fake_make_operation_if_type_done_e && state_process.operation != fake_make_operation_type_else_e) {
-            state_process.block = 0;
-            state_process.block_result = 0;
-          }
-
-          // Always set the condition result to done on error for unfinished blocks as there is no way to determine truth at this point.
-          else {
-            state_process.block_result = fake_condition_result_done_e;
+          // Setting error result informs the post-process that the operate process is not run due to an error during the pre-process.
+          if (state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e || state_process.operation == fake_make_operation_type_else_e) {
+            state_process.block_result = fake_condition_result_error_e;
           }
         }
       }
       else {
-        if (!(state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e)) {
-
-          // Only process a non-if-condition operation following an if condition, if the block result is true.
-          if (state_process.block == fake_make_operation_if_type_if_e) {
-            if (state_process.block_result != fake_condition_result_true_e) {
-              state_process.block = fake_make_operation_if_type_done_e;
-
-              success = F_true;
-
-              continue;
-            }
-          }
-
-          // Only process a non-if-condition operation following an else condition, if the block result is false.
-          else if (state_process.block == fake_make_operation_if_type_else_e) {
-            if (state_process.block_result != fake_condition_result_false_e) {
-              state_process.block = 0;
-              state_process.block_result = 0;
-
-              success = F_true;
-
-              continue;
-            }
-          }
-        }
-
         result = fake_make_operate_process(data_make, section->name, arguments, success, &state_process, section_stack, status);
 
         if (*status == F_child) {
@@ -1390,16 +1357,83 @@ extern "C" {
           return result;
         }
 
-        // When done processing an operation within a block, continue onto next block stage or exit the block.
-        if (!(state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e)) {
-          if (state_process.block == fake_make_operation_if_type_if_e) {
-            state_process.block = fake_make_operation_if_type_done_e;
+        if (state_process.block && F_status_is_error(result)) {
+          state_process.block_result == fake_condition_result_error_e;
+        }
+      }
+
+      // When done processing an operation within an if-condition or an else-condition, update the process state.
+      if (state_process.block) {
+        if (state_process.block == fake_state_process_block_if_e || state_process.block == fake_state_process_block_if_skip_e) {
+          if (state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_else_e) {
+            state_process.block = 0;
+            state_process.block_result = 0;
           }
-          else if (state_process.block == fake_make_operation_if_type_else_e) {
+          else if (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e) {
+            if (state_process.block_result == fake_condition_result_error_e) {
+              state_process.block_result = fake_condition_result_false_e;
+            }
+          }
+          else {
+            if (state_process.block == fake_state_process_block_if_skip_e || state_process.block == fake_state_process_block_skip_e) {
+              state_process.block = fake_state_process_block_skip_e;
+              state_process.block_result = fake_condition_result_false_e;
+            }
+            else if (state_process.block_result == fake_condition_result_false_e || state_process.block_result == fake_condition_result_error_e) {
+              state_process.block = fake_state_process_block_next_e;
+              state_process.block_result = fake_condition_result_false_e;
+            }
+            else {
+              state_process.block = fake_state_process_block_skip_e;
+            }
+          }
+        }
+        else if (state_process.block == fake_state_process_block_next_e || state_process.block == fake_state_process_block_skip_e) {
+
+          // Anything other than an "else" operation should not make it here.
+          if (state_process.block == fake_state_process_block_next_e) {
+            state_process.block_result = fake_condition_result_true_e;
+          }
+          else {
+            state_process.block_result = fake_condition_result_false_e;
+          }
+
+          state_process.block = fake_state_process_block_else_e;
+        }
+        else if (state_process.block == fake_state_process_block_else_e) {
+
+          // An "else" followed by an "if" resets the state back to an "if".
+          if (state_process.operation == fake_make_operation_type_if_e) {
+            if (state_process.block_result == fake_condition_result_true_e) {
+              state_process.block = fake_state_process_block_if_e;
+              state_process.block_result = state_process.condition_result;
+            }
+            else {
+              state_process.block = fake_state_process_block_if_skip_e;
+              state_process.block_result == fake_condition_result_false_e;
+            }
+          }
+          else {
             state_process.block = 0;
             state_process.block_result = 0;
           }
         }
+      }
+      else if (state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e) {
+        if (state_process.block_result == fake_condition_result_error_e) {
+          state_process.block = fake_state_process_block_if_skip_e;
+          state_process.block_result = fake_condition_result_false_e;
+        }
+        else {
+          state_process.block = fake_state_process_block_if_e;
+          state_process.block_result = state_process.condition_result;
+        }
+      }
+      else if (state_process.operation == fake_make_operation_type_else_e) {
+
+        // An else condition by itself is invalid and the operation associated with it should be skipped.
+        state_process.block = fake_state_process_block_else_e;
+        state_process.block_result = fake_condition_result_false_e;
       }
 
       if (F_status_set_fine(*status) == F_interrupt) break;
@@ -1464,23 +1498,17 @@ extern "C" {
       return 0;
     }
 
-    if (i == section->objects.used && F_status_is_error_not(*status) && state_process.condition) {
+    if (i == section->objects.used && F_status_is_error_not(*status) && (state_process.block == fake_state_process_block_if_e || state_process.block == fake_state_process_block_if_skip_e || state_process.block == fake_state_process_block_else_e)) {
       if (data_make->main->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
 
         fl_print_format("%c%[%SIncomplete '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
 
-        if (state_process.condition == fake_make_operation_type_if_e) {
-          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
-        }
-        else if (state_process.condition == fake_make_operation_type_and_e) {
-          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
-        }
-        else if (state_process.condition == fake_make_operation_type_or_e) {
-          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
+        if (state_process.block == fake_state_process_block_else_e) {
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
         }
         else {
-          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
+          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
         }
 
         fl_print_format("%[' at end of section.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);

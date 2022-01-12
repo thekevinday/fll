@@ -951,8 +951,7 @@ extern "C" {
   extern const f_string_t fake_make_operation_argument_if_success_s;
 
   enum {
-    fake_make_operation_if_type_done_e = 1,
-    fake_make_operation_if_type_else_e,
+    fake_make_operation_if_type_else_e = 1,
     fake_make_operation_if_type_if_e,
     fake_make_operation_if_type_if_defined_e,
     fake_make_operation_if_type_if_equal_e,
@@ -1172,7 +1171,7 @@ extern "C" {
 /**
  * A structure for managing the operation and if-condition states.
  *
- * block:              The operation type representing the block (either "if" or "else").
+ * block:              The process block state.
  * block_result:       The result of the block.
  * condition:          The current if-condition type.
  * condition_result:   The result of the currently processed condition.
@@ -1200,20 +1199,42 @@ extern "C" {
 #endif // _di_fake_state_process_t_
 
 /**
+ * Designate the current process block state.
+ *
+ * fake_condition_result_*:
+ * - none:    No if-condition is set.
+ * - if:      An if-condition is set and in use.
+ * - if_skip: An else-if-condition that is to be skipped.
+ * - next:    An if-condition completed, process the "else", if found.
+ * - skip:    An if-condition completed, skip the "else", if found.
+ * - else:    An else-condition is set and in use.
+ */
+#ifndef _di_fake_state_process_block_
+  enum {
+    fake_state_process_block_none_e = 0,
+    fake_state_process_block_if_e,
+    fake_state_process_block_if_skip_e,
+    fake_state_process_block_next_e,
+    fake_state_process_block_skip_e,
+    fake_state_process_block_else_e,
+  };
+#endif // _di_fake_state_process_block_
+
+/**
  * Designate that the if state is true, false, or undefined (none).
  *
  * fake_condition_result_*:
  * - none:  The result of the if-condition is not set.
  * - false: The result of the if-condition is false.
  * - true:  The result of the if-condition is true.
- * - done:  The if-condition is done and should no longer be processed.
+ * - error: An error occurred, any if-condition is to be skipped, falling back to the else condition, if any.
  */
 #ifndef _di_fake_condition_result_
   enum {
     fake_condition_result_none_e = 0,
     fake_condition_result_false_e,
     fake_condition_result_true_e,
-    fake_condition_result_done_e,
+    fake_condition_result_error_e,
   };
 #endif // _di_fake_condition_result_
 

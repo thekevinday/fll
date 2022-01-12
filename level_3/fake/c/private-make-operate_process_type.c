@@ -521,7 +521,7 @@ extern "C" {
       status = f_file_exists(arguments.array[i].string);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done_e;
+        state_process->condition_result = fake_condition_result_error_e;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i].string, "find", fll_error_file_type_file_e);
 
@@ -606,7 +606,7 @@ extern "C" {
       status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done_e;
+        state_process->condition_result = fake_condition_result_error_e;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file_e);
 
@@ -786,7 +786,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      state_process->condition_result = fake_condition_result_done_e;
+      state_process->condition_result = fake_condition_result_error_e;
 
       if (data_make->main->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
@@ -830,7 +830,7 @@ extern "C" {
       status = f_file_group_read(arguments.array[i].string, &id_file);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done_e;
+        state_process->condition_result = fake_condition_result_error_e;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_group_read", F_true, arguments.array[i].string, "get group of", fll_error_file_type_file_e);
 
@@ -877,7 +877,7 @@ extern "C" {
       status = fake_make_get_id_mode(data_make->main, data_make->error, arguments.array[if_not ? 3 : 2], &mode_rule, &mode_replace);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done_e;
+        state_process->condition_result = fake_condition_result_error_e;
 
         return status;
       }
@@ -885,7 +885,7 @@ extern "C" {
       status = f_file_mode_to_mode(mode_rule, &mode_match);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done_e;
+        state_process->condition_result = fake_condition_result_error_e;
 
         fll_error_print(data_make->error, F_status_set_fine(status), "f_file_mode_to_mode", F_true);
 
@@ -902,7 +902,7 @@ extern "C" {
       status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done_e;
+        state_process->condition_result = fake_condition_result_error_e;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file_e);
 
@@ -965,7 +965,7 @@ extern "C" {
       status = f_file_owner_read(arguments.array[i].string, &id_file);
 
       if (F_status_is_error(status)) {
-        state_process->condition_result = fake_condition_result_done_e;
+        state_process->condition_result = fake_condition_result_error_e;
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_owner_read", F_true, arguments.array[i].string, "get owner of", fll_error_file_type_file_e);
 

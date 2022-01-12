@@ -445,7 +445,7 @@ extern "C" {
         return;
       }
 
-      if (state_process->block != fake_make_operation_if_type_done_e) {
+      if (!state_process->block) {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
           fl_print_format("%c%[%SHas no preceding '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
@@ -568,7 +568,7 @@ extern "C" {
 
     if (state_process->operation == fake_make_operation_type_if_e || state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_or_e) {
       if (state_process->operation == fake_make_operation_type_if_e) {
-        if (state_process->block == fake_make_operation_type_if_e) {
+        if (state_process->operation_previous == fake_make_operation_type_if_e) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
             flockfile(data_make->error.to.stream);
 

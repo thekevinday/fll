@@ -19,6 +19,28 @@ extern "C" {
 
     if (*status == F_child) return data_make->main->child;
 
+    if (state_process->block) {
+      if (state_process->block == fake_state_process_block_if_e) {
+        if (!(state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_or_e)) {
+          if (state_process->block_result == fake_condition_result_false_e) {
+            return 0;
+          }
+        }
+      }
+      else if (state_process->block == fake_state_process_block_if_skip_e) {
+        if (!(state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_or_e)) {
+          return 0;
+        }
+      }
+      else if (state_process->block == fake_state_process_block_else_e) {
+        if (state_process->operation != fake_make_operation_type_if_e) {
+          if (state_process->block_result == fake_condition_result_false_e) {
+            return 0;
+          }
+        }
+      }
+    }
+
     if (state_process->operation == fake_make_operation_type_index_e) {
       const f_status_t result = fake_execute(data_make->main, data_make->environment, data_make->setting_build.build_indexer, arguments, status);
 
@@ -146,9 +168,7 @@ extern "C" {
 
     if (state_process->operation == fake_make_operation_type_else_e) {
 
-      // Setup the block so that subsequent operations can know the current block and the result (which is preserved across to the else condition).
-      state_process->block = fake_make_operation_if_type_else_e;
-
+      // There is nothing to do.
       return 0;
     }
 
@@ -286,26 +306,30 @@ extern "C" {
         *status = fake_make_operate_process_type_if_owner(data_make, arguments, F_false, state_process);
       }
 
-      // Setup the block for subsequent operations.
-      state_process->block = fake_make_operation_if_type_if_e;
+      // When inside an else block that is already set to false, then all if conditions inside are always considered false.
+      if (state_process->block == fake_state_process_block_else_e && state_process->block_result == fake_condition_result_false_e) {
+        return 0;
+      }
 
-      if (state_process->condition_result == fake_condition_result_done_e || state_process->operation == fake_make_operation_type_if_e) {
-        state_process->block_result = state_process->condition_result;
+      // When inside an if block designated to be skipped, then all if conditions inside are always considered false.
+      if (state_process->block == fake_state_process_block_if_skip_e) {
+        return 0;
       }
-      else if (state_process->operation == fake_make_operation_type_or_e) {
+
+      if (state_process->operation == fake_make_operation_type_or_e) {
         if (state_process->block_result == fake_condition_result_true_e || state_process->condition_result == fake_condition_result_true_e) {
-          state_process->block_result = fake_condition_result_true_e;
+          state_process->condition_result = fake_condition_result_true_e;
         }
         else {
-          state_process->block_result = fake_condition_result_false_e;
+          state_process->condition_result = fake_condition_result_false_e;
         }
       }
-      else {
+      else if (state_process->block) {
         if (state_process->block_result == fake_condition_result_true_e && state_process->condition_result == fake_condition_result_true_e) {
-          state_process->block_result = fake_condition_result_true_e;
+          state_process->condition_result = fake_condition_result_true_e;
         }
         else {
-          state_process->block_result = fake_condition_result_false_e;
+          state_process->condition_result = fake_condition_result_false_e;
         }
       }
 
