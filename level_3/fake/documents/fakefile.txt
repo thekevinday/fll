@@ -255,7 +255,8 @@ Fakefile Documentation:
           For example, "if group friends a.txt b.txt" would test if both file a.txt and b.txt have a group named "we".
 
         - is block character directory fifo link regular socket for "file path"\:
-          Test if one or more files exist and if each file is any of the given types followed by "for" to designate where the the file paths begin.
+          Test if one or more files exist and if each file is any of the given types.
+          The given types must be followed by "for" to designate where the the file paths begin.
           For example, "if is regular directory for "a.txt" "b.txt" would test if both the file a.txt and b.txt exist and are either of type "regular" or type "directory".
 
         - mode is/has "some mode" "some file"\:
