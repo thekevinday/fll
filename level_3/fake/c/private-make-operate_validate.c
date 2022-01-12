@@ -773,7 +773,9 @@ extern "C" {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
             flockfile(data_make->error.to.stream);
 
-            fl_print_format("%c%[%SUnsupported '%s' type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, if_and_or, data_make->error.context);
+            fl_print_format("%c%[%SUnsupported '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+            fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, if_and_or, data_make->error.notable);
+            fl_print_format("%[' type '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[0], data_make->error.notable);
             fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
@@ -808,8 +810,10 @@ extern "C" {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
-              fl_print_format("%c%[%SUnsupported '%s' not type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, if_and_or, data_make->error.context);
-              fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[0], data_make->error.notable);
+              fl_print_format("%c%[%SUnsupported '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+              fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, if_and_or, data_make->error.notable);
+              fl_print_format("%[' not type '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
+              fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
               fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
               funlockfile(data_make->error.to.stream);
