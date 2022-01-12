@@ -1391,6 +1391,9 @@ extern "C" {
               state_process.block_result = fake_condition_result_false_e;
               success_block = F_false;
             }
+            else {
+              state_process.block_result = state_process.condition_result;
+            }
           }
           else {
             if (state_process.block == fake_state_process_block_if_skip_e || state_process.block == fake_state_process_block_skip_e) {

@@ -21,18 +21,37 @@ extern "C" {
 
     if (state_process->block) {
       if (state_process->block == fake_state_process_block_if_e) {
-        if (state_process->block_result == fake_condition_result_false_e) {
-          return 0;
+        if (state_process->operation == fake_make_operation_type_or_e) {
+
+          // For cases of "or", if the previous condition is true, then don't bother because "true || X" is always true.
+          if (state_process->block_result == fake_condition_result_true_e) {
+            state_process->condition_result = state_process->block_result;
+
+            return 0;
+          }
+        }
+        else {
+
+          // For all other cases, if the previous condition is false, then it is always false because "false && XX" is always false.
+          if (state_process->block_result == fake_condition_result_false_e) {
+            state_process->condition_result = state_process->block_result;
+
+            return 0;
+          }
         }
       }
       else if (state_process->block == fake_state_process_block_if_skip_e) {
         if (!(state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_or_e)) {
+          state_process->condition_result = state_process->block_result;
+
           return 0;
         }
       }
       else if (state_process->block == fake_state_process_block_else_e) {
         if (state_process->operation != fake_make_operation_type_if_e) {
           if (state_process->block_result == fake_condition_result_false_e) {
+            state_process->condition_result = state_process->block_result;
+
             return 0;
           }
         }
@@ -314,16 +333,16 @@ extern "C" {
         return 0;
       }
 
-      if (state_process->operation == fake_make_operation_type_or_e) {
-        if (state_process->block_result == fake_condition_result_true_e || state_process->condition_result == fake_condition_result_true_e) {
-          state_process->condition_result = fake_condition_result_true_e;
+      if (state_process->block) {
+        if (state_process->operation == fake_make_operation_type_or_e) {
+          if (state_process->block_result == fake_condition_result_true_e || state_process->condition_result == fake_condition_result_true_e) {
+            state_process->condition_result = fake_condition_result_true_e;
+          }
+          else {
+            state_process->condition_result = fake_condition_result_false_e;
+          }
         }
-        else {
-          state_process->condition_result = fake_condition_result_false_e;
-        }
-      }
-      else if (state_process->block) {
-        if (state_process->block_result == fake_condition_result_true_e && state_process->condition_result == fake_condition_result_true_e) {
+        else if (state_process->block_result == fake_condition_result_true_e && state_process->condition_result == fake_condition_result_true_e) {
           state_process->condition_result = fake_condition_result_true_e;
         }
         else {
