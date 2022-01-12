@@ -21,10 +21,8 @@ extern "C" {
 
     if (state_process->block) {
       if (state_process->block == fake_state_process_block_if_e) {
-        if (!(state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_or_e)) {
-          if (state_process->block_result == fake_condition_result_false_e) {
-            return 0;
-          }
+        if (state_process->block_result == fake_condition_result_false_e) {
+          return 0;
         }
       }
       else if (state_process->block == fake_state_process_block_if_skip_e) {

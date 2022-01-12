@@ -608,7 +608,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get type of", fll_error_file_type_file_e);
 
         break;
       }
