@@ -842,13 +842,13 @@ extern "C" {
           }
 
           if (state_process->condition == fake_make_operation_if_type_if_defined_e || state_process->condition == fake_make_operation_if_type_if_not_defined_e) {
-            if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, arguments.array[1], fake_make_operation_argument_environment_s_length) == F_equal_to_not) {
-              if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter_s, arguments.array[1], fake_make_operation_argument_parameter_s_length) == F_equal_to_not) {
+            if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, j == 6 ? arguments.array[1] : arguments.array[2], fake_make_operation_argument_environment_s_length) == F_equal_to_not) {
+              if (fl_string_dynamic_compare_string(fake_make_operation_argument_parameter_s, j == 6 ? arguments.array[1] : arguments.array[2], fake_make_operation_argument_parameter_s_length) == F_equal_to_not) {
                 if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
                   flockfile(data_make->error.to.stream);
 
                   fl_print_format("%c%[%SUnsupported define type '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
-                  fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
+                  fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, j == 6 ? arguments.array[1] : arguments.array[2], data_make->error.notable);
                   fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
 
                   funlockfile(data_make->error.to.stream);
