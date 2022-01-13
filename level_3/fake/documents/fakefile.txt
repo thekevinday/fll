@@ -175,6 +175,31 @@ Fakefile Documentation:
 
       The Content represents a set of conditions to perform.
 
+      The "if" operation may be used in conjunction with the "and", "or", and the "else" operations.
+
+      The conditional logic is different from normal logic found in most software programs.
+      There is only one order of operation, a top-down design where the current operation relates to the previous operation.
+      This is mostly relevant when "if" operation is followed by an "and" or an "or" operation.
+
+      Consider the following\:
+        if defined parameter xxx
+        or defined parameter yyy
+        and defined parameter zzz
+          print first
+        else
+        if defined parameter www
+          print second
+        else
+          print third
+
+      The resulting logic is as follows\:
+        1) If "xxx" is defined, then...
+        2) If result from (1) is TRUE or if "yyy" is defined, then...
+        3) If result from (2) is TRUE and if "zzz" is defined, then...
+        4) If result from (3) is FALSE, then...
+        5) If result from (4) is TRUE, then...
+        6) If result from (5) is FALSE, then...
+
       For all conditions that rely on numbers, only whole numbers are (currently) supported.
 
       conditions\:
