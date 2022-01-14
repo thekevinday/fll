@@ -210,7 +210,7 @@ cap_mode_t __wrap_cap_get_mode(void) {
   return (cap_mode_t) 1;
 }
 
-uid_t __wrap_cap_get_nsowner(cap_t) {
+uid_t __wrap_cap_get_nsowner(cap_t capability) {
 
   bool failure = mock_type(bool);
 
