@@ -32,7 +32,7 @@ extern "C" {
         }
         else {
 
-          // For all other cases, if the previous condition is false, then it is always false because "false && XX" is always false.
+          // For all other cases, if the previous condition is false, then it is always false because "false && X" is always false.
           if (state_process->block_result == fake_condition_result_false_e) {
             state_process->condition_result = state_process->block_result;
 
