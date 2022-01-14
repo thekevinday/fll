@@ -88,7 +88,7 @@ extern "C" {
 #endif // _di_f_account_by_id_
 
 /**
- * Get the group account id by the group name.
+ * Get the account group id by the group name.
  *
  * @param name
  *   The group name.
@@ -140,6 +140,33 @@ extern "C" {
 #ifndef _di_f_account_id_user_by_name_
   extern f_status_t f_account_id_user_by_name(const f_string_t name, uid_t *id);
 #endif // _di_f_account_id_user_by_name_
+
+/**
+ * Get the account group name by the group id.
+ *
+ * @param id
+ *   The id of the group.
+ * @param name
+ *   This is replaced with by the group name.
+ *   The name will be NULL terminated.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_buffer_too_small (with error bit) if the buffer is too small to store the account data.
+ *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_input_output (with error bit) if an I/O error occurred.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see getgrgid_r()
+ */
+#ifndef _di_f_account_name_group_by_id_
+  extern f_status_t f_account_name_group_by_id(const gid_t id, f_string_dynamic_t *name);
+#endif // _di_f_account_name_group_by_id_
 
 /**
  * Get the user account name by the user id.

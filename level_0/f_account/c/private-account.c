@@ -7,18 +7,17 @@ extern "C" {
 
 #if !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
   f_status_t private_f_account_from_passwd(const struct passwd password, const f_array_length_t password_length, f_account_t *account) {
-    f_status_t status = F_none;
 
+    f_status_t status = F_none;
 
     // Account UID and GID.
     account->id_user = password.pw_uid;
     account->id_group = password.pw_gid;
 
-
-    // account home directory.
+    // Account home directory.
     f_array_length_t string_length = strnlen(password.pw_dir, password_length);
 
-    macro_f_string_dynamic_t_resize(status, account->home, string_length + 1);
+    status = f_string_dynamic_resize(string_length + 1, &account->home);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->home.string, password.pw_dir, string_length);
@@ -26,11 +25,10 @@ extern "C" {
     account->home.string[string_length] = 0;
     account->home.used = string_length;
 
-
-    // account label (gecos).
+    // Account label (gecos).
     string_length = strnlen(password.pw_gecos, password_length);
 
-    macro_f_string_dynamic_t_resize(status, account->label, string_length + 1);
+    status = f_string_dynamic_resize(string_length + 1, &account->label);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->label.string, password.pw_gecos, string_length);
@@ -38,11 +36,10 @@ extern "C" {
     account->label.string[string_length] = 0;
     account->label.used = string_length;
 
-
-    // account name.
+    // Account name.
     string_length = strnlen(password.pw_name, password_length);
 
-    macro_f_string_dynamic_t_resize(status, account->name, string_length + 1);
+    status = f_string_dynamic_resize(string_length + 1, &account->name);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->name.string, password.pw_name, string_length);
@@ -50,11 +47,10 @@ extern "C" {
     account->name.string[string_length] = 0;
     account->name.used = string_length;
 
-
-    // account password directory.
+    // Account password directory.
     string_length = strnlen(password.pw_passwd, password_length);
 
-    macro_f_string_dynamic_t_resize(status, account->password, string_length + 1);
+    status = f_string_dynamic_resize(string_length + 1, &account->password);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->password.string, password.pw_passwd, string_length);
@@ -62,11 +58,10 @@ extern "C" {
     account->password.string[string_length] = 0;
     account->password.used = string_length;
 
-
-    // account shell directory.
+    // Account shell directory.
     string_length = strnlen(password.pw_shell, password_length);
 
-    macro_f_string_dynamic_t_resize(status, account->shell, string_length + 1);
+    status = f_string_dynamic_resize(string_length + 1, &account->shell);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->shell.string, password.pw_shell, string_length);
