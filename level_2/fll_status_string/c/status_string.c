@@ -817,6 +817,30 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, f_status_endian_s, length, F_status_endian_s_length) == F_equal_to) {
+        *code = F_endian;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_endian_big_s, length, F_status_endian_big_s_length) == F_equal_to) {
+        *code = F_endian_big;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_endian_little_s, length, F_status_endian_little_s_length) == F_equal_to) {
+        *code = F_endian_little;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, f_status_endian_not_s, length, F_status_endian_not_s_length) == F_equal_to) {
+        *code = F_endian_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, f_status_eoa_s, length, F_status_eoa_s_length) == F_equal_to) {
         *code = F_eoa;
 

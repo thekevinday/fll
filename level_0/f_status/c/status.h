@@ -20,9 +20,27 @@ extern "C" {
 #endif
 
 /**
+ * Endianness.
+ *
+ * This is placed here because status is first and endianness must be set before everything else.
+ *
+ * Define either _is_F_endian_big or _is_F_endian_little (but not both) to override compiler detected endianness or to manually set endianness if not detected.
+ */
+#if !defined(_is_F_endian_big) && !defined(_is_F_endian_little)
+  #ifdef BIG_ENDIAN
+    #define _is_F_endian_big
+    #undef _is_F_endian_little
+  #else
+    #undef _is_F_endian_big
+    #define _is_F_endian_little
+  #endif // BIG_ENDIAN
+#endif // !defined(_is_F_endian_big) && !defined(_is_F_endian_little)
+
+/**
  * Status masks.
  */
 #ifndef _di_F_status_masks_
+
   // f_status_t is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
   #define F_status_bit_error   0x8000 // 1000 0000 0000 0000
   #define F_status_bit_signal  0xc000 // 1100 0000 0000 0000
@@ -209,6 +227,10 @@ extern "C" {
       F_encoding_not,
       F_end,
       F_end_not,
+      F_endian,
+      F_endian_big,
+      F_endian_little,
+      F_endian_not,
       F_eoa,
       F_eoa_not,
       F_eof,

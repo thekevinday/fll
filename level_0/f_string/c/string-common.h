@@ -80,6 +80,7 @@ extern "C" {
 #ifndef _di_f_string_eol_s_
   #define f_string_eol_s f_string_ascii_feed_line_s
   #define F_string_eol_s F_string_ascii_feed_line_s
+
   #define F_string_eol_s_length 1
 #endif // _di_f_string_eol_s_
 
@@ -90,12 +91,14 @@ extern "C" {
 #ifndef _di_f_string_placeholder_s_
   #define f_string_placeholder_s f_string_empty_s
   #define F_string_placeholder_s F_string_empty_s
+
   #define F_string_placeholder_s_length 1
 #endif // _di_f_string_placeholder_s_
 
 #ifndef _di_f_string_space_s_
   #define f_string_space_s f_string_ascii_space_s
   #define F_string_space_s F_string_ascii_space_s
+
   #define F_string_space_s_length 1
 #endif // _di_f_string_space_s_
 

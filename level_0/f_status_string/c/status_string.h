@@ -296,6 +296,10 @@ extern "C" {
     #define F_status_encoding_not_s      "F_encoding_not"
     #define F_status_end_s               "F_end"
     #define F_status_end_not_s           "F_end_not"
+    #define F_status_endian_s            "F_endian"
+    #define F_status_endian_big_s        "F_endian_big"
+    #define F_status_endian_little_s     "F_endian_little"
+    #define F_status_endian_not_s        "F_endian_not"
     #define F_status_eoa_s               "F_eoa"
     #define F_status_eoa_not_s           "F_eoa_not"
     #define F_status_eof_s               "F_eof"
@@ -536,6 +540,10 @@ extern "C" {
     #define F_status_encoding_not_s_length      14
     #define F_status_end_s_length               5
     #define F_status_end_not_s_length           9
+    #define F_status_endian_s_length            8
+    #define F_status_endian_big_s_length        12
+    #define F_status_endian_little_s_length     19
+    #define F_status_endian_not_s_length        12
     #define F_status_eoa_s_length               5
     #define F_status_eoa_not_s_length           9
     #define F_status_eof_s_length               5
@@ -776,6 +784,10 @@ extern "C" {
     extern const f_string_t f_status_encoding_not_s;
     extern const f_string_t f_status_end_s;
     extern const f_string_t f_status_end_not_s;
+    extern const f_string_t f_status_endian_s;
+    extern const f_string_t f_status_endian_big_s;
+    extern const f_string_t f_status_endian_little_s;
+    extern const f_string_t f_status_endian_not_s;
     extern const f_string_t f_status_eoa_s;
     extern const f_string_t f_status_eoa_not_s;
     extern const f_string_t f_status_eof_s;

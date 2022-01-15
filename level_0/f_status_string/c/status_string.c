@@ -143,6 +143,10 @@ extern "C" {
     const f_string_t f_status_encoding_not_s = F_status_encoding_not_s;
     const f_string_t f_status_end_s = F_status_end_s;
     const f_string_t f_status_end_not_s = F_status_end_not_s;
+    const f_string_t f_status_endian_s = F_status_endian_s;
+    const f_string_t f_status_endian_big_s = F_status_endian_big_s;
+    const f_string_t f_status_endian_little_s = F_status_endian_little_s;
+    const f_string_t f_status_endian_not_s = F_status_endian_not_s;
     const f_string_t f_status_eoa_s = F_status_eoa_s;
     const f_string_t f_status_eoa_not_s = F_status_eoa_not_s;
     const f_string_t f_status_eof_s = F_status_eof_s;
@@ -1118,6 +1122,22 @@ extern "C" {
 
         case F_end_not:
           *string = f_status_end_not_s;
+          break;
+
+        case F_endian:
+          *string = f_status_endian_s;
+          break;
+
+        case F_endian_big:
+          *string = f_status_endian_big_s;
+          break;
+
+        case F_endian_little:
+          *string = f_status_endian_little_s;
+          break;
+
+        case F_endian_not:
+          *string = f_status_endian_not_s;
           break;
 
         case F_eoa:
