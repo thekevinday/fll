@@ -14,10 +14,15 @@ Featureless Settings Specification: 000e - Payload:
   The payload is required to be the last list Object in the file.
   The payload is recommended to have its size designated in some manner in the "header".
   The designated size is recommended to use the fss-0001 Object "length".
+  The fss-0001 Content "part" is suggested to be used for fss-0001 Object "length" to represent a part of a set of packets intended to represent a single object spread across multiple payloads.
+  The fss-0001 Object "total" with the Content being a whole positive number is suggested to be used to represent the total number of packets that represent a whole.
+  The fss-0001 Object "part" with the Content being a whole positive number is suggested to be used to represent the number identifying which part of the whole it is.
   The payload may contain anything, including NULL characters.
-  The payload is terminated by the EOF (end of file) character or when a designated "length" is reached.
-  Nothing in the payload may be considered a valid list Object and therefore there will be no escaping allowed.
-  Comments are not considered comments inside the payload and are considered part of the payload.
+  The payload is terminated by the EOF (end of file) character or when a some designated length is reached.
+  The length used to designate the payload size does not necesserily have to be defined in the 'header".
+  That is to say, if the payload is expected to be of some pre-defined or static length then a length does even if that length is not provided in the "header".
+  Nothing in the payload may be considered a valid list Object and therefore there will be no escaping allowed (No further fss-0002 Basic List Objects are allowed at this point).
+  Comments are not considered comments inside the payload and are instead considered part of the payload, as-is.
   The payload may be empty (length may be zero), but the list Object "payload" must still exist.
 
   Other than the reserved list Objects "header" and "payload" any other valid Object may be specified.
@@ -28,6 +33,7 @@ Featureless Settings Specification: 000e - Payload:
     header\:
       type error
       status 296
+      length 30
 
     payload\:
     The program is out of memory.
@@ -39,10 +45,12 @@ Featureless Settings Specification: 000e - Payload:
   "header" Objects would be\:
     1.1) type
     1.2) status
+    1.3) length
 
   "header" Contents would be\:
     1.1.1) error
     1.2.1) 296
+    1.3.1) 30
 
   The payload would be\:
     2) The program is out of memory.
