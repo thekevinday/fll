@@ -11,6 +11,15 @@
 #define _TEST__F_memory__resize
 
 /**
+ * Test that parameter checking works as expected.
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_level_0_parameter_checking_
+  extern void test__f_memory_resize__parameter_checking(void **state);
+#endif // _di_level_0_parameter_checking_
+
+/**
  * Test that reallocation works.
  *
  * @see f_memory_new()

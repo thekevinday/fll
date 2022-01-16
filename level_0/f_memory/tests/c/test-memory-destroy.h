@@ -44,4 +44,13 @@ extern void test__f_memory_destroy__frees_memory(void **state);
  */
 extern void test__f_memory_destroy__frees_resized_memory(void **state);
 
+/**
+ * Test that parameter checking works as expected.
+ *
+ * @see f_memory_destroy()
+ */
+#ifndef _di_level_0_parameter_checking_
+  extern void test__f_memory_destroy__parameter_checking(void **state);
+#endif // _di_level_0_parameter_checking_
+
 #endif // _TEST__F_memory__destroy

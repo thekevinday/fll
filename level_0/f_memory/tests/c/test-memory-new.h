@@ -11,6 +11,15 @@
 #define _TEST__F_memory__new
 
 /**
+ * Test that parameter checking works as expected.
+ *
+ * @see f_memory_new()
+ */
+#ifndef _di_level_0_parameter_checking_
+  extern void test__f_memory_new__parameter_checking(void **state);
+#endif // _di_level_0_parameter_checking_
+
+/**
  * Test that allocation works.
  *
  * @see f_memory_new()
