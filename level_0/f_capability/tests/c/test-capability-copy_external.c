@@ -5,37 +5,11 @@
 extern "C" {
 #endif
 
-void test__f_capability_copy_external__works(void **state) {
-
-  f_capability_t capability = f_capability_t_initialize;
-  ssize_t max = 0;
-  int stub = 0;
-  void *external = (void *) &stub;
-  ssize_t size = 0;
-
-  #if defined(_di_libcap_)
-    printf("[  WARN    ] f_capability_copy_external() is not implemented and cannot be fully tested.\n");
-  #else
-    will_return(__wrap_cap_copy_ext, false);
-  #endif // defined(_di_libcap_)
-
-  {
-    const f_status_t status = f_capability_copy_external(capability, max, external, &size);
-
-    #if defined(_di_libcap_)
-      assert_int_equal(F_status_set_fine(status), F_implemented_not);
-    #else
-      assert_int_equal(status, F_none);
-      assert_int_equal(size, 1);
-    #endif // defined(_di_libcap_)
-  }
-}
-
 void test__f_capability_copy_external__fails(void **state) {
 
   #if !defined(_di_libcap_)
     f_capability_t capability = f_capability_t_initialize;
-    ssize_t max = 0;
+    const ssize_t max = 0;
     int stub = 0;
     void *external = (void *) &stub;
     ssize_t size = 0;
@@ -62,6 +36,45 @@ void test__f_capability_copy_external__fails(void **state) {
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
   #endif // !defined(_di_libcap_)
+}
+
+#ifndef _di_level_0_parameter_checking_
+  void test__f_capability_copy_external__parameter_checking(void **state) {
+
+    f_capability_t capability = f_capability_t_initialize;
+
+    {
+      const f_status_t status = f_capability_copy_external(capability, 0, 0, 0);
+
+      assert_int_equal(F_status_set_fine(status), F_parameter);
+    }
+  }
+#endif // _di_level_0_parameter_checking_
+
+void test__f_capability_copy_external__works(void **state) {
+
+  f_capability_t capability = f_capability_t_initialize;
+  const ssize_t max = 0;
+  int stub = 0;
+  void *external = (void *) &stub;
+  ssize_t size = 0;
+
+  #if defined(_di_libcap_)
+    printf("[  WARN    ] f_capability_copy_external() is not implemented and cannot be fully tested.\n");
+  #else
+    will_return(__wrap_cap_copy_ext, false);
+  #endif // defined(_di_libcap_)
+
+  {
+    const f_status_t status = f_capability_copy_external(capability, max, external, &size);
+
+    #if defined(_di_libcap_)
+      assert_int_equal(F_status_set_fine(status), F_implemented_not);
+    #else
+      assert_int_equal(status, F_none);
+      assert_int_equal(size, 1);
+    #endif // defined(_di_libcap_)
+  }
 }
 
 #ifdef __cplusplus

@@ -5,31 +5,10 @@
 extern "C" {
 #endif
 
-void test__f_capability_mode_set__works(void **state) {
-
-  f_capability_mode_t mode = f_capability_mode_t_initialize;
-
-  #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
-    printf("[  WARN    ] f_capability_mode_set() is not implemented and cannot be fully tested.\n");
-  #else
-    will_return(__wrap_cap_mode_set, false);
-  #endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
-
-  {
-    const f_status_t status = f_capability_mode_set(mode);
-
-    #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
-      assert_int_equal(F_status_set_fine(status), F_implemented_not);
-    #else
-      assert_int_equal(status, F_none);
-    #endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
-  }
-}
-
 void test__f_capability_mode_set__fails(void **state) {
 
   #if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
-    f_capability_mode_t mode = f_capability_mode_t_initialize;
+    const f_capability_mode_t mode = f_capability_mode_t_initialize;
 
     int errnos[] = {
       EINVAL,
@@ -55,6 +34,27 @@ void test__f_capability_mode_set__fails(void **state) {
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
   #endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+}
+
+void test__f_capability_mode_set__works(void **state) {
+
+  const f_capability_mode_t mode = f_capability_mode_t_initialize;
+
+  #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
+    printf("[  WARN    ] f_capability_mode_set() is not implemented and cannot be fully tested.\n");
+  #else
+    will_return(__wrap_cap_mode_set, false);
+  #endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+  {
+    const f_status_t status = f_capability_mode_set(mode);
+
+    #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
+      assert_int_equal(F_status_set_fine(status), F_implemented_not);
+    #else
+      assert_int_equal(status, F_none);
+    #endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
+  }
 }
 
 #ifdef __cplusplus

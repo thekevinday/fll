@@ -11,17 +11,19 @@
 #define _TEST__F_capability__compare
 
 /**
- * Test that function works.
- *
- * @see f_capability_compare()
- */
-extern void test__f_capability_compare__works(void **state);
-
-/**
  * Test that function fails.
  *
  * @see f_capability_compare()
  */
 extern void test__f_capability_compare__fails(void **state);
+
+// f_capability_compare() doesn't use parameter checking.
+
+/**
+ * Test that function works.
+ *
+ * @see f_capability_compare()
+ */
+extern void test__f_capability_compare__works(void **state);
 
 #endif // _TEST__F_capability__compare

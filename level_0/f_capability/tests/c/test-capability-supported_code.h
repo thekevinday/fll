@@ -10,13 +10,15 @@
 #ifndef _TEST__F_capability__supported_code
 #define _TEST__F_capability__supported_code
 
+// f_capability_supported_code() doesn't return failure.
+
+// f_capability_supported_code() doesn't use parameter checking.
+
 /**
  * Test that function works.
  *
  * @see f_capability_supported_code()
  */
 extern void test__f_capability_supported_code__works(void **state);
-
-// f_capability_supported_code() doesn't return failure.
 
 #endif // _TEST__F_capability__supported_code

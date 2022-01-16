@@ -11,6 +11,13 @@
 #define _TEST__F_capability__copy
 
 /**
+ * Test that function fails.
+ *
+ * @see f_capability_copy()
+ */
+extern void test__f_capability_copy__fails(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_capability_copy()
@@ -18,10 +25,12 @@
 extern void test__f_capability_copy__works(void **state);
 
 /**
- * Test that function fails.
+ * Test that parameter checking works as expected.
  *
  * @see f_capability_copy()
  */
-extern void test__f_capability_copy__fails(void **state);
+#ifndef _di_level_0_parameter_checking_
+  extern void test__f_capability_copy__parameter_checking(void **state);
+#endif // _di_level_0_parameter_checking_
 
 #endif // _TEST__F_capability__copy

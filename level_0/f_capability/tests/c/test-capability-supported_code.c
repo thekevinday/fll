@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_capability_supported_code__works(void **state) {
 
-  f_capability_value_t value = f_capability_value_t_initialize;
+  const f_capability_value_t value = f_capability_value_t_initialize;
 
   #if defined(_di_libcap_)
     {

@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_capability_user_set__works(void **state) {
 
-  uid_t uid;
+  const uid_t uid = 0;
 
   #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
     printf("[  WARN    ] f_capability_user_set() is not implemented and cannot be fully tested.\n");
@@ -29,7 +29,7 @@ void test__f_capability_user_set__works(void **state) {
 void test__f_capability_user_set__fails(void **state) {
 
   #if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
-    uid_t uid;
+    const uid_t uid = 0;
 
     int errnos[] = {
       EINVAL,

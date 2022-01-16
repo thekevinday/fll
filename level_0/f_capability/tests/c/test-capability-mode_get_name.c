@@ -5,9 +5,22 @@
 extern "C" {
 #endif
 
+#ifndef _di_level_0_parameter_checking_
+  void test__f_capability_mode_get_name__parameter_checking(void **state) {
+
+    const f_capability_mode_t mode = f_capability_mode_t_initialize;
+
+    {
+      const f_status_t status = f_capability_mode_get_name(mode, 0);
+
+      assert_int_equal(F_status_set_fine(status), F_parameter);
+    }
+  }
+#endif // _di_level_0_parameter_checking_
+
 void test__f_capability_mode_get_name__works(void **state) {
 
-  f_capability_mode_t mode = f_capability_mode_t_initialize;
+  const f_capability_mode_t mode = f_capability_mode_t_initialize;
   f_string_constant_t constant = f_string_constant_t_initialize;
 
   #if defined(_di_libcap_) || defined(_libcap_legacy_only_)

@@ -10,13 +10,22 @@
 #ifndef _TEST__F_capability__mode_get
 #define _TEST__F_capability__mode_get
 
+// cap_get_mode() doesn't return failure.
+
+/**
+ * Test that parameter checking works as expected.
+ *
+ * @see f_capability_mode_get()
+ */
+#ifndef _di_level_0_parameter_checking_
+  extern void test__f_capability_mode_get__parameter_checking(void **state);
+#endif // _di_level_0_parameter_checking_
+
 /**
  * Test that function works.
  *
  * @see f_capability_mode_get()
  */
 extern void test__f_capability_mode_get__works(void **state);
-
-// cap_get_mode() doesn't return failure.
 
 #endif // _TEST__F_capability__mode_get

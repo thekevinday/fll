@@ -5,38 +5,10 @@
 extern "C" {
 #endif
 
-void test__f_capability_to_name__works(void **state) {
-
-  int code = CAP_CHOWN;
-  char string[] = "CAP_CHOWN";
-  f_string_dynamic_t name = f_string_dynamic_t_initialize;
-
-  #if defined(_di_libcap_)
-    printf("[  WARN    ] f_capability_to_name() is not implemented and cannot be fully tested.\n");
-  #else
-    will_return(__wrap_cap_to_name, false);
-    will_return(__wrap_cap_to_name, string);
-    will_return(__wrap_cap_free, false);
-  #endif // defined(_di_libcap_)
-
-  {
-    const f_status_t status = f_capability_to_name(code, &name);
-
-    #if defined(_di_libcap_)
-      assert_int_equal(F_status_set_fine(status), F_implemented_not);
-    #else
-      assert_string_equal(name.string, string);
-      assert_int_equal(name.used, 9);
-    #endif // defined(_di_libcap_)
-  }
-
-  f_string_dynamic_resize(0, &name);
-}
-
 void test__f_capability_to_name__fails(void **state) {
 
   #if !defined(_di_libcap_)
-    int code = CAP_CHOWN;
+    const int code = CAP_CHOWN;
     f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
     int errnos[] = {
@@ -62,6 +34,47 @@ void test__f_capability_to_name__fails(void **state) {
       assert_int_equal(name.used, 0);
     } // for
   #endif // !defined(_di_libcap_)
+}
+
+#ifndef _di_level_0_parameter_checking_
+  void test__f_capability_to_name__parameter_checking(void **state) {
+
+    const int code = CAP_CHOWN;
+
+    {
+      const f_status_t status = f_capability_to_name(code, 0);
+
+      assert_int_equal(F_status_set_fine(status), F_parameter);
+    }
+  }
+#endif // _di_level_0_parameter_checking_
+
+void test__f_capability_to_name__works(void **state) {
+
+  const int code = CAP_CHOWN;
+  char string[] = "CAP_CHOWN";
+  f_string_dynamic_t name = f_string_dynamic_t_initialize;
+
+  #if defined(_di_libcap_)
+    printf("[  WARN    ] f_capability_to_name() is not implemented and cannot be fully tested.\n");
+  #else
+    will_return(__wrap_cap_to_name, false);
+    will_return(__wrap_cap_to_name, string);
+    will_return(__wrap_cap_free, false);
+  #endif // defined(_di_libcap_)
+
+  {
+    const f_status_t status = f_capability_to_name(code, &name);
+
+    #if defined(_di_libcap_)
+      assert_int_equal(F_status_set_fine(status), F_implemented_not);
+    #else
+      assert_string_equal(name.string, string);
+      assert_int_equal(name.used, 9);
+    #endif // defined(_di_libcap_)
+  }
+
+  f_string_dynamic_resize(0, &name);
 }
 
 #ifdef __cplusplus

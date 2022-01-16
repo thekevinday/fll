@@ -5,6 +5,17 @@
 extern "C" {
 #endif
 
+#ifndef _di_level_0_parameter_checking_
+  void test__f_capability_mode_get__parameter_checking(void **state) {
+
+    {
+      const f_status_t status = f_capability_mode_get(0);
+
+      assert_int_equal(F_status_set_fine(status), F_parameter);
+    }
+  }
+#endif // _di_level_0_parameter_checking_
+
 void test__f_capability_mode_get__works(void **state) {
 
   f_capability_mode_t mode = f_capability_mode_t_initialize;
