@@ -29,9 +29,7 @@ extern "C" {
 #if !defined(_is_F_endian_big) && !defined(_is_F_endian_little)
   #ifdef BIG_ENDIAN
     #define _is_F_endian_big
-    #undef _is_F_endian_little
   #else
-    #undef _is_F_endian_big
     #define _is_F_endian_little
   #endif // BIG_ENDIAN
 #endif // !defined(_is_F_endian_big) && !defined(_is_F_endian_little)
