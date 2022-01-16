@@ -10,6 +10,8 @@
 #ifndef _TEST__F_color__save
 #define _TEST__F_color__save
 
+// f_color_save() only returns failures by other functions that have their own tests.
+
 /**
  * Test that parameter checking works as expected.
  *
@@ -18,8 +20,6 @@
 #ifndef _di_level_0_parameter_checking_
   extern void test__f_color_save__parameter_checking(void **state);
 #endif // _di_level_0_parameter_checking_
-
-// f_color_save() only returns failures by other functions that have their own tests.
 
 /**
  * Test that function works.
