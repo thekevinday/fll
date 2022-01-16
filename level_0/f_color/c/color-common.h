@@ -154,6 +154,7 @@ extern "C" {
     const char *medium;
   } f_color_format_t;
 
+  #define f_color_format_t_initialize           { 0, 0, 0 }
   #define f_color_format_t_initialize_linux     { f_color_string_begin_s, f_color_string_end_s, f_color_string_medium_s }
   #define f_color_format_t_initialize_xterminal { f_color_string_begin_s, f_color_string_end_s, f_color_string_medium_s }
 

@@ -48,8 +48,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_color_save()
+ *
+ * @see f_color_save()
  */
 #ifndef _di_f_color_load_context_
   extern f_status_t f_color_load_context(f_color_context_t *context, const bool use_light_colors);
@@ -66,6 +69,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to save the colors to.
+ *   The buffer will become NULL terminated after the appended string length.
  * @param format
  *   The color format parts.
  * @param color1
@@ -82,11 +86,14 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_color_save_
-  extern f_status_t f_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
+  extern f_status_t f_color_save(f_string_dynamic_t * const buffer, const f_color_format_t format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5);
 
   #define macro_fl_color_save_1(buffer, format, color1)                                 f_color_save(buffer, format, color1, 0, 0, 0, 0);
   #define macro_fl_color_save_2(buffer, format, color1, color2)                         f_color_save(buffer, format, color1, color2, 0, 0, 0);
