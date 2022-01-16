@@ -5,10 +5,10 @@
  * API Version: 0.5
  * Licenses: lgpl-2.1-or-later
  *
- * This is the fss-0002 implementation.
+ * This is the fss-000e implementation.
  */
-#ifndef _FLL_fss_basic_list_h
-#define _FLL_fss_basic_list_h
+#ifndef _FLL_fss_payload_h
+#define _FLL_fss_payload_h
 
 // fll-0 includes
 #include <fll/level_0/type.h>
@@ -153,4 +153,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _FLL_fss_basic_list_h
+#endif // _FLL_fss_payload_h
