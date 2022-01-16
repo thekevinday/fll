@@ -15,21 +15,21 @@ extern "C" {
 /**
  * A structure for sharing mutexes globally between different threads.
  *
- * The print lock is intended to lock any activity printing to stdout/stderr.
  * The alert lock is intended for a generic waiting on alerts operations.
+ * The print lock is intended to lock any activity printing to stdout/stderr.
  * The process lock is intended to lock any activity on the processs structure.
  * The rule lock is intended to lock any activity on the rules structure.
  *
- * print:           The print mutex lock.
  * alert:           The alert mutex lock for waking up on alerts.
+ * print:           The print mutex lock.
  * process:         The process r/w lock.
  * rule:            The rule r/w lock.
  * alert_condition: The condition used to trigger alerts.
  */
 #ifndef _di_controller_lock_t_
   typedef struct {
-    f_thread_mutex_t print;
     f_thread_mutex_t alert;
+    f_thread_mutex_t print;
 
     f_thread_lock_t process;
     f_thread_lock_t rule;

@@ -1,0 +1,4 @@
+# fss-0002
+
+Entry Specification:
+  todo write this.

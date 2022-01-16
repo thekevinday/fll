@@ -1,5 +1,5 @@
-#include "../controller.h"
-#include "../private-common.h"
+#include "../controller/controller.h"
+#include "private-common.h"
 
 #ifdef __cplusplus
 extern "C" {
