@@ -11,6 +11,13 @@
 #define _TEST__F_account_by_name_
 
 /**
+ * Test that function fails.
+ *
+ * @see f_account_by_name()
+ */
+extern void test__f_account_by_name__fails(void **state);
+
+/**
  * Test that function works but the account does not exist.
  *
  * @see f_account_by_name()
@@ -18,17 +25,19 @@
 extern void test__f_account_by_name__not_found(void **state);
 
 /**
+ * Test that parameter checking works as expected.
+ *
+ * @see f_account_by_name()
+ */
+#ifndef _di_level_0_parameter_checking_
+  extern void test__f_account_by_name__parameter_checking(void **state);
+#endif // _di_level_0_parameter_checking_
+
+/**
  * Test that function works.
  *
  * @see f_account_by_name()
  */
 extern void test__f_account_by_name__works(void **state);
-
-/**
- * Test that function fails.
- *
- * @see f_account_by_name()
- */
-extern void test__f_account_by_name__fails(void **state);
 
 #endif // _TEST__F_account_by_name_
