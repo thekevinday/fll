@@ -5017,7 +5017,7 @@ extern "C" {
 
               cache->action.line_action = ++cache->action.line_item;
 
-              controller_rule_print_error(global.thread, global.main->error, cache->action, status, "f_account_id_group_by_name", F_true, F_false);
+              controller_rule_print_error(global.thread, global.main->error, cache->action, status, "f_account_group_id_by_name", F_true, F_false);
 
               controller_rule_item_print_error(global.thread, global.main->error, cache->action, F_false, F_status_set_fine(status));
             }

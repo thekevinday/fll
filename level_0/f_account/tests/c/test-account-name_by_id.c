@@ -1,15 +1,15 @@
 #include "test-account.h"
-#include "test-account-id_user_by_name.h"
+#include "test-account-name_by_id.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_account_id_user_by_name__fails(void **state) {
+void test__f_account_name_by_id__fails(void **state) {
 
   const long size = 20;
-  char *name = "name";
   uid_t uid = 0;
+  f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
   int errnos[] = {
     EINTR,
@@ -34,53 +34,56 @@ void test__f_account_id_user_by_name__fails(void **state) {
   for (int i = 0; i < 7; ++i) {
 
     will_return(__wrap_sysconf, size);
-    will_return(__wrap_getpwnam_r, true);
-    will_return(__wrap_getpwnam_r, errnos[i]);
+    will_return(__wrap_getpwuid_r, true);
+    will_return(__wrap_getpwuid_r, errnos[i]);
 
-    const f_status_t status = f_account_id_user_by_name(name, &uid);
+    const f_status_t status = f_account_name_by_id(uid, &name);
 
     assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for
+
+  f_string_dynamic_resize(0, &name);
 }
 
-void test__f_account_id_user_by_name__not_found(void **state) {
+void test__f_account_name_by_id__not_found(void **state) {
 
   const long size = 20;
   struct passwd password;
-  char *name = "name";
   uid_t uid = 0;
+  f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
   {
     will_return(__wrap_sysconf, size);
-    will_return(__wrap_getpwnam_r, false);
-    will_return(__wrap_getpwnam_r, &password);
-    will_return(__wrap_getpwnam_r, (struct passwd *) 0);
+    will_return(__wrap_getpwuid_r, false);
+    will_return(__wrap_getpwuid_r, &password);
+    will_return(__wrap_getpwuid_r, (struct passwd *) 0);
 
-    const f_status_t status = f_account_id_user_by_name(name, &uid);
+    const f_status_t status = f_account_name_by_id(uid, &name);
 
     assert_int_equal(status, F_exist_not);
   }
+
+  f_string_dynamic_resize(0, &name);
 }
 
 #ifndef _di_level_0_parameter_checking_
-  void test__f_account_id_user_by_name__parameter_checking(void **state) {
-
-    const f_string_t name = f_string_t_initialize;
+  void test__f_account_name_by_id__parameter_checking(void **state) {
 
     {
-      const f_status_t status = f_account_id_user_by_name(name, 0);
+      const f_status_t status = f_account_name_by_id(0, 0);
 
       assert_int_equal(F_status_set_fine(status), F_parameter);
     }
   }
 #endif // _di_level_0_parameter_checking_
 
-void test__f_account_id_user_by_name__works(void **state) {
+void test__f_account_name_by_id__works(void **state) {
 
   const long size = 20;
   struct passwd password;
   struct passwd pointer;
   uid_t uid = 0;
+  f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
   password.pw_uid = 1;
   password.pw_gid = 2;
@@ -92,15 +95,17 @@ void test__f_account_id_user_by_name__works(void **state) {
 
   {
     will_return(__wrap_sysconf, size);
-    will_return(__wrap_getpwnam_r, false);
-    will_return(__wrap_getpwnam_r, &password);
-    will_return(__wrap_getpwnam_r, &pointer);
+    will_return(__wrap_getpwuid_r, false);
+    will_return(__wrap_getpwuid_r, &password);
+    will_return(__wrap_getpwuid_r, &pointer);
 
-    const f_status_t status = f_account_id_user_by_name(password.pw_name, &uid);
+    const f_status_t status = f_account_name_by_id(uid, &name);
 
     assert_int_equal(status, F_none);
-    assert_int_equal(uid, password.pw_uid);
+    assert_string_equal(name.string, password.pw_name);
   }
+
+  f_string_dynamic_resize(0, &name);
 }
 
 #ifdef __cplusplus

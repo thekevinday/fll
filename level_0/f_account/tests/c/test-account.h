@@ -28,10 +28,10 @@
 // test includes.
 #include "test-account-by_id.h"
 #include "test-account-by_name.h"
-#include "test-account-id_group_by_name.h"
-#include "test-account-id_user_by_name.h"
-#include "test-account-name_group_by_id.h"
-#include "test-account-name_user_by_id.h"
+#include "test-account-group_id_by_name.h"
+#include "test-account-group_name_by_id.h"
+#include "test-account-id_by_name.h"
+#include "test-account-name_by_id.h"
 
 #ifdef __cplusplus
 extern "C" {

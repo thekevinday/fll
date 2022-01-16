@@ -1,11 +1,11 @@
 #include "test-account.h"
-#include "test-account-name_group_by_id.h"
+#include "test-account-group_name_by_id.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_account_name_group_by_id__fails(void **state) {
+void test__f_account_group_name_by_id__fails(void **state) {
 
   const long size = 20;
   gid_t gid = 0;
@@ -37,7 +37,7 @@ void test__f_account_name_group_by_id__fails(void **state) {
     will_return(__wrap_getgrgid_r, true);
     will_return(__wrap_getgrgid_r, errnos[i]);
 
-    const f_status_t status = f_account_name_group_by_id(gid, &name);
+    const f_status_t status = f_account_group_name_by_id(gid, &name);
 
     assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for
@@ -45,7 +45,7 @@ void test__f_account_name_group_by_id__fails(void **state) {
   f_string_dynamic_resize(0, &name);
 }
 
-void test__f_account_name_group_by_id__not_found(void **state) {
+void test__f_account_group_name_by_id__not_found(void **state) {
 
   const long size = 20;
   struct group group_data;
@@ -58,7 +58,7 @@ void test__f_account_name_group_by_id__not_found(void **state) {
     will_return(__wrap_getgrgid_r, &group_data);
     will_return(__wrap_getgrgid_r, (struct group *) 0);
 
-    const f_status_t status = f_account_name_group_by_id(gid, &name);
+    const f_status_t status = f_account_group_name_by_id(gid, &name);
 
     assert_int_equal(status, F_exist_not);
   }
@@ -67,17 +67,17 @@ void test__f_account_name_group_by_id__not_found(void **state) {
 }
 
 #ifndef _di_level_0_parameter_checking_
-  void test__f_account_name_group_by_id__parameter_checking(void **state) {
+  void test__f_account_group_name_by_id__parameter_checking(void **state) {
 
     {
-      const f_status_t status = f_account_name_group_by_id(0, 0);
+      const f_status_t status = f_account_group_name_by_id(0, 0);
 
       assert_int_equal(F_status_set_fine(status), F_parameter);
     }
   }
 #endif // _di_level_0_parameter_checking_
 
-void test__f_account_name_group_by_id__works(void **state) {
+void test__f_account_group_name_by_id__works(void **state) {
 
   const long size = 20;
   struct group group_data;
@@ -97,7 +97,7 @@ void test__f_account_name_group_by_id__works(void **state) {
     will_return(__wrap_getgrgid_r, &group_data);
     will_return(__wrap_getgrgid_r, &pointer);
 
-    const f_status_t status = f_account_name_group_by_id(gid, &name);
+    const f_status_t status = f_account_group_name_by_id(gid, &name);
 
     assert_int_equal(status, F_none);
     assert_string_equal(name.string, group_data.gr_name);

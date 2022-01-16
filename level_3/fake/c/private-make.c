@@ -60,10 +60,10 @@ extern "C" {
       status = F_status_set_fine(status);
 
       if (status == F_number) {
-        status = f_account_id_group_by_name(buffer.string, id);
+        status = f_account_group_id_by_name(buffer.string, id);
 
         if (F_status_is_error(status)) {
-          fll_error_print(print, F_status_set_fine(status), "f_account_id_group_by_name", F_true);
+          fll_error_print(print, F_status_set_fine(status), "f_account_group_id_by_name", F_true);
 
           return F_status_set_error(status);
         }
@@ -151,10 +151,10 @@ extern "C" {
       status = F_status_set_fine(status);
 
       if (status == F_number) {
-        status = f_account_id_user_by_name(buffer.string, id);
+        status = f_account_id_by_name(buffer.string, id);
 
         if (F_status_is_error(status)) {
-          fll_error_print(print, status, "f_account_id_user_by_name", F_true);
+          fll_error_print(print, status, "f_account_id_by_name", F_true);
 
           return F_status_set_error(status);
         }

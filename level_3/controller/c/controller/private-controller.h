@@ -227,10 +227,10 @@ extern "C" {
  *   F_exist_not (with error bit) if failed to match the name to an ID.
  *   F_number_too_large (with error bit) if the given ID is too large.
  *
- *   Errors (with error bit) from: f_account_id_user_by_name().
+ *   Errors (with error bit) from: f_account_id_by_name().
  *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
  *
- * @see f_account_id_user_by_name()
+ * @see f_account_id_by_name()
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_controller_get_id_user_
@@ -254,10 +254,10 @@ extern "C" {
  *   F_exist_not (with error bit) if failed to match the name to an ID.
  *   F_number_too_large (with error bit) if the given ID is too large.
  *
- *   Errors (with error bit) from: f_account_id_group_by_name().
+ *   Errors (with error bit) from: f_account_group_id_by_name().
  *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
  *
- * @see f_account_id_group_by_name()
+ * @see f_account_group_id_by_name()
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_controller_get_id_group_
