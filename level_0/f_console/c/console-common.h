@@ -251,7 +251,7 @@ extern "C" {
  * symbol_short: The single character string, such as 'h' in '-h'.
  * symbol_long:  The multi-character string, such as 'help' in '--help'.
  * symbol_other: The special meaning parameter, such as 'all' in 'make all'.
- * has_values:    Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
+ * values_total:  Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
  * type:          One of the f_console_type_* codes, defining how this parameter is to be processed.
  * result:        A code representing that the parameter is found and how it is found ('-h' vs '--help').
  * location:      The last location in argv[] where this parameter is found.
@@ -266,7 +266,7 @@ extern "C" {
     const char *symbol_long;
     const char *symbol_other;
 
-    const uint8_t has_values;
+    const uint8_t values_total;
     const uint8_t type;
 
     f_array_length_t result;
@@ -277,11 +277,48 @@ extern "C" {
     f_array_lengths_t values;
   } f_console_parameter_t;
 
-  #define f_console_parameter_t_initialize { 0, 0, 0, 0, 0, f_array_length_t_initialize, f_array_length_t_initialize, f_array_length_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
+  #define f_console_parameter_t_initialize { \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    f_array_length_t_initialize, \
+    f_array_length_t_initialize, \
+    f_array_length_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
 
-  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value) { symbol_short, symbol_long, symbol_other, has_values, type_value, f_console_result_none_e, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
+  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, values_total, type_value) { \
+    symbol_short, \
+    symbol_long, \
+    symbol_other, \
+    values_total, \
+    type_value, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
 
-  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_other, has_values, type_value, result, location, location_sub, locations, locations_sub, values) { symbol_short, symbol_long, symbol_other, has_values, type_value, result, total, location, location_sub, locations, locations_sub, values }
+  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_other, values_total, type_value, result, location, location_sub, locations, locations_sub, values) { \
+    symbol_short, \
+    symbol_long, \
+    symbol_other, \
+    values_total, \
+    type_value, \
+    result, \
+    total, \
+    location, \
+    location_sub, \
+    locations, \
+    locations_sub, \
+    values \
+  }
 #endif // _di_f_console_parameter_t_
 
 /**

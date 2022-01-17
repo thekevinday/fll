@@ -32,7 +32,7 @@ extern "C" {
 #endif
 
 /**
- * Determine the type code the given input parameter represents.
+ * Determine the type code represented by the given input parameter.
  *
  * @param input
  *   The input parameter to process.
@@ -46,50 +46,6 @@ extern "C" {
 #ifndef _di_f_console_identify_
   extern f_status_t f_console_identify(const f_string_t input, f_console_id_t *result);
 #endif // _di_f_console_identify_
-
-/**
- * Process console parameters.
- *
- * Short parameters are processed as follows:
- * - Begin with either '-' or '+'.
- * - "Empty" parameters are allow, such that '-' or '+' are valid parameters.
- * - Are one character long.
- * - May be grouped as a single parameter, such as "tar -xcf" and "tar -x -c -f" are equivalent.
- * - Additional parameters must immediately follow the parameter or grouped parameters, such as "tar -xfc file.tar.gz" or "tar -x -f file.tar.gz -c".
- *
- * Long parameters are processed as follows:
- * - Begin with either '--' or '++'.
- * - "Empty" parameters are allow, such that '--' or '++' are valid parameters.
- * - Are any length long so long as it is less than f_console_length_size.
- * - May not be grouped and must be separated from any subsequent parameter, such as: "tar --extract --create --file".
- * - Additional parameters must immediately follow the parameter, such as "tar --extract --file file.tar.gz --create".
- *
- * Other parameters are processed as follows:
- * - Anything that does not begin with '-', '+', '--', or '++'.
- * - Are any length long so long as it is less than f_console_length_size.
- * - May not be grouped and must be separated from any subsequent parameter, such as: "tar extract create file".
- * - Additional parameters must immediately follow the parameter, such as "tar extract file file.tar.gz create".
- *
- * @param arguments
- *   The parameters passed to the process.
- * @param parameters
- *   The console parameters to look for.
- *   This will be updated by this function with the results.
- * @param remaining
- *   A list of remaining parameters not associated with anything.
- *
- * @return
- *   F_none on success.
- *   F_data_not if "values" parameters were expected but not found.
- *
- *   F_array_too_large (with error bit) if a buffer would exceed max length.
- *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is an invalid UTF-8 character, when processing arguments.
- */
-#ifndef _di_f_console_parameter_process_
-  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_array_lengths_t *remaining);
-#endif // _di_f_console_parameter_process_
 
 /**
  * Given a set of parameter choices, determine which one has the highest priority.
@@ -152,6 +108,50 @@ extern "C" {
 #ifndef _di_f_console_parameter_prioritize_right_
   extern f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
 #endif // _di_f_console_parameter_prioritize_right_
+
+/**
+ * Process console parameters.
+ *
+ * Short parameters are processed as follows:
+ *   - Begin with either '-' or '+'.
+ *   - "Empty" parameters are allow, such that '-' or '+' are valid parameters.
+ *   - Are one character long.
+ *   - May be grouped as a single parameter, such as "tar -xcf" and "tar -x -c -f" are equivalent.
+ *   - Additional parameters must immediately follow the parameter or grouped parameters, such as "tar -xfc file.tar.gz" or "tar -x -f file.tar.gz -c".
+ *
+ * Long parameters are processed as follows:
+ *   - Begin with either '--' or '++'.
+ *   - "Empty" parameters are allow, such that '--' or '++' are valid parameters.
+ *   - Are any length long so long as it is less than f_console_length_size.
+ *   - May not be grouped and must be separated from any subsequent parameter, such as: "tar --extract --create --file".
+ *   - Additional parameters must immediately follow the parameter, such as "tar --extract --file file.tar.gz --create".
+ *
+ * Other parameters are processed as follows:
+ *   - Anything that does not begin with '-', '+', '--', or '++'.
+ *   - Are any length long so long as it is less than f_console_length_size.
+ *   - May not be grouped and must be separated from any subsequent parameter, such as: "tar extract create file".
+ *   - Additional parameters must immediately follow the parameter, such as "tar extract file file.tar.gz create".
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param parameters
+ *   The console parameters to look for.
+ *   This will be updated by this function with the results.
+ * @param remaining
+ *   A list of remaining parameters not associated with anything.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if "values" parameters were expected but not found.
+ *
+ *   F_array_too_large (with error bit) if a buffer would exceed max length.
+ *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character, when processing arguments.
+ */
+#ifndef _di_f_console_parameter_process_
+  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_array_lengths_t *remaining);
+#endif // _di_f_console_parameter_process_
 
 #ifdef __cplusplus
 } // extern "C"
