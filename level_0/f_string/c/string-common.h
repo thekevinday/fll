@@ -48,8 +48,7 @@ extern "C" {
   #define macro_f_string_t_delete_simple(string, length)  f_memory_resize(length, 0, sizeof(f_string_t), (void **) & string);
   #define macro_f_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_string_t), (void **) & string);
 
-  // @fixme update all code utilizing f_array_length_t on a string, such as strnlen().
-  #define F_string_t_size_d F_type_size_64_positive_d
+  #define F_string_t_size_d F_number_t_size_positive_d
 #endif // _di_f_string_t_
 
 /**

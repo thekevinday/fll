@@ -223,7 +223,7 @@ extern "C" {
  * This is intended to be used in buffers, such as strings, and in argument parameters.
  *
  * Provides additional custom types so that it can be more easily be overwritten.
- * Specifically, there is support for using 32-bit, 64-bit or 128-bit lengths.
+ * Specifically, there is support for using 32-bit, 64-bit, or 128-bit lengths.
  *
  * 64-bit is the designed default.
  */
@@ -238,9 +238,7 @@ extern "C" {
   #define F_number_t_size_max_unsigned_d F_type_size_max_64_unsigned_d
   #define F_number_t_size_max_positive_d F_type_size_max_64_positive_d
   #define F_number_t_size_max_negative_d F_type_size_max_64_negative_d
-#endif // _di_f_type_number_64_t_
-
-#ifdef _en_f_type_number_32_t_
+#elif defined(_en_f_type_number_32_t_)
   typedef int32_t  f_number_signed_t;
   typedef uint32_t f_number_unsigned_t;
 
@@ -251,9 +249,7 @@ extern "C" {
   #define F_number_t_size_max_unsigned_d F_type_size_max_32_unsigned_d
   #define F_number_t_size_max_positive_d F_type_size_max_32_positive_d
   #define F_number_t_size_max_negative_d F_type_size_max_32_negative_d
-#endif // _en_f_type_number_32_t_
-
-#ifdef _en_f_type_number_128_t_
+#elif defined(_en_f_type_number_128_t_)
   typedef f_int_128_t  f_number_signed_t;
   typedef f_uint_128_t f_number_unsigned_t;
 
