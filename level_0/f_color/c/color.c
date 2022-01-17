@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_color_load_context_
-  f_status_t f_color_load_context(f_color_context_t *context, const bool use_light_colors) {
+  f_status_t f_color_load_context(const bool use_light_colors, f_color_context_t * const context) {
     #ifndef _di_level_0_parameter_checking_
       if (!context) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -22,35 +22,35 @@ extern "C" {
       }
     }
 
-    f_status_t status = macro_fl_color_save_1(&context->reset, context->format, context->list.reset);
+    f_status_t status = f_color_save_1(context->format, context->list.reset, &context->reset);
 
     if (F_status_is_error_not(status)) {
-      status = macro_fl_color_save_1(&context->warning, context->format, context->list.yellow);
+      status = f_color_save_1(context->format, context->list.yellow, &context->warning);
     }
 
     if (F_status_is_error_not(status)) {
-      status = macro_fl_color_save_2(&context->error, context->format, context->list.bold, context->list.red);
+      status = f_color_save_2(context->format, context->list.bold, context->list.red, &context->error);
     }
 
     if (F_status_is_error_not(status)) {
-      status = macro_fl_color_save_2(&context->success, context->format, context->list.bold, context->list.green);
+      status = f_color_save_2(context->format, context->list.bold, context->list.green, &context->success);
     }
 
     if (F_status_is_error_not(status)) {
-      status = macro_fl_color_save_1(&context->notable, context->format, context->list.bold);
+      status = f_color_save_1(context->format, context->list.bold, &context->notable);
     }
 
     if (use_light_colors) {
       if (F_status_is_error_not(status)) {
-        status = macro_fl_color_save_2(&context->title, context->format, context->list.bold, context->list.blue);
+        status = f_color_save_2(context->format, context->list.bold, context->list.blue, &context->title);
       }
 
       if (F_status_is_error_not(status)) {
-        status = macro_fl_color_save_1(&context->important, context->format, context->list.blue);
+        status = f_color_save_1(context->format, context->list.blue, &context->important);
       }
 
       if (F_status_is_error_not(status)) {
-        status = macro_fl_color_save_1(&context->standout,  context->format, context->list.purple);
+        status = f_color_save_1(context->format, context->list.purple, &context->standout);
       }
 
       if (F_status_is_error_not(status)) {
@@ -59,15 +59,15 @@ extern "C" {
     }
     else {
       if (F_status_is_error_not(status)) {
-        status = macro_fl_color_save_2(&context->title, context->format, context->list.bold, context->list.yellow);
+        status = f_color_save_2(context->format, context->list.bold, context->list.yellow, &context->title);
       }
 
       if (F_status_is_error_not(status)) {
-        status = macro_fl_color_save_2(&context->important, context->format, context->list.bold, context->list.green);
+        status = f_color_save_2(context->format, context->list.bold, context->list.green, &context->important);
       }
 
       if (F_status_is_error_not(status)) {
-        status = macro_fl_color_save_1(&context->standout, context->format, context->list.green);
+        status = f_color_save_1(context->format, context->list.green, &context->standout);
       }
 
       if (F_status_is_error_not(status)) {
@@ -111,226 +111,195 @@ extern "C" {
   }
 #endif // _di_f_color_load_context_
 
-#ifndef _di_f_color_save_
-  f_status_t f_color_save(f_string_dynamic_t * const buffer, const f_color_format_t format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
+#ifndef _di_f_color_save_1_
+  f_status_t f_color_save_1(const f_color_format_t format, const f_string_static_t color1, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
-      if (!color1) return F_status_set_error(F_parameter);
-
-      // Require all data to be in the proper order.
-      if (!color2 && (color3 || color4 || color5)) return F_status_set_error(F_parameter);
-      if (!color3 && (color4 || color5))           return F_status_set_error(F_parameter);
-      if (!color4 && color5)                       return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_array_length_t size_string = 0;
-    uint8_t size_begin = 0;
-    uint8_t size_medium = 0;
-    uint8_t size_end = 0;
-    uint8_t size_color1 = 0;
-    uint8_t size_color2 = 0;
-    uint8_t size_color3 = 0;
-    uint8_t size_color4 = 0;
-    uint8_t size_color5 = 0;
+    f_status_t status = F_none;
 
-    if (format.begin) {
-      size_begin = strnlen(format.begin, F_color_max_size_d);
-      size_string += size_begin;
-    }
+    status = f_string_dynamic_increase_by(format.begin.used + format.end.used + color1.used + 1, buffer);
+    if (F_status_is_error(status)) return status;
 
-    if (format.medium) {
-      size_medium += strnlen(format.medium, F_color_max_size_d);
-    }
+    status = f_string_dynamic_append(format.begin, buffer);
+    if (F_status_is_error(status)) return status;
 
-    if (format.end) {
-      size_end = strnlen(format.end, F_color_max_size_d);
-      size_string += size_end;
-    }
+    status = f_string_dynamic_append(color1, buffer);
+    if (F_status_is_error(status)) return status;
 
-    size_color1 = strnlen(color1, F_color_max_size_d);
-    size_string += size_color1;
-
-    if (color2) {
-      size_color2 = strnlen(color2, F_color_max_size_d);
-      size_string += size_color2;
-    }
-
-    if (color3) {
-      size_color3 = strnlen(color3, F_color_max_size_d);
-      size_string += size_color3;
-    }
-
-    if (color4) {
-      size_color4 = strnlen(color4, F_color_max_size_d);
-      size_string += size_color4;
-    }
-
-    if (color5) {
-      size_color5 = strnlen(color5, F_color_max_size_d);
-      size_string += size_color5;
-    }
-
-    {
-      const f_status_t status = f_string_dynamic_increase_by(size_string + 1, buffer);
-      if (F_status_is_error(status)) return status;
-    }
-
-    if (!color2) {
-      if (size_begin) {
-        memcpy(buffer->string + buffer->used, format.begin, size_begin);
-        buffer->used += size_begin;
-      }
-
-      memcpy(buffer->string + buffer->used, color1, size_color1);
-      buffer->used += size_color1;
-
-      if (size_end) {
-        memcpy(buffer->string + buffer->used, format.end, size_end);
-        buffer->used += size_end;
-      }
-    }
-    else if (!color3) {
-      if (size_begin) {
-        memcpy(buffer->string + buffer->used, format.begin, size_begin);
-        buffer->used += size_begin;
-      }
-
-      memcpy(buffer->string + buffer->used, color1, size_color1);
-      buffer->used += size_color1;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color2, size_color2);
-      buffer->used += size_color2;
-
-      if (size_end) {
-        memcpy(buffer->string + buffer->used, format.end, size_end);
-        buffer->used += size_end;
-      }
-    }
-    else if (!color4) {
-      if (size_begin) {
-        memcpy(buffer->string + buffer->used, format.begin, size_begin);
-        buffer->used += size_begin;
-      }
-
-      memcpy(buffer->string + buffer->used, color1, size_color1);
-      buffer->used += size_color1;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color2, size_color2);
-      buffer->used += size_color2;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color3, size_color3);
-      buffer->used += size_color3;
-
-      if (size_end) {
-        memcpy(buffer->string + buffer->used, format.end, size_end);
-        buffer->used += size_end;
-      }
-    }
-    else if (!color5) {
-      if (size_begin) {
-        memcpy(buffer->string + buffer->used, format.begin, size_begin);
-        buffer->used += size_begin;
-      }
-
-      memcpy(buffer->string + buffer->used, color1, size_color1);
-      buffer->used += size_color1;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color2, size_color2);
-      buffer->used += size_color2;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color3, size_color3);
-      buffer->used += size_color3;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color4, size_color4);
-      buffer->used += size_color4;
-
-      if (size_end) {
-        memcpy(buffer->string + buffer->used, format.end, size_end);
-        buffer->used += size_end;
-      }
-    }
-    else {
-      if (size_begin) {
-        memcpy(buffer->string + buffer->used, format.begin, size_begin);
-        buffer->used += size_begin;
-      }
-
-      memcpy(buffer->string + buffer->used, color1, size_color1);
-      buffer->used += size_color1;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color2, size_color2);
-      buffer->used += size_color2;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color3, size_color3);
-      buffer->used += size_color3;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color4, size_color4);
-      buffer->used += size_color4;
-
-      if (size_medium) {
-        memcpy(buffer->string + buffer->used, format.medium, size_medium);
-        buffer->used += size_medium;
-      }
-
-      memcpy(buffer->string + buffer->used, color5, size_color5);
-      buffer->used += size_color5;
-
-      if (size_end) {
-        memcpy(buffer->string + buffer->used, format.end, size_end);
-        buffer->used += size_end;
-      }
-    }
+    status = f_string_dynamic_append(format.end, buffer);
+    if (F_status_is_error(status)) return status;
 
     buffer->string[buffer->used] = 0;
 
     return F_none;
   }
-#endif // _di_f_color_save_
+#endif // _di_f_color_save_1_
+
+#ifndef _di_f_color_save_1_
+  f_status_t f_color_save_2(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, f_string_dynamic_t * const buffer) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!buffer) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status_t status = F_none;
+
+    status = f_string_dynamic_increase_by(format.begin.used + format.medium.used + format.end.used + color1.used + color2.used + 1, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.begin, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color1, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color2, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.end, buffer);
+    if (F_status_is_error(status)) return status;
+
+    buffer->string[buffer->used] = 0;
+
+    return F_none;
+  }
+#endif // _di_f_color_save_2_
+
+#ifndef _di_f_color_save_3_
+  f_status_t f_color_save_3(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, const f_string_static_t color3, f_string_dynamic_t * const buffer) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!buffer) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status_t status = F_none;
+
+    status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 2) + format.end.used + color1.used + color2.used + color3.used + 1, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.begin, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color1, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color2, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color3, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.end, buffer);
+    if (F_status_is_error(status)) return status;
+
+    buffer->string[buffer->used] = 0;
+
+    return F_none;
+  }
+#endif // _di_f_color_save_3_
+
+#ifndef _di_f_color_save_4_
+  f_status_t f_color_save_4(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, const f_string_static_t color3, const f_string_static_t color4, f_string_dynamic_t * const buffer) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!buffer) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status_t status = F_none;
+
+    status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 3) + format.end.used + color1.used + color2.used + color3.used + color4.used + 1, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.begin, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color1, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color2, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color3, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color4, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.end, buffer);
+    if (F_status_is_error(status)) return status;
+
+    buffer->string[buffer->used] = 0;
+
+    return F_none;
+  }
+#endif // _di_f_color_save_4_
+
+#ifndef _di_f_color_save_5_
+  f_status_t f_color_save_5(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, const f_string_static_t color3, const f_string_static_t color4, const f_string_static_t color5, f_string_dynamic_t * const buffer) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!buffer) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status_t status = F_none;
+
+    status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 4) + format.end.used + color1.used + color2.used + color3.used + color4.used + color5.used + 1, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.begin, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color1, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color2, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color3, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color4, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.medium, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(color5, buffer);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(format.end, buffer);
+    if (F_status_is_error(status)) return status;
+
+    buffer->string[buffer->used] = 0;
+
+    return F_none;
+  }
+#endif // _di_f_color_save_5_
 
 #ifdef __cplusplus
 } // extern "C"

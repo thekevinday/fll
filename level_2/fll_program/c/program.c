@@ -96,7 +96,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    // load colors unless told not to.
+    // Load colors unless told not to.
     if (decision == choices.id[0]) {
       context->mode = F_color_mode_no_color_d;
     }
@@ -106,7 +106,7 @@ extern "C" {
       macro_f_color_context_t_new(allocation_status, (*context));
       if (F_status_is_error(status)) return status;
 
-      status = f_color_load_context(context, decision == choices.id[1]);
+      status = f_color_load_context(decision == choices.id[1], context);
     }
 
     return status;

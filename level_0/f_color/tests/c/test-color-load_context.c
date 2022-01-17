@@ -9,7 +9,7 @@ extern "C" {
   void test__f_color_load_context__parameter_checking(void **state) {
 
     {
-      const f_status_t status = f_color_load_context(0, F_true);
+      const f_status_t status = f_color_load_context(F_true, 0);
 
       assert_int_equal(F_status_set_fine(status), F_parameter);
     }
@@ -39,7 +39,7 @@ void test__f_color_load_context__works(void **state) {
       will_return(__wrap_getenv, i);
       will_return(__wrap_getenv, terms[j]);
 
-      const f_status_t status = f_color_load_context(&context, F_true);
+      const f_status_t status = f_color_load_context(F_true, &context);
 
       assert_int_equal(status, F_none);
 

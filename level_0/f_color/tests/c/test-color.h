@@ -27,7 +27,11 @@
 
 // test includes.
 #include "test-color-load_context.h"
-#include "test-color-save.h"
+#include "test-color-save_1.h"
+#include "test-color-save_2.h"
+#include "test-color-save_3.h"
+#include "test-color-save_4.h"
+#include "test-color-save_5.h"
 
 #ifdef __cplusplus
 extern "C" {

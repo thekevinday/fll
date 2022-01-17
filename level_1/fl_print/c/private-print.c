@@ -424,7 +424,7 @@ extern "C" {
           const f_color_set_t value = va_arg(*ap, f_color_set_t);
 
           if (value.before) {
-            *status = f_print_terminated(value.before->string, stream);
+            *status = f_print_dynamic(*value.before, stream);
           }
 
           return string;
@@ -433,7 +433,7 @@ extern "C" {
           const f_color_set_t value = va_arg(*ap, f_color_set_t);
 
           if (value.after) {
-            *status = f_print_terminated(value.after->string, stream);
+            *status = f_print_dynamic(*value.after, stream);
           }
 
           return string;
