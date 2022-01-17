@@ -35,10 +35,10 @@ extern "C" {
  * The directory path is validated to exist.
  *
  * The path to a directy has the following very basic cleanup operations performed:
- * - Ensures that it always ends in a '/'.
- * - Ensures that multiple '/' in front or multiple '/' at end of string is reduced to a single '/' in front and a single '/' at end.
- * - Ensures that multiple '/' following './' at the start of the string is reduced to only './' ('.////' would become './').
- * - Ensures that multiple '/' following '../' at the start of the string is reduced to only '../' ('..////' would become '../').
+ *   - Ensures that it always ends in a '/'.
+ *   - Ensures that multiple '/' in front or multiple '/' at end of string is reduced to a single '/' in front and a single '/' at end.
+ *   - Ensures that multiple '/' following './' at the start of the string is reduced to only './' ('.////' would become './').
+ *   - Ensures that multiple '/' following '../' at the start of the string is reduced to only '../' ('..////' would become '../').
  *
  * This does not perform complex cleanup, such as '..///..///' to '../../'.
  *

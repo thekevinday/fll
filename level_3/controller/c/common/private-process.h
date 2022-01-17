@@ -43,15 +43,15 @@ extern "C" {
  * There should only be a single thread running any given Rule process at a time, guaranteeing the cache to not need read/write locks.
  *
  * Process States:
- * - idle:   No process is running for this rule.
- * - busy:   A process is actively using this, and is running synchronously.
- * - active: A process is actively using this, and is running asynchronously.
- * - done:   A process has finished running on this and there is a thread that needs to be cleaned up.
+ *   - idle:   No process is running for this rule.
+ *   - busy:   A process is actively using this, and is running synchronously.
+ *   - active: A process is actively using this, and is running asynchronously.
+ *   - done:   A process has finished running on this and there is a thread that needs to be cleaned up.
  *
  * Process Types:
- * - entry:   The process is started from an entry.
- * - exit:    The process is started from an exit.
- * - control: The process is started from a control operation.
+ *   - entry:   The process is started from an entry.
+ *   - exit:    The process is started from an exit.
+ *   - control: The process is started from a control operation.
  *
  * id:           The ID of this process relative to the processes array.
  * result:       The last return code from an execution of a process.

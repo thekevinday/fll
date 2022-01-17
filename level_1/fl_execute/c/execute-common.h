@@ -20,12 +20,12 @@ extern "C" {
  * A structure for containing additional parameters for the execute functions that call the execv() family of functions.
  *
  * FL_execute_parameter_option_*:
- * - exit:       Used to desginate to exit after calling child otherwise child process will return.
- * - path:       Used to designate that the full path to the program is to be passed in argument[0] instead of the program name (such as '/bin/bash' instead of 'bash').
- * - return:     Used to designate that the parent process will immediately return instead of waiting for the child process to complete.
- * - session:    Start a new session, set the process of the child as the controlling terminal.
- * - terminal:   (Not Implemented) open() a terminal (tty) before executing. @todo determine if and how to setup the terminal properly (this needs research and planning and may require further structural changes).
- * - threadsafe: Used to designate that threadsafe functions are to be used (such as: f_thread_signal_mask instead of f_signal_mask).
+ *   - exit:       Used to desginate to exit after calling child otherwise child process will return.
+ *   - path:       Used to designate that the full path to the program is to be passed in argument[0] instead of the program name (such as '/bin/bash' instead of 'bash').
+ *   - return:     Used to designate that the parent process will immediately return instead of waiting for the child process to complete.
+ *   - session:    Start a new session, set the process of the child as the controlling terminal.
+ *   - terminal:   (Not Implemented) open() a terminal (tty) before executing. @todo determine if and how to setup the terminal properly (this needs research and planning and may require further structural changes).
+ *   - threadsafe: Used to designate that threadsafe functions are to be used (such as: f_thread_signal_mask instead of f_signal_mask).
  *
  * option:      Accepts the bitwise options
  * wait:        Represents options passed to waitpid(), such as WUNTRACED.

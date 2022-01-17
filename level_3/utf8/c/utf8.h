@@ -8,10 +8,10 @@
  * This is intendend to support Unicode 14.0.
  *
  * This is a program for handling basic UTF-8 related conversions.
- * - Convert from UTF-8 character to binary.
- * - Convert from Unicode Codepoint (such as U+0000) to binary.
- * - Convert from UTF-8 binary to character.
- * - Convert from UTF-8 binary to Unicode Codepoint (such as U+0000).
+ *   - Convert from UTF-8 character to binary.
+ *   - Convert from Unicode Codepoint (such as U+0000) to binary.
+ *   - Convert from UTF-8 binary to character.
+ *   - Convert from UTF-8 binary to Unicode Codepoint (such as U+0000).
  */
 #ifndef _utf8_h
 
@@ -185,27 +185,27 @@ extern "C" {
 
   #define utf8_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(utf8_short_from_binary_s, utf8_long_from_binary_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_from_file_s, utf8_long_from_file_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_headers_s, utf8_long_headers_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_separate_s, utf8_long_headers_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_to_binary_s, utf8_long_to_binary_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_to_combining_s, utf8_long_to_combining_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_to_file_s, utf8_long_to_file_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_to_width_s, utf8_long_to_width_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(utf8_short_verify_s, utf8_long_verify_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_from_binary_s, utf8_long_from_binary_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_from_file_s, utf8_long_from_file_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_headers_s, utf8_long_headers_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_separate_s, utf8_long_headers_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_binary_s, utf8_long_to_binary_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_combining_s, utf8_long_to_combining_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_file_s, utf8_long_to_file_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_width_s, utf8_long_to_width_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_verify_s, utf8_long_verify_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define utf8_total_parameters_d 21
@@ -295,12 +295,12 @@ extern "C" {
  * Be sure to call utf8_main_delete() after executing this.
  *
  * If main.signal is non-zero, then this blocks and handles the following signals:
- * - F_signal_abort
- * - F_signal_broken_pipe
- * - F_signal_hangup
- * - F_signal_interrupt
- * - F_signal_quit
- * - F_signal_termination
+ *   - F_signal_abort
+ *   - F_signal_broken_pipe
+ *   - F_signal_hangup
+ *   - F_signal_interrupt
+ *   - F_signal_quit
+ *   - F_signal_termination
  *
  * @param main
  *   The main program data.

@@ -103,11 +103,11 @@ extern "C" {
  * The defines for conversion data.
  *
  * f_conversion_data_base_*:
- * - 2:  Basic base-2 conversion structure.
- * - 8:  Basic base-8 conversion structure.
- * - 10: Basic base-10 conversion structure.
- * - 12: Basic base-12 conversion structure.
- * - 16: Basic base-16 conversion structure.
+ *   - 2:  Basic base-2 conversion structure.
+ *   - 8:  Basic base-8 conversion structure.
+ *   - 10: Basic base-10 conversion structure.
+ *   - 12: Basic base-12 conversion structure.
+ *   - 16: Basic base-16 conversion structure.
  */
 #ifndef _di_f_conversion_data_t_defines_
   extern const f_conversion_data_t f_conversion_data_base_2_s;
@@ -121,22 +121,22 @@ extern "C" {
  * Define flags used by f_conversion_data_t.
  *
  * f_conversion_data_flag_*:
- * - align_left:      Use left-justification.
- * - base_prepend:    Prepend the base character, such as "0x", or "0X", defaulting to lowercase (this includes base 10) (does nothing for unsupported base units).
- * - base_upper:      Any alphabet characters in the number are made uppercase rather than lowercase and when *_base_prepend flag is used, use uppercase in the base prepend.
- * - exponent:        Use exponent rather than decimal for printing double values.
- * - exponent_either: Use either exponent or decimila for printing double values.
- * - exponent_upper:  When using exponent, display the exponent 'e' as uppercase 'E'.
- * - sign_always:     Always show the signs ("+" or "-").
- * - sign_pad:        If the sign is not to be shown, then add a space as a placeholder (ignored when *_sign_always is used).
- * - zeros_leading:   If the number has fewer digits that specified in the padding, then display leading zeros to fill the pad length.
+ *   - align_left:      Use left-justification.
+ *   - base_prepend:    Prepend the base character, such as "0x", or "0X", defaulting to lowercase (this includes base 10) (does nothing for unsupported base units).
+ *   - base_upper:      Any alphabet characters in the number are made uppercase rather than lowercase and when *_base_prepend flag is used, use uppercase in the base prepend.
+ *   - exponent:        Use exponent rather than decimal for printing double values.
+ *   - exponent_either: Use either exponent or decimila for printing double values.
+ *   - exponent_upper:  When using exponent, display the exponent 'e' as uppercase 'E'.
+ *   - sign_always:     Always show the signs ("+" or "-").
+ *   - sign_pad:        If the sign is not to be shown, then add a space as a placeholder (ignored when *_sign_always is used).
+ *   - zeros_leading:   If the number has fewer digits that specified in the padding, then display leading zeros to fill the pad length.
  *
  * Supported base prepend base units:
- * - base 2:  0b, 0B.
- * - base 8:  0o, 0O.
- * - base 10: 0t, 0T.
- * - base 12: 0d, 0D.
- * - base 16: 0x, 0X.
+ *   - base 2:  0b, 0B.
+ *   - base 8:  0o, 0O.
+ *   - base 10: 0t, 0T.
+ *   - base 12: 0d, 0D.
+ *   - base 16: 0x, 0X.
  */
 #ifndef _di_f_conversion_data_flag_
   #define F_conversion_data_flag_align_left_d      0x1

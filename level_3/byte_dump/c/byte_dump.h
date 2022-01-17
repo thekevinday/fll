@@ -82,16 +82,16 @@ extern "C" {
  * Byte Dump defines.
  *
  * byte_dump_mode_*:
- * - hexidecimal: Display using hexidecimal notation (base 16).
- * - duodecimal:  Display using duodecimal notation (base 12).
- * - octal:       Display using octal notation (base 8).
- * - binary:      Display using binary notation (base 2).
- * - decimal:     Display using decimal notation (base 10).
+ *   - hexidecimal: Display using hexidecimal notation (base 16).
+ *   - duodecimal:  Display using duodecimal notation (base 12).
+ *   - octal:       Display using octal notation (base 8).
+ *   - binary:      Display using binary notation (base 2).
+ *   - decimal:     Display using decimal notation (base 10).
  *
  * byte_dump_presentation_*:
- * - normal:  Normal presentation mode.
- * - simple:  Simple presentation mode.
- * - classic: Classic presentation mode.
+ *   - normal:  Normal presentation mode.
+ *   - simple:  Simple presentation mode.
+ *   - classic: Classic presentation mode.
  */
 #ifndef _di_byte_dump_defines_
   enum {
@@ -223,31 +223,31 @@ extern "C" {
 
   #define byte_dump_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(byte_dump_short_binary_s, byte_dump_long_binary_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_decimal_s, byte_dump_long_decimal_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_duodecimal_s, byte_dump_long_duodecimal_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_hexidecimal_s, byte_dump_long_hexidecimal_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_octal_s, byte_dump_long_octal_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_unicode_s, byte_dump_long_unicode_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_first_s, byte_dump_long_first_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_last_s, byte_dump_long_last_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_narrow_s, byte_dump_long_narrow_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_placeholder_s, byte_dump_long_placeholder_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_text_s, byte_dump_long_text_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_wide_s, byte_dump_long_wide_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(byte_dump_short_width_s, byte_dump_long_width_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, byte_dump_long_normal_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, byte_dump_long_simple_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, byte_dump_long_classic_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_binary_s, byte_dump_long_binary_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_decimal_s, byte_dump_long_decimal_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_duodecimal_s, byte_dump_long_duodecimal_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_hexidecimal_s, byte_dump_long_hexidecimal_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_octal_s, byte_dump_long_octal_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_unicode_s, byte_dump_long_unicode_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_first_s, byte_dump_long_first_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_last_s, byte_dump_long_last_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_narrow_s, byte_dump_long_narrow_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_placeholder_s, byte_dump_long_placeholder_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_text_s, byte_dump_long_text_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_wide_s, byte_dump_long_wide_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_width_s, byte_dump_long_width_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, byte_dump_long_normal_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, byte_dump_long_simple_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, byte_dump_long_classic_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define byte_dump_total_parameters_d 25
@@ -321,12 +321,12 @@ extern "C" {
  *   The parameters passed to the process.
  *
  * If main.signal is non-zero, then this blocks and handles the following signals:
- * - F_signal_abort
- * - F_signal_broken_pipe
- * - F_signal_hangup
- * - F_signal_interrupt
- * - F_signal_quit
- * - F_signal_termination
+ *   - F_signal_abort
+ *   - F_signal_broken_pipe
+ *   - F_signal_hangup
+ *   - F_signal_interrupt
+ *   - F_signal_quit
+ *   - F_signal_termination
  *
  * @return
  *   F_none on success.

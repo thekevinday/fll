@@ -20,8 +20,8 @@ extern "C" {
  * Types for FSS quote.
  *
  * f_fss_quote_type_*:
- * - single: Quote type is a single quote.
- * - double: Quote type is a double quote.
+ *   - single: Quote type is a single quote.
+ *   - double: Quote type is a double quote.
  */
 #ifndef _di_f_fss_quote_type_
   enum {

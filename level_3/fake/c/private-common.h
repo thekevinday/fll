@@ -1202,12 +1202,12 @@ extern "C" {
  * Designate the current process block state.
  *
  * fake_condition_result_*:
- * - none:    No if-condition is set.
- * - if:      An if-condition is set and in use.
- * - if_skip: An else-if-condition that is to be skipped.
- * - next:    An if-condition completed, process the "else", if found.
- * - skip:    An if-condition completed, skip the "else", if found.
- * - else:    An else-condition is set and in use.
+ *   - none:    No if-condition is set.
+ *   - if:      An if-condition is set and in use.
+ *   - if_skip: An else-if-condition that is to be skipped.
+ *   - next:    An if-condition completed, process the "else", if found.
+ *   - skip:    An if-condition completed, skip the "else", if found.
+ *   - else:    An else-condition is set and in use.
  */
 #ifndef _di_fake_state_process_block_
   enum {
@@ -1224,10 +1224,10 @@ extern "C" {
  * Designate that the if state is true, false, or undefined (none).
  *
  * fake_condition_result_*:
- * - none:  The result of the if-condition is not set.
- * - false: The result of the if-condition is false.
- * - true:  The result of the if-condition is true.
- * - error: An error occurred, any if-condition is to be skipped, falling back to the else condition, if any.
+ *   - none:  The result of the if-condition is not set.
+ *   - false: The result of the if-condition is false.
+ *   - true:  The result of the if-condition is true.
+ *   - error: An error occurred, any if-condition is to be skipped, falling back to the else condition, if any.
  */
 #ifndef _di_fake_condition_result_
   enum {

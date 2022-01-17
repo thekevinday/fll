@@ -20,10 +20,10 @@ extern "C" {
  * Error file types.
  *
  * fll_error_file_type_*:
- * - file:      File error.
- * - directory: Directory error.
- * - path:      Path error.
- * - pipe:      Pipe error.
+ *   - file:      File error.
+ *   - directory: Directory error.
+ *   - path:      Path error.
+ *   - pipe:      Pipe error.
  */
 #ifndef _di_fll_error_file_type_
   enum {

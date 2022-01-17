@@ -25,15 +25,15 @@ extern "C" {
  * To be consistent with the historical use, "-" is referred to as "enable" and "+" is referred to as disable (which is the opposite of the usual mathematical interpetation of those symbols).
  *
  * f_console_*:
- * - none:                A basic parameter without any prefixes attached.
- * - short_enable:        An "enable" short parameter: "-".
- * - short_disable:       An "disable" short parameter: "+".
- * - long_enable:         An "enable" long parameter: "--".
- * - long_disable:        An "disable" long parameter: "++".
- * - empty_short_enable:  A "-" by itself, considered an "enable".
- * - empty_short_disable: A "+" by itself, considered an "disable".
- * - empty_long_enable:   A "--" by itself, considered an "enable".
- * - empty_long_disable:  A "++" by itself, considered an "disable".
+ *   - none:                A basic parameter without any prefixes attached.
+ *   - short_enable:        An "enable" short parameter: "-".
+ *   - short_disable:       An "disable" short parameter: "+".
+ *   - long_enable:         An "enable" long parameter: "--".
+ *   - long_disable:        An "disable" long parameter: "++".
+ *   - empty_short_enable:  A "-" by itself, considered an "enable".
+ *   - empty_short_disable: A "+" by itself, considered an "disable".
+ *   - empty_long_enable:   A "--" by itself, considered an "enable".
+ *   - empty_long_disable:  A "++" by itself, considered an "disable".
  */
 #ifndef _di_f_console_ids_
   enum {
@@ -85,26 +85,26 @@ extern "C" {
  * This is not stricly a requirement, but expect level 3 projects to work this way.
  *
  * The following options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation:
- * - debug:   Enable debugging, which will likely increase output verbosity.
- * - normal:  Use normal printing (don't use debug/quiet/verbose).
- * - quiet:   Decrease verbosity, print less, in some use cases this could mean printing nothing.
- * - verbose: Increase verbosity, print more, in some use cases this could mean printing just about everything.
+ *   - debug:   Enable debugging, which will likely increase output verbosity.
+ *   - normal:  Use normal printing (don't use debug/quiet/verbose).
+ *   - quiet:   Decrease verbosity, print less, in some use cases this could mean printing nothing.
+ *   - verbose: Increase verbosity, print more, in some use cases this could mean printing just about everything.
  *
  * The following are less subjective in interpretation but do allow some flexibility.
- * - dark:     Do display color intended for dark backgrounds (often the default behavior) when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
- * - help:     Display the help text. This does not define how the text is displayed only that the text is displayed.
- * - light:    Do display color intended for light backgrounds when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
- * - no_color: Do not display color when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
- * - version:  Should always print only the version number, no colors, but what represents the version number is undefined by this project.
+ *   - dark:     Do display color intended for dark backgrounds (often the default behavior) when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ *   - help:     Display the help text. This does not define how the text is displayed only that the text is displayed.
+ *   - light:    Do display color intended for light backgrounds when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ *   - no_color: Do not display color when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ *   - version:  Should always print only the version number, no colors, but what represents the version number is undefined by this project.
  *
  * The following options are for special purposes:
- * - status_in:  Is intended to accept the name of an environment variable in which to read the status from.
- * - status_out: Is intended to accept the name of an environment variable in which to ride the status to.
+ *   - status_in:  Is intended to accept the name of an environment variable in which to read the status from.
+ *   - status_out: Is intended to accept the name of an environment variable in which to ride the status to.
  *
  * In the case of "status_in" and "status_out", the environment variable will store a string representing the base-10 unsigned 16-bit status code.
- * - In the case of "status_in" the environment variable is being read in, which means that it should be the status from some previous execution.
- * - In the case of "status_out" the environment variable is being written to, which means that it should store the status this program exits with.
- *   - To avoid problems with the status code after a program is forcibly killed, the status_out environment variable should be cleared at program start.
+ *   - In the case of "status_in" the environment variable is being read in, which means that it should be the status from some previous execution.
+ *   - In the case of "status_out" the environment variable is being written to, which means that it should store the status this program exits with.
+ *     - To avoid problems with the status code after a program is forcibly killed, the status_out environment variable should be cleared at program start.
  */
 #ifndef _di_f_console_standard_s_
   #define F_console_standard_short_dark_s       "d"
@@ -194,14 +194,14 @@ extern "C" {
  * Provide console type enumerations:
  *
  * f_console_result_*:
- * - none:   Parameter not found.
- * - found:  Parameter found.
- * - values: Parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
+ *   - none:   Parameter not found.
+ *   - found:  Parameter found.
+ *   - values: Parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
  *
  * f_console_type_*:
- * - normal:  Parameters using minus sign, such as '--help'.
- * - inverse: Parameters using plus sign, such as '++version'.
- * - other:   Parameters using neither minus nor plus sign, such as 'build'.
+ *   - normal:  Parameters using minus sign, such as '--help'.
+ *   - inverse: Parameters using plus sign, such as '++version'.
+ *   - other:   Parameters using neither minus nor plus sign, such as 'build'.
  */
 #ifndef _di_f_console_types_t_
   typedef uint16_t f_console_id_t;
@@ -225,10 +225,10 @@ extern "C" {
  * Intended to be used for the basic/standard verbosity modes for all programs following this practice.
  *
  * f_console_verbosity_*:
- * - quiet:   Verbosity is set to quiet.
- * - normal:  Verbosity is set to normal.
- * - verbose: Verbosity is set to verbose.
- * - debug:   Verbosity is set to debug.
+ *   - quiet:   Verbosity is set to quiet.
+ *   - normal:  Verbosity is set to normal.
+ *   - verbose: Verbosity is set to verbose.
+ *   - debug:   Verbosity is set to debug.
  */
 #ifndef _di_f_console_verbosity_
   enum {
@@ -246,20 +246,17 @@ extern "C" {
  * The long parameters are will be prepended with either '--' or '++'.
  * The other parameters are for any other parameter that has no prepended characters.
  *
- * - symbol_short: The single character string, such as 'h' in '-h'.
- * - symbol_long:  The multi-character string, such as 'help' in '--help'.
- * - symbol_other: The special meaning parameter, such as 'all' in 'make all'.
- *
- * - has_values: Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
- * - type:       One of the f_console_type_* codes, defining how this parameter is to be processed.
- *
- * - result: A code representing that the parameter is found and how it is found ('-h' vs '--help').
- *
- * - location:      The last location in argv[] where this parameter is found.
- * - location_sub:  The last sub-location at location in argv (only used by short parameters, such as -h or +l).
- * - locations:     All locations within argv where this parameter is found (order is preserved).
- * - locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
- * - values:        An array of locations representing where in the argv[] the values arguments are found.
+ * symbol_short: The single character string, such as 'h' in '-h'.
+ * symbol_long:  The multi-character string, such as 'help' in '--help'.
+ * symbol_other: The special meaning parameter, such as 'all' in 'make all'.
+ * has_values:    Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
+ * type:          One of the f_console_type_* codes, defining how this parameter is to be processed.
+ * result:        A code representing that the parameter is found and how it is found ('-h' vs '--help').
+ * location:      The last location in argv[] where this parameter is found.
+ * location_sub:  The last sub-location at location in argv (only used by short parameters, such as -h or +l).
+ * locations:     All locations within argv where this parameter is found (order is preserved).
+ * locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
+ * values:        An array of locations representing where in the argv[] the values arguments are found.
  */
 #ifndef _di_f_console_parameter_t_
   typedef struct {

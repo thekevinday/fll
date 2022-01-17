@@ -15,21 +15,21 @@
  * Additional languages can be provided via explicit operations.
  *
  * The built sources are placed in the build directory with the following structure:
- * - build/
- *   - data/
- *   - documents/
- *   - includes/
- *   - libraries/
- *     - script/
- *     - shared/
- *     - static/
- *   - objects/
- *   - programs/
- *     - script/
- *     - shared/
- *     - static/
- *   - settings/
- *   - stage/
+ *   - build/
+ *     - data/
+ *     - documents/
+ *     - includes/
+ *     - libraries/
+ *       - script/
+ *       - shared/
+ *       - static/
+ *     - objects/
+ *     - programs/
+ *       - script/
+ *       - shared/
+ *       - static/
+ *     - settings/
+ *     - stage/
  *
  * The "data/" directory contains all file data, such as firmware or files commonly found under /usr/share in a standard GNU Linux system.
  * The "documents/" directory contains all documentation after any build-time processing.
@@ -354,34 +354,34 @@ extern "C" {
 
   #define fake_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(fake_short_define_s, fake_long_define_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fake_short_fakefile_s, fake_long_fakefile_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fake_short_mode_s, fake_long_mode_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fake_short_process_s, fake_long_process_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fake_short_settings_s, fake_long_settings_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fake_short_path_build_s, fake_long_path_build_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fake_short_path_data_s, fake_long_path_data_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fake_short_path_sources_s, fake_long_path_sources_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(fake_short_path_work_s, fake_long_path_work_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, fake_long_documents_disabled_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, fake_long_documents_enabled_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, fake_long_shared_disabled_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, fake_long_shared_enabled_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, fake_long_static_disabled_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, fake_long_static_enabled_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(0, 0, fake_other_operation_build_s, 0, f_console_type_other_e), \
-      f_console_parameter_t_initialize(0, 0, fake_other_operation_clean_s, 0, f_console_type_other_e), \
-      f_console_parameter_t_initialize(0, 0, fake_other_operation_make_s, 0, f_console_type_other_e), \
-      f_console_parameter_t_initialize(0, 0, fake_other_operation_skeleton_s, 0, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(fake_short_define_s, fake_long_define_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_fakefile_s, fake_long_fakefile_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_mode_s, fake_long_mode_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_process_s, fake_long_process_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_settings_s, fake_long_settings_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_path_build_s, fake_long_path_build_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_path_data_s, fake_long_path_data_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_path_sources_s, fake_long_path_sources_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fake_short_path_work_s, fake_long_path_work_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, fake_long_documents_disabled_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, fake_long_documents_enabled_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, fake_long_shared_disabled_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, fake_long_shared_enabled_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, fake_long_static_disabled_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, fake_long_static_enabled_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(0, 0, fake_other_operation_build_s, 0, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(0, 0, fake_other_operation_clean_s, 0, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(0, 0, fake_other_operation_make_s, 0, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(0, 0, fake_other_operation_skeleton_s, 0, f_console_type_other_e), \
     }
 
   #define fake_total_parameters_d 28
@@ -544,12 +544,12 @@ extern "C" {
  * Be sure to call fake_main_delete() after executing this.
  *
  * If main.signal is non-zero, then this blocks and handles the following signals:
- * - F_signal_abort
- * - F_signal_broken_pipe
- * - F_signal_hangup
- * - F_signal_interrupt
- * - F_signal_quit
- * - F_signal_termination
+ *   - F_signal_abort
+ *   - F_signal_broken_pipe
+ *   - F_signal_hangup
+ *   - F_signal_interrupt
+ *   - F_signal_quit
+ *   - F_signal_termination
  *
  * @param main
  *   The main program data.

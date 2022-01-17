@@ -283,12 +283,12 @@ extern "C" {
  * Be sure to call controller_main_delete() after executing this.
  *
  * If main.signal is non-zero, then this blocks and handles the following signals:
- * - F_signal_abort
- * - F_signal_broken_pipe
- * - F_signal_hangup
- * - F_signal_interrupt
- * - F_signal_quit
- * - F_signal_termination
+ *   - F_signal_abort
+ *   - F_signal_broken_pipe
+ *   - F_signal_hangup
+ *   - F_signal_interrupt
+ *   - F_signal_quit
+ *   - F_signal_termination
  *
  * @param main
  *   The main program data.
@@ -315,12 +315,12 @@ extern "C" {
  * Be sure to call this after executing controller_main().
  *
  * If main.signal is non-zero, then this blocks and handles the following signals:
- * - F_signal_abort
- * - F_signal_broken_pipe
- * - F_signal_hangup
- * - F_signal_interrupt
- * - F_signal_quit
- * - F_signal_termination
+ *   - F_signal_abort
+ *   - F_signal_broken_pipe
+ *   - F_signal_hangup
+ *   - F_signal_interrupt
+ *   - F_signal_quit
+ *   - F_signal_termination
  *
  * @param main
  *   The main program data.

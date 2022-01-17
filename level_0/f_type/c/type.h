@@ -74,9 +74,9 @@ extern "C" {
  * This allows for the error to be processed with all relevant data before the function returns.
  *
  * These two callbacks (handle() and interrupt()) accept the following parameters:
- * - error:    The current status code (with error bit as appropriate) (only passed to handle()).
- * - state:    The state data. Must be of type f_state_t. Must not be NULL.
- * - internal: Additional data passed by the function being called, often containing internal data to the called function. May be NULL.
+ *   - error:    The current status code (with error bit as appropriate) (only passed to handle()).
+ *   - state:    The state data. Must be of type f_state_t. Must not be NULL.
+ *   - internal: Additional data passed by the function being called, often containing internal data to the called function. May be NULL.
  *
  * The "custom" property on f_state_t is intended to be used so that the callback, such as the interrupt(), can make changes to something within the scope of the parent.
  *

@@ -10,28 +10,28 @@
  * @todo consider is_graph() functions being their own data set (review unicode to see which of checking only for graph() vs checking for all not-graph will be the smaller set).
  *
  * Identifiers:
- * - UTF_8-1: 1000 0000
- * - UTF_8-2: 1100 0000
- * - UTF_8-3: 1110 0000
- * - UTF_8-4: 1111 0000
+ *   - UTF_8-1: 1000 0000
+ *   - UTF_8-2: 1100 0000
+ *   - UTF_8-3: 1110 0000
+ *   - UTF_8-4: 1111 0000
  *
  * Values:
- * - UTF_8-1: 1011 1111
- * - UTF_8-2: 1101 1111
- * - UTF_8-3: 1110 1111
- * - UTF_8-4: 1111 0111
+ *   - UTF_8-1: 1011 1111
+ *   - UTF_8-2: 1101 1111
+ *   - UTF_8-3: 1110 1111
+ *   - UTF_8-4: 1111 0111
  *
  * Identifier Structure:
- * - UTF_8-1: 1000 0000
- * - UTF_8-2: 1100 0000 1000 0000
- * - UTF_8-3: 1110 0000 1000 0000 1000 0000
- * - UTF_8-4: 1111 0000 1000 0000 1000 0000 1000 0000
+ *   - UTF_8-1: 1000 0000
+ *   - UTF_8-2: 1100 0000 1000 0000
+ *   - UTF_8-3: 1110 0000 1000 0000 1000 0000
+ *   - UTF_8-4: 1111 0000 1000 0000 1000 0000 1000 0000
  *
  * Value Structure:
- * - UTF_8-1: 10xx xxxx
- * - UTF_8-2: 110x xxxx, 10xx xxxx
- * - UTF_8-3: 1110 xxxx, 10xx xxxx, 10xx xxxx
- * - UTF_8-4: 1111 0xxx, 10xx xxxx, 10xx xxxx, 10xx xxxx
+ *   - UTF_8-1: 10xx xxxx
+ *   - UTF_8-2: 110x xxxx, 10xx xxxx
+ *   - UTF_8-3: 1110 xxxx, 10xx xxxx, 10xx xxxx
+ *   - UTF_8-4: 1111 0xxx, 10xx xxxx, 10xx xxxx, 10xx xxxx
  */
 #ifndef _F_utf_h
 #define _F_utf_h

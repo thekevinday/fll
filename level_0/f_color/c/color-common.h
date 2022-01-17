@@ -229,10 +229,10 @@ extern "C" {
  * Color modes communicate how the color is supposed to be.
  *
  * F_color_mode_*:
- * - none:     define designates that there is no assigned mode (the mode is undefined).
- * - no_color: define designates that the color mode is set to no color (disable colors).
- * - dark:     define designates that the color mode is for dark backgrounds.
- * - light:    define designates that the color mode is for light backgrounds.
+ *   - none:     define designates that there is no assigned mode (the mode is undefined).
+ *   - no_color: define designates that the color mode is set to no color (disable colors).
+ *   - dark:     define designates that the color mode is for dark backgrounds.
+ *   - light:    define designates that the color mode is for light backgrounds.
  */
 #ifndef _di_f_color_mode_t_
   typedef uint8_t f_color_mode_t;
@@ -297,8 +297,8 @@ extern "C" {
  * Different system will support a different set.
  *
  * Custom initializers are provided for common defaults:
- * - f_color_t_initialize_linux: ideal for linux console.
- * - f_color_t_initialize_xterminal: ideal for linux x-terminal.
+ *   - f_color_t_initialize_linux: ideal for linux console.
+ *   - f_color_t_initialize_xterminal: ideal for linux x-terminal.
  *
  * reset:            String used to describe reset color code.
  * bold:             String used to describe bold color code.
