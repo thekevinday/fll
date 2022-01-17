@@ -206,6 +206,8 @@ extern "C" {
 #ifndef _di_f_console_types_t_
   typedef uint16_t f_console_id_t;
 
+  #define f_console_id_t_initialize 0
+
   enum {
     f_console_result_none_e = 1,
     f_console_result_found_e,
@@ -275,9 +277,11 @@ extern "C" {
     f_array_lengths_t values;
   } f_console_parameter_t;
 
-  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value) { symbol_short, symbol_long, symbol_other, has_values, type_value, f_console_result_none_e, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
+  #define f_console_parameter_t_initialize { 0, 0, 0, 0, 0, f_array_length_t_initialize, f_array_length_t_initialize, f_array_length_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
 
-  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value, result, location, location_sub, locations, locations_sub, values) { symbol_short, symbol_long, symbol_other, has_values, type_value, result, total, location, location_sub, locations, locations_sub, values }
+  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value) { symbol_short, symbol_long, symbol_other, has_values, type_value, f_console_result_none_e, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
+
+  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_other, has_values, type_value, result, location, location_sub, locations, locations_sub, values) { symbol_short, symbol_long, symbol_other, has_values, type_value, result, total, location, location_sub, locations, locations_sub, values }
 #endif // _di_f_console_parameter_t_
 
 /**
@@ -285,9 +289,9 @@ extern "C" {
  *
  * Designed for passing this to a function as a single argument.
  *
- * parameters: Intended to be populated with an array of f_console_parameter_id_t whose size is defined by the "used" property.
- *             This is not intended to be dynamically allocated, so there is no "size" property.
- * length:     The total number of parameters in the parameters array.
+ * parameter: Intended to be populated with an array of f_console_parameter_id_t whose size is defined by the "used" property.
+ *            This is not intended to be dynamically allocated, so there is no "size" property.
+ * length:    The total number of parameters in the parameters array.
  */
 #ifndef _di_f_console_parameters_t_
   typedef struct {
@@ -304,15 +308,21 @@ extern "C" {
 /**
  * Provide a helper structure for references and processing standard C main() arguments.
  *
- * The f_console_parameter_id_t is designed to be used for the enums to represent a any given parameter by the ID.
- *
- * The f_console_parameter_ids_t is designed for passing this to a function as a single argument.
- * The "id" property is intended to be populated with an aray of f_console_parameter_id_t whose size is defined by the "used" property.
- * This follows the idea of f_string_dynamic_t and has a "used" instead of length, but because this is not intended to be dynamically allocated there is no "size" property.
+ * The f_console_parameter_id_t is designed to be used for the enums to represent any given parameter by the ID.
  */
 #ifndef _di_f_console_parameter_id_t_
   typedef uint16_t f_console_parameter_id_t;
 
+  #define f_console_parameter_id_t_initialize 0
+#endif // _di_f_console_parameter_id_t_
+
+/**
+ * The f_console_parameter_ids_t is designed for passing this to a function as a single argument.
+ *
+ * id:   An array of f_console_parameter_id_t whose size is defined by the "used" property.
+ * used: The total number of ids in the id array.
+ */
+#ifndef _di_f_console_parameter_ids_t_
   typedef struct {
     f_console_parameter_id_t *id;
 
@@ -322,7 +332,7 @@ extern "C" {
   #define f_console_parameter_ids_t_initialize { 0, 0 }
 
   #define macro_f_console_parameter_ids_t_initialize(id, used) { id, used }
-#endif // _di_f_console_parameter_id_t_
+#endif // _di_f_console_parameter_ids_t_
 
 /**
  * Provide a helper structure for referencing the argc and argv standard main arguments.

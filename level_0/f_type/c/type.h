@@ -231,6 +231,9 @@ extern "C" {
   typedef int64_t  f_number_signed_t;
   typedef uint64_t f_number_unsigned_t;
 
+  #define f_number_signed_t_initialize 0
+  #define f_number_unsigned_t_initialize 0
+
   #define F_number_t_size_unsigned_d F_type_size_64_unsigned_d
   #define F_number_t_size_positive_d F_type_size_64_positive_d
   #define F_number_t_size_negative_d F_type_size_64_negative_d
@@ -242,6 +245,9 @@ extern "C" {
   typedef int32_t  f_number_signed_t;
   typedef uint32_t f_number_unsigned_t;
 
+  #define f_number_signed_t_initialize 0
+  #define f_number_unsigned_t_initialize 0
+
   #define F_number_t_size_unsigned_d F_type_size_32_unsigned_d
   #define F_number_t_size_positive_d F_type_size_32_positive_d
   #define F_number_t_size_negative_d F_type_size_32_negative_d
@@ -252,6 +258,9 @@ extern "C" {
 #elif defined(_en_f_type_number_128_t_)
   typedef f_int_128_t  f_number_signed_t;
   typedef f_uint_128_t f_number_unsigned_t;
+
+  #define f_number_signed_t_initialize 0
+  #define f_number_unsigned_t_initialize 0
 
   #define F_number_t_size_unsigned_d F_type_size_128_unsigned_d
   #define F_number_t_size_positive_d F_type_size_128_positive_d
@@ -292,6 +301,8 @@ extern "C" {
  */
 #ifndef _di_f_array_t_
   typedef f_number_unsigned_t f_array_length_t;
+
+  #define f_array_length_t_initialize 0
 
   #define F_array_length_t_size_d     F_number_t_size_unsigned_d
   #define F_array_length_t_size_max_d F_number_t_size_max_unsigned_d
@@ -468,6 +479,8 @@ extern "C" {
  */
 #ifndef _di_f_time_t_
   typedef uint64_t f_time_t;
+
+  #define f_time_t_initialize 0
 #endif // _di_f_time_t_
 
 /**
