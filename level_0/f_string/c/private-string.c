@@ -14,7 +14,7 @@ extern "C" {
     }
 
     memcpy(destination->string + destination->used, source, length);
-    destination->used = destination->used + length;
+    destination->used += length;
 
     return F_none;
   }
@@ -46,7 +46,7 @@ extern "C" {
         }
 
         memcpy(destination->string + destination->used, source + first, size);
-        destination->used = destination->used + size;
+        destination->used += size;
       }
 
       while (i + 1 < length && !source[i + 1]) {
@@ -65,7 +65,7 @@ extern "C" {
       }
 
       memcpy(destination->string + destination->used, source + first, size);
-      destination->used = destination->used + size;
+      destination->used += size;
     }
 
     return F_none;
@@ -350,7 +350,7 @@ extern "C" {
       memcpy(destination->string, source, length);
     }
 
-    destination->used = destination->used + length;
+    destination->used += length;
     return F_none;
   }
 #endif // !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
@@ -383,7 +383,7 @@ extern "C" {
           memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
           memcpy(destination->string + offset, source + first, size);
 
-          destination->used = destination->used + size;
+          destination->used += size;
           offset += size;
         }
 
@@ -403,7 +403,7 @@ extern "C" {
             memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
             memcpy(destination->string + offset, source + first, size);
 
-            destination->used = destination->used + size;
+            destination->used += size;
             offset += size;
           }
         }
