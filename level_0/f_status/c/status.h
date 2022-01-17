@@ -12,7 +12,7 @@
 #ifndef _F_status_h
 #define _F_status_h
 
-// libc includes
+// libc includes.
 #include <errno.h>
 
 #ifdef __cplusplus

@@ -13,19 +13,19 @@
 #ifndef _F_account_h
 #define _F_account_h
 
-// libc includes
+// libc includes.
 #include <sys/types.h>
 #include <grp.h>
 #include <pwd.h>
 #include <unistd.h>
 
-// fll-0 includes
+// fll-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-0 account includes
+// fll-0 account includes.
 #include <fll/level_0/account-common.h>
 
 #ifdef __cplusplus

@@ -12,7 +12,7 @@
 #ifndef _F_print_h
 #define _F_print_h
 
-// libc includes
+// libc includes.
 #include <dirent.h>
 #include <inttypes.h>
 #include <stdarg.h>
@@ -21,7 +21,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-// fll-0 includes
+// fll-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>

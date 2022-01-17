@@ -10,7 +10,7 @@
 #ifndef _FLL_fss_extended_list_h
 #define _FLL_fss_extended_list_h
 
-// fll-0 includes
+// fll-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>

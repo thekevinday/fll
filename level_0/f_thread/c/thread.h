@@ -13,7 +13,7 @@
 // include pre-requirements
 #define _GNU_SOURCE
 
-// libc includes
+// libc includes.
 #include <fcntl.h>
 #include <semaphore.h>
 #include <signal.h>
@@ -22,7 +22,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-// fll-0 includes
+// fll-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>

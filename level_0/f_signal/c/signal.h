@@ -10,14 +10,14 @@
 #ifndef _F_signal_h
 #define _F_signal_h
 
-// libc includes
+// libc includes.
 #include <poll.h>
 #include <signal.h>
 #include <string.h>
 #include <sys/signalfd.h>
 #include <unistd.h>
 
-// fll-0 includes
+// fll-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 

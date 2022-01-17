@@ -10,11 +10,11 @@
 #ifndef _FL_conversion_h
 #define _FL_conversion_h
 
-// libc includes
+// libc includes.
 #include <ctype.h>
 #include <stdlib.h>
 
-// fll-0 includes
+// fll-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
