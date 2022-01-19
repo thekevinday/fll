@@ -122,14 +122,23 @@ extern "C" {
     status = f_string_dynamic_increase_by(format.begin.used + format.end.used + color1.used + 1, buffer);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(format.begin, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.begin.used) {
+      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
 
-    status = f_string_dynamic_append(color1, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.begin.used;
+    }
 
-    status = f_string_dynamic_append(format.end, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color1.used) {
+      memcpy(buffer->string + buffer->used, color1.string, color1.used);
+
+      buffer->used += color1.used;
+    }
+
+    if (format.end.used) {
+      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+
+      buffer->used += format.end.used;
+    }
 
     buffer->string[buffer->used] = 0;
 
@@ -137,7 +146,7 @@ extern "C" {
   }
 #endif // _di_f_color_save_1_
 
-#ifndef _di_f_color_save_1_
+#ifndef _di_f_color_save_2_
   f_status_t f_color_save_2(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
@@ -148,20 +157,35 @@ extern "C" {
     status = f_string_dynamic_increase_by(format.begin.used + format.medium.used + format.end.used + color1.used + color2.used + 1, buffer);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(format.begin, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.begin.used) {
+      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
 
-    status = f_string_dynamic_append(color1, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.begin.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color1.used) {
+      memcpy(buffer->string + buffer->used, color1.string, color1.used);
 
-    status = f_string_dynamic_append(color2, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += color1.used;
+    }
 
-    status = f_string_dynamic_append(format.end, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+
+      buffer->used += format.medium.used;
+    }
+
+    if (color2.used) {
+      memcpy(buffer->string + buffer->used, color2.string, color2.used);
+
+      buffer->used += color2.used;
+    }
+
+    if (format.end.used) {
+      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+
+      buffer->used += format.end.used;
+    }
 
     buffer->string[buffer->used] = 0;
 
@@ -180,26 +204,47 @@ extern "C" {
     status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 2) + format.end.used + color1.used + color2.used + color3.used + 1, buffer);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(format.begin, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.begin.used) {
+      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
 
-    status = f_string_dynamic_append(color1, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.begin.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color1.used) {
+      memcpy(buffer->string + buffer->used, color1.string, color1.used);
 
-    status = f_string_dynamic_append(color2, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += color1.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
 
-    status = f_string_dynamic_append(color3, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.medium.used;
+    }
 
-    status = f_string_dynamic_append(format.end, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color2.used) {
+      memcpy(buffer->string + buffer->used, color2.string, color2.used);
+
+      buffer->used += color2.used;
+    }
+
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+
+      buffer->used += format.medium.used;
+    }
+
+    if (color3.used) {
+      memcpy(buffer->string + buffer->used, color3.string, color3.used);
+
+      buffer->used += color3.used;
+    }
+
+    if (format.end.used) {
+      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+
+      buffer->used += format.end.used;
+    }
 
     buffer->string[buffer->used] = 0;
 
@@ -218,32 +263,59 @@ extern "C" {
     status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 3) + format.end.used + color1.used + color2.used + color3.used + color4.used + 1, buffer);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(format.begin, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.begin.used) {
+      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
 
-    status = f_string_dynamic_append(color1, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.begin.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color1.used) {
+      memcpy(buffer->string + buffer->used, color1.string, color1.used);
 
-    status = f_string_dynamic_append(color2, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += color1.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
 
-    status = f_string_dynamic_append(color3, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.medium.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color2.used) {
+      memcpy(buffer->string + buffer->used, color2.string, color2.used);
 
-    status = f_string_dynamic_append(color4, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += color2.used;
+    }
 
-    status = f_string_dynamic_append(format.end, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+
+      buffer->used += format.medium.used;
+    }
+
+    if (color3.used) {
+      memcpy(buffer->string + buffer->used, color3.string, color3.used);
+
+      buffer->used += color3.used;
+    }
+
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+
+      buffer->used += format.medium.used;
+    }
+
+    if (color4.used) {
+      memcpy(buffer->string + buffer->used, color4.string, color4.used);
+
+      buffer->used += color4.used;
+    }
+
+    if (format.end.used) {
+      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+
+      buffer->used += format.end.used;
+    }
 
     buffer->string[buffer->used] = 0;
 
@@ -262,38 +334,71 @@ extern "C" {
     status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 4) + format.end.used + color1.used + color2.used + color3.used + color4.used + color5.used + 1, buffer);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(format.begin, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.begin.used) {
+      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
 
-    status = f_string_dynamic_append(color1, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.begin.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color1.used) {
+      memcpy(buffer->string + buffer->used, color1.string, color1.used);
 
-    status = f_string_dynamic_append(color2, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += color1.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
 
-    status = f_string_dynamic_append(color3, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.medium.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color2.used) {
+      memcpy(buffer->string + buffer->used, color2.string, color2.used);
 
-    status = f_string_dynamic_append(color4, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += color2.used;
+    }
 
-    status = f_string_dynamic_append(format.medium, buffer);
-    if (F_status_is_error(status)) return status;
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
 
-    status = f_string_dynamic_append(color5, buffer);
-    if (F_status_is_error(status)) return status;
+      buffer->used += format.medium.used;
+    }
 
-    status = f_string_dynamic_append(format.end, buffer);
-    if (F_status_is_error(status)) return status;
+    if (color3.used) {
+      memcpy(buffer->string + buffer->used, color3.string, color3.used);
+
+      buffer->used += color3.used;
+    }
+
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+
+      buffer->used += format.medium.used;
+    }
+
+    if (color4.used) {
+      memcpy(buffer->string + buffer->used, color4.string, color4.used);
+
+      buffer->used += color4.used;
+    }
+
+    if (format.medium.used) {
+      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+
+      buffer->used += format.medium.used;
+    }
+
+    if (color5.used) {
+      memcpy(buffer->string + buffer->used, color5.string, color5.used);
+
+      buffer->used += color5.used;
+    }
+
+    if (format.end.used) {
+      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+
+      buffer->used += format.end.used;
+    }
 
     buffer->string[buffer->used] = 0;
 
