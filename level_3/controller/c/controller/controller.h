@@ -122,7 +122,7 @@ extern "C" {
   #else
     #define controller_path_pid_init_s        "/var/run/controller/controller-"
     #define controller_path_pid_init_s_length 31
-  #endif /* defined(_override_controller_path_pid_init_) && defined(_override_controller_path_pid_init_length_) */
+  #endif // defined(_override_controller_path_pid_init_) && defined(_override_controller_path_pid_init_length_)
 
   // The settings path is a system-specific path and needs to be more easily contolled at compile time.
   #if defined(_override_controller_path_settings_init_) && defined(_override_controller_path_settings_init_length_)
@@ -134,7 +134,7 @@ extern "C" {
   #else
     #define controller_path_settings_init_s "/etc/controller"
     #define controller_path_settings_init_s_length 15
-  #endif /* defined(_override_controller_path_settings_init_) && defined(_override_controller_path_settings_init_length_) */
+  #endif // defined(_override_controller_path_settings_init_) && defined(_override_controller_path_settings_init_length_)
 
   #ifdef _override_controller_default_program_script_
     #define controller_default_program_script_s _override_controller_default_program_script_
@@ -142,13 +142,13 @@ extern "C" {
     #define controller_default_program_script_s "bash"
   #endif // _override_controller_default_program_script_
 
-  #define controller_path_pid_s      "controller/run/controller-"
-  #define controller_path_settings_s "controller"
-  #define controller_path_suffix_s   ".pid"
+  #define controller_path_pid_s        "controller/run/controller-"
+  #define controller_path_pid_suffix_s ".pid"
+  #define controller_path_settings_s   "controller"
 
-  #define controller_path_pid_s_length      26
-  #define controller_path_settings_s_length 10
-  #define controller_path_suffix_s_length   4
+  #define controller_path_pid_s_length        26
+  #define controller_path_pid_suffix_s_length 4
+  #define controller_path_settings_s_length   10
 
   #define controller_short_cgroup_s          "c"
   #define controller_short_daemon_s          "d"
@@ -194,24 +194,24 @@ extern "C" {
 
   #define controller_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
-      f_console_parameter_t_initialize(controller_short_cgroup_s, controller_long_cgroup_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(controller_short_daemon_s, controller_long_daemon_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(controller_short_init_s, controller_long_init_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(controller_short_interruptible_s, controller_long_interruptible_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(controller_short_pid_s, controller_long_pid_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(controller_short_settings_s, controller_long_settings_s, 0, 1, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(controller_short_simulate_s, controller_long_simulate_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(controller_short_uninterruptible_s, controller_long_uninterruptible_s, 0, 0, f_console_type_normal_e), \
-      f_console_parameter_t_initialize(controller_short_validate_s, controller_long_validate_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(controller_short_cgroup_s, controller_long_cgroup_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(controller_short_daemon_s, controller_long_daemon_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(controller_short_init_s, controller_long_init_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(controller_short_interruptible_s, controller_long_interruptible_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(controller_short_pid_s, controller_long_pid_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(controller_short_settings_s, controller_long_settings_s, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(controller_short_simulate_s, controller_long_simulate_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(controller_short_uninterruptible_s, controller_long_uninterruptible_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(controller_short_validate_s, controller_long_validate_s, 0, 0, f_console_type_normal_e), \
     }
 
   #define controller_total_parameters_d 18

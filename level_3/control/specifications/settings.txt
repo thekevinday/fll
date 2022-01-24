@@ -1,0 +1,16 @@
+# fss-0002
+
+Settings Specification:
+  The control settings "settings" file follows the FSS-0001 (Extended) format.
+
+  Each Object represents a settings property name.
+  There is only a distinct set of setting property names (see below).
+
+  Each Content represents the values associated with that property.
+  Additional restrictions are applied to each Content depending on each specific Object name (see below).
+
+  Object Names and their respective Content purpose/restrictions\:
+    - name_socket: Must only be a single valid filename, without the directory.
+    - path_socket: Must only be a single valid directory.
+    - path_socket_prefix: Zero or one string representing a file name.
+    - path_socket_suffix: Zero or one string representing a file name.

@@ -1,4 +1,29 @@
 # fss-0002
 
 Packet Documentation:
-  Todo write this.
+  Describes how a packet is designed and intended to be used.
+
+  The "packet" is the general category in which multiple types of packets belong.
+  This describes the different packets based on their "type".
+
+  Every packet contains a "header", a "type" within the header, a "length" within the header, and a "payload".
+
+  The "controller" packet type\:
+    Commands being sent to the controller and their respective responses utilize a "controller" packet.
+    These are pre-defined commands to rules or the controller program itself.
+    Commands such as starting or stopping some rule, for example.
+
+    When operating in "init" mode, additional commands are available: "reboot" and "shutdown".
+    The "reboot" is for rebooting the machine and will eventually support "kexec" mode.
+    The "shutdown" is for shutting down the machine.
+    These two commands are configurable to fire off based on conditions, namely "time".
+    Two conditions may be met "on or after a specific date and time" and/or after so many milliseconds (second, minutes, hours, days, etc..) have passed.
+
+    The normal "controller" packet commands are any valid Rule Action that performs some action.
+    This does not include Actions that provide some setting or configuration (such as "with_pid").
+    Some of the supported commands are: "freeze", "kill", "pause", "reload", "rerun", "restart", "resume", "start", "stop", or "thaw".
+
+  The "error" packet type\:
+    The error packet is intended to communicate some sort of failure.
+    The "status" from the "header" designates the status code (based on the FSS status codes and FLL status codes).
+    The "payload" will contain a NULL terminated string representin the message used to describe the error.

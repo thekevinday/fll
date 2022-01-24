@@ -33,7 +33,7 @@ boot:
   start boot root require
   start boot proc asynchronous require
   start boot devices asynchronous require
-  start boot file system asynchronous
+  start boot file_system asynchronous
   start boot modules wait
 
   start service logger

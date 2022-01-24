@@ -59,7 +59,15 @@ extern "C" {
     f_string_dynamic_t output;
   } controller_control_t;
 
-  #define controller_control_t_initialize { 0, 0, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
+  #define controller_control_t_initialize { \
+    0, \
+    0, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+  }
 
   #define macro_controller_control_t_initialize(server, client) { \
     0, \
@@ -83,30 +91,6 @@ extern "C" {
   #define controller_control_packet_flag_binary_d     0x1
   #define controller_control_packet_flag_endian_big_d 0x2
 #endif // _di_controller_control_packet_flag_
-
-/**
- * A 34-bit long little-endian structure representing the packet header.
- *
- * This represents the packet header which is different from the header inside the packet.
- *
- * Generally, the string-based packet format is FSS-000E (Payload).
- * This format is stored within packet and has it's own header and payload parts.
- * Example pseudo-structure:
- *   [0][0][4294967296][# fss-000e
- *     header:
- *       type message
- *       length 4294965248
- *     payload:
- *      ...
- *   ]
- *
- * This means that string format is "technical" binary because of the header, but after the header it is entirely a string.
- * Unlike other strings, this string is not NULL terminated and is instead end of tranmsission or end of file terminated (as appropriate).
- *
- * type:   A boolean that when TRUE designates this as a binary and when FALSE designates this as a string packet.
- * endian: A boolean designating that when TRUE thath the length digit is big endian and when FALSE designates that the length is little endian.
- * length: A size representing how large the entire packet is (including the header that is 34 bits).
- */
 
 /**
  * Fully deallocate all memory for the given control data without caring about return status.

@@ -1,4 +1,34 @@
 # fss-0002
 
 Entry Specification:
-  todo write this.
+  The controller program communicates use the FSS-000E Packet format.
+
+  The "header" Object contains the following FSS-0001 Extended Objects (depending on "type")\:
+    - action: A valid action type: "freeze", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", or "thaw".
+    - length: A positive whole number inclusively between 0 and 4294965248 representing the length of the "payload".
+    - status: The string name representing an FSS status code, such as F_none or F_failure.
+    - type: The packet type that is one of "error" and "controller".
+
+  When there are multiple Objects of the same name inside the "header"\:
+    - action: The order represents the order in which the actions are performed.
+    - length: There may only be one length Object, all others after the first are ignored.
+    - status: The first represents the status and all other represent additional statuses.
+    - type: The first represent the type and all others represents a sub-type.
+
+  There are different headers and payload properties based on the "type".
+
+  The "error" type\:
+    Supports the following headers: "length", "status", and "type".
+
+    Currently only a single "status" is supported.
+
+    The "payload" is a NULL terminated string whose length is defined by the "length" "header" Content.
+
+  The "controller" type\:
+    Supports the following headers: "action", "length", "status", and "type".
+
+    Currently only a single "action" is supported.
+    Currently only a single "status" is supported.
+
+    The "payload" is dependent on the "action".
+    @todo describe the different actions.

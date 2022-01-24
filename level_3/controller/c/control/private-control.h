@@ -108,6 +108,17 @@ extern "C" {
  *
  * Connectons are processed and actions are performed.
  *
+ * The response packet (string based) packet format is FSS-000E (Payload).
+ * This format is stored within packet and has it's own header and payload parts.
+ * Example pseudo-structure:
+ *   [0][0][4294967296][# fss-000e
+ *     header:
+ *       type message
+ *       length 4294965248
+ *     payload:
+ *      ...
+ *   ]
+ *
  * @param global
  *   The global data.
  * @param server

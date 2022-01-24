@@ -1,0 +1,6 @@
+# fss-0001
+
+name_socket default
+path_socket /var/run/controller
+path_socket_prefix controller-
+path_socket_suffix .socket

@@ -1,0 +1,61 @@
+# fss-0002
+
+Settings Documentation:
+  This describes intent and purposes of the control settings file.
+
+  The settings file provides default or system-wide settings.
+  The system-wide settings file is loaded by default but a custom settings file may be alternatively specified.
+  Using this avoids the need to add additional paramters to the command line when calling the control program.
+
+  When this file is not specified any hardcoded defaults compiled into the program are used.
+
+  The location of the settings file is compile time specific and should be changed depending on the particular design of the system.
+  The default path for the control settings file is something like "/etc/control/settings".
+
+  - name_socket\:
+    This represents the file name used to construct the full socket path.
+    The file name represents the name of the file but any file extensions, such as ".suffix", should likely use "path_socket_suffix" to specify the file extension.
+
+    When not defined the compiled in default is used.
+    The default socket path directory is generally "default" but this could be changed during compile time.
+
+    This is required to not be empty so when the Object "path_socket" is defined without any Content, then an error is expected to be thrown.
+
+    This is used along with the "path_socket", "path_socket_prefix", and the "path_socket_suffix" to construct the socket file.
+
+  - path_socket\:
+    This represents the directory path to the socket file provided by the controller or init service.
+    This directory path is separate from the file name part so that the name can be more dynamically constructed without having to specify a full directory path each time.
+
+    When not defined the compiled in default is used.
+    The default socket path directory is generally "/var/run/controller" but this could be changed during compile time.
+
+    When the Object "path_socket" is defined without any Content, then no path is added (resulting in the socket relative to the callers current working directory).
+
+    This is used along with the "path_socket_prefix", the "path_socket_suffix", and the "name_socket" to construct the socket file.
+    A full socket path might look something like "/var/run/controller/controller-default.socket".
+
+    It is common for the controller program to be compiled as an init program.
+    In this case it may be common for the full socket path to instead be something more like "/var/run/init/init-default.socket".
+
+  - path_socket_prefix\:
+    This represents a prefix used to construct the full socket path.
+    This prefix is prepended to the socket file name.
+
+    When not defined the compiled in default is used.
+    The default path prefix is generally "controller-" but this could be changed during compile time.
+
+    When the Object "path_socket_prefix" is defined without any Content, then no prefix is prepended.
+
+    This is used along with the "path_socket", the "path_socket_suffix", and the "name_socket" to construct the socket file.
+
+  - path_socket_suffix\:
+    This represents a suffix used to construct the full socket path.
+    This suffix is appended to the socket file name.
+
+    When not defined the compiled in default is used.
+    The default path suffix is generally ".socket" but this could be changed during compile time.
+
+    When the Object "path_socket_suffix" is defined without any Content, then no suffix is appended.
+
+    This is used along with the "path_socket", the "path_socket_prefix", and the "name_socket" to construct the socket file.

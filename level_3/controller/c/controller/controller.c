@@ -35,7 +35,7 @@ extern "C" {
     fll_program_print_help_option(main->output.to, main->context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(main->output.to, main->context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_interruptible_s, controller_long_interruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid_s CONTROLLER_default_s controller_path_suffix_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid_s CONTROLLER_default_s controller_path_pid_suffix_s "'.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" controller_path_settings_s "'.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
@@ -166,7 +166,7 @@ extern "C" {
     struct sockaddr_un address;
     setting.control_socket.address = (struct sockaddr *) &address;
     setting.control_socket.domain = f_socket_domain_file_d;
-    setting.control_socket.type = f_socket_type_stream_d;
+    setting.control_socket.type = f_socket_type_datagram_d;
     setting.control_socket.length = sizeof(struct sockaddr_un);
 
     memset(&address, 0, setting.control_socket.length);
@@ -285,7 +285,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_string_append(controller_path_suffix_s, controller_path_suffix_s_length, &setting.path_pid);
+        status = f_string_append(controller_path_pid_suffix_s, controller_path_pid_suffix_s_length, &setting.path_pid);
       }
 
       if (F_status_is_error(status)) {
