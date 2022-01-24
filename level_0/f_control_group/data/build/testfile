@@ -1,0 +1,45 @@
+# fss-0005 iki-0002
+
+settings:
+  load_build yes
+  fail exit
+
+  environment LD_LIBRARY_PATH
+
+main:
+  build settings
+  build settings-tests
+
+  operate ld_library_path
+
+  if exists build/programs/shared/test-f_control_group
+    shell build/programs/shared/test-f_control_group
+
+  if exists build/programs/static/test-f_control_group
+    shell build/programs/static/test-f_control_group
+
+  if not exists build/programs/shared/test-f_control_group
+  and not exists build/programs/static/test-f_control_group
+    operate not_created
+
+not_created:
+  print
+  print context:"error"Failed to test due to being unable to find either a shared or static test binary to perform tests. context:"error"
+
+  exit failure
+
+ld_library_path:
+  if defined environment LD_LIBRARY_PATH
+  and defined parameter work
+    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if defined environment LD_LIBRARY_PATH
+    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:define:"LD_LIBRARY_PATH"'
+
+  else
+  if defined parameter work
+    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared'
+
+  else
+    define LD_LIBRARY_PATH build/libraries/shared
