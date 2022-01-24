@@ -166,6 +166,7 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
           byte_dump_main_delete(main);
+
           return F_status_set_error(status);
         }
 
@@ -224,6 +225,7 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
           byte_dump_main_delete(main);
+
           return F_status_set_error(status);
         }
 
@@ -256,7 +258,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->remaining.used > 0 || main->process_pipe) {
+    if (main->remaining.used || main->process_pipe) {
       if (main->parameters[byte_dump_parameter_width_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
@@ -268,9 +270,10 @@ extern "C" {
 
         byte_dump_main_delete(main);
 
-        return F_status_set_error(status);
+        return F_status_set_error(F_parameter);
       }
-      else if (main->parameters[byte_dump_parameter_width_e].result == f_console_result_additional_e) {
+
+      if (main->parameters[byte_dump_parameter_width_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_width_e].values.array[main->parameters[byte_dump_parameter_width_e].values.used - 1];
         const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
@@ -292,7 +295,12 @@ extern "C" {
           funlockfile(main->error.to.stream);
 
           byte_dump_main_delete(main);
-          return F_status_set_error(status);
+
+          if (F_status_is_error(status)) {
+            return status;
+          }
+
+          return F_status_set_error(F_parameter);
         }
 
         main->width = (uint8_t) number;
@@ -309,9 +317,10 @@ extern "C" {
 
         byte_dump_main_delete(main);
 
-        return F_status_set_error(status);
+        return F_status_set_error(F_parameter);
       }
-      else if (main->parameters[byte_dump_parameter_first_e].result == f_console_result_additional_e) {
+
+      if (main->parameters[byte_dump_parameter_first_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_first_e].values.array[main->parameters[byte_dump_parameter_first_e].values.used - 1];
         const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
@@ -334,7 +343,11 @@ extern "C" {
 
           byte_dump_main_delete(main);
 
-          return F_status_set_error(status);
+          if (F_status_is_error(status)) {
+            return status;
+          }
+
+          return F_status_set_error(F_parameter);
         }
 
         main->first = number;
@@ -351,9 +364,10 @@ extern "C" {
 
         byte_dump_main_delete(main);
 
-        return F_status_set_error(status);
+        return F_status_set_error(F_parameter);
       }
-      else if (main->parameters[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
+
+      if (main->parameters[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_last_e].values.array[main->parameters[byte_dump_parameter_last_e].values.used - 1];
         const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
 
@@ -376,7 +390,11 @@ extern "C" {
 
           byte_dump_main_delete(main);
 
-          return F_status_set_error(status);
+          if (F_status_is_error(status)) {
+            return status;
+          }
+
+          return F_status_set_error(F_parameter);
         }
 
         main->last = number;
@@ -396,10 +414,10 @@ extern "C" {
 
           byte_dump_main_delete(main);
 
-          return F_status_set_error(status);
+          return F_status_set_error(F_parameter);
         }
 
-        // store last position as a relative offset from first instead of an absolute position.
+        // Store last position as a relative offset from first instead of an absolute position.
         main->last = (main->last - main->first) + 1;
       }
 
@@ -440,12 +458,14 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true);
 
           byte_dump_main_delete(main);
+
           return status;
         }
       }
 
       if (main->remaining.used > 0) {
-        // pre-process remaining arguments to ensure that they all files exist before processing.
+
+        // Pre-process remaining arguments to ensure that they all files exist before processing.
         {
           f_status_t missing_files = F_none;
 

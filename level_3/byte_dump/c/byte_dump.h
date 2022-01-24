@@ -332,6 +332,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
+ *   F_parameter (with error bit) on an argument error.
  *
  *   Status codes (with error bit) are returned on any problem.
  *
