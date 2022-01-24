@@ -7,8 +7,8 @@
  *
  * Test the account project.
  */
-#ifndef _TEST__F_account_id_user_by_name_
-#define _TEST__F_account_id_user_by_name_
+#ifndef _TEST__F_account_id_user_by_name_h
+#define _TEST__F_account_id_user_by_name_h
 
 /**
  * Test that function fails.
@@ -40,4 +40,4 @@ extern void test__f_account_id_by_name__not_found(void **state);
  */
 extern void test__f_account_id_by_name__works(void **state);
 
-#endif // _TEST__F_account_id_user_by_name_
+#endif // _TEST__F_account_id_user_by_name_h

@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__process_get_by_id
-#define _TEST__F_capability__process_get_by_id
+#ifndef _TEST__F_capability__process_get_by_id_h
+#define _TEST__F_capability__process_get_by_id_h
 
 /**
  * Test that function fails.
@@ -33,4 +33,4 @@ extern void test__f_capability_process_get_by_id__fails(void **state);
  */
 extern void test__f_capability_process_get_by_id__works(void **state);
 
-#endif // _TEST__F_capability__process_get_by_id
+#endif // _TEST__F_capability__process_get_by_id_h

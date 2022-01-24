@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__size
-#define _TEST__F_capability__size
+#ifndef _TEST__F_capability__size_h
+#define _TEST__F_capability__size_h
 
 /**
  * Test that function fails.
@@ -33,4 +33,4 @@ extern void test__f_capability_size__fails(void **state);
  */
 extern void test__f_capability_size__works(void **state);
 
-#endif // _TEST__F_capability__size
+#endif // _TEST__F_capability__size_h

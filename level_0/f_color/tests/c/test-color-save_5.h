@@ -7,8 +7,8 @@
  *
  * Test the color project.
  */
-#ifndef _TEST__F_color__save_5
-#define _TEST__F_color__save_5
+#ifndef _TEST__F_color__save_5_h
+#define _TEST__F_color__save_5_h
 
 // f_color_save_5() only returns failures by other functions that have their own tests.
 
@@ -28,4 +28,4 @@
  */
 extern void test__f_color_save_5_works(void **state);
 
-#endif // _TEST__F_color__save_5
+#endif // _TEST__F_color__save_5_h

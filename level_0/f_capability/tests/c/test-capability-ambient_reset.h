@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__ambient_reset
-#define _TEST__F_capability__ambient_reset
+#ifndef _TEST__F_capability__ambient_reset_h
+#define _TEST__F_capability__ambient_reset_h
 
 /**
  * Test that function fails.
@@ -26,4 +26,4 @@ extern void test__f_capability_ambient_reset__fails(void **state);
  */
 extern void test__f_capability_ambient_reset__works(void **state);
 
-#endif // _TEST__F_capability__ambient_reset
+#endif // _TEST__F_capability__ambient_reset_h

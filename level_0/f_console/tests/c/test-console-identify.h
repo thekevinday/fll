@@ -7,8 +7,8 @@
  *
  * Test the console project.
  */
-#ifndef _TEST__F_console_identify_
-#define _TEST__F_console_identify_
+#ifndef _TEST__F_console_identify_h
+#define _TEST__F_console_identify_h
 
 // f_console_identify() doesn't return failure.
 
@@ -28,4 +28,4 @@
  */
 extern void test__f_console_identify__works(void **state);
 
-#endif // _TEST__F_console_identify_
+#endif // _TEST__F_console_identify_h

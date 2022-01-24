@@ -7,8 +7,8 @@
  *
  * Test the color project.
  */
-#ifndef _TEST__F_color__load_context
-#define _TEST__F_color__load_context
+#ifndef _TEST__F_color__load_context_h
+#define _TEST__F_color__load_context_h
 
 // f_color_load_context() only returns failures by other functions that have their own tests.
 

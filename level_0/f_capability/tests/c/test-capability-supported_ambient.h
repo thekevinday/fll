@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__supported_ambient
-#define _TEST__F_capability__supported_ambient
+#ifndef _TEST__F_capability__supported_ambient_h
+#define _TEST__F_capability__supported_ambient_h
 
 // f_capability_supported_ambient() doesn't return failure.
 
@@ -21,4 +21,4 @@
  */
 extern void test__f_capability_supported_ambient__works(void **state);
 
-#endif // _TEST__F_capability__supported_ambient
+#endif // _TEST__F_capability__supported_ambient_h

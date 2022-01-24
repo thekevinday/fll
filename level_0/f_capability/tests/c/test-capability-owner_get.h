@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__owner_get
-#define _TEST__F_capability__owner_get
+#ifndef _TEST__F_capability__owner_get_h
+#define _TEST__F_capability__owner_get_h
 
 // cap_mode_name() doesn't return failure.
 
@@ -28,4 +28,4 @@
  */
 extern void test__f_capability_owner_get__works(void **state);
 
-#endif // _TEST__F_capability__owner_get
+#endif // _TEST__F_capability__owner_get_h

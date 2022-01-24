@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__file_descriptor_get
-#define _TEST__F_capability__file_descriptor_get
+#ifndef _TEST__F_capability__file_descriptor_get_h
+#define _TEST__F_capability__file_descriptor_get_h
 
 /**
  * Test that function fails.
@@ -33,4 +33,4 @@ extern void test__f_capability_file_descriptor_get__fails(void **state);
  */
 extern void test__f_capability_file_descriptor_get__works(void **state);
 
-#endif // _TEST__F_capability__file_descriptor_get
+#endif // _TEST__F_capability__file_descriptor_get_h

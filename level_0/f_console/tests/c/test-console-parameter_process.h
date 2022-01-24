@@ -7,8 +7,8 @@
  *
  * Test the console project.
  */
-#ifndef _TEST__F_console_parameter_process_
-#define _TEST__F_console_parameter_process_
+#ifndef _TEST__F_console_parameter_process_h
+#define _TEST__F_console_parameter_process_h
 
 // f_console_parameter_process() only returns memory failures.
 
@@ -42,4 +42,4 @@ extern void test__f_console_parameter_process__only_remaining(void **state);
  */
 extern void test__f_console_parameter_process__works(void **state);
 
-#endif // _TEST__F_console_parameter_process_
+#endif // _TEST__F_console_parameter_process_h

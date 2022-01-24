@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__copy_external
-#define _TEST__F_capability__copy_external
+#ifndef _TEST__F_capability__copy_external_h
+#define _TEST__F_capability__copy_external_h
 
 /**
  * Test that function fails.
@@ -33,4 +33,4 @@ extern void test__f_capability_copy_external__fails(void **state);
  */
 extern void test__f_capability_copy_external__works(void **state);
 
-#endif // _TEST__F_capability__copy_external
+#endif // _TEST__F_capability__copy_external_h

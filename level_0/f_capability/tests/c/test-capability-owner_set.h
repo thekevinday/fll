@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__owner_set
-#define _TEST__F_capability__owner_set
+#ifndef _TEST__F_capability__owner_set_h
+#define _TEST__F_capability__owner_set_h
 
 /**
  * Test that function fails.
@@ -26,4 +26,4 @@ extern void test__f_capability_owner_set__fails(void **state);
  */
 extern void test__f_capability_owner_set__works(void **state);
 
-#endif // _TEST__F_capability__owner_set
+#endif // _TEST__F_capability__owner_set_h

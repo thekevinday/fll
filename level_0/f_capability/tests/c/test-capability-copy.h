@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__copy
-#define _TEST__F_capability__copy
+#ifndef _TEST__F_capability__copy_h
+#define _TEST__F_capability__copy_h
 
 /**
  * Test that function fails.
@@ -33,4 +33,4 @@ extern void test__f_capability_copy__works(void **state);
   extern void test__f_capability_copy__parameter_checking(void **state);
 #endif // _di_level_0_parameter_checking_
 
-#endif // _TEST__F_capability__copy
+#endif // _TEST__F_capability__copy_h

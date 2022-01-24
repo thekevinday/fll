@@ -7,8 +7,8 @@
  *
  * Test the capability project.
  */
-#ifndef _TEST__F_capability__process_bound_drop
-#define _TEST__F_capability__process_bound_drop
+#ifndef _TEST__F_capability__process_bound_drop_h
+#define _TEST__F_capability__process_bound_drop_h
 
 /**
  * Test that function fails.
@@ -33,4 +33,4 @@ extern void test__f_capability_process_bound_drop__fails(void **state);
  */
 extern void test__f_capability_process_bound_drop__works(void **state);
 
-#endif // _TEST__F_capability__process_bound_drop
+#endif // _TEST__F_capability__process_bound_drop_h

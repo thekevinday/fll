@@ -7,8 +7,8 @@
  *
  * Test the console project.
  */
-#ifndef _TEST__F_console_parameter_prioritize_left_
-#define _TEST__F_console_parameter_prioritize_left_
+#ifndef _TEST__F_console_parameter_prioritize_left_h
+#define _TEST__F_console_parameter_prioritize_left_h
 
 /**
  * Test that function fails.
@@ -33,4 +33,4 @@ extern void test__f_console_parameter_prioritize_left__fails(void **state);
  */
 extern void test__f_console_parameter_prioritize_left__works(void **state);
 
-#endif // _TEST__F_console_parameter_prioritize_left_
+#endif // _TEST__F_console_parameter_prioritize_left_h
