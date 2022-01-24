@@ -873,6 +873,7 @@ extern "C" {
       for (; destination->used; --destination->used) {
 
         if (!destination->string[destination->used - 1]) continue;
+
         break;
       } // for
     }
@@ -881,15 +882,12 @@ extern "C" {
       return F_status_set_error(F_string_too_large);
     }
 
-    const f_array_length_t total = destination->used + 1;
-
-    if (total > destination->size) {
-      const f_status_t status = private_f_string_dynamic_resize(total, destination);
+    if (destination->used + 1 > destination->size) {
+      const f_status_t status = private_f_string_dynamic_resize(destination->used + F_memory_default_allocation_small_d, destination);
       if (F_status_is_error(status)) return status;
     }
 
     destination->string[destination->used] = 0;
-    destination->used = total - 1;
 
     return F_none;
   }

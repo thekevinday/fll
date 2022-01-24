@@ -174,7 +174,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_append_
 
 /**
- * Append the source string onto the destination.
+ * Append the source string onto the destination only if the string is not already at the end.
  *
  * @param source
  *   The source string to append.
@@ -195,7 +195,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_append_assure_
 
 /**
- * Append the source string onto the destination.
+ * Append the source string onto the destination only if the string is not already at the end.
  *
  * Skips over NULL characters from source when appending.
  *
@@ -452,7 +452,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_append_
 
 /**
- * Append the source string onto the destination, but only if the string is not already at the end and restricted to the given range
+ * Append the source string onto the destination only if the string is not already at the end and restricted to the given range.
  *
  * This ignores NULL characters when comparing both the source and the destination.
  *
@@ -478,7 +478,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_append_assure_
 
 /**
- * Append the source string onto the destination, but only if the string is not already at the end and restricted to the given range
+ * Append the source string onto the destination only if the string is not already at the end and restricted to the given range.
  *
  * This ignores NULL characters when comparing both the source and the destination.
  *
@@ -682,7 +682,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_prepend_
 
 /**
- * Prepend the source string onto the destination, but only if the string is not already at the end and restricted to the given range
+ * Prepend the source string onto the destination only if the string is not already at the beginning and restricted to the given range.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
  *
@@ -710,7 +710,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_prepend_assure_
 
 /**
- * Prepend the source string onto the destination, but only if the string is not already at the end and restricted to the given range
+ * Prepend the source string onto the destination only if the string is not already at the beginning and restricted to the given range.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
  *
@@ -788,7 +788,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_prepend_
 
 /**
- * Prepend the source string onto the destination, but only if the string is not already at the beginning.
+ * Prepend the source string onto the destination only if the string is not already at the beginning.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
  *
@@ -814,7 +814,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_prepend_assure_
 
 /**
- * Prepend the source string onto the destination, but only if the string is not already at the beginning.
+ * Prepend the source string onto the destination only if the string is not already at the beginning.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
  *
