@@ -1393,7 +1393,7 @@ extern "C" {
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
           fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_static_s, main->error.notable);
           fl_print_format("%[' cannot both be false when using the language '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, main->error.notable);
+          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, main->error.notable);
           fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
