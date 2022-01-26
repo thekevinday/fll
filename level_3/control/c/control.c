@@ -51,8 +51,8 @@ extern "C" {
 
     fll_program_print_help_usage(main->output.to, main->context, control_program_name_s.string, control_command_s.string);
 
-    fl_print_format("  When the %[%s%s%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s.string, main->context.set.notable);
-    fl_print_format(" %[%s%s%] parameter or from the control settings file.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s.string, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When the %[%s%q%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s, main->context.set.notable);
+    fl_print_format(" %[%s%q%] parameter or from the control settings file.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     fl_print_format("  A rule action allows for either the full rule path, such as '%[boot/root%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
     fl_print_format(" as a single parameter or two parameters with the first representing the rule directory path '%[boot%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
@@ -210,11 +210,11 @@ extern "C" {
         control_data_t data = control_data_t_initialize;
 
         // Verify commands before attempting to connect to the socket.
-        if (control_command_identify(main, &data, arguments->argv[0]) == F_found) {
+        if (control_command_identify(main, &data, arguments->argv[main->remaining.array[0]]) == F_found) {
           status = control_command_verify(main, &data, arguments);
         }
         else {
-          control_print_error_parameter_command_not(main, arguments->argv[0]);
+          control_print_error_parameter_command_not(main, arguments->argv[main->remaining.array[0]]);
 
           status = F_status_set_error(F_parameter);
         }

@@ -267,7 +267,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_foreground_
 
 /**
@@ -309,7 +309,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t * const process) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t * const process) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**

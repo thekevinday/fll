@@ -1127,7 +1127,7 @@ extern "C" {
         if (process->rule.items.array[i].type == controller_rule_item_type_command_e) {
           for (;;) {
 
-            status = controller_rule_execute_foreground(process->rule.items.array[i].type, 0, process->rule.items.array[i].actions.array[j].parameters, options, &execute_set, process);
+            status = controller_rule_execute_foreground(process->rule.items.array[i].type, f_string_static_empty_s, process->rule.items.array[i].actions.array[j].parameters, options, &execute_set, process);
 
             if (status == F_child || F_status_set_fine(status) == F_interrupt || F_status_set_fine(status) == F_lock) break;
             if (F_status_is_error(status) && F_status_set_fine(status) != F_failure) break;
@@ -1157,7 +1157,12 @@ extern "C" {
 
           for (;;) {
 
-            status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.script.used ? process->rule.script.string : controller_default_program_script_s, arguments_none, options, &execute_set, process);
+            if (process->rule.script.used) {
+              status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.script, arguments_none, options, &execute_set, process);
+            }
+            else {
+              status = controller_rule_execute_foreground(process->rule.items.array[i].type, controller_default_program_script_s, arguments_none, options, &execute_set, process);
+            }
 
             if (status == F_child || F_status_set_fine(status) == F_lock) break;
             if (F_status_is_error(status) && F_status_set_fine(status) != F_failure) break;
@@ -1186,7 +1191,7 @@ extern "C" {
           if (process->rule.items.array[i].pid_file.used) {
             for (;;) {
 
-              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, 0, process->rule.items.array[i].actions.array[j].parameters, options, process->rule.items.array[i].with, &execute_set, process);
+              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, f_string_static_empty_s, process->rule.items.array[i].actions.array[j].parameters, options, process->rule.items.array[i].with, &execute_set, process);
 
               if (status == F_child || F_status_set_fine(status) == F_interrupt || F_status_set_fine(status) == F_lock) break;
               if (F_status_is_error(status) && F_status_set_fine(status) != F_failure) break;
@@ -1224,7 +1229,7 @@ extern "C" {
 
             for (;;) {
 
-              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, process->rule.script.used ? process->rule.script.string : controller_default_program_script_s, arguments_none, options, process->rule.items.array[i].with, &execute_set, process);
+              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, process->rule.script.used ? process->rule.script : controller_default_program_script_s, arguments_none, options, process->rule.items.array[i].with, &execute_set, process);
 
               if (status == F_child || F_status_set_fine(status) == F_interrupt || F_status_set_fine(status) == F_lock) break;
               if (F_status_is_error(status) && F_status_set_fine(status) != F_failure) break;
@@ -1314,7 +1319,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_foreground_
-  f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t * const process) {
+  f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t * const process) {
 
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
@@ -1357,8 +1362,8 @@ extern "C" {
 
         fl_print_format("%cSimulating execution of '%[", main->output.to.stream, f_string_eol_s[0], main->context.set.title);
 
-        if (program) {
-          f_print_safely_terminated(program, main->output.to.stream);
+        if (program.used) {
+          f_print_dynamic_safely(program, main->output.to.stream);
         }
         else {
           f_print_dynamic_safely(arguments.array[0], main->output.to.stream);
@@ -1366,9 +1371,9 @@ extern "C" {
 
         fl_print_format("%]' with the arguments: '%[", main->output.to.stream, main->context.set.title, main->context.set.important);
 
-        for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
+        for (f_array_length_t i = program.used ? 0 : 1; i < arguments.used; ++i) {
 
-          if (program && i || !program && i > 1) {
+          if (program.used && i || !program.used && i > 1) {
             f_print_terminated(f_string_space_s, main->output.to.stream);
           }
 
@@ -1395,11 +1400,11 @@ extern "C" {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &simulated_program);
 
-        status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(controller_default_program_script_s.string, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {
-      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
+      status = fll_execute_program(program.string, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
     }
 
     if (status == F_parent) {
@@ -1518,7 +1523,7 @@ extern "C" {
       status = F_status_set_fine(status);
 
       if ((WIFEXITED(process->result) && WEXITSTATUS(process->result)) || status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_item_print_error_execute(type == controller_rule_item_type_script_e, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, status, process);
+        controller_rule_item_print_error_execute(type == controller_rule_item_type_script_e, program.used ? program : arguments.array[0], status, process);
       }
       else {
         controller_print_error(thread, main->error, F_status_set_fine(status), "fll_execute_program", F_true);
@@ -1532,7 +1537,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_foreground_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t * const process) {
+  f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_static_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t * const process) {
 
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
@@ -1613,8 +1618,8 @@ extern "C" {
 
         fl_print_format("%cSimulating execution of '%[", main->error.to.stream, f_string_eol_s[0], main->context.set.title);
 
-        if (program) {
-          f_print_safely_terminated(program, main->error.to.stream);
+        if (program.used) {
+          f_print_dynamic_safely(program, main->error.to.stream);
         }
         else {
           f_print_dynamic_safely(arguments.array[0], main->error.to.stream);
@@ -1622,9 +1627,9 @@ extern "C" {
 
         fl_print_format("%]' with the arguments: '%[", main->error.to.stream, main->context.set.title, main->context.set.important);
 
-        for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
+        for (f_array_length_t i = program.used ? 0 : 1; i < arguments.used; ++i) {
 
-          if (program && i || !program && i > 1) {
+          if (program.used && i || !program.used && i > 1) {
             f_print_terminated(f_string_space_s, main->error.to.stream);
           }
 
@@ -1651,11 +1656,11 @@ extern "C" {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &simulated_program);
 
-        status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(controller_default_program_script_s.string, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {
-      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
+      status = fll_execute_program(program.string, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
     }
 
     if (status == F_parent) {
@@ -1774,7 +1779,7 @@ extern "C" {
       status = F_status_set_fine(status);
 
       if ((WIFEXITED(process->result) && WEXITSTATUS(process->result)) || status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_item_print_error_execute(type == controller_rule_item_type_utility_e, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, status, process);
+        controller_rule_item_print_error_execute(type == controller_rule_item_type_utility_e, program.used ? program : arguments.array[0], status, process);
       }
       else {
         controller_print_error(thread, main->error, F_status_set_fine(status), "fll_execute_program", F_true);

@@ -45,16 +45,13 @@ int main(const int argc, const f_string_t *argv) {
   #ifdef _controller_as_init_
     data.program_name = controller_program_name_init_s;
     data.program_name_long = controller_program_name_init_long_s;
-    data.setting_default.string = controller_path_settings_init_s;
-    data.setting_default.used = controller_path_settings_init_s_length;
-    data.path_pid.string = controller_path_pid_init_s;
-    data.path_pid.used = controller_path_pid_init_s_length;
+    data.setting_default = controller_path_settings_init_s;
+    data.path_pid = controller_path_pid_init_s;
     data.as_init = F_true;
   #else
     data.program_name = controller_program_name_s;
     data.program_name_long = controller_program_name_long_s;
-    data.path_pid.string = controller_path_pid_s;
-    data.path_pid.used = controller_path_pid_s_length;
+    data.path_pid = controller_path_pid_s;
   #endif // _controller_as_init_
 
   const f_status_t status = controller_main(&data, &arguments);

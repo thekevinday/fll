@@ -75,7 +75,7 @@ extern "C" {
 #endif // _di_controller_rule_item_print_error_
 
 #ifndef _di_controller_rule_item_print_error_execute_
-  void controller_rule_item_print_error_execute(const bool script_is, const f_string_t name, const f_status_t status, controller_process_t * const process) {
+  void controller_rule_item_print_error_execute(const bool script_is, const f_string_static_t name, const f_status_t status, controller_process_t * const process) {
 
     if (((controller_main_t *) process->main_data)->error.verbosity != f_console_verbosity_quiet_e) {
       fl_print_t * const print = &((controller_main_t *) process->main_data)->error;
@@ -83,7 +83,7 @@ extern "C" {
       controller_lock_print(print->to, (controller_thread_t *) process->main_thread);
 
       fl_print_format("%c%[%SThe %s '%]", print->to.stream, f_string_eol_s[0], print->context, print->prefix, script_is ? controller_script_s : controller_program_s, print->context);
-      fl_print_format("%[%S%]", print->to.stream, print->notable, name, print->notable);
+      fl_print_format("%[%Q%]", print->to.stream, print->notable, name, print->notable);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
         fl_print_format("%[' failed due to a failure to setup the '%]%[", print->to.stream, print->context, print->context, print->notable);

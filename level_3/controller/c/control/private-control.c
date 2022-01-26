@@ -131,6 +131,8 @@ extern "C" {
 
     // @todo process the data.
 
+    fll_print_format("\nDEBUG: received packet: '%Q'\n", stdout, control->input);
+
     // @todo send any responses.
 
     f_socket_disconnect(&client, f_socket_close_fast_e);

@@ -12,12 +12,57 @@
 extern "C" {
 #endif
 
+#ifndef _di_controller_program_version_
+  const f_string_static_t controller_program_version_s = macro_f_string_static_t_initialize2(CONTROLLER_program_version_s, 0, CONTROLLER_program_version_s_length);
+#endif // _di_controller_program_version_
+
+#ifndef _di_controller_program_name_
+  const f_string_static_t controller_program_name_s = macro_f_string_static_t_initialize2(CONTROLLER_program_name_s, 0, CONTROLLER_program_name_s_length);
+  const f_string_static_t controller_program_name_long_s = macro_f_string_static_t_initialize2(CONTROLLER_program_name_long_s, 0, CONTROLLER_program_name_long_s_length);
+
+  const f_string_static_t controller_program_name_init_s = macro_f_string_static_t_initialize2(CONTROLLER_program_name_init_s, 0, CONTROLLER_program_name_init_s_length);
+  const f_string_static_t controller_program_name_init_long_s = macro_f_string_static_t_initialize2(CONTROLLER_program_name_init_long_s, 0, CONTROLLER_program_name_init_long_s_length);
+#endif // _di_controller_program_name_
+
+#ifndef _di_controller_defines_
+  const f_string_static_t controller_default_program_script_s = macro_f_string_static_t_initialize2(CONTROLLER_default_program_script_s, 0, CONTROLLER_default_program_script_s_length);
+  const f_string_static_t controller_name_socket_s = macro_f_string_static_t_initialize2(CONTROLLER_name_socket_s, 0, CONTROLLER_name_socket_s_length);
+  const f_string_static_t controller_path_pid_s = macro_f_string_static_t_initialize2(CONTROLLER_path_pid_s, 0, CONTROLLER_path_pid_s_length);
+  const f_string_static_t controller_path_pid_init_s = macro_f_string_static_t_initialize2(CONTROLLER_path_pid_init_s, 0, CONTROLLER_path_pid_init_s_length);
+  const f_string_static_t controller_path_pid_suffix_s = macro_f_string_static_t_initialize2(CONTROLLER_path_pid_s, 0, CONTROLLER_path_pid_s_length);
+  const f_string_static_t controller_path_settings_s = macro_f_string_static_t_initialize2(CONTROLLER_path_settings_s, 0, CONTROLLER_path_settings_s_length);
+  const f_string_static_t controller_path_settings_init_s = macro_f_string_static_t_initialize2(CONTROLLER_path_settings_init_s, 0, CONTROLLER_path_settings_init_s_length);
+  const f_string_static_t controller_path_socket_s = macro_f_string_static_t_initialize2(CONTROLLER_path_socket_s, 0, CONTROLLER_path_socket_s_length);
+  const f_string_static_t controller_path_socket_prefix_s = macro_f_string_static_t_initialize2(CONTROLLER_path_socket_prefix_s, 0, CONTROLLER_path_socket_prefix_s_length);
+  const f_string_static_t controller_path_socket_suffix_s = macro_f_string_static_t_initialize2(CONTROLLER_path_socket_suffix_s, 0, CONTROLLER_path_socket_suffix_s_length);
+
+  const f_string_static_t controller_short_cgroup_s = macro_f_string_static_t_initialize2(CONTROLLER_short_cgroup_s, 0, CONTROLLER_short_cgroup_s_length);
+  const f_string_static_t controller_short_daemon_s = macro_f_string_static_t_initialize2(CONTROLLER_short_daemon_s, 0, CONTROLLER_short_daemon_s_length);
+  const f_string_static_t controller_short_init_s = macro_f_string_static_t_initialize2(CONTROLLER_short_init_s, 0, CONTROLLER_short_init_s_length);
+  const f_string_static_t controller_short_interruptible_s = macro_f_string_static_t_initialize2(CONTROLLER_short_interruptible_s, 0, CONTROLLER_short_interruptible_s_length);
+  const f_string_static_t controller_short_pid_s = macro_f_string_static_t_initialize2(CONTROLLER_short_pid_s, 0, CONTROLLER_short_pid_s_length);
+  const f_string_static_t controller_short_settings_s = macro_f_string_static_t_initialize2(CONTROLLER_short_settings_s, 0, CONTROLLER_short_settings_s_length);
+  const f_string_static_t controller_short_simulate_s = macro_f_string_static_t_initialize2(CONTROLLER_short_simulate_s, 0, CONTROLLER_short_simulate_s_length);
+  const f_string_static_t controller_short_uninterruptible_s = macro_f_string_static_t_initialize2(CONTROLLER_short_uninterruptible_s, 0, CONTROLLER_short_uninterruptible_s_length);
+  const f_string_static_t controller_short_validate_s = macro_f_string_static_t_initialize2(CONTROLLER_short_validate_s, 0, CONTROLLER_short_validate_s_length);
+
+  const f_string_static_t controller_long_cgroup_s = macro_f_string_static_t_initialize2(CONTROLLER_long_cgroup_s, 0, CONTROLLER_long_cgroup_s_length);
+  const f_string_static_t controller_long_daemon_s = macro_f_string_static_t_initialize2(CONTROLLER_long_daemon_s, 0, CONTROLLER_long_daemon_s_length);
+  const f_string_static_t controller_long_init_s = macro_f_string_static_t_initialize2(CONTROLLER_long_init_s, 0, CONTROLLER_long_init_s_length);
+  const f_string_static_t controller_long_interruptible_s = macro_f_string_static_t_initialize2(CONTROLLER_long_interruptible_s, 0, CONTROLLER_long_interruptible_s_length);
+  const f_string_static_t controller_long_pid_s = macro_f_string_static_t_initialize2(CONTROLLER_long_pid_s, 0, CONTROLLER_long_pid_s_length);
+  const f_string_static_t controller_long_settings_s = macro_f_string_static_t_initialize2(CONTROLLER_long_settings_s, 0, CONTROLLER_long_settings_s_length);
+  const f_string_static_t controller_long_simulate_s = macro_f_string_static_t_initialize2(CONTROLLER_long_simulate_s, 0, CONTROLLER_long_simulate_s_length);
+  const f_string_static_t controller_long_uninterruptible_s = macro_f_string_static_t_initialize2(CONTROLLER_long_uninterruptible_s, 0, CONTROLLER_long_uninterruptible_s_length);
+  const f_string_static_t controller_long_validate_s = macro_f_string_static_t_initialize2(CONTROLLER_long_validate_s, 0, CONTROLLER_long_validate_s_length);
+#endif // _di_controller_defines_
+
 #ifndef _di_controller_print_help_
   f_status_t controller_print_help(controller_main_t * const main) {
 
     controller_lock_print(main->output.to, 0);
 
-    fll_program_print_help_header(main->output.to, main->context, main->program_name_long, controller_program_version_s);
+    fll_program_print_help_header(main->output.to, main->context, main->program_name_long.string, controller_program_version_s.string);
 
     fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -31,24 +76,24 @@ extern "C" {
 
     f_print_character(f_string_eol_s[0], main->output.to.stream);
 
-    fll_program_print_help_option(main->output.to, main->context, controller_short_cgroup_s, controller_long_cgroup_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Specify a custom control group file path, such as '" F_control_group_path_system_prefix_s F_control_group_path_system_default_s "'.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_interruptible_s, controller_long_interruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid_s CONTROLLER_default_s controller_path_pid_suffix_s "'.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" controller_path_settings_s "'.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_cgroup_s.string, controller_long_cgroup_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Specify a custom control group file path, such as '" F_control_group_path_system_prefix_s F_control_group_path_system_default_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_daemon_s.string, controller_long_daemon_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_init_s.string, controller_long_init_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_interruptible_s.string, controller_long_interruptible_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s.string, controller_long_pid_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" CONTROLLER_path_pid_s CONTROLLER_default_s CONTROLLER_path_pid_suffix_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s.string, controller_long_settings_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" CONTROLLER_path_settings_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_simulate_s.string, controller_long_simulate_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_uninterruptible_s.string, controller_long_uninterruptible_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_validate_s.string, controller_long_validate_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
-    fll_program_print_help_usage(main->output.to, main->context, main->program_name, "entry");
+    fll_program_print_help_usage(main->output.to, main->context, main->program_name.string, "entry");
 
-    fl_print_format("  When both the %[%s%s%] parameter and the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate_s, main->context.set.notable);
-    fl_print_format(" %[%s%s%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_validate_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When both the %[%s%q%] parameter and the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate_s, main->context.set.notable);
+    fl_print_format(" %[%s%q%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_validate_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, main->setting_default.used ? controller_long_uninterruptible_s : controller_long_interruptible_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%q%] parameter is passed.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, main->setting_default.used ? controller_long_uninterruptible_s : controller_long_interruptible_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format(" Specify an empty string for the %[%s%s%] parameter to disable pid file creation for this program.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" Specify an empty string for the %[%s%q%] parameter to disable pid file creation for this program.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     controller_unlock_print_flush(main->output.to, 0);
 
@@ -152,7 +197,7 @@ extern "C" {
     if (main->parameters[controller_parameter_version_e].result == f_console_result_found_e) {
       controller_lock_print(main->output.to, 0);
 
-      fll_program_print_version(main->output.to, controller_program_version_s);
+      fll_program_print_version(main->output.to, controller_program_version_s.string);
 
       controller_unlock_print_flush(main->output.to, 0);
 
@@ -228,17 +273,17 @@ extern "C" {
     }
     else {
       if (main->parameters[controller_parameter_init_e].result == f_console_result_found_e && !main->as_init) {
-        status = f_string_append(controller_path_settings_init_s, controller_path_settings_init_s_length, &setting.path_setting);
+        status = f_string_dynamic_append(controller_path_settings_init_s, &setting.path_setting);
       }
       else if (main->setting_default.used) {
-        status = f_string_append(main->setting_default.string, main->setting_default.used, &setting.path_setting);
+        status = f_string_dynamic_append(main->setting_default, &setting.path_setting);
       }
       else {
-        status = f_string_append(controller_path_settings_s, controller_path_settings_s_length, &setting.path_setting);
+        status = f_string_dynamic_append(controller_path_settings_s, &setting.path_setting);
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
+        fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
       }
     }
 
@@ -274,22 +319,22 @@ extern "C" {
 
     if (F_status_is_error_not(status) && !setting.path_pid.used && !main->parameters[controller_parameter_pid_e].locations.used) {
       if (main->parameters[controller_parameter_init_e].result == f_console_result_found_e) {
-        status = f_string_append(controller_path_pid_init_s, controller_path_pid_init_s_length, &setting.path_pid);
+        status = f_string_dynamic_append(controller_path_pid_init_s, &setting.path_pid);
       }
       else {
-        status = f_string_append(main->path_pid.string, main->path_pid.used, &setting.path_pid);
+        status = f_string_dynamic_append(main->path_pid, &setting.path_pid);
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_string_append(setting.name_entry.string, setting.name_entry.used, &setting.path_pid);
+        status = f_string_dynamic_append(setting.name_entry, &setting.path_pid);
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_string_append(controller_path_pid_suffix_s, controller_path_pid_suffix_s_length, &setting.path_pid);
+        status = f_string_dynamic_append(controller_path_pid_suffix_s, &setting.path_pid);
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
+        fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
       }
     }
 

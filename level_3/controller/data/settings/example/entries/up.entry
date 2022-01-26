@@ -1,0 +1,9 @@
+# fss-0005
+
+main:
+  failsafe maintenance
+
+  ready
+
+maintenance:
+  start maintenance boom
