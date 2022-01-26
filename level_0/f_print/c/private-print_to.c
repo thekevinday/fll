@@ -211,6 +211,7 @@ static inline f_status_t private_inline_f_print_to_error() {
 
       if (j < except.used && except.array[j] == i) {
         ++i;
+
         continue;
       }
 
@@ -229,6 +230,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -246,6 +248,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -297,6 +300,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -316,6 +320,7 @@ static inline f_status_t private_inline_f_print_to_error() {
 
           i = except_in.array[in].stop + 1;
           start = i;
+
           continue;
         }
       }
@@ -369,6 +374,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -388,6 +394,7 @@ static inline f_status_t private_inline_f_print_to_error() {
 
           i = except_in.array[in].stop + 1;
           start = i;
+
           continue;
         }
       }
@@ -444,6 +451,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -463,6 +471,7 @@ static inline f_status_t private_inline_f_print_to_error() {
 
           i = except_in.array[in].stop + 1;
           start = i;
+
           continue;
         }
       }
@@ -482,6 +491,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -499,6 +509,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -598,6 +609,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -616,6 +628,7 @@ static inline f_status_t private_inline_f_print_to_error() {
 
         i += width;
         start = i;
+
         continue;
       }
 

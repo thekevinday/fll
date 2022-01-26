@@ -81,6 +81,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -133,6 +134,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -152,6 +154,7 @@ extern "C" {
 
           i = except_in.array[in].stop + 1;
           start = i;
+
           continue;
         }
       }
@@ -205,6 +208,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -224,6 +228,7 @@ extern "C" {
 
           i = except_in.array[in].stop + 1;
           start = i;
+
           continue;
         }
       }
@@ -280,6 +285,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -299,6 +305,7 @@ extern "C" {
 
           i = except_in.array[in].stop + 1;
           start = i;
+
           continue;
         }
       }
@@ -318,6 +325,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -336,6 +344,7 @@ extern "C" {
 
         i += width;
         start = i;
+
         continue;
       }
 
@@ -386,6 +395,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -440,6 +450,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -458,6 +469,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -478,6 +490,7 @@ extern "C" {
 
         i += width;
         start = i;
+
         continue;
       }
 
@@ -571,6 +584,7 @@ extern "C" {
         }
 
         start = ++i;
+
         continue;
       }
 
@@ -589,6 +603,7 @@ extern "C" {
 
         i += width;
         start = i;
+
         continue;
       }
 
