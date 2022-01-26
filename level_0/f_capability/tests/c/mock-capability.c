@@ -6,7 +6,7 @@ extern "C" {
 
 int __wrap_cap_get_ambient(cap_value_t value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     return -1;
@@ -17,7 +17,7 @@ int __wrap_cap_get_ambient(cap_value_t value) {
 
 int __wrap_cap_clear(cap_t capability) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -30,7 +30,7 @@ int __wrap_cap_clear(cap_t capability) {
 
 int __wrap_cap_clear_flag(cap_t capability, cap_flag_value_t flag_value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -43,7 +43,7 @@ int __wrap_cap_clear_flag(cap_t capability, cap_flag_value_t flag_value) {
 
 int __wrap_cap_compare(cap_t capability_1, cap_t capability_2) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -56,7 +56,7 @@ int __wrap_cap_compare(cap_t capability_1, cap_t capability_2) {
 
 ssize_t __wrap_cap_copy_ext(void *data, cap_t capability, ssize_t size) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -69,7 +69,7 @@ ssize_t __wrap_cap_copy_ext(void *data, cap_t capability, ssize_t size) {
 
 cap_t __wrap_cap_copy_int(void *data) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -82,7 +82,7 @@ cap_t __wrap_cap_copy_int(void *data) {
 
 int __wrap_cap_drop_bound(cap_value_t value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -95,7 +95,7 @@ int __wrap_cap_drop_bound(cap_value_t value) {
 
 cap_t __wrap_cap_dup(cap_t capability) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -108,7 +108,7 @@ cap_t __wrap_cap_dup(cap_t capability) {
 
 int __wrap_cap_free(void *pointer) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -121,7 +121,7 @@ int __wrap_cap_free(void *pointer) {
 
 int __wrap_cap_from_name(const char *name, cap_value_t *value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -134,7 +134,7 @@ int __wrap_cap_from_name(const char *name, cap_value_t *value) {
 
 cap_t __wrap_cap_from_text(const char *text) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -147,7 +147,7 @@ cap_t __wrap_cap_from_text(const char *text) {
 
 int __wrap_cap_get_bound(cap_value_t value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -160,7 +160,7 @@ int __wrap_cap_get_bound(cap_value_t value) {
 
 cap_t __wrap_cap_get_fd(int descriptor) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -173,7 +173,7 @@ cap_t __wrap_cap_get_fd(int descriptor) {
 
 cap_t __wrap_cap_get_file(const char *path) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -186,7 +186,7 @@ cap_t __wrap_cap_get_file(const char *path) {
 
 int __wrap_cap_get_flag(cap_t capability, cap_value_t value, cap_flag_t flag, cap_flag_value_t *flag_value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -199,7 +199,7 @@ int __wrap_cap_get_flag(cap_t capability, cap_value_t value, cap_flag_t flag, ca
 
 cap_mode_t __wrap_cap_get_mode(void) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -212,7 +212,7 @@ cap_mode_t __wrap_cap_get_mode(void) {
 
 uid_t __wrap_cap_get_nsowner(cap_t capability) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -225,7 +225,7 @@ uid_t __wrap_cap_get_nsowner(cap_t capability) {
 
 cap_t __wrap_cap_init(void) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -238,7 +238,7 @@ cap_t __wrap_cap_init(void) {
 
 const char *__wrap_cap_mode_name(cap_mode_t mode) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -251,7 +251,7 @@ const char *__wrap_cap_mode_name(cap_mode_t mode) {
 
 cap_t __wrap_cap_get_pid(pid_t pid) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -264,7 +264,7 @@ cap_t __wrap_cap_get_pid(pid_t pid) {
 
 cap_t __wrap_cap_get_proc(void) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -277,7 +277,7 @@ cap_t __wrap_cap_get_proc(void) {
 
 unsigned __wrap_cap_get_secbits(void) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -290,7 +290,7 @@ unsigned __wrap_cap_get_secbits(void) {
 
 int __wrap_cap_reset_ambient(void) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -303,7 +303,7 @@ int __wrap_cap_reset_ambient(void) {
 
 int __wrap_cap_set_ambient(cap_value_t value, cap_flag_value_t flag_value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -316,7 +316,7 @@ int __wrap_cap_set_ambient(cap_value_t value, cap_flag_value_t flag_value) {
 
 int __wrap_cap_set_fd(int descriptor, cap_t capability) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -329,7 +329,7 @@ int __wrap_cap_set_fd(int descriptor, cap_t capability) {
 
 int __wrap_cap_set_file(const char *path, cap_t capability) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -342,7 +342,7 @@ int __wrap_cap_set_file(const char *path, cap_t capability) {
 
 int __wrap_cap_set_flag(cap_t capability, cap_flag_t flag, int number, const cap_value_t *value, cap_flag_value_t flag_value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -355,7 +355,7 @@ int __wrap_cap_set_flag(cap_t capability, cap_flag_t flag, int number, const cap
 
 int __wrap_cap_set_mode(cap_mode_t mode) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -368,7 +368,7 @@ int __wrap_cap_set_mode(cap_mode_t mode) {
 
 int __wrap_cap_set_nsowner(cap_t capability, uid_t id) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -381,7 +381,7 @@ int __wrap_cap_set_nsowner(cap_t capability, uid_t id) {
 
 int __wrap_cap_set_proc(cap_t capability) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -394,7 +394,7 @@ int __wrap_cap_set_proc(cap_t capability) {
 
 int __wrap_cap_set_secbits(unsigned bits) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -407,7 +407,7 @@ int __wrap_cap_set_secbits(unsigned bits) {
 
 int __wrap_cap_setgroups(gid_t gid, size_t total, const gid_t groups[]) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -420,7 +420,7 @@ int __wrap_cap_setgroups(gid_t gid, size_t total, const gid_t groups[]) {
 
 int __wrap_cap_setuid(uid_t uid) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -433,7 +433,7 @@ int __wrap_cap_setuid(uid_t uid) {
 
 ssize_t __wrap_cap_size(cap_t capability) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -446,7 +446,7 @@ ssize_t __wrap_cap_size(cap_t capability) {
 
 char * __wrap_cap_to_text(cap_t capability, ssize_t *size) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -461,7 +461,7 @@ char * __wrap_cap_to_text(cap_t capability, ssize_t *size) {
 
 char * __wrap_cap_to_name(cap_value_t value) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);

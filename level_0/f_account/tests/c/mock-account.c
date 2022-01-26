@@ -6,7 +6,7 @@ extern "C" {
 
 int __wrap_getpwnam_r(const char *name, struct passwd *pwd, char *buf, size_t buflen, struct passwd **result) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -22,7 +22,7 @@ int __wrap_getpwnam_r(const char *name, struct passwd *pwd, char *buf, size_t bu
 
 int __wrap_getpwuid_r(uid_t uid, struct passwd *pwd, char *buf, size_t buflen, struct passwd **result) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -38,7 +38,7 @@ int __wrap_getpwuid_r(uid_t uid, struct passwd *pwd, char *buf, size_t buflen, s
 
 int __wrap_getgrnam_r(const char *name, struct group *grp, char *buf, size_t buflen, struct group **result) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
@@ -54,7 +54,7 @@ int __wrap_getgrnam_r(const char *name, struct group *grp, char *buf, size_t buf
 
 int __wrap_getgrgid_r(uid_t uid, struct group *grp, char *buf, size_t buflen, struct group **result) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);

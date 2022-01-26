@@ -6,7 +6,7 @@ extern "C" {
 
 char * __wrap_getenv(char *name) {
 
-  bool failure = mock_type(bool);
+  const bool failure = mock_type(bool);
 
   if (failure) {
     errno = mock_type(int);
