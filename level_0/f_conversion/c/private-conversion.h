@@ -35,12 +35,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
- *   F_output (with error bit) on any other file output error.
+ *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fwrite_unlocked()
@@ -74,12 +69,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
- *   F_output (with error bit) on any other file output error.
+ *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fwrite_unlocked()
@@ -108,12 +98,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
- *   F_output (with error bit) on any other file output error.
+ *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fwrite_unlocked()
@@ -143,12 +128,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
- *   F_output (with error bit) on any other file output error.
+ *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fwrite_unlocked()
@@ -180,7 +160,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize()
+ *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
  * @see f_conversion_number_signed_to_string()
  * @see f_conversion_number_unsigned_to_string()

@@ -64,14 +64,7 @@ extern "C" {
           return F_status_set_error(F_output);
         }
 
-        if (fwrite_unlocked(f_string_ascii_0_s, 1, 1, output) == -1) {
-          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-          if (errno == EFAULT) return F_status_set_error(F_buffer);
-          if (errno == EINTR) return F_status_set_error(F_interrupt);
-          if (errno == EINVAL) return F_status_set_error(F_parameter);
-          if (errno == EIO) return F_status_set_error(F_input_output);
-          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+        if (!fwrite_unlocked(f_string_ascii_0_s, 1, 1, output)) {
           return F_status_set_error(F_output);
         }
       }
@@ -113,14 +106,7 @@ extern "C" {
         }
       }
       else if (data.width) {
-        if (fwrite_unlocked(f_string_ascii_0_s, 1, 1, output) == -1) {
-          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-          if (errno == EFAULT) return F_status_set_error(F_buffer);
-          if (errno == EINTR) return F_status_set_error(F_interrupt);
-          if (errno == EINVAL) return F_status_set_error(F_parameter);
-          if (errno == EIO) return F_status_set_error(F_input_output);
-          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+        if (!fwrite_unlocked(f_string_ascii_0_s, 1, 1, output)) {
           return F_status_set_error(F_output);
         }
       }
@@ -144,18 +130,15 @@ extern "C" {
 
       while (digits--) {
 
-        if (fwrite_unlocked((work & number) ? f_string_ascii_1_s : f_string_ascii_0_s, 1, 1, output) == -1) {
-          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-          if (errno == EFAULT) return F_status_set_error(F_buffer);
-          if (errno == EINTR) return F_status_set_error(F_interrupt);
-          if (errno == EINVAL) return F_status_set_error(F_parameter);
-          if (errno == EIO) return F_status_set_error(F_input_output);
-          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+        if (!fwrite_unlocked((work & number) ? f_string_ascii_1_s : f_string_ascii_0_s, 1, 1, output)) {
           return F_status_set_error(F_output);
         }
 
-        work >>= 1;
+        #ifdef _is_F_endian_big
+          work <<= 1; // @todo review this and see if there is more that needs to be done.
+        #else
+          work >>= 1;
+        #endif // _is_F_endian_big
       } // while
 
       return F_none;
@@ -182,14 +165,7 @@ extern "C" {
         }
       }
 
-      if (fwrite_unlocked(&c, 1, 1, output) == -1) {
-        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-        if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupt);
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == EIO) return F_status_set_error(F_input_output);
-        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+      if (!fwrite_unlocked(&c, 1, 1, output)) {
         return F_status_set_error(F_output);
       }
     } // for
@@ -203,14 +179,7 @@ extern "C" {
 
     for (; total; --total) {
 
-      if (fwrite_unlocked(&pad, 1, 1, output) == -1) {
-        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-        if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupt);
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == EIO) return F_status_set_error(F_input_output);
-        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+      if (!fwrite_unlocked(&pad, 1, 1, output)) {
         return F_status_set_error(F_output);
       }
     } // for
@@ -224,52 +193,24 @@ extern "C" {
 
     if (negative) {
       if (negative == 1) {
-        if (fwrite_unlocked(f_string_ascii_minus_s, 1, 1, output) == -1) {
-          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-          if (errno == EFAULT) return F_status_set_error(F_buffer);
-          if (errno == EINTR) return F_status_set_error(F_interrupt);
-          if (errno == EINVAL) return F_status_set_error(F_parameter);
-          if (errno == EIO) return F_status_set_error(F_input_output);
-          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+        if (!fwrite_unlocked(f_string_ascii_minus_s, 1, 1, output)) {
           return F_status_set_error(F_output);
         }
       }
     }
     else if (data.flag & F_conversion_data_flag_sign_always_d) {
-      if (fwrite_unlocked(f_string_ascii_plus_s, 1, 1, output) == -1) {
-        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-        if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupt);
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == EIO) return F_status_set_error(F_input_output);
-        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+      if (!fwrite_unlocked(f_string_ascii_plus_s, 1, 1, output)) {
         return F_status_set_error(F_output);
       }
     }
     else if (data.flag & F_conversion_data_flag_sign_pad_d) {
-      if (fwrite_unlocked(f_string_ascii_space_s, 1, 1, output) == -1) {
-        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-        if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupt);
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == EIO) return F_status_set_error(F_input_output);
-        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+      if (!fwrite_unlocked(f_string_ascii_space_s, 1, 1, output)) {
         return F_status_set_error(F_output);
       }
     }
 
     if (data.flag & F_conversion_data_flag_base_prepend_d) {
-      if (fwrite_unlocked(f_string_ascii_0_s, 1, 1, output) == -1) {
-        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-        if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupt);
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == EIO) return F_status_set_error(F_input_output);
-        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+      if (!fwrite_unlocked(f_string_ascii_0_s, 1, 1, output)) {
         return F_status_set_error(F_output);
       }
 
@@ -301,14 +242,7 @@ extern "C" {
       }
 
       if (c) {
-        if (fwrite_unlocked(&c, 1, 1, output) == -1) {
-          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-          if (errno == EFAULT) return F_status_set_error(F_buffer);
-          if (errno == EINTR) return F_status_set_error(F_interrupt);
-          if (errno == EINVAL) return F_status_set_error(F_parameter);
-          if (errno == EIO) return F_status_set_error(F_input_output);
-          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
+        if (!fwrite_unlocked(&c, 1, 1, output)) {
           return F_status_set_error(F_output);
         }
       }
@@ -327,6 +261,11 @@ extern "C" {
       remaining /= data.base;
     } // for
 
+    // A zero value should always show at least 1 zero when width is not 0.
+    if (data.width && !number) {
+      ++digits;
+    }
+
     // Ensure there is enough space for pad, adding the sign (1) and the prepend units (2).
     {
       long max = 3;
@@ -338,59 +277,35 @@ extern "C" {
         max += data.width;
       }
 
-      if (destination->used + max > destination->size) {
-        const f_status_t status = f_string_dynamic_resize(destination->used + max, destination);
-        if (F_status_is_error(status)) return status;
-      }
+      const f_status_t status = f_string_dynamic_increase_by(max, destination);
+      if (F_status_is_error(status)) return status;
     }
 
-    if (data.flag & F_conversion_data_flag_base_prepend_d) {
-      const int used = digits + 2 + (data.flag & F_conversion_data_flag_sign_always_d & F_conversion_data_flag_sign_pad_d ? 1 : 0);
-
-      if (data.width > used) {
-        if (data.flag & F_conversion_data_flag_zeros_leading_d) {
-          private_f_conversion_digit_to_string_prefix(data, negative, destination);
-          private_f_conversion_digit_to_string_pad(data, f_string_ascii_0_s[0], data.width - used, destination);
-          private_f_conversion_digit_to_string_number(data, number, digits, destination);
-        }
-        else {
-          private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s[0], data.width - used, destination);
-          private_f_conversion_digit_to_string_prefix(data, negative, destination);
-          private_f_conversion_digit_to_string_number(data, number, digits, destination);
-        }
+    if (data.width > digits) {
+      if (data.flag & F_conversion_data_flag_zeros_leading_d) {
+        private_f_conversion_digit_to_string_prefix(data, negative, destination);
+        private_f_conversion_digit_to_string_pad(data, f_string_ascii_0_s[0], data.width - digits, destination);
+        private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
       else if (number) {
+        private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s[0], data.width - digits, destination);
         private_f_conversion_digit_to_string_prefix(data, negative, destination);
         private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
-      else if (data.width) {
-        private_f_conversion_digit_to_string_prefix(data, negative, destination);
-
-        destination->string[destination->used++] = f_string_ascii_0_s[0];
-      }
-    }
-    else {
-      const int used = digits + (data.flag & (F_conversion_data_flag_sign_always_d | F_conversion_data_flag_sign_pad_d) ? 1 : 0);
-
-      if (data.width > used) {
-        if (data.flag & F_conversion_data_flag_zeros_leading_d) {
-          private_f_conversion_digit_to_string_prefix(data, negative, destination);
-          private_f_conversion_digit_to_string_pad(data, f_string_ascii_0_s[0], data.width - used, destination);
-          private_f_conversion_digit_to_string_number(data, number, digits, destination);
-        }
-        else {
-          private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s[0], data.width - used, destination);
-          private_f_conversion_digit_to_string_prefix(data, negative, destination);
-          private_f_conversion_digit_to_string_number(data, number, digits, destination);
-        }
-      }
-      else if (number) {
+      else {
+        private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s[0], data.width - digits, destination);
         private_f_conversion_digit_to_string_prefix(data, negative, destination);
         private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
-      else if (data.width) {
-        destination->string[destination->used++] = f_string_ascii_0_s[0];
-      }
+    }
+    else if (number) {
+      private_f_conversion_digit_to_string_prefix(data, negative, destination);
+      private_f_conversion_digit_to_string_number(data, number, digits, destination);
+    }
+    else if (data.width) {
+      private_f_conversion_digit_to_string_prefix(data, negative, destination);
+
+      destination->string[destination->used++] = f_string_ascii_0_s[0];
     }
 
     return F_none;
@@ -412,7 +327,12 @@ extern "C" {
       while (digits--) {
 
         destination->string[destination->used++] = (work & number) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[1];
-        work >>= 1;
+
+        #ifdef _is_F_endian_big
+          work <<= 1; // @todo review this and see if there is more that needs to be done.
+        #else
+          work >>= 1;
+        #endif // _is_F_endian_big
       } // while
 
       return;
@@ -459,6 +379,9 @@ extern "C" {
     if (negative) {
       if (negative == 1) {
         destination->string[destination->used++] = f_string_ascii_minus_s[0];
+      }
+      else if (data.flag & (F_conversion_data_flag_sign_always_d | F_conversion_data_flag_sign_pad_d)) {
+        destination->string[destination->used++] = f_string_ascii_space_s[0];
       }
     }
     else if (data.flag & F_conversion_data_flag_sign_always_d) {

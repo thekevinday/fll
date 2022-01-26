@@ -52,10 +52,12 @@ extern "C" {
     if (character > 0x2f && character < 0x3a) {
       return F_true;
     }
-    else if (character > 0x40 && character < 0x47) {
+
+    if (character > 0x40 && character < 0x47) {
       return F_true;
     }
-    else if (character > 0x60 && character < 0x67) {
+
+    if (character > 0x60 && character < 0x67) {
       return F_true;
     }
 

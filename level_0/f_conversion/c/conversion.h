@@ -33,7 +33,11 @@ extern "C" {
 #endif
 
 /**
- * Convert a single character into the binary digit that it represents.
+ * Identify whether or not the given 1-byte character represents a boolean digit.
+ *
+ * A boolean digit is either '0' or '1'.
+ *
+ * This only checks against ASCII characters.
  *
  * @param character
  *   The character to validate.
@@ -47,7 +51,11 @@ extern "C" {
 #endif // _di_f_conversion_character_is_binary_
 
 /**
- * Convert a single character into the decimal value that it represents.
+ * Identify whether or not the given 1-byte character represents a decimal digit.
+ *
+ * A decimal digit is a character from the numbers '0' to '9'.
+ *
+ * This only checks against ASCII characters.
  *
  * @param character
  *   The character to validate.
@@ -61,7 +69,13 @@ extern "C" {
 #endif // _di_f_conversion_character_is_decimal_
 
 /**
- * Convert a single character into the duodecimal digit that it represents.
+ * Identify whether or not the given 1-byte character represents a duodecimal digit.
+ *
+ * A decimal digit is a character from the numbers '0' to '9' and the following:
+ *   - 'a' or 'A': Character used to represent the number 10.
+ *   - 'b' or 'B': Character used to represent the number 11.
+ *
+ * This only checks against ASCII characters.
  *
  * @param character
  *   The character to validate.
@@ -75,7 +89,17 @@ extern "C" {
 #endif // _di_f_conversion_character_is_duodecimal_
 
 /**
- * Convert a single character into the hexidecimal digit that it represents.
+ * Identify whether or not the given 1-byte character represents a hexidecimal digit.
+ *
+ * A decimal digit is a character from the numbers '0' to '9' and the following:
+ *   - 'a' or 'A': Character used to represent the number 10.
+ *   - 'b' or 'B': Character used to represent the number 11.
+ *   - 'c' or 'C': Character used to represent the number 12.
+ *   - 'd' or 'D': Character used to represent the number 13.
+ *   - 'e' or 'E': Character used to represent the number 14.
+ *   - 'f' or 'F': Character used to represent the number 15.
+ *
+ * This only checks against ASCII characters.
  *
  * @param character
  *   The character to validate.
@@ -89,7 +113,11 @@ extern "C" {
 #endif // _di_f_conversion_character_is_hexidecimal_
 
 /**
- * Convert a single character into the octal digit that it represents.
+ * Identify whether or not the given 1-byte character represents a octal digit.
+ *
+ * A decimal digit is a character from the numbers '0' to '7'.
+ *
+ * This only checks against ASCII characters.
  *
  * @param character
  *   The character to validate.
@@ -251,9 +279,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize()
+ *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
- * @see f_string_dynamic_resize()
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_conversion_number_signed_to_string_
   extern f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const f_conversion_data_t data, f_string_dynamic_t *destination);
@@ -315,9 +343,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize()
+ *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
- * @see f_string_dynamic_resize()
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_conversion_number_unsigned_to_string_
   extern f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, f_string_dynamic_t *destination);
