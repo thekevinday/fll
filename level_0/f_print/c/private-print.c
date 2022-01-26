@@ -19,7 +19,7 @@ extern "C" {
           total = F_print_write_max_d;
         }
 
-        if (fwrite_unlocked(string + i, 1, total, output) == -1) {
+        if (fwrite_unlocked(string + i, 1, total, output) < total) {
           return F_status_set_error(F_output);
         }
 
@@ -73,7 +73,7 @@ extern "C" {
 
       if (j < except.used && except.array[j] == i) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -90,7 +90,7 @@ extern "C" {
 
       if (!string[i] || i + 1 == stop || total == F_print_write_max_d) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -125,7 +125,7 @@ extern "C" {
 
       if (at < except_at.used && except_at.array[at] == i) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -143,7 +143,7 @@ extern "C" {
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
           if (total) {
-            if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+            if (fwrite_unlocked(string + start, 1, total, output) < total) {
               return F_status_set_error(F_output);
             }
 
@@ -162,7 +162,7 @@ extern "C" {
 
       if (!string[i] || i + 1 == stop || total == F_print_write_max_d) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -197,7 +197,7 @@ extern "C" {
 
       if (at < except_at.used && except_at.array[at] == i) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -215,7 +215,7 @@ extern "C" {
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
           if (total) {
-            if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+            if (fwrite_unlocked(string + start, 1, total, output) < total) {
               return F_status_set_error(F_output);
             }
 
@@ -232,7 +232,7 @@ extern "C" {
 
       if (i + 1 == stop || total == F_print_write_max_d) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -272,7 +272,7 @@ extern "C" {
 
       if (at < except_at.used && except_at.array[at] == i) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -290,7 +290,7 @@ extern "C" {
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
           if (total) {
-            if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+            if (fwrite_unlocked(string + start, 1, total, output) < total) {
               return F_status_set_error(F_output);
             }
 
@@ -310,7 +310,7 @@ extern "C" {
       }
       else {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -323,14 +323,14 @@ extern "C" {
 
       if (safe) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
           total = 0;
         }
 
-        if (fwrite_unlocked(safe, 1, 3, output) == -1) {
+        if (fwrite_unlocked(safe, 1, 3, output) < 3) {
           return F_status_set_error(F_output);
         }
 
@@ -340,7 +340,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+        if (fwrite_unlocked(string + start, 1, total, output) < total) {
           return F_status_set_error(F_output);
         }
 
@@ -353,7 +353,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+      if (fwrite_unlocked(string + start, 1, total, output) < total) {
         return F_status_set_error(F_output);
       }
     }
@@ -378,7 +378,7 @@ extern "C" {
 
       if (j < except.used && except.array[j] == i) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -393,7 +393,7 @@ extern "C" {
 
       if (i + 1 == stop || total == F_print_write_max_d) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -432,7 +432,7 @@ extern "C" {
 
       if (j < except.used && except.array[j] == i) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -450,7 +450,7 @@ extern "C" {
       }
       else {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -465,14 +465,14 @@ extern "C" {
 
       if (safe) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
           total = 0;
         }
 
-        if (fwrite_unlocked(safe, 1, 3, output) == -1) {
+        if (fwrite_unlocked(safe, 1, 3, output) < 3) {
           return F_status_set_error(F_output);
         }
 
@@ -482,7 +482,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+        if (fwrite_unlocked(string + start, 1, total, output) < total) {
           return F_status_set_error(F_output);
         }
 
@@ -513,7 +513,7 @@ extern "C" {
           total = F_print_write_max_d;
         }
 
-        if (fwrite_unlocked(string + i, 1, total, output) == -1) {
+        if (fwrite_unlocked(string + i, 1, total, output) < total) {
           return F_status_set_error(F_output);
         }
 
@@ -531,7 +531,7 @@ extern "C" {
 
         } while (i < length && !string[i] && total < F_print_write_max_d);
 
-        if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+        if (fwrite_unlocked(string + start, 1, total, output) < total) {
           return F_status_set_error(F_output);
         }
       }
@@ -563,7 +563,7 @@ extern "C" {
       }
       else {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
@@ -576,14 +576,14 @@ extern "C" {
 
       if (safe) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (fwrite_unlocked(string + start, 1, total, output) < total) {
             return F_status_set_error(F_output);
           }
 
           total = 0;
         }
 
-        if (fwrite_unlocked(safe, 1, 3, output) == -1) {
+        if (!fwrite_unlocked(safe, 1, 3, output) < 3) {
           return F_status_set_error(F_output);
         }
 
@@ -593,7 +593,7 @@ extern "C" {
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+        if (fwrite_unlocked(string + start, 1, total, output) < total) {
           return F_status_set_error(F_output);
         }
 
@@ -606,7 +606,7 @@ extern "C" {
     } // while
 
     if (total) {
-      if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+      if (fwrite_unlocked(string + start, 1, total, output) < total) {
         return F_status_set_error(F_output);
       }
     }
@@ -641,7 +641,9 @@ extern "C" {
 #if !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
   f_status_t private_f_print_terminated(const f_string_t string, FILE *output) {
 
-    if (fwrite_unlocked(string, 1, strlen(string), output) == -1) {
+    const size_t length = strlen(string);
+
+    if (fwrite_unlocked(string, 1, length, output) < length) {
       return F_status_set_error(F_output);
     }
 

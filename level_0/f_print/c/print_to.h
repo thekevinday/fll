@@ -1418,7 +1418,7 @@ extern "C" {
  *
  *   F_output (with error bit) on any other failure.
  *
- * @see fwrite_unlocked()
+ * @see write()
  *
  * @see f_utf_is_valid()
  */
