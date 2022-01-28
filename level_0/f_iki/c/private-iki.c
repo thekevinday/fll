@@ -13,19 +13,19 @@ extern "C" {
 
     while (range->start <= range->stop && range->start < buffer.used) {
 
-      if (buffer.string[range->start] == f_iki_syntax_separator_s[0]) {
+      if (buffer.string[range->start] == f_iki_syntax_separator_s.string[0]) {
         break;
       }
 
-      if (buffer.string[range->start] == F_iki_syntax_quote_double_s[0]) {
+      if (buffer.string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
         break;
       }
 
-      if (buffer.string[range->start] == F_iki_syntax_quote_single_s[0]) {
+      if (buffer.string[range->start] == f_iki_syntax_quote_single_s.string[0]) {
         break;
       }
 
-      if (buffer.string[range->start] == F_iki_syntax_slash_s[0]) {
+      if (buffer.string[range->start] == f_iki_syntax_slash_s.string[0]) {
         break;
       }
 
@@ -63,7 +63,7 @@ extern "C" {
 
         return F_false;
       }
-      else if (buffer.string[i] == f_iki_syntax_slash_s[0]) {
+      else if (buffer.string[i] == f_iki_syntax_slash_s.string[0]) {
         ++delimits;
       }
       else {

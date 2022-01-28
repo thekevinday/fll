@@ -68,12 +68,12 @@ static inline f_status_t private_inline_f_print_to_error() {
   f_status_t private_f_print_to_character_safely(const char character, const int id) {
 
     if (character == 0x7f) {
-      if (write(id, f_print_sequence_delete_s, 3) != -1) {
+      if (write(id, f_print_sequence_delete_s.string, f_print_sequence_delete_s.used) != -1) {
         return F_none;
       }
     }
     else if (macro_f_utf_character_t_width_is(character) == 1) {
-      if (write(id, f_print_sequence_unknown_s, 3) != -1) {
+      if (write(id, f_print_sequence_unknown_s.string, f_print_sequence_unknown_s.used) != -1) {
         return F_none;
       }
     }
@@ -83,7 +83,7 @@ static inline f_status_t private_inline_f_print_to_error() {
       }
     }
     else {
-      if (write(id, f_print_sequence_set_control_s, 3) != -1) {
+      if (write(id, f_print_sequence_set_control_s[character].string, f_print_sequence_set_control_s[character].used) != -1) {
         return F_none;
       }
     }
@@ -199,7 +199,7 @@ static inline f_status_t private_inline_f_print_to_error() {
     f_array_length_t total = 0;
 
     f_status_t status = F_none;
-    f_string_t safe = 0;
+    f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
 
@@ -234,7 +234,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         continue;
       }
 
-      if (safe) {
+      if (safe.used) {
         if (total) {
           if (write(id, string + start, total) == -1) {
             return private_inline_f_print_to_error();
@@ -243,7 +243,7 @@ static inline f_status_t private_inline_f_print_to_error() {
           total = 0;
         }
 
-        if (write(id, safe, 3) == -1) {
+        if (write(id, safe.string, safe.used) == -1) {
           return private_inline_f_print_to_error();
         }
 
@@ -431,7 +431,7 @@ static inline f_status_t private_inline_f_print_to_error() {
     f_array_length_t total = 0;
 
     f_status_t status = F_none;
-    f_string_t safe = 0;
+    f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
 
@@ -495,7 +495,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         continue;
       }
 
-      if (safe) {
+      if (safe.used) {
         if (total) {
           if (write(id, string + start, total) == -1) {
             return private_inline_f_print_to_error();
@@ -504,7 +504,7 @@ static inline f_status_t private_inline_f_print_to_error() {
           total = 0;
         }
 
-        if (write(id, safe, 3) == -1) {
+        if (write(id, safe.string, safe.used) == -1) {
           return private_inline_f_print_to_error();
         }
 
@@ -588,7 +588,7 @@ static inline f_status_t private_inline_f_print_to_error() {
     f_array_length_t start = 0;
     f_array_length_t total = 0;
 
-    f_string_t safe = 0;
+    f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
 
@@ -613,7 +613,7 @@ static inline f_status_t private_inline_f_print_to_error() {
         continue;
       }
 
-      if (safe) {
+      if (safe.used) {
         if (total) {
           if (write(id, string + start, total) == -1) {
             return private_inline_f_print_to_error();
@@ -622,7 +622,7 @@ static inline f_status_t private_inline_f_print_to_error() {
           total = 0;
         }
 
-        if (write(id, safe, 3) == -1) {
+        if (write(id, safe.string, safe.used) == -1) {
           return private_inline_f_print_to_error();
         }
 

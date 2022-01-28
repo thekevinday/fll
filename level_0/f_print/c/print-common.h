@@ -71,40 +71,75 @@ extern "C" {
   #define F_print_sequence_tab_vertical_s              "␋"
   #define F_print_sequence_unknown_s                   "�"
 
-  extern const f_string_t f_print_sequence_acknowledge_s;
-  extern const f_string_t f_print_sequence_acknowledge_negative_s;
-  extern const f_string_t f_print_sequence_backspace_s;
-  extern const f_string_t f_print_sequence_bell_s;
-  extern const f_string_t f_print_sequence_cancel_s;
-  extern const f_string_t f_print_sequence_carriage_return_s;
-  extern const f_string_t f_print_sequence_data_link_escape_s;
-  extern const f_string_t f_print_sequence_delete_s;
-  extern const f_string_t f_print_sequence_device_control_1_s;
-  extern const f_string_t f_print_sequence_device_control_2_s;
-  extern const f_string_t f_print_sequence_device_control_3_s;
-  extern const f_string_t f_print_sequence_device_control_4_s;
-  extern const f_string_t f_print_sequence_end_of_medium_s;
-  extern const f_string_t f_print_sequence_end_of_text_s;
-  extern const f_string_t f_print_sequence_end_of_transmission_s;
-  extern const f_string_t f_print_sequence_end_of_transmission_block_s;
-  extern const f_string_t f_print_sequence_escape_s;
-  extern const f_string_t f_print_sequence_equiry_s;
-  extern const f_string_t f_print_sequence_form_feed_s;
-  extern const f_string_t f_print_sequence_line_feed_s;
-  extern const f_string_t f_print_sequence_null_s;
-  extern const f_string_t f_print_sequence_separator_file_s;
-  extern const f_string_t f_print_sequence_separator_group_s;
-  extern const f_string_t f_print_sequence_separator_record_s;
-  extern const f_string_t f_print_sequence_separator_unit_s;
-  extern const f_string_t f_print_sequence_shift_in_s;
-  extern const f_string_t f_print_sequence_shift_out_s;
-  extern const f_string_t f_print_sequence_start_of_header_s;
-  extern const f_string_t f_print_sequence_start_of_text_s;
-  extern const f_string_t f_print_sequence_substitute_s;
-  extern const f_string_t f_print_sequence_synchronous_idle_s;
-  extern const f_string_t f_print_sequence_tab_s;
-  extern const f_string_t f_print_sequence_tab_vertical_s;
-  extern const f_string_t f_print_sequence_unknown_s;
+  #define F_print_sequence_acknowledge_s_length               3
+  #define F_print_sequence_acknowledge_negative_s_length      3
+  #define F_print_sequence_backspace_s_length                 3
+  #define F_print_sequence_bell_s_length                      3
+  #define F_print_sequence_cancel_s_length                    3
+  #define F_print_sequence_carriage_return_s_length           3
+  #define F_print_sequence_data_link_escape_s_length          3
+  #define F_print_sequence_delete_s_length                    3
+  #define F_print_sequence_device_control_1_s_length          3
+  #define F_print_sequence_device_control_2_s_length          3
+  #define F_print_sequence_device_control_3_s_length          3
+  #define F_print_sequence_device_control_4_s_length          3
+  #define F_print_sequence_end_of_medium_s_length             3
+  #define F_print_sequence_end_of_text_s_length               3
+  #define F_print_sequence_end_of_transmission_s_length       3
+  #define F_print_sequence_end_of_transmission_block_s_length 3
+  #define F_print_sequence_enquiry_s_length                   3
+  #define F_print_sequence_escape_s_length                    3
+  #define F_print_sequence_form_feed_s_length                 3
+  #define F_print_sequence_line_feed_s_length                 3
+  #define F_print_sequence_null_s_length                      3
+  #define F_print_sequence_separator_file_s_length            3
+  #define F_print_sequence_separator_group_s_length           3
+  #define F_print_sequence_separator_record_s_length          3
+  #define F_print_sequence_separator_unit_s_length            3
+  #define F_print_sequence_shift_in_s_length                  3
+  #define F_print_sequence_shift_out_s_length                 3
+  #define F_print_sequence_start_of_header_s_length           3
+  #define F_print_sequence_start_of_text_s_length             3
+  #define F_print_sequence_substitute_s_length                3
+  #define F_print_sequence_synchronous_idle_s_length          3
+  #define F_print_sequence_tab_s_length                       3
+  #define F_print_sequence_tab_vertical_s_length              3
+  #define F_print_sequence_unknown_s_length                   3
+
+  extern const f_string_static_t f_print_sequence_acknowledge_s;
+  extern const f_string_static_t f_print_sequence_acknowledge_negative_s;
+  extern const f_string_static_t f_print_sequence_backspace_s;
+  extern const f_string_static_t f_print_sequence_bell_s;
+  extern const f_string_static_t f_print_sequence_cancel_s;
+  extern const f_string_static_t f_print_sequence_carriage_return_s;
+  extern const f_string_static_t f_print_sequence_data_link_escape_s;
+  extern const f_string_static_t f_print_sequence_delete_s;
+  extern const f_string_static_t f_print_sequence_device_control_1_s;
+  extern const f_string_static_t f_print_sequence_device_control_2_s;
+  extern const f_string_static_t f_print_sequence_device_control_3_s;
+  extern const f_string_static_t f_print_sequence_device_control_4_s;
+  extern const f_string_static_t f_print_sequence_end_of_medium_s;
+  extern const f_string_static_t f_print_sequence_end_of_text_s;
+  extern const f_string_static_t f_print_sequence_end_of_transmission_s;
+  extern const f_string_static_t f_print_sequence_end_of_transmission_block_s;
+  extern const f_string_static_t f_print_sequence_escape_s;
+  extern const f_string_static_t f_print_sequence_equiry_s;
+  extern const f_string_static_t f_print_sequence_form_feed_s;
+  extern const f_string_static_t f_print_sequence_line_feed_s;
+  extern const f_string_static_t f_print_sequence_null_s;
+  extern const f_string_static_t f_print_sequence_separator_file_s;
+  extern const f_string_static_t f_print_sequence_separator_group_s;
+  extern const f_string_static_t f_print_sequence_separator_record_s;
+  extern const f_string_static_t f_print_sequence_separator_unit_s;
+  extern const f_string_static_t f_print_sequence_shift_in_s;
+  extern const f_string_static_t f_print_sequence_shift_out_s;
+  extern const f_string_static_t f_print_sequence_start_of_header_s;
+  extern const f_string_static_t f_print_sequence_start_of_text_s;
+  extern const f_string_static_t f_print_sequence_substitute_s;
+  extern const f_string_static_t f_print_sequence_synchronous_idle_s;
+  extern const f_string_static_t f_print_sequence_tab_s;
+  extern const f_string_static_t f_print_sequence_tab_vertical_s;
+  extern const f_string_static_t f_print_sequence_unknown_s;
 #endif // _di_f_print_sequences_
 
 /**
@@ -114,7 +149,7 @@ extern "C" {
  * With the exception being ASCII code 127, which is not present in this map.
  */
 #ifndef _di_f_print_sequences_set_control_
-  extern const char f_print_sequence_set_control_s[32][3];
+  extern const f_string_static_t f_print_sequence_set_control_s[32];
 #endif // _di_f_print_sequences_set_control_
 
 /**

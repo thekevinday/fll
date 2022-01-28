@@ -304,7 +304,7 @@ extern "C" {
     f_string_dynamic_t destination_directory = f_string_dynamic_t_initialize;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%c%[Copying %S.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, label, main->context.set.important, f_string_eol_s[0]);
+      fll_print_format("%q%[Copying %S.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, label, main->context.set.important, f_string_eol_s);
     }
 
      macro_f_string_dynamic_t_resize(*status, path_source, source.used);
@@ -474,7 +474,7 @@ extern "C" {
         }
 
         if (main->error.verbosity == f_console_verbosity_verbose_e) {
-          fll_print_format("Copied file '%Q' to '%Q'.%c", main->output.to.stream, path_source, destination_file, f_string_eol_s[0]);
+          fll_print_format("Copied file '%Q' to '%Q'.%q", main->output.to.stream, path_source, destination_file, f_string_eol_s);
         }
       }
       else if (F_status_is_error(*status)) {
@@ -508,16 +508,16 @@ extern "C" {
 
     // Ensure console color mode is passed to the scripts so that they can also react to color mode.
     if (F_status_is_error_not(*status) && main->context.mode != F_color_mode_none_d) {
-      char argument[3] = { f_console_symbol_short_disable_s[0], 0, 0 };
+      char argument[3] = { f_console_symbol_short_disable_s.string[0], 0, 0 };
 
       if (main->context.mode == F_color_mode_dark_d) {
-        argument[1] = f_console_standard_short_dark_s[0];
+        argument[1] = f_console_standard_short_dark_s.string[0];
       }
       else if (main->context.mode == F_color_mode_light_d) {
-        argument[1] = f_console_standard_short_light_s[0];
+        argument[1] = f_console_standard_short_light_s.string[0];
       }
       else if (main->context.mode == F_color_mode_no_color_d) {
-        argument[1] = f_console_standard_short_no_color_s[0];
+        argument[1] = f_console_standard_short_no_color_s.string[0];
       }
 
       *status = fll_execute_arguments_add(argument, 2, &arguments);
@@ -525,16 +525,16 @@ extern "C" {
 
     // Ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
     if (F_status_is_error_not(*status) && main->error.verbosity != f_console_verbosity_normal_e) {
-      char argument[3] = { f_console_symbol_short_disable_s[0], 0, 0 };
+      char argument[3] = { f_console_symbol_short_disable_s.string[0], 0, 0 };
 
       if (main->error.verbosity == f_console_verbosity_quiet_e) {
-        argument[1] = f_console_standard_short_quiet_s[0];
+        argument[1] = f_console_standard_short_quiet_s.string[0];
       }
       else if (main->error.verbosity == f_console_verbosity_verbose_e) {
-        argument[1] = f_console_standard_short_verbose_s[0];
+        argument[1] = f_console_standard_short_verbose_s.string[0];
       }
       else if (main->error.verbosity == f_console_verbosity_debug_e) {
-        argument[1] = f_console_standard_short_debug_s[0];
+        argument[1] = f_console_standard_short_debug_s.string[0];
       }
 
       *status = fll_execute_arguments_add(argument, 2, &arguments);
@@ -553,7 +553,7 @@ extern "C" {
       if (main->define.used) {
         for (f_array_length_t i = 0; i < main->define.used; ++i) {
 
-          *status = f_string_dynamic_mash(f_string_space_s, 1, main->define.array[i], &defines);
+          *status = f_string_dynamic_mash(f_string_space_s, main->define.array[i], &defines);
 
           if (F_status_is_error(*status)) {
             break;
@@ -580,23 +580,23 @@ extern "C" {
       }
 
       const f_string_t parameters_prefix[] = {
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s.string,
+        f_console_symbol_short_enable_s.string,
+        f_console_symbol_short_enable_s.string,
+        f_console_symbol_short_enable_s.string,
+        f_console_symbol_short_enable_s.string,
+        f_console_symbol_short_enable_s.string,
+        f_console_symbol_short_enable_s.string,
       };
 
       const f_array_length_t parameters_prefix_length[] = {
-         F_console_symbol_short_enable_s_length,
-         F_console_symbol_short_enable_s_length,
-         F_console_symbol_short_enable_s_length,
-         F_console_symbol_short_enable_s_length,
-         F_console_symbol_short_enable_s_length,
-         F_console_symbol_short_enable_s_length,
-         F_console_symbol_short_enable_s_length,
+         f_console_symbol_short_enable_s.used,
+         f_console_symbol_short_enable_s.used,
+         f_console_symbol_short_enable_s.used,
+         f_console_symbol_short_enable_s.used,
+         f_console_symbol_short_enable_s.used,
+         f_console_symbol_short_enable_s.used,
+         f_console_symbol_short_enable_s.used,
       };
 
       const f_string_t parameters_name[] = {
@@ -701,9 +701,9 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%c%[%SFailed to execute script: '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%q%[%SFailed to execute script: '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
-            fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+            fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -742,7 +742,7 @@ extern "C" {
 
     for (; i > 0; --i) {
 
-      if (name->string[i] == F_path_extension_separator_s[0]) {
+      if (name->string[i] == f_path_extension_separator_s.string[0]) {
         name->used = i;
         break;
       }
@@ -781,9 +781,9 @@ extern "C" {
       if (main->output.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->output.to.stream);
 
-        fl_print_format("%c%[Building project%] ", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
+        fl_print_format("%q%[Building project%] ", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important);
         fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, data_build.setting.project_name, main->context.set.notable);
-        fl_print_format("%[.%]%c", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+        fl_print_format("%[.%]%q", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s);
 
         funlockfile(main->output.to.stream);
       }

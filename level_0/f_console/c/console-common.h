@@ -59,17 +59,17 @@ extern "C" {
   #define F_console_symbol_short_enable_s_length  1
   #define F_console_symbol_short_disable_s_length 1
 
-  #define F_console_symbol_long_s_enable  "--"
-  #define F_console_symbol_long_s_disable "++"
+  #define F_console_symbol_long_enable_s  "--"
+  #define F_console_symbol_long_disable_s "++"
 
   #define F_console_symbol_long_enable_s_length  2
   #define F_console_symbol_long_disable_s_length 2
 
-  extern const f_string_t f_console_symbol_short_enable_s;
-  extern const f_string_t f_console_symbol_short_disable_s;
+  extern const f_string_static_t f_console_symbol_short_enable_s;
+  extern const f_string_static_t f_console_symbol_short_disable_s;
 
-  extern const f_string_t f_console_symbol_long_enable_s;
-  extern const f_string_t f_console_symbol_long_disable_s;
+  extern const f_string_static_t f_console_symbol_long_enable_s;
+  extern const f_string_static_t f_console_symbol_long_disable_s;
 #endif // _di_f_console_symbol_s_
 
 /**
@@ -155,29 +155,29 @@ extern "C" {
   #define F_console_standard_long_verbose_s_length    7
   #define F_console_standard_long_version_s_length    7
 
-  extern const f_string_t f_console_standard_short_dark_s;
-  extern const f_string_t f_console_standard_short_debug_s;
-  extern const f_string_t f_console_standard_short_help_s;
-  extern const f_string_t f_console_standard_short_light_s;
-  extern const f_string_t f_console_standard_short_no_color_s;
-  extern const f_string_t f_console_standard_short_normal_s;
-  extern const f_string_t f_console_standard_short_quiet_s;
-  extern const f_string_t f_console_standard_short_status_in_s;
-  extern const f_string_t f_console_standard_short_status_out_s;
-  extern const f_string_t f_console_standard_short_verbose_s;
-  extern const f_string_t f_console_standard_short_version_s;
+  extern const f_string_static_t f_console_standard_short_dark_s;
+  extern const f_string_static_t f_console_standard_short_debug_s;
+  extern const f_string_static_t f_console_standard_short_help_s;
+  extern const f_string_static_t f_console_standard_short_light_s;
+  extern const f_string_static_t f_console_standard_short_no_color_s;
+  extern const f_string_static_t f_console_standard_short_normal_s;
+  extern const f_string_static_t f_console_standard_short_quiet_s;
+  extern const f_string_static_t f_console_standard_short_status_in_s;
+  extern const f_string_static_t f_console_standard_short_status_out_s;
+  extern const f_string_static_t f_console_standard_short_verbose_s;
+  extern const f_string_static_t f_console_standard_short_version_s;
 
-  extern const f_string_t f_console_standard_long_dark_s;
-  extern const f_string_t f_console_standard_long_debug_s;
-  extern const f_string_t f_console_standard_long_help_s;
-  extern const f_string_t f_console_standard_long_light_s;
-  extern const f_string_t f_console_standard_long_no_color_s;
-  extern const f_string_t f_console_standard_long_normal_s;
-  extern const f_string_t f_console_standard_long_quiet_s;
-  extern const f_string_t f_console_standard_long_status_in_s;
-  extern const f_string_t f_console_standard_long_status_out_s;
-  extern const f_string_t f_console_standard_long_verbose_s;
-  extern const f_string_t f_console_standard_long_version_s;
+  extern const f_string_static_t f_console_standard_long_dark_s;
+  extern const f_string_static_t f_console_standard_long_debug_s;
+  extern const f_string_static_t f_console_standard_long_help_s;
+  extern const f_string_static_t f_console_standard_long_light_s;
+  extern const f_string_static_t f_console_standard_long_no_color_s;
+  extern const f_string_static_t f_console_standard_long_normal_s;
+  extern const f_string_static_t f_console_standard_long_quiet_s;
+  extern const f_string_static_t f_console_standard_long_status_in_s;
+  extern const f_string_static_t f_console_standard_long_status_out_s;
+  extern const f_string_static_t f_console_standard_long_verbose_s;
+  extern const f_string_static_t f_console_standard_long_version_s;
 #endif // _di_f_console_standard_s_
 
 /**

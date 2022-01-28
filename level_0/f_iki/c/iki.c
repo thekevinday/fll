@@ -9,7 +9,7 @@ extern "C" {
   f_status_t f_iki_content_is(const f_string_static_t content, const uint8_t quote) {
     #ifndef _di_level_0_parameter_checking_
       if (content.used > content.size) return F_status_set_error(F_parameter);
-      if (quote != f_iki_syntax_quote_single_s[0] && quote != f_iki_syntax_quote_double_s[0]) return F_status_set_error(F_parameter);
+      if (quote != f_iki_syntax_quote_single_s.string[0] && quote != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     const f_string_range_t range = macro_f_string_range_t_initialize(content.used);
@@ -24,7 +24,7 @@ extern "C" {
       if (content.used > content.size) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (range.start >= content.used) return F_status_set_error(F_parameter);
-      if (quote != f_iki_syntax_quote_single_s[0] && quote != f_iki_syntax_quote_double_s[0]) return F_status_set_error(F_parameter);
+      if (quote != f_iki_syntax_quote_single_s.string[0] && quote != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     return private_f_iki_content_partial_is(content, range, quote);
@@ -126,13 +126,13 @@ extern "C" {
           }
         }
 
-        if (buffer->string[range->start] == f_iki_syntax_placeholder_s[0]) {
+        if (buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]) {
           ++range->start;
 
           continue;
         }
 
-        if (buffer->string[range->start] == f_iki_syntax_separator_s[0]) {
+        if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
           if (range->start == found_vocabulary.start) {
             ++range->start;
 
@@ -144,12 +144,12 @@ extern "C" {
 
           do {
             status = f_utf_buffer_increment(*buffer, range, 1);
-          } while (F_status_is_fine(status) && buffer->string[range->start] == f_iki_syntax_placeholder_s[0]);
+          } while (F_status_is_fine(status) && buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]);
 
           if (F_status_is_error(status)) break;
 
           // Found a valid vocabulary name.
-          if (buffer->string[range->start] == f_iki_syntax_quote_single_s[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s[0]) {
+          if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
             quote = buffer->string[range->start++];
 
             break;
@@ -158,7 +158,7 @@ extern "C" {
           break;
         }
 
-        if (buffer->string[range->start] == f_iki_syntax_slash_s[0]) {
+        if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
           bool separator_found = F_false;
 
           vocabulary_slash_first = range->start;
@@ -166,14 +166,14 @@ extern "C" {
           // The slash only needs to be delimited if it were to otherwise be a valid vocabulary name.
           while (range->start <= range->stop && range->start < buffer->used) {
 
-            if (buffer->string[range->start] == f_iki_syntax_placeholder_s[0]) {
+            if (buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]) {
               ++range->start;
 
               continue;
             }
 
             if (separator_found) {
-              if (buffer->string[range->start] == f_iki_syntax_quote_single_s[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s[0]) {
+              if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
                 vocabulary_delimited = F_true;
                 quote = buffer->string[range->start++];
 
@@ -185,10 +185,10 @@ extern "C" {
                 break;
               }
             }
-            else if (buffer->string[range->start] == f_iki_syntax_separator_s[0]) {
+            else if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
               separator_found = F_true;
             }
-            else if (buffer->string[range->start] != f_iki_syntax_slash_s[0]) {
+            else if (buffer->string[range->start] != f_iki_syntax_slash_s.string[0]) {
               find_next = F_true;
 
               break;
@@ -256,7 +256,7 @@ extern "C" {
             }
           }
 
-          if (buffer->string[range->start] == f_iki_syntax_placeholder_s[0]) {
+          if (buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]) {
             ++range->start;
 
             continue;
@@ -307,13 +307,13 @@ extern "C" {
 
             return F_none;
           }
-          else if (buffer->string[range->start] == f_iki_syntax_slash_s[0]) {
+          else if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
             f_array_length_t content_slash_first = range->start;
             f_array_length_t content_slash_total = 0;
 
             while (range->start <= range->stop && range->start < buffer->used) {
 
-              if (buffer->string[range->start] == f_iki_syntax_placeholder_s[0]) {
+              if (buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]) {
                 ++range->start;
 
                 continue;
@@ -336,7 +336,7 @@ extern "C" {
 
                 while (i < content_slash_delimits) {
 
-                  if (buffer->string[content_range.start] == f_iki_syntax_slash_s[0]) {
+                  if (buffer->string[content_range.start] == f_iki_syntax_slash_s.string[0]) {
                     delimits->array[delimits->used++] = content_range.start;
                     ++i;
                   }
@@ -401,7 +401,7 @@ extern "C" {
                 break;
               }
 
-              if (buffer->string[range->start] != f_iki_syntax_slash_s[0]) {
+              if (buffer->string[range->start] != f_iki_syntax_slash_s.string[0]) {
                 break;
               }
 

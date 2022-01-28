@@ -32,11 +32,11 @@ extern "C" {
   #define F_iki_syntax_quote_single_s_length 1
   #define F_iki_syntax_slash_s_length        1
 
-  extern const f_string_t f_iki_syntax_separator_s;
-  extern const f_string_t f_iki_syntax_placeholder_s;
-  extern const f_string_t f_iki_syntax_quote_double_s;
-  extern const f_string_t f_iki_syntax_quote_single_s;
-  extern const f_string_t f_iki_syntax_slash_s;
+  extern const f_string_static_t f_iki_syntax_separator_s;
+  extern const f_string_static_t f_iki_syntax_placeholder_s;
+  extern const f_string_static_t f_iki_syntax_quote_double_s;
+  extern const f_string_static_t f_iki_syntax_quote_single_s;
+  extern const f_string_static_t f_iki_syntax_slash_s;
 #endif //_di_f_iki_syntax_
 
 #ifndef _di_iki_vocabulary_0001_
@@ -62,16 +62,16 @@ extern "C" {
   #define F_iki_vocabulary_0001_urn_s_length      3
   #define F_iki_vocabulary_0001_variable_s_length 3
 
-  extern const f_string_t f_iki_vocabulary_0001_address_s;
-  extern const f_string_t f_iki_vocabulary_0001_code_s;
-  extern const f_string_t f_iki_vocabulary_0001_email_s;
-  extern const f_string_t f_iki_vocabulary_0001_name_s;
-  extern const f_string_t f_iki_vocabulary_0001_phone_s;
-  extern const f_string_t f_iki_vocabulary_0001_quote_s;
-  extern const f_string_t f_iki_vocabulary_0001_uri_s;
-  extern const f_string_t f_iki_vocabulary_0001_url_s;
-  extern const f_string_t f_iki_vocabulary_0001_urn_s;
-  extern const f_string_t f_iki_vocabulary_0001_variable_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_address_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_code_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_email_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_name_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_phone_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_quote_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_uri_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_url_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_urn_s;
+  extern const f_string_static_t f_iki_vocabulary_0001_variable_s;
 #endif // _di_iki_vocabulary_0001_
 
 #ifndef _di_iki_vocabulary_0002_
@@ -83,9 +83,9 @@ extern "C" {
   #define F_iki_vocabulary_0002_define_s_length    6
   #define F_iki_vocabulary_0002_parameter_s_length 9
 
-  extern const f_string_t f_iki_vocabulary_0002_context_s;
-  extern const f_string_t f_iki_vocabulary_0002_define_s;
-  extern const f_string_t f_iki_vocabulary_0002_parameter_s;
+  extern const f_string_static_t f_iki_vocabulary_0002_context_s;
+  extern const f_string_static_t f_iki_vocabulary_0002_define_s;
+  extern const f_string_static_t f_iki_vocabulary_0002_parameter_s;
 #endif // _di_iki_vocabulary_0002_
 
 // @todo consider IKI-0003 = vocabulary based on context from HTML5 and accessibility-related?

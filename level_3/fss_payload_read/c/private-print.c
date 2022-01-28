@@ -68,24 +68,24 @@ extern "C" {
       if (data->option & fss_payload_read_data_option_object_d) {
         if (data->option & fss_payload_read_data_option_trim_d) {
           if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_object_header.array[at]) {
-            f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+            f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
           }
 
           fl_print_trim_except_dynamic_partial(data->buffer, data->objects_header.array[at], delimits_object, main->output.to.stream);
 
           if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_object_header.array[at]) {
-            f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+            f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
           }
         }
         else {
           if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_object_header.array[at]) {
-            f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+            f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
           }
 
           f_print_except_dynamic_partial(data->buffer, data->objects_header.array[at], delimits_object, main->output.to.stream);
 
           if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_object_header.array[at]) {
-            f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+            f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
           }
         }
 
@@ -102,13 +102,13 @@ extern "C" {
             content_printed = F_true;
 
             if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_content_header.array[at].array[data->select]) {
-              f_print_character_safely(data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
 
             f_print_except_dynamic_partial(data->buffer, data->contents_header.array[at].array[data->select], delimits_content, main->output.to.stream);
 
             if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_content_header.array[at].array[data->select]) {
-              f_print_character_safely(data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes_content_header.array[at].array[data->select] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
           }
         }
@@ -122,13 +122,13 @@ extern "C" {
             content_printed = F_true;
 
             if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_content_header.array[at].array[i]) {
-              f_print_character_safely(data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
 
             f_print_except_dynamic_partial(data->buffer, data->contents_header.array[at].array[i], delimits_content, main->output.to.stream);
 
             if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_content_header.array[at].array[i]) {
-              f_print_character_safely(data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
 
             if (i + 1 < data->contents_header.array[at].used && data->contents_header.array[at].array[i + 1].start <= data->contents_header.array[at].array[i + 1].stop) {
@@ -226,7 +226,7 @@ extern "C" {
       f_print_character(fss_payload_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
-      f_print_character(F_fss_space_s[0], main->output.to.stream);
+      f_print_dynamic(f_fss_space_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_payload_read_print_content_end_extended_
@@ -248,11 +248,11 @@ extern "C" {
     }
     else {
       if (main->parameters[fss_payload_read_parameter_content_e].result == f_console_result_found_e) {
-        f_print_character(f_fss_basic_list_open_s[0], main->output.to.stream);
-        f_print_character(f_fss_basic_list_open_end_s[0], main->output.to.stream);
+        f_print_dynamic(f_fss_basic_list_open_s, main->output.to.stream);
+        f_print_dynamic(f_fss_basic_list_open_end_s, main->output.to.stream);
       }
       else {
-        f_print_character(f_fss_eol_s[0], main->output.to.stream);
+        f_print_dynamic(f_fss_eol_s, main->output.to.stream);
       }
     }
   }
@@ -265,7 +265,7 @@ extern "C" {
       f_print_character(fss_payload_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
-      f_print_character(F_fss_space_s[0], main->output.to.stream);
+      f_print_dynamic(f_fss_space_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_payload_read_print_object_end_extended_
@@ -286,7 +286,7 @@ extern "C" {
       f_print_character(fss_payload_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
-      f_print_character(f_fss_eol_s[0], main->output.to.stream);
+      f_print_dynamic(f_fss_eol_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_payload_read_print_set_end_extended_
@@ -294,16 +294,16 @@ extern "C" {
 #ifndef _di_fss_payload_read_print_one_
   void fss_payload_read_print_one(fss_payload_read_main_t * const main) {
 
-    f_print_character(f_string_ascii_1_s[0], main->output.to.stream);
-    f_print_character(f_string_eol_s[0], main->output.to.stream);
+    f_print_dynamic(f_string_ascii_1_s, main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_payload_read_print_one_
 
 #ifndef _di_fss_payload_read_print_zero_
   void fss_payload_read_print_zero(fss_payload_read_main_t * const main) {
 
-    f_print_character(f_string_ascii_0_s[0], main->output.to.stream);
-    f_print_character(f_string_eol_s[0], main->output.to.stream);
+    f_print_dynamic(f_string_ascii_0_s, main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_payload_read_print_zero_
 

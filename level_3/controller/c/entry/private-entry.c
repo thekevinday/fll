@@ -300,9 +300,9 @@ extern "C" {
         if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global.main->warning.to, global.thread);
 
-          fl_print_format("%c%[%SUnknown %s item action '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
+          fl_print_format("%q%[%SUnknown %s item action '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
           fl_print_format("%[%S%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_action, global.main->warning.notable);
-          fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+          fl_print_format("%['.%]%q", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
           controller_entry_print_error_cache(is_entry, global.main->warning, cache->action);
 
@@ -346,7 +346,7 @@ extern "C" {
 
           flockfile(global.main->error.to.stream);
 
-          fl_print_format("%c%[%SThe %s item action '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+          fl_print_format("%q%[%SThe %s item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
           fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
           fl_print_format("%[' requires ", global.main->error.to.stream, global.main->error.context);
 
@@ -357,16 +357,16 @@ extern "C" {
           fl_print_format("%]%[%un%]", global.main->error.to.stream, global.main->error.context, global.main->error.notable, at_least, global.main->error.notable);
 
           if (action->type == controller_entry_action_type_consider_e || controller_entry_action_type_is_rule(action->type)) {
-            fl_print_format("%[ or more parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%[ or more parameters.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
           }
           else {
             if (at_least == at_most) {
-              fl_print_format("%[ parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+              fl_print_format("%[ parameters.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
             }
             else {
               fl_print_format("%[ to %]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
               fl_print_format("%[%un%]", global.main->error.to.stream, global.main->error.notable, at_most, global.main->error.notable);
-              fl_print_format("%[ parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+              fl_print_format("%[ parameters.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
             }
           }
 
@@ -455,7 +455,7 @@ extern "C" {
               }
 
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_format("%c%[%SThe %s item action must not have an empty string for a path (the first parameter).%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s[0]);
+                fll_print_format("%q%[%SThe %s item action must not have an empty string for a path (the first parameter).%]%q", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s);
               }
             }
 
@@ -498,11 +498,11 @@ extern "C" {
 
                     flockfile(global.main->error.to.stream);
 
-                    fl_print_format("%c%[%SThe %s item action second parameter '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+                    fl_print_format("%q%[%SThe %s item action second parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                     fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, action->parameters.array[1], global.main->error.notable);
                     fl_print_format("%[' must be a base path name, such as '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                     fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_path, global.main->error.notable);
-                    fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                    fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                     funlockfile(global.main->error.to.stream);
                   }
@@ -523,7 +523,7 @@ extern "C" {
               }
 
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_format("%c%[%SThe %s item action must not have an empty string for a rule name (the second parameter).%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s[0]);
+                fll_print_format("%q%[%SThe %s item action must not have an empty string for a rule name (the second parameter).%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s);
               }
             }
 
@@ -550,7 +550,7 @@ extern "C" {
                 if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(global.main->error.to.stream);
 
-                  fl_print_format("%c%[%SThe %s item action third parameter (and beyond) must be one of '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+                  fl_print_format("%q%[%SThe %s item action third parameter (and beyond) must be one of '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                   fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_asynchronous_s, global.main->error.notable);
                   fl_print_format("%[', '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                   fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_require_s, global.main->error.notable);
@@ -558,7 +558,7 @@ extern "C" {
                   fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_wait_s, global.main->error.notable);
                   fl_print_format("%[' but instead has '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                   fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, action->parameters.array[j], global.main->error.notable);
-                  fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                   funlockfile(global.main->error.to.stream);
                 }
@@ -576,9 +576,9 @@ extern "C" {
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 flockfile(global.main->error.to.stream);
 
-                fl_print_format("%c%[%SThe %s item action may not specify the reserved item '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+                fl_print_format("%q%[%SThe %s item action may not specify the reserved item '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                 fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_main_s, global.main->error.notable);
-                fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 funlockfile(global.main->error.to.stream);
               }
@@ -605,7 +605,7 @@ extern "C" {
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 flockfile(global.main->error.to.stream);
 
-                fl_print_format("%c%[%SThe %s item action must have one of '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+                fl_print_format("%q%[%SThe %s item action must have one of '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                 fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_kill_s, global.main->error.notable);
                 fl_print_format("%[', '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                 fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_start_s, global.main->error.notable);
@@ -613,7 +613,7 @@ extern "C" {
                 fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_stop_s, global.main->error.notable);
                 fl_print_format("%[' but instead has '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                 fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, action->parameters.array[0], global.main->error.notable);
-                fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 funlockfile(global.main->error.to.stream);
               }
@@ -644,9 +644,9 @@ extern "C" {
                 if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(global.main->error.to.stream);
 
-                  fl_print_format("%c%[%SThe %s item action parameter '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+                  fl_print_format("%q%[%SThe %s item action parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                   fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, action->parameters.array[1], global.main->error.notable);
-                  fl_print_format("%[' is not a valid supported number.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%[' is not a valid supported number.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                   funlockfile(global.main->error.to.stream);
                 }
@@ -664,11 +664,11 @@ extern "C" {
                 if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(global.main->error.to.stream);
 
-                  fl_print_format("%c%[%SThe %s item action may only have '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+                  fl_print_format("%q%[%SThe %s item action may only have '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                   fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_wait_s, global.main->error.notable);
                   fl_print_format("%[' but instead has '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                   fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, action->parameters.array[0], global.main->error.notable);
-                  fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%['.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                   funlockfile(global.main->error.to.stream);
                 }
@@ -766,9 +766,9 @@ extern "C" {
             if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
               controller_lock_print(global.main->warning.to, global.thread);
 
-              fl_print_format("%c%[%SMultiple '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
+              fl_print_format("%q%[%SMultiple '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
               fl_print_format("%[%s%]", global.main->warning.to.stream, global.main->warning.notable, controller_ready_s, global.main->warning.notable);
-              fl_print_format("%[' %s item actions detected; only the first will be used.%]%c", global.main->warning.to.stream, global.main->warning.context, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context, f_string_eol_s[0]);
+              fl_print_format("%[' %s item actions detected; only the first will be used.%]%q", global.main->warning.to.stream, global.main->warning.context, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context, f_string_eol_s);
 
               controller_entry_print_error_cache(is_entry, global.main->warning, cache->action);
 
@@ -802,9 +802,9 @@ extern "C" {
                   if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                     controller_lock_print(global.main->error.to, global.thread);
 
-                    fl_print_format("%c%[%SThe %s item named '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, is_entry ? controller_entry_s : controller_exit_s, global.main->error.prefix, global.main->error.context);
+                    fl_print_format("%q%[%SThe %s item named '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, is_entry ? controller_entry_s : controller_exit_s, global.main->error.prefix, global.main->error.context);
                     fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, entry->items.array[i].name, global.main->error.notable);
-                    fl_print_format("%[' cannot be executed because recursion is not allowed.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                    fl_print_format("%[' cannot be executed because recursion is not allowed.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                     controller_entry_print_error_cache(is_entry, global.main->error, cache->action);
 
@@ -864,9 +864,9 @@ extern "C" {
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
-                fl_print_format("%c%[%SThe %s item named '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, is_entry ? controller_entry_s : controller_exit_s, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%q%[%SThe %s item named '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, is_entry ? controller_entry_s : controller_exit_s, global.main->error.prefix, global.main->error.context);
                 fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, actions->array[cache->ats.array[at_j]].parameters.array[0], global.main->error.notable);
-                fl_print_format("%[' does not exist.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%[' does not exist.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_entry_print_error_cache(is_entry, global.main->error, cache->action);
 
@@ -984,8 +984,8 @@ extern "C" {
       if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(global->main->output.to, global->thread);
 
-        fl_print_format("%cProcessing %s%s item '", global->main->output.to.stream, f_string_eol_s[0], failsafe ? "failsafe " : "", is_entry ? controller_entry_s : controller_exit_s);
-        fl_print_format("%[%Q%]'.%c", global->main->output.to.stream, global->main->context.set.notable, cache->action.name_item, global->main->context.set.notable, f_string_eol_s[0]);
+        fl_print_format("%qProcessing %s%s item '", global->main->output.to.stream, f_string_eol_s, failsafe ? "failsafe " : "", is_entry ? controller_entry_s : controller_exit_s);
+        fl_print_format("%[%Q%]'.%q", global->main->output.to.stream, global->main->context.set.notable, cache->action.name_item, global->main->context.set.notable, f_string_eol_s);
 
         controller_unlock_print_flush(global->main->output.to, global->thread);
       }
@@ -1021,7 +1021,7 @@ extern "C" {
             if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
-              fl_print_format("%cThe %s item action '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
+              fl_print_format("%qThe %s item action '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
               fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.title, cache->action.name_action, global->main->context.set.title);
 
               if (entry_action->parameters.used) {
@@ -1034,7 +1034,7 @@ extern "C" {
 
               fl_print_format("' is %[%s%] and is in a ", global->main->output.to.stream, global->main->context.set.notable, entry_action->code & controller_entry_rule_code_require_d ? "required" : "optional", global->main->context.set.notable);
 
-              fl_print_format("%[failed%] state, skipping.%c", global->main->output.to.stream, global->main->context.set.notable, global->main->context.set.notable, global->main->context.set.notable, f_string_eol_s[0]);
+              fl_print_format("%[failed%] state, skipping.%q", global->main->output.to.stream, global->main->context.set.notable, global->main->context.set.notable, global->main->context.set.notable, f_string_eol_s);
 
               controller_unlock_print_flush(global->main->output.to, global->thread);
             }
@@ -1052,7 +1052,7 @@ extern "C" {
 
               controller_lock_print(output->to, global->thread);
 
-              fl_print_format("%c%[%SThe %s item action '%]", output->to.stream, f_string_eol_s[0], output->context, output->prefix ? output->prefix : f_string_empty_s, is_entry ? controller_entry_s : controller_exit_s, output->context);
+              fl_print_format("%q%[%QThe %s item action '%]", output->to.stream, f_string_eol_s, output->context, output->prefix ? output->prefix : f_string_empty_s, is_entry ? controller_entry_s : controller_exit_s, output->context);
               fl_print_format("%[%Q%]", output->to.stream, output->notable, cache->action.name_action, output->notable);
 
 
@@ -1074,10 +1074,10 @@ extern "C" {
               fl_print_format(" %[and is in a%] %[failed%]", output->to.stream, output->context, output->context, output->notable, output->notable);
 
               if (entry_action->code & controller_entry_rule_code_require_d) {
-                fl_print_format(" %[state, aborting.%]%c", output->to.stream, output->context, output->context, f_string_eol_s[0]);
+                fl_print_format(" %[state, aborting.%]%q", output->to.stream, output->context, output->context, f_string_eol_s);
               }
               else {
-                fl_print_format(" %[state, skipping.%]%c", output->to.stream, output->context, output->context, f_string_eol_s[0]);
+                fl_print_format(" %[state, skipping.%]%q", output->to.stream, output->context, output->context, f_string_eol_s);
               }
 
               controller_entry_print_error_cache(is_entry, *output, cache->action);
@@ -1099,9 +1099,9 @@ extern "C" {
               if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->output.to, global->thread);
 
-                fl_print_format("%cWaiting before processing %s item action '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
+                fl_print_format("%qWaiting before processing %s item action '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
                 fl_print_format("%[%s%]", global->main->output.to.stream, global->main->context.set.title, controller_ready_s, global->main->context.set.title);
-                fl_print_format("'.%c", global->main->output.to.stream, f_string_eol_s[0]);
+                fl_print_format("'.%q", global->main->output.to.stream, f_string_eol_s);
 
                 controller_unlock_print_flush(global->main->output.to, global->thread);
               }
@@ -1118,9 +1118,9 @@ extern "C" {
               if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->output.to, global->thread);
 
-                fl_print_format("%cIgnoring %s item action '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
+                fl_print_format("%qIgnoring %s item action '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
                 fl_print_format("%[%s%]", global->main->output.to.stream, global->main->context.set.title, controller_ready_s, global->main->context.set.title);
-                fl_print_format("', state already is ready.%c", global->main->output.to.stream, f_string_eol_s[0]);
+                fl_print_format("', state already is ready.%q", global->main->output.to.stream, f_string_eol_s);
 
                 controller_unlock_print_flush(global->main->output.to, global->thread);
               }
@@ -1128,7 +1128,7 @@ extern "C" {
           }
           else {
             if (!failsafe && (global->main->error.verbosity == f_console_verbosity_verbose_e || entry->show == controller_entry_show_init_e) && global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e) {
-              fl_print_format("%cState is now '%[%s%]'.%c", global->main->output.to.stream, f_string_eol_s[0], global->main->context.set.notable, controller_ready_s, global->main->context.set.notable, f_string_eol_s[0]);
+              fl_print_format("%qState is now '%[%s%]'.%q", global->main->output.to.stream, f_string_eol_s, global->main->context.set.notable, controller_ready_s, global->main->context.set.notable, f_string_eol_s);
             }
 
             status = controller_perform_ready(global, cache, is_entry);
@@ -1142,9 +1142,9 @@ extern "C" {
             if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->error.to, global->thread);
 
-              fl_print_format("%c%[Invalid %s item index '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, is_entry ? controller_entry_s : controller_exit_s, global->main->error.context);
+              fl_print_format("%q%[Invalid %s item index '%]", global->main->error.to.stream, f_string_eol_s, global->main->error.context, is_entry ? controller_entry_s : controller_exit_s, global->main->error.context);
               fl_print_format("%[%un%]", global->main->error.to.stream, global->main->error.notable, entry_action->number, global->main->error.notable);
-              fl_print_format("%[' detected.%]%c", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s[0]);
+              fl_print_format("%[' detected.%]%q", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s);
 
               controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
 
@@ -1189,9 +1189,9 @@ extern "C" {
             if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
-              fl_print_format("%cProcessing %s item '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
+              fl_print_format("%qProcessing %s item '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
               fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.title, cache->action.name_item, global->main->context.set.title);
-              fl_print_format("'.%c", global->main->output.to.stream, f_string_eol_s[0]);
+              fl_print_format("'.%q", global->main->output.to.stream, f_string_eol_s);
 
               controller_unlock_print_flush(global->main->output.to, global->thread);
             }
@@ -1226,7 +1226,7 @@ extern "C" {
           memcpy(id_rule_name, entry_action->parameters.array[0].string, entry_action->parameters.array[0].used);
           memcpy(id_rule_name + entry_action->parameters.array[0].used + 1, entry_action->parameters.array[1].string, entry_action->parameters.array[1].used);
 
-          id_rule_name[entry_action->parameters.array[0].used] = f_path_separator_s[0];
+          id_rule_name[entry_action->parameters.array[0].used] = f_path_separator_s.string[0];
           id_rule_name[id_rule_length] = 0;
 
           status_lock = controller_lock_read(is_entry, global->thread, &global->thread->lock.rule);
@@ -1245,7 +1245,7 @@ extern "C" {
             if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
-              fl_print_format("%c%s %s item rule ", global->main->output.to.stream, f_string_eol_s[0], entry_action->type == controller_entry_action_type_consider_e ? "Considering" : "Processing", is_entry ? controller_entry_s : controller_exit_s);
+              fl_print_format("%q%s %s item rule ", global->main->output.to.stream, f_string_eol_s, entry_action->type == controller_entry_action_type_consider_e ? "Considering" : "Processing", is_entry ? controller_entry_s : controller_exit_s);
               fl_print_format("'%[%Q%]'", global->main->output.to.stream, global->main->context.set.title, alias_rule, global->main->context.set.title);
 
               if (entry->show == controller_entry_show_init_e && global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e) {
@@ -1260,7 +1260,7 @@ extern "C" {
                 }
               }
 
-              fl_print_format(".%c", global->main->output.to.stream, f_string_eol_s[0]);
+              fl_print_format(".%q", global->main->output.to.stream, f_string_eol_s);
 
               controller_unlock_print_flush(global->main->output.to, global->thread);
             }
@@ -1394,18 +1394,18 @@ extern "C" {
             if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
-              fl_print_format("%c%s is executing '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
+              fl_print_format("%q%s is executing '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
 
               for (f_array_length_t k = 0; k < entry_action->parameters.used; ++k) {
 
                 fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.title, entry_action->parameters.array[k], global->main->context.set.title);
 
                 if (k + 1 < entry_action->parameters.used) {
-                  f_print_character(f_string_space_s[0], global->main->output.to.stream);
+                  f_print_dynamic(f_string_space_s, global->main->output.to.stream);
                 }
               } // for
 
-              fl_print_format("'.%c", global->main->output.to.stream, f_string_eol_s[0]);
+              fl_print_format("'.%q", global->main->output.to.stream, f_string_eol_s);
 
               controller_unlock_print_flush(global->main->output.to, global->thread);
             }
@@ -1431,9 +1431,9 @@ extern "C" {
               if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->error.to, global->thread);
 
-                fl_print_format("%c%[%SExecution failed, unable to find program or script '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, global->main->error.context);
+                fl_print_format("%q%[%SExecution failed, unable to find program or script '%]", global->main->error.to.stream, f_string_eol_s, global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, global->main->error.context);
                 fl_print_format("%[%Q%]", global->main->error.to.stream, global->main->error.notable, entry_action->parameters.array[0], global->main->error.notable);
-                fl_print_format("%['.%]%c", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s[0]);
+                fl_print_format("%['.%]%q", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s);
 
                 controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
 
@@ -1450,9 +1450,9 @@ extern "C" {
             if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->error.to, global->thread);
 
-              fl_print_format("%c%[%SExecution failed with return value of '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, global->main->error.context);
+              fl_print_format("%q%[%SExecution failed with return value of '%]", global->main->error.to.stream, f_string_eol_s, global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, global->main->error.context);
               fl_print_format("%[%i%]", global->main->error.to.stream, global->main->error.notable, result, global->main->error.notable);
-              fl_print_format("$['.%]%c", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s[0]);
+              fl_print_format("$['.%]%q", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s);
 
               controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
 
@@ -1489,7 +1489,7 @@ extern "C" {
             if (global->main->warning.verbosity == f_console_verbosity_debug_e) {
               controller_lock_print(global->main->warning.to, global->thread);
 
-              fl_print_format("%c%[%SFailsafe may not be specified when running in failsafe, ignoring.%]%c", global->main->warning.to.stream, f_string_eol_s[0], global->main->warning.context, global->main->warning.prefix, global->main->warning.context, f_string_eol_s[0]);
+              fl_print_format("%q%[%SFailsafe may not be specified when running in failsafe, ignoring.%]%q", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context, f_string_eol_s);
 
               controller_entry_print_error_cache(is_entry, global->main->warning, cache->action);
 
@@ -1503,9 +1503,9 @@ extern "C" {
               if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->error.to, global->thread);
 
-                fl_print_format("%c%[%SInvalid %s item index '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, is_entry ? controller_entry_s : controller_exit_s, global->main->error.context);
+                fl_print_format("%q%[%SInvalid %s item index '%]", global->main->error.to.stream, f_string_eol_s, global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, is_entry ? controller_entry_s : controller_exit_s, global->main->error.context);
                 fl_print_format("%[%un%]", global->main->error.to.stream, global->main->error.notable, entry_action->number, global->main->error.notable);
-                fl_print_format("%[' detected.%]%c", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s[0]);
+                fl_print_format("%[' detected.%]%q", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s);
 
                 controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
 
@@ -1588,9 +1588,9 @@ extern "C" {
     if ((global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e && global->main->error.verbosity != f_console_verbosity_quiet_e) || global->main->error.verbosity == f_console_verbosity_verbose_e) {
       controller_lock_print(global->main->output.to, global->thread);
 
-      fl_print_format("%cDone processing %s item '", global->main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
+      fl_print_format("%qDone processing %s item '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
       fl_print_format("%[%s%]", global->main->output.to.stream, global->main->context.set.title, controller_main_s, global->main->context.set.title);
-      fl_print_format("'.%c", global->main->output.to.stream, f_string_eol_s[0]);
+      fl_print_format("'.%q", global->main->output.to.stream, f_string_eol_s);
 
       // failsafe should not print the extra newline because the failure exit from controller_main should handle this.
       if (!failsafe) {
@@ -1690,7 +1690,7 @@ extern "C" {
         if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
-          fll_print_format("%c%[%SThe %s file is empty.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s[0]);
+          fll_print_format("%q%[%SThe %s file is empty.%]%q", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(global.main->error.to, global.thread);
         }
@@ -1770,9 +1770,9 @@ extern "C" {
               if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
                 controller_lock_print(global.main->warning.to, global.thread);
 
-                fl_print_format("%c%[%SIgnoring duplicate %s item '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
+                fl_print_format("%q%[%SIgnoring duplicate %s item '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
                 fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_file, global.main->warning.notable);
-                fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+                fl_print_format("%['.%]%q", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
                 controller_entry_print_error_cache(is_entry, global.main->warning, cache->action);
 
@@ -1853,9 +1853,9 @@ extern "C" {
             if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
-              fl_print_format("%c%[%SThe required %s item '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+              fl_print_format("%q%[%SThe required %s item '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
               fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_main_s, global.main->error.notable);
-              fl_print_format("%[' was not found.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+              fl_print_format("%[' was not found.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_unlock_print_flush(global.main->error.to, global.thread);
             }
@@ -1915,9 +1915,9 @@ extern "C" {
                     if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                       controller_lock_print(global.main->error.to, global.thread);
 
-                      fl_print_format("%c%[%SThe required %s item '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+                      fl_print_format("%q%[%SThe required %s item '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                       fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, action->parameters.array[0], global.main->error.notable);
-                      fl_print_format("%[' does not exist.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                      fl_print_format("%[' does not exist.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                       controller_entry_print_error_cache(is_entry, global.main->error, cache->action);
 

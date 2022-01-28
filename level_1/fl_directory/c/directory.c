@@ -30,7 +30,7 @@ extern "C" {
 
       for (; path[at_path]; ++at_path) {
 
-        if (at_path && path[at_path] == f_path_separator_s[0]) {
+        if (at_path && path[at_path] == f_path_separator_s.string[0]) {
           memcpy(tree, path + at_tree, at_path - at_tree);
           tree[at_path] = 0;
 
@@ -101,7 +101,7 @@ extern "C" {
       for (; i > 0; --i, --static_source.used) {
 
         if (!source[i - 1]) continue;
-        if (source[i - 1] == f_path_separator_s[0]) continue;
+        if (source[i - 1] == f_path_separator_s.string[0]) continue;
 
         break;
       } // for
@@ -111,7 +111,7 @@ extern "C" {
       for (; i > 0; --i, --static_destination.used) {
 
         if (!destination[i - 1]) continue;
-        if (destination[i - 1] == f_path_separator_s[0]) continue;
+        if (destination[i - 1] == f_path_separator_s.string[0]) continue;
 
         break;
       } // for
@@ -155,7 +155,7 @@ extern "C" {
       for (; i > 0; --i, --static_source.used) {
 
         if (!source[i - 1]) continue;
-        if (source[i - 1] == f_path_separator_s[0]) continue;
+        if (source[i - 1] == f_path_separator_s.string[0]) continue;
 
         break;
       } // for
@@ -165,7 +165,7 @@ extern "C" {
       for (; i > 0; --i, --static_destination.used) {
 
         if (!destination[i - 1]) continue;
-        if (destination[i - 1] == f_path_separator_s[0]) continue;
+        if (destination[i - 1] == f_path_separator_s.string[0]) continue;
 
         break;
       } // for
@@ -223,7 +223,7 @@ extern "C" {
       for (; i > 0; --i, --static_source.used) {
 
         if (!source[i - 1]) continue;
-        if (source[i - 1] == f_path_separator_s[0]) continue;
+        if (source[i - 1] == f_path_separator_s.string[0]) continue;
 
         break;
       } // for
@@ -233,7 +233,7 @@ extern "C" {
       for (; i > 0; --i, --static_destination.used) {
 
         if (!destination[i - 1]) continue;
-        if (destination[i - 1] == f_path_separator_s[0]) continue;
+        if (destination[i - 1] == f_path_separator_s.string[0]) continue;
 
         break;
       } // for
@@ -277,7 +277,7 @@ extern "C" {
       for (; i > 0; --i, --static_source.used) {
 
         if (!source[i - 1]) continue;
-        if (source[i - 1] == f_path_separator_s[0]) continue;
+        if (source[i - 1] == f_path_separator_s.string[0]) continue;
 
         break;
       } // for
@@ -287,7 +287,7 @@ extern "C" {
       for (; i > 0; --i, --static_destination.used) {
 
         if (!destination[i - 1]) continue;
-        if (destination[i - 1] == f_path_separator_s[0]) continue;
+        if (destination[i - 1] == f_path_separator_s.string[0]) continue;
 
         break;
       } // for
@@ -348,7 +348,7 @@ extern "C" {
       }
 
       if (first_nulless) {
-        if (path->string[i] == f_path_separator_s[0]) {
+        if (path->string[i] == f_path_separator_s.string[0]) {
           if (null_terminated) {
             path->string[i + 1] = 0;
             path->used = i + 2;
@@ -375,7 +375,7 @@ extern "C" {
             return status;
           }
 
-          if (path->string[j] != f_path_separator_s[0]) {
+          if (path->string[j] != f_path_separator_s.string[0]) {
             i = j + 1;
             break;
           }

@@ -23,7 +23,7 @@ extern "C" {
       fl_print_format("%04_ui", main->output.to.stream, id.type);
     }
 
-    f_print_character(f_string_eol_s[0], main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
 
     funlockfile(main->output.to.stream);
   }

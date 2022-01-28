@@ -139,7 +139,7 @@ extern "C" {
     // create a string array that is compatible with execv() calls.
     f_string_t fixed_arguments[arguments.used + 2];
 
-    const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
+    const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s.string[0]);
     const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, F_path_length_max_d) : strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
 
     char program_name[size_name + 1];
@@ -174,7 +174,7 @@ extern "C" {
         found = &path;
       }
       else {
-        status = f_environment_get(f_path_environment_s, &path);
+        status = f_environment_get(f_path_environment_s.string, &path);
 
         if (F_status_is_error(status)) {
 
@@ -328,7 +328,7 @@ extern "C" {
     // create a string array that is compatible with execv() calls.
     f_string_t fixed_arguments[arguments.used + 2];
 
-    const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
+    const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s.string[0]);
     const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, F_path_length_max_d) : strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
 
     char program_name[size_name + 1];
@@ -357,7 +357,7 @@ extern "C" {
         found = &path;
       }
       else {
-        status = f_environment_get(f_path_environment_s, &path);
+        status = f_environment_get(f_path_environment_s.string, &path);
 
         if (F_status_is_error(status)) {
 

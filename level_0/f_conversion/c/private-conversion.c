@@ -10,47 +10,34 @@ extern "C" {
 
     int digits = 0;
 
-    if (number) {
-      for (register f_number_unsigned_t remaining = number; remaining; ++digits) {
-        remaining /= data.base;
-      } // for
+    for (register f_number_unsigned_t remaining = number; remaining; ++digits) {
+      remaining /= data.base;
+    } // for
+
+    // A zero value should always show at least 1 zero when width is not 0.
+    if (data.width && !number) {
+      ++digits;
     }
-    else {
-      digits = 1;
-    }
 
-    if (data.flag & F_conversion_data_flag_base_prepend_d) {
-      const int used = digits + 2 + (data.flag & F_conversion_data_flag_sign_always_d & F_conversion_data_flag_sign_pad_d ? 1 : 0);
-
-      if (data.width > used) {
-        if (data.flag & F_conversion_data_flag_zeros_leading_d) {
-          if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
-            return F_status_set_error(F_output);
-          }
-
-          if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_0_s[0], data.width - used, output))) {
-            return F_status_set_error(F_output);
-          }
-
-          if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
-            return F_status_set_error(F_output);
-          }
+    if (data.width > digits) {
+      if (data.flag & F_conversion_data_flag_zeros_leading_d) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
+          return F_status_set_error(F_output);
         }
-        else {
-          if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s[0], data.width - used, output))) {
-            return F_status_set_error(F_output);
-          }
 
-          if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
-            return F_status_set_error(F_output);
-          }
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_0_s, data.width - digits, output))) {
+          return F_status_set_error(F_output);
+        }
 
-          if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
-            return F_status_set_error(F_output);
-          }
+        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
+          return F_status_set_error(F_output);
         }
       }
       else if (number) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, output))) {
+          return F_status_set_error(F_output);
+        }
+
         if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
           return F_status_set_error(F_output);
         }
@@ -59,56 +46,36 @@ extern "C" {
           return F_status_set_error(F_output);
         }
       }
-      else if (data.width) {
+      else {
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, output))) {
+          return F_status_set_error(F_output);
+        }
+
         if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
           return F_status_set_error(F_output);
         }
 
-        if (!fwrite_unlocked(f_string_ascii_0_s, 1, 1, output)) {
-          return F_status_set_error(F_output);
-        }
-      }
-    }
-    else {
-      const int used = digits + (data.flag & (F_conversion_data_flag_sign_always_d | F_conversion_data_flag_sign_pad_d) ? 1 : 0);
-
-      if (data.width > used) {
-        if (data.flag & F_conversion_data_flag_zeros_leading_d) {
-          if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
-            return F_status_set_error(F_output);
-          }
-
-          if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_0_s[0], data.width - used, output))) {
-            return F_status_set_error(F_output);
-          }
-
-          if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
-            return F_status_set_error(F_output);
-          }
-        }
-        else {
-          if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s[0], data.width - used, output))) {
-            return F_status_set_error(F_output);
-          }
-
-          if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
-            return F_status_set_error(F_output);
-          }
-
-          if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
-            return F_status_set_error(F_output);
-          }
-        }
-      }
-      else if (number) {
         if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
           return F_status_set_error(F_output);
         }
       }
-      else if (data.width) {
-        if (!fwrite_unlocked(f_string_ascii_0_s, 1, 1, output)) {
-          return F_status_set_error(F_output);
-        }
+    }
+    else if (number) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
+        return F_status_set_error(F_output);
+      }
+
+      if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
+        return F_status_set_error(F_output);
+      }
+    }
+    else if (data.width) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
+        return F_status_set_error(F_output);
+      }
+
+      if (fwrite_unlocked(f_string_ascii_0_s.string, 1, f_string_ascii_0_s.used, output) < f_string_ascii_0_s.used) {
+        return F_status_set_error(F_output);
       }
     }
 
@@ -130,8 +97,15 @@ extern "C" {
 
       while (digits--) {
 
-        if (!fwrite_unlocked((work & number) ? f_string_ascii_1_s : f_string_ascii_0_s, 1, 1, output)) {
-          return F_status_set_error(F_output);
+        if (work & number) {
+          if (fwrite_unlocked(f_string_ascii_1_s.string, 1, f_string_ascii_1_s.used, output) < f_string_ascii_1_s.used) {
+            return F_status_set_error(F_output);
+          }
+        }
+        else {
+          if (fwrite_unlocked(f_string_ascii_0_s.string, 1, f_string_ascii_0_s.used, output) < f_string_ascii_0_s.used) {
+            return F_status_set_error(F_output);
+          }
         }
 
         #ifdef _is_F_endian_big
@@ -175,11 +149,11 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const char pad, int total, FILE *output) {
+  f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, FILE *output) {
 
     for (; total; --total) {
 
-      if (!fwrite_unlocked(&pad, 1, 1, output)) {
+      if (fwrite_unlocked(pad.string, 1, pad.used, output) < pad.used) {
         return F_status_set_error(F_output);
       }
     } // for
@@ -193,24 +167,24 @@ extern "C" {
 
     if (negative) {
       if (negative == 1) {
-        if (!fwrite_unlocked(f_string_ascii_minus_s, 1, 1, output)) {
+        if (fwrite_unlocked(f_string_ascii_minus_s.string, 1, f_string_ascii_minus_s.used, output) < f_string_ascii_minus_s.used) {
           return F_status_set_error(F_output);
         }
       }
     }
     else if (data.flag & F_conversion_data_flag_sign_always_d) {
-      if (!fwrite_unlocked(f_string_ascii_plus_s, 1, 1, output)) {
+      if (fwrite_unlocked(f_string_ascii_plus_s.string, 1, f_string_ascii_plus_s.used, output) < f_string_ascii_plus_s.used) {
         return F_status_set_error(F_output);
       }
     }
     else if (data.flag & F_conversion_data_flag_sign_pad_d) {
-      if (!fwrite_unlocked(f_string_ascii_space_s, 1, 1, output)) {
+      if (fwrite_unlocked(f_string_ascii_space_s.string, 1, f_string_ascii_space_s.used, output) < f_string_ascii_space_s.used) {
         return F_status_set_error(F_output);
       }
     }
 
     if (data.flag & F_conversion_data_flag_base_prepend_d) {
-      if (!fwrite_unlocked(f_string_ascii_0_s, 1, 1, output)) {
+      if (fwrite_unlocked(f_string_ascii_0_s.string, 1, f_string_ascii_0_s.used, output) < f_string_ascii_0_s.used) {
         return F_status_set_error(F_output);
       }
 
@@ -218,23 +192,23 @@ extern "C" {
 
       switch (data.base) {
         case 2:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_B_s.string[0] : f_string_ascii_b_s.string[0];
           break;
 
         case 8:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_O_s[0] : f_string_ascii_o_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_O_s.string[0] : f_string_ascii_o_s.string[0];
           break;
 
         case 10:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_T_s[0] : f_string_ascii_t_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_T_s.string[0] : f_string_ascii_t_s.string[0];
           break;
 
         case 12:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_D_s[0] : f_string_ascii_d_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_D_s.string[0] : f_string_ascii_d_s.string[0];
           break;
 
         case 16:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_X_s[0] : f_string_ascii_x_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_X_s.string[0] : f_string_ascii_x_s.string[0];
           break;
 
         default:
@@ -284,16 +258,16 @@ extern "C" {
     if (data.width > digits) {
       if (data.flag & F_conversion_data_flag_zeros_leading_d) {
         private_f_conversion_digit_to_string_prefix(data, negative, destination);
-        private_f_conversion_digit_to_string_pad(data, f_string_ascii_0_s[0], data.width - digits, destination);
+        private_f_conversion_digit_to_string_pad(data, f_string_ascii_0_s.string[0], data.width - digits, destination);
         private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
       else if (number) {
-        private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s[0], data.width - digits, destination);
+        private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s.string[0], data.width - digits, destination);
         private_f_conversion_digit_to_string_prefix(data, negative, destination);
         private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
       else {
-        private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s[0], data.width - digits, destination);
+        private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s.string[0], data.width - digits, destination);
         private_f_conversion_digit_to_string_prefix(data, negative, destination);
         private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
@@ -305,7 +279,7 @@ extern "C" {
     else if (data.width) {
       private_f_conversion_digit_to_string_prefix(data, negative, destination);
 
-      destination->string[destination->used++] = f_string_ascii_0_s[0];
+      destination->string[destination->used++] = f_string_ascii_0_s.string[0];
     }
 
     return F_none;
@@ -326,7 +300,12 @@ extern "C" {
 
       while (digits--) {
 
-        destination->string[destination->used++] = (work & number) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[1];
+        if (work & number) {
+          destination->string[destination->used++] = f_string_ascii_1_s.string[0];
+        }
+        else {
+          destination->string[destination->used++] = f_string_ascii_0_s.string[1];
+        }
 
         #ifdef _is_F_endian_big
           work <<= 1; // @todo review this and see if there is more that needs to be done.
@@ -378,43 +357,43 @@ extern "C" {
 
     if (negative) {
       if (negative == 1) {
-        destination->string[destination->used++] = f_string_ascii_minus_s[0];
+        destination->string[destination->used++] = f_string_ascii_minus_s.string[0];
       }
       else if (data.flag & (F_conversion_data_flag_sign_always_d | F_conversion_data_flag_sign_pad_d)) {
-        destination->string[destination->used++] = f_string_ascii_space_s[0];
+        destination->string[destination->used++] = f_string_ascii_space_s.string[0];
       }
     }
     else if (data.flag & F_conversion_data_flag_sign_always_d) {
-      destination->string[destination->used++] = f_string_ascii_plus_s[0];
+      destination->string[destination->used++] = f_string_ascii_plus_s.string[0];
     }
     else if (data.flag & F_conversion_data_flag_sign_pad_d) {
-      destination->string[destination->used++] = f_string_ascii_space_s[0];
+      destination->string[destination->used++] = f_string_ascii_space_s.string[0];
     }
 
     if (data.flag & F_conversion_data_flag_base_prepend_d) {
-      destination->string[destination->used++] = f_string_ascii_0_s[0];
+      destination->string[destination->used++] = f_string_ascii_0_s.string[0];
 
       char c = 0;
 
       switch (data.base) {
         case 2:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_B_s.string[0] : f_string_ascii_b_s.string[0];
           break;
 
         case 8:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_O_s[0] : f_string_ascii_o_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_O_s.string[0] : f_string_ascii_o_s.string[0];
           break;
 
         case 10:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_T_s[0] : f_string_ascii_t_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_T_s.string[0] : f_string_ascii_t_s.string[0];
           break;
 
         case 12:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_D_s[0] : f_string_ascii_d_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_D_s.string[0] : f_string_ascii_d_s.string[0];
           break;
 
         case 16:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_X_s[0] : f_string_ascii_x_s[0];
+          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_X_s.string[0] : f_string_ascii_x_s.string[0];
           break;
 
         default:

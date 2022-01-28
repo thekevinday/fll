@@ -19,13 +19,13 @@ extern "C" {
     range->start = 0;
     if (main->line > 0) {
       for (; line < main->line && range->start < main->buffer.used; ++range->start) {
-        if (main->buffer.string[range->start] == f_string_eol_s[0]) ++line;
+        if (main->buffer.string[range->start] == f_string_eol_s.string[0]) ++line;
       } // for
     }
 
     if (line == main->line) {
       for (range->stop = range->start; range->stop < main->buffer.used; ++range->stop) {
-        if (main->buffer.string[range->stop] == f_string_eol_s[0]) break;
+        if (main->buffer.string[range->stop] == f_string_eol_s.string[0]) break;
       } // for
 
       return F_true;
@@ -116,7 +116,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < iki_data->delimits.used; ++i) {
-      main->buffer.string[iki_data->delimits.array[i]] = f_iki_syntax_placeholder_s[0];
+      main->buffer.string[iki_data->delimits.array[i]] = f_iki_syntax_placeholder_s.string[0];
     } // for
 
     const bool content_only = main->mode == iki_read_mode_content_e;
@@ -188,7 +188,7 @@ extern "C" {
               f_print_dynamic_partial(main->buffer, ranges->array[j], main->output.to.stream);
             }
 
-            f_print_character(f_string_eol_s[0], main->output.to.stream);
+            f_print_dynamic(f_string_eol_s, main->output.to.stream);
           }
         } // for
 
@@ -212,7 +212,7 @@ extern "C" {
             f_print_dynamic_partial(main->buffer, ranges->array[main->at], main->output.to.stream);
           }
 
-          f_print_character(f_string_eol_s[0], main->output.to.stream);
+          f_print_dynamic(f_string_eol_s, main->output.to.stream);
 
           funlockfile(main->output.to.stream);
 
@@ -234,7 +234,7 @@ extern "C" {
             f_print_dynamic_partial(main->buffer, ranges->array[i], main->output.to.stream);
           }
 
-          f_print_character(f_string_eol_s[0], main->output.to.stream);
+          f_print_dynamic(f_string_eol_s, main->output.to.stream);
         } // for
 
         funlockfile(main->output.to.stream);
@@ -273,7 +273,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < iki_data->delimits.used; ++i) {
-      main->buffer.string[iki_data->delimits.array[i]] = f_iki_syntax_placeholder_s[0];
+      main->buffer.string[iki_data->delimits.array[i]] = f_iki_syntax_placeholder_s.string[0];
     } // for
 
     if (!iki_data->variable.used) {
@@ -459,13 +459,13 @@ extern "C" {
 
     if (status == F_true) {
       if (range.start > main->buffer.used) {
-        fll_print_format("0%c", main->output.to.stream, f_string_eol_s[0]);
+        fll_print_format("0%q", main->output.to.stream, f_string_eol_s);
 
         return F_none;
       }
     }
     else if (status == F_data_not) {
-      fll_print_format("0%c", main->output.to.stream, f_string_eol_s[0]);
+      fll_print_format("0%q", main->output.to.stream, f_string_eol_s);
 
       return F_none;
     }
@@ -483,7 +483,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < iki_data->delimits.used; ++i) {
-      main->buffer.string[iki_data->delimits.array[i]] = f_iki_syntax_placeholder_s[0];
+      main->buffer.string[iki_data->delimits.array[i]] = f_iki_syntax_placeholder_s.string[0];
     } // for
 
     f_array_length_t total = 0;
@@ -547,7 +547,7 @@ extern "C" {
       }
     }
 
-    fll_print_format("%ul%c", main->output.to.stream, total, f_string_eol_s[0]);
+    fll_print_format("%ul%q", main->output.to.stream, total, f_string_eol_s);
 
     return F_none;
   }

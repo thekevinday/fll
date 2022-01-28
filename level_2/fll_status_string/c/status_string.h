@@ -33,8 +33,8 @@ extern "C" {
  *
  * This process the string until either a match or NULL is reached.
  *
- * @param string
- *   The error name to process.
+ * @param name
+ *   The status name to process.
  * @param code
  *   The status code a matched string represents.
  *
@@ -48,7 +48,7 @@ extern "C" {
  *   Errors (with error bit) from: f_conversion_character_is_decimal().
  */
 #ifndef _di_fll_status_string_from_
-  extern f_status_t fll_status_string_from(const f_string_t string, f_status_t *code);
+  extern f_status_t fll_status_string_from(const f_string_static_t name, f_status_t *code);
 #endif // _di_fll_status_string_to_
 
 #ifdef __cplusplus

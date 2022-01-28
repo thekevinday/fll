@@ -28,7 +28,7 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%c%[Compiling shared library.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+      fll_print_format("%q%[Compiling shared library.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -374,7 +374,7 @@ extern "C" {
       *status = f_file_link(parameter_file_name_major, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("Linked file '%S' to '%S'.%c", main->output.to.stream, parameter_file_path, parameter_file_name_major, f_string_eol_s[0]);
+        fll_print_format("Linked file '%S' to '%S'.%q", main->output.to.stream, parameter_file_path, parameter_file_name_major, f_string_eol_s);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -403,7 +403,7 @@ extern "C" {
       *status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("Linked file '%S' to '%S'.%c", main->output.to.stream, parameter_file_path, parameter_file_name_minor, f_string_eol_s[0]);
+        fll_print_format("Linked file '%S' to '%S'.%q", main->output.to.stream, parameter_file_path, parameter_file_name_minor, f_string_eol_s);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -431,7 +431,7 @@ extern "C" {
         *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
         if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
-          fll_print_format("Linked file '%S' to '%S'.%c", main->output.to.stream, parameter_file_path, parameter_file_name_micro, f_string_eol_s[0]);
+          fll_print_format("Linked file '%S' to '%S'.%q", main->output.to.stream, parameter_file_path, parameter_file_name_micro, f_string_eol_s);
         }
         else if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_file_found) {
@@ -459,7 +459,7 @@ extern "C" {
           *status = f_file_link(parameter_file_name_nano, parameter_file_path);
 
           if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
-            fll_print_format("Linked file '%S' to '%S'.%c", main->output.to.stream, parameter_file_path, parameter_file_name_nano, f_string_eol_s[0]);
+            fll_print_format("Linked file '%S' to '%S'.%q", main->output.to.stream, parameter_file_path, parameter_file_name_nano, f_string_eol_s);
           }
           else if (F_status_is_error(*status)) {
             if (F_status_set_fine(*status) == F_file_found) {
@@ -489,7 +489,7 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%c%[Compiling static library.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+      fll_print_format("%q%[Compiling static library.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
@@ -571,10 +571,10 @@ extern "C" {
               break;
             }
 
-            *status = f_string_append_assure(f_path_separator_s, F_path_separator_s_length, &source_path);
+            *status = f_string_dynamic_append_assure(f_path_separator_s, &source_path);
 
             if (F_status_is_error(*status)) {
-              fll_error_print(main->error, F_status_set_fine(*status), "f_string_append_assure", F_true);
+              fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
 
               break;
             }

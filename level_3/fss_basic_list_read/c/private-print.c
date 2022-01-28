@@ -79,11 +79,11 @@ extern "C" {
     }
     else {
       if (main->parameters[fss_basic_list_read_parameter_content_e].result == f_console_result_found_e) {
-        f_print_character(f_fss_basic_list_open_s[0], main->output.to.stream);
-        f_print_character(f_fss_basic_list_open_end_s[0], main->output.to.stream);
+        f_print_character(f_fss_basic_list_open_s.string[0], main->output.to.stream);
+        f_print_character(f_fss_basic_list_open_end_s.string[0], main->output.to.stream);
       }
       else {
-        f_print_character(f_fss_eol_s[0], main->output.to.stream);
+        f_print_character(f_fss_eol_s.string[0], main->output.to.stream);
       }
     }
   }
@@ -101,16 +101,16 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_one_
   void fss_basic_list_read_print_one(fss_basic_list_read_main_t * const main) {
 
-    f_print_character(f_string_ascii_1_s[0], main->output.to.stream);
-    f_print_character(f_string_eol_s[0], main->output.to.stream);
+    f_print_character(f_string_ascii_1_s.string[0], main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_basic_list_read_print_one_
 
 #ifndef _di_fss_basic_list_read_print_zero_
   void fss_basic_list_read_print_zero(fss_basic_list_read_main_t * const main) {
 
-    f_print_character(f_string_ascii_0_s[0], main->output.to.stream);
-    f_print_character(f_string_eol_s[0], main->output.to.stream);
+    f_print_character(f_string_ascii_0_s.string[0], main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_basic_list_read_print_zero_
 

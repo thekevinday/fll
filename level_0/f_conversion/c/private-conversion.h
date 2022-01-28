@@ -88,7 +88,7 @@ extern "C" {
  *   The settings designating how to perform the conversion.
  * @param pad
  *   The character to print as the padding character.
- *   Should be either f_string_ascii_space_s[0] or f_string_ascii_0_s[0].
+ *   Should be either f_string_ascii_space_s or f_string_ascii_0_s.
  * @param total
  *   The total number of times to print the pad.
  * @param output
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const char pad, int total, FILE *output) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -202,7 +202,7 @@ extern "C" {
  *   The settings designating how to perform the conversion.
  * @param pad
  *   The character to print as the padding character.
- *   Should be either f_string_ascii_space_s[0] or f_string_ascii_0_s[0].
+ *   Should be either f_string_ascii_space_s or f_string_ascii_0_s.
  * @param total
  *   The total number of times to print the pad.
  * @param output

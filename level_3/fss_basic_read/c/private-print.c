@@ -20,13 +20,13 @@ extern "C" {
         if (data->option & fss_basic_read_data_option_trim_d) {
           if (data->option & fss_basic_read_data_option_raw_d) {
             if (data->quotes.array[at]) {
-              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
 
             fl_print_trim_dynamic_partial(data->buffer, data->objects.array[at], main->output.to.stream);
 
             if (data->quotes.array[at]) {
-              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
           }
           else {
@@ -36,13 +36,13 @@ extern "C" {
         else {
           if (data->option & fss_basic_read_data_option_raw_d) {
             if (data->quotes.array[at]) {
-              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
 
             f_print_dynamic_partial(data->buffer, data->objects.array[at], main->output.to.stream);
 
             if (data->quotes.array[at]) {
-              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
           }
           else {
@@ -78,7 +78,7 @@ extern "C" {
       f_print_character(fss_basic_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
-      f_print_character(F_fss_space_s[0], main->output.to.stream);
+      f_print_character(f_fss_space_s.string[0], main->output.to.stream);
     }
   }
 #endif // _di_fss_basic_read_print_object_end_
@@ -86,8 +86,8 @@ extern "C" {
 #ifndef _di_fss_basic_read_print_one_
   void fss_basic_read_print_one(fss_basic_read_main_t * const main) {
 
-    f_print_character(f_string_ascii_1_s[0], main->output.to.stream);
-    f_print_character(f_string_eol_s[0], main->output.to.stream);
+    f_print_character(f_string_ascii_1_s.string[0], main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_basic_read_print_one_
 
@@ -98,7 +98,7 @@ extern "C" {
       f_print_character(fss_basic_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
-      f_print_character(f_string_eol_s[0], main->output.to.stream);
+      f_print_dynamic(f_string_eol_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_basic_read_print_set_end_
@@ -106,8 +106,8 @@ extern "C" {
 #ifndef _di_fss_basic_read_print_zero_
   void fss_basic_read_print_zero(fss_basic_read_main_t * const main) {
 
-    f_print_character(f_string_ascii_0_s[0], main->output.to.stream);
-    f_print_character(f_string_eol_s[0], main->output.to.stream);
+    f_print_character(f_string_ascii_0_s.string[0], main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_basic_read_print_zero_
 

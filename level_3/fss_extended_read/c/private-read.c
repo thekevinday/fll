@@ -193,11 +193,11 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%c%[%sThe value '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%q%[%sThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_read_long_depth_s, main->error.notable);
-            fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+            fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_read_long_depth_s, main->error.notable);
+            fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -208,13 +208,13 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_read_long_depth_s, main->error.notable);
+            fl_print_format("%q%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_read_long_depth_s, main->error.notable);
             fl_print_format("%[' may not have the value '%]", main->error.to.stream, main->error.context, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' before the value '%]", main->error.to.stream, main->error.context, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[j].depth, main->error.notable);
-            fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+            fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -412,18 +412,18 @@ extern "C" {
           }
           else {
             if ((data->option & fss_extended_read_data_option_raw_d) && data->quotes_object.array[at]) {
-              f_print_character_safely(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
 
             fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
             if ((data->option & fss_extended_read_data_option_raw_d) && data->quotes_object.array[at]) {
-              f_print_character_safely(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+              f_print_character_safely(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
           }
         }
         else if (data->option & fss_extended_read_data_option_columns_d) {
-          fll_print_format("%ul%c", main->output.to.stream, data->contents.array[i].used, f_string_eol_s[0]);
+          fll_print_format("%ul%q", main->output.to.stream, data->contents.array[i].used, f_string_eol_s);
         }
         else if (data->option & fss_extended_read_data_option_total_d) {
           if (fss_extended_read_print_at_total(main, i, data) == F_none) {
@@ -432,13 +432,13 @@ extern "C" {
         }
         else {
           if ((data->option & fss_extended_read_data_option_raw_d) && data->quotes_content.array[at].array[i]) {
-            f_print_character_safely(data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+            f_print_character_safely(data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
           }
 
           fss_extended_read_print_at(main, i, *delimits_object, *delimits_content, data);
 
           if ((data->option & fss_extended_read_data_option_raw_d) && data->quotes_content.array[at].array[i]) {
-            f_print_character_safely(data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.to.stream);
+            f_print_character_safely(data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
           }
         }
 
@@ -484,7 +484,7 @@ extern "C" {
       }
     } // for
 
-    fll_print_format("%ul%c", main->output.to.stream, max, f_string_eol_s[0]);
+    fll_print_format("%ul%q", main->output.to.stream, max, f_string_eol_s);
 
     return F_none;
   }
@@ -698,7 +698,7 @@ extern "C" {
       }
     }
     else {
-      fl_print_format("%ul%c", main->output.to.stream, total, f_string_eol_s[0]);
+      fl_print_format("%ul%q", main->output.to.stream, total, f_string_eol_s);
     }
 
     funlockfile(main->output.to.stream);

@@ -20,7 +20,7 @@ extern "C" {
 
     for (f_string_t current = string; *current; ++current) {
 
-      if (*current == f_string_ascii_percent_s[0]) {
+      if (*current == f_string_ascii_percent_s.string[0]) {
         ++current;
 
         current = private_fl_print_format_convert(current, stream, &ap, &status);
@@ -64,7 +64,7 @@ extern "C" {
 
     for (f_string_t current = string; *current; ++current) {
 
-      if (*current == f_string_ascii_percent_s[0]) {
+      if (*current == f_string_ascii_percent_s.string[0]) {
         ++current;
 
         current = private_fl_print_format_convert(current, stream, ap, &status);

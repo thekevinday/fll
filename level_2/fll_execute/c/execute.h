@@ -143,6 +143,8 @@ extern "C" {
  * This guarantees that an end of string exists at the end of each argument.
  * This does not check for NULL characters anywhere else in the string.
  *
+ * @todo functions like this should be changed to accept arrays of f_string_static, reducing the number of parameters passed to it.
+ *
  * @param prefix
  *   An array of the strings prepend to the name.
  * @param prefix_length

@@ -7,10 +7,10 @@ extern "C" {
 #ifndef _di_fll_program_print_help_header_
   f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t version) {
 
-    fl_print_format("%c %[%S%]%c", output.stream, f_string_eol_s[0], context.set.title, name, context.set.title, f_string_eol_s[0]);
-    fl_print_format("  %[Version %s%]%c", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("%q %[%S%]%q", output.stream, f_string_eol_s, context.set.title, name, context.set.title, f_string_eol_s);
+    fl_print_format("  %[Version %s%]%q", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s);
 
-    fl_print_format("%c %[Available Options:%] ", output.stream, f_string_eol_s[0], context.set.important, context.set.important);
+    fl_print_format("%q %[Available Options:%] ", output.stream, f_string_eol_s, context.set.important, context.set.important);
 
     return F_none;
   }
@@ -19,7 +19,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_
   f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
 
-    fl_print_format("%c  %s%[%S%]", output.stream, f_string_eol_s[0], symbol_short, context.set.standout, option_short, context.set.standout);
+    fl_print_format("%q  %s%[%S%]", output.stream, f_string_eol_s, symbol_short, context.set.standout, option_short, context.set.standout);
     fl_print_format(", %s%[%S%]", output.stream, symbol_long, context.set.standout, option_long, context.set.standout);
     fl_print_format("  %S", output.stream, description);
 
@@ -30,7 +30,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_long_
   f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
 
-    fl_print_format("%c      %s%[%S%]", output.stream, f_string_eol_s[0], symbol_long, context.set.standout, option_long, context.set.standout);
+    fl_print_format("%q      %s%[%S%]", output.stream, f_string_eol_s, symbol_long, context.set.standout, option_long, context.set.standout);
     fl_print_format("  %S", output.stream, description);
 
     return F_none;
@@ -40,7 +40,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_other_
   f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
 
-    fl_print_format("%c  %[%S%]", output.stream, f_string_eol_s[0], context.set.standout, option_other, context.set.standout);
+    fl_print_format("%q  %[%S%]", output.stream, f_string_eol_s, context.set.standout, option_other, context.set.standout);
     fl_print_format("  %S", output.stream, description);
 
     return F_none;
@@ -50,9 +50,9 @@ extern "C" {
 #ifndef _di_fll_program_print_help_usage_
   f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
 
-    fl_print_format("%c%c %[Usage:%]", output.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
+    fl_print_format("%q%q %[Usage:%]", output.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important);
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_dynamic(f_string_eol_s, output.stream);
     fl_print_format("  %[%S%]", output.stream, context.set.standout, name, context.set.standout);
 
     fl_print_format(" %[[%] options %[]%]", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
@@ -61,8 +61,8 @@ extern "C" {
       fl_print_format(" %[[%] %S %[]%]", output.stream, context.set.notable, context.set.notable, parameters, context.set.notable, context.set.notable);
     }
 
-    f_print_character(f_string_eol_s[0], output.stream);
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_dynamic(f_string_eol_s, output.stream);
+    f_print_dynamic(f_string_eol_s, output.stream);
 
     return F_none;
   }
@@ -71,7 +71,7 @@ extern "C" {
 #ifndef _di_fll_program_print_version_
   f_status_t fll_program_print_version(const f_file_t output, const f_string_t version) {
 
-    fl_print_format("%S%c", output.stream, version, f_string_eol_s[0]);
+    fl_print_format("%S%q", output.stream, version, f_string_eol_s);
 
     return F_none;
   }
@@ -178,10 +178,9 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_append_
 
 #ifndef _di_fll_program_parameter_additional_mash_
-  f_status_t fll_program_parameter_additional_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
+  f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!argv) return F_status_set_error(F_parameter);
-      if (glue_length < 1) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
@@ -195,7 +194,7 @@ extern "C" {
       length = strnlen(argv[values.array[i]], f_console_parameter_size);
 
       if (length > 0) {
-        status = f_string_mash(glue, glue_length, argv[values.array[i]], length, destination);
+        status = f_string_mash(glue.string, glue.used, argv[values.array[i]], length, destination);
         if (F_status_is_error(status)) return F_status_set_error(F_string_too_large);
       }
     } // for
@@ -250,10 +249,9 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_rip_
 
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  f_status_t fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
+  f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!argv) return F_status_set_error(F_parameter);
-      if (glue_length < 1) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
@@ -276,10 +274,11 @@ extern "C" {
         }
 
         if (ripped.used > 0) {
-          status = f_string_dynamic_mash(glue, glue_length, ripped, destination);
+          status = f_string_dynamic_mash(glue, ripped, destination);
 
           if (F_status_is_error(status)) {
-            macro_f_string_dynamic_t_delete_simple(ripped)
+            status = f_string_dynamic_resize(0, &ripped);
+
             return F_status_set_error(F_string_too_large);
           }
         }

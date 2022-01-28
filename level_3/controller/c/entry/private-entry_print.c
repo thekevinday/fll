@@ -32,7 +32,7 @@ extern "C" {
 
     controller_lock_print(global.main->output.to, global.thread);
 
-    fl_print_format("%cProcessing %s item action '", global.main->output.to.stream, f_string_eol_s[0], is_entry ? controller_entry_s : controller_exit_s);
+    fl_print_format("%qProcessing %s item action '", global.main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
 
     fl_print_format("%[%S%]' setting ", global.main->output.to.stream, global.main->context.set.title, name, global.main->context.set.title);
 
@@ -45,7 +45,7 @@ extern "C" {
 
     fl_print_format(" to '%[%Q%]", global.main->output.to.stream, global.main->context.set.important, value, global.main->context.set.important);
 
-    fl_print_format("'%S.%c", global.main->output.to.stream, suffix, f_string_eol_s[0]);
+    fl_print_format("'%S.%q", global.main->output.to.stream, suffix, f_string_eol_s);
 
     controller_unlock_print_flush(global.main->output.to, global.thread);
   }
@@ -73,7 +73,7 @@ extern "C" {
 #ifndef _di_controller_entry_print_error_cache_
   void controller_entry_print_error_cache(const bool is_entry, const fl_print_t output, const controller_cache_action_t cache) {
 
-    fl_print_format("%c%[%SWhile processing ", output.to.stream, f_string_eol_s[0], output.context, output.prefix);
+    fl_print_format("%q%[%SWhile processing ", output.to.stream, f_string_eol_s, output.context, output.prefix);
 
     if (cache.name_action.used) {
       fl_print_format("action '%]", output.to.stream, output.context);
@@ -96,7 +96,7 @@ extern "C" {
       fl_print_format("%[%Q%]%['", output.to.stream, output.notable, cache.name_file, output.notable, output.context);
     }
 
-    fl_print_format(".%]%c", output.to.stream, output.context, f_string_eol_s[0]);
+    fl_print_format(".%]%q", output.to.stream, output.context, f_string_eol_s);
   }
 #endif // _di_controller_entry_print_error_cache_
 
@@ -126,9 +126,9 @@ extern "C" {
 
     controller_lock_print(print.to, thread);
 
-    fl_print_format("%c%[%S%s setting%S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, is_entry ? "Entry" : "Exit", before, print.context);
+    fl_print_format("%q%[%Q%s setting%S '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, is_entry ? "Entry" : "Exit", before, print.context);
     fl_print_format("%[%/Q%]", print.to.stream, print.notable, cache->buffer_file, range, print.notable);
-    fl_print_format("%['%S.%]%c", print.to.stream, print.context, after, print.context, f_string_eol_s[0]);
+    fl_print_format("%['%S.%]%q", print.to.stream, print.context, after, print.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, print, cache->action);
 
@@ -143,11 +143,11 @@ extern "C" {
 
     controller_lock_print(global.main->error.to, global.thread);
 
-    fl_print_format("%c%[%SThe %s item setting '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+    fl_print_format("%q%[%SThe %s item setting '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
     fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache.action.name_action, global.main->error.notable);
     fl_print_format("%[' requires exactly %]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
     fl_print_format("%[%un%]", global.main->error.to.stream, global.main->error.notable, total, global.main->error.notable);
-    fl_print_format("%[' %s.%]%c", global.main->error.to.stream, global.main->error.context, total > 1 ? controller_parameters_s : controller_parameter_s, global.main->error.context, f_string_eol_s[0]);
+    fl_print_format("%[' %s.%]%q", global.main->error.to.stream, global.main->error.context, total > 1 ? controller_parameters_s : controller_parameter_s, global.main->error.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->error, cache.action);
 
@@ -162,9 +162,9 @@ extern "C" {
 
     controller_lock_print(global.main->warning.to, global.thread);
 
-    fl_print_format("%c%[%SUnknown %s item setting '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
+    fl_print_format("%q%[%SUnknown %s item setting '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
     fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
-    fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+    fl_print_format("%['.%]%q", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
 
@@ -179,11 +179,11 @@ extern "C" {
 
     controller_lock_print(global.main->warning.to, global.thread);
 
-    fl_print_format("%c%[%SThe %s item setting '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
+    fl_print_format("%q%[%SThe %s item setting '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
     fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
-    fl_print_format("%[' has an unknown value '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
+    fl_print_format("%[' has an unknown value '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
     fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.content_actions.array[index].array[0], global.main->warning.notable);
-    fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+    fl_print_format("%['.%]%q", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
 

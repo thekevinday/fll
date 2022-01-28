@@ -885,21 +885,21 @@ extern "C" {
     uint8_t replace_result = 0;
     f_file_mode_t mode_result = 0;
 
-    if (string[0] == f_string_ascii_plus_s[0] || string[0] == f_string_ascii_minus_s[0] || string[0] == f_string_ascii_equal_s[0]) {
-      if (string[1] == f_string_ascii_r_s[0] || f_string_ascii_w_s[0] || f_string_ascii_x_s[0] || f_string_ascii_X_s[0] || f_string_ascii_s_s[0] ||f_string_ascii_t_s[0]) {
+    if (string[0] == f_string_ascii_plus_s.string[0] || string[0] == f_string_ascii_minus_s.string[0] || string[0] == f_string_ascii_equal_s.string[0]) {
+      if (string[1] == f_string_ascii_r_s.string[0] || f_string_ascii_w_s.string[0] || f_string_ascii_x_s.string[0] || f_string_ascii_X_s.string[0] || f_string_ascii_s_s.string[0] ||f_string_ascii_t_s.string[0]) {
         syntax = 1;
       }
-      else if (string[1] == f_string_ascii_0_s[0] || string[1] == f_string_ascii_1_s[0] || string[1] == f_string_ascii_2_s[0] || string[1] == f_string_ascii_3_s[0] || string[1] == f_string_ascii_4_s[0] || string[1] == f_string_ascii_5_s[0] || string[1] == f_string_ascii_6_s[0] || string[1] == f_string_ascii_7_s[0]) {
+      else if (string[1] == f_string_ascii_0_s.string[0] || string[1] == f_string_ascii_1_s.string[0] || string[1] == f_string_ascii_2_s.string[0] || string[1] == f_string_ascii_3_s.string[0] || string[1] == f_string_ascii_4_s.string[0] || string[1] == f_string_ascii_5_s.string[0] || string[1] == f_string_ascii_6_s.string[0] || string[1] == f_string_ascii_7_s.string[0]) {
         syntax = 2;
       }
       else {
         return F_status_set_error(F_syntax);
       }
     }
-    else if (string[0] == f_string_ascii_u_s[0] || string[0] == f_string_ascii_g_s[0] || string[0] == f_string_ascii_o_s[0] || string[0] == f_string_ascii_a_s[0]) {
+    else if (string[0] == f_string_ascii_u_s.string[0] || string[0] == f_string_ascii_g_s.string[0] || string[0] == f_string_ascii_o_s.string[0] || string[0] == f_string_ascii_a_s.string[0]) {
       syntax = 1;
     }
-    else if (string[0] == f_string_ascii_0_s[0] || string[0] == f_string_ascii_1_s[0] || string[0] == f_string_ascii_2_s[0] || string[0] == f_string_ascii_3_s[0] || string[0] == f_string_ascii_4_s[0] || string[0] == f_string_ascii_5_s[0] || string[0] == f_string_ascii_6_s[0] || string[0] == f_string_ascii_7_s[0]) {
+    else if (string[0] == f_string_ascii_0_s.string[0] || string[0] == f_string_ascii_1_s.string[0] || string[0] == f_string_ascii_2_s.string[0] || string[0] == f_string_ascii_3_s.string[0] || string[0] == f_string_ascii_4_s.string[0] || string[0] == f_string_ascii_5_s.string[0] || string[0] == f_string_ascii_6_s.string[0] || string[0] == f_string_ascii_7_s.string[0]) {
       syntax = 2;
     }
     else {
@@ -965,27 +965,27 @@ extern "C" {
 
       for (f_array_length_t i = 0; syntax && string[i]; ++i) {
 
-        if (string[i] == f_string_ascii_u_s[0]) {
+        if (string[i] == f_string_ascii_u_s.string[0]) {
           on |= 1;
           mode_mask |= F_file_mode_t_block_owner_d;
         }
-        else if (string[i] == f_string_ascii_g_s[0]) {
+        else if (string[i] == f_string_ascii_g_s.string[0]) {
           on |= 2;
           mode_mask |= F_file_mode_t_block_group_d;
         }
-        else if (string[i] == f_string_ascii_o_s[0]) {
+        else if (string[i] == f_string_ascii_o_s.string[0]) {
           on |= 4;
           mode_mask |= F_file_mode_t_block_world_d;
         }
-        else if (string[i] == f_string_ascii_a_s[0]) {
+        else if (string[i] == f_string_ascii_a_s.string[0]) {
           on = 7;
           mode_mask = F_file_mode_t_block_standard_d;
         }
-        else if (string[i] == f_string_ascii_plus_s[0] || string[i] == f_string_ascii_minus_s[0] || string[i] == f_string_ascii_equal_s[0]) {
-          if (string[i] == f_string_ascii_plus_s[0]) {
+        else if (string[i] == f_string_ascii_plus_s.string[0] || string[i] == f_string_ascii_minus_s.string[0] || string[i] == f_string_ascii_equal_s.string[0]) {
+          if (string[i] == f_string_ascii_plus_s.string[0]) {
             how = on ? 1 : 4;
           }
-          else if (string[i] == f_string_ascii_minus_s[0]) {
+          else if (string[i] == f_string_ascii_minus_s.string[0]) {
             how = on ? 3 : 6;
           }
           else {
@@ -1019,19 +1019,19 @@ extern "C" {
 
           for (++i; string[i]; ++i) {
 
-            if (string[i] == f_string_ascii_r_s[0]) {
+            if (string[i] == f_string_ascii_r_s.string[0]) {
               what = F_file_mode_t_mask_bit_read_d;
             }
-            else if (string[i] == f_string_ascii_w_s[0]) {
+            else if (string[i] == f_string_ascii_w_s.string[0]) {
               what = F_file_mode_t_mask_bit_write_d;
             }
-            else if (string[i] == f_string_ascii_x_s[0]) {
+            else if (string[i] == f_string_ascii_x_s.string[0]) {
               what = F_file_mode_t_mask_bit_execute_d;
             }
-            else if (string[i] == f_string_ascii_X_s[0]) {
+            else if (string[i] == f_string_ascii_X_s.string[0]) {
               what = F_file_mode_t_mask_bit_execute_only_d;
             }
-            else if (string[i] == f_string_ascii_s_s[0]) {
+            else if (string[i] == f_string_ascii_s_s.string[0]) {
               mode_mask |= F_file_mode_t_block_special_d;
 
               if (on & 1) {
@@ -1044,7 +1044,7 @@ extern "C" {
                 what = 0;
               }
             }
-            else if (string[i] == f_string_ascii_t_s[0]) {
+            else if (string[i] == f_string_ascii_t_s.string[0]) {
               mode_mask |= F_file_mode_t_block_special_d;
 
               if (on & 4) {
@@ -1054,7 +1054,7 @@ extern "C" {
                 what = 0;
               }
             }
-            else if (string[i] == f_string_ascii_comma_s[0]) {
+            else if (string[i] == f_string_ascii_comma_s.string[0]) {
               if (how > 3) {
                 mode_result -= mode_result & mode_umask;
               }
@@ -1065,13 +1065,13 @@ extern "C" {
 
               break;
             }
-            else if (string[i] == f_string_ascii_plus_s[0] || string[i] == f_string_ascii_minus_s[0] || string[i] == f_string_ascii_equal_s[0]) {
+            else if (string[i] == f_string_ascii_plus_s.string[0] || string[i] == f_string_ascii_minus_s.string[0] || string[i] == f_string_ascii_equal_s.string[0]) {
               what = 0;
 
-              if (string[i] == f_string_ascii_plus_s[0]) {
+              if (string[i] == f_string_ascii_plus_s.string[0]) {
                 how = on ? 1 : 4;
               }
-              else if (string[i] == f_string_ascii_minus_s[0]) {
+              else if (string[i] == f_string_ascii_minus_s.string[0]) {
                 how = on ? 3 : 6;
               }
               else {
@@ -1142,15 +1142,15 @@ extern "C" {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      if (string[0] == f_string_ascii_plus_s[0]) {
+      if (string[0] == f_string_ascii_plus_s.string[0]) {
         how = 1;
         i = 1;
       }
-      else if (string[0] == f_string_ascii_minus_s[0]) {
+      else if (string[0] == f_string_ascii_minus_s.string[0]) {
         how = 3;
         i = 1;
       }
-      else if (string[0] == f_string_ascii_equal_s[0]) {
+      else if (string[0] == f_string_ascii_equal_s.string[0]) {
         how = 2;
         i = 1;
 
@@ -1163,7 +1163,7 @@ extern "C" {
       }
 
       // Seek past leading '0's.
-      while (string[i] == f_string_ascii_0_s[0]) {
+      while (string[i] == f_string_ascii_0_s.string[0]) {
         ++i;
       } // while
 
@@ -1176,10 +1176,10 @@ extern "C" {
             mode_result <<= 8;
           }
 
-          if (string[i] == f_string_ascii_0_s[0]) {
+          if (string[i] == f_string_ascii_0_s.string[0]) {
             // Already is a zero.
           }
-          else if (string[i] == f_string_ascii_1_s[0] || string[i] == f_string_ascii_2_s[0] || string[i] == f_string_ascii_3_s[0] || string[i] == f_string_ascii_4_s[0] || string[i] == f_string_ascii_5_s[0] || string[i] == f_string_ascii_6_s[0] || string[i] == f_string_ascii_7_s[0]) {
+          else if (string[i] == f_string_ascii_1_s.string[0] || string[i] == f_string_ascii_2_s.string[0] || string[i] == f_string_ascii_3_s.string[0] || string[i] == f_string_ascii_4_s.string[0] || string[i] == f_string_ascii_5_s.string[0] || string[i] == f_string_ascii_6_s.string[0] || string[i] == f_string_ascii_7_s.string[0]) {
 
             // This assumes ASCII/UTF-8.
             if (how == 3) {

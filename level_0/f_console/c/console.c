@@ -24,9 +24,9 @@ extern "C" {
       return F_data_not;
     }
 
-    if (input[0] == f_console_symbol_short_enable_s[0]) {
+    if (input[0] == f_console_symbol_short_enable_s.string[0]) {
       if (length > 1) {
-        if (input[1] == f_console_symbol_short_enable_s[0]) {
+        if (input[1] == f_console_symbol_short_enable_s.string[0]) {
           if (length > 2) {
             *result = f_console_long_enable_e;
           }
@@ -36,9 +36,9 @@ extern "C" {
       }
       else *result = f_console_empty_short_enable_e;
     }
-    else if (input[0] == f_console_symbol_short_disable_s[0]) {
+    else if (input[0] == f_console_symbol_short_disable_s.string[0]) {
       if (length > 1) {
-        if (input[1] == f_console_symbol_short_disable_s[0]) {
+        if (input[1] == f_console_symbol_short_disable_s.string[0]) {
           if (length > 2) {
             *result = f_console_long_disable_e;
           }

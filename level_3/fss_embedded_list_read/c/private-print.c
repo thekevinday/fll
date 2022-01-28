@@ -14,11 +14,11 @@ extern "C" {
     }
     else {
       if (main->parameters[fss_embedded_list_read_parameter_object_e].result == f_console_result_found_e && main->parameters[fss_embedded_list_read_parameter_content_e].result == f_console_result_found_e) {
-        f_print_character(f_fss_embedded_list_open_s[0], main->output.to.stream);
-        f_print_character(f_fss_embedded_list_open_end_s[0], main->output.to.stream);
+        f_print_character(f_fss_embedded_list_open_s.string[0], main->output.to.stream);
+        f_print_character(f_fss_embedded_list_open_end_s.string[0], main->output.to.stream);
       }
       else {
-        f_print_character(f_fss_eol_s[0], main->output.to.stream);
+        f_print_character(f_fss_eol_s.string[0], main->output.to.stream);
       }
     }
   }
@@ -41,11 +41,11 @@ extern "C" {
     }
     else {
       if (main->parameters[fss_embedded_list_read_parameter_object_e].result == f_console_result_found_e && main->parameters[fss_embedded_list_read_parameter_content_e].result == f_console_result_found_e) {
-        f_print_character(f_fss_embedded_list_close_s[0], main->output.to.stream);
-        f_print_character(f_fss_embedded_list_close_end_s[0], main->output.to.stream);
+        f_print_character(f_fss_embedded_list_close_s.string[0], main->output.to.stream);
+        f_print_character(f_fss_embedded_list_close_end_s.string[0], main->output.to.stream);
       }
       else {
-        f_print_character(f_fss_eol_s[0], main->output.to.stream);
+        f_print_character(f_fss_eol_s.string[0], main->output.to.stream);
       }
     }
   }

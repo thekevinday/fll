@@ -117,7 +117,7 @@ extern "C" {
 
     for (i = 0; i <= length; ++i) {
 
-      if (i == length || path[i] == f_path_separator_variable_s[0]) {
+      if (i == length || path[i] == f_path_separator_variable_s.string[0]) {
         macro_f_memory_structure_increment(status, (*paths), 1, F_memory_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
@@ -134,7 +134,7 @@ extern "C" {
         total = i - first;
 
         if (total > 0) {
-          if (path[i - 1] == f_path_separator_s[0]) {
+          if (path[i - 1] == f_path_separator_s.string[0]) {
             macro_f_string_dynamic_t_clear(part)
             macro_f_string_dynamic_t_resize(status, part, total)
             if (F_status_is_error(status)) return status;
@@ -145,7 +145,7 @@ extern "C" {
             macro_f_string_dynamic_t_resize(status, part, (total + 1))
             if (F_status_is_error(status)) return status;
 
-            part.string[total] = f_path_separator_s[0];
+            part.string[total] = f_path_separator_s.string[0];
             part.used = total + 1;
           }
 
@@ -196,7 +196,7 @@ extern "C" {
 
     for (i = 0; i <= path.used; ++i) {
 
-      if (i == path.used || path.string[i] == f_path_separator_variable_s[0]) {
+      if (i == path.used || path.string[i] == f_path_separator_variable_s.string[0]) {
         macro_f_memory_structure_increment(status, (*paths), 1, F_memory_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
@@ -223,11 +223,11 @@ extern "C" {
             ++part.used;
           } // for
 
-          if (part.string[part.used - 1] != f_path_separator_s[0]) {
+          if (part.string[part.used - 1] != f_path_separator_s.string[0]) {
             macro_f_string_dynamic_t_resize(status, part, (total + 1))
             if (F_status_is_error(status)) return status;
 
-            part.string[part.used] = f_path_separator_s[0];
+            part.string[part.used] = f_path_separator_s.string[0];
             ++part.used;
           }
         }
@@ -278,15 +278,15 @@ extern "C" {
     // @fixme i is unsgned, it will never be less than 0!
     for (; i > 0; --i, --j) {
 
-      if (!j || path[j] == f_path_separator_variable_s[0]) {
+      if (!j || path[j] == f_path_separator_variable_s.string[0]) {
         macro_f_memory_structure_increment(status, (*paths), 1, F_memory_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
-        if (path[j] == f_path_separator_variable_s[0]) {
+        if (path[j] == f_path_separator_variable_s.string[0]) {
           total = last - i;
 
           if (total > 0) {
-            if (path[j + total] == f_path_separator_s[0]) {
+            if (path[j + total] == f_path_separator_s.string[0]) {
               macro_f_string_dynamic_t_clear(part)
               macro_f_string_dynamic_t_resize(status, part, total)
               if (F_status_is_error(status)) return status;
@@ -297,7 +297,7 @@ extern "C" {
               macro_f_string_dynamic_t_resize(status, part, (total + 1))
               if (F_status_is_error(status)) return status;
 
-              part.string[total] = f_path_separator_s[0];
+              part.string[total] = f_path_separator_s.string[0];
               part.used = total + 1;
             }
 
@@ -312,7 +312,7 @@ extern "C" {
           total = last - j;
 
           if (total > 0) {
-            if (path[last - 1] == f_path_separator_s[0]) {
+            if (path[last - 1] == f_path_separator_s.string[0]) {
               macro_f_string_dynamic_t_clear(part)
               macro_f_string_dynamic_t_resize(status, part, total)
               if (F_status_is_error(status)) return status;
@@ -324,7 +324,7 @@ extern "C" {
               if (F_status_is_error(status)) return status;
 
               part.used = total + 1;
-              part.string[total] = f_path_separator_s[0];
+              part.string[total] = f_path_separator_s.string[0];
             }
 
             memcpy(part.string, path, total);
@@ -375,11 +375,11 @@ extern "C" {
     // @fixme i is unsgned, it will never be less than 0!
     for (; i > 0; --i, --j) {
 
-      if (!j || path.string[j] == f_path_separator_variable_s[0]) {
+      if (!j || path.string[j] == f_path_separator_variable_s.string[0]) {
         macro_f_memory_structure_increment(status, (*paths), 1, F_memory_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
-        if (path.string[j] == f_path_separator_variable_s[0]) {
+        if (path.string[j] == f_path_separator_variable_s.string[0]) {
           total = last - i;
 
           if (total > 0) {
@@ -395,11 +395,11 @@ extern "C" {
               ++part.used;
             } // for
 
-            if (part.string[part.used - 1] != f_path_separator_s[0]) {
+            if (part.string[part.used - 1] != f_path_separator_s.string[0]) {
               macro_f_string_dynamic_t_resize(status, part, (total + 1))
               if (F_status_is_error(status)) return status;
 
-              part.string[part.used] = f_path_separator_s[0];
+              part.string[part.used] = f_path_separator_s.string[0];
               ++part.used;
             }
           }
@@ -422,11 +422,11 @@ extern "C" {
             ++part.used;
           } // for
 
-          if (part.string[part.used - 1] != f_path_separator_s[0]) {
+          if (part.string[part.used - 1] != f_path_separator_s.string[0]) {
             macro_f_string_dynamic_t_resize(status, part, (total + 1))
             if (F_status_is_error(status)) return status;
 
-            part.string[part.used - 1] = f_path_separator_s[0];
+            part.string[part.used - 1] = f_path_separator_s.string[0];
             ++part.used;
           }
         }

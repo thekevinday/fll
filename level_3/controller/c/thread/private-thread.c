@@ -222,9 +222,9 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, &thread);
 
-            fl_print_format("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+            fl_print_format("%q%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
             fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, setting->path_pid.string, main->error.notable);
-            fl_print_format("%[' must not already exist.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+            fl_print_format("%[' must not already exist.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             controller_unlock_print_flush(main->error.to, &thread);
           }
@@ -328,7 +328,7 @@ extern "C" {
       controller_print_signal_received(main, thread.signal);
 
       if (main->output.verbosity != f_console_verbosity_quiet_e) {
-        fll_print_terminated(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic(f_string_eol_s, main->output.to.stream);
       }
 
       return F_status_set_error(F_interrupt);

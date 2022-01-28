@@ -583,7 +583,7 @@ extern "C" {
       return private_f_utf_character_is_word(character, strict);
     }
 
-    if (isalnum(macro_f_utf_character_t_to_char_1(character)) || character == f_string_ascii_underscore_s[0]) {
+    if (isalnum(macro_f_utf_character_t_to_char_1(character)) || character == f_string_ascii_underscore_s.string[0]) {
       return F_true;
     }
 
@@ -602,7 +602,7 @@ extern "C" {
       return private_f_utf_character_is_word_dash(character, strict);
     }
 
-    if (isalnum(macro_f_utf_character_t_to_char_1(character)) || character == f_string_ascii_underscore_s[0] || character == f_string_ascii_minus_s[0]) {
+    if (isalnum(macro_f_utf_character_t_to_char_1(character)) || character == f_string_ascii_underscore_s.string[0] || character == f_string_ascii_minus_s.string[0]) {
       return F_true;
     }
 
@@ -621,7 +621,7 @@ extern "C" {
       return private_f_utf_character_is_word_dash_plus(character, strict);
     }
 
-    if (isalnum(macro_f_utf_character_t_to_char_1(character)) || character == f_string_ascii_underscore_s[0] || character == f_string_ascii_minus_s[0] || character == f_string_ascii_plus_s[0]) {
+    if (isalnum(macro_f_utf_character_t_to_char_1(character)) || character == f_string_ascii_underscore_s.string[0] || character == f_string_ascii_minus_s.string[0] || character == f_string_ascii_plus_s.string[0]) {
       return F_true;
     }
 
@@ -785,12 +785,12 @@ extern "C" {
         i = length;
       }
       else {
-        if (macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_u_s[0] || macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_U_s[0]) {
+        if (macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_u_s.string[0] || macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_U_s.string[0]) {
           do {
             ++i;
           } while (i < length && !string[i]);
 
-          if (i < length && !macro_f_utf_character_t_width_is(string[i]) && macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_plus_s[0]) {
+          if (i < length && !macro_f_utf_character_t_width_is(string[i]) && macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_plus_s.string[0]) {
             ++i;
           }
           else {
@@ -1680,7 +1680,7 @@ extern "C" {
       return private_f_utf_character_is_word(character_utf, strict);
     }
 
-    if (isalnum(*character) || *character == f_string_ascii_underscore_s[0]) {
+    if (isalnum(*character) || *character == f_string_ascii_underscore_s.string[0]) {
       return F_true;
     }
 
@@ -1713,7 +1713,7 @@ extern "C" {
       return private_f_utf_character_is_word_dash(character_utf, strict);
     }
 
-    if (isalnum(*character) || *character == f_string_ascii_underscore_s[0] || *character == f_string_ascii_minus_s[0]) {
+    if (isalnum(*character) || *character == f_string_ascii_underscore_s.string[0] || *character == f_string_ascii_minus_s.string[0]) {
       return F_true;
     }
 
@@ -1746,7 +1746,7 @@ extern "C" {
       return private_f_utf_character_is_word_dash_plus(character_utf, strict);
     }
 
-    if (isalnum(*character) || *character == f_string_ascii_underscore_s[0] || *character == f_string_ascii_minus_s[0] || *character == f_string_ascii_plus_s[0]) {
+    if (isalnum(*character) || *character == f_string_ascii_underscore_s.string[0] || *character == f_string_ascii_minus_s.string[0] || *character == f_string_ascii_plus_s.string[0]) {
       return F_true;
     }
 
@@ -1901,12 +1901,12 @@ extern "C" {
     } // while
 
     if (i < length) {
-      if (string[i] == f_string_ascii_u_s[0] || string[i] == f_string_ascii_U_s[0]) {
+      if (string[i] == f_string_ascii_u_s.string[0] || string[i] == f_string_ascii_U_s.string[0]) {
         do {
           ++i;
         } while (i < length && !string[i]);
 
-        if (i < length && string[i] == f_string_ascii_plus_s[0]) {
+        if (i < length && string[i] == f_string_ascii_plus_s.string[0]) {
           ++i;
         }
         else {

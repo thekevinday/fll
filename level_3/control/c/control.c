@@ -33,30 +33,30 @@ extern "C" {
 
     fll_program_print_help_header(main->output.to, main->context, control_program_name_long_s.string, control_program_version_s.string);
 
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not main->output.to in color.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity, silencing most output.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal main->output.to.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_help_s.string, f_console_standard_long_help_s.string, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "    Print this help message.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_light_s.string, f_console_standard_long_light_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "Do not main->output.to in color.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_quiet_s.string, f_console_standard_long_quiet_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Decrease verbosity, silencing most output.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_normal_s.string, f_console_standard_long_normal_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "  Set verbosity to normal main->output.to.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Enable debugging, significantly increasing verbosity beyond normal output.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
 
-    fll_program_print_help_option(main->output.to, main->context, control_short_name_s.string, control_long_name_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Specify the name of the controller socket file.");
-    fll_program_print_help_option(main->output.to, main->context, control_short_settings_s.string, control_long_settings_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Specify a directory path or a full path to the control settings file.");
-    fll_program_print_help_option(main->output.to, main->context, control_short_socket_s.string, control_long_socket_s.string, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Specify a directory path or a full path to the controller socket file.");
+    fll_program_print_help_option(main->output.to, main->context, control_short_name_s.string, control_long_name_s.string, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "    Specify the name of the controller socket file.");
+    fll_program_print_help_option(main->output.to, main->context, control_short_settings_s.string, control_long_settings_s.string, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "Specify a directory path or a full path to the control settings file.");
+    fll_program_print_help_option(main->output.to, main->context, control_short_socket_s.string, control_long_socket_s.string, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "  Specify a directory path or a full path to the controller socket file.");
 
     fll_program_print_help_usage(main->output.to, main->context, control_program_name_s.string, control_command_s.string);
 
-    fl_print_format("  When the %[%s%q%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s, main->context.set.notable);
-    fl_print_format(" %[%s%q%] parameter or from the control settings file.%c%c", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When the %[%s%q%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s.string, control_long_socket_s, main->context.set.notable);
+    fl_print_format(" %[%s%q%] parameter or from the control settings file.%q%q", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s.string, control_long_name_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  A rule action allows for either the full rule path, such as '%[boot/root%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
     fl_print_format(" as a single parameter or two parameters with the first representing the rule directory path '%[boot%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
-    fl_print_format(" and the second representing the rule base name '%[root%]'.%c%c", main->output.to.stream, main->context.set.notable, main->context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" and the second representing the rule base name '%[root%]'.%q%q", main->output.to.stream, main->context.set.notable, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fflush(main->output.to.stream);
     funlockfile(main->output.to.stream);
@@ -102,7 +102,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fll_print_terminated(f_string_eol_s, main->error.to.stream);
+            fll_print_dynamic(f_string_eol_s, main->error.to.stream);
           }
 
           control_main_delete(main);
@@ -256,7 +256,7 @@ extern "C" {
           fflush(main->output.to.stream);
         }
 
-        fll_print_terminated(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic(f_string_eol_s, main->output.to.stream);
       }
     }
 

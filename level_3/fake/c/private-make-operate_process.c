@@ -88,9 +88,9 @@ extern "C" {
       if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
 
-        fl_print_format("%cBreaking as '", data_make->main->output.to.stream, f_string_eol_s[0]);
+        fl_print_format("%qBreaking as '", data_make->main->output.to.stream, f_string_eol_s);
         fl_print_format("%[%S%]", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success_s, data_make->main->context.set.notable);
-        fl_print_format("'.%c", data_make->main->output.to.stream, f_string_eol_s[0]);
+        fl_print_format("'.%q", data_make->main->output.to.stream, f_string_eol_s);
 
         funlockfile(data_make->main->output.to.stream);
       }
@@ -158,14 +158,14 @@ extern "C" {
         *status = f_environment_set(arguments.array[0].string, arguments.array[1].string, F_true);
       }
       else {
-        *status = f_environment_set(arguments.array[0].string, f_string_empty_s, F_true);
+        *status = f_environment_set(arguments.array[0].string, f_string_empty_s.string, F_true);
       }
 
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "f_environment_set", F_true);
       }
       else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("%cDefined environment variable '%[%Q%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[0], data_make->main->context.set.notable, f_string_eol_s[0]);
+        fll_print_format("%qDefined environment variable '%[%Q%]'.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
       }
 
       return 0;
@@ -199,7 +199,7 @@ extern "C" {
         // Forcing exit forces fail mode.
         data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
         data_make->error.prefix = fl_print_error_s;
-        data_make->error.suffix = 0;
+        data_make->error.suffix = f_string_empty_s;
         data_make->error.context = data_make->main->context.set.error;
         data_make->error.notable = data_make->main->context.set.notable;
         data_make->error.to.stream = F_type_error_d;
@@ -211,7 +211,7 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("%cExiting as '%[%S%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success_s, data_make->main->context.set.notable, f_string_eol_s[0]);
+        fll_print_format("%qExiting as '%[%S%]'.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success_s, data_make->main->context.set.notable, f_string_eol_s);
       }
 
       return 0;
@@ -363,7 +363,7 @@ extern "C" {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[1], data_make->main->context.set.notable);
-        fl_print_format("' to %[%Q%].%c", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[0], data_make->main->context.set.notable, f_string_eol_s[0]);
+        fl_print_format("' to %[%Q%].%q", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
 
         funlockfile(data_make->main->output.to.stream);
       }
@@ -448,12 +448,12 @@ extern "C" {
         f_print_dynamic(arguments.array[i], data_make->main->output.to.stream);
 
         if (i + 1 < arguments.used) {
-          f_print_character(f_string_space_s[0], data_make->main->output.to.stream);
+          f_print_dynamic(f_string_space_s, data_make->main->output.to.stream);
         }
       } // for
 
-      f_print_character(f_string_space_s[0], data_make->main->output.to.stream);
-      f_print_character(f_string_eol_s[0], data_make->main->output.to.stream);
+      f_print_dynamic(f_string_space_s, data_make->main->output.to.stream);
+      f_print_dynamic(f_string_eol_s, data_make->main->output.to.stream);
 
       funlockfile(data_make->main->output.to.stream);
 
@@ -542,7 +542,7 @@ extern "C" {
         }
       } // for
 
-      f_print_character(f_string_eol_s[0], data_make->main->output.to.stream);
+      f_print_dynamic(f_string_eol_s, data_make->main->output.to.stream);
 
       funlockfile(data_make->main->output.to.stream);
 
@@ -574,9 +574,9 @@ extern "C" {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
           flockfile(data_make->error.to.stream);
 
-          fl_print_format("%c%[%SFailed to find program '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%q%[%SFailed to find program '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, program, data_make->error.notable);
-          fl_print_format("%[' for executing.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
+          fl_print_format("%[' for executing.%]%q", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
           funlockfile(data_make->error.to.stream);
         }
@@ -650,9 +650,9 @@ extern "C" {
     if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
       flockfile(data_make->error.to.stream);
 
-      fl_print_format("%c%[%SFailed with return code %]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+      fl_print_format("%q%[%SFailed with return code %]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
       fl_print_format("%[%i%]", data_make->error.to.stream, data_make->error.notable, return_code, data_make->error.notable);
-      fl_print_format("%[.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
+      fl_print_format("%[.%]%q", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
       funlockfile(data_make->error.to.stream);
     }

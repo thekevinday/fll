@@ -202,11 +202,11 @@ extern "C" {
         if (depths->array[i].depth == depths->array[j].depth) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%c%[%sThe value '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%q%[%sThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, depths->array[i].depth, main->error.notable);
           fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.notable, main->error.notable);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
-          fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
+          fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
 
@@ -215,13 +215,13 @@ extern "C" {
         else if (depths->array[i].depth > depths->array[j].depth) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
+          fl_print_format("%q%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
           fl_print_format("%[' may not have the value '%]", main->error.to.stream, main->error.notable, main->error.notable);
           fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, depths->array[i].depth, main->error.notable);
           fl_print_format("%[' before the value '%]", main->error.to.stream, main->error.notable, main->error.notable);
           fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, depths->array[j].depth, main->error.notable);
-          fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+          fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
 
@@ -258,7 +258,7 @@ extern "C" {
         macro_f_string_dynamic_t_delete_simple(main->buffer);
 
         if (main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
-          fll_print_format("0%c", main->output.to.stream, f_string_eol_s[0]);
+          fll_print_format("0%q", main->output.to.stream, f_string_eol_s);
 
           return F_none;
         }
@@ -280,7 +280,7 @@ extern "C" {
       for (; i < comments->used; ++i) {
 
         for (j = comments->array[i].start; j <= comments->array[i].stop; ++j) {
-          main->buffer.string[j] = F_fss_delimit_placeholder_s;
+          main->buffer.string[j] = f_fss_delimit_placeholder_s.string[0];
         } // for
       } // for
     }
@@ -288,7 +288,7 @@ extern "C" {
     // Requested depths cannot be greater than contents depth.
     if (depths.used > main->nest.used) {
       if (main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
-        fll_print_format("0%c", main->output.to.stream, f_string_eol_s[0]);
+        fll_print_format("0%q", main->output.to.stream, f_string_eol_s);
 
         return F_none;
       }
@@ -508,7 +508,7 @@ extern "C" {
           ++total;
         } // for
 
-        fll_print_format("%lu%c", main->output.to.stream, total, f_string_eol_s[0]);
+        fll_print_format("%lu%q", main->output.to.stream, total, f_string_eol_s);
 
         return F_none;
       }
@@ -573,13 +573,13 @@ extern "C" {
 
           if (!main->buffer.string[j]) continue;
 
-          if (main->buffer.string[j] == f_string_eol_s[0]) {
+          if (main->buffer.string[j] == f_string_eol_s.string[0]) {
             ++total;
           }
         } // for
       } // for
 
-      fll_print_format("%lu%c", main->output.to.stream, total, f_string_eol_s[0]);
+      fll_print_format("%lu%q", main->output.to.stream, total, f_string_eol_s);
 
       return F_none;
     }
@@ -612,7 +612,7 @@ extern "C" {
         if (line_current != line) {
           for (; j <= items->array[i].content.array[0].stop; ++j) {
 
-            if (main->buffer.string[j] == f_string_eol_s[0]) {
+            if (main->buffer.string[j] == f_string_eol_s.string[0]) {
               ++line_current;
 
               if (line_current == line) {
@@ -631,8 +631,8 @@ extern "C" {
 
             if (!main->buffer.string[j]) continue;
 
-            if (main->buffer.string[j] == f_string_eol_s[0]) {
-              f_print_character(f_string_eol_s[0], main->output.to.stream);
+            if (main->buffer.string[j] == f_string_eol_s.string[0]) {
+              f_print_dynamic(f_string_eol_s, main->output.to.stream);
 
               break;
             }

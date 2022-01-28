@@ -20,14 +20,14 @@ extern "C" {
     }
 
     if (length > 1) {
-      while (length > 1 && argument[length - 1] == f_path_separator_s[0]) {
+      while (length > 1 && argument[length - 1] == f_path_separator_s.string[0]) {
         --length;
       } // while
 
-      if (argument[0] == f_path_separator_s[0]) {
+      if (argument[0] == f_path_separator_s.string[0]) {
         f_array_length_t begin = 1;
 
-        while (begin < length && argument[begin] == f_path_separator_s[0]) {
+        while (begin < length && argument[begin] == f_path_separator_s.string[0]) {
           ++begin;
         } // while
 
@@ -44,8 +44,8 @@ extern "C" {
 
           directory->used = length;
           directory->size = length;
-          directory->string[0] = f_path_separator_s[0];
-          directory->string[length - 1] = f_path_separator_s[0];
+          directory->string[0] = f_path_separator_s.string[0];
+          directory->string[length - 1] = f_path_separator_s.string[0];
         }
         else {
           macro_f_string_dynamic_t_clear((*directory))
@@ -54,13 +54,13 @@ extern "C" {
 
           directory->used = 1;
           directory->size = 1;
-          directory->string[0] = f_path_separator_s[0];
+          directory->string[0] = f_path_separator_s.string[0];
         }
       }
-      else if (length > 3 && argument[0] == f_path_separator_current_s[0] && argument[1] == f_path_separator_current_s[0] && argument[2] == f_path_separator_s[0]) {
+      else if (length > 3 && argument[0] == f_path_separator_current_s.string[0] && argument[1] == f_path_separator_current_s.string[0] && argument[2] == f_path_separator_s.string[0]) {
         f_array_length_t begin = 3;
 
-        while (begin < length && argument[begin] == f_path_separator_s[0]) {
+        while (begin < length && argument[begin] == f_path_separator_s.string[0]) {
           ++begin;
         } // while
 
@@ -77,10 +77,10 @@ extern "C" {
 
           directory->used = length;
           directory->size = length;
-          directory->string[0] = f_path_separator_current_s[0];
-          directory->string[1] = f_path_separator_current_s[0];
-          directory->string[2] = f_path_separator_s[0];
-          directory->string[length - 1] = f_path_separator_s[0];
+          directory->string[0] = f_path_separator_current_s.string[0];
+          directory->string[1] = f_path_separator_current_s.string[0];
+          directory->string[2] = f_path_separator_s.string[0];
+          directory->string[length - 1] = f_path_separator_s.string[0];
         }
         else {
           macro_f_string_dynamic_t_clear((*directory))
@@ -89,15 +89,15 @@ extern "C" {
 
           directory->used = 3;
           directory->size = 3;
-          directory->string[0] = f_path_separator_current_s[0];
-          directory->string[1] = f_path_separator_current_s[0];
-          directory->string[2] = f_path_separator_s[0];
+          directory->string[0] = f_path_separator_current_s.string[0];
+          directory->string[1] = f_path_separator_current_s.string[0];
+          directory->string[2] = f_path_separator_s.string[0];
         }
       }
-      else if (length > 2 && argument[0] == f_path_separator_current_s[0] && argument[1] == f_path_separator_s[0]) {
+      else if (length > 2 && argument[0] == f_path_separator_current_s.string[0] && argument[1] == f_path_separator_s.string[0]) {
         f_array_length_t begin = 2;
 
-        while (begin < length && argument[begin] == f_path_separator_s[0]) {
+        while (begin < length && argument[begin] == f_path_separator_s.string[0]) {
           ++begin;
         } // while
 
@@ -114,9 +114,9 @@ extern "C" {
 
           directory->used = length;
           directory->size = length;
-          directory->string[0] = f_path_separator_current_s[0];
-          directory->string[1] = f_path_separator_s[0];
-          directory->string[length - 1] = f_path_separator_s[0];
+          directory->string[0] = f_path_separator_current_s.string[0];
+          directory->string[1] = f_path_separator_s.string[0];
+          directory->string[length - 1] = f_path_separator_s.string[0];
         }
         else {
           macro_f_string_dynamic_t_clear((*directory))
@@ -125,8 +125,8 @@ extern "C" {
 
           directory->used = 2;
           directory->size = 2;
-          directory->string[0] = f_path_separator_current_s[0];
-          directory->string[1] = f_path_separator_s[0];
+          directory->string[0] = f_path_separator_current_s.string[0];
+          directory->string[1] = f_path_separator_s.string[0];
         }
       }
       else {
@@ -140,10 +140,10 @@ extern "C" {
 
         directory->used = length;
         directory->size = length;
-        directory->string[length - 1] = f_path_separator_s[0];
+        directory->string[length - 1] = f_path_separator_s.string[0];
       }
     }
-    else if (argument[0] != f_path_separator_s[0]) {
+    else if (argument[0] != f_path_separator_s.string[0]) {
       macro_f_string_dynamic_t_clear((*directory))
       macro_f_string_dynamic_t_resize(status, (*directory), 2)
       if (F_status_is_error(status)) return status;
@@ -152,7 +152,7 @@ extern "C" {
 
       directory->used = 2;
       directory->size = 2;
-      directory->string[1] = f_path_separator_s[0];
+      directory->string[1] = f_path_separator_s.string[0];
     }
     else {
       macro_f_string_dynamic_t_clear((*directory))

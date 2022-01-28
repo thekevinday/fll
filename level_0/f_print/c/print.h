@@ -124,9 +124,9 @@ extern "C" {
  *
  * Control characters are converted to the Unicode control character symbols, including NULL.
  * UTF-8 sequences with a width of 1 are converted to the unknown character '�'.
- * For all other UTF-8 sequences, 0 is returned because it cannot be processed via a single 8-byte character.
+ * For all other UTF-8 sequences, an empty string is returned.
  *
- * The returned string will either be NULL (for characters that are already safe) or a string representing the replacement.
+ * The returned string will either be an empty string (for characters that are already safe) or a string representing the replacement.
  * This can result in a 3-byte character being returned as a string of 3 1-bytes.
  *
  * This should only be called for the first 1-byte character of a multibyte character.
@@ -135,13 +135,12 @@ extern "C" {
  *   The character to verify as safe or not and then print.
  *
  * @return
- *   NULL is returned if the character is already safe or if the character has a UTF-8 width of 2 or greater.
- *   A non-NULL string is returned if the character needs safe replacement.
- *   The non-NULL strings returned are NULL terminated.
- *   The non-NULL strings returned are the 3-byte characters used as placeholder symbols.
+ *   A string with used length of 0 (an empty string) is returned if the character is already safe or is a UTF-8 character whose width is greater than 1.
+ *   A string with a non-zero used length is returned if the character needs safe replacement.
+ *   A string with a non-zero used length is returned are NULL terminated (after the used length).
  */
 #ifndef _di_f_print_character_safely_get_
-  extern f_string_t f_print_character_safely_get(const char character);
+  extern const f_string_static_t f_print_character_safely_get(const char character);
 #endif // _di_f_print_character_safely_get_
 
 /**
@@ -1102,9 +1101,9 @@ extern "C" {
  *
  * Control characters are converted to the Unicode control character symbols, including NULL.
  * UTF-8 sequences with a width of 1 are converted to the unknown character '�'.
- * For all other UTF-8 sequences, 0 is returned because it cannot be processed via a single 8-byte character.
+ * For all other UTF-8 sequences, an empty string is returned.
  *
- * The returned string will either be NULL (for characters that are already safe) or a string representing the replacement.
+ * The returned string will either be an empty string (for characters that are already safe) or a string representing the replacement.
  * This can result in a 3-byte character being returned as a string of 3 1-bytes.
  *
  * This should only be called for the first 1-byte character of a multibyte character.
@@ -1116,13 +1115,12 @@ extern "C" {
  *   This is then updated to represent the max bytes used if enough space is available.
  *
  * @return
- *   NULL is returned if the character is already safe or if the character has a UTF-8 width of 2 or greater.
- *   A non-NULL string is returned if the character needs safe replacement.
- *   The non-NULL strings returned are NULL terminated.
- *   The non-NULL strings returned are the 3-byte characters used as placeholder symbols.
+ *   A string with used length of 0 (an empty string) is returned if the character is already safe or is a UTF-8 character whose width is greater than 1.
+ *   A string with a non-zero used length is returned if the character needs safe replacement.
+ *   A string with a non-zero used length is returned are NULL terminated (after the used length).
  */
 #ifndef _di_f_print_safely_get_
-  extern f_string_t f_print_safely_get(const f_string_t character, const f_array_length_t width_max);
+  extern const f_string_static_t f_print_safely_get(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_print_safely_get_
 
 /**

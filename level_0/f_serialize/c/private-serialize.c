@@ -18,7 +18,7 @@ extern "C" {
 
       width = macro_f_utf_byte_width(serialize.string[i]);
 
-      if (serialize.string[i] == f_serialize_simple_splitter_s[0]) {
+      if (serialize.string[i] == f_serialize_simple_splitter_s.string[0]) {
         if (current == index) {
           if (start == i) {
 

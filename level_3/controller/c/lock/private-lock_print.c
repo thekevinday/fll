@@ -15,7 +15,7 @@ extern "C" {
     if (print.verbosity != f_console_verbosity_quiet_e) {
       controller_lock_print(print.to, thread);
 
-      fl_print_format("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
+      fl_print_format("%q%[%QThe pid file '%]", print.to.stream, f_string_eol_s, print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
       fl_print_format("%['Critical failure while attempting to establish '%]", print.to.stream, print.context, print.context);
       fl_print_format("%[%s lock%]", print.to.stream, print.notable, read ? "read" : "write", print.notable);
 
@@ -36,7 +36,7 @@ extern "C" {
         }
       }
 
-      fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+      fl_print_format("%['.%]%q", print.to.stream, print.context, print.context, f_string_eol_s);
 
       controller_unlock_print_flush(print.to, thread);
     }

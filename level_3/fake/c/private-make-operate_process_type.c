@@ -71,7 +71,7 @@ extern "C" {
 
       if (existing) {
         memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
-        destination[arguments.array[total].used] = f_path_separator_s[0];
+        destination[arguments.array[total].used] = f_path_separator_s.string[0];
       }
 
       destination[destination_length] = 0;
@@ -108,8 +108,8 @@ extern "C" {
         else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
           flockfile(data_make->main->output.to.stream);
 
-          fl_print_format("%c%s '%[%Q%]' to '", data_make->main->output.to.stream, f_string_eol_s[0], clone ? "Cloned" : "Copied", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
-          fl_print_format("%[%S%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, destination, data_make->main->context.set.notable, f_string_eol_s[0]);
+          fl_print_format("%q%s '%[%Q%]' to '", data_make->main->output.to.stream, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
+          fl_print_format("%[%S%]'.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, destination, data_make->main->context.set.notable, f_string_eol_s);
 
           funlockfile(data_make->main->output.to.stream);
         }
@@ -146,9 +146,9 @@ extern "C" {
           if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(data_make->main->warning.to.stream);
 
-            fl_print_format("%c%[%SThe file '%]", data_make->main->warning.to.stream, data_make->main->warning.prefix, f_string_eol_s[0]);
+            fl_print_format("%q%[%SThe file '%]", data_make->main->warning.to.stream, data_make->main->warning.prefix, f_string_eol_s);
             fl_print_format("%[%Q%]", data_make->main->warning.to.stream, data_make->main->warning.notable, arguments.array[i], data_make->main->warning.notable);
-            fl_print_format("%[' cannot be found.%]%c", data_make->main->warning.to.stream, f_string_eol_s[0]);
+            fl_print_format("%[' cannot be found.%]%q", data_make->main->warning.to.stream, f_string_eol_s);
 
             funlockfile(data_make->main->warning.to.stream);
           }
@@ -171,7 +171,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_file_found_not) {
           if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-            fll_print_format("%cThe directory '%[%Q%]' does not exist.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
+            fll_print_format("%qThe directory '%[%Q%]' does not exist.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
           }
 
           status = F_none;
@@ -183,7 +183,7 @@ extern "C" {
           return status;
         }
         else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-          fll_print_format("%cRemoved '%[%Q%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
+          fll_print_format("%qRemoved '%[%Q%]'.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
         }
       }
       else {
@@ -191,7 +191,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_file_found_not) {
           if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-            fll_print_format("%cThe file '%[%Q%]' does not exist.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
+            fll_print_format("%qThe file '%[%Q%]' does not exist.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
           }
 
           status = F_none;
@@ -204,7 +204,7 @@ extern "C" {
         }
 
         if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-          fll_print_format("%cRemoved '%[%Q%]'.%c", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
+          fll_print_format("%qRemoved '%[%Q%]'.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
         }
       }
     } // for
@@ -219,7 +219,7 @@ extern "C" {
     if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit_s, arguments.array[0], fake_make_operation_argument_exit_s_length) == F_equal_to) {
       data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
       data_make->error.prefix = fl_print_error_s;
-      data_make->error.suffix = 0;
+      data_make->error.suffix = f_string_empty_s;
       data_make->error.context = data_make->main->context.set.error;
       data_make->error.notable = data_make->main->context.set.notable;
       data_make->error.to.stream = F_type_error_d;
@@ -229,7 +229,7 @@ extern "C" {
     else if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn_s, arguments.array[0], fake_make_operation_argument_warn_s_length) == F_equal_to) {
       data_make->setting_make.fail = fake_make_operation_fail_type_warn_e;
       data_make->error.prefix = fl_print_warning_s;
-      data_make->error.suffix = 0;
+      data_make->error.suffix = f_string_empty_s;
       data_make->error.context = data_make->main->context.set.warning;
       data_make->error.notable = data_make->main->context.set.notable;
       data_make->error.to.stream = F_type_warning_d;
@@ -257,7 +257,7 @@ extern "C" {
         fl_print_format("%[%s%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_ignore_s, data_make->main->context.set.notable);
       }
 
-      fl_print_format("'.%c", data_make->main->output.to.stream, f_string_eol_s[0]);
+      fl_print_format("'.%q", data_make->main->output.to.stream, f_string_eol_s);
 
       funlockfile(data_make->main->output.to.stream);
     }
@@ -303,7 +303,7 @@ extern "C" {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("%s group of '%[%s%]", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
-        fl_print_format("' to %[%ul%].%c", data_make->main->output.to.stream, data_make->main->context.set.notable, id, data_make->main->context.set.notable, f_string_eol_s[0]);
+        fl_print_format("' to %[%ul%].%q", data_make->main->output.to.stream, data_make->main->context.set.notable, id, data_make->main->context.set.notable, f_string_eol_s);
 
         funlockfile(data_make->main->output.to.stream);
       }
@@ -792,14 +792,14 @@ extern "C" {
         flockfile(data_make->error.to.stream);
 
         if ((i == 1 && number_left > F_number_t_size_unsigned_d) || (i > 1 && number_right > F_number_t_size_unsigned_d)) {
-          fl_print_format("%c%[%SThe number '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%q%[%SThe number '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[i], data_make->error.notable);
-          fl_print_format("%[' may only be between the ranges -%un to %un.%]%c", data_make->error.to.stream, data_make->error.context, F_number_t_size_unsigned_d, F_number_t_size_unsigned_d, data_make->error.context, f_string_eol_s[0]);
+          fl_print_format("%[' may only be between the ranges -%un to %un.%]%q", data_make->error.to.stream, data_make->error.context, F_number_t_size_unsigned_d, F_number_t_size_unsigned_d, data_make->error.context, f_string_eol_s);
         }
         else {
-          fl_print_format("%c%[%SInvalid or unsupported number provided '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%q%[%SInvalid or unsupported number provided '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[i], data_make->error.notable);
-          fl_print_format("%['.%]%c", data_make->error.to.stream, data_make->error.context, F_number_t_size_unsigned_d, F_number_t_size_unsigned_d, data_make->error.context, f_string_eol_s[0]);
+          fl_print_format("%['.%]%q", data_make->error.to.stream, data_make->error.context, F_number_t_size_unsigned_d, F_number_t_size_unsigned_d, data_make->error.context, f_string_eol_s);
         }
 
         funlockfile(data_make->error.to.stream);
@@ -1040,7 +1040,7 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("Changed mode of '%Q' to %#@u.%c", data_make->main->output.to.stream, arguments.array[i], mode, f_string_eol_s[0]);
+        fll_print_format("Changed mode of '%Q' to %#@u.%q", data_make->main->output.to.stream, arguments.array[i], mode, f_string_eol_s);
       }
     } // for
 
@@ -1098,7 +1098,7 @@ extern "C" {
 
       if (existing) {
         memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
-        destination[arguments.array[total].used] = f_path_separator_s[0];
+        destination[arguments.array[total].used] = f_path_separator_s.string[0];
       }
 
       destination[destination_length] = 0;
@@ -1154,7 +1154,7 @@ extern "C" {
         fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i].string, "change owner of", fll_error_file_type_file_e);
       }
       else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("%s owner of '%Q' to %u.%c", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", arguments.array[i], id, f_string_eol_s[0]);
+        fll_print_format("%s owner of '%Q' to %u.%q", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", arguments.array[i], id, f_string_eol_s);
       }
     } // for
 
@@ -1283,10 +1283,10 @@ extern "C" {
       // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
       if (F_status_is_error(status)) {
         fll_error_print(data_make->error, F_status_set_fine(status), "fake_make_path_relative", F_true);
-        fll_print_format("Changed to project path '%[%Q%]'.%c", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used - 1], data_make->main->context.set.notable, f_string_eol_s[0]);
+        fll_print_format("Changed to project path '%[%Q%]'.%q", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used - 1], data_make->main->context.set.notable, f_string_eol_s);
       }
       else {
-        fll_print_format("Changed to project path '%[%Q%]'.%c", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path_cache, data_make->main->context.set.notable, f_string_eol_s[0]);
+        fll_print_format("Changed to project path '%[%Q%]'.%q", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path_cache, data_make->main->context.set.notable, f_string_eol_s);
       }
     }
 
@@ -1348,10 +1348,10 @@ extern "C" {
         // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
         if (F_status_is_error(status)) {
           fll_error_print(data_make->error, F_status_set_fine(status), "fake_make_path_relative", F_true);
-          fll_print_format("Changed to project path '%[%Q%]'.%c", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used], data_make->main->context.set.notable, f_string_eol_s[0]);
+          fll_print_format("Changed to project path '%[%Q%]'.%q", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used], data_make->main->context.set.notable, f_string_eol_s);
         }
         else {
-          fll_print_format("Changed to project path '%[%Q%]'.%c", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path_cache, data_make->main->context.set.notable, f_string_eol_s[0]);
+          fll_print_format("Changed to project path '%[%Q%]'.%q", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path_cache, data_make->main->context.set.notable, f_string_eol_s);
         }
       }
 
@@ -1378,7 +1378,7 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-      fll_print_format("Changed to project path ''.%c", data_make->main->output.to.stream, f_string_eol_s[0]);
+      fll_print_format("Changed to project path ''.%q", data_make->main->output.to.stream, f_string_eol_s);
     }
 
     // Clear stack, except for the project root.
@@ -1432,7 +1432,7 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("Touched '%[%Q%]'.%c", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s[0]);
+        fll_print_format("Touched '%[%Q%]'.%q", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
       }
     } // for
 

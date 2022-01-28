@@ -450,7 +450,7 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (string[range->start] == f_string_eol_s[0]) {
+        if (string[range->start] == f_string_eol_s.string[0]) {
           return F_none_eol;
         }
 
@@ -520,7 +520,7 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start] == f_string_eol_s[0]) {
+      if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
       }
 
@@ -582,7 +582,7 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start] == f_string_eol_s[0]) {
+      if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
       }
 
@@ -716,7 +716,7 @@ extern "C" {
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s[0]) {
+        if (buffer[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
@@ -752,7 +752,7 @@ extern "C" {
         break;
       }
 
-      if (buffer[range->start] == f_string_eol_s[0]) {
+      if (buffer[range->start] == f_string_eol_s.string[0]) {
         ++range->start;
 
         return F_found_not;
@@ -770,7 +770,7 @@ extern "C" {
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s[0]) {
+        if (buffer[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
@@ -802,12 +802,12 @@ extern "C" {
       range->start += macro_f_utf_byte_width(buffer[range->start]);
     } // for
 
-    if (range->start > range->stop || buffer[range->start] != F_string_ascii_minus_s[0]) {
+    if (range->start > range->stop || buffer[range->start] != f_string_ascii_minus_s.string[0]) {
 
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s[0]) {
+        if (buffer[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
@@ -831,7 +831,7 @@ extern "C" {
           // Increment until stop, while taking into consideration UTF-8 character widths.
           for (; range->start <= range->stop; ) {
 
-            if (buffer[range->start] == f_string_eol_s[0]) {
+            if (buffer[range->start] == f_string_eol_s.string[0]) {
               ++range->start;
 
               break;
@@ -867,7 +867,7 @@ extern "C" {
         // Increment until stop, while taking into consideration UTF-8 character widths.
         for (; range->start <= range->stop; ) {
 
-          if (buffer[range->start] == f_string_eol_s[0]) {
+          if (buffer[range->start] == f_string_eol_s.string[0]) {
             ++range->start;
 
             break;
@@ -906,7 +906,7 @@ extern "C" {
         // Increment until stop, while taking into consideration UTF-8 character widths.
         for (; range->start <= range->stop; ) {
 
-          if (buffer[range->start] == f_string_eol_s[0]) {
+          if (buffer[range->start] == f_string_eol_s.string[0]) {
             ++range->start;
 
             break;
@@ -923,7 +923,7 @@ extern "C" {
       }
     }
 
-    if (buffer[range->start] == f_string_eol_s[0]) {
+    if (buffer[range->start] == f_string_eol_s.string[0]) {
       ++range->start;
     }
 
@@ -931,7 +931,7 @@ extern "C" {
       for (f_array_length_t j = i, i = 0; j <= range->stop; ++j) {
 
         if (!buffer[j]) continue;
-        if (buffer[j] == F_string_ascii_minus_s[0]) break;
+        if (buffer[j] == f_string_ascii_minus_s.string[0]) break;
 
         id->name[i] = buffer[j];
         ++i;
@@ -1028,7 +1028,7 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (string[range->start] == f_string_eol_s[0]) {
+        if (string[range->start] == f_string_eol_s.string[0]) {
           return F_none_eol;
         }
 
@@ -1088,7 +1088,7 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start] == f_string_eol_s[0]) {
+      if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
       }
 
@@ -1146,7 +1146,7 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start] == f_string_eol_s[0]) {
+      if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
       }
 

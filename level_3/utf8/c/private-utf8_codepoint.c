@@ -103,10 +103,10 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (character.string[0] == f_string_ascii_u_s[0] || character.string[0] == f_string_ascii_U_s[0] || character.string[0] == f_string_ascii_plus_s[0]) {
+    if (character.string[0] == f_string_ascii_u_s.string[0] || character.string[0] == f_string_ascii_U_s.string[0] || character.string[0] == f_string_ascii_plus_s.string[0]) {
       // Do nothing.
     }
-    else if (character.string[0] == f_string_ascii_space_s[0]) {
+    else if (character.string[0] == f_string_ascii_space_s.string[0]) {
       status = F_space;
     }
     else if (macro_f_utf_byte_width_is(*character.string)) {
@@ -170,7 +170,7 @@ extern "C" {
         if (status == F_space) {
           status = F_next;
         }
-        else if (character.string[0] == f_string_ascii_u_s[0] || character.string[0] == f_string_ascii_U_s[0]) {
+        else if (character.string[0] == f_string_ascii_u_s.string[0] || character.string[0] == f_string_ascii_U_s.string[0]) {
           *mode = utf8_codepoint_mode_begin_e;
           data->text.used = 0;
         }
@@ -179,7 +179,7 @@ extern "C" {
         }
       }
       else if (*mode == utf8_codepoint_mode_begin_e) {
-        if (character.string[0] == f_string_ascii_plus_s[0]) {
+        if (character.string[0] == f_string_ascii_plus_s.string[0]) {
           *mode = utf8_codepoint_mode_number_e;
         }
         else {

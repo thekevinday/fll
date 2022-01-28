@@ -319,7 +319,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    while (string[range->start] != f_string_eol_s[0]) {
+    while (string[range->start] != f_string_eol_s.string[0]) {
 
       ++range->start;
 
@@ -344,7 +344,7 @@ extern "C" {
 
     while (string[range->start] != seek_to) {
 
-      if (string[range->start] == f_string_eol_s[0]) {
+      if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
       }
 

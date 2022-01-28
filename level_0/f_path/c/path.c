@@ -101,7 +101,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < length; ++i) {
 
-      if (path[i] == f_path_separator_s[0]) {
+      if (path[i] == f_path_separator_s.string[0]) {
         return F_true;
       }
     } // for
@@ -123,7 +123,7 @@ extern "C" {
       if (path[i]) break;
     } // for
 
-    if (path[i] == f_path_separator_s[0]) {
+    if (path[i] == f_path_separator_s.string[0]) {
       return F_false;
     }
 
@@ -144,25 +144,25 @@ extern "C" {
       if (path[i]) break;
     } // for
 
-    if (path[i] == f_path_separator_s[0]) {
+    if (path[i] == f_path_separator_s.string[0]) {
       return F_false;
     }
 
-    if (path[i] == f_path_separator_current_s[0]) {
+    if (path[i] == f_path_separator_current_s.string[0]) {
       for (; i < length; ++i) {
         if (path[i]) break;
       } // for
 
-      if (path[i] == f_path_separator_s[0]) {
+      if (path[i] == f_path_separator_s.string[0]) {
         return F_true;
       }
 
-      if (path[i] == f_path_separator_current_s[0]) {
+      if (path[i] == f_path_separator_current_s.string[0]) {
         for (; i < length; ++i) {
           if (path[i]) break;
         } // for
 
-        if (path[i] == f_path_separator_s[0]) {
+        if (path[i] == f_path_separator_s.string[0]) {
           return F_true;
         }
       }

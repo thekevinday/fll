@@ -640,13 +640,13 @@ extern "C" {
     const f_string_static_t *after;
   } f_color_set_t;
 
-  #define f_color_set_t_initialize { 0, 0 }
+  #define f_color_set_t_initialize { &f_string_empty_s, &f_string_empty_s }
 
   #define macro_f_color_set_t_initialize(before, after) { before, after }
 
   #define macro_f_color_set_t_clear(set) \
-    set.before = 0; \
-    set.after = 0;
+    set.before = &f_string_empty_s; \
+    set.after = &f_string_empty_s;
 #endif // _di_f_color_set_t_
 
 /**

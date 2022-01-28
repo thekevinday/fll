@@ -57,7 +57,7 @@ extern "C" {
     };
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%c%[Creating base build directories.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+      fll_print_format("%q%[Creating base build directories.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     for (uint8_t i = 0; i < 15; ++i) {
@@ -67,14 +67,14 @@ extern "C" {
       // @todo implement this in a common function and use across project for creating parent directories.
       for (f_array_length_t j = 0; j < directorys[i]->used; ++j) {
 
-        if (directorys[i]->string[j] != f_path_separator_s[0]) continue;
+        if (directorys[i]->string[j] != f_path_separator_s.string[0]) continue;
 
         directorys[i]->string[j] = 0;
 
         *status = f_directory_exists(directorys[i]->string);
 
         if (F_status_is_error(*status) || *status == F_false) {
-          directorys[i]->string[j] = f_path_separator_s[0];
+          directorys[i]->string[j] = f_path_separator_s.string[0];
 
           break;
         }
@@ -83,7 +83,7 @@ extern "C" {
           *status = f_directory_create(directorys[i]->string, mode);
         }
 
-        directorys[i]->string[j] = f_path_separator_s[0];
+        directorys[i]->string[j] = f_path_separator_s.string[0];
 
         if (F_status_is_error(*status)) break;
       } // for
@@ -103,7 +103,7 @@ extern "C" {
       }
 
       if (main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("Created directory '%Q'.%c", main->output.to.stream, directorys[i], f_string_eol_s[0]);
+        fll_print_format("Created directory '%Q'.%q", main->output.to.stream, directorys[i], f_string_eol_s);
       }
     } // for
 

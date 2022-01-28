@@ -35,8 +35,8 @@ extern "C" {
     #define FLL_fss_status_format_s_length     12
     #define FLL_fss_status_format_eos_s_length 16
 
-    extern const f_string_t fll_fss_status_format_s;
-    extern const f_string_t fll_fss_status_format_eos_s;
+    const f_string_static_t fll_fss_status_format_s;
+    const f_string_static_t fll_fss_status_format_eos_s;
   #endif // _di_fll_fss_status_error_
 
   #ifndef _di_fll_fss_status_warning_
@@ -46,8 +46,8 @@ extern "C" {
     #define FLL_fss_status_accepted_invalid_s_length     22
     #define FLL_fss_status_accepted_invalid_eos_s_length 26
 
-    extern const f_string_t fll_fss_status_accepted_invalid_s;
-    extern const f_string_t fll_fss_status_accepted_invalid_eos_s;
+    const f_string_static_t fll_fss_status_accepted_invalid_s;
+    const f_string_static_t fll_fss_status_accepted_invalid_eos_s;
   #endif // _di_fll_fss_status_warning_
 
   #ifndef _di_fll_fss_status_success_
@@ -63,19 +63,19 @@ extern "C" {
     #define FLL_fss_status_found_content_not_s_length        23
     #define FLL_fss_status_found_object_content_not_s_length 30
 
-    extern const f_string_t fll_fss_status_found_object_s;
-    extern const f_string_t fll_fss_status_found_content_s;
-    extern const f_string_t fll_fss_status_found_object_not_s;
-    extern const f_string_t fll_fss_status_found_content_not_s;
-    extern const f_string_t fll_fss_status_found_object_content_not_s;
+    const f_string_static_t fll_fss_status_found_object_s;
+    const f_string_static_t fll_fss_status_found_content_s;
+    const f_string_static_t fll_fss_status_found_object_not_s;
+    const f_string_static_t fll_fss_status_found_content_not_s;
+    const f_string_static_t fll_fss_status_found_object_content_not_s;
   #endif // _di_fll_fss_status_success_
 
   #ifndef _di_fll_fss_status_codes_
     #define FLL_fss_status_found_comment_s "F_fss_found_comment"
 
-    #define FLL_fss_status_found_comment_length_s 19
+    #define FLL_fss_status_found_comment_s_length 19
 
-    extern const f_string_t fll_fss_status_found_comment_s;
+    const f_string_static_t fll_fss_status_found_comment_s;
   #endif // _di_fll_fss_status_codes_
 
   #define FLL_fss_status_status_code_first_s "F_fss_status_code_first"
@@ -84,8 +84,8 @@ extern "C" {
   #define FLL_fss_status_status_code_first_s_length 23
   #define FLL_fss_status_status_code_last_s_length  21
 
-  extern const f_string_t fll_fss_status_status_code_first_s;
-  extern const f_string_t fll_fss_status_status_code_last_s;
+  const f_string_static_t fll_fss_status_status_code_first_s;
+  const f_string_static_t fll_fss_status_status_code_last_s;
 #endif // _di_fll_fss_status_string_
 
 /**
@@ -95,10 +95,10 @@ extern "C" {
  *
  * This process the string until either a match or NULL is reached.
  *
- * @param string
- *   The code name to process.
+ * @param name
+ *   The status name to process.
  * @param code
- *   The code code a matched string represents.
+ *   The status number a matched string represents.
  *
  * @return
  *   F_none on success.
@@ -110,16 +110,16 @@ extern "C" {
  *   Errors (with error bit) from: f_conversion_character_is_decimal().
  */
 #ifndef _di_fll_fss_status_string_from_
-  extern f_status_t fll_fss_status_string_from(const f_string_t string, f_status_t *code);
+  extern f_status_t fll_fss_status_string_from(const f_string_static_t name, f_status_t *code);
 #endif // _di_fll_fss_status_string_to_
 
 /**
  * Convert code codes to their string equivalents.
  *
  * @param code
- *   The code to process.
- * @param string
- *   The code name that represents the given code.
+ *   The status number to process.
+ * @param name
+ *   The status name that represents the given code.
  *
  * @return
  *   F_none on success.
@@ -131,7 +131,7 @@ extern "C" {
  * @see f_status_string_to()
  */
 #ifndef _di_fll_fss_status_string_to_
-  extern f_status_t fll_fss_status_string_to(const f_status_t code, f_string_t *string);
+  extern f_status_t fll_fss_status_string_to(const f_status_t code, f_string_static_t *name);
 #endif // _di_fll_fss_status_string_to_
 
 #ifdef __cplusplus

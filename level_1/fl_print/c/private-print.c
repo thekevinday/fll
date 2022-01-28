@@ -29,32 +29,32 @@ extern "C" {
     for (; *string; string += 1) {
 
       if (*string < 0x2c) {
-        if (*string == f_string_ascii_space_s[0]) {
+        if (*string == f_string_ascii_space_s.string[0]) {
           flag |= F_print_format_flag_sign_pad_d;
 
           continue;
         }
-        else if (*string == f_string_ascii_exclamation_s[0]) {
+        else if (*string == f_string_ascii_exclamation_s.string[0]) {
           base = 2;
 
           continue;
         }
-        else if (*string == f_string_ascii_pound_s[0]) {
+        else if (*string == f_string_ascii_pound_s.string[0]) {
           flag |= F_print_format_flag_convert_d;
 
           continue;
         }
-        else if (*string == f_string_ascii_dollar_s[0]) {
+        else if (*string == f_string_ascii_dollar_s.string[0]) {
 
           // If followed immediately by a '$' this is ignored.
           // Use '%$' to separate, such as '%l%$l' would allow for '0l' to be printed where '%ll' would interpret the 'l', resulting in a long long.
           return string;
         }
-        else if (*string == f_string_ascii_percent_s[0]) {
+        else if (*string == f_string_ascii_percent_s.string[0]) {
 
           // The first percent found represents a literal '%' to be printed, otherwise return as invalid.
           if (string == start) {
-            if (!fputc_unlocked(f_string_ascii_percent_s[0], stream)) {
+            if (fwrite_unlocked(f_string_ascii_percent_s.string, 1, f_string_ascii_percent_s.used, stream) < f_string_ascii_percent_s.used) {
               *status = F_status_set_error(F_output);
             }
           }
@@ -64,16 +64,16 @@ extern "C" {
 
           return string;
         }
-        else if (*string == f_string_ascii_ampersand_s[0]) {
+        else if (*string == f_string_ascii_ampersand_s.string[0]) {
           base = 12;
 
           continue;
         }
-        else if (*string == f_string_ascii_asterisk_s[0]) {
+        else if (*string == f_string_ascii_asterisk_s.string[0]) {
           flag |= F_print_format_flag_width_d | F_print_format_flag_width_value_d;
           continue;
         }
-        else if (*string == f_string_ascii_plus_s[0]) {
+        else if (*string == f_string_ascii_plus_s.string[0]) {
           flag |= F_print_format_flag_sign_always_d;
 
           continue;
@@ -85,12 +85,12 @@ extern "C" {
         }
       }
       else if (*string < 0x41) {
-        if (*string == f_string_ascii_minus_s[0]) {
+        if (*string == f_string_ascii_minus_s.string[0]) {
           flag |= F_print_format_flag_align_left_d;
 
           continue;
         }
-        else if (*string == f_string_ascii_period_s[0]) {
+        else if (*string == f_string_ascii_period_s.string[0]) {
           if (!*(string + 1)) {
             *status = F_status_set_error(F_eos);
 
@@ -99,7 +99,7 @@ extern "C" {
 
           ++string;
 
-          if (*string == f_string_ascii_asterisk_s[0]) {
+          if (*string == f_string_ascii_asterisk_s.string[0]) {
             flag |= F_print_format_flag_precision_d | F_print_format_flag_precision_value_d;
           }
           else if (*string < 0x30 || *string > 0x39) {
@@ -118,14 +118,14 @@ extern "C" {
 
           continue;
         }
-        else if (*string == f_string_ascii_slash_forward_s[0]) {
+        else if (*string == f_string_ascii_slash_forward_s.string[0]) {
           flag |= F_print_format_flag_range_d;
 
           continue;
         }
         else if (*string > 0x2f && *string < 0x3a) {
           if (!(flag & F_print_format_flag_width_d)) {
-            if (*string == f_string_ascii_0_s[0]) {
+            if (*string == f_string_ascii_0_s.string[0]) {
               flag |= F_print_format_flag_zeros_leading_d;
 
               continue;
@@ -146,22 +146,22 @@ extern "C" {
             return string;
           }
         }
-        else if (*string == f_string_ascii_colon_s[0]) {
+        else if (*string == f_string_ascii_colon_s.string[0]) {
           flag |= F_print_format_flag_ignore_range_d;
 
           continue;
         }
-        else if (*string == f_string_ascii_colon_semi_s[0]) {
+        else if (*string == f_string_ascii_colon_semi_s.string[0]) {
           flag |= F_print_format_flag_ignore_index_d;
 
           continue;
         }
-        else if (*string == f_string_ascii_equal_s[0]) {
+        else if (*string == f_string_ascii_equal_s.string[0]) {
           flag |= F_print_format_flag_trim_d;
 
           continue;
         }
-        else if (*string == f_string_ascii_sign_at_s[0]) {
+        else if (*string == f_string_ascii_sign_at_s.string[0]) {
           base = 8;
 
           continue;
@@ -173,34 +173,34 @@ extern "C" {
         }
       }
       else if (*string < 0x56) {
-        if (*string == f_string_ascii_C_s[0]) {
+        if (*string == f_string_ascii_C_s.string[0]) {
           char value[1] = { (char) va_arg(*ap, int) };
 
           *status = f_print_safely(value, 1, stream);
 
           return string;
         }
-        else if (*string == f_string_ascii_D_s[0]) {
+        else if (*string == f_string_ascii_D_s.string[0]) {
           type = f_print_format_type_double_32_e;
           flag |= F_print_format_flag_uppercase_d;
 
           if (*(string + 1)) {
-            if (*(string + 1) == f_string_ascii_L_s[0]) {
+            if (*(string + 1) == f_string_ascii_L_s.string[0]) {
               type = f_print_format_type_double_64_e;
 
-              if (*(string + 2) == f_string_ascii_e_s[0]) {
+              if (*(string + 2) == f_string_ascii_e_s.string[0]) {
                 flag |= F_print_format_flag_exponent_d;
                 string += 2;
               }
-              else if (*(string + 2) == f_string_ascii_E_s[0]) {
+              else if (*(string + 2) == f_string_ascii_E_s.string[0]) {
                 flag |= F_print_format_flag_exponent_d | F_print_format_flag_exponent_upper_d;
                 string += 2;
               }
-              else if (*(string + 2) == f_string_ascii_g_s[0]) {
+              else if (*(string + 2) == f_string_ascii_g_s.string[0]) {
                 flag |= F_print_format_flag_exponent_either_d;
                 string += 2;
               }
-              else if (*(string + 2) == f_string_ascii_G_s[0]) {
+              else if (*(string + 2) == f_string_ascii_G_s.string[0]) {
                 flag |= F_print_format_flag_exponent_either_d | F_print_format_flag_exponent_upper_d;
                 string += 2;
               }
@@ -208,30 +208,30 @@ extern "C" {
                 ++string;
               }
             }
-            else if (*(string + 1) == f_string_ascii_e_s[0]) {
+            else if (*(string + 1) == f_string_ascii_e_s.string[0]) {
               flag |= F_print_format_flag_exponent_d;
               ++string;
             }
-            else if (*(string + 1) == f_string_ascii_E_s[0]) {
+            else if (*(string + 1) == f_string_ascii_E_s.string[0]) {
               flag |= F_print_format_flag_exponent_d | F_print_format_flag_exponent_upper_d;
               ++string;
             }
-            else if (*(string + 1) == f_string_ascii_g_s[0]) {
+            else if (*(string + 1) == f_string_ascii_g_s.string[0]) {
               flag |= F_print_format_flag_exponent_either_d;
               ++string;
             }
-            else if (*(string + 1) == f_string_ascii_G_s[0]) {
+            else if (*(string + 1) == f_string_ascii_G_s.string[0]) {
               flag |= F_print_format_flag_exponent_either_d | F_print_format_flag_exponent_upper_d;
               ++string;
             }
           }
         }
-        else if (*string == f_string_ascii_I_s[0]) {
+        else if (*string == f_string_ascii_I_s.string[0]) {
           type = f_print_format_type_signed_32_e;
           flag |= F_print_format_flag_uppercase_d;
 
-          if (*(string + 1) == f_string_ascii_I_s[0]) {
-            if (*(string + 2) == f_string_ascii_I_s[0]) {
+          if (*(string + 1) == f_string_ascii_I_s.string[0]) {
+            if (*(string + 2) == f_string_ascii_I_s.string[0]) {
               type = f_print_format_type_signed_8_e;
               string += 2;
             }
@@ -240,8 +240,8 @@ extern "C" {
               ++string;
             }
           }
-          else if (*(string + 1) == f_string_ascii_L_s[0]) {
-            if (*(string + 2) == f_string_ascii_L_s[0]) {
+          else if (*(string + 1) == f_string_ascii_L_s.string[0]) {
+            if (*(string + 2) == f_string_ascii_L_s.string[0]) {
               type = f_print_format_type_signed_128_e;
               string += 2;
             }
@@ -250,13 +250,13 @@ extern "C" {
               ++string;
             }
           }
-          else if (*(string + 1) == f_string_ascii_N_s[0]) {
+          else if (*(string + 1) == f_string_ascii_N_s.string[0]) {
             type = f_print_format_type_signed_number_e;
             flag |= F_print_format_flag_uppercase_d;
             ++string;
           }
         }
-        else if (*string == f_string_ascii_Q_s[0]) {
+        else if (*string == f_string_ascii_Q_s.string[0]) {
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
 
           if (flag & F_print_format_flag_range_d) {
@@ -373,19 +373,19 @@ extern "C" {
 
           return string;
         }
-        else if (*string == f_string_ascii_S_s[0]) {
+        else if (*string == f_string_ascii_S_s.string[0]) {
           const f_string_t value = va_arg(*ap, f_string_t);
 
           *status = f_print_safely_terminated(value, stream);
 
           return string;
         }
-        else if (*string == f_string_ascii_U_s[0]) {
+        else if (*string == f_string_ascii_U_s.string[0]) {
           type = f_print_format_type_unsigned_32_e;
           flag |= F_print_format_flag_uppercase_d;
 
-          if (*(string + 1) == f_string_ascii_I_s[0]) {
-            if (*(string + 2) == f_string_ascii_I_s[0]) {
+          if (*(string + 1) == f_string_ascii_I_s.string[0]) {
+            if (*(string + 2) == f_string_ascii_I_s.string[0]) {
               type = f_print_format_type_unsigned_8_e;
               string += 2;
             }
@@ -394,8 +394,8 @@ extern "C" {
               ++string;
             }
           }
-          else if (*(string + 1) == f_string_ascii_L_s[0]) {
-            if (*(string + 2) == f_string_ascii_L_s[0]) {
+          else if (*(string + 1) == f_string_ascii_L_s.string[0]) {
+            if (*(string + 2) == f_string_ascii_L_s.string[0]) {
               type = f_print_format_type_unsigned_128_e;
               string += 2;
             }
@@ -404,7 +404,7 @@ extern "C" {
               ++string;
             }
           }
-          else if (*(string + 1) == f_string_ascii_N_s[0]) {
+          else if (*(string + 1) == f_string_ascii_N_s.string[0]) {
             type = f_print_format_type_unsigned_number_e;
             ++string;
           }
@@ -416,11 +416,11 @@ extern "C" {
         }
       }
       else if (*string < 0x60) {
-        if (*string == f_string_ascii_Z_s[0]) {
+        if (*string == f_string_ascii_Z_s.string[0]) {
           type = f_print_format_type_size_e;
           flag |= F_print_format_flag_uppercase_d;
         }
-        else if (*string == f_string_ascii_bracket_open_s[0]) {
+        else if (*string == f_string_ascii_bracket_open_s.string[0]) {
           const f_color_set_t value = va_arg(*ap, f_color_set_t);
 
           if (value.before) {
@@ -429,7 +429,7 @@ extern "C" {
 
           return string;
         }
-        else if (*string == f_string_ascii_bracket_close_s[0]) {
+        else if (*string == f_string_ascii_bracket_close_s.string[0]) {
           const f_color_set_t value = va_arg(*ap, f_color_set_t);
 
           if (value.after) {
@@ -438,12 +438,12 @@ extern "C" {
 
           return string;
         }
-        else if (*string == f_string_ascii_caret_s[0]) {
+        else if (*string == f_string_ascii_caret_s.string[0]) {
           base = 10;
 
           continue;
         }
-        else if (*string == f_string_ascii_underscore_s[0]) {
+        else if (*string == f_string_ascii_underscore_s.string[0]) {
           base = 16;
 
           continue;
@@ -455,7 +455,7 @@ extern "C" {
         }
       }
       else if (*string < 0x72) {
-        if (*string == f_string_ascii_c_s[0]) {
+        if (*string == f_string_ascii_c_s.string[0]) {
           const char value = (char) va_arg(*ap, uint32_t);
 
           if (!fputc_unlocked(value, stream)) {
@@ -464,26 +464,26 @@ extern "C" {
 
           return string;
         }
-        else if (*string == f_string_ascii_d_s[0]) {
+        else if (*string == f_string_ascii_d_s.string[0]) {
           type = f_print_format_type_double_32_e;
 
           if (*(string + 1)) {
-            if (*(string + 1) == f_string_ascii_L_s[0]) {
+            if (*(string + 1) == f_string_ascii_L_s.string[0]) {
               type = f_print_format_type_double_64_e;
 
-              if (*(string + 2) == f_string_ascii_e_s[0]) {
+              if (*(string + 2) == f_string_ascii_e_s.string[0]) {
                 flag |= F_print_format_flag_exponent_d;
                 string += 2;
               }
-              else if (*(string + 2) == f_string_ascii_E_s[0]) {
+              else if (*(string + 2) == f_string_ascii_E_s.string[0]) {
                 flag |= F_print_format_flag_exponent_d | F_print_format_flag_exponent_upper_d;
                 string += 2;
               }
-              else if (*(string + 2) == f_string_ascii_g_s[0]) {
+              else if (*(string + 2) == f_string_ascii_g_s.string[0]) {
                 flag |= F_print_format_flag_exponent_either_d;
                 string += 2;
               }
-              else if (*(string + 2) == f_string_ascii_G_s[0]) {
+              else if (*(string + 2) == f_string_ascii_G_s.string[0]) {
                 flag |= F_print_format_flag_exponent_either_d | F_print_format_flag_exponent_upper_d;
                 string += 2;
               }
@@ -491,29 +491,29 @@ extern "C" {
                 ++string;
               }
             }
-            else if (*(string + 1) == f_string_ascii_e_s[0]) {
+            else if (*(string + 1) == f_string_ascii_e_s.string[0]) {
               flag |= F_print_format_flag_exponent_d;
               ++string;
             }
-            else if (*(string + 1) == f_string_ascii_E_s[0]) {
+            else if (*(string + 1) == f_string_ascii_E_s.string[0]) {
               flag |= F_print_format_flag_exponent_d | F_print_format_flag_exponent_upper_d;
               ++string;
             }
-            else if (*(string + 1) == f_string_ascii_g_s[0]) {
+            else if (*(string + 1) == f_string_ascii_g_s.string[0]) {
               flag |= F_print_format_flag_exponent_either_d;
               ++string;
             }
-            else if (*(string + 1) == f_string_ascii_G_s[0]) {
+            else if (*(string + 1) == f_string_ascii_G_s.string[0]) {
               flag |= F_print_format_flag_exponent_either_d | F_print_format_flag_exponent_upper_d;
               ++string;
             }
           }
         }
-        else if (*string == f_string_ascii_i_s[0]) {
+        else if (*string == f_string_ascii_i_s.string[0]) {
           type = f_print_format_type_signed_32_e;
 
-          if (*(string + 1) == f_string_ascii_i_s[0]) {
-            if (*(string + 2) == f_string_ascii_i_s[0]) {
+          if (*(string + 1) == f_string_ascii_i_s.string[0]) {
+            if (*(string + 2) == f_string_ascii_i_s.string[0]) {
               type = f_print_format_type_signed_8_e;
               string += 2;
             }
@@ -522,8 +522,8 @@ extern "C" {
               ++string;
             }
           }
-          else if (*(string + 1) == f_string_ascii_l_s[0]) {
-            if (*(string + 2) == f_string_ascii_l_s[0]) {
+          else if (*(string + 1) == f_string_ascii_l_s.string[0]) {
+            if (*(string + 2) == f_string_ascii_l_s.string[0]) {
               type = f_print_format_type_signed_128_e;
               string += 2;
             }
@@ -532,12 +532,12 @@ extern "C" {
               ++string;
             }
           }
-          else if (*(string + 1) == f_string_ascii_n_s[0]) {
+          else if (*(string + 1) == f_string_ascii_n_s.string[0]) {
             type = f_print_format_type_signed_number_e;
             ++string;
           }
         }
-        else if (*string == f_string_ascii_q_s[0]) {
+        else if (*string == f_string_ascii_q_s.string[0]) {
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
 
           if (flag & F_print_format_flag_range_d) {
@@ -661,7 +661,7 @@ extern "C" {
         }
       }
       else {
-        if (*string == f_string_ascii_r_s[0]) {
+        if (*string == f_string_ascii_r_s.string[0]) {
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
 
           if (flag & F_print_format_flag_range_d) {
@@ -778,18 +778,18 @@ extern "C" {
 
           return string;
         }
-        else if (*string == f_string_ascii_s_s[0]) {
+        else if (*string == f_string_ascii_s_s.string[0]) {
           const f_string_t value = va_arg(*ap, f_string_t);
 
           *status = f_print_terminated(value, stream);
 
           return string;
         }
-        else if (*string == f_string_ascii_u_s[0]) {
+        else if (*string == f_string_ascii_u_s.string[0]) {
           type = f_print_format_type_unsigned_32_e;
 
-          if (*(string + 1) == f_string_ascii_i_s[0]) {
-            if (*(string + 2) == f_string_ascii_i_s[0]) {
+          if (*(string + 1) == f_string_ascii_i_s.string[0]) {
+            if (*(string + 2) == f_string_ascii_i_s.string[0]) {
               type = f_print_format_type_unsigned_8_e;
               string += 2;
             }
@@ -798,8 +798,8 @@ extern "C" {
               ++string;
             }
           }
-          else if (*(string + 1) == f_string_ascii_l_s[0]) {
-            if (*(string + 2) == f_string_ascii_l_s[0]) {
+          else if (*(string + 1) == f_string_ascii_l_s.string[0]) {
+            if (*(string + 2) == f_string_ascii_l_s.string[0]) {
               type = f_print_format_type_unsigned_128_e;
               string += 2;
             }
@@ -808,12 +808,12 @@ extern "C" {
               ++string;
             }
           }
-          else if (*(string + 1) == f_string_ascii_n_s[0]) {
+          else if (*(string + 1) == f_string_ascii_n_s.string[0]) {
             type = f_print_format_type_unsigned_number_e;
             ++string;
           }
         }
-        else if (*string == f_string_ascii_z_s[0]) {
+        else if (*string == f_string_ascii_z_s.string[0]) {
           type = f_print_format_type_size_e;
         }
         else {
@@ -1023,7 +1023,7 @@ extern "C" {
         *number *= 10;
         *number += 0xf & *string;
       }
-      else if (*string == f_string_ascii_asterisk_s[0]) {
+      else if (*string == f_string_ascii_asterisk_s.string[0]) {
         *number = va_arg(*ap, unsigned int);
 
         break;
@@ -1629,25 +1629,19 @@ extern "C" {
           }
 
           if (i + macro_f_utf_byte_width(string[i]) >= length) {
-            if (!fputc_unlocked(f_print_sequence_unknown_s[0], stream)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[1], stream)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[2], stream)) {
+            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
 
             i = length;
             status = F_none;
+
             break;
           }
 
           if (!string[i]) {
             ++i;
+
             continue;
           }
 
@@ -1677,15 +1671,7 @@ extern "C" {
             }
           }
           else {
-            if (!fputc_unlocked(f_print_sequence_unknown_s[0], stream)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[1], stream)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[2], stream)) {
+            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
           }
@@ -1707,15 +1693,7 @@ extern "C" {
       }
 
       if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
-        if (!fputc_unlocked(f_print_sequence_unknown_s[0], stream)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(f_print_sequence_unknown_s[1], stream)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(f_print_sequence_unknown_s[2], stream)) {
+        if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
 
@@ -2093,25 +2071,19 @@ extern "C" {
         while (i < j) {
 
           if (i + macro_f_utf_byte_width(string[i]) >= length) {
-            if (!fputc_unlocked(f_print_sequence_unknown_s[0], stream)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[1], stream)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[2], stream)) {
+            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
 
             i = length;
             status = F_none;
+
             break;
           }
 
           if (!string[i]) {
             ++i;
+
             continue;
           }
 
@@ -2141,15 +2113,7 @@ extern "C" {
             }
           }
           else {
-            if (!fputc_unlocked(f_print_sequence_unknown_s[0], stream)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[1], stream)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[2], stream)) {
+            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
           }
@@ -2171,15 +2135,7 @@ extern "C" {
       }
 
       if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
-        if (!fputc_unlocked(f_print_sequence_unknown_s[0], stream)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(f_print_sequence_unknown_s[1], stream)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(f_print_sequence_unknown_s[2], stream)) {
+        if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
 

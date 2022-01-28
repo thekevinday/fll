@@ -59,6 +59,7 @@ extern "C" {
  *     Errors (with error bit) from: f_print_terminated().
  *
  * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_conversion_number_signed_print()
  * @see f_conversion_number_unsigned_print()
@@ -131,6 +132,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see fl_print_trim_except()
  * @see fl_print_trim_except_dynamic()
@@ -174,6 +176,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see fl_print_trim_except_raw()
  * @see fl_print_trim_except_dynamic_raw()
@@ -218,6 +221,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see fl_print_trim_except_safely()
  * @see fl_print_trim_except_dynamic_safely()
@@ -255,6 +259,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see fl_print_trim()
  * @see fl_print_trim_dynamic()
@@ -287,6 +292,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see fl_print_trim_raw()
  * @see fl_print_trim_dynamic_raw()
@@ -320,6 +326,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see fl_print_trim_safely()
  * @see fl_print_trim_dynamic_safely()

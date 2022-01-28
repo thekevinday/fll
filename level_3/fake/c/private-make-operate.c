@@ -25,7 +25,7 @@ extern "C" {
     }
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%c%[Making project.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+      fll_print_format("%q%[Making project.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_status_t status = F_none;
@@ -80,7 +80,7 @@ extern "C" {
 
     if (data_make.setting_make.fail == fake_make_operation_fail_type_exit_e) {
       data_make.error.prefix = fl_print_error_s;
-      data_make.error.suffix = 0;
+      data_make.error.suffix = f_string_empty_s;
       data_make.error.context = main->context.set.error;
       data_make.error.notable = main->context.set.notable;
       data_make.error.to.stream = F_type_error_d;
@@ -89,7 +89,7 @@ extern "C" {
     }
     else if (data_make.setting_make.fail == fake_make_operation_fail_type_warn_e) {
       data_make.error.prefix = fl_print_warning_s;
-      data_make.error.suffix = 0;
+      data_make.error.suffix = f_string_empty_s;
       data_make.error.context = main->context.set.warning;
       data_make.error.notable = main->context.set.notable;
       data_make.error.to.stream = F_type_warning_d;
@@ -98,8 +98,8 @@ extern "C" {
     }
     else {
       data_make.error.to.stream = 0;
-      data_make.error.prefix = 0;
-      data_make.error.suffix = 0;
+      data_make.error.prefix = f_string_empty_s;
+      data_make.error.suffix = f_string_empty_s;
       data_make.error.to.id = -1;
       data_make.error.set = &main->context.set;
     }
@@ -118,11 +118,11 @@ extern "C" {
       if (F_status_is_error(status_path) && main->warning.verbosity == f_console_verbosity_verbose_e) {
         flockfile(main->warning.to.stream);
 
-        fl_print_format("%c%[%SFailed change back to orignal path '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
+        fl_print_format("%q%[%SFailed change back to orignal path '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
         fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, data_make.path.stack.array[0], main->warning.notable);
         fl_print_format("%[', status code =%] ", main->warning.to.stream, main->warning.context, main->warning.context);
         fl_print_format("%[%ui%]", main->warning.to.stream, main->warning.notable, F_status_set_fine(status_path), main->warning.notable);
-        fl_print_format("%['.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+        fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
         funlockfile(main->warning.to.stream);
       }
@@ -308,7 +308,7 @@ extern "C" {
 
       // Apply the IKI delimits to the buffer.
       for (j = 0; j < iki_delimits.used; ++j) {
-        data_make->buffer.string[iki_delimits.array[j]] = f_iki_syntax_placeholder_s[0];
+        data_make->buffer.string[iki_delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
       } // for
 
       if (iki_variable.used) {
@@ -406,10 +406,10 @@ extern "C" {
                   if (!reserved_value[k]->array[l].used) continue;
 
                   if (l) {
-                    *status = f_string_append(f_string_space_s, 1, &arguments->array[arguments->used]);
+                    *status = f_string_dynamic_append(f_string_space_s, &arguments->array[arguments->used]);
 
                     if (F_status_is_error(*status)) {
-                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_append", F_true);
+                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
 
                       break;
                     }
@@ -444,10 +444,10 @@ extern "C" {
                       for (l = 0; l < parameter->array[k].value.used; ++l) {
 
                         if (l > 0) {
-                          *status = f_string_append(f_string_space_s, 1, &arguments->array[arguments->used]);
+                          *status = f_string_dynamic_append(f_string_space_s, &arguments->array[arguments->used]);
 
                           if (F_status_is_error(*status)) {
-                            fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_append", F_true);
+                            fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
 
                             break;
                           }
@@ -892,11 +892,8 @@ extern "C" {
 
           for (f_array_length_t j = 0; j < dynamics_value[i].used; ++j) {
 
-            status = f_string_dynamic_mash(f_string_space_s, 1, dynamics_value[i].array[j], &value);
-
-            if (F_status_is_error(status)) {
-              break;
-            }
+            status = f_string_dynamic_mash(f_string_space_s, dynamics_value[i].array[j], &value);
+            if (F_status_is_error(status)) break;
           } // for
 
           break;
@@ -1107,9 +1104,9 @@ extern "C" {
     if (data_make->main->output.verbosity != f_console_verbosity_quiet_e) {
       flockfile(data_make->main->output.to.stream);
 
-      fl_print_format("%c%[Processing Section '%]", data_make->main->output.to.stream, f_string_eol_s[0], data_make->main->context.set.important, data_make->main->context.set.important);
+      fl_print_format("%q%[Processing Section '%]", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.important, data_make->main->context.set.important);
       fl_print_format("%[%/Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->buffer, section->name, data_make->main->context.set.notable);
-      fl_print_format("%['.%]%c", data_make->main->output.to.stream, data_make->main->context.set.important, data_make->main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("%['.%]%q", data_make->main->output.to.stream, data_make->main->context.set.important, data_make->main->context.set.important, f_string_eol_s);
 
       funlockfile(data_make->main->output.to.stream);
     }
@@ -1435,7 +1432,7 @@ extern "C" {
         if (F_status_set_fine(*status) == F_signal_abort && !section_stack->used) {
           data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
           data_make->error.prefix = fl_print_error_s;
-          data_make->error.suffix = 0;
+          data_make->error.suffix = f_string_empty_s;
           data_make->error.context = data_make->main->context.set.error;
           data_make->error.notable = data_make->main->context.set.notable;
           data_make->error.to.stream = F_type_error_d;
@@ -1499,7 +1496,7 @@ extern "C" {
       if (data_make->main->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
 
-        fl_print_format("%c%[%SIncomplete '%]", data_make->error.to.stream, f_string_eol_s[0], data_make->error.context, data_make->error.prefix, data_make->error.context);
+        fl_print_format("%q%[%SIncomplete '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
 
         if (state_process.block == fake_state_process_block_else_e) {
           fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
@@ -1508,7 +1505,7 @@ extern "C" {
           fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
         }
 
-        fl_print_format("%[' at end of section.%]%c", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s[0]);
+        fl_print_format("%[' at end of section.%]%q", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
         funlockfile(data_make->error.to.stream);
       }

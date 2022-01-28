@@ -47,12 +47,12 @@ extern "C" {
       }
 
       for (; range->start < buffer->used; ++range->start) {
-        if (buffer->string[range->start] == f_string_eol_s[0]) break;
+        if (buffer->string[range->start] == f_string_eol_s.string[0]) break;
       } // for
 
       range->stop = range->start;
 
-      if (buffer->string[range->start] == f_string_eol_s[0]) break;
+      if (buffer->string[range->start] == f_string_eol_s.string[0]) break;
 
     } while (F_status_is_error_not(status) && status != F_none_eof);
 

@@ -29,8 +29,8 @@ extern "C" {
     #define F_status_false_s_length 7
     #define F_status_true_s_length  6
 
-    extern const f_string_t f_status_false_s;
-    extern const f_string_t f_status_true_s;
+    extern const f_string_static_t f_status_false_s;
+    extern const f_string_static_t f_status_true_s;
   #endif // _di_F_status_boolean_
 
   #ifndef _di_F_status_signal_
@@ -164,70 +164,70 @@ extern "C" {
     #define F_status_signal_reserved_63_s_length          20
     #define F_status_signal_reserved_64_s_length          20
 
-    extern const f_string_t f_status_signal_hangup_s;
-    extern const f_string_t f_status_signal_interrupt_s;
-    extern const f_string_t f_status_signal_quit_s;
-    extern const f_string_t f_status_signal_illegal_s;
-    extern const f_string_t f_status_signal_trap_s;
-    extern const f_string_t f_status_signal_abort_s;
-    extern const f_string_t f_status_signal_bus_error_s;
-    extern const f_string_t f_status_signal_floating_point_error_s;
-    extern const f_string_t f_status_signal_kill_s;
-    extern const f_string_t f_status_signal_user_1_s;
-    extern const f_string_t f_status_signal_segmentation_fault_s;
-    extern const f_string_t f_status_signal_user_2_s;
-    extern const f_string_t f_status_signal_broken_pipe_s;
-    extern const f_string_t f_status_signal_alarm_clock_s;
-    extern const f_string_t f_status_signal_termination_s;
-    extern const f_string_t f_status_signal_stack_fault_s;
-    extern const f_string_t f_status_signal_child_s;
-    extern const f_string_t f_status_signal_continue_s;
-    extern const f_string_t f_status_signal_stop_s;
-    extern const f_string_t f_status_signal_keyboard_stop_s;
-    extern const f_string_t f_status_signal_tty_in_s;
-    extern const f_string_t f_status_signal_tty_out_s;
-    extern const f_string_t f_status_signal_urgent_s;
-    extern const f_string_t f_status_signal_cpu_limit_s;
-    extern const f_string_t f_status_signal_file_size_limit_s;
-    extern const f_string_t f_status_signal_virtual_alarm_clock_s;
-    extern const f_string_t f_status_signal_profile_alarm_clock_s;
-    extern const f_string_t f_status_signal_window_size_change_s;
-    extern const f_string_t f_status_signal_pollable_event_s;
-    extern const f_string_t f_status_signal_power_failure_s;
-    extern const f_string_t f_status_signal_bad_system_call_s;
-    extern const f_string_t f_status_signal_reserved_32_s;
-    extern const f_string_t f_status_signal_reserved_33_s;
-    extern const f_string_t f_status_signal_reserved_34_s;
-    extern const f_string_t f_status_signal_reserved_35_s;
-    extern const f_string_t f_status_signal_reserved_36_s;
-    extern const f_string_t f_status_signal_reserved_37_s;
-    extern const f_string_t f_status_signal_reserved_38_s;
-    extern const f_string_t f_status_signal_reserved_39_s;
-    extern const f_string_t f_status_signal_reserved_40_s;
-    extern const f_string_t f_status_signal_reserved_41_s;
-    extern const f_string_t f_status_signal_reserved_42_s;
-    extern const f_string_t f_status_signal_reserved_43_s;
-    extern const f_string_t f_status_signal_reserved_44_s;
-    extern const f_string_t f_status_signal_reserved_45_s;
-    extern const f_string_t f_status_signal_reserved_46_s;
-    extern const f_string_t f_status_signal_reserved_47_s;
-    extern const f_string_t f_status_signal_reserved_48_s;
-    extern const f_string_t f_status_signal_reserved_49_s;
-    extern const f_string_t f_status_signal_reserved_50_s;
-    extern const f_string_t f_status_signal_reserved_51_s;
-    extern const f_string_t f_status_signal_reserved_52_s;
-    extern const f_string_t f_status_signal_reserved_53_s;
-    extern const f_string_t f_status_signal_reserved_54_s;
-    extern const f_string_t f_status_signal_reserved_55_s;
-    extern const f_string_t f_status_signal_reserved_56_s;
-    extern const f_string_t f_status_signal_reserved_57_s;
-    extern const f_string_t f_status_signal_reserved_58_s;
-    extern const f_string_t f_status_signal_reserved_59_s;
-    extern const f_string_t f_status_signal_reserved_60_s;
-    extern const f_string_t f_status_signal_reserved_61_s;
-    extern const f_string_t f_status_signal_reserved_62_s;
-    extern const f_string_t f_status_signal_reserved_63_s;
-    extern const f_string_t f_status_signal_reserved_64_s;
+    extern const f_string_static_t f_status_signal_hangup_s;
+    extern const f_string_static_t f_status_signal_interrupt_s;
+    extern const f_string_static_t f_status_signal_quit_s;
+    extern const f_string_static_t f_status_signal_illegal_s;
+    extern const f_string_static_t f_status_signal_trap_s;
+    extern const f_string_static_t f_status_signal_abort_s;
+    extern const f_string_static_t f_status_signal_bus_error_s;
+    extern const f_string_static_t f_status_signal_floating_point_error_s;
+    extern const f_string_static_t f_status_signal_kill_s;
+    extern const f_string_static_t f_status_signal_user_1_s;
+    extern const f_string_static_t f_status_signal_segmentation_fault_s;
+    extern const f_string_static_t f_status_signal_user_2_s;
+    extern const f_string_static_t f_status_signal_broken_pipe_s;
+    extern const f_string_static_t f_status_signal_alarm_clock_s;
+    extern const f_string_static_t f_status_signal_termination_s;
+    extern const f_string_static_t f_status_signal_stack_fault_s;
+    extern const f_string_static_t f_status_signal_child_s;
+    extern const f_string_static_t f_status_signal_continue_s;
+    extern const f_string_static_t f_status_signal_stop_s;
+    extern const f_string_static_t f_status_signal_keyboard_stop_s;
+    extern const f_string_static_t f_status_signal_tty_in_s;
+    extern const f_string_static_t f_status_signal_tty_out_s;
+    extern const f_string_static_t f_status_signal_urgent_s;
+    extern const f_string_static_t f_status_signal_cpu_limit_s;
+    extern const f_string_static_t f_status_signal_file_size_limit_s;
+    extern const f_string_static_t f_status_signal_virtual_alarm_clock_s;
+    extern const f_string_static_t f_status_signal_profile_alarm_clock_s;
+    extern const f_string_static_t f_status_signal_window_size_change_s;
+    extern const f_string_static_t f_status_signal_pollable_event_s;
+    extern const f_string_static_t f_status_signal_power_failure_s;
+    extern const f_string_static_t f_status_signal_bad_system_call_s;
+    extern const f_string_static_t f_status_signal_reserved_32_s;
+    extern const f_string_static_t f_status_signal_reserved_33_s;
+    extern const f_string_static_t f_status_signal_reserved_34_s;
+    extern const f_string_static_t f_status_signal_reserved_35_s;
+    extern const f_string_static_t f_status_signal_reserved_36_s;
+    extern const f_string_static_t f_status_signal_reserved_37_s;
+    extern const f_string_static_t f_status_signal_reserved_38_s;
+    extern const f_string_static_t f_status_signal_reserved_39_s;
+    extern const f_string_static_t f_status_signal_reserved_40_s;
+    extern const f_string_static_t f_status_signal_reserved_41_s;
+    extern const f_string_static_t f_status_signal_reserved_42_s;
+    extern const f_string_static_t f_status_signal_reserved_43_s;
+    extern const f_string_static_t f_status_signal_reserved_44_s;
+    extern const f_string_static_t f_status_signal_reserved_45_s;
+    extern const f_string_static_t f_status_signal_reserved_46_s;
+    extern const f_string_static_t f_status_signal_reserved_47_s;
+    extern const f_string_static_t f_status_signal_reserved_48_s;
+    extern const f_string_static_t f_status_signal_reserved_49_s;
+    extern const f_string_static_t f_status_signal_reserved_50_s;
+    extern const f_string_static_t f_status_signal_reserved_51_s;
+    extern const f_string_static_t f_status_signal_reserved_52_s;
+    extern const f_string_static_t f_status_signal_reserved_53_s;
+    extern const f_string_static_t f_status_signal_reserved_54_s;
+    extern const f_string_static_t f_status_signal_reserved_55_s;
+    extern const f_string_static_t f_status_signal_reserved_56_s;
+    extern const f_string_static_t f_status_signal_reserved_57_s;
+    extern const f_string_static_t f_status_signal_reserved_58_s;
+    extern const f_string_static_t f_status_signal_reserved_59_s;
+    extern const f_string_static_t f_status_signal_reserved_60_s;
+    extern const f_string_static_t f_status_signal_reserved_61_s;
+    extern const f_string_static_t f_status_signal_reserved_62_s;
+    extern const f_string_static_t f_status_signal_reserved_63_s;
+    extern const f_string_static_t f_status_signal_reserved_64_s;
   #endif // _di_F_status_signal_
 
   #ifndef _di_F_status_basic_
@@ -719,249 +719,249 @@ extern "C" {
     #define F_status_write_not_s_length         11
     #define F_status_write_only_s_length        12
 
-    extern const f_string_t f_status_none_s;
-    extern const f_string_t f_status_abort_s;
-    extern const f_string_t f_status_abort_not_s;
-    extern const f_string_t f_status_absolute_s;
-    extern const f_string_t f_status_absolute_not_s;
-    extern const f_string_t f_status_address_s;
-    extern const f_string_t f_status_address_not_s;
-    extern const f_string_t f_status_ascii_s;
-    extern const f_string_t f_status_ascii_not_s;
-    extern const f_string_t f_status_atomic_s;
-    extern const f_string_t f_status_atomic_not_s;
-    extern const f_string_t f_status_begin_s;
-    extern const f_string_t f_status_begin_not_s;
-    extern const f_string_t f_status_block_s;
-    extern const f_string_t f_status_block_not_s;
-    extern const f_string_t f_status_body_s;
-    extern const f_string_t f_status_body_not_s;
-    extern const f_string_t f_status_bound_s;
-    extern const f_string_t f_status_bound_not_s;
-    extern const f_string_t f_status_capability_s;
-    extern const f_string_t f_status_capability_not_s;
-    extern const f_string_t f_status_child_s;
-    extern const f_string_t f_status_child_not_s;
-    extern const f_string_t f_status_complete_s;
-    extern const f_string_t f_status_complete_not_s;
-    extern const f_string_t f_status_connect_s;
-    extern const f_string_t f_status_connect_not_s;
-    extern const f_string_t f_status_connect_refuse_s;
-    extern const f_string_t f_status_connect_reset_s;
-    extern const f_string_t f_status_container_s;
-    extern const f_string_t f_status_container_not_s;
-    extern const f_string_t f_status_content_s;
-    extern const f_string_t f_status_content_not_s;
-    extern const f_string_t f_status_continue_s;
-    extern const f_string_t f_status_continue_not_s;
-    extern const f_string_t f_status_control_s;
-    extern const f_string_t f_status_control_not_s;
-    extern const f_string_t f_status_control_group_s;
-    extern const f_string_t f_status_control_group_not_s;
-    extern const f_string_t f_status_critical_s;
-    extern const f_string_t f_status_critical_not_s;
-    extern const f_string_t f_status_dead_s;
-    extern const f_string_t f_status_dead_not_s;
-    extern const f_string_t f_status_deadlock_s;
-    extern const f_string_t f_status_deadlock_not_s;
-    extern const f_string_t f_status_descriptor_s;
-    extern const f_string_t f_status_descriptor_not_s;
-    extern const f_string_t f_status_device_s;
-    extern const f_string_t f_status_device_not_s;
-    extern const f_string_t f_status_disable_s;
-    extern const f_string_t f_status_disable_not_s;
-    extern const f_string_t f_status_domain_s;
-    extern const f_string_t f_status_domain_not_s;
-    extern const f_string_t f_status_done_s;
-    extern const f_string_t f_status_done_not_s;
-    extern const f_string_t f_status_dummy_s;
-    extern const f_string_t f_status_dummy_not_s;
-    extern const f_string_t f_status_empty_s;
-    extern const f_string_t f_status_empty_not_s;
-    extern const f_string_t f_status_enable_s;
-    extern const f_string_t f_status_enable_not_s;
-    extern const f_string_t f_status_encoding_s;
-    extern const f_string_t f_status_encoding_not_s;
-    extern const f_string_t f_status_end_s;
-    extern const f_string_t f_status_end_not_s;
-    extern const f_string_t f_status_endian_s;
-    extern const f_string_t f_status_endian_big_s;
-    extern const f_string_t f_status_endian_little_s;
-    extern const f_string_t f_status_endian_not_s;
-    extern const f_string_t f_status_eoa_s;
-    extern const f_string_t f_status_eoa_not_s;
-    extern const f_string_t f_status_eof_s;
-    extern const f_string_t f_status_eof_not_s;
-    extern const f_string_t f_status_eol_s;
-    extern const f_string_t f_status_eol_not_s;
-    extern const f_string_t f_status_eos_s;
-    extern const f_string_t f_status_eos_not_s;
-    extern const f_string_t f_status_execute_s;
-    extern const f_string_t f_status_execute_not_s;
-    extern const f_string_t f_status_exist_s;
-    extern const f_string_t f_status_exist_not_s;
-    extern const f_string_t f_status_failure_s;
-    extern const f_string_t f_status_failure_not_s;
-    extern const f_string_t f_status_family_s;
-    extern const f_string_t f_status_family_not_s;
-    extern const f_string_t f_status_first_s;
-    extern const f_string_t f_status_first_not_s;
-    extern const f_string_t f_status_footer_s;
-    extern const f_string_t f_status_footer_not_s;
-    extern const f_string_t f_status_fork_s;
-    extern const f_string_t f_status_fork_not_s;
-    extern const f_string_t f_status_format_s;
-    extern const f_string_t f_status_format_not_s;
-    extern const f_string_t f_status_found_s;
-    extern const f_string_t f_status_found_not_s;
-    extern const f_string_t f_status_full_s;
-    extern const f_string_t f_status_full_not_s;
-    extern const f_string_t f_status_group_s;
-    extern const f_string_t f_status_group_not_s;
-    extern const f_string_t f_status_header_s;
-    extern const f_string_t f_status_header_not_s;
-    extern const f_string_t f_status_ignore_s;
-    extern const f_string_t f_status_ignore_not_s;
-    extern const f_string_t f_status_implemented_s;
-    extern const f_string_t f_status_implemented_not_s;
-    extern const f_string_t f_status_input_s;
-    extern const f_string_t f_status_input_not_s;
-    extern const f_string_t f_status_input_output_s;
-    extern const f_string_t f_status_interrupt_s;
-    extern const f_string_t f_status_interrupt_not_s;
-    extern const f_string_t f_status_known_s;
-    extern const f_string_t f_status_known_not_s;
-    extern const f_string_t f_status_last_s;
-    extern const f_string_t f_status_last_not_s;
-    extern const f_string_t f_status_limit_s;
-    extern const f_string_t f_status_limit_not_s;
-    extern const f_string_t f_status_link_s;
-    extern const f_string_t f_status_link_not_s;
-    extern const f_string_t f_status_live_s;
-    extern const f_string_t f_status_live_not_s;
-    extern const f_string_t f_status_lock_s;
-    extern const f_string_t f_status_lock_not_s;
-    extern const f_string_t f_status_loop_s;
-    extern const f_string_t f_status_loop_not_s;
-    extern const f_string_t f_status_maybe_s;
-    extern const f_string_t f_status_maybe_not_s;
-    extern const f_string_t f_status_memory_s;
-    extern const f_string_t f_status_memory_not_s;
-    extern const f_string_t f_status_message_s;
-    extern const f_string_t f_status_message_not_s;
-    extern const f_string_t f_status_minor_s;
-    extern const f_string_t f_status_minor_not_s;
-    extern const f_string_t f_status_moderate_s;
-    extern const f_string_t f_status_moderate_not_s;
-    extern const f_string_t f_status_mount_s;
-    extern const f_string_t f_status_mount_not_s;
-    extern const f_string_t f_status_name_s;
-    extern const f_string_t f_status_name_not_s;
-    extern const f_string_t f_status_next_s;
-    extern const f_string_t f_status_next_not_s;
-    extern const f_string_t f_status_nice_s;
-    extern const f_string_t f_status_nice_not_s;
-    extern const f_string_t f_status_object_s;
-    extern const f_string_t f_status_object_not_s;
-    extern const f_string_t f_status_option_s;
-    extern const f_string_t f_status_option_not_s;
-    extern const f_string_t f_status_output_s;
-    extern const f_string_t f_status_output_not_s;
-    extern const f_string_t f_status_packet_s;
-    extern const f_string_t f_status_packet_not_s;
-    extern const f_string_t f_status_parameter_s;
-    extern const f_string_t f_status_parameter_not_s;
-    extern const f_string_t f_status_parent_s;
-    extern const f_string_t f_status_parent_not_s;
-    extern const f_string_t f_status_payload_s;
-    extern const f_string_t f_status_payload_not_s;
-    extern const f_string_t f_status_previous_s;
-    extern const f_string_t f_status_previous_not_s;
-    extern const f_string_t f_status_pipe_s;
-    extern const f_string_t f_status_pipe_not_s;
-    extern const f_string_t f_status_port_s;
-    extern const f_string_t f_status_port_not_s;
-    extern const f_string_t f_status_processor_s;
-    extern const f_string_t f_status_processor_not_s;
-    extern const f_string_t f_status_progress_s;
-    extern const f_string_t f_status_progress_not_s;
-    extern const f_string_t f_status_prohibited_s;
-    extern const f_string_t f_status_prohibited_not_s;
-    extern const f_string_t f_status_property_s;
-    extern const f_string_t f_status_property_not_s;
-    extern const f_string_t f_status_protocol_s;
-    extern const f_string_t f_status_protocol_not_s;
-    extern const f_string_t f_status_range_s;
-    extern const f_string_t f_status_range_not_s;
-    extern const f_string_t f_status_read_s;
-    extern const f_string_t f_status_read_not_s;
-    extern const f_string_t f_status_read_only_s;
-    extern const f_string_t f_status_ready_s;
-    extern const f_string_t f_status_ready_not_s;
-    extern const f_string_t f_status_recover_s;
-    extern const f_string_t f_status_recover_not_s;
-    extern const f_string_t f_status_recurse_s;
-    extern const f_string_t f_status_recurse_not_s;
-    extern const f_string_t f_status_relative_s;
-    extern const f_string_t f_status_relative_not_s;
-    extern const f_string_t f_status_require_s;
-    extern const f_string_t f_status_require_not_s;
-    extern const f_string_t f_status_resource_s;
-    extern const f_string_t f_status_resource_not_s;
-    extern const f_string_t f_status_search_s;
-    extern const f_string_t f_status_search_not_s;
-    extern const f_string_t f_status_schedule_s;
-    extern const f_string_t f_status_schedule_not_s;
-    extern const f_string_t f_status_size_s;
-    extern const f_string_t f_status_size_not_s;
-    extern const f_string_t f_status_signal_s;
-    extern const f_string_t f_status_signal_not_s;
-    extern const f_string_t f_status_space_s;
-    extern const f_string_t f_status_space_not_s;
-    extern const f_string_t f_status_start_s;
-    extern const f_string_t f_status_start_not_s;
-    extern const f_string_t f_status_stop_s;
-    extern const f_string_t f_status_stop_not_s;
-    extern const f_string_t f_status_stream_s;
-    extern const f_string_t f_status_stream_not_s;
-    extern const f_string_t f_status_string_s;
-    extern const f_string_t f_status_string_not_s;
-    extern const f_string_t f_status_string_too_large_s;
-    extern const f_string_t f_status_string_too_small_s;
-    extern const f_string_t f_status_syntax_s;
-    extern const f_string_t f_status_syntax_not_s;
-    extern const f_string_t f_status_thread_s;
-    extern const f_string_t f_status_thread_not_s;
-    extern const f_string_t f_status_time_s;
-    extern const f_string_t f_status_time_not_s;
-    extern const f_string_t f_status_time_out_s;
-    extern const f_string_t f_status_too_large_s;
-    extern const f_string_t f_status_too_small_s;
-    extern const f_string_t f_status_type_s;
-    extern const f_string_t f_status_type_not_s;
-    extern const f_string_t f_status_success_s;
-    extern const f_string_t f_status_success_not_s;
-    extern const f_string_t f_status_supported_s;
-    extern const f_string_t f_status_supported_not_s;
-    extern const f_string_t f_status_user_s;
-    extern const f_string_t f_status_user_not_s;
-    extern const f_string_t f_status_utf_s;
-    extern const f_string_t f_status_utf_fragment_s;
-    extern const f_string_t f_status_utf_fragment_not_s;
-    extern const f_string_t f_status_utf_not_s;
-    extern const f_string_t f_status_valid_s;
-    extern const f_string_t f_status_valid_not_s;
-    extern const f_string_t f_status_value_s;
-    extern const f_string_t f_status_value_not_s;
-    extern const f_string_t f_status_wait_s;
-    extern const f_string_t f_status_wait_not_s;
-    extern const f_string_t f_status_warn_s;
-    extern const f_string_t f_status_warn_not_s;
-    extern const f_string_t f_status_world_s;
-    extern const f_string_t f_status_world_not_s;
-    extern const f_string_t f_status_write_s;
-    extern const f_string_t f_status_write_not_s;
-    extern const f_string_t f_status_write_only_s;
+    extern const f_string_static_t f_status_none_s;
+    extern const f_string_static_t f_status_abort_s;
+    extern const f_string_static_t f_status_abort_not_s;
+    extern const f_string_static_t f_status_absolute_s;
+    extern const f_string_static_t f_status_absolute_not_s;
+    extern const f_string_static_t f_status_address_s;
+    extern const f_string_static_t f_status_address_not_s;
+    extern const f_string_static_t f_status_ascii_s;
+    extern const f_string_static_t f_status_ascii_not_s;
+    extern const f_string_static_t f_status_atomic_s;
+    extern const f_string_static_t f_status_atomic_not_s;
+    extern const f_string_static_t f_status_begin_s;
+    extern const f_string_static_t f_status_begin_not_s;
+    extern const f_string_static_t f_status_block_s;
+    extern const f_string_static_t f_status_block_not_s;
+    extern const f_string_static_t f_status_body_s;
+    extern const f_string_static_t f_status_body_not_s;
+    extern const f_string_static_t f_status_bound_s;
+    extern const f_string_static_t f_status_bound_not_s;
+    extern const f_string_static_t f_status_capability_s;
+    extern const f_string_static_t f_status_capability_not_s;
+    extern const f_string_static_t f_status_child_s;
+    extern const f_string_static_t f_status_child_not_s;
+    extern const f_string_static_t f_status_complete_s;
+    extern const f_string_static_t f_status_complete_not_s;
+    extern const f_string_static_t f_status_connect_s;
+    extern const f_string_static_t f_status_connect_not_s;
+    extern const f_string_static_t f_status_connect_refuse_s;
+    extern const f_string_static_t f_status_connect_reset_s;
+    extern const f_string_static_t f_status_container_s;
+    extern const f_string_static_t f_status_container_not_s;
+    extern const f_string_static_t f_status_content_s;
+    extern const f_string_static_t f_status_content_not_s;
+    extern const f_string_static_t f_status_continue_s;
+    extern const f_string_static_t f_status_continue_not_s;
+    extern const f_string_static_t f_status_control_s;
+    extern const f_string_static_t f_status_control_not_s;
+    extern const f_string_static_t f_status_control_group_s;
+    extern const f_string_static_t f_status_control_group_not_s;
+    extern const f_string_static_t f_status_critical_s;
+    extern const f_string_static_t f_status_critical_not_s;
+    extern const f_string_static_t f_status_dead_s;
+    extern const f_string_static_t f_status_dead_not_s;
+    extern const f_string_static_t f_status_deadlock_s;
+    extern const f_string_static_t f_status_deadlock_not_s;
+    extern const f_string_static_t f_status_descriptor_s;
+    extern const f_string_static_t f_status_descriptor_not_s;
+    extern const f_string_static_t f_status_device_s;
+    extern const f_string_static_t f_status_device_not_s;
+    extern const f_string_static_t f_status_disable_s;
+    extern const f_string_static_t f_status_disable_not_s;
+    extern const f_string_static_t f_status_domain_s;
+    extern const f_string_static_t f_status_domain_not_s;
+    extern const f_string_static_t f_status_done_s;
+    extern const f_string_static_t f_status_done_not_s;
+    extern const f_string_static_t f_status_dummy_s;
+    extern const f_string_static_t f_status_dummy_not_s;
+    extern const f_string_static_t f_status_empty_s;
+    extern const f_string_static_t f_status_empty_not_s;
+    extern const f_string_static_t f_status_enable_s;
+    extern const f_string_static_t f_status_enable_not_s;
+    extern const f_string_static_t f_status_encoding_s;
+    extern const f_string_static_t f_status_encoding_not_s;
+    extern const f_string_static_t f_status_end_s;
+    extern const f_string_static_t f_status_end_not_s;
+    extern const f_string_static_t f_status_endian_s;
+    extern const f_string_static_t f_status_endian_big_s;
+    extern const f_string_static_t f_status_endian_little_s;
+    extern const f_string_static_t f_status_endian_not_s;
+    extern const f_string_static_t f_status_eoa_s;
+    extern const f_string_static_t f_status_eoa_not_s;
+    extern const f_string_static_t f_status_eof_s;
+    extern const f_string_static_t f_status_eof_not_s;
+    extern const f_string_static_t f_status_eol_s;
+    extern const f_string_static_t f_status_eol_not_s;
+    extern const f_string_static_t f_status_eos_s;
+    extern const f_string_static_t f_status_eos_not_s;
+    extern const f_string_static_t f_status_execute_s;
+    extern const f_string_static_t f_status_execute_not_s;
+    extern const f_string_static_t f_status_exist_s;
+    extern const f_string_static_t f_status_exist_not_s;
+    extern const f_string_static_t f_status_failure_s;
+    extern const f_string_static_t f_status_failure_not_s;
+    extern const f_string_static_t f_status_family_s;
+    extern const f_string_static_t f_status_family_not_s;
+    extern const f_string_static_t f_status_first_s;
+    extern const f_string_static_t f_status_first_not_s;
+    extern const f_string_static_t f_status_footer_s;
+    extern const f_string_static_t f_status_footer_not_s;
+    extern const f_string_static_t f_status_fork_s;
+    extern const f_string_static_t f_status_fork_not_s;
+    extern const f_string_static_t f_status_format_s;
+    extern const f_string_static_t f_status_format_not_s;
+    extern const f_string_static_t f_status_found_s;
+    extern const f_string_static_t f_status_found_not_s;
+    extern const f_string_static_t f_status_full_s;
+    extern const f_string_static_t f_status_full_not_s;
+    extern const f_string_static_t f_status_group_s;
+    extern const f_string_static_t f_status_group_not_s;
+    extern const f_string_static_t f_status_header_s;
+    extern const f_string_static_t f_status_header_not_s;
+    extern const f_string_static_t f_status_ignore_s;
+    extern const f_string_static_t f_status_ignore_not_s;
+    extern const f_string_static_t f_status_implemented_s;
+    extern const f_string_static_t f_status_implemented_not_s;
+    extern const f_string_static_t f_status_input_s;
+    extern const f_string_static_t f_status_input_not_s;
+    extern const f_string_static_t f_status_input_output_s;
+    extern const f_string_static_t f_status_interrupt_s;
+    extern const f_string_static_t f_status_interrupt_not_s;
+    extern const f_string_static_t f_status_known_s;
+    extern const f_string_static_t f_status_known_not_s;
+    extern const f_string_static_t f_status_last_s;
+    extern const f_string_static_t f_status_last_not_s;
+    extern const f_string_static_t f_status_limit_s;
+    extern const f_string_static_t f_status_limit_not_s;
+    extern const f_string_static_t f_status_link_s;
+    extern const f_string_static_t f_status_link_not_s;
+    extern const f_string_static_t f_status_live_s;
+    extern const f_string_static_t f_status_live_not_s;
+    extern const f_string_static_t f_status_lock_s;
+    extern const f_string_static_t f_status_lock_not_s;
+    extern const f_string_static_t f_status_loop_s;
+    extern const f_string_static_t f_status_loop_not_s;
+    extern const f_string_static_t f_status_maybe_s;
+    extern const f_string_static_t f_status_maybe_not_s;
+    extern const f_string_static_t f_status_memory_s;
+    extern const f_string_static_t f_status_memory_not_s;
+    extern const f_string_static_t f_status_message_s;
+    extern const f_string_static_t f_status_message_not_s;
+    extern const f_string_static_t f_status_minor_s;
+    extern const f_string_static_t f_status_minor_not_s;
+    extern const f_string_static_t f_status_moderate_s;
+    extern const f_string_static_t f_status_moderate_not_s;
+    extern const f_string_static_t f_status_mount_s;
+    extern const f_string_static_t f_status_mount_not_s;
+    extern const f_string_static_t f_status_name_s;
+    extern const f_string_static_t f_status_name_not_s;
+    extern const f_string_static_t f_status_next_s;
+    extern const f_string_static_t f_status_next_not_s;
+    extern const f_string_static_t f_status_nice_s;
+    extern const f_string_static_t f_status_nice_not_s;
+    extern const f_string_static_t f_status_object_s;
+    extern const f_string_static_t f_status_object_not_s;
+    extern const f_string_static_t f_status_option_s;
+    extern const f_string_static_t f_status_option_not_s;
+    extern const f_string_static_t f_status_output_s;
+    extern const f_string_static_t f_status_output_not_s;
+    extern const f_string_static_t f_status_packet_s;
+    extern const f_string_static_t f_status_packet_not_s;
+    extern const f_string_static_t f_status_parameter_s;
+    extern const f_string_static_t f_status_parameter_not_s;
+    extern const f_string_static_t f_status_parent_s;
+    extern const f_string_static_t f_status_parent_not_s;
+    extern const f_string_static_t f_status_payload_s;
+    extern const f_string_static_t f_status_payload_not_s;
+    extern const f_string_static_t f_status_previous_s;
+    extern const f_string_static_t f_status_previous_not_s;
+    extern const f_string_static_t f_status_pipe_s;
+    extern const f_string_static_t f_status_pipe_not_s;
+    extern const f_string_static_t f_status_port_s;
+    extern const f_string_static_t f_status_port_not_s;
+    extern const f_string_static_t f_status_processor_s;
+    extern const f_string_static_t f_status_processor_not_s;
+    extern const f_string_static_t f_status_progress_s;
+    extern const f_string_static_t f_status_progress_not_s;
+    extern const f_string_static_t f_status_prohibited_s;
+    extern const f_string_static_t f_status_prohibited_not_s;
+    extern const f_string_static_t f_status_property_s;
+    extern const f_string_static_t f_status_property_not_s;
+    extern const f_string_static_t f_status_protocol_s;
+    extern const f_string_static_t f_status_protocol_not_s;
+    extern const f_string_static_t f_status_range_s;
+    extern const f_string_static_t f_status_range_not_s;
+    extern const f_string_static_t f_status_read_s;
+    extern const f_string_static_t f_status_read_not_s;
+    extern const f_string_static_t f_status_read_only_s;
+    extern const f_string_static_t f_status_ready_s;
+    extern const f_string_static_t f_status_ready_not_s;
+    extern const f_string_static_t f_status_recover_s;
+    extern const f_string_static_t f_status_recover_not_s;
+    extern const f_string_static_t f_status_recurse_s;
+    extern const f_string_static_t f_status_recurse_not_s;
+    extern const f_string_static_t f_status_relative_s;
+    extern const f_string_static_t f_status_relative_not_s;
+    extern const f_string_static_t f_status_require_s;
+    extern const f_string_static_t f_status_require_not_s;
+    extern const f_string_static_t f_status_resource_s;
+    extern const f_string_static_t f_status_resource_not_s;
+    extern const f_string_static_t f_status_search_s;
+    extern const f_string_static_t f_status_search_not_s;
+    extern const f_string_static_t f_status_schedule_s;
+    extern const f_string_static_t f_status_schedule_not_s;
+    extern const f_string_static_t f_status_size_s;
+    extern const f_string_static_t f_status_size_not_s;
+    extern const f_string_static_t f_status_signal_s;
+    extern const f_string_static_t f_status_signal_not_s;
+    extern const f_string_static_t f_status_space_s;
+    extern const f_string_static_t f_status_space_not_s;
+    extern const f_string_static_t f_status_start_s;
+    extern const f_string_static_t f_status_start_not_s;
+    extern const f_string_static_t f_status_stop_s;
+    extern const f_string_static_t f_status_stop_not_s;
+    extern const f_string_static_t f_status_stream_s;
+    extern const f_string_static_t f_status_stream_not_s;
+    extern const f_string_static_t f_status_string_s;
+    extern const f_string_static_t f_status_string_not_s;
+    extern const f_string_static_t f_status_string_too_large_s;
+    extern const f_string_static_t f_status_string_too_small_s;
+    extern const f_string_static_t f_status_syntax_s;
+    extern const f_string_static_t f_status_syntax_not_s;
+    extern const f_string_static_t f_status_thread_s;
+    extern const f_string_static_t f_status_thread_not_s;
+    extern const f_string_static_t f_status_time_s;
+    extern const f_string_static_t f_status_time_not_s;
+    extern const f_string_static_t f_status_time_out_s;
+    extern const f_string_static_t f_status_too_large_s;
+    extern const f_string_static_t f_status_too_small_s;
+    extern const f_string_static_t f_status_type_s;
+    extern const f_string_static_t f_status_type_not_s;
+    extern const f_string_static_t f_status_success_s;
+    extern const f_string_static_t f_status_success_not_s;
+    extern const f_string_static_t f_status_supported_s;
+    extern const f_string_static_t f_status_supported_not_s;
+    extern const f_string_static_t f_status_user_s;
+    extern const f_string_static_t f_status_user_not_s;
+    extern const f_string_static_t f_status_utf_s;
+    extern const f_string_static_t f_status_utf_fragment_s;
+    extern const f_string_static_t f_status_utf_fragment_not_s;
+    extern const f_string_static_t f_status_utf_not_s;
+    extern const f_string_static_t f_status_valid_s;
+    extern const f_string_static_t f_status_valid_not_s;
+    extern const f_string_static_t f_status_value_s;
+    extern const f_string_static_t f_status_value_not_s;
+    extern const f_string_static_t f_status_wait_s;
+    extern const f_string_static_t f_status_wait_not_s;
+    extern const f_string_static_t f_status_warn_s;
+    extern const f_string_static_t f_status_warn_not_s;
+    extern const f_string_static_t f_status_world_s;
+    extern const f_string_static_t f_status_world_not_s;
+    extern const f_string_static_t f_status_write_s;
+    extern const f_string_static_t f_status_write_not_s;
+    extern const f_string_static_t f_status_write_only_s;
   #endif // _di_F_status_basic_
 
   #ifndef _di_F_status_array_
@@ -975,10 +975,10 @@ extern "C" {
     #define F_status_array_too_large_s_length 17
     #define F_status_array_too_small_s_length 17
 
-    extern const f_string_t f_status_array_s;
-    extern const f_string_t f_status_array_not_s;
-    extern const f_string_t f_status_array_too_large_s;
-    extern const f_string_t f_status_array_too_small_s;
+    extern const f_string_static_t f_status_array_s;
+    extern const f_string_static_t f_status_array_not_s;
+    extern const f_string_static_t f_status_array_too_large_s;
+    extern const f_string_static_t f_status_array_too_small_s;
   #endif // _di_F_status_array_
 
   #ifndef _di_F_status_available_
@@ -1002,15 +1002,15 @@ extern "C" {
     #define F_status_available_not_process_s_length 23
     #define F_status_available_not_socket_s_length  22
 
-    extern const f_string_t f_status_available_s;
-    extern const f_string_t f_status_available_not_s;
-    extern const f_string_t f_status_available_not_address_s;
-    extern const f_string_t f_status_available_not_buffer_s;
-    extern const f_string_t f_status_available_not_device_s;
-    extern const f_string_t f_status_available_not_pipe_s;
-    extern const f_string_t f_status_available_not_port_s;
-    extern const f_string_t f_status_available_not_process_s;
-    extern const f_string_t f_status_available_not_socket_s;
+    extern const f_string_static_t f_status_available_s;
+    extern const f_string_static_t f_status_available_not_s;
+    extern const f_string_static_t f_status_available_not_address_s;
+    extern const f_string_static_t f_status_available_not_buffer_s;
+    extern const f_string_static_t f_status_available_not_device_s;
+    extern const f_string_static_t f_status_available_not_pipe_s;
+    extern const f_string_static_t f_status_available_not_port_s;
+    extern const f_string_static_t f_status_available_not_process_s;
+    extern const f_string_static_t f_status_available_not_socket_s;
   #endif // _di_F_status_available_
 
   #ifndef _di_F_status_busy_
@@ -1034,15 +1034,15 @@ extern "C" {
     #define F_status_busy_process_s_length 14
     #define F_status_busy_socket_s_length  13
 
-    extern const f_string_t f_status_busy_s;
-    extern const f_string_t f_status_busy_address_s;
-    extern const f_string_t f_status_busy_buffer_s;
-    extern const f_string_t f_status_busy_device_s;
-    extern const f_string_t f_status_busy_not_s;
-    extern const f_string_t f_status_busy_pipe_s;
-    extern const f_string_t f_status_busy_port_s;
-    extern const f_string_t f_status_busy_process_s;
-    extern const f_string_t f_status_busy_socket_s;
+    extern const f_string_static_t f_status_busy_s;
+    extern const f_string_static_t f_status_busy_address_s;
+    extern const f_string_static_t f_status_busy_buffer_s;
+    extern const f_string_static_t f_status_busy_device_s;
+    extern const f_string_static_t f_status_busy_not_s;
+    extern const f_string_static_t f_status_busy_pipe_s;
+    extern const f_string_static_t f_status_busy_port_s;
+    extern const f_string_static_t f_status_busy_process_s;
+    extern const f_string_static_t f_status_busy_socket_s;
   #endif // _di_F_status_busy_
 
   #ifndef _di_F_status_network_
@@ -1092,28 +1092,28 @@ extern "C" {
     #define F_status_network_time_s_length             14
     #define F_status_network_time_not_s_length         18
 
-    extern const f_string_t f_status_network_s;
-    extern const f_string_t f_status_network_busy_s;
-    extern const f_string_t f_status_network_busy_not_s;
-    extern const f_string_t f_status_network_client_s;
-    extern const f_string_t f_status_network_client_not_s;
-    extern const f_string_t f_status_network_device_s;
-    extern const f_string_t f_status_network_device_not_s;
-    extern const f_string_t f_status_network_found_s;
-    extern const f_string_t f_status_network_found_not_s;
-    extern const f_string_t f_status_network_lost_s;
-    extern const f_string_t f_status_network_lost_not_s;
-    extern const f_string_t f_status_network_not_s;
-    extern const f_string_t f_status_network_reach_s;
-    extern const f_string_t f_status_network_reach_client_s;
-    extern const f_string_t f_status_network_reach_client_not_s;
-    extern const f_string_t f_status_network_reach_not_s;
-    extern const f_string_t f_status_network_reach_server_s;
-    extern const f_string_t f_status_network_reach_server_not_s;
-    extern const f_string_t f_status_network_server_s;
-    extern const f_string_t f_status_network_server_not_s;
-    extern const f_string_t f_status_network_time_s;
-    extern const f_string_t f_status_network_time_not_s;
+    extern const f_string_static_t f_status_network_s;
+    extern const f_string_static_t f_status_network_busy_s;
+    extern const f_string_static_t f_status_network_busy_not_s;
+    extern const f_string_static_t f_status_network_client_s;
+    extern const f_string_static_t f_status_network_client_not_s;
+    extern const f_string_static_t f_status_network_device_s;
+    extern const f_string_static_t f_status_network_device_not_s;
+    extern const f_string_static_t f_status_network_found_s;
+    extern const f_string_static_t f_status_network_found_not_s;
+    extern const f_string_static_t f_status_network_lost_s;
+    extern const f_string_static_t f_status_network_lost_not_s;
+    extern const f_string_static_t f_status_network_not_s;
+    extern const f_string_static_t f_status_network_reach_s;
+    extern const f_string_static_t f_status_network_reach_client_s;
+    extern const f_string_static_t f_status_network_reach_client_not_s;
+    extern const f_string_static_t f_status_network_reach_not_s;
+    extern const f_string_static_t f_status_network_reach_server_s;
+    extern const f_string_static_t f_status_network_reach_server_not_s;
+    extern const f_string_static_t f_status_network_server_s;
+    extern const f_string_static_t f_status_network_server_not_s;
+    extern const f_string_static_t f_status_network_time_s;
+    extern const f_string_static_t f_status_network_time_not_s;
   #endif // _di_F_status_network_
 
   #ifndef _di_F_status_number_
@@ -1153,23 +1153,23 @@ extern "C" {
     #define F_status_number_zero_s_length           13
     #define F_status_number_zero_not_s_length       17
 
-    extern const f_string_t f_status_number_s;
-    extern const f_string_t f_status_number_decimal_s;
-    extern const f_string_t f_status_number_decimal_not_s;
-    extern const f_string_t f_status_number_divide_by_zero_s;
-    extern const f_string_t f_status_number_negative_s;
-    extern const f_string_t f_status_number_negative_not_s;
-    extern const f_string_t f_status_number_not_s;
-    extern const f_string_t f_status_number_overflow_s;
-    extern const f_string_t f_status_number_positive_s;
-    extern const f_string_t f_status_number_positive_not_s;
-    extern const f_string_t f_status_number_too_large_s;
-    extern const f_string_t f_status_number_too_small_s;
-    extern const f_string_t f_status_number_underflow_s;
-    extern const f_string_t f_status_number_whole_s;
-    extern const f_string_t f_status_number_whole_not_s;
-    extern const f_string_t f_status_number_zero_s;
-    extern const f_string_t f_status_number_zero_not_s;
+    extern const f_string_static_t f_status_number_s;
+    extern const f_string_static_t f_status_number_decimal_s;
+    extern const f_string_static_t f_status_number_decimal_not_s;
+    extern const f_string_static_t f_status_number_divide_by_zero_s;
+    extern const f_string_static_t f_status_number_negative_s;
+    extern const f_string_static_t f_status_number_negative_not_s;
+    extern const f_string_static_t f_status_number_not_s;
+    extern const f_string_static_t f_status_number_overflow_s;
+    extern const f_string_static_t f_status_number_positive_s;
+    extern const f_string_static_t f_status_number_positive_not_s;
+    extern const f_string_static_t f_status_number_too_large_s;
+    extern const f_string_static_t f_status_number_too_small_s;
+    extern const f_string_static_t f_status_number_underflow_s;
+    extern const f_string_static_t f_status_number_whole_s;
+    extern const f_string_static_t f_status_number_whole_not_s;
+    extern const f_string_static_t f_status_number_zero_s;
+    extern const f_string_static_t f_status_number_zero_not_s;
   #endif // _di_F_status_number_
 
   #ifndef _di_F_status_buffer_
@@ -1238,6 +1238,7 @@ extern "C" {
     #define F_status_none_eof_s_length                   10
     #define F_status_none_eol_s_length                   10
     #define F_status_none_eos_s_length                   10
+    #define F_status_none_not_s_length                   10
     #define F_status_none_stop_s_length                  11
     #define F_status_data_s_length                       6
     #define F_status_data_not_s_length                   10
@@ -1270,54 +1271,54 @@ extern "C" {
     #define F_status_terminated_not_nest_eos_s_length    25
     #define F_status_terminated_not_nest_stop_s_length   26
 
-    extern const f_string_t f_status_buffer_s;
-    extern const f_string_t f_status_buffer_not_s;
-    extern const f_string_t f_status_buffer_too_large_s;
-    extern const f_string_t f_status_buffer_too_small_s;
-    extern const f_string_t f_status_complete_not_utf_s;
-    extern const f_string_t f_status_complete_not_utf_block_s;
-    extern const f_string_t f_status_complete_not_utf_eoa_s;
-    extern const f_string_t f_status_complete_not_utf_eof_s;
-    extern const f_string_t f_status_complete_not_utf_eol_s;
-    extern const f_string_t f_status_complete_not_utf_eos_s;
-    extern const f_string_t f_status_complete_not_utf_stop_s;
-    extern const f_string_t f_status_none_block_s;
-    extern const f_string_t f_status_none_eoa_s;
-    extern const f_string_t f_status_none_eof_s;
-    extern const f_string_t f_status_none_eol_s;
-    extern const f_string_t f_status_none_eos_s;
-    extern const f_string_t f_status_none_not_s;
-    extern const f_string_t f_status_none_stop_s;
-    extern const f_string_t f_status_data_s;
-    extern const f_string_t f_status_data_not_s;
-    extern const f_string_t f_status_data_not_block_s;
-    extern const f_string_t f_status_data_not_eoa_s;
-    extern const f_string_t f_status_data_not_eof_s;
-    extern const f_string_t f_status_data_not_eol_s;
-    extern const f_string_t f_status_data_not_eos_s;
-    extern const f_string_t f_status_data_not_stop_s;
-    extern const f_string_t f_status_terminated_s;
-    extern const f_string_t f_status_terminated_not_s;
-    extern const f_string_t f_status_terminated_not_block_s;
-    extern const f_string_t f_status_terminated_not_eoa_s;
-    extern const f_string_t f_status_terminated_not_eof_s;
-    extern const f_string_t f_status_terminated_not_eol_s;
-    extern const f_string_t f_status_terminated_not_eos_s;
-    extern const f_string_t f_status_terminated_not_stop_s;
-    extern const f_string_t f_status_terminated_not_group_s;
-    extern const f_string_t f_status_terminated_not_group_block_s;
-    extern const f_string_t f_status_terminated_not_group_eoa_s;
-    extern const f_string_t f_status_terminated_not_group_eof_s;
-    extern const f_string_t f_status_terminated_not_group_eol_s;
-    extern const f_string_t f_status_terminated_not_group_eos_s;
-    extern const f_string_t f_status_terminated_not_group_stop_s;
-    extern const f_string_t f_status_terminated_not_nest_s;
-    extern const f_string_t f_status_terminated_not_nest_block_s;
-    extern const f_string_t f_status_terminated_not_nest_eoa_s;
-    extern const f_string_t f_status_terminated_not_nest_eof_s;
-    extern const f_string_t f_status_terminated_not_nest_eol_s;
-    extern const f_string_t f_status_terminated_not_nest_eos_s;
-    extern const f_string_t f_status_terminated_not_nest_stop_s;
+    extern const f_string_static_t f_status_buffer_s;
+    extern const f_string_static_t f_status_buffer_not_s;
+    extern const f_string_static_t f_status_buffer_too_large_s;
+    extern const f_string_static_t f_status_buffer_too_small_s;
+    extern const f_string_static_t f_status_complete_not_utf_s;
+    extern const f_string_static_t f_status_complete_not_utf_block_s;
+    extern const f_string_static_t f_status_complete_not_utf_eoa_s;
+    extern const f_string_static_t f_status_complete_not_utf_eof_s;
+    extern const f_string_static_t f_status_complete_not_utf_eol_s;
+    extern const f_string_static_t f_status_complete_not_utf_eos_s;
+    extern const f_string_static_t f_status_complete_not_utf_stop_s;
+    extern const f_string_static_t f_status_none_block_s;
+    extern const f_string_static_t f_status_none_eoa_s;
+    extern const f_string_static_t f_status_none_eof_s;
+    extern const f_string_static_t f_status_none_eol_s;
+    extern const f_string_static_t f_status_none_eos_s;
+    extern const f_string_static_t f_status_none_not_s;
+    extern const f_string_static_t f_status_none_stop_s;
+    extern const f_string_static_t f_status_data_s;
+    extern const f_string_static_t f_status_data_not_s;
+    extern const f_string_static_t f_status_data_not_block_s;
+    extern const f_string_static_t f_status_data_not_eoa_s;
+    extern const f_string_static_t f_status_data_not_eof_s;
+    extern const f_string_static_t f_status_data_not_eol_s;
+    extern const f_string_static_t f_status_data_not_eos_s;
+    extern const f_string_static_t f_status_data_not_stop_s;
+    extern const f_string_static_t f_status_terminated_s;
+    extern const f_string_static_t f_status_terminated_not_s;
+    extern const f_string_static_t f_status_terminated_not_block_s;
+    extern const f_string_static_t f_status_terminated_not_eoa_s;
+    extern const f_string_static_t f_status_terminated_not_eof_s;
+    extern const f_string_static_t f_status_terminated_not_eol_s;
+    extern const f_string_static_t f_status_terminated_not_eos_s;
+    extern const f_string_static_t f_status_terminated_not_stop_s;
+    extern const f_string_static_t f_status_terminated_not_group_s;
+    extern const f_string_static_t f_status_terminated_not_group_block_s;
+    extern const f_string_static_t f_status_terminated_not_group_eoa_s;
+    extern const f_string_static_t f_status_terminated_not_group_eof_s;
+    extern const f_string_static_t f_status_terminated_not_group_eol_s;
+    extern const f_string_static_t f_status_terminated_not_group_eos_s;
+    extern const f_string_static_t f_status_terminated_not_group_stop_s;
+    extern const f_string_static_t f_status_terminated_not_nest_s;
+    extern const f_string_static_t f_status_terminated_not_nest_block_s;
+    extern const f_string_static_t f_status_terminated_not_nest_eoa_s;
+    extern const f_string_static_t f_status_terminated_not_nest_eof_s;
+    extern const f_string_static_t f_status_terminated_not_nest_eol_s;
+    extern const f_string_static_t f_status_terminated_not_nest_eos_s;
+    extern const f_string_static_t f_status_terminated_not_nest_stop_s;
   #endif // _di_F_status_buffer_
 
   #ifndef _di_F_status_process_
@@ -1329,9 +1330,9 @@ extern "C" {
     #define F_status_process_not_s_length      13
     #define F_status_process_too_many_s_length 18
 
-    extern const f_string_t f_status_process_s;
-    extern const f_string_t f_status_process_not_s;
-    extern const f_string_t f_status_process_too_many_s;
+    extern const f_string_static_t f_status_process_s;
+    extern const f_string_static_t f_status_process_not_s;
+    extern const f_string_static_t f_status_process_too_many_s;
   #endif // _di_F_status_process_
 
   #ifndef _di_F_status_file_
@@ -1423,49 +1424,49 @@ extern "C" {
     #define F_status_file_utf_not_s_length            14
     #define F_status_file_write_s_length              12
 
-    extern const f_string_t f_status_file_s;
-    extern const f_string_t f_status_file_close_s;
-    extern const f_string_t f_status_file_closed_s;
-    extern const f_string_t f_status_file_descriptor_s;
-    extern const f_string_t f_status_file_descriptor_max_s;
-    extern const f_string_t f_status_file_descriptor_not_s;
-    extern const f_string_t f_status_file_empty_s;
-    extern const f_string_t f_status_file_flush_s;
-    extern const f_string_t f_status_file_found_s;
-    extern const f_string_t f_status_file_found_not_s;
-    extern const f_string_t f_status_file_not_s;
-    extern const f_string_t f_status_file_open_s;
-    extern const f_string_t f_status_file_open_max_s;
-    extern const f_string_t f_status_file_opened_s;
-    extern const f_string_t f_status_file_overflow_s;
-    extern const f_string_t f_status_file_purge_s;
-    extern const f_string_t f_status_file_read_s;
-    extern const f_string_t f_status_file_reallocation_s;
-    extern const f_string_t f_status_file_seek_s;
-    extern const f_string_t f_status_file_stat_s;
-    extern const f_string_t f_status_file_synchronize_s;
-    extern const f_string_t f_status_file_type_block_s;
-    extern const f_string_t f_status_file_type_character_s;
-    extern const f_string_t f_status_file_type_directory_s;
-    extern const f_string_t f_status_file_type_fifo_s;
-    extern const f_string_t f_status_file_type_link_s;
-    extern const f_string_t f_status_file_type_not_block_s;
-    extern const f_string_t f_status_file_type_not_character_s;
-    extern const f_string_t f_status_file_type_not_directory_s;
-    extern const f_string_t f_status_file_type_not_fifo_s;
-    extern const f_string_t f_status_file_type_not_link_s;
-    extern const f_string_t f_status_file_type_not_pipe_s;
-    extern const f_string_t f_status_file_type_not_regular_s;
-    extern const f_string_t f_status_file_type_not_socket_s;
-    extern const f_string_t f_status_file_type_not_unknown_s;
-    extern const f_string_t f_status_file_type_pipe_s;
-    extern const f_string_t f_status_file_type_regular_s;
-    extern const f_string_t f_status_file_type_socket_s;
-    extern const f_string_t f_status_file_type_unknown_s;
-    extern const f_string_t f_status_file_underflow_s;
-    extern const f_string_t f_status_file_utf_s;
-    extern const f_string_t f_status_file_utf_not_s;
-    extern const f_string_t f_status_file_write_s;
+    extern const f_string_static_t f_status_file_s;
+    extern const f_string_static_t f_status_file_close_s;
+    extern const f_string_static_t f_status_file_closed_s;
+    extern const f_string_static_t f_status_file_descriptor_s;
+    extern const f_string_static_t f_status_file_descriptor_max_s;
+    extern const f_string_static_t f_status_file_descriptor_not_s;
+    extern const f_string_static_t f_status_file_empty_s;
+    extern const f_string_static_t f_status_file_flush_s;
+    extern const f_string_static_t f_status_file_found_s;
+    extern const f_string_static_t f_status_file_found_not_s;
+    extern const f_string_static_t f_status_file_not_s;
+    extern const f_string_static_t f_status_file_open_s;
+    extern const f_string_static_t f_status_file_open_max_s;
+    extern const f_string_static_t f_status_file_opened_s;
+    extern const f_string_static_t f_status_file_overflow_s;
+    extern const f_string_static_t f_status_file_purge_s;
+    extern const f_string_static_t f_status_file_read_s;
+    extern const f_string_static_t f_status_file_reallocation_s;
+    extern const f_string_static_t f_status_file_seek_s;
+    extern const f_string_static_t f_status_file_stat_s;
+    extern const f_string_static_t f_status_file_synchronize_s;
+    extern const f_string_static_t f_status_file_type_block_s;
+    extern const f_string_static_t f_status_file_type_character_s;
+    extern const f_string_static_t f_status_file_type_directory_s;
+    extern const f_string_static_t f_status_file_type_fifo_s;
+    extern const f_string_static_t f_status_file_type_link_s;
+    extern const f_string_static_t f_status_file_type_not_block_s;
+    extern const f_string_static_t f_status_file_type_not_character_s;
+    extern const f_string_static_t f_status_file_type_not_directory_s;
+    extern const f_string_static_t f_status_file_type_not_fifo_s;
+    extern const f_string_static_t f_status_file_type_not_link_s;
+    extern const f_string_static_t f_status_file_type_not_pipe_s;
+    extern const f_string_static_t f_status_file_type_not_regular_s;
+    extern const f_string_static_t f_status_file_type_not_socket_s;
+    extern const f_string_static_t f_status_file_type_not_unknown_s;
+    extern const f_string_static_t f_status_file_type_pipe_s;
+    extern const f_string_static_t f_status_file_type_regular_s;
+    extern const f_string_static_t f_status_file_type_socket_s;
+    extern const f_string_static_t f_status_file_type_unknown_s;
+    extern const f_string_static_t f_status_file_underflow_s;
+    extern const f_string_static_t f_status_file_utf_s;
+    extern const f_string_static_t f_status_file_utf_not_s;
+    extern const f_string_static_t f_status_file_write_s;
   #endif // _di_F_status_file_
 
   #ifndef _di_F_status_filesystem_
@@ -1479,10 +1480,10 @@ extern "C" {
     #define F_status_filesystem_quota_block_s_length   24
     #define F_status_filesystem_quota_reached_s_length 26
 
-    extern const f_string_t f_status_filesystem_s;
-    extern const f_string_t f_status_filesystem_not_s;
-    extern const f_string_t f_status_filesystem_quota_block_s;
-    extern const f_string_t f_status_filesystem_quota_reached_s;
+    extern const f_string_static_t f_status_filesystem_s;
+    extern const f_string_static_t f_status_filesystem_not_s;
+    extern const f_string_static_t f_status_filesystem_quota_block_s;
+    extern const f_string_static_t f_status_filesystem_quota_reached_s;
   #endif // _di_F_status_filesystem_
 
   #ifndef _di_F_status_directory_
@@ -1528,26 +1529,26 @@ extern "C" {
     #define F_status_directory_utf_not_s_length       19
     #define F_status_directory_write_s_length         17
 
-    extern const f_string_t f_status_directory_s;
-    extern const f_string_t f_status_directory_close_s;
-    extern const f_string_t f_status_directory_closed_s;
-    extern const f_string_t f_status_directory_descriptor_s;
-    extern const f_string_t f_status_directory_empty_s;
-    extern const f_string_t f_status_directory_empty_not_s;
-    extern const f_string_t f_status_directory_found_s;
-    extern const f_string_t f_status_directory_found_not_s;
-    extern const f_string_t f_status_directory_flush_s;
-    extern const f_string_t f_status_directory_link_max_s;
-    extern const f_string_t f_status_directory_not_s;
-    extern const f_string_t f_status_directory_open_s;
-    extern const f_string_t f_status_directory_purge_s;
-    extern const f_string_t f_status_directory_read_s;
-    extern const f_string_t f_status_directory_stream_s;
-    extern const f_string_t f_status_directory_supported_not_s;
-    extern const f_string_t f_status_directory_synchronize_s;
-    extern const f_string_t f_status_directory_utf_s;
-    extern const f_string_t f_status_directory_utf_not_s;
-    extern const f_string_t f_status_directory_write_s;
+    extern const f_string_static_t f_status_directory_s;
+    extern const f_string_static_t f_status_directory_close_s;
+    extern const f_string_static_t f_status_directory_closed_s;
+    extern const f_string_static_t f_status_directory_descriptor_s;
+    extern const f_string_static_t f_status_directory_empty_s;
+    extern const f_string_static_t f_status_directory_empty_not_s;
+    extern const f_string_static_t f_status_directory_found_s;
+    extern const f_string_static_t f_status_directory_found_not_s;
+    extern const f_string_static_t f_status_directory_flush_s;
+    extern const f_string_static_t f_status_directory_link_max_s;
+    extern const f_string_static_t f_status_directory_not_s;
+    extern const f_string_static_t f_status_directory_open_s;
+    extern const f_string_static_t f_status_directory_purge_s;
+    extern const f_string_static_t f_status_directory_read_s;
+    extern const f_string_static_t f_status_directory_stream_s;
+    extern const f_string_static_t f_status_directory_supported_not_s;
+    extern const f_string_static_t f_status_directory_synchronize_s;
+    extern const f_string_static_t f_status_directory_utf_s;
+    extern const f_string_static_t f_status_directory_utf_not_s;
+    extern const f_string_static_t f_status_directory_write_s;
   #endif // _di_F_status_directory_
 
   #ifndef _di_F_status_socket_
@@ -1565,12 +1566,12 @@ extern "C" {
     #define F_status_socket_send_s_length    13
     #define F_status_socket_target_s_length  15
 
-    extern const f_string_t f_status_socket_s;
-    extern const f_string_t f_status_socket_client_s;
-    extern const f_string_t f_status_socket_not_s;
-    extern const f_string_t f_status_socket_receive_s;
-    extern const f_string_t f_status_socket_send_s;
-    extern const f_string_t f_status_socket_target_s;
+    extern const f_string_static_t f_status_socket_s;
+    extern const f_string_static_t f_status_socket_client_s;
+    extern const f_string_static_t f_status_socket_not_s;
+    extern const f_string_static_t f_status_socket_receive_s;
+    extern const f_string_static_t f_status_socket_send_s;
+    extern const f_string_static_t f_status_socket_target_s;
   #endif // _di_F_status_socket_
 
   #ifndef _di_F_status_compare_
@@ -1584,10 +1585,10 @@ extern "C" {
     #define F_status_than_greater_s_length 14
     #define F_status_than_less_s_length    11
 
-    extern const f_string_t f_status_equal_to_s;
-    extern const f_string_t f_status_equal_to_not_s;
-    extern const f_string_t f_status_than_greater_s;
-    extern const f_string_t f_status_than_less_s;
+    extern const f_string_static_t f_status_equal_to_s;
+    extern const f_string_static_t f_status_equal_to_not_s;
+    extern const f_string_static_t f_status_than_greater_s;
+    extern const f_string_static_t f_status_than_less_s;
   #endif // _di_F_status_compare_
 
   #ifndef _di_F_status_access_
@@ -1635,27 +1636,27 @@ extern "C" {
     #define F_status_access_not_s_length             12
     #define F_status_access_owner_s_length           14
 
-    extern const f_string_t f_status_access_s;
-    extern const f_string_t f_status_access_denied_s;
-    extern const f_string_t f_status_access_denied_user_s;
-    extern const f_string_t f_status_access_denied_group_s;
-    extern const f_string_t f_status_access_denied_world_s;
-    extern const f_string_t f_status_access_denied_read_s;
-    extern const f_string_t f_status_access_denied_write_s;
-    extern const f_string_t f_status_access_denied_execute_s;
-    extern const f_string_t f_status_access_denied_super_s;
-    extern const f_string_t f_status_access_granted_s;
-    extern const f_string_t f_status_access_granted_user_s;
-    extern const f_string_t f_status_access_granted_group_s;
-    extern const f_string_t f_status_access_granted_world_s;
-    extern const f_string_t f_status_access_granted_read_s;
-    extern const f_string_t f_status_access_granted_write_s;
-    extern const f_string_t f_status_access_granted_execute_s;
-    extern const f_string_t f_status_access_granted_super_s;
-    extern const f_string_t f_status_access_group_s;
-    extern const f_string_t f_status_access_mode_s;
-    extern const f_string_t f_status_access_not_s;
-    extern const f_string_t f_status_access_owner_s;
+    extern const f_string_static_t f_status_access_s;
+    extern const f_string_static_t f_status_access_denied_s;
+    extern const f_string_static_t f_status_access_denied_user_s;
+    extern const f_string_static_t f_status_access_denied_group_s;
+    extern const f_string_static_t f_status_access_denied_world_s;
+    extern const f_string_static_t f_status_access_denied_read_s;
+    extern const f_string_static_t f_status_access_denied_write_s;
+    extern const f_string_static_t f_status_access_denied_execute_s;
+    extern const f_string_static_t f_status_access_denied_super_s;
+    extern const f_string_static_t f_status_access_granted_s;
+    extern const f_string_static_t f_status_access_granted_user_s;
+    extern const f_string_static_t f_status_access_granted_group_s;
+    extern const f_string_static_t f_status_access_granted_world_s;
+    extern const f_string_static_t f_status_access_granted_read_s;
+    extern const f_string_static_t f_status_access_granted_write_s;
+    extern const f_string_static_t f_status_access_granted_execute_s;
+    extern const f_string_static_t f_status_access_granted_super_s;
+    extern const f_string_static_t f_status_access_group_s;
+    extern const f_string_static_t f_status_access_mode_s;
+    extern const f_string_static_t f_status_access_not_s;
+    extern const f_string_static_t f_status_access_owner_s;
   #endif // _di_F_status_access_
 
   #ifndef _di_F_status_terminal_
@@ -1681,23 +1682,22 @@ extern "C" {
     #define F_status_terminal_valid_not_s_length  20
     #define F_status_terminal_write_s_length      16
 
-    extern const f_string_t f_status_terminal_s;
-    extern const f_string_t f_status_terminal_access_s;
-    extern const f_string_t f_status_terminal_known_s;
-    extern const f_string_t f_status_terminal_known_not_s;
-    extern const f_string_t f_status_terminal_not_s;
-    extern const f_string_t f_status_terminal_prohibited_s;
-    extern const f_string_t f_status_terminal_read_s;
-    extern const f_string_t f_status_terminal_valid_s;
-    extern const f_string_t f_status_terminal_valid_not_s;
-    extern const f_string_t f_status_terminal_write_s;
+    extern const f_string_static_t f_status_terminal_s;
+    extern const f_string_static_t f_status_terminal_access_s;
+    extern const f_string_static_t f_status_terminal_known_s;
+    extern const f_string_static_t f_status_terminal_known_not_s;
+    extern const f_string_static_t f_status_terminal_not_s;
+    extern const f_string_static_t f_status_terminal_prohibited_s;
+    extern const f_string_static_t f_status_terminal_read_s;
+    extern const f_string_static_t f_status_terminal_valid_s;
+    extern const f_string_static_t f_status_terminal_valid_not_s;
+    extern const f_string_static_t f_status_terminal_write_s;
   #endif // _di_F_status_terminal_
 
   #define F_status_status_code_last_s "F_status_code_last"
-
-  extern const f_string_t f_status_status_code_last_s;
-
   #define F_status_status_code_last_s_length 18
+
+  extern const f_string_static_t f_status_status_code_last_s;
 #endif // _di_F_status_string_
 
 /**
@@ -1706,9 +1706,9 @@ extern "C" {
  * The error, warning, and signal bits are ignored.
  *
  * @param code
- *   The status code to process.
- * @param string
- *   The processed code code.
+ *   The status number to process.
+ * @param name
+ *   The processed code name.
  *
  * @return
  *   F_none on success.
@@ -1717,7 +1717,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_status_string_to_
-  extern f_status_t f_status_string_to(const f_status_t code, f_string_t *string);
+  extern f_status_t f_status_string_to(const f_status_t code, f_string_static_t *name);
 #endif // _di_f_status_string_to_
 
 #ifdef __cplusplus

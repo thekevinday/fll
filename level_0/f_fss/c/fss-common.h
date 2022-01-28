@@ -91,10 +91,20 @@ extern "C" {
  * FSS-specific delimiters.
  */
 #ifndef _di_f_fss_delimiters_
-  #define F_fss_delimit_placeholder_s  f_string_placeholder_s[0]
-  #define F_fss_delimit_quote_single_s f_fss_quote_single_s[0]
-  #define F_fss_delimit_quote_double_s f_fss_quote_double_s[0]
-  #define F_fss_delimit_slash_s        f_fss_slash_s[0]
+  #define F_fss_delimit_placeholder_s  F_string_placeholder_s
+  #define F_fss_delimit_quote_single_s F_fss_quote_single_s
+  #define F_fss_delimit_quote_double_s F_fss_quote_double_s
+  #define F_fss_delimit_slash_s        F_fss_slash_s
+
+  #define F_fss_delimit_placeholder_s_length  F_string_placeholder_s_length
+  #define F_fss_delimit_quote_single_s_length F_fss_quote_single_s_length
+  #define F_fss_delimit_quote_double_s_length F_fss_quote_double_s_length
+  #define F_fss_delimit_slash_s_length        F_fss_slash_s_length
+
+  #define f_fss_delimit_placeholder_s  f_string_placeholder_s
+  #define f_fss_delimit_quote_single_s f_fss_quote_single_s
+  #define f_fss_delimit_quote_double_s f_fss_quote_double_s
+  #define f_fss_delimit_slash_s        f_fss_slash_s
 #endif //_di_f_fss_delimiters_
 
 /**
@@ -111,8 +121,8 @@ extern "C" {
   #define F_fss_string_header_s_length  6
   #define F_fss_string_payload_s_length 7
 
-  extern const f_string_t f_fss_string_header_s;
-  extern const f_string_t f_fss_string_payload_s;
+  extern const f_string_static_t f_fss_string_header_s;
+  extern const f_string_static_t f_fss_string_payload_s;
 #endif // _di_f_fss_strings_
 
 /**

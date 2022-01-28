@@ -509,13 +509,13 @@ static inline f_status_t private_inline_f_print_to_error() {
     f_array_length_t start = 0;
     f_array_length_t total = 0;
 
-    f_string_t safe = 0;
+    f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
 
     for (register f_array_length_t i = 0; string[i]; ) {
 
-      safe = 0;
+      safe = f_string_empty_s;
       width = macro_f_utf_character_t_width(string[i]);
 
       if (width > 1) {
@@ -524,25 +524,25 @@ static inline f_status_t private_inline_f_print_to_error() {
             if (string[i + 2]) {
               if (width > 3) {
                 if (!string[i + 3]) {
-                  safe = (f_string_t) f_print_sequence_unknown_s;
+                  safe = f_print_sequence_unknown_s;
                 }
               }
             }
             else {
-              safe = (f_string_t) f_print_sequence_unknown_s;
+              safe = f_print_sequence_unknown_s;
             }
           }
         }
         else {
-          safe = (f_string_t) f_print_sequence_unknown_s;
+          safe = f_print_sequence_unknown_s;
         }
       }
 
-      if (!safe) {
+      if (!safe.used) {
         safe = private_f_print_safely_get(string + i, width);
       }
 
-      if (safe) {
+      if (safe.used) {
         if (total) {
           if (write(id, string + start, total) == -1) {
             return private_inline_f_print_to_error();
@@ -551,12 +551,13 @@ static inline f_status_t private_inline_f_print_to_error() {
           total = 0;
         }
 
-        if (write(id, safe, 3) == -1) {
+        if (write(id, safe.string, safe.used) == -1) {
           return private_inline_f_print_to_error();
         }
 
         i += width;
         start = i;
+
         continue;
       }
 
@@ -571,6 +572,7 @@ static inline f_status_t private_inline_f_print_to_error() {
 
         i += width;
         start = i - 1;
+
         continue;
       }
 

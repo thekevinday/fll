@@ -180,7 +180,7 @@ extern "C" {
         status = f_string_dynamic_increase(F_fss_default_allocation_step_small_d, destination);
         if (F_status_is_error(status)) return status;
 
-        destination->string[destination->used++] = f_string_eol_s[0];
+        destination->string[destination->used++] = f_string_eol_s.string[0];
       }
     }
 

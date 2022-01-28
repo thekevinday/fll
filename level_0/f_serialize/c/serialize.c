@@ -23,8 +23,8 @@ extern "C" {
       serialize->used += value.used;
     }
     else {
-      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_s, 1);
-      memcpy(serialize->string + serialize->used + 1, value.string, value.used);
+      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_s.string, f_serialize_simple_splitter_s.used);
+      memcpy(serialize->string + serialize->used + f_serialize_simple_splitter_s.used, value.string, value.used);
       serialize->used += value.used + 1;
     }
 
@@ -50,7 +50,7 @@ extern "C" {
 
       width = macro_f_utf_byte_width(serialize.string[i]);
 
-      if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
+      if (serialize.string[i] == f_serialize_simple_splitter_s.string[0] || i + 1 >= serialize.used) {
         macro_f_memory_structure_increment(status, (*strings), 1, F_memory_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
@@ -66,7 +66,7 @@ extern "C" {
           }
           else {
 
-            // subtract one from stop point to disclused the f_serialize_simple_splitter_s[0] character.
+            // subtract one from stop point to disclused the f_serialize_simple_splitter_s character.
             total = ((i - 1) - start) + 1;
           }
 
@@ -119,7 +119,7 @@ extern "C" {
 
       width = macro_f_utf_byte_width(serialize.string[i]);
 
-      if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
+      if (serialize.string[i] == f_serialize_simple_splitter_s.string[0] || i + 1 >= serialize.used) {
         macro_f_memory_structure_increment(status, (*locations), 1, F_memory_default_allocation_small_d, macro_f_string_ranges_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
@@ -135,7 +135,7 @@ extern "C" {
         }
         else {
 
-          // subtract one from stop point to disclused the f_serialize_simple_splitter_s[0] character.
+          // subtract one from stop point to disclused the f_serialize_simple_splitter_s character.
           locations->array[locations->used].start = start;
           locations->array[locations->used].stop = i - 1;
         }

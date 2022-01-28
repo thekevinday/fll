@@ -154,7 +154,7 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
 
     const f_array_length_t used_start = destination->used;
 
-    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : F_fss_delimit_quote_double_s, state, range, destination);
+    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double_s.string[0], state, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
@@ -162,8 +162,8 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
       const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
-      destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
-      destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
+      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
     }
 
     if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
@@ -171,14 +171,14 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
         f_status_t status2 = F_none;
 
         if (complete == f_fss_complete_full_trim_e) {
-          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : F_fss_delimit_quote_double_s, used_start, state, destination);
+          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_delimit_quote_double_s.string[0], used_start, state, destination);
           if (F_status_is_error(status2)) return status2;
         }
 
         status2 = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status2)) return status2;
 
-        destination->string[destination->used++] = f_fss_extended_open_s[0];
+        destination->string[destination->used++] = f_fss_extended_open_s.string[0];
       }
     }
 
@@ -194,7 +194,7 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
     #endif // _di_level_1_parameter_checking_
 
     // this operates exactly like an object, syntax-wise.
-    const f_status_t status = private_fl_fss_basic_write(F_false, content, quote ? quote : F_fss_delimit_quote_double_s, state, range, destination);
+    const f_status_t status = private_fl_fss_basic_write(F_false, content, quote ? quote : f_fss_delimit_quote_double_s.string[0], state, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
@@ -202,16 +202,16 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
       const f_status_t status_allocation = f_string_dynamic_increase_by(4, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
-      destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
-      destination->string[destination->used++] = quote ? quote : F_fss_delimit_quote_double_s;
+      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
 
       // content should be terminated, even if empty.
       if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_next_e) {
-        destination->string[destination->used++] = f_fss_extended_next_s[0];
+        destination->string[destination->used++] = f_fss_extended_next_s.string[0];
       }
 
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-        destination->string[destination->used++] = f_fss_extended_close_s[0];
+        destination->string[destination->used++] = f_fss_extended_close_s.string[0];
       }
 
       if (status == F_data_not_stop) {
@@ -226,11 +226,11 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
       if (F_status_is_error(status_allocation)) return status_allocation;
 
       if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_next_e) {
-        destination->string[destination->used++] = f_fss_extended_next_s[0];
+        destination->string[destination->used++] = f_fss_extended_next_s.string[0];
       }
 
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-        destination->string[destination->used++] = f_fss_extended_close_s[0];
+        destination->string[destination->used++] = f_fss_extended_close_s.string[0];
       }
     }
 

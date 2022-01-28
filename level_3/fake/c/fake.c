@@ -20,41 +20,41 @@ extern "C" {
 
     fll_program_print_help_header(file, context, fake_program_name_long_s, fake_program_version_s);
 
-    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
-    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity, silencing most output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
-    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s.string, f_console_standard_long_help_s.string, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s.string, f_console_standard_long_light_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s.string, f_console_standard_long_quiet_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Decrease verbosity, silencing most output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s.string, f_console_standard_long_normal_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Enable debugging, significantly increasing verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], file.stream);
+    f_print_dynamic(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, fake_short_define_s, fake_long_define_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Append an additional define after defines from settings file.");
-    fll_program_print_help_option(file, context, fake_short_fakefile_s, fake_long_fakefile_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Use this fakefile.");
-    fll_program_print_help_option(file, context, fake_short_mode_s, fake_long_mode_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Use this mode when processing the build settings.");
-    fll_program_print_help_option(file, context, fake_short_process_s, fake_long_process_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Process name for storing build states.");
-    fll_program_print_help_option(file, context, fake_short_settings_s, fake_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Use this settings file.");
+    fll_program_print_help_option(file, context, fake_short_define_s, fake_long_define_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "  Append an additional define after defines from settings file.");
+    fll_program_print_help_option(file, context, fake_short_fakefile_s, fake_long_fakefile_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "Use this fakefile.");
+    fll_program_print_help_option(file, context, fake_short_mode_s, fake_long_mode_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "    Use this mode when processing the build settings.");
+    fll_program_print_help_option(file, context, fake_short_process_s, fake_long_process_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, " Process name for storing build states.");
+    fll_program_print_help_option(file, context, fake_short_settings_s, fake_long_settings_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "Use this settings file.");
 
-    f_print_character(f_string_eol_s[0], file.stream);
+    f_print_dynamic(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, fake_short_path_build_s, fake_long_path_build_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Specify a custom build directory.");
-    fll_program_print_help_option(file, context, fake_short_path_data_s, fake_long_path_data_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a custom path to the data files.");
-    fll_program_print_help_option(file, context, fake_short_path_sources_s, fake_long_path_sources_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Specify a custom path to the source files.");
-    fll_program_print_help_option(file, context, fake_short_path_work_s, fake_long_path_work_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Use includes/libraries/programs from this directory instead of system.");
+    fll_program_print_help_option(file, context, fake_short_path_build_s, fake_long_path_build_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "  Specify a custom build directory.");
+    fll_program_print_help_option(file, context, fake_short_path_data_s, fake_long_path_data_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "   Specify a custom path to the data files.");
+    fll_program_print_help_option(file, context, fake_short_path_sources_s, fake_long_path_sources_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "Specify a custom path to the source files.");
+    fll_program_print_help_option(file, context, fake_short_path_work_s, fake_long_path_work_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "   Use includes/libraries/programs from this directory instead of system.");
 
-    fl_print_format("%c%c %[Special Options:%] ", file.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
+    fl_print_format("%q%q %[Special Options:%] ", file.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important);
 
-    fll_program_print_help_option_long(file, context, fake_long_documents_disabled_s, f_console_symbol_long_enable_s, "   Forcibly do not build documents files.");
-    fll_program_print_help_option_long(file, context, fake_long_documents_enabled_s, f_console_symbol_long_enable_s, "    Forcibly do build documents files.");
-    fll_program_print_help_option_long(file, context, fake_long_shared_disabled_s, f_console_symbol_long_enable_s, "Forcibly do not build shared files.");
-    fll_program_print_help_option_long(file, context, fake_long_shared_enabled_s, f_console_symbol_long_enable_s, " Forcibly do build shared files.");
-    fll_program_print_help_option_long(file, context, fake_long_static_disabled_s, f_console_symbol_long_enable_s, "Forcibly do not build static files.");
-    fll_program_print_help_option_long(file, context, fake_long_static_enabled_s, f_console_symbol_long_enable_s, " Forcibly do build static files.");
+    fll_program_print_help_option_long(file, context, fake_long_documents_disabled_s, f_console_symbol_long_enable_s.string, "   Forcibly do not build documents files.");
+    fll_program_print_help_option_long(file, context, fake_long_documents_enabled_s, f_console_symbol_long_enable_s.string, "    Forcibly do build documents files.");
+    fll_program_print_help_option_long(file, context, fake_long_shared_disabled_s, f_console_symbol_long_enable_s.string, "Forcibly do not build shared files.");
+    fll_program_print_help_option_long(file, context, fake_long_shared_enabled_s, f_console_symbol_long_enable_s.string, " Forcibly do build shared files.");
+    fll_program_print_help_option_long(file, context, fake_long_static_disabled_s, f_console_symbol_long_enable_s.string, "Forcibly do not build static files.");
+    fll_program_print_help_option_long(file, context, fake_long_static_enabled_s, f_console_symbol_long_enable_s.string, " Forcibly do build static files.");
 
-    fl_print_format("%c%c %[Operations:%] ", file.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
+    fl_print_format("%q%q %[Operations:%] ", file.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important);
 
     fll_program_print_help_option_other(file, context, fake_other_operation_build_s, "   Build or compile the code based on build settings file.");
     fll_program_print_help_option_other(file, context, fake_other_operation_clean_s, "   Delete all build files.");
@@ -64,18 +64,18 @@ extern "C" {
     fll_program_print_help_usage(file, context, fake_program_name_s, "operation");
 
     fl_print_format("  When performing the %[%s%] operation, the", file.stream, context.set.notable, fake_other_operation_build_s, context.set.notable);
-    fl_print_format(" %[%s%s%] parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_mode_s, context.set.notable, f_string_eol_s[0]);
+    fl_print_format(" %[%q%s%] parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.%q", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_mode_s, context.set.notable, f_string_eol_s);
 
     fl_print_format("  For example, when a %[%s%]", file.stream, context.set.notable, fake_make_parameter_variable_mode_s, context.set.notable);
-    fl_print_format(" of 'fll_monolithic' is specified, build libraries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" of 'fll_monolithic' is specified, build libraries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').%q%q", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  When specifying the %[%s%]  or the %[%s%]", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable, context.set.notable, fake_make_parameter_variable_settings_s, context.set.notable);
-    fl_print_format(" parameters, the filenames are relative to the data build directory, unless a path is used.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format(" parameters, the filenames are relative to the data build directory, unless a path is used.%q", file.stream, f_string_eol_s);
 
-    fl_print_format("  For example, with '%[%s%s my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
+    fl_print_format("  For example, with '%[%q%s my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
     fl_print_format(" '%[./%s%smy_fakefile%]' would be used, however with", file.stream, context.set.notable, fake_default_path_data_s, fake_default_path_build_s, context.set.notable);
-    fl_print_format(" '%[%s%s ./my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
-    fl_print_format(" '%[./my_fakefile%]' would be used.%c%c", file.stream, context.set.notable, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" '%[%q%s ./my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
+    fl_print_format(" '%[./my_fakefile%]' would be used.%q%q", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 
@@ -348,9 +348,9 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%c%[%SThe operation '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%q%[%SThe operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, operations_name, main->error.notable);
-            fl_print_format("%[' failed.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+            fl_print_format("%[' failed.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -365,16 +365,16 @@ extern "C" {
             fflush(main->output.to.stream);
           }
 
-          fll_print_terminated(f_string_eol_s, main->output.to.stream);
+          fll_print_dynamic(f_string_eol_s, main->output.to.stream);
         }
         else if (status != F_child) {
-          fll_print_format("%cAll operations complete.%c%c", main->output.to.stream, f_string_eol_s[0], f_string_eol_s[0], f_string_eol_s[0]);
+          fll_print_format("%qAll operations complete.%q%q", main->output.to.stream, f_string_eol_s, f_string_eol_s, f_string_eol_s);
         }
       }
     }
     else {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        fll_print_format("%c%[%SYou failed to specify an operation.%]%c%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0], f_string_eol_s[0]);
+        fll_print_format("%q%[%SYou failed to specify an operation.%]%q%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s, f_string_eol_s);
       }
 
       status = F_status_set_error(F_parameter);

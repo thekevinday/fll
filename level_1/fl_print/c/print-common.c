@@ -6,9 +6,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_print_t_
-  const f_string_t fl_print_debug_s = FL_print_debug_s;
-  const f_string_t fl_print_error_s = FL_print_error_s;
-  const f_string_t fl_print_warning_s = FL_print_warning_s;
+  const f_string_static_t fl_print_debug_s = macro_f_string_static_t_initialize2(FL_print_debug_s, 0, FL_print_debug_s_length);
+  const f_string_static_t fl_print_error_s = macro_f_string_static_t_initialize2(FL_print_error_s, 0, FL_print_error_s_length);
+  const f_string_static_t fl_print_warning_s = macro_f_string_static_t_initialize2(FL_print_warning_s, 0, FL_print_warning_s_length);
 #endif // _di_fl_print_t_
 
 #ifdef __cplusplus

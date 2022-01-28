@@ -43,10 +43,10 @@ extern "C" {
   #define FLL_error_file_type_path_s_length      4
   #define FLL_error_file_type_pipe_s_length      4
 
-  extern const f_string_t fll_error_file_type_directory_s;
-  extern const f_string_t fll_error_file_type_file_s;
-  extern const f_string_t fll_error_file_type_path_s;
-  extern const f_string_t fll_error_file_type_pipe_s;
+  extern const f_string_static_t fll_error_file_type_directory_s;
+  extern const f_string_static_t fll_error_file_type_file_s;
+  extern const f_string_static_t fll_error_file_type_path_s;
+  extern const f_string_static_t fll_error_file_type_pipe_s;
 #endif // _di_fll_error_file_type_
 
 #ifdef __cplusplus

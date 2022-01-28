@@ -14,7 +14,7 @@ extern "C" {
     for (f_array_length_t i = 0; i < delimits.used; ++i) {
 
       if (delimits.array[i] < buffer->used) {
-        buffer->string[delimits.array[i]] = F_fss_delimit_placeholder_s;
+        buffer->string[delimits.array[i]] = f_fss_delimit_placeholder_s.string[0];
       }
     } // for
 
@@ -31,7 +31,7 @@ extern "C" {
     for (f_array_length_t i = 0; i < delimits.used; ++i) {
 
       if (delimits.array[i] < buffer->used && delimits.array[i] >= range.start && delimits.array[i] <= range.stop) {
-        buffer->string[delimits.array[i]] = F_fss_delimit_placeholder_s;
+        buffer->string[delimits.array[i]] = f_fss_delimit_placeholder_s.string[0];
       }
     } // for
 
@@ -51,12 +51,12 @@ extern "C" {
 
     for (f_array_length_t i = before; i > 0; --i) {
 
-      if (buffer.string[i] == f_fss_eol_s[0]) {
+      if (buffer.string[i] == f_fss_eol_s.string[0]) {
         ++(*line);
       }
     } // for
 
-    if (buffer.string[0] == f_fss_eol_s[0]) {
+    if (buffer.string[0] == f_fss_eol_s.string[0]) {
       ++(*line);
     }
 
@@ -76,12 +76,12 @@ extern "C" {
 
     for (f_array_length_t i = before; i > range.start; --i) {
 
-      if (buffer.string[i] == f_fss_eol_s[0]) {
+      if (buffer.string[i] == f_fss_eol_s.string[0]) {
         ++(*line);
       }
     } // for
 
-    if (buffer.string[range.start] == f_fss_eol_s[0]) {
+    if (buffer.string[range.start] == f_fss_eol_s.string[0]) {
       ++(*line);
     }
 
@@ -166,7 +166,7 @@ extern "C" {
 
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
-      if (buffer.string[range->start] == f_fss_eol_s[0]) break;
+      if (buffer.string[range->start] == f_fss_eol_s.string[0]) break;
     } // for
 
     return F_none;
@@ -192,7 +192,7 @@ extern "C" {
 
     while (position < buffer->used && position <= range.stop) {
 
-      if (buffer->string[position] == F_fss_delimit_placeholder_s) {
+      if (buffer->string[position] == f_fss_delimit_placeholder_s.string[0]) {
         ++distance;
       }
 
@@ -233,7 +233,7 @@ extern "C" {
     if (distance > 0) {
       while (position < buffer->used + distance && position <= range.stop) {
 
-        buffer->string[position] = F_fss_delimit_placeholder_s;
+        buffer->string[position] = f_fss_delimit_placeholder_s.string[0];
         ++position;
       }
     }
@@ -252,7 +252,7 @@ extern "C" {
 
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
-      if (buffer.string[range->start] != F_fss_delimit_placeholder_s) break;
+      if (buffer.string[range->start] != f_fss_delimit_placeholder_s.string[0]) break;
     } // for
 
     return F_none;
@@ -284,11 +284,11 @@ extern "C" {
 
     for (;;) {
 
-      if (buffer.string[range->start] == f_fss_eol_s[0]) {
+      if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
         return F_none_eol;
       }
 
-      if (buffer.string[range->start] == F_fss_delimit_placeholder_s) {
+      if (buffer.string[range->start] == f_fss_delimit_placeholder_s.string[0]) {
         ++range->start;
 
         if (range->start >= buffer.used) {
@@ -381,7 +381,7 @@ extern "C" {
 
     for (;;) {
 
-      if (buffer.string[range->start] != F_fss_delimit_placeholder_s) {
+      if (buffer.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
         status = f_utf_is_graph(buffer.string + range->start, width_max);
 
         if (status == F_true) {

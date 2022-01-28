@@ -268,8 +268,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param argv
  *   The program argument array to parse.
  * @param values
@@ -290,7 +288,7 @@ extern "C" {
  * @see f_string_mash()
  */
 #ifndef _di_fll_program_parameter_additional_mash_
-  extern f_status_t fll_program_parameter_additional_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
+  extern f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_mash_
 
 /**
@@ -327,8 +325,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param argv
  *   The program argument array to parse.
  * @param values
@@ -351,7 +347,7 @@ extern "C" {
  * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  extern f_status_t fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
+  extern f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
 #ifdef __cplusplus

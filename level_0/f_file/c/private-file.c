@@ -765,26 +765,26 @@ extern "C" {
 
     if (flag & F_file_flag_read_write_d) {
       if (flag & F_file_flag_truncate_d) {
-        return f_file_open_mode_read_truncate_s;
+        return f_file_open_mode_read_truncate_s.string;
       }
       else if (flag & F_file_flag_append_d) {
-        return f_file_open_mode_read_append_s;
+        return f_file_open_mode_read_append_s.string;
       }
 
-      // failsafe to read write prepend.
-      return f_file_open_mode_read_write_s;
+      // Failsafe to read write prepend.
+      return f_file_open_mode_read_write_s.string;
     }
     else if (flag & F_file_flag_write_only_d) {
       if (flag & F_file_flag_truncate_d) {
-        return f_file_open_mode_truncate_s;
+        return f_file_open_mode_truncate_s.string;
       }
 
-      // failsafe to append.
-      return f_file_open_mode_append_s;
+      // Failsafe to append.
+      return f_file_open_mode_append_s.string;
     }
 
-    // failsafe to read only.
-    return f_file_open_mode_read_s;
+    // Failsafe to read only.
+    return f_file_open_mode_read_s.string;
   }
 #endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 

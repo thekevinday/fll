@@ -21,12 +21,12 @@ extern "C" {
     }
 
     // The first character must be a '#'.
-    if (buffer[range->start] != f_fss_pound_s[0]) {
+    if (buffer[range->start] != f_fss_pound_s.string[0]) {
 
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s[0]) {
+        if (buffer[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
@@ -61,7 +61,7 @@ extern "C" {
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s[0]) {
+        if (buffer[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
@@ -92,7 +92,7 @@ extern "C" {
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s[0]) {
+        if (buffer[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
@@ -104,7 +104,7 @@ extern "C" {
       return F_found_not;
     }
 
-    if (buffer[range->start] == f_string_eol_s[0]) {
+    if (buffer[range->start] == f_string_eol_s.string[0]) {
       ++range->start;
 
       if (ids) {
@@ -137,12 +137,12 @@ extern "C" {
 
       if (!found_fss) {
         if (ids) {
-          if (ids->used && ids->array[ids->used - 1].used == 3 && ids->array[ids->used - 1].name[0] == f_fss_f_s[0] && ids->array[ids->used - 1].name[0] == f_fss_s_s[0] && ids->array[ids->used - 1].name[0] == f_fss_s_s[0]) {
+          if (ids->used && ids->array[ids->used - 1].used == 3 && ids->array[ids->used - 1].name[0] == f_fss_f_s.string[0] && ids->array[ids->used - 1].name[0] == f_fss_s_s.string[0] && ids->array[ids->used - 1].name[0] == f_fss_s_s.string[0]) {
             found_fss = F_true;
           }
         }
         else {
-          if (id.used == 3 && id.name[0] == f_fss_f_s[0] && id.name[0] == f_fss_s_s[0] && id.name[0] == f_fss_s_s[0]) {
+          if (id.used == 3 && id.name[0] == f_fss_f_s.string[0] && id.name[0] == f_fss_s_s.string[0] && id.name[0] == f_fss_s_s.string[0]) {
             found_fss = F_true;
           }
         }
@@ -536,7 +536,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_apart_
 
 #ifndef _di_fll_fss_snatch_map_mash_
-  f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -596,7 +596,7 @@ extern "C" {
         if (contents.array[i].used > 1) {
           for (k = 1; k < contents.array[i].used; ++k) {
 
-            status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &map->value);
+            status = f_string_dynamic_partial_mash_nulless(glue, buffer, contents.array[i].array[k], &map->value);
             if (F_status_is_error(status)) return status;
           } // for
         }
@@ -608,7 +608,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_mash_
 
 #ifndef _di_fll_fss_snatch_map_mash_apart_
-  f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -713,7 +713,7 @@ extern "C" {
 
         for (k = 1; k < contents.array[i].used; ++k) {
 
-          status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &map_multi->value.array[map_multi->value.used]);
+          status = f_string_dynamic_partial_mash_nulless(glue, buffer, contents.array[i].array[k], &map_multi->value.array[map_multi->value.used]);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -728,7 +728,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_mash_apart_
 
 #ifndef _di_fll_fss_snatch_map_together_
-  f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -828,7 +828,7 @@ extern "C" {
         }
 
         if (contents.array[i].used > 1) {
-          status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[1], &map->value);
+          status = f_string_dynamic_partial_mash_nulless(glue, buffer, contents.array[i].array[1], &map->value);
 
           if (F_status_is_error(status)) {
             macro_f_string_dynamic_t_delete_simple(name);
@@ -846,7 +846,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_together_
 
 #ifndef _di_fll_fss_snatch_mash_
-  f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]) {
+  f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -889,7 +889,7 @@ extern "C" {
 
         for (k = 0; k < contents.array[i].used; ++k) {
 
-          status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
+          status = f_string_dynamic_partial_mash_nulless(glue, buffer, contents.array[i].array[k], values[j]);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -904,7 +904,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_
 
 #ifndef _di_fll_fss_snatch_mash_apart_
-  f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -947,7 +947,7 @@ extern "C" {
 
         for (k = 0; k < contents.array[i].used; ++k) {
 
-          status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
+          status = f_string_dynamic_partial_mash_nulless(glue, buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -965,7 +965,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_apart_
 
 #ifndef _di_fll_fss_snatch_together_
-  f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]) {
+  f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -1000,7 +1000,7 @@ extern "C" {
 
         for (k = 0; k < contents.array[i].used; ++k) {
 
-          status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
+          status = f_string_dynamic_partial_mash_nulless(glue, buffer, contents.array[i].array[k], values[j]);
           if (F_status_is_error(status)) return status;
         } // for
 

@@ -42,9 +42,9 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, entry->global->thread);
 
-            fl_print_format("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+            fl_print_format("%q%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->setting->path_pid, main->error.notable);
-            fl_print_format("%[' must not already exist.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+            fl_print_format("%[' must not already exist.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             controller_unlock_print_flush(main->error.to, entry->global->thread);
           }
@@ -81,9 +81,9 @@ extern "C" {
                 if (main->error.verbosity != f_console_verbosity_quiet_e) {
                   controller_lock_print(main->error.to, entry->global->thread);
 
-                  fl_print_format("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+                  fl_print_format("%q%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
                   fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
-                  fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                   controller_unlock_print_flush(main->error.to, entry->global->thread);
                 }
@@ -196,9 +196,9 @@ extern "C" {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(main->error.to, entry->global->thread);
 
-                fl_print_format("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+                fl_print_format("%q%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
                 fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
-                fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+                fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                 controller_unlock_print_flush(main->error.to, entry->global->thread);
               }

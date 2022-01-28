@@ -6,46 +6,45 @@ extern "C" {
 
 #ifndef _di_fll_fss_status_string_
   #ifndef _di_fll_fss_status_error_
-    const f_string_t fll_fss_status_format_s = FLL_fss_status_format_s;
-    const f_string_t fll_fss_status_format_eos_s = FLL_fss_status_format_eos_s;
+    const f_string_static_t fll_fss_status_format_s = macro_f_string_static_t_initialize2(FLL_fss_status_format_s, 0, FLL_fss_status_format_s_length);
+    const f_string_static_t fll_fss_status_format_eos_s = macro_f_string_static_t_initialize2(FLL_fss_status_format_eos_s, 0, FLL_fss_status_format_eos_s_length);
   #endif // _di_fll_fss_status_error_
 
   #ifndef _di_fll_fss_status_warning_
-    const f_string_t fll_fss_status_accepted_invalid_s = FLL_fss_status_accepted_invalid_s;
-    const f_string_t fll_fss_status_accepted_invalid_eos_s = FLL_fss_status_accepted_invalid_eos_s;
+    const f_string_static_t fll_fss_status_accepted_invalid_s = macro_f_string_static_t_initialize2(FLL_fss_status_accepted_invalid_s, 0, FLL_fss_status_accepted_invalid_s_length);
+    const f_string_static_t fll_fss_status_accepted_invalid_eos_s = macro_f_string_static_t_initialize2(FLL_fss_status_accepted_invalid_eos_s, 0, FLL_fss_status_accepted_invalid_eos_s_length);
   #endif // _di_fll_fss_status_warning_
 
   #ifndef _di_fll_fss_status_success_
-    const f_string_t fll_fss_status_found_object_s = FLL_fss_status_found_object_s;
-    const f_string_t fll_fss_status_found_content_s = FLL_fss_status_found_content_s;
-    const f_string_t fll_fss_status_found_object_not_s = FLL_fss_status_found_object_not_s;
-    const f_string_t fll_fss_status_found_content_not_s = FLL_fss_status_found_content_not_s;
-    const f_string_t fll_fss_status_found_object_content_not_s = FLL_fss_status_found_object_content_not_s;
+    const f_string_static_t fll_fss_status_found_object_s = macro_f_string_static_t_initialize2(FLL_fss_status_found_object_s, 0, FLL_fss_status_found_object_s_length);
+    const f_string_static_t fll_fss_status_found_content_s = macro_f_string_static_t_initialize2(FLL_fss_status_found_content_s, 0, FLL_fss_status_found_content_s_length);
+    const f_string_static_t fll_fss_status_found_object_not_s = macro_f_string_static_t_initialize2(FLL_fss_status_found_object_not_s, 0, FLL_fss_status_found_object_not_s_length);
+    const f_string_static_t fll_fss_status_found_content_not_s = macro_f_string_static_t_initialize2(FLL_fss_status_found_content_not_s, 0, FLL_fss_status_found_content_not_s_length);
+    const f_string_static_t fll_fss_status_found_object_content_not_s = macro_f_string_static_t_initialize2(FLL_fss_status_found_object_content_not_s, 0, FLL_fss_status_found_object_content_not_s_length);
   #endif // _di_fll_fss_status_success_
 
   #ifndef _di_fll_fss_status_codes_
-    const f_string_t fll_fss_status_found_comment_s = FLL_fss_status_found_comment_s;
+    const f_string_static_t fll_fss_status_found_comment_s = macro_f_string_static_t_initialize2(FLL_fss_status_found_comment_s, 0, FLL_fss_status_found_comment_s_length);
   #endif // _di_fll_fss_status_codes_
 
-  const f_string_t fll_fss_status_status_code_first_s = FLL_fss_status_status_code_first_s;
-  const f_string_t fll_fss_status_status_code_last_s = FLL_fss_status_status_code_last_s;
+  const f_string_static_t fll_fss_status_status_code_first_s = macro_f_string_static_t_initialize2(FLL_fss_status_status_code_first_s, 0, FLL_fss_status_status_code_first_s_length);
+  const f_string_static_t fll_fss_status_status_code_last_s = macro_f_string_static_t_initialize2(FLL_fss_status_status_code_last_s, 0, FLL_fss_status_status_code_last_s_length);
 #endif // _di_FLL_fss_status_string_
 
 #ifndef _di_fll_fss_status_string_from_
-  f_status_t fll_fss_status_string_from(const f_string_t string, f_status_t *code) {
+  f_status_t fll_fss_status_string_from(const f_string_static_t name, f_status_t *code) {
     #ifndef _di_level_2_parameter_checking_
       if (!code) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
-    const f_array_length_t length = strlen(string);
 
-    if (!length) {
+    if (!name.used) {
       return F_data_not;
     }
 
     // Numbers are not valid status code strings.
-    status = f_conversion_character_is_decimal(string[0]);
+    status = f_conversion_character_is_decimal(name.string[0]);
 
     if (status == F_true) {
       return F_status_set_error(F_data);
@@ -56,13 +55,13 @@ extern "C" {
     }
 
     #ifndef _di_fll_fss_status_error_
-      if (fl_string_compare(string, FLL_fss_status_format_s, length, FLL_fss_status_format_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_format_s) == F_equal_to) {
         *code = F_fss_format;
 
         return F_none;
       }
 
-      if (fl_string_compare(string, FLL_fss_status_format_eos_s, length, FLL_fss_status_format_eos_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_format_eos_s) == F_equal_to) {
         *code = F_fss_format_eos;
 
         return F_none;
@@ -70,13 +69,13 @@ extern "C" {
     #endif // _di_fll_fss_status_error_
 
     #ifndef _di_fll_fss_status_warning_
-      if (fl_string_compare(string, FLL_fss_status_accepted_invalid_s, length, FLL_fss_status_accepted_invalid_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_accepted_invalid_s) == F_equal_to) {
         *code = F_fss_accepted_invalid;
 
         return F_none;
       }
 
-      if (fl_string_compare(string, FLL_fss_status_accepted_invalid_eos_s, length, FLL_fss_status_accepted_invalid_eos_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_accepted_invalid_eos_s) == F_equal_to) {
         *code = F_fss_accepted_invalid_eos;
 
         return F_none;
@@ -84,31 +83,31 @@ extern "C" {
     #endif // _di_fll_fss_status_warning_
 
     #ifndef _di_fll_fss_status_success_
-      if (fl_string_compare(string, FLL_fss_status_found_object_s, length, FLL_fss_status_found_object_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_found_object_s) == F_equal_to) {
         *code = F_fss_found_object;
 
         return F_none;
       }
 
-      if (fl_string_compare(string, FLL_fss_status_found_content_s, length, FLL_fss_status_found_content_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_found_content_s) == F_equal_to) {
         *code = F_fss_found_content;
 
         return F_none;
       }
 
-      if (fl_string_compare(string, FLL_fss_status_found_object_not_s, length, FLL_fss_status_found_object_not_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_found_object_not_s) == F_equal_to) {
         *code = F_fss_found_object_not;
 
         return F_none;
       }
 
-      if (fl_string_compare(string, FLL_fss_status_found_content_not_s, length, FLL_fss_status_found_content_not_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_found_content_not_s) == F_equal_to) {
         *code = F_fss_found_content_not;
 
         return F_none;
       }
 
-      if (fl_string_compare(string, FLL_fss_status_found_object_content_not_s, length, FLL_fss_status_found_object_content_not_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_found_object_content_not_s) == F_equal_to) {
         *code = F_fss_found_object_content_not;
 
         return F_none;
@@ -116,20 +115,20 @@ extern "C" {
     #endif // _di_fll_fss_status_success_
 
     #ifndef _di_fll_fss_status_codes_
-      if (fl_string_compare(string, FLL_fss_status_found_comment_s, length, FLL_fss_status_found_comment_length_s) == F_equal_to) {
+      if (fl_string_dynamic_compare(name, fll_fss_status_found_comment_s) == F_equal_to) {
         *code = F_fss_found_object;
 
         return F_none;
       }
     #endif // _di_fll_fss_status_codes_
 
-    if (fl_string_compare(string, FLL_fss_status_status_code_first_s, length, FLL_fss_status_status_code_first_s_length) == F_equal_to) {
+    if (fl_string_dynamic_compare(name, fll_fss_status_status_code_first_s) == F_equal_to) {
       *code = F_fss_status_code_first;
 
       return F_none;
     }
 
-    if (fl_string_compare(string, FLL_fss_status_status_code_last_s, length, FLL_fss_status_status_code_last_s_length) == F_equal_to) {
+    if (fl_string_dynamic_compare(name, fll_fss_status_status_code_last_s) == F_equal_to) {
       *code = F_fss_status_code_last;
 
       return F_none;
@@ -140,9 +139,9 @@ extern "C" {
 #endif // _di_fll_fss_status_string_from_
 
 #ifndef _di_fll_fss_status_string_to_
-  f_status_t fll_fss_status_string_to(const f_status_t code, f_string_t *string) {
+  f_status_t fll_fss_status_string_to(const f_status_t code, f_string_static_t *name) {
     #ifndef _di_level_2_parameter_checking_
-      if (!string) return F_status_set_error(F_parameter);
+      if (!name) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     const f_status_t unmasked_code = F_status_set_fine(code);
@@ -150,56 +149,62 @@ extern "C" {
     switch (unmasked_code) {
       #ifndef _di_fll_fss_status_error_
         case F_fss_format:
-          *string = FLL_fss_status_format_s;
+          *name = fll_fss_status_format_s;
           break;
+
         case F_fss_format_eos:
-          *string = FLL_fss_status_format_eos_s;
+          *name = fll_fss_status_format_eos_s;
           break;
       #endif // _di_fll_fss_status_error_
 
       #ifndef _di_fll_fss_status_warning_
         case F_fss_accepted_invalid:
-          *string = FLL_fss_status_accepted_invalid_s;
+          *name = fll_fss_status_accepted_invalid_s;
           break;
+
         case F_fss_accepted_invalid_eos:
-          *string = FLL_fss_status_accepted_invalid_eos_s;
+          *name = fll_fss_status_accepted_invalid_eos_s;
           break;
       #endif // _di_fll_fss_status_warning_
 
       #ifndef _di_fll_fss_status_success_
         case F_fss_found_object:
-          *string = FLL_fss_status_found_object_s;
+          *name = fll_fss_status_found_object_s;
           break;
+
         case F_fss_found_content:
-          *string = FLL_fss_status_found_content_s;
+          *name = fll_fss_status_found_content_s;
           break;
+
         case F_fss_found_object_not:
-          *string = FLL_fss_status_found_object_not_s;
+          *name = fll_fss_status_found_object_not_s;
           break;
+
         case F_fss_found_content_not:
-          *string = FLL_fss_status_found_content_not_s;
+          *name = fll_fss_status_found_content_not_s;
           break;
+
         case F_fss_found_object_content_not:
-          *string = FLL_fss_status_found_object_content_not_s;
+          *name = fll_fss_status_found_object_content_not_s;
           break;
       #endif // _di_fll_fss_status_success_
 
       #ifndef _di_fll_fss_status_codes_
         case F_fss_found_comment:
-          *string = FLL_fss_status_found_comment_s;
+          *name = fll_fss_status_found_comment_s;
           break;
       #endif // _di_fll_fss_status_codes_
 
       case F_fss_status_code_first:
-        *string = FLL_fss_status_status_code_first_s;
+        *name = fll_fss_status_status_code_first_s;
         break;
 
       case F_fss_status_code_last:
-        *string = FLL_fss_status_status_code_last_s;
+        *name = fll_fss_status_status_code_last_s;
         break;
 
       default:
-        return f_status_string_to(code, string);
+        return f_status_string_to(code, name);
     }
 
     return F_none;
