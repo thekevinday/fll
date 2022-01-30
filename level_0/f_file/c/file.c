@@ -59,7 +59,8 @@ extern "C" {
 
       return private_f_file_copy_content(source, destination, size_block == 0 ? F_file_default_read_size_d : size_block);
     }
-    else if (macro_f_file_type_is_link(source_stat.st_mode)) {
+
+    if (macro_f_file_type_is_link(source_stat.st_mode)) {
       status = private_f_file_link(destination, source);
       if (F_status_set_fine(status) == F_file_found) {
         if (exclusive) return status;
@@ -130,7 +131,8 @@ extern "C" {
 
       return private_f_file_copy_content(source, destination, size_block == 0 ? F_file_default_read_size_d : size_block);
     }
-    else if (macro_f_file_type_is_directory(source_stat.st_mode)) {
+
+    if (macro_f_file_type_is_directory(source_stat.st_mode)) {
       status = private_f_file_create_directory(destination, (~F_file_type_mask_d) & mode.directory);
 
       if (F_status_is_error(status)) {
@@ -144,18 +146,20 @@ extern "C" {
 
       return F_none;
     }
-    else if (macro_f_file_type_is_link(source_stat.st_mode)) {
+
+    if (macro_f_file_type_is_link(source_stat.st_mode)) {
       f_string_dynamic_t target = f_string_dynamic_t_initialize;
 
       status = private_f_file_link_read(source, source_stat, &target);
       if (F_status_is_error(status)) {
-        macro_f_string_dynamic_t_delete_simple(target);
+        f_string_dynamic_resize(0, &target);
+
         return status;
       }
 
       status = private_f_file_link(target.string, destination);
 
-      macro_f_string_dynamic_t_delete_simple(target);
+      f_string_dynamic_resize(0, &target);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -165,7 +169,8 @@ extern "C" {
 
       return F_none;
     }
-    else if (macro_f_file_type_is_fifo(source_stat.st_mode)) {
+
+    if (macro_f_file_type_is_fifo(source_stat.st_mode)) {
       status = private_f_file_create_fifo(destination, (~F_file_type_mask_d) & mode.fifo);
 
       if (F_status_is_error(status)) {
@@ -179,7 +184,8 @@ extern "C" {
 
       return F_none;
     }
-    else if (macro_f_file_type_is_socket(source_stat.st_mode)) {
+
+    if (macro_f_file_type_is_socket(source_stat.st_mode)) {
       status = private_f_file_create_node(destination, macro_f_file_type_get(source_stat.st_mode) | ((~F_file_type_mask_d) & mode.socket), source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
@@ -193,7 +199,8 @@ extern "C" {
 
       return F_none;
     }
-    else if (macro_f_file_type_is_block(source_stat.st_mode) || macro_f_file_type_is_character(source_stat.st_mode)) {
+
+    if (macro_f_file_type_is_block(source_stat.st_mode) || macro_f_file_type_is_character(source_stat.st_mode)) {
       status = private_f_file_create_node(destination, macro_f_file_type_get(source_stat.st_mode) | ((~F_file_type_mask_d) & mode.block), source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
@@ -2588,6 +2595,28 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_file_type_at_
+
+#ifndef _di_f_file_umask_get_
+  f_status_t f_file_umask_get(mode_t *mask) {
+
+    // Bad design in POSIX where there is no get umask without setting it.
+    *mask = umask(0);
+
+    // Restore umask.
+    umask(*mask);
+
+    return F_none;
+  }
+#endif // _di_f_file_umask_get_
+
+#ifndef _di_f_file_umask_set_
+  f_status_t f_file_umask_set(const mode_t mask) {
+
+    umask(mask);
+
+    return F_none;
+  }
+#endif // _di_f_file_umask_set_
 
 #ifndef _di_f_file_write_
   f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {

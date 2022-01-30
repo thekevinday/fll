@@ -1,4 +1,4 @@
-#include "../controller/controller.h"
+#include "../controller.h"
 #include "private-common.h"
 
 #ifdef __cplusplus
@@ -18,8 +18,8 @@ extern "C" {
 #ifndef _di_controller_cache_delete_simple_
   void controller_cache_delete_simple(controller_cache_t * const cache) {
 
-    macro_f_array_lengths_t_delete_simple(cache->ats)
-    macro_f_array_lengths_t_delete_simple(cache->stack)
+    f_type_array_lengths_resize(0, &cache->ats);
+    f_type_array_lengths_resize(0, &cache->stack);
     macro_f_fss_delimits_t_delete_simple(cache->delimits)
 
     f_string_dynamic_resize(0, &cache->buffer_file);

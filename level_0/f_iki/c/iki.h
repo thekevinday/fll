@@ -13,11 +13,11 @@
 #ifndef _F_iki_h
 #define _F_iki_h
 
-// libc includes.
+// Libc includes.
 #include <stdio.h>
 #include <sys/stat.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -47,7 +47,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_iki_content_is_
-  extern f_status_t f_iki_content_is(const f_string_static_t content, const uint8_t quote);
+  extern f_status_t f_iki_content_is(const f_string_static_t content, const f_string_static_t quote);
 #endif // _di_f_iki_content_is_
 
 /**
@@ -68,7 +68,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_iki_content_partial_is_
-  extern f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const uint8_t quote);
+  extern f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote);
 #endif // _di_f_iki_content_partial_is_
 
 /**

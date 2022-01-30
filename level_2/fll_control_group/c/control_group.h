@@ -10,9 +10,9 @@
 #ifndef _FLL_control_h
 #define _FLL_control_h
 
-// libc includes.
+// Libc includes.
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -23,7 +23,7 @@
 #include <fll/level_0/file.h>
 #include <fll/level_0/path.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/control_group.h>
 #include <fll/level_1/directory.h>
 

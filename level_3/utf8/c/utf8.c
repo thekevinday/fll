@@ -9,6 +9,15 @@
 extern "C" {
 #endif
 
+#ifndef _di_utf8_program_version_
+  const f_string_static_t utf8_program_version_s = macro_f_string_static_t_initialize2(UTF8_program_version_s, 0, UTF8_program_version_s_length);
+#endif // _di_utf8_program_version_
+
+#ifndef _di_utf8_program_name_
+  const f_string_static_t utf8_program_name_s = macro_f_string_static_t_initialize2(UTF8_program_name_s, 0, UTF8_program_name_s_length);
+  const f_string_static_t utf8_program_name_long_s = macro_f_string_static_t_initialize2(UTF8_program_name_long_s, 0, UTF8_program_name_s_long_length);
+#endif // _di_utf8_program_name_
+
 #ifndef _di_utf8_print_help_
   f_status_t utf8_print_help(const f_file_t file, const f_color_context_t context) {
 
@@ -16,36 +25,36 @@ extern "C" {
 
     fll_program_print_help_header(file, context, utf8_program_name_long_s, utf8_version_s);
 
-    fll_program_print_help_option(file, context, f_console_standard_short_help_s.string, f_console_standard_long_help_s.string, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "    Print this help message.");
-    fll_program_print_help_option(file, context, f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_light_s.string, f_console_standard_long_light_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "Do not file in color.");
-    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s.string, f_console_standard_long_quiet_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Decrease verbosity, silencing most output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_normal_s.string, f_console_standard_long_normal_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "  Set verbosity to normal file.");
-    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, "   Enable debugging, significantly increasing verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, f_console_symbol_short_disable_s.string, f_console_symbol_long_disable_s.string, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity, silencing most output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
     f_print_dynamic(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, utf8_short_from_binary_s, utf8_long_from_binary_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "   The expected input format is binary (character data).");
-    fll_program_print_help_option(file, context, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "The expected input format is codepoint (such as U+0000).");
-    fll_program_print_help_option(file, context, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "     Use the given file as the input source.");
+    fll_program_print_help_option(file, context, utf8_short_from_binary_s, utf8_long_from_binary_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The expected input format is binary (character data).");
+    fll_program_print_help_option(file, context, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The expected input format is codepoint (such as U+0000).");
+    fll_program_print_help_option(file, context, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the input source.");
 
     f_print_dynamic(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, utf8_short_to_binary_s, utf8_long_to_binary_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "   The output format is binary (character data).");
-    fll_program_print_help_option(file, context, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "The output format is codepoint (such as U+0000).");
-    fll_program_print_help_option(file, context, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "The output format is to print whether or not character is combining or not.");
-    fll_program_print_help_option(file, context, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "     Use the given file as the output destination.");
-    fll_program_print_help_option(file, context, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "    The output format is to print the width of a character (either 0, 1, or 2).");
+    fll_program_print_help_option(file, context, utf8_short_to_binary_s, utf8_long_to_binary_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The output format is binary (character data).");
+    fll_program_print_help_option(file, context, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is codepoint (such as U+0000).");
+    fll_program_print_help_option(file, context, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is to print whether or not character is combining or not.");
+    fll_program_print_help_option(file, context, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the output destination.");
+    fll_program_print_help_option(file, context, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    The output format is to print the width of a character (either 0, 1, or 2).");
 
     f_print_dynamic(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, utf8_short_headers_s, utf8_long_headers_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "      Print headers for each section (pipe, file, or parameter).");
-    fll_program_print_help_option(file, context, utf8_short_separate_s, utf8_long_separate_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "     Separate characters by newlines (implied when printing headers).");
-    fll_program_print_help_option(file, context, utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "Strip invalid Unicode characters (do not print invalid sequences).");
-    fll_program_print_help_option(file, context, utf8_short_verify_s, utf8_long_verify_s, f_console_symbol_short_enable_s.string, f_console_symbol_long_enable_s.string, "       Only perform verification of valid sequences.");
+    fll_program_print_help_option(file, context, utf8_short_headers_s, utf8_long_headers_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Print headers for each section (pipe, file, or parameter).");
+    fll_program_print_help_option(file, context, utf8_short_separate_s, utf8_long_separate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Separate characters by newlines (implied when printing headers).");
+    fll_program_print_help_option(file, context, utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Strip invalid Unicode characters (do not print invalid sequences).");
+    fll_program_print_help_option(file, context, utf8_short_verify_s, utf8_long_verify_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Only perform verification of valid sequences.");
 
     fll_program_print_help_usage(file, context, utf8_program_name_s, "filename(s)");
 
@@ -512,12 +521,12 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < utf8_total_parameters_d; ++i) {
 
-      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
-      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
-      macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
+      f_type_array_lengths_resize(0, &main->parameters[i].locations);
+      f_type_array_lengths_resize(0, &main->parameters[i].locations_sub);
+      f_type_array_lengths_resize(0, &main->parameters[i].values);
     } // for
 
-    macro_f_array_lengths_t_delete_simple(main->remaining);
+    f_type_array_lengths_resize(0, &main->remaining);
 
     macro_f_color_context_t_delete_simple(main->context);
 

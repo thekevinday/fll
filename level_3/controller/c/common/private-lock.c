@@ -1,4 +1,4 @@
-#include "../controller/controller.h"
+#include "../controller.h"
 #include "private-common.h"
 
 #ifdef __cplusplus

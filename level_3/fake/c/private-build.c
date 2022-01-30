@@ -41,21 +41,16 @@ extern "C" {
     memcpy(build_includes, fake_build_parameter_library_include_s, fake_build_parameter_library_include_s_length);
     memcpy(build_includes + fake_build_parameter_library_include_s_length, main->path_build_includes.string, main->path_build_includes.used);
 
-    const f_string_t values[] = {
-      build_libraries,
-      build_includes,
-    };
-
-    const f_array_length_t lengths[] = {
-      build_libraries_length,
-      build_includes_length,
+    const f_string_static_t values[] = {
+      macro_f_string_static_t_initialize2(build_libraries, 0, build_includes_length),
+      macro_f_string_static_t_initialize2(build_includes, 0, build_includes_length),
     };
 
     for (uint8_t i = 0; i < 2; ++i) {
 
       if (!lengths[i]) continue;
 
-      *status = fll_execute_arguments_add(values[i], lengths[i], arguments);
+      *status = fll_execute_arguments_add(values[i].string, values[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
@@ -312,7 +307,8 @@ extern "C" {
     if (F_status_is_error(*status)) {
       fll_error_print(main->error, F_status_set_fine(*status), " macro_f_string_dynamic_t_resize", F_true);
 
-      macro_f_string_dynamic_t_delete_simple(path_source);
+      f_string_dynamic_resize(0, &path_source);
+
       return;
     }
 
@@ -486,9 +482,10 @@ extern "C" {
     } // for
 
     macro_f_directory_statuss_t_delete_simple(failures);
-    macro_f_string_dynamic_t_delete_simple(path_source);
-    macro_f_string_dynamic_t_delete_simple(destination_file);
-    macro_f_string_dynamic_t_delete_simple(destination_directory);
+
+    f_string_dynamic_resize(0, &path_source);
+    f_string_dynamic_resize(0, &destination_file);
+    f_string_dynamic_resize(0, &destination_directory);
 
     if (F_status_is_error_not(*status)) {
       fake_build_touch(main, file_stage, status);
@@ -543,7 +540,8 @@ extern "C" {
     if (F_status_is_error(*status)) {
       fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
-      macro_f_string_dynamics_t_delete_simple(arguments);
+      f_string_dynamics_resize(0, &arguments);
+
       return 0;
     }
 
@@ -563,8 +561,9 @@ extern "C" {
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_mash", F_true);
 
-          macro_f_string_dynamic_t_delete_simple(defines);
-          macro_f_string_dynamics_t_delete_simple(arguments);
+          f_string_dynamic_resize(0, &defines);
+          f_string_dynamics_resize(0, &arguments);
+
           return 0;
         }
 
@@ -573,20 +572,21 @@ extern "C" {
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
 
-          macro_f_string_dynamic_t_delete_simple(defines);
-          macro_f_string_dynamics_t_delete_simple(arguments);
+          f_string_dynamic_resize(0, &defines);
+          f_string_dynamics_resize(0, &arguments);
+
           return 0;
         }
       }
 
       const f_string_t parameters_prefix[] = {
-        f_console_symbol_short_enable_s.string,
-        f_console_symbol_short_enable_s.string,
-        f_console_symbol_short_enable_s.string,
-        f_console_symbol_short_enable_s.string,
-        f_console_symbol_short_enable_s.string,
-        f_console_symbol_short_enable_s.string,
-        f_console_symbol_short_enable_s.string,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
       };
 
       const f_array_length_t parameters_prefix_length[] = {
@@ -641,12 +641,13 @@ extern "C" {
 
       *status = fll_execute_arguments_add_parameter_set(parameters_prefix, parameters_prefix_length, parameters_name, parameters_name_length, parameters_value, parameters_value_length, 7, &arguments);
 
-      macro_f_string_dynamic_t_delete_simple(defines);
+      f_string_dynamic_resize(0, &defines);
 
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_arguments_add_parameter_set", F_true);
 
-        macro_f_string_dynamics_t_delete_simple(arguments);
+        f_string_dynamics_resize(0, &arguments);
+
         return 0;
       }
     }
@@ -673,8 +674,9 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), function, F_true);
 
-        macro_f_string_dynamic_t_delete_simple(path);
-        macro_f_string_dynamics_t_delete_simple(arguments);
+        f_string_dynamic_resize(0, &path);
+        f_string_dynamics_resize(0, &arguments);
+
         return 0;
       }
     }
@@ -690,7 +692,7 @@ extern "C" {
 
     *status = fll_execute_program(path.string, arguments, &parameter, 0, (void *) &return_code);
 
-    macro_f_string_dynamics_t_delete_simple(arguments);
+    f_string_dynamics_resize(0, &arguments);
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_interrupt);
@@ -701,7 +703,7 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%SFailed to execute script: '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%q%[%QFailed to execute script: '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
             fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -717,7 +719,7 @@ extern "C" {
       }
     }
 
-    macro_f_string_dynamic_t_delete_simple(path);
+    f_string_dynamic_resize(0, &path);
 
     return return_code;
   }

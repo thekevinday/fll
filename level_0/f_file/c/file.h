@@ -15,7 +15,7 @@
 #ifndef _F_file_h
 #define _F_file_h
 
-// libc includes.
+// Libc includes.
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -31,7 +31,7 @@
 // non-standard libc includs
 #include <sys/sysmacros.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -2439,6 +2439,37 @@ extern "C" {
 #ifndef _di_f_file_type_at_
   extern f_status_t f_file_type_at(const int at_id, const f_string_t path, const int flag, int *type);
 #endif // _di_f_file_type_at_
+
+/**
+ * Get the umask.
+ *
+ * This sets the umask after getting the umask.
+ * This is necessary because the umask() is poorly designed such that it requires changing the umask to get the current umask.
+ *
+ * @param mask
+ *   The umask value.
+ *   (The name "mask" is used avoid a naming conflict with the umask() function.)
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_f_file_umask_get_
+  extern f_status_t f_file_umask_get(mode_t *mask);
+#endif // _di_f_file_umask_get_
+
+/**
+ * Set the umask.
+ *
+ * @param mask
+ *   The umask value to assigned.
+ *   (The name "mask" is used avoid a naming conflict with the umask() function.)
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_f_file_umask_set_
+  extern f_status_t f_file_umask_set(const mode_t mask);
+#endif // _di_f_file_umask_set_
 
 /**
  * Write until entire buffer is written.

@@ -6,9 +6,10 @@ extern "C" {
 #endif
 
 #ifndef _di_f_file_type_
-  const f_string_static_t f_file_type_name_blocks_s = macro_f_string_static_t_initialize2(F_file_type_name_block_s, 0, F_file_type_name_block_s_length);
+  const f_string_static_t f_file_type_name_block_s = macro_f_string_static_t_initialize2(F_file_type_name_block_s, 0, F_file_type_name_block_s_length);
   const f_string_static_t f_file_type_name_character_s = macro_f_string_static_t_initialize2(F_file_type_name_character_s, 0, F_file_type_name_character_s_length);
   const f_string_static_t f_file_type_name_directory_s = macro_f_string_static_t_initialize2(F_file_type_name_directory_s, 0, F_file_type_name_directory_s_length);
+  const f_string_static_t f_file_type_name_fifo_s = macro_f_string_static_t_initialize2(F_file_type_name_fifo_s, 0, F_file_type_name_fifo_s_length);
   const f_string_static_t f_file_type_name_link_s = macro_f_string_static_t_initialize2(F_file_type_name_link_s, 0, F_file_type_name_link_s_length);
   const f_string_static_t f_file_type_name_regular_s = macro_f_string_static_t_initialize2(F_file_type_name_regular_s, 0, F_file_type_name_regular_s_length);
   const f_string_static_t f_file_type_name_socket_s = macro_f_string_static_t_initialize2(F_file_type_name_socket_s, 0, F_file_type_name_socket_s_length);

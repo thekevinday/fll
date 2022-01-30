@@ -8,14 +8,15 @@
  * This program provides status code to/from string translation.
  */
 #ifndef _status_code_h
+#define _status_code_h
 
-// libc includes.
+// Libc includes.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -29,13 +30,13 @@
 #include <fll/level_0/signal.h>
 #include <fll/level_0/status_string.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/console.h>
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
 
-// fll-2 includes
+// FLL-2 includes.
 #include <fll/level_2/error.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
@@ -46,24 +47,40 @@ extern "C" {
 #endif
 
 #ifndef _di_status_code_program_version_
-  #define status_code_program_version_major_s F_string_ascii_0_s
-  #define status_code_program_version_minor_s F_string_ascii_5_s
-  #define status_code_program_version_micro_s F_string_ascii_8_s
+  #define STATUS_CODE_program_version_major_s F_string_ascii_0_s
+  #define STATUS_CODE_program_version_minor_s F_string_ascii_5_s
+  #define STATUS_CODE_program_version_micro_s F_string_ascii_8_s
 
-  #ifndef status_code_progam_version_nano_prefix_s
-    #define status_code_progam_version_nano_prefix_s
-  #endif
+  #define STATUS_CODE_program_version_major_s_length F_string_ascii_0_s_length
+  #define STATUS_CODE_program_version_minor_s_length F_string_ascii_5_s_length
+  #define STATUS_CODE_program_version_micro_s_length F_string_ascii_8_s_length
 
-  #ifndef status_code_progam_version_nano_s
-    #define status_code_progam_version_nano_s
-  #endif
+  #if !(defined(STATUS_CODE_program_version_nano_prefix_s) && defined(STATUS_CODE_program_version_nano_prefix_s_length))
+    #define STATUS_CODE_program_version_nano_prefix_s
+    #define STATUS_CODE_program_version_nano_prefix_s_length 0
+  #endif // !(defined(STATUS_CODE_program_version_nano_prefix_s) && defined(STATUS_CODE_program_version_nano_prefix_s_length))
 
-  #define status_code_progam_version_s status_code_program_version_major_s F_string_ascii_period_s status_code_program_version_minor_s F_string_ascii_period_s status_code_program_version_micro_s status_code_progam_version_nano_prefix_s status_code_progam_version_nano_s
+  #if !(defined(STATUS_CODE_program_version_nano_s) && defined(STATUS_CODE_program_version_nano_s_length))
+    #define STATUS_CODE_program_version_nano_s
+    #define STATUS_CODE_program_version_nano_s_length 0
+  #endif // !(defined(STATUS_CODE_program_version_nano_s) && defined(STATUS_CODE_program_version_nano_s_length))
+
+  #define STATUS_CODE_progam_version_s STATUS_CODE_program_version_major_s F_string_ascii_period_s STATUS_CODE_program_version_minor_s F_string_ascii_period_s STATUS_CODE_program_version_micro_s STATUS_CODE_progam_version_nano_prefix_s STATUS_CODE_progam_version_nano_s
+
+  #define STATUS_CODE_progam_version_s_length STATUS_CODE_program_version_major_s_length + F_string_ascii_period_s_length + STATUS_CODE_program_version_minor_s_length + F_string_ascii_period_s_length + STATUS_CODE_program_version_micro_s_length + STATUS_CODE_progam_version_nano_prefix_s_length + STATUS_CODE_progam_version_nano_s_length
+
+  extern const f_string_static_t status_code_program_version_s;
 #endif // _di_status_code_program_version_
 
 #ifndef _di_status_code_program_name_
-  #define status_code_progam_name_s      "status_code"
-  #define status_code_progam_name_long_s "FSS Status Code"
+  #define STATUS_CODE_progam_name_s      "status_code"
+  #define STATUS_CODE_progam_name_long_s "FSS Status Code"
+
+  #define STATUS_CODE_program_name_s_length      11
+  #define STATUS_CODE_program_name_long_s_length 15
+
+  extern const f_string_static_t status_code_program_name_s;
+  extern const f_string_static_t status_code_program_name_long_s;
 #endif // _di_status_code_program_name_
 
 #ifndef _di_status_code_defines_

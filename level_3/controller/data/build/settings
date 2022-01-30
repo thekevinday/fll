@@ -21,33 +21,29 @@ build_indexer ar
 build_indexer_arguments rcs
 build_language c
 build_libraries -lc -lcap
-
 build_libraries-individual -lfll_control_group -lfll_error -lfll_execute -lfll_fss -lfll_path -lfll_print -lfll_program
 build_libraries-individual -lfl_console -lfl_control_group -lfl_conversion -lfl_directory -lfl_environment -lfl_fss -lfl_iki -lfl_print -lfl_string
 build_libraries-individual -lf_account -lf_capability -lf_color -lf_console -lf_control_group -lf_conversion -lf_directory -lf_environment -lf_execute -lf_file -lf_fss -lf_iki -lf_limit -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_socket -lf_status_string -lf_string -lf_thread -lf_type_array -lf_utf
-
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_libraries_shared
 build_libraries_static
+build_sources_library controller.c common.c
 build_sources_library common/private-common.c common/private-cache.c common/private-control.c common/private-entry.c common/private-lock.c common/private-process.c common/private-rule.c common/private-setting.c common/private-task.c common/private-thread.c
 build_sources_library control/private-control.c control/private-control_print.c
-build_sources_library controller/controller.c controller/private-controller.c controller/private-controller_print.c
+build_sources_library controller/private-controller.c controller/private-controller_print.c
 build_sources_library entry/private-entry.c entry/private-entry_print.c
 build_sources_library rule/private-rule.c rule/private-rule_print.c
 build_sources_library process/private-process.c
 build_sources_library task/private-task.c task/private-task_print.c
 build_sources_library lock/private-lock.c lock/private-lock_print.c
 build_sources_library thread/private-thread.c thread/private-thread_control.c thread/private-thread_entry.c thread/private-thread_process.c thread/private-thread_rule.c thread/private-thread_signal.c
-build_sources_library
-build_sources_library
-build_sources_library
 build_sources_library_shared
 build_sources_library_static
 build_sources_program main.c
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers controller.h
+build_sources_headers controller.h common.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script

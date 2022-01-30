@@ -111,10 +111,6 @@ extern "C" {
  *   The path name, such as 'default' from '/etc/controller/entries/default.entry'.
  * @param path_suffix
  *   The path suffix, such as 'entry' from '/etc/controller/entries/default.entry'.
- * @param path_prefix_length
- *   The length of the prefix path.
- * @param path_suffix_length
- *   The length of the suffix path.
  * @param cache
  *   The following within the cache is updated:
  *   - name_file: The partial path of the file is inserted.
@@ -138,7 +134,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_file_load_
-  extern f_status_t controller_file_load(const controller_global_t global, const bool required, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern f_status_t controller_file_load(const controller_global_t global, const bool required, const f_string_static_t path_prefix, const f_string_static_t path_name, const f_string_static_t path_suffix, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_file_load_
 
 /**

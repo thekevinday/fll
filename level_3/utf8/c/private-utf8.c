@@ -16,8 +16,8 @@ extern "C" {
       f_file_stream_close(F_true, &data->file);
     }
 
-    macro_f_string_dynamic_t_delete_simple(data->buffer);
-    macro_f_string_dynamic_t_delete_simple(data->text);
+    f_string_dynamic_resize(0, &data->buffer);
+    f_string_dynamic_resize(0, &data->text);
   }
 #endif // _di_utf8_data_delete_
 
@@ -102,7 +102,7 @@ extern "C" {
 
       // When headers are printed, they are printed with a newline so only print this newline when separate is used without headers being printed.
       if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e && data->main->parameters[utf8_parameter_separate_e].result == f_console_result_found_e) {
-        f_print_terminated(f_string_eol_s, data->file.stream);
+        f_print_dynamic(f_string_eol_s, data->file.stream);
       }
     }
 

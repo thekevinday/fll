@@ -211,7 +211,7 @@ extern "C" {
 
       f_console_identify(arguments.argv[location], &result);
 
-      argument_length = strnlen(arguments.argv[location], f_console_parameter_size);
+      argument_length = strnlen(arguments.argv[location], F_console_parameter_size_d);
 
       // Process the current parameter.
       if (result == f_console_short_enable_e || result == f_console_short_disable_e) {

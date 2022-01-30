@@ -23,7 +23,7 @@ extern "C" {
         &main->path_sources,
       };
 
-      const uint8_t parameters_length[] = {
+      const uint8_t parameters_size[] = {
         7,
         2,
         4,
@@ -59,7 +59,7 @@ extern "C" {
 
       for (i = 0; i < 3; ++i) {
 
-        status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
+        status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_size[i]);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
@@ -70,7 +70,7 @@ extern "C" {
     }
 
     {
-      const f_string_t parameters_source[] = {
+      const f_string_static_t parameters_source[] = {
         fake_path_part_documents_s,
         fake_path_part_includes_s,
         fake_path_part_libraries_s,
@@ -86,24 +86,6 @@ extern "C" {
         fake_path_part_c_s,
         fake_path_part_cpp_s,
         fake_path_part_script_s,
-      };
-
-      const f_array_length_t parameters_length[] = {
-        fake_path_part_documents_s_length,
-        fake_path_part_includes_s_length,
-        fake_path_part_libraries_s_length,
-        fake_path_part_objects_s_length,
-        fake_path_part_programs_s_length,
-        fake_path_part_settings_s_length,
-        fake_path_part_stage_s_length,
-        fake_path_part_build_s_length,
-        fake_path_part_settings_s_length,
-        fake_path_part_documents_s_length,
-        fake_path_part_licenses_s_length,
-        fake_path_part_bash_s_length,
-        fake_path_part_c_s_length,
-        fake_path_part_cpp_s_length,
-        fake_path_part_script_s_length,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
@@ -126,10 +108,10 @@ extern "C" {
 
       for (i = 0; i < 15; ++i) {
 
-        status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
+        status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
           return status;
         }
@@ -144,7 +126,7 @@ extern "C" {
         &main->path_documents,
       };
 
-      const uint8_t parameters_length[] = {
+      const uint8_t parameters_size[] = {
         3,
         3,
         4,
@@ -183,7 +165,7 @@ extern "C" {
 
       for (i = 0; i < 4; ++i) {
 
-        status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
+        status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_size[i]);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
@@ -203,7 +185,7 @@ extern "C" {
     }
 
     {
-      const f_string_t parameters_source[] = {
+      const f_string_static_t parameters_source[] = {
         fake_path_part_script_s,
         fake_path_part_shared_s,
         fake_path_part_static_s,
@@ -212,23 +194,9 @@ extern "C" {
         fake_path_part_static_s,
         fake_file_defines_s,
         fake_file_dependencies_s,
-        main->fakefile.string,
-        main->settings.string,
+        main->fakefile,
+        main->settings,
         fake_file_readme_s,
-      };
-
-      const f_array_length_t parameters_length[] = {
-        fake_path_part_script_s_length,
-        fake_path_part_shared_s_length,
-        fake_path_part_static_s_length,
-        fake_path_part_script_s_length,
-        fake_path_part_shared_s_length,
-        fake_path_part_static_s_length,
-        fake_file_defines_s_length,
-        fake_file_dependencies_s_length,
-        main->fakefile.used,
-        main->settings.used,
-        fake_file_readme_s_length,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
@@ -247,10 +215,10 @@ extern "C" {
 
       for (i = 0; i < 11; ++i) {
 
-        status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
+        status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
           return status;
         }
@@ -278,16 +246,10 @@ extern "C" {
       }
 
       {
-        const f_string_t parameters_source[] = {
+        const f_string_static_t parameters_source[] = {
           fake_path_part_includes_s,
           fake_path_part_libraries_s,
           fake_path_part_programs_s,
-        };
-
-        const f_array_length_t parameters_length[] = {
-          fake_path_part_includes_s_length,
-          fake_path_part_libraries_s_length,
-          fake_path_part_programs_s_length,
         };
 
         f_string_dynamic_t * const parameters_value[] = {
@@ -298,10 +260,10 @@ extern "C" {
 
         for (i = 0; i < 3; ++i) {
 
-          status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
+          status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
             return status;
           }
@@ -314,7 +276,7 @@ extern "C" {
           &main->path_work_programs,
         };
 
-        const uint8_t parameters_length[] = {
+        const uint8_t parameters_size[] = {
           3,
           3,
         };
@@ -338,7 +300,7 @@ extern "C" {
 
         for (i = 0; i < 2; ++i) {
 
-          status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
+          status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_size[i]);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
@@ -349,22 +311,13 @@ extern "C" {
       }
 
       {
-        const f_string_t parameters_source[] = {
+        const f_string_static_t parameters_source[] = {
           fake_path_part_script_s,
           fake_path_part_shared_s,
           fake_path_part_static_s,
           fake_path_part_script_s,
           fake_path_part_shared_s,
           fake_path_part_static_s,
-        };
-
-        const f_array_length_t parameters_length[] = {
-          fake_path_part_script_s_length,
-          fake_path_part_shared_s_length,
-          fake_path_part_static_s_length,
-          fake_path_part_script_s_length,
-          fake_path_part_shared_s_length,
-          fake_path_part_static_s_length,
         };
 
         f_string_dynamic_t * const parameters_value[] = {
@@ -378,10 +331,10 @@ extern "C" {
 
         for (i = 0; i < 6; ++i) {
 
-          status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
+          status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
             return status;
           }

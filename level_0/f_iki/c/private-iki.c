@@ -48,7 +48,7 @@ extern "C" {
 #endif // !defined(_di_f_iki_read_)
 
 #if !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
-  f_status_t private_f_iki_content_partial_is(const f_string_static_t buffer, const f_string_range_t range, const uint8_t quote) {
+  f_status_t private_f_iki_content_partial_is(const f_string_static_t buffer, const f_string_range_t range, const char quote) {
 
     f_array_length_t delimits = 0;
 

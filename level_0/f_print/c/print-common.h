@@ -56,6 +56,7 @@ extern "C" {
   #define F_print_sequence_escape_s                    "␛"
   #define F_print_sequence_form_feed_s                 "␌"
   #define F_print_sequence_line_feed_s                 "␊"
+  #define F_print_sequence_line_new_s                  "␤"
   #define F_print_sequence_null_s                      "␀"
   #define F_print_sequence_separator_file_s            "␜"
   #define F_print_sequence_separator_group_s           "␝"
@@ -63,6 +64,7 @@ extern "C" {
   #define F_print_sequence_separator_unit_s            "␟"
   #define F_print_sequence_shift_in_s                  "␏"
   #define F_print_sequence_shift_out_s                 "␎"
+  #define F_print_sequence_space_s                     "␠"
   #define F_print_sequence_start_of_header_s           "␁"
   #define F_print_sequence_start_of_text_s             "␂"
   #define F_print_sequence_substitute_s                "␚"
@@ -91,6 +93,7 @@ extern "C" {
   #define F_print_sequence_escape_s_length                    3
   #define F_print_sequence_form_feed_s_length                 3
   #define F_print_sequence_line_feed_s_length                 3
+  #define F_print_sequence_line_new_s_length                  3
   #define F_print_sequence_null_s_length                      3
   #define F_print_sequence_separator_file_s_length            3
   #define F_print_sequence_separator_group_s_length           3
@@ -98,6 +101,7 @@ extern "C" {
   #define F_print_sequence_separator_unit_s_length            3
   #define F_print_sequence_shift_in_s_length                  3
   #define F_print_sequence_shift_out_s_length                 3
+  #define F_print_sequence_space_s_length                     3
   #define F_print_sequence_start_of_header_s_length           3
   #define F_print_sequence_start_of_text_s_length             3
   #define F_print_sequence_substitute_s_length                3
@@ -126,6 +130,7 @@ extern "C" {
   extern const f_string_static_t f_print_sequence_equiry_s;
   extern const f_string_static_t f_print_sequence_form_feed_s;
   extern const f_string_static_t f_print_sequence_line_feed_s;
+  extern const f_string_static_t f_print_sequence_line_new_s;
   extern const f_string_static_t f_print_sequence_null_s;
   extern const f_string_static_t f_print_sequence_separator_file_s;
   extern const f_string_static_t f_print_sequence_separator_group_s;
@@ -133,6 +138,7 @@ extern "C" {
   extern const f_string_static_t f_print_sequence_separator_unit_s;
   extern const f_string_static_t f_print_sequence_shift_in_s;
   extern const f_string_static_t f_print_sequence_shift_out_s;
+  extern const f_string_static_t f_print_sequence_space_s;
   extern const f_string_static_t f_print_sequence_start_of_header_s;
   extern const f_string_static_t f_print_sequence_start_of_text_s;
   extern const f_string_static_t f_print_sequence_substitute_s;

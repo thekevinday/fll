@@ -50,10 +50,10 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%SThe values for the setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, fake_build_setting_name_environment_s, main->error.notable);
+          fl_print_format("%q%[%QThe values for the setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, fake_build_setting_name_environment_s, main->error.notable);
           fl_print_format("%[' of setting file '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, fake_build_setting_name_environment_s, main->error.notable);
+          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, fake_build_setting_name_environment_s, main->error.notable);
           fl_print_format("%[' is too large.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           flockfile(main->error.to.stream);
@@ -131,7 +131,8 @@ extern "C" {
         macro_f_fss_delimits_t_delete_simple(delimits);
       }
 
-      macro_f_string_dynamic_t_delete_simple(buffer);
+      f_string_dynamic_resize(0, &buffer);
+
       macro_f_fss_objects_t_delete_simple(objects);
       macro_f_fss_contents_t_delete_simple(contents);
     }
@@ -144,7 +145,7 @@ extern "C" {
         &setting->project_name,
       };
 
-      f_string_t names[] = {
+      f_string_static_t names[] = {
         fake_build_setting_name_project_name_s,
       };
 
@@ -153,8 +154,8 @@ extern "C" {
         if (!settings[i]->used) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%SThe setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, names[i], main->error.notable);
+          fl_print_format("%q%[%QThe setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, names[i], main->error.notable);
           fl_print_format("%[' is required but is not specified in the settings file '%]", main->error.to.stream, main->error.context, main->error.context);
           fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, setting_file.used ? path_file : main->file_data_build_settings.string, main->error.notable);
           fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
@@ -223,7 +224,7 @@ extern "C" {
     f_string_dynamics_t version_nano_prefix = f_string_dynamics_t_initialize;
     f_string_dynamics_t version_target = f_string_dynamics_t_initialize;
 
-    const f_string_t settings_name[] = {
+    const f_string_static_t settings_name[] = {
       fake_build_setting_name_build_compiler_s,
       fake_build_setting_name_build_indexer_s,
       fake_build_setting_name_build_indexer_arguments_s,
@@ -293,78 +294,6 @@ extern "C" {
       fake_build_setting_name_version_nano_s,
       fake_build_setting_name_version_nano_prefix_s,
       fake_build_setting_name_version_target_s,
-    };
-
-    const f_array_length_t settings_length[] = {
-      fake_build_setting_name_build_compiler_s_length,
-      fake_build_setting_name_build_indexer_s_length,
-      fake_build_setting_name_build_indexer_arguments_s_length,
-      fake_build_setting_name_build_language_s_length,
-      fake_build_setting_name_build_libraries_s_length,
-      fake_build_setting_name_build_libraries_shared_s_length,
-      fake_build_setting_name_build_libraries_static_s_length,
-      fake_build_setting_name_build_script_s_length,
-      fake_build_setting_name_build_shared_s_length,
-      fake_build_setting_name_build_sources_headers_s_length,
-      fake_build_setting_name_build_sources_headers_shared_s_length,
-      fake_build_setting_name_build_sources_headers_static_s_length,
-      fake_build_setting_name_build_sources_library_s_length,
-      fake_build_setting_name_build_sources_library_shared_s_length,
-      fake_build_setting_name_build_sources_library_static_s_length,
-      fake_build_setting_name_build_sources_program_s_length,
-      fake_build_setting_name_build_sources_program_shared_s_length,
-      fake_build_setting_name_build_sources_program_static_s_length,
-      fake_build_setting_name_build_sources_script_s_length,
-      fake_build_setting_name_build_sources_settings_s_length,
-      fake_build_setting_name_build_static_s_length,
-      fake_build_setting_name_defines_s_length,
-      fake_build_setting_name_defines_library_s_length,
-      fake_build_setting_name_defines_library_shared_s_length,
-      fake_build_setting_name_defines_library_static_s_length,
-      fake_build_setting_name_defines_program_s_length,
-      fake_build_setting_name_defines_program_shared_s_length,
-      fake_build_setting_name_defines_program_static_s_length,
-      fake_build_setting_name_defines_shared_s_length,
-      fake_build_setting_name_defines_static_s_length,
-      fake_build_setting_name_environment_length_s,
-      fake_build_setting_name_flags_s_length,
-      fake_build_setting_name_flags_library_s_length,
-      fake_build_setting_name_flags_library_shared_s_length,
-      fake_build_setting_name_flags_library_static_s_length,
-      fake_build_setting_name_flags_program_s_length,
-      fake_build_setting_name_flags_program_shared_s_length,
-      fake_build_setting_name_flags_program_static_s_length,
-      fake_build_setting_name_flags_shared_s_length,
-      fake_build_setting_name_flags_static_s_length,
-      fake_build_setting_name_modes_s_length,
-      fake_build_setting_name_modes_default_s_length,
-      fake_build_setting_name_path_headers_s_length,
-      fake_build_setting_name_path_headers_preserve_s_length,
-      fake_build_setting_name_path_language_s_length,
-      fake_build_setting_name_path_library_script_s_length,
-      fake_build_setting_name_path_library_shared_s_length,
-      fake_build_setting_name_path_library_static_s_length,
-      fake_build_setting_name_path_program_script_s_length,
-      fake_build_setting_name_path_program_shared_s_length,
-      fake_build_setting_name_path_program_static_s_length,
-      fake_build_setting_name_path_sources_s_length,
-      fake_build_setting_name_path_standard_s_length,
-      fake_build_setting_name_process_post_s_length,
-      fake_build_setting_name_process_pre_s_length,
-      fake_build_setting_name_project_name_s_length,
-      fake_build_setting_name_search_exclusive_s_length,
-      fake_build_setting_name_search_shared_s_length,
-      fake_build_setting_name_search_static_s_length,
-      fake_build_setting_name_version_file_s_length,
-      fake_build_setting_name_version_major_s_length,
-      fake_build_setting_name_version_major_prefix_s_length,
-      fake_build_setting_name_version_micro_s_length,
-      fake_build_setting_name_version_micro_prefix_s_length,
-      fake_build_setting_name_version_minor_s_length,
-      fake_build_setting_name_version_minor_prefix_s_length,
-      fake_build_setting_name_version_nano_s_length,
-      fake_build_setting_name_version_nano_prefix_s_length,
-      fake_build_setting_name_version_target_s_length,
     };
 
     f_string_dynamics_t *settings_value[] = {
@@ -513,7 +442,7 @@ extern "C" {
 
     f_string_t function = "fll_fss_snatch_apart";
 
-    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total_d, settings_value, settings_matches, 0);
+    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, fake_build_setting_total_d, settings_value, settings_matches, 0);
 
     if (*status == F_none) {
       const int total_build_libraries = setting->build_libraries.used;
@@ -550,7 +479,7 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%SThe specified mode '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%q%[%QThe specified mode '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, modes->array[i], main->error.notable);
             fl_print_format("%[' is not a valid mode, according to '%]", main->error.to.stream, main->error.context, main->error.context);
             fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
@@ -597,7 +526,7 @@ extern "C" {
         }
 
         for (j = 0; j < fake_build_setting_total_d; ++j) {
-          macro_f_string_dynamic_t_delete_simple(settings_mode_name_dynamic[j]);
+          f_string_dynamic_resize(0, &settings_mode_name_dynamic[j]);
         } // for
 
         if (F_status_is_error(*status)) break;
@@ -635,7 +564,7 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           funlockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%SA setting in the file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%q%[%QA setting in the file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
           fl_print_format("%[' is too long.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -647,7 +576,7 @@ extern "C" {
       }
     }
     else {
-      const f_string_t settings_single_name[] = {
+      const f_string_static_t settings_single_name[] = {
         fake_build_setting_name_build_compiler_s,
         fake_build_setting_name_build_indexer_s,
         fake_build_setting_name_build_language_s,
@@ -939,8 +868,8 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
-            fl_print_format("%q%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
+            fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' may only have a single property, only using the first: '%]", main->warning.to.stream, main->warning.context, main->warning.context);
@@ -964,16 +893,16 @@ extern "C" {
             if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
-              fl_print_format("%q%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-              fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
+              fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may be either '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
               fl_print_format("%[' or '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_no_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_no_s, main->warning.notable);
               fl_print_format("%[', defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
               fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
               funlockfile(main->warning.to.stream);
@@ -996,18 +925,18 @@ extern "C" {
             if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
-              fl_print_format("%q%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-              fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
+              fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may only be one of '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_language_bash_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_language_bash_s, main->warning.notable);
               fl_print_format("%[', '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_language_c_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_language_c_s, main->warning.notable);
               fl_print_format("%[', or '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_language_cpp_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_language_cpp_s, main->warning.notable);
               fl_print_format("%[', defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_language_c_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_language_c_s, main->warning.notable);
               fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
               funlockfile(main->warning.to.stream);
@@ -1033,20 +962,20 @@ extern "C" {
             if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
-              fl_print_format("%q%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-              fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
+              fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may only be one of '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
               fl_print_format("%[', '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_version_minor_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_minor_s, main->warning.notable);
               fl_print_format("%[', '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
               fl_print_format("%[', or '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_version_nano_s, main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_nano_s, main->warning.notable);
               fl_print_format("%[', defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, settings_single_version_default_name[i], main->warning.notable);
+              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_version_default_name[i], main->warning.notable);
               fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
               funlockfile(main->warning.to.stream);
@@ -1092,12 +1021,12 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
-            fl_print_format("%q%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_file_s, main->warning.notable);
+            fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_file_s, main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' is required, defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
+            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
             fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
             funlockfile(main->warning.to.stream);
@@ -1110,12 +1039,12 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
-            fl_print_format("%q%[%SThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_target_s, main->warning.notable);
+            fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_target_s, main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' is required, defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%s%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
+            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
             fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
             funlockfile(main->warning.to.stream);
@@ -1147,21 +1076,21 @@ extern "C" {
           settings_matches[67], // version_nano_prefix
         };
 
-        const char *name_target[] = {
+        const f_string_static_t name_target[] = {
           fake_build_version_major_s,
           fake_build_version_minor_s,
           fake_build_version_micro_s,
           fake_build_version_nano_s,
         };
 
-        const char *name_object[] = {
+        const f_string_static_t name_object[] = {
           fake_build_setting_name_version_major_s,
           fake_build_setting_name_version_minor_s,
           fake_build_setting_name_version_micro_s,
           fake_build_setting_name_version_nano_s,
         };
 
-        const char *setting_name[] = {
+        const f_string_static_t setting_name[] = {
           fake_build_setting_name_version_file_s,
           fake_build_setting_name_version_target_s,
         };
@@ -1180,10 +1109,11 @@ extern "C" {
             if (!has_prefix_object[i]) {
               prefix[i]->used = 0;
 
-              *status = f_string_append(fake_build_setting_default_version_prefix_s, fake_build_setting_default_version_prefix_s_length, prefix[i]);
+              *status = f_string_dynamic_append(fake_build_setting_default_version_prefix_s, prefix[i]);
 
               if (F_status_is_error(*status)) {
-                fll_error_print(main->error, F_status_set_fine(*status), "f_string_append", F_true);
+                fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+
                 break;
               }
             }
@@ -1197,18 +1127,19 @@ extern "C" {
                 if (main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(main->error.to.stream);
 
-                  fl_print_format("%q%[%SWhen the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                  fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, setting_name[j], main->error.notable);
+                  fl_print_format("%q%[%QWhen the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+                  fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, setting_name[j], main->error.notable);
                   fl_print_format("%[' is set to '%]", main->error.to.stream, main->error.context, main->error.context);
-                  fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, name_target[setting_target[j] - 1], main->error.notable);
+                  fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, name_target[setting_target[j] - 1], main->error.notable);
                   fl_print_format("%[' then the '%]", main->error.to.stream, main->error.context, main->error.context);
-                  fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, name_object[i], main->error.notable);
+                  fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, name_object[i], main->error.notable);
                   fl_print_format("%[' Object must have Content.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                   funlockfile(main->error.to.stream);
                 }
 
                 *status = F_status_set_error(F_failure);
+
                 break;
               }
             } // for
@@ -1219,39 +1150,39 @@ extern "C" {
       }
     }
 
-    macro_f_string_dynamics_t_delete_simple(build_compiler);
-    macro_f_string_dynamics_t_delete_simple(build_indexer);
-    macro_f_string_dynamics_t_delete_simple(build_language);
-    macro_f_string_dynamics_t_delete_simple(build_script);
-    macro_f_string_dynamics_t_delete_simple(build_shared);
-    macro_f_string_dynamics_t_delete_simple(build_static);
-    macro_f_string_dynamics_t_delete_simple(path_headers);
-    macro_f_string_dynamics_t_delete_simple(path_headers_preserve);
-    macro_f_string_dynamics_t_delete_simple(path_language);
-    macro_f_string_dynamics_t_delete_simple(path_library_script);
-    macro_f_string_dynamics_t_delete_simple(path_library_shared);
-    macro_f_string_dynamics_t_delete_simple(path_library_static);
-    macro_f_string_dynamics_t_delete_simple(path_program_script);
-    macro_f_string_dynamics_t_delete_simple(path_program_shared);
-    macro_f_string_dynamics_t_delete_simple(path_program_static);
-    macro_f_string_dynamics_t_delete_simple(path_sources);
-    macro_f_string_dynamics_t_delete_simple(path_standard);
-    macro_f_string_dynamics_t_delete_simple(process_post);
-    macro_f_string_dynamics_t_delete_simple(process_pre);
-    macro_f_string_dynamics_t_delete_simple(project_name);
-    macro_f_string_dynamics_t_delete_simple(search_exclusive);
-    macro_f_string_dynamics_t_delete_simple(search_shared);
-    macro_f_string_dynamics_t_delete_simple(search_static);
-    macro_f_string_dynamics_t_delete_simple(version_file);
-    macro_f_string_dynamics_t_delete_simple(version_major);
-    macro_f_string_dynamics_t_delete_simple(version_major_prefix);
-    macro_f_string_dynamics_t_delete_simple(version_micro);
-    macro_f_string_dynamics_t_delete_simple(version_micro_prefix);
-    macro_f_string_dynamics_t_delete_simple(version_minor);
-    macro_f_string_dynamics_t_delete_simple(version_minor_prefix);
-    macro_f_string_dynamics_t_delete_simple(version_nano);
-    macro_f_string_dynamics_t_delete_simple(version_nano_prefix);
-    macro_f_string_dynamics_t_delete_simple(version_target);
+    f_string_dynamics_resize(0, &build_compiler);
+    f_string_dynamics_resize(0, &build_indexer);
+    f_string_dynamics_resize(0, &build_language);
+    f_string_dynamics_resize(0, &build_script);
+    f_string_dynamics_resize(0, &build_shared);
+    f_string_dynamics_resize(0, &build_static);
+    f_string_dynamics_resize(0, &path_headers);
+    f_string_dynamics_resize(0, &path_headers_preserve);
+    f_string_dynamics_resize(0, &path_language);
+    f_string_dynamics_resize(0, &path_library_script);
+    f_string_dynamics_resize(0, &path_library_shared);
+    f_string_dynamics_resize(0, &path_library_static);
+    f_string_dynamics_resize(0, &path_program_script);
+    f_string_dynamics_resize(0, &path_program_shared);
+    f_string_dynamics_resize(0, &path_program_static);
+    f_string_dynamics_resize(0, &path_sources);
+    f_string_dynamics_resize(0, &path_standard);
+    f_string_dynamics_resize(0, &process_post);
+    f_string_dynamics_resize(0, &process_pre);
+    f_string_dynamics_resize(0, &project_name);
+    f_string_dynamics_resize(0, &search_exclusive);
+    f_string_dynamics_resize(0, &search_shared);
+    f_string_dynamics_resize(0, &search_static);
+    f_string_dynamics_resize(0, &version_file);
+    f_string_dynamics_resize(0, &version_major);
+    f_string_dynamics_resize(0, &version_major_prefix);
+    f_string_dynamics_resize(0, &version_micro);
+    f_string_dynamics_resize(0, &version_micro_prefix);
+    f_string_dynamics_resize(0, &version_minor);
+    f_string_dynamics_resize(0, &version_minor_prefix);
+    f_string_dynamics_resize(0, &version_nano);
+    f_string_dynamics_resize(0, &version_nano_prefix);
+    f_string_dynamics_resize(0, &version_target);
   }
 #endif // _di_fake_build_load_setting_process_
 
@@ -1267,16 +1198,10 @@ extern "C" {
     }
 
     {
-      const f_string_t sources[] = {
+      const f_string_static_t sources[] = {
         fake_build_setting_default_version_s,
         fake_build_setting_default_version_s,
         fake_build_setting_default_version_s,
-      };
-
-      const f_array_length_t lengths[] = {
-        fake_build_setting_default_version_s_length,
-        fake_build_setting_default_version_s_length,
-        fake_build_setting_default_version_s_length,
       };
 
       f_string_dynamic_t * const destinations[] = {
@@ -1289,10 +1214,10 @@ extern "C" {
 
         if (destinations[i]->used) continue;
 
-        *status = f_string_append_assure(sources[i], lengths[i], destinations[i]);
+        *status = f_string_dynamic_append_assure(sources[i], destinations[i]);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_append_assure", F_true);
+          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
           break;
         }
 
@@ -1322,12 +1247,12 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%SThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled_s, main->error.notable);
+          fl_print_format("%q%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled_s, main->error.notable);
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled_s, main->error.notable);
+          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled_s, main->error.notable);
           fl_print_format("%[' contradict, defaulting to '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, main->error.notable);
+          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, main->error.notable);
           fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
@@ -1357,12 +1282,12 @@ extern "C" {
         if (main->error.verbosity == f_console_verbosity_verbose_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%SThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled_s, main->error.notable);
+          fl_print_format("%q%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled_s, main->error.notable);
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled_s, main->error.notable);
+          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled_s, main->error.notable);
           fl_print_format("%[' contradict, defaulting to '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, main->error.notable);
+          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, main->error.notable);
           fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
@@ -1383,12 +1308,12 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%SThe build settings '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_shared_s, main->error.notable);
+          fl_print_format("%q%[%QThe build settings '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_shared_s, main->error.notable);
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_static_s, main->error.notable);
+          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_static_s, main->error.notable);
           fl_print_format("%[' cannot both be false when using the language '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, main->error.notable);
+          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, main->error.notable);
           fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
@@ -1425,22 +1350,6 @@ extern "C" {
       fake_build_stage_sources_headers_s,
       fake_build_stage_sources_script_s,
       fake_build_stage_sources_settings_s,
-    };
-
-    const f_array_length_t lengths[] = {
-      fake_build_stage_libraries_script_s_length,
-      fake_build_stage_libraries_shared_s_length,
-      fake_build_stage_libraries_static_s_length,
-      fake_build_stage_objects_static_s_length,
-      fake_build_stage_process_post_s_length,
-      fake_build_stage_process_pre_s_length,
-      fake_build_stage_programs_script_s_length,
-      fake_build_stage_programs_shared_s_length,
-      fake_build_stage_programs_static_s_length,
-      fake_build_stage_skeleton_s_length,
-      fake_build_stage_sources_headers_s_length,
-      fake_build_stage_sources_script_s_length,
-      fake_build_stage_sources_settings_s_length,
     };
 
     f_string_dynamic_t * const values[] = {
@@ -1487,51 +1396,39 @@ extern "C" {
       }
 
       if (main->process.used) {
-        *status = f_string_append(main->process.string, main->process.used, values[i]);
+        *status = f_string_dynamic_append_nulless(main->process, values[i]);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_append", F_true);
+          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
           break;
         }
 
-        *status = f_string_append(fake_build_stage_separate_s, fake_build_stage_separate_s_length, values[i]);
+        *status = f_string_dynamic_append(fake_build_stage_separate_s, values[i]);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_append", F_true);
+          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
 
           break;
         }
       }
 
-      *status = f_string_append_nulless(names[i], lengths[i], values[i]);
+      *status = f_string_dynamic_append(names[i], values[i]);
 
-      if (F_status_is_error(*status)) {
-        fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
-
-        break;
+      if (F_status_is_error_not(*status)) {
+        *status = f_string_dynamic_append(fake_build_stage_separate_s, values[i]);
       }
 
-      *status = f_string_append(fake_build_stage_separate_s, fake_build_stage_separate_s_length, values[i]);
-
-      if (F_status_is_error(*status)) {
-        fll_error_print(main->error, F_status_set_fine(*status), "f_string_append", F_true);
-
-        break;
+      if (F_status_is_error_not(*status)) {
+        *status = f_string_dynamic_append(settings_file_base, values[i]);
       }
 
-      *status = f_string_dynamic_append(settings_file_base, values[i]);
+      if (F_status_is_error_not(*status)) {
+        *status = f_string_dynamic_append(fake_build_stage_built_s, values[i]);
+      }
 
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
-
-        break;
-      }
-
-      *status = f_string_append(fake_build_stage_built_s, fake_build_stage_built_s_length, values[i]);
-
-      if (F_status_is_error(*status)) {
-        fll_error_print(main->error, F_status_set_fine(*status), "f_string_append", F_true);
 
         break;
       }
@@ -1545,7 +1442,7 @@ extern "C" {
       }
     } // for
 
-    macro_f_string_dynamic_t_delete_simple(settings_file_base);
+    f_string_dynamic_resize(0, &settings_file_base);
   }
 #endif // _di_fake_build_load_stage_
 

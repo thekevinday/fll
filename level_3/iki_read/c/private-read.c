@@ -162,7 +162,7 @@ extern "C" {
             macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
           } // for
 
-          macro_f_string_dynamic_t_delete_simple(name);
+          f_string_dynamic_resize(0, &name);
           return status;
         }
 
@@ -195,7 +195,7 @@ extern "C" {
         funlockfile(main->output.to.stream);
       } // for
 
-      macro_f_string_dynamic_t_delete_simple(name);
+      f_string_dynamic_resize(0, &name);
 
       if (unmatched) status = F_data_not;
       else status = F_none;
@@ -318,7 +318,7 @@ extern "C" {
       for (f_array_length_t index = 0; i < main->parameters[iki_read_parameter_name_e].values.used; ++i) {
 
         index = main->parameters[iki_read_parameter_name_e].values.array[i];
-        length_argument = strnlen(arguments->argv[index], f_console_parameter_size);
+        length_argument = strnlen(arguments->argv[index], F_console_parameter_size_d);
 
         for (j = 0, name_missed = F_true; j < names.used; ++j) {
 
@@ -357,7 +357,8 @@ extern "C" {
           macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
-        macro_f_string_dynamics_t_delete_simple(names);
+        f_string_dynamics_resize(0, &names);
+
         return status;
       }
     }
@@ -443,7 +444,7 @@ extern "C" {
       macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
-    macro_f_string_dynamics_t_delete_simple(names);
+    f_string_dynamics_resize(0, &names);
 
     return F_none;
   }
@@ -501,7 +502,7 @@ extern "C" {
 
         if (!((++signal_check) % iki_read_signal_check_d)) {
           if (iki_read_signal_received(main)) {
-            macro_f_string_dynamic_t_delete_simple(name);
+            f_string_dynamic_resize(0, &name);
 
             return F_status_set_error(F_interrupt);
           }
@@ -517,7 +518,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
 
-          macro_f_string_dynamic_t_delete_simple(name);
+          f_string_dynamic_resize(0, &name);
           return status;
         }
 
@@ -531,7 +532,7 @@ extern "C" {
         } // for
       } // for
 
-      macro_f_string_dynamic_t_delete_simple(name);
+      f_string_dynamic_resize(0, &name);
     }
     else {
       total = iki_data->variable.used;
@@ -575,7 +576,7 @@ extern "C" {
     for (; i < parameter->values.used; i += 3) {
 
       index = parameter->values.array[i];
-      length = strnlen(arguments->argv[index], f_console_parameter_size);
+      length = strnlen(arguments->argv[index], F_console_parameter_size_d);
 
       for (j = 0; j < vocabulary->used; ++j) {
 
@@ -588,12 +589,12 @@ extern "C" {
           index = parameter->values.array[i + 1];
           index_2 = substitutionss[j].used;
           substitutionss[j].array[index_2].replace.string = arguments->argv[index];
-          substitutionss[j].array[index_2].replace.used = strnlen(arguments->argv[index], f_console_parameter_size);
+          substitutionss[j].array[index_2].replace.used = strnlen(arguments->argv[index], F_console_parameter_size_d);
           substitutionss[j].array[index_2].replace.size = substitutionss[j].array[index_2].replace.used;
 
           index = parameter->values.array[i + 2];
           substitutionss[j].array[index_2].with.string = arguments->argv[index];
-          substitutionss[j].array[index_2].with.used = strnlen(arguments->argv[index], f_console_parameter_size);
+          substitutionss[j].array[index_2].with.used = strnlen(arguments->argv[index], F_console_parameter_size_d);
           substitutionss[j].array[index_2].with.size = substitutionss[j].array[index_2].with.used;
 
           ++substitutionss[j].used;

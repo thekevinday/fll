@@ -14,7 +14,7 @@ extern "C" {
 
     fss_extended_list_read_depths_resize(0, &data->depths);
 
-    macro_f_string_dynamic_t_delete_simple(data->buffer);
+    f_string_dynamic_resize(0, &data->buffer);
     macro_f_fss_contents_t_delete_simple(data->contents);
     macro_f_fss_objects_t_delete_simple(data->objects);
     macro_f_fss_delimits_t_delete_simple(data->delimits_object);
@@ -67,7 +67,7 @@ extern "C" {
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%]%c%c%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
+    fl_print_format("%]%q%q%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
     fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, signal, main->context.set.notable);
     fl_print_format("%[.%]%q", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 

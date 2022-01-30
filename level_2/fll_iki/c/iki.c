@@ -6,58 +6,62 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_iki_content_escape_
-  f_status_t fll_iki_content_escape(const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *escaped) {
+  f_status_t fll_iki_content_escape(const f_string_static_t content, const f_string_static_t quote, f_string_dynamic_t *escaped) {
     #ifndef _di_level_2_parameter_checking_
       if (content.used > content.size) return F_status_set_error(F_parameter);
-      if (quote != f_iki_syntax_quote_single_s.string[0] && quote != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
+      if (!quote.used) return F_status_set_error(F_parameter);
+      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
       if (escaped->used > escaped->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     const f_string_range_t range = macro_f_string_range_t_initialize(content.used);
 
-    return private_fll_iki_content_partial_escape(content, range, quote, escaped);
+    return private_fll_iki_content_partial_escape(content, range, quote.string[0], escaped);
   }
 #endif // _di_fll_iki_content_escape_
 
 #ifndef _di_fll_iki_content_partial_escape_
-  f_status_t fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *escaped) {
+  f_status_t fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote, f_string_dynamic_t *escaped) {
     #ifndef _di_level_2_parameter_checking_
       if (content.used > content.size) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (range.start >= content.used) return F_status_set_error(F_parameter);
-      if (quote != f_iki_syntax_quote_single_s.string[0] && quote != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
+      if (!quote.used) return F_status_set_error(F_parameter);
+      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
       if (escaped->used > escaped->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    return private_fll_iki_content_partial_escape(content, range, quote, escaped);
+    return private_fll_iki_content_partial_escape(content, range, quote.string[0], escaped);
   }
 #endif // _di_fll_iki_content_partial_escape_
 
 #ifndef _di_fll_iki_content_partial_unescape_
-  f_status_t fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *unescaped) {
+  f_status_t fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote, f_string_dynamic_t *unescaped) {
     #ifndef _di_level_2_parameter_checking_
       if (content.used > content.size) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (range.start >= content.used) return F_status_set_error(F_parameter);
-      if (quote != f_iki_syntax_quote_single_s.string[0] && quote != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
+      if (!quote.used) return F_status_set_error(F_parameter);
+      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
       if (unescaped->used > unescaped->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    return private_fll_iki_content_partial_unescape(content, range, quote, unescaped);
+    return private_fll_iki_content_partial_unescape(content, range, quote.string[0], unescaped);
   }
 #endif // _di_fll_iki_content_partial_unescape_
 
 #ifndef _di_fll_iki_content_unescape_
-  f_status_t fll_iki_content_unescape(const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *unescaped) {
+  f_status_t fll_iki_content_unescape(const f_string_static_t content, const f_string_static_t quote, f_string_dynamic_t *unescaped) {
     #ifndef _di_level_2_parameter_checking_
       if (content.used > content.size) return F_status_set_error(F_parameter);
-      if (quote != f_iki_syntax_quote_single_s.string[0] && quote != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
+      if (!quote.used) return F_status_set_error(F_parameter);
+      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
       if (unescaped->used > unescaped->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     const f_string_range_t range = macro_f_string_range_t_initialize(content.used);
 
-    return private_fll_iki_content_partial_unescape(content, range, quote, unescaped);
+    return private_fll_iki_content_partial_unescape(content, range, quote.string[0], unescaped);
   }
 #endif // _di_fll_iki_content_unescape_
 

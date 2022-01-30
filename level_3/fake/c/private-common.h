@@ -293,156 +293,156 @@ extern "C" {
   #define FAKE_build_setting_name_version_nano_prefix_s          "version_nano_prefix"
   #define FAKE_build_setting_name_version_target_s               "version_target"
 
-  #define fake_build_setting_name_build_compiler_s_length               14
-  #define fake_build_setting_name_build_language_s_length               14
-  #define fake_build_setting_name_build_libraries_s_length              15
-  #define fake_build_setting_name_build_libraries_shared_s_length       22
-  #define fake_build_setting_name_build_libraries_static_s_length       22
-  #define fake_build_setting_name_build_indexer_s_length                13
-  #define fake_build_setting_name_build_indexer_arguments_s_length      23
-  #define fake_build_setting_name_build_script_s_length                 12
-  #define fake_build_setting_name_build_shared_s_length                 12
-  #define fake_build_setting_name_build_sources_headers_s_length        21
-  #define fake_build_setting_name_build_sources_headers_shared_s_length 28
-  #define fake_build_setting_name_build_sources_headers_static_s_length 28
-  #define fake_build_setting_name_build_sources_library_s_length        21
-  #define fake_build_setting_name_build_sources_library_shared_s_length 28
-  #define fake_build_setting_name_build_sources_library_static_s_length 28
-  #define fake_build_setting_name_build_sources_program_s_length        21
-  #define fake_build_setting_name_build_sources_program_shared_s_length 28
-  #define fake_build_setting_name_build_sources_program_static_s_length 28
-  #define fake_build_setting_name_build_sources_script_s_length         20
-  #define fake_build_setting_name_build_sources_settings_s_length       22
-  #define fake_build_setting_name_build_static_s_length                 12
-  #define fake_build_setting_name_environment_length_s                  11
-  #define fake_build_setting_name_defines_s_length                      7
-  #define fake_build_setting_name_defines_library_s_length              15
-  #define fake_build_setting_name_defines_library_shared_s_length       22
-  #define fake_build_setting_name_defines_library_static_s_length       22
-  #define fake_build_setting_name_defines_program_s_length              15
-  #define fake_build_setting_name_defines_program_shared_s_length       22
-  #define fake_build_setting_name_defines_program_static_s_length       22
-  #define fake_build_setting_name_defines_shared_s_length               14
-  #define fake_build_setting_name_defines_static_s_length               14
-  #define fake_build_setting_name_flags_s_length                        5
-  #define fake_build_setting_name_flags_library_s_length                13
-  #define fake_build_setting_name_flags_library_shared_s_length         20
-  #define fake_build_setting_name_flags_library_static_s_length         20
-  #define fake_build_setting_name_flags_program_s_length                13
-  #define fake_build_setting_name_flags_program_shared_s_length         20
-  #define fake_build_setting_name_flags_program_static_s_length         20
-  #define fake_build_setting_name_flags_shared_s_length                 12
-  #define fake_build_setting_name_flags_static_s_length                 12
-  #define fake_build_setting_name_modes_s_length                        5
-  #define fake_build_setting_name_modes_default_s_length                13
-  #define fake_build_setting_name_path_headers_s_length                 12
-  #define fake_build_setting_name_path_headers_preserve_s_length        21
-  #define fake_build_setting_name_path_language_s_length                13
-  #define fake_build_setting_name_path_library_script_s_length          19
-  #define fake_build_setting_name_path_library_shared_s_length          19
-  #define fake_build_setting_name_path_library_static_s_length          19
-  #define fake_build_setting_name_path_program_script_s_length          19
-  #define fake_build_setting_name_path_program_shared_s_length          19
-  #define fake_build_setting_name_path_program_static_s_length          19
-  #define fake_build_setting_name_path_sources_s_length                 12
-  #define fake_build_setting_name_path_standard_s_length                13
-  #define fake_build_setting_name_process_post_s_length                 12
-  #define fake_build_setting_name_process_pre_s_length                  11
-  #define fake_build_setting_name_project_name_s_length                 12
-  #define fake_build_setting_name_search_exclusive_s_length             16
-  #define fake_build_setting_name_search_shared_s_length                13
-  #define fake_build_setting_name_search_static_s_length                13
-  #define fake_build_setting_name_version_file_s_length                 12
-  #define fake_build_setting_name_version_major_s_length                13
-  #define fake_build_setting_name_version_major_prefix_s_length         20
-  #define fake_build_setting_name_version_micro_s_length                13
-  #define fake_build_setting_name_version_micro_prefix_s_length         20
-  #define fake_build_setting_name_version_minor_s_length                13
-  #define fake_build_setting_name_version_minor_prefix_s_length         20
-  #define fake_build_setting_name_version_nano_s_length                 12
-  #define fake_build_setting_name_version_nano_prefix_s_length          19
-  #define fake_build_setting_name_version_target_s_length               14
+  #define FAKE_build_setting_name_build_compiler_s_length               14
+  #define FAKE_build_setting_name_build_language_s_length               14
+  #define FAKE_build_setting_name_build_libraries_s_length              15
+  #define FAKE_build_setting_name_build_libraries_shared_s_length       22
+  #define FAKE_build_setting_name_build_libraries_static_s_length       22
+  #define FAKE_build_setting_name_build_indexer_s_length                13
+  #define FAKE_build_setting_name_build_indexer_arguments_s_length      23
+  #define FAKE_build_setting_name_build_script_s_length                 12
+  #define FAKE_build_setting_name_build_shared_s_length                 12
+  #define FAKE_build_setting_name_build_sources_headers_s_length        21
+  #define FAKE_build_setting_name_build_sources_headers_shared_s_length 28
+  #define FAKE_build_setting_name_build_sources_headers_static_s_length 28
+  #define FAKE_build_setting_name_build_sources_library_s_length        21
+  #define FAKE_build_setting_name_build_sources_library_shared_s_length 28
+  #define FAKE_build_setting_name_build_sources_library_static_s_length 28
+  #define FAKE_build_setting_name_build_sources_program_s_length        21
+  #define FAKE_build_setting_name_build_sources_program_shared_s_length 28
+  #define FAKE_build_setting_name_build_sources_program_static_s_length 28
+  #define FAKE_build_setting_name_build_sources_script_s_length         20
+  #define FAKE_build_setting_name_build_sources_settings_s_length       22
+  #define FAKE_build_setting_name_build_static_s_length                 12
+  #define FAKE_build_setting_name_environment_length_s                  11
+  #define FAKE_build_setting_name_defines_s_length                      7
+  #define FAKE_build_setting_name_defines_library_s_length              15
+  #define FAKE_build_setting_name_defines_library_shared_s_length       22
+  #define FAKE_build_setting_name_defines_library_static_s_length       22
+  #define FAKE_build_setting_name_defines_program_s_length              15
+  #define FAKE_build_setting_name_defines_program_shared_s_length       22
+  #define FAKE_build_setting_name_defines_program_static_s_length       22
+  #define FAKE_build_setting_name_defines_shared_s_length               14
+  #define FAKE_build_setting_name_defines_static_s_length               14
+  #define FAKE_build_setting_name_flags_s_length                        5
+  #define FAKE_build_setting_name_flags_library_s_length                13
+  #define FAKE_build_setting_name_flags_library_shared_s_length         20
+  #define FAKE_build_setting_name_flags_library_static_s_length         20
+  #define FAKE_build_setting_name_flags_program_s_length                13
+  #define FAKE_build_setting_name_flags_program_shared_s_length         20
+  #define FAKE_build_setting_name_flags_program_static_s_length         20
+  #define FAKE_build_setting_name_flags_shared_s_length                 12
+  #define FAKE_build_setting_name_flags_static_s_length                 12
+  #define FAKE_build_setting_name_modes_s_length                        5
+  #define FAKE_build_setting_name_modes_default_s_length                13
+  #define FAKE_build_setting_name_path_headers_s_length                 12
+  #define FAKE_build_setting_name_path_headers_preserve_s_length        21
+  #define FAKE_build_setting_name_path_language_s_length                13
+  #define FAKE_build_setting_name_path_library_script_s_length          19
+  #define FAKE_build_setting_name_path_library_shared_s_length          19
+  #define FAKE_build_setting_name_path_library_static_s_length          19
+  #define FAKE_build_setting_name_path_program_script_s_length          19
+  #define FAKE_build_setting_name_path_program_shared_s_length          19
+  #define FAKE_build_setting_name_path_program_static_s_length          19
+  #define FAKE_build_setting_name_path_sources_s_length                 12
+  #define FAKE_build_setting_name_path_standard_s_length                13
+  #define FAKE_build_setting_name_process_post_s_length                 12
+  #define FAKE_build_setting_name_process_pre_s_length                  11
+  #define FAKE_build_setting_name_project_name_s_length                 12
+  #define FAKE_build_setting_name_search_exclusive_s_length             16
+  #define FAKE_build_setting_name_search_shared_s_length                13
+  #define FAKE_build_setting_name_search_static_s_length                13
+  #define FAKE_build_setting_name_version_file_s_length                 12
+  #define FAKE_build_setting_name_version_major_s_length                13
+  #define FAKE_build_setting_name_version_major_prefix_s_length         20
+  #define FAKE_build_setting_name_version_micro_s_length                13
+  #define FAKE_build_setting_name_version_micro_prefix_s_length         20
+  #define FAKE_build_setting_name_version_minor_s_length                13
+  #define FAKE_build_setting_name_version_minor_prefix_s_length         20
+  #define FAKE_build_setting_name_version_nano_s_length                 12
+  #define FAKE_build_setting_name_version_nano_prefix_s_length          19
+  #define FAKE_build_setting_name_version_target_s_length               14
 
-  extern const f_string_t fake_build_setting_name_build_compiler_s;
-  extern const f_string_t fake_build_setting_name_build_language_s;
-  extern const f_string_t fake_build_setting_name_build_libraries_s;
-  extern const f_string_t fake_build_setting_name_build_libraries_shared_s;
-  extern const f_string_t fake_build_setting_name_build_libraries_static_s;
-  extern const f_string_t fake_build_setting_name_build_indexer_s;
-  extern const f_string_t fake_build_setting_name_build_indexer_arguments_s;
-  extern const f_string_t fake_build_setting_name_build_script_s;
-  extern const f_string_t fake_build_setting_name_build_shared_s;
-  extern const f_string_t fake_build_setting_name_build_sources_headers_s;
-  extern const f_string_t fake_build_setting_name_build_sources_headers_shared_s;
-  extern const f_string_t fake_build_setting_name_build_sources_headers_static_s;
-  extern const f_string_t fake_build_setting_name_build_sources_library_s;
-  extern const f_string_t fake_build_setting_name_build_sources_library_shared_s;
-  extern const f_string_t fake_build_setting_name_build_sources_library_static_s;
-  extern const f_string_t fake_build_setting_name_build_sources_program_s;
-  extern const f_string_t fake_build_setting_name_build_sources_program_shared_s;
-  extern const f_string_t fake_build_setting_name_build_sources_program_static_s;
-  extern const f_string_t fake_build_setting_name_build_sources_script_s;
-  extern const f_string_t fake_build_setting_name_build_sources_settings_s;
-  extern const f_string_t fake_build_setting_name_build_static_s;
-  extern const f_string_t fake_build_setting_name_defines_s;
-  extern const f_string_t fake_build_setting_name_defines_library_s;
-  extern const f_string_t fake_build_setting_name_defines_library_shared_s;
-  extern const f_string_t fake_build_setting_name_defines_library_static_s;
-  extern const f_string_t fake_build_setting_name_defines_program_s;
-  extern const f_string_t fake_build_setting_name_defines_program_shared_s;
-  extern const f_string_t fake_build_setting_name_defines_program_static_s;
-  extern const f_string_t fake_build_setting_name_defines_shared_s;
-  extern const f_string_t fake_build_setting_name_defines_static_s;
-  extern const f_string_t fake_build_setting_name_environment_s;
-  extern const f_string_t fake_build_setting_name_flags_s;
-  extern const f_string_t fake_build_setting_name_flags_library_s;
-  extern const f_string_t fake_build_setting_name_flags_library_shared_s;
-  extern const f_string_t fake_build_setting_name_flags_library_static_s;
-  extern const f_string_t fake_build_setting_name_flags_program_s;
-  extern const f_string_t fake_build_setting_name_flags_program_shared_s;
-  extern const f_string_t fake_build_setting_name_flags_program_static_s;
-  extern const f_string_t fake_build_setting_name_flags_shared_s;
-  extern const f_string_t fake_build_setting_name_flags_static_s;
-  extern const f_string_t fake_build_setting_name_modes_s;
-  extern const f_string_t fake_build_setting_name_modes_default_s;
-  extern const f_string_t fake_build_setting_name_path_headers_s;
-  extern const f_string_t fake_build_setting_name_path_headers_preserve_s;
-  extern const f_string_t fake_build_setting_name_path_language_s;
-  extern const f_string_t fake_build_setting_name_path_library_script_s;
-  extern const f_string_t fake_build_setting_name_path_library_shared_s;
-  extern const f_string_t fake_build_setting_name_path_library_static_s;
-  extern const f_string_t fake_build_setting_name_path_program_script_s;
-  extern const f_string_t fake_build_setting_name_path_program_shared_s;
-  extern const f_string_t fake_build_setting_name_path_program_static_s;
-  extern const f_string_t fake_build_setting_name_path_sources_s;
-  extern const f_string_t fake_build_setting_name_path_standard_s;
-  extern const f_string_t fake_build_setting_name_process_post_s;
-  extern const f_string_t fake_build_setting_name_process_pre_s;
-  extern const f_string_t fake_build_setting_name_project_name_s;
-  extern const f_string_t fake_build_setting_name_search_exclusive_s;
-  extern const f_string_t fake_build_setting_name_search_shared_s;
-  extern const f_string_t fake_build_setting_name_search_static_s;
-  extern const f_string_t fake_build_setting_name_version_file_s;
-  extern const f_string_t fake_build_setting_name_version_major_s;
-  extern const f_string_t fake_build_setting_name_version_major_prefix_s;
-  extern const f_string_t fake_build_setting_name_version_micro_s;
-  extern const f_string_t fake_build_setting_name_version_micro_prefix_s;
-  extern const f_string_t fake_build_setting_name_version_minor_s;
-  extern const f_string_t fake_build_setting_name_version_minor_prefix_s;
-  extern const f_string_t fake_build_setting_name_version_nano_s;
-  extern const f_string_t fake_build_setting_name_version_nano_prefix_s;
-  extern const f_string_t fake_build_setting_name_version_target_s;
+  extern const f_string_static_t fake_build_setting_name_build_compiler_s;
+  extern const f_string_static_t fake_build_setting_name_build_language_s;
+  extern const f_string_static_t fake_build_setting_name_build_libraries_s;
+  extern const f_string_static_t fake_build_setting_name_build_libraries_shared_s;
+  extern const f_string_static_t fake_build_setting_name_build_libraries_static_s;
+  extern const f_string_static_t fake_build_setting_name_build_indexer_s;
+  extern const f_string_static_t fake_build_setting_name_build_indexer_arguments_s;
+  extern const f_string_static_t fake_build_setting_name_build_script_s;
+  extern const f_string_static_t fake_build_setting_name_build_shared_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_headers_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_headers_shared_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_headers_static_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_library_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_library_shared_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_library_static_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_program_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_program_shared_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_program_static_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_script_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_settings_s;
+  extern const f_string_static_t fake_build_setting_name_build_static_s;
+  extern const f_string_static_t fake_build_setting_name_defines_s;
+  extern const f_string_static_t fake_build_setting_name_defines_library_s;
+  extern const f_string_static_t fake_build_setting_name_defines_library_shared_s;
+  extern const f_string_static_t fake_build_setting_name_defines_library_static_s;
+  extern const f_string_static_t fake_build_setting_name_defines_program_s;
+  extern const f_string_static_t fake_build_setting_name_defines_program_shared_s;
+  extern const f_string_static_t fake_build_setting_name_defines_program_static_s;
+  extern const f_string_static_t fake_build_setting_name_defines_shared_s;
+  extern const f_string_static_t fake_build_setting_name_defines_static_s;
+  extern const f_string_static_t fake_build_setting_name_environment_s;
+  extern const f_string_static_t fake_build_setting_name_flags_s;
+  extern const f_string_static_t fake_build_setting_name_flags_library_s;
+  extern const f_string_static_t fake_build_setting_name_flags_library_shared_s;
+  extern const f_string_static_t fake_build_setting_name_flags_library_static_s;
+  extern const f_string_static_t fake_build_setting_name_flags_program_s;
+  extern const f_string_static_t fake_build_setting_name_flags_program_shared_s;
+  extern const f_string_static_t fake_build_setting_name_flags_program_static_s;
+  extern const f_string_static_t fake_build_setting_name_flags_shared_s;
+  extern const f_string_static_t fake_build_setting_name_flags_static_s;
+  extern const f_string_static_t fake_build_setting_name_modes_s;
+  extern const f_string_static_t fake_build_setting_name_modes_default_s;
+  extern const f_string_static_t fake_build_setting_name_path_headers_s;
+  extern const f_string_static_t fake_build_setting_name_path_headers_preserve_s;
+  extern const f_string_static_t fake_build_setting_name_path_language_s;
+  extern const f_string_static_t fake_build_setting_name_path_library_script_s;
+  extern const f_string_static_t fake_build_setting_name_path_library_shared_s;
+  extern const f_string_static_t fake_build_setting_name_path_library_static_s;
+  extern const f_string_static_t fake_build_setting_name_path_program_script_s;
+  extern const f_string_static_t fake_build_setting_name_path_program_shared_s;
+  extern const f_string_static_t fake_build_setting_name_path_program_static_s;
+  extern const f_string_static_t fake_build_setting_name_path_sources_s;
+  extern const f_string_static_t fake_build_setting_name_path_standard_s;
+  extern const f_string_static_t fake_build_setting_name_process_post_s;
+  extern const f_string_static_t fake_build_setting_name_process_pre_s;
+  extern const f_string_static_t fake_build_setting_name_project_name_s;
+  extern const f_string_static_t fake_build_setting_name_search_exclusive_s;
+  extern const f_string_static_t fake_build_setting_name_search_shared_s;
+  extern const f_string_static_t fake_build_setting_name_search_static_s;
+  extern const f_string_static_t fake_build_setting_name_version_file_s;
+  extern const f_string_static_t fake_build_setting_name_version_major_s;
+  extern const f_string_static_t fake_build_setting_name_version_major_prefix_s;
+  extern const f_string_static_t fake_build_setting_name_version_micro_s;
+  extern const f_string_static_t fake_build_setting_name_version_micro_prefix_s;
+  extern const f_string_static_t fake_build_setting_name_version_minor_s;
+  extern const f_string_static_t fake_build_setting_name_version_minor_prefix_s;
+  extern const f_string_static_t fake_build_setting_name_version_nano_s;
+  extern const f_string_static_t fake_build_setting_name_version_nano_prefix_s;
+  extern const f_string_static_t fake_build_setting_name_version_target_s;
 
   #define fake_build_setting_total_d 69
 
   #define FAKE_build_setting_default_version_s        "0"
   #define FAKE_build_setting_default_version_prefix_s "."
 
-  #define fake_build_setting_default_version_s_length        1
-  #define fake_build_setting_default_version_prefix_s_length 1
+  #define FAKE_build_setting_default_version_s_length        1
+  #define FAKE_build_setting_default_version_prefix_s_length 1
 
-  extern const f_string_t fake_build_setting_default_version_s;
-  extern const f_string_t fake_build_setting_default_version_prefix_s;
+  extern const f_string_static_t fake_build_setting_default_version_s;
+  extern const f_string_static_t fake_build_setting_default_version_prefix_s;
 #endif // _di_fake_build_setting_t_
 
 #ifndef _di_fake_build_stage_t_
@@ -511,37 +511,37 @@ extern "C" {
   #define FAKE_build_stage_sources_script_s   "sources_script"
   #define FAKE_build_stage_sources_settings_s "sources_settings"
 
-  #define fake_build_stage_built_s_length            6
-  #define fake_build_stage_libraries_script_s_length 16
-  #define fake_build_stage_libraries_shared_s_length 16
-  #define fake_build_stage_libraries_static_s_length 16
-  #define fake_build_stage_objects_static_s_length   14
-  #define fake_build_stage_process_post_s_length     12
-  #define fake_build_stage_process_pre_s_length      11
-  #define fake_build_stage_programs_script_s_length  15
-  #define fake_build_stage_programs_shared_s_length  15
-  #define fake_build_stage_programs_static_s_length  15
-  #define fake_build_stage_separate_s_length         1
-  #define fake_build_stage_skeleton_s_length         8
-  #define fake_build_stage_sources_headers_s_length  15
-  #define fake_build_stage_sources_script_s_length   14
-  #define fake_build_stage_sources_settings_s_length 16
+  #define FAKE_build_stage_built_s_length            6
+  #define FAKE_build_stage_libraries_script_s_length 16
+  #define FAKE_build_stage_libraries_shared_s_length 16
+  #define FAKE_build_stage_libraries_static_s_length 16
+  #define FAKE_build_stage_objects_static_s_length   14
+  #define FAKE_build_stage_process_post_s_length     12
+  #define FAKE_build_stage_process_pre_s_length      11
+  #define FAKE_build_stage_programs_script_s_length  15
+  #define FAKE_build_stage_programs_shared_s_length  15
+  #define FAKE_build_stage_programs_static_s_length  15
+  #define FAKE_build_stage_separate_s_length         1
+  #define FAKE_build_stage_skeleton_s_length         8
+  #define FAKE_build_stage_sources_headers_s_length  15
+  #define FAKE_build_stage_sources_script_s_length   14
+  #define FAKE_build_stage_sources_settings_s_length 16
 
-  extern const f_string_t fake_build_stage_built_s;
-  extern const f_string_t fake_build_stage_libraries_script_s;
-  extern const f_string_t fake_build_stage_libraries_shared_s;
-  extern const f_string_t fake_build_stage_libraries_static_s;
-  extern const f_string_t fake_build_stage_objects_static_s;
-  extern const f_string_t fake_build_stage_process_post_s;
-  extern const f_string_t fake_build_stage_process_pre_s;
-  extern const f_string_t fake_build_stage_programs_script_s;
-  extern const f_string_t fake_build_stage_programs_shared_s;
-  extern const f_string_t fake_build_stage_programs_static_s;
-  extern const f_string_t fake_build_stage_separate_s;
-  extern const f_string_t fake_build_stage_skeleton_s;
-  extern const f_string_t fake_build_stage_sources_headers_s;
-  extern const f_string_t fake_build_stage_sources_script_s;
-  extern const f_string_t fake_build_stage_sources_settings_s;
+  extern const f_string_static_t fake_build_stage_built_s;
+  extern const f_string_static_t fake_build_stage_libraries_script_s;
+  extern const f_string_static_t fake_build_stage_libraries_shared_s;
+  extern const f_string_static_t fake_build_stage_libraries_static_s;
+  extern const f_string_static_t fake_build_stage_objects_static_s;
+  extern const f_string_static_t fake_build_stage_process_post_s;
+  extern const f_string_static_t fake_build_stage_process_pre_s;
+  extern const f_string_static_t fake_build_stage_programs_script_s;
+  extern const f_string_static_t fake_build_stage_programs_shared_s;
+  extern const f_string_static_t fake_build_stage_programs_static_s;
+  extern const f_string_static_t fake_build_stage_separate_s;
+  extern const f_string_static_t fake_build_stage_skeleton_s;
+  extern const f_string_static_t fake_build_stage_sources_headers_s;
+  extern const f_string_static_t fake_build_stage_sources_script_s;
+  extern const f_string_static_t fake_build_stage_sources_settings_s;
 #endif // _di_fake_build_stage_t_
 
 #ifndef _di_fake_build_data_t_
@@ -572,42 +572,42 @@ extern "C" {
   #define FAKE_build_parameter_library_static_s             "-static"
   #define FAKE_build_parameter_library_shared_prefix_s      "-Wl,-soname,"
 
-  #define fake_build_parameter_library_include_s_length            2
-  #define fake_build_parameter_library_link_file_s_length          2
-  #define fake_build_parameter_library_link_path_s_length          2
-  #define fake_build_parameter_library_name_prefix_s_length        3
-  #define fake_build_parameter_library_name_suffix_shared_s_length 3
-  #define fake_build_parameter_library_name_suffix_static_s_length 2
-  #define fake_build_parameter_library_output_s_length             2
-  #define fake_build_parameter_library_shared_s_length             7
-  #define fake_build_parameter_library_static_s_length             7
-  #define fake_build_parameter_library_shared_prefix_s_length      12
+  #define FAKE_build_parameter_library_include_s_length            2
+  #define FAKE_build_parameter_library_link_file_s_length          2
+  #define FAKE_build_parameter_library_link_path_s_length          2
+  #define FAKE_build_parameter_library_name_prefix_s_length        3
+  #define FAKE_build_parameter_library_name_suffix_shared_s_length 3
+  #define FAKE_build_parameter_library_name_suffix_static_s_length 2
+  #define FAKE_build_parameter_library_output_s_length             2
+  #define FAKE_build_parameter_library_shared_s_length             7
+  #define FAKE_build_parameter_library_static_s_length             7
+  #define FAKE_build_parameter_library_shared_prefix_s_length      12
 
-  extern const f_string_t fake_build_parameter_library_include_s;
-  extern const f_string_t fake_build_parameter_library_link_file_s;
-  extern const f_string_t fake_build_parameter_library_link_path_s;
-  extern const f_string_t fake_build_parameter_library_name_prefix_s;
-  extern const f_string_t fake_build_parameter_library_name_suffix_shared_s;
-  extern const f_string_t fake_build_parameter_library_name_suffix_static_s;
-  extern const f_string_t fake_build_parameter_library_output_s;
-  extern const f_string_t fake_build_parameter_library_shared_s;
-  extern const f_string_t fake_build_parameter_library_static_s;
-  extern const f_string_t fake_build_parameter_library_shared_prefix_s;
+  extern const f_string_static_t fake_build_parameter_library_include_s;
+  extern const f_string_static_t fake_build_parameter_library_link_file_s;
+  extern const f_string_static_t fake_build_parameter_library_link_path_s;
+  extern const f_string_static_t fake_build_parameter_library_name_prefix_s;
+  extern const f_string_static_t fake_build_parameter_library_name_suffix_shared_s;
+  extern const f_string_static_t fake_build_parameter_library_name_suffix_static_s;
+  extern const f_string_static_t fake_build_parameter_library_output_s;
+  extern const f_string_static_t fake_build_parameter_library_shared_s;
+  extern const f_string_static_t fake_build_parameter_library_static_s;
+  extern const f_string_static_t fake_build_parameter_library_shared_prefix_s;
 
   #define FAKE_build_parameter_object_compile_s     "-c"
   #define FAKE_build_parameter_object_name_suffix_s ".o"
   #define FAKE_build_parameter_object_output_s      "-o"
   #define FAKE_build_parameter_object_static_s      "-static"
 
-  #define fake_build_parameter_object_compile_s_length     2
-  #define fake_build_parameter_object_name_suffix_s_length 2
-  #define fake_build_parameter_object_output_s_length      2
-  #define fake_build_parameter_object_static_s_length      7
+  #define FAKE_build_parameter_object_compile_s_length     2
+  #define FAKE_build_parameter_object_name_suffix_s_length 2
+  #define FAKE_build_parameter_object_output_s_length      2
+  #define FAKE_build_parameter_object_static_s_length      7
 
-  extern const f_string_t fake_build_parameter_object_compile_s;
-  extern const f_string_t fake_build_parameter_object_name_suffix_s;
-  extern const f_string_t fake_build_parameter_object_output_s;
-  extern const f_string_t fake_build_parameter_object_static_s;
+  extern const f_string_static_t fake_build_parameter_object_compile_s;
+  extern const f_string_static_t fake_build_parameter_object_name_suffix_s;
+  extern const f_string_static_t fake_build_parameter_object_output_s;
+  extern const f_string_static_t fake_build_parameter_object_static_s;
 #endif // _di_fake_build_parameter_
 
 /**
@@ -620,6 +620,9 @@ extern "C" {
  * fake_common_setting_bool_*:
  *   - yes: A representation of yes or true.
  *   - no:  A representation of no or false.
+ *
+ * fake_common_setting_*:
+ *   - list: A generic name referring to a setting as a list.
  */
 #ifndef _di_fake_common_
   #define fake_common_allocation_large_d 256
@@ -628,11 +631,16 @@ extern "C" {
   #define FAKE_common_setting_bool_yes_s "yes"
   #define FAKE_common_setting_bool_no_s  "no"
 
-  #define fake_common_setting_bool_yes_s_length 3
-  #define fake_common_setting_bool_no_s_length  2
+  #define FAKE_common_setting_list_s "list"
 
-  extern const f_string_t fake_common_setting_bool_yes_s;
-  extern const f_string_t fake_common_setting_bool_no_s;
+  #define FAKE_common_setting_bool_yes_s_length 3
+  #define FAKE_common_setting_bool_no_s_length  2
+
+  #define FAKE_common_setting_list_s_length 4
+
+  extern const f_string_static_t fake_common_setting_bool_yes_s;
+  extern const f_string_static_t fake_common_setting_bool_no_s;
+  extern const f_string_static_t fake_common_setting_list_s;
 
   #define fake_common_initial_buffer_max_d 131072 // 128k max default initial buffer size.
 #endif // _di_fake_common_
@@ -648,11 +656,11 @@ extern "C" {
   #define FAKE_make_section_main_s     "main"
   #define FAKE_make_section_settings_s "settings"
 
-  #define fake_make_section_main_s_length     4
-  #define fake_make_section_settings_s_length 8
+  #define FAKE_make_section_main_s_length     4
+  #define FAKE_make_section_settings_s_length 8
 
-  extern const f_string_t fake_make_section_main_s;
-  extern const f_string_t fake_make_section_settings_s;
+  extern const f_string_static_t fake_make_section_main_s;
+  extern const f_string_static_t fake_make_section_settings_s;
 
   #define fake_make_section_stack_max_d 8192 // maximum stack call depth.
 #endif // _di_fake_make_section_
@@ -685,25 +693,25 @@ extern "C" {
   #define FAKE_make_setting_parameter_s         "parameter"
   #define FAKE_make_setting_return_s            "return"
 
-  #define fake_make_setting_compiler_s_length          8
-  #define fake_make_setting_define_s_length            6
-  #define fake_make_setting_environment_s_length       11
-  #define fake_make_setting_fail_s_length              4
-  #define fake_make_setting_indexer_s_length           7
-  #define fake_make_setting_indexer_arguments_s_length 17
-  #define fake_make_setting_load_build_s_length        10
-  #define fake_make_setting_parameter_s_length         9
-  #define fake_make_setting_return_s_length            6
+  #define FAKE_make_setting_compiler_s_length          8
+  #define FAKE_make_setting_define_s_length            6
+  #define FAKE_make_setting_environment_s_length       11
+  #define FAKE_make_setting_fail_s_length              4
+  #define FAKE_make_setting_indexer_s_length           7
+  #define FAKE_make_setting_indexer_arguments_s_length 17
+  #define FAKE_make_setting_load_build_s_length        10
+  #define FAKE_make_setting_parameter_s_length         9
+  #define FAKE_make_setting_return_s_length            6
 
-  extern const f_string_t fake_make_setting_compiler_s;
-  extern const f_string_t fake_make_setting_define_s;
-  extern const f_string_t fake_make_setting_environment_s;
-  extern const f_string_t fake_make_setting_fail_s;
-  extern const f_string_t fake_make_setting_indexer_s;
-  extern const f_string_t fake_make_setting_indexer_arguments_s;
-  extern const f_string_t fake_make_setting_load_build_s;
-  extern const f_string_t fake_make_setting_parameter_s;
-  extern const f_string_t fake_make_setting_return_s;
+  extern const f_string_static_t fake_make_setting_compiler_s;
+  extern const f_string_static_t fake_make_setting_define_s;
+  extern const f_string_static_t fake_make_setting_environment_s;
+  extern const f_string_static_t fake_make_setting_fail_s;
+  extern const f_string_static_t fake_make_setting_indexer_s;
+  extern const f_string_static_t fake_make_setting_indexer_arguments_s;
+  extern const f_string_static_t fake_make_setting_load_build_s;
+  extern const f_string_static_t fake_make_setting_parameter_s;
+  extern const f_string_static_t fake_make_setting_return_s;
 #endif // _di_fake_make_setting_t_
 
 #ifndef _di_fake_make_operation_
@@ -742,75 +750,75 @@ extern "C" {
   #define FAKE_make_operation_top_s       "top"
   #define FAKE_make_operation_touch_s     "touch"
 
-  #define fake_make_operation_and_s_length       3
-  #define fake_make_operation_break_s_length     5
-  #define fake_make_operation_build_s_length     5
-  #define fake_make_operation_clean_s_length     5
-  #define fake_make_operation_clone_s_length     5
-  #define fake_make_operation_compile_s_length   7
-  #define fake_make_operation_copy_s_length      4
-  #define fake_make_operation_define_s_length    6
-  #define fake_make_operation_delete_s_length    6
-  #define fake_make_operation_deletes_s_length   7
-  #define fake_make_operation_else_s_length      4
-  #define fake_make_operation_exit_s_length      4
-  #define fake_make_operation_fail_s_length      4
-  #define fake_make_operation_group_s_length     5
-  #define fake_make_operation_groups_s_length    6
-  #define fake_make_operation_if_s_length        2
-  #define fake_make_operation_index_s_length     5
-  #define fake_make_operation_link_s_length      4
-  #define fake_make_operation_mode_s_length      4
-  #define fake_make_operation_modes_s_length     5
-  #define fake_make_operation_move_s_length      4
-  #define fake_make_operation_operate_s_length   7
-  #define fake_make_operation_or_s_length        2
-  #define fake_make_operation_owner_s_length     5
-  #define fake_make_operation_owners_s_length    6
-  #define fake_make_operation_parameter_s_length 9
-  #define fake_make_operation_pop_s_length       3
-  #define fake_make_operation_print_s_length     5
-  #define fake_make_operation_run_s_length       3
-  #define fake_make_operation_shell_s_length     5
-  #define fake_make_operation_skeleton_s_length  8
-  #define fake_make_operation_to_s_length        2
-  #define fake_make_operation_top_s_length       3
-  #define fake_make_operation_touch_s_length     5
+  #define FAKE_make_operation_and_s_length       3
+  #define FAKE_make_operation_break_s_length     5
+  #define FAKE_make_operation_build_s_length     5
+  #define FAKE_make_operation_clean_s_length     5
+  #define FAKE_make_operation_clone_s_length     5
+  #define FAKE_make_operation_compile_s_length   7
+  #define FAKE_make_operation_copy_s_length      4
+  #define FAKE_make_operation_define_s_length    6
+  #define FAKE_make_operation_delete_s_length    6
+  #define FAKE_make_operation_deletes_s_length   7
+  #define FAKE_make_operation_else_s_length      4
+  #define FAKE_make_operation_exit_s_length      4
+  #define FAKE_make_operation_fail_s_length      4
+  #define FAKE_make_operation_group_s_length     5
+  #define FAKE_make_operation_groups_s_length    6
+  #define FAKE_make_operation_if_s_length        2
+  #define FAKE_make_operation_index_s_length     5
+  #define FAKE_make_operation_link_s_length      4
+  #define FAKE_make_operation_mode_s_length      4
+  #define FAKE_make_operation_modes_s_length     5
+  #define FAKE_make_operation_move_s_length      4
+  #define FAKE_make_operation_operate_s_length   7
+  #define FAKE_make_operation_or_s_length        2
+  #define FAKE_make_operation_owner_s_length     5
+  #define FAKE_make_operation_owners_s_length    6
+  #define FAKE_make_operation_parameter_s_length 9
+  #define FAKE_make_operation_pop_s_length       3
+  #define FAKE_make_operation_print_s_length     5
+  #define FAKE_make_operation_run_s_length       3
+  #define FAKE_make_operation_shell_s_length     5
+  #define FAKE_make_operation_skeleton_s_length  8
+  #define FAKE_make_operation_to_s_length        2
+  #define FAKE_make_operation_top_s_length       3
+  #define FAKE_make_operation_touch_s_length     5
 
-  extern const f_string_t fake_make_operation_and_s;
-  extern const f_string_t fake_make_operation_break_s;
-  extern const f_string_t fake_make_operation_build_s;
-  extern const f_string_t fake_make_operation_clean_s;
-  extern const f_string_t fake_make_operation_clone_s;
-  extern const f_string_t fake_make_operation_compile_s;
-  extern const f_string_t fake_make_operation_copy_s;
-  extern const f_string_t fake_make_operation_define_s;
-  extern const f_string_t fake_make_operation_delete_s;
-  extern const f_string_t fake_make_operation_deletes_s;
-  extern const f_string_t fake_make_operation_else_s;
-  extern const f_string_t fake_make_operation_exit_s;
-  extern const f_string_t fake_make_operation_fail_s;
-  extern const f_string_t fake_make_operation_group_s;
-  extern const f_string_t fake_make_operation_groups_s;
-  extern const f_string_t fake_make_operation_if_s;
-  extern const f_string_t fake_make_operation_index_s;
-  extern const f_string_t fake_make_operation_link_s;
-  extern const f_string_t fake_make_operation_mode_s;
-  extern const f_string_t fake_make_operation_modes_s;
-  extern const f_string_t fake_make_operation_move_s;
-  extern const f_string_t fake_make_operation_operate_s;
-  extern const f_string_t fake_make_operation_or_s;
-  extern const f_string_t fake_make_operation_owner_s;
-  extern const f_string_t fake_make_operation_owners_s;
-  extern const f_string_t fake_make_operation_parameter_s;
-  extern const f_string_t fake_make_operation_pop_s;
-  extern const f_string_t fake_make_operation_print_s;
-  extern const f_string_t fake_make_operation_run_s;
-  extern const f_string_t fake_make_operation_shell_s;
-  extern const f_string_t fake_make_operation_skeleton_s;
-  extern const f_string_t fake_make_operation_to_s;
-  extern const f_string_t fake_make_operation_top_s;
-  extern const f_string_t fake_make_operation_touch_s;
+  extern const f_string_static_t fake_make_operation_and_s;
+  extern const f_string_static_t fake_make_operation_break_s;
+  extern const f_string_static_t fake_make_operation_build_s;
+  extern const f_string_static_t fake_make_operation_clean_s;
+  extern const f_string_static_t fake_make_operation_clone_s;
+  extern const f_string_static_t fake_make_operation_compile_s;
+  extern const f_string_static_t fake_make_operation_copy_s;
+  extern const f_string_static_t fake_make_operation_define_s;
+  extern const f_string_static_t fake_make_operation_delete_s;
+  extern const f_string_static_t fake_make_operation_deletes_s;
+  extern const f_string_static_t fake_make_operation_else_s;
+  extern const f_string_static_t fake_make_operation_exit_s;
+  extern const f_string_static_t fake_make_operation_fail_s;
+  extern const f_string_static_t fake_make_operation_group_s;
+  extern const f_string_static_t fake_make_operation_groups_s;
+  extern const f_string_static_t fake_make_operation_if_s;
+  extern const f_string_static_t fake_make_operation_index_s;
+  extern const f_string_static_t fake_make_operation_link_s;
+  extern const f_string_static_t fake_make_operation_mode_s;
+  extern const f_string_static_t fake_make_operation_modes_s;
+  extern const f_string_static_t fake_make_operation_move_s;
+  extern const f_string_static_t fake_make_operation_operate_s;
+  extern const f_string_static_t fake_make_operation_or_s;
+  extern const f_string_static_t fake_make_operation_owner_s;
+  extern const f_string_static_t fake_make_operation_owners_s;
+  extern const f_string_static_t fake_make_operation_parameter_s;
+  extern const f_string_static_t fake_make_operation_pop_s;
+  extern const f_string_static_t fake_make_operation_print_s;
+  extern const f_string_static_t fake_make_operation_run_s;
+  extern const f_string_static_t fake_make_operation_shell_s;
+  extern const f_string_static_t fake_make_operation_skeleton_s;
+  extern const f_string_static_t fake_make_operation_to_s;
+  extern const f_string_static_t fake_make_operation_top_s;
+  extern const f_string_static_t fake_make_operation_touch_s;
 
   enum {
     fake_make_operation_type_and_e = 1,
@@ -867,37 +875,37 @@ extern "C" {
   #define FAKE_make_operation_argument_target_s      "target"
   #define FAKE_make_operation_argument_warn_s        "warn"
 
-  #define fake_make_operation_argument_environment_s_length 11
-  #define fake_make_operation_argument_failure_s_length     7
-  #define fake_make_operation_argument_file_s_length        4
-  #define fake_make_operation_argument_directory_s_length   9
-  #define fake_make_operation_argument_error_s_length       5
-  #define fake_make_operation_argument_exit_s_length        4
-  #define fake_make_operation_argument_has_s_length         3
-  #define fake_make_operation_argument_ignore_s_length      6
-  #define fake_make_operation_argument_is_s_length          2
-  #define fake_make_operation_argument_parameter_s_length   9
-  #define fake_make_operation_argument_point_s_length       5
-  #define fake_make_operation_argument_recursive_s_length   9
-  #define fake_make_operation_argument_success_s_length     7
-  #define fake_make_operation_argument_target_s_length      6
-  #define fake_make_operation_argument_warn_s_length        4
+  #define FAKE_make_operation_argument_environment_s_length 11
+  #define FAKE_make_operation_argument_failure_s_length     7
+  #define FAKE_make_operation_argument_file_s_length        4
+  #define FAKE_make_operation_argument_directory_s_length   9
+  #define FAKE_make_operation_argument_error_s_length       5
+  #define FAKE_make_operation_argument_exit_s_length        4
+  #define FAKE_make_operation_argument_has_s_length         3
+  #define FAKE_make_operation_argument_ignore_s_length      6
+  #define FAKE_make_operation_argument_is_s_length          2
+  #define FAKE_make_operation_argument_parameter_s_length   9
+  #define FAKE_make_operation_argument_point_s_length       5
+  #define FAKE_make_operation_argument_recursive_s_length   9
+  #define FAKE_make_operation_argument_success_s_length     7
+  #define FAKE_make_operation_argument_target_s_length      6
+  #define FAKE_make_operation_argument_warn_s_length        4
 
-  extern const f_string_t fake_make_operation_argument_environment_s;
-  extern const f_string_t fake_make_operation_argument_failure_s;
-  extern const f_string_t fake_make_operation_argument_file_s;
-  extern const f_string_t fake_make_operation_argument_directory_s;
-  extern const f_string_t fake_make_operation_argument_error_s;
-  extern const f_string_t fake_make_operation_argument_exit_s;
-  extern const f_string_t fake_make_operation_argument_has_s;
-  extern const f_string_t fake_make_operation_argument_ignore_s;
-  extern const f_string_t fake_make_operation_argument_is_s;
-  extern const f_string_t fake_make_operation_argument_parameter_s;
-  extern const f_string_t fake_make_operation_argument_point_s;
-  extern const f_string_t fake_make_operation_argument_recursive_s;
-  extern const f_string_t fake_make_operation_argument_success_s;
-  extern const f_string_t fake_make_operation_argument_target_s;
-  extern const f_string_t fake_make_operation_argument_warn_s;
+  extern const f_string_static_t fake_make_operation_argument_environment_s;
+  extern const f_string_static_t fake_make_operation_argument_failure_s;
+  extern const f_string_static_t fake_make_operation_argument_file_s;
+  extern const f_string_static_t fake_make_operation_argument_directory_s;
+  extern const f_string_static_t fake_make_operation_argument_error_s;
+  extern const f_string_static_t fake_make_operation_argument_exit_s;
+  extern const f_string_static_t fake_make_operation_argument_has_s;
+  extern const f_string_static_t fake_make_operation_argument_ignore_s;
+  extern const f_string_static_t fake_make_operation_argument_is_s;
+  extern const f_string_static_t fake_make_operation_argument_parameter_s;
+  extern const f_string_static_t fake_make_operation_argument_point_s;
+  extern const f_string_static_t fake_make_operation_argument_recursive_s;
+  extern const f_string_static_t fake_make_operation_argument_success_s;
+  extern const f_string_static_t fake_make_operation_argument_target_s;
+  extern const f_string_static_t fake_make_operation_argument_warn_s;
 
   #define FAKE_make_operation_argument_if_defined_s       "defined"
   #define FAKE_make_operation_argument_if_equal_s         "=="
@@ -916,39 +924,39 @@ extern "C" {
   #define FAKE_make_operation_argument_if_owner_s         "owner"
   #define FAKE_make_operation_argument_if_success_s       "success"
 
-  #define fake_make_operation_argument_if_defined_s_length       7
-  #define fake_make_operation_argument_if_equal_s_length         2
-  #define fake_make_operation_argument_if_equal_not_s_length     2
-  #define fake_make_operation_argument_if_exists_s_length        6
-  #define fake_make_operation_argument_if_failure_s_length       7
-  #define fake_make_operation_argument_if_greater_s_length       1
-  #define fake_make_operation_argument_if_greater_equal_s_length 2
-  #define fake_make_operation_argument_if_group_s_length         5
-  #define fake_make_operation_argument_if_is_s_length            2
-  #define fake_make_operation_argument_if_is_for_s_length        3
-  #define fake_make_operation_argument_if_less_s_length          1
-  #define fake_make_operation_argument_if_less_equal_s_length    2
-  #define fake_make_operation_argument_if_mode_s_length          4
-  #define fake_make_operation_argument_if_not_s_length           3
-  #define fake_make_operation_argument_if_owner_s_length         5
-  #define fake_make_operation_argument_if_success_s_length       7
+  #define FAKE_make_operation_argument_if_defined_s_length       7
+  #define FAKE_make_operation_argument_if_equal_s_length         2
+  #define FAKE_make_operation_argument_if_equal_not_s_length     2
+  #define FAKE_make_operation_argument_if_exists_s_length        6
+  #define FAKE_make_operation_argument_if_failure_s_length       7
+  #define FAKE_make_operation_argument_if_greater_s_length       1
+  #define FAKE_make_operation_argument_if_greater_equal_s_length 2
+  #define FAKE_make_operation_argument_if_group_s_length         5
+  #define FAKE_make_operation_argument_if_is_s_length            2
+  #define FAKE_make_operation_argument_if_is_for_s_length        3
+  #define FAKE_make_operation_argument_if_less_s_length          1
+  #define FAKE_make_operation_argument_if_less_equal_s_length    2
+  #define FAKE_make_operation_argument_if_mode_s_length          4
+  #define FAKE_make_operation_argument_if_not_s_length           3
+  #define FAKE_make_operation_argument_if_owner_s_length         5
+  #define FAKE_make_operation_argument_if_success_s_length       7
 
-  extern const f_string_t fake_make_operation_argument_if_defined_s;
-  extern const f_string_t fake_make_operation_argument_if_equal_s;
-  extern const f_string_t fake_make_operation_argument_if_equal_not_s;
-  extern const f_string_t fake_make_operation_argument_if_exists_s;
-  extern const f_string_t fake_make_operation_argument_if_failure_s;
-  extern const f_string_t fake_make_operation_argument_if_greater_s;
-  extern const f_string_t fake_make_operation_argument_if_greater_equal_s;
-  extern const f_string_t fake_make_operation_argument_if_group_s;
-  extern const f_string_t fake_make_operation_argument_if_is_s;
-  extern const f_string_t fake_make_operation_argument_if_is_for_s;
-  extern const f_string_t fake_make_operation_argument_if_less_s;
-  extern const f_string_t fake_make_operation_argument_if_less_equal_s;
-  extern const f_string_t fake_make_operation_argument_if_mode_s;
-  extern const f_string_t fake_make_operation_argument_if_not_s;
-  extern const f_string_t fake_make_operation_argument_if_owner_s;
-  extern const f_string_t fake_make_operation_argument_if_success_s;
+  extern const f_string_static_t fake_make_operation_argument_if_defined_s;
+  extern const f_string_static_t fake_make_operation_argument_if_equal_s;
+  extern const f_string_static_t fake_make_operation_argument_if_equal_not_s;
+  extern const f_string_static_t fake_make_operation_argument_if_exists_s;
+  extern const f_string_static_t fake_make_operation_argument_if_failure_s;
+  extern const f_string_static_t fake_make_operation_argument_if_greater_s;
+  extern const f_string_static_t fake_make_operation_argument_if_greater_equal_s;
+  extern const f_string_static_t fake_make_operation_argument_if_group_s;
+  extern const f_string_static_t fake_make_operation_argument_if_is_s;
+  extern const f_string_static_t fake_make_operation_argument_if_is_for_s;
+  extern const f_string_static_t fake_make_operation_argument_if_less_s;
+  extern const f_string_static_t fake_make_operation_argument_if_less_equal_s;
+  extern const f_string_static_t fake_make_operation_argument_if_mode_s;
+  extern const f_string_static_t fake_make_operation_argument_if_not_s;
+  extern const f_string_static_t fake_make_operation_argument_if_owner_s;
+  extern const f_string_static_t fake_make_operation_argument_if_success_s;
 
   enum {
     fake_make_operation_if_type_else_e = 1,
@@ -986,6 +994,9 @@ extern "C" {
 #endif // _di_fake_make_operation_
 
 #ifndef _di_fake_make_parameter_t_
+  #define FAKE_make_parameter_iki_option_s ":option"
+  #define FAKE_make_parameter_iki_value_s  ":value"
+
   #define FAKE_make_parameter_variable_build_s     "build"
   #define FAKE_make_parameter_variable_color_s     "color"
   #define FAKE_make_parameter_variable_data_s      "data"
@@ -999,63 +1010,63 @@ extern "C" {
   #define FAKE_make_parameter_variable_verbosity_s "verbosity"
   #define FAKE_make_parameter_variable_work_s      "work"
 
-  #define fake_make_parameter_iki_option_s ":option"
-  #define fake_make_parameter_iki_value_s  ":value"
+  #define FAKE_make_parameter_iki_option_s_length 7
+  #define FAKE_make_parameter_iki_value_s_length  6
 
-  #define fake_make_parameter_variable_build_s_length     5
-  #define fake_make_parameter_variable_color_s_length     5
-  #define fake_make_parameter_variable_data_s_length      4
-  #define fake_make_parameter_variable_define_s_length    6
-  #define fake_make_parameter_variable_fakefile_s_length  8
-  #define fake_make_parameter_variable_mode_s_length      4
-  #define fake_make_parameter_variable_process_s_length   7
-  #define fake_make_parameter_variable_return_s_length    6
-  #define fake_make_parameter_variable_settings_s_length  8
-  #define fake_make_parameter_variable_sources_s_length   7
-  #define fake_make_parameter_variable_verbosity_s_length 9
-  #define fake_make_parameter_variable_work_s_length      4
+  #define FAKE_make_parameter_variable_build_s_length     5
+  #define FAKE_make_parameter_variable_color_s_length     5
+  #define FAKE_make_parameter_variable_data_s_length      4
+  #define FAKE_make_parameter_variable_define_s_length    6
+  #define FAKE_make_parameter_variable_fakefile_s_length  8
+  #define FAKE_make_parameter_variable_mode_s_length      4
+  #define FAKE_make_parameter_variable_process_s_length   7
+  #define FAKE_make_parameter_variable_return_s_length    6
+  #define FAKE_make_parameter_variable_settings_s_length  8
+  #define FAKE_make_parameter_variable_sources_s_length   7
+  #define FAKE_make_parameter_variable_verbosity_s_length 9
+  #define FAKE_make_parameter_variable_work_s_length      4
 
-  #define fake_make_parameter_iki_option_s_length 7
-  #define fake_make_parameter_iki_value_s_length  6
+  extern const f_string_static_t fake_make_parameter_iki_option_s;
+  extern const f_string_static_t fake_make_parameter_iki_value_s;
 
-  extern const f_string_t fake_make_parameter_variable_build_s;
-  extern const f_string_t fake_make_parameter_variable_color_s;
-  extern const f_string_t fake_make_parameter_variable_data_s;
-  extern const f_string_t fake_make_parameter_variable_define_s;
-  extern const f_string_t fake_make_parameter_variable_fakefile_s;
-  extern const f_string_t fake_make_parameter_variable_mode_s;
-  extern const f_string_t fake_make_parameter_variable_process_s;
-  extern const f_string_t fake_make_parameter_variable_return_s;
-  extern const f_string_t fake_make_parameter_variable_settings_s;
-  extern const f_string_t fake_make_parameter_variable_sources_s;
-  extern const f_string_t fake_make_parameter_variable_verbosity_s;
-  extern const f_string_t fake_make_parameter_variable_work_s;
+  extern const f_string_static_t fake_make_parameter_variable_build_s;
+  extern const f_string_static_t fake_make_parameter_variable_color_s;
+  extern const f_string_static_t fake_make_parameter_variable_data_s;
+  extern const f_string_static_t fake_make_parameter_variable_define_s;
+  extern const f_string_static_t fake_make_parameter_variable_fakefile_s;
+  extern const f_string_static_t fake_make_parameter_variable_mode_s;
+  extern const f_string_static_t fake_make_parameter_variable_process_s;
+  extern const f_string_static_t fake_make_parameter_variable_return_s;
+  extern const f_string_static_t fake_make_parameter_variable_settings_s;
+  extern const f_string_static_t fake_make_parameter_variable_sources_s;
+  extern const f_string_static_t fake_make_parameter_variable_verbosity_s;
+  extern const f_string_static_t fake_make_parameter_variable_work_s;
 
-  extern const f_string_t fake_make_parameter_variable_option_build_s;
-  extern const f_string_t fake_make_parameter_variable_option_color_s;
-  extern const f_string_t fake_make_parameter_variable_option_data_s;
-  extern const f_string_t fake_make_parameter_variable_option_define_s;
-  extern const f_string_t fake_make_parameter_variable_option_fakefile_s;
-  extern const f_string_t fake_make_parameter_variable_option_mode_s;
-  extern const f_string_t fake_make_parameter_variable_option_process_s;
-  extern const f_string_t fake_make_parameter_variable_option_return_s;
-  extern const f_string_t fake_make_parameter_variable_option_settings_s;
-  extern const f_string_t fake_make_parameter_variable_option_sources_s;
-  extern const f_string_t fake_make_parameter_variable_option_verbosity_s;
-  extern const f_string_t fake_make_parameter_variable_option_work_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_build_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_color_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_data_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_define_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_fakefile_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_mode_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_process_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_return_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_settings_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_sources_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_verbosity_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_work_s;
 
-  extern const f_string_t fake_make_parameter_variable_value_build_s;
-  extern const f_string_t fake_make_parameter_variable_value_color_s;
-  extern const f_string_t fake_make_parameter_variable_value_data_s;
-  extern const f_string_t fake_make_parameter_variable_value_define_s;
-  extern const f_string_t fake_make_parameter_variable_value_fakefile_s;
-  extern const f_string_t fake_make_parameter_variable_value_mode_s;
-  extern const f_string_t fake_make_parameter_variable_value_process_s;
-  extern const f_string_t fake_make_parameter_variable_value_return_s;
-  extern const f_string_t fake_make_parameter_variable_value_settings_s;
-  extern const f_string_t fake_make_parameter_variable_value_sources_s;
-  extern const f_string_t fake_make_parameter_variable_value_verbosity_s;
-  extern const f_string_t fake_make_parameter_variable_value_work_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_build_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_color_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_data_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_define_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_fakefile_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_mode_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_process_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_return_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_settings_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_sources_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_verbosity_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_work_s;
 
   typedef struct {
     f_string_dynamics_t build;
@@ -1242,17 +1253,23 @@ extern "C" {
   #define FAKE_make_skeleton_content_defines_s      "# fss-0000\n\n"
   #define FAKE_make_skeleton_content_dependencies_s "# fss-0000\n\n"
   #define FAKE_make_skeleton_content_fakefile_s     "# fss-0005 iki-0002\n\nsettings:\n  fail exit\n\nmain:\n\n"
+  #define FAKE_make_skeleton_content_process_post_s "#!/bin/bash\n\n"
+  #define FAKE_make_skeleton_content_process_pre_s  "#!/bin/bash\n\n"
   #define FAKE_make_skeleton_content_settings_s     "# fss-0001\n\n"
 
-  #define fake_make_skeleton_content_defines_s_length      12
-  #define fake_make_skeleton_content_dependencies_s_length 12
-  #define fake_make_skeleton_content_fakefile_s_length     51
-  #define fake_make_skeleton_content_settings_s_length     12
+  #define FAKE_make_skeleton_content_defines_s_length      12
+  #define FAKE_make_skeleton_content_dependencies_s_length 12
+  #define FAKE_make_skeleton_content_fakefile_s_length     51
+  #define FAKE_make_skeleton_content_process_post_s_length 13
+  #define FAKE_make_skeleton_content_process_pre_s_length  13
+  #define FAKE_make_skeleton_content_settings_s_length     12
 
-  extern const f_string_t fake_make_skeleton_content_defines_s;
-  extern const f_string_t fake_make_skeleton_content_dependencies_s;
-  extern const f_string_t fake_make_skeleton_content_fakefile_s;
-  extern const f_string_t fake_make_skeleton_content_settings_s;
+  extern const f_string_static_t fake_make_skeleton_content_defines_s;
+  extern const f_string_static_t fake_make_skeleton_content_dependencies_s;
+  extern const f_string_static_t fake_make_skeleton_content_fakefile_s;
+  extern const f_string_static_t fake_make_skeleton_content_process_post_s;
+  extern const f_string_static_t fake_make_skeleton_content_process_pre_s;
+  extern const f_string_static_t fake_make_skeleton_content_settings_s;
 #endif // _di_fake_skeleton_content_
 
 #ifndef _di_fake_make_context_
@@ -1266,26 +1283,37 @@ extern "C" {
   #define FAKE_make_context_success_s   "success"
   #define FAKE_make_context_normal_s    "normal"
 
-  #define fake_make_context_reset_s_length     5
-  #define fake_make_context_warning_s_length   7
-  #define fake_make_context_error_s_length     5
-  #define fake_make_context_title_s_length     5
-  #define fake_make_context_notable_s_length   7
-  #define fake_make_context_important_s_length 9
-  #define fake_make_context_standout_s_length  8
-  #define fake_make_context_success_s_length   7
-  #define fake_make_context_normal_s_length    5
+  #define FAKE_make_context_reset_s_length     5
+  #define FAKE_make_context_warning_s_length   7
+  #define FAKE_make_context_error_s_length     5
+  #define FAKE_make_context_title_s_length     5
+  #define FAKE_make_context_notable_s_length   7
+  #define FAKE_make_context_important_s_length 9
+  #define FAKE_make_context_standout_s_length  8
+  #define FAKE_make_context_success_s_length   7
+  #define FAKE_make_context_normal_s_length    5
 
-  extern const f_string_t fake_make_context_reset_s;
-  extern const f_string_t fake_make_context_warning_s;
-  extern const f_string_t fake_make_context_error_s;
-  extern const f_string_t fake_make_context_title_s;
-  extern const f_string_t fake_make_context_notable_s;
-  extern const f_string_t fake_make_context_important_s;
-  extern const f_string_t fake_make_context_standout_s;
-  extern const f_string_t fake_make_context_success_s;
-  extern const f_string_t fake_make_context_normal_s;
+  extern const f_string_static_t fake_make_context_reset_s;
+  extern const f_string_static_t fake_make_context_warning_s;
+  extern const f_string_static_t fake_make_context_error_s;
+  extern const f_string_static_t fake_make_context_title_s;
+  extern const f_string_static_t fake_make_context_notable_s;
+  extern const f_string_static_t fake_make_context_important_s;
+  extern const f_string_static_t fake_make_context_standout_s;
+  extern const f_string_static_t fake_make_context_success_s;
+  extern const f_string_static_t fake_make_context_normal_s;
 #endif // _di_fake_make_context_
+
+#ifndef _di_fake_file_data_build_strings_
+  #define FAKE_file_data_build_process_post_s "process_post.sh"
+  #define FAKE_file_data_build_process_pre_s  "process_pre.sh"
+
+  #define FAKE_file_data_build_process_post_s_length 15
+  #define FAKE_file_data_build_process_pre_s_length  14
+
+  extern const f_string_static_t fake_file_data_build_process_post_s;
+  extern const f_string_static_t fake_file_data_build_process_pre_s;
+#endif // _di_fake_file_data_build_strings_
 
 /**
  * Check to see if a process signal is received.

@@ -10,7 +10,7 @@
 #ifndef _FL_directory_h
 #define _FL_directory_h
 
-// libc includes.
+// Libc includes.
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -29,7 +29,7 @@
   #include <ftw.h>
 #endif // __USE_XOPEN_EXTENDED
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>

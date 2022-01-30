@@ -212,15 +212,15 @@ extern "C" {
  * @param name
  *   The Object name of the setting being populated.
  * @param name_sub
- *   (optional) A sub-name associated with the setting being populated.
- *   Set to NULL to disable.
+ *   A sub-name associated with the setting being populated.
+ *   Set to a string with used set to 0 to not use.
  * @param value
  *   The value being set.
  * @param suffix
  *   An additional message to append at the end (before the final period).
  */
 #ifndef _di_controller_rule_setting_read_print_value_
-  extern void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) F_attribute_visibility_internal_d;
+  extern void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_t suffix) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_value_
 
 /**
@@ -238,7 +238,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_rule_setting_read_print_values_
-  extern void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+  extern void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_static_t name, const f_array_length_t index, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_setting_read_print_values_
 
 #ifdef __cplusplus

@@ -12,7 +12,7 @@
 #ifndef _FLL_fss_h
 #define _FLL_fss_h
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -20,7 +20,7 @@
 #include <fll/level_0/utf.h>
 #include <fll/level_0/fss.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/fss.h>
 #include <fll/level_1/string.h>
@@ -96,10 +96,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param values
  *   An array of values where "snatched" content is stored.
  * @param matches
@@ -115,14 +113,14 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  *
  * @see f_string_dynamic_partial_append_nulless()
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_
-  extern f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
 #endif // _di_fll_fss_snatch_
 
 /**
@@ -146,10 +144,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param values
  *   An array of values where "snatched" content is stored.
  * @param matches
@@ -165,14 +161,14 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  *
  * @see f_string_dynamic_partial_append_nulless()
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_apart_
-  extern f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_apart_
 
 /**
@@ -198,10 +194,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param values
  *   An array of map arrays where "snatched" content is stored.
  * @param matches
@@ -217,14 +211,14 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  *
  * @see f_string_dynamic_partial_append_nulless()
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_map_
-  extern f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_
 
 /**
@@ -252,10 +246,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param values
  *   An array of multi map arrays where "snatched" content is stored.
  * @param matches
@@ -271,14 +263,14 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  *
  * @see f_string_dynamic_partial_append_nulless()
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_map_apart_
-  extern f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_apart_
 
 /**
@@ -305,10 +297,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param glue
  *   A string to append between each duplicate name found when "snatching".
  * @param values
@@ -326,11 +316,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_mash_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  */
 #ifndef _di_fll_fss_snatch_map_mash_
-  extern f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_mash_
 
 /**
@@ -358,10 +348,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param glue
  *   A string to append between each duplicate name found when "snatching".
  * @param values
@@ -379,14 +367,14 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  *
  * @see f_string_dynamic_partial_mash_nulless()
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_map_mash_apart_
-  extern f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_mash_apart_
 
 /**
@@ -413,10 +401,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param glue
  *   A string to append between each duplicate name found when "snatching".
  * @param values
@@ -434,14 +420,14 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  *
  * @see f_string_dynamic_partial_mash_nulless()
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_map_together_
-  extern f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_together_
 
 /**
@@ -465,10 +451,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param glue
  *   A string to append between each duplicate name found when "snatching".
  * @param values
@@ -486,11 +470,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_mash_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  */
 #ifndef _di_fll_fss_snatch_mash_
-  extern f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
 #endif // _di_fll_fss_snatch_mash_
 
 /**
@@ -515,10 +499,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param glue
  *   A string to append between each duplicate name found when "snatching".
  * @param values
@@ -536,14 +518,14 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  *
  * @see f_string_dynamic_partial_mash_nulless()
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_mash_apart_
-  extern f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_mash_apart_
 
 /**
@@ -565,10 +547,8 @@ extern "C" {
  *   This content mappings to process.
  * @param names
  *   An array of strings to "snatch" from the buffer.
- * @param lengths
- *   An array of lengths for each names string.
  * @param size
- *   The total size of the names, lengths, and values arrays.
+ *   The total size of the names and values arrays.
  * @param glue
  *   A string to append between each duplicate name found when "snatching".
  * @param values
@@ -586,14 +566,14 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_compare_trim().
  *   Errors (with error bit) from: f_string_dynamic_partial_mash_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  *
  * @see f_string_dynamic_partial_append_nulless()
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_together_
-  extern f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
 #endif // _di_fll_fss_snatch_together_
 
 #ifdef __cplusplus

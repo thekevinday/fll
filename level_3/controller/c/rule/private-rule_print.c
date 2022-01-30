@@ -1,4 +1,4 @@
-#include "../controller/controller.h"
+#include "../controller.h"
 #include "../common/private-common.h"
 #include "../rule/private-rule_print.h"
 #include "../lock/private-lock_print.h"
@@ -34,7 +34,7 @@ extern "C" {
     fl_print_format("%q%[%QWhile processing ", print.to.stream, f_string_eol_s, print.context, print.prefix);
 
     if (cache.name_action.used) {
-      fl_print_format("%s '%]", print.to.stream, item ? controller_action_s : controller_value_s, print.context);
+      fl_print_format("%q '%]", print.to.stream, item ? controller_action_s : controller_value_s, print.context);
       fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_action, print.notable);
       fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
       fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_action, print.notable);
@@ -42,7 +42,7 @@ extern "C" {
     }
 
     if (cache.name_item.used) {
-      fl_print_format("rule %s '%]", print.to.stream, item ? controller_item_s : controller_setting_s, print.context);
+      fl_print_format("rule %q '%]", print.to.stream, item ? controller_item_s : controller_setting_s, print.context);
       fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_item, print.notable);
       fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
       fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_item, print.notable);
@@ -89,16 +89,16 @@ extern "C" {
         fl_print_format("%[' failed due to a failure to setup the '%]%[", print->to.stream, print->context, print->context, print->notable);
 
         if (status == F_control_group) {
-          f_print_terminated(controller_cgroup_s, print->to.stream);
+          f_print_dynamic(controller_cgroup_s, print->to.stream);
         }
         else if (status == F_limit) {
-          f_print_terminated(controller_limit_s, print->to.stream);
+          f_print_dynamic(controller_limit_s, print->to.stream);
         }
         else if (status == F_processor) {
-          f_print_terminated(controller_processor_s, print->to.stream);
+          f_print_dynamic(controller_processor_s, print->to.stream);
         }
         else if (status == F_schedule) {
-          f_print_terminated(controller_scheduler_s, print->to.stream);
+          f_print_dynamic(controller_scheduler_s, print->to.stream);
         }
 
         fl_print_format("%]%['.%]%q", print->to.stream, print->notable, print->context, print->context, f_string_eol_s);
@@ -301,7 +301,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_print_error_with_range_
 
 #ifndef _di_controller_rule_setting_read_print_value_
-  void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) {
+  void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_t suffix) {
 
     if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
       return;
@@ -309,9 +309,9 @@ extern "C" {
 
     controller_lock_print(global.main->output.to, global.thread);
 
-    fl_print_format("%qProcessing rule item action '%[%S%]' setting ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%qProcessing rule item action '%[%Q%]' setting ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
 
-    if (name_sub) {
+    if (name_sub.used) {
       fl_print_format("'%[%S%]'", global.main->output.to.stream, global.main->context.set.notable, name_sub, global.main->context.set.notable);
     }
     else {
@@ -326,7 +326,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_print_value_
 
 #ifndef _di_controller_rule_setting_read_print_values_
-  void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t * const cache) {
+  void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_static_t name, const f_array_length_t index, controller_cache_t * const cache) {
 
     if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
       return;
@@ -334,7 +334,7 @@ extern "C" {
 
     controller_lock_print(global.main->output.to, global.thread);
 
-    fl_print_format("%qProcessing rule item action '%[%S%]' setting value to", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%qProcessing rule item action '%[%Q%]' setting value to", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
 
     for (f_array_length_t j = 0; j < cache->content_actions.array[index].used; ++j) {
 

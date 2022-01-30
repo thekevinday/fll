@@ -57,66 +57,36 @@ extern "C" {
 
     f_string_dynamic_t file_data_build_process_post = f_string_dynamic_t_initialize;
     f_string_dynamic_t file_data_build_process_pre = f_string_dynamic_t_initialize;
-    f_string_dynamic_t content = f_string_dynamic_t_initialize;
 
     if (F_status_is_error_not(status)) {
-      content.string = fake_make_skeleton_content_defines_s;
-      content.used = fake_make_skeleton_content_defines_s_length;
-      content.size = content.used;
-
-      status = fake_skeleton_operate_file_create(main, main->file_data_build_defines, F_false, content);
-
-      content.used = 0;
+      status = fake_skeleton_operate_file_create(main, main->file_data_build_defines, F_false, fake_make_skeleton_content_defines_s);
     }
 
     if (F_status_is_error_not(status)) {
-      content.string = fake_make_skeleton_content_dependencies_s;
-      content.used = fake_make_skeleton_content_dependencies_s_length;
-      content.size = content.used;
-
-      status = fake_skeleton_operate_file_create(main, main->file_data_build_dependencies, F_false, content);
-
-      content.used = 0;
+      status = fake_skeleton_operate_file_create(main, main->file_data_build_dependencies, F_false, fake_make_skeleton_content_dependencies_s);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(main, file_data_build_process_post, F_true, content);
+      status = fake_skeleton_operate_file_create(main, fake_file_data_build_process_post_s, F_true, fake_make_skeleton_content_process_post_s);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(main, file_data_build_process_pre, F_true, content);
+      status = fake_skeleton_operate_file_create(main, fake_file_data_build_process_pre_s, F_true, fake_make_skeleton_content_process_pre_s);
     }
 
     if (F_status_is_error_not(status)) {
-      content.string = fake_make_skeleton_content_settings_s;
-      content.used = fake_make_skeleton_content_settings_s_length;
-      content.size = content.used;
-
-      status = fake_skeleton_operate_file_create(main, main->file_data_build_settings, F_false, content);
-
-      content.used = 0;
+      status = fake_skeleton_operate_file_create(main, main->file_data_build_settings, F_false, fake_make_skeleton_content_settings_s);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(main, main->file_documents_readme, F_false, content);
+      status = fake_skeleton_operate_file_create(main, main->file_documents_readme, F_false, f_string_empty_s);
     }
 
     if (F_status_is_error_not(status)) {
-      content.string = fake_make_skeleton_content_fakefile_s;
-      content.used = fake_make_skeleton_content_fakefile_s_length;
-      content.size = content.used;
-
-      status = fake_skeleton_operate_file_create(main, main->file_data_build_fakefile, F_false, content);
-
-      content.used = 0;
+      status = fake_skeleton_operate_file_create(main, main->file_data_build_fakefile, F_false, fake_make_skeleton_content_fakefile_s);
     }
 
-    if (F_status_is_error(status)) {
-      macro_f_string_dynamic_t_delete_simple(file_data_build_process_post);
-      macro_f_string_dynamic_t_delete_simple(file_data_build_process_pre);
-
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -143,7 +113,7 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%q%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
         fl_print_format("%[' exists but is not a directory.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -159,7 +129,7 @@ extern "C" {
         if (F_status_set_fine(status) == F_file_found_not) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%SThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%q%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
           fl_print_format("%[' could not be created, a parent directory does not exist.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -236,7 +206,7 @@ extern "C" {
         if (F_status_set_fine(status) == F_file_found_not) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%SThe file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%q%[%QThe file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
           fl_print_format("%[' could not be created, a parent directory does not exist.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 

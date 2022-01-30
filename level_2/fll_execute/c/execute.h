@@ -16,7 +16,7 @@
 // include pre-requirements
 #define _GNU_SOURCE
 
-// libc includes.
+// Libc includes.
 #include <memory.h>
 #include <sched.h>
 #include <signal.h>
@@ -26,7 +26,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -45,7 +45,7 @@
   #include <fll/level_0/thread.h>
 #endif // _di_pthread_support_
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/control_group.h>
 #include <fll/level_1/environment.h>
 #include <fll/level_1/execute.h>

@@ -13,15 +13,16 @@
  * This processes in accordance to the IKI specification.
  */
 #ifndef _iki_write_h
+#define _iki_write_h
 
-// libc includes.
+// Libc includes.
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -36,14 +37,14 @@
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/console.h>
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/iki.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
 
-// fll-2 includes
+// FLL-2 includes.
 #include <fll/level_2/error.h>
 #include <fll/level_2/file.h>
 #include <fll/level_2/iki.h>
@@ -55,24 +56,40 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_program_version_
-  #define iki_write_program_version_major_s F_string_ascii_0_s
-  #define iki_write_program_version_minor_s F_string_ascii_5_s
-  #define iki_write_program_version_micro_s F_string_ascii_8_s
+  #define IKI_WRITE_program_version_major_s F_string_ascii_0_s
+  #define IKI_WRITE_program_version_minor_s F_string_ascii_5_s
+  #define IKI_WRITE_program_version_micro_s F_string_ascii_8_s
 
-  #ifndef iki_write_program_version_nano_prefix_s
-    #define iki_write_program_version_nano_prefix_s
-  #endif
+  #define IKI_WRITE_program_version_major_s_length F_string_ascii_0_s_length
+  #define IKI_WRITE_program_version_minor_s_length F_string_ascii_5_s_length
+  #define IKI_WRITE_program_version_micro_s_length F_string_ascii_8_s_length
 
-  #ifndef iki_write_program_version_nano_s
-    #define iki_write_program_version_nano_s
-  #endif
+  #if !(defined(IKI_WRITE_program_version_nano_prefix_s) && defined(IKI_WRITE_program_version_nano_prefix_s_length))
+    #define IKI_WRITE_program_version_nano_prefix_s
+    #define IKI_WRITE_program_version_nano_prefix_s_length 0
+  #endif // !(defined(IKI_WRITE_program_version_nano_prefix_s) && defined(IKI_WRITE_program_version_nano_prefix_s_length))
 
-  #define iki_write_program_version_s iki_write_program_version_major_s F_string_ascii_period_s iki_write_program_version_minor_s F_string_ascii_period_s iki_write_program_version_micro_s iki_write_program_version_nano_prefix_s iki_write_program_version_nano_s
+  #if !(defined(IKI_WRITE_program_version_nano_s) && defined(IKI_WRITE_program_version_nano_s_length))
+    #define IKI_WRITE_program_version_nano_s
+    #define IKI_WRITE_program_version_nano_s_length 0
+  #endif // !(defined(IKI_WRITE_program_version_nano_s) && defined(IKI_WRITE_program_version_nano_s_length))
+
+  #define IKI_WRITE_program_version_s IKI_WRITE_program_version_major_s F_string_ascii_period_s IKI_WRITE_program_version_minor_s F_string_ascii_period_s IKI_WRITE_program_version_micro_s IKI_WRITE_program_version_nano_prefix_s IKI_WRITE_program_version_nano_s
+
+  #define IKI_WRITE_program_version_s_length IKI_WRITE_program_version_major_s_length + F_string_ascii_period_s_length + IKI_WRITE_program_version_minor_s_length + F_string_ascii_period_s_length + IKI_WRITE_program_version_micro_s_length + IKI_WRITE_program_version_nano_prefix_s_length + IKI_WRITE_program_version_nano_s_length
+
+  extern const f_string_static_t iki_write_program_version_s;
 #endif // _di_iki_write_program_version_
 
 #ifndef _di_iki_write_program_name_
   #define iki_write_program_name_s      "iki_write"
   #define iki_write_program_name_long_s "IKI Write"
+
+  #define IKI_WRITE_program_name_s_length      9
+  #define IKI_WRITE_program_name_long_s_length 9
+
+  extern const f_string_static_t iki_write_program_name_s;
+  extern const f_string_static_t iki_write_program_name_long_s;
 #endif // _di_iki_write_program_name_
 
 #ifndef _di_iki_write_defines_
@@ -142,6 +159,7 @@ extern "C" {
 
     f_signal_t signal;
 
+    f_string_static_t quote;
     f_string_dynamic_t buffer;
 
     f_color_context_t context;
@@ -156,6 +174,7 @@ extern "C" {
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
       f_signal_t_initialize, \
+      f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_color_context_t_initialize, \
     }

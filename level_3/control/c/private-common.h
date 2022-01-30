@@ -166,19 +166,19 @@ extern "C" {
   extern const f_string_static_t control_path_socket_prefix_s;
   extern const f_string_static_t control_path_socket_suffix_s;
 
-  extern const f_string_static_t control_error_s_length;
-  extern const f_string_static_t control_freeze_s_length;
-  extern const f_string_static_t control_kill_s_length;
-  extern const f_string_static_t control_pause_s_length;
-  extern const f_string_static_t control_reboot_s_length;
-  extern const f_string_static_t control_reload_s_length;
-  extern const f_string_static_t control_rerun_s_length;
-  extern const f_string_static_t control_restart_s_length;
-  extern const f_string_static_t control_resume_s_length;
-  extern const f_string_static_t control_shutdown_s_length;
-  extern const f_string_static_t control_start_s_length;
-  extern const f_string_static_t control_stop_s_length;
-  extern const f_string_static_t control_thaw_s_length;
+  extern const f_string_static_t control_error_s;
+  extern const f_string_static_t control_freeze_s;
+  extern const f_string_static_t control_kill_s;
+  extern const f_string_static_t control_pause_s;
+  extern const f_string_static_t control_reboot_s;
+  extern const f_string_static_t control_reload_s;
+  extern const f_string_static_t control_rerun_s;
+  extern const f_string_static_t control_restart_s;
+  extern const f_string_static_t control_resume_s;
+  extern const f_string_static_t control_shutdown_s;
+  extern const f_string_static_t control_start_s;
+  extern const f_string_static_t control_stop_s;
+  extern const f_string_static_t control_thaw_s;
 #endif // _di_control_strings_s_
 
 /**

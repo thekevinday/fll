@@ -10,7 +10,7 @@
 #ifndef _FLL_status_string_h
 #define _FLL_status_string_h
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -19,7 +19,7 @@
 #include <fll/level_0/conversion.h>
 #include <fll/level_0/status_string.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/string.h>
 
 #ifdef __cplusplus

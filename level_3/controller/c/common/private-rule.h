@@ -102,11 +102,14 @@ extern "C" {
  * parameters: All parameters associated with the Rule Action.
  */
 #ifndef _di_controller_rule_action_t_
-  #define controller_rule_action_method_string_extended_s      "FSS-0001 (Extended)"
-  #define controller_rule_action_method_string_extended_list_s "FSS-0003 (Extended List)"
+  #define CONTROLLER_rule_action_method_string_extended_s      "FSS-0001 (Extended)"
+  #define CONTROLLER_rule_action_method_string_extended_list_s "FSS-0003 (Extended List)"
 
-  #define controller_rule_action_method_string_extended_s_length      19
-  #define controller_rule_action_method_string_extended_list_s_length 24
+  #define CONTROLLER_rule_action_method_string_extended_s_length      19
+  #define CONTROLLER_rule_action_method_string_extended_list_s_length 24
+
+  extern const f_string_static_t controller_rule_action_method_string_extended_s;
+  extern const f_string_static_t controller_rule_action_method_string_extended_list_s;
 
   enum {
     controller_rule_action_method_extended_e = 1,

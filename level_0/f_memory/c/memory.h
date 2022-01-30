@@ -10,12 +10,12 @@
 #ifndef _F_memory_h
 #define _F_memory_h
 
-// libc includes.
+// Libc includes.
 #include <malloc.h>
 #include <stdlib.h>
 #include <string.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 

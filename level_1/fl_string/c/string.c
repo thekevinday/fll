@@ -7,24 +7,28 @@ extern "C" {
 
 #ifndef _di_fl_string_compare_
   f_status_t fl_string_compare(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
+
     return private_fl_string_compare(string1, string2, 0, 0, length1, length2);
   }
 #endif // _di_fl_string_compare_
 
 #ifndef _di_fl_string_compare_except_
   f_status_t fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
     return private_fl_string_compare_except(string1, string2, 0, 0, length1, length2, except1, except2);
   }
 #endif // _di_fl_string_compare_except_
 
 #ifndef _di_fl_string_compare_except_trim_
   f_status_t fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
     return private_fl_string_compare_except_trim(string1, string2, 0, 0, length1, length2, except1, except2);
   }
 #endif // _di_fl_string_compare_except_trim_
 
 #ifndef _di_fl_string_compare_trim_
   f_status_t fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
+
     return private_fl_string_compare_trim(string1, string2, 0, 0, length1, length2);
   }
 #endif // _di_fl_string_compare_trim_
@@ -37,42 +41,49 @@ extern "C" {
 
 #ifndef _di_fl_string_dynamic_compare_except_
   f_status_t fl_string_dynamic_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
     return private_fl_string_compare_except(string1.string, string2.string, 0, 0, string1.used, string2.used, except1, except2);
   }
 #endif // _di_fl_string_dynamic_compare_except_
 
 #ifndef _di_fl_string_dynamic_compare_except_string_
   f_status_t fl_string_dynamic_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
     return private_fl_string_compare_except(string1, string2.string, 0, 0, length1, string2.used, except1, except2);
   }
 #endif // _di_fl_string_dynamic_compare_except_string_
 
 #ifndef _di_fl_string_dynamic_compare_except_trim_
   f_status_t fl_string_dynamic_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
     return private_fl_string_compare_except_trim(string1.string, string2.string, 0, 0, string1.used, string2.used, except1, except2);
   }
 #endif // _di_fl_string_dynamic_compare_except_trim_
 
 #ifndef _di_fl_string_dynamic_compare_except_trim_string_
   f_status_t fl_string_dynamic_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
     return private_fl_string_compare_except_trim(string1, string2.string, 0, 0, length1, string2.used, except1, except2);
   }
 #endif // _di_fl_string_dynamic_compare_except_trim_string_
 
 #ifndef _di_fl_string_dynamic_compare_string_
   f_status_t fl_string_dynamic_compare_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1) {
+
     return private_fl_string_compare(string1, string2.string, 0, 0, length1, string2.used);
   }
 #endif // _di_fl_string_dynamic_compare_string_
 
 #ifndef _di_fl_string_dynamic_compare_trim_
   f_status_t fl_string_dynamic_compare_trim(const f_string_static_t string1, const f_string_static_t string2) {
+
     return private_fl_string_compare_trim(string1.string, string2.string, 0, 0, string1.used, string2.used);
   }
 #endif // _di_fl_string_dynamic_compare_trim_
 
 #ifndef _di_fl_string_dynamic_compare_trim_string_
   f_status_t fl_string_dynamic_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1) {
+
     return private_fl_string_compare_trim(string1, string2.string, 0, 0, length1, string2.used);
   }
 #endif // _di_fl_string_dynamic_compare_trim_string_
@@ -362,10 +373,7 @@ extern "C" {
     f_array_length_t end = range.stop;
 
     const f_status_t status = private_fl_string_rip_find_range(source.string, &begin, &end);
-
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     if (status == F_data_not) {
       return status;
@@ -400,10 +408,7 @@ extern "C" {
     f_array_length_t end = range.stop;
 
     const f_status_t status = private_fl_string_rip_find_range(source.string, &begin, &end);
-
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     if (status == F_data_not) {
       return status;
@@ -473,10 +478,7 @@ extern "C" {
           f_utf_character_t character = 0;
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
-
-          if (F_status_is_error(status)) {
-            return status;
-          }
+          if (F_status_is_error(status)) return status;
 
           if (character == seek_to_this) {
             return F_none;
@@ -516,9 +518,7 @@ extern "C" {
 
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
 
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
@@ -549,9 +549,7 @@ extern "C" {
       width_max = (range->stop - range->start) + 1;
     } // while
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -578,9 +576,7 @@ extern "C" {
 
     while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
 
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
@@ -611,9 +607,7 @@ extern "C" {
       width_max = (range->stop - range->start) + 1;
     } // while
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -668,10 +662,7 @@ extern "C" {
           f_utf_character_t character = 0;
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
-
-          if (F_status_is_error(status)) {
-            return status;
-          }
+          if (F_status_is_error(status)) return status;
 
           if (character == seek_to_this) {
             return F_none;
@@ -701,7 +692,7 @@ extern "C" {
       id->used = 0;
     }
 
-    // skip past all leading NULLs.
+    // Skip past all leading NULLs.
     for (; range->start <= range->stop; ++range->start) {
       if (buffer[range->start]) break;
     } // for
@@ -962,10 +953,7 @@ extern "C" {
     f_array_length_t end = length - 1;
 
     const f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
-
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     if (status == F_data_not) {
       return status;
@@ -989,10 +977,7 @@ extern "C" {
     f_array_length_t end = length - 1;
 
     const f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
-
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     if (status == F_data_not) {
       return status;
@@ -1051,10 +1036,7 @@ extern "C" {
           f_utf_character_t character = 0;
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
-
-          if (F_status_is_error(status)) {
-            return status;
-          }
+          if (F_status_is_error(status)) return status;
 
           if (character == seek_to) {
             return F_none;
@@ -1084,9 +1066,7 @@ extern "C" {
 
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
 
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
@@ -1117,9 +1097,7 @@ extern "C" {
       width_max = (range->stop - range->start) + 1;
     } // while
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -1142,9 +1120,7 @@ extern "C" {
 
     while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
 
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (string[range->start] == f_string_eol_s.string[0]) {
         return F_none_eol;
@@ -1175,9 +1151,7 @@ extern "C" {
       width_max = (range->stop - range->start) + 1;
     } // while
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -1228,10 +1202,7 @@ extern "C" {
           f_utf_character_t character = 0;
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
-
-          if (F_status_is_error(status)) {
-            return status;
-          }
+          if (F_status_is_error(status)) return status;
 
           if (character == seek_to) {
             return F_none;

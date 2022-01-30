@@ -14,8 +14,9 @@
  *   - Convert from UTF-8 binary to Unicode Codepoint (such as U+0000).
  */
 #ifndef _utf8_h
+#define _utf8_h
 
-// libc includes.
+// Libc includes.
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +28,7 @@
 #define PATH_MAX 4096
 #endif /* PATH_MAX */
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -42,14 +43,14 @@
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/console.h>
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
 #include <fll/level_1/utf.h>
 
-// fll-2 includes
+// FLL-2 includes.
 #include <fll/level_2/error.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
@@ -59,24 +60,40 @@ extern "C" {
 #endif
 
 #ifndef _di_utf8_program_version_
-  #define utf8_program_version_major_s F_string_ascii_0_s
-  #define utf8_program_version_minor_s F_string_ascii_5_s
-  #define utf8_program_version_micro_s F_string_ascii_8_s
+  #define UTF8_program_version_major_s F_string_ascii_0_s
+  #define UTF8_program_version_minor_s F_string_ascii_5_s
+  #define UTF8_program_version_micro_s F_string_ascii_8_s
 
-  #ifndef utf8_program_version_nano_prefix_s
-    #define utf8_program_version_nano_prefix_s
-  #endif
+  #define UTF8_program_version_major_s_length F_string_ascii_0_s_length
+  #define UTF8_program_version_minor_s_length F_string_ascii_5_s_length
+  #define UTF8_program_version_micro_s_length F_string_ascii_8_s_length
 
-  #ifndef utf8_program_version_nano_s
-    #define utf8_program_version_nano_s
-  #endif
+  #if !(defined(UTF8_program_version_nano_prefix_s) && defined(UTF8_program_version_nano_prefix_s_length))
+    #define UTF8_program_version_nano_prefix_s
+    #define UTF8_program_version_nano_prefix_s_length 0
+  #endif // !(defined(UTF8_program_version_nano_prefix_s) && defined(UTF8_program_version_nano_prefix_s_length))
 
-  #define utf8_version_s utf8_program_version_major_s F_string_ascii_period_s utf8_program_version_minor_s F_string_ascii_period_s utf8_program_version_micro_s utf8_program_version_nano_prefix_s utf8_program_version_nano_s
+  #if !(defined(UTF8_program_version_nano_s) && defined(UTF8_program_version_nano_s_length))
+    #define UTF8_program_version_nano_s
+    #define UTF8_program_version_nano_s_length 0
+  #endif // !(defined(UTF8_program_version_nano_s) && defined(UTF8_program_version_nano_s_length))
+
+  #define UTF8_program_version_s UTF8_program_version_major_s F_string_ascii_period_s UTF8_program_version_minor_s F_string_ascii_period_s UTF8_program_version_micro_s UTF8_program_version_nano_prefix_s UTF8_program_version_nano_s
+
+  #define UTF8_program_version_s_length UTF8_program_version_major_s_length + F_string_ascii_period_s_length + UTF8_program_version_minor_s_length + F_string_ascii_period_s_length + UTF8_program_version_micro_s_length + UTF8_program_version_nano_prefix_s_length + UTF8_program_version_nano_s_length
+
+    extern const f_string_static_t utf8_program_version_s;
 #endif // _di_utf8_program_version_
 
 #ifndef _di_utf8_program_name_
-  #define utf8_program_name_s      "utf8"
-  #define utf8_program_name_long_s "UTF-8"
+  #define UTF8_program_name_s      "utf8"
+  #define UTF8_program_name_long_s "UTF-8"
+
+  #define UTF8_program_name_s_length      4
+  #define UTF8_program_name_long_s_length 5
+
+  extern const f_string_static_t utf8_program_name_s;
+  extern const f_string_static_t utf8_program_name_long_s;
 #endif // _di_utf8_program_name_
 
 /**

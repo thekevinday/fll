@@ -111,7 +111,7 @@ extern "C" {
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
-              fl_print_format("%q%[%SThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+              fl_print_format("%q%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
               fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, destination_path, main->error.notable);
               fl_print_format("%[' exists but is not a directory.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -129,7 +129,7 @@ extern "C" {
               if (F_status_set_fine(*status) == F_file_found_not) {
                 flockfile(main->error.to.stream);
 
-                fl_print_format("%q%[%SThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+                fl_print_format("%q%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                 fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, destination_path, main->error.notable);
                 fl_print_format("%[' could not be created, a parent directory does not exist.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -215,9 +215,9 @@ extern "C" {
       if (F_status_is_error(*status) || *status == F_child) break;
     } // for
 
-    macro_f_string_dynamic_t_delete_simple(file_name);
-    macro_f_string_dynamic_t_delete_simple(destination_path);
-    macro_f_string_dynamics_t_delete_simple(arguments);
+    f_string_dynamic_resize(0, &file_name);
+    f_string_dynamic_resize(0, &destination_path);
+    f_string_dynamics_resize(0, &arguments);
 
     if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(main, file_stage, status);

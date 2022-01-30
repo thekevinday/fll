@@ -19,12 +19,12 @@
 // include pre-requirements
 #define _GNU_SOURCE
 
-// libc includes.
+// Libc includes.
 #include <sched.h>
 #include <stdio.h>
 #include <string.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>

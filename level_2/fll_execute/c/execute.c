@@ -164,7 +164,7 @@ extern "C" {
         status = f_file_exists(program ? program : arguments.array[0].string);
 
         if (status != F_true) {
-          macro_f_string_dynamics_t_delete_simple(paths);
+          f_string_dynamics_resize(0, &paths);
 
           return F_status_set_error(F_file_found_not);
         }
@@ -187,10 +187,10 @@ extern "C" {
           status = fl_environment_path_explode_dynamic(path, &paths);
         }
 
-        macro_f_string_dynamic_t_delete_simple(path);
+        f_string_dynamic_resize(0, &path);
 
         if (F_status_is_error(status)) {
-          macro_f_string_dynamics_t_delete_simple(paths);
+          f_string_dynamics_resize(0, &paths);
 
           return status;
         }
@@ -229,14 +229,14 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            macro_f_string_dynamics_t_delete_simple(paths);
+            f_string_dynamics_resize(0, &paths);
 
             return status;
           }
         } // for
 
         if (!found) {
-          macro_f_string_dynamics_t_delete_simple(paths);
+          f_string_dynamics_resize(0, &paths);
 
           return F_status_set_error(F_file_found_not);
         }
@@ -247,8 +247,7 @@ extern "C" {
 
       memcpy(&program_path, found->string, found->used);
 
-      status = macro_f_string_dynamics_t_delete_simple(paths);
-      if (F_status_is_error(status)) return status;
+      f_string_dynamics_resize(0, &paths);
 
       fixed_arguments[0] = program_path;
 
@@ -347,7 +346,7 @@ extern "C" {
         status = f_file_exists(program ? program : arguments.array[0].string);
 
         if (status != F_true) {
-          macro_f_string_dynamics_t_delete_simple(paths);
+          f_string_dynamics_resize(0, &paths);
 
           return F_status_set_error(F_file_found_not);
         }
@@ -370,10 +369,10 @@ extern "C" {
           status = fl_environment_path_explode_dynamic(path, &paths);
         }
 
-        macro_f_string_dynamic_t_delete_simple(path);
+        f_string_dynamic_resize(0, &path);
 
         if (F_status_is_error(status)) {
-          macro_f_string_dynamics_t_delete_simple(paths);
+          f_string_dynamics_resize(0, &paths);
 
           return status;
         }
@@ -412,14 +411,14 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            macro_f_string_dynamics_t_delete_simple(paths);
+            f_string_dynamics_resize(0, &paths);
 
             return status;
           }
         } // for
 
         if (!found) {
-          macro_f_string_dynamics_t_delete_simple(paths);
+          f_string_dynamics_resize(0, &paths);
 
           return F_status_set_error(F_file_found_not);
         }
@@ -430,8 +429,7 @@ extern "C" {
 
       memcpy(&program_path, found->string, found->used);
 
-      status = macro_f_string_dynamics_t_delete_simple(paths);
-      if (F_status_is_error(status)) return status;
+      f_string_dynamics_resize(0, &paths);
 
       if (parameter && (parameter->option & FL_execute_parameter_option_path_d)) {
         fixed_arguments[0] = program_path;

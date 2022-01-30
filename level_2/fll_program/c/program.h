@@ -13,7 +13,7 @@
 // libc include
 #include <stdio.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -23,8 +23,9 @@
 #include <fll/level_0/console.h>
 #include <fll/level_0/file.h>
 #include <fll/level_0/print.h>
+#include <fll/level_0/signal.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/string.h>
 #include <fll/level_1/print.h>
 
@@ -53,7 +54,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_header_
-  extern f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t version);
+  extern f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t version);
 #endif // _di_fll_program_print_help_header_
 
 /**
@@ -83,7 +84,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_
-  extern f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
+  extern f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_
 
 /**
@@ -109,7 +110,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_long_
-  extern f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
+  extern f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_static_t option_long, const f_string_static_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_long_
 
 /**
@@ -133,7 +134,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_other_
-  extern f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_t option_other, const f_string_t description);
+  extern f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_static_t option_other, const f_string_t description);
 #endif // _di_fll_program_print_help_option_other_
 
 /**
@@ -158,7 +159,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_usage_
-  extern f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t parameters);
+  extern f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t parameters);
 #endif // _di_fll_program_print_help_usage_
 
 /**
@@ -177,7 +178,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_version_
-  extern f_status_t fll_program_print_version(const f_file_t output, const f_string_t version);
+  extern f_status_t fll_program_print_version(const f_file_t output, const f_string_static_t version);
 #endif // _di_fll_program_print_version_
 
 /**
@@ -242,6 +243,7 @@ extern "C" {
  *
  * @param argv
  *   The program argument array to parse.
+ *   The caller must guarantee that the values.used does not exceed the argv length.
  * @param values
  *   The string locations where the console parameters are found.
  * @param destination
@@ -270,6 +272,7 @@ extern "C" {
  *   A string to append between the source and destination, such as a space: ' '.
  * @param argv
  *   The program argument array to parse.
+ *   The caller must guarantee that the values.used does not exceed the argv length.
  * @param values
  *   The string locations where the console parameters are found.
  * @param destination
@@ -298,6 +301,7 @@ extern "C" {
  *
  * @param argv
  *   The program argument array to parse.
+ *   The caller must guarantee that the values.used does not exceed the argv length.
  * @param values
  *   The string locations where the console parameters are found.
  * @param destination
@@ -349,6 +353,50 @@ extern "C" {
 #ifndef _di_fll_program_parameter_additional_rip_mash_
   extern f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_rip_mash_
+
+/**
+ * This provides a standard program setdown operations used by FLL programs.
+ *
+ * This does the following:
+ *   - Flushes standard outputs.
+ *   - Closes standard inputs and outputs.
+ *   - Closes the signal handler.
+ *
+ * @param signal
+ *   The signal structure.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_signal_close().
+ *
+ * @see f_signal_close()
+ */
+#ifndef _di_fll_program_standard_setdown_
+  extern f_status_t fll_program_standard_setdown(f_signal_t * const signal);
+#endif // _di_fll_program_standard_setdown_
+
+/**
+ * This provides a standard program setup operations used by FLL programs.
+ *
+ * This does the following:
+ *   - Handle signals so that program can cleanly exit, deallocating as appropriate.
+ *
+ * @param signal
+ *   The signal structure.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_signal_mask().
+ *   Errors (with error bit) from: f_signal_open().
+ *
+ * @see f_signal_mask()
+ * @see f_signal_open()
+ */
+#ifndef _di_fll_program_standard_setup_
+  extern f_status_t fll_program_standard_setup(f_signal_t * const signal);
+#endif // _di_fll_program_standard_setup_
 
 #ifdef __cplusplus
 } // extern "C"

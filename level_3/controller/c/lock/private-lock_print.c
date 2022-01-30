@@ -1,4 +1,4 @@
-#include "../controller/controller.h"
+#include "../controller.h"
 #include "../common/private-common.h"
 #include "../lock/private-lock_print.h"
 
@@ -15,7 +15,7 @@ extern "C" {
     if (print.verbosity != f_console_verbosity_quiet_e) {
       controller_lock_print(print.to, thread);
 
-      fl_print_format("%q%[%QThe pid file '%]", print.to.stream, f_string_eol_s, print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
+      fl_print_format("%q%[%QThe pid file '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
       fl_print_format("%['Critical failure while attempting to establish '%]", print.to.stream, print.context, print.context);
       fl_print_format("%[%s lock%]", print.to.stream, print.notable, read ? "read" : "write", print.notable);
 

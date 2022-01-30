@@ -1,9 +1,14 @@
-#include "../controller/controller.h"
+#include "../controller.h"
 #include "private-common.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#ifndef _di_controller_rule_action_t_
+  const f_string_static_t controller_rule_action_method_string_extended_s = macro_f_string_static_t_initialize2(CONTROLLER_rule_action_method_string_extended_s, 0, CONTROLLER_rule_action_method_string_extended_s_length);
+  const f_string_static_t controller_rule_action_method_string_extended_list_s = macro_f_string_static_t_initialize2(CONTROLLER_rule_action_method_string_extended_list_s, 0, CONTROLLER_rule_action_method_string_extended_list_s_length);
+#endif // _di_controller_rule_action_t_
 
 #ifndef _di_controller_rule_action_delete_simple_
   void controller_rule_action_delete_simple(controller_rule_action_t * const action) {

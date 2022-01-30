@@ -26,6 +26,7 @@ extern "C" {
   const f_string_static_t f_print_sequence_escape_s = macro_f_string_static_t_initialize2(F_print_sequence_escape_s, 0, F_print_sequence_escape_s_length);
   const f_string_static_t f_print_sequence_form_feed_s = macro_f_string_static_t_initialize2(F_print_sequence_form_feed_s, 0, F_print_sequence_form_feed_s_length);
   const f_string_static_t f_print_sequence_line_feed_s = macro_f_string_static_t_initialize2(F_print_sequence_line_feed_s, 0, F_print_sequence_line_feed_s_length);
+  const f_string_static_t f_print_sequence_line_new_s = macro_f_string_static_t_initialize2(F_print_sequence_line_new_s, 0, F_print_sequence_line_new_s_length);
   const f_string_static_t f_print_sequence_null_s = macro_f_string_static_t_initialize2(F_print_sequence_null_s, 0, F_print_sequence_null_s_length);
   const f_string_static_t f_print_sequence_separator_file_s = macro_f_string_static_t_initialize2(F_print_sequence_separator_file_s, 0, F_print_sequence_separator_file_s_length);
   const f_string_static_t f_print_sequence_separator_group_s = macro_f_string_static_t_initialize2(F_print_sequence_separator_group_s, 0, F_print_sequence_separator_group_s_length);
@@ -33,6 +34,7 @@ extern "C" {
   const f_string_static_t f_print_sequence_separator_unit_s = macro_f_string_static_t_initialize2(F_print_sequence_separator_unit_s, 0, F_print_sequence_separator_unit_s_length);
   const f_string_static_t f_print_sequence_shift_in_s = macro_f_string_static_t_initialize2(F_print_sequence_shift_in_s, 0, F_print_sequence_shift_in_s_length);
   const f_string_static_t f_print_sequence_shift_out_s = macro_f_string_static_t_initialize2(F_print_sequence_shift_out_s, 0, F_print_sequence_shift_out_s_length);
+  const f_string_static_t f_print_sequence_space_s = macro_f_string_static_t_initialize2(F_print_sequence_space_s, 0, F_print_sequence_space_s_length);
   const f_string_static_t f_print_sequence_start_of_header_s = macro_f_string_static_t_initialize2(F_print_sequence_start_of_header_s, 0, F_print_sequence_start_of_header_s_length);
   const f_string_static_t f_print_sequence_start_of_text_s = macro_f_string_static_t_initialize2(F_print_sequence_start_of_text_s, 0, F_print_sequence_start_of_text_s_length);
   const f_string_static_t f_print_sequence_substitute_s = macro_f_string_static_t_initialize2(F_print_sequence_substitute_s, 0, F_print_sequence_substitute_s_length);

@@ -15,7 +15,7 @@
   #define _GNU_SOURCE
 #endif // _GNU_SOURCE
 
-// libc includes.
+// Libc includes.
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/stat.h>

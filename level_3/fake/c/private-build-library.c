@@ -80,7 +80,8 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
-        macro_f_string_dynamics_t_delete_simple(arguments);
+        f_string_dynamics_resize(0, &arguments);
+
         return 0;
       }
     }
@@ -346,7 +347,7 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
-        macro_f_string_dynamics_t_delete_simple(arguments);
+        f_string_dynamics_resize(0, &arguments);
 
         return 0;
       }
@@ -355,7 +356,7 @@ extern "C" {
     {
       const int result = fake_execute(main, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
-      macro_f_string_dynamics_t_delete_simple(arguments);
+      f_string_dynamics_resize(0, &arguments);
 
       if (F_status_is_error(*status)) return 0;
       if (*status == F_child) return result;
@@ -625,9 +626,9 @@ extern "C" {
       result = fake_execute(main, data_build.environment, data_build.setting.build_indexer, arguments, status);
     }
 
-    macro_f_string_dynamic_t_delete_simple(file_name);
-    macro_f_string_dynamic_t_delete_simple(source_path);
-    macro_f_string_dynamics_t_delete_simple(arguments);
+    f_string_dynamic_resize(0, &file_name);
+    f_string_dynamic_resize(0, &source_path);
+    f_string_dynamics_resize(0, &arguments);
 
     if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(main, file_stage, status);

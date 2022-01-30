@@ -5,10 +5,10 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_program_print_help_header_
-  f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t version) {
+  f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t version) {
 
-    fl_print_format("%q %[%S%]%q", output.stream, f_string_eol_s, context.set.title, name, context.set.title, f_string_eol_s);
-    fl_print_format("  %[Version %s%]%q", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s);
+    fl_print_format("%q %[%Q%]%q", output.stream, f_string_eol_s, context.set.title, name, context.set.title, f_string_eol_s);
+    fl_print_format("  %[Version %Q%]%q", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s);
 
     fl_print_format("%q %[Available Options:%] ", output.stream, f_string_eol_s, context.set.important, context.set.important);
 
@@ -17,61 +17,52 @@ extern "C" {
 #endif // _di_fll_program_print_help_header_
 
 #ifndef _di_fll_program_print_help_option_
-  f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
+  f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const f_string_t description) {
 
-    fl_print_format("%q  %s%[%S%]", output.stream, f_string_eol_s, symbol_short, context.set.standout, option_short, context.set.standout);
-    fl_print_format(", %s%[%S%]", output.stream, symbol_long, context.set.standout, option_long, context.set.standout);
-    fl_print_format("  %S", output.stream, description);
+    fl_print_format("%q  %Q%[%Q%]", output.stream, f_string_eol_s, symbol_short, context.set.standout, option_short, context.set.standout);
+    fl_print_format(", %Q%[%Q%]  %S", output.stream, symbol_long, context.set.standout, option_long, context.set.standout, description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_
 
 #ifndef _di_fll_program_print_help_option_long_
-  f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
+  f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_static_t option_long, const f_string_static_t symbol_long, const f_string_t description) {
 
-    fl_print_format("%q      %s%[%S%]", output.stream, f_string_eol_s, symbol_long, context.set.standout, option_long, context.set.standout);
-    fl_print_format("  %S", output.stream, description);
+    fl_print_format("%q      %Q%[%Q%]  %S", output.stream, f_string_eol_s, symbol_long, context.set.standout, option_long, context.set.standout, description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_long_
 
 #ifndef _di_fll_program_print_help_option_other_
-  f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
+  f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_static_t option_other, const f_string_t description) {
 
-    fl_print_format("%q  %[%S%]", output.stream, f_string_eol_s, context.set.standout, option_other, context.set.standout);
-    fl_print_format("  %S", output.stream, description);
+    fl_print_format("%q  %[%Q%]  %S", output.stream, f_string_eol_s, context.set.standout, option_other, context.set.standout, description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_other_
 
 #ifndef _di_fll_program_print_help_usage_
-  f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
+  f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t parameters) {
 
-    fl_print_format("%q%q %[Usage:%]", output.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important);
+    fl_print_format("%q%q %[Usage:%]%q", output.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important, f_string_eol_s);
 
-    f_print_dynamic(f_string_eol_s, output.stream);
-    fl_print_format("  %[%S%]", output.stream, context.set.standout, name, context.set.standout);
-
+    fl_print_format("  %[%Q%]", output.stream, context.set.standout, name, context.set.standout);
     fl_print_format(" %[[%] options %[]%]", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
-
-    if (parameters[0] != '\0') {
-      fl_print_format(" %[[%] %S %[]%]", output.stream, context.set.notable, context.set.notable, parameters, context.set.notable, context.set.notable);
-    }
-
-    f_print_dynamic(f_string_eol_s, output.stream);
-    f_print_dynamic(f_string_eol_s, output.stream);
+    fl_print_format(" %[[%] %Q", output.stream, context.set.notable, context.set.notable, parameters);
+    fl_print_format(" %[]%]%q%q", output.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_version_
-  f_status_t fll_program_print_version(const f_file_t output, const f_string_t version) {
+  f_status_t fll_program_print_version(const f_file_t output, const f_string_static_t version) {
 
-    fl_print_format("%S%q", output.stream, version, f_string_eol_s);
+    f_print_dynamic(version, output.stream);
+    f_print_dynamic(f_string_eol_s, output.stream);
 
     return F_none;
   }
@@ -149,7 +140,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
 
-      length = strnlen(argv[values.array[i]], f_console_parameter_size);
+      length = strnlen(argv[values.array[i]], F_console_parameter_size_d);
 
       if (length > 0) {
         f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
@@ -191,7 +182,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
 
-      length = strnlen(argv[values.array[i]], f_console_parameter_size);
+      length = strnlen(argv[values.array[i]], F_console_parameter_size_d);
 
       if (length > 0) {
         status = f_string_mash(glue.string, glue.used, argv[values.array[i]], length, destination);
@@ -220,9 +211,9 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
 
-      length = strnlen(argv[values.array[i]], f_console_parameter_size);
+      length = strnlen(argv[values.array[i]], F_console_parameter_size_d);
 
-      if (length > 0) {
+      if (length) {
         f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
         status = fl_string_rip(argv[values.array[i]], length, &ripped);
@@ -263,13 +254,14 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
 
-      length = strnlen(argv[values.array[i]], f_console_parameter_size);
+      length = strnlen(argv[values.array[i]], F_console_parameter_size_d);
 
       if (length > 0) {
         status = fl_string_rip(argv[values.array[i]], length, &ripped);
 
         if (F_status_is_error(status)) {
-          macro_f_string_dynamic_t_delete_simple(ripped);
+          f_string_dynamic_resize(0, &ripped);
+
           return status;
         }
 
@@ -286,7 +278,7 @@ extern "C" {
     } // for
 
     if (ripped.size) {
-      macro_f_string_dynamic_t_delete_simple(ripped)
+      f_string_dynamic_resize(0, &ripped);
     }
 
     if (status == F_none && start == destination->used) {
@@ -296,6 +288,55 @@ extern "C" {
     return status;
   }
 #endif // _di_fll_program_parameter_additional_rip_mash_
+
+#ifndef _di_fll_program_standard_setdown_
+  f_status_t fll_program_standard_setdown(f_signal_t * const signal) {
+
+    // Flush output pipes before closing.
+    fflush(F_type_output_d);
+    fflush(F_type_error_d);
+
+    // Close all open file descriptors.
+    close(F_type_descriptor_output_d);
+    close(F_type_descriptor_input_d);
+    close(F_type_descriptor_error_d);
+
+    const f_status_t status = f_signal_close(signal);
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fll_program_standard_setdown_
+
+#ifndef _di_fll_program_standard_setup_
+  f_status_t fll_program_standard_setup(f_signal_t * const signal) {
+
+    f_signal_set_empty(&signal->set);
+    f_signal_set_add(F_signal_abort, &signal->set);
+    f_signal_set_add(F_signal_broken_pipe, &signal->set);
+    f_signal_set_add(F_signal_hangup, &signal->set);
+    f_signal_set_add(F_signal_interrupt, &signal->set);
+    f_signal_set_add(F_signal_quit, &signal->set);
+    f_signal_set_add(F_signal_termination, &signal->set);
+
+    f_status_t status = f_signal_mask(SIG_BLOCK, &signal->set, 0);
+
+    if (F_status_is_error_not(status)) {
+      status = f_signal_open(signal);
+
+      // If there is an error opening a signal descriptor, then do not handle signals.
+      if (F_status_is_error(status)) {
+        f_signal_mask(SIG_UNBLOCK, &signal->set, 0);
+        f_signal_close(signal);
+      }
+    }
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fll_program_standard_setup_
 
 #ifdef __cplusplus
 } // extern "C"

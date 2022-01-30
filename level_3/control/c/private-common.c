@@ -23,19 +23,19 @@ extern "C" {
   const f_string_static_t control_path_socket_prefix_s = macro_f_string_static_t_initialize2(CONTROL_path_socket_prefix_s, 0, CONTROL_path_socket_prefix_s_length);
   const f_string_static_t control_path_socket_suffix_s = macro_f_string_static_t_initialize2(CONTROL_path_socket_suffix_s, 0, CONTROL_path_socket_suffix_s_length);
 
-  const f_string_static_t control_error_s_length = macro_f_string_static_t_initialize2(CONTROL_error_s, 0, CONTROL_error_s_length);
-  const f_string_static_t control_freeze_s_length = macro_f_string_static_t_initialize2(CONTROL_freeze_s, 0, CONTROL_freeze_s_length);
-  const f_string_static_t control_kill_s_length = macro_f_string_static_t_initialize2(CONTROL_kill_s, 0, CONTROL_kill_s_length);
-  const f_string_static_t control_pause_s_length = macro_f_string_static_t_initialize2(CONTROL_pause_s, 0, CONTROL_pause_s_length);
-  const f_string_static_t control_reboot_s_length = macro_f_string_static_t_initialize2(CONTROL_reboot_s, 0, CONTROL_reboot_s_length);
-  const f_string_static_t control_reload_s_length = macro_f_string_static_t_initialize2(CONTROL_reload_s, 0, CONTROL_reload_s_length);
-  const f_string_static_t control_rerun_s_length = macro_f_string_static_t_initialize2(CONTROL_rerun_s, 0, CONTROL_rerun_s_length);
-  const f_string_static_t control_restart_s_length = macro_f_string_static_t_initialize2(CONTROL_restart_s, 0, CONTROL_restart_s_length);
-  const f_string_static_t control_resume_s_length = macro_f_string_static_t_initialize2(CONTROL_resume_s, 0, CONTROL_resume_s_length);
-  const f_string_static_t control_shutdown_s_length = macro_f_string_static_t_initialize2(CONTROL_shutdown_s, 0, CONTROL_shutdown_s_length);
-  const f_string_static_t control_start_s_length = macro_f_string_static_t_initialize2(CONTROL_start_s, 0, CONTROL_start_s_length);
-  const f_string_static_t control_stop_s_length = macro_f_string_static_t_initialize2(CONTROL_stop_s, 0, CONTROL_stop_s_length);
-  const f_string_static_t control_thaw_s_length = macro_f_string_static_t_initialize2(CONTROL_thaw_s, 0, CONTROL_thaw_s_length);
+  const f_string_static_t control_error_s = macro_f_string_static_t_initialize2(CONTROL_error_s, 0, CONTROL_error_s_length);
+  const f_string_static_t control_freeze_s = macro_f_string_static_t_initialize2(CONTROL_freeze_s, 0, CONTROL_freeze_s_length);
+  const f_string_static_t control_kill_s = macro_f_string_static_t_initialize2(CONTROL_kill_s, 0, CONTROL_kill_s_length);
+  const f_string_static_t control_pause_s = macro_f_string_static_t_initialize2(CONTROL_pause_s, 0, CONTROL_pause_s_length);
+  const f_string_static_t control_reboot_s = macro_f_string_static_t_initialize2(CONTROL_reboot_s, 0, CONTROL_reboot_s_length);
+  const f_string_static_t control_reload_s = macro_f_string_static_t_initialize2(CONTROL_reload_s, 0, CONTROL_reload_s_length);
+  const f_string_static_t control_rerun_s = macro_f_string_static_t_initialize2(CONTROL_rerun_s, 0, CONTROL_rerun_s_length);
+  const f_string_static_t control_restart_s = macro_f_string_static_t_initialize2(CONTROL_restart_s, 0, CONTROL_restart_s_length);
+  const f_string_static_t control_resume_s = macro_f_string_static_t_initialize2(CONTROL_resume_s, 0, CONTROL_resume_s_length);
+  const f_string_static_t control_shutdown_s = macro_f_string_static_t_initialize2(CONTROL_shutdown_s, 0, CONTROL_shutdown_s_length);
+  const f_string_static_t control_start_s = macro_f_string_static_t_initialize2(CONTROL_start_s, 0, CONTROL_start_s_length);
+  const f_string_static_t control_stop_s = macro_f_string_static_t_initialize2(CONTROL_stop_s, 0, CONTROL_stop_s_length);
+  const f_string_static_t control_thaw_s = macro_f_string_static_t_initialize2(CONTROL_thaw_s, 0, CONTROL_thaw_s_length);
 #endif // _di_control_strings_s_
 
 #ifndef _di_control_data_delete_

@@ -10,7 +10,7 @@
 #ifndef _F_directory_type_h
 #define _F_directory_type_h
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>

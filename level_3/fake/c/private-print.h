@@ -46,7 +46,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_operation_file_
-  extern bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_t operation, const f_string_t source, const f_string_t destination, const f_string_t how, const bool fallback) F_attribute_visibility_internal_d;
+  extern bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_t source, const f_string_t destination, const f_string_t how, const bool fallback) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_operation_file_
 
 /**
@@ -92,7 +92,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_missing_value_
-  extern void fake_print_error_parameter_missing_value(fake_main_t * const main, const f_string_t parameter) F_attribute_visibility_internal_d;
+  extern void fake_print_error_parameter_missing_value(fake_main_t * const main, const f_string_static_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_parameter_missing_value_
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_too_many_
-  extern void fake_print_error_parameter_too_many(fake_main_t * const main, const f_string_t parameter) F_attribute_visibility_internal_d;
+  extern void fake_print_error_parameter_too_many(fake_main_t * const main, const f_string_static_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
@@ -293,7 +293,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_empty_
-  extern void fake_print_warning_settings_content_empty(fake_main_t * const main, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_t settings_name) F_attribute_visibility_internal_d;
+  extern void fake_print_warning_settings_content_empty(fake_main_t * const main, const f_string_static_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_static_t settings_name) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_warning_settings_content_empty_
 
 /**
@@ -318,7 +318,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_invalid_
-  extern void fake_print_warning_settings_content_invalid(fake_main_t * const main, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_t settings_name) F_attribute_visibility_internal_d;
+  extern void fake_print_warning_settings_content_invalid(fake_main_t * const main, const f_string_static_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_static_t settings_name) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_warning_settings_content_invalid_
 
 /**
@@ -339,7 +339,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_multiple_
-  extern void fake_print_warning_settings_content_multiple(fake_main_t * const main, const f_string_t path_file, const f_string_t name_object) F_attribute_visibility_internal_d;
+  extern void fake_print_warning_settings_content_multiple(fake_main_t * const main, const f_string_static_t path_file, const f_string_static_t name_object) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_warning_settings_content_multiple_
 
 /**
@@ -362,7 +362,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_object_multiple_
-  extern void fake_print_warning_settings_object_multiple(fake_main_t * const main, const f_string_t path_file, const f_string_t label, const f_string_t name_object) F_attribute_visibility_internal_d;
+  extern void fake_print_warning_settings_object_multiple(fake_main_t * const main, const f_string_static_t path_file, const f_string_static_t label, const f_string_static_t name_object) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_warning_settings_object_multiple_
 
 #ifdef __cplusplus

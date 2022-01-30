@@ -263,15 +263,15 @@ extern "C" {
         byte_dump_print_text(main, characters, invalid, &previous, &offset);
       }
       else {
-        f_print_terminated(f_string_eol_s, main->output.to.stream);
+        f_print_dynamic(f_string_eol_s, main->output.to.stream);
       }
     }
 
-    f_print_terminated(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic(f_string_eol_s, main->output.to.stream);
 
     funlockfile(main->output.to.stream);
 
-    // make sure to flush standard out to help prevent standard error from causing poblems.
+    // Make sure to flush standard out to help prevent standard error from causing problems.
     fflush(main->output.to.stream);
 
     if (found_invalid_utf) {
@@ -288,7 +288,7 @@ extern "C" {
       // @todo determine what the error is and display it.
       flockfile(main->error.to.stream);
 
-      fl_print_format("%[%Sread() failed for '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
+      fl_print_format("%[%Qread() failed for '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
       fl_print_format("%[%S%]", main->error.to.stream, main->context.set.notable, file_name ? file_name : "-", main->context.set.notable);
       fl_print_format("%['.%]%q%q", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s, f_string_eol_s);
 
@@ -399,25 +399,25 @@ extern "C" {
 
           if (width_utf < 2) {
 
-            // 1 == U+0000 -> U+007F
+            // 1 == U+0000 -> U+007F.
             unicode = macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x7f;
           }
           else if (width_utf == 2) {
 
-            // 2 == U+0080 -> U+07FF
+            // 2 == U+0080 -> U+07FF.
             unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x1f) << 6;
             unicode |= macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f;
           }
           else if (width_utf == 3) {
 
-            // 3 == U+0800 -> U+FFFF
+            // 3 == U+0800 -> U+FFFF.
             unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0xf) << 12;
             unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
             unicode |= macro_f_utf_character_t_to_char_3(characters.string[character_current]) & 0x3f;
           }
           else if (width_utf == 4) {
 
-            // 4 == U+10000 -> U+10FFFF
+            // 4 == U+10000 -> U+10FFFF.
             unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x7) << 18;
             unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 12;
             unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
@@ -512,7 +512,7 @@ extern "C" {
         byte_dump_print_text(main, characters, invalid, previous, offset);
       }
       else {
-        f_print_terminated(f_string_eol_s, main->output.to.stream);
+        f_print_dynamic(f_string_eol_s, main->output.to.stream);
       }
 
       cell->column = 0;
@@ -574,7 +574,7 @@ extern "C" {
 
     char byte[5] = { 0, 0, 0, 0, 0 };
 
-    fl_print_format("  %[%s%] ", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable);
+    fl_print_format("  %[%q%] ", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable);
 
     if (*offset) {
       if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
@@ -594,7 +594,7 @@ extern "C" {
         if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           for (; *offset && at < main->width; --(*offset), ++at) {
 
-            fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
 
             if (main->options & byte_dump_option_wide_d) {
               f_print_dynamic(f_string_space_s, main->output.to.stream);
@@ -627,13 +627,13 @@ extern "C" {
           for (; at < previous->bytes && at < main->width; ++at) {
 
             if (previous->invalid) {
-              fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+              fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
             }
             else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
               f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
             }
             else {
-              fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+              fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
             }
 
             if (main->options & byte_dump_option_wide_d) {
@@ -668,7 +668,7 @@ extern "C" {
       width_utf = macro_f_utf_byte_width_is(c);
 
       if (invalid[i]) {
-        fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
+        fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
 
         if (main->options & byte_dump_option_wide_d) {
           f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
@@ -758,7 +758,7 @@ extern "C" {
           f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
         }
         else {
-          fl_print_format("%[%[%s%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, byte_dump_sequence_space_s, main->context.set.warning, main->context.set.notable);
+          fl_print_format("%[%[%q%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, f_print_sequence_space_s, main->context.set.warning, main->context.set.notable);
         }
 
         if (main->options & byte_dump_option_wide_d) {
@@ -770,7 +770,7 @@ extern "C" {
           f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
         }
         else if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
-          fl_print_format("%[%[%s%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning, main->context.set.notable);
+          fl_print_format("%[%[%q%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning, main->context.set.notable);
         }
         else {
           f_print_dynamic(f_string_space_s, main->output.to.stream);
@@ -787,10 +787,10 @@ extern "C" {
 
           // Print invalid placeholder for invalid UTF-8 widths.
           if (invalid[i]) {
-            fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
+            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
           }
           else {
-            fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_incomplete_s, main->context.set.warning);
+            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_incomplete_s, main->context.set.warning);
           }
         }
         else if (width_utf == 2) {
@@ -879,13 +879,13 @@ extern "C" {
       if (width_utf > 1 && at + 1 < main->width) {
         if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           if (invalid[i]) {
-            fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
           }
           else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
             f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
           }
           else {
-            fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
           }
         }
         else {
@@ -901,13 +901,13 @@ extern "C" {
         if (width_utf > 2 && at + 1 < main->width) {
           if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
             if (invalid[i]) {
-              fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+              fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
             }
             else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
               f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
             }
             else {
-              fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+              fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
             }
           }
           else {
@@ -923,13 +923,13 @@ extern "C" {
           if (width_utf > 3 && at + 1 < main->width) {
             if (main->parameters[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
               if (invalid[i]) {
-                fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+                fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
               }
               else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
                 f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
               }
               else {
-                fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+                fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
               }
             }
             else {
@@ -951,13 +951,13 @@ extern "C" {
       for (; at < main->width; ++at) {
 
         if (invalid[at]) {
-          fl_print_format("%[%s%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
         }
         else if (main->parameters[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
           f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
         }
         else {
-          fl_print_format("%[%s%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
         }
 
         if (main->options & byte_dump_option_wide_d) {
@@ -976,7 +976,7 @@ extern "C" {
       } // for
     }
 
-    fl_print_format(" %[%s%]%s", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable, f_string_eol_s);
+    fl_print_format(" %[%q%]%q", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable, f_string_eol_s);
   }
 #endif // _di_byte_dump_print_text_
 

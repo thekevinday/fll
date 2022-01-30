@@ -187,7 +187,7 @@ extern "C" {
  * However, the libc/POSIX appears to limit this to 2^63 (signed).
  */
 #ifndef _di_f_console_length_size_
-  #define f_console_parameter_size F_string_t_size_d
+  #define F_console_parameter_size_d F_string_t_size_d
 #endif // _di_f_console_length_size_
 
 /**

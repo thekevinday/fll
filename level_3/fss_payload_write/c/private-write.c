@@ -15,12 +15,12 @@ extern "C" {
 
     flockfile(main->error.to.stream);
 
-    fl_print_format("%q%[%sMust specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_object_s, main->error.notable);
-    fl_print_format("%[' parameter and the '%]", main->error.to.stream, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_content_s, main->error.notable);
-    fl_print_format("%[' parameter the same number of times when not specifying the '%]", main->error.to.stream, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_partial_s, main->error.notable);
+    fl_print_format("%q%[%QMust specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_object_s, main->error.notable);
+    fl_print_format("%[' parameter and the '%]", main->error.to.stream, main->error.context, main->error.context);
+    fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_content_s, main->error.notable);
+    fl_print_format("%[' parameter the same number of times when not specifying the '%]", main->error.to.stream, main->error.context, main->error.context);
+    fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_partial_s, main->error.notable);
     fl_print_format("%[' parameter.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
     funlockfile(main->error.to.stream);
@@ -36,7 +36,7 @@ extern "C" {
 
     flockfile(main->error.to.stream);
 
-    fl_print_format("%q%[%sThis standard does not support end of line character '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%q%[%QThis standard does not support end of line character '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[\\n%]", main->error.to.stream, main->error.notable, main->error.notable);
     fl_print_format("%[' in objects.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -53,8 +53,8 @@ extern "C" {
 
     flockfile(main->error.to.stream);
 
-    fl_print_format("%q%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%S%S%]", main->error.to.stream, main->error.notable, symbol, parameter, main->error.notable);
+    fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, symbol, parameter, main->error.notable);
     fl_print_format("%[' is specified, but no value is given.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
     funlockfile(main->error.to.stream);
@@ -280,7 +280,7 @@ extern "C" {
         }
 
         // When payload is provided, all data at this point is part of the payload until the end of the pipe.
-        if (fl_string_dynamic_compare_string(f_fss_string_payload_s, object, F_fss_string_payload_s_length) == F_equal_to) {
+        if (fl_string_dynamic_compare(f_fss_string_payload_s, object) == F_equal_to) {
           if (total > 1) {
 
             // The first character is the terminating new line, which is not part of the payload.
@@ -322,7 +322,7 @@ extern "C" {
 
             if (block.string[range.start] == fss_payload_write_pipe_content_start_s) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_format("%q%[%sThis standard only supports one content per object.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+                fll_print_format("%q%[%QThis standard only supports one content per object.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
               }
 
               status = F_status_set_error(F_supported_not);
@@ -386,9 +386,9 @@ extern "C" {
       status = fss_payload_write_process(main, output, quote, &object, &content, buffer);
     }
 
-    macro_f_string_dynamic_t_delete_simple(block);
-    macro_f_string_dynamic_t_delete_simple(object);
-    macro_f_string_dynamic_t_delete_simple(content);
+    f_string_dynamic_resize(0, &block);
+    f_string_dynamic_resize(0, &object);
+    f_string_dynamic_resize(0, &content);
 
     return status;
   }

@@ -10,7 +10,7 @@
 #ifndef _TEST__F_capability_h
 #define _TEST__F_capability_h
 
-// libc includes.
+// Libc includes.
 #include <stdarg.h>
 #include <stddef.h>
 #include <setjmp.h>
@@ -19,7 +19,7 @@
 // cmocka includes.
 #include <cmocka.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/capability.h>
 
 // mock includes.

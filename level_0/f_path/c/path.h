@@ -10,7 +10,7 @@
 #ifndef _F_path_h
 #define _F_path_h
 
-// libc includes.
+// Libc includes.
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,7 +20,7 @@
 #define PATH_MAX 4096
 #endif /* PATH_MAX */
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>

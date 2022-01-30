@@ -6,28 +6,29 @@ extern "C" {
 #endif
 
 #ifndef _di_f_iki_content_is_
-  f_status_t f_iki_content_is(const f_string_static_t content, const uint8_t quote) {
+  f_status_t f_iki_content_is(const f_string_static_t content, const f_string_static_t quote) {
     #ifndef _di_level_0_parameter_checking_
-      if (content.used > content.size) return F_status_set_error(F_parameter);
-      if (quote != f_iki_syntax_quote_single_s.string[0] && quote != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
+      if (!quote.used) return F_status_set_error(F_parameter);
+      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     const f_string_range_t range = macro_f_string_range_t_initialize(content.used);
 
-    return private_f_iki_content_partial_is(content, range, quote);
+    return private_f_iki_content_partial_is(content, range, quote.string[0]);
   }
 #endif // _di_f_iki_content_is_
 
 #ifndef _di_f_iki_content_partial_is_
-  f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const uint8_t quote) {
+  f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote) {
     #ifndef _di_level_0_parameter_checking_
       if (content.used > content.size) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (range.start >= content.used) return F_status_set_error(F_parameter);
-      if (quote != f_iki_syntax_quote_single_s.string[0] && quote != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
+      if (!quote.used) return F_status_set_error(F_parameter);
+      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_iki_content_partial_is(content, range, quote);
+    return private_f_iki_content_partial_is(content, range, quote.string[0]);
   }
 #endif // _di_f_iki_content_partial_is_
 

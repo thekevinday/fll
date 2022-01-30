@@ -11,16 +11,23 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_error_build_operation_file_
-  bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_t operation, const f_string_t how, const f_string_t source, const f_string_t destination, const bool fallback) {
+  bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_t how, const f_string_t source, const f_string_t destination, const bool fallback) {
 
     if (status == F_file_found_not) {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SFailed to find '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, f_file_exists(source) == F_true ? destination : source, main->error.notable);
-        fl_print_format("%[while trying to %S '%]", main->error.to.stream, main->error.context, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QFailed to find '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, f_file_exists(source) == F_true ? destination : source, main->error.notable);
+        }
+
+        fl_print_format("%[while trying to %Q '%]", main->error.to.stream, main->error.context, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -39,10 +46,13 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SInvalid parameter when calling '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%q%[%QInvalid parameter when calling '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, function, main->error.notable);
-        fl_print_format("%[() to %s '%]", main->error.to.stream, main->error.context, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%[() to %Q '%]", main->error.to.stream, main->error.context, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -61,8 +71,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SInvalid name for '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QInvalid name for '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' or '%]", main->error.to.stream, main->error.context, main->error.context);
@@ -81,8 +94,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SUnable to allocate memory, while trying to %S '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QUnable to allocate memory, while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -101,8 +117,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SOverflow while trying to %S '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QOverflow while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -121,8 +140,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SInvalid directory while trying to %S '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QInvalid directory while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -141,8 +163,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SAccess denied while trying to %S '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QAccess denied while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -161,8 +186,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SLoop while trying to %S '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QLoop while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -181,8 +209,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SProhibited by system while trying to %S '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QProhibited by system while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -201,8 +232,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SFailed to %S '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QFailed to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -221,8 +255,11 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SFailed to %S '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        fl_print_format("%q%[%QFailed to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+
+        if (source) {
+          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        }
 
         if (destination) {
           fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -240,10 +277,13 @@ extern "C" {
     if (fll_error_print(main->error, status, function, F_false) == F_known_not && fallback && main->error.verbosity != f_console_verbosity_quiet_e) {
       flockfile(main->error.to.stream);
 
-      fl_print_format("%q%[UNKNOWN %s(%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
+      fl_print_format("%q%[UNKNOWN %Q(%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
       fl_print_format("%[%ui%]", main->error.to.stream, main->error.notable, status, main->error.notable);
-      fl_print_format("%[) occurred while trying to %S '%]", main->error.to.stream, main->error.context, operation, main->error.context);
-      fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+      fl_print_format("%[) occurred while trying to %Q '%]", main->error.to.stream, main->error.context, operation, main->error.context);
+
+      if (source) {
+        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+      }
 
       if (destination) {
         fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
@@ -266,7 +306,7 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SOccurred on invalid UTF-8 character at stop position (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%q%[%QOccurred on invalid UTF-8 character at stop position (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%un%]", main->error.to.stream, main->error.notable, range.start, main->error.notable);
         fl_print_format("%[ of setting file '%]", main->error.to.stream, main->error.context, main->error.context);
         fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
@@ -282,7 +322,7 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SOccurred on invalid UTF-8 character at %s (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, status == F_complete_not_utf_eos ? "end of string" : "stop point of string", main->error.context);
+        fl_print_format("%q%[%QOccurred on invalid UTF-8 character at %s (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, status == F_complete_not_utf_eos ? "end of string" : "stop point of string", main->error.context);
         fl_print_format("%[%un%]", main->error.to.stream, main->error.notable, range.start, main->error.notable);
         fl_print_format("%[ of setting file '%]", main->error.to.stream, main->error.context, main->error.context);
         fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
@@ -298,7 +338,7 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%SOccurred on invalid UTF-8 character at stop point of string (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%q%[%QOccurred on invalid UTF-8 character at stop point of string (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%un%]", main->error.to.stream, main->error.notable, range.start, main->error.notable);
         fl_print_format("%[ of setting file '%]", main->error.to.stream, main->error.context, main->error.context);
         fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
@@ -313,7 +353,7 @@ extern "C" {
     if (fll_error_print(main->error, status, function, F_false) == F_known_not && fallback && main->error.verbosity != f_console_verbosity_quiet_e) {
       flockfile(main->error.to.stream);
 
-      fl_print_format("%q%[UNKNOWN %s(%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+      fl_print_format("%q%[UNKNOWN %Q(%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
       fl_print_format("%[%ui%]", main->error.to.stream, main->error.notable, status, main->error.notable);
       fl_print_format("%[) in function '%]", main->error.to.stream, main->error.context, main->error.context);
       fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, function, main->error.notable);
@@ -327,14 +367,14 @@ extern "C" {
 #endif // _di_fake_print_error_fss
 
 #ifndef _di_fake_print_error_parameter_missing_value_
-  void fake_print_error_parameter_missing_value(fake_main_t * const main, const f_string_t parameter) {
+  void fake_print_error_parameter_missing_value(fake_main_t * const main, const f_string_static_t parameter) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->error.to.stream);
 
-    fl_print_format("%q%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%S%S%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter, main->error.notable);
+    fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter, main->error.notable);
     fl_print_format("%[' is specified, but no value is given.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
     funlockfile(main->error.to.stream);
@@ -342,14 +382,14 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_missing_value_
 
 #ifndef _di_fake_print_error_parameter_too_many_
-  void fake_print_error_parameter_too_many(fake_main_t * const main, const f_string_t parameter) {
+  void fake_print_error_parameter_too_many(fake_main_t * const main, const f_string_static_t parameter) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->error.to.stream);
 
-    fl_print_format("%q%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%S%S%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter, main->error.notable);
+    fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter, main->error.notable);
     fl_print_format("%[' was specified too many times.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
     funlockfile(main->error.to.stream);
@@ -362,7 +402,7 @@ extern "C" {
     if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
     if (!data_make->error.to.stream) return;
 
-    fll_print_format("%q%[%SRequires more arguments.%]%q", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
+    fll_print_format("%q%[%QRequires more arguments.%]%q", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
   }
 #endif // _di_fake_print_error_requires_more_arguments_
 
@@ -372,7 +412,7 @@ extern "C" {
     if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
     if (!data_make->error.to.stream) return;
 
-    fll_print_format("%q%[%SHas too many arguments.%]%q", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
+    fll_print_format("%q%[%QHas too many arguments.%]%q", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
   }
 #endif // _di_fake_print_error_too_many_arguments_
 
@@ -387,7 +427,7 @@ extern "C" {
 
     flockfile(main->error.to.stream);
 
-    fl_print_format("%q%[%SThe section operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%q%[%QThe section operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[%/Q%]", main->error.to.stream, main->error.notable, buffer, operation_name, main->error.notable);
     fl_print_format("%[' from section '%]", main->error.to.stream, main->error.context, main->error.context);
     fl_print_format("%[%/Q%]", main->error.to.stream, main->error.notable, buffer, section_name, main->error.notable);
@@ -407,7 +447,7 @@ extern "C" {
     flockfile(main->error.to.stream);
 
     if (F_status_set_fine(status) == F_false) {
-      fl_print_format("%q%[%SThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+      fl_print_format("%q%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
       fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path, main->error.notable);
       fl_print_format("%[' is outside the project root.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
     }
@@ -427,7 +467,7 @@ extern "C" {
     if (status == F_array_too_large) {
       flockfile(main->error.to.stream);
 
-      fl_print_format("%q%[%SMaximum stack size reached while processing path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+      fl_print_format("%q%[%QMaximum stack size reached while processing path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
       fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path, main->error.notable);
       fl_print_format("%['", main->error.to.stream, main->error.context);
 
@@ -457,7 +497,7 @@ extern "C" {
 
     flockfile(main->error.to.stream);
 
-    fl_print_format("%q%[%SThe section operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%q%[%QThe section operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[%/Q%]", main->error.to.stream, main->error.notable, buffer, operation_name, main->error.notable);
     fl_print_format("%[' from section '%]", main->error.to.stream, main->error.context, buffer, main->error.context);
     fl_print_format("%[%/Q%]", main->error.to.stream, main->error.notable, buffer, section_name, main->error.notable);
@@ -504,7 +544,7 @@ extern "C" {
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%]%c%c%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
+    fl_print_format("%]%q%q%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
     fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, signal, main->context.set.notable);
     fl_print_format("%[.%]%q", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
@@ -513,16 +553,16 @@ extern "C" {
 #endif // _di_fake_print_signal_received_
 
 #ifndef _di_fake_print_warning_settings_content_empty_
-  void fake_print_warning_settings_content_empty(fake_main_t * const main, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_t settings_name) {
+  void fake_print_warning_settings_content_empty(fake_main_t * const main, const f_string_static_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_static_t settings_name) {
 
     if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%q%[%SThe fakefile '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-    fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+    fl_print_format("%q%[%QThe fakefile '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+    fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
     fl_print_format("%[' has empty content for the '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-    fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, settings_name, main->warning.notable);
+    fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_name, main->warning.notable);
     fl_print_format("%[' object '%]", main->warning.to.stream, main->warning.context, main->warning.context);
     fl_print_format("%[%/Q%]", main->warning.to.stream, main->warning.notable, buffer, range_object, main->warning.notable);
     fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
@@ -532,18 +572,18 @@ extern "C" {
 #endif // _di_fake_print_warning_settings_content_empty_
 
 #ifndef _di_fake_print_warning_settings_content_invalid_
-  void fake_print_warning_settings_content_invalid(fake_main_t * const main, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_t settings_name) {
+  void fake_print_warning_settings_content_invalid(fake_main_t * const main, const f_string_static_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_static_t settings_name) {
 
     if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%q%[%SThe fakefile '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-    fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+    fl_print_format("%q%[%QThe fakefile '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+    fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
     fl_print_format("%[' has invalid content '%]", main->warning.to.stream, main->warning.context, main->warning.context);
     fl_print_format("%[%/Q%]", main->warning.to.stream, main->warning.notable, buffer, range_content, main->warning.notable);
     fl_print_format("%[' for the '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-    fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, settings_name, main->warning.notable);
+    fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_name, main->warning.notable);
     fl_print_format("%[' object '%]", main->warning.to.stream, main->warning.context, main->warning.context);
     fl_print_format("%[%/Q%]", main->warning.to.stream, main->warning.notable, buffer, range_object, main->warning.notable);
     fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
@@ -553,16 +593,16 @@ extern "C" {
 #endif // _di_fake_print_warning_settings_content_invalid_
 
 #ifndef _di_fake_print_warning_settings_content_multiple_
-  void fake_print_warning_settings_content_multiple(fake_main_t * const main, const f_string_t path_file, const f_string_t name_object) {
+  void fake_print_warning_settings_content_multiple(fake_main_t * const main, const f_string_static_t path_file, const f_string_static_t name_object) {
 
     if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%q%[%SThe fakefile '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-    fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, name_object, main->warning.notable);
+    fl_print_format("%q%[%QThe fakefile '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+    fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, name_object, main->warning.notable);
     fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-    fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+    fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
     fl_print_format("%[' may only have a single property, only using the first.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
     funlockfile(main->warning.to.stream);
@@ -570,16 +610,16 @@ extern "C" {
 #endif // _di_fake_print_warning_settings_content_multiple_
 
 #ifndef _di_fake_print_warning_settings_object_multiple_
-  void fake_print_warning_settings_object_multiple(fake_main_t * const main, const f_string_t path_file, const f_string_t label, const f_string_t name_object) {
+  void fake_print_warning_settings_object_multiple(fake_main_t * const main, const f_string_static_t path_file, const f_string_static_t label, const f_string_static_t name_object) {
 
     if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%q%[%SThe object '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-    fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, name_object, main->warning.notable);
+    fl_print_format("%q%[%QThe object '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+    fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, name_object, main->warning.notable);
     fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-    fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+    fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
     fl_print_format("%[' may only be specified once, only using the first.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
     funlockfile(main->warning.to.stream);

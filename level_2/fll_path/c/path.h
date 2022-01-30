@@ -10,10 +10,10 @@
 #ifndef _FLL_path_h
 #define _FLL_path_h
 
-// libc includes.
+// Libc includes.
 #include <stdio.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>

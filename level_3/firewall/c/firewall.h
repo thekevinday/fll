@@ -10,14 +10,15 @@
  * This program processes firewall commands and passes them to iptables from netfiler.org.
  */
 #ifndef _firewall_h
+#define _firewall_h
 
-// libc includes.
+// Libc includes.
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -33,12 +34,12 @@
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/console.h>
 #include <fll/level_1/string.h>
 #include <fll/level_1/print.h>
 
-// fll-2 includes
+// FLL-2 includes.
 #include <fll/level_2/error.h>
 #include <fll/level_2/execute.h>
 #include <fll/level_2/fss_basic.h>
@@ -52,24 +53,40 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_program_version_
-  #define firewall_program_version_major_s F_string_ascii_0_s
-  #define firewall_program_version_minor_s F_string_ascii_5_s
-  #define firewall_program_version_micro_s F_string_ascii_8_s
+  #define FIREWALL_program_version_major_s F_string_ascii_0_s
+  #define FIREWALL_program_version_minor_s F_string_ascii_5_s
+  #define FIREWALL_program_version_micro_s F_string_ascii_8_s
 
-  #ifndef firewall_program_version_nano_prefix_s
-    #define firewall_program_version_nano_prefix_s
-  #endif
+  #define FIREWALL_program_version_major_s_length F_string_ascii_0_s_length
+  #define FIREWALL_program_version_minor_s_length F_string_ascii_5_s_length
+  #define FIREWALL_program_version_micro_s_length F_string_ascii_8_s_length
 
-  #ifndef firewall_program_version_nano_s
-    #define firewall_program_version_nano_s
-  #endif
+  #if !(defined(FIREWALL_program_version_nano_prefix_s) && defined(FIREWALL_program_version_nano_prefix_s_length))
+    #define FIREWALL_program_version_nano_prefix_s
+    #define FIREWALL_program_version_nano_prefix_s_length 0
+  #endif // !(defined(FIREWALL_program_version_nano_prefix_s) && defined(FIREWALL_program_version_nano_prefix_s_length))
 
-  #define firewall_version_s firewall_program_version_major_s F_string_ascii_period_s firewall_program_version_minor_s F_string_ascii_period_s firewall_program_version_micro_s firewall_program_version_nano_prefix_s firewall_program_version_nano_s
+  #if !(defined(FIREWALL_program_version_nano_s) && defined(FIREWALL_program_version_nano_s_length))
+    #define FIREWALL_program_version_nano_s
+    #define FIREWALL_program_version_nano_s_length 0
+  #endif // !(defined(FIREWALL_program_version_nano_s) && defined(FIREWALL_program_version_nano_s_length))
+
+  #define FIREWALL_version_s FIREWALL_program_version_major_s F_string_ascii_period_s FIREWALL_program_version_minor_s F_string_ascii_period_s FIREWALL_program_version_micro_s FIREWALL_program_version_nano_prefix_s FIREWALL_program_version_nano_s
+
+  #define FIREWALL_version_s_length FIREWALL_program_version_major_s_length + F_string_ascii_period_s_length + FIREWALL_program_version_minor_s_length + F_string_ascii_period_s_length + FIREWALL_program_version_micro_s_length + FIREWALL_program_version_nano_prefix_s_length + FIREWALL_program_version_nano_s_length
+
+  extern const f_string_static_t firewall_program_version_s;
 #endif // _di_firewall_program_version_
 
 #ifndef _di_firewall_program_name_
-  #define firewall_program_name_s      "firewall"
-  #define firewall_program_name_long_s "Kevux Firewall Manager"
+  #define FIREWALL_program_name_s      "firewall"
+  #define FIREWALL_program_name_long_s "Kevux Firewall Manager"
+
+  #define FIREWALL_program_name_s_length      8
+  #define FIREWALL_program_name_long_s_length 22
+
+  extern const f_string_static_t firewall_program_name_s;
+  extern const f_string_static_t firewall_program_name_long_s;
 #endif // _di_firewall_program_name_
 
 #ifndef _di_firewall_paths_

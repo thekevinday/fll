@@ -146,7 +146,7 @@ extern "C" {
     }
 
     {
-      const f_string_t parameter[] = {
+      const f_string_static_t parameter[] = {
         fake_short_define_s,
         fake_short_mode_s,
       };
@@ -217,16 +217,12 @@ extern "C" {
           }
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_append(parameter[i], 1, &destination[i]->array[destination[i]->used]);
+            *status = f_string_dynamic_append(parameter[i], &destination[i]->array[destination[i]->used]);
           }
 
-          if (F_status_is_error(*status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_append", F_true);
-
-            return;
+          if (F_status_is_error_not(*status)) {
+            *status = f_string_dynamic_append(destination[i]->array[destination[i]->used], &destination_option[i]->array[destination_option[i]->used]);
           }
-
-          *status = f_string_dynamic_append(destination[i]->array[destination[i]->used], &destination_option[i]->array[destination_option[i]->used]);
 
           if (F_status_is_error(*status)) {
             fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
@@ -264,7 +260,7 @@ extern "C" {
     }
 
     {
-      const f_string_t parameter[] = {
+      const f_string_static_t parameter[] = {
         fake_short_fakefile_s,
         fake_short_path_build_s,
         fake_short_path_data_s,
@@ -360,16 +356,12 @@ extern "C" {
         }
 
         if (F_status_is_error_not(*status)) {
-          *status = f_string_append(parameter[i], 1, &destination[i]->array[destination[i]->used]);
+          *status = f_string_dynamic_append(parameter[i], &destination[i]->array[destination[i]->used]);
         }
 
-        if (F_status_is_error(*status)) {
-          fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_append", F_true);
-
-          return;
+        if (F_status_is_error_not(*status)) {
+          *status = f_string_dynamic_append(destination[i]->array[destination[i]->used], &destination_option[i]->array[destination_option[i]->used]);
         }
-
-        *status = f_string_dynamic_append(destination[i]->array[destination[i]->used], &destination_option[i]->array[destination_option[i]->used]);
 
         if (F_status_is_error(*status)) {
           fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);

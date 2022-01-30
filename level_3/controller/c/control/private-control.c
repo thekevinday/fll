@@ -1,4 +1,4 @@
-#include "../controller/controller.h"
+#include "../controller.h"
 #include "../common/private-common.h"
 #include "private-control.h"
 #include "../controller/private-controller_print.h"
@@ -232,10 +232,6 @@ extern "C" {
 
     f_status_t status2 = F_none;
 
-    const f_string_static_t object_header = macro_f_string_static_t_initialize(f_fss_string_header_s, F_fss_string_header_s_length);
-    const f_string_static_t object_type = macro_f_string_static_t_initialize(controller_type_s, controller_type_s_length);
-    const f_string_static_t object_status = macro_f_string_static_t_initialize(controller_status_s, controller_status_s_length);
-    const f_string_static_t object_length = macro_f_string_static_t_initialize(controller_length_s, controller_length_s_length);
     const f_state_t state = f_state_t_initialize;
     const f_conversion_data_t data_conversion = macro_f_conversion_data_t_initialize(10, 0, 1);
 
@@ -252,7 +248,7 @@ extern "C" {
     if (type.used) {
       contents[0] = type;
 
-      status2 = fll_fss_extended_write_string(object_type, content, 0, state, &control->cache_1);
+      status2 = fll_fss_extended_write_string(controller_type_s, content, 0, state, &control->cache_1);
       if (F_status_is_error(status2)) return status2;
     }
 
@@ -260,7 +256,7 @@ extern "C" {
     if (status.used) {
       contents[0] = status;
 
-      status2 = fll_fss_extended_write_string(object_status, content, 0, state, &control->cache_1);
+      status2 = fll_fss_extended_write_string(controller_status_s, content, 0, state, &control->cache_1);
       if (F_status_is_error(status2)) return status2;
 
       control->cache_2.used = 0;
@@ -272,15 +268,15 @@ extern "C" {
 
     contents[0] = control->cache_2;
 
-    status2 = fll_fss_extended_write_string(object_length, content, 0, state, &control->cache_1);
+    status2 = fll_fss_extended_write_string(controller_length_s, content, 0, state, &control->cache_1);
     if (F_status_is_error(status2)) return status2;
 
     // Prepend the identifier comment to the output.
-    status2 = f_string_append(controller_payload_type_s, controller_payload_type_s_length, &control->output);
+    status2 = f_string_dynamic_append(controller_payload_type_s, &control->output);
     if (F_status_is_error(status2)) return status2;
 
     // Append entire header block to the output.
-    status2 = fll_fss_payload_write_string(object_header, control->cache_1, F_false, 0, state, &control->output);
+    status2 = fll_fss_payload_write_string(f_fss_string_header_s, control->cache_1, F_false, 0, state, &control->output);
     if (F_status_is_error(status2)) return status2;
 
     return F_none;
@@ -291,7 +287,6 @@ extern "C" {
   f_status_t controller_control_respond_error(const controller_global_t *global, controller_control_t * const control, const f_status_t status, const f_string_static_t message) {
 
     f_status_t status2 = F_none;
-    const f_state_t state = f_state_t_initialize;
 
     control->output.used = 0;
     control->cache_3.used = 0;
@@ -303,17 +298,13 @@ extern "C" {
       if (F_status_is_error(status2)) return status2;
     }
 
-    {
-      const f_string_static_t content_error = macro_f_string_static_t_initialize(controller_error_s, controller_error_s_length);
-
-      status2 = controller_control_respond_build_header(global, control, content_error, control->cache_3, message.used);
-      if (F_status_is_error(status2)) return status2;
-    }
+    status2 = controller_control_respond_build_header(global, control, controller_error_s, control->cache_3, message.used);
+    if (F_status_is_error(status2)) return status2;
 
     {
-      const f_string_static_t object_payload = macro_f_string_static_t_initialize(f_fss_string_payload_s, F_fss_string_payload_s_length);
+      const f_state_t state = f_state_t_initialize;
 
-      status2 = fll_fss_payload_write_string(object_payload, message, F_false, 0, state, &control->output);
+      status2 = fll_fss_payload_write_string(f_fss_string_payload_s, message, F_false, 0, state, &control->output);
       if (F_status_is_error(status2)) return status2;
     }
 

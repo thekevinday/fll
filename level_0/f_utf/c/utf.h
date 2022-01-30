@@ -36,12 +36,12 @@
 #ifndef _F_utf_h
 #define _F_utf_h
 
-// libc includes.
+// Libc includes.
 #include <endian.h>
 #include <ctype.h>
 #include <string.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>

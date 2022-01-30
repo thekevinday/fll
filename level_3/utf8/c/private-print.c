@@ -98,7 +98,7 @@ extern "C" {
     if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
     if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
-    fl_print_format("%q%[%SFailed to decode character code '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
+    fl_print_format("%q%[%QFailed to decode character code '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
 
     if (character.used) {
       fl_print_format("%[0x", data->main->error.to.stream, data->main->context.set.notable);
@@ -129,7 +129,7 @@ extern "C" {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%q%[%SFailed to encode Unicode codepoint '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
+    fl_print_format("%q%[%QFailed to encode Unicode codepoint '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
     fl_print_format("%[U+%_U%]", data->main->error.to.stream, data->main->context.set.notable, codepoint, data->main->context.set.notable);
 
     if (F_status_set_fine(status) == F_utf) {
@@ -148,7 +148,7 @@ extern "C" {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fll_print_format("%q%[%sNo from sources are specified, please pipe data, designate a file, or add parameters.%]%q", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context, f_string_eol_s);
+    fll_print_format("%q%[%QNo from sources are specified, please pipe data, designate a file, or add parameters.%]%q", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context, f_string_eol_s);
   }
 #endif // _di_utf8_print_error_no_from_
 
@@ -159,8 +159,8 @@ extern "C" {
 
     flockfile(data->main->error.to.stream);
 
-    fl_print_format("%q%[%SThe parameter '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
-    fl_print_format("%[%q%S%]", data->main->error.to.stream, data->main->context.set.notable, f_console_symbol_long_enable_s, parameter, data->main->context.set.notable);
+    fl_print_format("%q%[%QThe parameter '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
+    fl_print_format("%[%q%q%]", data->main->error.to.stream, data->main->context.set.notable, f_console_symbol_long_enable_s, parameter, data->main->context.set.notable);
     fl_print_format("%[' is specified, but no value was given.%]%q", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
 
     funlockfile(data->main->error.to.stream);
@@ -174,7 +174,7 @@ extern "C" {
 
     flockfile(data->main->error.to.stream);
 
-    fl_print_format("%q%[%SNo file specified at parameter index %]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
+    fl_print_format("%q%[%QNo file specified at parameter index %]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
     fl_print_format("%[%ul%]", data->main->error.to.stream, data->main->context.set.notable, index, data->main->context.set.notable);
     fl_print_format("%[.%]%q", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
 
@@ -189,7 +189,7 @@ extern "C" {
 
     flockfile(data->main->error.to.stream);
 
-    fl_print_format("%q%[%SFailed to find the %s file '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, from ? utf8_string_from_s : utf8_string_to_s, data->main->context.set.error);
+    fl_print_format("%q%[%QFailed to find the %s file '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, from ? utf8_string_from_s : utf8_string_to_s, data->main->context.set.error);
     fl_print_format("%[%S%]", data->main->error.to.stream, data->main->context.set.notable, name, data->main->context.set.notable);
     fl_print_format("%['.%]%q", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
 
@@ -202,7 +202,7 @@ extern "C" {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fll_print_format("%q%[%SToo many %s files specified, there may only be one to file.%]%q", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, utf8_string_to_s, data->main->context.set.error, f_string_eol_s);
+    fll_print_format("%q%[%QToo many %q files specified, there may only be one to file.%]%q", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, utf8_string_to_s, data->main->context.set.error, f_string_eol_s);
   }
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 
@@ -262,7 +262,7 @@ extern "C" {
 
     flockfile(data->main->warning.to.stream);
 
-    fl_print_format("%]%c%c%[Received signal code %]", data->main->warning.to.stream, data->main->context.set.reset, f_string_eol_s, f_string_eol_s, data->main->context.set.warning, data->main->context.set.warning);
+    fl_print_format("%]%q%q%[Received signal code %]", data->main->warning.to.stream, data->main->context.set.reset, f_string_eol_s, f_string_eol_s, data->main->context.set.warning, data->main->context.set.warning);
     fl_print_format("%[%i%]", data->main->warning.to.stream, data->main->context.set.notable, signal, data->main->context.set.notable);
     fl_print_format("%[.%]%q", data->main->warning.to.stream, data->main->context.set.warning, data->main->context.set.warning, f_string_eol_s);
 

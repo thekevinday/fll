@@ -1,4 +1,4 @@
-#include "../controller/controller.h"
+#include "../controller.h"
 #include "../common/private-common.h"
 #include "../controller/private-controller.h"
 #include "../controller/private-controller_print.h"
@@ -222,8 +222,8 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, &thread);
 
-            fl_print_format("%q%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-            fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, setting->path_pid.string, main->error.notable);
+            fl_print_format("%q%[%QThe pid file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, setting->path_pid, main->error.notable);
             fl_print_format("%[' must not already exist.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             controller_unlock_print_flush(main->error.to, &thread);

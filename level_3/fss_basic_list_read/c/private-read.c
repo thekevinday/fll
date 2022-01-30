@@ -189,10 +189,10 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%sThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%q%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
+            fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
             fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
@@ -204,8 +204,8 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
+            fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
             fl_print_format("%[' may not have the value '%]", main->error.to.stream, main->error.context, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' before the value '%]", main->error.to.stream, main->error.context, main->error.context);
@@ -285,7 +285,7 @@ extern "C" {
 
     if (main->parameters[parameter].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters[parameter].values.array[main->parameters[parameter].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], f_console_parameter_size));
+      const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], F_console_parameter_size_d));
 
       const f_status_t status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, number);
 

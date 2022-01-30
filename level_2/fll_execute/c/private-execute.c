@@ -17,7 +17,7 @@ extern "C" {
       status = f_string_append(source, length, &argument);
 
       if (F_status_is_error(status)) {
-        macro_f_string_dynamic_t_delete_simple(argument);
+        f_string_dynamic_resize(0, &argument);
 
         return status;
       }
@@ -26,7 +26,7 @@ extern "C" {
     status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      macro_f_string_dynamic_t_delete_simple(argument);
+      f_string_dynamic_resize(0, &argument);
 
       return status;
     }
@@ -85,7 +85,7 @@ extern "C" {
       status = f_string_append(value, value_length, &argument);
 
       if (F_status_is_error(status)) {
-        macro_f_string_dynamic_t_delete_simple(argument);
+        f_string_dynamic_resize(0, &argument);
 
         return status;
       }
@@ -94,7 +94,7 @@ extern "C" {
     status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      macro_f_string_dynamic_t_delete_simple(argument);
+      f_string_dynamic_resize(0, &argument);
 
       return status;
     }

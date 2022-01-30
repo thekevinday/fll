@@ -75,10 +75,10 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_break_e) {
-      if (!arguments.used || fl_string_dynamic_compare_string(fake_make_operation_argument_success_s, arguments.array[0], fake_make_operation_argument_success_s_length) == F_equal_to) {
+      if (!arguments.used || fl_string_dynamic_compare(fake_make_operation_argument_success_s, arguments.array[0]) == F_equal_to) {
         *status = F_signal_abort;
       }
-      else if (fl_string_dynamic_compare_string(fake_make_operation_argument_failure_s, arguments.array[0], fake_make_operation_argument_failure_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(fake_make_operation_argument_failure_s, arguments.array[0]) == F_equal_to) {
         *status = F_status_set_error(F_signal_abort);
       }
       else {
@@ -89,7 +89,7 @@ extern "C" {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("%qBreaking as '", data_make->main->output.to.stream, f_string_eol_s);
-        fl_print_format("%[%S%]", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success_s, data_make->main->context.set.notable);
+        fl_print_format("%[%Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, data_make->main->context.set.notable);
         fl_print_format("'.%q", data_make->main->output.to.stream, f_string_eol_s);
 
         funlockfile(data_make->main->output.to.stream);
@@ -190,10 +190,10 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_exit_e) {
-      if (!arguments.used || fl_string_dynamic_compare_string(fake_make_operation_argument_success_s, arguments.array[0], fake_make_operation_argument_success_s_length) == F_equal_to) {
+      if (!arguments.used || fl_string_dynamic_compare(fake_make_operation_argument_success_s, arguments.array[0]) == F_equal_to) {
         *status = F_signal_quit;
       }
-      else if (fl_string_dynamic_compare_string(fake_make_operation_argument_failure_s, arguments.array[0], fake_make_operation_argument_failure_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(fake_make_operation_argument_failure_s, arguments.array[0]) == F_equal_to) {
         *status = F_status_set_error(F_signal_quit);
 
         // Forcing exit forces fail mode.
@@ -211,7 +211,7 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("%qExiting as '%[%S%]'.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success_s, data_make->main->context.set.notable, f_string_eol_s);
+        fll_print_format("%qExiting as '%[%Q%]'.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, data_make->main->context.set.notable, f_string_eol_s);
       }
 
       return 0;
@@ -574,7 +574,7 @@ extern "C" {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
           flockfile(data_make->error.to.stream);
 
-          fl_print_format("%q%[%SFailed to find program '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%q%[%QFailed to find program '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, program, data_make->error.notable);
           fl_print_format("%[' for executing.%]%q", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
@@ -650,7 +650,7 @@ extern "C" {
     if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
       flockfile(data_make->error.to.stream);
 
-      fl_print_format("%q%[%SFailed with return code %]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+      fl_print_format("%q%[%QFailed with return code %]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
       fl_print_format("%[%i%]", data_make->error.to.stream, data_make->error.notable, return_code, data_make->error.notable);
       fl_print_format("%[.%]%q", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 

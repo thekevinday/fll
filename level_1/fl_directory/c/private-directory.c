@@ -42,7 +42,7 @@ extern "C" {
           status = private_fl_directory_clone_file(list[i]->array[j], source, destination, role, recurse);
         } // for
 
-        macro_f_string_dynamics_t_delete_simple((*list[i]));
+        f_string_dynamics_resize(0, list[i]);
       } // for
     }
 
@@ -123,11 +123,9 @@ extern "C" {
       }
     } // for
 
-    macro_f_string_dynamics_t_delete_simple(listing.directory);
+    f_string_dynamics_resize(0, &listing.directory);
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     if (recurse.failures && failures_used < recurse.failures->used) {
       return F_failure;
@@ -260,7 +258,7 @@ extern "C" {
           status = private_fl_directory_copy_file(list[i]->array[j], source, destination, mode, recurse);
         } // for
 
-        macro_f_string_dynamics_t_delete_simple((*list[i]));
+        f_string_dynamics_resize(0, list[i]);
       } // for
     }
 
@@ -327,11 +325,9 @@ extern "C" {
       }
     } // for
 
-    macro_f_string_dynamics_t_delete_simple(listing.directory);
+    f_string_dynamics_resize(0, &listing.directory);
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     if (recurse.failures && failures_used < recurse.failures->used) {
       return F_failure;

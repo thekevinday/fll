@@ -1,4 +1,4 @@
-#include "../controller/controller.h"
+#include "../controller.h"
 #include "private-common.h"
 
 #ifdef __cplusplus
@@ -67,7 +67,7 @@ extern "C" {
 
     f_string_dynamics_resize(0, &process->path_pids);
 
-    macro_f_array_lengths_t_delete_simple(process->stack)
+    f_type_array_lengths_resize(0, &process->stack);
   }
 #endif // _di_controller_process_delete_simple_
 

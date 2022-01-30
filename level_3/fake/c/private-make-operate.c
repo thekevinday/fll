@@ -118,7 +118,7 @@ extern "C" {
       if (F_status_is_error(status_path) && main->warning.verbosity == f_console_verbosity_verbose_e) {
         flockfile(main->warning.to.stream);
 
-        fl_print_format("%q%[%SFailed change back to orignal path '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+        fl_print_format("%q%[%QFailed change back to orignal path '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
         fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, data_make.path.stack.array[0], main->warning.notable);
         fl_print_format("%[', status code =%] ", main->warning.to.stream, main->warning.context, main->warning.context);
         fl_print_format("%[%ui%]", main->warning.to.stream, main->warning.notable, F_status_set_fine(status_path), main->warning.notable);
@@ -130,7 +130,7 @@ extern "C" {
 
     f_file_stream_close(F_true, &data_make.path.top);
 
-    macro_f_array_lengths_t_delete_simple(section_stack)
+    f_type_array_lengths_resize(0, &section_stack);
     macro_fake_make_data_t_delete_simple(data_make)
 
     return status;
@@ -182,7 +182,7 @@ extern "C" {
 
     f_array_length_t used_content = 0;
 
-    const f_string_t reserved_name[] = {
+    const f_string_static_t reserved_name[] = {
       fake_make_parameter_variable_build_s,
       fake_make_parameter_variable_color_s,
       fake_make_parameter_variable_data_s,
@@ -216,42 +216,6 @@ extern "C" {
       fake_make_parameter_variable_value_sources_s,
       fake_make_parameter_variable_value_verbosity_s,
       fake_make_parameter_variable_value_work_s,
-    };
-
-    const f_array_length_t reserved_length[] = {
-      fake_make_parameter_variable_build_s_length,
-      fake_make_parameter_variable_color_s_length,
-      fake_make_parameter_variable_data_s_length,
-      fake_make_parameter_variable_define_s_length,
-      fake_make_parameter_variable_fakefile_s_length,
-      fake_make_parameter_variable_mode_s_length,
-      fake_make_parameter_variable_process_s_length,
-      fake_make_parameter_variable_settings_s_length,
-      fake_make_parameter_variable_sources_s_length,
-      fake_make_parameter_variable_verbosity_s_length,
-      fake_make_parameter_variable_work_s_length,
-      fake_make_parameter_variable_build_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_color_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_data_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_define_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_fakefile_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_mode_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_process_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_settings_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_sources_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_verbosity_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_work_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_build_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_color_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_data_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_define_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_fakefile_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_mode_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_process_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_settings_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_sources_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_verbosity_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_work_s_length + fake_make_parameter_iki_value_s_length,
     };
 
     f_string_dynamics_t * const reserved_value[] = {
@@ -362,7 +326,7 @@ extern "C" {
             unmatched = F_true;
 
             // Check against reserved parameter names and if matches use them instead.
-            if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_return_s, data_make->buffer, fake_make_parameter_variable_return_s_length, iki_content.array[j]) == F_equal_to) {
+            if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_return_s.string, data_make->buffer, fake_make_parameter_variable_return_s.used, iki_content.array[j]) == F_equal_to) {
               if (data_make->setting_make.parameter.array[0].value.array[0].used) {
                 *status = f_string_dynamic_append_nulless(data_make->setting_make.parameter.array[0].value.array[0], &arguments->array[arguments->used]);
 
@@ -387,7 +351,7 @@ extern "C" {
             else {
               for (k = 0; k < 33; ++k) {
 
-                if (fl_string_dynamic_partial_compare_string(reserved_name[k], data_make->buffer, reserved_length[k], iki_content.array[j]) != F_equal_to) {
+                if (fl_string_dynamic_partial_compare_string(reserved_name[k].string, data_make->buffer, reserved_name[k].used, iki_content.array[j]) != F_equal_to) {
                   continue;
                 }
 
@@ -613,16 +577,10 @@ extern "C" {
     bool unmatched = F_true;
 
     {
-      const f_string_t uint8_name[] = {
+      const f_string_static_t uint8_name[] = {
         fake_build_setting_name_build_language_s,
         fake_build_setting_name_version_file_s,
         fake_build_setting_name_version_target_s,
-      };
-
-      const f_array_length_t uint8_length[] = {
-        fake_build_setting_name_build_language_s_length,
-        fake_build_setting_name_version_file_s_length,
-        fake_build_setting_name_version_target_s_length,
       };
 
       const uint8_t uint8_value[] = {
@@ -633,19 +591,20 @@ extern "C" {
 
       for (uint8_t i = 0; i < 3; ++i) {
 
-        status = fl_string_dynamic_partial_compare_string(uint8_name[i], data_make->buffer, uint8_length[i], range_name);
+        status = fl_string_dynamic_partial_compare_string(uint8_name[i].string, data_make->buffer, uint8_name[i].used, range_name);
 
         if (status == F_equal_to) {
           unmatched = F_false;
 
           status = f_conversion_number_unsigned_to_string(uint8_value[i], f_conversion_data_base_10_s, &value);
+
           break;
         }
       } // for
     }
 
     if (unmatched) {
-      const f_string_t bool_name[] = {
+      const f_string_static_t bool_name[] = {
         fake_build_setting_name_build_script_s,
         fake_build_setting_name_build_shared_s,
         fake_build_setting_name_build_static_s,
@@ -653,16 +612,6 @@ extern "C" {
         fake_build_setting_name_search_exclusive_s,
         fake_build_setting_name_search_shared_s,
         fake_build_setting_name_search_static_s,
-      };
-
-      const f_array_length_t bool_length[] = {
-        fake_build_setting_name_build_script_s_length,
-        fake_build_setting_name_build_shared_s_length,
-        fake_build_setting_name_build_static_s_length,
-        fake_build_setting_name_path_standard_s_length,
-        fake_build_setting_name_search_exclusive_s_length,
-        fake_build_setting_name_search_shared_s_length,
-        fake_build_setting_name_search_static_s_length,
       };
 
       const bool bool_value[] = {
@@ -677,16 +626,16 @@ extern "C" {
 
       for (uint8_t i = 0; i < 7; ++i) {
 
-        status = fl_string_dynamic_partial_compare_string(bool_name[i], data_make->buffer, bool_length[i], range_name);
+        status = fl_string_dynamic_partial_compare_string(bool_name[i].string, data_make->buffer, bool_name[i].used, range_name);
 
         if (status == F_equal_to) {
           unmatched = F_false;
 
           if (bool_value[i]) {
-            status = f_string_append(fake_common_setting_bool_yes_s, fake_common_setting_bool_yes_s_length, &value);
+            status = f_string_dynamic_append(fake_common_setting_bool_yes_s, &value);
           }
           else {
-            status = f_string_append(fake_common_setting_bool_no_s, fake_common_setting_bool_no_s_length, &value);
+            status = f_string_dynamic_append(fake_common_setting_bool_no_s, &value);
           }
 
           break;
@@ -695,7 +644,7 @@ extern "C" {
     }
 
     if (unmatched) {
-      const f_string_t dynamic_name[] = {
+      const f_string_static_t dynamic_name[] = {
         fake_build_setting_name_build_compiler_s,
         fake_build_setting_name_build_indexer_s,
         fake_build_setting_name_path_headers_s,
@@ -713,26 +662,6 @@ extern "C" {
         fake_build_setting_name_version_major_s,
         fake_build_setting_name_version_micro_s,
         fake_build_setting_name_version_minor_s,
-      };
-
-      const f_array_length_t dynamic_length[] = {
-        fake_build_setting_name_build_compiler_s_length,
-        fake_build_setting_name_build_indexer_s_length,
-        fake_build_setting_name_path_headers_s_length,
-        fake_build_setting_name_path_language_s_length,
-        fake_build_setting_name_path_library_script_s_length,
-        fake_build_setting_name_path_library_shared_s_length,
-        fake_build_setting_name_path_library_static_s_length,
-        fake_build_setting_name_path_program_script_s_length,
-        fake_build_setting_name_path_program_shared_s_length,
-        fake_build_setting_name_path_program_static_s_length,
-        fake_build_setting_name_path_sources_s_length,
-        fake_build_setting_name_process_post_s_length,
-        fake_build_setting_name_process_pre_s_length,
-        fake_build_setting_name_project_name_s_length,
-        fake_build_setting_name_version_major_s_length,
-        fake_build_setting_name_version_micro_s_length,
-        fake_build_setting_name_version_minor_s_length,
       };
 
       const f_string_dynamic_t dynamic_value[] = {
@@ -757,19 +686,20 @@ extern "C" {
 
       for (uint8_t i = 0; i < 17; ++i) {
 
-        status = fl_string_dynamic_partial_compare_string(dynamic_name[i], data_make->buffer, dynamic_length[i], range_name);
+        status = fl_string_dynamic_partial_compare_string(dynamic_name[i].string, data_make->buffer, dynamic_name[i].used, range_name);
 
         if (status == F_equal_to) {
           unmatched = F_false;
 
           status = f_string_dynamic_append(dynamic_value[i], &value);
+
           break;
         }
       } // for
     }
 
     if (unmatched) {
-      const f_string_t dynamics_name[] = {
+      const f_string_static_t dynamics_name[] = {
         fake_build_setting_name_build_libraries_s,
         fake_build_setting_name_build_libraries_shared_s,
         fake_build_setting_name_build_libraries_static_s,
@@ -805,44 +735,6 @@ extern "C" {
         fake_build_setting_name_flags_static_s,
         fake_build_setting_name_modes_s,
         fake_build_setting_name_modes_default_s,
-      };
-
-      const f_array_length_t dynamics_length[] = {
-        fake_build_setting_name_build_libraries_s_length,
-        fake_build_setting_name_build_libraries_shared_s_length,
-        fake_build_setting_name_build_libraries_static_s_length,
-        fake_build_setting_name_build_sources_headers_s_length,
-        fake_build_setting_name_build_sources_headers_shared_s_length,
-        fake_build_setting_name_build_sources_headers_static_s_length,
-        fake_build_setting_name_build_sources_library_s_length,
-        fake_build_setting_name_build_sources_library_shared_s_length,
-        fake_build_setting_name_build_sources_library_static_s_length,
-        fake_build_setting_name_build_sources_program_s_length,
-        fake_build_setting_name_build_sources_program_shared_s_length,
-        fake_build_setting_name_build_sources_program_static_s_length,
-        fake_build_setting_name_build_sources_settings_s_length,
-        fake_build_setting_name_build_sources_script_s_length,
-        fake_build_setting_name_defines_s_length,
-        fake_build_setting_name_defines_library_s_length,
-        fake_build_setting_name_defines_library_shared_s_length,
-        fake_build_setting_name_defines_library_static_s_length,
-        fake_build_setting_name_defines_program_s_length,
-        fake_build_setting_name_defines_program_shared_s_length,
-        fake_build_setting_name_defines_program_static_s_length,
-        fake_build_setting_name_defines_shared_s_length,
-        fake_build_setting_name_defines_static_s_length,
-        fake_build_setting_name_environment_length_s,
-        fake_build_setting_name_flags_s_length,
-        fake_build_setting_name_flags_library_s_length,
-        fake_build_setting_name_flags_library_shared_s_length,
-        fake_build_setting_name_flags_library_static_s_length,
-        fake_build_setting_name_flags_program_s_length,
-        fake_build_setting_name_flags_program_shared_s_length,
-        fake_build_setting_name_flags_program_static_s_length,
-        fake_build_setting_name_flags_shared_s_length,
-        fake_build_setting_name_flags_static_s_length,
-        fake_build_setting_name_modes_s_length,
-        fake_build_setting_name_modes_default_s_length,
       };
 
       const f_string_dynamics_t dynamics_value[] = {
@@ -885,7 +777,7 @@ extern "C" {
 
       for (uint8_t i = 0; i < 35; ++i) {
 
-        status = fl_string_dynamic_partial_compare_string(dynamics_name[i], data_make->buffer, dynamics_length[i], range_name);
+        status = fl_string_dynamic_partial_compare_string(dynamics_name[i].string, data_make->buffer, dynamics_name[i].used, range_name);
 
         if (status == F_equal_to) {
           unmatched = F_false;
@@ -902,13 +794,13 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      macro_f_string_dynamic_t_delete_simple(value);
+      f_string_dynamic_resize(0, &value);
 
       return status;
     }
 
     if (unmatched) {
-      macro_f_string_dynamic_t_delete_simple(value);
+      f_string_dynamic_resize(0, &value);
 
       return F_false;
     }
@@ -932,7 +824,7 @@ extern "C" {
       }
     }
 
-    macro_f_string_dynamic_t_delete_simple(value);
+    f_string_dynamic_resize(0, &value);
 
     if (F_status_is_error(status)) return status;
 
@@ -946,7 +838,7 @@ extern "C" {
     f_status_t status = F_none;
     const f_string_static_t *context = 0;
 
-    const f_string_t context_name[] = {
+    const f_string_static_t context_name[] = {
       fake_make_context_reset_s,
       fake_make_context_warning_s,
       fake_make_context_error_s,
@@ -956,18 +848,6 @@ extern "C" {
       fake_make_context_standout_s,
       fake_make_context_success_s,
       fake_make_context_normal_s,
-    };
-
-    const f_array_length_t context_length[] = {
-      fake_make_context_reset_s_length,
-      fake_make_context_warning_s_length,
-      fake_make_context_error_s_length,
-      fake_make_context_title_s_length,
-      fake_make_context_notable_s_length,
-      fake_make_context_important_s_length,
-      fake_make_context_standout_s_length,
-      fake_make_context_success_s_length,
-      fake_make_context_normal_s_length,
     };
 
     const f_color_set_t context_value[] = {
@@ -984,7 +864,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < 9; ++i) {
 
-      if (fl_string_dynamic_partial_compare_string(context_name[i], data_make->buffer, context_length[i], range_name) == F_equal_to) {
+      if (fl_string_dynamic_partial_compare_string(context_name[i].string, data_make->buffer, context_name[i].used, range_name) == F_equal_to) {
         context = context_value[i].before;
 
         break;
@@ -1034,16 +914,17 @@ extern "C" {
 
       status = f_environment_get(name.string, &value);
 
-      macro_f_string_dynamic_t_delete_simple(name);
+      f_string_dynamic_resize(0, &name);
     }
 
     if (F_status_is_error(status)) {
-      macro_f_string_dynamic_t_delete_simple(value);
+      f_string_dynamic_resize(0, &value);
 
       return status;
     }
-    else if (status == F_exist_not) {
-      macro_f_string_dynamic_t_delete_simple(value);
+
+    if (status == F_exist_not) {
+      f_string_dynamic_resize(0, &value);
 
       return F_false;
     }
@@ -1067,7 +948,7 @@ extern "C" {
       }
     }
 
-    macro_f_string_dynamic_t_delete_simple(value);
+    f_string_dynamic_resize(0, &value);
 
     if (F_status_is_error(status)) return status;
 
@@ -1117,7 +998,7 @@ extern "C" {
       return 0;
     }
 
-    const f_string_t operations_name[] = {
+    const f_string_static_t operations_name[] = {
       fake_make_operation_and_s,
       fake_make_operation_break_s,
       fake_make_operation_build_s,
@@ -1152,43 +1033,6 @@ extern "C" {
       fake_make_operation_to_s,
       fake_make_operation_top_s,
       fake_make_operation_touch_s,
-    };
-
-    const f_array_length_t operations_length[] = {
-      fake_make_operation_and_s_length,
-      fake_make_operation_break_s_length,
-      fake_make_operation_build_s_length,
-      fake_make_operation_clean_s_length,
-      fake_make_operation_clone_s_length,
-      fake_make_operation_compile_s_length,
-      fake_make_operation_copy_s_length,
-      fake_make_operation_define_s_length,
-      fake_make_operation_delete_s_length,
-      fake_make_operation_deletes_s_length,
-      fake_make_operation_else_s_length,
-      fake_make_operation_exit_s_length,
-      fake_make_operation_fail_s_length,
-      fake_make_operation_group_s_length,
-      fake_make_operation_groups_s_length,
-      fake_make_operation_if_s_length,
-      fake_make_operation_index_s_length,
-      fake_make_operation_link_s_length,
-      fake_make_operation_mode_s_length,
-      fake_make_operation_modes_s_length,
-      fake_make_operation_move_s_length,
-      fake_make_operation_operate_s_length,
-      fake_make_operation_or_s_length,
-      fake_make_operation_owner_s_length,
-      fake_make_operation_owners_s_length,
-      fake_make_operation_parameter_s_length,
-      fake_make_operation_pop_s_length,
-      fake_make_operation_print_s_length,
-      fake_make_operation_run_s_length,
-      fake_make_operation_shell_s_length,
-      fake_make_operation_skeleton_s_length,
-      fake_make_operation_to_s_length,
-      fake_make_operation_top_s_length,
-      fake_make_operation_touch_s_length,
     };
 
     const uint8_t operations_type[] = {
@@ -1258,7 +1102,7 @@ extern "C" {
 
       for (j = 0; j < fake_make_operation_total_d; ++j) {
 
-        if (fl_string_dynamic_partial_compare_string(operations_name[j], data_make->buffer, operations_length[j], section->objects.array[i]) == F_equal_to) {
+        if (fl_string_dynamic_partial_compare_string(operations_name[j].string, data_make->buffer, operations_name[j].used, section->objects.array[i]) == F_equal_to) {
           state_process.operation = operations_type[j];
 
           break;
@@ -1496,13 +1340,13 @@ extern "C" {
       if (data_make->main->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
 
-        fl_print_format("%q%[%SIncomplete '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+        fl_print_format("%q%[%QIncomplete '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
 
         if (state_process.block == fake_state_process_block_else_e) {
-          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
+          fl_print_format("%[%q%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
         }
         else {
-          fl_print_format("%[%s%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
+          fl_print_format("%[%q%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
         }
 
         fl_print_format("%[' at end of section.%]%q", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);

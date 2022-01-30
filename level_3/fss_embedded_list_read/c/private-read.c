@@ -172,7 +172,7 @@ extern "C" {
           depths->array[depths->used].value_name.used = 0;
 
           if (main->parameters[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
-            status = fl_string_rip(arguments->argv[values_order[i]], strnlen(arguments->argv[values_order[i]], f_console_parameter_size), &depths->array[depths->used].value_name);
+            status = fl_string_rip(arguments->argv[values_order[i]], strnlen(arguments->argv[values_order[i]], F_console_parameter_size_d), &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "fl_string_rip", F_true);
@@ -181,7 +181,7 @@ extern "C" {
             }
           }
           else {
-            status = f_string_append(arguments->argv[values_order[i]], strnlen(arguments->argv[values_order[i]], f_console_parameter_size), &depths->array[depths->used].value_name);
+            status = f_string_append(arguments->argv[values_order[i]], strnlen(arguments->argv[values_order[i]], F_console_parameter_size_d), &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
@@ -202,10 +202,10 @@ extern "C" {
         if (depths->array[i].depth == depths->array[j].depth) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%sThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%q%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, depths->array[i].depth, main->error.notable);
           fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.notable, main->error.notable);
-          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
+          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
           fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
@@ -215,8 +215,8 @@ extern "C" {
         else if (depths->array[i].depth > depths->array[j].depth) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
+          fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
           fl_print_format("%[' may not have the value '%]", main->error.to.stream, main->error.notable, main->error.notable);
           fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, depths->array[i].depth, main->error.notable);
           fl_print_format("%[' before the value '%]", main->error.to.stream, main->error.notable, main->error.notable);
@@ -255,7 +255,7 @@ extern "C" {
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         macro_f_fss_nest_t_delete_simple(main->nest);
-        macro_f_string_dynamic_t_delete_simple(main->buffer);
+        f_string_dynamic_resize(0, &main->buffer);
 
         if (main->parameters[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
           fll_print_format("0%q", main->output.to.stream, f_string_eol_s);
@@ -268,7 +268,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         macro_f_fss_nest_t_delete_simple(main->nest);
-        macro_f_string_dynamic_t_delete_simple(main->buffer);
+        f_string_dynamic_resize(0, &main->buffer);
 
         return status;
       }

@@ -10,10 +10,10 @@
 #ifndef _FLL_print_h
 #define _FLL_print_h
 
-// libc includes.
+// Libc includes.
 #include <stdio.h>
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -22,7 +22,7 @@
 #include <fll/level_0/conversion.h>
 #include <fll/level_0/print.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/print.h>
 
 #ifdef __cplusplus

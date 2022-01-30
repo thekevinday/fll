@@ -6,10 +6,11 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
-  f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *escaped) {
+  f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const char quote, f_string_dynamic_t *escaped) {
+
     f_status_t status = F_none;
 
-    // ensure escaped is at least the same size as content.
+    // Ensure escaped is at least the same size as content.
     if (content.used > escaped->size) {
       macro_f_string_dynamic_t_resize(status, (*escaped), content.used);
       if (F_status_is_error(status)) return status;
@@ -53,7 +54,7 @@ extern "C" {
       }
     } // for
 
-    // delimits found at the end must be escaped to prevent escaping the end quote.
+    // Delimits found at the end must be escaped to prevent escaping the end quote.
     if (delimits) {
       if (escaped->used + delimits > escaped->size) {
         status = f_string_dynamic_increase_by(delimits, escaped);
@@ -70,10 +71,11 @@ extern "C" {
 #endif // !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
 
 #if !defined(_di_fll_iki_content_unescape_) || !defined(_di_fll_iki_content_partial_unescape_)
-  f_status_t private_fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *unescaped) {
+  f_status_t private_fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const char quote, f_string_dynamic_t *unescaped) {
+
     f_status_t status = F_none;
 
-    // ensure escaped is at least the same size as content.
+    // Ensure escaped is at least the same size as content.
     if (content.used > unescaped->size) {
       macro_f_string_dynamic_t_resize(status, (*unescaped), content.used);
       if (F_status_is_error(status)) return status;
@@ -89,7 +91,7 @@ extern "C" {
 
       if (content.string[i] == quote) {
 
-        // reset the used array on failure.
+        // Reset the used array on failure.
         unescaped->used = used;
 
         return F_status_set_error(F_syntax);
@@ -145,13 +147,13 @@ extern "C" {
           } // for
         }
 
-        // at this point if delimits > 0, then this should be the end of the string.
+        // At this point if delimits > 0, then this should be the end of the string.
         if (delimits) {
 
-          // delimits at the end must be even to prevent escaping the closing quote.
+          // Delimits at the end must be even to prevent escaping the closing quote.
           if (delimits % 2) {
 
-            // reset the used array on failure.
+            // Reset the used array on failure.
             unescaped->used = used;
 
             return F_status_set_error(F_syntax);

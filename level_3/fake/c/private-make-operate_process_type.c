@@ -108,7 +108,7 @@ extern "C" {
         else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
           flockfile(data_make->main->output.to.stream);
 
-          fl_print_format("%q%s '%[%Q%]' to '", data_make->main->output.to.stream, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
+          fl_print_format("%q%q '%[%Q%]' to '", data_make->main->output.to.stream, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
           fl_print_format("%[%S%]'.%q", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, destination, data_make->main->context.set.notable, f_string_eol_s);
 
           funlockfile(data_make->main->output.to.stream);
@@ -146,7 +146,7 @@ extern "C" {
           if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(data_make->main->warning.to.stream);
 
-            fl_print_format("%q%[%SThe file '%]", data_make->main->warning.to.stream, data_make->main->warning.prefix, f_string_eol_s);
+            fl_print_format("%q%[%QThe file '%]", data_make->main->warning.to.stream, data_make->main->warning.prefix, f_string_eol_s);
             fl_print_format("%[%Q%]", data_make->main->warning.to.stream, data_make->main->warning.notable, arguments.array[i], data_make->main->warning.notable);
             fl_print_format("%[' cannot be found.%]%q", data_make->main->warning.to.stream, f_string_eol_s);
 
@@ -216,7 +216,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_fail_
   void fake_make_operate_process_type_fail(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) {
 
-    if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit_s, arguments.array[0], fake_make_operation_argument_exit_s_length) == F_equal_to) {
+    if (fl_string_dynamic_compare(fake_make_operation_argument_exit_s, arguments.array[0]) == F_equal_to) {
       data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
       data_make->error.prefix = fl_print_error_s;
       data_make->error.suffix = f_string_empty_s;
@@ -226,7 +226,7 @@ extern "C" {
       data_make->error.to.id = F_type_descriptor_error_d;
       data_make->error.set = &data_make->main->context.set;
     }
-    else if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn_s, arguments.array[0], fake_make_operation_argument_warn_s_length) == F_equal_to) {
+    else if (fl_string_dynamic_compare(fake_make_operation_argument_warn_s, arguments.array[0]) == F_equal_to) {
       data_make->setting_make.fail = fake_make_operation_fail_type_warn_e;
       data_make->error.prefix = fl_print_warning_s;
       data_make->error.suffix = f_string_empty_s;
@@ -248,13 +248,13 @@ extern "C" {
       f_print_terminated("Set failure state to '", data_make->main->output.to.stream);
 
       if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) {
-        fl_print_format("%[%s%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_exit_s, data_make->main->context.set.notable);
+        fl_print_format("%[%q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_exit_s, data_make->main->context.set.notable);
       }
       else if (data_make->setting_make.fail == fake_make_operation_fail_type_warn_e) {
-        fl_print_format("%[%s%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_warn_s, data_make->main->context.set.notable);
+        fl_print_format("%[%q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_warn_s, data_make->main->context.set.notable);
       }
       else {
-        fl_print_format("%[%s%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_ignore_s, data_make->main->context.set.notable);
+        fl_print_format("%[%q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, fake_make_operation_argument_ignore_s, data_make->main->context.set.notable);
       }
 
       fl_print_format("'.%q", data_make->main->output.to.stream, f_string_eol_s);
@@ -302,7 +302,7 @@ extern "C" {
       else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
 
-        fl_print_format("%s group of '%[%s%]", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
+        fl_print_format("%q group of '%[%q%]", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
         fl_print_format("' to %[%ul%].%q", data_make->main->output.to.stream, data_make->main->context.set.notable, id, data_make->main->context.set.notable, f_string_eol_s);
 
         funlockfile(data_make->main->output.to.stream);
@@ -318,7 +318,7 @@ extern "C" {
 
     const f_string_static_t argument = if_not ? arguments.array[2] : arguments.array[1];
 
-    const f_string_t reserved_name[] = {
+    const f_string_static_t reserved_name[] = {
       fake_make_parameter_variable_build_s,
       fake_make_parameter_variable_color_s,
       fake_make_parameter_variable_data_s,
@@ -352,42 +352,6 @@ extern "C" {
       fake_make_parameter_variable_value_sources_s,
       fake_make_parameter_variable_value_verbosity_s,
       fake_make_parameter_variable_value_work_s,
-    };
-
-    const f_array_length_t reserved_length[] = {
-      fake_make_parameter_variable_build_s_length,
-      fake_make_parameter_variable_color_s_length,
-      fake_make_parameter_variable_data_s_length,
-      fake_make_parameter_variable_define_s_length,
-      fake_make_parameter_variable_fakefile_s_length,
-      fake_make_parameter_variable_mode_s_length,
-      fake_make_parameter_variable_process_s_length,
-      fake_make_parameter_variable_settings_s_length,
-      fake_make_parameter_variable_sources_s_length,
-      fake_make_parameter_variable_verbosity_s_length,
-      fake_make_parameter_variable_work_s_length,
-      fake_make_parameter_variable_build_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_color_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_data_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_define_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_fakefile_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_mode_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_process_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_settings_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_sources_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_verbosity_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_work_s_length + fake_make_parameter_iki_option_s_length,
-      fake_make_parameter_variable_build_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_color_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_data_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_define_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_fakefile_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_mode_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_process_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_settings_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_sources_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_verbosity_s_length + fake_make_parameter_iki_value_s_length,
-      fake_make_parameter_variable_work_s_length + fake_make_parameter_iki_value_s_length,
     };
 
     const bool reserved_defined[] = {
@@ -426,7 +390,7 @@ extern "C" {
       data_make->parameter_value.work.used,
     };
 
-    if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment_s, argument, fake_make_operation_argument_environment_s_length) == F_equal_to) {
+    if (fl_string_dynamic_compare(fake_make_operation_argument_environment_s, argument) == F_equal_to) {
       state_process->condition_result = fake_condition_result_true_e;
 
       if (if_not) {
@@ -466,7 +430,7 @@ extern "C" {
 
       for (j = 0; j < 33; ++j) {
 
-        if (fl_string_dynamic_compare_string(reserved_name[j], arguments.array[i], reserved_length[j]) == F_equal_to) {
+        if (fl_string_dynamic_compare(reserved_name[j], arguments.array[i]) == F_equal_to) {
           result = reserved_defined[j] ? 2 : 1;
 
           break;
@@ -567,31 +531,31 @@ extern "C" {
 
     for (; i < arguments.used; ++i) {
 
-      if (fl_string_dynamic_compare_string(fake_make_operation_argument_if_is_for_s, arguments.array[i], fake_make_operation_argument_if_is_for_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(fake_make_operation_argument_if_is_for_s, arguments.array[i]) == F_equal_to) {
         ++i;
 
         break;
       }
 
-      if (fl_string_dynamic_compare_string(F_file_type_name_block_s, arguments.array[i], F_file_type_name_block_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(f_file_type_name_block_s, arguments.array[i]) == F_equal_to) {
         type |= 0x1;
       }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_character_s, arguments.array[i], F_file_type_name_character_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(f_file_type_name_character_s, arguments.array[i]) == F_equal_to) {
         type |= 0x2;
       }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_directory_s, arguments.array[i], F_file_type_name_directory_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(f_file_type_name_directory_s, arguments.array[i]) == F_equal_to) {
         type |= 0x4;
       }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_fifo_s, arguments.array[i], F_file_type_name_fifo_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(f_file_type_name_fifo_s, arguments.array[i]) == F_equal_to) {
         type |= 0x8;
       }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_link_s, arguments.array[i], F_file_type_name_link_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(f_file_type_name_link_s, arguments.array[i]) == F_equal_to) {
         type |= 0x10;
       }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_regular_s, arguments.array[i], F_file_type_name_regular_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(f_file_type_name_regular_s, arguments.array[i]) == F_equal_to) {
         type |= 0x20;
       }
-      else if (fl_string_dynamic_compare_string(F_file_type_name_socket_s, arguments.array[i], F_file_type_name_socket_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(f_file_type_name_socket_s, arguments.array[i]) == F_equal_to) {
         type |= 0x40;
       }
     } // for
@@ -792,12 +756,12 @@ extern "C" {
         flockfile(data_make->error.to.stream);
 
         if ((i == 1 && number_left > F_number_t_size_unsigned_d) || (i > 1 && number_right > F_number_t_size_unsigned_d)) {
-          fl_print_format("%q%[%SThe number '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%q%[%QThe number '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[i], data_make->error.notable);
           fl_print_format("%[' may only be between the ranges -%un to %un.%]%q", data_make->error.to.stream, data_make->error.context, F_number_t_size_unsigned_d, F_number_t_size_unsigned_d, data_make->error.context, f_string_eol_s);
         }
         else {
-          fl_print_format("%q%[%SInvalid or unsupported number provided '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%q%[%QInvalid or unsupported number provided '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[i], data_make->error.notable);
           fl_print_format("%['.%]%q", data_make->error.to.stream, data_make->error.context, F_number_t_size_unsigned_d, F_number_t_size_unsigned_d, data_make->error.context, f_string_eol_s);
         }
@@ -867,7 +831,7 @@ extern "C" {
     mode_t mode_match = 0;
     bool is = F_false;
 
-    if (fl_string_dynamic_compare_string(fake_make_operation_argument_is_s, arguments.array[if_not ? 2 : 1], fake_make_operation_argument_is_s_length) == F_equal_to) {
+    if (fl_string_dynamic_compare(fake_make_operation_argument_is_s, arguments.array[if_not ? 2 : 1]) == F_equal_to) {
       is = F_true;
     }
 
@@ -1402,7 +1366,7 @@ extern "C" {
 
     for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
-      if (fl_string_dynamic_compare_string(fake_make_operation_argument_file_s, arguments.array[0], fake_make_operation_argument_file_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(fake_make_operation_argument_file_s, arguments.array[0]) == F_equal_to) {
         status = f_file_touch(arguments.array[i].string, mode.regular, F_false);
 
         if (F_status_is_error(status)) {
@@ -1416,7 +1380,7 @@ extern "C" {
           break;
         }
       }
-      else if (fl_string_dynamic_compare_string(fake_make_operation_argument_directory_s, arguments.array[0], fake_make_operation_argument_directory_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(fake_make_operation_argument_directory_s, arguments.array[0]) == F_equal_to) {
         status = f_directory_touch(arguments.array[i].string, mode.directory);
 
         if (F_status_is_error(status)) {

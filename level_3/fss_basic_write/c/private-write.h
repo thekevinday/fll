@@ -33,7 +33,7 @@ extern "C" {
  *   The parameter name, such as "help" in "--help".
  */
 #ifndef _di_fss_basic_write_error_parameter_value_missing_print_
-  void fss_basic_write_error_parameter_value_missing_print(fss_basic_write_main_t * const main, const f_string_t symbol, const f_string_t parameter) F_attribute_visibility_internal_d;
+  void fss_basic_write_error_parameter_value_missing_print(fss_basic_write_main_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_error_parameter_value_missing_print_
 
 /**

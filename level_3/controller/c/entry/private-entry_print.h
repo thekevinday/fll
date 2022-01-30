@@ -13,6 +13,26 @@ extern "C" {
 #endif
 
 /**
+ * Special strings used for printing.
+ */
+#ifndef _di_controller_entry_print_string_s_
+  #define CONTROLLER_entry_print_considering_s     "Considering"
+  #define CONTROLLER_entry_print_failsafe_s        "failsafe"
+  #define CONTROLLER_entry_print_processing_s      "Processing"
+  #define CONTROLLER_entry_print_suffix_megatime_s " MegaTime (milliseconds)"
+
+  #define CONTROLLER_entry_print_considering_s_length     11
+  #define CONTROLLER_entry_print_failsafe_s_length        8
+  #define CONTROLLER_entry_print_processing_s_length      10
+  #define CONTROLLER_entry_print_suffix_megatime_s_length 24
+
+  extern const f_string_static_t controller_entry_print_considering_s;
+  extern const f_string_static_t controller_entry_print_failsafe_s;
+  extern const f_string_static_t controller_entry_print_processing_s;
+  extern const f_string_static_t controller_entry_print_suffix_megatime_s;
+#endif // _di_controller_entry_print_string_s_
+
+/**
  * Print all parameters for some action, separated by a space.
  *
  * @param stream
@@ -35,15 +55,15 @@ extern "C" {
  * @param name
  *   The Object name of the setting being populated.
  * @param name_sub
- *   (optional) A sub-name associated with the setting being populated.
- *   Set to NULL to disable.
+ *   A sub-name associated with the setting being populated.
+ *   Set to a string with used set to 0 to not use.
  * @param value
  *   The value being set.
  * @param suffix
  *   An additional message to append at the end (before the final period).
  */
 #ifndef _di_controller_entry_preprocess_print_simulate_setting_value_
-  extern void controller_entry_preprocess_print_simulate_setting_value(const controller_global_t global, const bool is_entry, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) F_attribute_visibility_internal_d;
+  extern void controller_entry_preprocess_print_simulate_setting_value(const controller_global_t global, const bool is_entry, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_static_t suffix) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_preprocess_print_simulate_setting_value_
 
 /**

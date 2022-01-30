@@ -26,13 +26,13 @@ build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_libraries_shared
 build_libraries_static
-build_sources_library control.c private-common.c private-control.c private-print.c
+build_sources_library control.c common.c private-common.c private-control.c private-print.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_program main.c
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers control.h
+build_sources_headers control.h common.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script

@@ -10,7 +10,7 @@
 #ifndef _FLL_fss_basic_h
 #define _FLL_fss_basic_h
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -18,7 +18,7 @@
 #include <fll/level_0/utf.h>
 #include <fll/level_0/fss.h>
 
-// fll-1 includes
+// FLL-1 includes.
 #include <fll/level_1/fss.h>
 #include <fll/level_1/fss_basic.h>
 #include <fll/level_1/string.h>

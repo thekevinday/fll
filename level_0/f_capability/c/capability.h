@@ -26,7 +26,7 @@
 #ifndef _F_capability_h
 #define _F_capability_h
 
-// libc includes.
+// Libc includes.
 #include <string.h>
 #include <sys/types.h>
 
@@ -34,7 +34,7 @@
   #include <sys/capability.h>
 #endif // _di_libcap_
 
-// fll-0 includes.
+// FLL-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
