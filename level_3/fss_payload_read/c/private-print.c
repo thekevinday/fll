@@ -222,7 +222,7 @@ extern "C" {
 #ifndef _di_fss_payload_read_print_content_end_extended_
   void fss_payload_read_print_content_end_extended(fss_payload_read_main_t * const main) {
 
-    if (main->parameters[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_payload_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
@@ -234,7 +234,7 @@ extern "C" {
 #ifndef _di_fss_payload_read_print_content_ignore_
   void fss_payload_read_print_content_ignore(fss_payload_read_main_t * const main) {
 
-    if (main->parameters[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_payload_read_pipe_content_ignore_s, main->output.to.stream);
     }
   }
@@ -243,11 +243,11 @@ extern "C" {
 #ifndef _di_fss_payload_read_print_object_end_
   void fss_payload_read_print_object_end(fss_payload_read_main_t * const main) {
 
-    if (main->parameters[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_payload_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
-      if (main->parameters[fss_payload_read_parameter_content_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_payload_read_parameter_content_e].result == f_console_result_found_e) {
         f_print_dynamic(f_fss_basic_list_open_s, main->output.to.stream);
         f_print_dynamic(f_fss_basic_list_open_end_s, main->output.to.stream);
       }
@@ -261,7 +261,7 @@ extern "C" {
 #ifndef _di_fss_payload_read_print_object_end_extended_
   void fss_payload_read_print_object_end_extended(fss_payload_read_main_t * const main) {
 
-    if (main->parameters[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_payload_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
@@ -273,7 +273,7 @@ extern "C" {
 #ifndef _di_fss_payload_read_print_set_end_
   void fss_payload_read_print_set_end(fss_payload_read_main_t * const main) {
 
-    if (main->parameters[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_payload_read_pipe_content_end_s, main->output.to.stream);
     }
   }
@@ -282,7 +282,7 @@ extern "C" {
 #ifndef _di_fss_payload_read_print_set_end_extended_
   void fss_payload_read_print_set_end_extended(fss_payload_read_main_t * const main) {
 
-    if (main->parameters[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_payload_read_pipe_content_end_s, main->output.to.stream);
     }
     else {

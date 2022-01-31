@@ -115,7 +115,7 @@ extern "C" {
 
     path[path_length] = 0;
 
-    status = f_file_stream_open(path, 0, &file);
+    status = f_file_stream_open(path, f_string_empty_s, &file);
 
     if (F_status_is_error(status)) {
       if (!required && F_status_set_fine(status) == F_file_found_not) {
@@ -125,7 +125,7 @@ extern "C" {
       }
 
       if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
-        controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file_e);
+        controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, f_file_operation_open_s, fll_error_file_type_file_e);
       }
     }
     else {
@@ -388,7 +388,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (global->setting->entry.pid != controller_entry_pid_disable_e && !global->setting->path_pid.used) {
-      if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_additional_e) {
+      if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_additional_e) {
         status = controller_file_pid_create(global->main->pid, global->setting->path_pid);
       }
 
@@ -440,7 +440,7 @@ extern "C" {
           fl_print_format("%qPID file '", global->main->output.to.stream, f_string_eol_s);
           fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_pid, global->main->context.set.notable);
 
-          if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
+          if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
             fl_print_format("' created.%q", global->main->output.to.stream, f_string_eol_s);
           }
           else {
@@ -580,7 +580,7 @@ extern "C" {
                   fl_print_format("%qControl socket '", global->main->output.to.stream, f_string_eol_s);
                   fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
 
-                  if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
+                  if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
                     fl_print_format("' created.%q", global->main->output.to.stream, f_string_eol_s);
                   }
                   else {

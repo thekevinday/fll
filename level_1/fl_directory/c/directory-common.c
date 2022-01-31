@@ -1,5 +1,5 @@
-#include "environment.h"
-#include "private-environment.h"
+#include "directory.h"
+#include "private-directory.h"
 
 #ifdef __cplusplus
 extern "C" {

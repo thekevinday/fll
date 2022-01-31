@@ -380,6 +380,116 @@ extern "C" {
   #define F_file_mode_user_protected_d (F_file_mode_owner_r_d | F_file_mode_group_r_d)
 #endif // _di_f_file_mode_
 
+/**
+ * Provide common file operation strings.
+ *
+ * F_file_operation_*:
+ *   - append:      Append to a file.
+ *   - clone:       Clone a file.
+ *   - close:       Close a file.
+ *   - concatenate: Concatenate a file.
+ *   - connect:     Connect to a file (such as a socket file).
+ *   - copy:        Copy a file.
+ *   - create:      Create a file.
+ *   - delete:      Delete a file.
+ *   - disconnect:  Disconnect from a file (such as a socket file).
+ *   - find:        Find a file.
+ *   - from:        Do something from a file.
+ *   - flush:       Flush a file.
+ *   - link:        Link a file.
+ *   - list:        List a file.
+ *   - open:        Open a file.
+ *   - process:     Process a file.
+ *   - read:        Read a file.
+ *   - receive:     Receive a file.
+ *   - send:        Send a file.
+ *   - to:          Do someting to a file.
+ *   - truncate:    Truncate a file.
+ *   - unlink:      Unlink a file.
+ *   - verify:      Verify a file.
+ *   - wipe:        Wipe a file.
+ *   - write:       Write a file.
+ */
+#ifndef _di_f_file_operation_strings_
+  #define F_file_operation_append_s      "append"
+  #define F_file_operation_clone_s       "clone"
+  #define F_file_operation_close_s       "close"
+  #define F_file_operation_concatenate_s "concatenate"
+  #define F_file_operation_connect_s     "connect"
+  #define F_file_operation_copy_s        "copy"
+  #define F_file_operation_create_s      "create"
+  #define F_file_operation_delete_s      "delete"
+  #define F_file_operation_disconnect_s  "disconnect"
+  #define F_file_operation_find_s        "find"
+  #define F_file_operation_from_s        "from"
+  #define F_file_operation_flush_s       "flush"
+  #define F_file_operation_link_s        "link"
+  #define F_file_operation_list_s        "list"
+  #define F_file_operation_open_s        "open"
+  #define F_file_operation_process_s     "process"
+  #define F_file_operation_read_s        "read"
+  #define F_file_operation_receive_s     "receive"
+  #define F_file_operation_send_s        "send"
+  #define F_file_operation_to_s          "to"
+  #define F_file_operation_truncate_s    "truncate"
+  #define F_file_operation_unlink_s      "unlink"
+  #define F_file_operation_verify_s      "verify"
+  #define F_file_operation_wipe_s        "wipe"
+  #define F_file_operation_write_s       "write"
+
+  #define F_file_operation_append_s_length      6
+  #define F_file_operation_clone_s_length       5
+  #define F_file_operation_close_s_length       5
+  #define F_file_operation_concatenate_s_length 11
+  #define F_file_operation_connect_s_length     7
+  #define F_file_operation_copy_s_length        4
+  #define F_file_operation_create_s_length      6
+  #define F_file_operation_delete_s_length      6
+  #define F_file_operation_disconnect_s_length  10
+  #define F_file_operation_find_s_length        4
+  #define F_file_operation_from_s_length        4
+  #define F_file_operation_flush_s_length       5
+  #define F_file_operation_link_s_length        4
+  #define F_file_operation_list_s_length        4
+  #define F_file_operation_open_s_length        4
+  #define F_file_operation_process_s_length     7
+  #define F_file_operation_read_s_length        4
+  #define F_file_operation_receive_s_length     7
+  #define F_file_operation_send_s_length        4
+  #define F_file_operation_to_s_length          2
+  #define F_file_operation_truncate_s_length    8
+  #define F_file_operation_unlink_s_length      6
+  #define F_file_operation_verify_s_length      6
+  #define F_file_operation_wipe_s_length        4
+  #define F_file_operation_write_s_length       5
+
+  extern const f_string_static_t f_file_operation_append_s;
+  extern const f_string_static_t f_file_operation_clone_s;
+  extern const f_string_static_t f_file_operation_close_s;
+  extern const f_string_static_t f_file_operation_concatenate_s;
+  extern const f_string_static_t f_file_operation_connect_s;
+  extern const f_string_static_t f_file_operation_copy_s;
+  extern const f_string_static_t f_file_operation_create_s;
+  extern const f_string_static_t f_file_operation_delete_s;
+  extern const f_string_static_t f_file_operation_disconnect_s;
+  extern const f_string_static_t f_file_operation_find_s;
+  extern const f_string_static_t f_file_operation_from_s;
+  extern const f_string_static_t f_file_operation_flush_s;
+  extern const f_string_static_t f_file_operation_link_s;
+  extern const f_string_static_t f_file_operation_list_s;
+  extern const f_string_static_t f_file_operation_open_s;
+  extern const f_string_static_t f_file_operation_process_s;
+  extern const f_string_static_t f_file_operation_read_s;
+  extern const f_string_static_t f_file_operation_receive_s;
+  extern const f_string_static_t f_file_operation_send_s;
+  extern const f_string_static_t f_file_operation_to_s;
+  extern const f_string_static_t f_file_operation_truncate_s;
+  extern const f_string_static_t f_file_operation_unlink_s;
+  extern const f_string_static_t f_file_operation_verify_s;
+  extern const f_string_static_t f_file_operation_wipe_s;
+  extern const f_string_static_t f_file_operation_write_s;
+#endif // _di_f_file_operation_strings_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

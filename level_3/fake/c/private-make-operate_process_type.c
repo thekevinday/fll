@@ -282,7 +282,7 @@ extern "C" {
       if (F_status_is_error(status_file)) {
         status = status_file;
 
-        fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
+        fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
         continue;
       }
@@ -366,17 +366,17 @@ extern "C" {
       data_make->main->path_sources.used,
       F_true,
       data_make->main->path_work.used,
-      data_make->main->parameters[fake_parameter_path_build_e].result == f_console_result_additional_e,
-      data_make->main->parameters[fake_parameter_light_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_dark_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_no_color_e].result == f_console_result_found_e,
-      data_make->main->parameters[fake_parameter_path_data_e].result == f_console_result_additional_e,
-      data_make->main->parameters[fake_parameter_define_e].result == f_console_result_additional_e,
-      data_make->main->parameters[fake_parameter_fakefile_e].result == f_console_result_additional_e,
-      data_make->main->parameters[fake_parameter_mode_e].result == f_console_result_additional_e,
-      data_make->main->parameters[fake_parameter_process_e].result == f_console_result_additional_e,
-      data_make->main->parameters[fake_parameter_settings_e].result == f_console_result_additional_e,
-      data_make->main->parameters[fake_parameter_path_sources_e].result == f_console_result_additional_e,
-      data_make->main->parameters[fake_parameter_verbosity_quiet_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_verbosity_normal_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_verbosity_verbose_e].result == f_console_result_found_e || data_make->main->parameters[fake_parameter_verbosity_debug_e].result == f_console_result_found_e,
-      data_make->main->parameters[fake_parameter_path_work_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_path_build_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_light_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_dark_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_no_color_e].result == f_console_result_found_e,
+      data_make->main->parameters.array[fake_parameter_path_data_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_define_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_mode_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_process_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_settings_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_path_sources_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_normal_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_debug_e].result == f_console_result_found_e,
+      data_make->main->parameters.array[fake_parameter_path_work_e].result == f_console_result_additional_e,
       data_make->parameter_value.build.used,
       data_make->parameter_value.color.used,
       data_make->parameter_value.data.used,
@@ -396,7 +396,7 @@ extern "C" {
       if (if_not) {
         for (f_array_length_t i = 3; i < arguments.used; ++i) {
 
-          if (f_environment_exists(arguments.array[i].string) == F_true) {
+          if (f_environment_exists(arguments.array[i]) == F_true) {
             state_process->condition_result = fake_condition_result_false_e;
 
             break;
@@ -406,7 +406,7 @@ extern "C" {
       else {
         for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
-          if (f_environment_exists(arguments.array[i].string) != F_true) {
+          if (f_environment_exists(arguments.array[i].) != F_true) {
             state_process->condition_result = fake_condition_result_false_e;
 
             break;
@@ -487,7 +487,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i].string, "find", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i].string, f_file_operation_find_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -1100,7 +1100,7 @@ extern "C" {
       if (F_status_is_error(status_file)) {
         status = status_file;
 
-        fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
+        fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
         continue;
       }
@@ -1236,7 +1236,7 @@ extern "C" {
     status = f_path_change(data_make->path.stack.array[data_make->path.stack.used - 1].string);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", data_make->path.stack.array[data_make->path.stack.used - 1].string);
+      fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", data_make->path.stack.array[data_make->path.stack.used - 1]);
 
       return 0;
     }
@@ -1266,7 +1266,7 @@ extern "C" {
     status = fake_make_assure_inside_project(data_make, arguments.array[0]);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string);
+      fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[0]);
 
       if (F_status_set_fine(status) == F_false) {
         status = F_status_set_error(F_failure);
@@ -1278,13 +1278,13 @@ extern "C" {
     status = f_path_change(arguments.array[0].string);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0].string);
+      fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0]);
     }
     else {
       status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->path.stack);
 
       if (F_status_set_fine(status) == F_array_too_large) {
-        fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", "path stack");
+        fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", fake_common_file_path_stack_s_length);
 
         return status;
       }
@@ -1335,7 +1335,7 @@ extern "C" {
       status = f_path_change_at(data_make->path.top.id);
 
       if (F_status_is_error(status)) {
-        fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0].string);
+        fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0]);
 
         return status;
       }

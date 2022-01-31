@@ -28,7 +28,7 @@ extern "C" {
  *   F_found_not if name is unknown.
  */
 #ifndef _di_control_command_identify_
-  extern f_status_t control_command_identify(control_main_t * const main, control_data_t * const data, const f_string_t command) F_attribute_visibility_internal_d;
+  extern f_status_t control_command_identify(control_main_t * const main, control_data_t * const data, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_command_identify_
 
 /**
@@ -38,11 +38,9 @@ extern "C" {
  *   The main program data.
  * @param data
  *   The control data.
- * @param arguments
- *   The main program arguments.
  */
 #ifndef _di_control_command_verify_
-  extern f_status_t control_command_verify(control_main_t * const main, control_data_t * const data, const f_console_arguments_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t control_command_verify(control_main_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_command_verify_
 /**
  * Load and process the control settings file.
@@ -53,8 +51,6 @@ extern "C" {
  *   The main program data.
  * @param data
  *   The control data.
- * @param arguments
- *   The main program arguments.
  *
  * @return
  *   F_none on success.
@@ -91,7 +87,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_control_settings_load_
-  extern f_status_t control_settings_load(control_main_t * const main, control_data_t * const data, const f_console_arguments_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t control_settings_load(control_main_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_settings_load_
 
 #ifdef __cplusplus

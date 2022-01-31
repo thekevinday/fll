@@ -51,10 +51,10 @@ extern "C" {
           return status;
         }
       }
-      else if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
+      else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
         if (data->mode & utf8_mode_to_binary_d) {
           char byte[5] = { 0, 0, 0, 0, 0 };
-          f_string_static_t character = macro_f_string_static_t_initialize(byte, 5);
+          f_string_static_t character = macro_f_string_static_t_initialize2(byte, 5);
 
           status = f_utf_unicode_from(codepoint, 4, &character.string);
 
@@ -210,7 +210,7 @@ extern "C" {
     f_array_length_t j = 0;
 
     char block[4] = { 0, 0, 0, 0 };
-    f_string_static_t character = macro_f_string_static_t_initialize(block, 4);
+    f_string_static_t character = macro_f_string_static_t_initialize2(block, 4);
 
     do {
       status = f_file_read_block(file, &data->buffer);

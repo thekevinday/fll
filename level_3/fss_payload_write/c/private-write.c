@@ -72,7 +72,7 @@ extern "C" {
       if (content) {
         bool trim = F_false;
 
-        if (main->parameters[fss_payload_write_parameter_trim_e].result == f_console_result_found_e) {
+        if (main->parameters.array[fss_payload_write_parameter_trim_e].result == f_console_result_found_e) {
           trim = F_true;
         }
 
@@ -112,7 +112,7 @@ extern "C" {
         }
 
         if (content) {
-          if (main->parameters[fss_payload_write_parameter_trim_e].result == f_console_result_found_e) {
+          if (main->parameters.array[fss_payload_write_parameter_trim_e].result == f_console_result_found_e) {
             complete = f_fss_complete_full_trim_e;
           }
           else {

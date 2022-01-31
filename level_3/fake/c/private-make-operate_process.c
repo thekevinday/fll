@@ -155,10 +155,10 @@ extern "C" {
     if (state_process->operation == fake_make_operation_type_define_e) {
 
       if (arguments.used > 1) {
-        *status = f_environment_set(arguments.array[0].string, arguments.array[1].string, F_true);
+        *status = f_environment_set(arguments.array[0], arguments.array[1], F_true);
       }
       else {
-        *status = f_environment_set(arguments.array[0].string, f_string_empty_s.string, F_true);
+        *status = f_environment_set(arguments.array[0], f_string_empty_s, F_true);
       }
 
       if (F_status_is_error(*status)) {
@@ -559,7 +559,7 @@ extern "C" {
 
     fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(as_shell ? 0 : FL_execute_parameter_option_path_d, 0, &data_make->environment, &signals, 0);
 
-    status = fll_execute_program(program.string, arguments, &parameter, 0, (void *) &return_code);
+    status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
     if (fake_signal_received(data_make->main)) {
       return F_status_set_error(F_interrupt);

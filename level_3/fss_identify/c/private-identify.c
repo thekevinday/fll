@@ -79,7 +79,7 @@ extern "C" {
       return status;
     }
 
-    if (main->parameters[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
 
       for (f_array_length_t i = 0; i < ids.used; ++i, ++data->current) {
 
@@ -90,7 +90,7 @@ extern "C" {
             }
           }
 
-          if (main->parameters[fss_identify_parameter_total_e].result == f_console_result_found_e) {
+          if (main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
             ++data->total;
           }
           else {
@@ -103,7 +103,7 @@ extern "C" {
         }
       } // for
     }
-    else if (main->parameters[fss_identify_parameter_total_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
       if (data->name.used) {
 
         for (f_array_length_t i = 0; i < ids.used; ++i, ++data->current) {

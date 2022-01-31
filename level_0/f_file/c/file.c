@@ -6,12 +6,13 @@ extern "C" {
 #endif
 
 #ifndef _di_f_file_access_
-  f_status_t f_file_access(const f_string_t path) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_access(const f_string_static_t path) {
 
-    if (access(path, F_OK)) {
+    if (!path.used) {
+      return F_data_not;
+    }
+
+    if (access(path.string, F_OK)) {
       if (errno == ENOENT) return F_false;
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -29,11 +30,11 @@ extern "C" {
 #endif // _di_f_file_access_
 
 #ifndef _di_f_file_clone_
-  f_status_t f_file_clone(const f_string_t source, const f_string_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!source) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive) {
+
+    if (!source.used || !destination.used) {
+      return F_data_not;
+    }
 
     f_status_t status = F_none;
     struct stat source_stat;
@@ -62,6 +63,7 @@ extern "C" {
 
     if (macro_f_file_type_is_link(source_stat.st_mode)) {
       status = private_f_file_link(destination, source);
+
       if (F_status_set_fine(status) == F_file_found) {
         if (exclusive) return status;
       }
@@ -105,11 +107,11 @@ extern "C" {
 #endif // _di_f_file_close_flush_
 
 #ifndef _di_f_file_copy_
-  f_status_t f_file_copy(const f_string_t source, const f_string_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!source) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive) {
+
+    if (!source.used || !destination.used) {
+      return F_data_not;
+    }
 
     f_status_t status = F_none;
     struct stat source_stat;
@@ -157,7 +159,7 @@ extern "C" {
         return status;
       }
 
-      status = private_f_file_link(target.string, destination);
+      status = private_f_file_link(target, destination);
 
       f_string_dynamic_resize(0, &target);
 
@@ -220,30 +222,33 @@ extern "C" {
 #endif // _di_f_file_copy_
 
 #ifndef _di_f_file_create_
-  f_status_t f_file_create(const f_string_t path, const mode_t mode, const bool exclusive) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_create(const f_string_static_t path, const mode_t mode, const bool exclusive) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_create(path, mode, exclusive);
   }
 #endif // _di_f_file_create_
 
 #ifndef _di_f_file_create_at_
-  f_status_t f_file_create_at(const int at_id, const f_string_t path, const mode_t mode, const bool exclusive) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_create_at(const int at_id, const f_string_static_t path, const mode_t mode, const bool exclusive) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_create_at(at_id, path, mode, exclusive);
   }
 #endif // _di_f_file_create_at_
 
 #ifndef _di_f_file_create_device_
-  f_status_t f_file_create_device(const f_string_t path, const mode_t mode, const unsigned int major, const unsigned int minor) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_create_device(const f_string_static_t path, const mode_t mode, const unsigned int major, const unsigned int minor) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
@@ -256,10 +261,11 @@ extern "C" {
 #endif // _di_f_file_create_device_
 
 #ifndef _di_f_file_create_device_at_
-  f_status_t f_file_create_device_at(const int at_id, const f_string_t path, const mode_t mode, const unsigned int major, const unsigned int minor) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_create_device_at(const int at_id, const f_string_static_t path, const mode_t mode, const unsigned int major, const unsigned int minor) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
@@ -272,30 +278,33 @@ extern "C" {
 #endif // _di_f_file_create_device_at_
 
 #ifndef _di_f_file_create_fifo_
-  f_status_t f_file_create_fifo(const f_string_t path, const mode_t mode) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_create_fifo(const f_string_static_t path, const mode_t mode) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_create_fifo(path, mode);
   }
 #endif // _di_f_file_create_fifo_
 
 #ifndef _di_f_file_create_fifo_at_
-  f_status_t f_file_create_fifo_at(const int at_id, const f_string_t path, const mode_t mode) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_create_fifo_at(const int at_id, const f_string_static_t path, const mode_t mode) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_create_fifo_at(at_id, path, mode);
   }
 #endif // _di_f_file_create_fifo_at_
 
 #ifndef _di_f_file_create_node_
-  f_status_t f_file_create_node(const f_string_t path, const mode_t mode, const dev_t device) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_create_node(const f_string_static_t path, const mode_t mode, const dev_t device) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
@@ -306,10 +315,11 @@ extern "C" {
 #endif // _di_f_file_create_node_
 
 #ifndef _di_f_file_create_node_at_
-  f_status_t f_file_create_node_at(const int at_id, const f_string_t path, const mode_t mode, const dev_t device) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_create_node_at(const int at_id, const f_string_static_t path, const mode_t mode, const dev_t device) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
@@ -321,9 +331,6 @@ extern "C" {
 
 #ifndef _di_f_file_descriptor_
   f_status_t f_file_descriptor(f_file_t *file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
     file->id = fileno(file->stream);
 
@@ -336,10 +343,11 @@ extern "C" {
 #endif // _di_f_file_descriptor_
 
 #ifndef _di_f_file_exists_
-  f_status_t f_file_exists(const f_string_t path) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_exists(const f_string_static_t path) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
@@ -360,10 +368,11 @@ extern "C" {
 #endif // _di_f_file_exists_
 
 #ifndef _di_f_file_exists_at_
-  f_status_t f_file_exists_at(const int at_id, const f_string_t path, const int flag) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_exists_at(const int at_id, const f_string_static_t path, const int flag) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
@@ -385,16 +394,20 @@ extern "C" {
 
 #ifndef _di_f_file_flush_
   f_status_t f_file_flush(const int id) {
+
     return private_f_file_flush(id);
   }
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_group_read_
-  f_status_t f_file_group_read(const f_string_t path, gid_t *group) {
+  f_status_t f_file_group_read(const f_string_static_t path, gid_t *group) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!group) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
@@ -412,10 +425,11 @@ extern "C" {
 #endif // _di_f_file_group_read_
 
 #ifndef _di_f_file_is_
-  f_status_t f_file_is(const f_string_t path, const int type, const bool dereference) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_is(const f_string_static_t path, const int type, const bool dereference) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
@@ -435,16 +449,17 @@ extern "C" {
 #endif // _di_f_file_is_
 
 #ifndef _di_f_file_is_at_
-  f_status_t f_file_is_at(const int at_id, const f_string_t path, const int type, const int flag) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_is_at(const int at_id, const f_string_static_t path, const int type, const int flag) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    if (fstatat(at_id, path, &stat_file, flag) < 0) {
+    if (fstatat(at_id, path.string, &stat_file, flag) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
@@ -467,35 +482,35 @@ extern "C" {
 #endif // _di_f_file_is_at_
 
 #ifndef _di_f_file_link_
-  f_status_t f_file_link(const f_string_t target, const f_string_t point) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!target) return F_status_set_error(F_parameter);
-      if (!point) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_link(const f_string_static_t target, const f_string_static_t point) {
+
+    if (!target.used || !point.used) {
+      return F_data_not;
+    }
 
     return private_f_file_link(target, point);
   }
 #endif // _di_f_file_link_
 
 #ifndef _di_f_file_link_at_
-  f_status_t f_file_link_at(const int at_id, const f_string_t target, const f_string_t point) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!target) return F_status_set_error(F_parameter);
-      if (!point) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_link_at(const int at_id, const f_string_static_t target, const f_string_static_t point) {
+
+    if (!target.used || !point.used) {
+      return F_data_not;
+    }
 
     return private_f_file_link_at(at_id, target, point);
   }
 #endif // _di_f_file_link_at_
 
 #ifndef _di_f_file_link_hard_
-  f_status_t f_file_link_hard(const f_string_t target, const f_string_t point) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!target) return F_status_set_error(F_parameter);
-      if (!point) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_link_hard(const f_string_static_t target, const f_string_static_t point) {
 
-    if (link(target, point) < 0) {
+    if (!target.used || !point.used) {
+      return F_data_not;
+    }
+
+    if (link(target.string, point.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -521,13 +536,9 @@ extern "C" {
 #endif // _di_f_file_link_hard_
 
 #ifndef _di_f_file_link_hard_at_
-  f_status_t f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_t target, const f_string_t point, const int flag) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!target) return F_status_set_error(F_parameter);
-      if (!point) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_static_t target, const f_string_static_t point, const int flag) {
 
-    if (linkat(at_id_target, target, at_id_point, point, flag) < 0) {
+    if (linkat(at_id_target, target.string, at_id_point, point.string, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -554,23 +565,30 @@ extern "C" {
 #endif // _di_f_file_link_hard_at_
 
 #ifndef _di_f_file_link_read_
-  f_status_t f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+  f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!link_stat.st_size) return F_status_set_error(F_parameter);
       if (!target) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_link_read(path, link_stat, target);
   }
 #endif // _di_f_file_link_read_
 
 #ifndef _di_f_file_link_read_at_
-  f_status_t f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+  f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target) {
     #ifndef _di_level_0_parameter_checking_
       if (!link_stat.st_size) return F_status_set_error(F_parameter);
       if (!target) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_link_read_at(at_id, path, link_stat, target);
   }
@@ -880,33 +898,35 @@ extern "C" {
 #endif // _di_f_file_mode_determine_
 
 #ifndef _di_f_file_mode_from_string_
-  f_status_t f_file_mode_from_string(const f_string_t string, const mode_t umask, f_file_mode_t *mode, uint8_t *replace) {
+  f_status_t f_file_mode_from_string(const f_string_static_t code, const mode_t umask, f_file_mode_t *mode, uint8_t *replace) {
     #ifndef _di_level_0_parameter_checking_
-      if (!string) return F_status_set_error(F_parameter);
-      if (!string[0]) return F_status_set_error(F_parameter);
       if (!mode) return F_status_set_error(F_parameter);
       if (!replace) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!code.used) {
+      return F_data_not;
+    }
 
     uint8_t syntax = 0;
     uint8_t replace_result = 0;
     f_file_mode_t mode_result = 0;
 
-    if (string[0] == f_string_ascii_plus_s.string[0] || string[0] == f_string_ascii_minus_s.string[0] || string[0] == f_string_ascii_equal_s.string[0]) {
-      if (string[1] == f_string_ascii_r_s.string[0] || f_string_ascii_w_s.string[0] || f_string_ascii_x_s.string[0] || f_string_ascii_X_s.string[0] || f_string_ascii_s_s.string[0] ||f_string_ascii_t_s.string[0]) {
+    if (code.string[0] == f_string_ascii_plus_s.string[0] || code.string[0] == f_string_ascii_minus_s.string[0] || code.string[0] == f_string_ascii_equal_s.string[0]) {
+      if (code.string[1] == f_string_ascii_r_s.string[0] || f_string_ascii_w_s.string[0] || f_string_ascii_x_s.string[0] || f_string_ascii_X_s.string[0] || f_string_ascii_s_s.string[0] ||f_string_ascii_t_s.string[0]) {
         syntax = 1;
       }
-      else if (string[1] == f_string_ascii_0_s.string[0] || string[1] == f_string_ascii_1_s.string[0] || string[1] == f_string_ascii_2_s.string[0] || string[1] == f_string_ascii_3_s.string[0] || string[1] == f_string_ascii_4_s.string[0] || string[1] == f_string_ascii_5_s.string[0] || string[1] == f_string_ascii_6_s.string[0] || string[1] == f_string_ascii_7_s.string[0]) {
+      else if (code.string[1] == f_string_ascii_0_s.string[0] || code.string[1] == f_string_ascii_1_s.string[0] || code.string[1] == f_string_ascii_2_s.string[0] || code.string[1] == f_string_ascii_3_s.string[0] || code.string[1] == f_string_ascii_4_s.string[0] || code.string[1] == f_string_ascii_5_s.string[0] || code.string[1] == f_string_ascii_6_s.string[0] || code.string[1] == f_string_ascii_7_s.string[0]) {
         syntax = 2;
       }
       else {
         return F_status_set_error(F_syntax);
       }
     }
-    else if (string[0] == f_string_ascii_u_s.string[0] || string[0] == f_string_ascii_g_s.string[0] || string[0] == f_string_ascii_o_s.string[0] || string[0] == f_string_ascii_a_s.string[0]) {
+    else if (code.string[0] == f_string_ascii_u_s.string[0] || code.string[0] == f_string_ascii_g_s.string[0] || code.string[0] == f_string_ascii_o_s.string[0] || code.string[0] == f_string_ascii_a_s.string[0]) {
       syntax = 1;
     }
-    else if (string[0] == f_string_ascii_0_s.string[0] || string[0] == f_string_ascii_1_s.string[0] || string[0] == f_string_ascii_2_s.string[0] || string[0] == f_string_ascii_3_s.string[0] || string[0] == f_string_ascii_4_s.string[0] || string[0] == f_string_ascii_5_s.string[0] || string[0] == f_string_ascii_6_s.string[0] || string[0] == f_string_ascii_7_s.string[0]) {
+    else if (code.string[0] == f_string_ascii_0_s.string[0] || code.string[0] == f_string_ascii_1_s.string[0] || code.string[0] == f_string_ascii_2_s.string[0] || code.string[0] == f_string_ascii_3_s.string[0] || code.string[0] == f_string_ascii_4_s.string[0] || code.string[0] == f_string_ascii_5_s.string[0] || code.string[0] == f_string_ascii_6_s.string[0] || code.string[0] == f_string_ascii_7_s.string[0]) {
       syntax = 2;
     }
     else {
@@ -970,29 +990,29 @@ extern "C" {
         mode_umask |= F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_execute_d;
       }
 
-      for (f_array_length_t i = 0; syntax && string[i]; ++i) {
+      for (f_array_length_t i = 0; syntax && code.string[i]; ++i) {
 
-        if (string[i] == f_string_ascii_u_s.string[0]) {
+        if (code.string[i] == f_string_ascii_u_s.string[0]) {
           on |= 1;
           mode_mask |= F_file_mode_t_block_owner_d;
         }
-        else if (string[i] == f_string_ascii_g_s.string[0]) {
+        else if (code.string[i] == f_string_ascii_g_s.string[0]) {
           on |= 2;
           mode_mask |= F_file_mode_t_block_group_d;
         }
-        else if (string[i] == f_string_ascii_o_s.string[0]) {
+        else if (code.string[i] == f_string_ascii_o_s.string[0]) {
           on |= 4;
           mode_mask |= F_file_mode_t_block_world_d;
         }
-        else if (string[i] == f_string_ascii_a_s.string[0]) {
+        else if (code.string[i] == f_string_ascii_a_s.string[0]) {
           on = 7;
           mode_mask = F_file_mode_t_block_standard_d;
         }
-        else if (string[i] == f_string_ascii_plus_s.string[0] || string[i] == f_string_ascii_minus_s.string[0] || string[i] == f_string_ascii_equal_s.string[0]) {
-          if (string[i] == f_string_ascii_plus_s.string[0]) {
+        else if (code.string[i] == f_string_ascii_plus_s.string[0] || code.string[i] == f_string_ascii_minus_s.string[0] || code.string[i] == f_string_ascii_equal_s.string[0]) {
+          if (code.string[i] == f_string_ascii_plus_s.string[0]) {
             how = on ? 1 : 4;
           }
-          else if (string[i] == f_string_ascii_minus_s.string[0]) {
+          else if (code.string[i] == f_string_ascii_minus_s.string[0]) {
             how = on ? 3 : 6;
           }
           else {
@@ -1024,21 +1044,21 @@ extern "C" {
 
           what = 0;
 
-          for (++i; string[i]; ++i) {
+          for (++i; code.string[i]; ++i) {
 
-            if (string[i] == f_string_ascii_r_s.string[0]) {
+            if (code.string[i] == f_string_ascii_r_s.string[0]) {
               what = F_file_mode_t_mask_bit_read_d;
             }
-            else if (string[i] == f_string_ascii_w_s.string[0]) {
+            else if (code.string[i] == f_string_ascii_w_s.string[0]) {
               what = F_file_mode_t_mask_bit_write_d;
             }
-            else if (string[i] == f_string_ascii_x_s.string[0]) {
+            else if (code.string[i] == f_string_ascii_x_s.string[0]) {
               what = F_file_mode_t_mask_bit_execute_d;
             }
-            else if (string[i] == f_string_ascii_X_s.string[0]) {
+            else if (code.string[i] == f_string_ascii_X_s.string[0]) {
               what = F_file_mode_t_mask_bit_execute_only_d;
             }
-            else if (string[i] == f_string_ascii_s_s.string[0]) {
+            else if (code.string[i] == f_string_ascii_s_s.string[0]) {
               mode_mask |= F_file_mode_t_block_special_d;
 
               if (on & 1) {
@@ -1051,7 +1071,7 @@ extern "C" {
                 what = 0;
               }
             }
-            else if (string[i] == f_string_ascii_t_s.string[0]) {
+            else if (code.string[i] == f_string_ascii_t_s.string[0]) {
               mode_mask |= F_file_mode_t_block_special_d;
 
               if (on & 4) {
@@ -1061,7 +1081,7 @@ extern "C" {
                 what = 0;
               }
             }
-            else if (string[i] == f_string_ascii_comma_s.string[0]) {
+            else if (code.string[i] == f_string_ascii_comma_s.string[0]) {
               if (how > 3) {
                 mode_result -= mode_result & mode_umask;
               }
@@ -1072,13 +1092,13 @@ extern "C" {
 
               break;
             }
-            else if (string[i] == f_string_ascii_plus_s.string[0] || string[i] == f_string_ascii_minus_s.string[0] || string[i] == f_string_ascii_equal_s.string[0]) {
+            else if (code.string[i] == f_string_ascii_plus_s.string[0] || code.string[i] == f_string_ascii_minus_s.string[0] || code.string[i] == f_string_ascii_equal_s.string[0]) {
               what = 0;
 
-              if (string[i] == f_string_ascii_plus_s.string[0]) {
+              if (code.string[i] == f_string_ascii_plus_s.string[0]) {
                 how = on ? 1 : 4;
               }
-              else if (string[i] == f_string_ascii_minus_s.string[0]) {
+              else if (code.string[i] == f_string_ascii_minus_s.string[0]) {
                 how = on ? 3 : 6;
               }
               else {
@@ -1131,7 +1151,7 @@ extern "C" {
             mode_result -= mode_result & mode_umask;
           }
 
-          if (!string[i]) break;
+          if (!code.string[i]) break;
         }
         else {
           syntax = 0;
@@ -1149,15 +1169,15 @@ extern "C" {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      if (string[0] == f_string_ascii_plus_s.string[0]) {
+      if (code.string[0] == f_string_ascii_plus_s.string[0]) {
         how = 1;
         i = 1;
       }
-      else if (string[0] == f_string_ascii_minus_s.string[0]) {
+      else if (code.string[0] == f_string_ascii_minus_s.string[0]) {
         how = 3;
         i = 1;
       }
-      else if (string[0] == f_string_ascii_equal_s.string[0]) {
+      else if (code.string[0] == f_string_ascii_equal_s.string[0]) {
         how = 2;
         i = 1;
 
@@ -1170,30 +1190,30 @@ extern "C" {
       }
 
       // Seek past leading '0's.
-      while (string[i] == f_string_ascii_0_s.string[0]) {
+      while (code.string[i] == f_string_ascii_0_s.string[0]) {
         ++i;
       } // while
 
-      if (string[i]) {
+      if (code.string[i]) {
         f_array_length_t j = 0;
 
-        for (; string[i + j] && j < 4; ++j) {
+        for (; code.string[i + j] && j < 4; ++j) {
 
           if (j) {
             mode_result <<= 8;
           }
 
-          if (string[i] == f_string_ascii_0_s.string[0]) {
+          if (code.string[i] == f_string_ascii_0_s.string[0]) {
             // Already is a zero.
           }
-          else if (string[i] == f_string_ascii_1_s.string[0] || string[i] == f_string_ascii_2_s.string[0] || string[i] == f_string_ascii_3_s.string[0] || string[i] == f_string_ascii_4_s.string[0] || string[i] == f_string_ascii_5_s.string[0] || string[i] == f_string_ascii_6_s.string[0] || string[i] == f_string_ascii_7_s.string[0]) {
+          else if (code.string[i] == f_string_ascii_1_s.string[0] || code.string[i] == f_string_ascii_2_s.string[0] || code.string[i] == f_string_ascii_3_s.string[0] || code.string[i] == f_string_ascii_4_s.string[0] || code.string[i] == f_string_ascii_5_s.string[0] || code.string[i] == f_string_ascii_6_s.string[0] || code.string[i] == f_string_ascii_7_s.string[0]) {
 
             // This assumes ASCII/UTF-8.
             if (how == 3) {
-              mode_result |= (string[i + j] - 0x30) << 4;
+              mode_result |= (code.string[i + j] - 0x30) << 4;
             }
             else {
-              mode_result |= string[i + j] - 0x30;
+              mode_result |= code.string[i + j] - 0x30;
             }
           }
           else {
@@ -1229,11 +1249,14 @@ extern "C" {
 #endif // _di_f_file_mode_from_string_
 
 #ifndef _di_f_file_mode_read_
-  f_status_t f_file_mode_read(const f_string_t path, mode_t *mode) {
+  f_status_t f_file_mode_read(const f_string_static_t path, mode_t *mode) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
@@ -1251,9 +1274,8 @@ extern "C" {
 #endif // _di_f_file_mode_read_
 
 #ifndef _di_f_file_mode_read_at_
-  f_status_t f_file_mode_read_at(const int at_id, const f_string_t path, mode_t *mode) {
+  f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, mode_t *mode) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -1273,20 +1295,25 @@ extern "C" {
 #endif // _di_f_file_mode_read_at_
 
 #ifndef _di_f_file_mode_set_
-  f_status_t f_file_mode_set(const f_string_t path, const mode_t mode) {
+  f_status_t f_file_mode_set(const f_string_static_t path, const mode_t mode) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
+      if (!path.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_mode_set(path, mode);
   }
 #endif // _di_f_file_mode_set_
 
 #ifndef _di_f_file_mode_set_at_
-  f_status_t f_file_mode_set_at(const int at_id, const f_string_t path, const mode_t mode) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_mode_set_at(const int at_id, const f_string_static_t path, const mode_t mode) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_mode_set_at(at_id, path, mode);
   }
@@ -1355,33 +1382,28 @@ extern "C" {
 #endif // _di_f_file_mode_to_mode_
 
 #ifndef _di_f_file_name_base_
-  f_status_t f_file_name_base(const f_string_t path, const f_array_length_t length, f_string_dynamic_t *name_base) {
+  f_status_t f_file_name_base(const f_string_static_t path, f_string_dynamic_t *name_base) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!name_base) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!path.used) {
+      return F_data_not;
+    }
+
     // POSIX basename() modifies the path, so protect it (and add a terminating NULL).
-    char path_argument[length + 1];
+    char path_argument[path.used + 1];
     f_string_t path_to_name;
 
-    memcpy(path_argument, path, length);
-    path_argument[length] = 0;
+    memcpy(path_argument, path.string, path.used);
+    path_argument[path.used] = 0;
 
     path_to_name = basename(path_argument);
 
-    f_array_length_t size = strnlen(path_to_name, length);
+    f_array_length_t size = strnlen(path_to_name, path.used);
 
-    if (name_base->used + size > name_base->size) {
-      if (name_base->used + size > F_string_t_size_d) {
-        return F_status_set_error(F_string_too_large);
-      }
-
-      f_status_t status = F_none;
-
-      macro_f_string_dynamic_t_resize(status, (*name_base), name_base->used + size);
-      if (F_status_is_error(status)) return status;
-    }
+    const f_status_t status = f_string_dynamic_increase_by(size, name_base);
+    if (F_status_is_error(status)) return status;
 
     memcpy(name_base->string + name_base->used, path_to_name, size);
     name_base->used += size;
@@ -1391,31 +1413,28 @@ extern "C" {
 #endif // _di_f_file_name_base_
 
 #ifndef _di_f_file_name_directory_
-  f_status_t f_file_name_directory(const f_string_t path, const f_array_length_t length, f_string_dynamic_t *name_directory) {
+  f_status_t f_file_name_directory(const f_string_static_t path, f_string_dynamic_t *name_directory) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!name_directory) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!path.used) {
+      return F_data_not;
+    }
+
     // POSIX dirname() modifies the path, so protect it (and add a terminating NULL).
-    char path_argument[length + 1];
+    char path_argument[path.used + 1];
     f_string_t path_to_name;
 
-    memcpy(path_argument, path, length);
-    path_argument[length] = 0;
+    memcpy(path_argument, path.string, path.used);
+    path_argument[path.used] = 0;
 
     path_to_name = dirname(path_argument);
 
-    f_array_length_t size = strnlen(path_to_name, length);
+    f_array_length_t size = strnlen(path_to_name, path.used);
 
-    if (name_directory->used + size > name_directory->size) {
-      if (name_directory->used + size > F_string_t_size_d) {
-        return F_status_set_error(F_string_too_large);
-      }
-
-      f_status_t status = F_none;
-
-      macro_f_string_dynamic_t_resize(status, (*name_directory), name_directory->used + size);
+    {
+      const f_status_t status = f_string_dynamic_increase_by(size, name_directory);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1427,32 +1446,42 @@ extern "C" {
 #endif // _di_f_file_name_directory_
 
 #ifndef _di_f_file_open_
-  f_status_t f_file_open(const f_string_t path, const mode_t mode, f_file_t *file) {
+  f_status_t f_file_open(const f_string_static_t path, const mode_t mode, f_file_t *file) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_open(path, mode, file);
   }
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_open_at_
-  f_status_t f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file) {
+  f_status_t f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t *file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_open_at(at_id, path, mode, file);
   }
 #endif // _di_f_file_open_at_
 
 #ifndef _di_f_file_owner_read_
-  f_status_t f_file_owner_read(const f_string_t path, uid_t *owner) {
+  f_status_t f_file_owner_read(const f_string_static_t path, uid_t *owner) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!owner) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
@@ -1483,20 +1512,12 @@ extern "C" {
     f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    for (f_string_t buffer_read = 0; ; ) {
+    for (;;) {
 
-      if (buffer->used + file.size_read > buffer->size) {
-        if (buffer->size + file.size_read > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
+      status = f_string_dynamic_increase_by(file.size_read, buffer);
+      if (F_status_is_error(status)) return status;
 
-        macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
-        if (F_status_is_error(status)) return status;
-      }
-
-      buffer_read = buffer->string + buffer->used;
-
-      size_read = read(file.id, buffer_read, file.size_read);
+      size_read = read(file.id, buffer->string + buffer->used, file.size_read);
 
       if (size_read < 0) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -1530,23 +1551,14 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    f_string_t buffer_read = 0;
-
-    if (buffer->used + file.size_read > buffer->size) {
-      if (buffer->size + file.size_read > F_string_t_size_d) {
-        return F_status_set_error(F_string_too_large);
-      }
-
-      macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
+    {
+      const f_status_t status = f_string_dynamic_increase_by(file.size_read, buffer);
       if (F_status_is_error(status)) return status;
     }
 
-    buffer_read = buffer->string + buffer->used;
-
-    size_read = read(file.id, buffer_read, file.size_read);
+    size_read = read(file.id, buffer->string + buffer->used, file.size_read);
 
     if (size_read > 0) {
       buffer->used += size_read;
@@ -1589,24 +1601,16 @@ extern "C" {
     f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    for (f_string_t buffer_read = 0; ; ) {
+    for (;;) {
 
       if (buffer_count + buffer_size > total) {
         buffer_size = total - buffer_count;
       }
 
-      if (buffer->used + buffer_size > buffer->size) {
-        if (buffer->size + buffer_size > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
+      status = f_string_dynamic_increase_by(buffer_size, buffer);
+      if (F_status_is_error(status)) return status;
 
-        macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
-        if (F_status_is_error(status)) return status;
-      }
-
-      buffer_read = buffer->string + buffer->used;
-
-      size_read = read(file.id, buffer_read, buffer_size);
+      size_read = read(file.id, buffer->string + buffer->used, buffer_size);
 
       if (size_read < 0) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -1628,22 +1632,21 @@ extern "C" {
 
       buffer_count += size_read;
 
-      if (buffer_count == total) {
-        return F_none_stop;
-      }
+      if (buffer_count >= total) break;
     } // for
 
-    return F_none;
+    return F_none_stop;
   }
 #endif // _di_f_file_read_until_
 
 #ifndef _di_f_file_remove_
-  f_status_t f_file_remove(const f_string_t path) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_remove(const f_string_static_t path) {
 
-    if (unlink(path) < 0) {
+    if (!path.used) {
+      return F_data_not;
+    }
+
+    if (unlink(path.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBUSY) return F_status_set_error(F_busy);
       if (errno == EIO) return F_status_set_error(F_input_output);
@@ -1665,12 +1668,13 @@ extern "C" {
 #endif // _di_f_file_remove_
 
 #ifndef _di_f_file_remove_at_
-  f_status_t f_file_remove_at(const int at_id, const f_string_t path, const int flag) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_remove_at(const int at_id, const f_string_static_t path, const int flag) {
 
-    if (unlinkat(at_id, path, flag) < 0) {
+    if (!path.used) {
+      return F_data_not;
+    }
+
+    if (unlinkat(at_id, path.string, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBUSY) return F_status_set_error(F_busy);
       if (errno == EIO) return F_status_set_error(F_input_output);
@@ -1693,13 +1697,13 @@ extern "C" {
 #endif // _di_f_file_remove_at_
 
 #ifndef _di_f_file_rename_
-  f_status_t f_file_rename(const f_string_t source, const f_string_t destination) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!source) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_rename(const f_string_static_t source, const f_string_static_t destination) {
 
-    if (rename(source, destination) < 0) {
+    if (!source.used || !destination.used) {
+      return F_data_not;
+    }
+
+    if (rename(source.string, destination.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBUSY) return F_status_set_error(F_busy);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
@@ -1727,13 +1731,13 @@ extern "C" {
 #endif // _di_f_file_rename_
 
 #ifndef _di_f_file_rename_at_
-  f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!source) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_static_t source, const f_string_static_t destination) {
 
-    if (renameat(at_id, source, to_id, destination) < 0) {
+    if (!source.used || !destination.used) {
+      return F_data_not;
+    }
+
+    if (renameat(at_id, source.string, to_id, destination.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBUSY) return F_status_set_error(F_busy);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
@@ -1762,20 +1766,22 @@ extern "C" {
 #endif // _di_f_file_rename_at_
 
 #ifndef _di_f_file_role_change_
-  f_status_t f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference) {
+  f_status_t f_file_role_change(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (uid == -1 && gid == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_role_change(path, uid, gid, dereference);
   }
 #endif // _di_f_file_role_change_
 
 #ifndef _di_f_file_role_change_at_
-  f_status_t f_file_role_change_at(const int at_id, const f_string_t path, const uid_t uid, const gid_t gid, const int flag) {
+  f_status_t f_file_role_change_at(const int at_id, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (uid == -1 && gid == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -1807,11 +1813,14 @@ extern "C" {
 #endif // _di_f_file_seek_
 
 #ifndef _di_f_file_size_
-  f_status_t f_file_size(const f_string_t path, const bool dereference, f_array_length_t *size) {
+  f_status_t f_file_size(const f_string_static_t path, const bool dereference, f_array_length_t *size) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
@@ -1829,12 +1838,15 @@ extern "C" {
 #endif // _di_f_file_size_
 
 #ifndef _di_f_file_size_at_
-  f_status_t f_file_size_at(const int at_id, const f_string_t path, const bool dereference, f_array_length_t *size) {
+  f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t *size) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (at_id <= 0) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
@@ -1874,23 +1886,29 @@ extern "C" {
 #endif // _di_f_file_size_by_id_
 
 #ifndef _di_f_file_stat_
-  f_status_t f_file_stat(const f_string_t path, const bool dereference, struct stat *stat_file) {
+  f_status_t f_file_stat(const f_string_static_t path, const bool dereference, struct stat *stat_file) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_stat(path, dereference, stat_file);
   }
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_at_
-  f_status_t f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *stat_file) {
+  f_status_t f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat *stat_file) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (at_id <= 0) return F_status_set_error(F_parameter);
       if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     return private_f_file_stat_at(at_id, path, flag, stat_file);
   }
@@ -1939,7 +1957,7 @@ extern "C" {
 
       file->stream = 0;
 
-      // file stream will result in the file descriptor being invalid because it is already closed.
+      // File stream will result in the file descriptor being invalid because it is already closed.
       if (complete) {
         file->id = -1;
       }
@@ -1956,14 +1974,14 @@ extern "C" {
 #endif // _di_f_file_stream_close_
 
 #ifndef _di_f_file_stream_descriptor_
-  f_status_t f_file_stream_descriptor(const f_string_t mode, f_file_t *file) {
+  f_status_t f_file_stream_descriptor(const f_string_static_t mode, f_file_t *file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
       if (file->id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (mode) {
-      file->stream = fdopen(file->id, mode);
+    if (mode.string) {
+      file->stream = fdopen(file->id, mode.string);
     }
     else {
       file->stream = fdopen(file->id, private_f_file_stream_open_mode_determine(file->flag));
@@ -1991,17 +2009,16 @@ extern "C" {
 
 
 #ifndef _di_f_file_stream_open_
-  f_status_t f_file_stream_open(const f_string_t path, const f_string_t mode, f_file_t *file) {
+  f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t *file) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (mode) {
-      file->stream = fopen(path, mode);
+    if (mode.used) {
+      file->stream = fopen(path.string, mode.string);
     }
     else {
-      file->stream = fopen(path, private_f_file_stream_open_mode_determine(file->flag));
+      file->stream = fopen(path.string, private_f_file_stream_open_mode_determine(file->flag));
     }
 
     if (!file->stream) {
@@ -2054,16 +2071,8 @@ extern "C" {
 
     for (;;) {
 
-      if (buffer->used + file.size_read > buffer->size) {
-        if (buffer->size + file.size_read > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
-
-        macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
-        if (F_status_is_error(status)) return status;
-
-        memset(buffer->string + buffer->used, 0, sizeof(file.size_read));
-      }
+      status = f_string_dynamic_increase_by(file.size_read, buffer);
+      if (F_status_is_error(status)) return status;
 
       size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
 
@@ -2092,20 +2101,14 @@ extern "C" {
   f_status_t f_file_stream_read_block(const f_file_t file, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!file.stream) return F_status_set_error(F_file_closed);
 
-    f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    if (buffer->used + file.size_read > buffer->size) {
-      if (buffer->size + file.size_read > F_string_t_size_d) {
-        return F_status_set_error(F_string_too_large);
-      }
-
-      macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
+    {
+      const f_status_t status = f_string_dynamic_increase_by(file.size_read, buffer);
       if (F_status_is_error(status)) return status;
     }
 
@@ -2154,14 +2157,8 @@ extern "C" {
         buffer_size = total - buffer_count;
       }
 
-      if (buffer->used + buffer_size > buffer->size) {
-        if (buffer->size + buffer_size > F_string_t_size_d) {
-          return F_status_set_error(F_string_too_large);
-        }
-
-        macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
-        if (F_status_is_error(status)) return status;
-      }
+      status = f_string_dynamic_increase_by(buffer_size, buffer);
+      if (F_status_is_error(status)) return status;
 
       size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
 
@@ -2193,19 +2190,22 @@ extern "C" {
 #endif // _di_f_file_stream_read_until_
 
 #ifndef _di_f_file_stream_reopen_
-  f_status_t f_file_stream_reopen(const f_string_t path, const f_string_t mode, f_file_t *file) {
+  f_status_t f_file_stream_reopen(const f_string_static_t path, const f_string_static_t mode, f_file_t *file) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!path.used) {
+      return F_data_not;
+    }
+
     FILE *result = 0;
 
-    if (mode) {
-      result = freopen(path, mode, file->stream);
+    if (mode.used) {
+      result = freopen(path.string, mode.string, file->stream);
     }
     else {
-      result = freopen(path, private_f_file_stream_open_mode_determine(file->flag), file->stream);
+      result = freopen(path.string, private_f_file_stream_open_mode_determine(file->flag), file->stream);
     }
 
     if (!result) {
@@ -2246,14 +2246,17 @@ extern "C" {
     }
 
     if (!buffer.used) {
-      if (written) *written = 0;
+      if (written) {
+        *written = 0;
+      }
+
       return F_data_not;
     }
 
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer.string, buffer.used, written);
+      private_f_file_stream_write_until(file, buffer, buffer.used, written);
 
       if (status == F_none && *written == buffer.used) {
         return F_none_eos;
@@ -2262,7 +2265,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer.string, buffer.used, &written_local);
+      private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none && written_local == buffer.used) {
         return F_none_eos;
@@ -2289,7 +2292,9 @@ extern "C" {
     }
 
     if (!buffer.used) {
-      if (written) *written = 0;
+      if (written) {
+        *written = 0;
+      }
 
       return F_data_not;
     }
@@ -2303,7 +2308,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer.string, write_max, written);
+      private_f_file_stream_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2318,7 +2323,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer.string, write_max, &written_local);
+      private_f_file_stream_write_until(file, buffer, write_max, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2339,7 +2344,6 @@ extern "C" {
   f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
       if (!total) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -2348,7 +2352,9 @@ extern "C" {
     }
 
     if (!buffer.used || !total) {
-      if (written) *written = 0;
+      if (written) {
+        *written = 0;
+      }
 
       return F_data_not;
     }
@@ -2362,7 +2368,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer.string, write_max, written);
+      private_f_file_stream_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2377,7 +2383,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer.string, buffer.used, &written_local);
+      private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2398,7 +2404,6 @@ extern "C" {
   f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2408,7 +2413,9 @@ extern "C" {
     }
 
     if (!buffer.used) {
-      if (written) *written = 0;
+      if (written) {
+        *written = 0;
+      }
 
       return F_data_not;
     }
@@ -2423,7 +2430,9 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer.string + range.start, write_max, written);
+      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
+
+      private_f_file_stream_write_until(file, buffer_adjusted, write_max, written);
 
       if (status == F_none) {
         if (range.start + *written == buffer.used) {
@@ -2436,9 +2445,10 @@ extern "C" {
       }
     }
     else {
+      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer.string + range.start, write_max, &written_local);
+      private_f_file_stream_write_until(file, buffer_adjusted, write_max, &written_local);
 
       if (status == F_none) {
         if (range.start + written_local == buffer.used) {
@@ -2456,10 +2466,11 @@ extern "C" {
 #endif // _di_f_file_stream_write_range_
 
 #ifndef _di_f_file_touch_
-  f_status_t f_file_touch(const f_string_t path, const mode_t mode, const bool dereference) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_touch(const f_string_static_t path, const mode_t mode, const bool dereference) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     f_status_t status = F_none;
     struct stat stat_file;
@@ -2471,11 +2482,12 @@ extern "C" {
     if (F_status_set_fine(status) == F_file_found_not) {
       return private_f_file_create(path, mode, dereference);
     }
-    else if (F_status_is_error(status)) {
+
+    if (F_status_is_error(status)) {
       return status;
     }
 
-    if (utimensat(F_file_at_current_working_d, path, 0, dereference ? 0 : F_file_at_symlink_follow_no_d) < 0) {
+    if (utimensat(F_file_at_current_working_d, path.string, 0, dereference ? 0 : F_file_at_symlink_follow_no_d) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -2496,10 +2508,11 @@ extern "C" {
 #endif // _di_f_file_touch_
 
 #ifndef _di_f_file_touch_at_
-  f_status_t f_file_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_touch_at(const int at_id, const f_string_static_t path, const mode_t mode, const int flag) {
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     f_status_t status = F_none;
     struct stat stat_file;
@@ -2511,11 +2524,10 @@ extern "C" {
     if (F_status_set_fine(status) == F_file_found_not) {
       return private_f_file_create_at(at_id, path, mode, F_false);
     }
-    else if (F_status_is_error(status)) {
-      return status;
-    }
 
-    if (utimensat(at_id, path, 0, flag) < 0) {
+    if (F_status_is_error(status)) return status;
+
+    if (utimensat(at_id, path.string, 0, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -2536,17 +2548,20 @@ extern "C" {
 #endif // _di_f_file_touch_at_
 
 #ifndef _di_f_file_type_
-  f_status_t f_file_type(const f_string_t path, int *type) {
+  f_status_t f_file_type(const f_string_static_t path, int *type) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    if (stat(path, &stat_file) < 0) {
+    if (stat(path.string, &stat_file) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
@@ -2566,17 +2581,20 @@ extern "C" {
 #endif // _di_f_file_type_
 
 #ifndef _di_f_file_type_at_
-  f_status_t f_file_type_at(const int at_id, const f_string_t path, const int flag, int *type) {
+  f_status_t f_file_type_at(const int at_id, const f_string_static_t path, const int flag, int *type) {
     #ifndef _di_level_0_parameter_checking_
-      if (!path) return F_status_set_error(F_parameter);
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    if (fstatat(at_id, path, &stat_file, flag) < 0) {
+    if (fstatat(at_id, path.string, &stat_file, flag) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
@@ -2622,7 +2640,6 @@ extern "C" {
   f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id == -1) {
@@ -2638,7 +2655,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_write_until(file, buffer.string, buffer.used, written);
+      private_f_file_write_until(file, buffer, buffer.used, written);
 
       if (status == F_none && *written == buffer.used) {
         return F_none_eos;
@@ -2647,7 +2664,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_write_until(file, buffer.string, buffer.used, &written_local);
+      private_f_file_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none && written_local == buffer.used) {
         return F_none_eos;
@@ -2666,7 +2683,6 @@ extern "C" {
   f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id == -1) {
@@ -2688,7 +2704,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_write_until(file, buffer.string, write_max, written);
+      private_f_file_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2703,7 +2719,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_write_until(file, buffer.string, write_max, &written_local);
+      private_f_file_write_until(file, buffer, write_max, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2724,7 +2740,6 @@ extern "C" {
   f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
       if (!total) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -2747,7 +2762,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_write_until(file, buffer.string, write_max, written);
+      private_f_file_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2762,7 +2777,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_write_until(file, buffer.string, buffer.used, &written_local);
+      private_f_file_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2783,7 +2798,6 @@ extern "C" {
   f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2793,7 +2807,9 @@ extern "C" {
     }
 
     if (!buffer.used) {
-      if (written) *written = 0;
+      if (written) {
+        *written = 0;
+      }
 
       return F_data_not;
     }
@@ -2808,7 +2824,9 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_write_until(file, buffer.string + range.start, write_max, written);
+      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
+
+      private_f_file_write_until(file, buffer_adjusted, write_max, written);
 
       if (status == F_none) {
         if (range.start + *written == buffer.used) {
@@ -2821,9 +2839,10 @@ extern "C" {
       }
     }
     else {
+      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
       f_array_length_t written_local = 0;
 
-      private_f_file_write_until(file, buffer.string + range.start, write_max, &written_local);
+      private_f_file_write_until(file, buffer_adjusted, write_max, &written_local);
 
       if (status == F_none) {
         if (range.start + written_local == buffer.used) {

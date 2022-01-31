@@ -43,11 +43,11 @@ extern "C" {
           path_sources = &main->path_sources_cpp;
         }
       }
-      else if (main->parameters[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
+      else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
         path_sources = &data_build.setting.path_sources;
       }
 
-      f_array_length_t source_length = 0;
+      f_string_static_t source = f_string_static_t_initialize;
 
       const f_string_dynamics_t *sources[2] = {
         &data_build.setting.build_sources_program,
@@ -61,15 +61,16 @@ extern "C" {
 
         for (j = 0; j < sources[i]->used; ++j) {
 
-          source_length = path_sources->used + sources[i]->array[j].used;
+          source.used = path_sources->used + sources[i]->array[j].used;
 
-          char source[source_length + 1];
+          char source_string[source.used + 1];
+          source.string = source_string;
 
-          memcpy(source, path_sources->string, path_sources->used);
-          memcpy(source + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
-          source[source_length] = 0;
+          memcpy(source_string, path_sources->string, path_sources->used);
+          memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
+          source_string[source.used] = 0;
 
-          *status = fll_execute_arguments_add(source, source_length, &arguments);
+          *status = fll_execute_arguments_add(source, &arguments);
           if (F_status_is_error(*status)) break;
         } // for
 
@@ -86,36 +87,33 @@ extern "C" {
       memcpy(parameter_file_name_path + main->path_build_programs_shared.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
       parameter_file_name_path[parameter_file_name_path_length] = 0;
 
-      const f_string_t values[] = {
+      const f_string_static_t values[] = {
         fake_build_parameter_library_output_s,
-        parameter_file_name_path,
-      };
-
-      const f_array_length_t lengths[] = {
-        fake_build_parameter_library_output_s_length,
-        parameter_file_name_path_length,
+        macro_f_string_static_t_initialize(parameter_file_name_path, 0, parameter_file_name_path_length),
       };
 
       for (uint8_t i = 0; i < 2; ++i) {
 
-        if (!lengths[i]) continue;
+        if (!values[i].used) continue;
 
-        *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
+        *status = fll_execute_arguments_add(values[i], &arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
 
     // if project-specific library sources exist, then the -lproject_name needs to be added to the arguments.
     if (F_status_is_error_not(*status) && data_build.setting.build_sources_library.used) {
-      f_array_length_t link_project_library_length = fake_build_parameter_library_link_file_s_length + data_build.setting.project_name.used;
+      f_string_static_t link_project_library = f_string_static_t_initialize;
+      link_project_library.used = fake_build_parameter_library_link_file_s_length + data_build.setting.project_name.used;
 
-      char link_project_library[link_project_library_length + 1];
+      char link_project_library_string[link_project_library.used + 1];
+      link_project_library.string = link_project_library_string;
 
-      memcpy(link_project_library, fake_build_parameter_library_link_file_s, fake_build_parameter_library_link_file_s_length);
-      memcpy(link_project_library + fake_build_parameter_library_link_file_s_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
-      link_project_library[link_project_library_length] = 0;
+      memcpy(link_project_library, fake_build_parameter_library_link_file_s.string, fake_build_parameter_library_link_file_s.used);
+      memcpy(link_project_library + fake_build_parameter_library_link_file_s.string, data_build.setting.project_name.string, data_build.setting.project_name.used);
+      link_project_library_string[link_project_library.used] = 0;
 
-      *status = fll_execute_arguments_add(link_project_library, link_project_library_length, &arguments);
+      *status = fll_execute_arguments_add(link_project_library, &arguments);
     }
 
     fake_build_arguments_standard_add(main, data_build, F_true, F_false, &arguments, status);
@@ -161,11 +159,11 @@ extern "C" {
           path_sources = &main->path_sources_cpp;
         }
       }
-      else if (main->parameters[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
+      else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
         path_sources = &data_build.setting.path_sources;
       }
 
-      f_array_length_t source_length = 0;
+      f_string_static_t source = f_string_static_t_initialize;
 
       const f_string_dynamics_t *sources[2] = {
         &data_build.setting.build_sources_program,
@@ -181,15 +179,16 @@ extern "C" {
 
           if (!sources[i]->array[j].used) continue;
 
-          source_length = path_sources->used + sources[i]->array[j].used;
+          source.used = path_sources->used + sources[i]->array[j].used;
 
-          char source[source_length + 1];
+          char source_string[source.used + 1];
+          source.string = source_string;
 
-          memcpy(source, path_sources->string, path_sources->used);
-          memcpy(source + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
-          source[source_length] = 0;
+          memcpy(source_string, path_sources->string, path_sources->used);
+          memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
+          source_string[source.used] = 0;
 
-          *status = fll_execute_arguments_add(source, source_length, &arguments);
+          *status = fll_execute_arguments_add(source, &arguments);
           if (F_status_is_error(*status)) break;
         } // for
 
@@ -209,17 +208,17 @@ extern "C" {
         memcpy(source_library, main->path_build_libraries_static.string, main->path_build_libraries_static.used);
         source_library_length += main->path_build_libraries_static.used;
 
-        memcpy(source_library + source_library_length, fake_build_parameter_library_name_prefix_s, fake_build_parameter_library_name_prefix_s_length);
-        source_library_length += fake_build_parameter_library_name_prefix_s_length;
+        memcpy(source_library + source_library_length, fake_build_parameter_library_name_prefix_s.string, fake_build_parameter_library_name_prefix_s.used);
+        source_library_length += fake_build_parameter_library_name_prefix_s.used;
 
         memcpy(source_library + source_library_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
         source_library_length += data_build.setting.project_name.used;
 
-        memcpy(source_library + source_library_length, fake_build_parameter_library_name_suffix_static_s, fake_build_parameter_library_name_suffix_static_s_length);
-        source_library_length += fake_build_parameter_library_name_suffix_static_s_length;
+        memcpy(source_library + source_library_length, fake_build_parameter_library_name_suffix_static_s.string, fake_build_parameter_library_name_suffix_static_s.used);
+        source_library_length += fake_build_parameter_library_name_suffix_static_s.used;
       }
 
-      source_library[source_library_length] = 0;
+      source_library.string[source_library_length] = 0;
 
       f_array_length_t parameter_file_name_path_length = main->path_build_programs_static.used + data_build.setting.project_name.used;
 
@@ -229,25 +228,18 @@ extern "C" {
       memcpy(parameter_file_name_path + main->path_build_programs_static.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
       parameter_file_name_path[parameter_file_name_path_length] = 0;
 
-      const f_string_t values[] = {
-        source_library,
+      const f_string_static_t values[] = {
+        macro_f_string_static_t_initialize(source_library, 0, source_library_length),
         fake_build_parameter_library_static_s,
         fake_build_parameter_library_output_s,
-        parameter_file_name_path,
-      };
-
-      const f_array_length_t lengths[] = {
-        source_library_length,
-        fake_build_parameter_library_static_s_length,
-        fake_build_parameter_library_output_s_length,
-        parameter_file_name_path_length,
+        macro_f_string_static_t_initialize(parameter_file_name_path, 0, parameter_file_name_path_length),
       };
 
       for (uint8_t i = 0; i < 4; ++i) {
 
-        if (!lengths[i]) continue;
+        if (!values[i].used) continue;
 
-        *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
+        *status = fll_execute_arguments_add(values[i], &arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }

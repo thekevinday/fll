@@ -5,115 +5,73 @@
 extern "C" {
 #endif
 
-#if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
-  f_status_t private_fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments) {
+#if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
+  f_status_t private_fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t *arguments) {
 
     f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
     if (F_status_is_error(status)) return status;
 
-    f_string_dynamic_t argument = f_string_dynamic_t_initialize;
+    arguments->array[arguments->used].used = 0;
 
-    if (length) {
-      status = f_string_append(source, length, &argument);
+    status = f_string_dynamic_increase_by(source.used + 1, &arguments->array[arguments->used]);
+    if (F_status_is_error(status)) return status;
 
-      if (F_status_is_error(status)) {
-        f_string_dynamic_resize(0, &argument);
+    status = f_string_dynamic_append(source, &arguments->array[arguments->used]);
 
-        return status;
-      }
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
     }
 
-    status = f_string_dynamic_terminate(&argument);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error(status)) {
-      f_string_dynamic_resize(0, &argument);
-
-      return status;
-    }
-
-    arguments->array[arguments->used].string = argument.string;
-    arguments->array[arguments->used].used = argument.used;
-    arguments->array[arguments->used++].size = argument.size;
+    ++arguments->used;
 
     return F_none;
   }
-#endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
+#endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
 
-#if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
-  f_status_t private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments) {
+#if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
+  f_status_t private_fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments) {
 
     f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
     if (F_status_is_error(status)) return status;
 
-    f_string_dynamic_t argument = f_string_dynamic_t_initialize;
+    arguments->array[arguments->used].used = 0;
 
-    if (prefix_length) {
-      status = f_string_append(prefix, prefix_length, &argument);
+    status = f_string_dynamic_increase_by(prefix.used + name.used + 1, &arguments->array[arguments->used]);
+    if (F_status_is_error(status)) return status;
 
-      if (F_status_is_error(status)) {
-        f_string_dynamic_resize(0, &argument);
+    status = f_string_dynamic_append(prefix, &arguments->array[arguments->used]);
 
-        return status;
-      }
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_terminate(&arguments->array[arguments->used]);
     }
 
-    if (name_length) {
-      status = f_string_append(name, name_length, &argument);
+    if (F_status_is_error(status)) return status;
 
-      if (F_status_is_error(status)) {
-        f_string_dynamic_resize(0, &argument);
-
-        return status;
-      }
-    }
-
-    status = f_string_dynamic_terminate(&argument);
-
-    if (F_status_is_error(status)) {
-      f_string_dynamic_resize(0, &argument);
-
-      return status;
-    }
-
-    arguments->array[arguments->used].string = argument.string;
-    arguments->array[arguments->used].used = argument.used;
-    arguments->array[arguments->used++].size = argument.size;
-
-    macro_f_string_dynamic_t_clear(argument);
-
-    if (value_length) {
-      status = f_string_append(value, value_length, &argument);
-
-      if (F_status_is_error(status)) {
-        f_string_dynamic_resize(0, &argument);
-
-        return status;
-      }
-    }
-
-    status = f_string_dynamic_terminate(&argument);
-
-    if (F_status_is_error(status)) {
-      f_string_dynamic_resize(0, &argument);
-
-      return status;
-    }
+    ++arguments->used;
 
     status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error(status)) {
-      f_string_dynamic_resize(0, &argument);
+    arguments->array[arguments->used].used = 0;
 
-      return status;
+    status = f_string_dynamic_increase_by(value.used + 1, &arguments->array[arguments->used]);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(value, &arguments->array[arguments->used]);
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_terminate(&arguments->array[arguments->used]);
     }
 
-    arguments->array[arguments->used].string = argument.string;
-    arguments->array[arguments->used].used = argument.used;
-    arguments->array[arguments->used++].size = argument.size;
+    if (F_status_is_error(status)) return status;
+
+    ++arguments->used;
 
     return F_none;
   }
-#endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
+#endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
 
 #if !defined(_di_fll_execute_program_)
   f_status_t private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) {
@@ -127,6 +85,7 @@ extern "C" {
         }
 
         *result = F_execute_nice;
+
         return F_status_set_error(F_nice);
       }
     }
@@ -140,6 +99,7 @@ extern "C" {
         }
 
         *result = F_execute_capability;
+
         return F_status_set_error(F_capability);
       }
     }
@@ -152,6 +112,7 @@ extern "C" {
         }
 
         *result = F_execute_group;
+
         return F_status_set_error(F_group);
       }
     }
@@ -163,6 +124,7 @@ extern "C" {
         }
 
         *result = F_execute_group;
+
         return F_status_set_error(F_group);
       }
     }
@@ -174,6 +136,7 @@ extern "C" {
         }
 
         *result = F_execute_user;
+
         return F_status_set_error(F_user);
       }
     }
@@ -250,7 +213,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_fork(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
+  f_status_t private_fll_execute_fork(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -274,10 +237,10 @@ extern "C" {
     if (id_process) {
       if (as) {
 
-        // close the read pipe for the parent.
+        // Close the read pipe for the parent.
         close(descriptors[0]);
 
-        // have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
+        // Have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
         {
           char string_result[2] = { '0', 0 };
 
@@ -291,10 +254,10 @@ extern "C" {
 
           const f_status_t status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
 
-          // inform the child that it can now safely begin (or exit).
+          // Inform the child that it can now safely begin (or exit).
           f_file_write(file, buffer, 0);
 
-          // close the write pipe for the parent when finished writing.
+          // Close the write pipe for the parent when finished writing.
           close(descriptors[1]);
 
           if (F_status_is_error(status)) {
@@ -316,7 +279,7 @@ extern "C" {
       // have the parent wait for the child process to finish.
       waitpid(id_process, (int *) result, parameter ? parameter->wait : 0);
 
-      // this must explicitly check for 0 (as opposed to checking (!result)).
+      // This must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
         if (WIFEXITED(*((int *) result))) {
           return F_none;
@@ -334,7 +297,7 @@ extern "C" {
 
     if (as) {
 
-      // close the write pipe for the child.
+      // Close the write pipe for the child.
       close(descriptors[1]);
 
       char string_response[2] = { 0, 0 };
@@ -385,20 +348,20 @@ extern "C" {
       clearenv();
 
       for (f_array_length_t i = 0; i < parameter->environment->used; ++i) {
-        f_environment_set_dynamic(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
+        f_environment_set(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
       } // for
     }
 
     if (as) {
 
-      // close the write pipe for the child when done.
+      // Close the write pipe for the child when done.
       close(descriptors[0]);
 
       const f_status_t status = private_fll_execute_as_child(*as, parameter, (int *) result);
       if (F_status_is_error(status)) return status;
     }
 
-    int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+    int code = direct ? execv(program.string, fixed_arguments) : execvp(program.string, fixed_arguments);
 
     if (code == -1) {
       if (errno == EACCES) code = F_execute_access;
@@ -440,7 +403,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_fork_data(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
+  f_status_t private_fll_execute_fork_data(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -459,7 +422,7 @@ extern "C" {
 
     if (id_process) {
 
-      // close the read pipe for the parent.
+      // Close the read pipe for the parent.
       close(descriptors[0]);
 
       {
@@ -469,7 +432,7 @@ extern "C" {
 
         f_status_t status = F_none;
 
-        // have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
+        // Have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
         if (as) {
           f_string_static_t buffer = f_string_static_t_initialize;
 
@@ -479,18 +442,18 @@ extern "C" {
 
           status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
 
-          // inform the child that it can now safely begin (or exit).
+          // Inform the child that it can now safely begin (or exit).
           if (F_status_is_error(f_file_write(file, buffer, 0))) {
             string_result[0] = '1';
           }
         }
 
-        // write all data, if child doesn't read this could block until child closes the pipe.
+        // Write all data, if child doesn't read this could block until child closes the pipe.
         if (string_result[0] == '0') {
           f_file_write(file, *parameter->data, 0);
         }
 
-        // close the write pipe for the parent when finished writing.
+        // Close the write pipe for the parent when finished writing.
         close(descriptors[1]);
 
         if (F_status_is_error(status)) {
@@ -508,10 +471,10 @@ extern "C" {
         return F_parent;
       }
 
-      // have the parent wait for the child process to finish.
+      // Have the parent wait for the child process to finish.
       waitpid(id_process, (int *) result, parameter->wait);
 
-      // this must explicitly check for 0 (as opposed to checking (!result)).
+      // This must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
         if (WIFEXITED(*((int *) result))) {
           return F_none;
@@ -527,10 +490,10 @@ extern "C" {
       setsid();
     }
 
-    // close the write pipe for the child.
+    // Close the write pipe for the child.
     close(descriptors[1]);
 
-    // wait for parent to tell child to begin.
+    // Wait for parent to tell child to begin.
     if (as) {
       char string_response[2] = { 0, 0 };
 
@@ -580,7 +543,7 @@ extern "C" {
       clearenv();
 
       for (f_array_length_t i = 0; i < parameter->environment->used; ++i) {
-        f_environment_set_dynamic(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
+        f_environment_set(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
       } // for
     }
 
@@ -591,9 +554,9 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+    int code = direct ? execv(program.string, fixed_arguments) : execvp(program.string, fixed_arguments);
 
-    // close the write pipe for the child when done.
+    // Close the write pipe for the child when done.
     close(descriptors[0]);
 
     if (code < 0) {
@@ -636,14 +599,15 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_t last_slash, const bool fixated_is, const f_array_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
+  void private_fll_execute_path_arguments_fixate(const f_string_static_t program_path, const f_string_statics_t arguments, const f_string_t last_slash, const bool fixated_is, f_string_static_t program_name, f_string_t fixed_arguments[]) {
 
-    memset(program_name, 0, name_size + 1);
+    memset(program_name.string, 0, program_name.used + 1);
     memset(fixed_arguments, 0, sizeof(f_string_t) * (arguments.used + 2));
-    memcpy(program_name, last_slash ? last_slash + 1 : program_path, name_size);
 
-    if (name_size) {
-      fixed_arguments[0] = program_name;
+    memcpy(program_name.string, last_slash ? last_slash + 1 : program_path.string, program_name.used);
+
+    if (program_name.used) {
+      fixed_arguments[0] = program_name.string;
     }
 
     if (fixated_is) {

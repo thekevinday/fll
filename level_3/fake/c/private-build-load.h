@@ -87,7 +87,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_process_
-  extern void fake_build_load_setting_process(fake_main_t * const main, const bool checks, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_setting_process(fake_main_t * const main, const bool checks, const f_string_static_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_setting_process_
 
 /**

@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_error_build_operation_file_
-  bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_t how, const f_string_t source, const f_string_t destination, const bool fallback) {
+  bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
 
     if (status == F_file_found_not) {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -19,20 +19,7 @@ extern "C" {
 
         fl_print_format("%q%[%QFailed to find '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, f_file_exists(source) == F_true ? destination : source, main->error.notable);
-        }
-
-        fl_print_format("%[while trying to %Q '%]", main->error.to.stream, main->error.context, operation, main->error.context);
-
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -50,14 +37,7 @@ extern "C" {
         fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, function, main->error.notable);
         fl_print_format("%[() to %Q '%]", main->error.to.stream, main->error.context, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -73,13 +53,13 @@ extern "C" {
 
         fl_print_format("%q%[%QInvalid name for '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+        if (source.used) {
+          fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, source, main->error.notable);
         }
 
-        if (destination) {
+        if (destination.used) {
           fl_print_format("%[' or '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
+          fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
         }
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
@@ -96,14 +76,7 @@ extern "C" {
 
         fl_print_format("%q%[%QUnable to allocate memory, while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -119,14 +92,7 @@ extern "C" {
 
         fl_print_format("%q%[%QOverflow while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -142,14 +108,7 @@ extern "C" {
 
         fl_print_format("%q%[%QInvalid directory while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -165,14 +124,7 @@ extern "C" {
 
         fl_print_format("%q%[%QAccess denied while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -188,14 +140,7 @@ extern "C" {
 
         fl_print_format("%q%[%QLoop while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -211,14 +156,7 @@ extern "C" {
 
         fl_print_format("%q%[%QProhibited by system while trying to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -234,14 +172,7 @@ extern "C" {
 
         fl_print_format("%q%[%QFailed to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%[' due to an invalid directory in the path.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -257,14 +188,7 @@ extern "C" {
 
         fl_print_format("%q%[%QFailed to %Q '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, operation, main->error.context);
 
-        if (source) {
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-        }
-
-        if (destination) {
-          fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-        }
+        fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
         fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -281,14 +205,7 @@ extern "C" {
       fl_print_format("%[%ui%]", main->error.to.stream, main->error.notable, status, main->error.notable);
       fl_print_format("%[) occurred while trying to %Q '%]", main->error.to.stream, main->error.context, operation, main->error.context);
 
-      if (source) {
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, source, main->error.notable);
-      }
-
-      if (destination) {
-        fl_print_format("%[' %S '%]", main->error.to.stream, main->error.context, how, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
-      }
+      fake_print_error_build_operation_file_message(main, operation, source, destination, how);
 
       fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
@@ -298,6 +215,25 @@ extern "C" {
     return F_true;
   }
 #endif // _di_fake_print_error_build_operation_file_
+
+#ifndef _di_fake_print_error_build_operation_file_message_
+  void fake_print_error_build_operation_file_message(fake_main_t * const main, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how) {
+
+    if (source.used) {
+      fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+    }
+
+    fl_print_format("%[while trying to %Q '%]", main->error.to.stream, main->error.context, operation, main->error.context);
+
+    if (destination.used) {
+      fl_print_format("%[' %Q '%]", main->error.to.stream, main->error.context, how, main->error.context);
+      fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, destination, main->error.notable);
+    }
+    else if (source.used) {
+      fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, source, main->error.notable);
+    }
+  }
+#endif // #ifndef _di_fake_print_error_build_operation_file_message_
 
 #ifndef _di_fake_print_error_fss
   bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_t path_file, const f_string_range_t range, const bool fallback) {
@@ -309,7 +245,7 @@ extern "C" {
         fl_print_format("%q%[%QOccurred on invalid UTF-8 character at stop position (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%un%]", main->error.to.stream, main->error.notable, range.start, main->error.notable);
         fl_print_format("%[ of setting file '%]", main->error.to.stream, main->error.context, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
+        fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
         fl_print_format("%[').%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
@@ -325,7 +261,7 @@ extern "C" {
         fl_print_format("%q%[%QOccurred on invalid UTF-8 character at %s (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, status == F_complete_not_utf_eos ? "end of string" : "stop point of string", main->error.context);
         fl_print_format("%[%un%]", main->error.to.stream, main->error.notable, range.start, main->error.notable);
         fl_print_format("%[ of setting file '%]", main->error.to.stream, main->error.context, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
+        fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
         fl_print_format("%[').%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
@@ -341,7 +277,7 @@ extern "C" {
         fl_print_format("%q%[%QOccurred on invalid UTF-8 character at stop point of string (at '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%un%]", main->error.to.stream, main->error.notable, range.start, main->error.notable);
         fl_print_format("%[ of setting file '%]", main->error.to.stream, main->error.context, main->error.context);
-        fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
+        fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
         fl_print_format("%[').%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
@@ -356,7 +292,7 @@ extern "C" {
       fl_print_format("%q%[UNKNOWN %Q(%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
       fl_print_format("%[%ui%]", main->error.to.stream, main->error.notable, status, main->error.notable);
       fl_print_format("%[) in function '%]", main->error.to.stream, main->error.context, main->error.context);
-      fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, function, main->error.notable);
+      fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, function, main->error.notable);
       fl_print_format("%[().%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
       funlockfile(main->error.to.stream);
@@ -440,7 +376,7 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_failed_
 
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) {
+  void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
@@ -448,11 +384,11 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_false) {
       fl_print_format("%q%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-      fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path, main->error.notable);
+      fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
       fl_print_format("%[' is outside the project root.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
     }
     else {
-      fll_error_file_print(main->error, F_status_set_fine(status), function, F_true, path, "determine real path of", fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), function, F_true, path, fake_common_file_path_determine_real_s, fll_error_file_type_file_e);
     }
 
     funlockfile(main->error.to.stream);
@@ -460,7 +396,7 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_path_outside_
 
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) {
+  void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
@@ -468,7 +404,7 @@ extern "C" {
       flockfile(main->error.to.stream);
 
       fl_print_format("%q%[%QMaximum stack size reached while processing path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-      fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path, main->error.notable);
+      fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
       fl_print_format("%['", main->error.to.stream, main->error.context);
 
       if (function) {
@@ -481,7 +417,7 @@ extern "C" {
       funlockfile(main->error.to.stream);
     }
     else {
-      fll_error_file_print(print, status, function, F_true, path, "change path to", fll_error_file_type_directory_e);
+      fll_error_file_print(print, status, function, F_true, path, fake_common_file_path_change_to_s, fll_error_file_type_directory_e);
     }
   }
 #endif // _di_fake_print_message_section_operation_path_stack_max_
@@ -522,7 +458,7 @@ extern "C" {
 
     flockfile(main->error.to.stream);
 
-    fl_print_format("%q%[%SThe section operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+    fl_print_format("%q%[%QThe section operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[%/Q%]", main->error.to.stream, main->error.notable, buffer, operation_name, main->error.notable);
     fl_print_format("%[' from section '%]", main->error.to.stream, main->error.context, buffer, main->error.context);
     fl_print_format("%[%/Q%]", main->error.to.stream, main->error.notable, buffer, section_name, main->error.notable);

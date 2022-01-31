@@ -30,7 +30,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
   f_array_length_t repeat = 2;
   f_array_length_t r = 0;
 
-  f_string_t current_tool = firewall_tool_iptables_s;
+  f_string_static_t current_tool = firewall_tool_iptables_s;
   f_array_length_t current_tool_length = firewall_tool_iptables_s_length;
 
   f_array_length_t direction = firewall_direction_none_id_e;
@@ -782,7 +782,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
                     firewall_print_debug_tool(main->warning, current_tool, arguments);
 
-                    status = fll_execute_program((f_string_t) current_tool, arguments, 0, 0, (void *) &return_code);
+                    status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
                     // Immediately exit child process, @todo this may require additional memory deallocation and relating changes.
                     if (status == F_child) {
@@ -1142,7 +1142,7 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
 
 f_status_t firewall_delete_chains(firewall_main_t * const main) {
 
-  const f_string_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
+  const f_string_static_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
   f_status_t status = F_none;
 
   for (f_array_length_t i = 0; i < 2; ++i) {

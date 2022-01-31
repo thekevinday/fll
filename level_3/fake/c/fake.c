@@ -88,89 +88,90 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    f_console_parameter_t parameters[] = fake_console_parameter_t_initialize;
+    main->parameters.array = parameters;
+    main->parameters.used = fake_total_parameters_d;
+
+    // Load all parameters and identify priority of color parameters.
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fake_total_parameters_d);
+      f_console_parameter_id_t ids[3] = { fake_parameter_no_color_e, fake_parameter_light_e, fake_parameter_dark_e };
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      // Load all parameters and identify priority of color parameters.
-      {
-        f_console_parameter_id_t ids[3] = { fake_parameter_no_color_e, fake_parameter_light_e, fake_parameter_dark_e };
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
 
-        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
+      main->output.set = &main->context.set;
+      main->error.set = &main->context.set;
+      main->warning.set = &main->context.set;
 
-        main->output.set = &main->context.set;
-        main->error.set = &main->context.set;
-        main->warning.set = &main->context.set;
+      if (main->context.set.error.before) {
+        main->output.context = f_color_set_empty_s;
+        main->output.notable = main->context.set.notable;
 
-        if (main->context.set.error.before) {
-          main->output.context = f_color_set_empty_s;
-          main->output.notable = main->context.set.notable;
+        main->error.context = main->context.set.error;
+        main->error.notable = main->context.set.notable;
 
-          main->error.context = main->context.set.error;
-          main->error.notable = main->context.set.notable;
+        main->warning.context = main->context.set.warning;
+        main->warning.notable = main->context.set.notable;
+      }
+      else {
+        f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
-          main->warning.context = main->context.set.warning;
-          main->warning.notable = main->context.set.notable;
-        }
-        else {
-          f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-          fll_program_parameter_process_empty(&main->context, sets);
-        }
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-
-          fake_main_delete(main);
-          return status;
-        }
+        fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      // Identify priority of verbosity related parameters.
-      {
-        f_console_parameter_id_t ids[4] = { fake_parameter_verbosity_quiet_e, fake_parameter_verbosity_normal_e, fake_parameter_verbosity_verbose_e, fake_parameter_verbosity_debug_e };
-        f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-          fake_main_delete(main);
-          return status;
-        }
-
-        if (choice == fake_parameter_verbosity_quiet_e) {
-          main->output.verbosity = f_console_verbosity_quiet_e;
-          main->error.verbosity = f_console_verbosity_quiet_e;
-          main->warning.verbosity = f_console_verbosity_quiet_e;
-        }
-        else if (choice == fake_parameter_verbosity_normal_e) {
-          main->output.verbosity = f_console_verbosity_normal_e;
-          main->error.verbosity = f_console_verbosity_normal_e;
-          main->warning.verbosity = f_console_verbosity_normal_e;
-        }
-        else if (choice == fake_parameter_verbosity_verbose_e) {
-          main->output.verbosity = f_console_verbosity_verbose_e;
-          main->error.verbosity = f_console_verbosity_verbose_e;
-          main->warning.verbosity = f_console_verbosity_verbose_e;
-        }
-        else if (choice == fake_parameter_verbosity_debug_e) {
-          main->output.verbosity = f_console_verbosity_debug_e;
-          main->error.verbosity = f_console_verbosity_debug_e;
-          main->warning.verbosity = f_console_verbosity_debug_e;
-        }
+        fake_main_delete(main);
+        return status;
       }
-
-      status = F_none;
     }
 
-    f_array_length_t operations_length = main->parameters[fake_parameter_operation_build_e].locations.used;
+    // Identify priority of verbosity related parameters.
+    {
+      f_console_parameter_id_t ids[4] = { fake_parameter_verbosity_quiet_e, fake_parameter_verbosity_normal_e, fake_parameter_verbosity_verbose_e, fake_parameter_verbosity_debug_e };
+      f_console_parameter_id_t choice = 0;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
-    operations_length += main->parameters[fake_parameter_operation_clean_e].locations.used;
-    operations_length += main->parameters[fake_parameter_operation_make_e].locations.used;
-    operations_length += main->parameters[fake_parameter_operation_skeleton_e].locations.used;
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
+        fake_main_delete(main);
+        return status;
+      }
+
+      if (choice == fake_parameter_verbosity_quiet_e) {
+        main->output.verbosity = f_console_verbosity_quiet_e;
+        main->error.verbosity = f_console_verbosity_quiet_e;
+        main->warning.verbosity = f_console_verbosity_quiet_e;
+      }
+      else if (choice == fake_parameter_verbosity_normal_e) {
+        main->output.verbosity = f_console_verbosity_normal_e;
+        main->error.verbosity = f_console_verbosity_normal_e;
+        main->warning.verbosity = f_console_verbosity_normal_e;
+      }
+      else if (choice == fake_parameter_verbosity_verbose_e) {
+        main->output.verbosity = f_console_verbosity_verbose_e;
+        main->error.verbosity = f_console_verbosity_verbose_e;
+        main->warning.verbosity = f_console_verbosity_verbose_e;
+      }
+      else if (choice == fake_parameter_verbosity_debug_e) {
+        main->output.verbosity = f_console_verbosity_debug_e;
+        main->error.verbosity = f_console_verbosity_debug_e;
+        main->warning.verbosity = f_console_verbosity_debug_e;
+      }
+    }
+
+    f_string_static_t * const argv = main->parameters.arguments.array;
+    status = F_none;
+
+    f_array_length_t operations_length = main->parameters.array[fake_parameter_operation_build_e].locations.used;
+
+    operations_length += main->parameters.array[fake_parameter_operation_clean_e].locations.used;
+    operations_length += main->parameters.array[fake_parameter_operation_make_e].locations.used;
+    operations_length += main->parameters.array[fake_parameter_operation_skeleton_e].locations.used;
 
     uint8_t operations[operations_length];
     f_string_static_t operations_name = f_string_static_t_initialize;
@@ -182,17 +183,17 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t k = 0;
 
-      for (; i < main->parameters[fake_parameter_operation_build_e].locations.used; ++i, ++locations_length) {
+      for (; i < main->parameters.array[fake_parameter_operation_build_e].locations.used; ++i, ++locations_length) {
 
         operations[locations_length] = fake_operation_build_e;
-        locations[locations_length] = main->parameters[fake_parameter_operation_build_e].locations.array[i];
+        locations[locations_length] = main->parameters.array[fake_parameter_operation_build_e].locations.array[i];
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_clean_e].locations.used; ++i) {
+      for (i = 0; i < main->parameters.array[fake_parameter_operation_clean_e].locations.used; ++i) {
 
         for (j = 0; j < locations_length; ++j) {
 
-          if (main->parameters[fake_parameter_operation_clean_e].locations.array[i] < locations[j]) {
+          if (main->parameters.array[fake_parameter_operation_clean_e].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; --k) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
@@ -202,16 +203,16 @@ extern "C" {
           }
         } // for
 
-        locations[j] = main->parameters[fake_parameter_operation_clean_e].locations.array[i];
+        locations[j] = main->parameters.array[fake_parameter_operation_clean_e].locations.array[i];
         operations[j] = fake_operation_clean_e;
         ++locations_length;
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_make_e].locations.used; ++i) {
+      for (i = 0; i < main->parameters.array[fake_parameter_operation_make_e].locations.used; ++i) {
 
         for (j = 0; j < locations_length; ++j) {
 
-          if (main->parameters[fake_parameter_operation_make_e].locations.array[i] < locations[j]) {
+          if (main->parameters.array[fake_parameter_operation_make_e].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; --k) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
@@ -221,16 +222,16 @@ extern "C" {
           }
         } // for
 
-        locations[j] = main->parameters[fake_parameter_operation_make_e].locations.array[i];
+        locations[j] = main->parameters.array[fake_parameter_operation_make_e].locations.array[i];
         operations[j] = fake_operation_make_e;
         ++locations_length;
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_skeleton_e].locations.used; ++i) {
+      for (i = 0; i < main->parameters.array[fake_parameter_operation_skeleton_e].locations.used; ++i) {
 
         for (j = 0; j < locations_length; ++j) {
 
-          if (main->parameters[fake_parameter_operation_skeleton_e].locations.array[i] < locations[j]) {
+          if (main->parameters.array[fake_parameter_operation_skeleton_e].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; --k) {
 
               locations[k] = locations[k - 1];
@@ -241,7 +242,7 @@ extern "C" {
           }
         } // for
 
-        locations[j] = main->parameters[fake_parameter_operation_skeleton_e].locations.array[i];
+        locations[j] = main->parameters.array[fake_parameter_operation_skeleton_e].locations.array[i];
         operations[j] = fake_operation_skeleton_e;
         ++locations_length;
       } // for
@@ -249,7 +250,7 @@ extern "C" {
 
     status = F_none;
 
-    if (main->parameters[fake_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fake_parameter_help_e].result == f_console_result_found_e) {
       fake_print_help(main->output.to, main->context);
 
       fake_main_delete(main);
@@ -257,7 +258,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[fake_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fake_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, fake_program_version_s);
 
       fake_main_delete(main);

@@ -315,7 +315,7 @@ extern "C" {
 #ifndef _di_controller_control_respond_error_string_
   f_status_t controller_control_respond_error_string(const controller_global_t *global, controller_control_t * const control, const f_status_t status, const f_string_t message) {
 
-    const f_string_static_t string = macro_f_string_static_t_initialize(message, strlen(message));
+    const f_string_static_t string = macro_f_string_static_t_initialize2(message, strlen(message));
 
     return controller_control_respond_error(global, control, status, string);
   }

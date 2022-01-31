@@ -58,33 +58,29 @@ extern "C" {
 /**
  * Add an argument to the execution arguments array.
  *
- * This guarantees that an end of string exists at the end of the copied string.
+ * This guarantees that a NULL exists at the end of the string (after the source.used length).
  * This does not check for NULL characters anywhere else in the string.
  *
  * @param source
  *   The string to add to the arguments array.
- * @param length
- *   Length of string to prepend.
  * @param arguments
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: macro_f_string_dynamics_t_resize().
- *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see macro_f_string_dynamics_t_resize()
- * @see f_string_append()
+ * @see f_string_dynamic_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
+ * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_
-  extern f_status_t fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_
 
 /**
@@ -101,16 +97,10 @@ extern "C" {
  *
  * @param prefix
  *   The string prepend to the name.
- * @param prefix_length
- *   Length of prefix to prepend.
  * @param name
  *   The string to add to the arguments array.
- * @param name_length
- *   Length of name to prepend.
  * @param value
  *   The string to add to the arguments array.
- * @param value_length
- *   Length of value to prepend.
  * @param arguments
  *   The array of string arguments intended to pass to the execute functions.
  *
@@ -128,7 +118,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
-  extern f_status_t fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_parameter_
 
 /**
@@ -147,16 +137,10 @@ extern "C" {
  *
  * @param prefix
  *   An array of the strings prepend to the name.
- * @param prefix_length
- *   Length of prefix to prepend.
  * @param name
  *   An array of the strings to add to the arguments array.
- * @param name_length
- *   Length of name to prepend.
  * @param value
  *   An array of the strings to add to the arguments array.
- * @param value_length
- *   Length of value to prepend.
  * @param size
  *   The array size of prefix, prefix_length, name, name_length, value, and value_length (all of which must be of the same array size).
  * @param arguments
@@ -176,7 +160,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_array_length_t prefix_length[], const f_string_t name[], const f_array_length_t name_length[], const f_string_t value[], const f_array_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 /**
@@ -187,8 +171,6 @@ extern "C" {
  *
  * @param source
  *   An array of strings to add to the arguments array.
- * @param length
- *   An array of lengths of each string to prepend.
  * @param size
  *   The array size of source and length (all of which must be of the same array size).
  * @param arguments
@@ -208,144 +190,8 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_set_
-  extern f_status_t fll_execute_arguments_add_set(const f_string_t source[], const f_array_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_set_
-
-/**
- * Add an argument to the execution arguments array.
- *
- * This guarantees that an end of string exists at the end of the copied string.
- * This does not check for NULL characters anywhere else in the string.
- *
- * @param source
- *   The string to add to the arguments array.
- * @param arguments
- *   The array of string arguments intended to pass to the execute functions.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
- *   Errors (with error bit) from: f_string_dynamics_increase().
- *
- * @see f_string_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
- * @see f_string_dynamics_increase()
- */
-#ifndef _di_fll_execute_arguments_dynamic_add_
-  extern f_status_t fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments);
-#endif // _di_fll_execute_arguments_dynamic_add_
-
-/**
- * Add parameters as arguments to the execution arguments array.
- *
- * This is intended to simplify adding arguments that have prefixes and values such as those common in console parameters.
- * For example, a pefix of '--', a name of 'do', and a value of 'something' would result in two arguments added:
- *   '--do' and 'something'.
- *
- * The arguments are only appended if the length of name and value are not 0.
- *
- * This guarantees that an end of string exists at the end of each argument.
- * This does not check for NULL characters anywhere else in the string.
- *
- * @param prefix
- *   The string prepend to the name.
- * @param name
- *   The string to add to the arguments array.
- * @param value
- *   The string to add to the arguments array.
- * @param arguments
- *   The array of string arguments intended to pass to the execute functions.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
- *   Errors (with error bit) from: f_string_dynamics_increase().
- *
- * @see f_string_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
- * @see f_string_dynamics_increase()
- */
-#ifndef _di_fll_execute_arguments_dynamic_add_parameter_
-  extern f_status_t fll_execute_arguments_dynamic_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments);
-#endif // _di_fll_execute_arguments_dynamic_add_parameter_
-
-/**
- * Add set of parameters as arguments to the execution arguments array.
- *
- * This is intended to simplify adding arguments that have prefixes and values such as those common in console parameters.
- * For example, a pefix of '--', a name of 'do', and a value of 'something' would result in two arguments added:
- *   '--do' and 'something'.
- *
- * The arguments are only appended if the length of name and value are not 0.
- *
- * This guarantees that an end of string exists at the end of each argument.
- * This does not check for NULL characters anywhere else in the string.
- *
- * @param prefix
- *   The string prepend to the name.
- * @param name
- *   The string to add to the arguments array.
- * @param value
- *   The string prepend to the name.
- * @param size
- *   The array size of buffer.
- * @param arguments
- *   The array of string arguments intended to pass to the execute functions.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
- *   Errors (with error bit) from: f_string_dynamics_increase().
- *
- * @see f_string_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
- * @see f_string_dynamics_increase()
- */
-#ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
-  extern f_status_t fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments);
-#endif // _di_fll_execute_arguments_dynamic_add_parameter_set_
-
-/**
- * Add a set of arguments to the execution arguments array.
- *
- * This guarantees that an end of string exists at the end of the copied string.
- * This does not check for NULL characters anywhere else in the string.
- *
- * @param source
- *   An array of strings to add to the arguments array.
- * @param size
- *   The array size of buffer.
- * @param arguments
- *   The array of string arguments intended to pass to the execute functions.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
- *   Errors (with error bit) from: f_string_dynamics_increase().
- *
- * @see f_string_append()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
- * @see f_string_dynamics_increase()
- */
-#ifndef _di_fll_execute_arguments_dynamic_add_set_
-  extern f_status_t fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
-#endif // _di_fll_execute_arguments_dynamic_add_set_
 
 /**
  * Execute a program given by program name found in the PATH environment (such as "bash") or program path (such as "/bin/bash").
@@ -382,14 +228,24 @@ extern "C" {
  *
  *   F_failure (with error bit) on execution failure.
  *
+ *   Errors (with error bit) from: f_environment_get().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: fl_environment_path_explode().
+ *
  * @see execv()
  * @see execvp()
  * @see exit()
  * @see memcpy()
  * @see strnlen()
+ *
+ * @see f_environment_get()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_terminate_after()
+ * @see fl_environment_path_explode()
  */
 #ifndef _di_fll_execute_into_
-  extern f_status_t fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, const f_string_maps_t *environment, int *result);
+  extern f_status_t fll_execute_into(const f_string_static_t program, const f_string_statics_t arguments, const uint8_t option, const f_string_maps_t *environment, int *result);
 #endif // _di_fll_execute_into_
 
 /**
@@ -463,13 +319,13 @@ extern "C" {
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_limit_process().
- *   Errors (with error bit) from: macro_f_string_dynamics_t_delete().
  *   Errors (with error bit) from: f_signal_mask().
- *   Errors (with error bit) from: f_thread_signal_mask().
- *   Errors (with error bit) from: fl_environment_path_explode_dynamic().
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
  *   Errors (with error bit) from: f_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_thread_signal_mask().
+ *   Errors (with error bit) from: fl_environment_path_explode().
  *
  * @see close()
  * @see clearenv()
@@ -496,14 +352,15 @@ extern "C" {
  * @see f_file_exists()
  * @see f_limit_process()
  * @see f_signal_mask()
- * @see f_string_append()
- * @see f_string_dynamic_terminate()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_terminate_after()
+ * @see f_string_dynamics_resize()
  * @see f_thread_signal_mask()
  * @see fl_control_group_apply()
- * @see fl_environment_path_explode_dynamic()
+ * @see fl_environment_path_explode()
  */
 #ifndef _di_fll_execute_program_
-  extern f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result);
+  extern f_status_t fll_execute_program(const f_string_static_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result);
 #endif // _di_fll_execute_program_
 
 #ifdef __cplusplus

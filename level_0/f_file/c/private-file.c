@@ -39,7 +39,7 @@ extern "C" {
 #endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
 
 #if !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
-  f_status_t private_f_file_copy_content(const f_string_t source, const f_string_t destination, const f_number_unsigned_t size_block) {
+  f_status_t private_f_file_copy_content(const f_string_static_t source, const f_string_static_t destination, const f_number_unsigned_t size_block) {
 
     f_file_t file_source = f_file_t_initialize;
     f_file_t file_destination = f_file_t_initialize;
@@ -88,7 +88,7 @@ extern "C" {
 #endif // !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
 
 #if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_)
-  f_status_t private_f_file_copy_content_at(const int at_id, const f_string_t source, const f_string_t destination, const f_number_unsigned_t size_block) {
+  f_status_t private_f_file_copy_content_at(const int at_id, const f_string_static_t source, const f_string_static_t destination, const f_number_unsigned_t size_block) {
 
     f_file_t file_source = f_file_t_initialize;
     f_file_t file_destination = f_file_t_initialize;
@@ -137,7 +137,7 @@ extern "C" {
 #endif // !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_)
 
 #if !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_create(const f_string_t path, const mode_t mode, const bool exclusive) {
+  f_status_t private_f_file_create(const f_string_static_t path, const mode_t mode, const bool exclusive) {
 
     f_file_t file = f_file_t_initialize;
 
@@ -158,7 +158,7 @@ extern "C" {
 #endif // !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_create_at(const int at_id, const f_string_t path, const mode_t mode, const bool exclusive) {
+  f_status_t private_f_file_create_at(const int at_id, const f_string_static_t path, const mode_t mode, const bool exclusive) {
 
     f_file_t file = f_file_t_initialize;
 
@@ -179,9 +179,9 @@ extern "C" {
 #endif // !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_copy_)
-  f_status_t private_f_file_create_directory(const f_string_t path, const mode_t mode) {
+  f_status_t private_f_file_create_directory(const f_string_static_t path, const mode_t mode) {
 
-    if (mkdir(path, mode) < 0) {
+    if (mkdir(path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -205,9 +205,9 @@ extern "C" {
 #endif // !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_create_directory_at(const int at_id, const f_string_t path, const mode_t mode) {
+  f_status_t private_f_file_create_directory_at(const int at_id, const f_string_static_t path, const mode_t mode) {
 
-    if (mkdirat(at_id, path, mode) < 0) {
+    if (mkdirat(at_id, path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -232,9 +232,9 @@ extern "C" {
 #endif // !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_create_fifo(const f_string_t path, const mode_t mode) {
+  f_status_t private_f_file_create_fifo(const f_string_static_t path, const mode_t mode) {
 
-    if (mkfifo(path, mode) < 0) {
+    if (mkfifo(path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -253,9 +253,9 @@ extern "C" {
 #endif // !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_create_fifo_at(const int at_id, const f_string_t path, const mode_t mode) {
+  f_status_t private_f_file_create_fifo_at(const int at_id, const f_string_static_t path, const mode_t mode) {
 
-    if (mkfifoat(at_id, path, mode) < 0) {
+    if (mkfifoat(at_id, path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -275,9 +275,9 @@ extern "C" {
 #endif // !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_create_device_) || !defined(_di_f_file_create_node_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_create_node(const f_string_t path, const mode_t mode, const dev_t device) {
+  f_status_t private_f_file_create_node(const f_string_static_t path, const mode_t mode, const dev_t device) {
 
-    if (mknod(path, mode, device) < 0) {
+    if (mknod(path.string, mode, device) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -301,9 +301,9 @@ extern "C" {
 #endif // !defined(_di_f_file_create_device_) || !defined(_di_f_file_create_node_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_create_node_at(const int at_id, const f_string_t path, const mode_t mode, const dev_t device) {
+  f_status_t private_f_file_create_node_at(const int at_id, const f_string_static_t path, const mode_t mode, const dev_t device) {
 
-    if (mknodat(at_id, path, mode, device) < 0) {
+    if (mknodat(at_id, path.string, mode, device) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -345,9 +345,9 @@ extern "C" {
 #endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_link(const f_string_t target, const f_string_t point) {
+  f_status_t private_f_file_link(const f_string_static_t target, const f_string_static_t point) {
 
-    if (symlink(target, point) < 0) {
+    if (symlink(target.string, point.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -373,9 +373,9 @@ extern "C" {
 #endif // !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_link_at(const int at_id, const f_string_t target, const f_string_t point) {
+  f_status_t private_f_file_link_at(const int at_id, const f_string_static_t target, const f_string_static_t point) {
 
-    if (symlinkat(target, at_id, point) < 0) {
+    if (symlinkat(target.string, at_id, point.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -402,7 +402,7 @@ extern "C" {
 #endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+  f_status_t private_f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target) {
 
     // create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
@@ -420,7 +420,7 @@ extern "C" {
 
     target->used = link_stat.st_size;
 
-    if (readlink(path, target->string, target->used) < 0) {
+    if (readlink(path.string, target->string, target->used) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -439,9 +439,9 @@ extern "C" {
 #endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+  f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target) {
 
-    // create a NULL terminated string based on file stat.
+    // Create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
       if (link_stat.st_size + 1 > F_array_length_t_size_d) {
         return F_status_set_error(F_string_too_large);
@@ -457,7 +457,7 @@ extern "C" {
 
     target->used = link_stat.st_size;
 
-    if (readlinkat(at_id, path, target->string, target->used) < 0) {
+    if (readlinkat(at_id, path.string, target->string, target->used) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -477,9 +477,9 @@ extern "C" {
 #endif // !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_mode_set(const f_string_t path, const mode_t mode) {
+  f_status_t private_f_file_mode_set(const f_string_static_t path, const mode_t mode) {
 
-    if (chmod(path, mode) < 0) {
+    if (chmod(path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -499,9 +499,9 @@ extern "C" {
 #endif // !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_mode_set_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_mode_set_at(const int at_id, const f_string_t path, const mode_t mode) {
+  f_status_t private_f_file_mode_set_at(const int at_id, const f_string_static_t path, const mode_t mode) {
 
-    if (fchmodat(at_id, path, mode, 0) < 0) {
+    if (fchmodat(at_id, path.string, mode, 0) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -522,13 +522,13 @@ extern "C" {
 #endif // !defined(_di_f_file_mode_set_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_open(const f_string_t path, const mode_t mode, f_file_t *file) {
+  f_status_t private_f_file_open(const f_string_static_t path, const mode_t mode, f_file_t *file) {
 
     if (!mode) {
-      file->id = open(path, file->flag);
+      file->id = open(path.string, file->flag);
     }
     else {
-      file->id = open(path, file->flag, mode);
+      file->id = open(path.string, file->flag, mode);
     }
 
     if (file->id == -1) {
@@ -560,13 +560,13 @@ extern "C" {
 #endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file) {
+  f_status_t private_f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t *file) {
 
     if (!mode) {
-      file->id = openat(at_id, path, file->flag);
+      file->id = openat(at_id, path.string, file->flag);
     }
     else {
-      file->id = openat(at_id, path, file->flag, mode);
+      file->id = openat(at_id, path.string, file->flag, mode);
     }
 
     if (file->id == -1) {
@@ -599,13 +599,13 @@ extern "C" {
 #endif // !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference) {
+  f_status_t private_f_file_role_change(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference) {
 
     int result = 0;
 
     if (dereference) {
       if (uid != -1) {
-        result = chown(path, uid, -1);
+        result = chown(path.string, uid, -1);
 
         if (result < 0 && errno == EPERM) {
           return F_status_set_error(F_access_owner);
@@ -613,7 +613,7 @@ extern "C" {
       }
 
       if (result == 0 && gid != -1) {
-        result = chown(path, -1, gid);
+        result = chown(path.string, -1, gid);
 
         if (result < 0 && errno == EPERM) {
           return F_status_set_error(F_access_group);
@@ -622,7 +622,7 @@ extern "C" {
     }
     else {
       if (uid != -1) {
-        result = lchown(path, uid, -1);
+        result = lchown(path.string, uid, -1);
 
         if (result < 0 && errno == EPERM) {
           return F_status_set_error(F_access_owner);
@@ -630,7 +630,7 @@ extern "C" {
       }
 
       if (gid != -1) {
-        result = lchown(path, -1, gid);
+        result = lchown(path.string, -1, gid);
 
         if (result < 0 && errno == EPERM) {
           return F_status_set_error(F_access_group);
@@ -657,12 +657,12 @@ extern "C" {
 #endif // !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_role_change_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_role_change_at(const int at_id, const f_string_t path, const uid_t uid, const gid_t gid, const int flag) {
+  f_status_t private_f_file_role_change_at(const int at_id, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag) {
 
     int result = 0;
 
     if (uid != -1) {
-      result = fchownat(at_id, path, uid, -1, flag);
+      result = fchownat(at_id, path.string, uid, -1, flag);
 
       if (result < 0 && errno == EPERM) {
         return F_status_set_error(F_access_owner);
@@ -670,7 +670,7 @@ extern "C" {
     }
 
     if (gid != -1) {
-      result = fchownat(at_id, path, -1, gid, flag);
+      result = fchownat(at_id, path.string, -1, gid, flag);
 
       if (result < 0 && errno == EPERM) {
         return F_status_set_error(F_access_group);
@@ -697,9 +697,9 @@ extern "C" {
 #endif // !defined(_di_f_file_role_change_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_stat(const f_string_t path, const bool dereference, struct stat *file_stat) {
+  f_status_t private_f_file_stat(const f_string_static_t path, const bool dereference, struct stat *file_stat) {
 
-    if ((dereference ? stat(path, file_stat) : lstat(path, file_stat)) < 0) {
+    if ((dereference ? stat(path.string, file_stat) : lstat(path.string, file_stat)) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
@@ -717,9 +717,9 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *file_stat) {
+  f_status_t private_f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat *file_stat) {
 
-    if (fstatat(at_id, path, file_stat, flag) < 0) {
+    if (fstatat(at_id, path.string, file_stat, flag) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
@@ -767,7 +767,8 @@ extern "C" {
       if (flag & F_file_flag_truncate_d) {
         return f_file_open_mode_read_truncate_s.string;
       }
-      else if (flag & F_file_flag_append_d) {
+
+      if (flag & F_file_flag_append_d) {
         return f_file_open_mode_read_append_s.string;
       }
 
@@ -789,7 +790,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
-  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
 
     *written = 0;
 
@@ -813,7 +814,7 @@ extern "C" {
 
     while (*written < write_max) {
 
-      size_write = fwrite(string + *written, write_amount, write_size, file.stream);
+      size_write = fwrite(buffer.string + *written, write_amount, write_size, file.stream);
 
       if (size_write < 0) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -839,7 +840,7 @@ extern "C" {
 #endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
 
 #if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
-  f_status_t private_f_file_write_until(const f_file_t file, const f_string_t string, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t private_f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
 
     *written = 0;
 
@@ -852,7 +853,7 @@ extern "C" {
       write_size = write_max;
     }
 
-    while (*written < write_max && (size_write = write(file.id, string + *written, write_size)) > 0) {
+    while (*written < write_max && (size_write = write(file.id, buffer.string + *written, write_size)) > 0) {
 
       *written += size_write;
 

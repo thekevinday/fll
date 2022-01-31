@@ -25,7 +25,7 @@ extern "C" {
 
     if (global->thread->enabled != controller_thread_enabled_e) return 0;
 
-    const struct timespec delay = controller_time_seconds(global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d);
+    const struct timespec delay = controller_time_seconds(global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e ? controller_thread_cleanup_interval_short_d : controller_thread_cleanup_interval_long_d);
 
     f_status_t status = F_none;
 
@@ -215,7 +215,7 @@ extern "C" {
       }
     }
     else {
-      if (main->parameters[controller_parameter_daemon_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_daemon_e].result == f_console_result_found_e) {
         setting->ready = controller_setting_ready_done_e;
 
         if (f_file_exists(setting->path_pid.string) == F_true) {
@@ -254,7 +254,7 @@ extern "C" {
 
     // Only make the rule and control threads available once any/all pre-processing and are completed.
     if (F_status_is_error_not(status) && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled_e) {
-      if (main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
+      if (main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
 
         // Wait for the entry thread to complete before starting the rule thread.
         controller_thread_join(&thread.id_rule);
@@ -286,7 +286,7 @@ extern "C" {
       return F_child;
     }
 
-    if (F_status_is_error_not(status) && status != F_failure && main->parameters[controller_parameter_validate_e].result == f_console_result_none_e && controller_thread_is_enabled(F_true, &thread)) {
+    if (F_status_is_error_not(status) && status != F_failure && main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e && controller_thread_is_enabled(F_true, &thread)) {
 
       if (setting->mode == controller_setting_mode_service_e) {
         controller_thread_join(&thread.id_signal);

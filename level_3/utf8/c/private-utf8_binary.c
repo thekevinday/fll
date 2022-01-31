@@ -40,7 +40,7 @@ extern "C" {
         return status;
       }
     }
-    else if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
+    else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
       if (data->mode & utf8_mode_to_binary_d) {
         utf8_print_binary(data, character);
       }
@@ -74,7 +74,7 @@ extern "C" {
     f_array_length_t j = 0;
 
     char block_character[4] = { 0, 0, 0, 0 };
-    f_string_static_t character = macro_f_string_static_t_initialize(block_character, 4);
+    f_string_static_t character = macro_f_string_static_t_initialize2(block_character, 4);
 
     do {
       status = f_file_read_block(file, &data->buffer);

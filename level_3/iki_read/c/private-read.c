@@ -10,7 +10,7 @@ extern "C" {
 #ifndef _di_iki_read_process_at_
   f_status_t iki_read_process_at(iki_read_main_t * const main, const f_string_t file_name, f_string_range_t *range) {
 
-    if (main->parameters[iki_read_parameter_line_e].result != f_console_result_additional_e) {
+    if (main->parameters.array[iki_read_parameter_line_e].result != f_console_result_additional_e) {
       return F_false;
     }
 
@@ -41,7 +41,7 @@ extern "C" {
     f_status_t status = F_none;
     iki_data_t iki_data = iki_data_t_initialize;
 
-    if (main->parameters[iki_read_parameter_whole_e].result == f_console_result_found_e) {
+    if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
       f_string_range_t buffer_range = macro_f_string_range_t_initialize(main->buffer.used);
 
       status = iki_read_process_at(main, file_name, &buffer_range);
@@ -139,7 +139,7 @@ extern "C" {
       }
     }
 
-    if (main->parameters[iki_read_parameter_name_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_read_parameter_name_e].result == f_console_result_additional_e) {
       f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
       f_array_length_t index = 0;
@@ -148,9 +148,9 @@ extern "C" {
       f_array_length_t matches = 0;
       buffer_range->start = 0;
 
-      for (; i < main->parameters[iki_read_parameter_name_e].values.used; ++i) {
+      for (; i < main->parameters.array[iki_read_parameter_name_e].values.used; ++i) {
 
-        index = main->parameters[iki_read_parameter_name_e].values.array[i];
+        index = main->parameters.array[iki_read_parameter_name_e].values.array[i];
         name.used = 0;
 
         status = f_string_append_nulless(arguments->argv[index], strlen(arguments->argv[index]), &name);
@@ -177,7 +177,7 @@ extern "C" {
           if (status == F_equal_to) {
             unmatched = F_false;
 
-            if (main->parameters[iki_read_parameter_at_e].result == f_console_result_additional_e) {
+            if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_additional_e) {
               if (matches++ != main->at) continue;
             }
 
@@ -201,7 +201,7 @@ extern "C" {
       else status = F_none;
     }
     else if (ranges->used) {
-      if (main->parameters[iki_read_parameter_at_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_additional_e) {
         if (main->at < ranges->used) {
           flockfile(main->output.to.stream);
 
@@ -310,14 +310,14 @@ extern "C" {
 
     substitution_range.start = 0;
 
-    if (main->parameters[iki_read_parameter_name_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_read_parameter_name_e].result == f_console_result_additional_e) {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
       f_array_length_t length_argument = 0;
 
-      for (f_array_length_t index = 0; i < main->parameters[iki_read_parameter_name_e].values.used; ++i) {
+      for (f_array_length_t index = 0; i < main->parameters.array[iki_read_parameter_name_e].values.used; ++i) {
 
-        index = main->parameters[iki_read_parameter_name_e].values.array[i];
+        index = main->parameters.array[iki_read_parameter_name_e].values.array[i];
         length_argument = strnlen(arguments->argv[index], F_console_parameter_size_d);
 
         for (j = 0, name_missed = F_true; j < names.used; ++j) {
@@ -489,7 +489,7 @@ extern "C" {
 
     f_array_length_t total = 0;
 
-    if (main->parameters[iki_read_parameter_name_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_read_parameter_name_e].result == f_console_result_additional_e) {
       f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
       f_array_length_t index = 0;
@@ -498,7 +498,7 @@ extern "C" {
 
       range.start = 0;
 
-      for (uint16_t signal_check = 0; i < main->parameters[iki_read_parameter_name_e].values.used; ++i) {
+      for (uint16_t signal_check = 0; i < main->parameters.array[iki_read_parameter_name_e].values.used; ++i) {
 
         if (!((++signal_check) % iki_read_signal_check_d)) {
           if (iki_read_signal_received(main)) {
@@ -510,7 +510,7 @@ extern "C" {
           signal_check = 0;
         }
 
-        index = main->parameters[iki_read_parameter_name_e].values.array[i];
+        index = main->parameters.array[iki_read_parameter_name_e].values.array[i];
         name.used = 0;
 
         status = f_string_append_nulless(arguments->argv[index], strlen(arguments->argv[index]), &name);
@@ -539,7 +539,7 @@ extern "C" {
     }
 
     // if that at position is within the actual total, then the total at the given position is 1, otherwise is 0.
-    if (main->parameters[iki_read_parameter_at_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_additional_e) {
       if (main->at < total) {
         total = 1;
       }
@@ -557,7 +557,7 @@ extern "C" {
 #ifndef _di_iki_read_substitutions_identify_
   f_status_t iki_read_substitutions_identify(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) {
 
-    if (main->parameters[iki_read_parameter_substitute_e].result != f_console_result_additional_e) {
+    if (main->parameters.array[iki_read_parameter_substitute_e].result != f_console_result_additional_e) {
       return F_none;
     }
 
@@ -571,7 +571,7 @@ extern "C" {
 
     f_array_length_t length = 0;
 
-    f_console_parameter_t *parameter = &main->parameters[iki_read_parameter_substitute_e];
+    f_console_parameter_t *parameter = &main->parameters.array[iki_read_parameter_substitute_e];
 
     for (; i < parameter->values.used; i += 3) {
 

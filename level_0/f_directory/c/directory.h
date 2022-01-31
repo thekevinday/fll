@@ -54,6 +54,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -73,7 +74,7 @@ extern "C" {
  * @see mkdir()
  */
 #ifndef _di_f_directory_create_
-  extern f_status_t f_directory_create(const f_string_t path, const mode_t mode);
+  extern f_status_t f_directory_create(const f_string_static_t path, const mode_t mode);
 #endif // _di_f_directory_create_
 
 /**
@@ -88,6 +89,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -108,7 +110,7 @@ extern "C" {
  * @see mkdirat()
  */
 #ifndef _di_f_directory_create_at_
-  extern f_status_t f_directory_create_at(const int at_id, const f_string_t path, const mode_t mode);
+  extern f_status_t f_directory_create_at(const int at_id, const f_string_static_t path, const mode_t mode);
 #endif // _di_f_directory_create_at_
 
 /**
@@ -121,6 +123,7 @@ extern "C" {
  *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) on loop error.
@@ -132,7 +135,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_directory_exists_
-  extern f_status_t f_directory_exists(const f_string_t path);
+  extern f_status_t f_directory_exists(const f_string_static_t path);
 #endif // _di_f_directory_exists_
 
 /**
@@ -149,6 +152,7 @@ extern "C" {
  *   F_true if path was found and path is a directory (or a symlink to a directory).
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
@@ -161,7 +165,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_directory_exists_at_
-  extern f_status_t f_directory_exists_at(const int at_id, const f_string_t path, const int flag);
+  extern f_status_t f_directory_exists_at(const int at_id, const f_string_static_t path, const int flag);
 #endif // _di_f_directory_exists_at_
 
 /**
@@ -174,6 +178,7 @@ extern "C" {
  *   F_true if path was found and path is a directory.
  *   F_false if path was found and path is not a directory (this includes symlinks).
  *   F_file_found_not if the path was not found.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) on loop error.
@@ -185,7 +190,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_directory_is_
-  extern f_status_t f_directory_is(const f_string_t path);
+  extern f_status_t f_directory_is(const f_string_static_t path);
 #endif // _di_f_directory_is_
 
 /**
@@ -202,6 +207,7 @@ extern "C" {
  *   F_true if path was found and path is a directory.
  *   F_false if path was found and path is not a directory.
  *   F_file_found_not if the path was not found.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
@@ -214,7 +220,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_directory_is_at_
-  extern f_status_t f_directory_is_at(const int at_id, const f_string_t path, const int flag);
+  extern f_status_t f_directory_is_at(const int at_id, const f_string_static_t path, const int flag);
 #endif // _di_f_directory_is_at_
 
 /**
@@ -236,7 +242,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if directory is empty.
+ *   F_data_not if path.used is 0.
+ *   F_directory_empty if directory is empty.
  *
  *   F_array_too_large (with error bit) if the directory buffer max length would be exceeded.
  *   F_failure (with error bit) if failed to read directory information.
@@ -248,7 +255,7 @@ extern "C" {
  * @see versionsort()
  */
 #ifndef _di_f_directory_list_
-  extern f_status_t f_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics_t *names);
+  extern f_status_t f_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics_t *names);
 #endif // _di_f_directory_list_
 
 /**
@@ -267,6 +274,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -287,7 +295,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_directory_open_
-  extern f_status_t f_directory_open(const f_string_t path, const bool dereference, int *id);
+  extern f_status_t f_directory_open(const f_string_static_t path, const bool dereference, int *id);
 #endif // _di_f_directory_open_
 
 /**
@@ -308,6 +316,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -329,7 +338,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_directory_open_at_
-  extern f_status_t f_directory_open_at(const int at_id, const f_string_t path, const bool dereference, int *id);
+  extern f_status_t f_directory_open_at(const int at_id, const f_string_static_t path, const bool dereference, int *id);
 #endif // _di_f_directory_open_at_
 
 /**
@@ -347,6 +356,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
@@ -369,7 +379,7 @@ extern "C" {
  * @see remove()
  */
 #ifndef _di_f_directory_remove_
-  extern f_status_t f_directory_remove(const f_string_t path, const int depth_max, const bool preserve);
+  extern f_status_t f_directory_remove(const f_string_static_t path, const int depth_max, const bool preserve);
 #endif // _di_f_directory_remove_
 
 /**
@@ -390,6 +400,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
@@ -412,7 +423,7 @@ extern "C" {
  * @see remove()
  */
 #ifndef _di_f_directory_remove_custom_
-  extern f_status_t f_directory_remove_custom(const f_string_t path, const int depth_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *));
+  extern f_status_t f_directory_remove_custom(const f_string_static_t path, const int depth_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *));
 #endif // _di_f_directory_remove_custom_
 
 /**
@@ -427,6 +438,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -451,7 +463,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_directory_touch_
-  extern f_status_t f_directory_touch(const f_string_t path, const mode_t mode);
+  extern f_status_t f_directory_touch(const f_string_static_t path, const mode_t mode);
 #endif // _di_f_directory_touch_
 
 /**
@@ -470,6 +482,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -494,7 +507,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_directory_touch_at_
-  extern f_status_t f_directory_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag);
+  extern f_status_t f_directory_touch_at(const int at_id, const f_string_static_t path, const mode_t mode, const int flag);
 #endif // _di_f_directory_touch_at_
 
 #ifdef __cplusplus

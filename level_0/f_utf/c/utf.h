@@ -47,7 +47,7 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-0 utf includes
+// FLL-0 utf includes.
 #include <fll/level_0/utf-common.h>
 #include <fll/level_0/utf_dynamic.h>
 #include <fll/level_0/utf_map.h>

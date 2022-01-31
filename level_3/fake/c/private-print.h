@@ -25,14 +25,11 @@ extern "C" {
  *   The operation performed.
  * @param source
  *   The operation source.
- *   Set to 0 to disable.
  * @param destination
  *   The operation destination, if applicable.
- *   Requires source to be non-zero.
- *   Set to 0 to disable.
+ *   Set destination.used to 0 to disable.
  * @param how
  *   The how the operation is perform, such as "to" in "copy" source "to" destination.
- *   Requires source and destination to be non-zero.
  * @param fallback
  *   Set to F_true to print the fallback error message for unknown errors.
  *
@@ -44,10 +41,37 @@ extern "C" {
  * @see funlockfile()
  *
  * @see fl_print_format()
+ *
+ * @see fake_print_error_build_operation_file_message();
  */
 #ifndef _di_fake_print_error_operation_file_
-  extern bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_t source, const f_string_t destination, const f_string_t how, const bool fallback) F_attribute_visibility_internal_d;
+  extern bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_operation_file_
+
+/**
+ * Helper function for printing build operation file error messages.
+ *
+ * This prints the "copy source to destination" part of the message.
+ *
+ * @param main
+ *   The main program data.
+ * @param operation
+ *   The operation performed.
+ * @param source
+ *   The operation source.
+ * @param destination
+ *   The operation destination, if applicable.
+ *   Set destination.used to 0 to disable.
+ * @param how
+ *   The how the operation is perform, such as "to" in "copy" source "to" destination.
+ *
+ * @see fl_print_format()
+ *
+ * @see fake_print_error_build_operation_file()
+ */
+#ifndef _di_fake_print_error_build_operation_file_message_
+  extern void fake_print_error_build_operation_file_message(fake_main_t * const main, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how) F_attribute_visibility_internal_d;
+#endif // _di_fake_print_error_build_operation_file_message_
 
 /**
  * Print FSS error messages.
@@ -180,7 +204,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  extern void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) F_attribute_visibility_internal_d;
 #endif // _fake_print_message_section_operation_path_outside_
 
 /**
@@ -205,7 +229,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t error, const f_status_t status, const f_string_t function, const f_string_static_t path) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 /**

@@ -78,173 +78,175 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    f_console_parameter_t parameters[] = byte_dump_console_parameter_t_initialize;
+    main->parameters.array = parameters;
+    main->parameters.used = byte_dump_total_parameters_d;
+
+    // Identify priority of color parameters.
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, byte_dump_total_parameters_d);
+      f_console_parameter_id_t ids[3] = { byte_dump_parameter_no_color_e, byte_dump_parameter_light_e, byte_dump_parameter_dark_e };
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      // Identify priority of color parameters.
-      {
-        f_console_parameter_id_t ids[3] = { byte_dump_parameter_no_color_e, byte_dump_parameter_light_e, byte_dump_parameter_dark_e };
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
 
-        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
+      main->output.set = &main->context.set;
+      main->error.set = &main->context.set;
+      main->warning.set = &main->context.set;
 
-        main->output.set = &main->context.set;
-        main->error.set = &main->context.set;
-        main->warning.set = &main->context.set;
+      if (main->context.set.error.before) {
+        main->output.context = f_color_set_empty_s;
+        main->output.notable = main->context.set.notable;
 
-        if (main->context.set.error.before) {
-          main->output.context = f_color_set_empty_s;
-          main->output.notable = main->context.set.notable;
+        main->error.context = main->context.set.error;
+        main->error.notable = main->context.set.notable;
 
-          main->error.context = main->context.set.error;
-          main->error.notable = main->context.set.notable;
+        main->warning.context = main->context.set.warning;
+        main->warning.notable = main->context.set.notable;
+      }
+      else {
+        f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
-          main->warning.context = main->context.set.warning;
-          main->warning.notable = main->context.set.notable;
-        }
-        else {
-          f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-          fll_program_parameter_process_empty(&main->context, sets);
-        }
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-
-          byte_dump_main_delete(main);
-
-          return F_status_set_error(status);
-        }
+        fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      // Identify priority of verbosity related parameters.
-      {
-        f_console_parameter_id_t ids[4] = { byte_dump_parameter_verbosity_quiet_e, byte_dump_parameter_verbosity_normal_e, byte_dump_parameter_verbosity_verbose_e, byte_dump_parameter_verbosity_debug_e };
-        f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
+        byte_dump_main_delete(main);
 
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-          byte_dump_main_delete(main);
-
-          return status;
-        }
-
-        if (choice == byte_dump_parameter_verbosity_quiet_e) {
-          main->output.verbosity = f_console_verbosity_quiet_e;
-          main->error.verbosity = f_console_verbosity_quiet_e;
-          main->warning.verbosity = f_console_verbosity_quiet_e;
-        }
-        else if (choice == byte_dump_parameter_verbosity_normal_e) {
-          main->output.verbosity = f_console_verbosity_normal_e;
-          main->error.verbosity = f_console_verbosity_normal_e;
-          main->warning.verbosity = f_console_verbosity_normal_e;
-        }
-        else if (choice == byte_dump_parameter_verbosity_verbose_e) {
-          main->output.verbosity = f_console_verbosity_verbose_e;
-          main->error.verbosity = f_console_verbosity_verbose_e;
-          main->warning.verbosity = f_console_verbosity_verbose_e;
-        }
-        else if (choice == byte_dump_parameter_verbosity_debug_e) {
-          main->output.verbosity = f_console_verbosity_debug_e;
-          main->error.verbosity = f_console_verbosity_debug_e;
-          main->warning.verbosity = f_console_verbosity_debug_e;
-        }
+        return F_status_set_error(status);
       }
-
-      // Identify priority of mode parameters.
-      {
-        f_console_parameter_id_t ids[5] = { byte_dump_parameter_hexidecimal_e, byte_dump_parameter_duodecimal_e, byte_dump_parameter_octal_e, byte_dump_parameter_binary_e, byte_dump_parameter_decimal_e };
-        f_console_parameter_id_t choice = byte_dump_parameter_hexidecimal_e;
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
-
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-          byte_dump_main_delete(main);
-
-          return F_status_set_error(status);
-        }
-
-        if (choice == byte_dump_parameter_hexidecimal_e) {
-          main->mode = byte_dump_mode_hexidecimal_e;
-        }
-        else if (choice == byte_dump_parameter_duodecimal_e) {
-          main->mode = byte_dump_mode_duodecimal_e;
-        }
-        else if (choice == byte_dump_parameter_octal_e) {
-          main->mode = byte_dump_mode_octal_e;
-        }
-        else if (choice == byte_dump_parameter_binary_e) {
-          main->mode = byte_dump_mode_binary_e;
-        }
-        else if (choice == byte_dump_parameter_decimal_e) {
-          main->mode = byte_dump_mode_decimal_e;
-        }
-      }
-
-      // Identify priority of presentation parameters.
-      {
-        f_console_parameter_id_t ids[3] = { byte_dump_parameter_normal_e, byte_dump_parameter_simple_e, byte_dump_parameter_classic_e };
-        f_console_parameter_id_t choice = byte_dump_parameter_normal_e;
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
-
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-          byte_dump_main_delete(main);
-
-          return F_status_set_error(status);
-        }
-
-        if (choice == byte_dump_parameter_normal_e) {
-          main->presentation = byte_dump_presentation_normal_e;
-        }
-        else if (choice == byte_dump_parameter_simple_e) {
-          main->presentation = byte_dump_presentation_simple_e;
-        }
-        else if (choice == byte_dump_parameter_classic_e) {
-          main->presentation = byte_dump_presentation_classic_e;
-        }
-      }
-
-      // Identify priority of narrow and wide parameters.
-      {
-        f_console_parameter_id_t ids[2] = { byte_dump_parameter_narrow_e, byte_dump_parameter_wide_e };
-        f_console_parameter_id_t choice = byte_dump_parameter_wide_e;
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
-
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-          byte_dump_main_delete(main);
-
-          return F_status_set_error(status);
-        }
-
-        if (choice == byte_dump_parameter_narrow_e) {
-          if (main->options & byte_dump_option_wide_d) {
-            main->options -= byte_dump_option_wide_d;
-          }
-        }
-        else if (choice == byte_dump_parameter_wide_e) {
-          main->options |= byte_dump_option_wide_d;
-        }
-      }
-
-      status = F_none;
     }
 
-    if (main->parameters[byte_dump_parameter_help_e].result == f_console_result_found_e) {
+    // Identify priority of verbosity related parameters.
+    {
+      f_console_parameter_id_t ids[4] = { byte_dump_parameter_verbosity_quiet_e, byte_dump_parameter_verbosity_normal_e, byte_dump_parameter_verbosity_verbose_e, byte_dump_parameter_verbosity_debug_e };
+      f_console_parameter_id_t choice = 0;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
+        byte_dump_main_delete(main);
+
+        return status;
+      }
+
+      if (choice == byte_dump_parameter_verbosity_quiet_e) {
+        main->output.verbosity = f_console_verbosity_quiet_e;
+        main->error.verbosity = f_console_verbosity_quiet_e;
+        main->warning.verbosity = f_console_verbosity_quiet_e;
+      }
+      else if (choice == byte_dump_parameter_verbosity_normal_e) {
+        main->output.verbosity = f_console_verbosity_normal_e;
+        main->error.verbosity = f_console_verbosity_normal_e;
+        main->warning.verbosity = f_console_verbosity_normal_e;
+      }
+      else if (choice == byte_dump_parameter_verbosity_verbose_e) {
+        main->output.verbosity = f_console_verbosity_verbose_e;
+        main->error.verbosity = f_console_verbosity_verbose_e;
+        main->warning.verbosity = f_console_verbosity_verbose_e;
+      }
+      else if (choice == byte_dump_parameter_verbosity_debug_e) {
+        main->output.verbosity = f_console_verbosity_debug_e;
+        main->error.verbosity = f_console_verbosity_debug_e;
+        main->warning.verbosity = f_console_verbosity_debug_e;
+      }
+    }
+
+    // Identify priority of mode parameters.
+    {
+      f_console_parameter_id_t ids[5] = { byte_dump_parameter_hexidecimal_e, byte_dump_parameter_duodecimal_e, byte_dump_parameter_octal_e, byte_dump_parameter_binary_e, byte_dump_parameter_decimal_e };
+      f_console_parameter_id_t choice = byte_dump_parameter_hexidecimal_e;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
+        byte_dump_main_delete(main);
+
+        return F_status_set_error(status);
+      }
+
+      if (choice == byte_dump_parameter_hexidecimal_e) {
+        main->mode = byte_dump_mode_hexidecimal_e;
+      }
+      else if (choice == byte_dump_parameter_duodecimal_e) {
+        main->mode = byte_dump_mode_duodecimal_e;
+      }
+      else if (choice == byte_dump_parameter_octal_e) {
+        main->mode = byte_dump_mode_octal_e;
+      }
+      else if (choice == byte_dump_parameter_binary_e) {
+        main->mode = byte_dump_mode_binary_e;
+      }
+      else if (choice == byte_dump_parameter_decimal_e) {
+        main->mode = byte_dump_mode_decimal_e;
+      }
+    }
+
+    // Identify priority of presentation parameters.
+    {
+      f_console_parameter_id_t ids[3] = { byte_dump_parameter_normal_e, byte_dump_parameter_simple_e, byte_dump_parameter_classic_e };
+      f_console_parameter_id_t choice = byte_dump_parameter_normal_e;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
+        byte_dump_main_delete(main);
+
+        return F_status_set_error(status);
+      }
+
+      if (choice == byte_dump_parameter_normal_e) {
+        main->presentation = byte_dump_presentation_normal_e;
+      }
+      else if (choice == byte_dump_parameter_simple_e) {
+        main->presentation = byte_dump_presentation_simple_e;
+      }
+      else if (choice == byte_dump_parameter_classic_e) {
+        main->presentation = byte_dump_presentation_classic_e;
+      }
+    }
+
+    // Identify priority of narrow and wide parameters.
+    {
+      f_console_parameter_id_t ids[2] = { byte_dump_parameter_narrow_e, byte_dump_parameter_wide_e };
+      f_console_parameter_id_t choice = byte_dump_parameter_wide_e;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
+        byte_dump_main_delete(main);
+
+        return F_status_set_error(status);
+      }
+
+      if (choice == byte_dump_parameter_narrow_e) {
+        if (main->options & byte_dump_option_wide_d) {
+          main->options -= byte_dump_option_wide_d;
+        }
+      }
+      else if (choice == byte_dump_parameter_wide_e) {
+        main->options |= byte_dump_option_wide_d;
+      }
+    }
+
+    f_string_static_t * const argv = main->parameters.arguments.array;
+
+    status = F_none;
+
+    if (main->parameters.array[byte_dump_parameter_help_e].result == f_console_result_found_e) {
       byte_dump_print_help(main->output.to, main->context);
 
       byte_dump_main_delete(main);
@@ -252,7 +254,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[byte_dump_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[byte_dump_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, byte_dump_program_version_s);
 
       byte_dump_main_delete(main);
@@ -261,7 +263,7 @@ extern "C" {
     }
 
     if (main->remaining.used || main->process_pipe) {
-      if (main->parameters[byte_dump_parameter_width_e].result == f_console_result_found_e) {
+      if (main->parameters.array[byte_dump_parameter_width_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
@@ -275,13 +277,13 @@ extern "C" {
         return F_status_set_error(F_parameter);
       }
 
-      if (main->parameters[byte_dump_parameter_width_e].result == f_console_result_additional_e) {
-        const f_array_length_t index = main->parameters[byte_dump_parameter_width_e].values.array[main->parameters[byte_dump_parameter_width_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
+      if (main->parameters.array[byte_dump_parameter_width_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].values.used - 1];
+        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
+        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           flockfile(main->error.to.stream);
@@ -306,7 +308,7 @@ extern "C" {
         main->width = (uint8_t) number;
       }
 
-      if (main->parameters[byte_dump_parameter_first_e].result == f_console_result_found_e) {
+      if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
@@ -320,13 +322,13 @@ extern "C" {
         return F_status_set_error(F_parameter);
       }
 
-      if (main->parameters[byte_dump_parameter_first_e].result == f_console_result_additional_e) {
-        const f_array_length_t index = main->parameters[byte_dump_parameter_first_e].values.array[main->parameters[byte_dump_parameter_first_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
+      if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].values.used - 1];
+        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
+        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
 
         if (F_status_is_error(status) || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);
@@ -351,7 +353,7 @@ extern "C" {
         main->first = number;
       }
 
-      if (main->parameters[byte_dump_parameter_last_e].result == f_console_result_found_e) {
+      if (main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
@@ -365,13 +367,13 @@ extern "C" {
         return F_status_set_error(F_parameter);
       }
 
-      if (main->parameters[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
-        const f_array_length_t index = main->parameters[byte_dump_parameter_last_e].values.array[main->parameters[byte_dump_parameter_last_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
+      if (main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].values.used - 1];
+        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
+        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
 
         if (F_status_is_error(status) || number < 0 || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);
@@ -396,7 +398,7 @@ extern "C" {
         main->last = number;
       }
 
-      if (main->parameters[byte_dump_parameter_first_e].result == f_console_result_additional_e && main->parameters[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_additional_e && main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
         if (main->first > main->last) {
           flockfile(main->error.to.stream);
 
@@ -448,7 +450,7 @@ extern "C" {
 
         funlockfile(main->output.to.stream);
 
-        status = byte_dump_file(main, 0, file);
+        status = byte_dump_file(main, f_string_empty_s, file);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true);
@@ -467,7 +469,7 @@ extern "C" {
 
           for (f_array_length_t counter = 0; counter < main->remaining.used; ++counter) {
 
-            status = f_file_exists(arguments->argv[main->remaining.array[counter]]);
+            status = f_file_exists(argv[main->remaining.array[counter]]);
 
             if (status == F_false) {
               status = F_status_set_error(F_file_found_not);
@@ -478,7 +480,7 @@ extern "C" {
                 missing_files = status;
               }
 
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, arguments->argv[main->remaining.array[counter]], "open", fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, argv[main->remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
             }
           } // for
 
@@ -495,10 +497,10 @@ extern "C" {
 
         for (f_array_length_t counter = 0; counter < main->remaining.used; ++counter) {
 
-          status = f_file_stream_open(arguments->argv[main->remaining.array[counter]], 0, &file);
+          status = f_file_stream_open(argv[main->remaining.array[counter]], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->remaining.array[counter]], "open", fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, argv[main->remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
 
             byte_dump_main_delete(main);
 
@@ -507,9 +509,8 @@ extern "C" {
 
           flockfile(main->output.to.stream);
 
-          f_print_dynamic(f_string_eol_s, main->output.to.stream);
-          fl_print_format("%[Byte Dump of: %]%[", main->output.to.stream, main->context.set.title, main->context.set.title, main->context.set.notable);
-          fl_print_format("%S%] %[(in ", main->output.to.stream, arguments->argv[main->remaining.array[counter]], main->context.set.notable, main->context.set.title);
+          fl_print_format("%q%[Byte Dump of: %]%[", main->output.to.stream, f_string_eol_s, main->context.set.title, main->context.set.title, main->context.set.notable);
+          fl_print_format("%Q%] %[(in ", main->output.to.stream, argv[main->remaining.array[counter]], main->context.set.notable, main->context.set.title);
 
           if (main->mode == byte_dump_mode_hexidecimal_e) {
             f_print_terminated("Hexidecimal", main->output.to.stream);
@@ -531,7 +532,7 @@ extern "C" {
 
           funlockfile(main->output.to.stream);
 
-          status = byte_dump_file(main, arguments->argv[main->remaining.array[counter]], file);
+          status = byte_dump_file(main, argv[main->remaining.array[counter]], file);
 
           f_file_stream_close(F_true, &file);
 
@@ -547,7 +548,7 @@ extern "C" {
             }
             else {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, arguments->argv[main->remaining.array[counter]], "process", fll_error_file_type_file_e);
+                fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, argv[main->remaining.array[counter]], f_file_operation_process_s, fll_error_file_type_file_e);
               }
             }
 
@@ -562,7 +563,8 @@ extern "C" {
       }
     }
     else {
-      fll_print_format("%[%QYou failed to specify one or more filenames.%]%q", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
+      fll_print_format("%q%[%QYou failed to specify one or more filenames.%]%q", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
+
       status = F_status_set_error(F_parameter);
     }
 

@@ -32,8 +32,8 @@ extern "C" {
 
     fll_program_print_help_usage(main->output.to, main->context, control_program_name_s, control_command_s);
 
-    fl_print_format("  When the %[%s%q%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s, main->context.set.notable);
-    fl_print_format(" %[%s%q%] parameter or from the control settings file.%q%q", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When the %[%q%q%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s, main->context.set.notable);
+    fl_print_format(" %[%q%q%] parameter or from the control settings file.%q%q", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  A rule action allows for either the full rule path, such as '%[boot/root%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
     fl_print_format(" as a single parameter or two parameters with the first representing the rule directory path '%[boot%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
@@ -51,87 +51,87 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    f_console_parameter_t parameters[] = control_console_parameter_t_initialize;
+    main->parameters.array = parameters;
+    main->parameters.used = control_total_parameters_d;
+
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, control_total_parameters_d);
+      f_console_parameter_id_t ids[3] = { control_parameter_no_color_e, control_parameter_light_e, control_parameter_dark_e };
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      {
-        f_console_parameter_id_t ids[3] = { control_parameter_no_color_e, control_parameter_light_e, control_parameter_dark_e };
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
 
-        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
+      main->output.set = &main->context.set;
+      main->error.set = &main->context.set;
+      main->warning.set = &main->context.set;
 
-        main->output.set = &main->context.set;
-        main->error.set = &main->context.set;
-        main->warning.set = &main->context.set;
+      if (main->context.set.error.before) {
+        main->output.context = f_color_set_empty_s;
+        main->output.notable = main->context.set.notable;
 
-        if (main->context.set.error.before) {
-          main->output.context = f_color_set_empty_s;
-          main->output.notable = main->context.set.notable;
+        main->error.context = main->context.set.error;
+        main->error.notable = main->context.set.notable;
 
-          main->error.context = main->context.set.error;
-          main->error.notable = main->context.set.notable;
+        main->warning.context = main->context.set.warning;
+        main->warning.notable = main->context.set.notable;
+      }
+      else {
+        f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
-          main->warning.context = main->context.set.warning;
-          main->warning.notable = main->context.set.notable;
-        }
-        else {
-          f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-          fll_program_parameter_process_empty(&main->context, sets);
-        }
-
-        if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fll_print_dynamic(f_string_eol_s, main->error.to.stream);
-          }
-
-          control_main_delete(main);
-
-          return F_status_set_error(status);
-        }
+        fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      // Identify priority of verbosity related parameters.
-      {
-        f_console_parameter_id_t ids[4] = { control_parameter_verbosity_quiet_e, control_parameter_verbosity_normal_e, control_parameter_verbosity_verbose_e, control_parameter_verbosity_debug_e };
-        f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
-
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
-
-        if (F_status_is_error(status)) {
-          control_main_delete(main);
-
-          return status;
+      if (F_status_is_error(status)) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+          fll_print_dynamic(f_string_eol_s, main->error.to.stream);
         }
 
-        if (choice == control_parameter_verbosity_quiet_e) {
-          main->output.verbosity = f_console_verbosity_quiet_e;
-          main->error.verbosity = f_console_verbosity_quiet_e;
-          main->warning.verbosity = f_console_verbosity_quiet_e;
-        }
-        else if (choice == control_parameter_verbosity_normal_e) {
-          main->output.verbosity = f_console_verbosity_normal_e;
-          main->error.verbosity = f_console_verbosity_normal_e;
-          main->warning.verbosity = f_console_verbosity_normal_e;
-        }
-        else if (choice == control_parameter_verbosity_verbose_e) {
-          main->output.verbosity = f_console_verbosity_verbose_e;
-          main->error.verbosity = f_console_verbosity_verbose_e;
-          main->warning.verbosity = f_console_verbosity_verbose_e;
-        }
-        else if (choice == control_parameter_verbosity_debug_e) {
-          main->output.verbosity = f_console_verbosity_debug_e;
-          main->error.verbosity = f_console_verbosity_debug_e;
-          main->warning.verbosity = f_console_verbosity_debug_e;
-        }
+        control_main_delete(main);
+
+        return F_status_set_error(status);
       }
-
-      status = F_none;
     }
 
-    if (main->parameters[control_parameter_help_e].result == f_console_result_found_e) {
+    // Identify priority of verbosity related parameters.
+    {
+      f_console_parameter_id_t ids[4] = { control_parameter_verbosity_quiet_e, control_parameter_verbosity_normal_e, control_parameter_verbosity_verbose_e, control_parameter_verbosity_debug_e };
+      f_console_parameter_id_t choice = 0;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        control_main_delete(main);
+
+        return status;
+      }
+
+      if (choice == control_parameter_verbosity_quiet_e) {
+        main->output.verbosity = f_console_verbosity_quiet_e;
+        main->error.verbosity = f_console_verbosity_quiet_e;
+        main->warning.verbosity = f_console_verbosity_quiet_e;
+      }
+      else if (choice == control_parameter_verbosity_normal_e) {
+        main->output.verbosity = f_console_verbosity_normal_e;
+        main->error.verbosity = f_console_verbosity_normal_e;
+        main->warning.verbosity = f_console_verbosity_normal_e;
+      }
+      else if (choice == control_parameter_verbosity_verbose_e) {
+        main->output.verbosity = f_console_verbosity_verbose_e;
+        main->error.verbosity = f_console_verbosity_verbose_e;
+        main->warning.verbosity = f_console_verbosity_verbose_e;
+      }
+      else if (choice == control_parameter_verbosity_debug_e) {
+        main->output.verbosity = f_console_verbosity_debug_e;
+        main->error.verbosity = f_console_verbosity_debug_e;
+        main->warning.verbosity = f_console_verbosity_debug_e;
+      }
+    }
+
+    status = F_none;
+
+    if (main->parameters.array[control_parameter_help_e].result == f_console_result_found_e) {
       control_print_help(main);
 
       control_main_delete(main);
@@ -139,7 +139,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[control_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[control_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, control_program_version_s);
 
       control_main_delete(main);
@@ -160,19 +160,19 @@ extern "C" {
         control_long_socket_s
       };
 
-      f_array_length_t location = f_array_length_t_initialize;
+      f_array_length_t index = f_array_length_t_initialize;
 
       for (uint8_t i = 0; i < 3; ++i) {
 
-        if (main->parameters[ids[i]].result == f_console_result_found_e) {
+        if (main->parameters.array[ids[i]].result == f_console_result_found_e) {
           control_print_error_parameter_value_not(main, names[i]);
 
           status = F_status_set_error(F_parameter);
         }
-        else if (main->parameters[ids[i]].result == f_console_result_additional_e) {
-          location = main->parameters[ids[i]].values.array[main->parameters[ids[i]].values.used - 1];
+        else if (main->parameters.array[ids[i]].result == f_console_result_additional_e) {
+          index = main->parameters.array[ids[i]].values.array[main->parameters.array[ids[i]].values.used - 1];
 
-          if (!strnlen(arguments->argv[location], F_console_parameter_size_d)) {
+          if (!main->parameters.arguments.array[index].used) {
             control_print_error_parameter_value_empty(main, names[i]);
 
             status = F_status_set_error(F_parameter);
@@ -189,13 +189,14 @@ extern "C" {
       }
       else if (main->remaining.used) {
         control_data_t data = control_data_t_initialize;
+        data.argv = main->parameters.arguments.array;
 
         // Verify commands before attempting to connect to the socket.
-        if (control_command_identify(main, &data, arguments->argv[main->remaining.array[0]]) == F_found) {
-          status = control_command_verify(main, &data, arguments);
+        if (control_command_identify(main, &data, data.argv[main->remaining.array[0]]) == F_found) {
+          status = control_command_verify(main, &data);
         }
         else {
-          control_print_error_parameter_command_not(main, arguments->argv[main->remaining.array[0]]);
+          control_print_error_parameter_command_not(main, data.argv[main->remaining.array[0]]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -210,7 +211,7 @@ extern "C" {
           data.socket.type = f_socket_type_datagram_d;
           data.socket.length = sizeof(struct sockaddr_un);
 
-          status = control_settings_load(main, &data, arguments);
+          status = control_settings_load(main, &data);
 
           if (F_status_is_error_not(status)) {
             // @todo construct the packet, send the packet to the controller, and process the response.
@@ -233,9 +234,8 @@ extern "C" {
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_interrupt) {
-          fflush(main->output.to.stream);
-        }
+        fflush(main->output.to.stream);
+        fflush(main->error.to.stream);
 
         fll_print_dynamic(f_string_eol_s, main->output.to.stream);
       }

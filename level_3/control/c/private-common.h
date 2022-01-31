@@ -239,6 +239,7 @@ extern "C" {
  * command: The command type code.
  * cache:   A cache.
  * socket:  A socket used to connect to the controller.
+ * argv:    The argument structure in control_main_t.parameters for simplifying syntax.
  */
 #ifndef _di_control_data_t_
   typedef struct {
@@ -247,6 +248,8 @@ extern "C" {
     control_cache_t cache;
 
     f_socket_t socket;
+
+    f_string_static_t *argv;
   } control_data_t;
 
   #define control_data_t_initialize \
@@ -254,6 +257,7 @@ extern "C" {
       0, \
       f_string_dynamic_t_initialize, \
       f_socket_t_initialize, \
+      0, \
     }
 #endif // _di_control_data_t_
 

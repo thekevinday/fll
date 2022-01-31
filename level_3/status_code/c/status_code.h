@@ -135,7 +135,7 @@ extern "C" {
 
 #ifndef _di_status_code_main_t_
   typedef struct {
-    f_console_parameter_t parameters[status_code_total_parameters_d];
+    f_console_parameters_t parameters;
 
     f_array_lengths_t remaining;
     bool process_pipe;
@@ -151,7 +151,7 @@ extern "C" {
 
   #define status_code_main_t_initialize \
     { \
-      status_code_console_parameter_t_initialize, \
+      f_console_parameters_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \

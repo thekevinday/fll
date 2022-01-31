@@ -417,7 +417,7 @@ extern "C" {
 
               if (F_status_is_error(status)) {
                 // @todo instead call: fll_error_file_print().
-                // fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, arguments->argv[location], "verify", fll_error_file_type_path_e);
+                // fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, arguments->argv[location], f_file_operation_verify_s, fll_error_file_type_path_e);
                 controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, global.thread);
 
                 action->status = status;
@@ -965,7 +965,7 @@ extern "C" {
       return status;
     }
 
-    if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
+    if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
       if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(global->main->output.to, global->thread);
 
@@ -1002,7 +1002,7 @@ extern "C" {
         }
 
         if (F_status_is_error(entry_action->status)) {
-          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
+          if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
             if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
@@ -1080,7 +1080,7 @@ extern "C" {
 
         if (entry_action->type == controller_entry_action_type_ready_e) {
           if ((entry_action->code & controller_entry_rule_code_wait_d) || global->setting->ready == controller_setting_ready_wait_e) {
-            if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || entry->show == controller_entry_show_init_e) {
+            if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || entry->show == controller_entry_show_init_e) {
               if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->output.to, global->thread);
 
@@ -1092,14 +1092,14 @@ extern "C" {
               }
             }
 
-            if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
+            if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
               status = controller_rule_wait_all(*global, is_entry, F_false, process);
               if (F_status_is_error(status)) return status;
             }
           }
 
           if (global->setting->ready == controller_setting_ready_yes_e) {
-            if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
+            if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
               if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->output.to, global->thread);
 
@@ -1112,7 +1112,7 @@ extern "C" {
             }
           }
           else {
-            if (!failsafe && (global->main->error.verbosity == f_console_verbosity_verbose_e || entry->show == controller_entry_show_init_e) && global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e) {
+            if (!failsafe && (global->main->error.verbosity == f_console_verbosity_verbose_e || entry->show == controller_entry_show_init_e) && global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_none_e) {
               fl_print_format("%qState is now '%[%q%]'.%q", global->main->output.to.stream, f_string_eol_s, global->main->context.set.notable, controller_ready_s, global->main->context.set.notable, f_string_eol_s);
             }
 
@@ -1170,7 +1170,7 @@ extern "C" {
             return status;
           }
 
-          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
+          if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
             if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
@@ -1206,7 +1206,7 @@ extern "C" {
 
           const f_array_length_t id_rule_length = entry_action->parameters.array[0].used + entry_action->parameters.array[1].used + 1;
           char id_rule_name[id_rule_length + 1];
-          const f_string_static_t alias_rule = macro_f_string_static_t_initialize(id_rule_name, id_rule_length);
+          const f_string_static_t alias_rule = macro_f_string_static_t_initialize2(id_rule_name, id_rule_length);
 
           memcpy(id_rule_name, entry_action->parameters.array[0].string, entry_action->parameters.array[0].used);
           memcpy(id_rule_name + entry_action->parameters.array[0].used + 1, entry_action->parameters.array[1].string, entry_action->parameters.array[1].used);
@@ -1226,14 +1226,14 @@ extern "C" {
 
           f_thread_unlock(&global->thread->lock.rule);
 
-          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || (entry->show == controller_entry_show_init_e && entry_action->type != controller_entry_action_type_consider_e)) {
+          if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || (entry->show == controller_entry_show_init_e && entry_action->type != controller_entry_action_type_consider_e)) {
             if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
               fl_print_format("%q%q %q item rule ", global->main->output.to.stream, f_string_eol_s, entry_action->type == controller_entry_action_type_consider_e ? controller_entry_print_considering_s : controller_entry_print_processing_s, is_entry ? controller_entry_s : controller_exit_s);
               fl_print_format("'%[%Q%]'", global->main->output.to.stream, global->main->context.set.title, alias_rule, global->main->context.set.title);
 
-              if (entry->show == controller_entry_show_init_e && global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e) {
+              if (entry->show == controller_entry_show_init_e && global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_none_e) {
                 fl_print_format(" [%[%q%]]", global->main->output.to.stream, global->main->context.set.notable, entry_action->code == controller_entry_rule_code_asynchronous_d ? controller_asynchronous_s : controller_synchronous_s, global->main->context.set.notable);
 
                 if (entry_action->code == controller_entry_rule_code_wait_d) {
@@ -1318,7 +1318,7 @@ extern "C" {
               // Designate the action as failed.
               entry_action->status = F_status_set_error(F_failure);
 
-              if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e) {
+              if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_none_e) {
                 f_thread_unlock(&global->thread->lock.rule);
 
                 if (entry_action->code & controller_entry_rule_code_require_d) {
@@ -1340,7 +1340,7 @@ extern "C" {
             options_force = 0;
             options_process = 0;
 
-            if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
+            if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
               options_process |= controller_process_option_simulate_d;
             }
 
@@ -1352,12 +1352,12 @@ extern "C" {
               options_process |= controller_process_option_wait_d;
             }
 
-            if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_found_e) {
+            if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_found_e) {
               options_process |= controller_process_option_validate_d;
             }
 
             if (entry_action->code & controller_entry_rule_code_asynchronous_d) {
-              if (global->main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
+              if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
                 options_force |= controller_process_option_asynchronous_d;
               }
 
@@ -1370,13 +1370,13 @@ extern "C" {
               break;
             }
 
-            if (F_status_is_error(status) && global->main->parameters[controller_parameter_simulate_e].result == f_console_result_none_e && (entry_action->code & controller_entry_rule_code_require_d)) {
+            if (F_status_is_error(status) && global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_none_e && (entry_action->code & controller_entry_rule_code_require_d)) {
               return F_status_set_error(F_require);
             }
           }
         }
         else if (entry_action->type == controller_entry_action_type_execute_e) {
-          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || entry->show == controller_entry_show_init_e) {
+          if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e || entry->show == controller_entry_show_init_e) {
             if (global->main->output.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
@@ -1397,7 +1397,7 @@ extern "C" {
             }
           }
 
-          if (global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
+          if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
             return F_execute;
           }
 
@@ -1410,7 +1410,7 @@ extern "C" {
             option |= FL_execute_parameter_option_session_d;
           }
 
-          status = fll_execute_into(0, entry_action->parameters, option, 0, (void *) &result);
+          status = fll_execute_into(f_string_empty_s, entry_action->parameters, option, 0, (void *) &result);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_file_found_not) {
@@ -1557,7 +1557,7 @@ extern "C" {
     }
 
     // Check to see if any required processes failed, but do not do this if already operating in failsafe.
-    if (F_status_is_error_not(status) && !failsafe && global->main->parameters[controller_parameter_validate_e].result == f_console_result_none_e) {
+    if (F_status_is_error_not(status) && !failsafe && global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
       const f_status_t status_wait = controller_rule_wait_all(*global, is_entry, F_true, 0);
 
       if (F_status_is_error(status_wait)) {
@@ -1569,7 +1569,7 @@ extern "C" {
       }
     }
 
-    if ((global->main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e && global->main->error.verbosity != f_console_verbosity_quiet_e) || global->main->error.verbosity == f_console_verbosity_verbose_e) {
+    if ((global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e && global->main->error.verbosity != f_console_verbosity_quiet_e) || global->main->error.verbosity == f_console_verbosity_verbose_e) {
       controller_lock_print(global->main->output.to, global->thread);
 
       fl_print_format("%qDone processing %q item '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);

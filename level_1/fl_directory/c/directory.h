@@ -20,7 +20,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-// work-around for out-dated systems.
+// Work-around for systems that require __USE_XOPEN_EXTENDED defined to properly include ftw.h.
 #ifndef __USE_XOPEN_EXTENDED
   #define __USE_XOPEN_EXTENDED
   #include <ftw.h>
@@ -40,54 +40,12 @@
 #include <fll/level_0/file.h>
 #include <fll/level_0/path.h>
 
+// FLL-1 directory includes.
+#include <fll/level_1/directory-common.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * An association of a path and a status code.
- *
- * The allocation macros apply to the path.
- *
- * depth_max:
- *   The max recursion depth.
- * size_block:
- *   The default number of chunks to read at a time with each chunk being 1-byte.
- *   Must be greater than 0.
- * exclusive:
- *   If TRUE, will fail when file already exists.
- *   If FALSE, will not fail if file already exists (existing file will be replaced).
- * output:
- *   Set to -1 to not print on successful operation.
- *   Set to a valid file descriptor to print to on successful operation.
- *   This is passed to the verbose function if that function pointer is not -1.
- * verbose:
- *   Set to 0 to not print on successful operation.
- *   Set to address of a function to be called for printing such that:
- *     - The first parameter represents the output file type.
- *     - The second parameter represents the source string.
- *     - The third parameter represents the destination string.
- * failures:
- *   A list of paths and their respective status codes for clone failures.
- *   If 0, then this and statuses are ignored.
- */
-#ifndef _di_fl_directory_recurse_t_
-  #define FL_directory_recurse_depth_max_d 65535
-
-  typedef struct {
-    f_number_unsigned_t depth_max;
-    f_number_unsigned_t size_block;
-
-    bool exclusive;
-    f_file_t output;
-
-    void (*verbose)(const f_file_t, const f_string_t, const f_string_t);
-
-    f_directory_statuss_t *failures;
-  } fl_directory_recurse_t;
-
-  #define fl_directory_recurse_t_initialize { FL_directory_recurse_depth_max_d, F_file_default_read_size_d, F_false, macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d), 0, 0 }
-#endif // _di_fl_directory_recurse_t_
 
 /**
  * Create all directories at the given path.
@@ -97,15 +55,13 @@ extern "C" {
  *
  * @param path
  *   The file path to the directory.
- * @param length
- *   The length of the path string.
  * @param mode
  *   The directory mode to use when creating.
  *   This is applied to all created directories.
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there was no string to process (length is 0).
+ *   F_data_not if path.used is 0.
  *   F_directory_found on success, but the directory already exists.
  *
  *   F_access_denied (with error bit) on access denied.
@@ -126,7 +82,7 @@ extern "C" {
  * @see f_directory_create()
  */
 #ifndef _di_fl_directory_create_
-  extern f_status_t fl_directory_create(const f_string_t path, const f_array_length_t length, const mode_t mode);
+  extern f_status_t fl_directory_create(const f_string_static_t path, const mode_t mode);
 #endif // _di_fl_directory_create_
 
 /**
@@ -145,10 +101,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param source_length
- *   The length of the source path.
- * @param destination_length
- *   The length of the destination path.
  * @param role
  *   If TRUE, will copy the owner and group ids.
  *   If FALSE, will not copy the owner and group ids.
@@ -158,6 +110,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if source.used or destination.used is 0.
  *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
@@ -170,7 +123,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_
-  extern f_status_t fl_directory_clone(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const bool role, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_clone_
 
 /**
@@ -191,10 +144,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param source_length
- *   The length of the source path.
- * @param destination_length
- *   The length of the destination path.
  * @param role
  *   If TRUE, will copy the owner and group ids.
  *   If FALSE, will not copy the owner and group ids.
@@ -204,6 +153,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if source.used or destination.used is 0.
  *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
@@ -212,7 +162,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_content_
-  extern f_status_t fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const bool role, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_clone_content(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_clone_content_
 
 /**
@@ -231,10 +181,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param source_length
- *   The length of the source path.
- * @param destination_length
- *   The length of the destination path.
  * @param mode
  *   The directory modes.
  * @param recurse
@@ -242,6 +188,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if source.used or destination.used is 0.
  *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
@@ -254,7 +201,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #ifndef _di_fl_directory_copy_
-  extern f_status_t fl_directory_copy(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_copy_
 
 /**
@@ -275,10 +222,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param source_length
- *   The length of the source path.
- * @param destination_length
- *   The length of the destination path.
  * @param mode
  *   The directory modes.
  * @param recurse
@@ -286,6 +229,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if source.used or destination.used is 0.
  *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
@@ -294,7 +238,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #ifndef _di_fl_directory_copy_content_
-  extern f_status_t fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_copy_content(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_copy_content_
 
 /**
@@ -319,7 +263,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if directory is empty.
+ *   F_data_not if source.used or destination.used is 0.
+ *   F_directory_empty if directory is empty.
  *
  *   F_directory_descriptor (with error bit) on directory file descriptor error.
  *   F_directory_open (with error bit) on directory open error.
@@ -333,14 +278,18 @@ extern "C" {
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  *   Errors (with error bit) from: f_file_stat_at().
+ *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *
  * @see alphasort()
  * @see opendir()
  * @see scandir()
  * @see versionsort()
+ *
+ * @see f_file_stat_at()
+ * @see f_string_dynamics_increase_by()
  */
 #ifndef _di_fl_directory_list_
-  extern f_status_t fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing);
+  extern f_status_t fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing);
 #endif // _di_fl_directory_list_
 
 /**
@@ -376,36 +325,6 @@ extern "C" {
  * @param source
  *   The path to append onto the destination.
  *   This need not be NULL terminated.
- * @param length
- *   The length of the string.
- *   Must not exceed length of source.
- * @param destination
- *   The destination path to push the path part onto.
- *   Any terminating NULLs at the end of the destination string are removed before appending.
- *   This will only be NULL terminated if destination string is already NULL terminated.
- *
- * @return
- *   F_none on success.
- *   F_data_not if length is 0.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
- *
- *   Errors (with error bit) from: f_utf_is_control().
- */
-#ifndef _di_fl_directory_path_push_
-  extern f_status_t fl_directory_path_push(const f_string_t source, f_array_length_t length, f_string_dynamic_t *destination);
-#endif // _di_fl_directory_path_push_
-
-/**
- * Append a dynamic path string onto the destination path.
- *
- * This ensures that there is a leading and trailing '/' from source.
- * This ignores control characters.
- *
- * @param source
- *   The path to append onto the destination.
- *   This need not be NULL terminated.
  * @param destination
  *   The destination path to push the path part onto.
  *   Any terminating NULLs at the end of the destination string are removed before appending.
@@ -420,9 +339,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_is_control().
  */
-#ifndef _di_fl_directory_path_push_dynamic_
-  extern f_status_t fl_directory_path_push_dynamic(const f_string_static_t source, f_string_dynamic_t *destination);
-#endif // _di_fl_directory_path_push_dynamic_
+#ifndef _di_fl_directory_path_push_
+  extern f_status_t fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t *destination);
+#endif // _di_fl_directory_path_push_
 
 #ifdef __cplusplus
 } // extern "C"

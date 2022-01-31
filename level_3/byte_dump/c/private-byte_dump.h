@@ -30,7 +30,7 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  */
 #ifndef _di_byte_dump_file_
-  extern f_status_t byte_dump_file(byte_dump_main_t * const main, const f_string_t file_name, const f_file_t file) F_attribute_visibility_internal_d;
+  extern f_status_t byte_dump_file(byte_dump_main_t * const main, const f_string_static_t file_name, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // _di_byte_dump_file_
 
 /**

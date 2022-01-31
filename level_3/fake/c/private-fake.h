@@ -56,7 +56,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_file_buffer_
-  extern f_status_t fake_file_buffer(fake_main_t * const main, const f_string_t path_file, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fake_file_buffer(fake_main_t * const main, const f_string_static_t path_file, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fake_file_buffer_
 
 /**

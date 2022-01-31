@@ -32,17 +32,14 @@ extern "C" {
 
       for (uint8_t i = 0; i < 2; ++i) {
 
-        *status = fl_environment_load_name(variables[i].string, variables[i].used, environment);
+        *status = fl_environment_load_name(variables[i], environment);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "fl_environment_load_name", F_true);
-          break;
+
+          return;
         }
       } // for
-
-      if (F_status_is_error(*status)) {
-        return;
-      }
     }
 
     if (environment->used + data_build.setting.environment.used > environment->size) {
@@ -84,7 +81,11 @@ extern "C" {
       return;
     }
 
-    char path_file[main->path_data_build.used + setting_file.used + 1];
+    f_string_static_t path_file = f_string_static_t_initialize;
+    path_file.used = main->path_data_build.used + setting_file.used;
+
+    char path_file_string[path_file.used + 1];
+    path_file.string = path_file_string;
 
     {
       f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
@@ -93,15 +94,15 @@ extern "C" {
       f_fss_contents_t contents = f_fss_contents_t_initialize;
 
       if (setting_file.used) {
-        memcpy(path_file, main->path_data_build.string, main->path_data_build.used);
-        memcpy(path_file + main->path_data_build.used, setting_file.string, setting_file.used);
+        memcpy(path_file_string, main->path_data_build.string, main->path_data_build.used);
+        memcpy(path_file_string + main->path_data_build.used, setting_file.string, setting_file.used);
 
-        path_file[main->path_data_build.used + setting_file.used] = 0;
+        path_file_string[main->path_data_build.used + setting_file.used] = 0;
 
         *status = fake_file_buffer(main, path_file, &buffer);
       }
       else {
-        *status = fake_file_buffer(main, main->file_data_build_settings.string, &buffer);
+        *status = fake_file_buffer(main, main->file_data_build_settings, &buffer);
       }
 
       if (F_status_is_error_not(*status)) {
@@ -124,7 +125,7 @@ extern "C" {
             fll_error_print(main->error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
           }
           else {
-            fake_build_load_setting_process(main, F_true, setting_file.used ? path_file : main->file_data_build_settings.string, buffer, objects, contents, setting, status);
+            fake_build_load_setting_process(main, F_true, setting_file.used ? path_file : main->file_data_build_settings, buffer, objects, contents, setting, status);
           }
         }
 
@@ -157,7 +158,7 @@ extern "C" {
           fl_print_format("%q%[%QThe setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, names[i], main->error.notable);
           fl_print_format("%[' is required but is not specified in the settings file '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, setting_file.used ? path_file : main->file_data_build_settings.string, main->error.notable);
+          fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, setting_file.used ? path_file : main->file_data_build_settings, main->error.notable);
           fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
@@ -178,7 +179,7 @@ extern "C" {
 #endif // _di_fake_build_load_setting_
 
 #ifndef _di_fake_build_load_setting_process_
-  void fake_build_load_setting_process(fake_main_t * const main, const bool checks, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) {
+  void fake_build_load_setting_process(fake_main_t * const main, const bool checks, const f_string_static_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) {
 
     if (F_status_is_error(*status) && buffer.used) return;
 
@@ -448,9 +449,7 @@ extern "C" {
       const int total_build_libraries = setting->build_libraries.used;
       const f_string_dynamics_t *modes = &setting->modes_default;
 
-      f_string_dynamic_t settings_mode_name_dynamic[fake_build_setting_total_d];
-      f_string_t settings_mode_names[fake_build_setting_total_d];
-      f_array_length_t setting_mode_lengths[fake_build_setting_total_d];
+      f_string_dynamic_t settings_mode_names[fake_build_setting_total_d];
 
       bool found = F_false;
 
@@ -482,7 +481,7 @@ extern "C" {
             fl_print_format("%q%[%QThe specified mode '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, modes->array[i], main->error.notable);
             fl_print_format("%[' is not a valid mode, according to '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
+            fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
             fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
@@ -494,31 +493,32 @@ extern "C" {
           break;
         }
 
-        memset(&settings_mode_name_dynamic, 0, sizeof(f_string_dynamic_t) * fake_build_setting_total_d);
-        memset(&settings_mode_names, 0, sizeof(f_string_t) * fake_build_setting_total_d);
-        memset(&setting_mode_lengths, 0, sizeof(f_array_length_t) * fake_build_setting_total_d);
+        memset(&settings_mode_names, 0, sizeof(f_string_dynamic_t) * fake_build_setting_total_d);
 
         for (j = 0; j < fake_build_setting_total_d; ++j) {
 
-          setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
+          settings_mode_names[j].used = 0;
 
-          *status = f_string_dynamic_resize(setting_mode_lengths[j], &settings_mode_name_dynamic[j]);
+          *status = f_string_dynamic_increase_by(settings_length[j] + f_string_ascii_minus_s.used + modes->array[i].used, &settings_mode_names[j]);
 
           if (F_status_is_error(*status)) {
-            function = "macro_f_string_dynamic_t_resize";
+            function = "f_string_dynamic_increase_by";
 
             break;
           }
 
-          memcpy(settings_mode_name_dynamic[j].string, settings_name[j], settings_length[j]);
-          memcpy(settings_mode_name_dynamic[j].string + settings_length[j] + 1, modes->array[i].string, modes->array[i].used);
-          settings_mode_name_dynamic[j].string[settings_length[j]] = '-';
+          memcpy(settings_mode_names[j].string, settings_name[j], settings_length[j]);
+          settings_mode_names[j].used = settings_length[j];
 
-          settings_mode_names[j] = settings_mode_name_dynamic[j].string;
+          memcpy(settings_mode_names[j].string, f_string_ascii_minus_s.string, f_string_ascii_minus_s.used);
+          settings_mode_names[j].used += f_string_ascii_minus_s.used;
+
+          memcpy(settings_mode_names[j].string + settings_mode_namesf[j].used, modes->array[i].string, modes->array[i].used);
+          settings_mode_names[j].used += modes->array[i].used;
         } // for
 
         if (*status == F_none) {
-          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, fake_build_setting_total_d, settings_value, 0, 0);
+          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, fake_build_setting_total_d, settings_value, 0, 0);
 
           if (F_status_is_error(*status)) {
             function = "fll_fss_snatch_apart";
@@ -526,7 +526,7 @@ extern "C" {
         }
 
         for (j = 0; j < fake_build_setting_total_d; ++j) {
-          f_string_dynamic_resize(0, &settings_mode_name_dynamic[j]);
+          f_string_dynamic_resize(0, &settings_mode_names[j]);
         } // for
 
         if (F_status_is_error(*status)) break;
@@ -565,7 +565,7 @@ extern "C" {
           funlockfile(main->error.to.stream);
 
           fl_print_format("%q%[%QA setting in the file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
+          fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
           fl_print_format("%[' is too long.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
@@ -1233,9 +1233,9 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     // Override setting file when any of these are specified in the command line.
-    if (main->parameters[fake_parameter_shared_disabled_e].result == f_console_result_found_e) {
-      if (main->parameters[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
-        if (main->parameters[fake_parameter_shared_enabled_e].location > main->parameters[fake_parameter_shared_disabled_e].location) {
+    if (main->parameters.array[fake_parameter_shared_disabled_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
+        if (main->parameters.array[fake_parameter_shared_enabled_e].location > main->parameters.array[fake_parameter_shared_disabled_e].location) {
           setting->build_shared = F_true;
           setting->search_shared = F_true;
         }
@@ -1263,14 +1263,14 @@ extern "C" {
         setting->search_shared = F_false;
       }
     }
-    else if (main->parameters[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
       setting->build_shared = F_true;
       setting->search_shared = F_true;
     }
 
-    if (main->parameters[fake_parameter_static_disabled_e].result == f_console_result_found_e) {
-      if (main->parameters[fake_parameter_static_enabled_e].result == f_console_result_found_e) {
-        if (main->parameters[fake_parameter_static_enabled_e].location > main->parameters[fake_parameter_static_disabled_e].location) {
+    if (main->parameters.array[fake_parameter_static_disabled_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fake_parameter_static_enabled_e].result == f_console_result_found_e) {
+        if (main->parameters.array[fake_parameter_static_enabled_e].location > main->parameters.array[fake_parameter_static_disabled_e].location) {
           setting->build_static = F_true;
           setting->search_static = F_true;
         }
@@ -1298,7 +1298,7 @@ extern "C" {
         setting->search_static = F_false;
       }
     }
-    else if (main->parameters[fake_parameter_static_enabled_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fake_parameter_static_enabled_e].result == f_console_result_found_e) {
       setting->build_static = F_true;
       setting->search_static = F_true;
     }

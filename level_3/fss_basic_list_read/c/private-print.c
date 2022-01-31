@@ -65,7 +65,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_content_ignore_
   void fss_basic_list_read_print_content_ignore(fss_basic_list_read_main_t * const main) {
 
-    if (main->parameters[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_basic_list_read_pipe_content_ignore_s, main->output.to.stream);
     }
   }
@@ -74,11 +74,11 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_object_end_
   void fss_basic_list_read_print_object_end(fss_basic_list_read_main_t * const main) {
 
-    if (main->parameters[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_basic_list_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
-      if (main->parameters[fss_basic_list_read_parameter_content_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_basic_list_read_parameter_content_e].result == f_console_result_found_e) {
         f_print_character(f_fss_basic_list_open_s.string[0], main->output.to.stream);
         f_print_character(f_fss_basic_list_open_end_s.string[0], main->output.to.stream);
       }
@@ -92,7 +92,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_set_end_
   void fss_basic_list_read_print_set_end(fss_basic_list_read_main_t * const main) {
 
-    if (main->parameters[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_basic_list_read_pipe_content_end_s, main->output.to.stream);
     }
   }

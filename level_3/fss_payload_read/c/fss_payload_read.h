@@ -225,7 +225,7 @@ extern "C" {
 
 #ifndef _di_fss_payload_read_main_t_
   typedef struct {
-    f_console_parameter_t parameters[fss_payload_total_parameters_d];
+    f_console_parameters_t parameters;
 
     f_array_lengths_t remaining;
     bool process_pipe;
@@ -241,7 +241,7 @@ extern "C" {
 
   #define fss_payload_read_main_t_initialize \
     { \
-      fss_payload_read_console_parameter_t_initialize, \
+      f_console_parameters_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \

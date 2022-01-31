@@ -6,7 +6,8 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_file_mode_set_all_)
-  f_status_t private_fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
+  f_status_t private_fll_file_mode_set_all(const f_string_static_t path, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
+
     f_status_t status = F_none;
 
     status = f_directory_is(path);
@@ -28,8 +29,6 @@ extern "C" {
 
     status = F_none;
 
-    const f_array_length_t path_length = strnlen(path, F_path_length_max_d);
-
     {
       f_string_dynamics_t * const list[] = {
         &listing.block,
@@ -43,20 +42,22 @@ extern "C" {
 
       uint8_t i = 0;
       f_array_length_t j = 0;
+      f_string_static_t path_sub = f_string_static_t_initialize;
 
       for (; i < 7; ++i) {
 
         for (j = 0; F_status_is_fine(status) && j < list[i]->used; ++j) {
 
-          const f_array_length_t length = path_length + list[i]->array[j].used + 1;
+          path_sub.used = path.used + list[i]->array[j].used + 1;
 
-          char path_sub[length + 1];
+          char path_sub_string[path_sub.used + 1];
+          path_sub.string = path_sub_string;
 
-          memcpy(path_sub, path, path_length);
-          memcpy(path_sub + path_length + 1, list[i]->array[j].string, list[i]->array[j].used);
+          memcpy(path_sub.string, path.string, path.used);
+          memcpy(path_sub.string + path.used + 1, list[i]->array[j].string, list[i]->array[j].used);
 
-          path_sub[path_length] = f_path_separator_s.string[0];
-          path_sub[length] = 0;
+          path_sub.string[path.used] = f_path_separator_s.string[0];
+          path_sub.string[path_sub.used] = 0;
 
           status = f_file_mode_set(path_sub, mode);
         } // for
@@ -67,17 +68,20 @@ extern "C" {
 
     f_string_dynamics_resize(0, &listing.unknown);
 
+    f_string_static_t path_sub = f_string_static_t_initialize;
+
     for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
 
-      const f_array_length_t length = path_length + listing.directory.array[i].used + 1;
+      path_sub.used = path.used + listing.directory.array[i].used + 1;
 
-      char path_sub[length + 1];
+      char path_sub_string[path_sub.used + 1];
+      path_sub.string = path_sub_string;
 
-      memcpy(path_sub, path, path_length);
-      memcpy(path_sub + path_length + 1, listing.directory.array[i].string, listing.directory.array[i].used);
+      memcpy(path_sub.string, path.string, path.used);
+      memcpy(path_sub.string + path.used + 1, listing.directory.array[i].string, listing.directory.array[i].used);
 
-      path_sub[path_length] = f_path_separator_s.string[0];
-      path_sub[length] = 0;
+      path_sub.string[path.used] = f_path_separator_s.string[0];
+      path_sub.string[path_sub.used] = 0;
 
       status = f_directory_exists(path_sub);
       if (F_status_is_error(status)) break;
@@ -105,7 +109,7 @@ extern "C" {
 #endif // !defined(_di_fll_file_mode_set_all_)
 
 #if !defined(_di_fll_file_role_change_all_)
-  f_status_t private_fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
+  f_status_t private_fll_file_role_change_all(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
     f_status_t status = F_none;
 
     status = f_directory_is(path);
@@ -127,8 +131,6 @@ extern "C" {
 
     status = F_none;
 
-    const f_array_length_t path_length = strnlen(path, F_path_length_max_d);
-
     {
       f_string_dynamics_t * const list[] = {
         &listing.block,
@@ -142,20 +144,22 @@ extern "C" {
 
       uint8_t i = 0;
       f_array_length_t j = 0;
+      f_string_static_t path_sub = f_string_static_t_initialize;
 
       for (; i < 7; ++i) {
 
         for (j = 0; F_status_is_fine(status) && j < list[i]->used; ++j) {
 
-          const f_array_length_t length = path_length + list[i]->array[j].used + 1;
+          path_sub.used = path.used + list[i]->array[j].used + 1;
 
-          char path_sub[length + 1];
+          char path_sub_string[path_sub.used + 1];
+          path_sub.string = path_sub_string;
 
-          memcpy(path_sub, path, path_length);
-          memcpy(path_sub + path_length + 1, list[i]->array[j].string, list[i]->array[j].used);
+          memcpy(path_sub.string, path.string, path.used);
+          memcpy(path_sub.string + path.used + 1, list[i]->array[j].string, list[i]->array[j].used);
 
-          path_sub[path_length] = f_path_separator_s.string[0];
-          path_sub[length] = 0;
+          path_sub.string[path.used] = f_path_separator_s.string[0];
+          path_sub.string[path_sub.used] = 0;
 
           status = f_file_role_change(path_sub, uid, gid, dereference);
         } // for
@@ -164,32 +168,37 @@ extern "C" {
       } // for
     }
 
-    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
+    {
+      f_string_static_t path_sub = f_string_static_t_initialize;
 
-      const f_array_length_t length = path_length + listing.directory.array[i].used + 1;
+      for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
 
-      char path_sub[length + 1];
+        path_sub.used = path.used + listing.directory.array[i].used + 1;
 
-      memcpy(path_sub, path, path_length);
-      memcpy(path_sub + path_length + 1, listing.directory.array[i].string, listing.directory.array[i].used);
+        char path_sub_string[path_sub.used + 1];
+        path_sub.string = path_sub_string;
 
-      path_sub[path_length] = f_path_separator_s.string[0];
-      path_sub[length] = 0;
+        memcpy(path_sub.string, path.string, path.used);
+        memcpy(path_sub.string + path.used + 1, listing.directory.array[i].string, listing.directory.array[i].used);
 
-      status = f_directory_exists(path_sub);
-      if (F_status_is_error(status)) break;
+        path_sub.string[path.used] = f_path_separator_s.string[0];
+        path_sub.string[path_sub.used] = 0;
 
-      if (status == F_false) {
-        status = F_status_set_error(F_directory);
-
-        break;
-      }
-
-      if (depth < depth_max) {
-        status = private_fll_file_role_change_all(path_sub, uid, gid, dereference, depth_max, depth + 1);
+        status = f_directory_exists(path_sub);
         if (F_status_is_error(status)) break;
-      }
-    } // for
+
+        if (status == F_false) {
+          status = F_status_set_error(F_directory);
+
+          break;
+        }
+
+        if (depth < depth_max) {
+          status = private_fll_file_role_change_all(path_sub, uid, gid, dereference, depth_max, depth + 1);
+          if (F_status_is_error(status)) break;
+        }
+      } // for
+    }
 
     f_string_dynamics_resize(0, &listing.directory);
 

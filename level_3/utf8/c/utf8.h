@@ -109,9 +109,6 @@ extern "C" {
   #define utf8_string_from_s "from"
   #define utf8_string_to_s   "to"
 
-  #define utf8_string_open_s    "open"
-  #define utf8_string_process_s "process"
-
   #define utf8_string_verified_valid_s     "Verified Valid"
   #define utf8_string_verified_valid_not_s "Verified Invalid"
 
@@ -125,9 +122,6 @@ extern "C" {
 
   #define utf8_string_from_s_length 4
   #define utf8_string_to_s_length   2
-
-  #define utf8_string_open_s_length    4
-  #define utf8_string_process_s_length 7
 
   #define utf8_string_verified_valid_s_length     14
   #define utf8_string_verified_valid_not_s_length 16
@@ -264,7 +258,7 @@ extern "C" {
  */
 #ifndef _di_utf8_main_t_
   typedef struct {
-    f_console_parameter_t parameters[utf8_total_parameters_d];
+    f_console_parameters_t parameters;
 
     f_array_lengths_t remaining;
     bool process_pipe;
@@ -280,7 +274,7 @@ extern "C" {
 
   #define utf8_main_t_initialize \
     { \
-      utf8_console_parameter_t_initialize, \
+      f_console_parameters_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \

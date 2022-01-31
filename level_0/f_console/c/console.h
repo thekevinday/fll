@@ -136,7 +136,6 @@ extern "C" {
  *   The parameters passed to the process.
  * @param parameters
  *   The console parameters to look for.
- *   This will be updated by this function with the results.
  * @param remaining
  *   A list of remaining parameters not associated with anything.
  *
@@ -148,9 +147,13 @@ extern "C" {
  *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character, when processing arguments.
+ *
+ *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *
+ * @see f_string_dynamics_increase_by()
  */
 #ifndef _di_f_console_parameter_process_
-  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_array_lengths_t *remaining);
+  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, f_array_lengths_t *remaining);
 #endif // _di_f_console_parameter_process_
 
 #ifdef __cplusplus

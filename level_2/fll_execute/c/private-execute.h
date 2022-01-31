@@ -22,31 +22,25 @@ extern "C" {
  *
  * @param source
  *   The string to add to the arguments array.
- * @param length
- *   Length of string to prepend.
  * @param arguments
  *   The array of string arguments intended to pass to the execute functions.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see f_string_append()
+ * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
+ * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
- * @see fll_execute_arguments_add()
- * @see fll_execute_arguments_add_set()
- * @see fll_execute_arguments_dynamic_add()
- * @see fll_execute_arguments_dynamic_add_set()
  */
-#if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
-  extern f_status_t private_fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
+#if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
+  extern f_status_t private_fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
 
 /**
  * Private implementation of fll_execute_arguments_add_parameter().
@@ -55,16 +49,10 @@ extern "C" {
  *
  * @param prefix
  *   The string prepend to the name.
- * @param prefix_length
- *   Length of prefix to prepend.
  * @param name
  *   The string to add to the arguments array.
- * @param name_length
- *   Length of name to prepend.
  * @param value
  *   The string prepend to the name.
- * @param value_length
- *   Length of value to prepend.
  * @param arguments
  *   The array of string arguments intended to pass to the execute functions.
  *
@@ -85,9 +73,9 @@ extern "C" {
  * @see fll_execute_arguments_dynamic_add_parameter()
  * @see fll_execute_arguments_dynamic_add_parameter_set()
  */
-#if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
-  extern f_status_t private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
+#if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
+  extern f_status_t private_fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
 
 /**
  * Private function for perform the execute as operations.
@@ -235,7 +223,7 @@ extern "C" {
  * @see pipe()
  * @see waitpid()
  *
- * @see f_environment_set_dynamic()
+ * @see f_environment_set()
  * @see f_limit_process()
  * @see f_signal_mask()
  * @see f_thread_signal_mask()
@@ -243,7 +231,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_execute_fork(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -311,14 +299,14 @@ extern "C" {
  * @see pipe()
  * @see waitpid()
  *
- * @see f_environment_set_dynamic()
+ * @see f_environment_set()
  * @see f_limit_process()
  * @see f_signal_mask()
  * @see f_thread_signal_mask()
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork_data(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_execute_fork_data(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -334,8 +322,6 @@ extern "C" {
  * @param fixated_is
  *   If TRUE, then the program_path is already fixated in the fixed_arguments at index 0.
  *   If FALSE, then the program_path needs to be fixated in the fixed_arguments at index 0.
- * @param name_size
- *   The size of the program_path to copy.
  * @param program_name
  *   The destination to copy the name to.
  * @param fixed_arguments
@@ -347,7 +333,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_t last_slash, const bool fixated_is, const f_array_length_t name_size, char program_name[], f_string_t fixed_arguments[]) F_attribute_visibility_internal_d;
+  extern void private_fll_execute_path_arguments_fixate(const f_string_static_t program_path, const f_string_statics_t arguments, const f_string_t last_slash, const bool fixated_is, f_string_static_t program_name, f_string_t fixed_arguments[]) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 #ifdef __cplusplus

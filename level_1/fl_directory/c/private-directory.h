@@ -172,11 +172,14 @@ extern "C" {
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  *   Errors (with error bit) from: f_file_stat_at().
+ *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *
+ * @see f_file_stat_at()
+ * @see f_string_dynamics_increase_by()
  * @see fl_directory_list()
  */
 #if !defined(_di_fl_directory_list_)
-  extern f_status_t private_fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_list_)
 
 /**
@@ -187,9 +190,6 @@ extern "C" {
  * @param source
  *   The path to append onto the destination.
  *   This need not be NULL terminated.
- * @param length
- *   The length of the string.
- *   Must not exceed length of source.
  * @param destination
  *   The destination path to push the path part onto.
  *   Any terminating NULLs at the end of the destination string are removed before appending.
@@ -208,7 +208,7 @@ extern "C" {
  * @see fl_directory_path_push_dynamic()
  */
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
-  extern f_status_t private_fl_directory_path_push(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
 
 #ifdef __cplusplus

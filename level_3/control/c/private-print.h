@@ -21,7 +21,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_not_
-  extern void control_print_error_parameter_command_not(control_main_t * const main, const f_string_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_not(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_not_
 
 /**
@@ -33,7 +33,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_basename_empty_
-  extern void control_print_error_parameter_command_rule_basename_empty(control_main_t * const main, const f_string_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_basename_empty(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_basename_empty_
 
 /**
@@ -45,7 +45,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_directory_empty_
-  extern void control_print_error_parameter_command_rule_directory_empty(control_main_t * const main, const f_string_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_directory_empty(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_directory_empty_
 
 /**
@@ -57,7 +57,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_empty_
-  extern void control_print_error_parameter_command_rule_empty(control_main_t * const main, const f_string_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_empty(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_empty_
 
 /**
@@ -69,7 +69,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_not_
-  extern void control_print_error_parameter_command_rule_not(control_main_t * const main, const f_string_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_not(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_not_
 
 /**
@@ -81,7 +81,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_too_many_
-  extern void control_print_error_parameter_command_rule_too_many(control_main_t * const main, const f_string_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_too_many(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_too_many_
 
 /**

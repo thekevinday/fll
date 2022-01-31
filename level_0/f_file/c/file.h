@@ -53,6 +53,8 @@ extern "C" {
  * @return
  *   F_true if file exists.
  *   F_false if file does not exist.
+ *   F_data_not if path.used is 0.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_false (with error bit) on unknown/unhandled errors.
@@ -65,7 +67,7 @@ extern "C" {
  * @see access()
  */
 #ifndef _di_f_file_access_
-  extern f_status_t f_file_access(const f_string_t path);
+  extern f_status_t f_file_access(const f_string_static_t path);
 #endif // _di_f_file_access_
 
 /**
@@ -95,6 +97,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if source.used or destination.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
@@ -120,7 +123,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  */
 #ifndef _di_f_file_clone_
-  extern f_status_t f_file_clone(const f_string_t source, const f_string_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive);
+  extern f_status_t f_file_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive);
 #endif // _di_f_file_clone_
 
 /**
@@ -201,6 +204,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if source.used or destination.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
@@ -223,7 +227,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  */
 #ifndef _di_f_file_copy_
-  extern f_status_t f_file_copy(const f_string_t source, const f_string_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive);
+  extern f_status_t f_file_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive);
 #endif // _di_f_file_copy_
 
 /**
@@ -241,6 +245,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
@@ -262,7 +267,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_file_create_
-  extern f_status_t f_file_create(const f_string_t path, const mode_t mode, const bool exclusive);
+  extern f_status_t f_file_create(const f_string_static_t path, const mode_t mode, const bool exclusive);
 #endif // _di_f_file_create_
 
 /**
@@ -282,6 +287,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
@@ -303,7 +309,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_create_at_
-  extern f_status_t f_file_create_at(const int at_id, const f_string_t path, const mode_t mode, const bool exclusive);
+  extern f_status_t f_file_create_at(const int at_id, const f_string_static_t path, const mode_t mode, const bool exclusive);
 #endif // _di_f_file_create_at_
 
 /**
@@ -324,6 +330,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -342,7 +349,7 @@ extern "C" {
  * @see mknod()
  */
 #ifndef _di_f_file_create_device_
-  extern f_status_t f_file_create_device(const f_string_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
+  extern f_status_t f_file_create_device(const f_string_static_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
 #endif // _di_f_file_create_device_
 
 /**
@@ -365,6 +372,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -384,7 +392,7 @@ extern "C" {
  * @see mknodat()
  */
 #ifndef _di_f_file_create_device_at_
-  extern f_status_t f_file_create_device_at(const int at_id, const f_string_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
+  extern f_status_t f_file_create_device_at(const int at_id, const f_string_static_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
 #endif // _di_f_file_create_device_at_
 
 /**
@@ -397,6 +405,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -414,7 +423,7 @@ extern "C" {
  * @see mkfifo()
  */
 #ifndef _di_f_file_create_fifo_
-  extern f_status_t f_file_create_fifo(const f_string_t path, const mode_t mode);
+  extern f_status_t f_file_create_fifo(const f_string_static_t path, const mode_t mode);
 #endif // _di_f_file_create_fifo_
 
 /**
@@ -429,6 +438,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -447,7 +457,7 @@ extern "C" {
  * @see mkfifoat()
  */
 #ifndef _di_f_file_create_fifo_at_
-  extern f_status_t f_file_create_fifo_at(const int at_id, const f_string_t path, const mode_t mode);
+  extern f_status_t f_file_create_fifo_at(const int at_id, const f_string_static_t path, const mode_t mode);
 #endif // _di_f_file_create_fifo_at_
 
 /**
@@ -463,6 +473,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -480,7 +491,7 @@ extern "C" {
  * @see mknod()
  */
 #ifndef _di_f_file_create_node_
-  extern f_status_t f_file_create_node(const f_string_t path, const mode_t mode, const dev_t device);
+  extern f_status_t f_file_create_node(const f_string_static_t path, const mode_t mode, const dev_t device);
 #endif // _di_f_file_create_node_
 
 /**
@@ -498,6 +509,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -516,7 +528,7 @@ extern "C" {
  * @see mknodat()
  */
 #ifndef _di_f_file_create_node_at_
-  extern f_status_t f_file_create_node_at(const int at_id, const f_string_t path, const mode_t mode, const dev_t device);
+  extern f_status_t f_file_create_node_at(const int at_id, const f_string_static_t path, const mode_t mode, const dev_t device);
 #endif // _di_f_file_create_node_at_
 
 /**
@@ -549,6 +561,7 @@ extern "C" {
  * @return
  *   F_true if path was found.
  *   F_false if path was not found.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
@@ -561,7 +574,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_exists_
-  extern f_status_t f_file_exists(const f_string_t path);
+  extern f_status_t f_file_exists(const f_string_static_t path);
 #endif // _di_f_file_exists_
 
 /**
@@ -580,6 +593,7 @@ extern "C" {
  * @return
  *   F_true if file exists.
  *   F_false if file does not exist.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) on invalid directory.
@@ -593,7 +607,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_exists_at_
-  extern f_status_t f_file_exists_at(const int at_id, const f_string_t path, const int flag);
+  extern f_status_t f_file_exists_at(const int at_id, const f_string_static_t path, const int flag);
 #endif // _di_f_file_exists_at_
 
 /**
@@ -629,6 +643,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
@@ -642,7 +657,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_group_read_
-  extern f_status_t f_file_group_read(const f_string_t path, uid_t *group);
+  extern f_status_t f_file_group_read(const f_string_static_t path, uid_t *group);
 #endif // _di_f_file_group_read_
 
 /**
@@ -663,6 +678,7 @@ extern "C" {
  *   F_true if path was found and path is type.
  *   F_false if path was found and path is not type.
  *   F_file_found_not if the path was not found.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
@@ -675,7 +691,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_is_
-  extern f_status_t f_file_is(const f_string_t path, const int type, const bool dereference);
+  extern f_status_t f_file_is(const f_string_static_t path, const int type, const bool dereference);
 #endif // _di_f_file_is_
 
 /**
@@ -694,6 +710,7 @@ extern "C" {
  *   F_true if path was found and path is type.
  *   F_false if path was found and path is not type.
  *   F_file_found_not if the path was not found.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
@@ -706,7 +723,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_is_at_
-  extern f_status_t f_file_is_at(const int at_id, const f_string_t path, const int type, const int flag);
+  extern f_status_t f_file_is_at(const int at_id, const f_string_static_t path, const int type, const int flag);
 #endif // _di_f_file_is_at_
 
 /**
@@ -722,6 +739,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if target.used or point.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -743,7 +761,7 @@ extern "C" {
  * @see symlink()
  */
 #ifndef _di_f_file_link_
-  extern f_status_t f_file_link(const f_string_t target, const f_string_t point);
+  extern f_status_t f_file_link(const f_string_static_t target, const f_string_static_t point);
 #endif // _di_f_file_link_
 
 /**
@@ -761,6 +779,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if target.used or point.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
@@ -783,7 +802,7 @@ extern "C" {
  * @see symlinkat()
  */
 #ifndef _di_f_file_link_at_
-  extern f_status_t f_file_link_at(const int at_id, const f_string_t target, const f_string_t point);
+  extern f_status_t f_file_link_at(const int at_id, const f_string_static_t target, const f_string_static_t point);
 #endif // _di_f_file_link_at_
 
 /**
@@ -798,6 +817,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if target.used or point.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -819,7 +839,7 @@ extern "C" {
  * @see link()
  */
 #ifndef _di_f_file_link_hard_
-  extern f_status_t f_file_link_hard(const f_string_t target, const f_string_t point);
+  extern f_status_t f_file_link_hard(const f_string_static_t target, const f_string_static_t point);
 #endif // _di_f_file_link_hard_
 
 /**
@@ -840,6 +860,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if target.used or point.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -862,7 +883,7 @@ extern "C" {
  * @see linkat()
  */
 #ifndef _di_f_file_link_hard_at_
-  extern f_status_t f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_t target, const f_string_t point, const int flag);
+  extern f_status_t f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_static_t target, const f_string_static_t point, const int flag);
 #endif // _di_f_file_link_hard_at_
 
 /**
@@ -881,6 +902,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -897,7 +919,7 @@ extern "C" {
  * @see readlink()
  */
 #ifndef _di_f_file_link_read_
-  extern f_status_t f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target);
+  extern f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target);
 #endif // _di_f_file_link_read_
 
 /**
@@ -918,6 +940,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -935,7 +958,7 @@ extern "C" {
  * @see readlinkat()
  */
 #ifndef _di_f_file_link_read_at_
-  extern f_status_t f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target);
+  extern f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target);
 #endif // _di_f_file_link_read_at_
 
 /**
@@ -1033,7 +1056,7 @@ extern "C" {
  *
  * @fixme apparently "u+g" is valid such that the mode from the group (g) is applied to the user (u) mode.
  *
- * @param string
+ * @param code
  *   A NULL terminated string designating the desired mode, following the above string syntax.
  * @param umask
  *   The umask to be applied to the file mode, when applicable.
@@ -1055,7 +1078,7 @@ extern "C" {
  * @see private_f_file_mode_determine()
  */
 #ifndef _di_f_file_mode_from_string_
-  extern f_status_t f_file_mode_from_string(const f_string_t string, const mode_t umask, f_file_mode_t *mode, uint8_t *replace);
+  extern f_status_t f_file_mode_from_string(const f_string_static_t code, const mode_t umask, f_file_mode_t *mode, uint8_t *replace);
 #endif // _di_f_file_mode_from_string_
 
 /**
@@ -1068,6 +1091,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
@@ -1081,7 +1105,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_mode_read_
-  extern f_status_t f_file_mode_read(const f_string_t path, mode_t *mode);
+  extern f_status_t f_file_mode_read(const f_string_static_t path, mode_t *mode);
 #endif // _di_f_file_mode_read_
 
 /**
@@ -1096,6 +1120,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
@@ -1109,7 +1134,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_mode_read_at_
-  extern f_status_t f_file_mode_read_at(const int at_id, const f_string_t path, mode_t *mode);
+  extern f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, mode_t *mode);
 #endif // _di_f_file_mode_read_at_
 
 /**
@@ -1125,6 +1150,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
@@ -1141,7 +1167,7 @@ extern "C" {
  * @see chmod()
  */
 #ifndef _di_f_file_mode_set_
-  extern f_status_t f_file_mode_set(const f_string_t path, const mode_t mode);
+  extern f_status_t f_file_mode_set(const f_string_static_t path, const mode_t mode);
 #endif // _di_f_file_mode_set_
 
 /**
@@ -1159,6 +1185,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
@@ -1175,7 +1202,7 @@ extern "C" {
  * @see fchmodat()
  */
 #ifndef _di_f_file_mode_set_at_
-  extern f_status_t f_file_mode_set_at(const int at_id, const f_string_t path, const mode_t mode);
+  extern f_status_t f_file_mode_set_at(const int at_id, const f_string_static_t path, const mode_t mode);
 #endif // _di_f_file_mode_set_at_
 
 /**
@@ -1205,23 +1232,26 @@ extern "C" {
  * @param path
  *   The path file name.
  *   Need not be NULL terminated.
- * @param length
- *   The length of the path string.
  * @param name_base
  *   The resulting base name as per basename().
  *   The base name is appended onto this.
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *
  * @see basename()
+ *
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_file_name_base_
-  extern f_status_t f_file_name_base(const f_string_t path, const f_array_length_t length, f_string_dynamic_t *name_base);
+  extern f_status_t f_file_name_base(const f_string_static_t path, f_string_dynamic_t *name_base);
 #endif // _di_f_file_name_base_
 
 /**
@@ -1230,23 +1260,26 @@ extern "C" {
  * @param path
  *   The path file name.
  *   Need not be NULL terminated.
- * @param length
- *   The length of the path string.
  * @param name_directory
  *   The resulting base name as per dirname().
  *   The directory name is appended onto this.
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *
  * @see dirname()
+ *
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_file_name_directory_
-  extern f_status_t f_file_name_directory(const f_string_t path, const f_array_length_t length, f_string_dynamic_t *name_directory);
+  extern f_status_t f_file_name_directory(const f_string_static_t path, f_string_dynamic_t *name_directory);
 #endif // _di_f_file_name_directory_
 
 /**
@@ -1266,6 +1299,7 @@ extern "C" {
  *
  * @return
  *   F_none is returned on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1288,7 +1322,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_file_open_
-  extern f_status_t f_file_open(const f_string_t path, const mode_t mode, f_file_t *file);
+  extern f_status_t f_file_open(const f_string_static_t path, const mode_t mode, f_file_t *file);
 #endif // _di_f_file_open_
 
 /**
@@ -1310,6 +1344,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found_not (with error bit) if the file was not found.
@@ -1319,7 +1354,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_open_at_
-  extern f_status_t f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file);
+  extern f_status_t f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t *file);
 #endif // _di_f_file_open_at_
 
 /**
@@ -1332,6 +1367,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
@@ -1345,7 +1381,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_owner_read_
-  extern f_status_t f_file_owner_read(const f_string_t path, uid_t *owner);
+  extern f_status_t f_file_owner_read(const f_string_static_t path, uid_t *owner);
 #endif // _di_f_file_owner_read_
 
 /**
@@ -1372,7 +1408,11 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *
  * @see read()
+ *
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_file_read_
   extern f_status_t f_file_read(const f_file_t file, f_string_dynamic_t *buffer);
@@ -1472,7 +1512,7 @@ extern "C" {
  * @see unlink()
  */
 #ifndef _di_f_file_remove_
-  extern f_status_t f_file_remove(const f_string_t path);
+  extern f_status_t f_file_remove(const f_string_static_t path);
 #endif // _di_f_file_remove_
 
 /**
@@ -1505,7 +1545,7 @@ extern "C" {
  * @see unlinkat()
  */
 #ifndef _di_f_file_remove_at_
-  extern f_status_t f_file_remove_at(const int at_id, const f_string_t path, const int flag);
+  extern f_status_t f_file_remove_at(const int at_id, const f_string_static_t path, const int flag);
 #endif // _di_f_file_remove_at_
 
 /**
@@ -1550,7 +1590,7 @@ extern "C" {
  * @see rename()
  */
 #ifndef _di_f_file_rename_
-  extern f_status_t f_file_rename(const f_string_t source, const f_string_t destination);
+  extern f_status_t f_file_rename(const f_string_static_t source, const f_string_static_t destination);
 #endif // _di_f_file_rename_
 
 /**
@@ -1600,7 +1640,7 @@ extern "C" {
  * @see renameat()
  */
 #ifndef _di_f_file_rename_at_
-  extern f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination);
+  extern f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_static_t source, const f_string_static_t destination);
 #endif // _di_f_file_rename_at_
 
 /**
@@ -1641,7 +1681,7 @@ extern "C" {
  * @see lchown()
  */
 #ifndef _di_f_file_role_change_
-  extern f_status_t f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference);
+  extern f_status_t f_file_role_change(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference);
 #endif // _di_f_file_role_change_
 
 /**
@@ -1683,7 +1723,7 @@ extern "C" {
  * @see fchownat()
  */
 #ifndef _di_f_file_role_change_at_
-  extern f_status_t f_file_role_change_at(const int at_id, const f_string_t path, const uid_t uid, const gid_t gid, const int flag);
+  extern f_status_t f_file_role_change_at(const int at_id, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag);
 #endif // _di_f_file_role_change_at_
 
 /**
@@ -1741,7 +1781,7 @@ extern "C" {
  * @see f_file_stat()
  */
 #ifndef _di_f_file_size_
-  extern f_status_t f_file_size(const f_string_t path, const bool dereference, f_array_length_t *size);
+  extern f_status_t f_file_size(const f_string_static_t path, const bool dereference, f_array_length_t *size);
 #endif // _di_f_file_size_
 
 /**
@@ -1772,7 +1812,7 @@ extern "C" {
  * @see f_file_stat_at()
  */
 #ifndef _di_f_file_size_at_
-  extern f_status_t f_file_size_at(const int at_id, const f_string_t path, const bool dereference, f_array_length_t *size);
+  extern f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t *size);
 #endif // _di_f_file_size_at_
 
 /**
@@ -1827,7 +1867,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_stat_
-  extern f_status_t f_file_stat(const f_string_t path, const bool dereference, struct stat *stat_file);
+  extern f_status_t f_file_stat(const f_string_static_t path, const bool dereference, struct stat *stat_file);
 #endif // _di_f_file_stat_
 
 /**
@@ -1857,7 +1897,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_stat_at_
-  extern f_status_t f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *stat_file);
+  extern f_status_t f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat *stat_file);
 #endif // _di_f_file_stat_at_
 
 /**
@@ -1931,8 +1971,7 @@ extern "C" {
  *
  * @param mode
  *   The file modes do use when opening.
- *   The file modes do use when opening.
- *   Set to 0 to determine mode from file.flags (falling back to read only as a failsafe).
+ *   Set mode.used to 0 to determine mode from file.flags (falling back to read only as a failsafe).
  *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
  *   This should match the modes used to open the file descriptor as it relates to the stream modes.
  * @param file
@@ -1956,7 +1995,7 @@ extern "C" {
  * @see fdopen()
  */
 #ifndef _di_f_file_stream_descriptor_
-  extern f_status_t f_file_stream_descriptor(const f_string_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_descriptor(const f_string_static_t mode, f_file_t *file);
 #endif // _di_f_file_stream_descriptor_
 
 /**
@@ -1968,7 +2007,7 @@ extern "C" {
  *   The file path
  * @param mode
  *   The file modes do use when opening, as an fopen() file mode string.
- *   Set to 0 to determine mode from file.flags (falling back to read only as a failsafe).
+ *   Set mode.used to 0 to determine mode from file.flags (falling back to read only as a failsafe).
  *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
  *
  *   File Modes (fopen() file modes vs open file modes):
@@ -2009,7 +2048,7 @@ extern "C" {
  * @see fopen()
  */
 #ifndef _di_f_file_stream_open_
-  extern f_status_t f_file_stream_open(const f_string_t path, const f_string_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t *file);
 #endif // _di_f_file_stream_open_
 
 /**
@@ -2107,7 +2146,11 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *
  * @see fread()
+ *
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_file_stream_read_until_
   extern f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer);
@@ -2157,7 +2200,7 @@ extern "C" {
  * @see freopen()
  */
 #ifndef _di_f_file_stream_reopen_
-  extern f_status_t f_file_stream_reopen(const f_string_t path, const f_string_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_reopen(const f_string_static_t path, const f_string_static_t mode, f_file_t *file);
 #endif // _di_f_file_stream_reopen_
 
 /**
@@ -2335,7 +2378,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_file_touch_
-  extern f_status_t f_file_touch(const f_string_t path, const mode_t mode, const bool dereference);
+  extern f_status_t f_file_touch(const f_string_static_t path, const mode_t mode, const bool dereference);
 #endif // _di_f_file_touch_
 
 /**
@@ -2378,7 +2421,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_file_touch_at_
-  extern f_status_t f_file_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag);
+  extern f_status_t f_file_touch_at(const int at_id, const f_string_static_t path, const mode_t mode, const int flag);
 #endif // _di_f_file_touch_at_
 
 /**
@@ -2407,7 +2450,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_type_
-  extern f_status_t f_file_type(const f_string_t path, int *type);
+  extern f_status_t f_file_type(const f_string_static_t path, int *type);
 #endif //  _di_f_file_type_
 
 /**
@@ -2437,7 +2480,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_type_at_
-  extern f_status_t f_file_type_at(const int at_id, const f_string_t path, const int flag, int *type);
+  extern f_status_t f_file_type_at(const int at_id, const f_string_static_t path, const int flag, int *type);
 #endif // _di_f_file_type_at_
 
 /**

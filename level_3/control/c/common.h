@@ -37,7 +37,7 @@ extern "C" {
 
   #define CONTROL_program_version_s CONTROL_program_version_major_s F_string_ascii_period_s CONTROL_program_version_minor_s F_string_ascii_period_s CONTROL_program_version_micro_s CONTROL_program_version_nano_prefix_s CONTROL_program_version_nano_s
 
-  #define CONTROL_program_version_s_length CONTROL_program_version_major_s_length + F_string_ascii_period_s_length + CONTROL_program_version_minor_s_length + F_string_ascii_period_s_length + CONTROL_program_version_nano_prefix_s_length + CONTROL_program_version_nano_s_length
+  #define CONTROL_program_version_s_length CONTROL_program_version_major_s_length + F_string_ascii_period_s_length + CONTROL_program_version_minor_s_length + F_string_ascii_period_s_length + CONTROL_program_version_micro_s_length + CONTROL_program_version_nano_prefix_s_length + CONTROL_program_version_nano_s_length
 
   extern const f_string_static_t control_program_version_s;
 #endif // _di_control_program_version_
@@ -115,7 +115,7 @@ extern "C" {
 
 #ifndef _di_control_main_t_
   typedef struct {
-    f_console_parameter_t parameters[control_total_parameters_d];
+    f_console_parameters_t parameters;
 
     uint16_t signal_check;
 
@@ -133,7 +133,7 @@ extern "C" {
 
   #define control_main_initialize \
     { \
-      control_console_parameter_t_initialize, \
+      f_console_parameters_t_initialize, \
       0, \
       f_array_lengths_t_initialize, \
       F_false, \

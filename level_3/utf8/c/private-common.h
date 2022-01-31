@@ -38,6 +38,7 @@ extern "C" {
  * The program data.
  *
  * main:      The main program data.
+ * argv:      The argument structure in utf8_main_t.parameters for simplifying syntax.
  * file:      The output file for writing the processed data to (may potentially default to "output").
  * mode:      The input/output mode (see utf8_modes).
  * valid:     Designate the output context set for valid characters.
@@ -51,6 +52,7 @@ extern "C" {
 #ifndef _di_utf8_data_t_
   typedef struct {
     utf8_main_t *main;
+    f_string_static_t *argv;
 
     f_file_t file;
     uint8_t mode;
@@ -68,6 +70,7 @@ extern "C" {
 
   #define utf8_data_t_initialize \
     { \
+      0, \
       0, \
       f_file_t_initialize, \
       utf8_mode_from_binary_d | utf8_mode_to_codepoint_d, \

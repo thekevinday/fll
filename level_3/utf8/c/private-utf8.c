@@ -32,7 +32,7 @@ extern "C" {
     bool valid = F_true;
     uint8_t mode_codepoint = utf8_codepoint_mode_ready_e;
 
-    f_string_static_t current = macro_f_string_static_t_initialize(text, 0);
+    f_string_static_t current = macro_f_string_static_t_initialize2(text, 0);
 
     utf8_process_text_width(&current);
 
@@ -98,10 +98,10 @@ extern "C" {
       return status;
     }
 
-    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
 
       // When headers are printed, they are printed with a newline so only print this newline when separate is used without headers being printed.
-      if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e && data->main->parameters[utf8_parameter_separate_e].result == f_console_result_found_e) {
+      if (data->main->parameters.array[utf8_parameter_headers_e].result == f_console_result_none_e && data->main->parameters.array[utf8_parameter_separate_e].result == f_console_result_found_e) {
         f_print_dynamic(f_string_eol_s, data->file.stream);
       }
     }

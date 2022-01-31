@@ -156,7 +156,7 @@ extern "C" {
 #ifndef _di_fss_extended_read_print_content_end_
   void fss_extended_read_print_content_end(fss_extended_read_main_t * const main) {
 
-    if (main->parameters[fss_extended_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_extended_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
@@ -168,7 +168,7 @@ extern "C" {
 #ifndef _di_fss_extended_read_print_object_end_
   void fss_extended_read_print_object_end(fss_extended_read_main_t * const main) {
 
-    if (main->parameters[fss_extended_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_extended_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
@@ -188,7 +188,7 @@ extern "C" {
 #ifndef _di_fss_extended_read_print_set_end_
   void fss_extended_read_print_set_end(fss_extended_read_main_t * const main) {
 
-    if (main->parameters[fss_extended_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_extended_read_pipe_content_end_s, main->output.to.stream);
     }
     else {

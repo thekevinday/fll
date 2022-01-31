@@ -6,12 +6,12 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_execute_arguments_add_
-  f_status_t fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    const f_status_t status = private_fll_execute_arguments_add(source, length, arguments);
+    const f_status_t status = private_fll_execute_arguments_add(source, arguments);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -19,12 +19,12 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_
 
 #ifndef _di_fll_execute_arguments_add_parameter_
-  f_status_t fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    const f_status_t status = private_fll_execute_arguments_add_parameter(prefix, prefix_length, name, name_length, value, value_length, arguments);
+    const f_status_t status = private_fll_execute_arguments_add_parameter(prefix, name, value, arguments);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -32,7 +32,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_parameter_
 
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  f_status_t fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_array_length_t prefix_length[], const f_string_t name[], const f_array_length_t name_length[], const f_string_t value[], const f_array_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -41,7 +41,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < size; ++i) {
 
-      status = private_fll_execute_arguments_add_parameter(prefix[i], prefix_length[i], name[i], name_length[i], value[i], value_length[i], arguments);
+      status = private_fll_execute_arguments_add_parameter(prefix[i], name[i], value[i], arguments);
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -50,7 +50,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 #ifndef _di_fll_execute_arguments_add_set_
-  f_status_t fll_execute_arguments_add_set(const f_string_t source[], const f_array_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -59,7 +59,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < size; ++i) {
 
-      status = private_fll_execute_arguments_add(source[i], length[i], arguments);
+      status = private_fll_execute_arguments_add(source[i], arguments);
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -67,84 +67,30 @@ extern "C" {
   }
 #endif // _di_fll_execute_arguments_add_set_
 
-#ifndef _di_fll_execute_arguments_dynamic_add_
-  f_status_t fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments) {
-    #ifndef _di_level_2_parameter_checking_
-      if (!arguments) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameter_checking_
-
-    const f_status_t status = private_fll_execute_arguments_add(source.string, source.used, arguments);
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
-  }
-#endif // _di_fll_execute_arguments_dynamic_add_
-
-#ifndef _di_fll_execute_arguments_dynamic_add_parameter_
-  f_status_t fll_execute_arguments_dynamic_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments) {
-    #ifndef _di_level_2_parameter_checking_
-      if (!arguments) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameter_checking_
-
-    const f_status_t status = private_fll_execute_arguments_add_parameter(prefix.string, prefix.used, name.string, name.used, value.string, value.used, arguments);
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
-  }
-#endif // _di_fll_execute_arguments_dynamic_add_parameter_
-
-#ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
-  f_status_t fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments) {
-    #ifndef _di_level_2_parameter_checking_
-      if (!arguments) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameter_checking_
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = 0; i < size; ++i) {
-
-      status = private_fll_execute_arguments_add_parameter(prefix[i].string, prefix[i].used, name[i].string, name[i].used, value[i].string, value[i].used, arguments);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    return status;
-  }
-#endif // _di_fll_execute_arguments_dynamic_add_parameter_set_
-
-#ifndef _di_fll_execute_arguments_dynamic_add_set_
-  f_status_t fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments) {
-    #ifndef _di_level_2_parameter_checking_
-      if (!arguments) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameter_checking_
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = 0; i < size; ++i) {
-
-      status = private_fll_execute_arguments_add(source[i].string, source[i].used, arguments);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    return status;
-  }
-#endif // _di_fll_execute_arguments_dynamic_add_set_
-
 #ifndef _di_fll_execute_into_
-  f_status_t fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, const f_string_maps_t *environment, int *result) {
+  f_status_t fll_execute_into(const f_string_static_t program, const f_string_statics_t arguments, const uint8_t option, const f_string_maps_t *environment, int *result) {
     #ifndef _di_level_2_parameter_checking_
-      if (!program && !arguments.used) return F_status_set_error(F_parameter);
+      if (!program.used && !arguments.used) return F_status_set_error(F_parameter);
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    // create a string array that is compatible with execv() calls.
+    // Create a string array that is compatible with execv() calls.
     f_string_t fixed_arguments[arguments.used + 2];
+    f_string_static_t program_name = f_string_static_t_initialize;
 
-    const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s.string[0]);
-    const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, F_path_length_max_d) : strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
+    const f_string_t last_slash = strrchr(program.used ? program.string : arguments.array[0].string, f_path_separator_s.string[0]);
 
-    char program_name[size_name + 1];
+    if (last_slash) {
+      program_name.used = strnlen(last_slash + 1, F_path_length_max_d);
+    }
+    else {
+      program_name.used = program.used ? program.used : arguments.array[0].used;
+    }
 
-    private_fll_execute_path_arguments_fixate(program ? program : arguments.array[0].string, arguments, last_slash, !program, size_name, program_name, fixed_arguments);
+    char program_name_string[program_name.used + 1];
+    program_name.string = program_name_string;
+
+    private_fll_execute_path_arguments_fixate(program.used ? program : arguments.array[0], arguments, last_slash, !program.used, program_name, fixed_arguments);
 
     int code = 0;
 
@@ -152,7 +98,7 @@ extern "C" {
       setsid();
     }
 
-    // full path is explicitly requested.
+    // Full path is explicitly requested.
     if (option & FL_execute_parameter_option_path_d) {
       f_string_dynamic_t path = f_string_dynamic_t_initialize;
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
@@ -161,30 +107,28 @@ extern "C" {
       f_status_t status = F_none;
 
       if (last_slash) {
-        status = f_file_exists(program ? program : arguments.array[0].string);
+        status = f_file_exists(program.used ? program : arguments.array[0]);
 
         if (status != F_true) {
-          f_string_dynamics_resize(0, &paths);
-
           return F_status_set_error(F_file_found_not);
         }
 
-        path.string = program ? program : arguments.array[0].string;
-        path.used = strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
+        path.string = program.used ? program.string : arguments.array[0].string;
+        path.used = program.used ? program.used : arguments.array[0].used;
         found = &path;
       }
       else {
-        status = f_environment_get(f_path_environment_s.string, &path);
+        status = f_environment_get(f_path_environment_s, &path);
 
         if (F_status_is_error(status)) {
 
-          // Do not consider PATH is not available (or valid?) to be an error.
+          // Do not consider PATH is not available (or not valid?) to be an error.
           if (F_status_set_fine(status) == F_valid_not || F_status_set_fine(status) == F_failure) {
             status = F_none;
           }
         }
         else {
-          status = fl_environment_path_explode_dynamic(path, &paths);
+          status = fl_environment_path_explode(path, &paths);
         }
 
         f_string_dynamic_resize(0, &path);
@@ -195,16 +139,17 @@ extern "C" {
           return status;
         }
 
+        // Search each individual path in PATH until a match is found.
         for (f_array_length_t i = 0; i < paths.used; ++i) {
 
-          status = f_string_append(program_name, size_name, &paths.array[i]);
+          status = f_string_dynamic_append(program_name, &paths.array[i]);
 
           if (F_status_is_error_not(status)) {
             status = f_string_dynamic_terminate_after(&paths.array[i]);
           }
 
           if (F_status_is_error_not(status)) {
-            status = f_file_exists(paths.array[i].string);
+            status = f_file_exists(paths.array[i]);
 
             if (status == F_true) {
               found = &paths.array[i];
@@ -215,7 +160,7 @@ extern "C" {
             if (F_status_is_error(status)) {
               status = F_status_set_fine(status);
 
-              // don't consider bad/non-accessible paths an error, just ignore them.
+              // Don't consider bad/non-accessible paths an error, just ignore them.
               if (status == F_name) {
                 continue;
               }
@@ -255,7 +200,7 @@ extern "C" {
         clearenv();
 
         for (f_array_length_t i = 0; i < environment->used; ++i) {
-          f_environment_set_dynamic(environment->array[i].name, environment->array[i].value, F_true);
+          f_environment_set(environment->array[i].name, environment->array[i].value, F_true);
         } // for
       }
 
@@ -266,14 +211,19 @@ extern "C" {
         clearenv();
 
         for (f_array_length_t i = 0; i < environment->used; ++i) {
-          f_environment_set_dynamic(environment->array[i].name, environment->array[i].value, F_true);
+          f_environment_set(environment->array[i].name, environment->array[i].value, F_true);
         } // for
       }
 
-      code = last_slash ? execv(program ? program : arguments.array[0].string, fixed_arguments) : execvp(program ? program : arguments.array[0].string, fixed_arguments);
+      if (last_slash) {
+        code = execv(program.used ? program.string : arguments.array[0].string, fixed_arguments);
+      }
+      else {
+        code = execvp(program.used ? program.string : arguments.array[0].string, fixed_arguments);
+      }
     }
 
-    // generally this does not return, but in some cases (such as with scripts) this does return so handle the results.
+    // Generally this does not return, but in some cases (such as with scripts) this does return so handle the results.
     if (code < 0) {
       if (errno == EACCES) code = F_execute_access;
       else if (errno == E2BIG) code = F_execute_too_large;
@@ -318,23 +268,32 @@ extern "C" {
 #endif // _di_fll_execute_into_
 
 #ifndef _di_fll_execute_program_
-  f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
+  f_status_t fll_execute_program(const f_string_static_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
     #ifndef _di_level_2_parameter_checking_
-      if (!program && !arguments.used) return F_status_set_error(F_parameter);
+      if (!program.used && !arguments.used) return F_status_set_error(F_parameter);
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    // create a string array that is compatible with execv() calls.
+    // Create a string array that is compatible with execv() calls.
     f_string_t fixed_arguments[arguments.used + 2];
 
-    const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s.string[0]);
-    const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, F_path_length_max_d) : strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
+    f_string_static_t program_name = f_string_static_t_initialize;
 
-    char program_name[size_name + 1];
+    const f_string_t last_slash = strrchr(program.used ? program.string : arguments.array[0].string, f_path_separator_s.string[0]);
 
-    private_fll_execute_path_arguments_fixate(program ? program : arguments.array[0].string, arguments, last_slash, !program, size_name, program_name, fixed_arguments);
+    if (last_slash) {
+      program_name.used = strnlen(last_slash + 1, F_path_length_max_d);
+    }
+    else {
+      program_name.used = program.used ? program.used : arguments.array[0].used;
+    }
 
-    // determine full path when the environment is to be cleared or full path is explicitly requested.
+    char program_name_string[program_name.used + 1];
+    program_name.string = program_name_string;
+
+    private_fll_execute_path_arguments_fixate(program.used ? program : arguments.array[0], arguments, last_slash, !program.used, program_name, fixed_arguments);
+
+    // Determine full path when the environment is to be cleared or full path is explicitly requested.
     if (parameter && parameter->environment || parameter && (parameter->option & FL_execute_parameter_option_path_d)) {
       f_string_dynamic_t path = f_string_dynamic_t_initialize;
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
@@ -343,7 +302,7 @@ extern "C" {
       f_status_t status = F_none;
 
       if (last_slash) {
-        status = f_file_exists(program ? program : arguments.array[0].string);
+        status = f_file_exists(program.used ? program : arguments.array[0]);
 
         if (status != F_true) {
           f_string_dynamics_resize(0, &paths);
@@ -351,22 +310,22 @@ extern "C" {
           return F_status_set_error(F_file_found_not);
         }
 
-        path.string = program ? program : arguments.array[0].string;
-        path.used = strnlen(program ? program : arguments.array[0].string, F_path_length_max_d);
+        path.string = program.used ? program.string : arguments.array[0].string;
+        path.used = program.used ? program.used : arguments.array[0].used;
         found = &path;
       }
       else {
-        status = f_environment_get(f_path_environment_s.string, &path);
+        status = f_environment_get(f_path_environment_s, &path);
 
         if (F_status_is_error(status)) {
 
-          // Do not consider PATH is not available (or valid?) to be an error.
+          // Do not consider PATH is not available (or not valid?) to be an error.
           if (F_status_set_fine(status) == F_valid_not || F_status_set_fine(status) == F_failure) {
             status = F_none;
           }
         }
         else {
-          status = fl_environment_path_explode_dynamic(path, &paths);
+          status = fl_environment_path_explode(path, &paths);
         }
 
         f_string_dynamic_resize(0, &path);
@@ -377,16 +336,17 @@ extern "C" {
           return status;
         }
 
+        // Search each individual path in PATH until a match is found.
         for (f_array_length_t i = 0; i < paths.used; ++i) {
 
-          status = f_string_append(program_name, size_name, &paths.array[i]);
+          status = f_string_dynamic_append(program_name, &paths.array[i]);
 
           if (F_status_is_error_not(status)) {
             status = f_string_dynamic_terminate_after(&paths.array[i]);
           }
 
           if (F_status_is_error_not(status)) {
-            status = f_file_exists(paths.array[i].string);
+            status = f_file_exists(paths.array[i]);
 
             if (status == F_true) {
               found = &paths.array[i];
@@ -397,7 +357,7 @@ extern "C" {
             if (F_status_is_error(status)) {
               status = F_status_set_fine(status);
 
-              // don't consider bad/non-accessible paths an error, just ignore them.
+              // Don't consider bad/non-accessible paths an error, just ignore them.
               if (status == F_name) {
                 continue;
               }
@@ -431,22 +391,25 @@ extern "C" {
 
       f_string_dynamics_resize(0, &paths);
 
+      program_name.string = program_path;
+      program_name.used = found->used;
+
       if (parameter && (parameter->option & FL_execute_parameter_option_path_d)) {
         fixed_arguments[0] = program_path;
       }
 
       if (parameter && parameter->data) {
-        return private_fll_execute_fork_data(F_true, program_path, fixed_arguments, parameter, as, result);
+        return private_fll_execute_fork_data(F_true, program_name, fixed_arguments, parameter, as, result);
       }
 
-      return private_fll_execute_fork(F_true, program_path, fixed_arguments, parameter, as, result);
+      return private_fll_execute_fork(F_true, program_name, fixed_arguments, parameter, as, result);
     }
 
     if (parameter && parameter->data) {
-      return private_fll_execute_fork_data(last_slash, program ? program : arguments.array[0].string, fixed_arguments, parameter, as, result);
+      return private_fll_execute_fork_data(last_slash, program.used ? program : arguments.array[0], fixed_arguments, parameter, as, result);
     }
 
-    return private_fll_execute_fork(last_slash, program ? program : arguments.array[0].string, fixed_arguments, parameter, as, result);
+    return private_fll_execute_fork(last_slash, program.used ? program : arguments.array[0], fixed_arguments, parameter, as, result);
   }
 #endif // _di_fll_execute_program_
 

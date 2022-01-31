@@ -317,7 +317,7 @@ extern "C" {
     location_sub, \
     locations, \
     locations_sub, \
-    values \
+    values, \
   }
 #endif // _di_f_console_parameter_t_
 
@@ -326,20 +326,22 @@ extern "C" {
  *
  * Designed for passing this to a function as a single argument.
  *
- * parameter: Intended to be populated with an array of f_console_parameter_id_t whose size is defined by the "used" property.
- *            This is not intended to be dynamically allocated, so there is no "size" property.
+ * This is not intended to be dynamically allocated, so there is no "size" property.
+ *
+ * array:     Intended to be populated with an array of f_console_parameter_t whose size is defined by the "used" property.
+ * arguments: An array of arguments pointing to the argv[] strings with the string lengths already calculated (This is a dynamic array of f_string_static_t).
  * length:    The total number of parameters in the parameters array.
  */
 #ifndef _di_f_console_parameters_t_
   typedef struct {
-    f_console_parameter_t *parameter;
+    f_console_parameter_t *array;
+
+    f_string_dynamics_t arguments;
 
     f_array_length_t used;
   } f_console_parameters_t;
 
-  #define f_console_parameters_t_initialize { 0, 0 }
-
-  #define macro_f_console_parameters_t_initialize(parameters, length) { parameters, length }
+  #define f_console_parameters_t_initialize {0, f_string_dynamics_t_initialize, 0 }
 #endif // _di_f_console_parameters_t_
 
 /**
@@ -389,6 +391,48 @@ extern "C" {
 
   #define macro_f_console_arguments_t_initialize(argc, argv) { argc, argv }
 #endif // _di_f_console_arguments_t_
+
+/**
+ * Delete any dynamic allocated data on the parameters object.
+ *
+ * @param parameters
+ *   The parameters object.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_type_array_lengths_resize().
+ *
+ * @see f_string_dynamics_resize()
+ * @see f_type_array_lengths_resize()
+ */
+#ifndef _di_f_console_parameters_delete_
+  extern f_status_t f_console_parameters_delete(f_console_parameters_t * const parameters);
+#endif // _di_f_console_parameters_delete_
+
+/**
+ * Destroy any dynamic allocated data on the parameters object.
+ *
+ * @param parameters
+ *   The parameters object.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_dynamics_adjust().
+ *   Errors (with error bit) from: f_type_array_lengths_adjust().
+ *
+ * @see f_string_dynamics_adjust()
+ * @see f_type_array_lengths_adjust()
+ */
+#ifndef _di_f_console_parameters_destroy_
+  extern f_status_t f_console_parameters_destroy(f_console_parameters_t * const parameters);
+#endif // _di_f_console_parameters_destroy_
 
 #ifdef __cplusplus
 } // extern "C"

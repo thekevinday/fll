@@ -46,7 +46,7 @@ extern "C" {
 
       fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
 
-      *status = fll_execute_program(program.string, arguments, &parameter, 0, (void *) &return_code);
+      *status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
       if (fake_signal_received(main)) {
         *status = F_status_set_error(F_interrupt);
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_fake_execute_
 
 #ifndef _di_fake_file_buffer_
-  f_status_t fake_file_buffer(fake_main_t * const main, const f_string_t path_file, f_string_dynamic_t *buffer) {
+  f_status_t fake_file_buffer(fake_main_t * const main, const f_string_static_t path_file, f_string_dynamic_t *buffer) {
 
     f_file_t file = f_file_t_initialize;
     f_string_t name_function = "f_file_exists";
@@ -99,14 +99,14 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    status = f_file_exists(path_file);
+    status = f_file_exists(path_file.string);
 
     if (status == F_true) {
       {
         f_array_length_t size_file = 0;
 
         name_function = "f_file_size";
-        status = f_file_size(path_file, F_true, &size_file);
+        status = f_file_size(path_file.string, F_true, &size_file);
 
         if (F_status_is_error_not(status)) {
           if (size_file > fake_common_initial_buffer_max_d) {
@@ -191,19 +191,19 @@ extern "C" {
 
       for (uint8_t i = 0; i < 3; ++i) {
 
-        if (main->parameters[parameters_id[i]].result == f_console_result_found_e) {
+        if (main->parameters.array[parameters_id[i]].result == f_console_result_found_e) {
           fake_print_error_parameter_missing_value(main, parameters_name[i]);
 
           return F_status_set_error(F_parameter);
         }
-        else if (main->parameters[parameters_id[i]].result == f_console_result_additional_e) {
-          if (main->parameters[parameters_id[i]].locations.used > 1) {
+        else if (main->parameters.array[parameters_id[i]].result == f_console_result_additional_e) {
+          if (main->parameters.array[parameters_id[i]].locations.used > 1) {
             fake_print_error_parameter_too_many(main, parameters_name[i]);
 
             return F_status_set_error(F_parameter);
           }
 
-          f_array_length_t location = main->parameters[parameters_id[i]].values.array[0];
+          f_array_length_t location = main->parameters.array[parameters_id[i]].values.array[0];
           f_array_length_t length = strnlen(arguments->argv[location], F_console_parameter_size_d);
 
           if (length > 0) {
@@ -300,7 +300,7 @@ extern "C" {
       } // for
     }
 
-    if (main->parameters[fake_parameter_define_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fake_parameter_define_e].result == f_console_result_found_e) {
       fake_print_error_parameter_missing_value(main, fake_long_define_s);
 
       return F_status_set_error(F_parameter);
@@ -337,19 +337,19 @@ extern "C" {
 
       for (uint8_t i = 0; i < 4; ++i) {
 
-        if (main->parameters[parameters_id[i]].result == f_console_result_found_e) {
+        if (main->parameters.array[parameters_id[i]].result == f_console_result_found_e) {
           fake_print_error_parameter_missing_value(main, parameters_name[i]);
 
           return F_status_set_error(F_parameter);
         }
-        else if (main->parameters[parameters_id[i]].result == f_console_result_additional_e) {
-          if (main->parameters[parameters_id[i]].values.used > 1) {
+        else if (main->parameters.array[parameters_id[i]].result == f_console_result_additional_e) {
+          if (main->parameters.array[parameters_id[i]].values.used > 1) {
             fake_print_error_parameter_too_many(main, parameters_name[i]);
 
             return F_status_set_error(F_parameter);
           }
 
-          status = fl_console_parameter_to_string_dynamic_directory(arguments->argv[main->parameters[parameters_id[i]].values.array[0]], parameters_value[i]);
+          status = fl_console_parameter_to_string_dynamic_directory(arguments->argv[main->parameters.array[parameters_id[i]].values.array[0]], parameters_value[i]);
 
           if (F_status_is_error(status)) {
             if (fll_error_print(main->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -387,8 +387,8 @@ extern "C" {
       } // for
     }
 
-    if (main->parameters[fake_parameter_define_e].result == f_console_result_additional_e) {
-      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters[fake_parameter_define_e].values, &main->define);
+    if (main->parameters.array[fake_parameter_define_e].result == f_console_result_additional_e) {
+      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters.array[fake_parameter_define_e].values, &main->define);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -405,12 +405,12 @@ extern "C" {
       }
     }
 
-    if (main->parameters[fake_parameter_mode_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fake_parameter_mode_e].result == f_console_result_found_e) {
       fake_print_error_parameter_missing_value(main, fake_long_mode_s);
       return F_status_set_error(F_parameter);
     }
-    else if (main->parameters[fake_parameter_mode_e].result == f_console_result_additional_e) {
-      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters[fake_parameter_mode_e].values, &main->mode);
+    else if (main->parameters.array[fake_parameter_mode_e].result == f_console_result_additional_e) {
+      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters.array[fake_parameter_mode_e].values, &main->mode);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {

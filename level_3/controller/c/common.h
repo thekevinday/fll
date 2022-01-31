@@ -309,7 +309,7 @@ extern "C" {
 
 #ifndef _di_controller_main_t_
   typedef struct {
-    f_console_parameter_t parameters[controller_total_parameters_d];
+    f_console_parameters_t parameters;
 
     f_array_lengths_t remaining;
     bool process_pipe;
@@ -336,7 +336,7 @@ extern "C" {
 
   #define controller_main_t_initialize \
     { \
-      controller_console_parameter_t_initialize, \
+      f_console_parameters_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
       F_false, \

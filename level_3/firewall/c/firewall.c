@@ -13,12 +13,12 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_program_version_
-  const f_string_static_t firewall_program_version_s = macro_f_string_static_t_initialize2(FIREWALL_program_version_s, 0, FIREWALL_program_version_s_length);
+  const f_string_static_t firewall_program_version_s = macro_f_string_static_t_initialize(FIREWALL_program_version_s, 0, FIREWALL_program_version_s_length);
 #endif // _di_firewall_program_version_
 
 #ifndef _di_firewall_program_name_
-  const f_string_static_t firewall_program_name_s = macro_f_string_static_t_initialize2(FIREWALL_program_name_s, 0, FIREWALL_program_name_s_length);
-  const f_string_static_t firewall_program_name_long_s = macro_f_string_static_t_initialize2(FIREWALL_program_name_long_s, 0, FIREWALL_program_name_long_s_length);
+  const f_string_static_t firewall_program_name_s = macro_f_string_static_t_initialize(FIREWALL_program_name_s, 0, FIREWALL_program_name_s_length);
+  const f_string_static_t firewall_program_name_long_s = macro_f_string_static_t_initialize(FIREWALL_program_name_long_s, 0, FIREWALL_program_name_long_s_length);
 #endif // _di_firewall_program_name_
 
 #ifndef _di_firewall_print_help_
@@ -58,82 +58,84 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    f_console_parameter_t parameters[] = firewall_console_parameter_t_initialize;
+    main->parameters.array = parameters;
+    main->parameters.used = firewall_total_parameters_d;
+
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, firewall_total_parameters_d);
+      f_console_parameter_id_t ids[3] = { firewall_parameter_no_color_e, firewall_parameter_light_e, firewall_parameter_dark_e };
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      {
-        f_console_parameter_id_t ids[3] = { firewall_parameter_no_color_e, firewall_parameter_light_e, firewall_parameter_dark_e };
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
 
-        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
+      main->output.set = &main->context.set;
+      main->error.set = &main->context.set;
+      main->warning.set = &main->context.set;
 
-        main->output.set = &main->context.set;
-        main->error.set = &main->context.set;
-        main->warning.set = &main->context.set;
+      if (main->context.set.error.before) {
+        main->output.context = f_color_set_empty_s;
+        main->output.notable = main->context.set.notable;
 
-        if (main->context.set.error.before) {
-          main->output.context = f_color_set_empty_s;
-          main->output.notable = main->context.set.notable;
+        main->error.context = main->context.set.error;
+        main->error.notable = main->context.set.notable;
 
-          main->error.context = main->context.set.error;
-          main->error.notable = main->context.set.notable;
+        main->warning.context = main->context.set.warning;
+        main->warning.notable = main->context.set.notable;
+      }
+      else {
+        f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
-          main->warning.context = main->context.set.warning;
-          main->warning.notable = main->context.set.notable;
-        }
-        else {
-          f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-          fll_program_parameter_process_empty(&main->context, sets);
-        }
-
-        if (F_status_is_error(status)) {
-          firewall_main_delete(main);
-
-          return F_status_set_error(status);
-        }
+        fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      // Identify priority of verbosity related parameters.
-      {
-        f_console_parameter_id_t ids[4] = { firewall_parameter_verbosity_quiet_e, firewall_parameter_verbosity_normal_e, firewall_parameter_verbosity_verbose_e, firewall_parameter_verbosity_debug_e };
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
-        f_console_parameter_id_t choice = 0;
+      if (F_status_is_error(status)) {
+        firewall_main_delete(main);
 
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
-
-        if (F_status_is_error(status)) {
-          firewall_main_delete(main);
-
-          return status;
-        }
-
-        if (choice == firewall_parameter_verbosity_quiet_e) {
-          main->output.verbosity = f_console_verbosity_quiet_e;
-          main->error.verbosity = f_console_verbosity_quiet_e;
-          main->warning.verbosity = f_console_verbosity_quiet_e;
-        }
-        else if (choice == firewall_parameter_verbosity_normal_e) {
-          main->output.verbosity = f_console_verbosity_normal_e;
-          main->error.verbosity = f_console_verbosity_normal_e;
-          main->warning.verbosity = f_console_verbosity_normal_e;
-        }
-        else if (choice == firewall_parameter_verbosity_verbose_e) {
-          main->output.verbosity = f_console_verbosity_verbose_e;
-          main->error.verbosity = f_console_verbosity_verbose_e;
-          main->warning.verbosity = f_console_verbosity_verbose_e;
-        }
-        else if (choice == firewall_parameter_verbosity_debug_e) {
-          main->output.verbosity = f_console_verbosity_debug_e;
-          main->error.verbosity = f_console_verbosity_debug_e;
-          main->warning.verbosity = f_console_verbosity_debug_e;
-        }
+        return F_status_set_error(status);
       }
-
-      status = F_none;
     }
 
-    if (main->parameters[firewall_parameter_help_e].result == f_console_result_found_e) {
+    // Identify priority of verbosity related parameters.
+    {
+      f_console_parameter_id_t ids[4] = { firewall_parameter_verbosity_quiet_e, firewall_parameter_verbosity_normal_e, firewall_parameter_verbosity_verbose_e, firewall_parameter_verbosity_debug_e };
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
+      f_console_parameter_id_t choice = 0;
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        firewall_main_delete(main);
+
+        return status;
+      }
+
+      if (choice == firewall_parameter_verbosity_quiet_e) {
+        main->output.verbosity = f_console_verbosity_quiet_e;
+        main->error.verbosity = f_console_verbosity_quiet_e;
+        main->warning.verbosity = f_console_verbosity_quiet_e;
+      }
+      else if (choice == firewall_parameter_verbosity_normal_e) {
+        main->output.verbosity = f_console_verbosity_normal_e;
+        main->error.verbosity = f_console_verbosity_normal_e;
+        main->warning.verbosity = f_console_verbosity_normal_e;
+      }
+      else if (choice == firewall_parameter_verbosity_verbose_e) {
+        main->output.verbosity = f_console_verbosity_verbose_e;
+        main->error.verbosity = f_console_verbosity_verbose_e;
+        main->warning.verbosity = f_console_verbosity_verbose_e;
+      }
+      else if (choice == firewall_parameter_verbosity_debug_e) {
+        main->output.verbosity = f_console_verbosity_debug_e;
+        main->error.verbosity = f_console_verbosity_debug_e;
+        main->warning.verbosity = f_console_verbosity_debug_e;
+      }
+    }
+
+    f_string_static_t * const argv = main->parameters.arguments.array;
+
+    status = F_none;
+
+    if (main->parameters.array[firewall_parameter_help_e].result == f_console_result_found_e) {
       firewall_print_help(main->output.to, main->context);
 
       firewall_main_delete(main);
@@ -141,7 +143,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[firewall_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, firewall_version_s);
 
       firewall_main_delete(main);
@@ -153,14 +155,14 @@ extern "C" {
     bool found_command = F_false;
     unsigned int command = 0;
 
-    if (main->parameters[firewall_parameter_command_start_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_start_e].result == f_console_result_found_e) {
       command = firewall_parameter_command_start_e;
       found_command = F_true;
     }
 
-    if (main->parameters[firewall_parameter_command_stop_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_stop_e].result == f_console_result_found_e) {
       if (found_command) {
-        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_stop_e].values.array[0]) {
+        if (main->parameters.array[command].values.array[0] > main->parameters.array[firewall_parameter_command_stop_e].values.array[0]) {
           command = firewall_parameter_command_stop_e;
         }
       }
@@ -170,9 +172,9 @@ extern "C" {
       }
     }
 
-    if (main->parameters[firewall_parameter_command_restart_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_restart_e].result == f_console_result_found_e) {
       if (found_command) {
-        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_restart_e].values.array[0]) {
+        if (main->parameters.array[command].values.array[0] > main->parameters.array[firewall_parameter_command_restart_e].values.array[0]) {
           command = firewall_parameter_command_restart_e;
         }
       }
@@ -182,9 +184,9 @@ extern "C" {
       }
     }
 
-    if (main->parameters[firewall_parameter_command_lock_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_lock_e].result == f_console_result_found_e) {
       if (found_command) {
-        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_lock_e].values.array[0]) {
+        if (main->parameters.array[command].values.array[0] > main->parameters.array[firewall_parameter_command_lock_e].values.array[0]) {
           command = firewall_parameter_command_lock_e;
         }
       }
@@ -194,9 +196,9 @@ extern "C" {
       }
     }
 
-    if (main->parameters[firewall_parameter_command_show_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_show_e].result == f_console_result_found_e) {
       if (found_command) {
-        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_show_e].values.array[0]) {
+        if (main->parameters.array[command].values.array[0] > main->parameters.array[firewall_parameter_command_show_e].values.array[0]) {
           command = firewall_parameter_command_show_e;
         }
       }
@@ -287,7 +289,7 @@ extern "C" {
           parameters.array[4].used = 9;
           parameters.array[5].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
+          status = fll_execute_program(firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -318,7 +320,7 @@ extern "C" {
           parameters.array[4].used = 9;
           parameters.array[5].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
+          status = fll_execute_program(firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -345,7 +347,7 @@ extern "C" {
           parameters.array[2].used = 9;
           parameters.array[3].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
+          status = fll_execute_program(firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -770,12 +772,7 @@ extern "C" {
 #ifndef _di_firewall_main_delete_
   f_status_t firewall_main_delete(firewall_main_t * const main) {
 
-    for (f_array_length_t i = 0; i < firewall_total_parameters_d; ++i) {
-
-      f_type_array_lengths_resize(0, &main->parameters[i].locations);
-      f_type_array_lengths_resize(0, &main->parameters[i].locations_sub);
-      f_type_array_lengths_resize(0, &main->parameters[i].values);
-    } // for
+    f_console_parameters_delete(&main->parameters);
 
     f_string_dynamics_resize(0, &main->chains);
     f_type_array_lengths_resize(0, &main->remaining);

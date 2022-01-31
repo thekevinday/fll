@@ -8,10 +8,10 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_entry_print_string_s_
-  const f_string_static_t controller_entry_print_considering_s = macro_f_string_static_t_initialize2(CONTROLLER_entry_print_considering_s, 0, CONTROLLER_entry_print_considering_s_length);
-  const f_string_static_t controller_entry_print_failsafe_s = macro_f_string_static_t_initialize2(CONTROLLER_entry_print_failsafe_s, 0, CONTROLLER_entry_print_failsafe_s_length);
-  const f_string_static_t controller_entry_print_processing_s = macro_f_string_static_t_initialize2(CONTROLLER_entry_print_processing_s, 0, CONTROLLER_entry_print_processing_s_length);
-  const f_string_static_t controller_entry_print_suffix_megatime_s = macro_f_string_static_t_initialize2(CONTROLLER_entry_print_suffix_megatime_s, 0, CONTROLLER_entry_print_suffix_megatime_s_length);
+  const f_string_static_t controller_entry_print_considering_s = macro_f_string_static_t_initialize(CONTROLLER_entry_print_considering_s, 0, CONTROLLER_entry_print_considering_s_length);
+  const f_string_static_t controller_entry_print_failsafe_s = macro_f_string_static_t_initialize(CONTROLLER_entry_print_failsafe_s, 0, CONTROLLER_entry_print_failsafe_s_length);
+  const f_string_static_t controller_entry_print_processing_s = macro_f_string_static_t_initialize(CONTROLLER_entry_print_processing_s, 0, CONTROLLER_entry_print_processing_s_length);
+  const f_string_static_t controller_entry_print_suffix_megatime_s = macro_f_string_static_t_initialize(CONTROLLER_entry_print_suffix_megatime_s, 0, CONTROLLER_entry_print_suffix_megatime_s_length);
 #endif // _di_controller_entry_print_string_s_
 
 #ifndef _di_controller_entry_action_parameters_print_
@@ -33,7 +33,7 @@ extern "C" {
 #ifndef _di_controller_entry_preprocess_print_simulate_setting_value_
   void controller_entry_preprocess_print_simulate_setting_value(const controller_global_t global, const bool is_entry, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_static_t suffix) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
       return;
     }
 
@@ -108,7 +108,7 @@ extern "C" {
 #endif // _di_controller_entry_print_error_cache_
 
 #ifndef _di_controller_entry_print_error_file_
-  void controller_entry_print_error_file(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) {
+  void controller_entry_print_error_file(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type, controller_thread_t *thread) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;

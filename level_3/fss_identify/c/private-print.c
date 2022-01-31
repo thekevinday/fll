@@ -11,15 +11,15 @@ extern "C" {
 
     flockfile(main->output.to.stream);
 
-    if (main->parameters[fss_identify_parameter_object_e].result == f_console_result_found_e || main->parameters[fss_identify_parameter_content_e].result != f_console_result_found_e) {
+    if (main->parameters.array[fss_identify_parameter_object_e].result == f_console_result_found_e || main->parameters.array[fss_identify_parameter_content_e].result != f_console_result_found_e) {
       f_print(id.name, id.used, main->output.to.stream);
 
-      if (main->parameters[fss_identify_parameter_object_e].result != f_console_result_found_e || main->parameters[fss_identify_parameter_content_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_identify_parameter_object_e].result != f_console_result_found_e || main->parameters.array[fss_identify_parameter_content_e].result == f_console_result_found_e) {
         f_print_terminated(f_fss_type_header_part5_s, main->output.to.stream);
       }
     }
 
-    if (main->parameters[fss_identify_parameter_object_e].result != f_console_result_found_e || main->parameters[fss_identify_parameter_content_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_identify_parameter_object_e].result != f_console_result_found_e || main->parameters.array[fss_identify_parameter_content_e].result == f_console_result_found_e) {
       fl_print_format("%04_ui", main->output.to.stream, id.type);
     }
 

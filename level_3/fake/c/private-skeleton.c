@@ -136,7 +136,7 @@ extern "C" {
           funlockfile(main->error.to.stream);
         }
         else {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_directory_create", F_true, path.string, "create", fll_error_file_type_directory_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_directory_create", F_true, path, f_file_operation_create_s, fll_error_file_type_directory_e);
         }
 
         return status;
@@ -147,7 +147,7 @@ extern "C" {
       }
     }
     else if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "f_directory_exists", F_true, path.string, "create", fll_error_file_type_directory_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "f_directory_exists", F_true, path, f_file_operation_create_s, fll_error_file_type_directory_e);
 
       return status;
     }
@@ -213,7 +213,7 @@ extern "C" {
           funlockfile(main->error.to.stream);
         }
         else {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_create", F_true, path.string, "create", fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_create", F_true, path, f_file_operation_create_s, fll_error_file_type_file_e);
         }
 
         return status;
@@ -232,7 +232,7 @@ extern "C" {
         status = f_file_open(path.string, 0, &file);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, path.string, "pre-populate", fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
           return status;
         }
@@ -240,7 +240,7 @@ extern "C" {
         status = f_file_write(file, content, 0);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_write", F_true, path.string, "pre-populate", fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_write", F_true, path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
           f_file_stream_close(F_true, &file);
           return status;
@@ -254,7 +254,7 @@ extern "C" {
       }
     }
     else if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "f_file_is", F_true, path.string, "create", fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "f_file_is", F_true, path, f_file_operation_create_s, fll_error_file_type_file_e);
 
       return status;
     }

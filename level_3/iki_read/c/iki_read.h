@@ -187,8 +187,8 @@ extern "C" {
 
   #define macro_iki_read_substitution_t_initialize(replace, with) \
     { \
-      macro_f_string_static_t_initialize(replace), \
-      macro_f_string_static_t_initialize(with), \
+      macro_f_string_static_t_initialize2(replace), \
+      macro_f_string_static_t_initialize2(with), \
     }
 #endif // _di_iki_read_substitution_t_
 
@@ -213,7 +213,7 @@ extern "C" {
 
 #ifndef _di_iki_read_main_t_
   typedef struct {
-    f_console_parameter_t parameters[iki_read_total_parameters_d];
+    f_console_parameters_t parameters;
 
     f_array_lengths_t remaining;
     bool process_pipe;
@@ -238,7 +238,7 @@ extern "C" {
 
   #define iki_read_main_t_initialize \
     { \
-      iki_read_console_parameter_t_initialize, \
+      f_console_parameters_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \

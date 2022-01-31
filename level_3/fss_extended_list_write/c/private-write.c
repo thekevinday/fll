@@ -81,7 +81,7 @@ extern "C" {
       }
 
       if (content) {
-        if (main->parameters[fss_extended_list_write_parameter_trim_e].result == f_console_result_found_e) {
+        if (main->parameters.array[fss_extended_list_write_parameter_trim_e].result == f_console_result_found_e) {
           complete = f_fss_complete_full_trim_e;
         }
         else {
@@ -364,13 +364,13 @@ extern "C" {
 
     range.start = 0;
 
-    for (; i < main->parameters[fss_extended_list_write_parameter_ignore_e].locations.used; ++i) {
+    for (; i < main->parameters.array[fss_extended_list_write_parameter_ignore_e].locations.used; ++i) {
 
       if (fss_extended_list_write_signal_received(main)) {
         return F_status_set_error(F_interrupt);
       }
 
-      l = main->parameters[fss_extended_list_write_parameter_ignore_e].locations.array[i];
+      l = main->parameters.array[fss_extended_list_write_parameter_ignore_e].locations.array[i];
 
       if (l < contents.array[location]) continue;
       if (location + 1 < contents.used && l > contents.array[location + 1]) continue;
@@ -396,7 +396,7 @@ extern "C" {
         }
       }
 
-      index = main->parameters[fss_extended_list_write_parameter_ignore_e].values.array[i * 2];
+      index = main->parameters.array[fss_extended_list_write_parameter_ignore_e].values.array[i * 2];
 
       range.start = 0;
       range.stop = strnlen(arguments->argv[index], F_console_parameter_size_d) - 1;
@@ -416,7 +416,7 @@ extern "C" {
 
       ignore->array[ignore->used].start = number;
 
-      index = main->parameters[fss_extended_list_write_parameter_ignore_e].values.array[(i * 2) + 1];
+      index = main->parameters.array[fss_extended_list_write_parameter_ignore_e].values.array[(i * 2) + 1];
 
       range.start = 0;
       range.stop = strnlen(arguments->argv[index], F_console_parameter_size_d) - 1;

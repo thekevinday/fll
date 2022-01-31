@@ -6,9 +6,9 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_directory_create_) || !defined(_di_f_directory_touch_)
-  f_status_t private_f_directory_create(const f_string_t path, const mode_t mode) {
+  f_status_t private_f_directory_create(const f_string_static_t path, const mode_t mode) {
 
-    if (mkdir(path, mode) < 0) {
+    if (mkdir(path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -32,9 +32,9 @@ extern "C" {
 #endif // !defined(_di_f_directory_create_) || !defined(_di_f_directory_touch_)
 
 #if !defined(_di_f_directory_create_at_) || !defined(_di_f_directory_touch_at_)
-  f_status_t private_f_directory_create_at(const int at_id, const f_string_t path, const mode_t mode) {
+  f_status_t private_f_directory_create_at(const int at_id, const f_string_static_t path, const mode_t mode) {
 
-    if (mkdirat(at_id, path, mode) < 0) {
+    if (mkdirat(at_id, path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);

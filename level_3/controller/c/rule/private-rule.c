@@ -1369,11 +1369,11 @@ extern "C" {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
-        status = fll_execute_program(controller_default_program_script_s.string, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {
-      status = fll_execute_program(program.string, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
     }
 
     if (status == F_parent) {
@@ -1562,13 +1562,13 @@ extern "C" {
     status = f_file_exists(pid_file.string);
 
     if (F_status_is_error(status)) {
-      controller_print_error_file(thread, main->error, F_status_set_fine(status), "f_file_exists", F_true, pid_file.string, "find", fll_error_file_type_file_e);
+      controller_print_error_file(thread, main->error, F_status_set_fine(status), "f_file_exists", F_true, pid_file.string, f_file_operation_find_s, fll_error_file_type_file_e);
 
       return status;
     }
 
     if (status == F_true) {
-      controller_print_error_file(thread, main->error, F_file_found, "f_file_exists", F_true, pid_file.string, "find", fll_error_file_type_file_e);
+      controller_print_error_file(thread, main->error, F_file_found, "f_file_exists", F_true, pid_file.string, f_file_operation_find_s, fll_error_file_type_file_e);
 
       return F_status_set_error(F_file_found);
     }
@@ -1624,11 +1624,11 @@ extern "C" {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
-        status = fll_execute_program(controller_default_program_script_s.string, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {
-      status = fll_execute_program(program.string, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, (void *) &result);
     }
 
     if (status == F_parent) {
@@ -2436,7 +2436,7 @@ extern "C" {
             memcpy(alias_other_buffer, global.setting->rules.array[id_rule].alias.string, global.setting->rules.array[id_rule].alias.used);
             alias_other_buffer[global.setting->rules.array[id_rule].alias.used] = 0;
 
-            const f_string_static_t alias_other = macro_f_string_static_t_initialize(alias_other_buffer, global.setting->rules.array[id_rule].alias.used);
+            const f_string_static_t alias_other = macro_f_string_static_t_initialize2(alias_other_buffer, global.setting->rules.array[id_rule].alias.used);
 
             f_thread_unlock(&global.thread->lock.rule);
 
@@ -2472,7 +2472,7 @@ extern "C" {
 
                 options_process = 0;
 
-                if (global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e) {
+                if (global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
                   options_process |= controller_process_option_simulate_d;
                 }
 
@@ -4623,7 +4623,7 @@ extern "C" {
             rule->timeout_stop = number;
           }
 
-          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
             f_string_static_t name_sub = controller_stop_s;
 
             if (timeout_code == controller_rule_timeout_code_kill_d) {
@@ -4815,7 +4815,7 @@ extern "C" {
             rule->nice = number;
             rule->has |= controller_rule_has_nice_d;
 
-            if (global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e || global.main->error.verbosity == f_console_verbosity_verbose_e) {
+            if (global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global.main->error.verbosity == f_console_verbosity_verbose_e) {
               cache->action.generic.used = 0;
 
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
@@ -4895,7 +4895,7 @@ extern "C" {
             rule->user = number;
             rule->has |= controller_rule_has_user_d;
 
-            if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+            if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
               cache->action.generic.used = 0;
 
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
@@ -5125,7 +5125,7 @@ extern "C" {
           controller_rule_setting_read_print_values(global, controller_environment_s, i, cache);
         }
         else {
-          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
             controller_lock_print(global.main->output.to, global.thread);
 
             fl_print_format("%qProcessing rule item action '%[%q%]' setting value to an empty set.%q", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, controller_environment_s, global.main->context.set.title, f_string_eol_s);
@@ -5354,7 +5354,7 @@ extern "C" {
         ++rule->ons.used;
       }
 
-      if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+      if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
         controller_lock_print(global.main->output.to, global.thread);
 
         fl_print_format("%qProcessing rule item action '%[%S%]', adding ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, controller_on_s, global.main->context.set.title);

@@ -63,8 +63,8 @@ extern "C" {
     {
       f_array_length_t depth_size = 1;
 
-      if (main->parameters[fss_extended_list_read_parameter_depth_e].result == f_console_result_additional_e) {
-        depth_size = main->parameters[fss_extended_list_read_parameter_depth_e].values.used;
+      if (main->parameters.array[fss_extended_list_read_parameter_depth_e].result == f_console_result_additional_e) {
+        depth_size = main->parameters.array[fss_extended_list_read_parameter_depth_e].values.used;
       }
 
       if (depth_size > data->depths.size) {
@@ -97,11 +97,11 @@ extern "C" {
 
       macro_f_string_dynamic_t_clear(data->depths.array[i].value_name);
 
-      if (!main->parameters[fss_extended_list_read_parameter_depth_e].values.used) {
+      if (!main->parameters.array[fss_extended_list_read_parameter_depth_e].values.used) {
         position_depth = 0;
       }
       else {
-        position_depth = main->parameters[fss_extended_list_read_parameter_depth_e].values.array[i];
+        position_depth = main->parameters.array[fss_extended_list_read_parameter_depth_e].values.array[i];
 
         const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[position_depth]));
 
@@ -114,18 +114,18 @@ extern "C" {
         }
       }
 
-      if (main->parameters[fss_extended_list_read_parameter_at_e].result == f_console_result_additional_e) {
-        for (; position_at < main->parameters[fss_extended_list_read_parameter_at_e].values.used; ++position_at) {
+      if (main->parameters.array[fss_extended_list_read_parameter_at_e].result == f_console_result_additional_e) {
+        for (; position_at < main->parameters.array[fss_extended_list_read_parameter_at_e].values.used; ++position_at) {
 
-          if (main->parameters[fss_extended_list_read_parameter_at_e].values.array[position_at] < position_depth) {
+          if (main->parameters.array[fss_extended_list_read_parameter_at_e].values.array[position_at] < position_depth) {
             continue;
           }
 
-          if (i + 1 < data->depths.used && main->parameters[fss_extended_list_read_parameter_at_e].values.array[position_at] > main->parameters[fss_extended_list_read_parameter_depth_e].values.array[i + 1]) {
+          if (i + 1 < data->depths.used && main->parameters.array[fss_extended_list_read_parameter_at_e].values.array[position_at] > main->parameters.array[fss_extended_list_read_parameter_depth_e].values.array[i + 1]) {
             break;
           }
 
-          data->depths.array[i].index_at = main->parameters[fss_extended_list_read_parameter_at_e].values.array[position_at];
+          data->depths.array[i].index_at = main->parameters.array[fss_extended_list_read_parameter_at_e].values.array[position_at];
 
           const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[data->depths.array[i].index_at]));
 
@@ -139,20 +139,20 @@ extern "C" {
         } // for
       }
 
-      if (main->parameters[fss_extended_list_read_parameter_name_e].result == f_console_result_additional_e) {
-        for (; position_name < main->parameters[fss_extended_list_read_parameter_name_e].values.used; ++position_name) {
+      if (main->parameters.array[fss_extended_list_read_parameter_name_e].result == f_console_result_additional_e) {
+        for (; position_name < main->parameters.array[fss_extended_list_read_parameter_name_e].values.used; ++position_name) {
 
-          if (main->parameters[fss_extended_list_read_parameter_name_e].values.array[position_name] < position_depth) {
+          if (main->parameters.array[fss_extended_list_read_parameter_name_e].values.array[position_name] < position_depth) {
             continue;
           }
 
-          if (i + 1 < data->depths.used && main->parameters[fss_extended_list_read_parameter_name_e].values.array[position_name] > main->parameters[fss_extended_list_read_parameter_depth_e].values.array[i + 1]) {
+          if (i + 1 < data->depths.used && main->parameters.array[fss_extended_list_read_parameter_name_e].values.array[position_name] > main->parameters.array[fss_extended_list_read_parameter_depth_e].values.array[i + 1]) {
             break;
           }
 
-          data->depths.array[i].index_name = main->parameters[fss_extended_list_read_parameter_name_e].values.array[position_name];
+          data->depths.array[i].index_name = main->parameters.array[fss_extended_list_read_parameter_name_e].values.array[position_name];
 
-          if (main->parameters[fss_extended_list_read_parameter_trim_e].result == f_console_result_found_e) {
+          if (main->parameters.array[fss_extended_list_read_parameter_trim_e].result == f_console_result_found_e) {
             status = fl_string_rip(arguments->argv[data->depths.array[i].index_name], strlen(arguments->argv[data->depths.array[i].index_name]), &data->depths.array[i].value_name);
           }
           else {
@@ -160,7 +160,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), main->parameters[fss_extended_list_read_parameter_trim_e].result == f_console_result_found_e ? "fl_string_rip" : "f_string_append", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), main->parameters.array[fss_extended_list_read_parameter_trim_e].result == f_console_result_found_e ? "fl_string_rip" : "f_string_append", F_true);
 
             return status;
           }
@@ -248,7 +248,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       const f_string_t file_name = fss_extended_list_read_file_identify(input.start, data->files);
 
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_list_read", F_true, file_name, "process", fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_list_read", F_true, file_name, f_file_operation_process_s, fll_error_file_type_file_e);
 
       return status;
     }
@@ -270,8 +270,8 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_load_number_
   f_status_t fss_extended_list_read_load_number(fss_extended_list_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) {
 
-    if (main->parameters[parameter].result == f_console_result_additional_e) {
-      const f_array_length_t index = main->parameters[parameter].values.array[main->parameters[parameter].values.used - 1];
+    if (main->parameters.array[parameter].result == f_console_result_additional_e) {
+      const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].values.used - 1];
       const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], F_console_parameter_size_d));
 
       const f_status_t status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, number);
@@ -297,7 +297,7 @@ extern "C" {
 
     // This standard does not support multiple content groups.
     if ((data->option & fss_extended_list_read_data_option_select_d) && data->select) {
-      if (main->parameters[fss_extended_list_read_parameter_total_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_extended_list_read_parameter_total_e].result == f_console_result_found_e) {
         fss_extended_list_read_print_zero(main);
       }
 
@@ -651,53 +651,53 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (main->parameters[fss_extended_list_read_parameter_at_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_at_e].result == f_console_result_additional_e) {
       data->option |= fss_extended_list_read_data_option_at_d;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_columns_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_columns_e].result == f_console_result_found_e) {
       data->option |= fss_extended_list_read_data_option_columns_d;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_content_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_content_e].result == f_console_result_found_e) {
       data->option |= fss_extended_list_read_data_option_content_d;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_empty_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_empty_e].result == f_console_result_found_e) {
       data->option |= fss_extended_list_read_data_option_empty_d;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_line_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_line_e].result == f_console_result_additional_e) {
       data->option |= fss_extended_list_read_data_option_line_d;
 
       status = fss_extended_list_read_load_number(main, fss_extended_list_read_parameter_line_e, fss_extended_list_read_long_line_s, arguments, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_name_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_name_e].result == f_console_result_additional_e) {
       data->option |= fss_extended_list_read_data_option_name_d;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_object_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_object_e].result == f_console_result_found_e) {
       data->option |= fss_extended_list_read_data_option_object_d;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_raw_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_raw_e].result == f_console_result_found_e) {
       data->option |= fss_extended_list_read_data_option_raw_d;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_select_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_select_e].result == f_console_result_additional_e) {
       data->option |= fss_extended_list_read_data_option_select_d;
 
       status = fss_extended_list_read_load_number(main, fss_extended_list_read_parameter_select_e, fss_extended_list_read_long_select_s, arguments, &data->select);
       if (F_status_is_error(status)) return status;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_total_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_total_e].result == f_console_result_found_e) {
       data->option |= fss_extended_list_read_data_option_total_d;
     }
 
-    if (main->parameters[fss_extended_list_read_parameter_trim_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_list_read_parameter_trim_e].result == f_console_result_found_e) {
       data->option |= fss_extended_list_read_data_option_trim_d;
     }
 

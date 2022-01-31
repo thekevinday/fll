@@ -46,7 +46,7 @@ extern "C" {
  * @see f_directory_touch()
  */
 #if !defined(_di_f_directory_create_) || !defined(_di_f_directory_touch_)
-  extern f_status_t private_f_directory_create(const f_string_t path, const mode_t mode) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_directory_create(const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_directory_create_) || !defined(_di_f_directory_touch_)
 
 /**
@@ -84,7 +84,7 @@ extern "C" {
  * @see f_directory_touch_at()
  */
 #if !defined(_di_f_directory_create_at_) || !defined(_di_f_directory_touch_at_)
-  extern f_status_t private_f_directory_create_at(const int at_id, const f_string_t path, const mode_t mode) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_directory_create_at(const int at_id, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_directory_create_at_) || !defined(_di_f_directory_touch_at_)
 
 /**

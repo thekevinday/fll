@@ -143,7 +143,7 @@ extern "C" {
 
 #ifndef _di_fss_identify_data_t_
   typedef struct {
-    f_console_parameter_t parameters[fss_identify_total_parameters_d];
+    f_console_parameters_t parameters;
 
     f_array_lengths_t remaining;
     bool process_pipe;
@@ -159,7 +159,7 @@ extern "C" {
 
   #define fss_identify_data_initialize \
     { \
-      fss_identify_console_parameter_t_initialize, \
+      f_console_parameters_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \

@@ -23,38 +23,37 @@ extern "C" {
 
     f_file_t file = macro_f_file_t_initialize2(0, -1, F_file_flag_write_only_d);
     f_status_t status = F_none;
-    f_array_length_t length = 0;
+    f_string_static_t path = f_string_static_t_initialize;
 
     for (f_array_length_t i = 0; i < control_group.groups.used; ++i) {
 
       if (!control_group.groups.array[i].used) continue;
 
-      length = control_group.path.used + control_group.groups.array[i].used + F_control_group_path_system_suffix_s_length;
+      path.used = control_group.path.used + control_group.groups.array[i].used + F_control_group_path_system_suffix_s_length;
 
-      char path[length + 1];
+      char path_string[path.used + 1];
+      path.string = path_string;
 
       if (control_group.path.used) {
-        memcpy(path, control_group.path.string, control_group.path.used);
+        memcpy(path.string, control_group.path.string, control_group.path.used);
       }
 
-      memcpy(path + control_group.path.used, control_group.groups.array[i].string, control_group.groups.array[i].used);
-      memcpy(path + control_group.path.used + F_control_group_path_system_default_s_length, F_control_group_path_system_suffix_s, F_control_group_path_system_suffix_s_length);
+      memcpy(path.string + control_group.path.used, control_group.groups.array[i].string, control_group.groups.array[i].used);
+      memcpy(path.string + control_group.path.used + F_control_group_path_system_default_s_length, F_control_group_path_system_suffix_s, F_control_group_path_system_suffix_s_length);
 
-      path[length] = 0;
+      path.string[path.used] = 0;
 
-      status = f_file_stream_open(path, 0, &file);
+      status = f_file_stream_open(path, f_string_empty_s, &file);
       if (F_status_is_error(status)) break;
 
       fprintf(file.stream, "%d", id);
       fflush(file.stream);
 
-      f_file_stream_close(F_true, &file);
+      status = f_file_stream_close(F_true, &file);
       if (F_status_is_error(status)) break;
     } // for
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }

@@ -16,8 +16,8 @@ extern "C" {
 #ifndef _di_utf8_print_character_invalid_
   void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) {
 
-    if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
-    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     if (!character.used) return;
 
@@ -81,7 +81,7 @@ extern "C" {
           fl_print_format("%s%s%s", data->file.stream, data->prepend, utf8_string_combining_not_s, data->append);
         }
       }
-      else if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_none_e && data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
+      else if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_none_e && data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
         fl_print_format("%s%[%s%]%s", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
       }
     }
@@ -95,8 +95,8 @@ extern "C" {
   void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
-    if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
-    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     fl_print_format("%q%[%QFailed to decode character code '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
 
@@ -209,8 +209,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_file_
   void utf8_print_section_header_file(utf8_data_t * const data, const f_string_t name) {
 
-    if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e) return;
-    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_headers_e].result == f_console_result_none_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     flockfile(data->main->output.to.stream);
 
@@ -230,8 +230,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_parameter_
   void utf8_print_section_header_parameter(utf8_data_t * const data, const f_array_length_t index) {
 
-    if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e) return;
-    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_headers_e].result == f_console_result_none_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     flockfile(data->main->output.to.stream);
 
@@ -245,8 +245,8 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_pipe_
   void utf8_print_section_header_pipe(utf8_data_t * const data) {
 
-    if (data->main->parameters[utf8_parameter_headers_e].result == f_console_result_none_e) return;
-    if (data->main->parameters[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_headers_e].result == f_console_result_none_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
     fll_print_format("%q%[Pipe%]:%q", data->main->output.to.stream, f_string_eol_s, data->main->output.set->title, data->main->output.set->title, f_string_eol_s);
   }
@@ -297,7 +297,7 @@ extern "C" {
       }
     }
 
-    if (data->main->parameters[utf8_parameter_strip_invalid_e].result == f_console_result_none_e && data->main->parameters[utf8_parameter_verify_e].result == f_console_result_none_e) {
+    if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_none_e && data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
       fl_print_format("%s%[%s%]%s", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
     }
   }

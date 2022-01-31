@@ -422,7 +422,7 @@ extern "C" {
 
 #ifndef _di_fake_main_t_
   typedef struct {
-    f_console_parameter_t parameters[fake_total_parameters_d];
+    f_console_parameters_t parameters;
 
     f_array_lengths_t remaining;
     bool process_pipe;
@@ -497,7 +497,7 @@ extern "C" {
 
   #define fake_main_t_initialize \
     { \
-      fake_console_parameter_t_initialize, \
+      macro_f_console_parameters_t_initialize(fake_console_parameter_t_initialize, fake_total_parameters_d) \
       f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \

@@ -47,6 +47,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
@@ -65,7 +66,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_directory_list().
  */
 #ifndef _di_fll_file_mode_set_all_
-  extern f_status_t fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max);
+  extern f_status_t fll_file_mode_set_all(const f_string_static_t path, const mode_t mode, const f_number_unsigned_t depth_max);
 #endif // _di_fll_file_mode_set_all_
 
 /**
@@ -84,10 +85,6 @@ extern "C" {
  *   The path to the file to copy from.
  * @param destination
  *   The path to copy to.
- * @param source_length
- *   The length of the source path.
- * @param destination_length
- *   The length of the destination path.
  * @param recurse
  *   The directory recurse data.
  *
@@ -126,7 +123,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #ifndef _di_fll_file_move_
-  extern f_status_t fll_file_move(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const fl_directory_recurse_t recurse);
+  extern f_status_t fll_file_move(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse);
 #endif // _di_fll_file_move_
 
 /**
@@ -172,7 +169,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_directory_list().
  */
 #ifndef _di_fll_file_role_change_all_
-  extern f_status_t fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max);
+  extern f_status_t fll_file_role_change_all(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max);
 #endif // _di_fll_file_role_change_all_
 
 #ifdef __cplusplus

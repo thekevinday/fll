@@ -68,87 +68,89 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    f_console_parameter_t parameters[] = controller_console_parameter_t_initialize;
+    main->parameters.array = parameters;
+    main->parameters.used = controller_total_parameters_d;
+
     {
-      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, controller_total_parameters_d);
+      f_console_parameter_id_t ids[3] = { controller_parameter_no_color_e, controller_parameter_light_e, controller_parameter_dark_e };
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      {
-        f_console_parameter_id_t ids[3] = { controller_parameter_no_color_e, controller_parameter_light_e, controller_parameter_dark_e };
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
 
-        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
+      main->output.set = &main->context.set;
+      main->error.set = &main->context.set;
+      main->warning.set = &main->context.set;
 
-        main->output.set = &main->context.set;
-        main->error.set = &main->context.set;
-        main->warning.set = &main->context.set;
+      if (main->context.set.error.before) {
+        main->output.context = f_color_set_empty_s;
+        main->output.notable = main->context.set.notable;
 
-        if (main->context.set.error.before) {
-          main->output.context = f_color_set_empty_s;
-          main->output.notable = main->context.set.notable;
+        main->error.context = main->context.set.error;
+        main->error.notable = main->context.set.notable;
 
-          main->error.context = main->context.set.error;
-          main->error.notable = main->context.set.notable;
+        main->warning.context = main->context.set.warning;
+        main->warning.notable = main->context.set.notable;
+      }
+      else {
+        f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
-          main->warning.context = main->context.set.warning;
-          main->warning.notable = main->context.set.notable;
-        }
-        else {
-          f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-          fll_program_parameter_process_empty(&main->context, sets);
-        }
-
-        if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fll_print_dynamic(f_string_eol_s, main->error.to.stream);
-          }
-
-          controller_main_delete(main);
-
-          return F_status_set_error(status);
-        }
+        fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      // Identify priority of verbosity related parameters.
-      {
-        f_console_parameter_id_t ids[4] = { controller_parameter_verbosity_quiet_e, controller_parameter_verbosity_normal_e, controller_parameter_verbosity_verbose_e, controller_parameter_verbosity_debug_e };
-        f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
-
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
-
-        if (F_status_is_error(status)) {
-          controller_main_delete(main);
-
-          return status;
+      if (F_status_is_error(status)) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+          fll_print_dynamic(f_string_eol_s, main->error.to.stream);
         }
 
-        if (choice == controller_parameter_verbosity_quiet_e) {
-          main->output.verbosity = f_console_verbosity_quiet_e;
-          main->error.verbosity = f_console_verbosity_quiet_e;
-          main->warning.verbosity = f_console_verbosity_quiet_e;
-        }
-        else if (choice == controller_parameter_verbosity_normal_e) {
-          main->output.verbosity = f_console_verbosity_normal_e;
-          main->error.verbosity = f_console_verbosity_normal_e;
-          main->warning.verbosity = f_console_verbosity_normal_e;
-        }
-        else if (choice == controller_parameter_verbosity_verbose_e) {
-          main->output.verbosity = f_console_verbosity_verbose_e;
-          main->error.verbosity = f_console_verbosity_verbose_e;
-          main->warning.verbosity = f_console_verbosity_verbose_e;
-        }
-        else if (choice == controller_parameter_verbosity_debug_e) {
-          main->output.verbosity = f_console_verbosity_debug_e;
-          main->error.verbosity = f_console_verbosity_debug_e;
-          main->warning.verbosity = f_console_verbosity_debug_e;
-        }
+        controller_main_delete(main);
+
+        return F_status_set_error(status);
       }
-
-      status = F_none;
     }
 
-    if (main->parameters[controller_parameter_help_e].result == f_console_result_found_e) {
+    // Identify priority of verbosity related parameters.
+    {
+      f_console_parameter_id_t ids[4] = { controller_parameter_verbosity_quiet_e, controller_parameter_verbosity_normal_e, controller_parameter_verbosity_verbose_e, controller_parameter_verbosity_debug_e };
+      f_console_parameter_id_t choice = 0;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        controller_main_delete(main);
+
+        return status;
+      }
+
+      if (choice == controller_parameter_verbosity_quiet_e) {
+        main->output.verbosity = f_console_verbosity_quiet_e;
+        main->error.verbosity = f_console_verbosity_quiet_e;
+        main->warning.verbosity = f_console_verbosity_quiet_e;
+      }
+      else if (choice == controller_parameter_verbosity_normal_e) {
+        main->output.verbosity = f_console_verbosity_normal_e;
+        main->error.verbosity = f_console_verbosity_normal_e;
+        main->warning.verbosity = f_console_verbosity_normal_e;
+      }
+      else if (choice == controller_parameter_verbosity_verbose_e) {
+        main->output.verbosity = f_console_verbosity_verbose_e;
+        main->error.verbosity = f_console_verbosity_verbose_e;
+        main->warning.verbosity = f_console_verbosity_verbose_e;
+      }
+      else if (choice == controller_parameter_verbosity_debug_e) {
+        main->output.verbosity = f_console_verbosity_debug_e;
+        main->error.verbosity = f_console_verbosity_debug_e;
+        main->warning.verbosity = f_console_verbosity_debug_e;
+      }
+    }
+
+    f_string_static_t * const argv = main->parameters.arguments.array;
+
+    status = F_none;
+
+    if (main->parameters.array[controller_parameter_help_e].result == f_console_result_found_e) {
       controller_print_help(main);
 
       controller_main_delete(main);
@@ -156,7 +158,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->parameters[controller_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[controller_parameter_version_e].result == f_console_result_found_e) {
       controller_lock_print(main->output.to, 0);
 
       fll_program_print_version(main->output.to, controller_program_version_s);
@@ -203,7 +205,7 @@ extern "C" {
       return status;
     }
 
-    if (main->parameters[controller_parameter_init_e].result == f_console_result_found_e) {
+    if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e) {
       main->as_init = F_true;
     }
 
@@ -211,7 +213,7 @@ extern "C" {
       setting.mode = controller_setting_mode_service_e;
     }
 
-    if (main->parameters[controller_parameter_settings_e].result == f_console_result_found_e) {
+    if (main->parameters.array[controller_parameter_settings_e].result == f_console_result_found_e) {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(main->error.to, 0);
 
@@ -224,17 +226,19 @@ extern "C" {
 
       status = F_status_set_error(F_parameter);
     }
-    else if (main->parameters[controller_parameter_settings_e].locations.used) {
-      const f_array_length_t location = main->parameters[controller_parameter_settings_e].values.array[main->parameters[controller_parameter_settings_e].values.used - 1];
+    else if (main->parameters.array[controller_parameter_settings_e].locations.used) {
+      const f_array_length_t location = main->parameters.array[controller_parameter_settings_e].values.array[main->parameters.array[controller_parameter_settings_e].values.used - 1];
 
       status = fll_path_canonical(arguments->argv[location], &setting.path_setting);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, arguments->argv[location], "verify", fll_error_file_type_path_e);
+        const f_string_static_t argv = macro_f_string_static_t_initialize(arguments->argv[location], 0, strnlen(arguments->argv[location], F_console_parameter_size_d);
+
+        fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv, f_file_operation_verify_s, fll_error_file_type_path_e);
       }
     }
     else {
-      if (main->parameters[controller_parameter_init_e].result == f_console_result_found_e && !main->as_init) {
+      if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e && !main->as_init) {
         status = f_string_dynamic_append(controller_path_settings_init_s, &setting.path_setting);
       }
       else if (main->default_path_setting->used) {
@@ -250,7 +254,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[controller_parameter_pid_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_pid_e].result == f_console_result_found_e) {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
@@ -263,8 +267,8 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[controller_parameter_pid_e].locations.used) {
-        const f_array_length_t location = main->parameters[controller_parameter_pid_e].values.array[main->parameters[controller_parameter_pid_e].values.used - 1];
+      else if (main->parameters.array[controller_parameter_pid_e].locations.used) {
+        const f_array_length_t location = main->parameters.array[controller_parameter_pid_e].values.array[main->parameters.array[controller_parameter_pid_e].values.used - 1];
 
         if (strnlen(arguments->argv[location], F_console_parameter_size_d)) {
           status = fll_path_canonical(arguments->argv[location], &setting.path_pid);
@@ -279,8 +283,8 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status) && !setting.path_pid.used && !main->parameters[controller_parameter_pid_e].locations.used) {
-      if (main->parameters[controller_parameter_init_e].result == f_console_result_found_e) {
+    if (F_status_is_error_not(status) && !setting.path_pid.used && !main->parameters.array[controller_parameter_pid_e].locations.used) {
+      if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e) {
         status = f_string_dynamic_append(controller_path_pid_init_s, &setting.path_pid);
       }
       else {
@@ -309,7 +313,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[controller_parameter_cgroup_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_cgroup_e].result == f_console_result_found_e) {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
@@ -322,8 +326,8 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[controller_parameter_cgroup_e].locations.used) {
-        const f_array_length_t location = main->parameters[controller_parameter_cgroup_e].values.array[main->parameters[controller_parameter_cgroup_e].values.used - 1];
+      else if (main->parameters.array[controller_parameter_cgroup_e].locations.used) {
+        const f_array_length_t location = main->parameters.array[controller_parameter_cgroup_e].values.array[main->parameters.array[controller_parameter_cgroup_e].values.used - 1];
 
         if (strnlen(arguments->argv[location], F_console_parameter_size_d)) {
           status = fll_path_canonical(arguments->argv[location], &setting.path_cgroup);
@@ -360,8 +364,8 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status) && main->parameters[controller_parameter_daemon_e].result == f_console_result_found_e) {
-      if (main->parameters[controller_parameter_validate_e].result == f_console_result_found_e) {
+    if (F_status_is_error_not(status) && main->parameters.array[controller_parameter_daemon_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_validate_e].result == f_console_result_found_e) {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
@@ -382,7 +386,7 @@ extern "C" {
       setting.entry.pid = controller_entry_pid_disable_e;
       setting.entry.show = controller_entry_show_init_e;
 
-      if (main->parameters[controller_parameter_interruptible_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_interruptible_e].result == f_console_result_found_e) {
         setting.interruptible = F_true;
       }
       else {
@@ -390,7 +394,7 @@ extern "C" {
       }
     }
     else {
-      if (main->parameters[controller_parameter_uninterruptible_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_uninterruptible_e].result == f_console_result_found_e) {
         setting.interruptible = F_false;
       }
       else {

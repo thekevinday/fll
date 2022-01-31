@@ -37,7 +37,7 @@ extern "C" {
         path_sources = &main->path_sources_cpp;
       }
     }
-    else if (main->parameters[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
+    else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
       path_sources = &data_build.setting.path_sources;
     }
 
@@ -136,7 +136,7 @@ extern "C" {
                 funlockfile(main->error.to.stream);
               }
               else {
-                fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_create", F_true, destination_path.string, "create", fll_error_file_type_directory_e);
+                fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_create", F_true, destination_path, f_file_operation_create_s, fll_error_file_type_directory_e);
               }
 
               break;
@@ -147,15 +147,15 @@ extern "C" {
             }
           }
           else if (F_status_is_error(*status)) {
-            fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_exists", F_true, destination_path.string, "create", fll_error_file_type_directory_e);
+            fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_exists", F_true, destination_path, f_file_operation_create_s, fll_error_file_type_directory_e);
 
             break;
           }
 
-          destination_length = destination_path.used + file_name.used + fake_build_parameter_object_name_suffix_s_length;
+          destination_length = destination_path.used + file_name.used + fake_build_parameter_object_name_suffix_s.used;
         }
         else {
-          destination_length = main->path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_s_length;
+          destination_length = main->path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_s.used;
         }
 
         char destination[destination_length + 1];
@@ -163,37 +163,29 @@ extern "C" {
         if (destination_path.used) {
           memcpy(destination, destination_path.string, destination_path.used);
           memcpy(destination + destination_path.used, file_name.string, file_name.used);
-          memcpy(destination + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s_length);
+          memcpy(destination + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s.used);
         }
         else {
           memcpy(destination, main->path_build_objects.string, main->path_build_objects.used);
           memcpy(destination + main->path_build_objects.used, file_name.string, file_name.used);
-          memcpy(destination + main->path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s_length);
+          memcpy(destination + main->path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s.used);
         }
 
         destination[destination_length] = 0;
 
-        const f_string_t values[] = {
-          source,
+        const f_string_static_t values[] = {
+          macro_f_string_static_t_initialize(source, 0, source_length),
           fake_build_parameter_object_compile_s,
           fake_build_parameter_object_static_s,
           fake_build_parameter_object_output_s,
-          destination,
-        };
-
-        const f_array_length_t lengths[] = {
-          source_length,
-          fake_build_parameter_object_compile_s_length,
-          fake_build_parameter_object_static_s_length,
-          fake_build_parameter_object_output_s_length,
-          destination_length,
+          macro_f_string_static_t_initialize(destination, 0, destination_length),
         };
 
         for (uint8_t k = 0; k < 5; ++k) {
 
           if (!lengths[k]) continue;
 
-          *status = fll_execute_arguments_add(values[k], lengths[k], &arguments);
+          *status = fll_execute_arguments_add(values[k], &arguments);
           if (F_status_is_error(*status)) break;
         } // for
 

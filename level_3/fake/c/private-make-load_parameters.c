@@ -31,10 +31,10 @@ extern "C" {
       }
 
       if (data_make->main->context.mode == F_color_mode_no_color_d) {
-        if (data_make->main->parameters[fake_parameter_no_color_e].type == f_console_type_normal_e) {
+        if (data_make->main->parameters.array[fake_parameter_no_color_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_no_color_e].type == f_console_type_inverse_e) {
+        else if (data_make->main->parameters.array[fake_parameter_no_color_e].type == f_console_type_inverse_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -43,10 +43,10 @@ extern "C" {
         }
       }
       else if (data_make->main->context.mode == F_color_mode_dark_d) {
-        if (data_make->main->parameters[fake_parameter_dark_e].type == f_console_type_normal_e) {
+        if (data_make->main->parameters.array[fake_parameter_dark_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_dark_e].type == f_console_type_inverse_e) {
+        else if (data_make->main->parameters.array[fake_parameter_dark_e].type == f_console_type_inverse_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -55,10 +55,10 @@ extern "C" {
         }
       }
       else {
-        if (data_make->main->parameters[fake_parameter_light_e].type == f_console_type_normal_e) {
+        if (data_make->main->parameters.array[fake_parameter_light_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_light_e].type == f_console_type_inverse_e) {
+        else if (data_make->main->parameters.array[fake_parameter_light_e].type == f_console_type_inverse_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -95,10 +95,10 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity == f_console_verbosity_quiet_e) {
-        if (data_make->main->parameters[fake_parameter_verbosity_quiet_e].type == f_console_type_normal_e) {
+        if (data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_verbosity_quiet_e].type == f_console_type_inverse_e) {
+        else if (data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].type == f_console_type_inverse_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -107,10 +107,10 @@ extern "C" {
         }
       }
       else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-        if (data_make->main->parameters[fake_parameter_verbosity_verbose_e].type == f_console_type_normal_e) {
+        if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_verbosity_verbose_e].type == f_console_type_inverse_e) {
+        else if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].type == f_console_type_inverse_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -119,10 +119,10 @@ extern "C" {
         }
       }
       else {
-        if (data_make->main->parameters[fake_parameter_verbosity_debug_e].type == f_console_type_normal_e) {
+        if (data_make->main->parameters.array[fake_parameter_verbosity_debug_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters[fake_parameter_verbosity_debug_e].type == f_console_type_inverse_e) {
+        else if (data_make->main->parameters.array[fake_parameter_verbosity_debug_e].type == f_console_type_inverse_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -152,8 +152,8 @@ extern "C" {
       };
 
       const f_console_parameter_t *console[] = {
-        &data_make->main->parameters[fake_parameter_define_e],
-        &data_make->main->parameters[fake_parameter_mode_e],
+        &data_make->main->parameters.array[fake_parameter_define_e],
+        &data_make->main->parameters.array[fake_parameter_mode_e],
       };
 
       const f_string_dynamics_t *source[] = {
@@ -271,13 +271,13 @@ extern "C" {
       };
 
       const f_console_parameter_t *console[] = {
-        &data_make->main->parameters[fake_parameter_fakefile_e],
-        &data_make->main->parameters[fake_parameter_path_build_e],
-        &data_make->main->parameters[fake_parameter_path_data_e],
-        &data_make->main->parameters[fake_parameter_path_sources_e],
-        &data_make->main->parameters[fake_parameter_path_work_e],
-        &data_make->main->parameters[fake_parameter_process_e],
-        &data_make->main->parameters[fake_parameter_settings_e],
+        &data_make->main->parameters.array[fake_parameter_fakefile_e],
+        &data_make->main->parameters.array[fake_parameter_path_build_e],
+        &data_make->main->parameters.array[fake_parameter_path_data_e],
+        &data_make->main->parameters.array[fake_parameter_path_sources_e],
+        &data_make->main->parameters.array[fake_parameter_path_work_e],
+        &data_make->main->parameters.array[fake_parameter_process_e],
+        &data_make->main->parameters.array[fake_parameter_settings_e],
       };
 
       const f_string_dynamic_t *source[] = {

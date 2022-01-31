@@ -16,7 +16,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    if (main->parameters[fss_status_code_parameter_is_error_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_status_code_parameter_is_error_e].result == f_console_result_found_e) {
       if (F_status_is_error(number)) {
         f_print_terminated(f_status_true_s, main->output.to.stream);
       }
@@ -26,7 +26,7 @@ extern "C" {
 
       f_print_dynamic(f_string_eol_s, main->output.to.stream);
     }
-    else if (main->parameters[fss_status_code_parameter_is_warning_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_status_code_parameter_is_warning_e].result == f_console_result_found_e) {
       if (F_status_is_warning(number)) {
         f_print_terminated(f_status_true_s, main->output.to.stream);
       }
@@ -36,7 +36,7 @@ extern "C" {
 
       f_print_dynamic(f_string_eol_s, main->output.to.stream);
     }
-    else if (main->parameters[fss_status_code_parameter_is_fine_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_status_code_parameter_is_fine_e].result == f_console_result_found_e) {
       if (F_status_is_fine(number)) {
         f_print_terminated(f_status_true_s, main->output.to.stream);
       }
