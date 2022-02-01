@@ -228,32 +228,32 @@ extern "C" {
         if (cell.column < main->width) {
           if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
             if (!(cell.column % 4)) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           }
           else if (main->mode == byte_dump_mode_hexidecimal_e) {
             if (!(cell.column % 8)) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           }
           else if (main->mode == byte_dump_mode_duodecimal_e) {
             if (!(cell.column % 6)) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           }
           else if (main->mode == byte_dump_mode_octal_e) {
             if (!(cell.column % 6)) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           }
           else if (main->mode == byte_dump_mode_binary_e) {
             if (!(cell.column % 6)) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           }
           else if (main->mode == byte_dump_mode_decimal_e) {
             if (!(cell.column % 6)) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           }
         }
@@ -263,11 +263,11 @@ extern "C" {
         byte_dump_print_text(main, characters, invalid, &previous, &offset);
       }
       else {
-        f_print_dynamic(f_string_eol_s, main->output.to.stream);
+        f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }
     }
 
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
     funlockfile(main->output.to.stream);
 
@@ -279,7 +279,7 @@ extern "C" {
 
       fl_print_format("%[Invalid UTF-8 codes were detected for file '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
       fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, main->context.set.notable);
-      fl_print_format("%['.%]%q%q", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s, f_string_eol_s);
+      fl_print_format("%['.%]%r%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s, f_string_eol_s);
 
       funlockfile(main->error.to.stream);
     }
@@ -290,7 +290,7 @@ extern "C" {
 
       fl_print_format("%[%Qread() failed for '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
       fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, main->context.set.notable);
-      fl_print_format("%['.%]%q%q", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s, f_string_eol_s);
+      fl_print_format("%['.%]%r%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s, f_string_eol_s);
 
       funlockfile(main->error.to.stream);
 
@@ -359,32 +359,32 @@ extern "C" {
           if (cell->column < main->width) {
             if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
               if (!(cell->column % 4)) {
-                f_print_dynamic(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
               }
             }
             else if (main->mode == byte_dump_mode_hexidecimal_e) {
               if (!(cell->column % 8)) {
-                f_print_dynamic(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
               }
             }
             else if (main->mode == byte_dump_mode_duodecimal_e) {
               if (!(cell->column % 6)) {
-                f_print_dynamic(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
               }
             }
             else if (main->mode == byte_dump_mode_octal_e) {
               if (!(cell->column % 6)) {
-                f_print_dynamic(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
               }
             }
             else if (main->mode == byte_dump_mode_binary_e) {
               if (!(cell->column % 4)) {
-                f_print_dynamic(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
               }
             }
             else if (main->mode == byte_dump_mode_decimal_e) {
               if (!(cell->column % 6)) {
-                f_print_dynamic(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
               }
             }
           }
@@ -512,7 +512,7 @@ extern "C" {
         byte_dump_print_text(main, characters, invalid, previous, offset);
       }
       else {
-        f_print_dynamic(f_string_eol_s, main->output.to.stream);
+        f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }
 
       cell->column = 0;
@@ -530,32 +530,32 @@ extern "C" {
     else {
       if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
         if (!(cell->column % 4)) {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
       }
       else if (main->mode == byte_dump_mode_hexidecimal_e) {
         if (!(cell->column % 8)) {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
       }
       else if (main->mode == byte_dump_mode_duodecimal_e) {
         if (!(cell->column % 6)) {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
       }
       else if (main->mode == byte_dump_mode_octal_e) {
         if (!(cell->column % 6)) {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
       }
       else if (main->mode == byte_dump_mode_binary_e) {
         if (!(cell->column % 4)) {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
       }
       else if (main->mode == byte_dump_mode_decimal_e) {
         if (!(cell->column % 6)) {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
       }
     }
@@ -574,16 +574,16 @@ extern "C" {
 
     char byte[5] = { 0, 0, 0, 0, 0 };
 
-    fl_print_format("  %[%q%] ", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable);
+    fl_print_format("  %[%r%] ", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable);
 
     if (*offset) {
       if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
         while (*offset && at < main->width) {
 
-          f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
 
           if (main->options & byte_dump_option_wide_d) {
-            f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
           }
 
           --(*offset);
@@ -594,20 +594,20 @@ extern "C" {
         if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           for (; *offset && at < main->width; --(*offset), ++at) {
 
-            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
 
             if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           } // for
         }
         else {
           for (; *offset && at < main->width; --(*offset), ++at) {
 
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
 
             if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           } // for
         }
@@ -627,27 +627,27 @@ extern "C" {
           for (; at < previous->bytes && at < main->width; ++at) {
 
             if (previous->invalid) {
-              fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+              fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
             }
             else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-              f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
             }
             else {
-              fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+              fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
             }
 
             if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
             }
           } // for
         }
         else {
           for (; at < previous->bytes && at < main->width; ++at) {
 
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
 
             if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
           } // for
         }
@@ -668,10 +668,10 @@ extern "C" {
       width_utf = macro_f_utf_byte_width_is(c);
 
       if (invalid[i]) {
-        fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
+        fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
 
         if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
         }
       }
       else if (f_utf_character_is_control(characters.string[i]) == F_true) {
@@ -712,72 +712,72 @@ extern "C" {
 
           if (main->options & byte_dump_option_wide_d) {
             if (f_utf_character_is_wide(characters.string[i]) != F_true) {
-              f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
             }
           }
         }
         else {
           if (main->presentation == byte_dump_presentation_simple_e) {
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
 
             if (width_utf > 1) {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
 
               if (width_utf > 2) {
-                f_print_dynamic(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
 
                 if (width_utf > 3) {
-                  f_print_dynamic(f_string_space_s, main->output.to.stream);
+                  f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
                 }
               }
             }
           }
           else if (main->presentation == byte_dump_presentation_classic_e) {
-            f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
 
             if (width_utf > 1) {
-              f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
 
               if (width_utf > 2) {
-                f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
 
                 if (width_utf > 3) {
-                  f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+                  f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
                 }
               }
             }
           }
 
           if (main->options & byte_dump_option_wide_d) {
-            f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
           }
         }
       }
       else if (f_utf_character_is_whitespace(characters.string[i]) == F_true) {
         if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-          f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
         }
         else {
-          fl_print_format("%[%[%q%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, f_print_sequence_space_s, main->context.set.warning, main->context.set.notable);
+          fl_print_format("%[%[%r%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, f_print_sequence_space_s, main->context.set.warning, main->context.set.notable);
         }
 
         if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
         }
       }
       else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
         if (main->presentation == byte_dump_presentation_classic_e) {
-          f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
         }
         else if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
-          fl_print_format("%[%[%q%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning, main->context.set.notable);
+          fl_print_format("%[%[%r%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning, main->context.set.notable);
         }
         else {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
 
         if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
         }
       }
       else if (width_utf) {
@@ -787,10 +787,10 @@ extern "C" {
 
           // Print invalid placeholder for invalid UTF-8 widths.
           if (invalid[i]) {
-            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
+            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
           }
           else {
-            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_incomplete_s, main->context.set.warning);
+            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_incomplete_s, main->context.set.warning);
           }
         }
         else if (width_utf == 2) {
@@ -801,17 +801,17 @@ extern "C" {
 
             // Use space to represent Specials codes.
             // 0xefbfbd00 is excluded because it is printable (and is the "Replacement Character" code).
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
           }
           else if (characters.string[i] >= 0xe290a700 && characters.string[i] <= 0xe290bf00) {
 
             // Use space to represent Control Pictues codes that are not currently defined but are reserved.
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
           }
           else if (characters.string[i] >= 0xee808000 && characters.string[i] <= 0xefa3bf00) {
 
             // Use space to represent Private Use Area codes.
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
           }
           else {
             print = F_true;
@@ -820,17 +820,17 @@ extern "C" {
         else if (characters.string[i] >= 0xf09c80a0 && characters.string[i] <= 0xf09c80bd) {
 
           // Use space to represent Variation Selectors Supplement codes.
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
         else if (characters.string[i] >= 0xf3b08080 && characters.string[i] <= 0xf3bfbfbf) {
 
           // Use space to represent Supplemental Private Use Area-A codes.
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
         else if (characters.string[i] >= 0xf4808080 && characters.string[i] <= 0xf48fbfbf) {
 
           // Use space to represent Supplemental Private Use Area-B codes.
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
         else {
           print = F_true;
@@ -852,18 +852,18 @@ extern "C" {
           }
 
           if (f_utf_character_is_combining(characters.string[i]) == F_true) {
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
           }
 
           if (main->options & byte_dump_option_wide_d) {
             if (width_utf == 1 || f_utf_character_is_wide(characters.string[i]) != F_true) {
-              f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
             }
           }
         }
         else {
           if (main->options & byte_dump_option_wide_d) {
-            f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
           }
         }
       }
@@ -871,7 +871,7 @@ extern "C" {
         f_print_character(c, main->output.to.stream);
 
         if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
         }
       }
 
@@ -879,21 +879,21 @@ extern "C" {
       if (width_utf > 1 && at + 1 < main->width) {
         if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           if (invalid[i]) {
-            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
           }
           else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-            f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
           }
           else {
-            fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
           }
         }
         else {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
 
         if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
         }
 
         ++at;
@@ -901,21 +901,21 @@ extern "C" {
         if (width_utf > 2 && at + 1 < main->width) {
           if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
             if (invalid[i]) {
-              fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+              fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
             }
             else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-              f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
             }
             else {
-              fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+              fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
             }
           }
           else {
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
           }
 
           if (main->options & byte_dump_option_wide_d) {
-            f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
           }
 
           ++at;
@@ -923,21 +923,21 @@ extern "C" {
           if (width_utf > 3 && at + 1 < main->width) {
             if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
               if (invalid[i]) {
-                fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+                fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
               }
               else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-                f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
               }
               else {
-                fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+                fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
               }
             }
             else {
-              f_print_dynamic(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
             }
 
             if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
             }
 
             ++at;
@@ -951,32 +951,32 @@ extern "C" {
       for (; at < main->width; ++at) {
 
         if (invalid[at]) {
-          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
         }
         else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-          f_print_dynamic(f_string_ascii_period_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
         }
         else {
-          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
         }
 
         if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic(f_string_ascii_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
         }
       } // for
     }
     else {
       for (; at < main->width; ++at) {
 
-        f_print_dynamic(f_string_space_s, main->output.to.stream);
+        f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
 
         if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
         }
       } // for
     }
 
-    fl_print_format(" %[%q%]%q", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable, f_string_eol_s);
+    fl_print_format(" %[%r%]%r", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable, f_string_eol_s);
   }
 #endif // _di_byte_dump_print_text_
 

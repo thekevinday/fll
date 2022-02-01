@@ -13,9 +13,9 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%QThe object is missing, it must not have a length of %]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%r%[%QThe object is missing, it must not have a length of %]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[0%]", main->error.to.stream, main->error.notable, main->error.notable);
-        fl_print_format("%[.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%[.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
       }
@@ -29,9 +29,9 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%QThe object '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%r%[%QThe object '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, object, main->error.notable);
-        fl_print_format("%[' is not a valid IKI object.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%[' is not a valid IKI object.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
       }
@@ -56,7 +56,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    fl_print_format("%Q%q%q%Q%q", output.stream, object, f_iki_syntax_separator_s, main->quote, *escaped, main->quote);
+    fl_print_format("%Q%r%r%Q%r", output.stream, object, f_iki_syntax_separator_s, main->quote, *escaped, main->quote);
 
     return F_none;
   }

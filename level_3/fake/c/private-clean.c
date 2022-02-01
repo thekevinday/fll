@@ -18,9 +18,9 @@ extern "C" {
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
       flockfile(main->output.to.stream);
 
-      fl_print_format("%q%[Deleting all files within build directory '%]", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important);
+      fl_print_format("%r%[Deleting all files within build directory '%]", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important);
       fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, main->path_build, main->context.set.notable);
-      fl_print_format("%[.%]%q", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fl_print_format("%[.%]%r", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s);
 
       funlockfile(main->output.to.stream);
     }
@@ -42,7 +42,7 @@ extern "C" {
 
         f_print_terminated("The build directory '", main->output.to.stream);
         fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, main->path_build, main->context.set.notable);
-        fl_print_format("' does not exist.%q", main->output.to.stream, f_string_eol_s);
+        fl_print_format("' does not exist.%r", main->output.to.stream, f_string_eol_s);
 
         funlockfile(main->output.to.stream);
       }
@@ -70,7 +70,7 @@ extern "C" {
     if (!result) {
 
       // @todo in order to get this working, the recursive function that calls this needs to be rewritten with more flexibility or provide a higher-level equivalent function.
-      fll_print_format("Removed '%S'.%q", stdout, path, f_string_eol_s);
+      fll_print_format("Removed '%S'.%r", stdout, path, f_string_eol_s);
     }
 
     return result;

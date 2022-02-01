@@ -175,7 +175,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    // skip past leading whitespace.
+    // Skip past leading whitespace.
     for (; *start <= *stop; ++(*start)) {
 
       // skip past NULL.

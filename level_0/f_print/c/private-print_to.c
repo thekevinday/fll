@@ -190,6 +190,82 @@ static inline f_status_t private_inline_f_print_to_error() {
   }
 #endif // !defined(_di_f_print_to_except_raw_) || !defined(_di_f_print_to_except_dynamic_raw_) || !defined(_di_f_print_to_except_dynamic_partial_raw_)
 
+#if !defined(_di_f_print_to_except_dynamic_raw_safely_) || !defined(_di_f_print_to_except_dynamic_partial_raw_safely_) || !defined(_di_f_print_to_except_raw_safely_)
+  f_status_t private_f_print_to_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) {
+
+    f_array_length_t i = offset;
+    f_array_length_t j = 0;
+    f_array_length_t start = offset;
+    f_array_length_t total = 0;
+
+    f_status_t status = F_none;
+    f_string_static_t safe = f_string_empty_s;
+
+    uint8_t width = 0;
+
+    while (i < stop) {
+
+      while (j < except.used && except.array[j] < i) {
+        ++j;
+      } // while
+
+      if (j < except.used && except.array[j] == i) {
+        ++i;
+
+        continue;
+      }
+
+      if (string[i]) {
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
+      }
+      else {
+        width = 1;
+        safe.used = 0;
+      }
+
+      if (safe.used) {
+        if (total) {
+          if (write(id, string + start, total) == -1) {
+            return private_inline_f_print_to_error();
+          }
+
+          total = 0;
+        }
+
+        if (write(id, safe.string, safe.used) == -1) {
+          return private_inline_f_print_to_error();
+        }
+
+        start = ++i;
+
+        continue;
+      }
+
+      if (total + width >= F_print_write_max_d) {
+        if (write(id, string + start, total) == -1) {
+          return private_inline_f_print_to_error();
+        }
+
+        total = 0;
+        start = i;
+      }
+
+      total += width;
+      i += width;
+    } // while
+
+    if (total) {
+      if (write(id, string + start, total) == -1) {
+        return private_inline_f_print_to_error();
+      }
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_print_to_except_dynamic_raw_safely_) || !defined(_di_f_print_to_except_dynamic_partial_raw_safely_) || !defined(_di_f_print_to_except_raw_safely_)
+
 #if !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_safely_)
   f_status_t private_f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const int id) {
 
@@ -421,6 +497,112 @@ static inline f_status_t private_inline_f_print_to_error() {
   }
 #endif // !defined(_di_f_print_to_except_in_raw_) || !defined(_di_f_print_to_except_in_dynamic_raw_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_)
 
+#if !defined(_di_f_print_to_except_in_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_safely_)
+  f_status_t private_f_print_to_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
+
+    f_array_length_t i = offset;
+    f_array_length_t at = 0;
+    f_array_length_t in = 0;
+    f_array_length_t start = i;
+    f_array_length_t total = 0;
+
+    f_status_t status = F_none;
+    f_string_static_t safe = f_string_empty_s;
+
+    uint8_t width = 0;
+
+    while (i < stop) {
+
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
+
+      if (at < except_at.used && except_at.array[at] == i) {
+        if (total) {
+          if (write(id, string + start, total) == -1) {
+            return private_inline_f_print_to_error();
+          }
+
+          total = 0;
+        }
+
+        start = ++i;
+
+        continue;
+      }
+
+      if (in < except_in.used) {
+        while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+          ++in;
+        } // while
+
+        if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+          if (total) {
+            if (write(id, string + start, total) == -1) {
+              return private_inline_f_print_to_error();
+            }
+
+            total = 0;
+          }
+
+          i = except_in.array[in].stop + 1;
+          start = i;
+
+          continue;
+        }
+      }
+
+      if (string[i]) {
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
+      }
+      else {
+        width = 1;
+        safe.used = 0;
+      }
+
+      if (safe.used) {
+        if (total) {
+          if (write(id, string + start, total) == -1) {
+            return private_inline_f_print_to_error();
+          }
+
+          total = 0;
+        }
+
+        if (write(id, safe.string, safe.used) == -1) {
+          return private_inline_f_print_to_error();
+        }
+
+        start = ++i;
+
+        continue;
+      }
+
+      if (total + width >= F_print_write_max_d) {
+        if (write(id, string + start, total) == -1) {
+          return private_inline_f_print_to_error();
+        }
+
+        total = 0;
+        start = i;
+      }
+
+      total += width;
+      i += width;
+    } // while
+
+    if (total) {
+      if (write(id, string + start, total) == -1) {
+        return private_inline_f_print_to_error();
+      }
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_print_to_except_in_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_raw_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_raw_safely_)
+
 #if !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_)
   f_status_t private_f_print_to_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
 
@@ -578,6 +760,73 @@ static inline f_status_t private_inline_f_print_to_error() {
     return F_none;
   }
 #endif // !defined(_di_f_print_to_raw_) || !defined(_di_f_print_dynamic_to_raw_) || !defined(_di_f_print_dynamic_partial_to_raw_)
+
+#if !defined(_di_f_print_to_dynamic_raw_safely_) || !defined(_di_f_print_to_dynamic_partial_raw_safely_) || !defined(_di_f_print_to_raw_safely_)
+  f_status_t private_f_print_to_raw_safely(const f_string_t string, const f_array_length_t length, const int id) {
+
+    f_status_t status = F_none;
+
+    register f_array_length_t i = 0;
+    f_array_length_t start = 0;
+    f_array_length_t total = 0;
+
+    f_string_static_t safe = f_string_empty_s;
+
+    uint8_t width = 0;
+
+    while (i < length) {
+
+      if (string[i]) {
+        width = macro_f_utf_character_t_width(string[i]);
+
+        safe = private_f_print_safely_get(string + i, width);
+      }
+      else {
+        width = 1;
+        safe.used = 0;
+      }
+
+      if (safe.used) {
+        if (total) {
+          if (write(id, string + start, total) == -1) {
+            return private_inline_f_print_to_error();
+          }
+
+          total = 0;
+        }
+
+        if (write(id, safe.string, safe.used) == -1) {
+          return private_inline_f_print_to_error();
+        }
+
+        i += width;
+        start = i;
+
+        continue;
+      }
+
+      if (total + width >= F_print_write_max_d) {
+        if (write(id, string + start, total) == -1) {
+          return private_inline_f_print_to_error();
+        }
+
+        total = 0;
+        start = i;
+      }
+
+      total += width;
+      i += width;
+    } // while
+
+    if (total) {
+      if (write(id, string + start, total) == -1) {
+        return private_inline_f_print_to_error();
+      }
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_print_to_dynamic_raw_safely_) || !defined(_di_f_print_dynamic_partial_to_raw_safely_) || !defined(_di_f_print_to_raw_safely_)
 
 #if !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_safely_)
   f_status_t private_f_print_to_safely(const f_string_t string, const f_array_length_t length, const int id) {

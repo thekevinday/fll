@@ -18,6 +18,14 @@ extern "C" {
   const f_string_static_t byte_dump_program_help_parameters_s = macro_f_string_static_t_initialize(BYTE_DUMP_program_help_parameters_s, 0, BYTE_DUMP_program_help_parameters_s_length);
 #endif // _di_byte_dump_program_help_parameters_
 
+#ifndef _di_byte_dump_print_strings_
+  const f_string_static_t byte_dump_print_strings_hexidecimal_s = macro_f_string_static_t_initialize(BYTE_DUMP_print_strings_hexidecimal_s, 0, BYTE_DUMP_print_strings_hexidecimal_s_length);
+  const f_string_static_t byte_dump_print_strings_duodecimal_s = macro_f_string_static_t_initialize(BYTE_DUMP_print_strings_duodecimal_s, 0, BYTE_DUMP_print_strings_duodecimal_s_length);
+  const f_string_static_t byte_dump_print_strings_octal_s = macro_f_string_static_t_initialize(BYTE_DUMP_print_strings_octal_s, 0, BYTE_DUMP_print_strings_octal_s_length);
+  const f_string_static_t byte_dump_print_strings_binary_s = macro_f_string_static_t_initialize(BYTE_DUMP_print_strings_binary_s, 0, BYTE_DUMP_print_strings_binary_s_length);
+  const f_string_static_t byte_dump_print_strings_decimal_s = macro_f_string_static_t_initialize(BYTE_DUMP_print_strings_decimal_s, 0, BYTE_DUMP_print_strings_decimal_s_length);
+#endif // _di_byte_dump_print_strings_
+
 #ifndef _di_byte_dump_defines_
   const f_string_static_t byte_dump_character_wall_s = macro_f_string_static_t_initialize(BYTE_DUMP_character_wall_s, 0, BYTE_DUMP_character_wall_s_length);
   const f_string_static_t byte_dump_character_placeholder_s = macro_f_string_static_t_initialize(BYTE_DUMP_character_placeholder_s, 0, BYTE_DUMP_character_placeholder_s_length);

@@ -190,6 +190,51 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
 
 /**
+ * Private implementation of fl_print_trim_except_raw_safely().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string
+ *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on failure to print to the output file.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ * @see fwrite_unlocked()
+ *
+ * @see fl_print_trim_except_raw_safely()
+ * @see fl_print_trim_except_dynamic_raw_safely()
+ * @see fl_print_trim_except_dynamic_partial_raw_safely()
+ * @see fl_print_trim_except_in_raw_safely()
+ * @see fl_print_trim_except_in_dynamic_raw_safely()
+ * @see fl_print_trim_except_in_dynamic_partial_raw_safely()
+ */
+#if !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
+  extern f_status_t private_fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
+
+/**
  * Private implementation of fl_print_trim_except_safely().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -301,6 +346,40 @@ extern "C" {
 #if !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
   extern f_status_t private_fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE *stream) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
+
+/**
+ * Private implementation of fl_print_trim_raw_safely().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on failure to print to the output file.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ * @see fwrite_unlocked()
+ *
+ * @see fl_print_trim_raw_safely()
+ * @see fl_print_trim_dynamic_raw_safely()
+ * @see fl_print_trim_dynamic_partial_raw_safely()
+ */
+#if !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
+  extern f_status_t private_fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, FILE *stream) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
 
 /**
  * Private implementation of fl_print_trim_safely().

@@ -71,9 +71,9 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%QThe group name '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%r%[%QThe group name '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, buffer, main->error.notable);
-            fl_print_format("%[' was not found.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%[' was not found.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -91,9 +91,9 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%QThe number '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%r%[%QThe number '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%un%]", main->error.to.stream, main->error.notable, number, main->error.notable);
-        fl_print_format("%[' is too large.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%[' is too large.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
       }
@@ -120,9 +120,9 @@ extern "C" {
         if (F_status_set_fine(status) == F_syntax) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QThe mode '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%r%[%QThe mode '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, buffer, main->error.notable);
-          fl_print_format("%[' is invalid.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%[' is invalid.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }
@@ -162,9 +162,9 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%QThe user '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%r%[%QThe user '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, buffer, main->error.notable);
-            fl_print_format("%[' was not found.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%[' was not found.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -182,9 +182,9 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%QThe number '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%r%[%QThe number '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%un%]", main->error.to.stream, main->error.notable, number, main->error.notable);
-        fl_print_format("%[' is too large.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%[' is too large.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
       }

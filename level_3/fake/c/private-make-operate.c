@@ -25,7 +25,7 @@ extern "C" {
     }
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%q%[Making project.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Making project.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_status_t status = F_none;
@@ -118,11 +118,11 @@ extern "C" {
       if (F_status_is_error(status_path) && main->warning.verbosity == f_console_verbosity_verbose_e) {
         flockfile(main->warning.to.stream);
 
-        fl_print_format("%q%[%QFailed change back to orignal path '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+        fl_print_format("%r%[%QFailed change back to orignal path '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
         fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, data_make.path.stack.array[0], main->warning.notable);
         fl_print_format("%[', status code =%] ", main->warning.to.stream, main->warning.context, main->warning.context);
         fl_print_format("%[%ui%]", main->warning.to.stream, main->warning.notable, F_status_set_fine(status_path), main->warning.notable);
-        fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+        fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
         funlockfile(main->warning.to.stream);
       }
@@ -985,9 +985,9 @@ extern "C" {
     if (data_make->main->output.verbosity != f_console_verbosity_quiet_e) {
       flockfile(data_make->main->output.to.stream);
 
-      fl_print_format("%q%[Processing Section '%]", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.important, data_make->main->context.set.important);
+      fl_print_format("%r%[Processing Section '%]", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.important, data_make->main->context.set.important);
       fl_print_format("%[%/Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->buffer, section->name, data_make->main->context.set.notable);
-      fl_print_format("%['.%]%q", data_make->main->output.to.stream, data_make->main->context.set.important, data_make->main->context.set.important, f_string_eol_s);
+      fl_print_format("%['.%]%r", data_make->main->output.to.stream, data_make->main->context.set.important, data_make->main->context.set.important, f_string_eol_s);
 
       funlockfile(data_make->main->output.to.stream);
     }
@@ -1340,16 +1340,16 @@ extern "C" {
       if (data_make->main->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
 
-        fl_print_format("%q%[%QIncomplete '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+        fl_print_format("%r%[%QIncomplete '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
 
         if (state_process.block == fake_state_process_block_else_e) {
-          fl_print_format("%[%q%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
+          fl_print_format("%[%r%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
         }
         else {
-          fl_print_format("%[%q%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
+          fl_print_format("%[%r%]", data_make->error.to.stream, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
         }
 
-        fl_print_format("%[' at end of section.%]%q", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
+        fl_print_format("%[' at end of section.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
         funlockfile(data_make->error.to.stream);
       }

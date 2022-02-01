@@ -28,7 +28,7 @@ extern "C" {
     if (!data_build.setting.build_sources_program.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%q%[Compiling shared program.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Compiling shared program.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -144,7 +144,7 @@ extern "C" {
     if (!data_build.setting.build_sources_program.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%q%[Compiling static program.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Compiling static program.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;

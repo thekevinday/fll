@@ -403,6 +403,43 @@ extern "C" {
 #endif // _di_fl_print_trim_raw_
 
 /**
+ * Print a string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_raw_safely_
+  extern f_status_t fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, FILE *stream);
+#endif // _di_fl_print_trim_raw_safely_
+
+/**
  * Print a string, stripping leading and trailing whitespace.
  *
  * Control characters are converted to the Unicode control character symbols, excluding NULL.
@@ -509,6 +546,44 @@ extern "C" {
 #ifndef _di_fl_print_trim_dynamic_raw_
   extern f_status_t fl_print_trim_dynamic_raw(const f_string_static_t buffer, FILE *stream);
 #endif // _di_fl_print_trim_dynamic_raw_
+
+/**
+ * Print a dynamic string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ * Will print the entire dynamic string, except for leading/trailing whitespace.
+ *
+ * NULL characters are treated as whitespace for the purpose of trimming.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_dynamic_raw_safely_
+  extern f_status_t fl_print_trim_dynamic_raw_safely(const f_string_static_t buffer, FILE *stream);
+#endif // _di_fl_print_trim_dynamic_raw_safely_
 
 /**
  * Print a dynamic string, stripping leading and trailing whitespace.
@@ -622,6 +697,46 @@ extern "C" {
 #ifndef _di_fl_print_trim_dynamic_partial_raw_
   extern f_status_t fl_print_trim_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
 #endif // _di_fl_print_trim_dynamic_partial_raw_
+
+/**
+ * Print a partial dynamic string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
+ *
+ * NULL characters are treated as whitespace for the purpose of trimming.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_dynamic_partial_raw_safely_
+  extern f_status_t fl_print_trim_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
+#endif // _di_fl_print_trim_dynamic_partial_raw_safely_
 
 /**
  * Print a partial dynamic string, stripping leading and trailing whitespace.
@@ -749,6 +864,51 @@ extern "C" {
 #endif // _di_fl_print_trim_except_raw_
 
 /**
+ * Print a string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ * Will not print any 1-byte character at a location specified in except_at array.
+ *
+ * NULL characters are treated as whitespace for the purpose of trimming.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param string
+ *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_except_raw_safely_
+  extern f_status_t fl_print_trim_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream);
+#endif // _di_fl_print_trim_except_raw_safely_
+
+/**
  * Print a string, stripping leading and trailing whitespace.
  *
  * Control characters are converted to the Unicode control character symbols, excluding NULL.
@@ -871,6 +1031,48 @@ extern "C" {
 #ifndef _di_fl_print_trim_except_dynamic_raw_
   extern f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
 #endif // _di_fl_print_trim_except_dynamic_raw_
+
+/**
+ * Print a dynamic string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ * Will print the entire dynamic string, except for leading/trailing whitespace.
+ * Will not print any 1-byte character at a location specified in except_at array.
+ *
+ * NULL characters are treated as whitespace for the purpose of trimming.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_except_dynamic_raw_safely_
+  extern f_status_t fl_print_trim_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
+#endif // _di_fl_print_trim_except_dynamic_raw_safely_
 
 /**
  * Print a dynamic string, stripping leading and trailing whitespace.
@@ -1006,6 +1208,55 @@ extern "C" {
 #ifndef _di_fl_print_trim_except_in_raw_
   extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
 #endif // _di_fl_print_trim_except_in_raw_
+
+/**
+ * Print a string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ *
+ * NULL characters are treated as whitespace for the purpose of trimming.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param string
+ *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_except_in_raw_safely_
+  extern f_status_t fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+#endif // _di_fl_print_trim_except_in_raw_safely_
 
 /**
  * Print a string, stripping leading and trailing whitespace.
@@ -1146,6 +1397,52 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_raw_
 
 /**
+ * Print a dynamic string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ * Will print the entire dynamic string, except for leading/trailing whitespace.
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ *
+ * NULL characters are treated as whitespace for the purpose of trimming.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_except_in_dynamic_raw_safely_
+  extern f_status_t fl_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+#endif // _di_fl_print_trim_except_in_dynamic_raw_safely_
+
+/**
  * Print a dynamic string, stripping leading and trailing whitespace.
  *
  * Control characters are converted to the Unicode control character symbols, excluding NULL.
@@ -1283,6 +1580,54 @@ extern "C" {
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_
 
 /**
+ * Print a partial dynamic string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
+ *
+ * NULL characters are treated as whitespace for the purpose of trimming.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+#endif // _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
+
+/**
  * Print a partial dynamic string, stripping leading and trailing whitespace.
  *
  * Control characters are converted to the Unicode control character symbols, excluding NULL.
@@ -1412,6 +1757,50 @@ extern "C" {
 #ifndef _di_fl_print_trim_except_dynamic_partial_raw_
   extern f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_
+
+/**
+ * Print a partial dynamic string, stripping leading and trailing whitespace (and NULLs).
+ *
+ * This is essentually a "safe" print that also prints NULL (except for trimmed NULLs).
+ *
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
+ * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * Will not stop at NULL.
+ * Will print NULL (that are not trimmed).
+ * Will not print any 1-byte character at a location specified in except array.
+ * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
+ *
+ * NULL characters are treated as whitespace for the purpose of trimming.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param stream
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_valid()
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_fl_print_trim_except_dynamic_partial_raw_safely_
+  extern f_status_t fl_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
+#endif // _di_fl_print_trim_except_dynamic_partial_raw_safely_
 
 /**
  * Print a partial dynamic string, stripping leading and trailing whitespace.

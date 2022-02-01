@@ -188,7 +188,7 @@ extern "C" {
               f_print_dynamic_partial(main->buffer, ranges->array[j], main->output.to.stream);
             }
 
-            f_print_dynamic(f_string_eol_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
           }
         } // for
 
@@ -212,7 +212,7 @@ extern "C" {
             f_print_dynamic_partial(main->buffer, ranges->array[main->at], main->output.to.stream);
           }
 
-          f_print_dynamic(f_string_eol_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
           funlockfile(main->output.to.stream);
 
@@ -234,7 +234,7 @@ extern "C" {
             f_print_dynamic_partial(main->buffer, ranges->array[i], main->output.to.stream);
           }
 
-          f_print_dynamic(f_string_eol_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
         } // for
 
         funlockfile(main->output.to.stream);
@@ -460,13 +460,13 @@ extern "C" {
 
     if (status == F_true) {
       if (range.start > main->buffer.used) {
-        fll_print_format("0%q", main->output.to.stream, f_string_eol_s);
+        fll_print_format("0%r", main->output.to.stream, f_string_eol_s);
 
         return F_none;
       }
     }
     else if (status == F_data_not) {
-      fll_print_format("0%q", main->output.to.stream, f_string_eol_s);
+      fll_print_format("0%r", main->output.to.stream, f_string_eol_s);
 
       return F_none;
     }
@@ -548,7 +548,7 @@ extern "C" {
       }
     }
 
-    fll_print_format("%ul%q", main->output.to.stream, total, f_string_eol_s);
+    fll_print_format("%ul%r", main->output.to.stream, total, f_string_eol_s);
 
     return F_none;
   }

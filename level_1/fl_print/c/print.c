@@ -111,6 +111,20 @@ extern "C" {
   }
 #endif // _di_fl_print_trim_raw_
 
+#ifndef _di_fl_print_trim_raw_safely_
+  f_status_t fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!string || !length) {
+      return F_data_not;
+    }
+
+    return private_fl_print_trim_raw_safely(string, length, stream);
+  }
+#endif // _di_fl_print_trim_raw_safely_
+
 #ifndef _di_fl_print_trim_safely_
   f_status_t fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE *stream) {
     #ifndef _di_level_1_parameter_checking_
@@ -152,6 +166,20 @@ extern "C" {
     return private_fl_print_trim_raw(buffer.string, buffer.used, stream);
   }
 #endif // _di_fl_print_trim_dynamic_raw_
+
+#ifndef _di_fl_print_trim_dynamic_raw_safely_
+  f_status_t fl_print_trim_dynamic_raw_safely(const f_string_static_t buffer, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used) {
+      return F_data_not;
+    }
+
+    return private_fl_print_trim_raw_safely(buffer.string, buffer.used, stream);
+  }
+#endif // _di_fl_print_trim_dynamic_raw_safely_
 
 #ifndef _di_fl_print_trim_dynamic_safely_
   f_status_t fl_print_trim_dynamic_safely(const f_string_static_t buffer, FILE *stream) {
@@ -207,6 +235,26 @@ extern "C" {
   }
 #endif // _di_fl_print_trim_dynamic_partial_raw_
 
+#ifndef _di_fl_print_trim_dynamic_partial_raw_safely_
+  f_status_t fl_print_trim_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
+
+    f_array_length_t length = (range.stop - range.start) + 1;
+
+    if (length + range.start > buffer.used) {
+      length = buffer.used - range.start;
+    }
+
+    return private_fl_print_trim_raw_safely(buffer.string + range.start, length, stream);
+  }
+#endif // _di_fl_print_trim_dynamic_partial_raw_safely_
+
 #ifndef _di_fl_print_trim_dynamic_partial_safely_
   f_status_t fl_print_trim_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *stream) {
     #ifndef _di_level_1_parameter_checking_
@@ -259,6 +307,22 @@ extern "C" {
   }
 #endif // _di_fl_print_trim_except_raw_
 
+#ifndef _di_fl_print_trim_except_raw_safely_
+  f_status_t fl_print_trim_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!string || !length) {
+      return F_data_not;
+    }
+
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in_raw_safely(string, offset, length, except_at, except_in, stream);
+  }
+#endif // _di_fl_print_trim_except_raw_safely_
+
 #ifndef _di_fl_print_trim_except_safely_
   f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream) {
     #ifndef _di_level_1_parameter_checking_
@@ -307,6 +371,22 @@ extern "C" {
   }
 #endif // _di_fl_print_trim_except_dynamic_raw_
 
+#ifndef _di_fl_print_trim_except_dynamic_raw_safely_
+  f_status_t fl_print_trim_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used) {
+      return F_data_not;
+    }
+
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in_raw_safely(buffer.string, 0, buffer.used, except_at, except_in, stream);
+  }
+#endif // _di_fl_print_trim_except_dynamic_raw_safely_
+
 #ifndef _di_fl_print_trim_except_dynamic_safely_
   f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream) {
     #ifndef _di_level_1_parameter_checking_
@@ -351,6 +431,20 @@ extern "C" {
   }
 #endif // _di_fl_print_trim_except_in_raw_
 
+#ifndef _di_fl_print_trim_except_in_raw_safely_
+  f_status_t fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!string || !length) {
+      return F_data_not;
+    }
+
+    return private_fl_print_trim_except_in_raw_safely(string, offset, length, except_at, except_in, stream);
+  }
+#endif // _di_fl_print_trim_except_in_raw_safely_
+
 #ifndef _di_fl_print_trim_except_in_safely_
   f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
     #ifndef _di_level_1_parameter_checking_
@@ -392,6 +486,20 @@ extern "C" {
     return private_fl_print_trim_except_in_raw(buffer.string, 0, buffer.used, except_at, except_in, stream);
   }
 #endif // _di_fl_print_trim_except_in_dynamic_raw_
+
+#ifndef _di_fl_print_trim_except_in_dynamic_raw_safely_
+  f_status_t fl_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used) {
+      return F_data_not;
+    }
+
+    return private_fl_print_trim_except_in_raw_safely(buffer.string, 0, buffer.used, except_at, except_in, stream);
+  }
+#endif // _di_fl_print_trim_except_in_dynamic_raw_safely_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_safely_
   f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
@@ -446,6 +554,26 @@ extern "C" {
     return private_fl_print_trim_except_in_raw(buffer.string, range.start, length, except_at, except_in, stream);
   }
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_
+
+#ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
+  f_status_t fl_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
+
+    f_array_length_t length = (range.stop - range.start) + 1;
+
+    if (length + range.start > buffer.used) {
+      length = buffer.used - range.start;
+    }
+
+    return private_fl_print_trim_except_in_raw_safely(buffer.string, range.start, length, except_at, except_in, stream);
+  }
+#endif // _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
 
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_safely_
   f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
@@ -510,6 +638,28 @@ extern "C" {
     return private_fl_print_trim_except_in_raw(buffer.string, range.start, length, except, except_in, stream);
   }
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_
+
+#ifndef _di_fl_print_trim_except_dynamic_partial_raw_safely_
+  f_status_t fl_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!stream) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
+
+    f_array_length_t length = (range.stop - range.start) + 1;
+
+    if (length + range.start > buffer.used) {
+      length = buffer.used - range.start;
+    }
+
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in_raw_safely(buffer.string, range.start, length, except, except_in, stream);
+  }
+#endif // _di_fl_print_trim_except_dynamic_partial_raw_safely_
 
 #ifndef _di_fl_print_trim_except_dynamic_partial_safely_
   f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream) {

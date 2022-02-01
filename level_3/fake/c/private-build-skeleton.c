@@ -57,7 +57,7 @@ extern "C" {
     };
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%q%[Creating base build directories.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Creating base build directories.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     for (uint8_t i = 0; i < 15; ++i) {
@@ -103,7 +103,7 @@ extern "C" {
       }
 
       if (main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("Created directory '%Q'.%q", main->output.to.stream, directorys[i], f_string_eol_s);
+        fll_print_format("Created directory '%Q'.%r", main->output.to.stream, directorys[i], f_string_eol_s);
       }
     } // for
 

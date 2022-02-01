@@ -35,13 +35,13 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
     fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_dynamic(f_string_eol_s, file.stream);
+    f_print_dynamic_raw(f_string_eol_s, file.stream);
 
     fll_program_print_help_option(file, context, utf8_short_from_binary_s, utf8_long_from_binary_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The expected input format is binary (character data).");
     fll_program_print_help_option(file, context, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The expected input format is codepoint (such as U+0000).");
     fll_program_print_help_option(file, context, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the input source.");
 
-    f_print_dynamic(f_string_eol_s, file.stream);
+    f_print_dynamic_raw(f_string_eol_s, file.stream);
 
     fll_program_print_help_option(file, context, utf8_short_to_binary_s, utf8_long_to_binary_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The output format is binary (character data).");
     fll_program_print_help_option(file, context, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is codepoint (such as U+0000).");
@@ -49,7 +49,7 @@ extern "C" {
     fll_program_print_help_option(file, context, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the output destination.");
     fll_program_print_help_option(file, context, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    The output format is to print the width of a character (either 0, 1, or 2).");
 
-    f_print_dynamic(f_string_eol_s, file.stream);
+    f_print_dynamic_raw(f_string_eol_s, file.stream);
 
     fll_program_print_help_option(file, context, utf8_short_headers_s, utf8_long_headers_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Print headers for each section (pipe, file, or parameter).");
     fll_program_print_help_option(file, context, utf8_short_separate_s, utf8_long_separate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Separate characters by newlines (implied when printing headers).");
@@ -58,16 +58,16 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, utf8_program_name_s, "filename(s)");
 
-    fl_print_format("  The default behavior is to assume the expected input is binary from the command line to be output to the screen as codepoints.%q%q", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The default behavior is to assume the expected input is binary from the command line to be output to the screen as codepoints.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%q%q", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When using the parameter '%[%q%s%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%q%q", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When using the parameter '%[%r%s%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When using the parameter '%[%q%s%]' with the parameter ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_combining_s, context.set.notable);
-    fl_print_format("'%[%q%s%]', the ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_width_s, context.set.notable);
-    fl_print_format("'%[%s%]' character is printed to represent the combining and the digits are used to represent widths.%q", file.stream, context.set.notable, utf8_string_combining_is_s, context.set.notable, f_string_eol_s);
-    fl_print_format("  The combining characters should be considered 1-width by themselves or 0-width when combined.%q%q", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When using the parameter '%[%r%s%]' with the parameter ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_combining_s, context.set.notable);
+    fl_print_format("'%[%r%s%]', the ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_width_s, context.set.notable);
+    fl_print_format("'%[%s%]' character is printed to represent the combining and the digits are used to represent widths.%r", file.stream, context.set.notable, utf8_string_combining_is_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  The combining characters should be considered 1-width by themselves or 0-width when combined.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 
@@ -503,7 +503,7 @@ extern "C" {
         }
       }
 
-      fll_print_dynamic(f_string_eol_s, main->output.to.stream);
+      fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
 
     utf8_data_delete(&data);

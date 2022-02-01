@@ -67,9 +67,9 @@ extern "C" {
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%]%q%q%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
+    fl_print_format("%]%r%r%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
     fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, signal, main->context.set.notable);
-    fl_print_format("%[.%]%q", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
+    fl_print_format("%[.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
     funlockfile(main->warning.to.stream);
   }

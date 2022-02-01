@@ -278,7 +278,7 @@ extern "C" {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.buffer_small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            fll_print_dynamic(f_string_eol_s, main->error.to.stream);
+            fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
           }
         }
 
@@ -355,7 +355,7 @@ extern "C" {
                 fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.buffer_small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
                 if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                  fll_print_dynamic(f_string_eol_s, main->error.to.stream);
+                  fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
                 }
               }
 
@@ -380,7 +380,7 @@ extern "C" {
               fll_error_print(main->error, F_status_set_fine(status), "f_socket_create", F_true);
 
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_dynamic(f_string_eol_s, main->error.to.stream);
+                fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
               }
 
               control_print_error_socket_file_failed(main, data->cache.buffer_small);
@@ -394,7 +394,7 @@ extern "C" {
               fll_error_print(main->error, F_status_set_fine(status), "f_socket_connect", F_true);
 
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_dynamic(f_string_eol_s, main->error.to.stream);
+                fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
               }
 
               control_print_error_socket_file_failed(main, data->cache.buffer_small);

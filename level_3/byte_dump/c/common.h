@@ -60,6 +60,26 @@ extern "C" {
   extern const f_string_static_t byte_dump_program_help_parameters_s;
 #endif // _di_byte_dump_program_help_parameters_
 
+#ifndef _di_byte_dump_print_strings_
+  #define BYTE_DUMP_print_strings_hexidecimal_s "Hexidecimal"
+  #define BYTE_DUMP_print_strings_duodecimal_s  "Duodecimal"
+  #define BYTE_DUMP_print_strings_octal_s       "Octal"
+  #define BYTE_DUMP_print_strings_binary_s      "Binary"
+  #define BYTE_DUMP_print_strings_decimal_s     "Decimal"
+
+  #define BYTE_DUMP_print_strings_hexidecimal_s_length 11
+  #define BYTE_DUMP_print_strings_duodecimal_s_length  10
+  #define BYTE_DUMP_print_strings_octal_s_length       5
+  #define BYTE_DUMP_print_strings_binary_s_length      6
+  #define BYTE_DUMP_print_strings_decimal_s_length     7
+
+  extern const f_string_static_t byte_dump_print_strings_hexidecimal_s;
+  extern const f_string_static_t byte_dump_print_strings_duodecimal_s;
+  extern const f_string_static_t byte_dump_print_strings_octal_s;
+  extern const f_string_static_t byte_dump_print_strings_binary_s;
+  extern const f_string_static_t byte_dump_print_strings_decimal_s;
+#endif // _di_byte_dump_print_strings_
+
 /**
  * Set to at least 4 to provide a UTF-8 friendly allocation step.
  */

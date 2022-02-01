@@ -500,7 +500,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    // skip past leading whitespace.
+    // Skip past leading whitespace.
     for (; *start <= *stop; *start += width) {
 
       // skip past NULL.

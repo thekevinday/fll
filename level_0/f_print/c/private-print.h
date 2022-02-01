@@ -227,6 +227,44 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_dynamic_in_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
 
 /**
+ * Private implementation of f_print_except_in_raw_safely().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string
+ *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
+ * @param stop
+ *   The exclusive stop point to stop printing.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if there is nothing to print.
+ *
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fwrite_unlocked()
+ *
+ * @see f_print_except_in_raw_safely()
+ * @see f_print_except_in_dynamic_raw_safely()
+ * @see f_print_except_in_dynamic_partial_raw_safely()
+ * @see f_utf_is_valid()
+ */
+#if !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_dynamic_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
+  extern f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE *output) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_dynamic_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
+
+/**
  * Private implementation of f_print_except_in_safely().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -299,6 +337,40 @@ extern "C" {
 #endif // !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
 
 /**
+ * Private implementation of f_print_except_raw_safely().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string
+ *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
+ * @param stop
+ *   The exclusive stop point to stop printing.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if there is nothing to print.
+ *
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fwrite_unlocked()
+ *
+ * @see f_print_except_raw_safely()
+ * @see f_print_except_dynamic_raw_safely()
+ * @see f_print_except_dynamic_partial_raw_safely()
+ */
+#if !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_dynamic_raw_safely_) || !defined(_di_f_print_except_dynamic_partial_raw_safely_)
+  extern f_status_t private_f_print_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_dynamic_raw_safely_) || !defined(_di_f_print_except_dynamic_partial_raw_safely_)
+
+/**
  * Private implementation of f_print_except_safely().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -361,6 +433,36 @@ extern "C" {
 #if !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
   extern f_status_t private_f_print_raw(const f_string_t string, const f_array_length_t length, FILE *output) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
+
+/**
+ * Private implementation of f_print_raw_safely().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if there is nothing to print.
+ *
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fwrite_unlocked()
+ *
+ * @see f_print_raw_safely()
+ * @see f_print_raw_safely_dynamic()
+ * @see f_print_raw_safely_dynamic_partial()
+ * @see f_utf_is_valid()
+ */
+#if !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
+  extern f_status_t private_f_print_raw_safely(const f_string_t string, const f_array_length_t length, FILE *output) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
 
 /**
  * Private implementation of f_print_safely().

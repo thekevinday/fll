@@ -102,7 +102,7 @@ extern "C" {
   void fss_basic_list_read_print_one(fss_basic_list_read_main_t * const main) {
 
     f_print_character(f_string_ascii_1_s.string[0], main->output.to.stream);
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_basic_list_read_print_one_
 
@@ -110,7 +110,7 @@ extern "C" {
   void fss_basic_list_read_print_zero(fss_basic_list_read_main_t * const main) {
 
     f_print_character(f_string_ascii_0_s.string[0], main->output.to.stream);
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_basic_list_read_print_zero_
 

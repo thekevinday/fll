@@ -7,10 +7,10 @@ extern "C" {
 #ifndef _di_fll_program_print_help_header_
   f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t version) {
 
-    fl_print_format("%q %[%Q%]%q", output.stream, f_string_eol_s, context.set.title, name, context.set.title, f_string_eol_s);
-    fl_print_format("  %[Version %Q%]%q", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s);
+    fl_print_format("%r %[%Q%]%r", output.stream, f_string_eol_s, context.set.title, name, context.set.title, f_string_eol_s);
+    fl_print_format("  %[Version %Q%]%r", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s);
 
-    fl_print_format("%q %[Available Options:%] ", output.stream, f_string_eol_s, context.set.important, context.set.important);
+    fl_print_format("%r %[Available Options:%] ", output.stream, f_string_eol_s, context.set.important, context.set.important);
 
     return F_none;
   }
@@ -19,7 +19,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_
   f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const f_string_t description) {
 
-    fl_print_format("%q  %Q%[%Q%]", output.stream, f_string_eol_s, symbol_short, context.set.standout, option_short, context.set.standout);
+    fl_print_format("%r  %Q%[%Q%]", output.stream, f_string_eol_s, symbol_short, context.set.standout, option_short, context.set.standout);
     fl_print_format(", %Q%[%Q%]  %S", output.stream, symbol_long, context.set.standout, option_long, context.set.standout, description);
 
     return F_none;
@@ -29,7 +29,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_long_
   f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_static_t option_long, const f_string_static_t symbol_long, const f_string_t description) {
 
-    fl_print_format("%q      %Q%[%Q%]  %S", output.stream, f_string_eol_s, symbol_long, context.set.standout, option_long, context.set.standout, description);
+    fl_print_format("%r      %Q%[%Q%]  %S", output.stream, f_string_eol_s, symbol_long, context.set.standout, option_long, context.set.standout, description);
 
     return F_none;
   }
@@ -38,7 +38,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_other_
   f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_static_t option_other, const f_string_t description) {
 
-    fl_print_format("%q  %[%Q%]  %S", output.stream, f_string_eol_s, context.set.standout, option_other, context.set.standout, description);
+    fl_print_format("%r  %[%Q%]  %S", output.stream, f_string_eol_s, context.set.standout, option_other, context.set.standout, description);
 
     return F_none;
   }
@@ -47,12 +47,12 @@ extern "C" {
 #ifndef _di_fll_program_print_help_usage_
   f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t parameters) {
 
-    fl_print_format("%q%q %[Usage:%]%q", output.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important, f_string_eol_s);
+    fl_print_format("%r%r %[Usage:%]%r", output.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important, f_string_eol_s);
 
     fl_print_format("  %[%Q%]", output.stream, context.set.standout, name, context.set.standout);
     fl_print_format(" %[[%] options %[]%]", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
     fl_print_format(" %[[%] %Q", output.stream, context.set.notable, context.set.notable, parameters);
-    fl_print_format(" %[]%]%q%q", output.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format(" %[]%]%r%r", output.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     return F_none;
   }
@@ -62,7 +62,7 @@ extern "C" {
   f_status_t fll_program_print_version(const f_file_t output, const f_string_static_t version) {
 
     f_print_dynamic(version, output.stream);
-    f_print_dynamic(f_string_eol_s, output.stream);
+    f_print_dynamic_raw(f_string_eol_s, output.stream);
 
     return F_none;
   }

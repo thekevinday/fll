@@ -90,7 +90,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
       if (chain == firewall_chain_custom_id_e) {
 
         // custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
-        fll_print_format("%q%[%QAt line %ul, the chain option is meaningless inside of a custom chain.%]%q", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, f_string_eol_s);
+        fll_print_format("%r%[%QAt line %ul, the chain option is meaningless inside of a custom chain.%]%r", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, f_string_eol_s);
         continue;
       }
 
@@ -304,14 +304,14 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
       if (length) {
         flockfile(main->warning.to.stream);
 
-        fl_print_format("%q%[%QAt line %ul, the object '%]%[", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, main->warning.notable);
+        fl_print_format("%r%[%QAt line %ul, the object '%]%[", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, main->warning.notable);
         f_print(local.buffer.string + local.rule_objects.array[i].start, length, main->warning.to.stream);
-        fl_print_format("%]%[' is invalid.%]%q", main->warning.to.stream, main->warning.notable, main->warning.context, main->warning.context, f_string_eol_s);
+        fl_print_format("%]%[' is invalid.%]%r", main->warning.to.stream, main->warning.notable, main->warning.context, main->warning.context, f_string_eol_s);
 
         funlockfile(main->warning.to.stream);
       }
       else {
-        fll_print_format("%q%[%QAt line %ul, the object is missing.%]%q", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, f_string_eol_s);
+        fll_print_format("%r%[%QAt line %ul, the object is missing.%]%r", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, f_string_eol_s);
       }
 
       continue;
@@ -323,16 +323,16 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
       if (length) {
         flockfile(main->warning.to.stream);
 
-        fl_print_format("%q%[%QAt line %ul, the object '%]%[", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, main->warning.notable);
+        fl_print_format("%r%[%QAt line %ul, the object '%]%[", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, main->warning.notable);
         f_print(local.buffer.string + local.rule_objects.array[i].start, length, main->warning.to.stream);
         fl_print_format("%]%[' has invalid content '%]%[", main->warning.to.stream, main->warning.notable, main->warning.context, main->warning.context, main->warning.notable);
         f_print(local.buffer.string + local.rule_contents.array[i].array[0].start, macro_firewall_structure_size(local.rule_contents.array[i], 0), main->warning.to.stream);
-        fl_print_format("%]%['.%]%q", main->warning.to.stream, main->warning.notable, main->warning.context, main->warning.context, f_string_eol_s);
+        fl_print_format("%]%['.%]%r", main->warning.to.stream, main->warning.notable, main->warning.context, main->warning.context, f_string_eol_s);
 
         funlockfile(main->warning.to.stream);
       }
       else {
-        fll_print_format("%q%[%QAt line %ul, the object has no content.%]%q", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, f_string_eol_s);
+        fll_print_format("%r%[%QAt line %ul, the object has no content.%]%r", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, f_string_eol_s);
       }
 
       continue;
@@ -578,9 +578,9 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
         flockfile(main->warning.to.stream);
 
-        fl_print_format("%q%[%QAt line %ul, the object '%]%[", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, main->warning.notable);
+        fl_print_format("%r%[%QAt line %ul, the object '%]%[", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, main->warning.notable);
         f_print(local.buffer.string + local.rule_objects.array[i].start, length, main->warning.to.stream);
-        fl_print_format("%]%[' has no content.%]%q", main->warning.to.stream, main->warning.notable, main->warning.context, main->warning.context, f_string_eol_s);
+        fl_print_format("%]%[' has no content.%]%r", main->warning.to.stream, main->warning.notable, main->warning.context, main->warning.context, f_string_eol_s);
 
         funlockfile(main->warning.to.stream);
 
@@ -620,19 +620,19 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
               // the file does not have to exist
               if (main->error.verbosity != f_console_verbosity_verbose_e || main->error.verbosity == f_console_verbosity_debug_e) {
-                fll_print_format("%q%[%QCannot find the file '%Q'.%]%q", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, file_path, main->warning.context, f_string_eol_s);
+                fll_print_format("%r%[%QCannot find the file '%Q'.%]%r", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, file_path, main->warning.context, f_string_eol_s);
               }
 
               status = F_none;
             }
             else if (status == F_file_open) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_format("%q%[%QUnable to open the file '%Q'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
+                fll_print_format("%r%[%QUnable to open the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
               }
             }
             else if (status == F_file_descriptor) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_format("%q%[%QFile descriptor error while trying to open the file '%Q'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
+                fll_print_format("%r%[%QFile descriptor error while trying to open the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
               }
             }
             else if (status == F_memory_not) {
@@ -661,16 +661,16 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
                   firewall_print_error_on_invalid_parameter(main->error, "f_file_read");
                 }
                 else if (status == F_number_overflow) {
-                  fll_print_format("%q%[%QInteger overflow while trying to buffer the file '%Q'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
+                  fll_print_format("%r%[%QInteger overflow while trying to buffer the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
                 }
                 else if (status == F_file_closed) {
-                  fll_print_format("%q%[%QThe file '%Q' is no longer open.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
+                  fll_print_format("%r%[%QThe file '%Q' is no longer open.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
                 }
                 else if (status == F_file_seek) {
-                  fll_print_format("%q%[%QA seek error occurred while accessing the file '%Q'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
+                  fll_print_format("%r%[%QA seek error occurred while accessing the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
                 }
                 else if (status == F_file_read) {
-                  fll_print_format("%q%[%QA read error occurred while accessing the file '%Q'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
+                  fll_print_format("%r%[%QA read error occurred while accessing the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, file_path, main->error.context, f_string_eol_s);
                 }
                 else if (status == F_memory_not) {
                   firewall_print_error_on_allocation_failure(main->error);
@@ -1328,13 +1328,13 @@ f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_t 
           firewall_print_error_on_invalid_parameter(main->error, "f_file_open");
         }
         else if (status == F_file_found_not) {
-          fll_print_format("%q%[%QUnable to find the file '%S'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+          fll_print_format("%r%[%QUnable to find the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
         }
         else if (status == F_file_open) {
-          fll_print_format("%q%[%QUnable to open the file '%S'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+          fll_print_format("%r%[%QUnable to open the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
         }
         else if (status == F_file_descriptor) {
-          fll_print_format("%q%[%QFile descriptor error while trying to open the file '%S'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+          fll_print_format("%r%[%QFile descriptor error while trying to open the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
         }
         else {
           firewall_print_error_on_unhandled(main->error, "f_file_open", status);
@@ -1357,16 +1357,16 @@ f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_t 
         firewall_print_error_on_invalid_parameter(main->error, "f_file_read");
       }
       else if (status == F_number_overflow) {
-        fll_print_format("%q%[%QInteger overflow while trying to buffer the file '%S'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QInteger overflow while trying to buffer the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_file_closed) {
-        fll_print_format("%q%[%QThe file '%S' is no longer open.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QThe file '%S' is no longer open.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_file_seek) {
-        fll_print_format("%q%[%QA seek error occurred while accessing the file '%S'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QA seek error occurred while accessing the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_file_read) {
-        fll_print_format("%q%[%QA read error occurred while accessing the file '%S'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QA read error occurred while accessing the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_memory_not) {
         firewall_print_error_on_allocation_failure(main->error);
@@ -1397,7 +1397,7 @@ f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_t 
         firewall_print_error_on_invalid_parameter_for_file(main->error, "fll_fss_basic_list_read", filename);
       }
       else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
-        fll_print_format("%q%[%QNo relevant main was found within the file '%s'.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QNo relevant main was found within the file '%s'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_memory_not) {
         firewall_print_error_on_allocation_failure(main->error);

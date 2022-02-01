@@ -17,7 +17,7 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%q%[Compiling static objects.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Compiling static objects.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
@@ -111,9 +111,9 @@ extern "C" {
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
-              fl_print_format("%q%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+              fl_print_format("%r%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
               fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, destination_path, main->error.notable);
-              fl_print_format("%[' exists but is not a directory.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+              fl_print_format("%[' exists but is not a directory.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
               funlockfile(main->error.to.stream);
             }
@@ -129,9 +129,9 @@ extern "C" {
               if (F_status_set_fine(*status) == F_file_found_not) {
                 flockfile(main->error.to.stream);
 
-                fl_print_format("%q%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+                fl_print_format("%r%[%QThe path '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                 fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, destination_path, main->error.notable);
-                fl_print_format("%[' could not be created, a parent directory does not exist.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+                fl_print_format("%[' could not be created, a parent directory does not exist.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                 funlockfile(main->error.to.stream);
               }
@@ -143,7 +143,7 @@ extern "C" {
             }
 
             if (main->error.verbosity == f_console_verbosity_verbose_e) {
-              fll_print_format("Directory '%Q' created.%q", main->output.to.stream, destination_path, f_string_eol_s);
+              fll_print_format("Directory '%Q' created.%r", main->output.to.stream, destination_path, f_string_eol_s);
             }
           }
           else if (F_status_is_error(*status)) {

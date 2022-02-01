@@ -32,7 +32,7 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
     fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_dynamic(f_string_eol_s, file.stream);
+    f_print_dynamic_raw(f_string_eol_s, file.stream);
 
     fll_program_print_help_option(file, context, fss_status_code_short_is_fine_s, fss_status_code_long_is_fine_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print F_true if the error code is not an error, F_false otherwise.");
     fll_program_print_help_option(file, context, fss_status_code_short_is_warning_s, fss_status_code_long_is_warning_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print F_true if the error code is a warning, F_false otherwise.");
@@ -145,11 +145,11 @@ extern "C" {
       if (main->parameters.array[fss_status_code_parameter_is_warning_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_error_s, main->error.notable);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_error_s, main->error.notable);
         fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-        fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_warning_s, main->error.notable);
-        fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_warning_s, main->error.notable);
+        fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
 
@@ -159,11 +159,11 @@ extern "C" {
       else if (main->parameters.array[fss_status_code_parameter_is_fine_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_error_s, main->error.notable);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_error_s, main->error.notable);
         fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-        fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_fine_s, main->error.notable);
-        fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_fine_s, main->error.notable);
+        fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
 
@@ -174,11 +174,11 @@ extern "C" {
     else if (main->parameters.array[fss_status_code_parameter_is_warning_e].result == f_console_result_found_e && main->parameters.array[fss_status_code_parameter_is_fine_e].result == f_console_result_found_e) {
       flockfile(main->error.to.stream);
 
-      fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-      fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_warning_s, main->error.notable);
+      fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+      fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_warning_s, main->error.notable);
       fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-      fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_fine_s, main->error.notable);
-      fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+      fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_status_code_long_is_fine_s, main->error.notable);
+      fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
       funlockfile(main->error.to.stream);
 
@@ -187,7 +187,7 @@ extern "C" {
     }
 
     if (main->remaining.used == 0 && !main->process_pipe) {
-      fll_print_format("%[You failed to specify an error code.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+      fll_print_format("%[You failed to specify an error code.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
       fss_status_code_main_delete(main);
       return F_status_set_error(F_parameter);
@@ -293,7 +293,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_interrupt) {
         fflush(main->output.to.stream);
 
-        fll_print_dynamic(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }
     }
 

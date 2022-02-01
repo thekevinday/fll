@@ -32,7 +32,7 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
     fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_dynamic(f_string_eol_s, file.stream);
+    f_print_dynamic_raw(f_string_eol_s, file.stream);
 
     fll_program_print_help_option(file, context, iki_write_short_file_s, iki_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
     fll_program_print_help_option(file, context, iki_write_short_content_s, iki_write_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The content to file.");
@@ -42,13 +42,13 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, iki_write_program_name_s, f_string_empty_s);
 
-    fl_print_format(" %[Notes:%]%q", file.stream, context.set.important, context.set.important, f_string_eol_s);
-    fl_print_format("  This program will accept object and content strings to generate an IKI string, such as %[object:\"content\"%].%q", file.stream, context.set.notable, context.set.notable, f_string_eol_s);
+    fl_print_format(" %[Notes:%]%r", file.stream, context.set.important, context.set.important, f_string_eol_s);
+    fl_print_format("  This program will accept object and content strings to generate an IKI string, such as %[object:\"content\"%].%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s);
 
-    fl_print_format("  Each object must have a content (and each content must have an object).%q%q", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Each object must have a content (and each content must have an object).%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When piping main to this program, a single end of line (\\n) must be used to separate each object from each content.%q", file.stream, f_string_eol_s);
-    fl_print_format("  Furthermore, each object must be followed by a content.%q%q", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When piping main to this program, a single end of line (\\n) must be used to separate each object from each content.%r", file.stream, f_string_eol_s);
+    fl_print_format("  Furthermore, each object must be followed by a content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 
@@ -94,7 +94,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-          f_print_dynamic(f_string_eol_s, main->error.to.stream);
+          f_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
         }
 
         iki_write_main_delete(main);
@@ -171,9 +171,9 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_file_s, main->error.notable);
-            fl_print_format("%[' may only be specified once.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_file_s, main->error.notable);
+            fl_print_format("%[' may only be specified once.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -197,9 +197,9 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_file_s, main->error.notable);
-          fl_print_format("%[' is specified, but no value is given.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_file_s, main->error.notable);
+          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }
@@ -212,9 +212,9 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
-        fl_print_format("%[' is specified, but no value is given.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
+        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
       }
@@ -226,9 +226,9 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->error.to.stream);
 
-        fl_print_format("%q%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
-        fl_print_format("%[' is specified, but no value is given.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
+        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
       }
@@ -241,11 +241,11 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QNo main provided, either pipe the main or use the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
+          fl_print_format("%r%[%QNo main provided, either pipe the main or use the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
           fl_print_format("%[' and the '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
-          fl_print_format("%[' parameters.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
+          fl_print_format("%[' parameters.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }
@@ -259,11 +259,11 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
+          fl_print_format("%r%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
-          fl_print_format("%[' must be specified the same number of times.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
+          fl_print_format("%[' must be specified the same number of times.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }
@@ -333,7 +333,7 @@ extern "C" {
 
             if (!buffer.used) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_format("%q%[%QThe pipe has no main.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+                fll_print_format("%r%[%QThe pipe has no main.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
               }
 
               status = F_status_set_error(F_parameter);
@@ -363,7 +363,7 @@ extern "C" {
 
           if (object_ended && previous == range.start) {
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
-              fll_print_format("%q%[%QThe pipe has incorrectly placed newlines.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+              fll_print_format("%r%[%QThe pipe has incorrectly placed newlines.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
             }
 
             status = F_status_set_error(F_parameter);
@@ -390,7 +390,7 @@ extern "C" {
             status = iki_write_process(main, file, object, content, &escaped);
             if (F_status_is_error(status)) break;
 
-            fll_print_dynamic(f_string_eol_s, file.stream);
+            fll_print_dynamic_raw(f_string_eol_s, file.stream);
 
             object_ended = F_false;
           }
@@ -423,7 +423,7 @@ extern "C" {
 
         if (F_status_is_error_not(status) && object_ended) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            fll_print_format("%q%[%QThe pipe has an object without content.%]%q", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+            fll_print_format("%r%[%QThe pipe has an object without content.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -461,12 +461,12 @@ extern "C" {
           status = iki_write_process(main, file, object, content, &escaped);
           if (F_status_is_error(status)) break;
 
-          fll_print_dynamic(f_string_eol_s, file.stream);
+          fll_print_dynamic_raw(f_string_eol_s, file.stream);
         } // for
 
         // Ensure there is always a newline at the end, unless in quiet mode.
         if (F_status_is_error_not(status) && main->error.verbosity != f_console_verbosity_quiet_e && main->parameters.array[iki_write_parameter_file_e].result == f_console_result_none_e) {
-          fll_print_dynamic(f_string_eol_s, file.stream);
+          fll_print_dynamic_raw(f_string_eol_s, file.stream);
         }
       }
 
@@ -486,7 +486,7 @@ extern "C" {
           fflush(main->output.to.stream);
         }
 
-        fll_print_dynamic(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }
     }
 

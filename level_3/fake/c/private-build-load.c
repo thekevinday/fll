@@ -47,11 +47,11 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QThe values for the setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, fake_build_setting_name_environment_s, main->error.notable);
+          fl_print_format("%r%[%QThe values for the setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_build_setting_name_environment_s, main->error.notable);
           fl_print_format("%[' of setting file '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, fake_build_setting_name_environment_s, main->error.notable);
-          fl_print_format("%[' is too large.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_build_setting_name_environment_s, main->error.notable);
+          fl_print_format("%[' is too large.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           flockfile(main->error.to.stream);
         }
@@ -155,11 +155,11 @@ extern "C" {
         if (!settings[i]->used) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QThe setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%r%[%QThe setting '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, names[i], main->error.notable);
           fl_print_format("%[' is required but is not specified in the settings file '%]", main->error.to.stream, main->error.context, main->error.context);
           fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, setting_file.used ? path_file : main->file_data_build_settings, main->error.notable);
-          fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
 
@@ -478,11 +478,11 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%QThe specified mode '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%r%[%QThe specified mode '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, modes->array[i], main->error.notable);
             fl_print_format("%[' is not a valid mode, according to '%]", main->error.to.stream, main->error.context, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
-            fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -564,9 +564,9 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           funlockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QA setting in the file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%r%[%QA setting in the file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path_file, main->error.notable);
-          fl_print_format("%[' is too long.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%[' is too long.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }
@@ -868,13 +868,13 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
-            fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
+            fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+            fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' may only have a single property, only using the first: '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, settings_single_source[i]->array[0], main->warning.notable);
-            fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+            fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
             funlockfile(main->warning.to.stream);
           }
@@ -893,17 +893,17 @@ extern "C" {
             if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
-              fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
+              fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may be either '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
               fl_print_format("%[' or '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_no_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_no_s, main->warning.notable);
               fl_print_format("%[', defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
-              fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
+              fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
               funlockfile(main->warning.to.stream);
             }
@@ -925,19 +925,19 @@ extern "C" {
             if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
-              fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
+              fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may only be one of '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_language_bash_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_language_bash_s, main->warning.notable);
               fl_print_format("%[', '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_language_c_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_language_c_s, main->warning.notable);
               fl_print_format("%[', or '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_language_cpp_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_language_cpp_s, main->warning.notable);
               fl_print_format("%[', defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_language_c_s, main->warning.notable);
-              fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_language_c_s, main->warning.notable);
+              fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
               funlockfile(main->warning.to.stream);
             }
@@ -962,21 +962,21 @@ extern "C" {
             if (main->warning.verbosity == f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
-              fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
+              fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may only be one of '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
               fl_print_format("%[', '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_minor_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_minor_s, main->warning.notable);
               fl_print_format("%[', '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
               fl_print_format("%[', or '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_nano_s, main->warning.notable);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_nano_s, main->warning.notable);
               fl_print_format("%[', defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, settings_single_version_default_name[i], main->warning.notable);
-              fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+              fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_version_default_name[i], main->warning.notable);
+              fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
               funlockfile(main->warning.to.stream);
             }
@@ -1021,13 +1021,13 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
-            fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_file_s, main->warning.notable);
+            fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+            fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_file_s, main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' is required, defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
-            fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+            fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
+            fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
             funlockfile(main->warning.to.stream);
           }
@@ -1039,13 +1039,13 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
-            fl_print_format("%q%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_target_s, main->warning.notable);
+            fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+            fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_target_s, main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' is required, defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%q%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
-            fl_print_format("%['.%]%q", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+            fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
+            fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
             funlockfile(main->warning.to.stream);
           }
@@ -1127,13 +1127,13 @@ extern "C" {
                 if (main->error.verbosity != f_console_verbosity_quiet_e) {
                   flockfile(main->error.to.stream);
 
-                  fl_print_format("%q%[%QWhen the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+                  fl_print_format("%r%[%QWhen the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                   fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, setting_name[j], main->error.notable);
                   fl_print_format("%[' is set to '%]", main->error.to.stream, main->error.context, main->error.context);
                   fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, name_target[setting_target[j] - 1], main->error.notable);
                   fl_print_format("%[' then the '%]", main->error.to.stream, main->error.context, main->error.context);
                   fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, name_object[i], main->error.notable);
-                  fl_print_format("%[' Object must have Content.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+                  fl_print_format("%[' Object must have Content.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                   funlockfile(main->error.to.stream);
                 }
@@ -1247,13 +1247,13 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled_s, main->error.notable);
+          fl_print_format("%r%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled_s, main->error.notable);
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled_s, main->error.notable);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled_s, main->error.notable);
           fl_print_format("%[' contradict, defaulting to '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, main->error.notable);
-          fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, main->error.notable);
+          fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }
@@ -1282,13 +1282,13 @@ extern "C" {
         if (main->error.verbosity == f_console_verbosity_verbose_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled_s, main->error.notable);
+          fl_print_format("%r%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled_s, main->error.notable);
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled_s, main->error.notable);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled_s, main->error.notable);
           fl_print_format("%[' contradict, defaulting to '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%q%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, main->error.notable);
-          fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, main->error.notable);
+          fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }
@@ -1308,13 +1308,13 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%q%[%QThe build settings '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_shared_s, main->error.notable);
+          fl_print_format("%r%[%QThe build settings '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_shared_s, main->error.notable);
           fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_static_s, main->error.notable);
+          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_build_setting_name_build_static_s, main->error.notable);
           fl_print_format("%[' cannot both be false when using the language '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, main->error.notable);
-          fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, main->error.notable);
+          fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }

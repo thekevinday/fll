@@ -24,7 +24,7 @@ extern "C" {
         f_print_terminated(f_status_false_s, main->output.to.stream);
       }
 
-      f_print_dynamic(f_string_eol_s, main->output.to.stream);
+      f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
     else if (main->parameters.array[status_code_parameter_is_warning_e].result == f_console_result_found_e) {
       if (F_status_is_warning(number)) {
@@ -34,7 +34,7 @@ extern "C" {
         f_print_terminated(f_status_false_s, main->output.to.stream);
       }
 
-      f_print_dynamic(f_string_eol_s, main->output.to.stream);
+      f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
     else if (main->parameters.array[status_code_parameter_is_fine_e].result == f_console_result_found_e) {
       if (F_status_is_fine(number)) {
@@ -44,7 +44,7 @@ extern "C" {
         f_print_terminated(f_status_false_s, main->output.to.stream);
       }
 
-      f_print_dynamic(f_string_eol_s, main->output.to.stream);
+      f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
 
     return F_none;
@@ -64,13 +64,13 @@ extern "C" {
       status = fl_conversion_string_to_number_unsigned(value, range, &number);
 
       if (status == F_none) {
-        fl_print_format("%[invalid name%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[invalid name%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
         return F_status_set_error(F_parameter);
       }
 
       if (status == F_data_not || F_status_set_fine(status) == F_parameter) {
-        fl_print_format("%[invalid main%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[invalid main%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
         return status;
       }
@@ -82,22 +82,22 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
-        fl_print_format("%[unknown name%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[unknown name%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
       }
       else {
-        fl_print_format("%[failed to convert%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[failed to convert%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
       }
 
       return status;
     }
 
     if (status == F_data) {
-      fl_print_format("%[unknown code%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+      fl_print_format("%[unknown code%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
       return F_none;
     }
 
-    fl_print_format("%ui%q", main->output.to.stream, code, f_string_eol_s);
+    fl_print_format("%ui%r", main->output.to.stream, code, f_string_eol_s);
 
     return F_none;
   }
@@ -120,16 +120,16 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
-        fl_print_format("%[unknown code%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[unknown code%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
       }
       else {
-        fl_print_format("%[failed to convert%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[failed to convert%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
       }
 
       return status;
     }
 
-    fl_print_format("%S%q", main->output.to.stream, name, f_string_eol_s);
+    fl_print_format("%S%r", main->output.to.stream, name, f_string_eol_s);
 
     return F_none;
   }
@@ -143,17 +143,17 @@ extern "C" {
     f_status_t status = fl_conversion_string_to_number_unsigned(value, range, number);
 
     if (*number > F_status_size_max_with_signal) {
-      fl_print_format("%[out of range%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+      fl_print_format("%[out of range%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
       return status;
     }
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_number_negative) {
-        fl_print_format("%[out of range%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[out of range%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
       }
       else {
-        fl_print_format("%[invalid number%]%q", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[invalid number%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
       }
 
       return status;

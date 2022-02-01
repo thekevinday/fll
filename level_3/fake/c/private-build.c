@@ -299,7 +299,7 @@ extern "C" {
     f_string_dynamic_t destination_directory = f_string_dynamic_t_initialize;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%q%[Copying %S.%]%q", main->output.to.stream, f_string_eol_s, main->context.set.important, label, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Copying %S.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, label, main->context.set.important, f_string_eol_s);
     }
 
      macro_f_string_dynamic_t_resize(*status, path_source, source.used);
@@ -470,7 +470,7 @@ extern "C" {
         }
 
         if (main->error.verbosity == f_console_verbosity_verbose_e) {
-          fll_print_format("Copied file '%Q' to '%Q'.%q", main->output.to.stream, path_source, destination_file, f_string_eol_s);
+          fll_print_format("Copied file '%Q' to '%Q'.%r", main->output.to.stream, path_source, destination_file, f_string_eol_s);
         }
       }
       else if (F_status_is_error(*status)) {
@@ -682,9 +682,9 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
-            fl_print_format("%q%[%QFailed to execute script: '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%r%[%QFailed to execute script: '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, path, main->error.notable);
-            fl_print_format("%['.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
           }
@@ -762,9 +762,9 @@ extern "C" {
       if (main->output.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->output.to.stream);
 
-        fl_print_format("%q%[Building project%] ", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important);
+        fl_print_format("%r%[Building project%] ", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important);
         fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, data_build.setting.project_name, main->context.set.notable);
-        fl_print_format("%[.%]%q", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s);
+        fl_print_format("%[.%]%r", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s);
 
         funlockfile(main->output.to.stream);
       }

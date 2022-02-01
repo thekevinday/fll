@@ -226,7 +226,7 @@ extern "C" {
       f_print_character(fss_payload_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
-      f_print_dynamic(f_fss_space_s, main->output.to.stream);
+      f_print_dynamic_raw(f_fss_space_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_payload_read_print_content_end_extended_
@@ -248,11 +248,11 @@ extern "C" {
     }
     else {
       if (main->parameters.array[fss_payload_read_parameter_content_e].result == f_console_result_found_e) {
-        f_print_dynamic(f_fss_basic_list_open_s, main->output.to.stream);
-        f_print_dynamic(f_fss_basic_list_open_end_s, main->output.to.stream);
+        f_print_dynamic_raw(f_fss_basic_list_open_s, main->output.to.stream);
+        f_print_dynamic_raw(f_fss_basic_list_open_end_s, main->output.to.stream);
       }
       else {
-        f_print_dynamic(f_fss_eol_s, main->output.to.stream);
+        f_print_dynamic_raw(f_fss_eol_s, main->output.to.stream);
       }
     }
   }
@@ -265,7 +265,7 @@ extern "C" {
       f_print_character(fss_payload_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
-      f_print_dynamic(f_fss_space_s, main->output.to.stream);
+      f_print_dynamic_raw(f_fss_space_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_payload_read_print_object_end_extended_
@@ -286,7 +286,7 @@ extern "C" {
       f_print_character(fss_payload_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
-      f_print_dynamic(f_fss_eol_s, main->output.to.stream);
+      f_print_dynamic_raw(f_fss_eol_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_payload_read_print_set_end_extended_
@@ -294,16 +294,16 @@ extern "C" {
 #ifndef _di_fss_payload_read_print_one_
   void fss_payload_read_print_one(fss_payload_read_main_t * const main) {
 
-    f_print_dynamic(f_string_ascii_1_s, main->output.to.stream);
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_ascii_1_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_payload_read_print_one_
 
 #ifndef _di_fss_payload_read_print_zero_
   void fss_payload_read_print_zero(fss_payload_read_main_t * const main) {
 
-    f_print_dynamic(f_string_ascii_0_s, main->output.to.stream);
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_ascii_0_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
   }
 #endif // _di_fss_payload_read_print_zero_
 

@@ -198,7 +198,7 @@ extern "C" {
     status = f_file_stream_open(path.string, f_file_open_mode_truncate_s.string, &file);
     if (F_status_is_error(status)) return status;
 
-    fll_print_format("%i%q", file.stream, pid, f_string_eol_s);
+    fll_print_format("%i%r", file.stream, pid, f_string_eol_s);
 
     f_file_stream_close(F_true, &file);
 
@@ -416,9 +416,9 @@ extern "C" {
           controller_lock_print(global->main->warning.to, global->thread);
 
           if (F_status_set_fine(status) == F_read_only) {
-            fl_print_format("%q%[%QThe pid file '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+            fl_print_format("%r%[%QThe pid file '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
             fl_print_format("%[%Q%]", global->main->warning.to.stream, global->main->warning.notable, global->setting->path_pid, global->main->warning.notable);
-            fl_print_format("%[' could not be written because the destination is read only.%]%q", global->main->warning.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+            fl_print_format("%[' could not be written because the destination is read only.%]%r", global->main->warning.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
           }
           else {
             controller_print_error_file(0, global->main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid.string, "create", fll_error_file_type_file_e);
@@ -437,14 +437,14 @@ extern "C" {
         if (global->main->output.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global->main->output.to, global->thread);
 
-          fl_print_format("%qPID file '", global->main->output.to.stream, f_string_eol_s);
+          fl_print_format("%rPID file '", global->main->output.to.stream, f_string_eol_s);
           fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_pid, global->main->context.set.notable);
 
           if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
-            fl_print_format("' created.%q", global->main->output.to.stream, f_string_eol_s);
+            fl_print_format("' created.%r", global->main->output.to.stream, f_string_eol_s);
           }
           else {
-            fl_print_format("'.%q", global->main->output.to.stream, f_string_eol_s);
+            fl_print_format("'.%r", global->main->output.to.stream, f_string_eol_s);
           }
 
           controller_unlock_print_flush(global->main->output.to, global->thread);
@@ -458,10 +458,10 @@ extern "C" {
           if (global->main->output.verbosity == f_console_verbosity_debug_e) {
             controller_lock_print(global->main->output.to, global->thread);
 
-            fl_print_format("%q%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+            fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
             fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
-            fl_print_format("' .%q", global->main->output.to.stream, f_string_eol_s);
-            fl_print_format("%[' cannot be found while read only mode is enabled and so the Control socket is unavailable.%]%q", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+            fl_print_format("' .%r", global->main->output.to.stream, f_string_eol_s);
+            fl_print_format("%[' cannot be found while read only mode is enabled and so the Control socket is unavailable.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
 
             controller_unlock_print_flush(global->main->output.to, global->thread);
           }
@@ -482,11 +482,11 @@ extern "C" {
           if (global->main->output.verbosity == f_console_verbosity_debug_e) {
             controller_lock_print(global->main->output.to, global->thread);
 
-            fl_print_format("%q%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+            fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
             fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
             fl_print_format("%[' could not be created, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
             fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
-            fl_print_format("%[.%]%q", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+            fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
 
             controller_unlock_print_flush(global->main->output.to, global->thread);
           }
@@ -516,11 +516,11 @@ extern "C" {
             if (global->main->output.verbosity == f_console_verbosity_debug_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
-              fl_print_format("%q%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+              fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
               fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
               fl_print_format("%[' could not be bound, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
               fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
-              fl_print_format("%[.%]%q", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+              fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
 
               controller_unlock_print_flush(global->main->output.to, global->thread);
             }
@@ -540,11 +540,11 @@ extern "C" {
               if (global->main->output.verbosity == f_console_verbosity_debug_e) {
                 controller_lock_print(global->main->output.to, global->thread);
 
-                fl_print_format("%q%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+                fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
                 fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
                 fl_print_format("%[' failed to set file roles, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
                 fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
-                fl_print_format("%[.%]%q", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+                fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
 
                 controller_unlock_print_flush(global->main->output.to, global->thread);
               }
@@ -564,11 +564,11 @@ extern "C" {
                 if (global->main->output.verbosity == f_console_verbosity_debug_e) {
                   controller_lock_print(global->main->output.to, global->thread);
 
-                  fl_print_format("%q%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+                  fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
                   fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
                   fl_print_format("%[' failed to set file mode, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
                   fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
-                  fl_print_format("%[.%]%q", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+                  fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
 
                   controller_unlock_print_flush(global->main->output.to, global->thread);
                 }
@@ -577,14 +577,14 @@ extern "C" {
                 if (global->main->output.verbosity == f_console_verbosity_debug_e) {
                   controller_lock_print(global->main->output.to, global->thread);
 
-                  fl_print_format("%qControl socket '", global->main->output.to.stream, f_string_eol_s);
+                  fl_print_format("%rControl socket '", global->main->output.to.stream, f_string_eol_s);
                   fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
 
                   if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
-                    fl_print_format("' created.%q", global->main->output.to.stream, f_string_eol_s);
+                    fl_print_format("' created.%r", global->main->output.to.stream, f_string_eol_s);
                   }
                   else {
-                    fl_print_format("'.%q", global->main->output.to.stream, f_string_eol_s);
+                    fl_print_format("'.%r", global->main->output.to.stream, f_string_eol_s);
                   }
 
                   controller_unlock_print_flush(global->main->output.to, global->thread);

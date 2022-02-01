@@ -31,10 +31,10 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%q%[%QWhile processing ", print.to.stream, f_string_eol_s, print.context, print.prefix);
+    fl_print_format("%r%[%QWhile processing ", print.to.stream, f_string_eol_s, print.context, print.prefix);
 
     if (cache.name_action.used) {
-      fl_print_format("%q '%]", print.to.stream, item ? controller_action_s : controller_value_s, print.context);
+      fl_print_format("%r '%]", print.to.stream, item ? controller_action_s : controller_value_s, print.context);
       fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_action, print.notable);
       fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
       fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_action, print.notable);
@@ -42,7 +42,7 @@ extern "C" {
     }
 
     if (cache.name_item.used) {
-      fl_print_format("rule %q '%]", print.to.stream, item ? controller_item_s : controller_setting_s, print.context);
+      fl_print_format("rule %r '%]", print.to.stream, item ? controller_item_s : controller_setting_s, print.context);
       fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_item, print.notable);
       fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
       fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_item, print.notable);
@@ -53,7 +53,7 @@ extern "C" {
       fl_print_format("rule file '%]%[%Q%]%['", print.to.stream, print.context, print.notable, cache.name_file, print.notable, print.context);
     }
 
-    fl_print_format(".%]%q", print.to.stream, print.context, f_string_eol_s);
+    fl_print_format(".%]%r", print.to.stream, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_print_error_cache_
 
@@ -82,140 +82,140 @@ extern "C" {
 
       controller_lock_print(print->to, (controller_thread_t *) process->main_thread);
 
-      fl_print_format("%q%[%SThe %s '%]", print->to.stream, f_string_eol_s, print->context, print->prefix, script_is ? controller_script_s : controller_program_s, print->context);
+      fl_print_format("%r%[%SThe %s '%]", print->to.stream, f_string_eol_s, print->context, print->prefix, script_is ? controller_script_s : controller_program_s, print->context);
       fl_print_format("%[%Q%]", print->to.stream, print->notable, name, print->notable);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
         fl_print_format("%[' failed due to a failure to setup the '%]%[", print->to.stream, print->context, print->context, print->notable);
 
         if (status == F_control_group) {
-          f_print_dynamic(controller_cgroup_s, print->to.stream);
+          f_print_dynamic_raw(controller_cgroup_s, print->to.stream);
         }
         else if (status == F_limit) {
-          f_print_dynamic(controller_limit_s, print->to.stream);
+          f_print_dynamic_raw(controller_limit_s, print->to.stream);
         }
         else if (status == F_processor) {
-          f_print_dynamic(controller_processor_s, print->to.stream);
+          f_print_dynamic_raw(controller_processor_s, print->to.stream);
         }
         else if (status == F_schedule) {
-          f_print_dynamic(controller_scheduler_s, print->to.stream);
+          f_print_dynamic_raw(controller_scheduler_s, print->to.stream);
         }
 
-        fl_print_format("%]%['.%]%q", print->to.stream, print->notable, print->context, print->context, f_string_eol_s);
+        fl_print_format("%]%['.%]%r", print->to.stream, print->notable, print->context, print->context, f_string_eol_s);
       }
       else if (WIFEXITED(process->result) ? WEXITSTATUS(process->result) : 0) {
         const uint8_t code = WIFEXITED(process->result) ? WEXITSTATUS(process->result) : 0;
 
         if (code == F_execute_access) {
-          fl_print_format("%[' access denied.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' access denied.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_bad) {
-          fl_print_format("%[' cannot execute, unsupported format.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' cannot execute, unsupported format.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_buffer) {
-          fl_print_format("%[' invalid memory access in arguments buffer.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' invalid memory access in arguments buffer.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_busy) {
-          fl_print_format("%[' required resources are unavailable, too busy.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' required resources are unavailable, too busy.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_capability) {
-          fl_print_format("%[' failed to setup capabilities.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup capabilities.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_control_group) {
-          fl_print_format("%[' failed to setup control group.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup control group.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_child) {
-          fl_print_format("%[' failed to setup child process.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup child process.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_directory_not) {
-          fl_print_format("%[' invalid path, part of the path is not a valid directory.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' invalid path, part of the path is not a valid directory.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_failure) {
-          fl_print_format("%[' failed during execution.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed during execution.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_file_found_not) {
-          fl_print_format("%[' could not be executed, unable to find file.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' could not be executed, unable to find file.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_file_type_directory) {
-          fl_print_format("%[' ELF interpreter is a directory.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' ELF interpreter is a directory.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_fork_not) {
-          fl_print_format("%[' fork failure.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' fork failure.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_format_not) {
-          fl_print_format("%[' could not be executed because the program has an invalid ELF header.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' could not be executed because the program has an invalid ELF header.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_group) {
-          fl_print_format("%[' failed to setup group.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup group.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_input_output) {
-          fl_print_format("%[' I/O failure.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' I/O failure.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_limit) {
-          fl_print_format("%[' failed to setup resource limits.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup resource limits.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_loop) {
-          fl_print_format("%[' max recursion reached.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' max recursion reached.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_memory_not) {
-          fl_print_format("%[' out of memory.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' out of memory.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_name_not) {
-          fl_print_format("%[' file name or path is too long.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' file name or path is too long.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_nice) {
-          fl_print_format("%[' failed to setup niceness.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup niceness.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_parameter) {
-          fl_print_format("%[' invalid parameter.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' invalid parameter.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_pipe) {
-          fl_print_format("%[' pipe failed.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' pipe failed.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_processor) {
-          fl_print_format("%[' failed to setup processor affinity.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup processor affinity.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_prohibited) {
-          fl_print_format("%[' access prohibited.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' access prohibited.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_resource_not) {
-          fl_print_format("%[' resource limit reached.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' resource limit reached.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_schedule) {
-          fl_print_format("%[' failed to setup scheduler.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup scheduler.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_terminal) {
-          fl_print_format("%[' failed while processing the terminal.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed while processing the terminal.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_terminal_known_not) {
-          fl_print_format("%[' cannot process terminal, unknown terminal control command.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' cannot process terminal, unknown terminal control command.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_terminal_not) {
-          fl_print_format("%[' cannot process terminal, not a known terminal.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' cannot process terminal, not a known terminal.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_terminal_prohibited) {
-          fl_print_format("%[' insufficient permissions to process the terminal.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' insufficient permissions to process the terminal.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_terminal_valid_not) {
-          fl_print_format("%[' invalid parameter while processing the terminal.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' invalid parameter while processing the terminal.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_too_large) {
-          fl_print_format("%[' too many arguments or arguments are too large.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' too many arguments or arguments are too large.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_user) {
-          fl_print_format("%[' failed to setup user.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed to setup user.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_valid_not) {
-          fl_print_format("%[' unknown ELF interpreter format.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' unknown ELF interpreter format.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else {
           fl_print_format("%[' failed with the execute error code %]", print->to.stream, print->context, print->context);
           fl_print_format("%[%i%]", print->to.stream, print->notable, code, print->notable);
-          fl_print_format("%[.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
       }
       else {
-        fl_print_format("%[' failed.%]%q", print->to.stream, print->context, print->context, f_string_eol_s);
+        fl_print_format("%[' failed.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
       }
 
       controller_unlock_print_flush(print->to, (controller_thread_t *) process->main_thread);
@@ -228,9 +228,9 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%q%[%QThe rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%r%[%QThe rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
     fl_print_format("%[%S%]", print.to.stream, print.notable, alias, print.notable);
-    fl_print_format("%[' is not designating a pid file.%]%q", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[' is not designating a pid file.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_action_print_error_missing_pid_
 
@@ -239,9 +239,9 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%q%[%QThe %s rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, need_want_wish, print.context);
+    fl_print_format("%r%[%QThe %s rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, need_want_wish, print.context);
     fl_print_format("%[%S%]", print.to.stream, print.notable, value, print.notable);
-    fl_print_format("%[' %S.%]%q", print.to.stream, print.context, why, print.context, f_string_eol_s);
+    fl_print_format("%[' %S.%]%r", print.to.stream, print.context, why, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_item_print_error_need_want_wish_
 
@@ -250,9 +250,9 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%q%[%QThe rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%r%[%QThe rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
     fl_print_format("%[%S%]", print.to.stream, print.notable, alias, print.notable);
-    fl_print_format("%[' is no longer loaded.%]%q", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[' is no longer loaded.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_item_print_error_rule_not_loaded_
 
@@ -269,7 +269,7 @@ extern "C" {
 
     controller_lock_print(print.to, thread);
 
-    fl_print_format("%q%[%QRule setting %S.%]%q", print.to.stream, f_string_eol_s, print.context, print.prefix, message, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QRule setting %S.%]%r", print.to.stream, f_string_eol_s, print.context, print.prefix, message, print.context, f_string_eol_s);
 
     controller_rule_print_error_cache(print, cache->action, F_false);
 
@@ -290,9 +290,9 @@ extern "C" {
 
     controller_lock_print(print.to, thread);
 
-    fl_print_format("%q%[%QRule setting%S '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, before, print.context);
+    fl_print_format("%r%[%QRule setting%S '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, before, print.context);
     fl_print_format("%[%/Q%]", print.to.stream, print.notable, cache->buffer_item, range, print.notable);
-    fl_print_format("%['%S.%]%q", print.to.stream, print.context, after, print.context, f_string_eol_s);
+    fl_print_format("%['%S.%]%r", print.to.stream, print.context, after, print.context, f_string_eol_s);
 
     controller_rule_print_error_cache(print, cache->action, F_false);
 
@@ -309,7 +309,7 @@ extern "C" {
 
     controller_lock_print(global.main->output.to, global.thread);
 
-    fl_print_format("%qProcessing rule item action '%[%Q%]' setting ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%rProcessing rule item action '%[%Q%]' setting ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
 
     if (name_sub.used) {
       fl_print_format("'%[%S%]'", global.main->output.to.stream, global.main->context.set.notable, name_sub, global.main->context.set.notable);
@@ -319,7 +319,7 @@ extern "C" {
     }
 
     fl_print_format(" to '%[%Q%]'", global.main->output.to.stream, global.main->context.set.important, value, global.main->context.set.important);
-    fl_print_format("%S.%q", global.main->output.to.stream, suffix, f_string_eol_s);
+    fl_print_format("%S.%r", global.main->output.to.stream, suffix, f_string_eol_s);
 
     controller_unlock_print_flush(global.main->output.to, global.thread);
   }
@@ -334,7 +334,7 @@ extern "C" {
 
     controller_lock_print(global.main->output.to, global.thread);
 
-    fl_print_format("%qProcessing rule item action '%[%Q%]' setting value to", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%rProcessing rule item action '%[%Q%]' setting value to", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
 
     for (f_array_length_t j = 0; j < cache->content_actions.array[index].used; ++j) {
 
@@ -352,7 +352,7 @@ extern "C" {
       }
     } // for
 
-    fl_print_format(".%q", global.main->output.to.stream, f_string_eol_s);
+    fl_print_format(".%r", global.main->output.to.stream, f_string_eol_s);
 
     controller_unlock_print_flush(global.main->output.to, global.thread);
   }

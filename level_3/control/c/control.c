@@ -24,7 +24,7 @@ extern "C" {
     fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
     fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
     fll_program_print_help_option(main->output.to, main->context, control_short_name_s, control_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Specify the name of the controller socket file.");
     fll_program_print_help_option(main->output.to, main->context, control_short_settings_s, control_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Specify a directory path or a full path to the control settings file.");
@@ -32,12 +32,12 @@ extern "C" {
 
     fll_program_print_help_usage(main->output.to, main->context, control_program_name_s, control_command_s);
 
-    fl_print_format("  When the %[%q%q%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s, main->context.set.notable);
-    fl_print_format(" %[%q%q%] parameter or from the control settings file.%q%q", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When the %[%r%r%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s, main->context.set.notable);
+    fl_print_format(" %[%r%r%] parameter or from the control settings file.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  A rule action allows for either the full rule path, such as '%[boot/root%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
     fl_print_format(" as a single parameter or two parameters with the first representing the rule directory path '%[boot%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
-    fl_print_format(" and the second representing the rule base name '%[root%]'.%q%q", main->output.to.stream, main->context.set.notable, main->context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format(" and the second representing the rule base name '%[root%]'.%r%r", main->output.to.stream, main->context.set.notable, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fflush(main->output.to.stream);
     funlockfile(main->output.to.stream);
@@ -84,7 +84,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-          fll_print_dynamic(f_string_eol_s, main->error.to.stream);
+          fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
         }
 
         control_main_delete(main);
@@ -237,7 +237,7 @@ extern "C" {
         fflush(main->output.to.stream);
         fflush(main->error.to.stream);
 
-        fll_print_dynamic(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }
     }
 

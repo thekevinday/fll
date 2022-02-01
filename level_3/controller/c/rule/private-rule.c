@@ -502,21 +502,21 @@ extern "C" {
             if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
-              fl_print_format("%q%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rerun_s, global.main->error.notable);
+              fl_print_format("%r%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_rerun_s, global.main->error.notable);
               fl_print_format("%[' has '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
               fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_action.array[0], global.main->error.notable);
               fl_print_format("%[' as the first value, only the following are allowed: '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_freeze_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_kill_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_pause_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_reload_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_restart_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_resume_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_start_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[', or '%]", global.main->error.to.stream, global.main->error.notable, controller_stop_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_thaw_s, global.main->error.notable, global.main->error.context);
-              fl_print_format("%['.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%[%r%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_freeze_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_kill_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_pause_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_reload_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_restart_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_resume_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]%[', '%]", global.main->error.to.stream, global.main->error.notable, controller_start_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]%[', or '%]", global.main->error.to.stream, global.main->error.notable, controller_stop_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_thaw_s, global.main->error.notable, global.main->error.context);
+              fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -542,14 +542,14 @@ extern "C" {
             if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
-              fl_print_format("%q%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rerun_s, global.main->error.notable);
+              fl_print_format("%r%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_rerun_s, global.main->error.notable);
               fl_print_format("%[' has '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
               fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_action.array[1], global.main->error.notable);
               fl_print_format("%[' as the second value, only the following are allowed: '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]%[' or '%]", global.main->error.to.stream, global.main->error.notable, controller_stop_s, global.main->error.notable, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_thaw_s, global.main->error.notable, global.main->error.context);
-              fl_print_format("%['.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%[%r%]%[' or '%]", global.main->error.to.stream, global.main->error.notable, controller_stop_s, global.main->error.notable, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_thaw_s, global.main->error.notable, global.main->error.context);
+              fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -574,11 +574,11 @@ extern "C" {
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
-                fl_print_format("%q%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rerun_s, global.main->error.notable);
+                fl_print_format("%r%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_rerun_s, global.main->error.notable);
                 fl_print_format("%[' has an unknown value '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                 fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_action.array[i], global.main->error.notable);
-                fl_print_format("%['.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -616,10 +616,10 @@ extern "C" {
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
-                fl_print_format("%q%[%QUnknown value '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%r%[%QUnknown value '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
                 fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_action.array[i], global.main->error.notable);
-                fl_print_format("%[' for rule item action '%]%[%q%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, global.main->error.notable, controller_with_s, global.main->error.notable);
-                fl_print_format("%['.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format("%[' for rule item action '%]%[%r%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, global.main->error.notable, controller_with_s, global.main->error.notable);
+                fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -700,7 +700,7 @@ extern "C" {
       if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
         controller_lock_print(global.main->warning.to, global.thread);
 
-        fl_print_format("%q%[%QAction is empty, nothing to do.%]%q", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s);
+        fl_print_format("%r%[%QAction is empty, nothing to do.%]%r", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s);
 
         controller_rule_print_error_cache(global.main->warning, cache->action, F_true);
 
@@ -743,26 +743,26 @@ extern "C" {
         else {
           controller_lock_print(global.main->error.to, global.thread);
 
-          fl_print_format("%q%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-          fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rerun_s, global.main->error.notable);
+          fl_print_format("%r%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+          fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_rerun_s, global.main->error.notable);
           fl_print_format("%[' requires a positive whole number or 0 for the '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
           fl_print_format("%[%S%]", global.main->error.to.stream, global.main->error.notable, name, global.main->error.notable);
           fl_print_format("%[' value", global.main->error.to.stream, global.main->error.context, global.main->error.context);
 
           if (*index + 1 == cache->content_action.used) {
-            fl_print_format(", but none were given.%]%q", global.main->error.to.stream, global.main->error.context, f_string_eol_s);
+            fl_print_format(", but none were given.%]%r", global.main->error.to.stream, global.main->error.context, f_string_eol_s);
           }
           else {
             fl_print_format(", but '%]%[%/Q%]", global.main->error.to.stream, global.main->error.context, global.main->error.notable, cache->buffer_item, cache->content_action.array[*index], global.main->error.notable);
 
             if (status == F_number || status == F_number_decimal) {
-              fl_print_format("%[' was given.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%[' was given.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
             }
             else if (status == F_number_overflow) {
-              fl_print_format("%[' is too large.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%[' is too large.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
             }
             else {
-              fl_print_format("%[' is negative.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%[' is negative.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
             }
           }
 
@@ -1238,7 +1238,7 @@ extern "C" {
           if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
             controller_lock_print(global.main->warning.to, global.thread);
 
-            fl_print_format("%q%[%QAction type is unknown, ignoring.%]%q", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s);
+            fl_print_format("%r%[%QAction type is unknown, ignoring.%]%r", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s);
 
             controller_rule_print_error_cache(global.main->warning, process->cache.action, F_true);
 
@@ -1330,7 +1330,7 @@ extern "C" {
       if (main->output.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(main->output.to, thread);
 
-        fl_print_format("%qSimulating execution of '%[", main->output.to.stream, f_string_eol_s, main->context.set.title);
+        fl_print_format("%rSimulating execution of '%[", main->output.to.stream, f_string_eol_s, main->context.set.title);
 
         if (program.used) {
           f_print_dynamic_safely(program, main->output.to.stream);
@@ -1344,14 +1344,14 @@ extern "C" {
         for (f_array_length_t i = program.used ? 0 : 1; i < arguments.used; ++i) {
 
           if (program.used && i || !program.used && i > 1) {
-            f_print_dynamic(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
           }
 
           f_print_dynamic_safely(arguments.array[i], main->output.to.stream);
         } // for
 
         fl_print_format("%]' from '", main->output.to.stream, main->context.set.important);
-        fl_print_format("%[%Q%]'.%q", main->output.to.stream, main->context.set.notable, process->rule.name, main->context.set.notable, f_string_eol_s);
+        fl_print_format("%[%Q%]'.%r", main->output.to.stream, main->context.set.notable, process->rule.name, main->context.set.notable, f_string_eol_s);
 
         controller_unlock_print_flush(main->output.to, thread);
       }
@@ -1585,7 +1585,7 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(main->error.to, thread);
 
-        fl_print_format("%qSimulating execution of '%[", main->error.to.stream, f_string_eol_s, main->context.set.title);
+        fl_print_format("%rSimulating execution of '%[", main->error.to.stream, f_string_eol_s, main->context.set.title);
 
         if (program.used) {
           f_print_dynamic_safely(program, main->error.to.stream);
@@ -1599,14 +1599,14 @@ extern "C" {
         for (f_array_length_t i = program.used ? 0 : 1; i < arguments.used; ++i) {
 
           if (program.used && i || !program.used && i > 1) {
-            f_print_dynamic(f_string_space_s, main->error.to.stream);
+            f_print_dynamic_raw(f_string_space_s, main->error.to.stream);
           }
 
           f_print_dynamic_safely(arguments.array[i], main->error.to.stream);
         } // for
 
         fl_print_format("%]' from '", main->error.to.stream, main->context.set.important);
-        fl_print_format("%[%Q%]'.%q", main->error.to.stream, main->context.set.notable, process->rule.name, main->context.set.notable, f_string_eol_s);
+        fl_print_format("%[%Q%]'.%r", main->error.to.stream, main->context.set.notable, process->rule.name, main->context.set.notable, f_string_eol_s);
 
         controller_unlock_print_flush(main->error.to, thread);
       }
@@ -1776,12 +1776,12 @@ extern "C" {
         if (main->error.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(main->output.to, thread);
 
-          fl_print_format("%qRe-running '", main->output.to.stream, f_string_eol_s);
-          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.title, process->rule.alias, main->context.set.title);
+          fl_print_format("%rRe-running '", main->output.to.stream, f_string_eol_s);
+          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.title, process->rule.alias, main->context.set.title);
           f_print_terminated("' '", main->output.to.stream);
-          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.notable, controller_rule_action_type_execute_name(action), main->context.set.notable);
+          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.notable, controller_rule_action_type_execute_name(action), main->context.set.notable);
           f_print_terminated("' with a ", main->output.to.stream);
-          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.notable, controller_delay_s, main->context.set.notable);
+          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.notable, controller_delay_s, main->context.set.notable);
           f_print_terminated(" of ", main->output.to.stream);
           fl_print_format("%[%ul%] MegaTime", main->output.to.stream, main->context.set.notable, rerun_item->delay, main->context.set.notable);
 
@@ -1789,12 +1789,12 @@ extern "C" {
             f_print_terminated(" for ", main->output.to.stream);
             fl_print_format("%[%ul%]", main->output.to.stream, main->context.set.notable, rerun_item->count, main->context.set.notable);
             f_print_terminated(" of ", main->output.to.stream);
-            fl_print_format("%[%q%] ", main->output.to.stream, main->context.set.notable, controller_max_s, main->context.set.notable);
+            fl_print_format("%[%r%] ", main->output.to.stream, main->context.set.notable, controller_max_s, main->context.set.notable);
             fl_print_format("%[%ul%]", main->output.to.stream, main->context.set.notable, rerun_item->max, main->context.set.notable);
-            fl_print_format(".%q", main->output.to.stream, f_string_eol_s);
+            fl_print_format(".%r", main->output.to.stream, f_string_eol_s);
           }
           else {
-            fl_print_format(" with no %[%q%].%q", main->output.to.stream, main->context.set.notable, controller_max_s, main->context.set.notable, f_string_eol_s);
+            fl_print_format(" with no %[%r%].%r", main->output.to.stream, main->context.set.notable, controller_max_s, main->context.set.notable, f_string_eol_s);
           }
 
           controller_unlock_print_flush(main->output.to, thread);
@@ -2006,9 +2006,9 @@ extern "C" {
         if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global.main->warning.to, global.thread);
 
-          fl_print_format("%q%[%QUnknown rule item action '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
+          fl_print_format("%r%[%QUnknown rule item action '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
           fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_action, global.main->warning.notable);
-          fl_print_format("%['.%]%q", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+          fl_print_format("%['.%]%r", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
           controller_rule_print_error_cache(global.main->warning, cache->action, F_true);
 
@@ -2024,9 +2024,9 @@ extern "C" {
           if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(global.main->error.to, global.thread);
 
-            fl_print_format("%q%[%QFSS Extended List is not allowed for the rule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%r%[%QFSS Extended List is not allowed for the rule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
             fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
-            fl_print_format("%['.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+            fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
             controller_unlock_print_flush(global.main->error.to, global.thread);
           }
@@ -2207,9 +2207,9 @@ extern "C" {
         if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
-          fl_print_format("%q%[%QUnsupported action type '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-          fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
-          fl_print_format("%[' while attempting to execute rule.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QUnsupported action type '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+          fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
+          fl_print_format("%[' while attempting to execute rule.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
           controller_rule_print_error_cache(global.main->error, process->cache.action, F_true);
 
@@ -2635,26 +2635,26 @@ extern "C" {
             controller_lock_print(global.main->error.to, global.thread);
 
             if (process->rule.items.used) {
-              fl_print_format("%q%[%QThe rule '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+              fl_print_format("%r%[%QThe rule '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
               fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.name, global.main->error.notable);
               fl_print_format("%[' has no '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
-              fl_print_format("%[' action to execute.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
+              fl_print_format("%[' action to execute.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
             }
             else {
-              fl_print_format("%q%[%QThe rule '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+              fl_print_format("%r%[%QThe rule '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
               fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.name, global.main->error.notable);
               fl_print_format("%[ has no known '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q %q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_s, controller_type_s, global.main->error.notable);
+              fl_print_format("%[%r %r%]", global.main->error.to.stream, global.main->error.notable, controller_rule_s, controller_type_s, global.main->error.notable);
               fl_print_format("%[' (such as '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_command_s, global.main->error.notable);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_command_s, global.main->error.notable);
               fl_print_format("%[', '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_service_s, global.main->error.notable);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_service_s, global.main->error.notable);
               fl_print_format("%[', '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_script_s, global.main->error.notable);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_script_s, global.main->error.notable);
               fl_print_format("%[', or '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_utility_s, global.main->error.notable);
-              fl_print_format("%[') to execute.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%[%r%]", global.main->error.to.stream, global.main->error.notable, controller_utility_s, global.main->error.notable);
+              fl_print_format("%[') to execute.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
             }
 
             controller_rule_print_error_cache(global.main->error, process->cache.action, F_true);
@@ -3091,9 +3091,9 @@ extern "C" {
             if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
-              fl_print_format("%q%[%QThe rule '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+              fl_print_format("%r%[%QThe rule '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
               fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.alias, global.main->error.notable);
-              fl_print_format("%[' is already on the execution dependency stack, this recursion is prohibited.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%[' is already on the execution dependency stack, this recursion is prohibited.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->error, process->cache.action, F_true);
 
@@ -3463,9 +3463,9 @@ extern "C" {
             if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
               controller_lock_print(global.main->warning.to, global.thread);
 
-              fl_print_format("%q%[%QUnknown rule item '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
+              fl_print_format("%r%[%QUnknown rule item '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
               fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
-              fl_print_format("%['.%]%q", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+              fl_print_format("%['.%]%r", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->warning, cache->action, F_true);
 
@@ -3682,9 +3682,9 @@ extern "C" {
 
           controller_lock_print(global.main->warning.to, global.thread);
 
-          fl_print_format("%q%[%QUnknown rule setting '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
+          fl_print_format("%r%[%QUnknown rule setting '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
           fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
-          fl_print_format("%['.%]%q", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+          fl_print_format("%['.%]%r", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
           controller_rule_print_error_cache(global.main->warning, cache->action, F_false);
 
@@ -3746,7 +3746,7 @@ extern "C" {
 
             controller_lock_print(global.main->warning.to, global.thread);
 
-            fl_print_format("%q%[%QEmpty rule setting.%]%q", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s);
+            fl_print_format("%r%[%QEmpty rule setting.%]%r", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s);
 
             controller_rule_print_error_cache(global.main->warning, cache->action, F_false);
 
@@ -4126,9 +4126,9 @@ extern "C" {
 
             controller_lock_print(global.main->error.to, global.thread);
 
-            fl_print_format("%q%[%QUnknown resource limit type '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%r%[%QUnknown resource limit type '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
             fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
-            fl_print_format("%['.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+            fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
             controller_rule_print_error_cache(global.main->error, cache->action, F_true);
 
@@ -4155,7 +4155,7 @@ extern "C" {
 
               controller_lock_print(global.main->error.to, global.thread);
 
-              fl_print_format("%q%[%SThe resource limit type is already specified%]%q", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.context, f_string_eol_s);
+              fl_print_format("%r%[%SThe resource limit type is already specified%]%r", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -4328,9 +4328,9 @@ extern "C" {
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
-                fl_print_format("%q%[%QRule setting has an invalid name '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%r%[%QRule setting has an invalid name '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
                 fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, *setting_value, global.main->error.notable);
-                fl_print_format("%[', there must be at least 1 graph character.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format("%[', there must be at least 1 graph character.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -4480,7 +4480,7 @@ extern "C" {
 
                 controller_lock_print(global.main->error.to, global.thread);
 
-                fl_print_format("%q%[%QRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%r%[%QRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
                 fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
 
                 if (zero_only) {
@@ -4493,7 +4493,7 @@ extern "C" {
                   fl_print_format("%[99%] %[are", global.main->error.to.stream, global.main->error.notable, global.main->error.notable, global.main->error.context);
                 }
 
-                fl_print_format(" allowed for the designated scheduler.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format(" allowed for the designated scheduler.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -4559,9 +4559,9 @@ extern "C" {
 
             controller_lock_print(global.main->error.to, global.thread);
 
-            fl_print_format("%q%[%QRule setting's first value has '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%r%[%QRule setting's first value has '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
             fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
-            fl_print_format("%[' but only supports %q, %q, and %q.%]%q", global.main->error.to.stream, global.main->error.context, controller_kill_s, controller_start_s, controller_stop_s, global.main->error.context, f_string_eol_s);
+            fl_print_format("%[' but only supports %r, %r, and %r.%]%r", global.main->error.to.stream, global.main->error.context, controller_kill_s, controller_start_s, controller_stop_s, global.main->error.context, f_string_eol_s);
 
             controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -4785,13 +4785,13 @@ extern "C" {
 
                 controller_lock_print(global.main->error.to, global.thread);
 
-                fl_print_format("%q%[%QRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%r%[%QRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
                 fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
                 fl_print_format("%[', only the whole numbers inclusively between%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                 fl_print_format("%[-20%]", global.main->error.to.stream, global.main->error.notable, global.main->error.notable);
                 fl_print_format(" %[and%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
                 fl_print_format("%[19%]", global.main->error.to.stream, global.main->error.notable, global.main->error.notable);
-                fl_print_format(" %[are allowed.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format(" %[are allowed.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -5086,9 +5086,9 @@ extern "C" {
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
-                fl_print_format("%q%[%QRule setting has an invalid environment variable name '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%r%[%QRule setting has an invalid environment variable name '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
                 fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, setting_values->array[setting_values->used], global.main->error.notable);
-                fl_print_format("%['.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+                fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -5128,7 +5128,7 @@ extern "C" {
           if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
             controller_lock_print(global.main->output.to, global.thread);
 
-            fl_print_format("%qProcessing rule item action '%[%q%]' setting value to an empty set.%q", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, controller_environment_s, global.main->context.set.title, f_string_eol_s);
+            fl_print_format("%rProcessing rule item action '%[%r%]' setting value to an empty set.%r", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, controller_environment_s, global.main->context.set.title, f_string_eol_s);
 
             controller_unlock_print_flush(global.main->output.to, global.thread);
           }
@@ -5188,10 +5188,10 @@ extern "C" {
 
           controller_lock_print(global.main->error.to, global.thread);
 
-          fl_print_format("%q%[%QRule setting's second value has '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+          fl_print_format("%r%[%QRule setting's second value has '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
           fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
-          fl_print_format("%[' but only supports %q, %q, %q, %q, %q", global.main->error.to.stream, global.main->error.context, controller_freeze_s, controller_kill_s, controller_pause_s, controller_reload_s, controller_restart_s);
-          fl_print_format("%q, %q, %q, and %q.%]%q", global.main->error.to.stream, controller_resume_s, controller_start_s, controller_stop_s, controller_thaw_s, global.main->error.context, f_string_eol_s);
+          fl_print_format("%[' but only supports %r, %r, %r, %r, %r", global.main->error.to.stream, global.main->error.context, controller_freeze_s, controller_kill_s, controller_pause_s, controller_reload_s, controller_restart_s);
+          fl_print_format("%r, %r, %r, and %r.%]%r", global.main->error.to.stream, controller_resume_s, controller_start_s, controller_stop_s, controller_thaw_s, global.main->error.context, f_string_eol_s);
 
           controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -5237,9 +5237,9 @@ extern "C" {
 
             controller_lock_print(global.main->error.to, global.thread);
 
-            fl_print_format("%q%[%QRule setting's second value has '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%r%[%QRule setting's second value has '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
             fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
-            fl_print_format("%[' but only supports %q, %q, and %q.%]%q", global.main->error.to.stream, global.main->error.context, controller_need_s, controller_want_s, controller_wish_s, global.main->error.context, f_string_eol_s);
+            fl_print_format("%[' but only supports %r, %r, and %r.%]%r", global.main->error.to.stream, global.main->error.context, controller_need_s, controller_want_s, controller_wish_s, global.main->error.context, f_string_eol_s);
 
             controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -5332,11 +5332,11 @@ extern "C" {
         if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
-          fl_print_format("%q%[%QThe rule item action third parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
+          fl_print_format("%r%[%QThe rule item action third parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
           fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[2], global.main->error.notable);
           fl_print_format("%[' must be a base path name, such as %un '.%]", global.main->error.to.stream, global.main->error.context, cache->buffer_path.used, global.main->error.context);
           fl_print_format("%[%Q%]", global.main->error.to.stream, cache->buffer_path, global.main->error.notable);
-          fl_print_format("%['.%]%q", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+          fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(global.main->error.to, global.thread);
         }
@@ -5357,10 +5357,10 @@ extern "C" {
       if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
         controller_lock_print(global.main->output.to, global.thread);
 
-        fl_print_format("%qProcessing rule item action '%[%S%]', adding ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, controller_on_s, global.main->context.set.title);
+        fl_print_format("%rProcessing rule item action '%[%S%]', adding ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, controller_on_s, global.main->context.set.title);
         fl_print_format("'%[%/Q%]' of ", global.main->output.to.stream, global.main->context.set.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->context.set.notable);
         fl_print_format("'%[%/Q%]/", global.main->output.to.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[2], global.main->context.set.important);
-        fl_print_format("%[%/Q%]'.%q", global.main->output.to.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[3], global.main->context.set.important, f_string_eol_s);
+        fl_print_format("%[%/Q%]'.%r", global.main->output.to.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[3], global.main->context.set.important, f_string_eol_s);
 
         controller_unlock_print_flush(global.main->output.to, global.thread);
       }
@@ -5399,9 +5399,9 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, global.thread);
 
-          fl_print_format("%q%[%QUnsupported action type '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, controller_rule_action_type_name(action), main->error.notable);
-          fl_print_format("%[' while attempting to validate rule execution.%]%q", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QUnsupported action type '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, controller_rule_action_type_name(action), main->error.notable);
+          fl_print_format("%[' while attempting to validate rule execution.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           controller_rule_print_error_cache(main->error, cache->action, F_true);
 
@@ -5433,22 +5433,22 @@ extern "C" {
         controller_lock_print(main->output.to, global.thread);
 
         if (rule.items.used) {
-          fl_print_format("%qRule '", main->output.to.stream, f_string_eol_s);
+          fl_print_format("%rRule '", main->output.to.stream, f_string_eol_s);
           fl_print_format("%[%Q%]' has no '", main->output.to.stream, main->context.set.title, rule.name, main->context.set.title);
-          fl_print_format("%[%q%]' action to execute and would '", main->output.to.stream, main->context.set.title, controller_rule_action_type_name(action), main->context.set.title);
-          fl_print_format("%[%q%]' because it is '", main->output.to.stream, main->context.set.important, options & controller_process_option_require_d ? controller_fail_s : controller_succeed_s, main->context.set.important);
-          fl_print_format("%[%q%]'.%q", main->output.to.stream, main->context.set.important, options & controller_process_option_require_d ? controller_required_s : controller_optional_s, main->context.set.important, f_string_eol_s);
+          fl_print_format("%[%r%]' action to execute and would '", main->output.to.stream, main->context.set.title, controller_rule_action_type_name(action), main->context.set.title);
+          fl_print_format("%[%r%]' because it is '", main->output.to.stream, main->context.set.important, options & controller_process_option_require_d ? controller_fail_s : controller_succeed_s, main->context.set.important);
+          fl_print_format("%[%r%]'.%r", main->output.to.stream, main->context.set.important, options & controller_process_option_require_d ? controller_required_s : controller_optional_s, main->context.set.important, f_string_eol_s);
         }
         else {
-          fl_print_format("%qRule '", main->output.to.stream, f_string_eol_s);
+          fl_print_format("%rRule '", main->output.to.stream, f_string_eol_s);
           fl_print_format("%[%Q%]' has no known '", main->output.to.stream, main->context.set.title, rule.name, main->context.set.title);
-          fl_print_format("%[%q %q%]' (such as ", main->output.to.stream, main->context.set.title, controller_rule_s, controller_type_s, main->context.set.title);
-          fl_print_format("'%[%q%]', ", main->output.to.stream, main->context.set.title, controller_command_s, main->context.set.title);
-          fl_print_format("'%[%q%]', ", main->output.to.stream, main->context.set.title, controller_service_s, main->context.set.title);
-          fl_print_format("'%[%q%]', or ", main->output.to.stream, main->context.set.title, controller_script_s, main->context.set.title);
-          fl_print_format("'%[%q%]'", main->output.to.stream, main->context.set.title, controller_utility_s, main->context.set.title);
-          fl_print_format(") and would '%[%q%]' because it is '", main->output.to.stream, main->context.set.important, options & controller_process_option_require_d ? controller_fail_s : controller_succeed_s, main->context.set.important);
-          fl_print_format("%[%q%]'.%q", main->output.to.stream, main->context.set.important, options & controller_process_option_require_d ? controller_required_s : controller_optional_s, main->context.set.important, f_string_eol_s);
+          fl_print_format("%[%r %r%]' (such as ", main->output.to.stream, main->context.set.title, controller_rule_s, controller_type_s, main->context.set.title);
+          fl_print_format("'%[%r%]', ", main->output.to.stream, main->context.set.title, controller_command_s, main->context.set.title);
+          fl_print_format("'%[%r%]', ", main->output.to.stream, main->context.set.title, controller_service_s, main->context.set.title);
+          fl_print_format("'%[%r%]', or ", main->output.to.stream, main->context.set.title, controller_script_s, main->context.set.title);
+          fl_print_format("'%[%r%]'", main->output.to.stream, main->context.set.title, controller_utility_s, main->context.set.title);
+          fl_print_format(") and would '%[%r%]' because it is '", main->output.to.stream, main->context.set.important, options & controller_process_option_require_d ? controller_fail_s : controller_succeed_s, main->context.set.important);
+          fl_print_format("%[%r%]'.%r", main->output.to.stream, main->context.set.important, options & controller_process_option_require_d ? controller_required_s : controller_optional_s, main->context.set.important, f_string_eol_s);
         }
 
         controller_unlock_print_flush(main->output.to, global.thread);
@@ -5457,13 +5457,13 @@ extern "C" {
 
     controller_lock_print(main->output.to, global.thread);
 
-    fl_print_format("%qRule %[%Q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s);
+    fl_print_format("%rRule %[%Q%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s);
 
     // name.
-    fl_print_format("  %[%q%] %Q%q", main->output.to.stream, main->context.set.important, controller_name_s, main->context.set.important, rule.name, f_string_eol_s);
+    fl_print_format("  %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_name_s, main->context.set.important, rule.name, f_string_eol_s);
 
     // capability.
-    fl_print_format("  %[%q%] ", main->output.to.stream, main->context.set.important, controller_capability_s, main->context.set.important);
+    fl_print_format("  %[%r%] ", main->output.to.stream, main->context.set.important, controller_capability_s, main->context.set.important);
 
     if (f_capability_supported()) {
       if (rule.capability) {
@@ -5474,17 +5474,17 @@ extern "C" {
         }
       }
 
-      f_print_dynamic(f_string_eol_s, main->output.to.stream);
+      f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
     else {
-      fl_print_format("%[(unsupported)%]%q", main->output.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
+      fl_print_format("%[(unsupported)%]%r", main->output.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
     }
 
     // control group.
-    fl_print_format("  %[%q%]", main->output.to.stream, main->context.set.important, controller_cgroup_s, main->context.set.important);
+    fl_print_format("  %[%r%]", main->output.to.stream, main->context.set.important, controller_cgroup_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_cgroup_d) {
-      fl_print_format(" %q", main->output.to.stream, rule.cgroup.as_new ? controller_new_s : controller_existing_s);
+      fl_print_format(" %r", main->output.to.stream, rule.cgroup.as_new ? controller_new_s : controller_existing_s);
 
       for (i = 0; i < rule.cgroup.groups.used; ++i) {
 
@@ -5494,22 +5494,22 @@ extern "C" {
       } // for
     }
 
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
     // How.
-    fl_print_format("  %[%q%] %q%q", main->output.to.stream, main->context.set.important, controller_how_s, main->context.set.important, options & controller_process_option_asynchronous_d ? controller_asynchronous_s : controller_synchronous_s, f_string_eol_s);
+    fl_print_format("  %[%r%] %r%r", main->output.to.stream, main->context.set.important, controller_how_s, main->context.set.important, options & controller_process_option_asynchronous_d ? controller_asynchronous_s : controller_synchronous_s, f_string_eol_s);
 
     // Nice.
-    fl_print_format("  %[%q%]", main->output.to.stream, main->context.set.important, controller_nice_s, main->context.set.important);
+    fl_print_format("  %[%r%]", main->output.to.stream, main->context.set.important, controller_nice_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_nice_d) {
       fl_print_format(" %i", main->output.to.stream, rule.nice);
     }
 
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
     // Scheduler.
-    fl_print_format("  %[%q%]", main->output.to.stream, main->context.set.important, controller_scheduler_s, main->context.set.important);
+    fl_print_format("  %[%r%]", main->output.to.stream, main->context.set.important, controller_scheduler_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_scheduler_d) {
       f_string_static_t policy = f_string_static_t_initialize;
@@ -5533,87 +5533,87 @@ extern "C" {
         policy = controller_round_robin_s;
       }
 
-      fl_print_format(" %q %i", main->output.to.stream, policy, rule.scheduler.priority);
+      fl_print_format(" %r %i", main->output.to.stream, policy, rule.scheduler.priority);
     }
 
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
     // script.
-    fl_print_format("  %[%q%] %Q%q", main->output.to.stream, main->context.set.important, controller_script_s, main->context.set.important, rule.script, f_string_eol_s);
+    fl_print_format("  %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_script_s, main->context.set.important, rule.script, f_string_eol_s);
 
     // user.
-    fl_print_format("  %[%q%]", main->output.to.stream, main->context.set.important, controller_user_s, main->context.set.important);
+    fl_print_format("  %[%r%]", main->output.to.stream, main->context.set.important, controller_user_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_user_d) {
       fl_print_format(" %i", main->output.to.stream, rule.user);
     }
 
-    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
     // wait.
-    fl_print_format("  %[%q%] %q%q", main->output.to.stream, main->context.set.important, controller_wait_s, main->context.set.important, options & controller_process_option_wait_d ? controller_yes_s : controller_no_s, f_string_eol_s);
+    fl_print_format("  %[%r%] %r%r", main->output.to.stream, main->context.set.important, controller_wait_s, main->context.set.important, options & controller_process_option_wait_d ? controller_yes_s : controller_no_s, f_string_eol_s);
 
     // affinity.
-    fl_print_format("  %[%q%] {%q", main->output.to.stream, main->context.set.important, controller_affinity_s, main->context.set.important, f_string_eol_s);
+    fl_print_format("  %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_affinity_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.affinity.used; ++i) {
-      fl_print_format("    %i%q", main->output.to.stream, rule.affinity.array[i], f_string_eol_s);
+      fl_print_format("    %i%r", main->output.to.stream, rule.affinity.array[i], f_string_eol_s);
     } // for
 
     // define.
-    fl_print_format("  }%q  %[%q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_define_s, main->context.set.important, f_string_eol_s);
+    fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_define_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.define.used; ++i) {
 
       if (rule.define.array[i].name.used && rule.define.array[i].value.used) {
-        fl_print_format("    %Q %[=%] %Q%q", main->output.to.stream, rule.define.array[i].name, main->context.set.important, main->context.set.important, rule.define.array[i].value, f_string_eol_s);
+        fl_print_format("    %Q %[=%] %Q%r", main->output.to.stream, rule.define.array[i].name, main->context.set.important, main->context.set.important, rule.define.array[i].value, f_string_eol_s);
       }
     } // for
 
     // environment.
-    fl_print_format("  }%q  %[%q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_environment_s, main->context.set.important, f_string_eol_s);
+    fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_environment_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.environment.used; ++i) {
 
       if (rule.environment.array[i].used) {
-        fl_print_format("    %Q%q", main->output.to.stream, rule.environment.array[i], f_string_eol_s);
+        fl_print_format("    %Q%r", main->output.to.stream, rule.environment.array[i], f_string_eol_s);
       }
     } // for
 
-    fl_print_format("  }%q  %[%q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s);
+    fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s);
 
     // parameter.
     for (i = 0; i < rule.parameter.used; ++i) {
 
       if (rule.parameter.array[i].name.used && rule.parameter.array[i].value.used) {
-        fl_print_format("    %Q %[=%] %Q%q", main->output.to.stream, rule.parameter.array[i].name, main->context.set.important, main->context.set.important, rule.parameter.array[i].value, f_string_eol_s);
+        fl_print_format("    %Q %[=%] %Q%r", main->output.to.stream, rule.parameter.array[i].name, main->context.set.important, main->context.set.important, rule.parameter.array[i].value, f_string_eol_s);
       }
     } // for
 
     // group.
-    fl_print_format("  }%q  %[%q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_group_s, main->context.set.important, f_string_eol_s);
+    fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_group_s, main->context.set.important, f_string_eol_s);
 
     if (rule.has & controller_rule_has_group_d) {
-      fl_print_format("    %i%q", main->output.to.stream, rule.group, f_string_eol_s);
+      fl_print_format("    %i%r", main->output.to.stream, rule.group, f_string_eol_s);
 
       for (i = 0; i < rule.groups.used; ++i) {
-        fl_print_format("    %i%q", main->output.to.stream, rule.groups.array[i], f_string_eol_s);
+        fl_print_format("    %i%r", main->output.to.stream, rule.groups.array[i], f_string_eol_s);
       } // for
     }
 
     // limit.
-    fl_print_format("  }%q  %[%q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_limit_s, main->context.set.important, f_string_eol_s);
+    fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_limit_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.limits.used; ++i) {
-      fl_print_format("    %Q %[=%] %un %un%q", main->output.to.stream, controller_rule_setting_limit_type_name(rule.limits.array[i].type), main->context.set.important, main->context.set.important, rule.limits.array[i].value.rlim_cur, rule.limits.array[i].value.rlim_max, f_string_eol_s);
+      fl_print_format("    %Q %[=%] %un %un%r", main->output.to.stream, controller_rule_setting_limit_type_name(rule.limits.array[i].type), main->context.set.important, main->context.set.important, rule.limits.array[i].value.rlim_cur, rule.limits.array[i].value.rlim_max, f_string_eol_s);
     } // for
 
     // on.
-    fl_print_format("  }%q  %[%q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_on_s, main->context.set.important, f_string_eol_s);
+    fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_on_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.ons.used; ++i) {
 
-      fl_print_format("    %[%q%] {%q", main->output.to.stream, main->context.set.important, controller_action_s, main->context.set.important, f_string_eol_s);
+      fl_print_format("    %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_action_s, main->context.set.important, f_string_eol_s);
 
       {
         f_string_static_t action = f_string_static_t_initialize;
@@ -5646,40 +5646,40 @@ extern "C" {
           action = controller_thaw_s;
         }
 
-        fl_print_format("      %[%q%] %q%q", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, action, f_string_eol_s);
+        fl_print_format("      %[%r%] %r%r", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, action, f_string_eol_s);
       }
 
-      fl_print_format("      %[%q%] {%q", main->output.to.stream, main->context.set.important, controller_need_s, main->context.set.important, f_string_eol_s);
+      fl_print_format("      %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_need_s, main->context.set.important, f_string_eol_s);
 
       for (j = 0; j < rule.ons.array[i].need.used; ++j) {
 
         if (rule.ons.array[i].need.array[j].used) {
-          fl_print_format("        %Q%q", main->output.to.stream, rule.ons.array[i].need.array[j], f_string_eol_s);
+          fl_print_format("        %Q%r", main->output.to.stream, rule.ons.array[i].need.array[j], f_string_eol_s);
         }
       } // for
 
-      fl_print_format("      }%q      %[%q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_want_s, main->context.set.important, f_string_eol_s);
+      fl_print_format("      }%r      %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_want_s, main->context.set.important, f_string_eol_s);
 
       for (j = 0; j < rule.ons.array[i].want.used; ++j) {
 
         if (rule.ons.array[i].want.array[j].used) {
-          fl_print_format("        %Q%q", main->output.to.stream, rule.ons.array[i].want.array[j], f_string_eol_s);
+          fl_print_format("        %Q%r", main->output.to.stream, rule.ons.array[i].want.array[j], f_string_eol_s);
         }
       } // for
 
-      fl_print_format("      }%q      %[%q%] {%q", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_wish_s, main->context.set.important, f_string_eol_s);
+      fl_print_format("      }%r      %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_wish_s, main->context.set.important, f_string_eol_s);
 
       for (j = 0; j < rule.ons.array[i].wish.used; ++j) {
 
         if (rule.ons.array[i].wish.array[j].used) {
-          fl_print_format("        %Q%q", main->output.to.stream, rule.ons.array[i].wish.array[j], f_string_eol_s);
+          fl_print_format("        %Q%r", main->output.to.stream, rule.ons.array[i].wish.array[j], f_string_eol_s);
         }
       } // for
 
-      fl_print_format("      }%q    }%q", main->output.to.stream, f_string_eol_s, f_string_eol_s);
+      fl_print_format("      }%r    }%r", main->output.to.stream, f_string_eol_s, f_string_eol_s);
     } // for
 
-    fl_print_format("  }%q", main->output.to.stream, f_string_eol_s);
+    fl_print_format("  }%r", main->output.to.stream, f_string_eol_s);
 
     // items.
     if (rule.items.used) {
@@ -5695,41 +5695,41 @@ extern "C" {
 
         item = &rule.items.array[i];
 
-        fl_print_format("  %[%q%] {%q", main->output.to.stream, main->context.set.important, controller_item_s, main->context.set.important, f_string_eol_s);
+        fl_print_format("  %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_item_s, main->context.set.important, f_string_eol_s);
 
         // type.
-        fl_print_format("    %[%q%] %Q%q", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_item_type_name(item->type), f_string_eol_s);
+        fl_print_format("    %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_item_type_name(item->type), f_string_eol_s);
 
         // pid_file.
-        fl_print_format("    %[%q%]", main->output.to.stream, main->context.set.important, controller_pid_file_s, main->context.set.important);
+        fl_print_format("    %[%r%]", main->output.to.stream, main->context.set.important, controller_pid_file_s, main->context.set.important);
         if (item->pid_file.used) {
           fl_print_format(" %Q", main->output.to.stream, item->pid_file);
         }
-        f_print_dynamic(f_string_eol_s, main->output.to.stream);
+        f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
         // with.
-        fl_print_format("    %[%q%]", main->output.to.stream, main->context.set.important, controller_with_s, main->context.set.important);
+        fl_print_format("    %[%r%]", main->output.to.stream, main->context.set.important, controller_with_s, main->context.set.important);
         if (item->with & controller_with_full_path_d) {
-          fl_print_format(" %q", main->output.to.stream, controller_full_path_s);
+          fl_print_format(" %r", main->output.to.stream, controller_full_path_s);
         }
         if (item->with & controller_with_session_new_d) {
-          fl_print_format(" %q", main->output.to.stream, controller_session_new_s);
+          fl_print_format(" %r", main->output.to.stream, controller_session_new_s);
         }
         if (item->with & controller_with_session_same_d) {
-          fl_print_format(" %q", main->output.to.stream, controller_session_same_s);
+          fl_print_format(" %r", main->output.to.stream, controller_session_same_s);
         }
-        f_print_dynamic(f_string_eol_s, main->output.to.stream);
+        f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
         // actions.
         for (j = 0; j < item->actions.used; ++j) {
 
           action = &item->actions.array[j];
 
-          fl_print_format("    %[%q%] {%q", main->output.to.stream, main->context.set.important, controller_action_s, main->context.set.important, f_string_eol_s);
-          fl_print_format("      %[%q%] %q%q", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s);
+          fl_print_format("    %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_action_s, main->context.set.important, f_string_eol_s);
+          fl_print_format("      %[%r%] %r%r", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s);
 
           if (item->type == controller_rule_item_type_script_e || item->type == controller_rule_item_type_utility_e) {
-            fl_print_format("      %[%q%] {%q", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s);
+            fl_print_format("      %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s);
 
             parameter = &action->parameters.array[0];
 
@@ -5740,7 +5740,7 @@ extern "C" {
 
                 if (parameter->string[k] == f_fss_eol_s.string[0]) {
                   if (k + 1 < parameter->used) {
-                    f_print_dynamic(f_string_eol_s, main->output.to.stream);
+                    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
                     f_print_terminated("        ", main->output.to.stream);
                   }
                 }
@@ -5750,22 +5750,22 @@ extern "C" {
                 }
               } // for
 
-              f_print_dynamic(f_string_eol_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
             }
 
-            fl_print_format("      }%q", main->output.to.stream, f_string_eol_s);
+            fl_print_format("      }%r", main->output.to.stream, f_string_eol_s);
           }
           else {
             for (k = 0; k < action->parameters.used; ++k) {
-              fl_print_format("      %[%q%] %Q%q", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s);
+              fl_print_format("      %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s);
             } // for
           }
 
-          fl_print_format("    }%q", main->output.to.stream, f_string_eol_s);
+          fl_print_format("    }%r", main->output.to.stream, f_string_eol_s);
         } // for
 
         // rerun.
-        fl_print_format("    %[%q%] {%q", main->output.to.stream, main->context.set.important, controller_rerun_s, main->context.set.important, f_string_eol_s);
+        fl_print_format("    %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_rerun_s, main->context.set.important, f_string_eol_s);
         for (j = 0; j < controller_rule_action_type_execute__enum_size_e; ++j) {
 
           for (k = 0; k < 2; ++k) {
@@ -5783,62 +5783,62 @@ extern "C" {
             fl_print_format("      %[", main->output.to.stream, main->context.set.important);
             switch (j) {
               case controller_rule_action_type_execute_freeze_e:
-                f_print_dynamic(controller_freeze_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_freeze_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_kill_e:
-                f_print_dynamic(controller_kill_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_kill_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_pause_e:
-                f_print_dynamic(controller_pause_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_pause_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_reload_e:
-                f_print_dynamic(controller_reload_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_reload_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_restart_e:
-                f_print_dynamic(controller_restart_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_restart_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_resume_e:
-                f_print_dynamic(controller_resume_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_resume_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_start_e:
-                f_print_dynamic(controller_start_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_start_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_stop_e:
-                f_print_dynamic(controller_stop_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_stop_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_thaw_e:
-                f_print_dynamic(controller_thaw_s, main->output.to.stream);
+                f_print_dynamic_raw(controller_thaw_s, main->output.to.stream);
                 break;
 
               default:
                 break;
             }
 
-            fl_print_format("%] %q", main->output.to.stream, main->context.set.important, k ? controller_success_s : controller_failure_s);
-            fl_print_format(" %q %ul %q %ul", main->output.to.stream, controller_delay_s, rerun_item->delay, controller_max_s, rerun_item->max);
+            fl_print_format("%] %r", main->output.to.stream, main->context.set.important, k ? controller_success_s : controller_failure_s);
+            fl_print_format(" %r %ul %r %ul", main->output.to.stream, controller_delay_s, rerun_item->delay, controller_max_s, rerun_item->max);
 
             if (!k && (item->reruns[j].is & controller_rule_rerun_is_failure_reset_d) || k && (item->reruns[j].is & controller_rule_rerun_is_success_reset_d)) {
-              fl_print_format(" %q", main->output.to.stream, controller_reset_s);
+              fl_print_format(" %r", main->output.to.stream, controller_reset_s);
             }
 
-            f_print_dynamic(f_string_eol_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
           } // for
         } // for
-        fl_print_format("    }%q", main->output.to.stream, f_string_eol_s);
+        fl_print_format("    }%r", main->output.to.stream, f_string_eol_s);
 
-        fl_print_format("  }%q", main->output.to.stream, f_string_eol_s);
+        fl_print_format("  }%r", main->output.to.stream, f_string_eol_s);
       } // for
     }
 
-    fl_print_format("}%q", main->output.to.stream, f_string_eol_s);
+    fl_print_format("}%r", main->output.to.stream, f_string_eol_s);
 
     controller_unlock_print_flush(main->output.to, global.thread);
   }
