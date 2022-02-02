@@ -171,6 +171,8 @@ extern "C" {
 
     f_string_dynamic_resize(0, &main->file_data_build_defines);
     f_string_dynamic_resize(0, &main->file_data_build_dependencies);
+    f_string_dynamic_resize(0, &main->file_data_build_process_post_s);
+    f_string_dynamic_resize(0, &main->file_data_build_process_pre_s);
     f_string_dynamic_resize(0, &main->file_data_build_fakefile);
     f_string_dynamic_resize(0, &main->file_data_build_settings);
 

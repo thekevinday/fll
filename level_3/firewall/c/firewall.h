@@ -167,7 +167,7 @@ extern "C" {
   #define firewall_chain_postrouting_s "POSTROUTING"
   #define firewall_chain_prerouting_s  "PREROUTING"
 
-  #define firewall_chain_length_s             5
+  #define firewall_chain_s_length             5
   #define firewall_chain_forward_s_length     7
   #define firewall_chain_input_s_length       5
   #define firewall_chain_none_s_length        4

@@ -54,7 +54,7 @@ extern "C" {
       return status;
     }
 
-    status = f_directory_open(data_make.path.stack.array[0].string, F_false, &data_make.path.top.id);
+    status = f_directory_open(data_make.path.stack.array[0], F_false, &data_make.path.top.id);
 
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "f_directory_open", F_true);
@@ -912,7 +912,7 @@ extern "C" {
       status = f_string_dynamic_partial_append_nulless(data_make->buffer, range_name, &name);
       if (F_status_is_error(status)) return status;
 
-      status = f_environment_get(name.string, &value);
+      status = f_environment_get(name, &value);
 
       f_string_dynamic_resize(0, &name);
     }

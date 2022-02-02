@@ -111,7 +111,7 @@ extern "C" {
  *   The long parameter name.
  */
 #ifndef _di_utf8_print_error_no_value_
-  extern void utf8_print_error_no_value(utf8_data_t * const data, const f_string_t parameter) F_attribute_visibility_internal_d;
+  extern void utf8_print_error_no_value(utf8_data_t * const data, const f_string_static_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_error_no_value_
 
 /**
@@ -138,7 +138,7 @@ extern "C" {
  *   The file path name.
  */
 #ifndef _di_utf8_print_error_parameter_file_not_found_
-  extern void utf8_print_error_parameter_file_not_found(utf8_data_t * const data, const bool from, const f_string_t name) F_attribute_visibility_internal_d;
+  extern void utf8_print_error_parameter_file_not_found(utf8_data_t * const data, const bool from, const f_string_static_t name) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_error_parameter_file_not_found_
 
 /**

@@ -488,6 +488,8 @@ extern "C" {
     f_string_dynamic_t file_data_build_defines;
     f_string_dynamic_t file_data_build_dependencies;
     f_string_dynamic_t file_data_build_fakefile;
+    f_string_dynamic_t file_data_build_process_post_s;
+    f_string_dynamic_t file_data_build_process_pre_s;
     f_string_dynamic_t file_data_build_settings;
 
     f_string_dynamic_t file_documents_readme;
@@ -497,7 +499,7 @@ extern "C" {
 
   #define fake_main_t_initialize \
     { \
-      macro_f_console_parameters_t_initialize(fake_console_parameter_t_initialize, fake_total_parameters_d) \
+      f_console_parameters_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \
@@ -511,6 +513,8 @@ extern "C" {
       f_string_dynamics_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \

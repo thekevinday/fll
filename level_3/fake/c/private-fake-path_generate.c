@@ -129,7 +129,7 @@ extern "C" {
       const uint8_t parameters_size[] = {
         3,
         3,
-        4,
+        6,
         1,
       };
 
@@ -149,6 +149,8 @@ extern "C" {
         &main->file_data_build_defines,
         &main->file_data_build_dependencies,
         &main->file_data_build_fakefile,
+        &main->file_data_build_process_post_s,
+        &main->file_data_build_process_pre_s,
         &main->file_data_build_settings,
       };
 
@@ -194,6 +196,8 @@ extern "C" {
         fake_path_part_static_s,
         fake_file_defines_s,
         fake_file_dependencies_s,
+        fake_file_process_post_s,
+        fake_file_process_pre_s,
         main->fakefile,
         main->settings,
         fake_file_readme_s,
@@ -208,12 +212,14 @@ extern "C" {
         &main->path_build_programs_static,
         &main->file_data_build_defines,
         &main->file_data_build_dependencies,
+        &main->file_data_build_process_post_s,
+        &main->file_data_build_process_pre_s,
         &main->file_data_build_fakefile,
         &main->file_data_build_settings,
         &main->file_documents_readme,
       };
 
-      for (i = 0; i < 11; ++i) {
+      for (i = 0; i < 13; ++i) {
 
         status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 

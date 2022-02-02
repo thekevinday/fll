@@ -6,6 +6,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#ifndef _di_controller_rule_print_string_s_
+  const f_string_static_t controller_rule_print_control_groups_prepare_s = macro_f_string_static_t_initialize(CONTROLLER_rule_print_control_groups_prepare_s, 0, CONTROLLER_rule_print_control_groups_prepare_s_length);
+#endif // _di_controller_rule_print_string_s_
 
 #ifndef _di_controller_rule_print_error_
   void controller_rule_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item) {
@@ -224,34 +227,34 @@ extern "C" {
 #endif // _di_controller_rule_item_print_error_execute_
 
 #ifndef _di_controller_rule_action_print_error_missing_pid_
-  void controller_rule_action_print_error_missing_pid(const fl_print_t print, const f_string_t alias) {
+  void controller_rule_action_print_error_missing_pid(const fl_print_t print, const f_string_static_t alias) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%r%[%QThe rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%S%]", print.to.stream, print.notable, alias, print.notable);
+    fl_print_format("%[%Q%]", print.to.stream, print.notable, alias, print.notable);
     fl_print_format("%[' is not designating a pid file.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_action_print_error_missing_pid_
 
 #ifndef _di_controller_rule_item_print_error_need_want_wish_
-  void controller_rule_item_print_error_need_want_wish(const fl_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
+  void controller_rule_item_print_error_need_want_wish(const fl_print_t print, const f_string_static_t need_want_wish, const f_string_static_t value, const f_string_t why) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%r%[%QThe %s rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, need_want_wish, print.context);
-    fl_print_format("%[%S%]", print.to.stream, print.notable, value, print.notable);
+    fl_print_format("%r%[%QThe %r rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, need_want_wish, print.context);
+    fl_print_format("%[%Q%]", print.to.stream, print.notable, value, print.notable);
     fl_print_format("%[' %S.%]%r", print.to.stream, print.context, why, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_item_print_error_need_want_wish_
 
 #ifndef _di_controller_rule_item_print_error_rule_not_loaded_
-  void controller_rule_item_print_error_rule_not_loaded(const fl_print_t print, const f_string_t alias) {
+  void controller_rule_item_print_error_rule_not_loaded(const fl_print_t print, const f_string_static_t alias) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
     fl_print_format("%r%[%QThe rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%S%]", print.to.stream, print.notable, alias, print.notable);
+    fl_print_format("%[%Q%]", print.to.stream, print.notable, alias, print.notable);
     fl_print_format("%[' is no longer loaded.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_item_print_error_rule_not_loaded_
@@ -312,7 +315,7 @@ extern "C" {
     fl_print_format("%rProcessing rule item action '%[%Q%]' setting ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
 
     if (name_sub.used) {
-      fl_print_format("'%[%S%]'", global.main->output.to.stream, global.main->context.set.notable, name_sub, global.main->context.set.notable);
+      fl_print_format("'%[%Q%]'", global.main->output.to.stream, global.main->context.set.notable, name_sub, global.main->context.set.notable);
     }
     else {
       f_print_terminated("value", global.main->output.to.stream);

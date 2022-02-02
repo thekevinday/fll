@@ -8,20 +8,15 @@ extern "C" {
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
   f_status_t private_fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t *arguments) {
 
-    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
-    if (F_status_is_error(status)) return status;
-
     arguments->array[arguments->used].used = 0;
 
-    status = f_string_dynamic_increase_by(source.used + 1, &arguments->array[arguments->used]);
+    f_status_t status = f_string_dynamic_increase_by(source.used + 1, &arguments->array[arguments->used]);
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamic_append(source, &arguments->array[arguments->used]);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
-    }
-
+    status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
     if (F_status_is_error(status)) return status;
 
     ++arguments->used;
@@ -300,23 +295,20 @@ extern "C" {
       // Close the write pipe for the child.
       close(descriptors[1]);
 
-      char string_response[2] = { 0, 0 };
-
-      f_string_static_t response = f_string_static_t_initialize;
-
-      response.string = string_response;
-      response.used = 0;
-      response.size = 2;
+      f_string_dynamic_t response = f_string_dynamic_t_initialize;
 
       const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], F_file_flag_read_only_d, 1, 1);
 
       f_file_read_block(file, &response);
 
       if (!response.used || response.string[0] == '1') {
+        f_string_dynamic_resize(0, &response);
+
         close(descriptors[0]);
 
         if (result) {
           int *r = (int *) result;
+
           *r = F_execute_failure;
         }
 
@@ -326,6 +318,8 @@ extern "C" {
 
         return F_child;
       }
+
+      f_string_dynamic_resize(0, &response);
     }
 
     if (parameter && parameter->signals) {
@@ -495,23 +489,20 @@ extern "C" {
 
     // Wait for parent to tell child to begin.
     if (as) {
-      char string_response[2] = { 0, 0 };
-
-      f_string_static_t response = f_string_static_t_initialize;
-
-      response.string = string_response;
-      response.used = 0;
-      response.size = 2;
+      f_string_dynamic_t response = f_string_dynamic_t_initialize;
 
       const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], F_file_flag_read_only_d, 1, 1);
 
       f_file_read_block(file, &response);
 
       if (!response.used || response.string[0] == '1') {
+        f_string_dynamic_resize(0, &response);
+
         close(descriptors[0]);
 
         if (result) {
           f_status_t *r = (f_status_t *) result;
+
           *r = F_status_set_error(F_failure);
         }
 
@@ -521,6 +512,8 @@ extern "C" {
 
         return F_child;
       }
+
+      f_string_dynamic_resize(0, &response);
     }
 
     if (parameter && parameter->signals) {

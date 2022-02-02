@@ -13,7 +13,7 @@ extern "C" {
 #ifndef _di_fake_build_objects_static_
   int fake_build_objects_static(fake_main_t * const main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
+    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return main->child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
@@ -23,8 +23,8 @@ extern "C" {
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_path = f_string_dynamic_t_initialize;
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
-    f_array_length_t source_length = 0;
-    f_array_length_t destination_length = 0;
+    f_string_static_t destination = f_string_static_t_initialize;
+    f_string_static_t source = f_string_static_t_initialize;
 
     const f_string_static_t *path_sources = &main->path_sources;
 
@@ -56,14 +56,13 @@ extern "C" {
 
         file_name.used = 0;
         destination_path.used = 0;
+        source.used = path_sources->used + sources[i]->array[j].used;
 
-        source_length = path_sources->used + sources[i]->array[j].used;
+        char source_string[source.used + 1];
 
-        char source[source_length + 1];
-
-        memcpy(source, path_sources->string, path_sources->used);
-        memcpy(source + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
-        source[source_length] = 0;
+        memcpy(source_string, path_sources->string, path_sources->used);
+        memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
+        source_string[source.used] = 0;
 
         *status = fake_build_get_file_name_without_extension(main, sources[i]->array[j], &file_name);
 
@@ -73,7 +72,7 @@ extern "C" {
           break;
         }
 
-        *status = f_file_name_directory(sources[i]->array[j].string, sources[i]->array[j].used, &destination_path);
+        *status = f_file_name_directory(sources[i]->array[j], &destination_path);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_file_name_directory", F_true);
@@ -94,6 +93,7 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
+
             break;
           }
 
@@ -105,7 +105,7 @@ extern "C" {
             break;
           }
 
-          *status = f_directory_exists(destination_path.string);
+          *status = f_directory_exists(destination_path);
 
           if (*status == F_false) {
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -122,8 +122,9 @@ extern "C" {
 
             break;
           }
-          else if (*status == F_file_found_not) {
-            *status = f_directory_create(destination_path.string, mode.directory);
+
+          if (*status == F_file_found_not) {
+            *status = f_directory_create(destination_path, mode.directory);
 
             if (F_status_is_error(*status)) {
               if (F_status_set_fine(*status) == F_file_found_not) {
@@ -146,44 +147,46 @@ extern "C" {
               fll_print_format("Directory '%Q' created.%r", main->output.to.stream, destination_path, f_string_eol_s);
             }
           }
-          else if (F_status_is_error(*status)) {
+
+          if (F_status_is_error(*status)) {
             fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_exists", F_true, destination_path, f_file_operation_create_s, fll_error_file_type_directory_e);
 
             break;
           }
 
-          destination_length = destination_path.used + file_name.used + fake_build_parameter_object_name_suffix_s.used;
+          destination.used = destination_path.used + file_name.used + fake_build_parameter_object_name_suffix_s.used;
         }
         else {
-          destination_length = main->path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_s.used;
+          destination.used = main->path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_s.used;
         }
 
-        char destination[destination_length + 1];
+        char destination_string[destination.used + 1];
+        destination.string = destination_string;
 
         if (destination_path.used) {
-          memcpy(destination, destination_path.string, destination_path.used);
-          memcpy(destination + destination_path.used, file_name.string, file_name.used);
-          memcpy(destination + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s.used);
+          memcpy(destination_string, destination_path.string, destination_path.used);
+          memcpy(destination_string + destination_path.used, file_name.string, file_name.used);
+          memcpy(destination_string + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix_s.string, fake_build_parameter_object_name_suffix_s.used);
         }
         else {
-          memcpy(destination, main->path_build_objects.string, main->path_build_objects.used);
-          memcpy(destination + main->path_build_objects.used, file_name.string, file_name.used);
-          memcpy(destination + main->path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s, fake_build_parameter_object_name_suffix_s.used);
+          memcpy(destination_string, main->path_build_objects.string, main->path_build_objects.used);
+          memcpy(destination_string + main->path_build_objects.used, file_name.string, file_name.used);
+          memcpy(destination_string + main->path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s.string, fake_build_parameter_object_name_suffix_s.used);
         }
 
-        destination[destination_length] = 0;
+        destination_string[destination.used] = 0;
 
         const f_string_static_t values[] = {
-          macro_f_string_static_t_initialize(source, 0, source_length),
+          source,
           fake_build_parameter_object_compile_s,
           fake_build_parameter_object_static_s,
           fake_build_parameter_object_output_s,
-          macro_f_string_static_t_initialize(destination, 0, destination_length),
+          destination,
         };
 
         for (uint8_t k = 0; k < 5; ++k) {
 
-          if (!lengths[k]) continue;
+          if (!values[k].used) continue;
 
           *status = fll_execute_arguments_add(values[k], &arguments);
           if (F_status_is_error(*status)) break;

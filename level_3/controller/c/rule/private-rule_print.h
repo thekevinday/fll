@@ -13,6 +13,16 @@ extern "C" {
 #endif
 
 /**
+ * Special strings used for printing.
+ */
+#ifndef _di_controller_rule_print_string_s_
+  #define CONTROLLER_rule_print_control_groups_prepare_s "prepare control groups for"
+  #define CONTROLLER_rule_print_control_groups_prepare_s_length 24
+
+  extern const f_string_static_t controller_rule_print_control_groups_prepare_s;
+#endif // _di_controller_rule_print_string_s_
+
+/**
  * Print generic error/warning information.
  *
  * This is essentially a wrapper to fll_error_print() that includes locking.
@@ -118,7 +128,7 @@ extern "C" {
  *   The rule alias of the rule that is missing the pid file designation.
  */
 #ifndef _di_controller_rule_action_print_error_missing_pid_
-  extern void controller_rule_action_print_error_missing_pid(const fl_print_t print, const f_string_t alias) F_attribute_visibility_internal_d;
+  extern void controller_rule_action_print_error_missing_pid(const fl_print_t print, const f_string_static_t alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_print_error_missing_pid_
 
 /**
@@ -135,7 +145,7 @@ extern "C" {
  *   A short explanation on why this is an error or warning.
  */
 #ifndef _di_controller_rule_item_print_error_need_want_wish_
-  extern void controller_rule_item_print_error_need_want_wish(const fl_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) F_attribute_visibility_internal_d;
+  extern void controller_rule_item_print_error_need_want_wish(const fl_print_t print, const f_string_static_t need_want_wish, const f_string_static_t value, const f_string_t why) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_print_error_need_want_wish_
 
 /**
@@ -147,7 +157,7 @@ extern "C" {
  *   The rule alias of the rule that is not loaded.
  */
 #ifndef _di_controller_rule_item_print_error_rule_not_loaded_
-  extern void controller_rule_item_print_error_rule_not_loaded(const fl_print_t print, const f_string_t alias) F_attribute_visibility_internal_d;
+  extern void controller_rule_item_print_error_rule_not_loaded(const fl_print_t print, const f_string_static_t alias) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_item_print_error_rule_not_loaded_
 
 /**

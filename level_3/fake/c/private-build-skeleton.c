@@ -13,7 +13,7 @@ extern "C" {
 #ifndef _di_fake_build_skeleton_
   void fake_build_skeleton(fake_main_t * const main, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return;
+    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return;
 
     f_string_static_t path_headers = f_string_static_t_initialize;
     f_array_length_t directory_headers_length = main->path_build_includes.used + data_build.setting.path_headers.used;
@@ -71,7 +71,7 @@ extern "C" {
 
         directorys[i]->string[j] = 0;
 
-        *status = f_directory_exists(directorys[i]->string);
+        *status = f_directory_exists(*directorys[i]);
 
         if (F_status_is_error(*status) || *status == F_false) {
           directorys[i]->string[j] = f_path_separator_s.string[0];
@@ -80,7 +80,7 @@ extern "C" {
         }
 
         if (*status == F_file_found_not) {
-          *status = f_directory_create(directorys[i]->string, mode);
+          *status = f_directory_create(*directorys[i], mode);
         }
 
         directorys[i]->string[j] = f_path_separator_s.string[0];
@@ -89,7 +89,7 @@ extern "C" {
       } // for
 
       if (F_status_is_fine(*status)) {
-        *status = f_directory_create(directorys[i]->string, mode);
+        *status = f_directory_create(*directorys[i], mode);
       }
 
       if (F_status_is_error(*status)) {
@@ -98,7 +98,7 @@ extern "C" {
           continue;
         }
 
-        fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_create", F_true, directorys[i]->string, "create", fll_error_file_type_directory_e);
+        fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_create", F_true, *directorys[i], f_file_operation_create_s, fll_error_file_type_directory_e);
         return;
       }
 

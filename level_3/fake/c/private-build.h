@@ -12,6 +12,26 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_build_strings_
+  #define FAKE_build_header_files_s        "header files"
+  #define FAKE_build_header_files_shared_s "shared header files"
+  #define FAKE_build_header_files_static_s "static header files"
+  #define FAKE_build_scripts_s             "scripts"
+  #define FAKE_build_setting_files_s       "setting files"
+
+  #define FAKE_build_header_files_s_length        12
+  #define FAKE_build_header_files_shared_s_length 19
+  #define FAKE_build_header_files_static_s_length 19
+  #define FAKE_build_scripts_s_length             7
+  #define FAKE_build_setting_files_s_length       13
+
+  extern const f_string_static_t fake_build_header_files_s;
+  extern const f_string_static_t fake_build_header_files_shared_s;
+  extern const f_string_static_t fake_build_header_files_static_s;
+  extern const f_string_static_t fake_build_scripts_s;
+  extern const f_string_static_t fake_build_setting_files_s;
+#endif // _di_fake_build_strings_
+
 /**
  * Add the standard arguments for building a library/program.
  *
@@ -71,7 +91,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_copy_
 
 /**

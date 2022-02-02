@@ -181,14 +181,14 @@ extern "C" {
     memset(&address, 0, setting.control_socket.length);
 
     if (main->remaining.used) {
-      status = f_string_append_nulless(arguments->argv[main->remaining.array[0]], strnlen(arguments->argv[main->remaining.array[0]], F_console_parameter_size_d), &setting.name_entry);
+      status = f_string_dynamic_append(argv[main->remaining.array[0]], &setting.name_entry);
     }
     else {
-      status = f_string_dynamic_append_nulless(controller_default_s, &setting.name_entry);
+      status = f_string_dynamic_append(controller_default_s, &setting.name_entry);
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(main->error, F_status_set_fine(status), main->remaining.used ? "f_string_append_nulless" : "f_string_dynamic_append_nulless", F_true);
+      fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
 
       controller_main_delete(main);
 
@@ -227,14 +227,12 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
     else if (main->parameters.array[controller_parameter_settings_e].locations.used) {
-      const f_array_length_t location = main->parameters.array[controller_parameter_settings_e].values.array[main->parameters.array[controller_parameter_settings_e].values.used - 1];
+      const f_array_length_t index = main->parameters.array[controller_parameter_settings_e].values.array[main->parameters.array[controller_parameter_settings_e].values.used - 1];
 
-      status = fll_path_canonical(arguments->argv[location], &setting.path_setting);
+      status = fll_path_canonical(argv[index], &setting.path_setting);
 
       if (F_status_is_error(status)) {
-        const f_string_static_t argv = macro_f_string_static_t_initialize(arguments->argv[location], 0, strnlen(arguments->argv[location], F_console_parameter_size_d);
-
-        fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv, f_file_operation_verify_s, fll_error_file_type_path_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
       }
     }
     else {
@@ -268,13 +266,13 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[controller_parameter_pid_e].locations.used) {
-        const f_array_length_t location = main->parameters.array[controller_parameter_pid_e].values.array[main->parameters.array[controller_parameter_pid_e].values.used - 1];
+        const f_array_length_t index = main->parameters.array[controller_parameter_pid_e].values.array[main->parameters.array[controller_parameter_pid_e].values.used - 1];
 
-        if (strnlen(arguments->argv[location], F_console_parameter_size_d)) {
-          status = fll_path_canonical(arguments->argv[location], &setting.path_pid);
+        if (argv[index].used) {
+          status = fll_path_canonical(argv[index], &setting.path_pid);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, arguments->argv[location], "verify", fll_error_file_type_path_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
           }
         }
         else {
@@ -327,13 +325,13 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[controller_parameter_cgroup_e].locations.used) {
-        const f_array_length_t location = main->parameters.array[controller_parameter_cgroup_e].values.array[main->parameters.array[controller_parameter_cgroup_e].values.used - 1];
+        const f_array_length_t index = main->parameters.array[controller_parameter_cgroup_e].values.array[main->parameters.array[controller_parameter_cgroup_e].values.used - 1];
 
-        if (strnlen(arguments->argv[location], F_console_parameter_size_d)) {
-          status = fll_path_canonical(arguments->argv[location], &setting.path_cgroup);
+        if (argv[index].used) {
+          status = fll_path_canonical(argv[index], &setting.path_cgroup);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, arguments->argv[location], "verify", fll_error_file_type_path_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
           }
           else {
             status = f_string_append_assure(F_path_separator_s, 1, &setting.path_cgroup);
@@ -474,7 +472,7 @@ extern "C" {
           controller_unlock_print_flush(main->warning.to, 0);
         }
         else if (F_status_set_fine(status_delete) != F_interrupt) {
-          fll_error_file_print(main->warning, F_status_set_fine(status_delete), "controller_file_pid_delete", F_true, setting.path_pid.string, "delete", fll_error_file_type_file_e);
+          fll_error_file_print(main->warning, F_status_set_fine(status_delete), "controller_file_pid_delete", F_true, setting.path_pid, f_file_operation_delete_s, fll_error_file_type_file_e);
         }
       }
     }
@@ -483,7 +481,7 @@ extern "C" {
       f_socket_disconnect(&setting.control_socket, f_socket_close_read_write_e);
 
       if (!setting.control_readonly) {
-        f_file_remove(setting.path_control.string);
+        f_file_remove(setting.path_control);
       }
     }
 

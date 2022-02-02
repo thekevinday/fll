@@ -14,6 +14,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#ifndef _di_controller_rule_string_s_
+  const f_string_static_t controller_rule_needed_s = macro_f_string_static_t_initialize(CONTROLLER_rule_needed_s, 0, CONTROLLER_rule_needed_s_length);
+  const f_string_static_t controller_rule_wanted_s = macro_f_string_static_t_initialize(CONTROLLER_rule_wanted_s, 0, CONTROLLER_rule_wanted_s_length);
+  const f_string_static_t controller_rule_wished_s = macro_f_string_static_t_initialize(CONTROLLER_rule_wished_s, 0, CONTROLLER_rule_wished_s_length);
+#endif // _di_controller_rule_print_string_s_
 
 #ifndef _di_controller_rule_action_method_name_
   f_string_static_t controller_rule_action_method_name(const uint8_t type) {
@@ -1033,7 +1038,7 @@ extern "C" {
         status = fll_control_group_prepare(process->rule.cgroup);
 
         if (F_status_is_error(status)) {
-          controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, process->rule.cgroup.path.string, "prepare control groups for", fll_error_file_type_directory_e);
+          controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, process->rule.cgroup.path, controller_rule_print_control_groups_prepare_s, fll_error_file_type_directory_e);
 
           return status;
         }
@@ -1193,7 +1198,7 @@ extern "C" {
             success = F_status_set_error(F_failure);
 
             // @todo make this more specific.
-            controller_rule_action_print_error_missing_pid(global.main->error, process->rule.alias.string);
+            controller_rule_action_print_error_missing_pid(global.main->error, process->rule.alias);
           }
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_utility_e) {
@@ -1231,7 +1236,7 @@ extern "C" {
             success = F_status_set_error(F_failure);
 
             // @todo make this more specific.
-            controller_rule_action_print_error_missing_pid(global.main->error, process->rule.alias.string);
+            controller_rule_action_print_error_missing_pid(global.main->error, process->rule.alias);
           }
         }
         else {
@@ -1559,16 +1564,16 @@ extern "C" {
       }
     }
 
-    status = f_file_exists(pid_file.string);
+    status = f_file_exists(pid_file);
 
     if (F_status_is_error(status)) {
-      controller_print_error_file(thread, main->error, F_status_set_fine(status), "f_file_exists", F_true, pid_file.string, f_file_operation_find_s, fll_error_file_type_file_e);
+      controller_print_error_file(thread, main->error, F_status_set_fine(status), "f_file_exists", F_true, pid_file, f_file_operation_find_s, fll_error_file_type_file_e);
 
       return status;
     }
 
     if (status == F_true) {
-      controller_print_error_file(thread, main->error, F_file_found, "f_file_exists", F_true, pid_file.string, f_file_operation_find_s, fll_error_file_type_file_e);
+      controller_print_error_file(thread, main->error, F_file_found, "f_file_exists", F_true, pid_file, f_file_operation_find_s, fll_error_file_type_file_e);
 
       return F_status_set_error(F_file_found);
     }
@@ -2284,10 +2289,10 @@ extern "C" {
 
       uint8_t options_process = 0;
 
-      const f_string_t strings[3] = {
-        "needed",
-        "wanted",
-        "wished for",
+      const f_string_static_t strings[3] = {
+        controller_rule_needed_s,
+        controller_rule_wanted_s,
+        controller_rule_wished_s,
       };
 
       f_string_dynamics_t empty = f_string_dynamics_t_initialize;
@@ -2335,7 +2340,7 @@ extern "C" {
               if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
-                controller_rule_item_print_error_rule_not_loaded(global.main->error, dynamics[i]->array[j].string);
+                controller_rule_item_print_error_rule_not_loaded(global.main->error, dynamics[i]->array[j]);
                 controller_rule_print_error_cache(global.main->error, process->cache.action, F_false);
 
                 controller_unlock_print_flush(global.main->error.to, global.thread);
@@ -2390,7 +2395,7 @@ extern "C" {
             if (i == 0) {
               controller_lock_print(global.main->error.to, global.thread);
 
-              controller_rule_item_print_error_need_want_wish(global.main->error, strings[i], dynamics[i]->array[j].string, "was not found");
+              controller_rule_item_print_error_need_want_wish(global.main->error, strings[i], dynamics[i]->array[j], "was not found");
               controller_rule_print_error_cache(global.main->error, process->cache.action, F_true);
 
               controller_unlock_print_flush(global.main->error.to, global.thread);
@@ -2409,7 +2414,7 @@ extern "C" {
               if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
                 controller_lock_print(global.main->warning.to, global.thread);
 
-                controller_rule_item_print_error_need_want_wish(global.main->warning, strings[i], dynamics[i]->array[j].string, "was not found");
+                controller_rule_item_print_error_need_want_wish(global.main->warning, strings[i], dynamics[i]->array[j], "was not found");
 
                 controller_rule_print_error_cache(global.main->warning, process->cache.action, F_true);
 
@@ -2430,13 +2435,15 @@ extern "C" {
 
           if (found) {
 
-            // the dependency may have write locks, which needs to be avoided, so copy the alias from the rule.
-            char alias_other_buffer[global.setting->rules.array[id_rule].alias.used + 1];
+            // The dependency may have write locks, which needs to be avoided, so copy the alias from the rule.
+            f_string_static_t alias_other_buffer = f_string_static_t_initialize;
+            alias_other_buffer.used = global.setting->rules.array[id_rule].alias.used;
 
-            memcpy(alias_other_buffer, global.setting->rules.array[id_rule].alias.string, global.setting->rules.array[id_rule].alias.used);
-            alias_other_buffer[global.setting->rules.array[id_rule].alias.used] = 0;
+            char alias_other_buffer_string[alias_other_buffer.used + 1];
+            alias_other_buffer.string = alias_other_buffer_string;
 
-            const f_string_static_t alias_other = macro_f_string_static_t_initialize2(alias_other_buffer, global.setting->rules.array[id_rule].alias.used);
+            memcpy(alias_other_buffer_string, global.setting->rules.array[id_rule].alias.string, alias_other_buffer.used);
+            alias_other_buffer_string[alias_other_buffer.used] = 0;
 
             f_thread_unlock(&global.thread->lock.rule);
 
@@ -2481,7 +2488,7 @@ extern "C" {
                 }
 
                 // Synchronously execute dependency.
-                status = controller_rule_process_begin(global, 0, alias_other, process->action, options_process, process->type, process->stack, dependency->cache);
+                status = controller_rule_process_begin(global, 0, alias_other_buffer, process->action, options_process, process->type, process->stack, dependency->cache);
 
                 if (status == F_child || F_status_set_fine(status) == F_interrupt) {
                   f_thread_unlock(&dependency->active);
@@ -2785,7 +2792,7 @@ extern "C" {
         if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
-          controller_rule_item_print_error_rule_not_loaded(global.main->error, alias_rule.string);
+          controller_rule_item_print_error_rule_not_loaded(global.main->error, alias_rule);
           controller_rule_print_error_cache(global.main->error, cache.action, F_false);
 
           controller_unlock_print_flush(global.main->error.to, global.thread);
@@ -3169,7 +3176,7 @@ extern "C" {
       if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
         controller_lock_print(global.main->error.to, global.thread);
 
-        controller_rule_item_print_error_rule_not_loaded(global.main->error, process->rule.alias.string);
+        controller_rule_item_print_error_rule_not_loaded(global.main->error, process->rule.alias);
         controller_rule_print_error_cache(global.main->error, process->cache.action, F_false);
 
         controller_unlock_print_flush(global.main->error.to, global.thread);
@@ -5308,7 +5315,7 @@ extern "C" {
 
       cache->buffer_path.used = 0;
 
-      status = f_file_name_base(setting_values->array[setting_values->used].string, setting_values->array[setting_values->used + 1].used, &cache->buffer_path);
+      status = f_file_name_base(setting_values->array[setting_values->used], &cache->buffer_path);
 
       if (F_status_is_error(status)) {
         setting_values->array[setting_values->used].used = 0;

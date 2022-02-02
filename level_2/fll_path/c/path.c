@@ -5,12 +5,20 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_path_canonical_
-  f_status_t fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical) {
+  f_status_t fll_path_canonical(const f_string_static_t path, f_string_dynamic_t *canonical) {
     #ifndef _di_level_2_parameter_checking_
       if (!canonical) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
+
+    if (!path.used) {
+      status = f_path_current(F_true, canonical);
+      if (F_status_is_error(status)) return status;
+
+      return F_none;
+    }
+
     f_array_length_t at = 0;
 
     uint8_t previous_1 = f_path_separator_s.string[0];
@@ -21,14 +29,14 @@ extern "C" {
 
     canonical->used = 0;
 
-    if (path[0] == f_path_separator_s.string[0]) {
+    if (path.string[0] == f_path_separator_s.string[0]) {
       at = 1;
     }
     else {
       status = f_path_current(F_true, canonical);
       if (F_status_is_error(status)) return status;
 
-      if (!path[0]) {
+      if (!path.string[0] || path.used == 1) {
         return F_none;
       }
 
@@ -38,9 +46,9 @@ extern "C" {
     status = f_string_dynamic_append_assure(f_path_separator_s, canonical);
     if (F_status_is_error(status)) return status;
 
-    for (; path[at]; ++at) {
+    for (; at < path.used && path.string[at]; ++at) {
 
-      if (!size_chunk && path[at] == f_path_separator_current_s.string[0]) {
+      if (!size_chunk && path.string[at] == f_path_separator_current_s.string[0]) {
         if (!previous_1 || previous_1 == f_path_separator_s.string[0]) {
           previous_1 = f_path_separator_current_s.string[0];
           previous_2 = 0;
@@ -60,7 +68,7 @@ extern "C" {
           }
         }
       }
-      else if (path[at] == f_path_separator_s.string[0]) {
+      else if (path.string[at] == f_path_separator_s.string[0]) {
         if (previous_1 == f_path_separator_s.string[0]) {
           size_chunk = 0;
           position = 0;
@@ -79,7 +87,7 @@ extern "C" {
         }
         else {
           if (++size_chunk) {
-            status = f_string_append(path + position, size_chunk, canonical);
+            status = f_string_append(path.string + position, size_chunk, canonical);
             if (F_status_is_error(status)) return status;
           }
         }
@@ -121,7 +129,7 @@ extern "C" {
     }
     else if (!(previous_1 == f_path_separator_current_s.string[0] || previous_1 == f_path_separator_s.string[0])) {
       if (size_chunk) {
-        status = f_string_append(path + position, size_chunk, canonical);
+        status = f_string_append(path.string + position, size_chunk, canonical);
         if (F_status_is_error(status)) return status;
       }
     }

@@ -99,14 +99,14 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    status = f_file_exists(path_file.string);
+    status = f_file_exists(path_file);
 
     if (status == F_true) {
       {
         f_array_length_t size_file = 0;
 
         name_function = "f_file_size";
-        status = f_file_size(path_file.string, F_true, &size_file);
+        status = f_file_size(path_file, F_true, &size_file);
 
         if (F_status_is_error_not(status)) {
           if (size_file > fake_common_initial_buffer_max_d) {
@@ -116,7 +116,8 @@ extern "C" {
            macro_f_string_dynamic_t_resize((status), (*buffer), size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file_e);
+            const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
+            fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, message, fll_error_file_type_file_e);
 
             f_string_dynamic_resize(0, buffer);
 
@@ -128,7 +129,7 @@ extern "C" {
       }
 
       name_function = "f_file_open";
-      status = f_file_stream_open(path_file, 0, &file);
+      status = f_file_stream_open(path_file, f_string_empty_s, &file);
 
       if (F_status_is_error_not(status)) {
         name_function = "f_file_read";
@@ -142,7 +143,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), name_function, F_true, path_file, f_file_operation_read_s, fll_error_file_type_file_e);
 
       f_string_dynamic_resize(0, buffer);
     }
@@ -562,13 +563,13 @@ extern "C" {
       if (parameters_value[i]->used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
-        status = f_file_stat(parameters_value[i]->string, F_true, &directory_stat);
+        status = f_file_stat(*parameters_value[i], F_true, &directory_stat);
 
         if (status == F_status_set_error(F_file_found_not)) status = F_status_set_error(F_directory_found_not);
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) != F_directory_found_not || parameters_required[i]) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i]->string, "access", fll_error_file_type_directory_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stat", F_true, *parameters_value[i], f_file_operation_access_s, fll_error_file_type_directory_e);
 
             return status;
           }
@@ -592,19 +593,19 @@ extern "C" {
 #endif // _di_fake_validate_parameter_directories_
 
 #ifndef _di_fake_verbose_print_clone_
-  void fake_verbose_print_clone(const f_file_t output, const f_string_t source, const f_string_t destination) {
+  void fake_verbose_print_clone(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
     fll_print_format("Cloned '%S' to '%S'.%r", output.stream, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_clone_
 
 #ifndef _di_fake_verbose_print_copy_
-  void fake_verbose_print_copy(const f_file_t output, const f_string_t source, const f_string_t destination) {
+  void fake_verbose_print_copy(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
     fll_print_format("Copied '%S' to '%S'.%r", output.stream, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_copy_
 
 #ifndef _di_fake_verbose_print_move_
-  void fake_verbose_print_move(const f_file_t output, const f_string_t source, const f_string_t destination) {
+  void fake_verbose_print_move(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
     fll_print_format("Moved '%S' to '%S'.%r", output.stream, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_move_

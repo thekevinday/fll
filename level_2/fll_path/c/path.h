@@ -32,9 +32,11 @@ extern "C" {
  * This does not process symbolic links.
  * This has a max size of F_string_t_size_d.
  *
+ * An empty path (first character is NULL or path.used is 0) appends only the current path to canonical.
+ *
  * @param path
  *   The source path to determine what the canonical path is.
- *   This is a NULL terminated string.
+ *   This need not be NULL terminated.
  * @param canonical
  *   The (allocated) canonical file path.
  *   The canonical->used is reset to 0 before processing.
@@ -46,10 +48,17 @@ extern "C" {
  *   Errors (with error bit) from: f_path_current().
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_append_assure().
+ *   Errors (with error bit) from: f_string_dynamic_append_assure().
  *   Errors (with error bit) from: f_string_dynamic_terminate_after().
+ *
+ * @see f_path_current()
+ * @see f_string_append()
+ * @see f_string_append_assure()
+ * @see f_string_dynamic_append_assure()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_fll_path_canonical_
-  extern f_status_t fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical);
+  extern f_status_t fll_path_canonical(const f_string_static_t path, f_string_dynamic_t *canonical);
 #endif // _di_fll_path_canonical_
 
 #ifdef __cplusplus

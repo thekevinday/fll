@@ -153,7 +153,7 @@ extern "C" {
 #endif // _di_utf8_print_error_no_from_
 
 #ifndef _di_utf8_print_error_no_value_
-  void utf8_print_error_no_value(utf8_data_t * const data, const f_string_t parameter) {
+  void utf8_print_error_no_value(utf8_data_t * const data, const f_string_static_t parameter) {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -183,14 +183,14 @@ extern "C" {
 #endif // _di_utf8_print_error_parameter_file_name_empty_
 
 #ifndef _di_utf8_print_error_parameter_file_not_found_
-  void utf8_print_error_parameter_file_not_found(utf8_data_t * const data, const bool from, const f_string_t name) {
+  void utf8_print_error_parameter_file_not_found(utf8_data_t * const data, const bool from, const f_string_static_t name) {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(data->main->error.to.stream);
 
     fl_print_format("%r%[%QFailed to find the %s file '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, from ? utf8_string_from_s : utf8_string_to_s, data->main->context.set.error);
-    fl_print_format("%[%S%]", data->main->error.to.stream, data->main->context.set.notable, name, data->main->context.set.notable);
+    fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->context.set.notable, name, data->main->context.set.notable);
     fl_print_format("%['.%]%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
 
     funlockfile(data->main->error.to.stream);

@@ -136,7 +136,7 @@ extern "C" {
  *   - "q":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed).
  *   - "Q":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed), where control characters and invalid UTF-8 are replaced.
  *   - "r":          Type is a f_string_static_t or f_string_dynamic_t and NULLs (and all other control characters) are printed.
- *   - "R":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are printed, but control characters and invalid UTF-8 are replaced. @todo not yet implemented.
+ *   - "R":          Type is a f_string_static_t or f_string_dynamic_t and NULLs are printed, but control characters and invalid UTF-8 are replaced.
  *   - "uii", "UII": Type is a uint8_t digit.
  *   - "ui", "UI":   Type is a uint16_t digit.
  *   - "u", "U":     Type is a uint32_t digit.

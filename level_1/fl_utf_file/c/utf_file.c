@@ -8,8 +8,7 @@ extern "C" {
 #ifndef _di_fl_utf_file_read_
   f_status_t fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) {
@@ -74,8 +73,7 @@ extern "C" {
 #ifndef _di_fl_utf_file_read_block_
   f_status_t fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
@@ -134,8 +132,7 @@ extern "C" {
 #ifndef _di_fl_utf_file_read_until_
   f_status_t fl_utf_file_read_until(const f_file_t file, const f_array_length_t total, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
-      if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) {

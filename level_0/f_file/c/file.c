@@ -1501,8 +1501,7 @@ extern "C" {
 #ifndef _di_f_file_read_
   f_status_t f_file_read(const f_file_t file, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id == -1) {
@@ -1543,8 +1542,7 @@ extern "C" {
 #ifndef _di_f_file_read_block_
   f_status_t f_file_read_block(const f_file_t file, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id == -1) {
@@ -1587,8 +1585,7 @@ extern "C" {
 #ifndef _di_f_file_read_until_
   f_status_t f_file_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id == -1) {
@@ -2058,8 +2055,7 @@ extern "C" {
 #ifndef _di_f_file_stream_read_
   f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!file.stream) {
@@ -2139,8 +2135,7 @@ extern "C" {
 #ifndef _di_f_file_stream_read_until_
   f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (!file.size_read) return F_status_set_error(F_parameter);
-      if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
+      if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!file.stream) return F_status_set_error(F_file_closed);

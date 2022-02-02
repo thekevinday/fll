@@ -342,6 +342,8 @@ extern "C" {
   } f_console_parameters_t;
 
   #define f_console_parameters_t_initialize {0, f_string_dynamics_t_initialize, 0 }
+
+  #define macro_f_console_parameters_initialize(parameter, used) { parameter, f_string_dynamics_t_initialize, used }
 #endif // _di_f_console_parameters_t_
 
 /**

@@ -55,9 +55,6 @@ extern "C" {
       } // for
     }
 
-    f_string_dynamic_t file_data_build_process_post = f_string_dynamic_t_initialize;
-    f_string_dynamic_t file_data_build_process_pre = f_string_dynamic_t_initialize;
-
     if (F_status_is_error_not(status)) {
       status = fake_skeleton_operate_file_create(main, main->file_data_build_defines, F_false, fake_make_skeleton_content_defines_s);
     }
@@ -67,11 +64,11 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(main, fake_file_data_build_process_post_s, F_true, fake_make_skeleton_content_process_post_s);
+      status = fake_skeleton_operate_file_create(main, main->file_data_build_process_post_s, F_true, fake_make_skeleton_content_process_post_s);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(main, fake_file_data_build_process_pre_s, F_true, fake_make_skeleton_content_process_pre_s);
+      status = fake_skeleton_operate_file_create(main, main->file_data_build_process_pre_s, F_true, fake_make_skeleton_content_process_pre_s);
     }
 
     if (F_status_is_error_not(status)) {
@@ -99,7 +96,7 @@ extern "C" {
 
     if (!path.used) return F_none;
 
-    status = f_directory_exists(path.string);
+    status = f_directory_exists(path);
 
     if (status == F_true) {
       if (main->error.verbosity == f_console_verbosity_verbose_e) {
@@ -123,7 +120,7 @@ extern "C" {
       return F_status_set_warning(F_failure);
     }
     else if (status == F_file_found_not) {
-      status = f_directory_create(path.string, F_file_mode_all_rwx_d);
+      status = f_directory_create(path, F_file_mode_all_rwx_d);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
@@ -163,7 +160,7 @@ extern "C" {
 
     if (!path.used) return F_none;
 
-    status = f_file_is(path.string, F_file_type_regular_d, F_false);
+    status = f_file_is(path, F_file_type_regular_d, F_false);
 
     if (status == F_true) {
       if (main->error.verbosity == f_console_verbosity_verbose_e) {
@@ -175,7 +172,7 @@ extern "C" {
 
     // symbolic links might also be fine.
     if (status == F_false) {
-      status = f_file_is(path.string, F_file_type_link_d, F_false);
+      status = f_file_is(path, F_file_type_link_d, F_false);
 
       if (status == F_true) {
         if (main->error.verbosity == f_console_verbosity_verbose_e) {
@@ -200,7 +197,7 @@ extern "C" {
         mode = F_file_mode_all_rwx_d;
       }
 
-      status = f_file_create(path.string, mode, F_true);
+      status = f_file_create(path, mode, F_true);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
@@ -229,7 +226,7 @@ extern "C" {
         file.flag = F_file_flag_append_wo_d;
         file.size_write = content.used;
 
-        status = f_file_open(path.string, 0, &file);
+        status = f_file_open(path, 0, &file);
 
         if (F_status_is_error(status)) {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);

@@ -413,7 +413,7 @@ extern "C" {
             if (action->parameters.array[0].used) {
 
               // Force the path to be canonical (removing all '../' parts).
-              status = fll_path_canonical(action->parameters.array[0].string, &cache->buffer_path);
+              status = fll_path_canonical(action->parameters.array[0], &cache->buffer_path);
 
               if (F_status_is_error(status)) {
                 // @todo instead call: fll_error_file_print().
@@ -447,7 +447,7 @@ extern "C" {
             if (action->parameters.array[1].used) {
               cache->buffer_path.used = 0;
 
-              status = f_file_name_base(action->parameters.array[1].string, action->parameters.array[1].used, &cache->buffer_path);
+              status = f_file_name_base(action->parameters.array[1], &cache->buffer_path);
 
               if (F_status_is_error(status)) {
                 controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_file_name_base", F_true, global.thread);
@@ -2019,7 +2019,7 @@ extern "C" {
         if (f_path_is_relative(global.setting->path_control.string, global.setting->path_control.used) == F_true) {
 
           // Use the PID file path for creating a relative path to the control socket.
-          status = f_file_name_directory(global.setting->path_pid.string, global.setting->path_pid.used, &cache->action.generic);
+          status = f_file_name_directory(global.setting->path_pid, &cache->action.generic);
 
           if (F_status_is_error(status)) {
             controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_file_name_directory", F_true, global.thread);
@@ -2065,10 +2065,10 @@ extern "C" {
           break;
         }
 
-        status = fll_path_canonical(cache->action.generic.string, &global.setting->path_control);
+        status = fll_path_canonical(cache->action.generic, &global.setting->path_control);
 
         if (F_status_is_error(status)) {
-          controller_entry_print_error_file(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, cache->action.generic.string, "analyze", fll_error_file_type_path_e, global.thread);
+          controller_entry_print_error_file(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, cache->action.generic, f_file_operation_analyze_s, fll_error_file_type_path_e, global.thread);
 
           global.setting->path_control.used = 0;
 
@@ -2116,7 +2116,7 @@ extern "C" {
           break;
         }
 
-        status = f_file_mode_from_string(cache->action.generic.string, global.main->umask, &mode_file, &replace);
+        status = f_file_mode_from_string(cache->action.generic, global.main->umask, &mode_file, &replace);
 
         if (F_status_is_error(status)) {
           controller_entry_setting_read_print_error_with_range(is_entry, global.main->error, " has an unsupported mode", cache->content_actions.array[i].array[0], ", because the format is unknown or contains invalid data", global.thread, cache);

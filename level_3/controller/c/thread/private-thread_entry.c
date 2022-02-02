@@ -38,7 +38,7 @@ extern "C" {
     if (F_status_is_error_not(*status) && *status != F_child) {
       if (main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e || main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
 
-        if (entry->setting->entry.pid == controller_entry_pid_require_e && f_file_exists(entry->setting->path_pid.string) == F_true) {
+        if (entry->setting->entry.pid == controller_entry_pid_require_e && f_file_exists(entry->setting->path_pid) == F_true) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, entry->global->thread);
 

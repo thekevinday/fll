@@ -324,7 +324,7 @@ extern "C" {
             status_pipe = f_file_read(pipe, &buffer);
 
             if (F_status_is_error(status_pipe)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_to", F_true, "-", "read", fll_error_file_type_pipe_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_to", F_true, f_string_ascii_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
 
               status = F_status_set_error(F_pipe);
 

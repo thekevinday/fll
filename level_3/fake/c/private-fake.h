@@ -142,7 +142,7 @@ extern "C" {
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_clone_
-  extern void fake_verbose_print_clone(const f_file_t output, const f_string_t source, const f_string_t destination) F_attribute_visibility_internal_d;
+  extern void fake_verbose_print_clone(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) F_attribute_visibility_internal_d;
 #endif // _di_fake_verbose_print_clone_
 
 /**
@@ -156,7 +156,7 @@ extern "C" {
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_copy_
-  extern void fake_verbose_print_copy(const f_file_t output, const f_string_t source, const f_string_t destination) F_attribute_visibility_internal_d;
+  extern void fake_verbose_print_copy(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) F_attribute_visibility_internal_d;
 #endif // _di_fake_verbose_print_copy_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  *   The destination string.
  */
 #ifndef _di_fake_verbose_print_move_
-  extern void fake_verbose_print_move(const f_file_t output, const f_string_t source, const f_string_t destination) F_attribute_visibility_internal_d;
+  extern void fake_verbose_print_move(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) F_attribute_visibility_internal_d;
 #endif // _di_fake_verbose_print_move_
 
 #ifdef __cplusplus

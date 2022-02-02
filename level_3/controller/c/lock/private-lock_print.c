@@ -17,7 +17,7 @@ extern "C" {
 
       fl_print_format("%r%[%QThe pid file '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
       fl_print_format("%['Critical failure while attempting to establish '%]", print.to.stream, print.context, print.context);
-      fl_print_format("%[%s lock%]", print.to.stream, print.notable, read ? "read" : "write", print.notable);
+      fl_print_format("%[%r lock%]", print.to.stream, print.notable, read ? f_file_operation_read_s : f_file_operation_write_s, print.notable);
 
       if (status != F_failure) {
         fl_print_format(" %['due to%] ", print.to.stream, print.context, print.context);

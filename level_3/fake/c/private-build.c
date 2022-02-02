@@ -14,6 +14,14 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_build_strings_
+  const f_string_static_t fake_build_header_files_s = macro_f_string_static_t_initialize(FAKE_build_header_files_s, 0, FAKE_build_header_files_s_length);
+  const f_string_static_t fake_build_header_files_shared_s = macro_f_string_static_t_initialize(FAKE_build_header_files_shared_s, 0, FAKE_build_header_files_shared_s_length);
+  const f_string_static_t fake_build_header_files_static_s = macro_f_string_static_t_initialize(FAKE_build_header_files_static_s, 0, FAKE_build_header_files_static_s_length);
+  const f_string_static_t fake_build_scripts_s = macro_f_string_static_t_initialize(FAKE_build_scripts_s, 0, FAKE_build_scripts_s_length);
+  const f_string_static_t fake_build_setting_files_s = macro_f_string_static_t_initialize(FAKE_build_setting_files_s, 0, FAKE_build_setting_files_s_length);
+#endif // _di_fake_build_strings_
+
 #ifndef _di_fake_build_arguments_standard_add_
   void fake_build_arguments_standard_add(fake_main_t * const main, const fake_build_data_t data_build, const bool is_shared, const bool is_library, f_string_dynamics_t *arguments, f_status_t *status) {
 
@@ -283,9 +291,9 @@ extern "C" {
 #endif // _di_fake_build_arguments_standard_add_
 
 #ifndef _di_fake_build_copy_
-  void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) {
+  void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return;
+    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return;
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_interrupt);
@@ -297,9 +305,10 @@ extern "C" {
     f_string_dynamic_t path_source = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_file = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_directory = f_string_dynamic_t_initialize;
+    f_string_static_t buffer = f_string_static_t_initialize;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%r%[Copying %S.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, label, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Copying %Q.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, label, main->context.set.important, f_string_eol_s);
     }
 
      macro_f_string_dynamic_t_resize(*status, path_source, source.used);
@@ -331,6 +340,7 @@ extern "C" {
 
       if (!(i % fake_signal_check_short_d) && fake_signal_received(main)) {
         *status = F_status_set_error(F_interrupt);
+
         break;
       }
 
@@ -342,6 +352,7 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+
         break;
       }
 
@@ -349,10 +360,11 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
+
         break;
       }
 
-      *status = f_directory_is(path_source.string);
+      *status = f_directory_is(path_source);
 
       if (*status == F_true) {
         destination_directory.used = 0;
@@ -361,13 +373,15 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+
           break;
         }
 
-        *status = f_file_name_base(path_source.string, path_source.used, &destination_directory);
+        *status = f_file_name_base(path_source, &destination_directory);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_file_name_base", F_true);
+
           break;
         }
 
@@ -375,10 +389,11 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
+
           break;
         }
 
-        *status = fl_directory_copy(path_source.string, destination_directory.string, path_source.used, destination_directory.used, mode, recurse);
+        *status = fl_directory_copy(path_source, destination_directory, mode, recurse);
 
         if (F_status_is_error(*status)) {
           if (main->error.verbosity == f_console_verbosity_verbose_e) {
@@ -407,6 +422,7 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+
           break;
         }
 
@@ -415,13 +431,18 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+
             break;
           }
 
-          *status = f_file_name_directory(path_source.string + preserve, path_source.used - preserve, &destination_directory);
+          buffer.string = path_source.string + preserve;
+          buffer.used = path_source.used - preserve;
+
+          *status = f_file_name_directory(buffer, &destination_directory);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_file_name_directory", F_true);
+
             break;
           }
 
@@ -429,13 +450,15 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
+
             break;
           }
 
-          *status = fl_directory_create(destination_directory.string, destination_directory.used, F_file_mode_all_rwx_d);
+          *status = fl_directory_create(destination_directory, F_file_mode_all_rwx_d);
 
           if (F_status_is_error(*status)) {
-            fll_error_file_print(main->error, F_status_set_fine(*status), "fl_directory_create", F_true, destination_directory.string, "create", fll_error_file_type_directory_e);
+            fll_error_file_print(main->error, F_status_set_fine(*status), "fl_directory_create", F_true, destination_directory, f_file_operation_create_s, fll_error_file_type_directory_e);
+
             break;
           }
 
@@ -443,14 +466,16 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_append", F_true);
+
             break;
           }
         }
         else {
-          *status = f_file_name_base(path_source.string, path_source.used, &destination_file);
+          *status = f_file_name_base(path_source, &destination_file);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_file_name_base", F_true);
+
             break;
           }
         }
@@ -459,13 +484,15 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
+
           break;
         }
 
-        *status = f_file_copy(path_source.string, destination_file.string, mode, F_file_default_read_size_d, F_false);
+        *status = f_file_copy(path_source, destination_file, mode, F_file_default_read_size_d, F_false);
 
         if (F_status_is_error(*status)) {
-          fake_print_error_build_operation_file(main, F_status_set_fine(*status), "f_file_copy", F_file_operation_copy_s, f_file_operation_to_s, path_source, destination_file, F_true);
+          fake_print_error_build_operation_file(main, F_status_set_fine(*status), "f_file_copy", f_file_operation_copy_s, f_file_operation_to_s, path_source, destination_file, F_true);
+
           break;
         }
 
@@ -475,6 +502,7 @@ extern "C" {
       }
       else if (F_status_is_error(*status)) {
         fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_is", F_true, path_source, f_file_operation_create_s, fll_error_file_type_file_e);
+
         break;
       }
 
@@ -496,7 +524,7 @@ extern "C" {
 #ifndef _di_fake_build_execute_process_script_
   int fake_build_execute_process_script(fake_main_t * const main, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
+    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return main->child;
     if (!process_script.used) return 0;
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -711,7 +739,7 @@ extern "C" {
 
     if (!path.used) return F_none;
 
-    f_status_t status = f_file_name_base(path.string, path.used, name);
+    f_status_t status = f_file_name_base(path, name);
 
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "f_file_name_base", F_true);
@@ -725,6 +753,7 @@ extern "C" {
 
       if (name->string[i] == f_path_extension_separator_s.string[0]) {
         name->used = i;
+
         break;
       }
     } // for
@@ -778,7 +807,7 @@ extern "C" {
 
     main->child = fake_build_execute_process_script(main, data_build, data_build.setting.process_pre, stage.file_process_pre, &status);
 
-    fake_build_copy(main, mode, "setting files", main->path_data_settings, main->path_build_settings, data_build.setting.build_sources_setting, stage.file_sources_settings, 0, &status);
+    fake_build_copy(main, mode, fake_build_setting_files_s, main->path_data_settings, main->path_build_settings, data_build.setting.build_sources_setting, stage.file_sources_settings, 0, &status);
 
     if (data_build.setting.build_language == fake_build_language_type_bash_e) {
       fake_build_library_script(main, data_build, mode, stage.file_libraries_script, &status);
@@ -786,7 +815,7 @@ extern "C" {
       fake_build_program_script(main, data_build, mode, stage.file_programs_script, &status);
 
       if (data_build.setting.build_script) {
-        fake_build_copy(main, mode, "scripts", main->path_sources_script, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
+        fake_build_copy(main, mode, fake_build_scripts_s, main->path_sources_script, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
       }
     }
     else {
@@ -823,14 +852,14 @@ extern "C" {
         path_headers.used = directory_headers_length;
         path_headers.size = directory_headers_length + 1;
 
-        fake_build_copy(main, mode, "header files", path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+        fake_build_copy(main, mode, fake_build_header_files_s, path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
 
         if (data_build.setting.build_shared) {
-          fake_build_copy(main, mode, "shared header files", path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+          fake_build_copy(main, mode, fake_build_header_files_shared_s, path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
         }
 
         if (data_build.setting.build_static) {
-          fake_build_copy(main, mode, "static header files", path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+          fake_build_copy(main, mode, fake_build_header_files_static_s, path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
         }
       }
 
@@ -849,7 +878,7 @@ extern "C" {
       }
 
       if (data_build.setting.build_script) {
-        fake_build_copy(main, mode, "scripts", main->path_sources_script, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
+        fake_build_copy(main, mode, fake_build_scripts_s, main->path_sources_script, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
       }
     }
 
@@ -869,6 +898,7 @@ extern "C" {
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_interrupt);
+
       return;
     }
 
@@ -876,10 +906,10 @@ extern "C" {
 
     macro_f_mode_t_set_default_umask(mode, main->umask);
 
-    *status = f_file_touch(file.string, mode.regular, F_false);
+    *status = f_file_touch(file, mode.regular, F_false);
 
     if (F_status_is_error(*status)) {
-      fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_touch", F_true, file.string, "touch", fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(*status), "f_file_touch", F_true, file, f_file_operation_touch_s, fll_error_file_type_file_e);
     }
   }
 #endif // _di_fake_build_touch_

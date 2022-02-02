@@ -27,7 +27,7 @@ extern "C" {
 
     data_make->fakefile.used = 0;
 
-    *status = fake_file_buffer(data_make->main, data_make->main->file_data_build_fakefile.string, &data_make->buffer);
+    *status = fake_file_buffer(data_make->main, data_make->main->file_data_build_fakefile, &data_make->buffer);
     if (F_status_is_error(*status)) return;
 
     if (!data_make->buffer.used) {
@@ -59,7 +59,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_print_error_fss(data_make->main, F_status_set_fine(*status), "fll_fss_basic_list_read", data_make->main->file_data_build_fakefile.string, range, F_true);
+        fake_print_error_fss(data_make->main, F_status_set_fine(*status), "fll_fss_basic_list_read", data_make->main->file_data_build_fakefile, range, F_true);
       }
       else {
         *status = fl_fss_apply_delimit(delimits, &data_make->buffer);
@@ -127,7 +127,7 @@ extern "C" {
             *status = fll_fss_extended_read(data_make->buffer, state, &content_range, &settings.objects, &settings.contents, 0, 0, &delimits, 0);
 
             if (F_status_is_error(*status)) {
-              fake_print_error_fss(data_make->main, F_status_set_fine(*status), "fll_fss_extended_read", data_make->main->file_data_build_fakefile.string, content_range, F_true);
+              fake_print_error_fss(data_make->main, F_status_set_fine(*status), "fll_fss_extended_read", data_make->main->file_data_build_fakefile, content_range, F_true);
 
               break;
             }
@@ -163,7 +163,7 @@ extern "C" {
           *status = fll_fss_extended_read(data_make->buffer, state, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess, &delimits, 0);
 
           if (F_status_is_error(*status)) {
-            fake_print_error_fss(data_make->main, F_status_set_fine(*status), "fll_fss_extended_read", data_make->main->file_data_build_fakefile.string, content_range, F_true);
+            fake_print_error_fss(data_make->main, F_status_set_fine(*status), "fll_fss_extended_read", data_make->main->file_data_build_fakefile, content_range, F_true);
 
             break;
           }
@@ -397,7 +397,7 @@ extern "C" {
     f_string_map_multis_t define = f_string_map_multis_t_initialize;
 
     // Load the fakefile "settings" as if they are build "settings".
-    fake_build_load_setting_process(main, F_false, main->file_data_build_fakefile.string, data_make->buffer, settings->objects, settings->contents, &data_make->setting_build, &status);
+    fake_build_load_setting_process(main, F_false, main->file_data_build_fakefile, data_make->buffer, settings->objects, settings->contents, &data_make->setting_build, &status);
 
     if (F_status_is_error_not(status) && settings->objects.used) {
       const f_string_static_t settings_name[] = {
@@ -457,7 +457,7 @@ extern "C" {
             break;
           }
 
-          status = f_environment_set(define.array[i].name.string, combined.string, F_true);
+          status = f_environment_set(define.array[i].name, combined, F_true);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_environment_set", F_true);

@@ -308,8 +308,8 @@ extern "C" {
           index = main->parameters.array[utf8_parameter_from_file_e].values.array[i];
 
           if (arguments->argv[index][0]) {
-            if (!f_file_exists(arguments->argv[index])) {
-              utf8_print_error_parameter_file_not_found(&data, F_true, arguments->argv[index]);
+            if (!f_file_exists(data.argv[index])) {
+              utf8_print_error_parameter_file_not_found(&data, F_true, data.argv[index]);
 
               if (F_status_is_error_not(status)) {
                 status = F_status_set_error(F_file_found_not);

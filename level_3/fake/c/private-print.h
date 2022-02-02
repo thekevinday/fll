@@ -99,7 +99,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_fss_
-  extern bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_t path_file, const f_string_range_t range, const bool fallback) F_attribute_visibility_internal_d;
+  extern bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_fss_
 
 /**

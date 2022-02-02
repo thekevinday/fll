@@ -79,12 +79,16 @@ extern "C" {
       }
       else if (arguments.used) {
         if (arguments.array[0].used) {
-          char path_file[data_make->main->path_data_build.used + arguments.array[0].used + 1];
+          f_string_static_t path_file = f_string_static_t_initialize;
+          path_file.used = data_make->main->path_data_build.used + arguments.array[0].used;
 
-          memcpy(path_file, data_make->main->path_data_build.string, data_make->main->path_data_build.used);
-          memcpy(path_file + data_make->main->path_data_build.used, arguments.array[0].string, arguments.array[0].used);
+          char path_file_string[path_file.used + 1];
+          path_file.string = path_file_string;
 
-          path_file[data_make->main->path_data_build.used + arguments.array[0].used] = 0;
+          memcpy(path_file_string, data_make->main->path_data_build.string, data_make->main->path_data_build.used);
+          memcpy(path_file_string + data_make->main->path_data_build.used, arguments.array[0].string, arguments.array[0].used);
+
+          path_file_string[path_file.used] = 0;
 
           f_status_t status_file = f_file_is(path_file, F_file_type_regular_d, F_false);
 
@@ -93,7 +97,7 @@ extern "C" {
               flockfile(data_make->error.to.stream);
 
               fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-              fl_print_format("%[%S%]", data_make->error.to.stream, data_make->error.notable, path_file, data_make->error.notable);
+              fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, path_file, data_make->error.notable);
               fl_print_format("%['.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
               funlockfile(data_make->error.to.stream);
@@ -110,7 +114,7 @@ extern "C" {
               flockfile(data_make->error.to.stream);
 
               fl_print_format("%r%[%QThe file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-              fl_print_format("%[%S%]", data_make->error.to.stream, data_make->error.notable, path_file, data_make->error.notable);
+              fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, path_file, data_make->error.notable);
               fl_print_format("%[' must be a regular file.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
               funlockfile(data_make->error.to.stream);
@@ -168,7 +172,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
-          if (f_file_exists(arguments.array[i].string) != F_true) {
+          if (f_file_exists(arguments.array[i]) != F_true) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -186,7 +190,7 @@ extern "C" {
         if (arguments.used > 2) {
 
           // The last file must be a directory.
-          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
+          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1]);
 
           if (status_file == F_false || status_file == F_file_found_not) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
@@ -202,23 +206,23 @@ extern "C" {
             *status = F_status_set_error(F_failure);
           }
           else if (F_status_is_error(status_file)) {
-            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1].string, f_file_operation_find_s, fll_error_file_type_directory_e);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1], f_file_operation_find_s, fll_error_file_type_directory_e);
             *status = F_status_set_error(F_failure);
           }
         }
         else {
 
           // When the first file is a directory, then the second, if it exists, must also be a directory.
-          f_status_t status_file = f_directory_is(arguments.array[0].string);
+          f_status_t status_file = f_directory_is(arguments.array[0]);
 
           if (status_file == F_true) {
-            status_file = f_directory_is(arguments.array[1].string);
+            status_file = f_directory_is(arguments.array[1]);
 
             if (status_file == F_false) {
               if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
                 flockfile(data_make->error.to.stream);
 
-                fl_print_format("%r%[%QThe last file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+                fl_print_format("%r%[%QThe second file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
                 fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
                 fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
@@ -279,7 +283,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
-          if (f_file_exists(arguments.array[i].string) != F_true) {
+          if (f_file_exists(arguments.array[i]) != F_true) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -297,7 +301,7 @@ extern "C" {
         if (arguments.used > 2) {
 
           // The last file must be a directory.
-          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
+          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1]);
 
           if (status_file == F_false || status_file == F_file_found_not) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
@@ -313,23 +317,23 @@ extern "C" {
             *status = F_status_set_error(F_failure);
           }
           else if (F_status_is_error(status_file)) {
-            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1].string, "identify", fll_error_file_type_directory_e);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1], f_file_operation_identify_s, fll_error_file_type_directory_e);
             *status = F_status_set_error(F_failure);
           }
         }
         else {
 
           // When the first file is a directory, then the second, if it exists, must also be a directory.
-          f_status_t status_file = f_directory_is(arguments.array[0].string);
+          f_status_t status_file = f_directory_is(arguments.array[0]);
 
           if (status_file == F_true) {
-            status_file = f_directory_is(arguments.array[1].string);
+            status_file = f_directory_is(arguments.array[1]);
 
             if (status_file == F_false) {
               if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
                 flockfile(data_make->error.to.stream);
 
-                fl_print_format("%r%[%QThe last file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+                fl_print_format("%r%[%QThe second file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
                 fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
                 fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
@@ -532,7 +536,7 @@ extern "C" {
 
         for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
-          status_file = f_file_is(arguments.array[i].string, F_file_type_regular_d, F_false);
+          status_file = f_file_is(arguments.array[i], F_file_type_regular_d, F_false);
 
           if (status_file == F_file_found_not) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
@@ -549,7 +553,7 @@ extern "C" {
           }
           else if (F_status_is_error(status_file)) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-              fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, arguments.array[i].string, f_file_operation_find_s, fll_error_file_type_directory_e);
+              fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, arguments.array[i], f_file_operation_find_s, fll_error_file_type_directory_e);
             }
 
             *status = status_file;
@@ -963,14 +967,14 @@ extern "C" {
                 else if (state_process->condition != fake_make_operation_if_type_if_exists_e && state_process->condition != fake_make_operation_if_type_if_is_e) {
 
                   // The existence tests do not need to happen here for *_if_exists and *_if_is as those two types will handle performing them during the process stage.
-                  status_file = f_file_exists(arguments.array[i].string);
+                  status_file = f_file_exists(arguments.array[i]);
 
                   if (status_file == F_false) {
                     status_file = F_status_set_error(F_file_found_not);
                   }
 
                   if (F_status_is_error(status_file)) {
-                    fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_file_exists", F_true, arguments.array[i].string, f_file_operation_find_s, fll_error_file_type_file_e);
+                    fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_file_exists", F_true, arguments.array[i], f_file_operation_find_s, fll_error_file_type_file_e);
 
                     if (F_status_is_error_not(*status)) {
                       *status = F_status_set_error(status_file);
@@ -1107,7 +1111,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
-          if (f_file_exists(arguments.array[i].string) != F_true) {
+          if (f_file_exists(arguments.array[i]) != F_true) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -1125,7 +1129,7 @@ extern "C" {
         if (arguments.used > 2) {
 
           // The last file must be a directory.
-          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1].string);
+          f_status_t status_file = f_directory_is(arguments.array[arguments.used - 1]);
 
           if (status_file == F_false || status_file == F_file_found_not) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
@@ -1141,24 +1145,24 @@ extern "C" {
             *status = F_status_set_error(F_failure);
           }
           else if (F_status_is_error(status_file)) {
-            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1].string, "identify", fll_error_file_type_directory_e);
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[arguments.used - 1], f_file_operation_identify_s, fll_error_file_type_directory_e);
             *status = F_status_set_error(F_failure);
           }
         }
         else {
 
           // When the first file is a directory, then the second, if it exists, must also be a directory.
-          f_status_t status_file = f_directory_is(arguments.array[0].string);
+          f_status_t status_file = f_directory_is(arguments.array[0]);
 
           if (status_file == F_true) {
-            status_file = f_directory_is(arguments.array[1].string);
+            status_file = f_directory_is(arguments.array[1]);
 
             if (status_file == F_false) {
               if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
                 flockfile(data_make->error.to.stream);
 
-                fl_print_format("%r%[%QThe last file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-                fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[arguments.used - 1], data_make->error.notable);
+                fl_print_format("%r%[%QThe second file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+                fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
                 fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
                 funlockfile(data_make->error.to.stream);
@@ -1298,7 +1302,7 @@ extern "C" {
       }
       else if (arguments.used) {
         if (arguments.array[0].used) {
-          f_status_t status_file = f_file_is(arguments.array[0].string, F_file_type_directory_d, F_false);
+          f_status_t status_file = f_file_is(arguments.array[0], F_file_type_directory_d, F_false);
 
           if (status_file == F_file_found_not) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
@@ -1315,7 +1319,7 @@ extern "C" {
           }
           else if (F_status_is_error(status_file)) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-              fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, data_make->main->file_data_build_fakefile.string, f_file_operation_find_s, fll_error_file_type_file_e);
+              fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, data_make->main->file_data_build_fakefile, f_file_operation_find_s, fll_error_file_type_file_e);
             }
 
             *status = status_file;

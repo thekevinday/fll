@@ -86,7 +86,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
     f_string_dynamic_resize(0, &ip_list);
 
     // process chain rule
-    if (length >= firewall_chain_length_s && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_chain_s, length, firewall_chain_length_s) == F_equal_to) {
+    if (length >= firewall_chain_s_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_chain_s, length, firewall_chain_s_length) == F_equal_to) {
       if (chain == firewall_chain_custom_id_e) {
 
         // custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
@@ -1060,19 +1060,19 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
       arguments.array[1].string[arguments.array[1].used] = 0;
       main->chains.array[main->chains.used].string[main->chains.array[main->chains.used].used] = 0;
 
-      if (fl_string_compare(arguments.array[1].string, firewall_chain_forward_s, arguments.array[1].used, firewall_chain_forward_s_length) == F_equal_to) {
+      if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_forward_s) == F_equal_to) {
         create_chain = F_false;
       }
-      else if (fl_string_compare(arguments.array[1].string, firewall_chain_input_s, arguments.array[1].used, firewall_chain_input_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_input_s) == F_equal_to) {
         create_chain = F_false;
       }
-      else if (fl_string_compare(arguments.array[1].string, firewall_chain_output_s, arguments.array[1].used, firewall_chain_output_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_output_s) == F_equal_to) {
         create_chain = F_false;
       }
-      else if (fl_string_compare(arguments.array[1].string, firewall_chain_postrouting_s, arguments.array[1].used, firewall_chain_postrouting_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_postrouting_s) == F_equal_to) {
         create_chain = F_false;
       }
-      else if (fl_string_compare(arguments.array[1].string, firewall_chain_prerouting_s, arguments.array[1].used, firewall_chain_prerouting_s_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_prerouting_s) == F_equal_to) {
         create_chain = F_false;
       }
 
@@ -1080,7 +1080,7 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
         firewall_print_debug_tool(main->warning, firewall_tool_iptables_s, arguments);
 
         tool = firewall_program_iptables_e;
-        status = fll_execute_program((f_string_t) firewall_tool_iptables_s, arguments, 0, 0, (void *) &return_code);
+        status = fll_execute_program(firewall_tool_iptables_s, arguments, 0, 0, (void *) &return_code);
 
         // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
         if (status == F_child) {
@@ -1155,7 +1155,7 @@ f_status_t firewall_delete_chains(firewall_main_t * const main) {
     f_string_dynamic_t argument[1] = f_string_dynamic_t_initialize;
     int return_code = 0;
 
-    argument[0].string = (f_string_t) "-F";
+    argument[0].string = "-F";
     argument[0].size = 2;
     argument[0].used = 2;
 
@@ -1256,9 +1256,9 @@ f_status_t firewall_default_lock(firewall_main_t * const main) {
     arguments.used = 3;
     arguments.size = arguments.used;
 
-    arguments.array[0].string = (f_string_t) firewall_action_policy_command_s;
-    arguments.array[1].string = (f_string_t) chains[i];
-    arguments.array[2].string = (f_string_t) "DROP";
+    arguments.array[0].string = firewall_action_policy_command_s;
+    arguments.array[1].string = chains[i];
+    arguments.array[2].string = "DROP";
 
     arguments.array[0].used = firewall_action_append_command_s_length;
     arguments.array[1].used = lengths[i];

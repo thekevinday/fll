@@ -34,7 +34,7 @@ extern "C" {
 
     if (F_status_set_fine(status) != F_mount) {
       if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-        recurse.verbose(recurse.output, source.string, destination.string);
+        recurse.verbose(recurse.output, source, destination);
       }
 
       return status;
@@ -57,7 +57,7 @@ extern "C" {
       status = f_directory_remove(source, recurse.depth_max, F_false);
 
       if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-        recurse.verbose(recurse.output, source.string, destination.string);
+        recurse.verbose(recurse.output, source, destination);
       }
     }
     else {
@@ -67,7 +67,7 @@ extern "C" {
       status = f_file_remove(source);
 
       if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-        recurse.verbose(recurse.output, source.string, destination.string);
+        recurse.verbose(recurse.output, source, destination);
       }
     }
 

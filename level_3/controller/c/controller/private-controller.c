@@ -103,17 +103,30 @@ extern "C" {
       return status;
     }
 
-    const f_array_length_t path_length = global.setting->path_setting.used ? global.setting->path_setting.used + F_path_separator_s_length + cache->action.name_file.used : cache->action.name_file.used;
-    char path[path_length + 1];
+    f_string_static_t path = f_string_static_t_initialize;
 
     if (global.setting->path_setting.used) {
-      memcpy(path, global.setting->path_setting.string, global.setting->path_setting.used);
-      memcpy(path + global.setting->path_setting.used + F_path_separator_s_length, cache->action.name_file.string, cache->action.name_file.used);
-
-      path[global.setting->path_setting.used] = f_path_separator_s.string[0];
+      path.used = global.setting->path_setting.used + F_path_separator_s_length + cache->action.name_file.used;
+    }
+    else {
+      path.used = cache->action.name_file.used;
     }
 
-    path[path_length] = 0;
+    char path_string[path.used + 1];
+    path.string = path_string;
+
+    if (global.setting->path_setting.used) {
+      memcpy(path_string, global.setting->path_setting.string, global.setting->path_setting.used);
+      memcpy(path_string + global.setting->path_setting.used + F_path_separator_s_length, cache->action.name_file.string, cache->action.name_file.used);
+
+      path_string[global.setting->path_setting.used] = f_path_separator_s.string[0];
+    }
+    else {
+      memcpy(path_string, cache->action.name_file.string, cache->action.name_file.used);
+    }
+
+    path_string[path.used] = 0;
+
 
     status = f_file_stream_open(path, f_string_empty_s, &file);
 
@@ -133,7 +146,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
-          controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file_e);
+          controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, f_file_operation_read_s, fll_error_file_type_file_e);
         }
       }
     }
@@ -147,7 +160,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
-          controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file_e);
+          controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stat", F_true, path, f_file_operation_stat_s, fll_error_file_type_file_e);
         }
       }
       else {
@@ -168,17 +181,17 @@ extern "C" {
     f_status_t status = F_none;
 
     // the file exists, do not attempt to overwrite.
-    if (f_file_exists(path.string) == F_true) {
+    if (f_file_exists(path) == F_true) {
       return F_status_set_error(F_file_found);
     }
 
     {
       f_string_dynamic_t path_directory = f_string_dynamic_t_initialize;
 
-      status = f_file_name_directory(path.string, path.used, &path_directory);
+      status = f_file_name_directory(path, &path_directory);
 
       if (F_status_is_error_not(status)) {
-        status = f_directory_exists(path_directory.string);
+        status = f_directory_exists(path_directory);
       }
 
       f_string_dynamic_resize(0, &path_directory);
@@ -195,7 +208,7 @@ extern "C" {
 
     file.flag = F_file_flag_write_only_d;
 
-    status = f_file_stream_open(path.string, f_file_open_mode_truncate_s.string, &file);
+    status = f_file_stream_open(path, f_file_open_mode_truncate_s, &file);
     if (F_status_is_error(status)) return status;
 
     fll_print_format("%i%r", file.stream, pid, f_string_eol_s);
@@ -212,14 +225,14 @@ extern "C" {
   f_status_t controller_file_pid_delete(const pid_t pid, const f_string_static_t path) {
 
     // only delete if the file exists and there is no error while checking.
-    if (f_file_exists(path.string) != F_true) {
+    if (f_file_exists(path) != F_true) {
       return F_none;
     }
 
     f_status_t status = F_none;
     f_file_t pid_file = f_file_t_initialize;
 
-    status = f_file_stream_open(path.string, f_file_open_mode_read_s.string, &pid_file);
+    status = f_file_stream_open(path, f_file_open_mode_read_s, &pid_file);
     if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t pid_buffer = f_string_dynamic_t_initialize;
@@ -245,7 +258,7 @@ extern "C" {
       status = fl_conversion_string_to_decimal_unsigned(pid_buffer.string, range, &number);
 
       if (F_status_is_error_not(status) && number == pid) {
-        status = f_file_remove(path.string);
+        status = f_file_remove(path);
       }
       else {
         status = F_status_set_error(F_number_not);
@@ -263,7 +276,7 @@ extern "C" {
 
     *pid = 0;
 
-    f_status_t status = f_file_exists(path.string);
+    f_status_t status = f_file_exists(path);
     if (F_status_is_error(status)) return status;
 
     if (status != F_true) {
@@ -272,7 +285,7 @@ extern "C" {
 
     f_file_t pid_file = f_file_t_initialize;
 
-    status = f_file_stream_open(path.string, f_file_open_mode_read_s.string, &pid_file);
+    status = f_file_stream_open(path, f_file_open_mode_read_s, &pid_file);
     if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t pid_buffer = f_string_dynamic_t_initialize;
@@ -400,7 +413,7 @@ extern "C" {
           if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(global->main->error.to, global->thread);
 
-            controller_print_error_file(0, global->main->error, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid.string, "create", fll_error_file_type_file_e);
+            controller_print_error_file(0, global->main->error, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid, f_file_operation_create_s, fll_error_file_type_file_e);
 
             flockfile(global->main->error.to.stream);
 
@@ -421,7 +434,7 @@ extern "C" {
             fl_print_format("%[' could not be written because the destination is read only.%]%r", global->main->warning.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
           }
           else {
-            controller_print_error_file(0, global->main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid.string, "create", fll_error_file_type_file_e);
+            controller_print_error_file(0, global->main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid, f_file_operation_create_s, fll_error_file_type_file_e);
           }
 
           controller_entry_print_error_cache(is_entry, global->main->warning, cache->action);
@@ -454,7 +467,7 @@ extern "C" {
 
     if (global->setting->path_control.used) {
       if (global->setting->control_readonly) {
-        if (f_file_exists(global->setting->path_control.string) != F_true) {
+        if (f_file_exists(global->setting->path_control) != F_true) {
           if (global->main->output.verbosity == f_console_verbosity_debug_e) {
             controller_lock_print(global->main->output.to, global->thread);
 
@@ -492,7 +505,7 @@ extern "C" {
           }
         }
         else {
-          status = f_file_remove(global->setting->path_control.string);
+          status = f_file_remove(global->setting->path_control);
 
           if (F_status_set_fine(status) == F_memory_not) {
             controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_file_remove", F_true);
@@ -526,7 +539,7 @@ extern "C" {
             }
           }
           else {
-            status = f_file_role_change(global->setting->path_control.string, global->setting->control_user, global->setting->control_group, F_true);
+            status = f_file_role_change(global->setting->path_control, global->setting->control_user, global->setting->control_group, F_true);
 
             if (F_status_is_error(status)) {
               f_socket_disconnect(&global->setting->control_socket, f_socket_close_fast_e);
@@ -550,7 +563,7 @@ extern "C" {
               }
             }
             else {
-              status = f_file_mode_set(global->setting->path_control.string, global->setting->control_mode);
+              status = f_file_mode_set(global->setting->path_control, global->setting->control_mode);
 
               if (F_status_is_error(status)) {
                 f_socket_disconnect(&global->setting->control_socket, f_socket_close_fast_e);

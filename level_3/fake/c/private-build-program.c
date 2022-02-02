@@ -13,7 +13,7 @@ extern "C" {
 #ifndef _di_fake_build_program_script_
   int fake_build_program_script(fake_main_t * const main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
+    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return main->child;
 
     fake_build_touch(main, file_stage, status);
 
@@ -24,7 +24,7 @@ extern "C" {
 #ifndef _di_fake_build_program_shared_
   int fake_build_program_shared(fake_main_t * const main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
+    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return main->child;
     if (!data_build.setting.build_sources_program.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
@@ -68,6 +68,7 @@ extern "C" {
 
           memcpy(source_string, path_sources->string, path_sources->used);
           memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
+
           source_string[source.used] = 0;
 
           *status = fll_execute_arguments_add(source, &arguments);
@@ -79,17 +80,20 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status)) {
-      f_array_length_t parameter_file_name_path_length = main->path_build_programs_shared.used + data_build.setting.project_name.used;
+      f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
+      parameter_file_name_path.used = main->path_build_programs_shared.used + data_build.setting.project_name.used;
 
-      char parameter_file_name_path[parameter_file_name_path_length + 1];
+      char parameter_file_name_path_string[parameter_file_name_path.used + 1];
+      parameter_file_name_path.string = parameter_file_name_path_string;
 
-      memcpy(parameter_file_name_path, main->path_build_programs_shared.string, main->path_build_programs_shared.used);
-      memcpy(parameter_file_name_path + main->path_build_programs_shared.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
-      parameter_file_name_path[parameter_file_name_path_length] = 0;
+      memcpy(parameter_file_name_path_string, main->path_build_programs_shared.string, main->path_build_programs_shared.used);
+      memcpy(parameter_file_name_path_string + main->path_build_programs_shared.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
+
+      parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
       const f_string_static_t values[] = {
         fake_build_parameter_library_output_s,
-        macro_f_string_static_t_initialize(parameter_file_name_path, 0, parameter_file_name_path_length),
+        parameter_file_name_path,
       };
 
       for (uint8_t i = 0; i < 2; ++i) {
@@ -104,13 +108,14 @@ extern "C" {
     // if project-specific library sources exist, then the -lproject_name needs to be added to the arguments.
     if (F_status_is_error_not(*status) && data_build.setting.build_sources_library.used) {
       f_string_static_t link_project_library = f_string_static_t_initialize;
-      link_project_library.used = fake_build_parameter_library_link_file_s_length + data_build.setting.project_name.used;
+      link_project_library.used = fake_build_parameter_library_link_file_s.used + data_build.setting.project_name.used;
 
       char link_project_library_string[link_project_library.used + 1];
       link_project_library.string = link_project_library_string;
 
-      memcpy(link_project_library, fake_build_parameter_library_link_file_s.string, fake_build_parameter_library_link_file_s.used);
-      memcpy(link_project_library + fake_build_parameter_library_link_file_s.string, data_build.setting.project_name.string, data_build.setting.project_name.used);
+      memcpy(link_project_library_string, fake_build_parameter_library_link_file_s.string, fake_build_parameter_library_link_file_s.used);
+      memcpy(link_project_library_string + fake_build_parameter_library_link_file_s.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
+
       link_project_library_string[link_project_library.used] = 0;
 
       *status = fll_execute_arguments_add(link_project_library, &arguments);
@@ -122,6 +127,7 @@ extern "C" {
       fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       macro_f_string_dynamics_t_delete_simple(arguments);
+
       return 0;
     }
 
@@ -140,7 +146,7 @@ extern "C" {
 #ifndef _di_fake_build_program_static_
   int fake_build_program_static(fake_main_t * const main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main->child;
+    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return main->child;
     if (!data_build.setting.build_sources_program.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
@@ -186,6 +192,7 @@ extern "C" {
 
           memcpy(source_string, path_sources->string, path_sources->used);
           memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
+
           source_string[source.used] = 0;
 
           *status = fll_execute_arguments_add(source, &arguments);
@@ -197,42 +204,45 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status)) {
-      f_array_length_t source_library_length = main->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_s_length;
+      f_string_static_t source_library = f_string_static_t_initialize;
+      source_library.used = main->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s.used + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_s.used;
 
-      char source_library[source_library_length + 1];
+      char source_library_string[source_library.used + 1];
+      source_library.string = source_library_string;
+      source_library.used = 0;
 
-      source_library_length = 0;
-
-      // only include the library if there are sources that would result in it being built.
+      // Only include the library if there are sources that would result in it being built.
       if (data_build.setting.build_sources_library.used) {
-        memcpy(source_library, main->path_build_libraries_static.string, main->path_build_libraries_static.used);
-        source_library_length += main->path_build_libraries_static.used;
+        memcpy(source_library_string, main->path_build_libraries_static.string, main->path_build_libraries_static.used);
+        source_library.used += main->path_build_libraries_static.used;
 
-        memcpy(source_library + source_library_length, fake_build_parameter_library_name_prefix_s.string, fake_build_parameter_library_name_prefix_s.used);
-        source_library_length += fake_build_parameter_library_name_prefix_s.used;
+        memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_prefix_s.string, fake_build_parameter_library_name_prefix_s.used);
+        source_library.used += fake_build_parameter_library_name_prefix_s.used;
 
-        memcpy(source_library + source_library_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
-        source_library_length += data_build.setting.project_name.used;
+        memcpy(source_library_string + source_library.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
+        source_library.used += data_build.setting.project_name.used;
 
-        memcpy(source_library + source_library_length, fake_build_parameter_library_name_suffix_static_s.string, fake_build_parameter_library_name_suffix_static_s.used);
-        source_library_length += fake_build_parameter_library_name_suffix_static_s.used;
+        memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_suffix_static_s.string, fake_build_parameter_library_name_suffix_static_s.used);
+        source_library.used += fake_build_parameter_library_name_suffix_static_s.used;
       }
 
-      source_library.string[source_library_length] = 0;
+      source_library_string[source_library.used] = 0;
 
-      f_array_length_t parameter_file_name_path_length = main->path_build_programs_static.used + data_build.setting.project_name.used;
+      f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
+      parameter_file_name_path.used = main->path_build_programs_static.used + data_build.setting.project_name.used;
 
-      char parameter_file_name_path[parameter_file_name_path_length + 1];
+      char parameter_file_name_path_string[parameter_file_name_path.used + 1];
 
-      memcpy(parameter_file_name_path, main->path_build_programs_static.string, main->path_build_programs_static.used);
-      memcpy(parameter_file_name_path + main->path_build_programs_static.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
-      parameter_file_name_path[parameter_file_name_path_length] = 0;
+      memcpy(parameter_file_name_path_string, main->path_build_programs_static.string, main->path_build_programs_static.used);
+      memcpy(parameter_file_name_path_string + main->path_build_programs_static.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
+
+      parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
       const f_string_static_t values[] = {
-        macro_f_string_static_t_initialize(source_library, 0, source_library_length),
+        source_library,
         fake_build_parameter_library_static_s,
         fake_build_parameter_library_output_s,
-        macro_f_string_static_t_initialize(parameter_file_name_path, 0, parameter_file_name_path_length),
+        parameter_file_name_path,
       };
 
       for (uint8_t i = 0; i < 4; ++i) {
@@ -250,6 +260,7 @@ extern "C" {
       fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       macro_f_string_dynamics_t_delete_simple(arguments);
+
       return 0;
     }
 

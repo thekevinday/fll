@@ -53,7 +53,7 @@ extern "C" {
     bool exclusive;
     f_file_t output;
 
-    void (*verbose)(const f_file_t, const f_string_t, const f_string_t);
+    void (*verbose)(const f_file_t, const f_string_static_t, const f_string_static_t);
 
     f_directory_statuss_t *failures;
   } fl_directory_recurse_t;

@@ -20,7 +20,7 @@ extern "C" {
     f_status_t status_file = F_none;
 
     const f_array_length_t total = arguments.used - 1;
-    f_array_length_t destination_length = 0;
+    f_string_static_t destination = f_string_static_t_initialize;
 
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
     f_mode_t mode = f_mode_t_initialize;
@@ -44,10 +44,10 @@ extern "C" {
 
     // In this case, the destination could be a file, so confirm this.
     if (arguments.used == 2) {
-      status = f_directory_is(arguments.array[1].string);
+      status = f_directory_is(arguments.array[1]);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, arguments.array[1], f_file_operation_identify_s, fll_error_file_type_directory_e);
 
         return F_status_set_error(F_failure);
       }
@@ -59,63 +59,64 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < total; ++i) {
 
-      destination_length = arguments.array[total].used;
+      destination.used = arguments.array[total].used;
 
       if (existing) {
-        destination_length += arguments.array[i].used + 1;
+        destination.used += arguments.array[i].used + 1;
       }
 
-      char destination[destination_length + 1];
+      char destination_string[destination.used + 1];
+      destination.string = destination_string;
 
-      memcpy(destination, arguments.array[total].string, arguments.array[total].used);
+      memcpy(destination_string, arguments.array[total].string, arguments.array[total].used);
 
       if (existing) {
-        memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
-        destination[arguments.array[total].used] = f_path_separator_s.string[0];
+        memcpy(destination_string + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
+        destination_string[arguments.array[total].used] = f_path_separator_s.string[0];
       }
 
-      destination[destination_length] = 0;
+      destination_string[destination.used] = 0;
 
-      status_file = f_directory_is(arguments.array[i].string);
+      status_file = f_directory_is(arguments.array[i]);
 
       if (status_file == F_true) {
         if (clone) {
-          status_file = fl_directory_clone(arguments.array[i].string, destination, arguments.array[i].used, destination_length, F_true, recurse);
+          status_file = fl_directory_clone(arguments.array[i], destination, F_true, recurse);
         }
         else {
-          status_file = fl_directory_copy(arguments.array[i].string, destination, arguments.array[i].used, destination_length, mode, recurse);
+          status_file = fl_directory_copy(arguments.array[i], destination, mode, recurse);
         }
 
         if (F_status_is_error(status_file)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status_file), clone ? "fl_directory_clone" : "fl_directory_copy", F_true, arguments.array[i].string, clone ? "clone" : "copy", fll_error_file_type_directory_e);
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), clone ? "fl_directory_clone" : "fl_directory_copy", F_true, arguments.array[i], clone ? f_file_operation_clone_s : f_file_operation_copy_s, fll_error_file_type_directory_e);
 
           status = F_status_set_error(F_failure);
         }
       }
       else if (status_file == F_false) {
         if (clone) {
-          status_file = f_file_clone(arguments.array[i].string, destination, F_true, recurse.size_block, recurse.exclusive);
+          status_file = f_file_clone(arguments.array[i], destination, F_true, recurse.size_block, recurse.exclusive);
         }
         else {
-          status_file = f_file_copy(arguments.array[i].string, destination, mode, recurse.size_block, recurse.exclusive);
+          status_file = f_file_copy(arguments.array[i], destination, mode, recurse.size_block, recurse.exclusive);
         }
 
         if (F_status_is_error(status_file)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status_file), clone ? "f_file_clone" : "f_file_copy", F_true, arguments.array[i].string, clone ? "clone" : "copy", fll_error_file_type_file_e);
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), clone ? "f_file_clone" : "f_file_copy", F_true, arguments.array[i], clone ? f_file_operation_clone_s : f_file_operation_copy_s, fll_error_file_type_file_e);
 
           status = F_status_set_error(F_failure);
         }
         else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
           flockfile(data_make->main->output.to.stream);
 
-          fl_print_format("%r%r '%[%Q%]' to '", data_make->main->output.to.stream, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
-          fl_print_format("%[%S%]'.%r", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, destination, data_make->main->context.set.notable, f_string_eol_s);
+          fl_print_format("%r%s '%[%Q%]' to '", data_make->main->output.to.stream, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
+          fl_print_format("%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, destination, data_make->main->context.set.notable, f_string_eol_s);
 
           funlockfile(data_make->main->output.to.stream);
         }
       }
       else if (F_status_is_error(status_file)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[i].string, "identify", fll_error_file_type_directory_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[i], f_file_operation_identify_s, fll_error_file_type_directory_e);
 
         return F_status_set_error(F_failure);
       }
@@ -139,7 +140,7 @@ extern "C" {
 
       memset(&file_stat, 0, sizeof(struct stat));
 
-      status = f_file_stat(arguments.array[i].string, F_false, &file_stat);
+      status = f_file_stat(arguments.array[i], F_false, &file_stat);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
@@ -156,17 +157,17 @@ extern "C" {
           status = F_none;
         }
         else {
-          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stat", F_true, arguments.array[i].string, "delete", fll_error_file_type_file_e);
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stat", F_true, arguments.array[i], f_file_operation_delete_s, fll_error_file_type_file_e);
 
           return status;
         }
       }
       else if (macro_f_file_type_is_directory(file_stat.st_mode)) {
         if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-          status = f_directory_remove_custom(arguments.array[i].string, recursion_max, F_false, fake_clean_remove_recursively_verbosely);
+          status = f_directory_remove_custom(arguments.array[i], recursion_max, F_false, fake_clean_remove_recursively_verbosely);
         }
         else {
-          status = f_directory_remove(arguments.array[i].string, recursion_max, F_false);
+          status = f_directory_remove(arguments.array[i], recursion_max, F_false);
         }
 
         if (F_status_set_fine(status) == F_file_found_not) {
@@ -178,7 +179,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_remove", F_true, arguments.array[i].string, "delete", fll_error_file_type_directory_e);
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_remove", F_true, arguments.array[i], f_file_operation_delete_s, fll_error_file_type_directory_e);
 
           return status;
         }
@@ -187,7 +188,7 @@ extern "C" {
         }
       }
       else {
-        status = f_file_remove(arguments.array[i].string);
+        status = f_file_remove(arguments.array[i]);
 
         if (F_status_set_fine(status) == F_file_found_not) {
           if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
@@ -198,7 +199,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_remove", F_true, arguments.array[i].string, "delete", fll_error_file_type_file_e);
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_remove", F_true, arguments.array[i], f_file_operation_delete_s, fll_error_file_type_file_e);
 
           return status;
         }
@@ -288,16 +289,16 @@ extern "C" {
       }
 
       if (all) {
-        status_file = fll_file_role_change_all(arguments.array[i].string, -1, id, F_false, fake_make_operation_recursion_depth_max_d);
+        status_file = fll_file_role_change_all(arguments.array[i], -1, id, F_false, fake_make_operation_recursion_depth_max_d);
       }
       else {
-        status_file = f_file_role_change(arguments.array[i].string, -1, id, F_false);
+        status_file = f_file_role_change(arguments.array[i], -1, id, F_false);
       }
 
       if (F_status_is_error(status_file)) {
         status = status_file;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i].string, "change group of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i], f_file_operation_change_group_s, fll_error_file_type_file_e);
       }
       else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
@@ -406,7 +407,7 @@ extern "C" {
       else {
         for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
-          if (f_environment_exists(arguments.array[i].) != F_true) {
+          if (f_environment_exists(arguments.array[i]) != F_true) {
             state_process->condition_result = fake_condition_result_false_e;
 
             break;
@@ -482,12 +483,12 @@ extern "C" {
 
     for (f_array_length_t i = if_not ? 2 : 1; i < arguments.used; ++i) {
 
-      status = f_file_exists(arguments.array[i].string);
+      status = f_file_exists(arguments.array[i]);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i].string, f_file_operation_find_s, fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.array[i], f_file_operation_find_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -567,12 +568,12 @@ extern "C" {
 
     for (; i < arguments.used; ++i, mode_file = 0) {
 
-      status = f_file_mode_read(arguments.array[i].string, &mode_file);
+      status = f_file_mode_read(arguments.array[i], &mode_file);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get type of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i], f_file_operation_get_type_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -791,12 +792,12 @@ extern "C" {
 
     for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
 
-      status = f_file_group_read(arguments.array[i].string, &id_file);
+      status = f_file_group_read(arguments.array[i], &id_file);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_group_read", F_true, arguments.array[i].string, "get group of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_group_read", F_true, arguments.array[i], f_file_operation_get_group_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -863,12 +864,12 @@ extern "C" {
 
     for (f_array_length_t i = if_not ? 4 : 3; i < arguments.used; ++i, mode_file = 0) {
 
-      status = f_file_mode_read(arguments.array[i].string, &mode_file);
+      status = f_file_mode_read(arguments.array[i], &mode_file);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "get mode of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i], f_file_operation_get_mode_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -926,12 +927,12 @@ extern "C" {
 
     for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
 
-      status = f_file_owner_read(arguments.array[i].string, &id_file);
+      status = f_file_owner_read(arguments.array[i], &id_file);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_owner_read", F_true, arguments.array[i].string, "get owner of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_owner_read", F_true, arguments.array[i], f_file_operation_get_owner_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -974,10 +975,10 @@ extern "C" {
 
     for (f_array_length_t i = 1; i < arguments.used; ++i, mode = 0) {
 
-      status = f_file_mode_read(arguments.array[i].string, &mode_file);
+      status = f_file_mode_read(arguments.array[i], &mode_file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i], f_file_operation_change_group_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -985,20 +986,20 @@ extern "C" {
       status = f_file_mode_determine(mode_file, mode_rule, replace, macro_f_file_type_is_directory(mode_file), &mode);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_determine", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_determine", F_true, arguments.array[i], f_file_operation_change_group_s, fll_error_file_type_file_e);
 
         break;
       }
 
       if (all) {
-        status = fll_file_mode_set_all(arguments.array[i].string, mode, fake_make_operation_recursion_depth_max_d);
+        status = fll_file_mode_set_all(arguments.array[i], mode, fake_make_operation_recursion_depth_max_d);
       }
       else {
-        status = f_file_mode_set(arguments.array[i].string, mode);
+        status = f_file_mode_set(arguments.array[i], mode);
       }
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_mode_set_all" : "f_file_mode_set", F_true, arguments.array[i].string, "change mode of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_mode_set_all" : "f_file_mode_set", F_true, arguments.array[i], f_file_operation_change_group_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -1024,7 +1025,7 @@ extern "C" {
 
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
-    f_array_length_t destination_length = 0;
+    f_string_static_t destination = f_string_static_t_initialize;
 
     if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
       recurse.output = data_make->main->output.to;
@@ -1035,10 +1036,10 @@ extern "C" {
 
     // In this case, the destination could be a file, so confirm this.
     if (arguments.used == 2) {
-      status_file = f_directory_is(arguments.array[1].string);
+      status_file = f_directory_is(arguments.array[1]);
 
       if (F_status_is_error(status_file)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, arguments.array[1], f_file_operation_identify_s, fll_error_file_type_directory_e);
 
         return F_status_set_error(F_failure);
       }
@@ -1050,27 +1051,28 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < total; ++i) {
 
-      destination_length = arguments.array[total].used;
+      destination.used = arguments.array[total].used;
 
       if (existing) {
-        destination_length += arguments.array[i].used + 1;
+        destination.used += arguments.array[i].used + 1;
       }
 
-      char destination[destination_length + 1];
+      char destination_string[destination.used + 1];
+      destination.string = destination_string;
 
-      memcpy(destination, arguments.array[total].string, arguments.array[total].used);
+      memcpy(destination_string, arguments.array[total].string, arguments.array[total].used);
 
       if (existing) {
-        memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
-        destination[arguments.array[total].used] = f_path_separator_s.string[0];
+        memcpy(destination_string + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
+        destination_string[arguments.array[total].used] = f_path_separator_s.string[0];
       }
 
-      destination[destination_length] = 0;
+      destination_string[destination.used] = 0;
 
-      status_file = fll_file_move(arguments.array[i].string, destination, arguments.array[i].used, destination_length, recurse);
+      status_file = fll_file_move(arguments.array[i], destination, recurse);
 
       if (F_status_is_error(status_file)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "fll_file_move", F_true, arguments.array[i].string, "move", fll_error_file_type_directory_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "fll_file_move", F_true, arguments.array[i], f_file_operation_move_s, fll_error_file_type_directory_e);
 
         status = F_status_set_error(F_failure);
       }
@@ -1106,16 +1108,16 @@ extern "C" {
       }
 
       if (all) {
-        status_file = fll_file_role_change_all(arguments.array[i].string, id, -1, F_false, fake_make_operation_recursion_depth_max_d);
+        status_file = fll_file_role_change_all(arguments.array[i], id, -1, F_false, fake_make_operation_recursion_depth_max_d);
       }
       else {
-        status_file = f_file_role_change(arguments.array[i].string, id, -1, F_false);
+        status_file = f_file_role_change(arguments.array[i], id, -1, F_false);
       }
 
       if (F_status_is_error(status_file)) {
         status = status_file;
 
-        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i].string, "change owner of", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i], f_file_operation_change_owner_s, fll_error_file_type_file_e);
       }
       else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         fll_print_format("%s owner of '%Q' to %u.%r", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", arguments.array[i], id, f_string_eol_s);
@@ -1229,25 +1231,27 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_string_dynamic_resize(0, &data_make->path.stack.array[data_make->path.stack.used - 1]);
+    f_string_dynamic_t *argument = &data_make->path.stack.array[data_make->path.stack.used - 1];
+
+    f_string_dynamic_resize(0, argument);
 
     --data_make->path.stack.used;
 
-    status = f_path_change(data_make->path.stack.array[data_make->path.stack.used - 1].string);
+    status = f_path_change(argument->string);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", data_make->path.stack.array[data_make->path.stack.used - 1]);
+      fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", *argument);
 
       return 0;
     }
 
     if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
-      status = fake_make_path_relative(data_make, data_make->path.stack.array[data_make->path.stack.used - 1]);
+      status = fake_make_path_relative(data_make, *argument);
 
       // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
       if (F_status_is_error(status)) {
         fll_error_print(data_make->error, F_status_set_fine(status), "fake_make_path_relative", F_true);
-        fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used - 1], data_make->main->context.set.notable, f_string_eol_s);
+        fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, argument, data_make->main->context.set.notable, f_string_eol_s);
       }
       else {
         fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path_cache, data_make->main->context.set.notable, f_string_eol_s);
@@ -1283,14 +1287,14 @@ extern "C" {
     else {
       status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->path.stack);
 
-      if (F_status_set_fine(status) == F_array_too_large) {
-        fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", fake_common_file_path_stack_s_length);
-
-        return status;
-      }
-
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "macro_f_string_dynamics_t_resize", F_true);
+        if (F_status_set_fine(status) == F_array_too_large) {
+          fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", fake_common_file_path_stack_s);
+
+          return status;
+        }
+
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
 
         return status;
       }
@@ -1301,7 +1305,7 @@ extern "C" {
       status = f_string_dynamic_append(data_make->path_cache, &data_make->path.stack.array[data_make->path.stack.used]);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
 
         return status;
       }
@@ -1367,28 +1371,28 @@ extern "C" {
     for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
       if (fl_string_dynamic_compare(fake_make_operation_argument_file_s, arguments.array[0]) == F_equal_to) {
-        status = f_file_touch(arguments.array[i].string, mode.regular, F_false);
+        status = f_file_touch(arguments.array[i], mode.regular, F_false);
 
         if (F_status_is_error(status)) {
-          if (F_status_is_error_not(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
-            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_touch", F_true, data_make->path_cache.string, "touch", fll_error_file_type_file_e);
+          if (F_status_is_error_not(fll_path_canonical(arguments.array[i], &data_make->path_cache))) {
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_touch", F_true, data_make->path_cache, f_file_operation_touch_s, fll_error_file_type_file_e);
           }
           else {
-            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_touch", F_true, arguments.array[i].string, "touch", fll_error_file_type_file_e);
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_touch", F_true, arguments.array[i], f_file_operation_touch_s, fll_error_file_type_file_e);
           }
 
           break;
         }
       }
       else if (fl_string_dynamic_compare(fake_make_operation_argument_directory_s, arguments.array[0]) == F_equal_to) {
-        status = f_directory_touch(arguments.array[i].string, mode.directory);
+        status = f_directory_touch(arguments.array[i], mode.directory);
 
         if (F_status_is_error(status)) {
-          if (F_status_is_error_not(fll_path_canonical(arguments.array[i].string, &data_make->path_cache))) {
-            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_touch", F_true, data_make->path_cache.string, "touch", fll_error_file_type_directory_e);
+          if (F_status_is_error_not(fll_path_canonical(arguments.array[i], &data_make->path_cache))) {
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_touch", F_true, data_make->path_cache, f_file_operation_touch_s, fll_error_file_type_directory_e);
           }
           else {
-            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_touch", F_true, arguments.array[i].string, "touch", fll_error_file_type_directory_e);
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_touch", F_true, arguments.array[i], f_file_operation_touch_s, fll_error_file_type_directory_e);
           }
 
           break;

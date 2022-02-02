@@ -354,10 +354,10 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_link_e) {
-      *status = f_file_link(arguments.array[0].string, arguments.array[1].string);
+      *status = f_file_link(arguments.array[0], arguments.array[1]);
 
       if (F_status_is_error(*status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_link", F_true, arguments.array[1].string, "create link", fll_error_file_type_file_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_link", F_true, arguments.array[1], f_file_operation_link_s, fll_error_file_type_file_e);
       }
       else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);

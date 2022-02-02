@@ -11,7 +11,10 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    const f_status_t status = private_fll_execute_arguments_add(source, arguments);
+    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
+    if (F_status_is_error(status)) return status;
+
+    status = private_fll_execute_arguments_add(source, arguments);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -55,12 +58,11 @@ extern "C" {
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_status_t status = F_none;
+    f_status_t status = f_string_dynamics_increase_by(size, arguments);
 
-    for (f_array_length_t i = 0; i < size; ++i) {
+    for (f_array_length_t i = 0; F_status_is_error_not(status) && i < size; ++i) {
 
       status = private_fll_execute_arguments_add(source[i], arguments);
-      if (F_status_is_error(status)) return status;
     } // for
 
     return status;
@@ -389,10 +391,10 @@ extern "C" {
 
       memcpy(&program_path, found->string, found->used);
 
-      f_string_dynamics_resize(0, &paths);
-
       program_name.string = program_path;
       program_name.used = found->used;
+
+      f_string_dynamics_resize(0, &paths);
 
       if (parameter && (parameter->option & FL_execute_parameter_option_path_d)) {
         fixed_arguments[0] = program_path;

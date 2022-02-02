@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_identify_load_line_
-  f_status_t fss_identify_load_line(fss_identify_main_t * const main, const f_file_t file, const f_string_t name, f_string_static_t *buffer, f_string_range_t *range) {
+  f_status_t fss_identify_load_line(fss_identify_main_t * const main, const f_file_t file, const f_string_static_t name, f_string_static_t *buffer, f_string_range_t *range) {
 
     f_status_t status = F_none;
     uint16_t signal_check = 0;
@@ -32,7 +32,7 @@ extern "C" {
         status = f_string_dynamic_resize(buffer->size + file.size_read, buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, name ? name : "-", "read", name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, name.used ? name : f_string_ascii_s, f_file_operation_read_s, name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
           return status;
         }
@@ -41,7 +41,7 @@ extern "C" {
       status = f_file_stream_read_block(file, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, name ? name : "-", "read", name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, name.used ? name : f_string_ascii_s, f_file_operation_read_s, name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
         return status;
       }
@@ -72,7 +72,7 @@ extern "C" {
     status = fll_fss_identify(buffer.string, range, &ids);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, name ? name : "-", "read", name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, name.used ? name : f_string_ascii_s, f_file_operation_read_s, name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
       f_type_fll_ids_resize(0, &ids);
 

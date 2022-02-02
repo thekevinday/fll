@@ -434,13 +434,13 @@ extern "C" {
         status = f_file_read(file, &main->buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
         }
         else {
-          status = fss_embedded_list_read_main_process_file(main, arguments, "-", depths, &objects_delimits, &contents_delimits, &comments);
+          status = fss_embedded_list_read_main_process_file(main, arguments, f_string_ascii_minus_s, depths, &objects_delimits, &contents_delimits, &comments);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, "-", "read", fll_error_file_type_pipe_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
           }
         }
 
@@ -472,7 +472,7 @@ extern "C" {
           if (!main->quantity.total) {
             status = f_file_size_by_id(file.id, &main->quantity.total);
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
               f_file_stream_close(F_true, &file);
 
@@ -496,7 +496,7 @@ extern "C" {
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -504,7 +504,7 @@ extern "C" {
           status = fss_embedded_list_read_main_process_file(main, arguments, arguments->argv[main->remaining.array[i]], depths, &objects_delimits, &contents_delimits, &comments);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
             break;
           }

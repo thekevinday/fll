@@ -316,6 +316,7 @@ extern "C" {
  *   The full path to the program or the program name to copy from.
  * @param arguments
  *   An array of strings representing the arguments.
+ *   The strings must be NULL terminated.
  * @param last_slash
  *   A pointer to the last slash.
  *   Set to NULL if there is no slash in the program_path.
@@ -326,6 +327,7 @@ extern "C" {
  *   The destination to copy the name to.
  * @param fixed_arguments
  *   The array of arguments to be updated with the program name.
+ *   This is a array of simple strings intended to be eventually directly passed to functions like exec().
  *
  * @return
  *   F_none on success.

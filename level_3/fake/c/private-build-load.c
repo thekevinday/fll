@@ -116,7 +116,7 @@ extern "C" {
         }
 
         if (F_status_is_error(*status)) {
-          fake_print_error_fss(main, F_status_set_fine(*status), "fll_fss_extended_read", main->file_data_build_settings.string, range, F_true);
+          fake_print_error_fss(main, F_status_set_fine(*status), "fll_fss_extended_read", main->file_data_build_settings, range, F_true);
         }
         else {
           *status = fl_fss_apply_delimit(delimits, &buffer);
@@ -499,7 +499,7 @@ extern "C" {
 
           settings_mode_names[j].used = 0;
 
-          *status = f_string_dynamic_increase_by(settings_length[j] + f_string_ascii_minus_s.used + modes->array[i].used, &settings_mode_names[j]);
+          *status = f_string_dynamic_increase_by(settings_value[j]->used + f_string_ascii_minus_s.used + modes->array[i].used, &settings_mode_names[j]);
 
           if (F_status_is_error(*status)) {
             function = "f_string_dynamic_increase_by";
@@ -507,13 +507,13 @@ extern "C" {
             break;
           }
 
-          memcpy(settings_mode_names[j].string, settings_name[j], settings_length[j]);
-          settings_mode_names[j].used = settings_length[j];
+          memcpy(settings_mode_names[j].string, settings_name[j].string, settings_value[j]->used);
+          settings_mode_names[j].used = settings_value[j]->used;
 
           memcpy(settings_mode_names[j].string, f_string_ascii_minus_s.string, f_string_ascii_minus_s.used);
           settings_mode_names[j].used += f_string_ascii_minus_s.used;
 
-          memcpy(settings_mode_names[j].string + settings_mode_namesf[j].used, modes->array[i].string, modes->array[i].used);
+          memcpy(settings_mode_names[j].string + settings_mode_names[j].used, modes->array[i].string, modes->array[i].used);
           settings_mode_names[j].used += modes->array[i].used;
         } // for
 
@@ -775,7 +775,7 @@ extern "C" {
         0,                               // search_exclusive
         0,                               // search_shared
         0,                               // search_static
-        fake_build_version_type_micro_e,   // version_file
+        fake_build_version_type_micro_e, // version_file
         0,                               // version_major
         0,                               // version_major_prefix
         0,                               // version_micro
@@ -784,42 +784,42 @@ extern "C" {
         0,                               // version_minor_prefix
         0,                               // version_nano
         0,                               // version_nano_prefix
-        fake_build_version_type_major_e,   // version_target
+        fake_build_version_type_major_e, // version_target
       };
 
-      const char *settings_single_version_default_name[] = {
-        0,                               // build_compiler
-        0,                               // build_indexer
-        0,                               // build_language
-        0,                               // build_script
-        0,                               // build_shared
-        0,                               // build_static
-        0,                               // path_headers
-        0,                               // path_headers_preserve
-        0,                               // path_language
-        0,                               // path_library_script
-        0,                               // path_library_shared
-        0,                               // path_library_static
-        0,                               // path_program_script
-        0,                               // path_program_shared
-        0,                               // path_program_static
-        0,                               // path_sources
-        0,                               // path_standard
-        0,                               // process_post
-        0,                               // process_pre
-        0,                               // project_name
-        0,                               // search_exclusive
-        0,                               // search_shared
-        0,                               // search_static
+      const f_string_static_t settings_single_version_default_name[] = {
+        f_string_empty_s,                // build_compiler
+        f_string_empty_s,                // build_indexer
+        f_string_empty_s,                // build_language
+        f_string_empty_s,                // build_script
+        f_string_empty_s,                // build_shared
+        f_string_empty_s,                // build_static
+        f_string_empty_s,                // path_headers
+        f_string_empty_s,                // path_headers_preserve
+        f_string_empty_s,                // path_language
+        f_string_empty_s,                // path_library_script
+        f_string_empty_s,                // path_library_shared
+        f_string_empty_s,                // path_library_static
+        f_string_empty_s,                // path_program_script
+        f_string_empty_s,                // path_program_shared
+        f_string_empty_s,                // path_program_static
+        f_string_empty_s,                // path_sources
+        f_string_empty_s,                // path_standard
+        f_string_empty_s,                // process_post
+        f_string_empty_s,                // process_pre
+        f_string_empty_s,                // project_name
+        f_string_empty_s,                // search_exclusive
+        f_string_empty_s,                // search_shared
+        f_string_empty_s,                // search_static
         fake_build_version_micro_s,      // version_file
-        0,                               // version_major
-        0,                               // version_major_prefix
-        0,                               // version_micro
-        0,                               // version_micro_prefix
-        0,                               // version_minor
-        0,                               // version_minor_prefix
-        0,                               // version_nano
-        0,                               // version_nano_prefix
+        f_string_empty_s,                // version_major
+        f_string_empty_s,                // version_major_prefix
+        f_string_empty_s,                // version_micro
+        f_string_empty_s,                // version_micro_prefix
+        f_string_empty_s,                // version_minor
+        f_string_empty_s,                // version_minor_prefix
+        f_string_empty_s,                // version_nano
+        f_string_empty_s,                // version_nano_prefix
         fake_build_version_major_s,      // version_target
       };
 
@@ -881,10 +881,10 @@ extern "C" {
         }
 
         if (settings_single_type[i] == 1) {
-          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_common_setting_bool_yes_s, settings_single_source[i]->array[0].used, fake_common_setting_bool_yes_s_length) == F_equal_to) {
+          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_common_setting_bool_yes_s) == F_equal_to) {
             *settings_single_bool[i] = F_true;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_common_setting_bool_no_s, settings_single_source[i]->array[0].used, fake_common_setting_bool_no_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_common_setting_bool_no_s) == F_equal_to) {
             *settings_single_bool[i] = F_false;
           }
           else {
@@ -910,13 +910,13 @@ extern "C" {
           }
         }
         else if (settings_single_type[i] == 4) {
-          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_bash_s, settings_single_source[i]->array[0].used, fake_build_language_bash_s_length) == F_equal_to) {
+          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_language_bash_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_bash_e;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_c_s, settings_single_source[i]->array[0].used, fake_build_language_c_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_language_c_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_c_e;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_language_cpp_s, settings_single_source[i]->array[0].used, fake_build_language_cpp_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_language_cpp_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_cpp_e;
           }
           else {
@@ -944,16 +944,16 @@ extern "C" {
           }
         }
         else if (settings_single_type[i] == 5) {
-          if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_major_s, settings_single_source[i]->array[0].used, fake_build_version_major_s_length) == F_equal_to) {
+          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_version_major_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_major_e;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor_s, settings_single_source[i]->array[0].used, fake_build_version_minor_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_version_minor_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_minor_e;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro_s, settings_single_source[i]->array[0].used, fake_build_version_micro_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_version_micro_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_micro_e;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_nano_s, settings_single_source[i]->array[0].used, fake_build_version_nano_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_version_nano_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_nano_e;
           }
           else {
@@ -1336,7 +1336,7 @@ extern "C" {
       return;
     }
 
-    const f_string_t names[] = {
+    const f_string_static_t names[] = {
       fake_build_stage_libraries_script_s,
       fake_build_stage_libraries_shared_s,
       fake_build_stage_libraries_static_s,
@@ -1373,10 +1373,10 @@ extern "C" {
     f_string_dynamic_t settings_file_base = f_string_dynamic_t_initialize;
 
     if (settings_file.used) {
-      *status = f_file_name_base(settings_file.string, settings_file.used, &settings_file_base);
+      *status = f_file_name_base(settings_file, &settings_file_base);
     }
     else {
-      *status = f_file_name_base(main->file_data_build_settings.string, main->file_data_build_settings.used, &settings_file_base);
+      *status = f_file_name_base(main->file_data_build_settings, &settings_file_base);
     }
 
     if (F_status_is_error(*status)) {

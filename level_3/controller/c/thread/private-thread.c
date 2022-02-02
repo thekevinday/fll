@@ -72,7 +72,7 @@ extern "C" {
 
             for (; j < process->path_pids.used; ++j) {
 
-              if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j].string) == F_true) {
+              if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j]) == F_true) {
                 break;
               }
             } // for
@@ -218,7 +218,7 @@ extern "C" {
       if (main->parameters.array[controller_parameter_daemon_e].result == f_console_result_found_e) {
         setting->ready = controller_setting_ready_done_e;
 
-        if (f_file_exists(setting->path_pid.string) == F_true) {
+        if (f_file_exists(setting->path_pid) == F_true) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, &thread);
 

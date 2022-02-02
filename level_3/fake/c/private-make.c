@@ -19,7 +19,7 @@ extern "C" {
 
     data_make->path_cache.used = 0;
 
-    f_status_t status = fll_path_canonical(path.string, &data_make->path_cache);
+    f_status_t status = fll_path_canonical(path, &data_make->path_cache);
     if (F_status_is_error(status)) return status;
 
     if (data_make->path_cache.used < data_make->path.stack.array[0].used) {
@@ -113,7 +113,7 @@ extern "C" {
       return F_status_set_error(F_parameter);
     }
 
-    const f_status_t status = f_file_mode_from_string(buffer.string, main->umask, mode, replace);
+    const f_status_t status = f_file_mode_from_string(buffer, main->umask, mode, replace);
 
     if (F_status_is_error(status)) {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
