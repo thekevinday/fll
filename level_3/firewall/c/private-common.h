@@ -108,7 +108,7 @@ typedef struct {
  * @param arguments
  *   The arguments passed to the tool.
  */
-extern void firewall_print_debug_tool(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+extern void firewall_print_debug_tool(const fl_print_t output, const f_string_static_t tool, const f_string_statics_t arguments) F_attribute_visibility_internal_d;
 
 /**
  * Print an memory allocation error.
@@ -138,7 +138,7 @@ extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, c
  * @param filename
  *   The name of the file.
  */
-extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_t filename) F_attribute_visibility_internal_d;
+extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_static_t filename) F_attribute_visibility_internal_d;
 
 /**
  * Print an error about the given operation failed.
@@ -150,7 +150,7 @@ extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t 
  * @param arguments
  *   The arguments passed to the tool.
  */
-extern void firewall_print_error_on_operation(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+extern void firewall_print_error_on_operation(const fl_print_t output, const f_string_static_t tool, const f_string_statics_t arguments) F_attribute_visibility_internal_d;
 
 /**
  * Print an unhandled error for the given function.
@@ -176,7 +176,7 @@ extern void firewall_print_error_on_unhandled(const fl_print_t output, const f_s
  * @param filename
  *   The name of the file.
  */
-extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_t filename) F_attribute_visibility_internal_d;
+extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_static_t filename) F_attribute_visibility_internal_d;
 
 /**
  * Print a message about a process signal being recieved, such as an interrupt signal.

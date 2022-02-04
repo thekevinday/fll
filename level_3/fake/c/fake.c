@@ -164,7 +164,6 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
     status = F_none;
 
     f_array_length_t operations_length = main->parameters.array[fake_parameter_operation_build_e].locations.used;
@@ -305,9 +304,7 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            f_string_static_t stub = f_string_static_t_initialize;
-
-            status = fake_build_operate(stub, main);
+            status = fake_build_operate(f_string_empty_s, main);
           }
         }
         else if (main->operation == fake_operation_clean_e) {

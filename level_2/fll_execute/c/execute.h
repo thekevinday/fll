@@ -92,7 +92,7 @@ extern "C" {
  *
  * The arguments are only appended if the length of name and value are not 0.
  *
- * This guarantees that an end of string exists at the end of each argument.
+ * This guarantees that NULL exists at the end of each argument (after the argumunets[..].used length).
  * This does not check for NULL characters anywhere else in the string.
  *
  * @param prefix
@@ -109,12 +109,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
+ * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
@@ -130,10 +130,8 @@ extern "C" {
  *
  * The arguments are only appended if the length of name and value are not 0.
  *
- * This guarantees that an end of string exists at the end of each argument.
+ * This guarantees that NULL exists at the end of each argument (after the argumunets[..].used length).
  * This does not check for NULL characters anywhere else in the string.
- *
- * @todo functions like this should be changed to accept arrays of f_string_static, reducing the number of parameters passed to it.
  *
  * @param prefix
  *   An array of the strings prepend to the name.
@@ -151,12 +149,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
+ * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
@@ -166,7 +164,7 @@ extern "C" {
 /**
  * Add a set of arguments to the execution arguments array.
  *
- * This guarantees that an end of string exists at the end of the copied string.
+ * This guarantees that NULL exists at the end of each argument (after the argumunets[..].used length).
  * This does not check for NULL characters anywhere else in the string.
  *
  * @param source
@@ -181,12 +179,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
+ * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_set_

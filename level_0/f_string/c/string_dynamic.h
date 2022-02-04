@@ -627,7 +627,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -635,7 +635,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_append_
-  extern f_status_t f_string_dynamic_append(const f_string_dynamic_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_append(const f_string_dynamic_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_append_
 
 /**
@@ -648,7 +648,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -656,7 +656,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_append_assure_
-  extern f_status_t f_string_dynamic_append_assure(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_append_assure(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_append_assure_
 
 /**
@@ -671,7 +671,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -679,7 +679,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_append_assure_nulless_
-  extern f_status_t f_string_dynamic_append_assure_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_append_assure_nulless(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_append_assure_nulless_
 
 /**
@@ -694,7 +694,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -702,7 +702,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_append_nulless_
-  extern f_status_t f_string_dynamic_append_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_append_nulless(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_append_nulless_
 
 /**
@@ -794,7 +794,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -802,7 +802,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_mash_
-  extern f_status_t f_string_dynamic_mash(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_mash(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_mash_
 
 /**
@@ -821,7 +821,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -829,7 +829,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_mash_nulless_
-  extern f_status_t f_string_dynamic_mash_nulless(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_mash_nulless(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_mash_nulless_
 
 /**
@@ -846,7 +846,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -854,7 +854,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_mish_
-  extern f_status_t f_string_dynamic_mish(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_mish(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_mish_
 
 /**
@@ -873,7 +873,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -881,7 +881,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_mish_nulless_
-  extern f_status_t f_string_dynamic_mish_nulless(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_mish_nulless(const f_string_static_t glue, const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_mish_nulless_
 
 /**
@@ -896,7 +896,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -905,7 +905,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_append_
-  extern f_status_t f_string_dynamic_partial_append(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_append(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_append_
 
 /**
@@ -922,7 +922,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -931,7 +931,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_append_assure_
-  extern f_status_t f_string_dynamic_partial_append_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_append_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_append_assure_
 
 /**
@@ -950,7 +950,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -959,7 +959,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_append_assure_nulless_
-  extern f_status_t f_string_dynamic_partial_append_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_append_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_append_assure_nulless_
 
 /**
@@ -976,7 +976,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -985,7 +985,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_append_nulless_
-  extern f_status_t f_string_dynamic_partial_append_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_append_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_append_nulless_
 
 /**
@@ -1004,7 +1004,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1013,7 +1013,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_mash_
-  extern f_status_t f_string_dynamic_partial_mash(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_mash(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_mash_
 
 /**
@@ -1034,7 +1034,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1043,7 +1043,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_mash_nulless_
-  extern f_status_t f_string_dynamic_partial_mash_nulless(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_mash_nulless(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_mash_nulless_
 
 /**
@@ -1062,7 +1062,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1071,7 +1071,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_mish_
-  extern f_status_t f_string_dynamic_partial_mish(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_mish(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_mish_
 
 /**
@@ -1092,7 +1092,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1101,7 +1101,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_mish_nulless_
-  extern f_status_t f_string_dynamic_partial_mish_nulless(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_mish_nulless(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_mish_nulless_
 
 /**
@@ -1118,7 +1118,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1127,7 +1127,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_prepend_
-  extern f_status_t f_string_dynamic_partial_prepend(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_prepend(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_prepend_
 
 /**
@@ -1146,7 +1146,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1155,7 +1155,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_prepend_assure_
-  extern f_status_t f_string_dynamic_partial_prepend_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_prepend_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_prepend_assure_
 
 /**
@@ -1174,7 +1174,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1183,7 +1183,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_prepend_assure_nulless_
-  extern f_status_t f_string_dynamic_partial_prepend_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_prepend_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_prepend_assure_nulless_
 
 /**
@@ -1200,7 +1200,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1209,7 +1209,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_partial_prepend_nulless_
-  extern f_status_t f_string_dynamic_partial_prepend_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_prepend_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_partial_prepend_nulless_
 
 /**
@@ -1224,7 +1224,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1233,7 +1233,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_prepend_
-  extern f_status_t f_string_dynamic_prepend(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_prepend(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_prepend_
 
 /**
@@ -1250,7 +1250,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1259,7 +1259,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_prepend_assure_
-  extern f_status_t f_string_dynamic_prepend_assure(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_prepend_assure(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_prepend_assure_
 
 /**
@@ -1276,7 +1276,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1285,7 +1285,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_prepend_assure_nulless_
-  extern f_status_t f_string_dynamic_prepend_assure_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_prepend_assure_nulless(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_prepend_assure_nulless_
 
 /**
@@ -1300,7 +1300,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1309,7 +1309,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_prepend_nulless_
-  extern f_status_t f_string_dynamic_prepend_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_prepend_nulless(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_prepend_nulless_
 
 /**
@@ -1344,7 +1344,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not_eos on success, but there was no string data to seek.
+ *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1370,7 +1370,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not_eos on success, but there was no string data to seek.
+ *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1396,7 +1396,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not_eos on success, but there was no string data to seek.
+ *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1427,7 +1427,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_terminate_
-  extern f_status_t f_string_dynamic_terminate(f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_terminate(f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_terminate_
 
 /**
@@ -1452,7 +1452,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_terminate_after_
-  extern f_status_t f_string_dynamic_terminate_after(f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_terminate_after(f_string_dynamic_t * const destination);
 #endif // _di_f_string_dynamic_terminate_after_
 
 /**
@@ -1471,7 +1471,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_string_dynamics_adjust_
-  extern f_status_t f_string_dynamics_adjust(const f_array_length_t length, f_string_dynamics_t *dynamics);
+  extern f_status_t f_string_dynamics_adjust(const f_array_length_t length, f_string_dynamics_t * const dynamics);
 #endif // _di_f_string_dynamics_adjust_
 
 /**
@@ -1516,7 +1516,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamics_decimate_by_
-  extern f_status_t f_string_dynamics_decimate_by(const f_array_length_t amount, f_string_dynamics_t *dynamics);
+  extern f_status_t f_string_dynamics_decimate_by(const f_array_length_t amount, f_string_dynamics_t * const dynamics);
 #endif // _di_f_string_dynamics_decimate_by_
 
 /**
@@ -1540,7 +1540,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamics_decrease_by_
-  extern f_status_t f_string_dynamics_decrease_by(const f_array_length_t amount, f_string_dynamics_t *dynamics);
+  extern f_status_t f_string_dynamics_decrease_by(const f_array_length_t amount, f_string_dynamics_t * const dynamics);
 #endif // _di_f_string_dynamics_decrease_by_
 
 /**
@@ -1565,7 +1565,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamics_increase_
-  extern f_status_t f_string_dynamics_increase(const uint16_t step, f_string_dynamics_t *dynamics);
+  extern f_status_t f_string_dynamics_increase(const uint16_t step, f_string_dynamics_t * const dynamics);
 #endif // _di_f_string_dynamics_increase_
 
 /**
@@ -1590,7 +1590,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamics_increase_by_
-  extern f_status_t f_string_dynamics_increase_by(const f_array_length_t amount, f_string_dynamics_t *dynamics);
+  extern f_status_t f_string_dynamics_increase_by(const f_array_length_t amount, f_string_dynamics_t * const dynamics);
 #endif // _di_f_string_dynamics_increase_by_
 
 /**
@@ -1609,7 +1609,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamics_resize_
-  extern f_status_t f_string_dynamics_resize(const f_array_length_t length, f_string_dynamics_t *dynamics);
+  extern f_status_t f_string_dynamics_resize(const f_array_length_t length, f_string_dynamics_t * const dynamics);
 #endif // _di_f_string_dynamics_resize_
 
 #ifdef __cplusplus

@@ -123,16 +123,19 @@ extern "C" {
         paths->array[paths->used].used = 0;
 
         if (total) {
-          char buffer[total];
+          char buffer[total + 1];
 
-          for (j = 0, k = 0; j < total; ++j) {
+          for (j = first, k = 0; j < i; ++j) {
 
-            if (!path.string[first + j]) continue;
+            if (!path.string[j]) continue;
 
-            buffer[k++] = path.string[first + j];
+            buffer[k++] = path.string[j];
           } // for
 
-          buffer[k++] = f_path_separator_s.string[0];
+          // Guarantee a trailing directory separator.
+          if (buffer[k - 1] != f_path_separator_s.string[0]) {
+            buffer[k++] = f_path_separator_s.string[0];
+          }
 
           status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
           if (F_status_is_error(status)) return status;
@@ -207,7 +210,10 @@ extern "C" {
             buffer[k++] = path.string[r + j + 1];
           } // for
 
-          buffer[k++] = f_path_separator_s.string[0];
+          // Guarantee a trailing directory separator.
+          if (buffer[k - 1] != f_path_separator_s.string[0]) {
+            buffer[k++] = f_path_separator_s.string[0];
+          }
 
           status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
           if (F_status_is_error(status)) return status;

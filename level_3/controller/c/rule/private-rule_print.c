@@ -85,7 +85,7 @@ extern "C" {
 
       controller_lock_print(print->to, (controller_thread_t *) process->main_thread);
 
-      fl_print_format("%r%[%SThe %s '%]", print->to.stream, f_string_eol_s, print->context, print->prefix, script_is ? controller_script_s : controller_program_s, print->context);
+      fl_print_format("%r%[%QThe %r '%]", print->to.stream, f_string_eol_s, print->context, print->prefix, script_is ? controller_script_s : controller_program_s, print->context);
       fl_print_format("%[%Q%]", print->to.stream, print->notable, name, print->notable);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
@@ -110,7 +110,7 @@ extern "C" {
         const uint8_t code = WIFEXITED(process->result) ? WEXITSTATUS(process->result) : 0;
 
         if (code == F_execute_access) {
-          fl_print_format("%[' access denied.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' cannot be executed, access is denied.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_bad) {
           fl_print_format("%[' cannot execute, unsupported format.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);

@@ -24,7 +24,7 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-1 control includes
+// FLL-1 control includes.
 #include <fll/level_0/control_group-common.h>
 
 #ifdef __cplusplus

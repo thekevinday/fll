@@ -6,13 +6,13 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_append_
-  f_status_t f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     return private_f_string_append(source, length, destination);
@@ -20,13 +20,13 @@ extern "C" {
 #endif // _di_f_string_append_
 
 #ifndef _di_f_string_append_assure_
-  f_status_t f_string_append_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_append_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     if (destination->used < length) {
@@ -63,13 +63,13 @@ extern "C" {
 #endif // _di_f_string_append_assure_
 
 #ifndef _di_f_string_append_assure_nulless_
-  f_status_t f_string_append_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_append_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     if (destination->used < length) {
@@ -106,13 +106,13 @@ extern "C" {
 #endif // _di_f_string_append_assure_nulless_
 
 #ifndef _di_f_string_append_nulless_
-  f_status_t f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     return private_f_string_append_nulless(source, length, destination);
@@ -120,13 +120,13 @@ extern "C" {
 #endif // _di_f_string_append_nulless_
 
 #ifndef _di_f_string_mash_
-  f_status_t f_string_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     if (glue_length && destination->used) {
@@ -139,13 +139,13 @@ extern "C" {
 #endif // _di_f_string_mash_
 
 #ifndef _di_f_string_mash_nulless_
-  f_status_t f_string_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     if (glue_length && destination->used) {
@@ -158,13 +158,13 @@ extern "C" {
 #endif // _di_f_string_mash_nulless_
 
 #ifndef _di_f_string_mish_
-  f_status_t f_string_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     if (glue_length && destination->used) {
@@ -177,13 +177,13 @@ extern "C" {
 #endif // _di_f_string_mish_
 
 #ifndef _di_f_string_mish_nulless_
-  f_status_t f_string_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     if (glue_length && destination->used) {
@@ -196,13 +196,13 @@ extern "C" {
 #endif // _di_f_string_mish_nulless_
 
 #ifndef _di_f_string_prepend_
-  f_status_t f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     return private_f_string_prepend(source, length, destination);
@@ -210,13 +210,13 @@ extern "C" {
 #endif // _di_f_string_prepend_
 
 #ifndef _di_f_string_prepend_assure_
-  f_status_t f_string_prepend_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_prepend_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     if (destination->used < length) {
@@ -253,13 +253,13 @@ extern "C" {
 #endif // _di_f_string_prepend_assure_
 
 #ifndef _di_f_string_prepend_assure_nulless_
-  f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     if (destination->used < length) {
@@ -296,13 +296,13 @@ extern "C" {
 #endif // _di_f_string_prepend_assure_nulless_
 
 #ifndef _di_f_string_prepend_nulless_
-  f_status_t f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!length) {
-      return F_data_not_eos;
+      return F_data_not;
     }
 
     return private_f_string_prepend_nulless(source, length, destination);

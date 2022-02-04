@@ -28,20 +28,15 @@ extern "C" {
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
   f_status_t private_fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments) {
 
-    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
-    if (F_status_is_error(status)) return status;
-
     arguments->array[arguments->used].used = 0;
 
-    status = f_string_dynamic_increase_by(prefix.used + name.used + 1, &arguments->array[arguments->used]);
+    f_status_t status = f_string_dynamic_increase_by(prefix.used + name.used + 1, &arguments->array[arguments->used]);
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamic_append(prefix, &arguments->array[arguments->used]);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_terminate(&arguments->array[arguments->used]);
-    }
-
+    status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
     if (F_status_is_error(status)) return status;
 
     ++arguments->used;
@@ -55,11 +50,9 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamic_append(value, &arguments->array[arguments->used]);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_terminate(&arguments->array[arguments->used]);
-    }
-
+    status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
     if (F_status_is_error(status)) return status;
 
     ++arguments->used;

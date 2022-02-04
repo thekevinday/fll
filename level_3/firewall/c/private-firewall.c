@@ -20,7 +20,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
   bool is_ip_list = F_false;
   f_string_dynamic_t ip_list = f_string_dynamic_t_initialize;
 
-  // iptables command arguments
+  // Iptables command arguments
   bool device_all = F_false;
   bool ip_list_direction = F_false; // false = source, true = destination
   bool use_protocol = F_false;
@@ -56,7 +56,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
     }
   }
 
-  // for custom chains, the chain command may not be specified.
+  // For custom chains, the chain command may not be specified.
   if (!(local.is_main || local.is_stop || local.is_lock)) {
     chain = firewall_chain_custom_id_e;
   }
@@ -85,12 +85,13 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
     f_string_dynamic_resize(0, &ip_list);
 
-    // process chain rule
+    // Process chain rule
     if (length >= firewall_chain_s_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_chain_s, length, firewall_chain_s_length) == F_equal_to) {
       if (chain == firewall_chain_custom_id_e) {
 
-        // custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
+        // Custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
         fll_print_format("%r%[%QAt line %ul, the chain option is meaningless inside of a custom chain.%]%r", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, i, main->warning.context, f_string_eol_s);
+
         continue;
       }
 
@@ -123,7 +124,8 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
       if (!invalid) continue;
     }
-    // process direction rule
+
+    // Process direction rule
     else if (length >= firewall_direction_s_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_direction_s, length, firewall_direction_s_length) == F_equal_to) {
       length = macro_firewall_structure_size(local.rule_contents.array[i], 0);
 
@@ -140,13 +142,15 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         direction = firewall_direction_none_id_e;
       }
       else {
-        // direction must be specified, and no custom directions are allowed.
+
+        // Direction must be specified, and no custom directions are allowed.
         invalid = F_true;
       }
 
       if (!invalid) continue;
     }
-    // process device rule.
+
+    // Process device rule.
     else if (length >= firewall_device_s_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_device_s, length, firewall_device_s_length) == F_equal_to) {
       length = macro_firewall_structure_size(local.rule_contents.array[i], 0);
 
@@ -200,7 +204,8 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         continue;
       }
     }
-    // process action rule.
+
+    // Process action rule.
     else if (length >= firewall_action_length_s && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_action_s, length, firewall_action_length_s) == F_equal_to) {
       length = macro_firewall_structure_size(local.rule_contents.array[i], 0);
 
@@ -225,7 +230,8 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
       if (!invalid) continue;
     }
-    // process ip_list rule.
+
+    // Process ip_list rule.
     else if (length >= firewall_ip_list_length_s && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_ip_list, length, firewall_ip_list_length_s) == F_equal_to) {
       length = macro_firewall_structure_size(local.rule_contents.array[i], 0);
       is_ip_list = F_true;
@@ -266,7 +272,8 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         continue;
       }
     }
-    // process tool rule.
+
+    // Process tool rule.
     else if (length >= firewall_tool_s_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_tool_s, length, firewall_tool_s_length) == F_equal_to) {
       length = macro_firewall_structure_size(local.rule_contents.array[i], 0);
 
@@ -299,7 +306,8 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         if (!invalid) continue;
       }
     }
-    // process rule rule, if the remaining rule does not match as firewall_rule_s, then it is an invalid rule.
+
+    // Process rule rule, if the remaining rule does not match as firewall_rule_s, then it is an invalid rule.
     else if (length < firewall_rule_s_length || fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_rule_s, length, firewall_rule_s_length) == F_equal_to_not) {
       if (length) {
         flockfile(main->warning.to.stream);
@@ -340,7 +348,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
     for (r = repeat; r > 0; --r) {
 
-      // first add the program name
+      // First add the program name
       f_string_dynamics_resize(0, &arguments);
 
       status = f_string_dynamics_increase(F_memory_default_allocation_small_d, &arguments);
@@ -361,7 +369,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
       if (F_status_is_error(status)) break;
 
-      // process the action when a non-none chain is specified.
+      // Process the action when a non-none chain is specified.
       if (chain != firewall_chain_none_id_e && action != firewall_action_none_id_e) {
         if (action == firewall_action_append_id_e) {
            macro_f_string_dynamic_t_resize(status, argument, firewall_action_append_command_s_length);
@@ -396,7 +404,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
             break;
           }
 
-          // process the chain, which is required by the action.
+          // Process the chain, which is required by the action.
           if (chain == firewall_chain_custom_id_e) {
             if (main->chains.array[local.chain_ids.array[local.chain]].used > 0) {
                macro_f_string_dynamic_t_resize(status, argument, main->chains.array[local.chain_ids.array[local.chain]].used);
@@ -457,7 +465,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         }
       }
 
-      // add the device if and only if a non-none direction is specified.
+      // Add the device if and only if a non-none direction is specified.
       if (device.used > 0 && (direction == firewall_direction_input_id_e || direction == firewall_direction_output_id_e)) {
         if (length < firewall_device_all_s_length || fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string_t) firewall_device_all_s, length, firewall_device_all_s_length) == F_equal_to_not) {
           if (direction == firewall_direction_input_id_e) {
@@ -483,7 +491,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
           }
         }
 
-        // add the device.
+        // Add the device.
         if (device.used > 0) {
            macro_f_string_dynamic_t_resize(status, argument, device.used);
 
@@ -527,13 +535,13 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         }
       }
 
-      // last up is the "rule"
+      // Last up is the "rule"
       if ((!is_ip_list && local.rule_contents.array[i].used > 0) || (is_ip_list && local.rule_contents.array[i].used > 1)) {
         f_array_length_t subcounter = 0;
 
         if (is_ip_list) {
 
-          // skip past the chain
+          // Skip past the chain
           ++subcounter;
 
           length = macro_firewall_structure_size(local.rule_contents.array[i], subcounter);
@@ -542,7 +550,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
              macro_f_string_dynamic_t_resize(status, ip_list, length);
 
             if (F_status_is_error(status)) {
-              // prevent the loop below from being processed.
+              // Prevent the loop below from being processed.
               subcounter = local.rule_contents.array[i].used;
             }
             else {
@@ -587,7 +595,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         break;
       }
 
-      // now execute the generated commands.
+      // Now execute the generated commands.
       if (arguments.used > 1) {
         if (is_ip_list) {
           f_file_t file = f_file_t_initialize;
@@ -618,7 +626,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
             }
             else if (status == F_file_found_not) {
 
-              // the file does not have to exist
+              // The file does not have to exist
               if (main->error.verbosity != f_console_verbosity_verbose_e || main->error.verbosity == f_console_verbosity_debug_e) {
                 fll_print_format("%r%[%QCannot find the file '%Q'.%]%r", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, file_path, main->warning.context, f_string_eol_s);
               }
@@ -699,7 +707,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
                   firewall_print_error_on_invalid_parameter_for_file(main->error, "fll_fss_basic_read", file_path.used ? file_path.string : "");
                 }
                 else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
-                  // empty files are to be silently ignored
+                  // Empty files are to be silently ignored
                 }
                 else if (status == F_memory_not) {
                   firewall_print_error_on_allocation_failure(main->error);
@@ -784,7 +792,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
                     status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
-                    // Immediately exit child process, @todo this may require additional memory deallocation and relating changes.
                     if (status == F_child) {
                       f_string_dynamic_resize(0, &ip_list);
                       f_string_dynamic_resize(0, &argument);
@@ -792,7 +799,9 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
                       f_string_dynamic_resize(0, &device);
                       f_string_dynamic_resize(0, &protocol);
 
-                      exit(return_code);
+                      main->child = return_code;
+
+                      return status;
                     }
 
                     if (F_status_is_error(status)) {
@@ -839,7 +848,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
           status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
-          // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
             f_string_dynamic_resize(0, &ip_list);
             f_string_dynamic_resize(0, &argument);
@@ -847,7 +855,9 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
             f_string_dynamic_resize(0, &device);
             f_string_dynamic_resize(0, &protocol);
 
-            exit(return_code);
+            main->child = return_code;
+
+            return status;
           }
 
           if (F_status_is_error(status)) {
@@ -946,7 +956,7 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
       }
     }
 
-    // skip globally reserved chain name: main
+    // Skip globally reserved chain name: main
     range.start = 0;
     range.stop = firewall_group_main_s_length - 1;
     fixed_string.string = firewall_group_main_s;
@@ -957,7 +967,7 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
       reserved->main_at = i;
     }
 
-    // skip globally reserved chain name: stop
+    // Skip globally reserved chain name: stop
     range.start = 0;
     range.stop = firewall_group_stop_s_length - 1;
     fixed_string.string = firewall_group_stop_s;
@@ -968,7 +978,7 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
       reserved->stop_at = i;
     }
 
-    // skip globally reserved chain name: lock
+    // Skip globally reserved chain name: lock
     range.start = 0;
     range.stop = firewall_group_lock_s_length - 1;
     fixed_string.string = firewall_group_lock_s;
@@ -979,7 +989,7 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
       reserved->lock_at = i;
     }
 
-    // skip globally reserved chain name: none
+    // Skip globally reserved chain name: none
     range.start = 0;
     range.stop = firewall_group_lock_s_length - 1;
     fixed_string.string = firewall_chain_none_s;
@@ -1082,11 +1092,12 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
         tool = firewall_program_iptables_e;
         status = fll_execute_program(firewall_tool_iptables_s, arguments, 0, 0, (void *) &return_code);
 
-        // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
         if (status == F_child) {
           f_string_dynamics_resize(0, &arguments);
 
-          exit(return_code);
+          main->child = return_code;
+
+          return status;
         }
 
         if (F_status_is_error_not(status)) {
@@ -1103,11 +1114,12 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
           tool = firewall_program_ip6tables_e;
           status = fll_execute_program((f_string_t) firewall_tool_ip6tables_s, arguments, 0, 0, (void *) &return_code);
 
-          // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
             f_string_dynamics_resize(0, &arguments);
 
-            exit(return_code);
+            main->child = return_code;
+
+            return status;
           }
         }
 
@@ -1151,25 +1163,23 @@ f_status_t firewall_delete_chains(firewall_main_t * const main) {
       return F_status_set_error(F_interrupt);
     }
 
-    f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
-    f_string_dynamic_t argument[1] = f_string_dynamic_t_initialize;
-    int return_code = 0;
-
-    argument[0].string = "-F";
-    argument[0].size = 2;
-    argument[0].used = 2;
-
-    arguments.array = argument;
-    arguments.size = 1;
+    f_string_statics_t arguments = f_string_statics_t_initialize;
     arguments.used = 1;
+
+    f_string_static_t arguments_array[arguments.used];
+    arguments_array[0] = firewall_chain_forward_s;
+    arguments.array = arguments_array;
+
+    int return_code = 0;
 
     firewall_print_debug_tool(main->warning, tools[i], arguments);
 
     status = fll_execute_program(tools[i], arguments, 0, 0, (void *) &return_code);
 
-    // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
     if (status == F_child) {
-      exit(return_code);
+      main->child = return_code;
+
+      return status;
     }
 
     if (F_status_is_error(status)) {
@@ -1211,9 +1221,10 @@ f_status_t firewall_delete_chains(firewall_main_t * const main) {
 
     status = fll_execute_program(tools[i], arguments, 0, 0, (void *) &return_code);
 
-    // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
     if (status == F_child) {
-      exit(return_code);
+      main->child = return_code;
+
+      return status;
     }
 
     if (F_status_is_error(status)) {
@@ -1238,10 +1249,8 @@ f_status_t firewall_delete_chains(firewall_main_t * const main) {
 
 f_status_t firewall_default_lock(firewall_main_t * const main) {
 
-  const f_string_t chains[3] = { firewall_chain_input_s, firewall_chain_output_s, firewall_chain_forward_s };
-  const f_string_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
-
-  const f_array_length_t lengths[3] = { firewall_chain_input_s_length, firewall_chain_output_s_length, firewall_chain_forward_s_length };
+  const f_string_static_t chains[3] = { firewall_chain_input_s, firewall_chain_output_s, firewall_chain_forward_s };
+  const f_string_static_t tools[2] = { firewall_tool_iptables_s, firewall_tool_ip6tables_s };
 
   f_status_t status = F_none;
 
@@ -1249,23 +1258,19 @@ f_status_t firewall_default_lock(firewall_main_t * const main) {
 
   for (f_array_length_t i = 0; i < 3; ++i) {
 
-    f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
-    f_string_dynamic_t argument[3];
+    f_string_statics_t arguments = f_string_statics_t_initialize;
+    f_string_static_t argument[3];
 
     arguments.array = argument;
     arguments.used = 3;
     arguments.size = arguments.used;
 
-    arguments.array[0].string = firewall_action_policy_command_s;
-    arguments.array[1].string = chains[i];
+    arguments.array[0] = firewall_action_policy_command_s;
+    arguments.array[1] = chains[i];
     arguments.array[2].string = "DROP";
 
-    arguments.array[0].used = firewall_action_append_command_s_length;
-    arguments.array[1].used = lengths[i];
     arguments.array[2].used = 4;
 
-    arguments.array[0].size = arguments.array[0].used;
-    arguments.array[1].size = arguments.array[1].used;
     arguments.array[2].size = arguments.array[2].used;
 
     for (f_array_length_t j = 0; j < 2; ++j) {
@@ -1276,9 +1281,10 @@ f_status_t firewall_default_lock(firewall_main_t * const main) {
 
       status = fll_execute_program(tools[j], arguments, 0, 0, (void *) &return_code);
 
-      // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
       if (status == F_child) {
-        exit(return_code);
+        main->child = return_code;
+
+        return status;
       }
 
       if (firewall_signal_received(main)) {
@@ -1306,7 +1312,7 @@ f_status_t firewall_default_lock(firewall_main_t * const main) {
   return status;
 }
 
-f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_t filename, const bool optional, firewall_local_data_t *local) {
+f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_static_t filename, const bool optional, firewall_local_data_t *local) {
 
   f_file_t file = f_file_t_initialize;
 
@@ -1328,13 +1334,13 @@ f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_t 
           firewall_print_error_on_invalid_parameter(main->error, "f_file_open");
         }
         else if (status == F_file_found_not) {
-          fll_print_format("%r%[%QUnable to find the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+          fll_print_format("%r%[%QUnable to find the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
         }
         else if (status == F_file_open) {
-          fll_print_format("%r%[%QUnable to open the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+          fll_print_format("%r%[%QUnable to open the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
         }
         else if (status == F_file_descriptor) {
-          fll_print_format("%r%[%QFile descriptor error while trying to open the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+          fll_print_format("%r%[%QFile descriptor error while trying to open the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
         }
         else {
           firewall_print_error_on_unhandled(main->error, "f_file_open", status);
@@ -1357,16 +1363,16 @@ f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_t 
         firewall_print_error_on_invalid_parameter(main->error, "f_file_read");
       }
       else if (status == F_number_overflow) {
-        fll_print_format("%r%[%QInteger overflow while trying to buffer the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QInteger overflow while trying to buffer the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_file_closed) {
-        fll_print_format("%r%[%QThe file '%S' is no longer open.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QThe file '%Q' is no longer open.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_file_seek) {
-        fll_print_format("%r%[%QA seek error occurred while accessing the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QA seek error occurred while accessing the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_file_read) {
-        fll_print_format("%r%[%QA read error occurred while accessing the file '%S'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QA read error occurred while accessing the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_memory_not) {
         firewall_print_error_on_allocation_failure(main->error);
@@ -1397,7 +1403,7 @@ f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_t 
         firewall_print_error_on_invalid_parameter_for_file(main->error, "fll_fss_basic_list_read", filename);
       }
       else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
-        fll_print_format("%r%[%QNo relevant main was found within the file '%s'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QNo relevant main was found within the file '%Q'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s);
       }
       else if (status == F_memory_not) {
         firewall_print_error_on_allocation_failure(main->error);
@@ -1445,6 +1451,13 @@ f_status_t firewall_process_rules(firewall_main_t * const main, f_string_range_t
   if (F_status_is_error_not(status)) {
     status = firewall_perform_commands(main, *local);
 
+    if (status == F_child) {
+      macro_f_fss_objects_t_delete_simple(local->rule_objects);
+      macro_f_fss_contents_t_delete_simple(local->rule_contents);
+
+      return status;
+    }
+
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
@@ -1452,7 +1465,7 @@ f_status_t firewall_process_rules(firewall_main_t * const main, f_string_range_t
         firewall_print_error_on_allocation_failure(main->error);
       }
       else if (status == F_failure) {
-        // the error message has already been displayed.
+        // The error message has already been displayed.
       }
       else {
         firewall_print_error_on_unhandled(main->error, "firewall_perform_commands", status);
@@ -1460,6 +1473,7 @@ f_status_t firewall_process_rules(firewall_main_t * const main, f_string_range_t
 
       macro_f_fss_objects_t_delete_simple(local->rule_objects);
       macro_f_fss_contents_t_delete_simple(local->rule_contents);
+
       return status;
     }
   }

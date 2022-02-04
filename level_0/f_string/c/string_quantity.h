@@ -115,7 +115,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_adjust_
-  extern f_status_t f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t *quantitys);
+  extern f_status_t f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t * const quantitys);
 #endif // _di_f_string_quantitys_adjust_
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_append_
-  extern f_status_t f_string_quantitys_append(const f_string_quantitys_t source, f_string_quantitys_t *destination);
+  extern f_status_t f_string_quantitys_append(const f_string_quantitys_t source, f_string_quantitys_t * const destination);
 #endif // _di_f_string_quantitys_append_
 
 /**
@@ -158,7 +158,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_decimate_by_
-  extern f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+  extern f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t * const quantitys);
 #endif // _di_f_string_quantitys_decimate_by_
 
 /**
@@ -181,7 +181,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_decrease_by_
-  extern f_status_t f_string_quantitys_decrease_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+  extern f_status_t f_string_quantitys_decrease_by(const f_array_length_t amount, f_string_quantitys_t * const quantitys);
 #endif // _di_f_string_quantitys_decrease_by_
 
 /**
@@ -205,7 +205,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_increase_
-  extern f_status_t f_string_quantitys_increase(const uint16_t step, f_string_quantitys_t *quantitys);
+  extern f_status_t f_string_quantitys_increase(const uint16_t step, f_string_quantitys_t * const quantitys);
 #endif // _di_f_string_quantitys_increase_
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_increase_by_
-  extern f_status_t f_string_quantitys_increase_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+  extern f_status_t f_string_quantitys_increase_by(const f_array_length_t amount, f_string_quantitys_t * const quantitys);
 #endif // _di_f_string_quantitys_increase_by_
 
 /**
@@ -248,7 +248,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_resize_
-  extern f_status_t f_string_quantitys_resize(const f_array_length_t length, f_string_quantitys_t *quantitys);
+  extern f_status_t f_string_quantitys_resize(const f_array_length_t length, f_string_quantitys_t * const quantitys);
 #endif // _di_f_string_quantitys_resize_
 
 /**
@@ -267,7 +267,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantityss_adjust_
-  extern f_status_t f_string_quantityss_adjust(const f_array_length_t length, f_string_quantityss_t *quantityss);
+  extern f_status_t f_string_quantityss_adjust(const f_array_length_t length, f_string_quantityss_t * const quantityss);
 #endif // _di_f_string_quantityss_adjust_
 
 /**
@@ -290,7 +290,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantityss_decimate_by_
-  extern f_status_t f_string_quantityss_decimate_by(const f_array_length_t amount, f_string_quantityss_t *quantityss);
+  extern f_status_t f_string_quantityss_decimate_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss);
 #endif // _di_f_string_quantityss_decimate_by_
 
 /**
@@ -313,7 +313,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantityss_decrease_by_
-  extern f_status_t f_string_quantityss_decrease_by(const f_array_length_t amount, f_string_quantityss_t *quantityss);
+  extern f_status_t f_string_quantityss_decrease_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss);
 #endif // _di_f_string_quantityss_decrease_by_
 
 /**
@@ -338,7 +338,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantityss_increase_
-  extern f_status_t f_string_quantityss_increase(const uint16_t step, f_string_quantityss_t *quantityss);
+  extern f_status_t f_string_quantityss_increase(const uint16_t step, f_string_quantityss_t * const quantityss);
 #endif // _di_f_string_quantityss_increase_
 
 /**
@@ -363,7 +363,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantityss_increase_by_
-  extern f_status_t f_string_quantityss_increase_by(const f_array_length_t amount, f_string_quantityss_t *quantityss);
+  extern f_status_t f_string_quantityss_increase_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss);
 #endif // _di_f_string_quantityss_increase_by_
 
 /**
@@ -382,7 +382,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantityss_resize_
-  extern f_status_t f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t *quantityss);
+  extern f_status_t f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t * const quantityss);
 #endif // _di_f_string_quantityss_resize_
 
 #ifdef __cplusplus

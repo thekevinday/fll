@@ -61,12 +61,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate()
+ * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  * @see fll_execute_arguments_add_parameter()
  * @see fll_execute_arguments_add_parameter_set()

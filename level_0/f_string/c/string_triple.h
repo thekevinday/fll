@@ -100,7 +100,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_triples_adjust_
-  extern f_status_t f_string_triples_adjust(const f_array_length_t length, f_string_triples_t *triples);
+  extern f_status_t f_string_triples_adjust(const f_array_length_t length, f_string_triples_t * const triples);
 #endif // _di_f_string_triples_adjust_
 
 /**
@@ -121,7 +121,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_append_
-  extern f_status_t f_string_triples_append(const f_string_triples_t source, f_string_triples_t *destination);
+  extern f_status_t f_string_triples_append(const f_string_triples_t source, f_string_triples_t * const destination);
 #endif // _di_f_string_triples_append_
 
 /**
@@ -144,7 +144,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_decimate_by_
-  extern f_status_t f_string_triples_decimate_by(const f_array_length_t amount, f_string_triples_t *triples);
+  extern f_status_t f_string_triples_decimate_by(const f_array_length_t amount, f_string_triples_t * const triples);
 #endif // _di_f_string_triples_decimate_by_
 
 /**
@@ -167,7 +167,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_decrease_by_
-  extern f_status_t f_string_triples_decrease_by(const f_array_length_t amount, f_string_triples_t *triples);
+  extern f_status_t f_string_triples_decrease_by(const f_array_length_t amount, f_string_triples_t * const triples);
 #endif // _di_f_string_triples_decrease_by_
 
 /**
@@ -192,7 +192,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_increase_
-  extern f_status_t f_string_triples_increase(const uint16_t step, f_string_triples_t *triples);
+  extern f_status_t f_string_triples_increase(const uint16_t step, f_string_triples_t * const triples);
 #endif // _di_f_string_triples_increase_
 
 /**
@@ -217,7 +217,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_increase_by_
-  extern f_status_t f_string_triples_increase_by(const f_array_length_t amount, f_string_triples_t *triples);
+  extern f_status_t f_string_triples_increase_by(const f_array_length_t amount, f_string_triples_t * const triples);
 #endif // _di_f_string_triples_increase_by_
 
 /**
@@ -236,7 +236,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_resize_
-  extern f_status_t f_string_triples_resize(const f_array_length_t length, f_string_triples_t *triples);
+  extern f_status_t f_string_triples_resize(const f_array_length_t length, f_string_triples_t * const triples);
 #endif // _di_f_string_triples_resize_
 
 #ifdef __cplusplus

@@ -829,7 +829,6 @@ extern "C" {
   f_status_t f_utf_string_dynamic_terminate(f_utf_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
-      if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!destination->used && destination->size && !destination->string[destination->used - 1]) {
@@ -858,7 +857,6 @@ extern "C" {
   f_status_t f_utf_string_dynamic_terminate_after(f_utf_string_dynamic_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
-      if (destination->used > destination->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (destination->used) {

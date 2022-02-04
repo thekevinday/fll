@@ -67,6 +67,7 @@ extern "C" {
 
       char destination_string[destination.used + 1];
       destination.string = destination_string;
+      destination_string[destination.used] = 0;
 
       memcpy(destination_string, arguments.array[total].string, arguments.array[total].used);
 
@@ -74,8 +75,6 @@ extern "C" {
         memcpy(destination_string + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
         destination_string[arguments.array[total].used] = f_path_separator_s.string[0];
       }
-
-      destination_string[destination.used] = 0;
 
       status_file = f_directory_is(arguments.array[i]);
 
@@ -1059,6 +1058,7 @@ extern "C" {
 
       char destination_string[destination.used + 1];
       destination.string = destination_string;
+      destination_string[destination.used] = 0;
 
       memcpy(destination_string, arguments.array[total].string, arguments.array[total].used);
 
@@ -1066,8 +1066,6 @@ extern "C" {
         memcpy(destination_string + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
         destination_string[arguments.array[total].used] = f_path_separator_s.string[0];
       }
-
-      destination_string[destination.used] = 0;
 
       status_file = fll_file_move(arguments.array[i], destination, recurse);
 

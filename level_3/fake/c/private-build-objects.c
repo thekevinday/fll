@@ -59,10 +59,11 @@ extern "C" {
         source.used = path_sources->used + sources[i]->array[j].used;
 
         char source_string[source.used + 1];
+        source.string = source_string;
+        source_string[source.used] = 0;
 
         memcpy(source_string, path_sources->string, path_sources->used);
         memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
-        source_string[source.used] = 0;
 
         *status = fake_build_get_file_name_without_extension(main, sources[i]->array[j], &file_name);
 
@@ -162,6 +163,7 @@ extern "C" {
 
         char destination_string[destination.used + 1];
         destination.string = destination_string;
+        destination_string[destination.used] = 0;
 
         if (destination_path.used) {
           memcpy(destination_string, destination_path.string, destination_path.used);
@@ -173,8 +175,6 @@ extern "C" {
           memcpy(destination_string + main->path_build_objects.used, file_name.string, file_name.used);
           memcpy(destination_string + main->path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s.string, fake_build_parameter_object_name_suffix_s.used);
         }
-
-        destination_string[destination.used] = 0;
 
         const f_string_static_t values[] = {
           source,

@@ -15,6 +15,10 @@ int main(const int argc, const f_string_t *argv) {
 
   fll_program_standard_setdown(&data.signal);
 
+  if (status == F_child) {
+    exit(data.child);
+  }
+
   if (F_status_is_error(status)) return 1;
 
   return 0;

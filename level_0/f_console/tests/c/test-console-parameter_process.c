@@ -30,7 +30,7 @@ void test__f_console_parameter_process__no_arguments(void **state) {
   f_array_lengths_t remaining = f_array_lengths_t_initialize;
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, parameters, &remaining);
+    const f_status_t status = f_console_parameter_process(arguments, &parameters, &remaining);
 
     assert_int_equal(status, F_none);
 
@@ -125,7 +125,7 @@ void test__f_console_parameter_process__only_remaining(void **state) {
   f_array_lengths_t remaining = f_array_lengths_t_initialize;
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, parameters, &remaining);
+    const f_status_t status = f_console_parameter_process(arguments, &parameters, &remaining);
 
     assert_int_equal(status, F_none);
 
@@ -193,10 +193,10 @@ void test__f_console_parameter_process__only_remaining(void **state) {
   void test__f_console_parameter_process__parameter_checking(void **state) {
 
     const f_console_arguments_t arguments = f_console_arguments_t_initialize;
-    const f_console_parameters_t parameters = f_console_parameters_t_initialize;
+    f_console_parameters_t parameters = f_console_parameters_t_initialize;
 
     {
-      const f_status_t status = f_console_parameter_process(arguments, parameters, 0);
+      const f_status_t status = f_console_parameter_process(arguments, &parameters, 0);
 
       assert_int_equal(F_status_set_fine(status), F_parameter);
     }
@@ -245,7 +245,7 @@ void test__f_console_parameter_process__works(void **state) {
   f_array_lengths_t remaining = f_array_lengths_t_initialize;
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, parameters, &remaining);
+    const f_status_t status = f_console_parameter_process(arguments, &parameters, &remaining);
 
     assert_int_equal(status, F_none);
 

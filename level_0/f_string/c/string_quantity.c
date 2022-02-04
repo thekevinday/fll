@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_quantitys_adjust_
-  f_status_t f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t *quantitys) {
+  f_status_t f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t * const quantitys) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -43,7 +43,7 @@ extern "C" {
 #endif // _di_f_string_quantitys_append_
 
 #ifndef _di_f_string_quantitys_decimate_by_
-  f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t *quantitys) {
+  f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t * const quantitys) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!quantitys) return F_status_set_error(F_parameter);
@@ -58,7 +58,7 @@ extern "C" {
 #endif // _di_f_string_quantitys_decimate_by_
 
 #ifndef _di_f_string_quantitys_decrease_by_
-  f_status_t f_string_quantitys_decrease_by(const f_array_length_t amount, f_string_quantitys_t *quantitys) {
+  f_status_t f_string_quantitys_decrease_by(const f_array_length_t amount, f_string_quantitys_t * const quantitys) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!quantitys) return F_status_set_error(F_parameter);
@@ -73,7 +73,7 @@ extern "C" {
 #endif // _di_f_string_quantitys_decrease_by_
 
 #ifndef _di_f_string_quantitys_increase_
-  f_status_t f_string_quantitys_increase(const uint16_t step, f_string_quantitys_t *quantitys) {
+  f_status_t f_string_quantitys_increase(const uint16_t step, f_string_quantitys_t * const quantitys) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!quantitys) return F_status_set_error(F_parameter);
@@ -98,7 +98,7 @@ extern "C" {
 #endif // _di_f_string_quantitys_increase_
 
 #ifndef _di_f_string_quantitys_increase_by_
-  f_status_t f_string_quantitys_increase_by(const f_array_length_t amount, f_string_quantitys_t *quantitys) {
+  f_status_t f_string_quantitys_increase_by(const f_array_length_t amount, f_string_quantitys_t * const quantitys) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!quantitys) return F_status_set_error(F_parameter);
@@ -117,7 +117,7 @@ extern "C" {
 #endif // _di_f_string_quantitys_increase_by_
 
 #ifndef _di_f_string_quantitys_resize_
-  f_status_t f_string_quantitys_resize(const f_array_length_t length, f_string_quantitys_t *quantitys) {
+  f_status_t f_string_quantitys_resize(const f_array_length_t length, f_string_quantitys_t * const quantitys) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -137,7 +137,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_adjust_
 
 #ifndef _di_f_string_quantityss_decimate_by_
-  f_status_t f_string_quantityss_decimate_by(const f_array_length_t amount, f_string_quantityss_t *quantityss) {
+  f_status_t f_string_quantityss_decimate_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!quantityss) return F_status_set_error(F_parameter);
@@ -152,7 +152,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_decimate_by_
 
 #ifndef _di_f_string_quantityss_decrease_by_
-  f_status_t f_string_quantityss_decrease_by(const f_array_length_t amount, f_string_quantityss_t *quantityss) {
+  f_status_t f_string_quantityss_decrease_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!quantityss) return F_status_set_error(F_parameter);
@@ -167,7 +167,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_decrease_by_
 
 #ifndef _di_f_string_quantityss_increase_
-  f_status_t f_string_quantityss_increase(const uint16_t step, f_string_quantityss_t *quantityss) {
+  f_status_t f_string_quantityss_increase(const uint16_t step, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!quantityss) return F_status_set_error(F_parameter);
@@ -192,7 +192,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_increase_
 
 #ifndef _di_f_string_quantityss_increase_by_
-  f_status_t f_string_quantityss_increase_by(const f_array_length_t amount, f_string_quantityss_t *quantityss) {
+  f_status_t f_string_quantityss_increase_by(const f_array_length_t amount, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!quantityss) return F_status_set_error(F_parameter);
@@ -211,7 +211,7 @@ extern "C" {
 #endif // _di_f_string_quantityss_increase_by_
 
 #ifndef _di_f_string_quantityss_resize_
-  f_status_t f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t *quantityss) {
+  f_status_t f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t * const quantityss) {
     #ifndef _di_level_0_parameter_checking_
       if (!quantityss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

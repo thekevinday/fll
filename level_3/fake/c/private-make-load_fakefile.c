@@ -291,9 +291,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(*status) && data_make->setting_make.load_build) {
-        f_string_static_t stub = f_string_static_t_initialize;
-
-        fake_build_load_setting(data_make->main, stub, &data_make->setting_build, status);
+        fake_build_load_setting(data_make->main, f_string_empty_s, &data_make->setting_build, status);
 
         if (F_status_is_error(*status) && *status != F_status_set_error(F_interrupt)) {
           fll_error_print(data_make->main->error, F_status_set_fine(*status), "fake_build_load_setting", F_true);

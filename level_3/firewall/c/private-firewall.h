@@ -22,6 +22,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
@@ -41,6 +42,7 @@ extern f_status_t firewall_perform_commands(firewall_main_t * const main, const 
  *
  * @return
  *   F_none on success.
+ *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
@@ -56,6 +58,7 @@ extern f_status_t firewall_create_custom_chains(firewall_main_t * const main, fi
  *
  * @return
  *   F_none on success.
+ *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
@@ -71,6 +74,7 @@ extern f_status_t firewall_delete_chains(firewall_main_t * const main) F_attribu
  *
  * @return
  *   F_none on success.
+ *   F_child on child process exiting.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
@@ -91,10 +95,11 @@ extern f_status_t firewall_default_lock(firewall_main_t * const main) F_attribut
  *
  * @return
  *   F_none on success.
+ *   F_child on child process exiting.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-extern f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_t filename, const bool optional, firewall_local_data_t *local) F_attribute_visibility_internal_d;
+extern f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_string_static_t filename, const bool optional, firewall_local_data_t *local) F_attribute_visibility_internal_d;
 
 /**
  * Process buffered rules.
@@ -108,6 +113,7 @@ extern f_status_t firewall_buffer_rules(firewall_main_t * const main, const f_st
  *
  * @return
  *   F_none on success.
+ *   F_child on child process exiting.
  *
  *   Status codes (with error bit) are returned on any problem.
  */

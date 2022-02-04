@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_triples_adjust_
-  f_status_t f_string_triples_adjust(const f_array_length_t length, f_string_triples_t *triples) {
+  f_status_t f_string_triples_adjust(const f_array_length_t length, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -16,7 +16,7 @@ extern "C" {
 #endif // _di_f_string_triples_adjust_
 
 #ifndef _di_f_string_triples_append_
-  f_status_t f_string_triples_append(const f_string_triples_t source, f_string_triples_t *destination) {
+  f_status_t f_string_triples_append(const f_string_triples_t source, f_string_triples_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_f_string_triples_append_
 
 #ifndef _di_f_string_triples_decimate_by_
-  f_status_t f_string_triples_decimate_by(const f_array_length_t amount, f_string_triples_t *triples) {
+  f_status_t f_string_triples_decimate_by(const f_array_length_t amount, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
@@ -74,7 +74,7 @@ extern "C" {
 #endif // _di_f_string_triples_decimate_by_
 
 #ifndef _di_f_string_triples_decrease_by_
-  f_status_t f_string_triples_decrease_by(const f_array_length_t amount, f_string_triples_t *triples) {
+  f_status_t f_string_triples_decrease_by(const f_array_length_t amount, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_f_string_triples_decrease_by_
 
 #ifndef _di_f_string_triples_increase_
-  f_status_t f_string_triples_increase(const uint16_t step, f_string_triples_t *triples) {
+  f_status_t f_string_triples_increase(const uint16_t step, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
@@ -114,7 +114,7 @@ extern "C" {
 #endif // _di_f_string_triples_increase_
 
 #ifndef _di_f_string_triples_increase_by_
-  f_status_t f_string_triples_increase_by(const f_array_length_t amount, f_string_triples_t *triples) {
+  f_status_t f_string_triples_increase_by(const f_array_length_t amount, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
@@ -133,7 +133,7 @@ extern "C" {
 #endif // _di_f_string_triples_increase_by_
 
 #ifndef _di_f_string_triples_resize_
-  f_status_t f_string_triples_resize(const f_array_length_t length, f_string_triples_t *triples) {
+  f_status_t f_string_triples_resize(const f_array_length_t length, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

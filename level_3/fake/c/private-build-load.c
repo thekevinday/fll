@@ -86,6 +86,7 @@ extern "C" {
 
     char path_file_string[path_file.used + 1];
     path_file.string = path_file_string;
+    path_file_string[path_file.used] = 0;
 
     {
       f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
@@ -96,8 +97,6 @@ extern "C" {
       if (setting_file.used) {
         memcpy(path_file_string, main->path_data_build.string, main->path_data_build.used);
         memcpy(path_file_string + main->path_data_build.used, setting_file.string, setting_file.used);
-
-        path_file_string[main->path_data_build.used + setting_file.used] = 0;
 
         *status = fake_file_buffer(main, path_file, &buffer);
       }
@@ -507,14 +506,21 @@ extern "C" {
             break;
           }
 
-          memcpy(settings_mode_names[j].string, settings_name[j].string, settings_value[j]->used);
-          settings_mode_names[j].used = settings_value[j]->used;
+          *status = f_string_dynamic_append(settings_name[j], &settings_mode_names[j]);
 
-          memcpy(settings_mode_names[j].string, f_string_ascii_minus_s.string, f_string_ascii_minus_s.used);
-          settings_mode_names[j].used += f_string_ascii_minus_s.used;
+          if (F_status_is_error_not(*status)) {
+            *status = f_string_dynamic_append(f_string_ascii_minus_s, &settings_mode_names[j]);
+          }
 
-          memcpy(settings_mode_names[j].string + settings_mode_names[j].used, modes->array[i].string, modes->array[i].used);
-          settings_mode_names[j].used += modes->array[i].used;
+          if (F_status_is_error_not(*status)) {
+            *status = f_string_dynamic_append(modes->array[i], &settings_mode_names[j]);
+          }
+
+          if (F_status_is_error(*status)) {
+            function = "f_string_dynamic_increase_by";
+
+            break;
+          }
         } // for
 
         if (*status == F_none) {
@@ -532,10 +538,11 @@ extern "C" {
         if (F_status_is_error(*status)) break;
       } // for
 
-      // "build_libraries" is appended after all modes to help assist with static linker file issues (@todo there should likely be more options to have a postfix linker parameter that can be added here instead, such as "build_libraries_last").
+      // The string "build_libraries" is appended after all modes to help assist with static linker file issues (@todo there should likely be more options to have a postfix linker parameter that can be added here instead, such as "build_libraries_last").
       if (total_build_libraries) {
-        f_string_dynamic_t temporary[total_build_libraries];
+        f_string_static_t temporary[total_build_libraries];
 
+        // Move the original "build_libraries" into a temporary location.
         for (i = 0; i < total_build_libraries; ++i) {
 
           temporary[i].string = setting->build_libraries.array[i].string;
@@ -543,6 +550,7 @@ extern "C" {
           temporary[i].size = setting->build_libraries.array[i].size;
         } // for
 
+        // Move all of the other build library settings to the front of the array.
         for (i = 0, j = total_build_libraries; j < setting->build_libraries.used; ++i, ++j) {
 
           setting->build_libraries.array[i].string = setting->build_libraries.array[j].string;
@@ -550,6 +558,7 @@ extern "C" {
           setting->build_libraries.array[i].size = setting->build_libraries.array[j].size;
         } // for
 
+        // Move back the original "build_libraries" back, but at the end of the array.
         for (i = setting->build_libraries.used - total_build_libraries, j = 0; j < total_build_libraries; ++i, ++j) {
 
           setting->build_libraries.array[i].string = temporary[j].string;

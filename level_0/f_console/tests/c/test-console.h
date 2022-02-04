@@ -27,6 +27,8 @@
 #include "test-console-parameter_prioritize_left.h"
 #include "test-console-parameter_prioritize_right.h"
 #include "test-console-parameter_process.h"
+#include "test-console-parameters_delete.h"
+#include "test-console-parameters_destroy.h"
 
 #ifdef __cplusplus
 extern "C" {

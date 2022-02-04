@@ -34,11 +34,17 @@ int main(void) {
     cmocka_unit_test(test__f_console_parameter_process__only_remaining),
     cmocka_unit_test(test__f_console_parameter_process__works),
 
+    cmocka_unit_test(test__f_console_parameters_delete__frees_memory),
+
+    cmocka_unit_test(test__f_console_parameters_destroy__frees_memory),
+
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_console_identify__parameter_checking),
       cmocka_unit_test(test__f_console_parameter_prioritize_left__parameter_checking),
       cmocka_unit_test(test__f_console_parameter_prioritize_right__parameter_checking),
       cmocka_unit_test(test__f_console_parameter_process__parameter_checking),
+      cmocka_unit_test(test__f_console_parameters_delete__parameter_checking),
+      cmocka_unit_test(test__f_console_parameters_destroy__parameter_checking),
     #endif // _di_level_0_parameter_checking_
   };
 

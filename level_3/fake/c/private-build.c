@@ -62,18 +62,18 @@ extern "C" {
       if (F_status_is_error(*status)) break;
     } // for
 
-    if (main->path_work.used) {
+    if (main->path_work.used && F_status_is_error_not(*status)) {
       f_string_static_t buffer = f_string_static_t_initialize;
 
       if (F_status_is_error_not(*status)) {
         buffer.used = fake_build_parameter_library_include_s.used + main->path_work_includes.used;
 
         char buffer_string[buffer.used + 1];
+        buffer.string = buffer_string;
+        buffer_string[buffer.used] = 0;
 
         memcpy(buffer_string, fake_build_parameter_library_include_s.string, fake_build_parameter_library_include_s.used);
         memcpy(buffer_string + fake_build_parameter_library_include_s.used, main->path_work_includes.string, main->path_work_includes.used);
-
-        buffer_string[buffer.used] = 0;
 
         *status = fll_execute_arguments_add(buffer, arguments);
       }
@@ -82,11 +82,11 @@ extern "C" {
         buffer.used = fake_build_parameter_library_link_path_s.used + main->path_work_libraries_shared.used;
 
         char buffer_string[buffer.used + 1];
+        buffer.string = buffer_string;
+        buffer_string[buffer.used] = 0;
 
         memcpy(buffer_string, fake_build_parameter_library_link_path_s.string, fake_build_parameter_library_link_path_s.used);
         memcpy(buffer_string + fake_build_parameter_library_link_path_s.used, main->path_work_libraries_shared.string, main->path_work_libraries_shared.used);
-
-        buffer_string[buffer.used] = 0;
 
         *status = fll_execute_arguments_add(buffer, arguments);
       }
@@ -95,11 +95,11 @@ extern "C" {
         buffer.used = fake_build_parameter_library_link_path_s.used + main->path_work_libraries_static.used;
 
         char buffer_string[buffer.used + 1];
+        buffer.string = buffer_string;
+        buffer_string[buffer.used] = 0;
 
         memcpy(buffer_string, fake_build_parameter_library_link_path_s.string, fake_build_parameter_library_link_path_s.used);
         memcpy(buffer_string + fake_build_parameter_library_link_path_s.used, main->path_work_libraries_static.string, main->path_work_libraries_static.used);
-
-        buffer_string[buffer.used] = 0;
 
         *status = fll_execute_arguments_add(buffer, arguments);
       }
@@ -537,6 +537,7 @@ extern "C" {
       argument.used = f_console_symbol_short_disable_s.used + f_console_standard_short_dark_s.used;
 
       char argument_string[argument.used + 1];
+      argument.string = argument_string;
       argument_string[argument.used] = 0;
 
       memcpy(argument_string, f_console_symbol_short_disable_s.string, f_console_symbol_short_disable_s.used);
@@ -560,6 +561,7 @@ extern "C" {
       argument.used = f_console_symbol_short_disable_s.used + f_console_standard_short_quiet_s.used;
 
       char argument_string[argument.used + 1];
+      argument.string = argument_string;
       argument_string[argument.used] = 0;
 
       memcpy(argument_string, f_console_symbol_short_disable_s.string, f_console_symbol_short_disable_s.used);

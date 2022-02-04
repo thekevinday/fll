@@ -372,19 +372,19 @@ extern "C" {
             if (arguments->argv[location][length - 1] == fss_embedded_list_read_delimit_mode_name_greater_s.string[0]) {
               main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_greater_e;
 
-              // shorten the length to better convert the remainder to a number.
+              // Shorten the length to better convert the remainder to a number.
               --length;
             }
             else if (arguments->argv[location][length - 1] == fss_embedded_list_read_delimit_mode_name_lesser_s.string[0]) {
               main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_lesser_e;
 
-              // shorten the length to better convert the remainder to a number.
+              // Shorten the length to better convert the remainder to a number.
               --length;
             }
 
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
-            // ignore leading plus sign.
+            // Ignore leading plus sign.
             if (arguments->argv[location][0] == '+') {
               ++range.start;
             }
@@ -543,22 +543,6 @@ extern "C" {
     return status;
   }
 #endif // _di_fss_embedded_list_read_main_
-
-#ifndef _di_fss_embedded_list_read_main_delete_
-  f_status_t fss_embedded_list_read_main_delete(fss_embedded_list_read_main_t * const main) {
-
-    f_console_parameters_delete(&main->parameters);
-
-    macro_f_fss_nest_t_delete_simple(main->nest);
-
-    f_string_dynamic_resize(0, &main->buffer);
-    f_type_array_lengths_resize(0, &main->remaining);
-
-    macro_f_color_context_t_delete_simple(main->context);
-
-    return F_none;
-  }
-#endif // _di_fss_embedded_list_read_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

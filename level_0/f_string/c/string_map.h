@@ -148,7 +148,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_adjust_
-  extern f_status_t f_string_map_multis_adjust(const f_array_length_t length, f_string_map_multis_t *map_multis);
+  extern f_status_t f_string_map_multis_adjust(const f_array_length_t length, f_string_map_multis_t * const map_multis);
 #endif // _di_f_string_map_multis_adjust_
 
 /**
@@ -192,7 +192,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_decimate_by_
-  extern f_status_t f_string_map_multis_decimate_by(const f_array_length_t amount, f_string_map_multis_t *map_multis);
+  extern f_status_t f_string_map_multis_decimate_by(const f_array_length_t amount, f_string_map_multis_t * const map_multis);
 #endif // _di_f_string_map_multis_decimate_by_
 
 /**
@@ -215,7 +215,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_decrease_by_
-  extern f_status_t f_string_map_multis_decrease_by(const f_array_length_t amount, f_string_map_multis_t *map_multis);
+  extern f_status_t f_string_map_multis_decrease_by(const f_array_length_t amount, f_string_map_multis_t * const map_multis);
 #endif // _di_f_string_map_multis_decrease_by_
 
 /**
@@ -240,7 +240,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_increase_
-  extern f_status_t f_string_map_multis_increase(const uint16_t step, f_string_map_multis_t *map_multis);
+  extern f_status_t f_string_map_multis_increase(const uint16_t step, f_string_map_multis_t * const map_multis);
 #endif // _di_f_string_map_multis_increase_
 
 /**
@@ -265,7 +265,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_increase_by_
-  extern f_status_t f_string_map_multis_increase_by(const f_array_length_t amount, f_string_map_multis_t *map_multis);
+  extern f_status_t f_string_map_multis_increase_by(const f_array_length_t amount, f_string_map_multis_t * const map_multis);
 #endif // _di_f_string_map_multis_increase_by_
 
 /**
@@ -284,7 +284,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_resize_
-  extern f_status_t f_string_map_multis_resize(const f_array_length_t length, f_string_map_multis_t *map_multis);
+  extern f_status_t f_string_map_multis_resize(const f_array_length_t length, f_string_map_multis_t * const map_multis);
 #endif // _di_f_string_map_multis_resize_
 
 /**
@@ -303,7 +303,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_adjust_
-  extern f_status_t f_string_maps_adjust(const f_array_length_t length, f_string_maps_t *maps);
+  extern f_status_t f_string_maps_adjust(const f_array_length_t length, f_string_maps_t * const maps);
 #endif // _di_f_string_maps_adjust_
 
 /**
@@ -324,7 +324,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_append_
-  extern f_status_t f_string_maps_append(const f_string_maps_t source, f_string_maps_t *destination);
+  extern f_status_t f_string_maps_append(const f_string_maps_t source, f_string_maps_t * const destination);
 #endif // _di_f_string_maps_append_
 
 /**
@@ -347,7 +347,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_decimate_by_
-  extern f_status_t f_string_maps_decimate_by(const f_array_length_t amount, f_string_maps_t *maps);
+  extern f_status_t f_string_maps_decimate_by(const f_array_length_t amount, f_string_maps_t * const maps);
 #endif // _di_f_string_maps_decimate_by_
 
 /**
@@ -370,7 +370,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_decrease_by_
-  extern f_status_t f_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t *maps);
+  extern f_status_t f_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t * const maps);
 #endif // _di_f_string_maps_decrease_by_
 
 /**
@@ -395,7 +395,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_increase_
-  extern f_status_t f_string_maps_increase(const uint16_t step, f_string_maps_t *maps);
+  extern f_status_t f_string_maps_increase(const uint16_t step, f_string_maps_t * const maps);
 #endif // _di_f_string_maps_increase_
 
 /**
@@ -420,7 +420,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_increase_by_
-  extern f_status_t f_string_maps_increase_by(const f_array_length_t amount, f_string_maps_t *maps);
+  extern f_status_t f_string_maps_increase_by(const f_array_length_t amount, f_string_maps_t * const maps);
 #endif // _di_f_string_maps_increase_by_
 
 /**
@@ -439,7 +439,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_resize_
-  extern f_status_t f_string_maps_resize(const f_array_length_t length, f_string_maps_t *maps);
+  extern f_status_t f_string_maps_resize(const f_array_length_t length, f_string_maps_t * const maps);
 #endif // _di_f_string_maps_resize_
 
 #ifdef __cplusplus
