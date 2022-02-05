@@ -29,7 +29,7 @@ extern "C" {
  *   Errors (with error bit) from: f_directory_is().
  *   Errors (with error bit) from: f_file_clone().
  *   Errors (with error bit) from: f_file_copy()
- *   Errors (with error bit) from: fl_directory_clone()..
+ *   Errors (with error bit) from: fl_directory_clone().
  *   Errors (with error bit) from: fl_directory_copy().
  *
  * @see f_directory_is()

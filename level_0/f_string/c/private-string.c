@@ -152,6 +152,7 @@ extern "C" {
 
 #if !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_)
   f_status_t private_f_string_dynamics_append(const f_string_dynamics_t source, f_string_dynamics_t *destination) {
+
     f_status_t status = F_none;
 
     if (destination->used + source.used > destination->size) {

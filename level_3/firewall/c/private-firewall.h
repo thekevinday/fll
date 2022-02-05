@@ -26,7 +26,15 @@ extern "C" {
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_partial_append()
+ * @see f_string_dynamics_increase()
+ * @see f_string_dynamics_increase_by()
  */
 extern f_status_t firewall_perform_commands(firewall_main_t * const main, const firewall_local_data_t local) F_attribute_visibility_internal_d;
 

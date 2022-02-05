@@ -139,7 +139,7 @@ extern "C" {
   #define FIREWALL_group_lock_s "lock"
   #define FIREWALL_group_main_s "main"
 
-  #define FIREWALL_ip_list                      "ip_list"
+  #define FIREWALL_ip_list_s                    "ip_list"
   #define FIREWALL_ip_list_source_s             "source"
   #define FIREWALL_ip_list_source_action_s      "-s"
   #define FIREWALL_ip_list_destination_s        "destination"
@@ -167,7 +167,7 @@ extern "C" {
   #define FIREWALL_tool_ip46tables_s "ip46tables"
   #define FIREWALL_tool_ipset_s      "ipset"
 
-  #define FIREWALL_action_length_s        6
+  #define FIREWALL_action_s_length        6
   #define FIREWALL_action_append_s_length 6
   #define FIREWALL_action_insert_s_length 6
   #define FIREWALL_action_policy_s_length 6
@@ -201,8 +201,8 @@ extern "C" {
   #define FIREWALL_device_this_s_length 4
   #define FIREWALL_device_loop_s_length 2
 
-  #define FIREWALL_device_input_command_length_s  2
-  #define FIREWALL_device_output_command_length_s 2
+  #define FIREWALL_device_input_command_s_length  2
+  #define FIREWALL_device_output_command_s_length 2
 
   #define FIREWALL_direction_s_length        9
   #define FIREWALL_direction_input_s_length  5
@@ -213,7 +213,7 @@ extern "C" {
   #define FIREWALL_group_lock_s_length  4
   #define FIREWALL_group_main_s_length  4
 
-  #define FIREWALL_ip_list_length_s                    7
+  #define FIREWALL_ip_list_s_length                    7
   #define FIREWALL_ip_list_source_s_length             6
   #define FIREWALL_ip_list_source_action_s_length      2
   #define FIREWALL_ip_list_destination_s_length        11

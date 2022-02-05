@@ -65,38 +65,16 @@ typedef struct {
     0, \
   }
 
-#define macro_firewall_delete_fss_buffers(status, buffer, objects, contents) \
-  macro_f_string_dynamic_t_delete_simple(buffer); \
-  macro_f_fss_objects_t_delete_simple(objects); \
-  macro_f_fss_contents_t_delete_simple(contents);
-
-#define macro_firewall_concat_string(destination, source, length) \
-  memcpy((void *)(destination), source, length);
-
 #define macro_firewall_rule_contents_has_incorrect_items(index, total_items) \
   local.rule_contents.array[index].used <= 0 || local.rule_contents.array[index].used > total_items
 
-// the buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
+// The buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
 #define macro_firewall_string_dynamic_size(structure, index) \
   (structure.string[index].stop - structure.string[index].start) + 1
 
-// the buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
+// The buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
 #define macro_firewall_structure_size(structure, index) \
   (structure.array[index].stop - structure.array[index].start) + 1
-
-// TODO: temporarily added, convert this to a function below.
-#define macro_firewall_append_argument_to_arguments(status, arguments, argument) \
-  if (arguments.used == arguments.size) { \
-    macro_f_string_dynamics_t_resize(status, arguments, arguments.used + firewall_default_allocation_step_d); \
-    \
-    if (F_status_is_error(status)) break; \
-  } \
-  \
-  arguments.array[arguments.used].string = argument.string; \
-  arguments.array[arguments.used].size   = argument.size; \
-  arguments.array[arguments.used++].used = argument.used; \
-  \
-  macro_f_string_dynamic_t_clear(argument);
 
 /**
  * Print debug information about tool execution.

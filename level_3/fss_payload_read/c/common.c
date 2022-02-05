@@ -4,14 +4,14 @@
 extern "C" {
 #endif
 
-#ifndef _di_firewall_program_version_
-  const f_string_static_t firewall_program_version_s = macro_f_string_static_t_initialize(FIREWALL_version_s, 0, FIREWALL_version_s_length);
-#endif // _di_firewall_program_version_
+#ifndef _di_fss_payload_read_program_version_
+  const f_string_static_t fss_payload_read_program_version_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_version_s, 0, FSS_PAYLOAD_READ_program_version_s_length);
+#endif // _di_fss_payload_read_program_version_
 
-#ifndef _di_firewall_program_name_
-  const f_string_static_t firewall_program_name_s = macro_f_string_static_t_initialize(FIREWALL_program_name_s, 0, FIREWALL_program_name_s_length);
-  const f_string_static_t firewall_program_name_long_s = macro_f_string_static_t_initialize(FIREWALL_program_name_long_s, 0, FIREWALL_program_name_long_s_length);
-#endif // _di_firewall_program_name_
+#ifndef _di_fss_payload_read_program_name_
+  const f_string_static_t fss_payload_read_program_name_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_name_s, 0, FSS_PAYLOAD_READ_program_name_s_length);
+  const f_string_static_t fss_payload_read_program_name_long_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_name_long_s, 0, FSS_PAYLOAD_READ_program_name_long_s_length);
+#endif // _di_fss_payload_read_program_name_
 
 #ifndef _di_fss_payload_read_main_delete_
   f_status_t fss_payload_read_main_delete(fss_payload_read_main_t * const main) {

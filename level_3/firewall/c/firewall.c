@@ -12,15 +12,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_firewall_program_version_
-  const f_string_static_t firewall_program_version_s = macro_f_string_static_t_initialize(FIREWALL_program_version_s, 0, FIREWALL_program_version_s_length);
-#endif // _di_firewall_program_version_
-
-#ifndef _di_firewall_program_name_
-  const f_string_static_t firewall_program_name_s = macro_f_string_static_t_initialize(FIREWALL_program_name_s, 0, FIREWALL_program_name_s_length);
-  const f_string_static_t firewall_program_name_long_s = macro_f_string_static_t_initialize(FIREWALL_program_name_long_s, 0, FIREWALL_program_name_long_s_length);
-#endif // _di_firewall_program_name_
-
 #ifndef _di_firewall_print_help_
   f_status_t firewall_print_help(const f_file_t file, const f_color_context_t context) {
 
@@ -39,11 +30,11 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
     fl_print_format("%r%r %[Available Commands:%] ", file.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important);
-    fl_print_format("%r  %[%s%]    Turn on the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_start_s, context.set.standout);
-    fl_print_format("%r  %[%s%]     Turn off the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_stop_s, context.set.standout);
-    fl_print_format("%r  %[%s%]  Turn off and then turn on the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_restart_s, context.set.standout);
-    fl_print_format("%r  %[%s%]     Prevent all communication.", file.stream, f_string_eol_s, context.set.standout, firewall_command_lock_s, context.set.standout);
-    fl_print_format("%r  %[%s%]     Show active firewall settings.", file.stream, f_string_eol_s, context.set.standout, firewall_command_show_s, context.set.standout);
+    fl_print_format("%r  %[%r%]    Turn on the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_start_s, context.set.standout);
+    fl_print_format("%r  %[%r%]     Turn off the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_stop_s, context.set.standout);
+    fl_print_format("%r  %[%r%]  Turn off and then turn on the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_restart_s, context.set.standout);
+    fl_print_format("%r  %[%r%]     Prevent all communication.", file.stream, f_string_eol_s, context.set.standout, firewall_command_lock_s, context.set.standout);
+    fl_print_format("%r  %[%r%]     Show active firewall settings.", file.stream, f_string_eol_s, context.set.standout, firewall_command_show_s, context.set.standout);
 
     fll_program_print_help_usage(file, context, firewall_program_name_s, firewall_program_help_parameters_s);
 
@@ -408,7 +399,7 @@ extern "C" {
 
         char path_file_other_string[path_file_other.used + 1];
         path_file_other.string = path_file_other_string;
-        path_file_other[path_file_other.used] = 0;
+        path_file_other_string[path_file_other.used] = 0;
 
         memcpy(path_file_other_string, firewall_network_path_s.string, firewall_network_path_s.used);
         memcpy(path_file_other_string + firewall_network_path_s.used, firewall_file_other_s.string, firewall_file_other_s.used);
@@ -529,7 +520,7 @@ extern "C" {
 
         char path_file_first_string[path_file_first.used + 1];
         path_file_first.string = path_file_first_string;
-        path_file_first[path_file_first.used] = 0;
+        path_file_first_string[path_file_first.used] = 0;
 
         memcpy(path_file_first_string, firewall_network_path_s.string, firewall_network_path_s.used);
         memcpy(path_file_first_string + firewall_network_path_s.used, firewall_file_first_s.string, firewall_file_first_s.used);
@@ -596,30 +587,30 @@ extern "C" {
         firewall_delete_local_data(&local);
 
         {
-          f_string_dynamic_t file_path = f_string_dynamic_t_initialize;
+          f_string_dynamic_t path_file = f_string_dynamic_t_initialize;
           f_array_length_t j = 0;
 
           for (i = 0; i < main->devices.used; ++i) {
 
-            file_path.used = 0;
+            path_file.used = 0;
             local.device = i;
 
-            status = f_string_dynamic_increase_by(firewall_network_path_s.used + main->devices.array[i].used + firewall_file_suffix_s_length + 1, &file_path);
+            status = f_string_dynamic_increase_by(firewall_network_path_s.used + main->devices.array[i].used + firewall_file_suffix_s.used + 1, &path_file);
 
             if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_append(firewall_network_path_s, &file_path);
+              status = f_string_dynamic_append(firewall_network_path_s, &path_file);
             }
 
             if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_append(main->devices.array[i], &file_path);
+              status = f_string_dynamic_append(main->devices.array[i], &path_file);
             }
 
             if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_append(firewall_file_suffix_s, &file_path);
+              status = f_string_dynamic_append(firewall_file_suffix_s, &path_file);
             }
 
             if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_terminate_after(&file_path);
+              status = f_string_dynamic_terminate_after(&path_file);
             }
 
             if (F_status_is_error(status)) {
@@ -631,12 +622,12 @@ extern "C" {
               return status;
             }
 
-            status = firewall_buffer_rules(main, file_path, F_true, &local);
+            status = firewall_buffer_rules(main, path_file, F_true, &local);
 
             if (status == F_child) {
               firewall_delete_local_data(&local);
 
-              f_string_dynamic_resize(0, &file_path);
+              f_string_dynamic_resize(0, &path_file);
 
               firewall_main_delete(main);
 
@@ -654,7 +645,7 @@ extern "C" {
                 continue;
               }
 
-              f_string_dynamic_resize(0, &file_path);
+              f_string_dynamic_resize(0, &path_file);
 
               firewall_main_delete(main);
 
@@ -685,6 +676,8 @@ extern "C" {
               status = firewall_process_rules(main, &input, &local);
 
               if (F_status_is_error(status) || command == firewall_parameter_command_stop_e || status == F_child) {
+                f_string_dynamic_resize(0, &path_file);
+
                 firewall_delete_local_data(&local);
                 firewall_main_delete(main);
 
@@ -695,54 +688,68 @@ extern "C" {
             firewall_delete_local_data(&local);
           } // for
 
-          f_string_dynamic_resize(0, &file_path);
-        }
+          path_file.used = 0;
 
-        status = firewall_buffer_rules(main, network_path_s firewall_file_last_s, F_false, &local);
+          status = f_string_dynamic_append(firewall_network_path_s, &path_file);
 
-        if (F_status_is_error(status) || status == F_child) {
-          firewall_delete_local_data(&local);
-          firewall_main_delete(main);
+          if (F_status_is_error_not(status)) {
+            status = f_string_dynamic_append(firewall_file_last_s, &path_file);
+          }
 
-          return status;
-        }
+          if (F_status_is_error_not(status)) {
+            status = firewall_buffer_rules(main, path_file, F_false, &local);
+          }
 
-        status = firewall_create_custom_chains(main, &reserved, &local);
+          if (F_status_is_error(status) || status == F_child) {
+            f_string_dynamic_resize(0, &path_file);
 
-        if (F_status_is_error(status) || status == F_child) {
-          f_status_t status2 = F_none;
-
-          macro_firewall_delete_fss_buffers(status2, local.buffer, local.chain_objects, local.chain_contents)
-          firewall_main_delete(main);
-
-          return status;
-        }
-
-        i = 0;
-
-        local.is_global = F_true;
-        local.is_stop = F_false;
-        local.is_lock = F_false;
-
-        while (i < local.chain_contents.used) {
-
-          input.start = local.chain_contents.array[i].array[0].start;
-          input.stop = local.chain_contents.array[i].array[0].stop;
-
-          local.is_main = reserved.has_main && i == reserved.main_at ? F_true : F_false;
-          local.chain = i;
-
-          status = firewall_process_rules(main, &input, &local);
-
-          if (F_status_is_error(status) || command == firewall_parameter_command_stop_e || status == F_child) {
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
 
             return status;
           }
 
-          ++i;
-        } // while
+          status = firewall_create_custom_chains(main, &reserved, &local);
+
+          if (F_status_is_error(status) || status == F_child) {
+            f_string_dynamic_resize(0, &path_file);
+
+            firewall_delete_local_data(&local);
+            firewall_main_delete(main);
+
+            return status;
+          }
+
+          i = 0;
+
+          local.is_global = F_true;
+          local.is_stop = F_false;
+          local.is_lock = F_false;
+
+          while (i < local.chain_contents.used) {
+
+            input.start = local.chain_contents.array[i].array[0].start;
+            input.stop = local.chain_contents.array[i].array[0].stop;
+
+            local.is_main = reserved.has_main && i == reserved.main_at ? F_true : F_false;
+            local.chain = i;
+
+            status = firewall_process_rules(main, &input, &local);
+
+            if (F_status_is_error(status) || command == firewall_parameter_command_stop_e || status == F_child) {
+              f_string_dynamic_resize(0, &path_file);
+
+              firewall_delete_local_data(&local);
+              firewall_main_delete(main);
+
+              return status;
+            }
+
+            ++i;
+          } // while
+
+          f_string_dynamic_resize(0, &path_file);
+        }
       }
 
       firewall_delete_local_data(&local);

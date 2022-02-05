@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_program_version_
-  const f_string_static_t firewall_program_version_s = macro_f_string_static_t_initialize(FIREWALL_version_s, 0, FIREWALL_version_s_length);
+  const f_string_static_t firewall_program_version_s = macro_f_string_static_t_initialize(FIREWALL_program_version_s, 0, FIREWALL_program_version_s_length);
 #endif // _di_firewall_program_version_
 
 #ifndef _di_firewall_program_name_
@@ -74,7 +74,7 @@ extern "C" {
   const f_string_static_t firewall_group_lock_s = macro_f_string_static_t_initialize(FIREWALL_group_lock_s, 0, FIREWALL_group_lock_s_length);
   const f_string_static_t firewall_group_main_s = macro_f_string_static_t_initialize(FIREWALL_group_main_s, 0, FIREWALL_group_main_s_length);
 
-  const f_string_static_t firewall_ip_list = macro_f_string_static_t_initialize(FIREWALL_ip_list, 0, FIREWALL_ip_list_length);
+  const f_string_static_t firewall_ip_list = macro_f_string_static_t_initialize(FIREWALL_ip_list_s, 0, FIREWALL_ip_list_s_length);
   const f_string_static_t firewall_ip_list_source_s = macro_f_string_static_t_initialize(FIREWALL_ip_list_source_s, 0, FIREWALL_ip_list_source_s_length);
   const f_string_static_t firewall_ip_list_source_action_s = macro_f_string_static_t_initialize(FIREWALL_ip_list_source_action_s, 0, FIREWALL_ip_list_source_action_s_length);
   const f_string_static_t firewall_ip_list_destination_s = macro_f_string_static_t_initialize(FIREWALL_ip_list_destination_s, 0, FIREWALL_ip_list_destination_s_length);
