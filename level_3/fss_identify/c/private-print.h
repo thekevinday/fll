@@ -21,7 +21,7 @@ extern "C" {
  *   The Identifier to print.
  */
 #ifndef _di_fss_identify_print_
-  extern void fss_identify_print(fss_identify_main_t * const main, f_fll_id_t id) F_attribute_visibility_internal_d;
+  extern void fss_identify_print(fll_program_data_t * const main, f_fll_id_t id) F_attribute_visibility_internal_d;
 #endif // _di_fss_identify_print_
 
 #ifdef __cplusplus

@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_byte_dump_program_version_
   #define BYTE_DUMP_program_version_major_s F_string_ascii_0_s
   #define BYTE_DUMP_program_version_minor_s F_string_ascii_5_s
@@ -42,6 +45,9 @@ extern "C" {
   extern const f_string_static_t byte_dump_program_version_s;
 #endif // _di_byte_dump_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_byte_dump_program_name_
   #define BYTE_DUMP_program_name_s      "byte_dump"
   #define BYTE_DUMP_program_name_long_s "Byte Dump"
@@ -53,13 +59,9 @@ extern "C" {
   extern const f_string_static_t byte_dump_program_name_long_s;
 #endif // _di_byte_dump_program_name_
 
-#ifndef _di_byte_dump_program_help_parameters_
-  #define BYTE_DUMP_program_help_parameters_s "filename(s)"
-  #define BYTE_DUMP_program_help_parameters_s_length 11
-
-  extern const f_string_static_t byte_dump_program_help_parameters_s;
-#endif // _di_byte_dump_program_help_parameters_
-
+/**
+ * The program strings for printing.
+ */
 #ifndef _di_byte_dump_print_strings_
   #define BYTE_DUMP_print_strings_hexidecimal_s "Hexidecimal"
   #define BYTE_DUMP_print_strings_duodecimal_s  "Duodecimal"
@@ -88,7 +90,7 @@ extern "C" {
 #endif // _di_byte_dump_default_allocation_step_
 
 /**
- * Byte Dump defines.
+ * The program defines.
  *
  * byte_dump_mode_*:
  *   - hexidecimal: Display using hexidecimal notation (base 16).
@@ -126,6 +128,42 @@ extern "C" {
   #define BYTE_DUMP_character_incomplete_s  "�"
   #define BYTE_DUMP_character_unused_s      "�"
 
+  #define BYTE_DUMP_character_wall_s_length        1
+  #define BYTE_DUMP_character_placeholder_s_length 3
+  #define BYTE_DUMP_character_incomplete_s_length  3
+  #define BYTE_DUMP_character_unused_s_length      3
+
+  extern const f_string_static_t byte_dump_character_wall_s;
+  extern const f_string_static_t byte_dump_character_placeholder_s;
+  extern const f_string_static_t byte_dump_character_incomplete_s;
+  extern const f_string_static_t byte_dump_character_unused_s;
+#endif // _di_byte_dump_defines_
+
+/**
+ * The program parameters.
+ *
+ * byte_dump_long_*:
+ *   - first: First offset byte size.
+ *   - last:  Last offset byte size.
+ *
+ *   - narrow:      Each character in the displyed text will take at least 1 columns.
+ *   - placeholder: Display (colored) placeholders to signify codes that are UTF-8 fragments.
+ *   - text:        Display text
+ *   - wide:        Each character in the displyed text will take at least 2 columns.
+ *   - width:       Number of characters to display per row.
+ *
+ *   - binary:      Display using binary format.
+ *   - decimal:     Display using decimal format.
+ *   - duodecimal:  Display using duodecimal format.
+ *   - hexidecimal: Display using hexidecimal format.
+ *   - octal:       Display using octal format.
+ *   - unicode:     Display using Unicode format.
+ *
+ *   - normal:  Use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
+ *   - simple:  Use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
+ *   - classic: Use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
+ */
+#ifndef _di_byte_dump_parameters_
   #define BYTE_DUMP_short_binary_s      "b"
   #define BYTE_DUMP_short_decimal_s     "d"
   #define BYTE_DUMP_short_duodecimal_s  "D"
@@ -149,23 +187,18 @@ extern "C" {
   #define BYTE_DUMP_long_octal_s       "octal"
   #define BYTE_DUMP_long_unicode_s     "unicode"
 
-  #define BYTE_DUMP_long_first_s "first" // First offset byte size.
-  #define BYTE_DUMP_long_last_s  "last"  // Last offset byte size.
+  #define BYTE_DUMP_long_first_s "first"
+  #define BYTE_DUMP_long_last_s  "last"
 
-  #define BYTE_DUMP_long_narrow_s      "narrow"      // Each character in the displyed text will take at least 1 columns.
-  #define BYTE_DUMP_long_placeholder_s "placeholder" // Display (colored) placeholders to signify codes that are UTF-8 fragments.
-  #define BYTE_DUMP_long_text_s        "text"        // Display text
-  #define BYTE_DUMP_long_wide_s        "wide"        // Each character in the displyed text will take at least 2 columns.
-  #define BYTE_DUMP_long_width_s       "width"       // Number of characters to display per row.
+  #define BYTE_DUMP_long_narrow_s      "narrow"
+  #define BYTE_DUMP_long_placeholder_s "placeholder"
+  #define BYTE_DUMP_long_text_s        "text"
+  #define BYTE_DUMP_long_wide_s        "wide"
+  #define BYTE_DUMP_long_width_s       "width"
 
-  #define BYTE_DUMP_long_normal_s  "normal"  // Use normal presentation, displaying UTF-8 sequence codes for ASCII special codes.
-  #define BYTE_DUMP_long_simple_s  "simple"  // Use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
-  #define BYTE_DUMP_long_classic_s "classic" // Use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
-
-  #define BYTE_DUMP_character_wall_s_length        1
-  #define BYTE_DUMP_character_placeholder_s_length 3
-  #define BYTE_DUMP_character_incomplete_s_length  3
-  #define BYTE_DUMP_character_unused_s_length      3
+  #define BYTE_DUMP_long_normal_s  "normal"
+  #define BYTE_DUMP_long_simple_s  "simple"
+  #define BYTE_DUMP_long_classic_s "classic"
 
   #define BYTE_DUMP_short_binary_s_length      1
   #define BYTE_DUMP_short_decimal_s_length     1
@@ -202,11 +235,6 @@ extern "C" {
   #define BYTE_DUMP_long_normal_s_length  6
   #define BYTE_DUMP_long_simple_s_length  6
   #define BYTE_DUMP_long_classic_s_length 7
-
-  extern const f_string_static_t byte_dump_character_wall_s;
-  extern const f_string_static_t byte_dump_character_placeholder_s;
-  extern const f_string_static_t byte_dump_character_incomplete_s;
-  extern const f_string_static_t byte_dump_character_unused_s;
 
   extern const f_string_static_t byte_dump_short_binary_s;
   extern const f_string_static_t byte_dump_short_decimal_s;
@@ -306,13 +334,25 @@ extern "C" {
     }
 
   #define byte_dump_total_parameters_d 25
-#endif // _di_byte_dump_defines_
+#endif // _di_byte_dump_parameters_
 
+/**
+ * The main program data.
+ *
+ * parameters:   The state of pre-defined parameters passed to the program.
+ * process_pipe: Designate whether or not to process the input pipe.
+ * output:       The output file for general printing.
+ * error:        The output file for error printing.
+ * warning:      The output file for warning printing.
+ * signal:       The process signal management structure.
+ * context:      The color context.
+ *
+ * @todo
+ */
 #ifndef _di_byte_dump_main_t_
   typedef struct {
     f_console_parameters_t parameters;
 
-    f_array_lengths_t remaining;
     bool process_pipe;
 
     fl_print_t output;
@@ -334,7 +374,6 @@ extern "C" {
   #define byte_dump_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
-      f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \

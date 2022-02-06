@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_iki_read_program_version_
   #define IKI_READ_program_version_major_s F_string_ascii_0_s
   #define IKI_READ_program_version_minor_s F_string_ascii_5_s
@@ -42,6 +45,9 @@ extern "C" {
   extern const f_string_static_t iki_read_program_version_s;
 #endif // _di_iki_read_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_iki_read_program_name_
   #define IKI_READ_program_name_s      "iki_read"
   #define IKI_READ_program_name_long_s "IKI Read"
@@ -53,6 +59,9 @@ extern "C" {
   extern const f_string_static_t iki_read_program_name_long_s;
 #endif // _di_iki_read_program_name_
 
+/**
+ * The program defines.
+ */
 #ifndef _di_iki_read_defines_
   #define iki_read_signal_check_d 10000
 
@@ -62,26 +71,71 @@ extern "C" {
     iki_read_mode_object_e,
     iki_read_mode_total_e,
   };
+#endif // _di_iki_read_defines_
 
-  #define iki_read_short_at_s         "a"
-  #define iki_read_short_content_s    "c"
-  #define iki_read_short_line_s       "l"
-  #define iki_read_short_literal_s    "L"
-  #define iki_read_short_name_s       "n"
-  #define iki_read_short_object_s     "o"
-  #define iki_read_short_substitute_s "s"
-  #define iki_read_short_total_s      "t"
-  #define iki_read_short_whole_s      "w"
+/**
+ * The main program parameters.
+ */
+#ifndef _di_iki_read_parameters_
+  #define IKI_READ_short_at_s         "a"
+  #define IKI_READ_short_content_s    "c"
+  #define IKI_READ_short_line_s       "l"
+  #define IKI_READ_short_literal_s    "L"
+  #define IKI_READ_short_name_s       "n"
+  #define IKI_READ_short_object_s     "o"
+  #define IKI_READ_short_substitute_s "s"
+  #define IKI_READ_short_total_s      "t"
+  #define IKI_READ_short_whole_s      "w"
 
-  #define iki_read_long_at_s         "at"
-  #define iki_read_long_content_s    "content"
-  #define iki_read_long_line_s       "line"
-  #define iki_read_long_literal_s    "literal"
-  #define iki_read_long_name_s       "name"
-  #define iki_read_long_object_s     "object"
-  #define iki_read_long_substitute_s "substitute"
-  #define iki_read_long_total_s      "total"
-  #define iki_read_long_whole_s      "whole"
+  #define IKI_READ_long_at_s         "at"
+  #define IKI_READ_long_content_s    "content"
+  #define IKI_READ_long_line_s       "line"
+  #define IKI_READ_long_literal_s    "literal"
+  #define IKI_READ_long_name_s       "name"
+  #define IKI_READ_long_object_s     "object"
+  #define IKI_READ_long_substitute_s "substitute"
+  #define IKI_READ_long_total_s      "total"
+  #define IKI_READ_long_whole_s      "whole"
+
+  #define IKI_READ_short_at_s_length         1
+  #define IKI_READ_short_content_s_length    1
+  #define IKI_READ_short_line_s_length       1
+  #define IKI_READ_short_literal_s_length    1
+  #define IKI_READ_short_name_s_length       1
+  #define IKI_READ_short_object_s_length     1
+  #define IKI_READ_short_substitute_s_length 1
+  #define IKI_READ_short_total_s_length      1
+  #define IKI_READ_short_whole_s_length      1
+
+  #define IKI_READ_long_at_s_length         2
+  #define IKI_READ_long_content_s_length    7
+  #define IKI_READ_long_line_s_length       4
+  #define IKI_READ_long_literal_s_length    7
+  #define IKI_READ_long_name_s_length       4
+  #define IKI_READ_long_object_s_length     7
+  #define IKI_READ_long_substitute_s_length 10
+  #define IKI_READ_long_total_s_length      5
+  #define IKI_READ_long_whole_s_length      5
+
+  extern const f_string_static_t iki_read_short_at_s;
+  extern const f_string_static_t iki_read_short_content_s;
+  extern const f_string_static_t iki_read_short_line_s;
+  extern const f_string_static_t iki_read_short_literal_s;
+  extern const f_string_static_t iki_read_short_name_s;
+  extern const f_string_static_t iki_read_short_object_s;
+  extern const f_string_static_t iki_read_short_substitute_s;
+  extern const f_string_static_t iki_read_short_total_s;
+  extern const f_string_static_t iki_read_short_whole_s;
+
+  extern const f_string_static_t iki_read_long_at_s;
+  extern const f_string_static_t iki_read_long_content_s;
+  extern const f_string_static_t iki_read_long_line_s;
+  extern const f_string_static_t iki_read_long_literal_s;
+  extern const f_string_static_t iki_read_long_name_s;
+  extern const f_string_static_t iki_read_long_object_s;
+  extern const f_string_static_t iki_read_long_substitute_s;
+  extern const f_string_static_t iki_read_long_total_s;
+  extern const f_string_static_t iki_read_long_whole_s;
 
   enum {
     iki_read_parameter_help_e,
@@ -116,19 +170,19 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_at_s, iki_read_long_at_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_content_s, iki_read_long_content_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_line_s, iki_read_long_line_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_literal_s, iki_read_long_literal_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_name_s, iki_read_long_name_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_object_s, iki_read_long_object_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_whole_s, iki_read_long_whole_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_substitute_s, iki_read_long_substitute_s, 0, 3, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_total_s, iki_read_long_total_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_at_s.string, iki_read_long_at_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_content_s.string, iki_read_long_content_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_line_s.string, iki_read_long_line_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_literal_s.string, iki_read_long_literal_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_name_s.string, iki_read_long_name_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_object_s.string, iki_read_long_object_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_whole_s.string, iki_read_long_whole_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_substitute_s.string, iki_read_long_substitute_s.string, 0, 3, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_total_s.string, iki_read_long_total_s.string, 0, 0, f_console_type_normal_e), \
     }
 
   #define iki_read_total_parameters_d 18
-#endif // _di_iki_read_defines_
+#endif // _di_iki_read_parameters_
 
 #ifndef _di_iki_read_substitution_t_
   #define iki_read_substitution_vocabulary_s "vocabulary"
@@ -172,11 +226,24 @@ extern "C" {
   #define macro_iki_read_substitutions_t_adjust(status, replacements, length) macro_f_memory_structure_adjust(status, replacements, iki_read_substitution_t, length)
 #endif // _di_iki_read_substitutions_t_
 
+/**
+ * The main program data.
+ *
+ * parameters:   The state of pre-defined parameters passed to the program.
+ * remaining:    The remaining, non-pre-defined parameters, passed to the program.
+ * process_pipe: Designate whether or not to process the input pipe.
+ * output:       The output file for general printing.
+ * error:        The output file for error printing.
+ * warning:      The output file for warning printing.
+ * signal:       The process signal management structure.
+ * context:      The color context.
+ *
+ * @todo
+ */
 #ifndef _di_iki_read_main_t_
   typedef struct {
     f_console_parameters_t parameters;
 
-    f_array_lengths_t remaining;
     bool process_pipe;
 
     fl_print_t output;

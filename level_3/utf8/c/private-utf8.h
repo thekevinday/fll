@@ -49,7 +49,7 @@ extern "C" {
  * @see utf8_signal_received()
  */
 #ifndef _di_utf8_process_text_
-  extern f_status_t utf8_process_text(utf8_data_t * const data, const f_string_t text) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_process_text(utf8_data_t * const data, f_string_static_t text) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_text_
 
 /**

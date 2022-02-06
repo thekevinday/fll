@@ -39,7 +39,7 @@ extern "C" {
     fll_program_print_help_option(file, context, fss_status_code_short_is_error_s, fss_status_code_long_is_error_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print F_true if the error code is an error, F_false otherwise.");
     fll_program_print_help_option(file, context, fss_status_code_short_number_s, fss_status_code_long_number_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Convert status code name to number.");
 
-    fll_program_print_help_usage(file, context, fss_status_code_program_name_s, "status code(s)");
+    fll_program_print_help_usage(file, context, fss_status_code_program_name_s, fss_status_code_program_help_parameters_s);
 
     funlockfile(file.stream);
 
@@ -48,7 +48,7 @@ extern "C" {
 #endif // _di_fss_status_code_print_help_
 
 #ifndef _di_fss_status_code_main_
-  f_status_t fss_status_code_main(fss_status_code_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t fss_status_code_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -60,7 +60,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { fss_status_code_parameter_no_color_e, fss_status_code_parameter_light_e, fss_status_code_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -186,7 +186,7 @@ extern "C" {
       return F_status_set_error(status);
     }
 
-    if (main->remaining.used == 0 && !main->process_pipe) {
+    if (main->parameters.remaining.used == 0 && !main->process_pipe) {
       fll_print_format("%[You failed to specify an error code.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
       fss_status_code_main_delete(main);
@@ -200,12 +200,12 @@ extern "C" {
         // @todo call fss_status_code_process_check() here for all main from pipe that is space separated.
       }
 
-      if (main->remaining.used > 0) {
+      if (main->parameters.remaining.used > 0) {
         uint16_t signal_check = 0;
 
         flockfile(main->output.to.stream);
 
-        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
+        for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++signal_check) % fss_status_code_signal_check_d)) {
             if (fss_status_code_signal_received(main)) {
@@ -216,7 +216,7 @@ extern "C" {
             signal_check = 0;
           }
 
-          status2 = fss_status_code_process_check(main, arguments->argv[main->remaining.array[i]]);
+          status2 = fss_status_code_process_check(main, arguments->argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -231,12 +231,12 @@ extern "C" {
         // @todo call fss_status_code_process_number() here for all main from pipe that is space separated.
       }
 
-      if (main->remaining.used > 0) {
+      if (main->parameters.remaining.used > 0) {
         uint16_t signal_check = 0;
 
         flockfile(main->output.to.stream);
 
-        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
+        for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++signal_check) % fss_status_code_signal_check_d)) {
             if (fss_status_code_signal_received(main)) {
@@ -247,7 +247,7 @@ extern "C" {
             signal_check = 0;
           }
 
-          status2 = fss_status_code_process_number(main, arguments->argv[main->remaining.array[i]]);
+          status2 = fss_status_code_process_number(main, arguments->argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -262,12 +262,12 @@ extern "C" {
         // @todo call fss_status_code_process_normal() here for all main from pipe that is space separated.
       }
 
-      if (main->remaining.used > 0) {
+      if (main->parameters.remaining.used > 0) {
         uint16_t signal_check = 0;
 
         flockfile(main->output.to.stream);
 
-        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
+        for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++signal_check) % fss_status_code_signal_check_d)) {
             if (fss_status_code_signal_received(main)) {
@@ -278,7 +278,7 @@ extern "C" {
             signal_check = 0;
           }
 
-          status2 = fss_status_code_process_normal(main, arguments->argv[main->remaining.array[i]]);
+          status2 = fss_status_code_process_normal(main, arguments->argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;

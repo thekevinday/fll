@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_control_program_version_
   #define CONTROL_program_version_major_s F_string_ascii_0_s
   #define CONTROL_program_version_minor_s F_string_ascii_5_s
@@ -42,6 +45,9 @@ extern "C" {
   extern const f_string_static_t control_program_version_s;
 #endif // _di_control_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_control_program_name_
   #define CONTROL_program_name_s      "control"
   #define CONTROL_program_name_long_s "Control Program"
@@ -53,7 +59,10 @@ extern "C" {
   extern const f_string_static_t control_program_name_long_s;
 #endif // _di_control_program_name_
 
-#ifndef _di_control_defines_
+/**
+ * The main program parameters.
+ */
+#ifndef _di_control_parameters_
   #define CONTROL_short_name_s     "n"
   #define CONTROL_short_settings_s "s"
   #define CONTROL_short_socket_s   "k"
@@ -111,39 +120,7 @@ extern "C" {
     }
 
   #define control_total_parameters_d 12
-#endif // _di_control_defines_
-
-#ifndef _di_control_main_t_
-  typedef struct {
-    f_console_parameters_t parameters;
-
-    uint16_t signal_check;
-
-    f_array_lengths_t remaining;
-    bool process_pipe;
-
-    fl_print_t output;
-    fl_print_t error;
-    fl_print_t warning;
-
-    f_signal_t signal;
-
-    f_color_context_t context;
-  } control_main_t;
-
-  #define control_main_initialize \
-    { \
-      f_console_parameters_t_initialize, \
-      0, \
-      f_array_lengths_t_initialize, \
-      F_false, \
-      fl_print_t_initialize, \
-      macro_fl_print_t_initialize_error(), \
-      macro_fl_print_t_initialize_warning(), \
-      f_signal_t_initialize, \
-      f_color_context_t_initialize, \
-    }
-#endif // _di_control_main_t_
+#endif // _di_control_parameters_
 
 /**
  * Deallocate main.
@@ -161,7 +138,7 @@ extern "C" {
  * @see control_main()
  */
 #ifndef _di_control_main_delete_
-  extern f_status_t control_main_delete(control_main_t * const main);
+  extern f_status_t control_main_delete(fll_program_data_t * const main);
 #endif // _di_control_main_delete_
 
 #ifdef __cplusplus

@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_utf8_program_version_
   #define UTF8_program_version_major_s F_string_ascii_0_s
   #define UTF8_program_version_minor_s F_string_ascii_5_s
@@ -39,9 +42,12 @@ extern "C" {
 
   #define UTF8_program_version_s_length UTF8_program_version_major_s_length + F_string_ascii_period_s_length + UTF8_program_version_minor_s_length + F_string_ascii_period_s_length + UTF8_program_version_micro_s_length + UTF8_program_version_nano_prefix_s_length + UTF8_program_version_nano_s_length
 
-    extern const f_string_static_t utf8_program_version_s;
+  extern const f_string_static_t utf8_program_version_s;
 #endif // _di_utf8_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_utf8_program_name_
   #define UTF8_program_name_s      "utf8"
   #define UTF8_program_name_long_s "UTF-8"
@@ -54,74 +60,176 @@ extern "C" {
 #endif // _di_utf8_program_name_
 
 /**
+ * The program help related data.
+ */
+#ifndef _di_utf8_program_help_parameters_
+  #define UTF8_program_help_parameters_s "character(s)"
+  #define UTF8_program_help_parameters_s_length 12
+
+  extern const f_string_static_t utf8_program_help_parameters_s;
+#endif // _di_utf8_program_help_parameters_
+
+/**
  * Set to at least 4 to provide a UTF-8 friendly allocation step.
  */
 #ifndef _di_utf8_default_allocation_step_
   #define utf8_default_allocation_step_d 16
 #endif // _di_utf8_default_allocation_step_
 
+/**
+ * The program defines.
+ */
 #ifndef _di_utf8_defines_
   #define utf8_signal_check_d 10000
 
-  #define utf8_string_from_s "from"
-  #define utf8_string_to_s   "to"
+  #define UTF8_string_combining_is_s  "C"
+  #define UTF8_string_combining_not_s "N"
+  #define UTF8_string_unknown_s       "?"
 
-  #define utf8_string_verified_valid_s     "Verified Valid"
-  #define utf8_string_verified_valid_not_s "Verified Invalid"
+  #define UTF8_string_from_s "from"
+  #define UTF8_string_to_s   "to"
 
-  #define utf8_string_combining_is_s  "C"
-  #define utf8_string_combining_not_s "N"
-  #define utf8_string_unknown_s       "?"
+  #define UTF8_string_prepend_padding_s "  "
 
-  #define utf8_string_width_0_s "0"
-  #define utf8_string_width_1_s "1"
-  #define utf8_string_width_2_s "2"
+  #define UTF8_string_valid_not_s "�"
 
-  #define utf8_string_from_s_length 4
-  #define utf8_string_to_s_length   2
+  #define UTF8_string_verified_valid_s     "Verified Valid"
+  #define UTF8_string_verified_valid_not_s "Verified Invalid"
 
-  #define utf8_string_verified_valid_s_length     14
-  #define utf8_string_verified_valid_not_s_length 16
+  #define UTF8_string_width_0_s "0"
+  #define UTF8_string_width_1_s "1"
+  #define UTF8_string_width_2_s "2"
 
-  #define utf8_string_combining_is_s_length  1
-  #define utf8_string_combining_not_s_length 1
-  #define utf8_string_unknown_s_length       1
+  #define UTF8_string_combining_is_s_length  1
+  #define UTF8_string_combining_not_s_length 1
+  #define UTF8_string_unknown_s_length       1
 
-  #define utf8_string_width_0_s_length 1
-  #define utf8_string_width_1_s_length 1
-  #define utf8_string_width_2_s_length 1
+  #define UTF8_string_from_s_length 4
+  #define UTF8_string_to_s_length   2
 
-  #define utf8_character_valid_not_s "�"
+  #define UTF8_string_prepend_padding_s_length 2
 
-  #define utf8_short_from_binary_s    "b"
-  #define utf8_short_from_codepoint_s "c"
-  #define utf8_short_from_file_s      "f"
+  #define UTF8_string_valid_not_s_length 3
 
-  #define utf8_short_headers_s       "H"
-  #define utf8_short_separate_s      "S"
-  #define utf8_short_strip_invalid_s "s"
-  #define utf8_short_verify_s        "v"
+  #define UTF8_string_verified_valid_s_length     14
+  #define UTF8_string_verified_valid_not_s_length 16
 
-  #define utf8_short_to_binary_s    "B"
-  #define utf8_short_to_codepoint_s "C"
-  #define utf8_short_to_combining_s "O"
-  #define utf8_short_to_file_s      "F"
-  #define utf8_short_to_width_s     "W"
+  #define UTF8_string_width_0_s_length 1
+  #define UTF8_string_width_1_s_length 1
+  #define UTF8_string_width_2_s_length 1
 
-  #define utf8_long_from_binary_s    "from_binary"
-  #define utf8_long_from_codepoint_s "from_codepoint"
-  #define utf8_long_from_file_s      "from_file"
+  extern const f_string_static_t utf8_string_combining_is_s;
+  extern const f_string_static_t utf8_string_combining_not_s;
+  extern const f_string_static_t utf8_string_unknown_s;
 
-  #define utf8_long_headers_s       "headers"
-  #define utf8_long_separate_s      "separate"
-  #define utf8_long_strip_invalid_s "strip_invalid"
-  #define utf8_long_verify_s        "verify"
+  extern const f_string_static_t utf8_string_from_s;
+  extern const f_string_static_t utf8_string_to_s;
 
-  #define utf8_long_to_binary_s    "to_binary"
-  #define utf8_long_to_codepoint_s "to_codepoint"
-  #define utf8_long_to_combining_s "to_combining"
-  #define utf8_long_to_file_s      "to_file"
-  #define utf8_long_to_width_s     "to_width"
+  extern const f_string_static_t utf8_string_prepend_padding_s;
+
+  extern const f_string_static_t utf8_string_verified_valid_s;
+  extern const f_string_static_t utf8_string_verified_valid_not_s;
+
+  extern const f_string_static_t utf8_string_width_0_s;
+  extern const f_string_static_t utf8_string_width_1_s;
+  extern const f_string_static_t utf8_string_width_2_s;
+
+  extern const f_string_static_t utf8_string_valid_not_s;
+#endif // _di_utf8_defines_
+
+/**
+ * The main program parameters.
+ */
+#ifndef _di_utf8_parameters_
+  #define UTF8_short_from_binary_s    "b"
+  #define UTF8_short_from_codepoint_s "c"
+  #define UTF8_short_from_file_s      "f"
+
+  #define UTF8_short_headers_s       "H"
+  #define UTF8_short_separate_s      "S"
+  #define UTF8_short_strip_invalid_s "s"
+  #define UTF8_short_verify_s        "v"
+
+  #define UTF8_short_to_binary_s    "B"
+  #define UTF8_short_to_codepoint_s "C"
+  #define UTF8_short_to_combining_s "O"
+  #define UTF8_short_to_file_s      "F"
+  #define UTF8_short_to_width_s     "W"
+
+  #define UTF8_long_from_binary_s    "from_binary"
+  #define UTF8_long_from_codepoint_s "from_codepoint"
+  #define UTF8_long_from_file_s      "from_file"
+
+  #define UTF8_long_headers_s       "headers"
+  #define UTF8_long_separate_s      "separate"
+  #define UTF8_long_strip_invalid_s "strip_invalid"
+  #define UTF8_long_verify_s        "verify"
+
+  #define UTF8_long_to_binary_s    "to_binary"
+  #define UTF8_long_to_codepoint_s "to_codepoint"
+  #define UTF8_long_to_combining_s "to_combining"
+  #define UTF8_long_to_file_s      "to_file"
+  #define UTF8_long_to_width_s     "to_width"
+
+  #define UTF8_short_from_binary_s_length    1
+  #define UTF8_short_from_codepoint_s_length 1
+  #define UTF8_short_from_file_s_length      1
+
+  #define UTF8_short_headers_s_length       1
+  #define UTF8_short_separate_s_length      1
+  #define UTF8_short_strip_invalid_s_length 1
+  #define UTF8_short_verify_s_length        1
+
+  #define UTF8_short_to_binary_s_length    1
+  #define UTF8_short_to_codepoint_s_length 1
+  #define UTF8_short_to_combining_s_length 1
+  #define UTF8_short_to_file_s_length      1
+  #define UTF8_short_to_width_s_length     1
+
+  #define UTF8_long_from_binary_s_length    11
+  #define UTF8_long_from_codepoint_s_length 14
+  #define UTF8_long_from_file_s_length      9
+
+  #define UTF8_long_headers_s_length       7
+  #define UTF8_long_separate_s_length      8
+  #define UTF8_long_strip_invalid_s_length 13
+  #define UTF8_long_verify_s_length        6
+
+  #define UTF8_long_to_binary_s_length    9
+  #define UTF8_long_to_codepoint_s_length 12
+  #define UTF8_long_to_combining_s_length 12
+  #define UTF8_long_to_file_s_length      7
+  #define UTF8_long_to_width_s_length     8
+
+  extern const f_string_static_t utf8_short_from_binary_s;
+  extern const f_string_static_t utf8_short_from_codepoint_s;
+  extern const f_string_static_t utf8_short_from_file_s;
+
+  extern const f_string_static_t utf8_short_headers_s;
+  extern const f_string_static_t utf8_short_separate_s;
+  extern const f_string_static_t utf8_short_strip_invalid_s;
+  extern const f_string_static_t utf8_short_verify_s;
+
+  extern const f_string_static_t utf8_short_to_binary_s;
+  extern const f_string_static_t utf8_short_to_codepoint_s;
+  extern const f_string_static_t utf8_short_to_combining_s;
+  extern const f_string_static_t utf8_short_to_file_s;
+  extern const f_string_static_t utf8_short_to_width_s;
+
+  extern const f_string_static_t utf8_long_from_binary_s;
+  extern const f_string_static_t utf8_long_from_codepoint_s;
+  extern const f_string_static_t utf8_long_from_file_s;
+
+  extern const f_string_static_t utf8_long_headers_s;
+  extern const f_string_static_t utf8_long_separate_s;
+  extern const f_string_static_t utf8_long_strip_invalid_s;
+  extern const f_string_static_t utf8_long_verify_s;
+
+  extern const f_string_static_t utf8_long_to_binary_s;
+  extern const f_string_static_t utf8_long_to_codepoint_s;
+  extern const f_string_static_t utf8_long_to_combining_s;
+  extern const f_string_static_t utf8_long_to_file_s;
+  extern const f_string_static_t utf8_long_to_width_s;
 
   enum {
     utf8_parameter_help_e,
@@ -162,22 +270,22 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_from_binary_s, utf8_long_from_binary_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_from_file_s, utf8_long_from_file_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_headers_s, utf8_long_headers_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_separate_s, utf8_long_headers_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_binary_s, utf8_long_to_binary_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_combining_s, utf8_long_to_combining_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_file_s, utf8_long_to_file_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_width_s, utf8_long_to_width_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_verify_s, utf8_long_verify_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_from_binary_s.string, utf8_long_from_binary_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_from_codepoint_s.string, utf8_long_from_codepoint_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_from_file_s.string, utf8_long_from_file_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_headers_s.string, utf8_long_headers_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_separate_s.string, utf8_long_headers_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_strip_invalid_s.string, utf8_long_strip_invalid_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_binary_s.string, utf8_long_to_binary_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_codepoint_s.string, utf8_long_to_codepoint_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_combining_s.string, utf8_long_to_combining_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_file_s.string, utf8_long_to_file_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_width_s.string, utf8_long_to_width_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_verify_s.string, utf8_long_verify_s.string, 0, 0, f_console_type_normal_e), \
     }
 
   #define utf8_total_parameters_d 21
-#endif // _di_utf8_defines_
+#endif // _di_utf8_parameters_
 
 /**
  * Modes used to designate how to the input and output are to be processed.
@@ -202,47 +310,6 @@ extern "C" {
 #endif // _di_utf8_modes_
 
 /**
- * The main program data.
- *
- * parameters:   The state of pre-defined parameters passed to the program.
- * remaining:    The remaining, non-pre-defined parameters, passed to the program.
- * process_pipe: Designate whether or not to process the input pipe.
- * output:       The output file for general printing.
- * error:        The output file for error printing.
- * warning:      The output file for warning printing.
- * signal:       The process signal management structure.
- * context:      The color context.
- */
-#ifndef _di_utf8_main_t_
-  typedef struct {
-    f_console_parameters_t parameters;
-
-    f_array_lengths_t remaining;
-    bool process_pipe;
-
-    fl_print_t output;
-    fl_print_t error;
-    fl_print_t warning;
-
-    f_signal_t signal;
-
-    f_color_context_t context;
-  } utf8_main_t;
-
-  #define utf8_main_t_initialize \
-    { \
-      f_console_parameters_t_initialize, \
-      f_array_lengths_t_initialize, \
-      F_false, \
-      fl_print_t_initialize, \
-      macro_fl_print_t_initialize_error(), \
-      macro_fl_print_t_initialize_warning(), \
-      f_signal_t_initialize, \
-      f_color_context_t_initialize, \
-    }
-#endif // _di_utf8_main_t_
-
-/**
  * Deallocate main.
  *
  * Be sure to call this after executing utf8_main().
@@ -258,7 +325,7 @@ extern "C" {
  * @see utf8_main()
  */
 #ifndef _di_utf8_main_delete_
-  extern f_status_t utf8_main_delete(utf8_main_t *main);
+  extern f_status_t utf8_main_delete(fll_program_data_t *main);
 #endif // _di_utf8_main_delete_
 
 #ifdef __cplusplus

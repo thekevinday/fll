@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_identify_print_
-  void fss_identify_print(fss_identify_main_t * const main, f_fll_id_t id) {
+  void fss_identify_print(fll_program_data_t * const main, f_fll_id_t id) {
 
     flockfile(main->output.to.stream);
 

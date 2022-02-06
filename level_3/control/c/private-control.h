@@ -28,7 +28,7 @@ extern "C" {
  *   F_found_not if name is unknown.
  */
 #ifndef _di_control_command_identify_
-  extern f_status_t control_command_identify(control_main_t * const main, control_data_t * const data, const f_string_static_t command) F_attribute_visibility_internal_d;
+  extern f_status_t control_command_identify(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_command_identify_
 
 /**
@@ -40,7 +40,7 @@ extern "C" {
  *   The control data.
  */
 #ifndef _di_control_command_verify_
-  extern f_status_t control_command_verify(control_main_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t control_command_verify(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_command_verify_
 /**
  * Load and process the control settings file.
@@ -87,7 +87,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_control_settings_load_
-  extern f_status_t control_settings_load(control_main_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t control_settings_load(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_settings_load_
 
 #ifdef __cplusplus

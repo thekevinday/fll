@@ -9,21 +9,12 @@
 extern "C" {
 #endif
 
-#ifndef _di_utf8_program_version_
-  const f_string_static_t utf8_program_version_s = macro_f_string_static_t_initialize(UTF8_program_version_s, 0, UTF8_program_version_s_length);
-#endif // _di_utf8_program_version_
-
-#ifndef _di_utf8_program_name_
-  const f_string_static_t utf8_program_name_s = macro_f_string_static_t_initialize(UTF8_program_name_s, 0, UTF8_program_name_s_length);
-  const f_string_static_t utf8_program_name_long_s = macro_f_string_static_t_initialize(UTF8_program_name_long_s, 0, UTF8_program_name_s_long_length);
-#endif // _di_utf8_program_name_
-
 #ifndef _di_utf8_print_help_
   f_status_t utf8_print_help(const f_file_t file, const f_color_context_t context) {
 
     flockfile(file.stream);
 
-    fll_program_print_help_header(file, context, utf8_program_name_long_s, utf8_version_s);
+    fll_program_print_help_header(file, context, utf8_program_name_long_s, utf8_program_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -56,17 +47,17 @@ extern "C" {
     fll_program_print_help_option(file, context, utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Strip invalid Unicode characters (do not print invalid sequences).");
     fll_program_print_help_option(file, context, utf8_short_verify_s, utf8_long_verify_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Only perform verification of valid sequences.");
 
-    fll_program_print_help_usage(file, context, utf8_program_name_s, "filename(s)");
+    fll_program_print_help_usage(file, context, utf8_program_name_s, utf8_program_help_parameters_s);
 
     fl_print_format("  The default behavior is to assume the expected input is binary from the command line to be output to the screen as codepoints.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When using the parameter '%[%r%s%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When using the parameter '%[%r%r%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When using the parameter '%[%r%s%]' with the parameter ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_combining_s, context.set.notable);
-    fl_print_format("'%[%r%s%]', the ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_width_s, context.set.notable);
-    fl_print_format("'%[%s%]' character is printed to represent the combining and the digits are used to represent widths.%r", file.stream, context.set.notable, utf8_string_combining_is_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  When using the parameter '%[%r%r%]' with the parameter ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_combining_s, context.set.notable);
+    fl_print_format("'%[%r%r%]', the ", file.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_width_s, context.set.notable);
+    fl_print_format("'%[%r%]' character is printed to represent the combining and the digits are used to represent widths.%r", file.stream, context.set.notable, utf8_string_combining_is_s, context.set.notable, f_string_eol_s);
     fl_print_format("  The combining characters should be considered 1-width by themselves or 0-width when combined.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
@@ -76,7 +67,7 @@ extern "C" {
 #endif // _di_utf8_print_help_
 
 #ifndef _di_utf8_main_
-  f_status_t utf8_main(utf8_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t utf8_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -92,7 +83,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { utf8_parameter_no_color_e, utf8_parameter_light_e, utf8_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -290,7 +281,7 @@ extern "C" {
     }
 
     if (main->parameters.array[utf8_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, utf8_version_s);
+      fll_program_print_version(main->output.to, utf8_program_version_s);
 
       utf8_data_delete(&data);
       utf8_main_delete(main);
@@ -307,7 +298,7 @@ extern "C" {
 
           index = main->parameters.array[utf8_parameter_from_file_e].values.array[i];
 
-          if (arguments->argv[index][0]) {
+          if (!data.argv[index].used) {
             if (!f_file_exists(data.argv[index])) {
               utf8_print_error_parameter_file_not_found(&data, F_true, data.argv[index]);
 
@@ -342,14 +333,11 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          data.file_name.string = arguments->argv[main->parameters.array[utf8_parameter_to_file_e].values.array[0]];
-          data.file_name.used = strnlen(data.file_name.string, PATH_MAX);
-
-          if (data.file_name.used) {
-            status = f_file_stream_open(data.file_name.string, "a", &data.file);
+          if (data.argv[main->parameters.array[utf8_parameter_to_file_e].values.array[0]].used) {
+            status = f_file_stream_open(data.argv[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &data.file);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.file_name.string, f_file_operation_open_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_operation_open_s, fll_error_file_type_file_e);
             }
           }
           else {
@@ -370,7 +358,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[utf8_parameter_from_file_e].result == f_console_result_none_e && !(main->process_pipe || main->remaining.used)) {
+      if (main->parameters.array[utf8_parameter_from_file_e].result == f_console_result_none_e && !(main->process_pipe || main->parameters.remaining.used)) {
         utf8_print_error_no_from(&data);
 
         status = F_status_set_error(F_parameter);
@@ -378,7 +366,7 @@ extern "C" {
 
       if (!(data.mode & utf8_mode_to_binary_d)) {
         if (main->parameters.array[utf8_parameter_separate_e].result == f_console_result_found_e || main->parameters.array[utf8_parameter_headers_e].result == f_console_result_found_e) {
-          data.prepend = "  ";
+          data.prepend = utf8_string_prepend_padding_s;
           data.append = f_string_eol_s;
         }
         else {
@@ -408,7 +396,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment) {
-          fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, 0, f_file_operation_process_s, fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, f_string_empty_s, f_file_operation_process_s, fll_error_file_type_pipe_e);
         }
       }
 
@@ -431,12 +419,12 @@ extern "C" {
 
           index = main->parameters.array[utf8_parameter_from_file_e].values.array[i];
 
-          utf8_print_section_header_file(&data, arguments->argv[index]);
+          utf8_print_section_header_file(&data, data.argv[index]);
 
-          status = f_file_stream_open(arguments->argv[index], 0, &file);
+          status = f_file_stream_open(data.argv[index], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[index], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[index], f_file_operation_open_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -457,33 +445,31 @@ extern "C" {
           }
 
           if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment) {
-            fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, arguments->argv[index], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_binary_d ? "utf8_process_file_binary" : "utf8_process_file_codepoint", F_true, data.argv[index], f_file_operation_process_s, fll_error_file_type_file_e);
 
             break;
           }
         } // for
       }
 
-      if (F_status_is_error_not(status) && status != F_signal && main->remaining.used) {
-        f_array_length_t i = 0;
-        f_array_length_t index = 0;
+      if (F_status_is_error_not(status) && status != F_signal && main->parameters.remaining.used) {
+        uint16_t signal_check = 0;
 
-        for (uint16_t signal_check = 0; F_status_is_error_not(status) && i < main->remaining.used; ++i) {
+        for (f_array_length_t i = 0; F_status_is_error_not(status) && i < main->parameters.remaining.used; ++i) {
 
           if (!((++signal_check) % utf8_signal_check_d)) {
             if (utf8_signal_received(&data)) {
               status = F_status_set_error(F_signal);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          index = main->remaining.array[i];
+          utf8_print_section_header_parameter(&data, main->parameters.remaining.array[i]);
 
-          utf8_print_section_header_parameter(&data, index);
-
-          status = utf8_process_text(&data, arguments->argv[index]);
+          status = utf8_process_text(&data, data.argv[main->parameters.remaining.array[i]]);
 
           if (main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) {
             if (status == F_false) {

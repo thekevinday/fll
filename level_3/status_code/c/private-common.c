@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_status_code_print_signal_received_
-  void status_code_print_signal_received(status_code_main_t * const main, const f_status_t signal) {
+  void status_code_print_signal_received(fll_program_data_t * const main, const f_status_t signal) {
 
     if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
@@ -24,7 +24,7 @@ extern "C" {
 #endif // _di_status_code_print_signal_received_
 
 #ifndef _di_status_code_signal_received_
-  f_status_t status_code_signal_received(status_code_main_t * const main) {
+  f_status_t status_code_signal_received(fll_program_data_t * const main) {
 
     if (main->signal.id == -1) {
       return F_false;

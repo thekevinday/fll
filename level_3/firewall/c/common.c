@@ -109,7 +109,6 @@ extern "C" {
     f_console_parameters_delete(&main->parameters);
 
     f_string_dynamics_resize(0, &main->chains);
-    f_type_array_lengths_resize(0, &main->remaining);
     f_string_dynamics_resize(0, &main->devices);
 
     macro_f_color_context_t_delete_simple(main->context);

@@ -252,7 +252,7 @@ extern "C" {
  *   The signal received.
  */
 #ifndef _di_fss_basic_read_print_signal_received_
-  extern void fss_basic_read_print_signal_received(fss_basic_read_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
+  extern void fss_basic_read_print_signal_received(fll_program_data_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_print_signal_received_
 
 /**
@@ -270,7 +270,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_fss_basic_read_signal_received_
-  extern f_status_t fss_basic_read_signal_received(fss_basic_read_main_t * const main);
+  extern f_status_t fss_basic_read_signal_received(fll_program_data_t * const main);
 #endif // _di_fss_basic_read_signal_received_
 
 #ifdef __cplusplus

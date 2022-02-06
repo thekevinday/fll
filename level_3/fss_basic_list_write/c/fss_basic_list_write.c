@@ -6,15 +6,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_basic_list_write_program_version_
-  const f_string_static_t fss_basic_list_write_program_version_s = macro_f_string_static_t_initialize(FSS_BASIC_LIST_WRITE_program_version_s, 0, FSS_BASIC_LIST_WRITE_program_version_s_length);
-#endif // _di_fss_basic_list_write_program_version_
-
-#ifndef _di_fss_basic_list_write_program_name_
-  const f_string_static_t fss_basic_list_write_program_name_s = macro_f_string_static_t_initialize(FSS_BASIC_LIST_WRITE_program_name_s, 0, FSS_BASIC_LIST_WRITE_program_name_s_length);
-  const f_string_static_t fss_basic_list_write_program_name_long_s = macro_f_string_static_t_initialize(FSS_BASIC_LIST_WRITE_program_name_long_s, 0, FSS_BASIC_LIST_WRITE_program_name_long_s_length);
-#endif // _di_fss_basic_list_write_program_name_
-
 #ifndef _di_fss_basic_list_write_print_help_
   f_status_t fss_basic_list_write_print_help(const f_file_t file, const f_color_context_t context) {
 
@@ -66,7 +57,7 @@ extern "C" {
 #endif // _di_fss_basic_list_write_print_help_
 
 #ifndef _di_fss_basic_list_write_main_
-  f_status_t fss_basic_list_write_main(fss_basic_list_write_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t fss_basic_list_write_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -78,7 +69,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { fss_basic_list_write_parameter_no_color_e, fss_basic_list_write_parameter_light_e, fss_basic_list_write_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;

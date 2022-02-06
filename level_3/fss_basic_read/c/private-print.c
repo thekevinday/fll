@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_read_print_at_
-  void fss_basic_read_print_at(fss_basic_read_main_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_basic_read_data_t * const data) {
+  void fss_basic_read_print_at(fll_program_data_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_basic_read_data_t * const data) {
 
     if (at >= data->contents.used) {
       return;
@@ -72,7 +72,7 @@ extern "C" {
 #endif // _di_fss_basic_read_print_at_
 
 #ifndef _di_fss_basic_read_print_object_end_
-  void fss_basic_read_print_object_end(fss_basic_read_main_t * const main) {
+  void fss_basic_read_print_object_end(fll_program_data_t * const main) {
 
     if (main->parameters.array[fss_basic_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_basic_read_pipe_content_start_s, main->output.to.stream);
@@ -84,7 +84,7 @@ extern "C" {
 #endif // _di_fss_basic_read_print_object_end_
 
 #ifndef _di_fss_basic_read_print_one_
-  void fss_basic_read_print_one(fss_basic_read_main_t * const main) {
+  void fss_basic_read_print_one(fll_program_data_t * const main) {
 
     f_print_character(f_string_ascii_1_s.string[0], main->output.to.stream);
     f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
@@ -92,7 +92,7 @@ extern "C" {
 #endif // _di_fss_basic_read_print_one_
 
 #ifndef _di_fss_basic_read_print_set_end_
-  void fss_basic_read_print_set_end(fss_basic_read_main_t * const main) {
+  void fss_basic_read_print_set_end(fll_program_data_t * const main) {
 
     if (main->parameters.array[fss_basic_read_parameter_pipe_e].result == f_console_result_found_e) {
       f_print_character(fss_basic_read_pipe_content_end_s, main->output.to.stream);
@@ -104,7 +104,7 @@ extern "C" {
 #endif // _di_fss_basic_read_print_set_end_
 
 #ifndef _di_fss_basic_read_print_zero_
-  void fss_basic_read_print_zero(fss_basic_read_main_t * const main) {
+  void fss_basic_read_print_zero(fll_program_data_t * const main) {
 
     f_print_character(f_string_ascii_0_s.string[0], main->output.to.stream);
     f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);

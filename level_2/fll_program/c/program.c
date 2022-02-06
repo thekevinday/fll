@@ -69,11 +69,11 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_parameter_process_
-  f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_array_lengths_t *remaining, f_color_context_t *context) {
+  f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_color_context_t *context) {
 
     f_status_t status = F_none;
 
-    status = f_console_parameter_process(arguments, parameters, remaining);
+    status = f_console_parameter_process(arguments, parameters);
     if (F_status_is_error(status)) return status;
 
     f_console_parameter_id_t decision = choices.id[2];

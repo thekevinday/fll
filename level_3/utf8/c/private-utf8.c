@@ -22,9 +22,9 @@ extern "C" {
 #endif // _di_utf8_data_delete_
 
 #ifndef _di_utf8_process_text_
-  f_status_t utf8_process_text(utf8_data_t * const data, const f_string_t text) {
+  f_status_t utf8_process_text(utf8_data_t * const data, f_string_static_t text) {
 
-    if (!text) {
+    if (!text.used) {
       return F_true;
     }
 
@@ -32,19 +32,18 @@ extern "C" {
     bool valid = F_true;
     uint8_t mode_codepoint = utf8_codepoint_mode_ready_e;
 
-    f_string_static_t current = macro_f_string_static_t_initialize2(text, 0);
-
-    utf8_process_text_width(&current);
+    utf8_process_text_width(&text);
 
     flockfile(data->file.stream);
 
-    for (uint16_t signal_check = 0; current.string[0] && F_status_is_error_not(status); ) {
+    for (uint16_t signal_check = 0; text.string[0] && F_status_is_error_not(status); ) {
 
       if (!((++signal_check) % utf8_signal_check_d)) {
         if (utf8_signal_received(data)) {
           utf8_print_signal_received(data, status);
 
           status = F_status_set_error(F_signal);
+
           break;
         }
       }
@@ -52,10 +51,10 @@ extern "C" {
       status = F_none;
 
       if (data->mode & utf8_mode_from_binary_d) {
-        status = utf8_convert_binary(data, current);
+        status = utf8_convert_binary(data, text);
       }
       else {
-        status = utf8_detect_codepoint(data, current, &mode_codepoint);
+        status = utf8_detect_codepoint(data, text, &mode_codepoint);
 
         if (F_status_is_error(status)) {
           fll_error_print(data->main->error, F_status_set_fine(status), "utf8_detect_codepoint", F_true);
@@ -64,7 +63,7 @@ extern "C" {
         }
 
         if (F_status_is_fine(status) && status != F_next) {
-          status = utf8_convert_codepoint(data, current, &mode_codepoint);
+          status = utf8_convert_codepoint(data, text, &mode_codepoint);
         }
       }
 
@@ -72,8 +71,8 @@ extern "C" {
         valid = F_false;
       }
 
-      current.string += current.used;
-      utf8_process_text_width(&current);
+      text.string += text.used;
+      utf8_process_text_width(&text);
     } // for
 
     if (F_status_is_error_not(status) && !(data->mode & utf8_mode_from_binary_d)) {
@@ -86,9 +85,9 @@ extern "C" {
           valid = F_false;
         }
 
-        current.used = 0;
+        text.used = 0;
 
-        status = utf8_convert_codepoint(data, current, &mode_codepoint);
+        status = utf8_convert_codepoint(data, text, &mode_codepoint);
       }
     }
 

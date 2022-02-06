@@ -13,16 +13,26 @@ extern "C" {
   const f_string_static_t status_code_program_name_long_s = macro_f_string_static_t_initialize(STATUS_CODE_program_name_long_s, 0, STATUS_CODE_program_name_long_s_length);
 #endif // _di_status_code_program_name_
 
+#ifndef _di_status_code_program_help_parameters_
+  const f_string_static_t status_code_program_help_parameters_s = macro_f_string_static_t_initialize(STATUS_CODE_program_help_parameters_s, 0, STATUS_CODE_program_help_parameters_s_length);
+#endif // _di_status_code_program_help_parameters_
+
+#ifndef _di_status_code_parameters_
+  const f_string_static_t status_code_short_is_fine_s = macro_f_string_static_t_initialize(STATUS_CODE_short_is_fine_s, 0, STATUS_CODE_short_is_fine_s_length);
+  const f_string_static_t status_code_short_is_warning_s = macro_f_string_static_t_initialize(STATUS_CODE_short_is_warning_s, 0, STATUS_CODE_short_is_warning_s_length);
+  const f_string_static_t status_code_short_is_error_s = macro_f_string_static_t_initialize(STATUS_CODE_short_is_error_s, 0, STATUS_CODE_short_is_error_s_length);
+  const f_string_static_t status_code_short_number_s = macro_f_string_static_t_initialize(STATUS_CODE_short_number_s, 0, STATUS_CODE_short_number_s_length);
+
+  const f_string_static_t status_code_long_is_fine_s = macro_f_string_static_t_initialize(STATUS_CODE_long_is_fine_s, 0, STATUS_CODE_long_is_fine_s_length);
+  const f_string_static_t status_code_long_is_warning_s = macro_f_string_static_t_initialize(STATUS_CODE_long_is_warning_s, 0, STATUS_CODE_long_is_warning_s_length);
+  const f_string_static_t status_code_long_is_error_s = macro_f_string_static_t_initialize(STATUS_CODE_long_is_error_s, 0, STATUS_CODE_long_is_error_s_length);
+  const f_string_static_t status_code_long_number_s = macro_f_string_static_t_initialize(STATUS_CODE_long_number_s, 0, STATUS_CODE_long_number_s_length);
+#endif // _di_status_code_parameters_
+
 #ifndef _di_status_code_main_delete_
-  f_status_t status_code_main_delete(status_code_main_t * const main) {
+  f_status_t status_code_main_delete(fll_program_data_t * const main) {
 
-    f_console_parameters_delete(&main->parameters);
-
-    f_type_array_lengths_resize(0, &main->remaining);
-
-    macro_f_color_context_t_delete_simple(main->context);
-
-    return F_none;
+    return fll_program_data_delete(main);
   }
 #endif // _di_status_code_main_delete_
 

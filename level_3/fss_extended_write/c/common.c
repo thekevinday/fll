@@ -13,16 +13,38 @@ extern "C" {
   const f_string_static_t fss_extended_write_program_name_long_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_program_name_long_s, 0, FSS_EXTENDED_WRITE_program_name_long_s_length);
 #endif // _di_fss_extended_write_program_name_
 
+#ifndef _di_fss_extended_write_defines_
+  const f_string_static_t fss_extended_write_pipe_content_end_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_pipe_content_end_s, 0, FSS_EXTENDED_WRITE_pipe_content_end_s_length);
+  const f_string_static_t fss_extended_write_pipe_content_ignore_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_pipe_content_ignore_s, 0, FSS_EXTENDED_WRITE_pipe_content_ignore_s_length);
+  const f_string_static_t fss_extended_write_pipe_content_start_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_pipe_content_start_s, 0, FSS_EXTENDED_WRITE_pipe_content_start_s_length);
+#endif // _di_fss_extended_write_defines_
+
+#ifndef _di_fss_extended_write_parameters_
+  const f_string_static_t fss_extended_write_short_file_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_file_s, 0, FSS_EXTENDED_WRITE_short_file_s_length);
+  const f_string_static_t fss_extended_write_short_content_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_content_s, 0, FSS_EXTENDED_WRITE_short_content_s_length);
+  const f_string_static_t fss_extended_write_short_double_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_double_s, 0, FSS_EXTENDED_WRITE_short_double_s_length);
+  const f_string_static_t fss_extended_write_short_ignore_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_ignore_s, 0, FSS_EXTENDED_WRITE_short_ignore_s_length);
+  const f_string_static_t fss_extended_write_short_object_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_object_s, 0, FSS_EXTENDED_WRITE_short_object_s_length);
+  const f_string_static_t fss_extended_write_short_partial_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_partial_s, 0, FSS_EXTENDED_WRITE_short_partial_s_length);
+  const f_string_static_t fss_extended_write_short_prepend_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_prepend_s, 0, FSS_EXTENDED_WRITE_short_prepend_s_length);
+  const f_string_static_t fss_extended_write_short_single_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_single_s, 0, FSS_EXTENDED_WRITE_short_single_s_length);
+  const f_string_static_t fss_extended_write_short_trim_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_short_trim_s, 0, FSS_EXTENDED_WRITE_short_trim_s_length);
+
+  const f_string_static_t fss_extended_write_long_file_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_file_s, 0, FSS_EXTENDED_WRITE_long_file_s_length);
+  const f_string_static_t fss_extended_write_long_content_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_content_s, 0, FSS_EXTENDED_WRITE_long_content_s_length);
+  const f_string_static_t fss_extended_write_long_double_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_double_s, 0, FSS_EXTENDED_WRITE_long_double_s_length);
+  const f_string_static_t fss_extended_write_long_ignore_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_ignore_s, 0, FSS_EXTENDED_WRITE_long_ignore_s_length);
+  const f_string_static_t fss_extended_write_long_object_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_object_s, 0, FSS_EXTENDED_WRITE_long_object_s_length);
+  const f_string_static_t fss_extended_write_long_partial_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_partial_s, 0, FSS_EXTENDED_WRITE_long_partial_s_length);
+  const f_string_static_t fss_extended_write_long_prepend_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_prepend_s, 0, FSS_EXTENDED_WRITE_long_prepend_s_length);
+  const f_string_static_t fss_extended_write_long_single_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_single_s, 0, FSS_EXTENDED_WRITE_long_single_s_length);
+  const f_string_static_t fss_extended_write_long_trim_s = macro_f_string_static_t_initialize(FSS_EXTENDED_WRITE_long_trim_s, 0, FSS_EXTENDED_WRITE_long_trim_s_length);
+#endif // _di_fss_extended_write_parameters_
+
 #ifndef _di_fss_extended_write_main_delete_
-  f_status_t fss_extended_write_main_delete(fss_extended_write_main_t * const main) {
+  f_status_t fss_extended_write_main_delete(fll_program_data_t * const main) {
 
-    f_console_parameters_delete(&main->parameters);
-
-    f_type_array_lengths_resize(0, &main->remaining);
-
-    macro_f_color_context_t_delete_simple(main->context);
-
-    return F_none;
+    return fll_program_data_delete(main);
   }
 #endif // _di_fss_extended_write_main_delete_
 

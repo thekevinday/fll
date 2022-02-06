@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_identify_load_line_
-  f_status_t fss_identify_load_line(fss_identify_main_t * const main, const f_file_t file, const f_string_static_t name, f_string_static_t *buffer, f_string_range_t *range) {
+  f_status_t fss_identify_load_line(fll_program_data_t * const main, const f_file_t file, const f_string_static_t name, f_string_static_t *buffer, f_string_range_t *range) {
 
     f_status_t status = F_none;
     uint16_t signal_check = 0;
@@ -64,7 +64,7 @@ extern "C" {
 #endif // _di_fss_identify_load_line_
 
 #ifndef _di_fss_identify_process_
-  f_status_t fss_identify_process(fss_identify_main_t * const main, const f_string_t name, const f_string_static_t buffer, f_string_range_t *range, fss_identify_data_t *data) {
+  f_status_t fss_identify_process(fll_program_data_t * const main, const f_string_t name, const f_string_static_t buffer, f_string_range_t *range, fss_identify_data_t *data) {
 
     f_status_t status = F_none;
     f_fll_ids_t ids = f_fll_ids_t_initialize;

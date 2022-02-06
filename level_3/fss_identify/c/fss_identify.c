@@ -6,15 +6,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_identify_program_version_
-  const f_string_static_t fss_identify_program_version_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_program_version_s, 0, FSS_IDENTIFY_program_version_s_length);
-#endif // _di_fss_identify_program_version_
-
-#ifndef _di_fss_identify_program_name_
-  const f_string_static_t fss_identify_program_name_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_program_name_s, 0, FSS_IDENTIFY_program_name_s_length);
-  const f_string_static_t fss_identify_program_name_long_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_program_name_long_s, 0, FSS_IDENTIFY_program_name_long_s_length);
-#endif // _di_fss_identify_program_name_
-
 #ifndef _di_fss_identify_print_help_
   f_status_t fss_identify_print_help(const f_file_t file, const f_color_context_t context) {
 
@@ -43,7 +34,7 @@ extern "C" {
     fll_program_print_help_option(file, context, fss_identify_short_name_s, fss_identify_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select Object with this name.");
     fll_program_print_help_option(file, context, fss_identify_short_total_s, fss_identify_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the total Identifiers found.");
 
-    fll_program_print_help_usage(file, context, fss_identify_program_name_s, "filename(s)");
+    fll_program_print_help_usage(file, context, fss_identify_program_name_s, fll_program_parameter_filenames_s);
 
     fl_print_format("  The %[%r%s%] parameter refers to the file lines and not the lines in a given file.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_line_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
@@ -67,7 +58,7 @@ extern "C" {
 #endif // _di_fss_identify_print_help_
 
 #ifndef _di_fss_identify_main_
-  f_status_t fss_identify_main(fss_identify_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t fss_identify_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -79,7 +70,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { fss_identify_parameter_no_color_e, fss_identify_parameter_light_e, fss_identify_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -312,7 +303,7 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       uint16_t signal_check = 0;
 
-      for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
+      for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
         if (!((++signal_check) % fss_identify_signal_check_d)) {
           if (fss_identify_signal_received(main)) {
@@ -331,16 +322,16 @@ extern "C" {
 
         file.size_read = 512;
 
-        status = f_file_stream_open(arguments->argv[main->remaining.array[i]], 0, &file);
+        status = f_file_stream_open(arguments->argv[main->parameters.remaining.array[i]], 0, &file);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
         }
         else {
-          status = fss_identify_load_line(main, file, arguments->argv[main->remaining.array[i]], &buffer, &range);
+          status = fss_identify_load_line(main, file, arguments->argv[main->parameters.remaining.array[i]], &buffer, &range);
 
           if (F_status_is_error_not(status)) {
-            status = fss_identify_process(main, arguments->argv[main->remaining.array[i]], buffer, &range, &data);
+            status = fss_identify_process(main, arguments->argv[main->parameters.remaining.array[i]], buffer, &range, &data);
           }
         }
 

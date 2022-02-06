@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_fake_program_version_
   #define FAKE_program_version_major_s F_string_ascii_0_s
   #define FAKE_program_version_minor_s F_string_ascii_5_s
@@ -42,6 +45,9 @@ extern "C" {
   extern const f_string_static_t fake_program_version_s;
 #endif // _di_fake_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_fake_program_name_
   #define FAKE_program_name_s      "fake"
   #define FAKE_program_name_long_s "Featureless Make"
@@ -53,6 +59,9 @@ extern "C" {
   extern const f_string_static_t fake_program_name_long_s;
 #endif // _di_fake_program_name_
 
+/**
+ * The program help related data.
+ */
 #ifndef _di_fake_program_help_parameters_
   #define FAKE_program_help_parameters_s "operation"
   #define FAKE_program_help_parameters_s_length 9
@@ -130,6 +139,9 @@ extern "C" {
   extern const f_string_static_t fake_path_part_static_s;
 #endif // _di_fake_path_
 
+/**
+ * The file settings.
+ */
 #ifndef _di_fake_file_
   #define FAKE_file_defines_s      "defines"
   #define FAKE_file_dependencies_s "dependencies"
@@ -188,6 +200,9 @@ extern "C" {
   extern const f_string_static_t fake_default_settings_s;
 #endif // _di_fake_defaults_
 
+/**
+ * The build languages.
+ */
 #ifndef _di_fake_build_language_
   enum {
     fake_build_language_type_bash_e = 1,
@@ -208,6 +223,9 @@ extern "C" {
   extern const f_string_static_t fake_build_language_cpp_s;
 #endif // _di_fake_build_language_
 
+/**
+ * The program version.
+ */
 #ifndef _di_fake_build_version_
   enum {
     fake_build_version_type_major_e = 1,
@@ -232,6 +250,9 @@ extern "C" {
   extern const f_string_static_t fake_build_version_nano_s;
 #endif // _di_fake_build_version_
 
+/**
+ * The program defines.
+ */
 #ifndef _di_fake_defines_
   enum {
     fake_operation_build_e = 1,
@@ -246,7 +267,12 @@ extern "C" {
 
   #define fake_operations_total_d    4
   #define fake_operations_initialize { 0, 0, 0, 0 }
+#endif // _di_fake_defines_
 
+/**
+ * The main program parameters.
+ */
+#ifndef _di_fake_parameters_
   #define FAKE_short_define_s   "d"
   #define FAKE_short_fakefile_s "f"
   #define FAKE_short_mode_s     "m"
@@ -418,13 +444,24 @@ extern "C" {
     }
 
   #define fake_total_parameters_d 28
-#endif // _di_fake_defines_
-
+#endif // _di_fake_parameters_
+/**
+ * The main program data.
+ *
+ * parameters:   The state of pre-defined parameters passed to the program.
+ * process_pipe: Designate whether or not to process the input pipe.
+ * output:       The output file for general printing.
+ * error:        The output file for error printing.
+ * warning:      The output file for warning printing.
+ * signal:       The process signal management structure.
+ * context:      The color context.
+ *
+ * @todo
+ */
 #ifndef _di_fake_main_t_
   typedef struct {
     f_console_parameters_t parameters;
 
-    f_array_lengths_t remaining;
     bool process_pipe;
 
     fl_print_t output;
@@ -500,7 +537,6 @@ extern "C" {
   #define fake_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
-      f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \

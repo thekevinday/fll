@@ -160,7 +160,7 @@ extern "C" {
  *   The name of the file.
  */
 #ifndef _di_utf8_print_section_header_file_
-  extern void utf8_print_section_header_file(utf8_data_t * const data, const f_string_t name) F_attribute_visibility_internal_d;
+  extern void utf8_print_section_header_file(utf8_data_t * const data, const f_string_static_t name) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_section_header_file_
 
 /**

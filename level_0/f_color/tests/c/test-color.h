@@ -32,6 +32,8 @@
 #include "test-color-save_3.h"
 #include "test-color-save_4.h"
 #include "test-color-save_5.h"
+#include "test-color-context_delete.h"
+#include "test-color-context_destroy.h"
 
 #ifdef __cplusplus
 extern "C" {

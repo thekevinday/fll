@@ -91,7 +91,7 @@ extern "C" {
  * @see fss_status_code_main_delete()
  */
 #ifndef _di_fss_status_code_main_
-  extern f_status_t fss_status_code_main(fss_status_code_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t fss_status_code_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_fss_status_code_main_
 
 #ifdef __cplusplus

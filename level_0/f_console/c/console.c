@@ -153,9 +153,9 @@ extern "C" {
 #endif // _di_f_console_parameter_prioritize_right_
 
 #ifndef _di_f_console_parameter_process_
-  f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, f_array_lengths_t *remaining) {
+  f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters) {
     #ifndef _di_level_0_parameter_checking_
-      if (!remaining) return F_status_set_error(F_parameter);
+      if (!parameters) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
@@ -388,12 +388,10 @@ extern "C" {
       if (!found) {
 
         // Populate list of remaining parameters->array that are not associated with anything.
-        if (remaining->used == remaining->size) {
-          status = f_type_array_lengths_increase(F_memory_default_allocation_small_d, remaining);
-          if (F_status_is_error(status)) break;
-        }
+        status = f_type_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->remaining);
+        if (F_status_is_error(status)) break;
 
-        remaining->array[remaining->used++] = location;
+        parameters->remaining.array[parameters->remaining.used++] = location;
       }
 
       ++location;

@@ -76,7 +76,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { controller_parameter_no_color_e, controller_parameter_light_e, controller_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -180,8 +180,8 @@ extern "C" {
 
     memset(&address, 0, setting.control_socket.length);
 
-    if (main->remaining.used) {
-      status = f_string_dynamic_append(argv[main->remaining.array[0]], &setting.name_entry);
+    if (main->parameters.remaining.used) {
+      status = f_string_dynamic_append(argv[main->parameters.remaining.array[0]], &setting.name_entry);
     }
     else {
       status = f_string_dynamic_append(controller_default_s, &setting.name_entry);

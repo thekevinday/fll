@@ -38,20 +38,19 @@ extern "C" {
  * The program data.
  *
  * main:      The main program data.
- * argv:      The argument structure in utf8_main_t.parameters for simplifying syntax.
+ * argv:      The argument structure in fll_program_data_t.parameters for simplifying syntax.
  * file:      The output file for writing the processed data to (may potentially default to "output").
  * mode:      The input/output mode (see utf8_modes).
  * valid:     Designate the output context set for valid characters.
  * valid_not: Designate the output context set for invalid characters.
  * append:    A string to append. A value of NULL results in not appending.
  * prepend:   A string to prepend. A value of NULL results in not prepending.
- * file_name: The name of the file being output to for processed data (is empty if defaulting to "output").
  * buffer:    A buffer to use for printing output (generally for storing a block of input from an input file).
  * text:      A buffer for storing a series of characters for processing (generally for codepoint processing).
  */
 #ifndef _di_utf8_data_t_
   typedef struct {
-    utf8_main_t *main;
+    fll_program_data_t *main;
     f_string_static_t *argv;
 
     f_file_t file;
@@ -60,10 +59,9 @@ extern "C" {
     f_color_set_t valid;
     f_color_set_t valid_not;
 
-    f_string_t append;
-    f_string_t prepend;
+    f_string_static_t append;
+    f_string_static_t prepend;
 
-    f_string_static_t file_name;
     f_string_dynamic_t buffer;
     f_string_dynamic_t text;
   } utf8_data_t;
@@ -76,8 +74,7 @@ extern "C" {
       utf8_mode_from_binary_d | utf8_mode_to_codepoint_d, \
       f_color_set_t_initialize, \
       f_color_set_t_initialize, \
-      f_string_t_initialize, \
-      f_string_t_initialize, \
+      f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \

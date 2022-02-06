@@ -63,7 +63,7 @@ extern "C" {
  * @see control_main()
  */
 #ifndef _di_control_print_help_
-  extern f_status_t control_print_help(control_main_t * const main);
+  extern f_status_t control_print_help(fll_program_data_t * const main);
 #endif // _di_control_print_help_
 
 /**
@@ -94,7 +94,7 @@ extern "C" {
  * @see control_main_delete()
  */
 #ifndef _di_control_main_
-  extern f_status_t control_main(control_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t control_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_control_main_
 
 #ifdef __cplusplus

@@ -6,9 +6,6 @@
  * Licenses: lgpl-2.1-or-later
  *
  * Some console input/output commands.
- *
- * @todo It may be a good idea to provide a standard parameter process process disable sequence.
- *       This does not yet exist, so "--help" would always be a parameter, but would if there was something like "-/ --help" where this help does not designate the help option?
  */
 #ifndef _F_console_h
 #define _F_console_h
@@ -136,8 +133,6 @@ extern "C" {
  *   The parameters passed to the process.
  * @param parameters
  *   The console parameters to look for.
- * @param remaining
- *   A list of remaining parameters not associated with anything.
  *
  * @return
  *   F_none on success.
@@ -153,7 +148,7 @@ extern "C" {
  * @see f_string_dynamics_increase_by()
  */
 #ifndef _di_f_console_parameter_process_
-  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, f_array_lengths_t *remaining);
+  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters);
 #endif // _di_f_console_parameter_process_
 
 #ifdef __cplusplus

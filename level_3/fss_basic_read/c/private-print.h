@@ -29,7 +29,7 @@ extern "C" {
  *   The program data.
  */
 #ifndef _di_fss_basic_read_print_at_
-  extern void fss_basic_read_print_at(fss_basic_read_main_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_basic_read_data_t * const data) F_attribute_visibility_internal_d;
+  extern void fss_basic_read_print_at(fll_program_data_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_basic_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_print_at_
 
 /**
@@ -39,7 +39,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_basic_read_print_object_end_
-  extern void fss_basic_read_print_object_end(fss_basic_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_basic_read_print_object_end(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_print_object_end_
 
 /**
@@ -49,7 +49,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_basic_read_print_one_
-  extern void fss_basic_read_print_one(fss_basic_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_basic_read_print_one(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_print_one_
 
 /**
@@ -59,7 +59,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_basic_read_print_set_end_
-  extern void fss_basic_read_print_set_end(fss_basic_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_basic_read_print_set_end(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_print_set_end_
 
 /**
@@ -69,7 +69,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_basic_read_print_zero_
-  extern void fss_basic_read_print_zero(fss_basic_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_basic_read_print_zero(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_print_zero_
 
 #ifdef __cplusplus

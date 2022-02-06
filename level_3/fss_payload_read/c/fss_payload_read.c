@@ -50,7 +50,7 @@ extern "C" {
     fll_program_print_help_option(file, context, fss_payload_read_short_total_s, fss_payload_read_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print the total number of lines.");
     fll_program_print_help_option(file, context, fss_payload_read_short_trim_s, fss_payload_read_long_trim_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Trim Object names on select or print.");
 
-    fll_program_print_help_usage(file, context, fss_payload_program_name_s, "filename(s)");
+    fll_program_print_help_usage(file, context, fss_payload_program_name_s, fll_program_parameter_filenames_s);
 
     fl_print_format(" %[Notes:%]%r", file.stream, context.set.important, context.set.important, f_string_eol_s);
 
@@ -137,7 +137,7 @@ extern "C" {
 #endif // _di_fss_payload_read_print_help_
 
 #ifndef _di_fss_payload_read_main_
-  f_status_t fss_payload_read_main(fss_payload_read_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t fss_payload_read_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -149,7 +149,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { fss_payload_read_parameter_no_color_e, fss_payload_read_parameter_light_e, fss_payload_read_parameter_dark_e };
       const f_console_parameter_ids_t choices = { ids, 3 };
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -233,17 +233,17 @@ extern "C" {
     }
 
     // Provide a range designating where within the buffer a particular file exists, using a statically allocated array.
-    fss_payload_read_file_t files_array[main->remaining.used + 1];
+    fss_payload_read_file_t files_array[main->parameters.remaining.used + 1];
     fss_payload_read_data_t data = fss_payload_read_data_t_initialize;
 
     data.files.array = files_array;
     data.files.used = 1;
-    data.files.size = main->remaining.used + 1;
+    data.files.size = main->parameters.remaining.used + 1;
     data.files.array[0].name = "(pipe)";
     data.files.array[0].range.start = 1;
     data.files.array[0].range.stop = 0;
 
-    if (main->remaining.used || main->process_pipe) {
+    if (main->parameters.remaining.used || main->process_pipe) {
       {
         const f_array_length_t parameter_code[] = {
           fss_payload_read_parameter_at_e,
@@ -583,13 +583,13 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error_not(status) && main->remaining.used > 0) {
+      if (F_status_is_error_not(status) && main->parameters.remaining.used > 0) {
         f_file_t file = f_file_t_initialize;
         f_array_length_t size_file = 0;
         const f_array_length_t buffer_used = data.buffer.used;
         uint16_t signal_check = 0;
 
-        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
+        for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++signal_check) % fss_payload_read_signal_check_d)) {
             if (fss_payload_read_signal_received(main)) {
@@ -605,10 +605,10 @@ extern "C" {
           file.stream = 0;
           file.id = -1;
 
-          status = f_file_stream_open(arguments->argv[main->remaining.array[i]], 0, &file);
+          status = f_file_stream_open(arguments->argv[main->parameters.remaining.array[i]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -617,7 +617,7 @@ extern "C" {
           status = f_file_size_by_id(file.id, &size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -626,7 +626,7 @@ extern "C" {
             status = f_string_dynamic_resize(data.buffer.size + size_file, &data.buffer);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
               break;
             }
@@ -646,12 +646,12 @@ extern "C" {
             status = f_file_stream_read(file, &data.buffer);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
               break;
             }
             else if (data.buffer.used > data.files.array[data.files.used].range.start) {
-              data.files.array[data.files.used].name = arguments->argv[main->remaining.array[i]];
+              data.files.array[data.files.used].name = arguments->argv[main->parameters.remaining.array[i]];
               data.files.array[data.files.used++].range.stop = data.buffer.used - 1;
             }
           }

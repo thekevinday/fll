@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_status_code_process_check_
-  f_status_t fss_status_code_process_check(fss_status_code_main_t * const main, const f_string_t value) {
+  f_status_t fss_status_code_process_check(fll_program_data_t * const main, const f_string_t value) {
 
     f_number_unsigned_t number = 0;
 
@@ -52,7 +52,7 @@ extern "C" {
 #endif // _di_fss_status_code_process_check_
 
 #ifndef _di_fss_status_code_process_number_
-  f_status_t fss_status_code_process_number(fss_status_code_main_t * const main, const f_string_t value) {
+  f_status_t fss_status_code_process_number(fll_program_data_t * const main, const f_string_t value) {
 
     f_status_t status = F_none;
 
@@ -110,7 +110,7 @@ extern "C" {
 #endif // _di_fss_status_code_process_number_
 
 #ifndef _di_fss_status_code_process_normal_
-  f_status_t fss_status_code_process_normal(fss_status_code_main_t * const main, const f_string_t value) {
+  f_status_t fss_status_code_process_normal(fll_program_data_t * const main, const f_string_t value) {
 
     f_number_unsigned_t number = 0;
 
@@ -140,7 +140,7 @@ extern "C" {
 #endif // _di_fss_status_code_process_normal_
 
 #ifndef _di_fss_status_code_convert_number_
-  f_status_t fss_status_code_convert_number(fss_status_code_main_t * const main, const f_string_t value, f_number_unsigned_t *number) {
+  f_status_t fss_status_code_convert_number(fll_program_data_t * const main, const f_string_t value, f_number_unsigned_t *number) {
 
     const f_string_range_t range = macro_f_string_range_t_initialize(strlen(value));
 

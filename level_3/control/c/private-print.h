@@ -21,7 +21,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_not_
-  extern void control_print_error_parameter_command_not(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_not(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_not_
 
 /**
@@ -33,7 +33,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_basename_empty_
-  extern void control_print_error_parameter_command_rule_basename_empty(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_basename_empty(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_basename_empty_
 
 /**
@@ -45,7 +45,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_directory_empty_
-  extern void control_print_error_parameter_command_rule_directory_empty(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_directory_empty(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_directory_empty_
 
 /**
@@ -57,7 +57,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_empty_
-  extern void control_print_error_parameter_command_rule_empty(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_empty(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_empty_
 
 /**
@@ -69,7 +69,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_not_
-  extern void control_print_error_parameter_command_rule_not(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_not(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_not_
 
 /**
@@ -81,7 +81,7 @@ extern "C" {
  *   The parameter representing a command.
  */
 #ifndef _di_control_print_error_parameter_command_rule_too_many_
-  extern void control_print_error_parameter_command_rule_too_many(control_main_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_command_rule_too_many(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_command_rule_too_many_
 
 /**
@@ -91,7 +91,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_control_print_error_commands_none_
-  extern void control_print_error_commands_none(control_main_t * const main) F_attribute_visibility_internal_d;
+  extern void control_print_error_commands_none(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_commands_none_
 
 /**
@@ -103,7 +103,7 @@ extern "C" {
  *   The parameter name.
  */
 #ifndef _di_control_print_error_parameter_value_empty_
-  extern void control_print_error_parameter_value_empty(control_main_t * const main, const f_string_static_t parameter) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_value_empty(fll_program_data_t * const main, const f_string_static_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_value_empty_
 
 /**
@@ -115,7 +115,7 @@ extern "C" {
  *   The parameter name.
  */
 #ifndef _di_control_print_error_parameter_value_not_
-  extern void control_print_error_parameter_value_not(control_main_t * const main, const f_string_static_t parameter) F_attribute_visibility_internal_d;
+  extern void control_print_error_parameter_value_not(fll_program_data_t * const main, const f_string_static_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_value_not_
 
 /**
@@ -125,7 +125,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_control_print_error_pipe_supported_not_
-  extern void control_print_error_pipe_supported_not(control_main_t * const main) F_attribute_visibility_internal_d;
+  extern void control_print_error_pipe_supported_not(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_pipe_supported_not_
 
 /**
@@ -137,7 +137,7 @@ extern "C" {
  *   The socket file path.
  */
 #ifndef _di_control_print_error_socket_file_failed_
-  extern void control_print_error_socket_file_failed(control_main_t * const main, const f_string_static_t path_socket) F_attribute_visibility_internal_d;
+  extern void control_print_error_socket_file_failed(fll_program_data_t * const main, const f_string_static_t path_socket) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_socket_file_failed_
 
 /**
@@ -149,7 +149,7 @@ extern "C" {
  *   The socket file path.
  */
 #ifndef _di_control_print_error_socket_file_missing_
-  extern void control_print_error_socket_file_missing(control_main_t * const main, const f_string_static_t path_socket) F_attribute_visibility_internal_d;
+  extern void control_print_error_socket_file_missing(fll_program_data_t * const main, const f_string_static_t path_socket) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_socket_file_missing_
 
 /**
@@ -161,7 +161,7 @@ extern "C" {
  *   The socket file path.
  */
 #ifndef _di_control_print_error_socket_file_not_
-  extern void control_print_error_socket_file_not(control_main_t * const main, const f_string_static_t path_socket) F_attribute_visibility_internal_d;
+  extern void control_print_error_socket_file_not(fll_program_data_t * const main, const f_string_static_t path_socket) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_socket_file_not_
 
 /**
@@ -173,7 +173,7 @@ extern "C" {
  *   The signal received.
  */
 #ifndef _di_control_print_signal_received_
-  extern void control_print_signal_received(control_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
+  extern void control_print_signal_received(fll_program_data_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
 #endif // _di_control_print_signal_received_
 
 #ifdef __cplusplus

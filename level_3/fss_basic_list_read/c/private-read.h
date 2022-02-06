@@ -74,7 +74,7 @@ extern "C" {
  * @see fss_basic_list_read_depths_resize()
  */
 #ifndef _di_fss_basic_list_read_depth_process_
-  extern f_status_t fss_basic_list_read_depth_process(fss_basic_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_depth_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_depth_process_
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  * @see fss_basic_list_read_process_option()
  */
 #ifndef _di_fss_basic_list_read_load_
-  extern f_status_t fss_basic_list_read_load(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_load(fll_program_data_t * const main, fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_load_
 
 /**
@@ -148,7 +148,7 @@ extern "C" {
  * @see fss_basic_list_read_depths_resize()
  */
 #ifndef _di_fss_basic_list_read_load_number_
-  extern f_status_t fss_basic_list_read_load_number(fss_basic_list_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_load_number_
 
 /**
@@ -173,7 +173,7 @@ extern "C" {
  * @see fss_basic_list_read_process_option()
  */
 #ifndef _di_fss_basic_list_read_process_
-  extern f_status_t fss_basic_list_read_process(fss_basic_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_process_
 
 /**
@@ -193,7 +193,7 @@ extern "C" {
  * @see fss_basic_list_read_process_at_line()
  */
 #ifndef _di_fss_basic_list_read_process_at_
-  extern f_status_t fss_basic_list_read_process_at(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_process_at(fll_program_data_t * const main, fss_basic_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_process_at_
 
 /**
@@ -216,7 +216,7 @@ extern "C" {
  *   F_success on success and the line was matched (and possibly printed).
  */
 #ifndef _di_fss_basic_list_read_process_at_line_
-  extern f_status_t fss_basic_list_read_process_at_line(fss_basic_list_read_main_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_basic_list_read_data_t *data, f_array_length_t *line) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_process_at_line(fll_program_data_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_basic_list_read_data_t *data, f_array_length_t *line) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_process_at_line_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_basic_list_read_process_columns_
-  extern f_status_t fss_basic_list_read_process_columns(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_process_columns(fll_program_data_t * const main, fss_basic_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_process_columns_
 
 /**
@@ -252,7 +252,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_basic_list_read_process_line_
-  extern f_status_t fss_basic_list_read_process_line(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_process_line(fll_program_data_t * const main, fss_basic_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_process_line_
 
 /**
@@ -293,7 +293,7 @@ extern "C" {
  * @see fss_basic_list_read_load_setting()
  */
 #ifndef _di_fss_basic_list_read_process_option_
-  extern f_status_t fss_basic_list_read_process_option(fss_basic_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_process_option(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_basic_list_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_process_option_
 
 /**
@@ -311,7 +311,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_basic_list_read_process_total_
-  extern f_status_t fss_basic_list_read_process_total(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_list_read_process_total(fll_program_data_t * const main, fss_basic_list_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_process_total_
 
 #ifdef __cplusplus

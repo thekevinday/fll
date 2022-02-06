@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_control_print_help_
-  f_status_t control_print_help(control_main_t * const main) {
+  f_status_t control_print_help(fll_program_data_t * const main) {
 
     flockfile(main->output.to.stream);
 
@@ -47,7 +47,7 @@ extern "C" {
 #endif // _di_control_print_help_
 
 #ifndef _di_control_main_
-  f_status_t control_main(control_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t control_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -59,7 +59,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { control_parameter_no_color_e, control_parameter_light_e, control_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -187,16 +187,16 @@ extern "C" {
 
         status = F_status_set_error(F_supported_not);
       }
-      else if (main->remaining.used) {
+      else if (main->parameters.remaining.used) {
         control_data_t data = control_data_t_initialize;
         data.argv = main->parameters.arguments.array;
 
         // Verify commands before attempting to connect to the socket.
-        if (control_command_identify(main, &data, data.argv[main->remaining.array[0]]) == F_found) {
+        if (control_command_identify(main, &data, data.argv[main->parameters.remaining.array[0]]) == F_found) {
           status = control_command_verify(main, &data);
         }
         else {
-          control_print_error_parameter_command_not(main, data.argv[main->remaining.array[0]]);
+          control_print_error_parameter_command_not(main, data.argv[main->parameters.remaining.array[0]]);
 
           status = F_status_set_error(F_parameter);
         }

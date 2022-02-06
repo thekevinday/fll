@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_firewall_program_version_
   #define FIREWALL_program_version_major_s F_string_ascii_0_s
   #define FIREWALL_program_version_minor_s F_string_ascii_5_s
@@ -42,6 +45,9 @@ extern "C" {
   extern const f_string_static_t firewall_program_version_s;
 #endif // _di_firewall_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_firewall_program_name_
   #define FIREWALL_program_name_s      "firewall"
   #define FIREWALL_program_name_long_s "Kevux Firewall Manager"
@@ -53,6 +59,9 @@ extern "C" {
   extern const f_string_static_t firewall_program_name_long_s;
 #endif // _di_firewall_program_name_
 
+/**
+ * The program help related data.
+ */
 #ifndef _di_firewall_program_help_parameters_
   #define FIREWALL_program_help_parameters_s "command"
   #define FIREWALL_program_help_parameters_s_length 7
@@ -60,6 +69,9 @@ extern "C" {
   extern const f_string_static_t firewall_program_help_parameters_s;
 #endif // _di_firewall_program_help_parameters_
 
+/**
+ * The program paths.
+ */
 #ifndef _di_firewall_paths_
   #define FIREWALL_file_first_s  "firewall-first"
   #define FIREWALL_file_last_s   "firewall-last"
@@ -86,13 +98,24 @@ extern "C" {
   extern const f_string_static_t firewall_network_devices_s;
 #endif // _di_firewall_paths_
 
+/**
+ * Default allocations.
+ */
 #ifndef _di_firewall_default_allocation_step_
   #define firewall_default_allocation_step_d F_memory_default_allocation_small_d
 #endif // _di_firewall_default_allocation_step_
 
+/**
+ * The program defines.
+ */
 #ifndef _di_firewall_defines_
   #define firewall_signal_check_d 10000
+#endif // _di_firewall_defines_
 
+/**
+ * The main program parameters.
+ */
+#ifndef _di_firewall_parameters_
   #define FIREWALL_action_s        "action"
   #define FIREWALL_action_append_s "append"
   #define FIREWALL_action_insert_s "insert"
@@ -379,11 +402,23 @@ extern "C" {
   #define firewall_total_parameters_d 14
 #endif // _di_firewall_defines_
 
+/**
+ * The main program data.
+ *
+ * parameters:   The state of pre-defined parameters passed to the program.
+ * process_pipe: Designate whether or not to process the input pipe.
+ * output:       The output file for general printing.
+ * error:        The output file for error printing.
+ * warning:      The output file for warning printing.
+ * signal:       The process signal management structure.
+ * context:      The color context.
+ *
+ * @todo
+ */
 #ifndef _di_firewall_main_t_
   typedef struct {
     f_console_parameters_t parameters;
 
-    f_array_lengths_t remaining;
     bool process_pipe;
     int child;
 
@@ -402,7 +437,6 @@ extern "C" {
   #define firewall_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
-      f_array_lengths_t_initialize, \
       F_false, \
       0, \
       fl_print_t_initialize, \

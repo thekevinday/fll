@@ -27,10 +27,9 @@ void test__f_console_parameter_process__no_arguments(void **state) {
   };
 
   f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9);
-  f_array_lengths_t remaining = f_array_lengths_t_initialize;
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, &parameters, &remaining);
+    const f_status_t status = f_console_parameter_process(arguments, &parameters);
 
     assert_int_equal(status, F_none);
 
@@ -88,10 +87,10 @@ void test__f_console_parameter_process__no_arguments(void **state) {
     assert_int_equal(parameter[8].location, 0);
     assert_int_equal(parameter[8].location_sub, 0);
 
-    assert_int_equal(remaining.used, 0);
+    assert_int_equal(parameters.remaining.used, 0);
   }
 
-  f_type_array_lengths_resize(0, &remaining);
+  f_console_parameters_delete(&parameters);
 }
 
 void test__f_console_parameter_process__only_remaining(void **state) {
@@ -122,10 +121,9 @@ void test__f_console_parameter_process__only_remaining(void **state) {
   };
 
   f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9);
-  f_array_lengths_t remaining = f_array_lengths_t_initialize;
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, &parameters, &remaining);
+    const f_status_t status = f_console_parameter_process(arguments, &parameters);
 
     assert_int_equal(status, F_none);
 
@@ -183,20 +181,19 @@ void test__f_console_parameter_process__only_remaining(void **state) {
     assert_int_equal(parameter[8].location, 0);
     assert_int_equal(parameter[8].location_sub, 0);
 
-    assert_int_equal(remaining.used, 6);
+    assert_int_equal(parameters.remaining.used, 6);
   }
 
-  f_type_array_lengths_resize(0, &remaining);
+  f_console_parameters_delete(&parameters);
 }
 
 #ifndef _di_level_0_parameter_checking_
   void test__f_console_parameter_process__parameter_checking(void **state) {
 
     const f_console_arguments_t arguments = f_console_arguments_t_initialize;
-    f_console_parameters_t parameters = f_console_parameters_t_initialize;
 
     {
-      const f_status_t status = f_console_parameter_process(arguments, &parameters, 0);
+      const f_status_t status = f_console_parameter_process(arguments, 0);
 
       assert_int_equal(F_status_set_fine(status), F_parameter);
     }
@@ -242,10 +239,9 @@ void test__f_console_parameter_process__works(void **state) {
   };
 
   f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9);
-  f_array_lengths_t remaining = f_array_lengths_t_initialize;
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, &parameters, &remaining);
+    const f_status_t status = f_console_parameter_process(arguments, &parameters);
 
     assert_int_equal(status, F_none);
 
@@ -319,12 +315,12 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[8].locations.array[0], 6);
     assert_int_equal(parameter[8].locations.array[1], 15);
 
-    assert_int_equal(remaining.used, 2);
-    assert_string_equal(argv[remaining.array[0]], "free");
-    assert_string_equal(argv[remaining.array[1]], "-4");
+    assert_int_equal(parameters.remaining.used, 2);
+    assert_string_equal(argv[parameters.remaining.array[0]], "free");
+    assert_string_equal(argv[parameters.remaining.array[1]], "-4");
   }
 
-  f_type_array_lengths_resize(0, &remaining);
+  f_console_parameters_delete(&parameters);
 }
 
 #ifdef __cplusplus

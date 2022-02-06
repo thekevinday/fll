@@ -330,6 +330,7 @@ extern "C" {
  *
  * array:     Intended to be populated with an array of f_console_parameter_t whose size is defined by the "used" property.
  * arguments: An array of arguments pointing to the argv[] strings with the string lengths already calculated (This is a dynamic array of f_string_static_t).
+ * remaining: An array of indexes within the arguments representing unmatched parameters.
  * length:    The total number of parameters in the parameters array.
  */
 #ifndef _di_f_console_parameters_t_
@@ -337,13 +338,14 @@ extern "C" {
     f_console_parameter_t *array;
 
     f_string_dynamics_t arguments;
+    f_array_lengths_t remaining;
 
     f_array_length_t used;
   } f_console_parameters_t;
 
-  #define f_console_parameters_t_initialize {0, f_string_dynamics_t_initialize, 0 }
+  #define f_console_parameters_t_initialize {0, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, 0 }
 
-  #define macro_f_console_parameters_t_initialize(parameter, used) { parameter, f_string_dynamics_t_initialize, used }
+  #define macro_f_console_parameters_t_initialize(parameter, used) { parameter, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, used }
 #endif // _di_f_console_parameters_t_
 
 /**

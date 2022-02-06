@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_fss_identify_program_version_
   #define FSS_IDENTIFY_program_version_major_s F_string_ascii_0_s
   #define FSS_IDENTIFY_program_version_minor_s F_string_ascii_5_s
@@ -42,6 +45,9 @@ extern "C" {
   const f_string_static_t fss_identify_program_version_s;
 #endif // _di_fss_identify_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_fss_identify_program_name_
   #define FSS_IDENTIFY_program_name_s      "fss_identify"
   #define FSS_IDENTIFY_program_name_long_s "FSS Identify"
@@ -53,20 +59,52 @@ extern "C" {
   const f_string_static_t fss_identify_program_name_long_s;
 #endif // _di_fss_identify_program_name_
 
+/**
+ * The program defines.
+ */
 #ifndef _di_fss_identify_defines_
   #define fss_identify_signal_check_d 10000
+#endif // _di_fss_identify_defines_
 
-  #define fss_identify_short_content_s "c"
-  #define fss_identify_short_line_s    "l"
-  #define fss_identify_short_name_s    "n"
-  #define fss_identify_short_object_s  "o"
-  #define fss_identify_short_total_s   "t"
+/**
+ * The main program parameters.
+ */
+#ifndef _di_fss_identify_parameters_
+  #define FSS_IDENTIFY_short_content_s "c"
+  #define FSS_IDENTIFY_short_line_s    "l"
+  #define FSS_IDENTIFY_short_name_s    "n"
+  #define FSS_IDENTIFY_short_object_s  "o"
+  #define FSS_IDENTIFY_short_total_s   "t"
 
-  #define fss_identify_long_content_s "content"
-  #define fss_identify_long_line_s    "line"
-  #define fss_identify_long_name_s    "name"
-  #define fss_identify_long_object_s  "object"
-  #define fss_identify_long_total_s   "total"
+  #define FSS_IDENTIFY_long_content_s "content"
+  #define FSS_IDENTIFY_long_line_s    "line"
+  #define FSS_IDENTIFY_long_name_s    "name"
+  #define FSS_IDENTIFY_long_object_s  "object"
+  #define FSS_IDENTIFY_long_total_s   "total"
+
+  #define FSS_IDENTIFY_short_content_s_length 1
+  #define FSS_IDENTIFY_short_line_s_length    1
+  #define FSS_IDENTIFY_short_name_s_length    1
+  #define FSS_IDENTIFY_short_object_s_length  1
+  #define FSS_IDENTIFY_short_total_s_length   1
+
+  #define FSS_IDENTIFY_long_content_s_length 7
+  #define FSS_IDENTIFY_long_line_s_length    4
+  #define FSS_IDENTIFY_long_name_s_length    4
+  #define FSS_IDENTIFY_long_object_s_length  6
+  #define FSS_IDENTIFY_long_total_s_length   5
+
+  extern const f_string_static_t fss_identify_short_content_s;
+  extern const f_string_static_t fss_identify_short_line_s;
+  extern const f_string_static_t fss_identify_short_name_s;
+  extern const f_string_static_t fss_identify_short_object_s;
+  extern const f_string_static_t fss_identify_short_total_s;
+
+  extern const f_string_static_t fss_identify_long_content_s;
+  extern const f_string_static_t fss_identify_long_line_s;
+  extern const f_string_static_t fss_identify_long_name_s;
+  extern const f_string_static_t fss_identify_long_object_s;
+  extern const f_string_static_t fss_identify_long_total_s;
 
   enum {
     fss_identify_parameter_help_e,
@@ -97,44 +135,15 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(fss_identify_short_content_s, fss_identify_long_content_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_identify_short_line_s, fss_identify_long_line_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_identify_short_name_s, fss_identify_long_name_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_identify_short_object_s, fss_identify_long_object_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_identify_short_total_s, fss_identify_long_total_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_identify_short_content_s.string, fss_identify_long_content_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_identify_short_line_s.string, fss_identify_long_line_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_identify_short_name_s.string, fss_identify_long_name_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_identify_short_object_s.string, fss_identify_long_object_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_identify_short_total_s.string, fss_identify_long_total_s.string, 0, 0, f_console_type_normal_e), \
     }
 
   #define fss_identify_total_parameters_d 14
-#endif // _di_fss_identify_defines_
-
-#ifndef _di_fss_identify_data_t_
-  typedef struct {
-    f_console_parameters_t parameters;
-
-    f_array_lengths_t remaining;
-    bool process_pipe;
-
-    fl_print_t output;
-    fl_print_t error;
-    fl_print_t warning;
-
-    f_signal_t signal;
-
-    f_color_context_t context;
-  } fss_identify_main_t;
-
-  #define fss_identify_data_initialize \
-    { \
-      f_console_parameters_t_initialize, \
-      f_array_lengths_t_initialize, \
-      F_false, \
-      fl_print_t_initialize, \
-      macro_fl_print_t_initialize_error(), \
-      macro_fl_print_t_initialize_warning(), \
-      f_signal_t_initialize, \
-      f_color_context_t_initialize, \
-    }
-#endif // _di_fss_identify_data_t_
+#endif // _di_fss_identify_parameters_
 
 /**
  * Deallocate main.
@@ -152,7 +161,7 @@ extern "C" {
  * @see fss_identify_main()
  */
 #ifndef _di_fss_identify_main_delete_
-  extern f_status_t fss_identify_main_delete(fss_identify_main_t * const main);
+  extern f_status_t fss_identify_main_delete(fll_program_data_t * const main);
 #endif // _di_fss_identify_main_delete_
 
 #ifdef __cplusplus

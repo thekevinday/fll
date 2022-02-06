@@ -6,15 +6,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_iki_read_program_version_
-  const f_string_static_t iki_read_program_version_s = macro_f_string_static_t_initialize(IKI_READ_program_version_s, 0, IKI_READ_program_version_s_length);
-#endif // _di_iki_read_program_version_
-
-#ifndef _di_iki_read_program_name_
-  const f_string_static_t iki_read_program_name_s = macro_f_string_static_t_initialize(IKI_READ_program_name_s, 0, IKI_READ_program_name_s_length);
-  const f_string_static_t iki_read_program_name_long_s = macro_f_string_static_t_initialize(IKI_READ_program_name_long_s, 0, IKI_READ_program_name_long_s_length);
-#endif // _di_iki_read_program_name_
-
 #ifndef _di_iki_read_print_help_
   f_status_t iki_read_print_help(const f_file_t file, const f_color_context_t context) {
 
@@ -50,7 +41,7 @@ extern "C" {
 
     fll_program_print_help_option(file, context, iki_read_short_substitute_s, iki_read_long_substitute_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Substitute the entire variable for the given name and content value with the given string.");
 
-    fll_program_print_help_usage(file, context, iki_read_program_name_s, "filename(s)");
+    fll_program_print_help_usage(file, context, iki_read_program_name_s, fll_program_parameter_filenames_s);
 
     fl_print_format(" %[Notes:%]%r", file.stream, context.set.important, context.set.important, f_string_eol_s);
     fl_print_format("  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
@@ -87,7 +78,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color_e, iki_read_parameter_light_e, iki_read_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -180,7 +171,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->remaining.used > 0 || main->process_pipe) {
+    if (main->parameters.remaining.used > 0 || main->process_pipe) {
       if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_found_e) {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
@@ -443,12 +434,12 @@ extern "C" {
         f_string_dynamic_resize(0, &main->buffer);
       }
 
-      if (F_status_is_fine(status) && main->remaining.used > 0) {
+      if (F_status_is_fine(status) && main->parameters.remaining.used > 0) {
         f_array_length_t i = 0;
         f_array_length_t total = 0;
         f_file_t file = f_file_t_initialize;
 
-        for (uint16_t signal_check = 0; i < main->remaining.used; ++i) {
+        for (uint16_t signal_check = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++signal_check) % iki_read_signal_check_d)) {
             if (iki_read_signal_received(main)) {
@@ -462,17 +453,17 @@ extern "C" {
           macro_f_file_t_reset(file);
           total = 0;
 
-          status = f_file_open(arguments->argv[main->remaining.array[i]], 0, &file);
+          status = f_file_open(arguments->argv[main->parameters.remaining.array[i]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
             break;
           }
 
           status = f_file_size_by_id(file.id, &total);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
 
             f_file_stream_close(F_true, &file);
             break;
@@ -489,11 +480,11 @@ extern "C" {
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
             break;
           }
 
-          status = iki_read_process_buffer(main, arguments, arguments->argv[main->remaining.array[i]]);
+          status = iki_read_process_buffer(main, arguments, arguments->argv[main->parameters.remaining.array[i]]);
           if (F_status_is_error(status)) break;
 
           // Clear buffers before repeating the loop.

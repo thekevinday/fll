@@ -66,7 +66,7 @@ extern "C" {
 #endif // _di_fss_payload_write_print_help_
 
 #ifndef _di_fss_payload_write_main_
-  f_status_t fss_payload_write_main(fss_payload_write_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t fss_payload_write_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
 
@@ -78,7 +78,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { fss_payload_write_parameter_no_color_e, fss_payload_write_parameter_light_e, fss_payload_write_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;

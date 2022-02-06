@@ -826,6 +826,44 @@ extern "C" {
     macro_f_color_context_t_clear(context)
 #endif // _di_f_color__context_t_
 
+/**
+ * Delete any dynamic allocated data on the color context object.
+ *
+ * @param context
+ *   The context object.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_f_color_context_delete_
+  extern f_status_t f_color_context_delete(f_color_context_t * const context);
+#endif // _di_f_color_context_delete_
+
+/**
+ * Destroy any dynamic allocated data on the color context object.
+ *
+ * @param context
+ *   The context object.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_adjust().
+ *
+ * @see f_string_dynamic_adjust()
+ */
+#ifndef _di_f_color_context_destroy_
+  extern f_status_t f_color_context_destroy(f_color_context_t * const context);
+#endif // _di_f_color_context_destroy_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -33,7 +33,7 @@ extern "C" {
 #endif // _di_fss_basic_read_delimit_object_is_
 
 #ifndef _di_fss_basic_read_depth_process_
-  f_status_t fss_basic_read_depth_process(fss_basic_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_read_data_t *data) {
+  f_status_t fss_basic_read_depth_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_basic_read_data_t *data) {
 
     f_status_t status = F_none;
 
@@ -213,7 +213,7 @@ extern "C" {
 #endif // _di_fss_basic_read_file_identify_
 
 #ifndef _di_fss_basic_read_load_
-  f_status_t fss_basic_read_load(fss_basic_read_main_t * const main, fss_basic_read_data_t *data) {
+  f_status_t fss_basic_read_load(fll_program_data_t * const main, fss_basic_read_data_t *data) {
 
     f_state_t state = macro_f_state_t_initialize(fss_basic_read_common_allocation_large_d, fss_basic_read_delimit_common_allocation_small_d, 0, 0, 0, 0, 0);
     f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
@@ -246,7 +246,7 @@ extern "C" {
 #endif // _di_fss_basic_read_load_
 
 #ifndef _di_fss_basic_read_load_number_
-  f_status_t fss_basic_read_load_number(fss_basic_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) {
+  f_status_t fss_basic_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) {
 
     if (main->parameters.array[parameter].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].values.used - 1];
@@ -268,7 +268,7 @@ extern "C" {
 #endif // _di_fss_basic_read_load_number_
 
 #ifndef _di_fss_basic_read_process_
-  f_status_t fss_basic_read_process(fss_basic_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_read_data_t *data) {
+  f_status_t fss_basic_read_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_basic_read_data_t *data) {
 
     f_status_t status = fss_basic_read_process_option(main, arguments, data);
     if (F_status_is_error(status)) return status;
@@ -325,7 +325,7 @@ extern "C" {
 #endif // _di_fss_basic_read_process_
 
 #ifndef _di_fss_basic_read_process_at_
-  f_status_t fss_basic_read_process_at(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) {
+  f_status_t fss_basic_read_process_at(fll_program_data_t * const main, fss_basic_read_data_t *data, bool names[]) {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
       if (data->option & (fss_basic_read_data_option_columns_d | fss_basic_read_data_option_total_d)) {
@@ -422,7 +422,7 @@ extern "C" {
 #endif // _di_fss_basic_read_process_at_
 
 #ifndef _di_fss_basic_read_process_columns_
-  f_status_t fss_basic_read_process_columns(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) {
+  f_status_t fss_basic_read_process_columns(fll_program_data_t * const main, fss_basic_read_data_t *data, bool names[]) {
 
     if (!(data->option & fss_basic_read_data_option_content_d)) {
       flockfile(main->output.to.stream);
@@ -456,7 +456,7 @@ extern "C" {
 #endif // _di_fss_basic_read_process_columns_
 
 #ifndef _di_fss_basic_read_process_line_
-  f_status_t fss_basic_read_process_line(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) {
+  f_status_t fss_basic_read_process_line(fll_program_data_t * const main, fss_basic_read_data_t *data, bool names[]) {
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
     f_array_lengths_t *delimits = fss_basic_read_delimit_object_is(0, data) ? &data->delimits : &except_none;
@@ -540,7 +540,7 @@ extern "C" {
 #endif // _di_fss_basic_read_process_name_
 
 #ifndef _di_fss_basic_read_process_option_
-  f_status_t fss_basic_read_process_option(fss_basic_read_main_t * const main, const f_console_arguments_t *arguments, fss_basic_read_data_t *data) {
+  f_status_t fss_basic_read_process_option(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_basic_read_data_t *data) {
 
     f_status_t status = F_none;
 
@@ -604,7 +604,7 @@ extern "C" {
 #endif // _di_fss_basic_read_process_option_
 
 #ifndef _di_fss_basic_read_process_total_
-  f_status_t fss_basic_read_process_total(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) {
+  f_status_t fss_basic_read_process_total(fll_program_data_t * const main, fss_basic_read_data_t *data, bool names[]) {
 
     f_array_length_t total = 0;
 

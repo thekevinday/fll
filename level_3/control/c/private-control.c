@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_control_command_identify_
-  f_status_t control_command_identify(control_main_t * const main, control_data_t * const data, const f_string_static_t command) {
+  f_status_t control_command_identify(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t command) {
 
     if (fl_string_dynamic_compare(command, control_freeze_s) == F_equal_to) {
       data->command = control_command_type_freeze_e;
@@ -87,7 +87,7 @@ extern "C" {
 #endif // _di_control_command_identify_
 
 #ifndef _di_control_command_verify_
-  f_status_t control_command_verify(control_main_t * const main, control_data_t * const data) {
+  f_status_t control_command_verify(fll_program_data_t * const main, control_data_t * const data) {
 
     switch (data->command) {
       case control_command_type_freeze_e:
@@ -100,31 +100,31 @@ extern "C" {
       case control_command_type_start_e:
       case control_command_type_stop_e:
       case control_command_type_thaw_e:
-        if (main->remaining.used < 2) {
-          control_print_error_parameter_command_rule_not(main, data->argv[main->remaining.array[0]]);
+        if (main->parameters.remaining.used < 2) {
+          control_print_error_parameter_command_rule_not(main, data->argv[main->parameters.remaining.array[0]]);
 
           return F_status_set_error(F_parameter);
         }
-        else if (main->remaining.used > 3) {
-          control_print_error_parameter_command_rule_too_many(main, data->argv[main->remaining.array[0]]);
+        else if (main->parameters.remaining.used > 3) {
+          control_print_error_parameter_command_rule_too_many(main, data->argv[main->parameters.remaining.array[0]]);
 
           return F_status_set_error(F_parameter);
         }
 
-        if (!data->argv[main->remaining.array[1]].used) {
-          if (main->remaining.used == 2) {
-            control_print_error_parameter_command_rule_empty(main, data->argv[main->remaining.array[0]]);
+        if (!data->argv[main->parameters.remaining.array[1]].used) {
+          if (main->parameters.remaining.used == 2) {
+            control_print_error_parameter_command_rule_empty(main, data->argv[main->parameters.remaining.array[0]]);
           }
           else {
-            control_print_error_parameter_command_rule_directory_empty(main, data->argv[main->remaining.array[0]]);
+            control_print_error_parameter_command_rule_directory_empty(main, data->argv[main->parameters.remaining.array[0]]);
           }
 
           return F_status_set_error(F_parameter);
         }
 
-        if (main->remaining.used == 3) {
-          if (!data->argv[main->remaining.array[2]].used) {
-            control_print_error_parameter_command_rule_basename_empty(main, data->argv[main->remaining.array[0]]);
+        if (main->parameters.remaining.used == 3) {
+          if (!data->argv[main->parameters.remaining.array[2]].used) {
+            control_print_error_parameter_command_rule_basename_empty(main, data->argv[main->parameters.remaining.array[0]]);
 
             return F_status_set_error(F_parameter);
           }
@@ -146,7 +146,7 @@ extern "C" {
 #endif // _di_control_command_verify_
 
 #ifndef _di_control_settings_load_
-  f_status_t control_settings_load(control_main_t * const main, control_data_t * const data) {
+  f_status_t control_settings_load(fll_program_data_t * const main, control_data_t * const data) {
 
     f_status_t status = F_none;
 

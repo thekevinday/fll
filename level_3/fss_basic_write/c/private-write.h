@@ -19,7 +19,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_basic_write_error_parameter_same_times_print_
-  void fss_basic_write_error_parameter_same_times_print(fss_basic_write_main_t * const main) F_attribute_visibility_internal_d;
+  void fss_basic_write_error_parameter_same_times_print(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_error_parameter_same_times_print_
 
 /**
@@ -33,7 +33,7 @@ extern "C" {
  *   The parameter name, such as "help" in "--help".
  */
 #ifndef _di_fss_basic_write_error_parameter_value_missing_print_
-  void fss_basic_write_error_parameter_value_missing_print(fss_basic_write_main_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) F_attribute_visibility_internal_d;
+  void fss_basic_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_error_parameter_value_missing_print_
 
 /**
@@ -43,7 +43,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_basic_write_error_parameter_unsupported_eol_print_
-  void fss_basic_write_error_parameter_unsupported_eol_print(fss_basic_write_main_t * const main) F_attribute_visibility_internal_d;
+  void fss_basic_write_error_parameter_unsupported_eol_print(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_error_parameter_unsupported_eol_print_
 
 /**
@@ -70,7 +70,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_basic_write_process_
-  extern f_status_t fss_basic_write_process(fss_basic_write_main_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_process_
 
 /**
@@ -91,7 +91,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_basic_write_process_pipe_
-  extern f_status_t fss_basic_write_process_pipe(fss_basic_write_main_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_process_pipe_
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_fss_basic_write_signal_received_
-  extern f_status_t fss_basic_write_signal_received(fss_basic_write_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_write_signal_received(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_signal_received_
 
 #ifdef __cplusplus

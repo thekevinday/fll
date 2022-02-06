@@ -78,7 +78,7 @@ extern "C" {
   const f_string_static_t fake_build_version_nano_s = macro_f_string_static_t_initialize(FAKE_build_version_nano_s, 0, FAKE_build_version_nano_s_length);
 #endif // _di_fake_build_version_
 
-#ifndef _di_fake_defines_
+#ifndef _di_fake_parameters_
   const f_string_static_t fake_short_define_s = macro_f_string_static_t_initialize(FAKE_short_define_s, 0, FAKE_short_define_s_length);
   const f_string_static_t fake_short_fakefile_s = macro_f_string_static_t_initialize(FAKE_short_fakefile_s, 0, FAKE_short_fakefile_s_length);
   const f_string_static_t fake_short_mode_s = macro_f_string_static_t_initialize(FAKE_short_mode_s, 0, FAKE_short_mode_s_length);
@@ -112,14 +112,12 @@ extern "C" {
   const f_string_static_t fake_other_operation_clean_s = macro_f_string_static_t_initialize(FAKE_other_operation_clean_s, 0, FAKE_other_operation_clean_s_length);
   const f_string_static_t fake_other_operation_make_s = macro_f_string_static_t_initialize(FAKE_other_operation_make_s, 0, FAKE_other_operation_make_s_length);
   const f_string_static_t fake_other_operation_skeleton_s = macro_f_string_static_t_initialize(FAKE_other_operation_skeleton_s, 0, FAKE_other_operation_skeleton_s_length);
-#endif // _di_fake_defines_
+#endif // _di_fake_parameters_
 
 #ifndef _di_fake_main_delete_
   f_status_t fake_main_delete(fake_main_t * const main) {
 
     f_console_parameters_delete(&main->parameters);
-
-    f_type_array_lengths_resize(0, &main->remaining);
 
     f_string_dynamics_resize(0, &main->define);
     f_string_dynamic_resize(0, &main->fakefile);

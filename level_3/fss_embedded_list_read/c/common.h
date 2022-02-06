@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_fss_embedded_list_read_program_version_
   #define FSS_EMBEDDED_LIST_READ_program_version_major_s F_string_ascii_0_s
   #define FSS_EMBEDDED_LIST_READ_program_version_minor_s F_string_ascii_5_s
@@ -42,6 +45,9 @@ extern "C" {
   extern const f_string_static_t fss_embedded_list_read_program_version_s;
 #endif // _di_fss_embedded_list_read_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_fss_embedded_list_read_program_name_
   #define FSS_EMBEDDED_LIST_READ_program_name_s      "fss_embedded_list_read"
   #define FSS_EMBEDDED_LIST_READ_program_name_long_s "FSS Embedded List Read"
@@ -53,42 +59,118 @@ extern "C" {
   extern const f_string_static_t fss_embedded_list_read_program_name_long_s;
 #endif // _di_fss_embedded_list_read_program_name_
 
+/**
+ * The program defines.
+ */
 #ifndef _di_fss_embedded_list_read_defines_
   #define fss_embedded_list_read_signal_check_d 10000
 
-  #define fss_embedded_list_read_pipe_content_end_s    '\f'
-  #define fss_embedded_list_read_pipe_content_ignore_s '\v'
-  #define fss_embedded_list_read_pipe_content_start_s  '\b'
+  #define FSS_EMBEDDED_LIST_READ_pipe_content_end_s    "\f"
+  #define FSS_EMBEDDED_LIST_READ_pipe_content_ignore_s "\v"
+  #define FSS_EMBEDDED_LIST_READ_pipe_content_start_s  "\b"
 
-  #define fss_embedded_list_read_short_at_s      "a"
-  #define fss_embedded_list_read_short_content_s "c"
-  #define fss_embedded_list_read_short_columns_s "C"
-  #define fss_embedded_list_read_short_delimit_s "D"
-  #define fss_embedded_list_read_short_depth_s   "d"
-  #define fss_embedded_list_read_short_empty_s   "e"
-  #define fss_embedded_list_read_short_line_s    "l"
-  #define fss_embedded_list_read_short_name_s    "n"
-  #define fss_embedded_list_read_short_object_s  "o"
-  #define fss_embedded_list_read_short_pipe_s    "p"
-  #define fss_embedded_list_read_short_raw_s     "R"
-  #define fss_embedded_list_read_short_select_s  "s"
-  #define fss_embedded_list_read_short_total_s   "t"
-  #define fss_embedded_list_read_short_trim_s    "T"
+  #define FSS_EMBEDDED_LIST_READ_pipe_content_end_s_length    1
+  #define FSS_EMBEDDED_LIST_READ_pipe_content_ignore_s_length 1
+  #define FSS_EMBEDDED_LIST_READ_pipe_content_start_s_length  1
 
-  #define fss_embedded_list_read_long_at_s      "at"
-  #define fss_embedded_list_read_long_content_s "content"
-  #define fss_embedded_list_read_long_columns_s "columns"
-  #define fss_embedded_list_read_long_delimit_s "delimit"
-  #define fss_embedded_list_read_long_depth_s   "depth"
-  #define fss_embedded_list_read_long_empty_s   "empty"
-  #define fss_embedded_list_read_long_line_s    "line"
-  #define fss_embedded_list_read_long_name_s    "name"
-  #define fss_embedded_list_read_long_object_s  "object"
-  #define fss_embedded_list_read_long_pipe_s    "pipe"
-  #define fss_embedded_list_read_long_raw_s     "raw"
-  #define fss_embedded_list_read_long_select_s  "select"
-  #define fss_embedded_list_read_long_total_s   "total"
-  #define fss_embedded_list_read_long_trim_s    "trim"
+  extern const f_string_static_t fss_embedded_list_read_pipe_content_end_s;
+  extern const f_string_static_t fss_embedded_list_read_pipe_content_ignore_s;
+  extern const f_string_static_t fss_embedded_list_read_pipe_content_start_s;
+#endif // _di_fss_embedded_list_read_defines_
+
+/**
+ * The main program parameters.
+ */
+#ifndef _di_fss_embedded_list_read_parameters_
+  #define FSS_EMBEDDED_LIST_READ_short_at_s      "a"
+  #define FSS_EMBEDDED_LIST_READ_short_content_s "c"
+  #define FSS_EMBEDDED_LIST_READ_short_columns_s "C"
+  #define FSS_EMBEDDED_LIST_READ_short_delimit_s "D"
+  #define FSS_EMBEDDED_LIST_READ_short_depth_s   "d"
+  #define FSS_EMBEDDED_LIST_READ_short_empty_s   "e"
+  #define FSS_EMBEDDED_LIST_READ_short_line_s    "l"
+  #define FSS_EMBEDDED_LIST_READ_short_name_s    "n"
+  #define FSS_EMBEDDED_LIST_READ_short_object_s  "o"
+  #define FSS_EMBEDDED_LIST_READ_short_pipe_s    "p"
+  #define FSS_EMBEDDED_LIST_READ_short_raw_s     "R"
+  #define FSS_EMBEDDED_LIST_READ_short_select_s  "s"
+  #define FSS_EMBEDDED_LIST_READ_short_total_s   "t"
+  #define FSS_EMBEDDED_LIST_READ_short_trim_s    "T"
+
+  #define FSS_EMBEDDED_LIST_READ_long_at_s      "at"
+  #define FSS_EMBEDDED_LIST_READ_long_content_s "content"
+  #define FSS_EMBEDDED_LIST_READ_long_columns_s "columns"
+  #define FSS_EMBEDDED_LIST_READ_long_delimit_s "delimit"
+  #define FSS_EMBEDDED_LIST_READ_long_depth_s   "depth"
+  #define FSS_EMBEDDED_LIST_READ_long_empty_s   "empty"
+  #define FSS_EMBEDDED_LIST_READ_long_line_s    "line"
+  #define FSS_EMBEDDED_LIST_READ_long_name_s    "name"
+  #define FSS_EMBEDDED_LIST_READ_long_object_s  "object"
+  #define FSS_EMBEDDED_LIST_READ_long_pipe_s    "pipe"
+  #define FSS_EMBEDDED_LIST_READ_long_raw_s     "raw"
+  #define FSS_EMBEDDED_LIST_READ_long_select_s  "select"
+  #define FSS_EMBEDDED_LIST_READ_long_total_s   "total"
+  #define FSS_EMBEDDED_LIST_READ_long_trim_s    "trim"
+
+  #define FSS_EMBEDDED_LIST_READ_short_at_s_length      1
+  #define FSS_EMBEDDED_LIST_READ_short_content_s_length 1
+  #define FSS_EMBEDDED_LIST_READ_short_columns_s_length 1
+  #define FSS_EMBEDDED_LIST_READ_short_delimit_s_length 1
+  #define FSS_EMBEDDED_LIST_READ_short_depth_s_length   1
+  #define FSS_EMBEDDED_LIST_READ_short_empty_s_length   1
+  #define FSS_EMBEDDED_LIST_READ_short_line_s_length    1
+  #define FSS_EMBEDDED_LIST_READ_short_name_s_length    1
+  #define FSS_EMBEDDED_LIST_READ_short_object_s_length  1
+  #define FSS_EMBEDDED_LIST_READ_short_pipe_s_length    1
+  #define FSS_EMBEDDED_LIST_READ_short_raw_s_length     1
+  #define FSS_EMBEDDED_LIST_READ_short_select_s_length  1
+  #define FSS_EMBEDDED_LIST_READ_short_total_s_length   1
+  #define FSS_EMBEDDED_LIST_READ_short_trim_s_length    1
+
+  #define FSS_EMBEDDED_LIST_READ_long_at_s_length      2
+  #define FSS_EMBEDDED_LIST_READ_long_content_s_length 7
+  #define FSS_EMBEDDED_LIST_READ_long_columns_s_length 7
+  #define FSS_EMBEDDED_LIST_READ_long_delimit_s_length 7
+  #define FSS_EMBEDDED_LIST_READ_long_depth_s_length   5
+  #define FSS_EMBEDDED_LIST_READ_long_empty_s_length   5
+  #define FSS_EMBEDDED_LIST_READ_long_line_s_length    4
+  #define FSS_EMBEDDED_LIST_READ_long_name_s_length    4
+  #define FSS_EMBEDDED_LIST_READ_long_object_s_length  6
+  #define FSS_EMBEDDED_LIST_READ_long_pipe_s_length    4
+  #define FSS_EMBEDDED_LIST_READ_long_raw_s_length     3
+  #define FSS_EMBEDDED_LIST_READ_long_select_s_length  6
+  #define FSS_EMBEDDED_LIST_READ_long_total_s_length   5
+  #define FSS_EMBEDDED_LIST_READ_long_trim_s_length    4
+
+  extern const f_string_static_t fss_embedded_list_read_short_at_s;
+  extern const f_string_static_t fss_embedded_list_read_short_content_s;
+  extern const f_string_static_t fss_embedded_list_read_short_columns_s;
+  extern const f_string_static_t fss_embedded_list_read_short_delimit_s;
+  extern const f_string_static_t fss_embedded_list_read_short_depth_s;
+  extern const f_string_static_t fss_embedded_list_read_short_empty_s;
+  extern const f_string_static_t fss_embedded_list_read_short_line_s;
+  extern const f_string_static_t fss_embedded_list_read_short_name_s;
+  extern const f_string_static_t fss_embedded_list_read_short_object_s;
+  extern const f_string_static_t fss_embedded_list_read_short_pipe_s;
+  extern const f_string_static_t fss_embedded_list_read_short_raw_s;
+  extern const f_string_static_t fss_embedded_list_read_short_select_s;
+  extern const f_string_static_t fss_embedded_list_read_short_total_s;
+  extern const f_string_static_t fss_embedded_list_read_short_trim_s;
+
+  extern const f_string_static_t fss_embedded_list_read_long_at_s;
+  extern const f_string_static_t fss_embedded_list_read_long_content_s;
+  extern const f_string_static_t fss_embedded_list_read_long_columns_s;
+  extern const f_string_static_t fss_embedded_list_read_long_delimit_s;
+  extern const f_string_static_t fss_embedded_list_read_long_depth_s;
+  extern const f_string_static_t fss_embedded_list_read_long_empty_s;
+  extern const f_string_static_t fss_embedded_list_read_long_line_s;
+  extern const f_string_static_t fss_embedded_list_read_long_name_s;
+  extern const f_string_static_t fss_embedded_list_read_long_object_s;
+  extern const f_string_static_t fss_embedded_list_read_long_pipe_s;
+  extern const f_string_static_t fss_embedded_list_read_long_raw_s;
+  extern const f_string_static_t fss_embedded_list_read_long_select_s;
+  extern const f_string_static_t fss_embedded_list_read_long_total_s;
+  extern const f_string_static_t fss_embedded_list_read_long_trim_s;
 
   enum {
     fss_embedded_list_read_parameter_help_e,
@@ -128,25 +210,28 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_at_s, fss_embedded_list_read_long_at_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_content_s, fss_embedded_list_read_long_content_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_columns_s, fss_embedded_list_read_long_columns_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_delimit_s, fss_embedded_list_read_long_delimit_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_depth_s, fss_embedded_list_read_long_depth_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_empty_s, fss_embedded_list_read_long_empty_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_line_s, fss_embedded_list_read_long_line_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_name_s, fss_embedded_list_read_long_name_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_object_s, fss_embedded_list_read_long_object_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_pipe_s, fss_embedded_list_read_long_pipe_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_raw_s, fss_embedded_list_read_long_raw_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_select_s, fss_embedded_list_read_long_select_s, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_total_s, fss_embedded_list_read_long_total_s, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_trim_s, fss_embedded_list_read_long_trim_s, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_at_s.string, fss_embedded_list_read_long_at_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_content_s.string, fss_embedded_list_read_long_content_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_columns_s.string, fss_embedded_list_read_long_columns_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_delimit_s.string, fss_embedded_list_read_long_delimit_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_depth_s.string, fss_embedded_list_read_long_depth_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_empty_s.string, fss_embedded_list_read_long_empty_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_line_s.string, fss_embedded_list_read_long_line_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_name_s.string, fss_embedded_list_read_long_name_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_object_s.string, fss_embedded_list_read_long_object_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_pipe_s.string, fss_embedded_list_read_long_pipe_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_raw_s.string, fss_embedded_list_read_long_raw_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_select_s.string, fss_embedded_list_read_long_select_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_total_s.string, fss_embedded_list_read_long_total_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_embedded_list_read_short_trim_s.string, fss_embedded_list_read_long_trim_s.string, 0, 0, f_console_type_normal_e), \
     }
 
   #define fss_embedded_list_read_total_parameters_d 23
-#endif // _di_fss_embedded_list_read_defines_
+#endif // _di_fss_embedded_list_read_parameters_
 
+/**
+ * Provide delimit management.
+ */
 #ifndef _di_fss_embedded_list_read_delimit_mode_
   #define fss_embedded_list_read_delimit_mode_name_none_s    "none"
   #define fss_embedded_list_read_delimit_mode_name_all_s     "all"
@@ -167,6 +252,18 @@ extern "C" {
   };
 #endif // _di_fss_embedded_list_read_delimit_modes_
 
+/**
+ * The main program data.
+ *
+ * parameters:   The state of pre-defined parameters passed to the program.
+ * remaining:    The remaining, non-pre-defined parameters, passed to the program.
+ * process_pipe: Designate whether or not to process the input pipe.
+ * output:       The output file for general printing.
+ * error:        The output file for error printing.
+ * warning:      The output file for warning printing.
+ * signal:       The process signal management structure.
+ * context:      The color context.
+ */
 #ifndef _di_fss_embedded_list_read_main_t_
   typedef struct {
     f_console_parameters_t parameters;

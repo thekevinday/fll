@@ -53,6 +53,114 @@ extern "C" {
   const f_color_set_t f_color_set_empty_s = macro_f_color_set_t_initialize(&f_string_empty_s, &f_string_empty_s);
 #endif // _di_f_color_set_string_empty_s_
 
+#ifndef _di_f_color_context_delete_
+  f_status_t f_color_context_delete(f_color_context_t * const context) {
+    #ifndef _di_level_0_parameters_checking_
+      if (!context) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameters_checking_
+
+    f_status_t status = F_none;
+
+    status = f_string_dynamic_resize(0, &context->reset);
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->warning);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->error);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->title);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->notable);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->important);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->standout);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->success);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->normal);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_resize(0, &context->normal_reset);
+    }
+
+    if (F_status_is_error(status)) return status;
+
+    macro_f_color_context_t_clear((*context))
+
+    return F_none;
+  }
+#endif // _di_f_color_context_delete_
+
+#ifndef _di_f_color_context_destroy_
+  f_status_t f_color_context_destroy(f_color_context_t * const context) {
+    #ifndef _di_level_0_parameters_checking_
+      if (!context) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameters_checking_
+
+    f_status_t status = F_none;
+
+    status = f_string_dynamic_adjust(0, &context->reset);
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->warning);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->error);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->title);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->notable);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->important);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->standout);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->success);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->normal);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_adjust(0, &context->normal_reset);
+    }
+
+    if (F_status_is_error(status)) return status;
+
+    macro_f_color_context_t_clear((*context))
+
+    return F_none;
+  }
+#endif // _di_f_color_context_destroy_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

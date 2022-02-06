@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_extended_write_error_parameter_at_least_once_print_
-  void fss_extended_write_error_parameter_at_least_once(fss_extended_write_main_t * const main) {
+  void fss_extended_write_error_parameter_at_least_once(fll_program_data_t * const main) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
@@ -28,7 +28,7 @@ extern "C" {
 #endif // _di_fss_extended_write_error_parameter_at_least_once_print_
 
 #ifndef _di_fss_extended_write_error_parameter_value_missing_print_
-  void fss_extended_write_error_parameter_value_missing_print(fss_extended_write_main_t * const main, const f_string_t symbol, const f_string_t parameter) {
+  void fss_extended_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_t symbol, const f_string_t parameter) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
@@ -45,7 +45,7 @@ extern "C" {
 #endif // _di_fss_extended_write_error_parameter_value_missing_print_
 
 #ifndef _di_fss_extended_write_error_parameter_unsupported_eol_print_
-  void fss_extended_write_error_parameter_unsupported_eol_print(fss_extended_write_main_t * const main) {
+  void fss_extended_write_error_parameter_unsupported_eol_print(fll_program_data_t * const main) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
@@ -62,7 +62,7 @@ extern "C" {
 #endif // _di_fss_extended_write_error_parameter_unsupported_eol_print_
 
 #ifndef _di_fss_extended_write_process_
-  f_status_t fss_extended_write_process(fss_extended_write_main_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) {
+  f_status_t fss_extended_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
     f_state_t state = macro_f_state_t_initialize(fss_extended_write_common_allocation_large_d, fss_extended_write_common_allocation_small_d, 0, 0, 0, 0, 0);
@@ -152,7 +152,7 @@ extern "C" {
 #endif // _di_fss_extended_write_process_
 
 #ifndef _di_fss_extended_write_process_pipe_
-  f_status_t fss_extended_write_process_pipe(fss_extended_write_main_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+  f_status_t fss_extended_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;

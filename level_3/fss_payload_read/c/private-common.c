@@ -64,7 +64,7 @@ extern "C" {
 #endif // _di_fss_payload_read_depths_resize_
 
 #ifndef _di_fss_payload_read_print_signal_received_
-  void fss_payload_read_print_signal_received(fss_payload_read_main_t * const main, const f_status_t signal) {
+  void fss_payload_read_print_signal_received(fll_program_data_t * const main, const f_status_t signal) {
 
     if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
@@ -82,7 +82,7 @@ extern "C" {
 #endif // _di_fss_payload_read_print_signal_received_
 
 #ifndef _di_fss_payload_read_signal_received_
-  f_status_t fss_payload_read_signal_received(fss_payload_read_main_t * const main) {
+  f_status_t fss_payload_read_signal_received(fll_program_data_t * const main) {
 
     if (main->signal.id == -1) {
       return F_false;

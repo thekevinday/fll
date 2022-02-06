@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+/**
+ * The program version.
+ */
 #ifndef _di_controller_program_version_
   #define CONTROLLER_program_version_major_s F_string_ascii_0_s
   #define CONTROLLER_program_version_minor_s F_string_ascii_5_s
@@ -42,6 +45,9 @@ extern "C" {
   extern const f_string_static_t controller_program_version_s;
 #endif // _di_controller_program_version_
 
+/**
+ * The program name.
+ */
 #ifndef _di_controller_program_name_
   #define CONTROLLER_program_name_s      "controller"
   #define CONTROLLER_program_name_long_s "Controller Program"
@@ -62,6 +68,9 @@ extern "C" {
   extern const f_string_static_t controller_program_name_init_long_s;
 #endif // _di_controller_program_name_
 
+/**
+ * The program defines.
+ */
 #ifndef _di_controller_defines_
 
   // The pid path is a system-specific path and needs to be more easily contolled at compile time.
@@ -191,7 +200,12 @@ extern "C" {
   extern const f_string_static_t controller_path_socket_init_s;
   extern const f_string_static_t controller_path_socket_prefix_s;
   extern const f_string_static_t controller_path_socket_suffix_s;
+#endif // _di_controller_defines_
 
+/**
+ * The main program parameters.
+ */
+#ifndef _di_controller_parameters_
   #define CONTROLLER_short_cgroup_s          "c"
   #define CONTROLLER_short_daemon_s          "d"
   #define CONTROLLER_short_init_s            "I"
@@ -305,13 +319,26 @@ extern "C" {
     }
 
   #define controller_total_parameters_d 19
-#endif // _di_controller_defines_
+#endif // _di_controller_parameters_
 
+/**
+ * The main program data.
+ *
+ * parameters:   The state of pre-defined parameters passed to the program.
+ * remaining:    The remaining, non-pre-defined parameters, passed to the program.
+ * process_pipe: Designate whether or not to process the input pipe.
+ * output:       The output file for general printing.
+ * error:        The output file for error printing.
+ * warning:      The output file for warning printing.
+ * signal:       The process signal management structure.
+ * context:      The color context.
+ *
+ * @todo
+ */
 #ifndef _di_controller_main_t_
   typedef struct {
     f_console_parameters_t parameters;
 
-    f_array_lengths_t remaining;
     bool process_pipe;
     bool as_init;
 
@@ -337,7 +364,6 @@ extern "C" {
   #define controller_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
-      f_array_lengths_t_initialize, \
       F_false, \
       F_false, \
       fl_print_t_initialize, \

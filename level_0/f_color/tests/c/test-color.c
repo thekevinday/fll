@@ -38,6 +38,10 @@ int main(void) {
     // f_color_save_5() only returns failures by other functions that have their own tests.
     cmocka_unit_test(test__f_color_save_5_works),
 
+    cmocka_unit_test(test__f_color_context_delete__frees_memory),
+
+    cmocka_unit_test(test__f_color_context_destroy__frees_memory),
+
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_color_load_context__parameter_checking),
       cmocka_unit_test(test__f_color_save_1_parameter_checking),
@@ -45,6 +49,8 @@ int main(void) {
       cmocka_unit_test(test__f_color_save_3_parameter_checking),
       cmocka_unit_test(test__f_color_save_4_parameter_checking),
       cmocka_unit_test(test__f_color_save_5_parameter_checking),
+      cmocka_unit_test(test__f_color_context_delete__parameter_checking),
+      cmocka_unit_test(test__f_color_context_destroy__parameter_checking),
     #endif // _di_level_0_parameter_checking_
   };
 

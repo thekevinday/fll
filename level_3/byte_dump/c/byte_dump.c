@@ -54,7 +54,7 @@ extern "C" {
     fll_program_print_help_option_long(file, context, byte_dump_long_simple_s, f_console_symbol_long_enable_s, " Display spaces for ASCII control codes.");
     fll_program_print_help_option_long(file, context, byte_dump_long_classic_s, f_console_symbol_long_enable_s, "Display periods for ASCII control codes.");
 
-    fll_program_print_help_usage(file, context, byte_dump_program_name_s, byte_dump_program_help_parameters_s);
+    fll_program_print_help_usage(file, context, byte_dump_program_name_s, fll_program_parameter_filenames_s);
 
     fl_print_format("  When using the %[%r%r%] option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
@@ -87,7 +87,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { byte_dump_parameter_no_color_e, byte_dump_parameter_light_e, byte_dump_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -262,7 +262,7 @@ extern "C" {
       return F_none;
     }
 
-    if (main->remaining.used || main->process_pipe) {
+    if (main->parameters.remaining.used || main->process_pipe) {
       if (main->parameters.array[byte_dump_parameter_width_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
@@ -461,15 +461,15 @@ extern "C" {
         }
       }
 
-      if (main->remaining.used > 0) {
+      if (main->parameters.remaining.used > 0) {
 
         // Pre-process remaining arguments to ensure that they all files exist before processing.
         {
           f_status_t missing_files = F_none;
 
-          for (f_array_length_t counter = 0; counter < main->remaining.used; ++counter) {
+          for (f_array_length_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
 
-            status = f_file_exists(argv[main->remaining.array[counter]]);
+            status = f_file_exists(argv[main->parameters.remaining.array[counter]]);
 
             if (status == F_false) {
               status = F_status_set_error(F_file_found_not);
@@ -480,7 +480,7 @@ extern "C" {
                 missing_files = status;
               }
 
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, argv[main->remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, argv[main->parameters.remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
             }
           } // for
 
@@ -495,12 +495,12 @@ extern "C" {
 
         f_file_t file = f_file_t_initialize;
 
-        for (f_array_length_t counter = 0; counter < main->remaining.used; ++counter) {
+        for (f_array_length_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
 
-          status = f_file_stream_open(argv[main->remaining.array[counter]], f_string_empty_s, &file);
+          status = f_file_stream_open(argv[main->parameters.remaining.array[counter]], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, argv[main->remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, argv[main->parameters.remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
 
             byte_dump_main_delete(main);
 
@@ -510,7 +510,7 @@ extern "C" {
           flockfile(main->output.to.stream);
 
           fl_print_format("%r%[Byte Dump of: %]%[", main->output.to.stream, f_string_eol_s, main->context.set.title, main->context.set.title, main->context.set.notable);
-          fl_print_format("%Q%] %[(in ", main->output.to.stream, argv[main->remaining.array[counter]], main->context.set.notable, main->context.set.title);
+          fl_print_format("%Q%] %[(in ", main->output.to.stream, argv[main->parameters.remaining.array[counter]], main->context.set.notable, main->context.set.title);
 
           if (main->mode == byte_dump_mode_hexidecimal_e) {
             f_print_dynamic_raw(byte_dump_print_strings_hexidecimal_s, main->output.to.stream);
@@ -532,7 +532,7 @@ extern "C" {
 
           funlockfile(main->output.to.stream);
 
-          status = byte_dump_file(main, argv[main->remaining.array[counter]], file);
+          status = byte_dump_file(main, argv[main->parameters.remaining.array[counter]], file);
 
           f_file_stream_close(F_true, &file);
 
@@ -548,7 +548,7 @@ extern "C" {
             }
             else {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, argv[main->remaining.array[counter]], f_file_operation_process_s, fll_error_file_type_file_e);
+                fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, argv[main->parameters.remaining.array[counter]], f_file_operation_process_s, fll_error_file_type_file_e);
               }
             }
 

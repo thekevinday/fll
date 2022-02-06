@@ -239,7 +239,7 @@ extern "C" {
  * command: The command type code.
  * cache:   A cache.
  * socket:  A socket used to connect to the controller.
- * argv:    The argument structure in control_main_t.parameters for simplifying syntax.
+ * argv:    The argument structure in fll_program_data_t.parameters for simplifying syntax.
  */
 #ifndef _di_control_data_t_
   typedef struct {
@@ -286,7 +286,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_control_signal_received_
-  extern f_status_t control_signal_received(control_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t control_signal_received(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_control_signal_received_
 
 /**

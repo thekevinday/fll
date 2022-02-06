@@ -7,7 +7,7 @@
  *
  * This is the FSS Extended List Read program
  * This program utilizes the Featureless Linux Library.
- * This program processes files or other input in fss format and stores the results in the fss_extended_list_read_main_t.
+ * This program processes files or other input in fss format and stores the results in the fll_program_data_t.
  *
  * This processes in accordance to the FSS-0003 Extended List specification.
  */
@@ -96,7 +96,7 @@ extern "C" {
  * @see fss_extended_list_read_main_delete()
  */
 #ifndef _di_fss_extended_list_read_main_
-  extern f_status_t fss_extended_list_read_main(fss_extended_list_read_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t fss_extended_list_read_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_fss_extended_list_read_main_
 
 #ifdef __cplusplus

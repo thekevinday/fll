@@ -29,6 +29,9 @@
 #include <fll/level_1/string.h>
 #include <fll/level_1/print.h>
 
+// fll-2 program includes
+#include <fll/level_2/program-common.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -193,8 +196,6 @@ extern "C" {
  *   This must have its used size set to 3 and the ids are expected to be in this order: no_color, light, and dark.
  * @param right
  *   Set to TRUE for right priortization and FALSE for left prioritization.
- * @param remaining
- *   A list of remaining parameters not associated with anything.
  * @param context
  *   The color context.
  *
@@ -216,7 +217,7 @@ extern "C" {
  * @see f_color_load_context()
  */
 #ifndef _di_fll_program_parameter_process_
-  extern f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_array_lengths_t *remaining, f_color_context_t *context);
+  extern f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_color_context_t *context);
 #endif // _di_fll_program_parameter_process_
 
 /**

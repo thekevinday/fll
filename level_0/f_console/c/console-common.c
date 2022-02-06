@@ -58,7 +58,13 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    return f_string_dynamics_resize(0, &parameters->arguments);
+    status = f_string_dynamics_resize(0, &parameters->arguments);
+    if (F_status_is_error(status)) return status;
+
+    status = f_type_array_lengths_resize(0, &parameters->remaining);
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // _di_f_console_parameters_delete_
 
@@ -82,7 +88,13 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    return f_string_dynamics_adjust(0, &parameters->arguments);
+    status = f_string_dynamics_adjust(0, &parameters->arguments);
+    if (F_status_is_error(status)) return status;
+
+    status = f_type_array_lengths_adjust(0, &parameters->remaining);
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // _di_f_console_parameters_destroy_
 

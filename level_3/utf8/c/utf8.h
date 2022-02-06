@@ -106,7 +106,7 @@ extern "C" {
  * @see utf8_main_delete()
  */
 #ifndef _di_utf8_main_
-  extern f_status_t utf8_main(utf8_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t utf8_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_utf8_main_
 
 #ifdef __cplusplus

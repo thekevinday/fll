@@ -59,7 +59,7 @@ extern "C" {
       f_console_parameter_id_t ids[3] = { firewall_parameter_no_color_e, firewall_parameter_light_e, firewall_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->remaining, &main->context);
+      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
 
       main->output.set = &main->context.set;
       main->error.set = &main->context.set;
@@ -215,16 +215,16 @@ extern "C" {
 
         int return_code = 0;
 
-        if (main->remaining.used > 0) {
+        if (main->parameters.remaining.used > 0) {
           show_nat = F_false;
           show_mangle = F_false;
           show_ports = F_false;
 
           f_array_length_t index = 0;
 
-          for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
+          for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
-            index = main->remaining.array[i];
+            index = main->parameters.remaining.array[i];
 
             if (fl_string_dynamic_compare(firewall_show_nat_s, argv[index]) == F_equal_to) {
               show_nat = F_true;

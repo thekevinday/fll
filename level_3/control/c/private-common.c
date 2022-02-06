@@ -47,7 +47,7 @@ extern "C" {
 #endif // _di_control_data_delete_
 
 #ifndef _di_control_signal_received_
-  f_status_t control_signal_received(control_main_t * const main) {
+  f_status_t control_signal_received(fll_program_data_t * const main) {
 
     if (main->signal.id == -1) {
       return F_false;
@@ -88,7 +88,7 @@ extern "C" {
       return F_interrupt_not;
     }
 
-    control_main_t * const main = (control_main_t *) state_ptr->custom;
+    fll_program_data_t * const main = (fll_program_data_t *) state_ptr->custom;
 
     if (!((++main->signal_check) % control_signal_check_d)) {
       if (control_signal_received(main)) {

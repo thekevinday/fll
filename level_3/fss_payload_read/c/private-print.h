@@ -31,7 +31,7 @@ extern "C" {
  *   The program data.
  */
 #ifndef _di_fss_payload_read_print_at_
-  extern void fss_payload_read_print_at(fss_payload_read_main_t * const main, const bool is_payload, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_at(fll_program_data_t * const main, const bool is_payload, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_at_
 
 /**
@@ -51,7 +51,7 @@ extern "C" {
  *   The program data.
  */
 #ifndef _di_fss_payload_read_print_at_extended_
-  extern void fss_payload_read_print_at_extended(fss_payload_read_main_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_at_extended(fll_program_data_t * const main, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_at_extended_
 
 /**
@@ -67,7 +67,7 @@ extern "C" {
  *   The delimits to be applied to an Object.
  */
 #ifndef _di_fss_payload_read_print_at_object_
-  extern void fss_payload_read_print_at_object(fss_payload_read_main_t * const main, fss_payload_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits_object) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_at_object(fll_program_data_t * const main, fss_payload_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits_object) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_at_object_
 
 /**
@@ -85,7 +85,7 @@ extern "C" {
  *   F_success on success and something was matched (and total was printed).
  */
 #ifndef _di_fss_payload_read_print_at_total_extended_
-  extern f_status_t fss_payload_read_print_at_total_extended(fss_payload_read_main_t * const main, const f_array_length_t at, fss_payload_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_print_at_total_extended(fll_program_data_t * const main, const f_array_length_t at, fss_payload_read_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_at_total_extended_
 
 /**
@@ -95,7 +95,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_payload_read_print_content_end_extended_
-  extern void fss_payload_read_print_content_end_extended(fss_payload_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_content_end_extended(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_content_end_extended_
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_payload_read_print_content_ignore_
-  extern void fss_payload_read_print_content_ignore(fss_payload_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_content_ignore(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_content_ignore_
 
 /**
@@ -117,7 +117,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_payload_read_print_object_end_
-  extern void fss_payload_read_print_object_end(fss_payload_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_object_end(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_object_end_
 
 /**
@@ -127,7 +127,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_payload_read_print_object_end_extended_
-  extern void fss_payload_read_print_object_end_extended(fss_payload_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_object_end_extended(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_object_end_extended_
 
 /**
@@ -137,7 +137,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_payload_read_print_one_
-  extern void fss_payload_read_print_one(fss_payload_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_one(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_one_
 
 /**
@@ -147,7 +147,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_payload_read_print_set_end_
-  extern void fss_payload_read_print_set_end(fss_payload_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_set_end(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_set_end_
 
 /**
@@ -157,7 +157,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_payload_read_print_set_end_extended_
-  extern void fss_payload_read_print_set_end_extended(fss_payload_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_set_end_extended(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_set_end_extended_
 
 /**
@@ -167,7 +167,7 @@ extern "C" {
  *   The main program data.
  */
 #ifndef _di_fss_payload_read_print_zero_
-  extern void fss_payload_read_print_zero(fss_payload_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_payload_read_print_zero(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_print_zero_
 
 #ifdef __cplusplus
