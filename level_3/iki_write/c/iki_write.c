@@ -172,15 +172,15 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_array_length_t location = main->parameters.array[iki_write_parameter_file_e].values.array[0];
+          const f_array_length_t index = main->parameters.array[iki_write_parameter_file_e].values.array[0];
 
           file.id = -1;
           file.stream = 0;
 
-          status = f_file_stream_open(arguments->argv[location], 0, &file);
+          status = f_file_stream_open(argv[index], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[index], f_file_operation_open_s, fll_error_file_type_file_e);
           }
         }
       }
@@ -263,18 +263,18 @@ extern "C" {
       }
     }
 
-    data->quote = f_iki_syntax_quote_double_s.string[0];
+    main->quote = f_iki_syntax_quote_double_s;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[iki_write_parameter_double_e].result == f_console_result_found_e) {
         if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
           if (main->parameters.array[iki_write_parameter_double_e].location < main->parameters.array[iki_write_parameter_single_e].location) {
-            data->quote = f_iki_syntax_quote_single_s.string[0];
+            main->quote = f_iki_syntax_quote_single_s;
           }
         }
       }
       else if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
-        data->quote = f_iki_syntax_quote_single_s.string[0];
+        main->quote = f_iki_syntax_quote_single_s;
       }
     }
 
@@ -315,7 +315,7 @@ extern "C" {
             status_pipe = f_file_read(pipe, &buffer);
 
             if (F_status_is_error(status_pipe)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_to", F_true, f_string_ascii_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_to", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
 
               status = F_status_set_error(F_pipe);
 
@@ -426,8 +426,6 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        f_string_static_t object = f_string_static_t_initialize;
-        f_string_static_t content = f_string_static_t_initialize;
         uint16_t signal_check = 0;
 
         for (f_array_length_t i = 0; i < main->parameters.array[iki_write_parameter_object_e].values.used; ++i) {
@@ -441,15 +439,7 @@ extern "C" {
             signal_check = 0;
           }
 
-          object.string = arguments->argv[main->parameters.array[iki_write_parameter_object_e].values.array[i]];
-          object.used = strnlen(object.string, F_console_parameter_size_d);
-          object.size = object.used;
-
-          content.string = arguments->argv[main->parameters.array[iki_write_parameter_content_e].values.array[i]];
-          content.used = strnlen(content.string, F_console_parameter_size_d);
-          content.size = content.used;
-
-          status = iki_write_process(main, file, object, content, &escaped);
+          status = iki_write_process(main, file, argv[main->parameters.array[iki_write_parameter_object_e].values.array[i]], argv[main->parameters.array[iki_write_parameter_content_e].values.array[i]], &escaped);
           if (F_status_is_error(status)) break;
 
           fll_print_dynamic_raw(f_string_eol_s, file.stream);

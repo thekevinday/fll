@@ -10,17 +10,11 @@ extern "C" {
   void iki_read_substitutions_print(iki_read_main_t * const main, const iki_data_t iki_data, const f_string_ranges_t ranges, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) {
 
     f_status_t status = F_none;
-
     f_array_length_t i = 0;
-    f_string_range_t range = f_string_range_t_initialize;
-
-    range.start = 0;
 
     for (; i < substitutions.used; ++i) {
 
-      range.stop = substitutions.array[i].replace.used - 1;
-
-      status = fl_string_dynamic_partial_compare(substitutions.array[i].replace, main->buffer, range, iki_data.content.array[index]);
+      status = fl_string_dynamic_partial_compare_string(substitutions.array[i].replace.string, main->buffer, substitutions.array[i].replace.used, iki_data.content.array[index]);
       if (status == F_equal_to) break;
     } // for
 
@@ -29,8 +23,7 @@ extern "C" {
         f_print_dynamic(substitutions.array[i].with, main->output.to.stream);
       }
       else {
-        range.start = iki_data.variable.array[index].start;
-        range.stop = iki_data.content.array[index].start - 1;
+        f_string_range_t range = macro_f_string_range_t_initialize2(iki_data.variable.array[index].start, iki_data.content.array[index].start - 1);
 
         f_print_dynamic_partial(main->buffer, range, main->output.to.stream);
 

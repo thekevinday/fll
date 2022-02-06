@@ -337,10 +337,10 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else if (main->parameters.array[fss_embedded_list_read_parameter_delimit_e].result == f_console_result_additional_e) {
-          const f_array_length_t location = main->parameters.array[fss_embedded_list_read_parameter_delimit_e].values.array[0];
-          f_array_length_t length = strnlen(arguments->argv[location], F_console_parameter_size_d);
+          const f_array_length_t index = main->parameters.array[fss_embedded_list_read_parameter_delimit_e].values.array[0];
+          f_array_length_t length = argv[index].used;
 
-          if (length == 0) {
+          if (!length) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -351,22 +351,22 @@ extern "C" {
 
             status = F_status_set_error(F_parameter);
           }
-          else if (fl_string_compare(arguments->argv[location], fss_embedded_list_read_delimit_mode_name_none_s, length, fss_embedded_list_read_delimit_mode_name_none_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare_string(fss_embedded_list_read_delimit_mode_name_none_s.string, argv[index], fss_embedded_list_read_delimit_mode_name_none_s.used) == F_equal_to) {
             main->delimit_mode = fss_embedded_list_read_delimit_mode_none_e;
           }
-          else if (fl_string_compare(arguments->argv[location], fss_embedded_list_read_delimit_mode_name_all_s, length, fss_embedded_list_read_delimit_mode_name_all_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare_string(fss_embedded_list_read_delimit_mode_name_all_s.string, argv[index], fss_embedded_list_read_delimit_mode_name_all_s.used) == F_equal_to) {
             main->delimit_mode = fss_embedded_list_read_delimit_mode_all_e;
           }
           else {
             main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_e;
 
-            if (arguments->argv[location][length - 1] == fss_embedded_list_read_delimit_mode_name_greater_s.string[0]) {
+            if (argv[index][length - 1] == fss_embedded_list_read_delimit_mode_name_greater_s.string[0]) {
               main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_greater_e;
 
               // Shorten the length to better convert the remainder to a number.
               --length;
             }
-            else if (arguments->argv[location][length - 1] == fss_embedded_list_read_delimit_mode_name_lesser_s.string[0]) {
+            else if (argv[index][length - 1] == fss_embedded_list_read_delimit_mode_name_lesser_s.string[0]) {
               main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_lesser_e;
 
               // Shorten the length to better convert the remainder to a number.
@@ -376,14 +376,14 @@ extern "C" {
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // Ignore leading plus sign.
-            if (arguments->argv[location][0] == '+') {
+            if (argv[index][0] == f_string_ascii_plus_s[0]) {
               ++range.start;
             }
 
-            status = fl_conversion_string_to_number_unsigned(arguments->argv[location], range, &main->delimit_depth);
+            status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &main->delimit_depth);
 
             if (F_status_is_error(status)) {
-              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_delimit_s, arguments->argv[location]);
+              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_delimit_s, argv[index]);
             }
           }
         }
@@ -445,17 +445,18 @@ extern "C" {
 
           if (fss_embedded_list_read_signal_received(main)) {
             status = F_status_set_error(F_interrupt);
+
             break;
           }
 
           f_file_t file = f_file_t_initialize;
 
-          status = f_file_open(arguments->argv[main->parameters.remaining.array[i]], 0, &file);
+          status = f_file_open(argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
           main->quantity.total = original_size;
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -463,7 +464,7 @@ extern "C" {
           if (!main->quantity.total) {
             status = f_file_size_by_id(file.id, &main->quantity.total);
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
               f_file_stream_close(F_true, &file);
 
@@ -473,7 +474,7 @@ extern "C" {
             // Skip past empty files.
             if (!main->quantity.total) {
               if (main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
-                fll_print_format("0%r", main->output.to.stream, f_string_eol_s);
+                fll_print_format("%r%r", main->output.to.stream, f_string_ascii_0_s, f_string_eol_s);
               }
 
               f_file_stream_close(F_true, &file);
@@ -487,15 +488,15 @@ extern "C" {
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
             break;
           }
 
-          status = fss_embedded_list_read_main_process_file(main, arguments, arguments->argv[main->parameters.remaining.array[i]], depths, &objects_delimits, &contents_delimits, &comments);
+          status = fss_embedded_list_read_main_process_file(main, arguments, argv[main->parameters.remaining.array[i]], depths, &objects_delimits, &contents_delimits, &comments);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
             break;
           }

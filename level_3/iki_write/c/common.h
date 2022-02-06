@@ -49,8 +49,8 @@ extern "C" {
  * The program name.
  */
 #ifndef _di_iki_write_program_name_
-  #define iki_write_program_name_s      "iki_write"
-  #define iki_write_program_name_long_s "IKI Write"
+  #define IKI_WRITE_program_name_s      "iki_write"
+  #define IKI_WRITE_program_name_long_s "IKI Write"
 
   #define IKI_WRITE_program_name_s_length      9
   #define IKI_WRITE_program_name_long_s_length 9
@@ -149,7 +149,6 @@ extern "C" {
  * The main program data.
  *
  * parameters:   The state of pre-defined parameters passed to the program.
- * remaining:    The remaining, non-pre-defined parameters, passed to the program.
  * process_pipe: Designate whether or not to process the input pipe.
  * output:       The output file for general printing.
  * error:        The output file for error printing.
@@ -180,7 +179,6 @@ extern "C" {
   #define iki_write_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
-      f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \

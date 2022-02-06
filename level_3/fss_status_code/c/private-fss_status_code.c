@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_status_code_process_check_
-  f_status_t fss_status_code_process_check(fll_program_data_t * const main, const f_string_t value) {
+  f_status_t fss_status_code_process_check(fll_program_data_t * const main, const f_string_static_t value) {
 
     f_number_unsigned_t number = 0;
 
@@ -18,30 +18,30 @@ extern "C" {
 
     if (main->parameters.array[fss_status_code_parameter_is_error_e].result == f_console_result_found_e) {
       if (F_status_is_error(number)) {
-        f_print_terminated(f_status_true_s, main->output.to.stream);
+        f_print_dynamic_raw(f_status_true_s, main->output.to.stream);
       }
       else {
-        f_print_terminated(f_status_false_s, main->output.to.stream);
+        f_print_dynamic_raw(f_status_false_s, main->output.to.stream);
       }
 
       f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
     else if (main->parameters.array[fss_status_code_parameter_is_warning_e].result == f_console_result_found_e) {
       if (F_status_is_warning(number)) {
-        f_print_terminated(f_status_true_s, main->output.to.stream);
+        f_print_dynamic_raw(f_status_true_s, main->output.to.stream);
       }
       else {
-        f_print_terminated(f_status_false_s, main->output.to.stream);
+        f_print_dynamic_raw(f_status_false_s, main->output.to.stream);
       }
 
       f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
     else if (main->parameters.array[fss_status_code_parameter_is_fine_e].result == f_console_result_found_e) {
       if (F_status_is_fine(number)) {
-        f_print_terminated(f_status_true_s, main->output.to.stream);
+        f_print_dynamic_raw(f_status_true_s, main->output.to.stream);
       }
       else {
-        f_print_terminated(f_status_false_s, main->output.to.stream);
+        f_print_dynamic_raw(f_status_false_s, main->output.to.stream);
       }
 
       f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
@@ -52,16 +52,16 @@ extern "C" {
 #endif // _di_fss_status_code_process_check_
 
 #ifndef _di_fss_status_code_process_number_
-  f_status_t fss_status_code_process_number(fll_program_data_t * const main, const f_string_t value) {
+  f_status_t fss_status_code_process_number(fll_program_data_t * const main, const f_string_static_t value) {
 
     f_status_t status = F_none;
 
     {
-      const f_string_range_t range = macro_f_string_range_t_initialize(strlen(value));
+      const f_string_range_t range = macro_f_string_range_t_initialize(value.used);
 
       f_number_unsigned_t number = 0;
 
-      status = fl_conversion_string_to_number_unsigned(value, range, &number);
+      status = fl_conversion_string_to_number_unsigned(value.string, range, &number);
 
       if (status == F_none) {
         fl_print_format("%[invalid name%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
@@ -110,17 +110,16 @@ extern "C" {
 #endif // _di_fss_status_code_process_number_
 
 #ifndef _di_fss_status_code_process_normal_
-  f_status_t fss_status_code_process_normal(fll_program_data_t * const main, const f_string_t value) {
+  f_status_t fss_status_code_process_normal(fll_program_data_t * const main, const f_string_static_t value) {
 
     f_number_unsigned_t number = 0;
 
     f_status_t status = fss_status_code_convert_number(main, value, &number);
     if (F_status_is_error(status)) return status;
 
-    const f_status_t code = (f_status_t) number;
-    f_string_t string = 0;
+    f_string_static_t name = f_string_static_t_initialize;
 
-    status = fll_fss_status_string_to(code, &string);
+    status = fll_fss_status_string_to((f_status_t) number, &name);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
@@ -133,18 +132,18 @@ extern "C" {
       return status;
     }
 
-    fl_print_format("%S%r", main->output.to.stream, string, f_string_eol_s);
+    fl_print_format("%Q%r", main->output.to.stream, name, f_string_eol_s);
 
     return F_none;
   }
 #endif // _di_fss_status_code_process_normal_
 
 #ifndef _di_fss_status_code_convert_number_
-  f_status_t fss_status_code_convert_number(fll_program_data_t * const main, const f_string_t value, f_number_unsigned_t *number) {
+  f_status_t fss_status_code_convert_number(fll_program_data_t * const main, const f_string_static_t value, f_number_unsigned_t *number) {
 
-    const f_string_range_t range = macro_f_string_range_t_initialize(strlen(value));
+    const f_string_range_t range = macro_f_string_range_t_initialize(value.used);
 
-    f_status_t status = fl_conversion_string_to_number_unsigned(value, range, number);
+    f_status_t status = fl_conversion_string_to_number_unsigned(value.string, range, number);
 
     if (*number > F_status_size_max_with_signal) {
       fl_print_format("%[out of range%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);

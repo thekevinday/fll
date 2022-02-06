@@ -204,19 +204,18 @@ extern "C" {
             return F_status_set_error(F_parameter);
           }
 
-          f_array_length_t location = main->parameters.array[parameters_id[i]].values.array[0];
-          f_array_length_t length = strnlen(arguments->argv[location], F_console_parameter_size_d);
+          f_array_length_t index = main->parameters.array[parameters_id[i]].values.array[0];
 
-          if (length > 0) {
+          if (argv[index].used) {
             if (parameters_validate_word[i]) {
               f_array_length_t j = 0;
               f_array_length_t width_max = 0;
 
-              for (j = 0; j < length; ++j) {
+              for (j = 0; j < argv[index].used; ++j) {
 
-                width_max = length - j;
+                width_max = argv[index].used - j;
 
-                status = f_utf_is_word_dash_plus(arguments->argv[location] + j, width_max, F_false);
+                status = f_utf_is_word_dash_plus(argv[index] + j, width_max, F_false);
 
                 if (F_status_is_error(status)) {
                   if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -239,7 +238,7 @@ extern "C" {
                     fl_print_format("%r%[%QThe '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_process_s, main->error.notable);
                     fl_print_format("%[' parameters value '%]", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-                    fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, arguments->argv[location], main->error.notable);
+                    fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, argv[index], main->error.notable);
                     fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                     funlockfile(main->error.to.stream);
@@ -250,7 +249,7 @@ extern "C" {
               } // for
             }
 
-            status = f_string_append(arguments->argv[location], length, parameters_value[i]);
+            status = f_string_append(argv[index], argv[index].used, parameters_value[i]);
 
             if (F_status_is_error(status)) {
               if (status == F_status_set_error(F_string_too_large)) {
@@ -275,7 +274,7 @@ extern "C" {
             }
           }
 
-          if (length == 0 || status == F_data_not) {
+          if (!argv[index].used || status == F_data_not) {
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
@@ -350,7 +349,7 @@ extern "C" {
             return F_status_set_error(F_parameter);
           }
 
-          status = fl_console_parameter_to_string_dynamic_directory(arguments->argv[main->parameters.array[parameters_id[i]].values.array[0]], parameters_value[i]);
+          status = fl_console_parameter_to_string_dynamic_directory(argv[main->parameters.array[parameters_id[i]].values.array[0]], parameters_value[i]);
 
           if (F_status_is_error(status)) {
             if (fll_error_print(main->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -389,7 +388,7 @@ extern "C" {
     }
 
     if (main->parameters.array[fake_parameter_define_e].result == f_console_result_additional_e) {
-      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters.array[fake_parameter_define_e].values, &main->define);
+      status = fll_program_parameter_additional_rip(argv, main->parameters.array[fake_parameter_define_e].values, &main->define);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -411,7 +410,7 @@ extern "C" {
       return F_status_set_error(F_parameter);
     }
     else if (main->parameters.array[fake_parameter_mode_e].result == f_console_result_additional_e) {
-      status = fll_program_parameter_additional_rip(arguments->argv, main->parameters.array[fake_parameter_mode_e].values, &main->mode);
+      status = fll_program_parameter_additional_rip(argv, main->parameters.array[fake_parameter_mode_e].values, &main->mode);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {

@@ -40,7 +40,7 @@ extern "C" {
 
   #define IKI_READ_program_version_s IKI_READ_program_version_major_s F_string_ascii_period_s IKI_READ_program_version_minor_s F_string_ascii_period_s IKI_READ_program_version_micro_s IKI_READ_program_version_nano_prefix_s IKI_READ_program_version_nano_s
 
-  #define IKI_READ_program_version_s_length iki_read_program_version_major_s_length + F_string_ascii_period_s iki_read_program_version_minor_s_length + F_string_ascii_period_s_length + iki_read_program_version_micro_s_length + iki_read_program_version_nano_prefix_s_length + iki_read_program_version_nano_s_length
+  #define IKI_READ_program_version_s_length IKI_READ_program_version_major_s_length + F_string_ascii_period_s_length + IKI_READ_program_version_minor_s_length + F_string_ascii_period_s_length + IKI_READ_program_version_micro_s_length + IKI_READ_program_version_nano_prefix_s_length + IKI_READ_program_version_nano_s_length
 
   extern const f_string_static_t iki_read_program_version_s;
 #endif // _di_iki_read_program_version_
@@ -52,8 +52,8 @@ extern "C" {
   #define IKI_READ_program_name_s      "iki_read"
   #define IKI_READ_program_name_long_s "IKI Read"
 
-  #define IKI_READ_program_name_s_length      9
-  #define IKI_READ_program_name_long_s_length 9
+  #define IKI_READ_program_name_s_length      8
+  #define IKI_READ_program_name_long_s_length 8
 
   extern const f_string_static_t iki_read_program_name_s;
   extern const f_string_static_t iki_read_program_name_long_s;
@@ -185,9 +185,17 @@ extern "C" {
 #endif // _di_iki_read_parameters_
 
 #ifndef _di_iki_read_substitution_t_
-  #define iki_read_substitution_vocabulary_s "vocabulary"
-  #define iki_read_substitution_replace_s    "replace"
-  #define iki_read_substitution_with_s       "with"
+  #define IKI_READ_substitution_vocabulary_s "vocabulary"
+  #define IKI_READ_substitution_replace_s    "replace"
+  #define IKI_READ_substitution_with_s       "with"
+
+  #define IKI_READ_substitution_vocabulary_s_length 10
+  #define IKI_READ_substitution_replace_s_length    7
+  #define IKI_READ_substitution_with_s_length       4
+
+  extern const f_string_static_t iki_read_substitution_vocabulary_s;
+  extern const f_string_static_t iki_read_substitution_replace_s;
+  extern const f_string_static_t iki_read_substitution_with_s;
 
   typedef struct {
     f_string_static_t replace;
@@ -230,7 +238,6 @@ extern "C" {
  * The main program data.
  *
  * parameters:   The state of pre-defined parameters passed to the program.
- * remaining:    The remaining, non-pre-defined parameters, passed to the program.
  * process_pipe: Designate whether or not to process the input pipe.
  * output:       The output file for general printing.
  * error:        The output file for error printing.
@@ -267,7 +274,6 @@ extern "C" {
   #define iki_read_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
-      f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \

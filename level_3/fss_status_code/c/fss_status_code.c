@@ -6,15 +6,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_status_code_program_version_
-  const f_string_static_t fss_status_code_program_version_s = macro_f_string_static_t_initialize(FSS_STATUS_CODE_program_version_s, 0, FSS_STATUS_CODE_program_version_s_length);
-#endif // _di_fss_status_code_program_version_
-
-#ifndef _di_fss_status_code_program_name_
-  const f_string_static_t fss_status_code_program_name_s = macro_f_string_static_t_initialize(FSS_STATUS_CODE_program_name_s, 0, FSS_STATUS_CODE_program_name_s_length);
-  const f_string_static_t fss_status_code_program_name_long_s = macro_f_string_static_t_initialize(FSS_STATUS_CODE_program_name_long_s, 0, FSS_STATUS_CODE_program_name_long_s_length);
-#endif // _di_fss_status_code_program_name_
-
 #ifndef _di_fss_status_code_print_help_
   f_status_t fss_status_code_print_help(const f_file_t file, const f_color_context_t context) {
 
@@ -84,6 +75,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fss_status_code_main_delete(main);
+
         return F_status_set_error(status);
       }
     }
@@ -98,6 +90,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fss_status_code_main_delete(main);
+
         return status;
       }
 
@@ -131,6 +124,7 @@ extern "C" {
       fss_status_code_print_help(main->output.to, main->context);
 
       fss_status_code_main_delete(main);
+
       return F_none;
     }
 
@@ -138,6 +132,7 @@ extern "C" {
       fll_program_print_version(main->output.to, fss_status_code_program_version_s);
 
       fss_status_code_main_delete(main);
+
       return F_none;
     }
 
@@ -154,9 +149,11 @@ extern "C" {
         funlockfile(main->error.to.stream);
 
         fss_status_code_main_delete(main);
+
         return F_status_set_error(status);
       }
-      else if (main->parameters.array[fss_status_code_parameter_is_fine_e].result == f_console_result_found_e) {
+
+      if (main->parameters.array[fss_status_code_parameter_is_fine_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -168,6 +165,7 @@ extern "C" {
         funlockfile(main->error.to.stream);
 
         fss_status_code_main_delete(main);
+
         return F_status_set_error(status);
       }
     }
@@ -183,6 +181,7 @@ extern "C" {
       funlockfile(main->error.to.stream);
 
       fss_status_code_main_delete(main);
+
       return F_status_set_error(status);
     }
 
@@ -190,6 +189,7 @@ extern "C" {
       fll_print_format("%[You failed to specify an error code.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
       fss_status_code_main_delete(main);
+
       return F_status_set_error(F_parameter);
     }
 
@@ -210,13 +210,14 @@ extern "C" {
           if (!((++signal_check) % fss_status_code_signal_check_d)) {
             if (fss_status_code_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          status2 = fss_status_code_process_check(main, arguments->argv[main->parameters.remaining.array[i]]);
+          status2 = fss_status_code_process_check(main, argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -241,13 +242,14 @@ extern "C" {
           if (!((++signal_check) % fss_status_code_signal_check_d)) {
             if (fss_status_code_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          status2 = fss_status_code_process_number(main, arguments->argv[main->parameters.remaining.array[i]]);
+          status2 = fss_status_code_process_number(main, argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -272,13 +274,14 @@ extern "C" {
           if (!((++signal_check) % fss_status_code_signal_check_d)) {
             if (fss_status_code_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          status2 = fss_status_code_process_normal(main, arguments->argv[main->parameters.remaining.array[i]]);
+          status2 = fss_status_code_process_normal(main, argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;

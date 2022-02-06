@@ -2233,7 +2233,6 @@ extern "C" {
   f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!file.stream) {
@@ -2279,7 +2278,6 @@ extern "C" {
   f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!file.stream) {

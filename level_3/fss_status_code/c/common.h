@@ -20,25 +20,27 @@ extern "C" {
  * The program version.
  */
 #ifndef _di_fss_status_code_program_version_
-  #define FSS_STATUS_code_program_version_major_s F_string_ascii_0_s
-  #define FSS_STATUS_code_program_version_minor_s F_string_ascii_5_s
-  #define FSS_STATUS_code_program_version_micro_s F_string_ascii_8_s
+  #define FSS_STATUS_CODE_program_version_major_s F_string_ascii_0_s
+  #define FSS_STATUS_CODE_program_version_minor_s F_string_ascii_5_s
+  #define FSS_STATUS_CODE_program_version_micro_s F_string_ascii_8_s
 
-  #define FSS_STATUS_code_program_version_major_s_length F_string_ascii_0_s_length
-  #define FSS_STATUS_code_program_version_minor_s_length F_string_ascii_5_s_length
-  #define FSS_STATUS_code_program_version_micro_s_length F_string_ascii_8_s_length
+  #define FSS_STATUS_CODE_program_version_major_s_length F_string_ascii_0_s_length
+  #define FSS_STATUS_CODE_program_version_minor_s_length F_string_ascii_5_s_length
+  #define FSS_STATUS_CODE_program_version_micro_s_length F_string_ascii_8_s_length
 
-  #if !(defined(FSS_STATUS_program_version_nano_prefix_s) && defined(FSS_STATUS_program_version_nano_prefix_s_length))
-    #define FSS_STATUS_program_version_nano_prefix_s
-    #define FSS_STATUS_program_version_nano_prefix_s_length 0
-  #endif // !(defined(FSS_STATUS_program_version_nano_prefix_s) && defined(FSS_STATUS_program_version_nano_prefix_s_length))
+  #if !(defined(FSS_STATUS_CODE_program_version_nano_prefix_s) && defined(FSS_STATUS_CODE_program_version_nano_prefix_s_length))
+    #define FSS_STATUS_CODE_program_version_nano_prefix_s
+    #define FSS_STATUS_CODE_program_version_nano_prefix_s_length 0
+  #endif // !(defined(FSS_STATUS_CODE_program_version_nano_prefix_s) && defined(FSS_STATUS_CODE_program_version_nano_prefix_s_length))
 
-  #if !(defined(FSS_STATUS_program_version_nano_s) && defined(FSS_STATUS_program_version_nano_s_length))
-    #define FSS_STATUS_program_version_nano_s
-    #define FSS_STATUS_program_version_nano_s_length 0
-  #endif // !(defined(FSS_STATUS_program_version_nano_s) && defined(FSS_STATUS_program_version_nano_s_length))
+  #if !(defined(FSS_STATUS_CODE_program_version_nano_s) && defined(FSS_STATUS_CODE_program_version_nano_s_length))
+    #define FSS_STATUS_CODE_program_version_nano_s
+    #define FSS_STATUS_CODE_program_version_nano_s_length 0
+  #endif // !(defined(FSS_STATUS_CODE_program_version_nano_s) && defined(FSS_STATUS_CODE_program_version_nano_s_length))
 
-  #define FSS_STATUS_code_program_version_length_s FSS_STATUS_code_program_version_major_s F_string_ascii_period_s FSS_STATUS_code_program_version_minor_s F_string_ascii_period_s FSS_STATUS_code_program_version_micro_s FSS_STATUS_code_program_version_nano_prefix_s FSS_STATUS_code_program_version_nano_s
+  #define FSS_STATUS_CODE_program_version_s FSS_STATUS_CODE_program_version_major_s F_string_ascii_period_s FSS_STATUS_CODE_program_version_minor_s F_string_ascii_period_s FSS_STATUS_CODE_program_version_micro_s FSS_STATUS_CODE_program_version_nano_prefix_s FSS_STATUS_CODE_program_version_nano_s
+
+  #define FSS_STATUS_CODE_program_version_s_length FSS_STATUS_CODE_program_version_major_s_length + F_string_ascii_period_s_length + FSS_STATUS_CODE_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_STATUS_CODE_program_version_micro_s_length + FSS_STATUS_CODE_program_version_nano_prefix_s_length + FSS_STATUS_CODE_program_version_nano_s_length
 
   extern const f_string_static_t fss_status_code_program_version_s;
 #endif // _di_fss_status_code_program_version_
@@ -47,11 +49,11 @@ extern "C" {
  * The program name.
  */
 #ifndef _di_fss_status_code_program_name_
-  #define FSS_STATUS_code_program_name_s      "FSS_STATUS_code"
-  #define FSS_STATUS_code_program_name_long_s "FSS Status Code"
+  #define FSS_STATUS_CODE_program_name_s      "fss_status_code"
+  #define FSS_STATUS_CODE_program_name_long_s "FSS Status Code"
 
-  #define FSS_STATUS_CODE_program_name_s_length
-  #define FSS_STATUS_CODE_program_name_long_s_length
+  #define FSS_STATUS_CODE_program_name_s_length      15
+  #define FSS_STATUS_CODE_program_name_long_s_length 15
 
   const f_string_static_t fss_status_code_program_name_s;
   const f_string_static_t fss_status_code_program_name_long_s;

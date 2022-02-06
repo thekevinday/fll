@@ -399,17 +399,17 @@ extern "C" {
       index = main->parameters.array[fss_extended_list_write_parameter_ignore_e].values.array[i * 2];
 
       range.start = 0;
-      range.stop = strnlen(arguments->argv[index], F_console_parameter_size_d) - 1;
+      range.stop = strnlen(argv[index], F_console_parameter_size_d) - 1;
 
       // allow and ignore the positive sign.
-      if (range.stop > 0 && arguments->argv[index][0] == '+') {
+      if (range.stop > 0 && argv[index][0] == '+') {
         range.start = 1;
       }
 
-      status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
+      status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_write_long_ignore_s, arguments->argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_write_long_ignore_s, argv[index]);
 
         return status;
       }
@@ -419,17 +419,17 @@ extern "C" {
       index = main->parameters.array[fss_extended_list_write_parameter_ignore_e].values.array[(i * 2) + 1];
 
       range.start = 0;
-      range.stop = strnlen(arguments->argv[index], F_console_parameter_size_d) - 1;
+      range.stop = strnlen(argv[index], F_console_parameter_size_d) - 1;
 
       // allow and ignore the positive sign.
-      if (range.stop > 0 && arguments->argv[index][0] == '+') {
+      if (range.stop > 0 && argv[index][0] == '+') {
         range.start = 1;
       }
 
-      status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
+      status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_write_long_ignore_s, arguments->argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_write_long_ignore_s, argv[index]);
 
         return status;
       }

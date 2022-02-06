@@ -21,7 +21,6 @@ extern "C" {
 #ifndef _di_f_iki_content_partial_is_
   f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote) {
     #ifndef _di_level_0_parameter_checking_
-      if (content.used > content.size) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (range.start >= content.used) return F_status_set_error(F_parameter);
       if (!quote.used) return F_status_set_error(F_parameter);
@@ -34,9 +33,6 @@ extern "C" {
 
 #ifndef _di_f_iki_object_is_
   f_status_t f_iki_object_is(const f_string_static_t object) {
-    #ifndef _di_level_0_parameter_checking_
-      if (object.used > object.size) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
     const f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
@@ -47,7 +43,6 @@ extern "C" {
 #ifndef _di_f_iki_object_partial_is_
   f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
-      if (object.used > object.size) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
       if (range.start >= object.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

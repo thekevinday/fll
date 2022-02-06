@@ -242,7 +242,7 @@ extern "C" {
  *
  * Empty console parameters are ignored.
  *
- * @param argv
+ * @param arguments
  *   The program argument array to parse.
  *   The caller must guarantee that the values.used does not exceed the argv length.
  * @param values
@@ -258,12 +258,12 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_append().
  *
- * @see f_string_append()
+ * @see f_string_dynamic_append()
  */
 #ifndef _di_fll_program_parameter_additional_append_
-  extern f_status_t fll_program_parameter_additional_append(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination);
+  extern f_status_t fll_program_parameter_additional_append(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t *destination);
 #endif // _di_fll_program_parameter_additional_append_
 
 /**
@@ -271,7 +271,7 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param argv
+ * @param arguments
  *   The program argument array to parse.
  *   The caller must guarantee that the values.used does not exceed the argv length.
  * @param values
@@ -287,12 +287,12 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- *   Errors (with error bit) from: f_string_mash().
+ *   Errors (with error bit) from: f_string_dynamic_mash().
  *
- * @see f_string_mash()
+ * @see f_string_dynamic_mash()
  */
 #ifndef _di_fll_program_parameter_additional_mash_
-  extern f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
+  extern f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_mash_
 
 /**
@@ -300,7 +300,7 @@ extern "C" {
  *
  * The console parameters are trimmed.
  *
- * @param argv
+ * @param arguments
  *   The program argument array to parse.
  *   The caller must guarantee that the values.used does not exceed the argv length.
  * @param values
@@ -320,7 +320,7 @@ extern "C" {
  * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_
-  extern f_status_t fll_program_parameter_additional_rip(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination);
+  extern f_status_t fll_program_parameter_additional_rip(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t *destination);
 #endif // _di_fll_program_parameter_additional_rip_
 
 /**
@@ -330,7 +330,7 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param argv
+ * @param arguments
  *   The program argument array to parse.
  * @param values
  *   The string locations where the console parameters are found.
@@ -352,7 +352,7 @@ extern "C" {
  * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  extern f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
+  extern f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
 /**

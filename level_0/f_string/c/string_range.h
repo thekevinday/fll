@@ -23,8 +23,6 @@ extern "C" {
  * Therefore, a range from 0 to 0 would be include position 0.
  * Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
  *
- * A special macro_f_string_range_t_initialize() is provided for the special purpose of easily initialize a static string range.
- *
  * start: the start position.
  * stop:  the stop position.
  */
@@ -37,6 +35,7 @@ extern "C" {
   #define f_string_range_t_initialize { 1, 0 }
 
   #define macro_f_string_range_t_initialize(length) { length ? 0 : 1, length ? length - 1 : 0 }
+  #define macro_f_string_range_t_initialize2(start, stop) { start, stop }
 
   #define macro_f_string_range_t_clear(range) \
     range.start = 1; \

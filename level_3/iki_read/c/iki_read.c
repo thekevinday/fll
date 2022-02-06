@@ -46,14 +46,14 @@ extern "C" {
     fl_print_format(" %[Notes:%]%r", file.stream, context.set.important, context.set.important, f_string_eol_s);
     fl_print_format("  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  This %[%r%s%] option, requires 3 additional parameters:", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_replace_s, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%].%r", file.stream, context.set.notable, context.set.notable, iki_read_substitution_with_s, context.set.notable, context.set.notable, f_string_eol_s);
+    fl_print_format("  This %[%r%r%] option, requires 3 additional parameters:", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable);
+    fl_print_format(" %[<%]%r%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, context.set.notable);
+    fl_print_format(" %[<%]%r%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_replace_s, context.set.notable, context.set.notable);
+    fl_print_format(" %[<%]%r%[>%].%r", file.stream, context.set.notable, context.set.notable, iki_read_substitution_with_s, context.set.notable, context.set.notable, f_string_eol_s);
 
-    fl_print_format("    %[%s%]: The name of the vocabulary whose content is to be substituted.%r", file.stream, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%s%]: The content matching this exact string will be substituted.%r", file.stream, context.set.notable, iki_read_substitution_replace_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%s%]: The new string to use as the substitute.%r%r", file.stream, context.set.notable, iki_read_substitution_with_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("    %[%r%]: The name of the vocabulary whose content is to be substituted.%r", file.stream, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, f_string_eol_s);
+    fl_print_format("    %[%r%]: The content matching this exact string will be substituted.%r", file.stream, context.set.notable, iki_read_substitution_replace_s, context.set.notable, f_string_eol_s);
+    fl_print_format("    %[%r%]: The new string to use as the substitute.%r%r", file.stream, context.set.notable, iki_read_substitution_with_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The vocabulary and replacement are case-sensitive and must exactly match.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
@@ -187,14 +187,14 @@ extern "C" {
       }
       else if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[iki_read_parameter_at_e].values.array[main->parameters.array[iki_read_parameter_at_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
+        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, F_console_symbol_long_enable_s iki_read_long_at_s, arguments->argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, iki_read_long_at_s, argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -233,14 +233,14 @@ extern "C" {
       }
       else if (main->parameters.array[iki_read_parameter_line_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[iki_read_parameter_line_e].values.array[main->parameters.array[iki_read_parameter_line_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &number);
+        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, F_console_symbol_long_enable_s iki_read_long_line_s, arguments->argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, iki_read_long_line_s, argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -384,7 +384,8 @@ extern "C" {
         main->mode = iki_read_mode_total_e;
       }
       else {
-        // this is the default behavior, so there is no reason to check for the -c/--content parameter.
+
+        // This is the default behavior, so there is no reason to check for the -c/--content parameter.
         main->mode = iki_read_mode_content_e;
       }
 
@@ -424,10 +425,10 @@ extern "C" {
         status = f_file_read(file, &main->buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, "-", f_file_operation_process_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, f_string_ascii_minus_s, f_file_operation_process_s, fll_error_file_type_file_e);
         }
         else {
-          status = iki_read_process_buffer(main, arguments, "-");
+          status = iki_read_process_buffer(main);
         }
 
         // Clear buffers before continuing.
@@ -435,15 +436,16 @@ extern "C" {
       }
 
       if (F_status_is_fine(status) && main->parameters.remaining.used > 0) {
-        f_array_length_t i = 0;
+        uint16_t signal_check = 0;
         f_array_length_t total = 0;
         f_file_t file = f_file_t_initialize;
 
-        for (uint16_t signal_check = 0; i < main->parameters.remaining.used; ++i) {
+        for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++signal_check) % iki_read_signal_check_d)) {
             if (iki_read_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
 
@@ -453,25 +455,28 @@ extern "C" {
           macro_f_file_t_reset(file);
           total = 0;
 
-          status = f_file_open(arguments->argv[main->parameters.remaining.array[i]], 0, &file);
+          status = f_file_open(argv[main->parameters.remaining.array[i]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+
             break;
           }
 
           status = f_file_size_by_id(file.id, &total);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
 
             f_file_stream_close(F_true, &file);
+
             break;
           }
 
           // Skip past empty files.
           if (!total) {
             f_file_stream_close(F_true, &file);
+
             continue;
           }
 
@@ -480,11 +485,12 @@ extern "C" {
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+
             break;
           }
 
-          status = iki_read_process_buffer(main, arguments, arguments->argv[main->parameters.remaining.array[i]]);
+          status = iki_read_process_buffer(main);
           if (F_status_is_error(status)) break;
 
           // Clear buffers before repeating the loop.

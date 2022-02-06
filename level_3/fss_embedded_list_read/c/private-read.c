@@ -133,12 +133,12 @@ extern "C" {
         }
 
         if (values_type[i] == fss_embedded_list_read_parameter_depth_e || values_type[i] == fss_embedded_list_read_parameter_at_e) {
-          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[values_order[i]]));
+          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(argv[values_order[i]]));
 
-          status = fl_conversion_string_to_number_unsigned(arguments->argv[values_order[i]], range, &number);
+          status = fl_conversion_string_to_number_unsigned(argv[values_order[i]], range, &number);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_depth_s, arguments->argv[values_order[i]]);
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_depth_s, argv[values_order[i]]);
 
             return status;
           }
@@ -172,7 +172,7 @@ extern "C" {
           depths->array[depths->used].value_name.used = 0;
 
           if (main->parameters.array[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
-            status = fl_string_rip(arguments->argv[values_order[i]], strnlen(arguments->argv[values_order[i]], F_console_parameter_size_d), &depths->array[depths->used].value_name);
+            status = fl_string_rip(argv[values_order[i]], strnlen(argv[values_order[i]], F_console_parameter_size_d), &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "fl_string_rip", F_true);
@@ -181,7 +181,7 @@ extern "C" {
             }
           }
           else {
-            status = f_string_append(arguments->argv[values_order[i]], strnlen(arguments->argv[values_order[i]], F_console_parameter_size_d), &depths->array[depths->used].value_name);
+            status = f_string_append(argv[values_order[i]], strnlen(argv[values_order[i]], F_console_parameter_size_d), &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
@@ -288,7 +288,7 @@ extern "C" {
     // Requested depths cannot be greater than contents depth.
     if (depths.used > main->nest.used) {
       if (main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
-        fll_print_format("0%r", main->output.to.stream, f_string_eol_s);
+        fll_print_format("%r%r", main->output.to.stream, f_string_ascii_0_s, f_string_eol_s);
 
         return F_none;
       }
@@ -301,18 +301,18 @@ extern "C" {
 
       if (main->parameters.array[fss_embedded_list_read_parameter_select_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[main->parameters.array[fss_embedded_list_read_parameter_select_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index]);
 
-        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &select);
+        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &select);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_select_s, arguments->argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_select_s, argv[index]);
 
           return status;
         }
 
         // This standard does not support multiple content groups.
-        if (select > 0) {
+        if (select) {
           return F_none;
         }
       }
@@ -322,12 +322,12 @@ extern "C" {
 
     if (main->parameters.array[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[main->parameters.array[fss_embedded_list_read_parameter_line_e].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[index]));
+      const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
-      status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &line);
+      status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &line);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_line_s, arguments->argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_line_s, argv[index]);
 
         return status;
       }

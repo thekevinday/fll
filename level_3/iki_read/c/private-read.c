@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_read_process_at_
-  f_status_t iki_read_process_at(iki_read_main_t * const main, const f_string_t file_name, f_string_range_t *range) {
+  f_status_t iki_read_process_at(iki_read_main_t * const main, f_string_range_t *range) {
 
     if (main->parameters.array[iki_read_parameter_line_e].result != f_console_result_additional_e) {
       return F_false;
@@ -36,7 +36,7 @@ extern "C" {
 #endif // _di_iki_read_process_at_
 
 #ifndef _di_iki_read_process_buffer_
-  f_status_t iki_read_process_buffer(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name) {
+  f_status_t iki_read_process_buffer(iki_read_main_t * const main) {
 
     f_status_t status = F_none;
     iki_data_t iki_data = iki_data_t_initialize;
@@ -44,7 +44,7 @@ extern "C" {
     if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
       f_string_range_t buffer_range = macro_f_string_range_t_initialize(main->buffer.used);
 
-      status = iki_read_process_at(main, file_name, &buffer_range);
+      status = iki_read_process_at(main, &buffer_range);
 
       if (status == F_true) {
         if (buffer_range.start > main->buffer.used) {
@@ -56,22 +56,22 @@ extern "C" {
       }
 
       if (main->mode == iki_read_mode_content_e) {
-        status = iki_read_process_buffer_ranges_whole(main, arguments, file_name, buffer_range, &iki_data, &iki_data.content);
+        status = iki_read_process_buffer_ranges_whole(main, buffer_range, &iki_data, &iki_data.content);
       }
       else if (main->mode == iki_read_mode_literal_e) {
-        status = iki_read_process_buffer_ranges_whole(main, arguments, file_name, buffer_range, &iki_data, &iki_data.variable);
+        status = iki_read_process_buffer_ranges_whole(main, buffer_range, &iki_data, &iki_data.variable);
       }
       else if (main->mode == iki_read_mode_object_e) {
-        status = iki_read_process_buffer_ranges_whole(main, arguments, file_name, buffer_range, &iki_data, &iki_data.vocabulary);
+        status = iki_read_process_buffer_ranges_whole(main, buffer_range, &iki_data, &iki_data.vocabulary);
       }
     }
     else if (main->mode == iki_read_mode_total_e) {
-      status = iki_read_process_buffer_total(main, arguments, file_name, &iki_data);
+      status = iki_read_process_buffer_total(main, &iki_data);
     }
     else {
       f_string_range_t buffer_range = macro_f_string_range_t_initialize(main->buffer.used);
 
-      status = iki_read_process_at(main, file_name, &buffer_range);
+      status = iki_read_process_at(main, &buffer_range);
 
       if (status == F_true && buffer_range.start > main->buffer.used || status == F_data_not) {
         macro_iki_data_t_delete_simple(iki_data);
@@ -80,13 +80,13 @@ extern "C" {
       }
 
       if (main->mode == iki_read_mode_content_e) {
-        status = iki_read_process_buffer_ranges(main, arguments, file_name, &buffer_range, &iki_data, &iki_data.content);
+        status = iki_read_process_buffer_ranges(main, &buffer_range, &iki_data, &iki_data.content);
       }
       else if (main->mode == iki_read_mode_literal_e) {
-        status = iki_read_process_buffer_ranges(main, arguments, file_name, &buffer_range, &iki_data, &iki_data.variable);
+        status = iki_read_process_buffer_ranges(main, &buffer_range, &iki_data, &iki_data.variable);
       }
       else if (main->mode == iki_read_mode_object_e) {
-        status = iki_read_process_buffer_ranges(main, arguments, file_name, &buffer_range, &iki_data, &iki_data.vocabulary);
+        status = iki_read_process_buffer_ranges(main, &buffer_range, &iki_data, &iki_data.vocabulary);
       }
     }
 
@@ -97,7 +97,7 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_
 
 #ifndef _di_iki_read_process_buffer_ranges_
-  f_status_t iki_read_process_buffer_ranges(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, f_string_range_t *buffer_range, iki_data_t *iki_data, f_string_ranges_t *ranges) {
+  f_status_t iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range, iki_data_t *iki_data, f_string_ranges_t *ranges) {
 
     f_status_t status = F_none;
 
@@ -126,7 +126,7 @@ extern "C" {
     memset(substitutionss, 0, sizeof(iki_read_substitutions_t) * iki_data->variable.used);
 
     if (main->mode == iki_read_mode_literal_e || main->mode == iki_read_mode_content_e) {
-      status = iki_read_substitutions_identify(main, arguments, file_name, &iki_data->vocabulary, substitutionss);
+      status = iki_read_substitutions_identify(main, &iki_data->vocabulary, substitutionss);
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
@@ -153,10 +153,10 @@ extern "C" {
         index = main->parameters.array[iki_read_parameter_name_e].values.array[i];
         name.used = 0;
 
-        status = f_string_append_nulless(arguments->argv[index], strlen(arguments->argv[index]), &name);
+        status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &name);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
           for (f_array_length_t i = 0; i < iki_data->variable.used; ++i) {
             macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
@@ -197,8 +197,12 @@ extern "C" {
 
       f_string_dynamic_resize(0, &name);
 
-      if (unmatched) status = F_data_not;
-      else status = F_none;
+      if (unmatched) {
+        status = F_data_not;
+      }
+      else {
+        status = F_none;
+      }
     }
     else if (ranges->used) {
       if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_additional_e) {
@@ -255,7 +259,7 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_ranges_
 
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  f_status_t iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, const f_string_range_t buffer_range, iki_data_t *iki_data, f_string_ranges_t *ranges) {
+  f_status_t iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range, iki_data_t *iki_data, f_string_ranges_t *ranges) {
 
     f_status_t status = F_none;
     f_string_range_t range = buffer_range;
@@ -289,7 +293,7 @@ extern "C" {
     memset(substitutionss, 0, sizeof(iki_read_substitutions_t) * iki_data->variable.used);
 
     if (main->mode == iki_read_mode_literal_e || main->mode == iki_read_mode_content_e) {
-      status = iki_read_substitutions_identify(main, arguments, file_name, &iki_data->vocabulary, substitutionss);
+      status = iki_read_substitutions_identify(main, &iki_data->vocabulary, substitutionss);
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
@@ -313,18 +317,14 @@ extern "C" {
     if (main->parameters.array[iki_read_parameter_name_e].result == f_console_result_additional_e) {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
-      f_array_length_t length_argument = 0;
 
       for (f_array_length_t index = 0; i < main->parameters.array[iki_read_parameter_name_e].values.used; ++i) {
 
         index = main->parameters.array[iki_read_parameter_name_e].values.array[i];
-        length_argument = strnlen(arguments->argv[index], F_console_parameter_size_d);
 
         for (j = 0, name_missed = F_true; j < names.used; ++j) {
 
-          status = fl_string_compare(arguments->argv[index], names.array[j].string, length_argument, names.array[j].used);
-
-          if (status == F_equal_to) {
+          if (fl_string_dynamic_compare(main->parameters.arguments.array[index], names.array[j]) == F_equal_to) {
             name_missed = F_false;
 
             break;
@@ -340,10 +340,10 @@ extern "C" {
             break;
           }
 
-          status = f_string_append_nulless(arguments->argv[index], length_argument, &names.array[names.used]);
+          status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &names.array[names.used]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
             break;
           }
@@ -451,22 +451,22 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 #ifndef _di_iki_read_process_buffer_total_
-  f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, iki_data_t *iki_data) {
+  f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, iki_data_t *iki_data) {
 
     f_status_t status = F_none;
     f_string_range_t range = macro_f_string_range_t_initialize(main->buffer.used);
 
-    status = iki_read_process_at(main, file_name, &range);
+    status = iki_read_process_at(main, &range);
 
     if (status == F_true) {
       if (range.start > main->buffer.used) {
-        fll_print_format("0%r", main->output.to.stream, f_string_eol_s);
+        fll_print_format("%r%r", main->output.to.stream, f_string_ascii_0_s, f_string_eol_s);
 
         return F_none;
       }
     }
     else if (status == F_data_not) {
-      fll_print_format("0%r", main->output.to.stream, f_string_eol_s);
+      fll_print_format("%r%r", main->output.to.stream, f_string_ascii_0_s, f_string_eol_s);
 
       return F_none;
     }
@@ -513,12 +513,13 @@ extern "C" {
         index = main->parameters.array[iki_read_parameter_name_e].values.array[i];
         name.used = 0;
 
-        status = f_string_append_nulless(arguments->argv[index], strlen(arguments->argv[index]), &name);
+        status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &name);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
           f_string_dynamic_resize(0, &name);
+
           return status;
         }
 
@@ -555,7 +556,7 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_total_
 
 #ifndef _di_iki_read_substitutions_identify_
-  f_status_t iki_read_substitutions_identify(iki_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) {
+  f_status_t iki_read_substitutions_identify(iki_read_main_t * const main, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) {
 
     if (main->parameters.array[iki_read_parameter_substitute_e].result != f_console_result_additional_e) {
       return F_none;
@@ -569,33 +570,24 @@ extern "C" {
     f_array_length_t index = 0;
     f_array_length_t index_2 = 0;
 
-    f_array_length_t length = 0;
-
     f_console_parameter_t *parameter = &main->parameters.array[iki_read_parameter_substitute_e];
 
     for (; i < parameter->values.used; i += 3) {
 
       index = parameter->values.array[i];
-      length = strnlen(arguments->argv[index], F_console_parameter_size_d);
 
       for (j = 0; j < vocabulary->used; ++j) {
 
-        status = fl_string_compare(arguments->argv[index], main->buffer.string + vocabulary->array[j].start, length, (vocabulary->array[j].stop - vocabulary->array[j].start) + 1);
-
-        if (status == F_equal_to) {
+        if (fl_string_dynamic_partial_compare_string(main->parameters.arguments.array[index].string, main->buffer, main->parameters.arguments.array[index].used, vocabulary->array[j]) == F_equal_to) {
           macro_f_memory_structure_increment(status, substitutionss[j], 1, F_iki_default_allocation_step_d, macro_iki_read_substitutions_t_resize, F_array_too_large);
           if (F_status_is_error(status)) return status;
 
           index = parameter->values.array[i + 1];
           index_2 = substitutionss[j].used;
-          substitutionss[j].array[index_2].replace.string = arguments->argv[index];
-          substitutionss[j].array[index_2].replace.used = strnlen(arguments->argv[index], F_console_parameter_size_d);
-          substitutionss[j].array[index_2].replace.size = substitutionss[j].array[index_2].replace.used;
+          substitutionss[j].array[index_2].replace = main->parameters.arguments.array[index];
 
           index = parameter->values.array[i + 2];
-          substitutionss[j].array[index_2].with.string = arguments->argv[index];
-          substitutionss[j].array[index_2].with.used = strnlen(arguments->argv[index], F_console_parameter_size_d);
-          substitutionss[j].array[index_2].with.size = substitutionss[j].array[index_2].with.used;
+          substitutionss[j].array[index_2].with = main->parameters.arguments.array[index];
 
           ++substitutionss[j].used;
         }

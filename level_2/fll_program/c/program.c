@@ -127,35 +127,32 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_empty_
 
 #ifndef _di_fll_program_parameter_additional_append_
-  f_status_t fll_program_parameter_additional_append(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination) {
+  f_status_t fll_program_parameter_additional_append(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!argv) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
 
-    f_array_length_t length = 0;
     const f_array_length_t start = destination->used;
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
 
-      length = strnlen(argv[values.array[i]], F_console_parameter_size_d);
+      if (arguments[values.array[i]].used) {
+        status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination);
+        if (F_status_is_error(status)) break;
 
-      if (length > 0) {
-        f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
+        destination->array[destination->used].used = 0;
 
-        status = f_string_append(argv[values.array[i]], length, &ripped);
-        if (F_status_is_error(status)) return status;
+        status = f_string_dynamic_append(arguments[values.array[i]], &destination->array[destination->used]);
+        if (F_status_is_error(status)) break;
 
         if (status == F_data_not) {
           status = F_none;
         }
         else {
-          macro_f_memory_structure_increment(status, (*destination), 1, F_memory_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
-          if (F_status_is_error(status)) break;
-
-          destination->array[destination->used++] = ripped;
+          ++destination->used;
         }
       }
     } // for
@@ -169,24 +166,21 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_append_
 
 #ifndef _di_fll_program_parameter_additional_mash_
-  f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
+  f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!argv) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
 
-    f_array_length_t length = 0;
     const f_array_length_t start = destination->used;
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
 
-      length = strnlen(argv[values.array[i]], F_console_parameter_size_d);
-
-      if (length > 0) {
-        status = f_string_mash(glue.string, glue.used, argv[values.array[i]], length, destination);
-        if (F_status_is_error(status)) return F_status_set_error(F_string_too_large);
+      if (arguments[values.array[i]].used) {
+        status = f_string_dynamic_mash(glue, arguments[values.array[i]], destination);
+        if (F_status_is_error(status)) break;
       }
     } // for
 
@@ -199,34 +193,31 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_mash_
 
 #ifndef _di_fll_program_parameter_additional_rip_
-  f_status_t fll_program_parameter_additional_rip(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination) {
+  f_status_t fll_program_parameter_additional_rip(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!argv) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
-    f_array_length_t length = 0;
     const f_array_length_t start = destination->used;
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
 
-      length = strnlen(argv[values.array[i]], F_console_parameter_size_d);
+      if (arguments[values.array[i]].used) {
+        status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination);
+        if (F_status_is_error(status)) break;
 
-      if (length) {
-        f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
+        destination->array[destination->used].used = 0;
 
-        status = fl_string_rip(argv[values.array[i]], length, &ripped);
-        if (F_status_is_error(status)) return status;
+        status = fl_string_rip(arguments[values.array[i]].string, arguments[values.array[i]].used, &destination->array[destination->used]);
+        if (F_status_is_error(status)) break;
 
         if (status == F_data_not) {
           status = F_none;
         }
         else {
-          macro_f_string_dynamics_t_increase(status, F_memory_default_allocation_small_d, (*destination));
-          if (F_status_is_error(status)) return status;
-
-          destination->array[destination->used++] = ripped;
+          ++destination->used;
         }
       }
     } // for
@@ -240,46 +231,33 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_rip_
 
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
+  f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
-      if (!argv) return F_status_set_error(F_parameter);
+      if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
 
-    f_array_length_t length = 0;
     const f_array_length_t start = destination->used;
     f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
 
-      length = strnlen(argv[values.array[i]], F_console_parameter_size_d);
+      if (arguments[values.array[i]].used) {
+        ripped.used = 0;
 
-      if (length > 0) {
-        status = fl_string_rip(argv[values.array[i]], length, &ripped);
+        status = fl_string_rip(arguments[values.array[i]].string, arguments[values.array[i]].used, &ripped);
+        if (F_status_is_error(status)) break;
 
-        if (F_status_is_error(status)) {
-          f_string_dynamic_resize(0, &ripped);
-
-          return status;
-        }
-
-        if (ripped.used > 0) {
+        if (ripped.used) {
           status = f_string_dynamic_mash(glue, ripped, destination);
-
-          if (F_status_is_error(status)) {
-            status = f_string_dynamic_resize(0, &ripped);
-
-            return F_status_set_error(F_string_too_large);
-          }
+          if (F_status_is_error(status)) break;
         }
       }
     } // for
 
-    if (ripped.size) {
-      f_string_dynamic_resize(0, &ripped);
-    }
+    f_string_dynamic_resize(0, &ripped);
 
     if (status == F_none && start == destination->used) {
       return F_data_not;

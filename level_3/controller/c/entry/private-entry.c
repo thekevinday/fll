@@ -417,7 +417,7 @@ extern "C" {
 
               if (F_status_is_error(status)) {
                 // @todo instead call: fll_error_file_print().
-                // fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, arguments->argv[location], f_file_operation_verify_s, fll_error_file_type_path_e);
+                // fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
                 controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, global.thread);
 
                 action->status = status;

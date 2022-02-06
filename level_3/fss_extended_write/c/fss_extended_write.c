@@ -175,14 +175,14 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_array_length_t location = main->parameters.array[fss_extended_write_parameter_file_e].values.array[0];
+          const f_array_length_t index = main->parameters.array[fss_extended_write_parameter_file_e].values.array[0];
 
           output.id = -1;
           output.stream = 0;
-          status = f_file_stream_open(arguments->argv[location], 0, &output);
+          status = f_file_stream_open(argv[index], f_string_empty_s, &output);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[index], f_file_operation_open_s, fll_error_file_type_file_e);
           }
         }
       }
@@ -334,16 +334,14 @@ extern "C" {
       }
       else if (main->parameters.array[fss_extended_write_parameter_prepend_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_extended_write_parameter_prepend_e].values.array[main->parameters.array[fss_extended_write_parameter_prepend_e].values.used - 1];
-        const f_array_length_t length = strnlen(arguments->argv[index], F_console_parameter_size_d);
 
         // Even though this standard does not utilize this parameter, provide the validation for consistency.
-        if (length) {
-          f_string_range_t range = macro_f_string_range_t_initialize(length);
-          const f_string_static_t prepend = macro_f_string_static_t_initialize2(arguments->argv[index], length);
+        if (argv[index].used) {
+          f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
           for (; range.start < length; ++range.start) {
 
-            status = f_fss_is_space(prepend, range);
+            status = f_fss_is_space(argv[index], range);
             if (F_status_is_error(status)) break;
 
             if (status == F_false) {
@@ -466,7 +464,7 @@ extern "C" {
                 signal_check = 0;
               }
 
-              object.string = arguments->argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]];
+              object.string = argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]];
               object.used = strnlen(object.string, F_console_parameter_size_d);
               object.size = object.used;
 
@@ -491,7 +489,7 @@ extern "C" {
 
               for (; i < main->parameters.array[fss_extended_write_parameter_content_e].values.used; ++i) {
 
-                contents.array[contents.used].string = arguments->argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[i]];
+                contents.array[contents.used].string = argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[i]];
                 contents.array[contents.used].used = strnlen(contents.array[contents.used].string, F_console_parameter_size_d);
                 contents.array[contents.used].size = contents.array[contents.used].used;
                 ++contents.used;
@@ -535,7 +533,7 @@ extern "C" {
               object_next = main->parameters.array[fss_extended_write_parameter_object_e].locations.array[i + 1];
             }
 
-            object.string = arguments->argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]];
+            object.string = argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]];
             object.used = strnlen(object.string, F_console_parameter_size_d);
             object.size = object.used;
 
@@ -561,7 +559,7 @@ extern "C" {
                 contents.array[contents.used].used = 0;
               }
 
-              status = f_string_append(arguments->argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[j]], strnlen(arguments->argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[j]], F_console_parameter_size_d), &contents.array[contents.used]);
+              status = f_string_append(argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[j]], strnlen(argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[j]], F_console_parameter_size_d), &contents.array[contents.used]);
 
               if (F_status_is_error(status)) {
                 fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);

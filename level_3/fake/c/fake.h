@@ -36,7 +36,7 @@
  * The "libraries/" and "programs/" directories contains the sub-directories "script/", "shared/", and "static/".
  * The "libraries/" directory will contain compiled libraries or library-like scripts in their respective sub-directories.
  * The "objects/" directory will contain any compile object files.
- * The "progams/" directory will contain compiled programs or program-like scripts in their respective sub-directories.
+ * The "programs/" directory will contain compiled programs or program-like scripts in their respective sub-directories.
  * The "settings/" directory contains all configuration data, such as files commonly found under /etc in a standard GNU Linux system.
  * The "stage/" directory will contain build-time data.
  */

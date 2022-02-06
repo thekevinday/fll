@@ -38,9 +38,9 @@ extern "C" {
     #define STATUS_CODE_program_version_nano_s_length 0
   #endif // !(defined(STATUS_CODE_program_version_nano_s) && defined(STATUS_CODE_program_version_nano_s_length))
 
-  #define STATUS_CODE_progam_version_s STATUS_CODE_program_version_major_s F_string_ascii_period_s STATUS_CODE_program_version_minor_s F_string_ascii_period_s STATUS_CODE_program_version_micro_s STATUS_CODE_progam_version_nano_prefix_s STATUS_CODE_progam_version_nano_s
+  #define STATUS_CODE_program_version_s STATUS_CODE_program_version_major_s F_string_ascii_period_s STATUS_CODE_program_version_minor_s F_string_ascii_period_s STATUS_CODE_program_version_micro_s STATUS_CODE_program_version_nano_prefix_s STATUS_CODE_program_version_nano_s
 
-  #define STATUS_CODE_progam_version_s_length STATUS_CODE_program_version_major_s_length + F_string_ascii_period_s_length + STATUS_CODE_program_version_minor_s_length + F_string_ascii_period_s_length + STATUS_CODE_program_version_micro_s_length + STATUS_CODE_progam_version_nano_prefix_s_length + STATUS_CODE_progam_version_nano_s_length
+  #define STATUS_CODE_program_version_s_length STATUS_CODE_program_version_major_s_length + F_string_ascii_period_s_length + STATUS_CODE_program_version_minor_s_length + F_string_ascii_period_s_length + STATUS_CODE_program_version_micro_s_length + STATUS_CODE_program_version_nano_prefix_s_length + STATUS_CODE_program_version_nano_s_length
 
   extern const f_string_static_t status_code_program_version_s;
 #endif // _di_status_code_program_version_
@@ -49,11 +49,11 @@ extern "C" {
  * The program name.
  */
 #ifndef _di_status_code_program_name_
-  #define STATUS_CODE_progam_name_s      "status_code"
-  #define STATUS_CODE_progam_name_long_s "FSS Status Code"
+  #define STATUS_CODE_program_name_s      "status_code"
+  #define STATUS_CODE_program_name_long_s "Status Code"
 
   #define STATUS_CODE_program_name_s_length      11
-  #define STATUS_CODE_program_name_long_s_length 15
+  #define STATUS_CODE_program_name_long_s_length 11
 
   extern const f_string_static_t status_code_program_name_s;
   extern const f_string_static_t status_code_program_name_long_s;

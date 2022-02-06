@@ -179,14 +179,14 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_array_length_t location = main->parameters.array[fss_embedded_list_write_parameter_file_e].values.array[0];
+          const f_array_length_t index = main->parameters.array[fss_embedded_list_write_parameter_file_e].values.array[0];
 
           output.id = -1;
           output.stream = 0;
-          status = f_file_stream_open(arguments->argv[location], 0, &output);
+          status = f_file_stream_open(argv[index], f_string_empty_s, &output);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[location], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[index], f_file_operation_open_s, fll_error_file_type_file_e);
           }
         }
       }
@@ -325,12 +325,11 @@ extern "C" {
       }
       else if (main->parameters.array[fss_embedded_list_write_parameter_prepend_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_embedded_list_write_parameter_prepend_e].values.array[main->parameters.array[fss_embedded_list_write_parameter_prepend_e].values.used - 1];
-        const f_array_length_t length = strnlen(arguments->argv[index], F_console_parameter_size_d);
 
-        if (length) {
-          f_string_range_t range = macro_f_string_range_t_initialize(length);
+        if (argv[index].used) {
+          f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
-          for (; range.start < length; ++range.start) {
+          for (; range.start < argv[index].used; ++range.start) {
 
             status = f_fss_is_space(main->parameter->arguments.array[index], range);
             if (F_status_is_error(status)) break;
@@ -416,11 +415,8 @@ extern "C" {
     }
 
     f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
-    f_string_dynamic_t object = f_string_dynamic_t_initialize;
-    f_string_dynamic_t content = f_string_dynamic_t_initialize;
 
     if (F_status_is_error_not(status)) {
-      f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
       f_string_ranges_t ignore = f_string_ranges_t_initialize;
 
       if (main->process_pipe) {
@@ -452,11 +448,7 @@ extern "C" {
                 break;
               }
 
-              object.string = arguments->argv[main->parameters.array[fss_embedded_list_write_parameter_object_e].values.array[i]];
-              object.used = strnlen(object.string, F_console_parameter_size_d);
-              object.size = object.used;
-
-              status = fss_embedded_list_write_process(main, output, quote, &object, 0, 0, &buffer);
+              status = fss_embedded_list_write_process(main, output, quote, &argv[main->parameters.array[fss_embedded_list_write_parameter_object_e].values.array[i]], 0, 0, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
@@ -472,11 +464,7 @@ extern "C" {
               status = fss_embedded_list_write_process_parameter_ignore(main, arguments, main->parameters.array[fss_embedded_list_write_parameter_content_e].locations, i, &ignore);
               if (F_status_is_error(status)) break;
 
-              content.string = arguments->argv[main->parameters.array[fss_embedded_list_write_parameter_content_e].values.array[i]];
-              content.used = strnlen(content.string, F_console_parameter_size_d);
-              content.size = content.used;
-
-              status = fss_embedded_list_write_process(main, output, quote, 0, &content, &ignore, &buffer);
+              status = fss_embedded_list_write_process(main, output, quote, 0, &argv[main->parameters.array[fss_embedded_list_write_parameter_content_e].values.array[i]], &ignore, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
@@ -493,15 +481,7 @@ extern "C" {
             status = fss_embedded_list_write_process_parameter_ignore(main, arguments, main->parameters.array[fss_embedded_list_write_parameter_content_e].locations, i, &ignore);
             if (F_status_is_error(status)) break;
 
-            object.string = arguments->argv[main->parameters.array[fss_embedded_list_write_parameter_object_e].values.array[i]];
-            object.used = strnlen(object.string, F_console_parameter_size_d);
-            object.size = object.used;
-
-            content.string = arguments->argv[main->parameters.array[fss_embedded_list_write_parameter_content_e].values.array[i]];
-            content.used = strnlen(content.string, F_console_parameter_size_d);
-            content.size = content.used;
-
-            status = fss_embedded_list_write_process(main, output, quote, &object, &content, &ignore, &buffer);
+            status = fss_embedded_list_write_process(main, output, quote, &argv[main->parameters.array[fss_embedded_list_write_parameter_object_e].values.array[i]], &argv[main->parameters.array[fss_embedded_list_write_parameter_content_e].values.array[i]], &ignore, &buffer);
             if (F_status_is_error(status)) break;
           } // for
         }
@@ -523,17 +503,7 @@ extern "C" {
         }
       }
 
-      f_string_dynamic_resize(0, &escaped);
       macro_f_string_ranges_t_delete_simple(ignore);
-
-      // Object and content, though being a "dynamic" type, is being used statically, so clear them up to avoid invalid free().
-      object.string = 0;
-      object.used = 0;
-      object.size = 0;
-
-      content.string = 0;
-      content.used = 0;
-      content.size = 0;
     }
 
     if (main->parameters.array[fss_embedded_list_write_parameter_file_e].result == f_console_result_additional_e) {
@@ -550,8 +520,6 @@ extern "C" {
     }
 
     f_string_dynamic_resize(0, &buffer);
-    f_string_dynamic_resize(0, &object);
-    f_string_dynamic_resize(0, &content);
     fss_embedded_list_write_main_delete(main);
 
     return status;

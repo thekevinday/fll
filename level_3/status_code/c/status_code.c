@@ -11,7 +11,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    fll_program_print_help_header(file, context, status_code_progam_name_long_s, status_code_progam_version_s);
+    fll_program_print_help_header(file, context, status_code_program_name_long_s, status_code_program_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -30,7 +30,7 @@ extern "C" {
     fll_program_print_help_option(file, context, status_code_short_is_error_s, status_code_long_is_error_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print F_true if the error code is an error, F_false otherwise.");
     fll_program_print_help_option(file, context, status_code_short_number_s, status_code_long_number_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Convert status code name to number.");
 
-    fll_program_print_help_usage(file, context, status_code_progam_name_s, status_code_program_help_parameters_s);
+    fll_program_print_help_usage(file, context, status_code_program_name_s, status_code_program_help_parameters_s);
 
     funlockfile(file.stream);
 
@@ -90,6 +90,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         status_code_main_delete(main);
+
         return status;
       }
 
@@ -128,7 +129,7 @@ extern "C" {
     }
 
     if (main->parameters.array[status_code_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, status_code_progam_version_s);
+      fll_program_print_version(main->output.to, status_code_program_version_s);
 
       status_code_main_delete(main);
 
@@ -151,7 +152,8 @@ extern "C" {
 
         return F_status_set_error(status);
       }
-      else if (main->parameters.array[status_code_parameter_is_fine_e].result == f_console_result_found_e) {
+
+      if (main->parameters.array[status_code_parameter_is_fine_e].result == f_console_result_found_e) {
         flockfile(main->error.to.stream);
 
         fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -208,13 +210,14 @@ extern "C" {
           if (!((++signal_check) % status_code_signal_check_d)) {
             if (status_code_signal_received(main)) {
               status = F_status_set_error(F_signal);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          status2 = status_code_process_check(main, arguments->argv[main->parameters.remaining.array[i]]);
+          status2 = status_code_process_check(main, argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -239,13 +242,14 @@ extern "C" {
           if (!((++signal_check) % status_code_signal_check_d)) {
             if (status_code_signal_received(main)) {
               status = F_status_set_error(F_signal);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          status2 = status_code_process_number(main, arguments->argv[main->parameters.remaining.array[i]]);
+          status2 = status_code_process_number(main, argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -270,13 +274,14 @@ extern "C" {
           if (!((++signal_check) % status_code_signal_check_d)) {
             if (status_code_signal_received(main)) {
               status = F_status_set_error(F_signal);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          status2 = status_code_process_normal(main, arguments->argv[main->parameters.remaining.array[i]]);
+          status2 = status_code_process_normal(main, argv[main->parameters.remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;

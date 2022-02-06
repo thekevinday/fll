@@ -80,12 +80,12 @@ extern "C" {
       else {
         position_depth = main->parameters.array[fss_basic_read_parameter_depth_e].values.array[i];
 
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[position_depth]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(argv[position_depth]));
 
-        status = fl_conversion_string_to_number_unsigned(arguments->argv[position_depth], range, &data->depths.array[i].depth);
+        status = fl_conversion_string_to_number_unsigned(argv[position_depth], range, &data->depths.array[i].depth);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_depth_s, arguments->argv[position_depth]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_depth_s, argv[position_depth]);
 
           return status;
         }
@@ -104,12 +104,12 @@ extern "C" {
 
           data->depths.array[i].index_at = main->parameters.array[fss_basic_read_parameter_at_e].values.array[position_at];
 
-          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[data->depths.array[i].index_at]));
+          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(argv[data->depths.array[i].index_at]));
 
-          status = fl_conversion_string_to_number_unsigned(arguments->argv[data->depths.array[i].index_at], range, &data->depths.array[i].value_at);
+          status = fl_conversion_string_to_number_unsigned(argv[data->depths.array[i].index_at], range, &data->depths.array[i].value_at);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_at_s, arguments->argv[data->depths.array[i].index_at]);
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_at_s, argv[data->depths.array[i].index_at]);
 
             return status;
           }
@@ -130,14 +130,14 @@ extern "C" {
           data->depths.array[i].index_name = main->parameters.array[fss_basic_read_parameter_name_e].values.array[position_name];
 
           if (main->parameters.array[fss_basic_read_parameter_trim_e].result == f_console_result_found_e) {
-            status = fl_string_rip(arguments->argv[data->depths.array[i].index_name], strlen(arguments->argv[data->depths.array[i].index_name]), &data->depths.array[i].value_name);
+            status = fl_string_dynamic_rip(argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
           else {
-            status = f_string_append(arguments->argv[data->depths.array[i].index_name], strlen(arguments->argv[data->depths.array[i].index_name]), &data->depths.array[i].value_name);
+            status = f_string_dynamic_append(argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), main->parameters.array[fss_basic_read_parameter_trim_e].result == f_console_result_found_e ? "fl_string_rip" : "f_string_append", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), main->parameters.array[fss_basic_read_parameter_trim_e].result == f_console_result_found_e ? "fl_string_dynamic_rip" : "f_string_dynamic_append", F_true);
 
             return status;
           }
@@ -250,12 +250,12 @@ extern "C" {
 
     if (main->parameters.array[parameter].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], F_console_parameter_size_d));
+      const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(argv[index], F_console_parameter_size_d));
 
-      const f_status_t status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, number);
+      const f_status_t status = fl_conversion_string_to_number_unsigned(argv[index].string, range, number);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, name, arguments->argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, name, argv[index]);
 
         return status;
       }

@@ -51,8 +51,6 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "fll_iki_content_escape", F_true);
 
-      f_string_dynamic_resize(0, &escaped);
-
       return F_status_set_error(F_failure);
     }
 
