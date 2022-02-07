@@ -53,10 +53,10 @@ extern "C" {
     fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s);
     fl_print_format("  The end of the pipe represents the end of any Object or Content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The FSS-000E (Payload) specification does not support quoted names, therefore the parameters '%[%r%s%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_payload_write_long_single_s, context.set.notable);
-    fl_print_format(" and '%[%r%s%]' do nothing.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_payload_write_long_double_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The FSS-000E (Payload) specification does not support quoted names, therefore the parameters '%[%r%r%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_payload_write_long_single_s, context.set.notable);
+    fl_print_format(" and '%[%r%r%]' do nothing.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_payload_write_long_double_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  This program does not use the parameter '%[%r%s%]', which therefore does nothing.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_payload_write_long_ignore_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_payload_write_long_ignore_s, context.set.notable, f_string_eol_s);
     fl_print_format("  This parameter requires two values.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);

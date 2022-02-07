@@ -44,10 +44,10 @@ extern "C" {
     fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s);
     fl_print_format("  The end of the pipe represents the end of any Object or Content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The FSS-0001 (Extended) specification does not support multi-line Content, therefore the parameter '%[%r%s%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_write_long_prepend_s, context.set.notable);
+    fl_print_format("  The FSS-0001 (Extended) specification does not support multi-line Content, therefore the parameter '%[%r%r%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_write_long_prepend_s, context.set.notable);
     fl_print_format(" does nothing.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  This program does not use the parameter '%[%r%s%]', which therefore does nothing.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_write_long_ignore_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_write_long_ignore_s, context.set.notable, f_string_eol_s);
     fl_print_format("  This parameter requires two values.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);

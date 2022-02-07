@@ -229,7 +229,7 @@ extern "C" {
 #endif // _di_fss_extended_read_depth_process_
 
 #ifndef _di_fss_extended_read_file_identify_
-  f_string_t fss_extended_read_file_identify(const f_array_length_t at, const fss_extended_read_files_t files) {
+  f_string_static_t fss_extended_read_file_identify(const f_array_length_t at, const fss_extended_read_files_t files) {
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
@@ -243,7 +243,7 @@ extern "C" {
       return files.array[files.used - 1].name;
     }
 
-    return "";
+    return f_string_empty_s;
   }
 #endif // _di_fss_extended_read_file_identify_
 

@@ -1511,7 +1511,7 @@ extern "C" {
     f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    for (;;) {
+    do {
 
       status = f_string_dynamic_increase_by(file.size_read, buffer);
       if (F_status_is_error(status)) return status;
@@ -1532,8 +1532,7 @@ extern "C" {
 
       buffer->used += size_read;
 
-      if (size_read < file.size_read) break;
-    } // for
+    } while (size_read == file.size_read);
 
     return F_none_eof;
   }

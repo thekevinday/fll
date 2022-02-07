@@ -38,11 +38,11 @@ extern "C" {
     #define FSS_BASIC_LIST_READ_program_version_nano_s_length 0
   #endif // !(defined(FSS_BASIC_LIST_READ_program_version_nano_s) && defined(FSS_BASIC_LIST_READ_program_version_nano_s_length))
 
-  #define FSS_BASIC_LIST_READ_program_version_s FSS_BASIC_LIST_READ_program_version_major_s F_string_ascii_period_s FSS_BASIC_LIST_READ_program_version_minor_s F_string_ascii_period_s FSS_BASIC_LIST_READ_program_version_micro_s fss_basic_list_program_version_nano_prefix_s FSS_BASIC_LIST_READ_program_version_nano_s
+  #define FSS_BASIC_LIST_READ_program_version_s FSS_BASIC_LIST_READ_program_version_major_s F_string_ascii_period_s FSS_BASIC_LIST_READ_program_version_minor_s F_string_ascii_period_s FSS_BASIC_LIST_READ_program_version_micro_s FSS_BASIC_LIST_READ_program_version_nano_prefix_s FSS_BASIC_LIST_READ_program_version_nano_s
 
-  #define FSS_BASIC_LIST_READ_program_version_s_length FSS_BASIC_LIST_READ_program_version_major_s_length + F_string_ascii_period_s_length + FSS_BASIC_LIST_READ_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_BASIC_LIST_READ_program_version_micro_s_length + fss_basic_list_program_version_nano_prefix_s_length + FSS_BASIC_LIST_READ_program_version_nano_s_length
+  #define FSS_BASIC_LIST_READ_program_version_s_length FSS_BASIC_LIST_READ_program_version_major_s_length + F_string_ascii_period_s_length + FSS_BASIC_LIST_READ_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_BASIC_LIST_READ_program_version_micro_s_length + FSS_BASIC_LIST_READ_program_version_nano_prefix_s_length + FSS_BASIC_LIST_READ_program_version_nano_s_length
 
-  extern const f_string_static_t fss_basic_list_program_version_s;
+  extern const f_string_static_t fss_basic_list_read_program_version_s;
 #endif // _di_fss_basic_list_read_program_version_
 
 /**
@@ -55,23 +55,35 @@ extern "C" {
   #define FSS_BASIC_LIST_READ_program_name_s_length      19
   #define FSS_BASIC_LIST_READ_program_name_long_s_length 19
 
-  extern const f_string_static_t fss_basic_list_program_name_s;
-  extern const f_string_static_t fss_basic_list_program_name_long_s;
+  extern const f_string_static_t fss_basic_list_read_program_name_s;
+  extern const f_string_static_t fss_basic_list_read_program_name_long_s;
 #endif // _di_fss_basic_list_read_program_name_
 
 /**
  * The program defines.
+ *
+ * fss_basic_list_read_pipe_*:
+ *   - name:           A name used to represent the pipe when printing file names.
+ *   - content_end:    A code used to reprsent the end of Content for use in binary formats.
+ *   - content_ignore: A code used to reprsent the ignoring Content for use in binary formats.
+ *   - content_start:  A code used to reprsent the start of Content for use in binary formats.
  */
 #ifndef _di_fss_basic_list_read_defines_
   #define fss_basic_list_read_signal_check_d 10000
+
+  #define FSS_BASIC_LIST_READ_pipe_name_s "(pipe)"
 
   #define FSS_BASIC_LIST_READ_pipe_content_end_s    "\f"
   #define FSS_BASIC_LIST_READ_pipe_content_ignore_s "\v"
   #define FSS_BASIC_LIST_READ_pipe_content_start_s  "\b"
 
+  #define FSS_BASIC_LIST_READ_pipe_name_s_length 6
+
   #define FSS_BASIC_LIST_READ_pipe_content_end_s_length    1
   #define FSS_BASIC_LIST_READ_pipe_content_ignore_s_length 1
   #define FSS_BASIC_LIST_READ_pipe_content_start_s_length  1
+
+  extern const f_string_static_t fss_basic_list_read_pipe_name_s;
 
   extern const f_string_static_t fss_basic_list_read_pipe_content_end_s;
   extern const f_string_static_t fss_basic_list_read_pipe_content_ignore_s;
@@ -226,7 +238,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(fss_basic_list_read_short_trim_s.string, fss_basic_list_read_long_trim_s.string, 0, 0, f_console_type_normal_e), \
     }
 
-  #define fss_basic_list_total_parameters_d 23
+  #define fss_basic_list_read_total_parameters_d 23
 #endif // _di_fss_basic_list_read_parameters_
 
 /**
@@ -243,17 +255,23 @@ extern "C" {
  *   - object:                 Objects arre to have delimits applied.
  */
 #ifndef _di_fss_basic_list_read_delimit_mode_
-  #define fss_basic_list_read_delimit_mode_name_none_s    "none"
-  #define fss_basic_list_read_delimit_mode_name_all_s     "all"
-  #define fss_basic_list_read_delimit_mode_name_object_s  "object"
-  #define fss_basic_list_read_delimit_mode_name_greater_s "+"
-  #define fss_basic_list_read_delimit_mode_name_lesser_s  "-"
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_none_s    "none"
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_all_s     "all"
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_object_s  "object"
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_greater_s "+"
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_lesser_s  "-"
 
-  #define fss_basic_list_read_delimit_mode_name_none_s_length    4
-  #define fss_basic_list_read_delimit_mode_name_all_s_length     3
-  #define fss_basic_list_read_delimit_mode_name_object_s_length  6
-  #define fss_basic_list_read_delimit_mode_name_greater_s_length 1
-  #define fss_basic_list_read_delimit_mode_name_lesser_s_length  1
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_none_s_length    4
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_all_s_length     3
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_object_s_length  6
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_greater_s_length 1
+  #define FSS_BASIC_LIST_READ_delimit_mode_name_lesser_s_length  1
+
+  extern const f_string_static_t fss_basic_list_read_delimit_mode_name_none_s;
+  extern const f_string_static_t fss_basic_list_read_delimit_mode_name_all_s;
+  extern const f_string_static_t fss_basic_list_read_delimit_mode_name_object_s;
+  extern const f_string_static_t fss_basic_list_read_delimit_mode_name_greater_s;
+  extern const f_string_static_t fss_basic_list_read_delimit_mode_name_lesser_s;
 
   enum {
     fss_basic_list_read_delimit_mode_none_e = 1,

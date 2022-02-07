@@ -50,64 +50,64 @@ extern "C" {
     fl_print_format("  All numeric positions (indexes) start at 0 instead of 1.%r", file.stream, f_string_eol_s);
     fl_print_format("  For example, a file of 17 lines would range from 0 to 16.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When using the %[%r%s%] option, an order of operations is enforced on the parameters.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  When using the %[%r%r%] option, an order of operations is enforced on the parameters.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable, f_string_eol_s);
 
     fl_print_format("  When this order of operations is in effect, parameters to the right of a depth parameter are influenced by that depth parameter:%r", file.stream, f_string_eol_s);
 
-    fl_print_format("    %[%r%s%]: An Object index at the specified depth.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_at_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%r%s%]: A new depth within the specified depth, indexed from the root.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%r%s%]: An Object name at the specified depth.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_name_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("    %[%r%r%]: An Object index at the specified depth.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_at_s, context.set.notable, f_string_eol_s);
+    fl_print_format("    %[%r%r%]: A new depth within the specified depth, indexed from the root.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable, f_string_eol_s);
+    fl_print_format("    %[%r%r%]: An Object name at the specified depth.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_name_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The parameter %[%r%s%] must be in numeric order, but values in between may be skipped.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  The parameter %[%r%r%] must be in numeric order, but values in between may be skipped.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable, f_string_eol_s);
     fl_print_format("    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%r", file.stream, f_string_eol_s);
     fl_print_format("    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The parameter %[%r%s%] selects a Content column.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The parameter %[%r%r%] selects a Content column.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  Specify both %[%r%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_object_s, context.set.notable);
-    fl_print_format(" and the %[%r%s%] parameters to get the total objects.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_total_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Specify both %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_object_s, context.set.notable);
+    fl_print_format(" and the %[%r%r%] parameters to get the total objects.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_total_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When both %[%r%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_at_s, context.set.notable);
-    fl_print_format(" and %[%r%s%] parameters are specified (at the same depth),", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_name_s, context.set.notable);
-    fl_print_format(" the %[%r%s%] parameter value will be treated as a position relative to the specified", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_at_s, context.set.notable);
-    fl_print_format(" %[%r%s%] parameter value.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_name_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When both %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_at_s, context.set.notable);
+    fl_print_format(" and %[%r%r%] parameters are specified (at the same depth),", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_name_s, context.set.notable);
+    fl_print_format(" the %[%r%r%] parameter value will be treated as a position relative to the specified", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_at_s, context.set.notable);
+    fl_print_format(" %[%r%r%] parameter value.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_name_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  This program may support parameters, such as %[%r%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable);
-    fl_print_format(" or %[%r%s%], even if not supported by the standard.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  This program may support parameters, such as %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable);
+    fl_print_format(" or %[%r%r%], even if not supported by the standard.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, context.set.notable, f_string_eol_s);
     fl_print_format("  This is done to help ensure consistency for scripting.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  For parameters like %[%r%s%],", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable);
+    fl_print_format("  For parameters like %[%r%r%],", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, context.set.notable);
     fl_print_format(" if the standard doesn't support nested Content, then only a depth of 0 would be valid.%r", file.stream, f_string_eol_s);
 
-    fl_print_format("  For parameters like %[%r%s%],", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, context.set.notable);
+    fl_print_format("  For parameters like %[%r%r%],", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, context.set.notable);
     fl_print_format(" if the standard doesn't support multiple Content groups, then only a select of 0 would be valid.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The parameter %[%r%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_trim_s, context.set.notable);
+    fl_print_format("  The parameter %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_trim_s, context.set.notable);
     fl_print_format(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When specifying both the %[%r%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_object_s, context.set.notable);
-    fl_print_format(" parameter and the %[%r%s%] parameter, the entire Object and Content are printed, including the formatting.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_content_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  When specifying both the %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_object_s, context.set.notable);
+    fl_print_format(" parameter and the %[%r%r%] parameter, the entire Object and Content are printed, including the formatting.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_content_s, context.set.notable, f_string_eol_s);
     fl_print_format("  Both the Object and Content printed are already escaped.%r", file.stream, f_string_eol_s);
     fl_print_format("  Both the Object and Content are separated by an EOL.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The parameter %[%r%s%] accepts the following:%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, context.set.notable, f_string_eol_s);
-    fl_print_format("  - %[%s%]: Do not apply delimits.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_none_s, context.set.notable, f_string_eol_s);
-    fl_print_format("  - %[%s%]: (default) Apply all delimits.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_all_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  The parameter %[%r%r%] accepts the following:%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  - %[%r%]: Do not apply delimits.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_none_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  - %[%r%]: (default) Apply all delimits.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_all_s, context.set.notable, f_string_eol_s);
     // @todo
-    //fl_print_format("  - %[%s%]: Apply delimits for Objects.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_object, context.set.notable, f_string_eol_s);
+    //fl_print_format("  - %[%r%]: Apply delimits for Objects.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_object, context.set.notable, f_string_eol_s);
     fl_print_format("  - A number, 0 or greater: apply delimits for Content at the specified depth.%r", file.stream, f_string_eol_s);
-    fl_print_format("  - A number, 0 or greater, followed by a %[%s%]: (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_greater_s, context.set.notable, f_string_eol_s, f_string_eol_s);
-    fl_print_format("  - A number, 0 or lesser, followed by a %[%s%]: (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%r%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_lesser_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  - A number, 0 or greater, followed by a %[%r%]: (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_greater_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  - A number, 0 or lesser, followed by a %[%r%]: (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%r%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_lesser_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%s%] parameter may be specified multiple times to customize the delimit behavior.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  The %[%r%r%] parameter may be specified multiple times to customize the delimit behavior.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, context.set.notable, f_string_eol_s);
 
-    fl_print_format("  The %[%r%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, context.set.notable);
-    fl_print_format(" values %[%s%]", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_none_s, context.set.notable);
-    fl_print_format(" and %[%s%],", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_all_s, context.set.notable);
+    fl_print_format("  The %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, context.set.notable);
+    fl_print_format(" values %[%r%]", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_none_s, context.set.notable);
+    fl_print_format(" and %[%r%],", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_all_s, context.set.notable);
     fl_print_format(" overrule all other delimit values.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The parameters %[%r%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_columns_s, context.set.notable);
-    fl_print_format(" and %[%r%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, context.set.notable);
+    fl_print_format("  The parameters %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_columns_s, context.set.notable);
+    fl_print_format(" and %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, context.set.notable);
     fl_print_format(" refer to a Content column.%r", file.stream, f_string_eol_s);
     fl_print_format("  The word \"column\" is being loosely defined to refer to a specific Content.%r", file.stream, f_string_eol_s);
     fl_print_format("  This is not to be confused with a depth.%r%r", file.stream, f_string_eol_s, f_string_eol_s);

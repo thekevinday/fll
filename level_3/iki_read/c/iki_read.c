@@ -437,7 +437,6 @@ extern "C" {
 
       if (F_status_is_fine(status) && main->parameters.remaining.used > 0) {
         uint16_t signal_check = 0;
-        f_array_length_t total = 0;
         f_file_t file = f_file_t_initialize;
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
@@ -453,7 +452,7 @@ extern "C" {
           }
 
           macro_f_file_t_reset(file);
-          total = 0;
+          file.size_read = 0;
 
           status = f_file_open(argv[main->parameters.remaining.array[i]], 0, &file);
 
@@ -463,7 +462,7 @@ extern "C" {
             break;
           }
 
-          status = f_file_size_by_id(file.id, &total);
+          status = f_file_size_by_id(file.id, &file.size_read);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
@@ -474,18 +473,20 @@ extern "C" {
           }
 
           // Skip past empty files.
-          if (!total) {
+          if (!file.size_read) {
             f_file_stream_close(F_true, &file);
 
             continue;
           }
 
-          status = f_file_read_until(file, total, &main->buffer);
+          ++file.size_read;
+
+          status = f_file_read(file, &main->buffer);
 
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_until", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
 
             break;
           }

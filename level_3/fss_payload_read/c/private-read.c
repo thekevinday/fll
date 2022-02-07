@@ -225,7 +225,7 @@ extern "C" {
 #endif // _di_fss_payload_read_depth_process_
 
 #ifndef _di_fss_payload_read_file_identify_
-  f_string_t fss_payload_read_file_identify(const f_array_length_t at, const fss_payload_read_files_t files) {
+  f_string_static_t fss_payload_read_file_identify(const f_array_length_t at, const fss_payload_read_files_t files) {
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
@@ -239,14 +239,14 @@ extern "C" {
       return files.array[files.used - 1].name;
     }
 
-    return "";
+    return f_string_empty_s;
   }
 #endif // _di_fss_payload_read_file_identify_
 
 #ifndef _di_fss_payload_read_load_
   f_status_t fss_payload_read_load(fll_program_data_t * const main, fss_payload_read_data_t *data) {
 
-    f_state_t state = macro_f_state_t_initialize(fss_payload_common_allocation_large_d, fss_payload_read_common_allocation_small_d, 0, 0, 0, 0, 0);
+    f_state_t state = macro_f_state_t_initialize(fss_payload_read_common_allocation_large_d, fss_payload_read_common_allocation_small_d, 0, 0, 0, 0, 0);
     f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
 
     data->delimits_object.used = 0;

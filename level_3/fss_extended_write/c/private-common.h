@@ -20,8 +20,8 @@ extern "C" {
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
  */
 #ifndef _di_fss_extended_write_common_
-  #define fss_extended_write_common_allocation_large_d 256
-  #define fss_extended_write_common_allocation_small_d 16
+  #define fss_extended_write_common_allocation_large_d 2048
+  #define fss_extended_write_common_allocation_small_d 128
 #endif // _di_fss_extended_write_common_
 
 /**

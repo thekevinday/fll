@@ -233,15 +233,20 @@ extern "C" {
  * Provide delimit management.
  */
 #ifndef _di_fss_embedded_list_read_delimit_mode_
-  #define fss_embedded_list_read_delimit_mode_name_none_s    "none"
-  #define fss_embedded_list_read_delimit_mode_name_all_s     "all"
-  #define fss_embedded_list_read_delimit_mode_name_greater_s "+"
-  #define fss_embedded_list_read_delimit_mode_name_lesser_s  "-"
+  #define FSS_EMBEDDED_LIST_READ_delimit_mode_name_none_s    "none"
+  #define FSS_EMBEDDED_LIST_READ_delimit_mode_name_all_s     "all"
+  #define FSS_EMBEDDED_LIST_READ_delimit_mode_name_greater_s "+"
+  #define FSS_EMBEDDED_LIST_READ_delimit_mode_name_lesser_s  "-"
 
-  #define fss_embedded_list_read_delimit_mode_name_none_s_length    4
-  #define fss_embedded_list_read_delimit_mode_name_all_s_length     3
-  #define fss_embedded_list_read_delimit_mode_name_greater_s_length 1
-  #define fss_embedded_list_read_delimit_mode_name_lesser_s_length  1
+  #define FSS_EMBEDDED_LIST_READ_delimit_mode_name_none_s_length    4
+  #define FSS_EMBEDDED_LIST_READ_delimit_mode_name_all_s_length     3
+  #define FSS_EMBEDDED_LIST_READ_delimit_mode_name_greater_s_length 1
+  #define FSS_EMBEDDED_LIST_READ_delimit_mode_name_lesser_s_length  1
+
+  extern const f_string_static_t fss_embedded_list_read_delimit_mode_name_none_s;
+  extern const f_string_static_t fss_embedded_list_read_delimit_mode_name_all_s;
+  extern const f_string_static_t fss_embedded_list_read_delimit_mode_name_greater_s;
+  extern const f_string_static_t fss_embedded_list_read_delimit_mode_name_lesser_s;
 
   enum {
     fss_embedded_list_read_delimit_mode_none_e = 1,

@@ -20,8 +20,8 @@ extern "C" {
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
  */
 #ifndef _di_fss_basic_list_read_common_
-  #define fss_basic_list_common_allocation_large_d 256
-  #define fss_basic_list_read_common_allocation_small_d 16
+  #define fss_basic_list_read_common_allocation_large_d 2048
+  #define fss_basic_list_read_common_allocation_small_d 128
 #endif // _di_fss_basic_list_read_common_
 
 /**
@@ -86,18 +86,18 @@ extern "C" {
 /**
  * A structure for designating where within the buffer a particular file exists, using a statically allocated array.
  *
- * name:  The name of the file representing the range. Set string to NULL to represent the STDIN pipe.
+ * name:  The name of the file representing the range.
  * range: A range within the buffer representing the file.
  */
 #ifndef _di_fss_basic_list_read_file_t_
   typedef struct {
-    f_string_t name;
+    f_string_static_t name;
     f_string_range_t range;
   } fss_basic_list_read_file_t;
 
   #define fss_basic_list_read_file_t_initialize \
     { \
-      f_string_t_initialize, \
+      f_string_static_t_initialize, \
       f_string_range_t_initialize, \
     }
 #endif // _di_fss_basic_list_read_file_t_
@@ -173,6 +173,8 @@ extern "C" {
     f_number_unsigned_t select;
     f_number_unsigned_t line;
 
+    f_string_static_t *argv;
+
     fss_basic_list_read_files_t files;
     fss_basic_list_read_depths_t depths;
 
@@ -189,6 +191,7 @@ extern "C" {
     { \
       0, \
       fss_basic_list_read_delimit_mode_all_e, \
+      0, \
       0, \
       0, \
       0, \

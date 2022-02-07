@@ -243,17 +243,23 @@ extern "C" {
  *   - object:                 Objects arre to have delimits applied.
  */
 #ifndef _di_fss_basic_read_delimit_mode_
-  #define fss_basic_read_delimit_mode_name_none_s    "none"
-  #define fss_basic_read_delimit_mode_name_all_s     "all"
-  #define fss_basic_read_delimit_mode_name_object_s  "object"
-  #define fss_basic_read_delimit_mode_name_greater_s "+"
-  #define fss_basic_read_delimit_mode_name_lesser_s  "-"
+  #define FSS_BASIC_READ_delimit_mode_name_none_s    "none"
+  #define FSS_BASIC_READ_delimit_mode_name_all_s     "all"
+  #define FSS_BASIC_READ_delimit_mode_name_object_s  "object"
+  #define FSS_BASIC_READ_delimit_mode_name_greater_s "+"
+  #define FSS_BASIC_READ_delimit_mode_name_lesser_s  "-"
 
-  #define fss_basic_read_delimit_mode_name_none_s_length    4
-  #define fss_basic_read_delimit_mode_name_all_s_length     3
-  #define fss_basic_read_delimit_mode_name_object_s_length  6
-  #define fss_basic_read_delimit_mode_name_greater_s_length 1
-  #define fss_basic_read_delimit_mode_name_lesser_s_length  1
+  #define FSS_BASIC_READ_delimit_mode_name_none_s_length    4
+  #define FSS_BASIC_READ_delimit_mode_name_all_s_length     3
+  #define FSS_BASIC_READ_delimit_mode_name_object_s_length  6
+  #define FSS_BASIC_READ_delimit_mode_name_greater_s_length 1
+  #define FSS_BASIC_READ_delimit_mode_name_lesser_s_length  1
+
+  extern const f_string_static_t fss_basic_read_delimit_mode_name_none_s;
+  extern const f_string_static_t fss_basic_read_delimit_mode_name_all_s;
+  extern const f_string_static_t fss_basic_read_delimit_mode_name_object_s;
+  extern const f_string_static_t fss_basic_read_delimit_mode_name_greater_s;
+  extern const f_string_static_t fss_basic_read_delimit_mode_name_lesser_s;
 
   enum {
     fss_basic_read_delimit_mode_none_e = 1,

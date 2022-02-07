@@ -44,14 +44,14 @@ extern "C" {
     fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s);
     fl_print_format("  The end of the pipe represents the end of any Object or Content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The FSS-0008 (Embedded List) specification does not support quoted names, therefore the parameters '%[%r%s%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_single_s, context.set.notable);
-    fl_print_format(" and '%[%r%s%]' do nothing.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_double_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The FSS-0008 (Embedded List) specification does not support quoted names, therefore the parameters '%[%r%r%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_single_s, context.set.notable);
+    fl_print_format(" and '%[%r%r%]' do nothing.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_double_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The parameter '%[%r%s%]' designates to not escape any valid nested Object or Content within some Content.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_ignore_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  The parameter '%[%r%r%]' designates to not escape any valid nested Object or Content within some Content.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_ignore_s, context.set.notable, f_string_eol_s);
     fl_print_format("  This parameter requires two values.%r", file.stream, f_string_eol_s);
     fl_print_format("  This parameter is not used for ignoring anything from the input pipe.%r", file.stream, f_string_eol_s);
-    fl_print_format("  This parameter must be specified after a '%[%r%s%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content_s, context.set.notable);
-    fl_print_format(" parameter and this applies only to the Content represented by that specific '%[%r%s%]' parameter.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  This parameter must be specified after a '%[%r%r%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content_s, context.set.notable);
+    fl_print_format(" parameter and this applies only to the Content represented by that specific '%[%r%r%]' parameter.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 

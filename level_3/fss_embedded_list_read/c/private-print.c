@@ -10,15 +10,15 @@ extern "C" {
   void fss_embedded_list_read_print_object_end(fss_embedded_list_read_main_t * const main) {
 
     if (main->parameters.array[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_character(fss_embedded_list_read_pipe_content_start_s, main->output.to.stream);
+      f_print_dynamic_raw(fss_embedded_list_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
       if (main->parameters.array[fss_embedded_list_read_parameter_object_e].result == f_console_result_found_e && main->parameters.array[fss_embedded_list_read_parameter_content_e].result == f_console_result_found_e) {
-        f_print_character(f_fss_embedded_list_open_s.string[0], main->output.to.stream);
-        f_print_character(f_fss_embedded_list_open_end_s.string[0], main->output.to.stream);
+        f_print_dynamic_raw(f_fss_embedded_list_open_s, main->output.to.stream);
+        f_print_dynamic_raw(f_fss_embedded_list_open_end_s, main->output.to.stream);
       }
       else {
-        f_print_character(f_fss_eol_s.string[0], main->output.to.stream);
+        f_print_dynamic_raw(f_fss_eol_s, main->output.to.stream);
       }
     }
   }
@@ -28,7 +28,7 @@ extern "C" {
   void fss_embedded_list_read_print_content_ignore(fss_embedded_list_read_main_t * const main) {
 
     if (main->parameters.array[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_character(fss_embedded_list_read_pipe_content_ignore_s, main->output.to.stream);
+      f_print_dynamic_raw(fss_embedded_list_read_pipe_content_ignore_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_embedded_list_read_print_content_ignore_
@@ -37,15 +37,15 @@ extern "C" {
   void fss_embedded_list_read_print_set_end(fss_embedded_list_read_main_t * const main) {
 
     if (main->parameters.array[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_character(fss_embedded_list_read_pipe_content_end_s, main->output.to.stream);
+      f_print_dynamic_raw(fss_embedded_list_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
       if (main->parameters.array[fss_embedded_list_read_parameter_object_e].result == f_console_result_found_e && main->parameters.array[fss_embedded_list_read_parameter_content_e].result == f_console_result_found_e) {
-        f_print_character(f_fss_embedded_list_close_s.string[0], main->output.to.stream);
-        f_print_character(f_fss_embedded_list_close_end_s.string[0], main->output.to.stream);
+        f_print_dynamic_raw(f_fss_embedded_list_close_s, main->output.to.stream);
+        f_print_dynamic_raw(f_fss_embedded_list_close_end_s, main->output.to.stream);
       }
       else {
-        f_print_character(f_fss_eol_s.string[0], main->output.to.stream);
+        f_print_dynamic_raw(f_fss_eol_s, main->output.to.stream);
       }
     }
   }
