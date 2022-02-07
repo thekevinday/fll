@@ -20,13 +20,11 @@ extern "C" {
     bool found_data = F_false;
 
     do {
-      if (objects->used == objects->size) {
-        macro_f_fss_objects_t_resize(status2, (*objects), objects->used + F_fss_default_allocation_step_d);
-        if (F_status_is_error(status)) return status;
+      status = f_string_ranges_increase(state.step_small, objects);
+      if (F_status_is_error(status)) return status;
 
-        macro_f_fss_contents_t_resize(status2, (*contents), contents->used + F_fss_default_allocation_step_d);
-        if (F_status_is_error(status)) return status;
-      }
+      status = f_string_rangess_increase(state.step_small, contents);
+      if (F_status_is_error(status)) return status;
 
       do {
         status = fl_fss_basic_list_object_read(buffer, state, range, &objects->array[objects->used], objects_delimits);
@@ -45,7 +43,7 @@ extern "C" {
 
             ++objects->used;
 
-            status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+            status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;
@@ -73,7 +71,7 @@ extern "C" {
           found_data = F_true;
 
           if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
-            status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+            status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status)) return status;
 
             contents->array[contents->used].used = 1;
@@ -104,13 +102,13 @@ extern "C" {
         else if (status == F_fss_found_object_content_not) {
           found_data = F_true;
 
-          status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+          status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
           if (F_status_is_error(status2)) return status2;
 
           if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
             ++objects->used;
 
-            status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+            status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;

@@ -23,22 +23,20 @@ extern "C" {
     f_fss_quotes_t *quoted_content = 0;
 
     do {
-      if (objects->used == objects->size) {
-        status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, objects);
-        if (F_status_is_error(status2)) return status2;
+      status = f_string_ranges_increase(state.step_small, objects);
+      if (F_status_is_error(status)) return status;
 
-        status2 = f_string_rangess_increase(F_fss_default_allocation_step_small_d, contents);
-        if (F_status_is_error(status2)) return status2;
+      status = f_string_rangess_increase(state.step_small, contents);
+      if (F_status_is_error(status)) return status;
 
-        if (objects_quoted) {
-          status2 = f_type_uint8s_increase(F_fss_default_allocation_step_small_d, objects_quoted);
-          if (F_status_is_error(status2)) return status2;
-        }
+      if (objects_quoted) {
+        status = f_type_uint8s_increase(state.step_small, objects_quoted);
+        if (F_status_is_error(status)) return status;
+      }
 
-        if (contents_quoted) {
-          macro_f_fss_quotess_t_increase(status2, F_fss_default_allocation_step_small_d, (*contents_quoted));
-          if (F_status_is_error(status2)) return status2;
-        }
+      if (contents_quoted) {
+        status = f_type_uint8ss_increase(state.step_small, contents_quoted);
+        if (F_status_is_error(status)) return status;
       }
 
       do {
@@ -57,13 +55,13 @@ extern "C" {
               ++objects_quoted->used;
             }
 
-            status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+            status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;
 
             if (contents_quoted) {
-              status2 = f_type_uint8s_increase(F_fss_default_allocation_step_small_d, &contents_quoted->array[contents_quoted->used]);
+              status2 = f_type_uint8s_increase(state.step_small, &contents_quoted->array[contents_quoted->used]);
               if (F_status_is_error(status2)) return status2;
 
               ++contents_quoted->used;
@@ -91,7 +89,7 @@ extern "C" {
           found_data = F_true;
 
           if (contents_quoted) {
-            status2 = f_type_uint8s_increase(F_fss_default_allocation_step_small_d, &contents_quoted->array[contents_quoted->used]);
+            status2 = f_type_uint8s_increase(state.step_small, &contents_quoted->array[contents_quoted->used]);
             if (F_status_is_error(status2)) return status2;
 
             quoted_content = &contents_quoted->array[contents_quoted->used];

@@ -20,13 +20,11 @@ extern "C" {
     bool found_data = F_false;
 
     do {
-      if (objects->used == objects->size) {
-        macro_f_fss_objects_t_resize(status2, (*objects), objects->used + F_fss_default_allocation_step_d);
-        if (F_status_is_error(status)) return status;
+      status = f_string_ranges_increase(state.step_small, objects);
+      if (F_status_is_error(status)) return status;
 
-        macro_f_fss_contents_t_resize(status2, (*contents), contents->used + F_fss_default_allocation_step_d);
-        if (F_status_is_error(status)) return status;
-      }
+      status = f_string_rangess_increase(state.step_small, contents);
+      if (F_status_is_error(status)) return status;
 
       do {
         status = fl_fss_basic_list_object_read(buffer, state, range, &objects->array[objects->used], objects_delimits);
@@ -36,7 +34,7 @@ extern "C" {
           if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
             ++objects->used;
 
-            status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+            status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;
@@ -71,7 +69,7 @@ extern "C" {
         if (status == F_fss_found_object_content_not) {
           found_data = F_true;
 
-          status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+          status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
           if (F_status_is_error(status2)) return status2;
 
           break;

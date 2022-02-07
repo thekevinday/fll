@@ -2076,7 +2076,9 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fread()
+ * @see flockfile()
+ * @see fread_unlocked()
+ * @see funlockfile()
  */
 #ifndef _di_f_file_stream_read_
   extern f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t *buffer);
@@ -2148,7 +2150,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *
- * @see fread()
+ * @see flockfile()
+ * @see fread_unlocked()
+ * @see funlockfile()
  *
  * @see f_string_dynamic_increase_by()
  */

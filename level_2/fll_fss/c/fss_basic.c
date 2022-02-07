@@ -22,17 +22,15 @@ extern "C" {
     f_fss_quote_t *quoted_object = 0;
 
     do {
-      if (objects->used == objects->size) {
-        status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, objects);
-        if (F_status_is_error(status2)) return status2;
+      status = f_string_ranges_increase(state.step_small, objects);
+      if (F_status_is_error(status)) return status;
 
-        status2 = f_string_rangess_increase(F_fss_default_allocation_step_small_d, contents);
-        if (F_status_is_error(status2)) return status2;
+      status = f_string_rangess_increase(state.step_small, contents);
+      if (F_status_is_error(status)) return status;
 
-        if (objects_quoted) {
-          status2 = f_type_uint8s_increase(F_fss_default_allocation_step_small_d, objects_quoted);
-          if (F_status_is_error(status2)) return status2;
-        }
+      if (objects_quoted) {
+        status = f_type_uint8s_increase(state.step_small, objects_quoted);
+        if (F_status_is_error(status)) return status;
       }
 
       do {
@@ -51,7 +49,7 @@ extern "C" {
               ++objects_quoted->used;
             }
 
-            status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+            status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
             ++contents->used;
@@ -86,7 +84,7 @@ extern "C" {
         else if (status == F_fss_found_object_content_not) {
           found_data = F_true;
 
-          status2 = f_string_ranges_increase(F_fss_default_allocation_step_small_d, &contents->array[contents->used]);
+          status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
           if (F_status_is_error(status2)) return status2;
 
           break;
@@ -177,7 +175,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
       else {
-        status = f_string_dynamic_increase(F_fss_default_allocation_step_small_d, destination);
+        status = f_string_dynamic_increase(state.step_small, destination);
         if (F_status_is_error(status)) return status;
 
         destination->string[destination->used++] = f_string_eol_s.string[0];

@@ -11,7 +11,7 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    // skip past all NULLs.
+    // Skip past all NULLs.
     for (; range->start <= range->stop; ++range->start) {
       if (buffer[range->start]) break;
     }

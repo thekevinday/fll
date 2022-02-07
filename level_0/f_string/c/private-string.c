@@ -75,7 +75,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
   f_status_t private_f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t * const dynamic) {
 
-    f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
+    f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(char), (void **) & dynamic->string);
 
     if (F_status_is_error_not(status)) {
       dynamic->size = length;
@@ -107,7 +107,7 @@ extern "C" {
 #if !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(f_string_dynamic_partial_append) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_triples_append_)
   f_status_t private_f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t * const dynamic) {
 
-    const f_status_t status = f_memory_resize(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
+    const f_status_t status = f_memory_resize(dynamic->size, length, sizeof(char), (void **) & dynamic->string);
 
     if (F_status_is_error_not(status)) {
       dynamic->size = length;

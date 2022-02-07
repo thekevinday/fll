@@ -20,8 +20,8 @@ extern "C" {
     bool found_data = F_false;
 
     if (!nest->used) {
-      macro_f_fss_nest_t_resize(status2, (*nest), F_fss_default_allocation_step_d);
-      if (F_status_is_error(status2)) return status2;
+      status = f_fss_nest_resize(state.step_small, nest);
+      if (F_status_is_error(status)) return status;
     }
     else {
       initial_used = nest->depth[0].used;
@@ -29,10 +29,8 @@ extern "C" {
 
     do {
       do {
-        if (nest->depth[0].used == nest->depth[0].size) {
-          macro_f_fss_items_t_resize(status2, nest->depth[0], nest->depth[0].used + F_fss_default_allocation_step_d);
-          if (F_status_is_error(status)) return status;
-        }
+        status = f_fss_items_resize(state.step_small, &nest->depth[0]);
+        if (F_status_is_error(status)) return status;
 
         status = fl_fss_embedded_list_object_read(buffer, state, range, &nest->depth[0].array[nest->depth[0].used].object, objects_delimits);
         if (F_status_is_error(status)) return status;
@@ -40,7 +38,7 @@ extern "C" {
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
 
-            // extended list requires content closure, so this could be an error.
+            // Extended list requires content closure, so this could be an error.
             return F_fss_found_object_content_not;
           }
 
@@ -64,10 +62,12 @@ extern "C" {
           found_data = F_true;
 
           status = fl_fss_embedded_list_content_read(buffer, state, range, nest, contents_delimits ? contents_delimits : objects_delimits, comments);
+
           break;
         }
         else if (status == F_fss_found_object_content_not) {
           found_data = F_true;
+
           break;
         }
 

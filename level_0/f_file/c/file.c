@@ -2065,14 +2065,22 @@ extern "C" {
     f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    for (;;) {
+    flockfile(file.stream);
 
+    do {
       status = f_string_dynamic_increase_by(file.size_read, buffer);
-      if (F_status_is_error(status)) return status;
 
-      size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
+      if (F_status_is_error(status)) {
+        funlockfile(file.stream);
+
+        return status;
+      }
+
+      size_read = fread_unlocked(buffer->string + buffer->used, 1, file.size_read, file.stream);
 
       if (ferror(file.stream)) {
+        funlockfile(file.stream);
+
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EBADF) return F_status_set_error(F_file_descriptor);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -2086,8 +2094,9 @@ extern "C" {
 
       buffer->used += size_read;
 
-      if (feof(file.stream)) break;
-    } // for
+    } while (size_read == file.size_read && !feof(file.stream));
+
+    funlockfile(file.stream);
 
     return F_none_eof;
   }
@@ -2122,7 +2131,9 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    buffer->used += size_read;
+    if (size_read) {
+      buffer->used += size_read;
+    }
 
     if (feof(file.stream)) {
       return F_none_eof;
@@ -2140,11 +2151,17 @@ extern "C" {
 
     if (!file.stream) return F_status_set_error(F_file_closed);
 
+    {
+      const f_status_t status = f_string_dynamic_increase_by(total, buffer);
+      if (F_status_is_error(status)) return status;
+    }
+
     f_array_length_t buffer_size = file.size_read;
     f_array_length_t buffer_count = 0;
 
-    f_status_t status = F_none;
     ssize_t size_read = 0;
+
+    flockfile(file.stream);
 
     for (;;) {
 
@@ -2152,12 +2169,11 @@ extern "C" {
         buffer_size = total - buffer_count;
       }
 
-      status = f_string_dynamic_increase_by(buffer_size, buffer);
-      if (F_status_is_error(status)) return status;
-
       size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
 
       if (ferror(file.stream)) {
+        funlockfile(file.stream);
+
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EBADF) return F_status_set_error(F_file_descriptor);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -2172,6 +2188,8 @@ extern "C" {
       buffer->used += size_read;
 
       if (feof(file.stream)) {
+        funlockfile(file.stream);
+
         return F_none_eof;
       }
 
@@ -2179,6 +2197,8 @@ extern "C" {
 
       if (buffer_count == total) break;
     } // for
+
+    funlockfile(file.stream);
 
     return F_none_stop;
   }
