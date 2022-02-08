@@ -2274,6 +2274,12 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_buffer_overflow_s) == F_equal_to) {
+        *code = F_buffer_overflow;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_buffer_too_large_s) == F_equal_to) {
         *code = F_buffer_too_large;
 
@@ -2282,6 +2288,12 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_buffer_too_small_s) == F_equal_to) {
         *code = F_buffer_too_small;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_buffer_underflow_s) == F_equal_to) {
+        *code = F_buffer_underflow;
 
         return F_none;
       }

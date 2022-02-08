@@ -402,8 +402,10 @@ extern "C" {
   #ifndef _di_F_status_buffer_
     const f_string_static_t f_status_buffer_s = macro_f_string_static_t_initialize(F_status_buffer_s, 0, F_status_buffer_s_length);
     const f_string_static_t f_status_buffer_not_s = macro_f_string_static_t_initialize(F_status_buffer_not_s, 0, F_status_buffer_not_s_length);
+    const f_string_static_t f_status_buffer_overflow_s = macro_f_string_static_t_initialize(F_status_buffer_overflow_s, 0, F_status_buffer_overflow_s_length);
     const f_string_static_t f_status_buffer_too_large_s = macro_f_string_static_t_initialize(F_status_buffer_too_large_s, 0, F_status_buffer_too_large_s_length);
     const f_string_static_t f_status_buffer_too_small_s = macro_f_string_static_t_initialize(F_status_buffer_too_small_s, 0, F_status_buffer_too_small_s_length);
+    const f_string_static_t f_status_buffer_underflow_s = macro_f_string_static_t_initialize(F_status_buffer_underflow_s, 0, F_status_buffer_underflow_s_length);
     const f_string_static_t f_status_complete_not_utf_s = macro_f_string_static_t_initialize(F_status_complete_not_utf_s, 0, F_status_complete_not_utf_s_length);
     const f_string_static_t f_status_complete_not_utf_block_s = macro_f_string_static_t_initialize(F_status_complete_not_utf_block_s, 0, F_status_complete_not_utf_block_s_length);
     const f_string_static_t f_status_complete_not_utf_eoa_s = macro_f_string_static_t_initialize(F_status_complete_not_utf_eoa_s, 0, F_status_complete_not_utf_eoa_s_length);
@@ -2100,12 +2102,20 @@ extern "C" {
           *name = f_status_buffer_not_s;
           break;
 
+        case F_buffer_overflow:
+          *name = f_status_buffer_overflow_s;
+          break;
+
         case F_buffer_too_large:
           *name = f_status_buffer_too_large_s;
           break;
 
         case F_buffer_too_small:
           *name = f_status_buffer_too_small_s;
+          break;
+
+        case F_buffer_underflow:
+          *name = f_status_buffer_underflow_s;
           break;
 
         case F_complete_not_utf_block:

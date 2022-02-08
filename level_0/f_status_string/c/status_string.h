@@ -1175,8 +1175,10 @@ extern "C" {
   #ifndef _di_F_status_buffer_
     #define F_status_buffer_s                     "F_buffer"
     #define F_status_buffer_not_s                 "F_buffer_not"
+    #define F_status_buffer_overflow_s            "F_buffer_overflow"
     #define F_status_buffer_too_large_s           "F_buffer_too_large"
     #define F_status_buffer_too_small_s           "F_buffer_too_small"
+    #define F_status_buffer_underflow_s           "F_buffer_underflow"
     #define F_status_complete_not_utf_s           "F_complete_not_utf"
     #define F_status_complete_not_utf_block_s     "F_complete_not_utf_block"
     #define F_status_complete_not_utf_eoa_s       "F_complete_not_utf_eoa"
@@ -1224,8 +1226,10 @@ extern "C" {
 
     #define F_status_buffer_s_length                     8
     #define F_status_buffer_not_s_length                 12
+    #define F_status_buffer_overflow_s_length            17
     #define F_status_buffer_too_large_s_length           18
     #define F_status_buffer_too_small_s_length           18
+    #define F_status_buffer_underflow_s_length           18
     #define F_status_complete_not_utf_s_length           18
     #define F_status_complete_not_utf_block_s_length     24
     #define F_status_complete_not_utf_eoa_s_length       22
@@ -1273,8 +1277,10 @@ extern "C" {
 
     extern const f_string_static_t f_status_buffer_s;
     extern const f_string_static_t f_status_buffer_not_s;
+    extern const f_string_static_t f_status_buffer_overflow_s;
     extern const f_string_static_t f_status_buffer_too_large_s;
     extern const f_string_static_t f_status_buffer_too_small_s;
+    extern const f_string_static_t f_status_buffer_underflow_s;
     extern const f_string_static_t f_status_complete_not_utf_s;
     extern const f_string_static_t f_status_complete_not_utf_block_s;
     extern const f_string_static_t f_status_complete_not_utf_eoa_s;

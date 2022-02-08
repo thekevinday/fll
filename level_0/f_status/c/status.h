@@ -484,8 +484,10 @@ extern "C" {
     #ifndef _di_F_status_buffer_
       F_buffer,
       F_buffer_not,
+      F_buffer_overflow,
       F_buffer_too_large,
       F_buffer_too_small,
+      F_buffer_underflow,
       F_complete_not_utf,
       F_complete_not_utf_block,
       F_complete_not_utf_eoa,
