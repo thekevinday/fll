@@ -287,6 +287,30 @@ extern "C" {
   const f_string_static_t fake_file_data_build_process_pre_s = macro_f_string_static_t_initialize(FAKE_file_data_build_process_pre_s, 0, FAKE_file_data_build_process_pre_s_length);
 #endif // _di_fake_file_data_build_strings_
 
+#ifndef _di_fake_make_data_delete_
+  f_status_t fake_make_data_delete(fake_make_data_t * const data) {
+
+    macro_fake_build_setting_t_delete_simple(data->setting_build);
+    macro_fake_make_setting_t_delete_simple(data->setting_make);
+
+    f_string_maps_resize(0, &data->environment);
+
+    macro_fake_make_parameter_delete_simple(data->parameter);
+    macro_fake_make_parameter_delete_simple(data->parameter_option);
+    macro_fake_make_parameter_delete_simple(data->parameter_value);
+    macro_fake_make_path_delete_simple(data->path);
+
+    f_fss_nameds_resize(0, &data->fakefile);
+
+    f_string_dynamic_resize(0, &data->buffer);
+    f_string_dynamic_resize(0, &data->cache_1);
+    f_string_dynamic_resize(0, &data->cache_2);
+    f_string_dynamic_resize(0, &data->path_cache);
+
+    return F_none;
+  }
+#endif // _di_fake_make_data_delete_
+
 #ifndef _di_fake_signal_received_
   f_status_t fake_signal_received(fake_main_t * const main) {
 

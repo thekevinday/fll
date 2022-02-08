@@ -50,13 +50,19 @@ extern "C" {
     const f_array_length_t size = strnlen(result, f_environment_max_length);
 
     if (size) {
-      const f_status_t status = f_string_dynamic_increase_by(size, value);
+      const f_status_t status = f_string_dynamic_increase_by(size + 1, value);
       if (F_status_is_error(status)) return status;
 
       memcpy(value->string + value->used, result, size);
+
       value->used += size;
+      value->string[value->used] = 0;
     }
     else {
+      const f_status_t status = f_string_dynamic_increase_by(1, value);
+      if (F_status_is_error(status)) return status;
+
+      value->string[0] = 0;
       value->used = 0;
     }
 

@@ -1168,7 +1168,7 @@ extern "C" {
       }
     }
     else {
-      status = f_string_map_multis_resize(F_memory_default_allocation_small_d, &data_make->setting_make.parameter);
+      status = f_string_map_multis_resize(fake_default_allocation_small_d, &data_make->setting_make.parameter);
 
       if (F_status_is_error(status)) {
         fll_error_print(data_make->error, F_status_set_fine(status), "f_string_map_multis_resize", F_true);
@@ -1283,7 +1283,7 @@ extern "C" {
       fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0]);
     }
     else {
-      status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, &data_make->path.stack);
+      status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->path.stack);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_array_too_large) {

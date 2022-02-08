@@ -251,7 +251,6 @@ extern "C" {
     if (!contents.used) return F_data_not;
 
     f_status_t status = F_none;
-    f_string_dynamics_t *value = 0;
     f_fss_content_t *content = 0;
 
     f_array_length_t i = 0;
@@ -267,7 +266,6 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        value = values[j];
         content = &contents.array[i];
 
         if (matches) {
@@ -279,11 +277,11 @@ extern "C" {
             return F_status_set_error(F_array_too_large);
           }
 
-          macro_f_string_dynamics_t_resize(status, (*value), (values[j]->used + content->used));
+          status = f_string_dynamics_increase_by(content->used, values[j]);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_resize(status, (*indexs[j]), (indexs[j]->used + content->used));
+            status = f_type_array_lengths_increase_by(content->used, indexs[j]);
             if (F_status_is_error(status)) return status;
           }
         }
@@ -293,11 +291,13 @@ extern "C" {
           status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
           if (F_status_is_error(status)) return status;
 
+          status = f_string_dynamic_terminate_after(&values[j]->array[values[j]->used]);
+          if (F_status_is_error(status)) return status;
+
           ++values[j]->used;
 
           if (indexs) {
-            indexs[j]->array[indexs[j]->used] = i;
-            ++indexs[j]->used;
+            indexs[j]->array[indexs[j]->used++] = i;
           }
         } // for
       } // for

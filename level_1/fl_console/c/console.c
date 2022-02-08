@@ -5,13 +5,12 @@ extern "C" {
 #endif
 
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
-  f_status_t fl_console_parameter_to_string_dynamic_directory(const f_string_t argument, f_string_dynamic_t *directory) {
+  f_status_t fl_console_parameter_to_string_dynamic_directory(const f_string_static_t argument, f_string_dynamic_t *directory) {
     #ifndef _di_level_1_parameter_checking_
-      if (!argument) return F_status_set_error(F_parameter);
+      if (!directory) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
-    f_array_length_t length = strlen(argument);
+    f_array_length_t length = argument.used;
 
     if (!length) {
       directory->used = 0;
@@ -19,150 +18,145 @@ extern "C" {
       return F_none;
     }
 
+    f_status_t status = F_none;
+
     if (length > 1) {
-      while (length > 1 && argument[length - 1] == f_path_separator_s.string[0]) {
+      while (length > 1 && argument.string[length - 1] == f_path_separator_s.string[0]) {
         --length;
       } // while
 
-      if (argument[0] == f_path_separator_s.string[0]) {
+      if (argument.string[0] == f_path_separator_s.string[0]) {
         f_array_length_t begin = 1;
 
-        while (begin < length && argument[begin] == f_path_separator_s.string[0]) {
+        while (begin < length && argument.string[begin] == f_path_separator_s.string[0]) {
           ++begin;
         } // while
 
         length -= begin;
+        directory->used = 0;
 
-        if (length > 0) {
-          length += 2;
+        if (length) {
+          directory->used = 0;
 
-          macro_f_string_dynamic_t_clear((*directory))
-          macro_f_string_dynamic_t_resize(status, (*directory), length)
+          status = f_string_dynamic_increase_by(length + 3, directory);
           if (F_status_is_error(status)) return status;
 
-          memcpy(directory->string + 1, argument + begin, length - 2);
+          memcpy(directory->string + 1, argument.string + begin, length);
 
-          directory->used = length;
-          directory->size = length;
           directory->string[0] = f_path_separator_s.string[0];
-          directory->string[length - 1] = f_path_separator_s.string[0];
+          directory->string[length + 1] = f_path_separator_s.string[0];
+          directory->string[length + 2] = 0;
+          directory->used = length + 2;
         }
         else {
-          macro_f_string_dynamic_t_clear((*directory))
-          macro_f_string_dynamic_t_resize(status, (*directory), 1)
+          status = f_string_dynamic_increase_by(2, directory);
           if (F_status_is_error(status)) return status;
 
-          directory->used = 1;
-          directory->size = 1;
           directory->string[0] = f_path_separator_s.string[0];
+          directory->string[length + 1] = 0;
+          directory->used = length + 1;
         }
       }
-      else if (length > 3 && argument[0] == f_path_separator_current_s.string[0] && argument[1] == f_path_separator_current_s.string[0] && argument[2] == f_path_separator_s.string[0]) {
+      else if (length > 3 && argument.string[0] == f_path_separator_current_s.string[0] && argument.string[1] == f_path_separator_current_s.string[0] && argument.string[2] == f_path_separator_s.string[0]) {
         f_array_length_t begin = 3;
 
-        while (begin < length && argument[begin] == f_path_separator_s.string[0]) {
+        while (begin < length && argument.string[begin] == f_path_separator_s.string[0]) {
           ++begin;
         } // while
 
         length -= begin;
+        directory->used = 0;
 
-        if (length > 0) {
-          length += 4;
-
-          macro_f_string_dynamic_t_clear((*directory))
-          macro_f_string_dynamic_t_resize(status, (*directory), length);
+        if (length) {
+          status = f_string_dynamic_increase_by(length + 5, directory);
           if (F_status_is_error(status)) return status;
 
-          memcpy(directory->string + 3, argument + begin, length - 4);
+          memcpy(directory->string + 3, argument.string + begin, length);
 
-          directory->used = length;
-          directory->size = length;
           directory->string[0] = f_path_separator_current_s.string[0];
           directory->string[1] = f_path_separator_current_s.string[0];
           directory->string[2] = f_path_separator_s.string[0];
-          directory->string[length - 1] = f_path_separator_s.string[0];
+          directory->string[length] = f_path_separator_s.string[0];
+          directory->string[length + 4] = 0;
+          directory->used = length + 4;
         }
         else {
-          macro_f_string_dynamic_t_clear((*directory))
-          macro_f_string_dynamic_t_resize(status, (*directory), 3)
+          status = f_string_dynamic_increase_by(5, directory);
           if (F_status_is_error(status)) return status;
 
-          directory->used = 3;
-          directory->size = 3;
           directory->string[0] = f_path_separator_current_s.string[0];
           directory->string[1] = f_path_separator_current_s.string[0];
           directory->string[2] = f_path_separator_s.string[0];
+          directory->string[3] = f_path_separator_s.string[0];
+          directory->string[4] = 0;
+          directory->used = 4;
         }
       }
-      else if (length > 2 && argument[0] == f_path_separator_current_s.string[0] && argument[1] == f_path_separator_s.string[0]) {
+      else if (length > 2 && argument.string[0] == f_path_separator_current_s.string[0] && argument.string[1] == f_path_separator_s.string[0]) {
         f_array_length_t begin = 2;
 
-        while (begin < length && argument[begin] == f_path_separator_s.string[0]) {
+        while (begin < length && argument.string[begin] == f_path_separator_s.string[0]) {
           ++begin;
         } // while
 
         length -= begin;
+        directory->used = 0;
 
-        if (length > 0) {
-          length += 3;
-
-          macro_f_string_dynamic_t_clear((*directory))
-          macro_f_string_dynamic_t_resize(status, (*directory), length)
+        if (length) {
+          status = f_string_dynamic_increase_by(length + 4, directory);
           if (F_status_is_error(status)) return status;
 
-          memcpy(directory->string + 2, argument + begin, length - 3);
+          memcpy(directory->string + 2, argument.string + begin, length);
 
-          directory->used = length;
-          directory->size = length;
           directory->string[0] = f_path_separator_current_s.string[0];
           directory->string[1] = f_path_separator_s.string[0];
-          directory->string[length - 1] = f_path_separator_s.string[0];
+          directory->string[length] = f_path_separator_s.string[0];
+          directory->string[length + 3] = 0;
+          directory->used = length + 3;
         }
         else {
-          macro_f_string_dynamic_t_clear((*directory))
-          macro_f_string_dynamic_t_resize(status, (*directory), 2)
+          status = f_string_dynamic_increase_by(4, directory);
           if (F_status_is_error(status)) return status;
 
-          directory->used = 2;
-          directory->size = 2;
           directory->string[0] = f_path_separator_current_s.string[0];
           directory->string[1] = f_path_separator_s.string[0];
+          directory->string[2] = f_path_separator_s.string[0];
+          directory->string[3] = 0;
+          directory->used = 3;
         }
       }
       else {
-        ++length;
+        directory->used = 0;
 
-        macro_f_string_dynamic_t_clear((*directory))
-        macro_f_string_dynamic_t_resize(status, (*directory), length)
+        status = f_string_dynamic_increase_by(length + 2, directory);
         if (F_status_is_error(status)) return status;
 
-        memcpy(directory->string, argument, length - 1);
+        memcpy(directory->string, argument.string, length);
 
-        directory->used = length;
-        directory->size = length;
-        directory->string[length - 1] = f_path_separator_s.string[0];
+        directory->string[length] = f_path_separator_s.string[0];
+        directory->string[length + 1] = 0;
+        directory->used = length + 1;
       }
     }
-    else if (argument[0] != f_path_separator_s.string[0]) {
-      macro_f_string_dynamic_t_clear((*directory))
-      macro_f_string_dynamic_t_resize(status, (*directory), 2)
+    else if (argument.string[0] != f_path_separator_s.string[0]) {
+      directory->used = 0;
+
+      status = f_string_dynamic_increase_by(2, directory);
       if (F_status_is_error(status)) return status;
 
-      memcpy(directory->string, argument, 2);
-
-      directory->used = 2;
-      directory->size = 2;
-      directory->string[1] = f_path_separator_s.string[0];
+      directory->string[0] = f_path_separator_s.string[0];
+      directory->string[1] = 0;
+      directory->used = 1;
     }
     else {
-      macro_f_string_dynamic_t_clear((*directory))
-      macro_f_string_dynamic_t_resize(status, (*directory), 1)
+      directory->used = 0;
+
+      status = f_string_dynamic_increase_by(2, directory);
       if (F_status_is_error(status)) return status;
 
-      memcpy(directory->string, argument, 1);
-
+      directory->string[0] = argument.string[0];
+      directory->string[1] = 0;
       directory->used = 1;
-      directory->size = 1;
     }
 
     return F_none;

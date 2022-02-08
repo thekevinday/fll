@@ -280,7 +280,6 @@ extern "C" {
 
     // Create a string array that is compatible with execv() calls.
     f_string_t fixed_arguments[arguments.used + 2];
-
     f_string_static_t program_name = f_string_static_t_initialize;
 
     const f_string_t last_slash = strrchr(program.used ? program.string : arguments.array[0].string, f_path_separator_s.string[0]);

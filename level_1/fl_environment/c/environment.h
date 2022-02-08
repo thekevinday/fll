@@ -31,6 +31,8 @@ extern "C" {
  * If the environment variable name is not found, then it is not added to the map.
  * If the environment variable name is found but has an empty value, then it is added to the map with an empty value.
  *
+ * Each name and value in the map is NULL terminated after the name.used or size.used.
+ *
  * This does not check for uniqueness in the map.
  *
  * @param name
@@ -45,10 +47,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_maps_increase_by().
  *
  * @see f_environment_get()
  * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_terminate_after()
  * @see f_string_maps_increase_by()
  */
 #ifndef _di_fl_environment_load_name_
@@ -60,6 +66,8 @@ extern "C" {
  *
  * If the environment variable name is not found, then it is not added to the map.
  * If the environment variable name is found but has an empty value, then it is added to the map with an empty value.
+ *
+ * Each name and value in the map is NULL terminated after the name.used or size.used.
  *
  * This does not check for uniqueness in the map.
  *

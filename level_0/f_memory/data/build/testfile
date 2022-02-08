@@ -24,7 +24,7 @@ main:
 
 not_created:
   print
-  print context:"error"Failed to test due to being unable to find either a shared or static test binary to perform tests. context:"error"
+  print 'context:"error"Failed to test due to being unable to find either a shared or static test binary to perform tests. context:"reset"'
 
   exit failure
 

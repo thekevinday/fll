@@ -511,7 +511,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    // reset the environment.
+    // Reset the environment.
     for (f_array_length_t i = 0; i < data_make->environment.used; ++i) {
 
       data_make->environment.array[i].name.used = 0;
@@ -544,7 +544,7 @@ extern "C" {
 
       funlockfile(data_make->main->output.to.stream);
 
-      // flush to stdout before executing command.
+      // Flush to stdout before executing command.
       fflush(data_make->main->output.to.stream);
     }
 
@@ -666,48 +666,15 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_run_
   f_status_t fake_make_operate_process_run(fake_make_data_t * const data_make, const f_string_statics_t arguments, const bool as_shell) {
 
-    const f_string_static_t *program = &arguments.array[0];
-
-    f_status_t status = F_none;
-    f_string_dynamics_t args = f_string_dynamics_t_initialize;
+    f_string_statics_t args = f_string_statics_t_initialize;
 
     if (arguments.used > 1) {
-      status = f_string_dynamics_resize(arguments.used - 1, &args);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamics_resize", F_true);
-        return status;
-      }
-
-      for (f_array_length_t i = 0; i < args.size; ++i) {
-
-        status = f_string_dynamic_append(arguments.array[i + 1], &args.array[i]);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
-
-          f_string_dynamics_resize(0, &args);
-
-          return status;
-        }
-
-        status = f_string_dynamic_terminate(&args.array[i]);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_terminate", F_true);
-
-          f_string_dynamics_resize(0, &args);
-
-          return status;
-        }
-
-        ++args.used;
-      } // for
+      args.array = arguments.array + 1;
+      args.used = arguments.used - 1;
+      args.size = 0;
     }
 
-    status = fake_make_operate_process_execute(data_make, *program, args, as_shell);
-
-    f_string_dynamics_resize(0, &args);
+    const f_status_t status = fake_make_operate_process_execute(data_make, arguments.array[0], args, as_shell);
 
     return status;
   }

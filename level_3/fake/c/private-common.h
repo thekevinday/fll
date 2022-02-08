@@ -1217,6 +1217,8 @@ extern "C" {
     f_fss_nameds_t fakefile;
 
     f_string_dynamic_t buffer;
+    f_string_dynamic_t cache_1;
+    f_string_dynamic_t cache_2;
     f_string_dynamic_t path_cache;
 
     f_array_length_t id_main;
@@ -1236,21 +1238,11 @@ extern "C" {
     f_fss_nameds_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
     0, \
     0, \
   }
-
-  #define macro_fake_make_data_t_delete_simple(structure) \
-    macro_fake_build_setting_t_delete_simple(structure.setting_build) \
-    macro_fake_make_setting_t_delete_simple(structure.setting_make) \
-    macro_f_string_maps_t_delete_simple(structure.environment) \
-    macro_fake_make_parameter_delete_simple(structure.parameter) \
-    macro_fake_make_parameter_delete_simple(structure.parameter_option) \
-    macro_fake_make_parameter_delete_simple(structure.parameter_value) \
-    macro_fake_make_path_delete_simple(structure.path) \
-    macro_f_fss_nameds_t_delete_simple(structure.fakefile) \
-    macro_f_string_dynamic_t_delete_simple(structure.buffer) \
-    macro_f_string_dynamic_t_delete_simple(structure.path_cache)
 #endif // _di_fake_make_data_t_
 
 /**
@@ -1388,6 +1380,23 @@ extern "C" {
   extern const f_string_static_t fake_file_data_build_process_post_s;
   extern const f_string_static_t fake_file_data_build_process_pre_s;
 #endif // _di_fake_file_data_build_strings_
+
+/**
+ * Deallocate make data.
+ *
+ * @param data
+ *   The make data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ * @see f_fss_nameds_resize()
+ * @see f_string_dynamic_resize()
+ * @see f_string_maps_resize()
+ */
+#ifndef _di_fake_make_data_delete_
+  extern f_status_t fake_make_data_delete(fake_make_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_data_delete_
 
 /**
  * Check to see if a process signal is received.

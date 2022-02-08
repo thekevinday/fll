@@ -20,13 +20,23 @@ extern "C" {
     environment->array[environment->used].name.used = 0;
     environment->array[environment->used].value.used = 0;
 
-    status = f_string_dynamic_append_nulless(name, &environment->array[environment->used].name);
-    if (F_status_is_error(status)) return status;
+    status = f_string_dynamic_increase_by(name.used + 1, &environment->array[environment->used].name);
 
-    status = f_environment_get(name, &environment->array[environment->used].value);
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_append_nulless(name, &environment->array[environment->used].name);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_terminate_after(&environment->array[environment->used].name);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_environment_get(name, &environment->array[environment->used].value);
+    }
 
     if (F_status_is_error(status) || status == F_data_not || status == F_exist_not) {
       environment->array[environment->used].name.used = 0;
+      environment->array[environment->used].value.used = 0;
 
       return status;
     }
@@ -55,22 +65,28 @@ extern "C" {
       environment->array[environment->used].name.used = 0;
       environment->array[environment->used].value.used = 0;
 
-      status = f_string_dynamic_append_nulless(names.array[i], &environment->array[environment->used].name);
-      if (F_status_is_error(status)) return status;
+      status = f_string_dynamic_increase_by(names.array[i].used + 1, &environment->array[environment->used].name);
 
-      status = f_environment_get(names.array[i], &environment->array[environment->used].value);
+      if (F_status_is_error_not(status)) {
+        status = f_string_dynamic_append_nulless(names.array[i], &environment->array[environment->used].name);
+      }
+
+      if (F_status_is_error_not(status)) {
+        status = f_string_dynamic_terminate_after(&environment->array[environment->used].name);
+      }
+
+      if (F_status_is_error_not(status)) {
+        status = f_environment_get(names.array[i], &environment->array[environment->used].value);
+      }
 
       if (F_status_is_error(status)) {
         environment->array[environment->used].name.used = 0;
+        environment->array[environment->used].value.used = 0;
 
         return status;
       }
 
-      if (status == F_data_not || status == F_exist_not) {
-        environment->array[environment->used].name.used = 0;
-
-        continue;
-      }
+      if (status == F_data_not || status == F_exist_not) continue;
 
       ++environment->used;
     } // for

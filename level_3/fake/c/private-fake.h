@@ -62,8 +62,6 @@ extern "C" {
 /**
  * Validate console arguments and print any relating error messages.
  *
- * @param arguments
- *   The parameters passed to the process.
  * @param main
  *   The main program data.
  *
@@ -73,7 +71,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_process_console_parameters_
-  extern f_status_t fake_process_console_parameters(const f_console_arguments_t *arguments, fake_main_t *main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_process_console_parameters(fake_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_validate_console_parameters_
 
 /**
@@ -115,8 +113,6 @@ extern "C" {
  *
  * This should not be called for skeleton as in that case the directories probably do not exist.
  *
- * @param arguments
- *   The parameters passed to the process.
  * @param main
  *   The main program data.
  *
@@ -128,7 +124,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_
-  extern f_status_t fake_validate_parameter_directories(const f_console_arguments_t *arguments, fake_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_validate_parameter_directories(fake_main_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fake_validate_parameter_directories_
 
 /**

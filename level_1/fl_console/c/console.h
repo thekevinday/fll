@@ -40,6 +40,8 @@ extern "C" {
  *   - Ensures that multiple '/' following './' at the start of the string is reduced to only './' ('.////' would become './').
  *   - Ensures that multiple '/' following '../' at the start of the string is reduced to only '../' ('..////' would become '../').
  *
+ * The directory string will be NULL terminated after directory.used.
+ *
  * This does not perform complex cleanup, such as '..///..///' to '../../'.
  *
  * The purpose of the cleanups is to ensure/enforce a consistent beginning and ending of the path strings.
@@ -47,9 +49,9 @@ extern "C" {
  *
  * @param argv
  *   The argument string expected to be a number.
- *   This is generally passed from the argv[].
  * @param directory
  *   The dynamically allocated processed directory string.
+ *   The string will be replaced on success.
  *
  * @return
  *   F_none on success.
@@ -58,7 +60,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _fl_console_parameter_to_string_dynamic_directory_
-  extern f_status_t fl_console_parameter_to_string_dynamic_directory(const f_string_t argument, f_string_dynamic_t *directory);
+  extern f_status_t fl_console_parameter_to_string_dynamic_directory(const f_string_static_t argument, f_string_dynamic_t *directory);
 #endif // _fl_console_parameter_to_string_dynamic_directory_
 
 #ifdef __cplusplus

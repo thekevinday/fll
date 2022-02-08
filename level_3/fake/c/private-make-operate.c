@@ -36,7 +36,7 @@ extern "C" {
 
     data_make.main = main;
 
-    status = f_string_dynamics_increase(F_memory_default_allocation_small_d, &data_make.path.stack);
+    status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make.path.stack);
 
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
@@ -49,7 +49,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "f_path_current", F_true);
 
-      macro_fake_make_data_t_delete_simple(data_make);
+      fake_make_data_delete(&data_make);
 
       return status;
     }
@@ -59,7 +59,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "f_directory_open", F_true);
 
-      macro_fake_make_data_t_delete_simple(data_make);
+      fake_make_data_delete(&data_make);
 
       return status;
     }
@@ -73,7 +73,7 @@ extern "C" {
     fake_make_load_fakefile(&data_make, &status);
 
     if (F_status_is_error(status)) {
-      macro_fake_make_data_t_delete_simple(data_make)
+      fake_make_data_delete(&data_make);
 
       return status;
     }
@@ -131,7 +131,7 @@ extern "C" {
     f_file_stream_close(F_true, &data_make.path.top);
 
     f_type_array_lengths_resize(0, &section_stack);
-    macro_fake_make_data_t_delete_simple(data_make)
+    fake_make_data_delete(&data_make);
 
     return status;
   }
@@ -337,10 +337,10 @@ extern "C" {
                 }
               }
               else {
-                *status = f_string_append("0", 1, &arguments->array[arguments->used]);
+                *status = f_string_dynamic_append(f_string_ascii_0_s, &arguments->array[arguments->used]);
 
                 if (F_status_is_error(*status)) {
-                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_append", F_true);
+                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
 
                   break;
                 }
@@ -357,7 +357,7 @@ extern "C" {
 
                 unmatched = F_false;
 
-                *status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
+                *status = f_string_dynamics_increase(fake_default_allocation_small_d, arguments);
 
                 if (F_status_is_error(*status)) {
                   fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
@@ -427,7 +427,7 @@ extern "C" {
                       } // for
                     }
                     else {
-                      *status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, arguments);
+                      *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, arguments);
 
                       if (F_status_is_error(*status)) {
                         fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -809,7 +809,7 @@ extern "C" {
       status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
     }
     else {
-      status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, arguments);
+      status = f_string_dynamics_increase_by(fake_default_allocation_small_d, arguments);
 
       if (F_status_is_error_not(status)) {
         status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
@@ -876,7 +876,7 @@ extern "C" {
         status = f_string_dynamic_append_nulless(*context, &arguments->array[arguments->used]);
       }
       else {
-        status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, arguments);
+        status = f_string_dynamics_increase_by(fake_default_allocation_small_d, arguments);
 
         if (F_status_is_error_not(status)) {
           status = f_string_dynamic_append_nulless(*context, &arguments->array[arguments->used]);
@@ -902,55 +902,46 @@ extern "C" {
   f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) {
 
     f_status_t status = F_none;
-    f_string_dynamic_t value = f_string_dynamic_t_initialize;
 
-    bool unmatched = F_false;
+    data_make->cache_1.used = 0;
+    data_make->cache_2.used = 0;
 
-    {
-      f_string_dynamic_t name = f_string_dynamic_t_initialize;
+    status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 1, &data_make->cache_1);
 
-      status = f_string_dynamic_partial_append_nulless(data_make->buffer, range_name, &name);
-      if (F_status_is_error(status)) return status;
-
-      status = f_environment_get(name, &value);
-
-      f_string_dynamic_resize(0, &name);
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_partial_append_nulless(data_make->buffer, range_name, &data_make->cache_1);
     }
 
-    if (F_status_is_error(status)) {
-      f_string_dynamic_resize(0, &value);
-
-      return status;
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_terminate_after(&data_make->cache_1);
     }
 
-    if (status == F_exist_not) {
-      f_string_dynamic_resize(0, &value);
-
-      return F_false;
+    if (F_status_is_error_not(status)) {
+      status = f_environment_get(data_make->cache_1, &data_make->cache_2);
     }
-
-    if (quoted) {
-      status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
-    }
-    else {
-      status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, arguments);
-
-      if (F_status_is_error_not(status)) {
-        status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
-
-        if (F_status_is_error_not(status)) {
-          status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
-
-          if (F_status_is_error_not(status)) {
-            ++arguments->used;
-          }
-        }
-      }
-    }
-
-    f_string_dynamic_resize(0, &value);
 
     if (F_status_is_error(status)) return status;
+    if (status == F_exist_not) return F_false;
+
+    status = f_string_dynamics_increase(fake_default_allocation_small_d, arguments);
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_increase_by(data_make->cache_2.used + 1, &arguments->array[arguments->used]);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_append_nulless(data_make->cache_2, &arguments->array[arguments->used]);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
+    }
+
+    if (F_status_is_error(status)) return status;
+
+    if (!quoted) {
+      ++arguments->used;
+    }
 
     return F_true;
   }

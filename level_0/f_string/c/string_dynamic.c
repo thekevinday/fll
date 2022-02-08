@@ -985,15 +985,12 @@ extern "C" {
       return F_status_set_error(F_string_too_large);
     }
 
-    const f_array_length_t total = destination->used + 1;
-
-    if (total > destination->size) {
-      const f_status_t status = private_f_string_dynamic_resize(total, destination);
+    if (destination->used + 1 > destination->size) {
+      const f_status_t status = private_f_string_dynamic_resize(destination->used + (destination->used + 1 == F_string_t_size_d ? 1 : F_memory_default_allocation_small_d), destination);
       if (F_status_is_error(status)) return status;
     }
 
-    destination->string[destination->used] = 0;
-    destination->used = total;
+    destination->string[destination->used++] = 0;
 
     return F_none;
   }
@@ -1005,13 +1002,10 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (destination->used) {
-      for (; destination->used; --destination->used) {
-
-        if (!destination->string[destination->used - 1]) continue;
-
-        break;
-      } // for
+    if (destination->used < destination->size) {
+      if (!destination->string[destination->used]) {
+        return F_none;
+      }
     }
 
     if (destination->used == F_string_t_size_d) {
@@ -1019,7 +1013,7 @@ extern "C" {
     }
 
     if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_string_dynamic_resize(destination->used + F_memory_default_allocation_small_d, destination);
+      const f_status_t status = private_f_string_dynamic_resize(destination->used + (destination->used + 1 == F_string_t_size_d ? 1 : F_memory_default_allocation_small_d), destination);
       if (F_status_is_error(status)) return status;
     }
 

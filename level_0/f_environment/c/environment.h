@@ -76,8 +76,8 @@ extern "C" {
  *   The name must be NULL terminated.
  * @param value
  *   The value associated with name.
- *   The value will not be null terminated.
- *   The value will be appended (set value->used to 0 to replace).
+ *   The value is be null terminated.
+ *   The value is be appended (set value->used to 0 before calling this to fully replace).
  *
  * @return
  *   F_none on success.

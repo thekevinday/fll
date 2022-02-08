@@ -244,7 +244,7 @@ extern "C" {
  *
  * @param arguments
  *   The program argument array to parse.
- *   The caller must guarantee that the values.used does not exceed the argv length.
+ *   The caller must guarantee that the indexes within values do not exceed the arguments array length.
  * @param values
  *   The string locations where the console parameters are found.
  * @param destination
@@ -273,7 +273,7 @@ extern "C" {
  *   A string to append between the source and destination, such as a space: ' '.
  * @param arguments
  *   The program argument array to parse.
- *   The caller must guarantee that the values.used does not exceed the argv length.
+ *   The caller must guarantee that the indexes within values do not exceed the arguments array length.
  * @param values
  *   The string locations where the console parameters are found.
  * @param destination
@@ -302,7 +302,7 @@ extern "C" {
  *
  * @param arguments
  *   The program argument array to parse.
- *   The caller must guarantee that the values.used does not exceed the argv length.
+ *   The caller must guarantee that the indexes within values do not exceed the arguments array length.
  * @param values
  *   The string locations where the console parameters are found.
  * @param destination
@@ -332,6 +332,7 @@ extern "C" {
  *   A string to append between the source and destination, such as a space: ' '.
  * @param arguments
  *   The program argument array to parse.
+ *   The caller must guarantee that the indexes within values do not exceed the arguments array length.
  * @param values
  *   The string locations where the console parameters are found.
  * @param destination

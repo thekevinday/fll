@@ -215,7 +215,7 @@ extern "C" {
       {
         f_string_t function_name = "macro_f_string_map_multis_t_resize";
 
-        macro_f_string_map_multis_t_resize(*status, data_make->setting_make.parameter, F_memory_default_allocation_small_d);
+        macro_f_string_map_multis_t_resize(*status, data_make->setting_make.parameter, fake_default_allocation_small_d);
 
         if (F_status_is_error_not(*status)) {
           data_make->setting_make.parameter.used = 1;
@@ -526,7 +526,7 @@ extern "C" {
         } // for
 
         if (j == data_make->setting_build.environment.used) {
-          status = f_string_dynamics_increase(F_memory_default_allocation_small_d, &data_make->setting_build.environment);
+          status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->setting_build.environment);
 
           if (F_status_is_error(status)) {
             fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);

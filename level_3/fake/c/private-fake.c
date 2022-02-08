@@ -153,7 +153,7 @@ extern "C" {
 #endif // _di_fake_file_buffer_
 
 #ifndef _di_fake_process_console_parameters_
-  f_status_t fake_process_console_parameters(const f_console_arguments_t *arguments, fake_main_t *main) {
+  f_status_t fake_process_console_parameters(fake_main_t * const main) {
 
     f_status_t status = F_none;
 
@@ -206,16 +206,16 @@ extern "C" {
 
           f_array_length_t index = main->parameters.array[parameters_id[i]].values.array[0];
 
-          if (argv[index].used) {
+          if (main->parameters.arguments.array[index].used) {
             if (parameters_validate_word[i]) {
               f_array_length_t j = 0;
               f_array_length_t width_max = 0;
 
-              for (j = 0; j < argv[index].used; ++j) {
+              for (j = 0; j < main->parameters.arguments.array[index].used; ++j) {
 
-                width_max = argv[index].used - j;
+                width_max = main->parameters.arguments.array[index].used - j;
 
-                status = f_utf_is_word_dash_plus(argv[index] + j, width_max, F_false);
+                status = f_utf_is_word_dash_plus(main->parameters.arguments.array[index].string + j, width_max, F_false);
 
                 if (F_status_is_error(status)) {
                   if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -238,7 +238,7 @@ extern "C" {
                     fl_print_format("%r%[%QThe '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fake_long_process_s, main->error.notable);
                     fl_print_format("%[' parameters value '%]", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-                    fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, argv[index], main->error.notable);
+                    fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, main->parameters.arguments.array[index], main->error.notable);
                     fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                     funlockfile(main->error.to.stream);
@@ -249,7 +249,15 @@ extern "C" {
               } // for
             }
 
-            status = f_string_append(argv[index], argv[index].used, parameters_value[i]);
+            status = f_string_dynamic_increase_by(main->parameters.arguments.array[index].used + 1, parameters_value[i]);
+
+            if (F_status_is_error(status)) {
+              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
+              return status;
+            }
+
+            status = f_string_dynamic_append(main->parameters.arguments.array[index], parameters_value[i]);
 
             if (F_status_is_error(status)) {
               if (status == F_status_set_error(F_string_too_large)) {
@@ -274,7 +282,7 @@ extern "C" {
             }
           }
 
-          if (!argv[index].used || status == F_data_not) {
+          if (!main->parameters.arguments.array[index].used || status == F_data_not) {
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
@@ -289,6 +297,14 @@ extern "C" {
         else if (parameter_defaults[i].used) {
           parameters_value[i]->used = 0;
 
+          status = f_string_dynamic_increase_by(parameter_defaults[i].used + 1, parameters_value[i]);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
+            return status;
+          }
+
           status = f_string_dynamic_append(parameter_defaults[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
@@ -296,6 +312,14 @@ extern "C" {
 
             return status;
           }
+        }
+
+        status = f_string_dynamic_terminate_after(parameters_value[i]);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+
+          return status;
         }
       } // for
     }
@@ -349,7 +373,17 @@ extern "C" {
             return F_status_set_error(F_parameter);
           }
 
-          status = fl_console_parameter_to_string_dynamic_directory(argv[main->parameters.array[parameters_id[i]].values.array[0]], parameters_value[i]);
+          const f_array_length_t index = main->parameters.array[parameters_id[i]].values.array[main->parameters.array[parameters_id[i]].values.used - 1];
+
+          status = f_string_dynamic_increase_by(main->parameters.arguments.array[index].used + 1, parameters_value[i]);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
+            return status;
+          }
+
+          status = fl_console_parameter_to_string_dynamic_directory(main->parameters.arguments.array[index], parameters_value[i]);
 
           if (F_status_is_error(status)) {
             if (fll_error_print(main->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -368,6 +402,14 @@ extern "C" {
         else if (parameter_defaults[i].used) {
           parameters_value[i]->used = 0;
 
+          status = f_string_dynamic_increase_by(parameter_defaults[i].used + 1, parameters_value[i]);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
+            return status;
+          }
+
           status = f_string_dynamic_append(parameter_defaults[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
@@ -384,11 +426,19 @@ extern "C" {
             return status;
           }
         }
+
+        status = f_string_dynamic_terminate_after(parameters_value[i]);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+
+          return status;
+        }
       } // for
     }
 
     if (main->parameters.array[fake_parameter_define_e].result == f_console_result_additional_e) {
-      status = fll_program_parameter_additional_rip(argv, main->parameters.array[fake_parameter_define_e].values, &main->define);
+      status = fll_program_parameter_additional_rip(main->parameters.arguments.array, main->parameters.array[fake_parameter_define_e].values, &main->define);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -407,10 +457,11 @@ extern "C" {
 
     if (main->parameters.array[fake_parameter_mode_e].result == f_console_result_found_e) {
       fake_print_error_parameter_missing_value(main, fake_long_mode_s);
+
       return F_status_set_error(F_parameter);
     }
     else if (main->parameters.array[fake_parameter_mode_e].result == f_console_result_additional_e) {
-      status = fll_program_parameter_additional_rip(argv, main->parameters.array[fake_parameter_mode_e].values, &main->mode);
+      status = fll_program_parameter_additional_rip(main->parameters.arguments.array, main->parameters.array[fake_parameter_mode_e].values, &main->mode);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -530,7 +581,7 @@ extern "C" {
 #endif // _di_fake_signal_state_interrupt_iki_
 
 #ifndef _di_fake_validate_directories_
-  f_status_t fake_validate_parameter_directories(const f_console_arguments_t *arguments, fake_main_t * const main) {
+  f_status_t fake_validate_parameter_directories(fake_main_t * const main) {
 
     if (fake_signal_received(main)) {
       return F_status_set_error(F_interrupt);
@@ -542,10 +593,10 @@ extern "C" {
       fake_long_path_work_s,
     };
 
-    const f_string_dynamic_t *parameters_value[] = {
-      &main->path_build,
-      &main->path_data,
-      &main->path_work,
+    const f_string_dynamic_t parameters_value[] = {
+      main->path_build,
+      main->path_data,
+      main->path_work,
     };
 
     const bool parameters_required[] = {
@@ -559,16 +610,16 @@ extern "C" {
 
     for (uint8_t i = 0; i < 3; ++i) {
 
-      if (parameters_value[i]->used) {
+      if (parameters_value[i].used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
-        status = f_file_stat(*parameters_value[i], F_true, &directory_stat);
+        status = f_file_stat(parameters_value[i], F_true, &directory_stat);
 
         if (status == F_status_set_error(F_file_found_not)) status = F_status_set_error(F_directory_found_not);
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) != F_directory_found_not || parameters_required[i]) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stat", F_true, *parameters_value[i], f_file_operation_access_s, fll_error_file_type_directory_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i], f_file_operation_access_s, fll_error_file_type_directory_e);
 
             return status;
           }
@@ -593,19 +644,19 @@ extern "C" {
 
 #ifndef _di_fake_verbose_print_clone_
   void fake_verbose_print_clone(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Cloned '%S' to '%S'.%r", output.stream, source, destination, f_string_eol_s);
+    fll_print_format("Cloned '%Q' to '%Q'.%r", output.stream, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_clone_
 
 #ifndef _di_fake_verbose_print_copy_
   void fake_verbose_print_copy(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Copied '%S' to '%S'.%r", output.stream, source, destination, f_string_eol_s);
+    fll_print_format("Copied '%Q' to '%Q'.%r", output.stream, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_copy_
 
 #ifndef _di_fake_verbose_print_move_
   void fake_verbose_print_move(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Moved '%S' to '%S'.%r", output.stream, source, destination, f_string_eol_s);
+    fll_print_format("Moved '%Q' to '%Q'.%r", output.stream, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_move_
 

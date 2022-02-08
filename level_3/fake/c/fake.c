@@ -268,7 +268,7 @@ extern "C" {
     if (operations_length) {
       bool validate_parameter_directories = F_true;
 
-      status = fake_process_console_parameters(arguments, main);
+      status = fake_process_console_parameters(main);
 
       if (F_status_is_error_not(status)) {
         status = fake_path_generate(main);
@@ -299,7 +299,7 @@ extern "C" {
 
         if (main->operation == fake_operation_build_e) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, main);
+            status = fake_validate_parameter_directories(main);
             validate_parameter_directories = F_false;
           }
 
@@ -309,7 +309,7 @@ extern "C" {
         }
         else if (main->operation == fake_operation_clean_e) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, main);
+            status = fake_validate_parameter_directories(main);
             validate_parameter_directories = F_false;
           }
 
@@ -319,7 +319,7 @@ extern "C" {
         }
         else if (main->operation == fake_operation_make_e) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, main);
+            status = fake_validate_parameter_directories(main);
             validate_parameter_directories = F_false;
           }
 
