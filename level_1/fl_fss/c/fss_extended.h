@@ -149,7 +149,7 @@ extern "C" {
  *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param quote
+ * @param quoted
  *   If 0, then double quotes are auto-inserted, when required.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param complete
@@ -189,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_extended_object_write_
-  extern f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_extended_object_write_
 
 /**
@@ -202,7 +202,7 @@ extern "C" {
  *
  * @param content
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param quote
+ * @param quoted
  *   If 0, then double quotes are auto-inserted, when required.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param complete
@@ -244,7 +244,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_extended_content_write_
-  extern f_status_t fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_status_t fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_extended_content_write_
 
 #ifdef __cplusplus

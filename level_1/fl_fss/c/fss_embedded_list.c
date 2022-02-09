@@ -1244,7 +1244,7 @@ extern "C" {
     bool is_comment = F_false;
     bool ends_on_eol = F_false;
     bool has_graph = F_false;
-    bool do_prepend = F_true;
+    bool do_prepend = prepend ? F_true : F_false;
 
     f_array_length_t i = 0;
     f_array_length_t slash_count = 0;
@@ -1363,7 +1363,7 @@ extern "C" {
 
         if (range->start >= content.used || range->start > range->stop || content.string[range->start] == f_fss_eol_s.string[0]) {
 
-          if (content.string[range->start] == f_fss_eol_s.string[0]) {
+          if (content.string[range->start] == f_fss_eol_s.string[0] && prepend) {
             do_prepend = F_true;
             ends_on_eol = F_true;
           }
@@ -1431,7 +1431,7 @@ extern "C" {
           do_prepend = F_false;
         }
 
-        if (content.string[range->start] == f_fss_eol_s.string[0]) {
+        if (content.string[range->start] == f_fss_eol_s.string[0] && prepend) {
           do_prepend = F_true;
           ends_on_eol = F_true;
         }

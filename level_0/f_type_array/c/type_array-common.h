@@ -197,9 +197,9 @@ extern "C" {
 #endif // _di_f_array_lengthss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for int8_t, see type.h for typedefs.
  */
-#ifndef _di_f_array_t_int8_t_
+#ifndef _di_f_int8_t_
   #define macro_f_int8s_t_clear(int8s) macro_f_memory_structures_clear(int8s)
 
   #define macro_f_int8s_t_resize(status, int8s, length) status = f_type_int8s_resize(length, &int8s);
@@ -212,12 +212,12 @@ extern "C" {
 
   #define macro_f_int8s_t_delete_simple(int8s)  f_type_int8s_resize(0, &int8s);
   #define macro_f_int8s_t_destroy_simple(int8s) f_type_int8s_adjust(0, &int8s);
-#endif // _di_int8s_t_
+#endif // _di_f_int8_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_int8s_t, see type.h for typedefs.
  */
-#ifndef _di_int8ss_t_
+#ifndef _di_f_int8ss_t_
   #define macro_f_int8ss_t_clear(int8ss) macro_f_memory_structures_clear(int8ss)
 
   #define macro_f_int8ss_t_resize(status, int8ss, length) status = f_type_int8ss_resize(length, &int8ss);
@@ -230,12 +230,12 @@ extern "C" {
 
   #define macro_f_int8ss_t_delete_simple(int8ss)  f_type_int8ss_resize(0, &int8ss);
   #define macro_f_int8ss_t_destroy_simple(int8ss) f_type_int8ss_adjust(0, &int8ss);
-#endif // _di_int8ss_t_
+#endif // _di_f_int8ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint8s_t, see type.h for typedefs.
  */
-#ifndef _di_uint8s_t_
+#ifndef _di_f_uint8s_t_
   #define macro_f_uint8s_t_clear(uint8s) macro_f_memory_structures_clear(uint8s)
 
   #define macro_f_uint8s_t_resize(status, uint8s, length) status = f_type_uint8s_resize(length, &uint8s);
@@ -248,12 +248,12 @@ extern "C" {
   #define macro_f_uint8s_t_increase_by(status, uint8s, amount) status = f_type_uint8s_increase_by(amount, &uint8s);
   #define macro_f_uint8s_t_decrease_by(status, uint8s, amount) status = f_type_uint8s_decrease_by(amount, &uint8s);
   #define macro_f_uint8s_t_decimate_by(status, uint8s, amount) status = f_type_uint8s_decimate_by(amount, &uint8s);
-#endif // _di_uint8s_t_
+#endif // _di_f_uint8s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint8ss_t, see type.h for typedefs.
  */
-#ifndef _di_uint8ss_t_
+#ifndef _di_f_uint8ss_t_
   #define macro_f_uint8ss_t_clear(uint8ss) macro_f_memory_structures_clear(uint8ss)
 
   #define macro_f_uint8ss_t_resize(status, uint8ss, length) status = f_type_uint8ss_resize(length, &uint8ss);
@@ -266,12 +266,12 @@ extern "C" {
   #define macro_f_uint8ss_t_increase_by(status, uint8ss, amount) status = f_type_uint8ss_increase_by(amount, &uint8ss);
   #define macro_f_uint8ss_t_decrease_by(status, uint8ss, amount) status = f_type_uint8ss_decrease_by(amount, &uint8ss);
   #define macro_f_uint8ss_t_decimate_by(status, uint8ss, amount) status = f_type_uint8ss_decimate_by(amount, &uint8ss);
-#endif // _di_uint8ss_t_
+#endif // _di_f_uint8ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_int16s_t, see type.h for typedefs.
  */
-#ifndef _di_int16s_t_
+#ifndef _di_f_int16s_t_
   #define macro_f_int16s_t_clear(int16s) macro_f_memory_structures_clear(int16s)
 
   #define macro_f_int16s_t_resize(status, int16s, length) status = f_type_int16s_resize(length, &int16s);
@@ -284,12 +284,12 @@ extern "C" {
 
   #define macro_f_int16s_t_delete_simple(int16s)  f_type_int16s_resize(0, &int16s);
   #define macro_f_int16s_t_destroy_simple(int16s) f_type_int16s_adjust(0, &int16s);
-#endif // _di_int16s_t_
+#endif // _di_f_int16s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_int16ss_t, see type.h for typedefs.
  */
-#ifndef _di_int16ss_t_
+#ifndef _di_f_int16ss_t_
   #define macro_f_int16ss_t_clear(int16ss) macro_f_memory_structures_clear(int16ss)
 
   #define macro_f_int16ss_t_resize(status, int16ss, length) status = f_type_int16ss_resize(length, &int16ss);
@@ -302,12 +302,12 @@ extern "C" {
 
   #define macro_f_int16ss_t_delete_simple(int16ss)  f_type_int16ss_resize(0, &int16ss);
   #define macro_f_int16ss_t_destroy_simple(int16ss) f_type_int16ss_adjust(0, &int16ss);
-#endif // _di_int16ss_t_
+#endif // _di_f_int16ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint16s_t, see type.h for typedefs.
  */
-#ifndef _di_uint16s_t_
+#ifndef _di_f_uint16s_t_
   #define macro_f_uint16s_t_clear(uint16s) macro_f_memory_structures_clear(uint16s)
 
   #define macro_f_uint16s_t_resize(status, uint16s, length) status = f_type_uint16s_resize(length, &uint16s);
@@ -320,12 +320,12 @@ extern "C" {
   #define macro_f_uint16s_t_increase_by(status, uint16s, amount) status = f_type_uint16s_increase_by(amount, &uint16s);
   #define macro_f_uint16s_t_decrease_by(status, uint16s, amount) status = f_type_uint16s_decrease_by(amount, &uint16s);
   #define macro_f_uint16s_t_decimate_by(status, uint16s, amount) status = f_type_uint16s_decimate_by(amount, &uint16s);
-#endif // _di_uint16s_t_
+#endif // _di_f_uint16s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint16ss_t, see type.h for typedefs.
  */
-#ifndef _di_uint16ss_t_
+#ifndef _di_f_uint16ss_t_
   #define macro_f_uint16ss_t_clear(uint16ss) macro_f_memory_structures_clear(uint16ss)
 
   #define macro_f_uint16ss_t_resize(status, uint16ss, length) status = f_type_uint16ss_resize(length, &uint16ss);
@@ -338,12 +338,12 @@ extern "C" {
   #define macro_f_uint16ss_t_increase_by(status, uint16ss, amount) status = f_type_uint16ss_increase_by(amount, &uint16ss);
   #define macro_f_uint16ss_t_decrease_by(status, uint16ss, amount) status = f_type_uint16ss_decrease_by(amount, &uint16ss);
   #define macro_f_uint16ss_t_decimate_by(status, uint16ss, amount) status = f_type_uint16ss_decimate_by(amount, &uint16ss);
-#endif // _di_uint16ss_t_
+#endif // _di_f_uint16ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_int32s_t, see type.h for typedefs.
  */
-#ifndef _di_int32s_t_
+#ifndef _di_f_int32s_t_
   #define macro_f_int32s_t_clear(int32s) macro_f_memory_structures_clear(int32s)
 
   #define macro_f_int32s_t_resize(status, int32s, length) status = f_type_int32s_resize(length, &int32s);
@@ -356,12 +356,12 @@ extern "C" {
   #define macro_f_int32s_t_increase_by(status, int32s, amount) status = f_type_int32s_increase_by(amount, &int32s);
   #define macro_f_int32s_t_decrease_by(status, int32s, amount) status = f_type_int32s_decrease_by(amount, &int32s);
   #define macro_f_int32s_t_decimate_by(status, int32s, amount) status = f_type_int32s_decimate_by(amount, &int32s);
-#endif // _di_int32s_t_
+#endif // _di_f_int32s_t_
 
 /**
  * Macros for f_array_lengths_t, see type.h for typedefs.
  */
-#ifndef _di_int32ss_t_
+#ifndef _di_f_int32ss_t_
   #define macro_f_int32ss_t_clear(int32ss) macro_f_memory_structures_clear(int32ss)
 
   #define macro_f_int32ss_t_resize(status, int32ss, length) status = f_type_int32ss_resize(length, &int32ss);
@@ -374,12 +374,12 @@ extern "C" {
   #define macro_f_int32ss_t_increase_by(status, int32ss, amount) status = f_type_int32ss_increase_by(amount, &int32ss);
   #define macro_f_int32ss_t_decrease_by(status, int32ss, amount) status = f_type_int32ss_decrease_by(amount, &int32ss);
   #define macro_f_int32ss_t_decimate_by(status, int32ss, amount) status = f_type_int32ss_decimate_by(amount, &int32ss);
-#endif // _di_int32ss_t_
+#endif // _di_f_int32ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint32s_t, see type.h for typedefs.
  */
-#ifndef _di_uint32s_t_
+#ifndef _di_f_uint32s_t_
   #define macro_f_uint32s_t_clear(uint32s) macro_f_memory_structures_clear(uint32s)
 
   #define macro_f_uint32s_t_resize(status, uint32s, length) status = f_type_uint32s_resize(length, &uint32s);
@@ -392,12 +392,12 @@ extern "C" {
   #define macro_f_uint32s_t_increase_by(status, uint32s, amount) status = f_type_uint32s_increase_by(amount, &uint32s);
   #define macro_f_uint32s_t_decrease_by(status, uint32s, amount) status = f_type_uint32s_decrease_by(amount, &uint32s);
   #define macro_f_uint32s_t_decimate_by(status, uint32s, amount) status = f_type_uint32s_decimate_by(amount, &uint32s);
-#endif // _di_uint32s_t_
+#endif // _di_f_uint32s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint32ss_t, see type.h for typedefs.
  */
-#ifndef _di_uint32ss_t_
+#ifndef _di_f_uint32ss_t_
   #define macro_f_uint32ss_t_clear(uint32ss) macro_f_memory_structures_clear(uint32ss)
 
   #define macro_f_uint32ss_t_resize(status, uint32ss, length) status = f_type_uint32ss_resize(length, &uint32ss);
@@ -410,12 +410,12 @@ extern "C" {
   #define macro_f_uint32ss_t_increase_by(status, uint32ss, amount) status = f_type_uint32ss_increase_by(amount, &uint32ss);
   #define macro_f_uint32ss_t_decrease_by(status, uint32ss, amount) status = f_type_uint32ss_decrease_by(amount, &uint32ss);
   #define macro_f_uint32ss_t_decimate_by(status, uint32ss, amount) status = f_type_uint32ss_decimate_by(amount, &uint32ss);
-#endif // _di_uint32ss_t_
+#endif // _di_f_uint32ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_int64s_t, see type.h for typedefs.
  */
-#ifndef _di_int64s_t_
+#ifndef _di_f_int64s_t_
   #define macro_f_int64s_t_clear(int64s) macro_f_memory_structures_clear(int64s)
 
   #define macro_f_int64s_t_resize(status, int64s, length) status = f_type_int64s_resize(length, &int64s);
@@ -428,12 +428,12 @@ extern "C" {
 
   #define macro_f_int64s_t_delete_simple(int64s)  f_type_int64s_resize(0, &int64s);
   #define macro_f_int64s_t_destroy_simple(int64s) f_type_int64s_adjust(0, &int64s);
-#endif // _di_int64s_t_
+#endif // _di_f_int64s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_int64ss_t, see type.h for typedefs.
  */
-#ifndef _di_int64ss_t_
+#ifndef _di_f_int64ss_t_
   #define macro_f_int64ss_t_clear(int64ss) macro_f_memory_structures_clear(int64ss)
 
   #define macro_f_int64ss_t_resize(status, int64ss, length) status = f_type_int64ss_resize(length, &int64ss);
@@ -446,12 +446,12 @@ extern "C" {
 
   #define macro_f_int64ss_t_delete_simple(int64ss)  f_type_int64ss_resize(0, &int64ss);
   #define macro_f_int64ss_t_destroy_simple(int64ss) f_type_int64ss_adjust(0, &int64ss);
-#endif // _di_int64ss_t_
+#endif // _di_f_int64ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint64s_t, see type.h for typedefs.
  */
-#ifndef _di_uint64s_t_
+#ifndef _di_f_uint64s_t_
   #define macro_f_uint64s_t_clear(uint64s) macro_f_memory_structures_clear(uint64s)
 
   #define macro_f_uint64s_t_resize(status, uint64s, length) status = f_type_uint64s_resize(length, &uint64s);
@@ -464,12 +464,12 @@ extern "C" {
 
   #define macro_f_uint64s_t_delete_simple(uint64s)  f_type_uint64s_resize(0, &uint64s);
   #define macro_f_uint64s_t_destroy_simple(uint64s) f_type_uint64s_adjust(0, &uint64s);
-#endif // _di_uint64s_t_
+#endif // _di_f_uint64s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint64ss_t, see type.h for typedefs.
  */
-#ifndef _di_uint64ss_t_
+#ifndef _di_f_uint64ss_t_
   #define macro_f_uint64ss_t_clear(uint64ss) macro_f_memory_structures_clear(uint64ss)
 
   #define macro_f_uint64ss_t_resize(status, uint64ss, length) status = f_type_uint64ss_resize(length, &uint64ss);
@@ -482,12 +482,12 @@ extern "C" {
 
   #define macro_f_uint64ss_t_delete_simple(uint64ss)  f_type_uint64ss_resize(0, &uint64ss);
   #define macro_f_uint64ss_t_destroy_simple(uint64ss) f_type_uint64ss_adjust(0, &uint64ss);
-#endif // _di_uint64ss_t_
+#endif // _di_f_uint64ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_int128s_t, see type.h for typedefs.
  */
-#ifndef _di_int128s_t_
+#ifndef _di_f_int128s_t_
   #define macro_f_int128s_t_clear(int128s) macro_f_memory_structures_clear(int128s)
 
   #define macro_f_int128s_t_resize(status, int128s, length) status = f_type_int128s_resize(length, &int128s);
@@ -500,12 +500,12 @@ extern "C" {
   #define macro_f_int128s_t_increase_by(status, int128s, amount) status = f_type_int128s_increase_by(amount, &int128s);
   #define macro_f_int128s_t_decrease_by(status, int128s, amount) status = f_type_int128s_decrease_by(amount, &int128s);
   #define macro_f_int128s_t_decimate_by(status, int128s, amount) status = f_type_int128s_decimate_by(amount, &int128s);
-#endif // _di_int128s_t_
+#endif // _di_f_int128s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_int128ss_t, see type.h for typedefs.
  */
-#ifndef _di_int128ss_t_
+#ifndef _di_f_int128ss_t_
   #define macro_f_int128ss_t_clear(int128ss) macro_f_memory_structures_clear(int128ss)
 
   #define macro_f_int128ss_t_resize(status, int128ss, length) status = f_type_int128ss_resize(length, &int128ss);
@@ -518,12 +518,12 @@ extern "C" {
   #define macro_f_int128ss_t_increase_by(status, int128ss, amount) status = f_type_int128ss_increase_by(amount, &int128ss);
   #define macro_f_int128ss_t_decrease_by(status, int128ss, amount) status = f_type_int128ss_decrease_by(amount, &int128ss);
   #define macro_f_int128ss_t_decimate_by(status, int128ss, amount) status = f_type_int128ss_decimate_by(amount, &int128ss);
-#endif // _di_int128ss_t_
+#endif // _di_f_int128ss_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint128s_t, see type.h for typedefs.
  */
-#ifndef _di_uint128s_t_
+#ifndef _di_f_uint128s_t_
   #define macro_f_uint128s_t_clear(uint128s) macro_f_memory_structures_clear(uint128s)
 
   #define macro_f_uint128s_t_resize(status, uint128s, length) status = f_type_uint128s_resize(length, &uint128s);
@@ -536,12 +536,12 @@ extern "C" {
   #define macro_f_uint128s_t_increase_by(status, uint128s, amount) status = f_type_uint128s_increase_by(amount, &uint128s);
   #define macro_f_uint128s_t_decrease_by(status, uint128s, amount) status = f_type_uint128s_decrease_by(amount, &uint128s);
   #define macro_f_uint128s_t_decimate_by(status, uint128s, amount) status = f_type_uint128s_decimate_by(amount, &uint128s);
-#endif // _di_uint128s_t_
+#endif // _di_f_uint128s_t_
 
 /**
- * Macros for f_array_lengths_t, see type.h for typedefs.
+ * Macros for f_uint128ss_t, see type.h for typedefs.
  */
-#ifndef _di_uint128ss_t_
+#ifndef _di_f_uint128ss_t_
   #define macro_f_uint128ss_t_clear(uint128ss) macro_f_memory_structures_clear(uint128ss)
 
   #define macro_f_uint128ss_t_resize(status, uint128ss, length) status = f_type_uint128ss_resize(length, &uint128ss);
@@ -554,7 +554,7 @@ extern "C" {
   #define macro_f_uint128ss_t_increase_by(status, uint128ss, amount) status = f_type_uint128ss_increase_by(amount, &uint128ss);
   #define macro_f_uint128ss_t_decrease_by(status, uint128ss, amount) status = f_type_uint128ss_decrease_by(amount, &uint128ss);
   #define macro_f_uint128ss_t_decimate_by(status, uint128ss, amount) status = f_type_uint128ss_decimate_by(amount, &uint128ss);
-#endif // _di_uint128ss_t_
+#endif // _di_f_uint128ss_t_
 
 #ifdef __cplusplus
 } // extern "C"

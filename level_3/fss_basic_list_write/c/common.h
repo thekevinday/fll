@@ -65,9 +65,9 @@ extern "C" {
 #ifndef _di_fss_basic_list_write_defines_
   #define fss_basic_list_write_signal_check_d 10000
 
-  #define FSS_BASIC_LIST_WRITE_pipe_content_end_s    '\f'
-  #define FSS_BASIC_LIST_WRITE_pipe_content_ignore_s '\v'
-  #define FSS_BASIC_LIST_WRITE_pipe_content_start_s  '\b'
+  #define FSS_BASIC_LIST_WRITE_pipe_content_end_s    "\f"
+  #define FSS_BASIC_LIST_WRITE_pipe_content_ignore_s "\v"
+  #define FSS_BASIC_LIST_WRITE_pipe_content_start_s  "\b"
 
   #define FSS_BASIC_LIST_WRITE_pipe_content_end_s_length    1
   #define FSS_BASIC_LIST_WRITE_pipe_content_ignore_s_length 1

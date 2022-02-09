@@ -62,7 +62,7 @@ extern "C" {
 #endif // _di_fss_basic_list_write_error_parameter_value_missing_print_
 
 #ifndef _di_fss_basic_list_write_process_
-  f_status_t fss_basic_list_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_list_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t * const buffer) {
 
     f_status_t status = F_none;
     f_state_t state = macro_f_state_t_initialize(fss_basic_list_write_common_allocation_large_d, fss_basic_list_write_common_allocation_small_d, 0, 0, 0, 0, 0);
@@ -108,7 +108,15 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      status = fl_fss_basic_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, &main->prepend, state, &range, buffer);
+      f_string_static_t *prepend = 0;
+
+      if (main->parameters.array[fss_basic_list_write_parameter_prepend_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters.array[fss_basic_list_write_parameter_prepend_e].values.array[main->parameters.array[fss_basic_list_write_parameter_prepend_e].values.used - 1];
+
+        prepend = &main->parameters.arguments.array[index];
+      }
+
+      status = fl_fss_basic_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, prepend, state, &range, buffer);
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "fl_fss_basic_list_content_write", F_true);
@@ -118,10 +126,10 @@ extern "C" {
     }
 
     if (!object || !content) {
-      status = f_string_append(f_string_eol_s, 1, buffer);
+      status = f_string_dynamic_append(f_string_eol_s, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
+        fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
 
         return status;
       }
@@ -136,7 +144,7 @@ extern "C" {
 #endif // _di_fss_basic_list_write_process_
 
 #ifndef _di_fss_basic_list_write_process_pipe_
-  f_status_t fss_basic_list_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_list_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t * const buffer) {
 
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;
@@ -205,21 +213,21 @@ extern "C" {
 
         for (; range.start <= range.stop; ++range.start) {
 
-          if (block.string[range.start] == fss_basic_list_write_pipe_content_start_s) {
+          if (block.string[range.start] == fss_basic_list_write_pipe_content_start_s.string[0]) {
             state = 0x2;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_basic_list_write_pipe_content_end_s) {
+          if (block.string[range.start] == fss_basic_list_write_pipe_content_end_s.string[0]) {
             state = 0x3;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_basic_list_write_pipe_content_ignore_s) {
+          if (block.string[range.start] == fss_basic_list_write_pipe_content_ignore_s.string[0]) {
 
             // This is not used by objects.
             continue;
@@ -255,7 +263,7 @@ extern "C" {
 
           for (; range.start <= range.stop; ++range.start) {
 
-            if (block.string[range.start] == fss_basic_list_write_pipe_content_start_s) {
+            if (block.string[range.start] == fss_basic_list_write_pipe_content_start_s.string[0]) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%sThis standard only supports one content per object.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
               }
@@ -265,14 +273,14 @@ extern "C" {
               break;
             }
 
-            if (block.string[range.start] == fss_basic_list_write_pipe_content_end_s) {
+            if (block.string[range.start] == fss_basic_list_write_pipe_content_end_s.string[0]) {
               state = 0x3;
               ++range.start;
 
               break;
             }
 
-            if (block.string[range.start] == fss_basic_list_write_pipe_content_ignore_s) {
+            if (block.string[range.start] == fss_basic_list_write_pipe_content_ignore_s.string[0]) {
 
               // This is not used by this program.
               continue;

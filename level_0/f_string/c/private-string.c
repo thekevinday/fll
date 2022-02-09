@@ -156,7 +156,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (destination->used + source.used > destination->size) {
-      status = private_f_string_dynamics_adjust(destination->used + source.used, destination);
+      status = private_f_string_dynamics_resize(destination->used + source.used, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -203,6 +203,88 @@ extern "C" {
   }
 #endif // !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
 
+#if !defined(_di_f_string_dynamicss_adjust_) || !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_dynamicss_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
+  f_status_t private_f_string_dynamicss_adjust(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) {
+
+    if (dynamicss->used + length > F_array_length_t_size_d) {
+      return F_status_set_error(F_array_too_large);
+    }
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < dynamicss->size; ++i) {
+
+      status = private_f_string_dynamics_adjust(0, &dynamicss->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust(dynamicss->size, length, sizeof(f_string_dynamics_t), (void **) & dynamicss->array);
+
+    if (F_status_is_error_not(status)) {
+      dynamicss->size = length;
+
+      if (dynamicss->used > dynamicss->size) {
+        dynamicss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_dynamicss_adjust_) || !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_dynamicss_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
+
+#if !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_map_multis_append_)
+  f_status_t private_f_string_dynamicss_append(const f_string_dynamicss_t source, f_string_dynamicss_t *destination) {
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_string_dynamicss_resize(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+
+      destination->array[destination->used].used = 0;
+
+      if (source.array[i].used) {
+        status = private_f_string_dynamics_append(source.array[i], &destination->array[destination->used]);
+        if (F_status_is_error(status)) return status;
+      }
+    } // for
+
+    return F_none;
+  }
+#endif // !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_map_multis_append_)
+
+#if !defined(_di_f_string_dynamicss_decrease_by_) || !defined(_di_f_string_dynamicss_increase_) || !defined(_di_f_string_dynamicss_increase_by_)
+  f_status_t private_f_string_dynamicss_resize(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) {
+
+    if (dynamicss->used + length > F_array_length_t_size_d) {
+      return F_status_set_error(F_array_too_large);
+    }
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < dynamicss->size; ++i) {
+
+      status = private_f_string_dynamics_resize(0, &dynamicss->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize(dynamicss->size, length, sizeof(f_string_dynamics_t), (void **) & dynamicss->array);
+
+    if (F_status_is_error_not(status)) {
+      dynamicss->size = length;
+
+      if (dynamicss->used > dynamicss->size) {
+        dynamicss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_dynamicss_decrease_by_) || !defined(_di_f_string_dynamicss_increase_) || !defined(_di_f_string_dynamicss_increase_by_)
+
 #if !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_decimate_by_)
   f_status_t private_f_string_map_multis_adjust(const f_array_length_t length, f_string_map_multis_t *map_multis) {
 
@@ -234,6 +316,36 @@ extern "C" {
     return status;
   }
 #endif // !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_decimate_by_)
+
+#if !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multis_append_)
+  f_status_t private_f_string_map_multis_append(const f_string_map_multis_t source, f_string_map_multis_t *destination) {
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_string_map_multis_resize(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+
+      destination->array[destination->used].name.used = 0;
+      destination->array[destination->used].value.used = 0;
+
+      if (source.array[i].name.used) {
+        status = private_f_string_append(source.array[i].name.string, source.array[i].name.used, &destination->array[destination->used].name);
+        if (F_status_is_error(status)) return status;
+      }
+
+      if (source.array[i].value.used) {
+        status = private_f_string_dynamics_append(source.array[i].value, &destination->array[destination->used].value);
+        if (F_status_is_error(status)) return status;
+      }
+    } // for
+
+    return F_none;
+  }
+#endif // !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multis_append_)
 
 #if !defined(_di_f_string_map_multis_decrease_by_) || !defined(_di_f_string_map_multis_increase_) || !defined(_di_f_string_map_multis_increase_by_) || !defined(_di_f_string_map_multis_terminate_) || !defined(_di_f_string_map_multis_terminate_after_)
   f_status_t private_f_string_map_multis_resize(const f_array_length_t length, f_string_map_multis_t *map_multis) {
@@ -267,6 +379,64 @@ extern "C" {
   }
 #endif // !defined(_di_f_string_map_multis_decrease_by_) || !defined(_di_f_string_map_multis_increase_) || !defined(_di_f_string_map_multis_increase_by_) || !defined(_di_f_string_map_multis_terminate_) || !defined(_di_f_string_map_multis_terminate_after_)
 
+#if !defined(_di_f_string_map_multiss_adjust_) || !defined(_di_f_string_map_multiss_decimate_by_)
+  f_status_t private_f_string_map_multiss_adjust(const f_array_length_t length, f_string_map_multiss_t *map_multiss) {
+
+    if (map_multiss->used + length > F_array_length_t_size_d) {
+      return F_status_set_error(F_array_too_large);
+    }
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < map_multiss->size; ++i) {
+
+      status = private_f_string_map_multis_adjust(0, &map_multiss->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust(map_multiss->size, length, sizeof(f_string_map_multis_t), (void **) & map_multiss->array);
+
+    if (F_status_is_error_not(status)) {
+      map_multiss->size = length;
+
+      if (map_multiss->used > map_multiss->size) {
+        map_multiss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_map_multiss_adjust_) || !defined(_di_f_string_map_multiss_decimate_by_)
+
+#if !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_) || !defined(_di_f_string_map_multiss_terminate_) || !defined(_di_f_string_map_multiss_terminate_after_)
+  f_status_t private_f_string_map_multiss_resize(const f_array_length_t length, f_string_map_multiss_t *map_multiss) {
+
+    if (map_multiss->used + length > F_array_length_t_size_d) {
+      return F_status_set_error(F_array_too_large);
+    }
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < map_multiss->size; ++i) {
+
+      status = private_f_string_map_multis_resize(0, &map_multiss->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize(map_multiss->size, length, sizeof(f_string_map_multis_t), (void **) & map_multiss->array);
+
+    if (F_status_is_error_not(status)) {
+      map_multiss->size = length;
+
+      if (map_multiss->used > map_multiss->size) {
+        map_multiss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_) || !defined(_di_f_string_map_multiss_terminate_) || !defined(_di_f_string_map_multiss_terminate_after_)
+
 #if !defined(_di_f_string_maps_adjust_) || !defined(_di_f_string_maps_decimate_by_)
   f_status_t private_f_string_maps_adjust(const f_array_length_t length, f_string_maps_t *maps) {
 
@@ -299,6 +469,36 @@ extern "C" {
   }
 #endif // !defined(_di_f_string_maps_adjust_) || !defined(_di_f_string_maps_decimate_by_)
 
+#if !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_maps_append_)
+  f_status_t private_f_string_maps_append(const f_string_maps_t source, f_string_maps_t *destination) {
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_string_maps_resize(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+
+      destination->array[destination->used].name.used = 0;
+      destination->array[destination->used].value.used = 0;
+
+      if (source.array[i].name.used) {
+        status = private_f_string_append(source.array[i].name.string, source.array[i].name.used, &destination->array[destination->used].name);
+        if (F_status_is_error(status)) return status;
+      }
+
+      if (source.array[i].value.used) {
+        status = private_f_string_append(source.array[i].value.string, source.array[i].value.used, &destination->array[destination->used].value);
+        if (F_status_is_error(status)) return status;
+      }
+    } // for
+
+    return F_none;
+  }
+#endif // !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_maps_append_)
+
 #if !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
   f_status_t private_f_string_maps_resize(const f_array_length_t length, f_string_maps_t *maps) {
 
@@ -330,6 +530,64 @@ extern "C" {
     return status;
   }
 #endif // !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
+
+#if !defined(_di_f_string_mapss_adjust_) || !defined(_di_f_string_mapss_decimate_by_)
+  f_status_t private_f_string_mapss_adjust(const f_array_length_t length, f_string_mapss_t *mapss) {
+
+    if (mapss->used + length > F_array_length_t_size_d) {
+      return F_status_set_error(F_array_too_large);
+    }
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < mapss->size; ++i) {
+
+      status = private_f_string_maps_adjust(0, &mapss->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust(mapss->size, length, sizeof(f_string_maps_t), (void **) & mapss->array);
+
+    if (F_status_is_error_not(status)) {
+      mapss->size = length;
+
+      if (mapss->used > mapss->size) {
+        mapss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_mapss_adjust_) || !defined(_di_f_string_mapss_decimate_by_)
+
+#if !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_) || !defined(_di_f_string_mapss_terminate_) || !defined(_di_f_string_mapss_terminate_after_)
+  f_status_t private_f_string_mapss_resize(const f_array_length_t length, f_string_mapss_t *mapss) {
+
+    if (mapss->used + length > F_array_length_t_size_d) {
+      return F_status_set_error(F_array_too_large);
+    }
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < mapss->size; ++i) {
+
+      status = private_f_string_maps_resize(0, &mapss->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize(mapss->size, length, sizeof(f_string_maps_t), (void **) & mapss->array);
+
+    if (F_status_is_error_not(status)) {
+      mapss->size = length;
+
+      if (mapss->used > mapss->size) {
+        mapss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_) || !defined(_di_f_string_mapss_terminate_) || !defined(_di_f_string_mapss_terminate_after_)
 
 #if !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
   f_status_t private_f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination) {

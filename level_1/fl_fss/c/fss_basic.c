@@ -114,8 +114,8 @@ extern "C" {
         return status_allocation;
       }
 
-      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
-      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quote ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quote ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
     }
 
     if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {

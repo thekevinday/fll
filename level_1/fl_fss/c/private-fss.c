@@ -7,13 +7,14 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-  f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quoted, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t *destination) {
 
     f_status_t status = F_none;
     f_string_range_t destination_range = macro_f_string_range_t_initialize(destination->used);
     f_array_length_t i = 0;
 
     uint8_t width = 0;
+    const char quote_char = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
 
     // If there are any spaces, then this will be quoted so find the first non-placeholder character.
     for (; destination_range.start < destination->used; ++destination_range.start) {
@@ -31,7 +32,7 @@ extern "C" {
       if (destination->string[destination_range.start] != f_fss_delimit_placeholder_s.string[0]) break;
     } // for
 
-    if (destination->string[destination_range.start] == quote) {
+    if (destination->string[destination_range.start] == quote_char) {
       const f_array_length_t front = destination_range.start;
 
       for (++destination_range.start; destination_range.start < destination->used; ++destination_range.start) {
@@ -80,7 +81,7 @@ extern "C" {
           }
         }
 
-        if (destination->string[destination_range.start] == quote) {
+        if (destination->string[destination_range.start] == quote_char) {
           --destination_range.start;
           break;
         }
@@ -277,7 +278,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
 
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
+  f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits) {
 
     f_status_t status = f_fss_skip_past_space(buffer, range);
     if (F_status_is_error(status)) return status;
@@ -334,8 +335,8 @@ extern "C" {
     // Handle quoted support.
     char quote_found = 0;
 
-    if (quote) {
-      *quote = 0;
+    if (quoted) {
+      *quoted = 0;
     }
 
     // Identify where the object begins.
@@ -560,12 +561,12 @@ extern "C" {
             }
 
             if (status == F_true) {
-              if (quote) {
+              if (quoted) {
                 if (quote_found == f_fss_delimit_quote_single_s.string[0]) {
-                  *quote = f_fss_quote_type_single_e;
+                  *quoted = f_fss_quote_type_single_e;
                 }
                 else if (quote_found == f_fss_delimit_quote_double_s.string[0]) {
-                  *quote = f_fss_quote_type_double_e;
+                  *quoted = f_fss_quote_type_double_e;
                 }
               }
 
@@ -716,12 +717,12 @@ extern "C" {
           range->start = location;
 
           if (status == F_true) {
-            if (quote) {
+            if (quoted) {
               if (quote_found == f_fss_delimit_quote_single_s.string[0]) {
-                *quote = f_fss_quote_type_single_e;
+                *quoted = f_fss_quote_type_single_e;
               }
               else if (quote_found == f_fss_delimit_quote_double_s.string[0]) {
-                *quote = f_fss_quote_type_double_e;
+                *quoted = f_fss_quote_type_double_e;
               }
             }
 
@@ -846,7 +847,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_)
 
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
-  f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quoted, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
 
     f_status_t status = f_fss_skip_past_space(object, range);
     if (F_status_is_error(status)) return status;
@@ -866,20 +867,22 @@ extern "C" {
     const f_array_length_t input_start = range->start;
     const f_array_length_t used_start = destination->used;
 
-    bool quoted = F_false;
+    bool quoted_is = F_false;
     bool commented = F_false;
 
     f_array_length_t item_first = 0;
     f_array_length_t item_total = 0;
     f_array_length_t i = 0;
 
+    const char quote_char = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
+
     // Use placeholders for potential quote and potential delimited quote to avoid doing things such as memmove().
     destination->string[destination->used++] = f_fss_delimit_placeholder_s.string[0];
     destination->string[destination->used++] = f_fss_delimit_placeholder_s.string[0];
 
     // If there is an initial quote, then this must be quoted and the existing quote must be delimited.
-    if (object.string[input_start] == quote) {
-      quoted = F_true;
+    if (object.string[input_start] == quote_char) {
+      quoted_is = F_true;
     }
     else if (object_as && object.string[input_start] == f_fss_comment_s.string[0]) {
       commented = F_true;
@@ -924,7 +927,7 @@ extern "C" {
         if (range->start > range->stop || range->start >= object.used) {
 
           // Slashes before the final quote must be escaped when quoted, add the delimit slashes.
-          if (quoted) {
+          if (quoted_is) {
 
             // If this is the first quote, then only a single delimit slash is needed.
             if (item_first == input_start) {
@@ -958,7 +961,7 @@ extern "C" {
           break;
         }
 
-        if (object.string[range->start] == quote) {
+        if (object.string[range->start] == quote_char) {
           item_first = range->start++;
 
           status = f_fss_skip_past_delimit(object, range);
@@ -973,7 +976,7 @@ extern "C" {
               destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
             } // for
 
-            destination->string[destination->used++] = quote;
+            destination->string[destination->used++] = quote_char;
 
             break;
           }
@@ -983,7 +986,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           if (status == F_true) {
-            quoted = F_true;
+            quoted_is = F_true;
 
             status = f_string_dynamic_increase_by(item_total, destination);
             if (F_status_is_error(status)) break;
@@ -1014,7 +1017,7 @@ extern "C" {
             destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
           } // for
 
-          destination->string[destination->used++] = quote;
+          destination->string[destination->used++] = quote_char;
 
           for (i = 0; i < width; ++i) {
             destination->string[destination->used++] = object.string[range->start + i];
@@ -1046,7 +1049,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           if (status == F_true) {
-            quoted = F_true;
+            quoted_is = F_true;
           }
 
           width = macro_f_utf_byte_width(object.string[range->start]);
@@ -1067,7 +1070,7 @@ extern "C" {
           } // for
         }
       }
-      else if (object.string[range->start] == quote) {
+      else if (object.string[range->start] == quote_char) {
         item_first = range->start++;
 
         // The very first quote, must be escaped, when quoting is disabled.
@@ -1086,15 +1089,15 @@ extern "C" {
           status = f_string_dynamic_increase(state.step_large, destination);
           if (F_status_is_error(status)) break;
 
-          destination->string[destination->used++] = quote;
+          destination->string[destination->used++] = quote_char;
           break;
         }
 
-        if (object.string[range->start] == quote) {
+        if (object.string[range->start] == quote_char) {
           status = f_string_dynamic_increase(state.step_large, destination);
           if (F_status_is_error(status)) break;
 
-          destination->string[destination->used++] = quote;
+          destination->string[destination->used++] = quote_char;
 
           // The next quote must also be checked, so do not increment.
           continue;
@@ -1112,7 +1115,7 @@ extern "C" {
             destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
           }
 
-          quoted = F_true;
+          quoted_is = F_true;
         }
 
         width = macro_f_utf_byte_width(object.string[range->start]);
@@ -1120,7 +1123,7 @@ extern "C" {
         status = f_string_dynamic_increase_by(1 + width, destination);
         if (F_status_is_error(status)) break;
 
-        destination->string[destination->used++] = quote;
+        destination->string[destination->used++] = quote_char;
 
         for (i = 0; i < width; ++i) {
           destination->string[destination->used++] = object.string[range->start + i];
@@ -1131,12 +1134,12 @@ extern "C" {
         break;
       }
       else if (object.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
-        if (!quoted) {
+        if (!quoted_is) {
           status = f_fss_is_space(object, *range);
           if (F_status_is_error(status)) break;
 
           if (status == F_true) {
-            quoted = F_true;
+            quoted_is = F_true;
           }
         }
 
@@ -1160,7 +1163,7 @@ extern "C" {
       return status;
     }
 
-    if (quoted) {
+    if (quoted_is) {
       status = f_string_dynamic_increase(state.step_large, destination);
 
       if (F_status_is_error(status)) {
@@ -1169,11 +1172,11 @@ extern "C" {
         return status;
       }
 
-      destination->string[used_start] = quote;
-      destination->string[destination->used++] = quote;
+      destination->string[used_start] = quote_char;
+      destination->string[destination->used++] = quote_char;
 
       // The start quote may or may not need to be delimited in this case.
-      if (destination->string[input_start] == quote) {
+      if (destination->string[input_start] == quote_char) {
 
         for (i = input_start + 1; i <= range->stop && i < object.used; ++i) {
 

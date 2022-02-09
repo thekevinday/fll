@@ -18,7 +18,7 @@ extern "C" {
 /**
  * Trim a given object used by the basic and extended object write functions.
  *
- * @param quote
+ * @param quoted
  *   If 0, then double quotes are auto-inserted, when required.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param used_start
@@ -46,7 +46,7 @@ extern "C" {
  * @see fl_fss_extended_object_write()
  */
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-  extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quoted, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
 
 /**

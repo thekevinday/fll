@@ -558,7 +558,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_array_t_int8_t_
+#ifndef _di_int8s_t_
   typedef struct {
     int8_t *array;
 

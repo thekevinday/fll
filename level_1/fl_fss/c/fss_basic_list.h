@@ -214,7 +214,7 @@ extern "C" {
  *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this content, including the final newline.
  * @param prepend
  *   A string of whitespace to prepend at the start of each line.
- *   This should only be whitespace, anything else could product invalid content.
+ *   This should only be whitespace, anything else could produce invalid content.
  *   Set the pointer address to 0 to disable.
  * @param state
  *   A state for handling interrupts during long running operations.

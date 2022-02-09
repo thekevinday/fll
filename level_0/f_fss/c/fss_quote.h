@@ -31,7 +31,7 @@ extern "C" {
 #endif // _di_f_fss_quote_type_
 
 /**
- * Designate an fss quote.
+ * A number representing a quote type fom the FSS quote type enumeration.
  */
 #ifndef _di_f_fss_quote_t_
   typedef uint8_t f_fss_quote_t;
@@ -66,7 +66,7 @@ extern "C" {
 /**
  * An array of f_fss_quotes_t.
  *
- * array: The array of fss quotes.
+ * array: The array of an array of fss quote.
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */

@@ -74,10 +74,10 @@ extern "C" {
  *
  * Set to at least 4 to provide a UTF-8 friendly allocation step.
  */
-#ifndef _di_fake_default_allocation_step_
+#ifndef _di_fake_default_allocation_
   #define fake_default_allocation_large_d 64
   #define fake_default_allocation_small_d 8
-#endif // _di_fake_default_allocation_step_
+#endif // _di_fake_default_allocation_
 
 /**
  * The build operation utilizes pre-defined path structures.

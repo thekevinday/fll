@@ -256,8 +256,9 @@ extern "C" {
  *
  *   F_array_too_large (with error bit) if the combined array is too large.
  *
- *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_resize().
  *
+ * @see f_memory_resize()
  * @see f_string_dynamics_append()
  * @see f_string_map_multis_append()
  */
@@ -298,6 +299,85 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
+ * @param dynamicss
+ *   The strings to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_memory_adjust()
+ * @see f_string_dynamicss_adjust()
+ * @see f_string_dynamicss_append()
+ * @see f_string_dynamicss_decimate_by()
+ * @see f_string_map_multis_adjust()
+ * @see f_string_map_multis_append()
+ */
+#if !defined(_di_f_string_dynamicss_adjust_) || !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_dynamicss_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
+  extern f_status_t private_f_string_dynamicss_adjust(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_dynamicss_adjust_) || !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_dynamicss_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
+
+/**
+ * Private implementation for appending.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source strings to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_string_dynamicss_append()
+ * @see f_string_map_multis_append()
+ */
+#if !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_map_multis_append_)
+  extern f_status_t private_f_string_dynamicss_append(const f_string_dynamicss_t source, f_string_dynamicss_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_map_multis_append_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param dynamicss
+ *   The strings to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_string_dynamicss_decrease_by()
+ * @see f_string_dynamicss_increase()
+ * @see f_string_dynamicss_increase_by()
+ */
+#if !defined(_di_f_string_dynamicss_decrease_by_) || !defined(_di_f_string_dynamicss_increase_) || !defined(_di_f_string_dynamicss_increase_by_)
+  extern f_status_t private_f_string_dynamicss_resize(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_dynamicss_decrease_by_) || !defined(_di_f_string_dynamicss_increase_) || !defined(_di_f_string_dynamicss_increase_by_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
  * @param map_multis
  *   The map_multis to adjust.
  *
@@ -314,6 +394,33 @@ extern "C" {
 #if !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_decimate_by_)
   extern f_status_t private_f_string_map_multis_adjust(const f_array_length_t length, f_string_map_multis_t *map_multis) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_decimate_by_)
+
+/**
+ * Private implementation for appending.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source strings to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_map_multis_append().
+ *   Errors (with error bit) from: f_string_map_multiss_append().
+ *
+ * @see f_memory_resize()
+ * @see f_string_map_multis_append()
+ * @see f_string_map_multiss_append()
+ */
+#if !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multis_append_)
+  extern f_status_t private_f_string_map_multis_append(const f_string_map_multis_t source, f_string_map_multis_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multis_append_)
 
 /**
  * Private implementation for resizing.
@@ -350,6 +457,58 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
+ * @param map_multiss
+ *   The map_multiss to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_memory_adjust()
+ * @see f_string_map_multiss_adjust()
+ */
+#if !defined(_di_f_string_map_multiss_adjust_) || !defined(_di_f_string_map_multiss_decimate_by_)
+  extern f_status_t private_f_string_map_multiss_adjust(const f_array_length_t length, f_string_map_multiss_t *map_multiss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_map_multiss_adjust_) || !defined(_di_f_string_map_multiss_decimate_by_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param map_multiss
+ *   The map_multiss to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_adjust()
+ * @see f_string_map_multiss_decrease_by()
+ * @see f_string_map_multiss_increase()
+ * @see f_string_map_multiss_increase_by()
+ * @see f_string_map_multiss_terminate()
+ * @see f_string_map_multiss_terminate_after()
+ */
+#if !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_) || !defined(_di_f_string_map_multiss_terminate_) || !defined(_di_f_string_map_multiss_terminate_after_)
+  extern f_status_t private_f_string_map_multiss_resize(const f_array_length_t length, f_string_map_multiss_t *map_multiss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_) || !defined(_di_f_string_map_multiss_terminate_) || !defined(_di_f_string_map_multiss_terminate_after_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
  * @param maps
  *   The maps to adjust.
  *
@@ -366,6 +525,31 @@ extern "C" {
 #if !defined(_di_f_string_maps_adjust_) || !defined(_di_f_string_maps_decimate_by_)
   extern f_status_t private_f_string_maps_adjust(const f_array_length_t length, f_string_maps_t *maps) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_maps_adjust_) || !defined(_di_f_string_maps_decimate_by_)
+
+/**
+ * Private implementation for appending.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source strings to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_string_maps_append()
+ * @see f_string_mapss_append()
+ */
+#if !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_maps_append_)
+  extern f_status_t private_f_string_maps_append(const f_string_maps_t source, f_string_maps_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_maps_append_)
 
 /**
  * Private implementation for resizing.
@@ -394,6 +578,58 @@ extern "C" {
 #if !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
   extern f_status_t private_f_string_maps_resize(const f_array_length_t length, f_string_maps_t *maps) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param mapss
+ *   The mapss to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_memory_adjust()
+ * @see f_string_mapss_adjust()
+ */
+#if !defined(_di_f_string_mapss_adjust_) || !defined(_di_f_string_mapss_decimate_by_)
+  extern f_status_t private_f_string_mapss_adjust(const f_array_length_t length, f_string_mapss_t *mapss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_mapss_adjust_) || !defined(_di_f_string_mapss_decimate_by_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param mapss
+ *   The mapss to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_adjust()
+ * @see f_string_mapss_decrease_by()
+ * @see f_string_mapss_increase()
+ * @see f_string_mapss_increase_by()
+ * @see f_string_mapss_terminate()
+ * @see f_string_mapss_terminate_after()
+ */
+#if !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_) || !defined(_di_f_string_mapss_terminate_) || !defined(_di_f_string_mapss_terminate_after_)
+  extern f_status_t private_f_string_mapss_resize(const f_array_length_t length, f_string_mapss_t *mapss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_) || !defined(_di_f_string_mapss_terminate_) || !defined(_di_f_string_mapss_terminate_after_)
 
 /**
  * Private implementation of f_string_prepend().

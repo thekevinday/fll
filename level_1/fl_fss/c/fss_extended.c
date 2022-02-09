@@ -65,11 +65,13 @@ extern "C" {
     const f_array_length_t delimits_used = delimits->used;
 
     uint8_t content_found = 0;
+    f_fss_quote_t quoted = 0;
 
     while (range->start <= range->stop && range->start < buffer.used) {
 
       f_string_range_t content_partial = f_string_range_t_initialize;
-      f_fss_quote_t quoted = 0;
+
+      quoted = 0;
 
       status = private_fl_fss_basic_read(buffer, F_false, state, range, &content_partial, &quoted, delimits);
 
@@ -93,7 +95,7 @@ extern "C" {
         ++found->used;
 
         if (quotes) {
-          quotes->array[quotes->used] = quoted;
+          quotes->array[quotes->used] = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
           quotes->used = found->used;
         }
 
@@ -110,6 +112,7 @@ extern "C" {
         }
 
         content_found = 2;
+
         break;
       }
       else if (status == F_data_not_stop) {
@@ -118,12 +121,14 @@ extern "C" {
         }
 
         content_found = 2;
+
         break;
       }
       else if (status == F_terminated_not_group_eos || status == F_terminated_not_group_eos) {
         if (content_found) {
           content_found = 2;
         }
+
         break;
       }
       else if (F_status_is_error(status)) {
@@ -146,7 +151,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_content_read_
 
 #ifndef _di_fl_fss_extended_object_write_
-f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -154,7 +159,7 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
 
     const f_array_length_t used_start = destination->used;
 
-    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double_s.string[0], state, range, destination);
+    f_status_t status = private_fl_fss_basic_write(F_true, object, quoted ? quoted : f_fss_delimit_quote_double_s.string[0], state, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
@@ -162,8 +167,8 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
       const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
-      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
-      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quoted ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quoted ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
     }
 
     if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
@@ -171,7 +176,7 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
         f_status_t status2 = F_none;
 
         if (complete == f_fss_complete_full_trim_e) {
-          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_delimit_quote_double_s.string[0], used_start, state, destination);
+          status2 = private_fl_fss_basic_write_object_trim(quoted ? quoted : f_fss_delimit_quote_double_s.string[0], used_start, state, destination);
           if (F_status_is_error(status2)) return status2;
         }
 
@@ -187,25 +192,25 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
 #endif // _di_fl_fss_extended_object_write_
 
 #ifndef _di_fl_fss_extended_content_write_
-  f_status_t fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    // this operates exactly like an object, syntax-wise.
-    const f_status_t status = private_fl_fss_basic_write(F_false, content, quote ? quote : f_fss_delimit_quote_double_s.string[0], state, range, destination);
+    // This operates exactly like an object, syntax-wise.
+    const f_status_t status = private_fl_fss_basic_write(F_false, content, quoted ? quoted : f_fss_delimit_quote_double_s.string[0], state, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
-      // content that is empty must be represented by a quoted empty string.
+      // Content that is empty must be represented by a quoted empty string.
       const f_status_t status_allocation = f_string_dynamic_increase_by(4, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
-      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
-      destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quoted ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quoted ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
 
-      // content should be terminated, even if empty.
+      // Content should be terminated, even if empty.
       if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_next_e) {
         destination->string[destination->used++] = f_fss_extended_next_s.string[0];
       }

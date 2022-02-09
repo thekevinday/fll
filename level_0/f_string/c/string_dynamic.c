@@ -1130,6 +1130,113 @@ extern "C" {
   }
 #endif // _di_f_string_dynamics_resize_
 
+#ifndef _di_f_string_dynamicss_adjust_
+  f_status_t f_string_dynamicss_adjust(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!dynamicss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_string_dynamicss_adjust(length, dynamicss);
+  }
+#endif // _di_f_string_dynamicss_adjust_
+
+#ifndef _di_f_string_dynamicss_append_
+  f_status_t f_string_dynamicss_append(const f_string_dynamicss_t source, f_string_dynamicss_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) {
+      return F_data_not;
+    }
+
+    return private_f_string_dynamicss_append(source, destination);
+  }
+#endif // _di_f_string_dynamicss_append_
+
+#ifndef _di_f_string_dynamicss_decimate_by_
+  f_status_t f_string_dynamicss_decimate_by(const f_array_length_t amount, f_string_dynamicss_t * const dynamicss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!dynamicss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (dynamicss->size - amount > 0) {
+      return private_f_string_dynamicss_adjust(dynamicss->size - amount, dynamicss);
+    }
+
+    return private_f_string_dynamicss_adjust(0, dynamicss);
+  }
+#endif // _di_f_string_dynamicss_decimate_by_
+
+#ifndef _di_f_string_dynamicss_decrease_by_
+  f_status_t f_string_dynamicss_decrease_by(const f_array_length_t amount, f_string_dynamicss_t * const dynamicss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!dynamicss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (dynamicss->size - amount > 0) {
+      return private_f_string_dynamicss_resize(dynamicss->size - amount, dynamicss);
+    }
+
+    return private_f_string_dynamicss_resize(0, dynamicss);
+  }
+#endif // _di_f_string_dynamicss_decrease_by_
+
+#ifndef _di_f_string_dynamicss_increase_
+  f_status_t f_string_dynamicss_increase(const uint16_t step, f_string_dynamicss_t * const dynamicss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
+      if (!dynamicss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (dynamicss->used + 1 > dynamicss->size) {
+      f_array_length_t size = dynamicss->used + step;
+
+      if (size > F_array_length_t_size_d) {
+        if (dynamicss->used + 1 > F_array_length_t_size_d) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = F_array_length_t_size_d;
+      }
+
+      return private_f_string_dynamicss_resize(size, dynamicss);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_string_dynamicss_increase_
+
+#ifndef _di_f_string_dynamicss_increase_by_
+  f_status_t f_string_dynamicss_increase_by(const f_array_length_t amount, f_string_dynamicss_t * const dynamicss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!dynamicss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (dynamicss->used + amount > dynamicss->size) {
+      if (dynamicss->used + amount > F_array_length_t_size_d) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_string_dynamicss_resize(dynamicss->used + amount, dynamicss);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_string_dynamicss_increase_by_
+
+#ifndef _di_f_string_dynamicss_resize_
+  f_status_t f_string_dynamicss_resize(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!dynamicss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_string_dynamicss_resize(length, dynamicss);
+  }
+#endif // _di_f_string_dynamicss_resize_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

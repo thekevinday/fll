@@ -24,7 +24,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_items_adjust_) || !defined(_di_f_fss_items_decimate_by_)
 
@@ -47,7 +49,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_items_decrease_by_) || !defined(_di_f_fss_items_increase_) || !defined(_di_f_fss_items_increase_by_) || !defined(_di_f_fss_items_resize_)
 
@@ -63,8 +67,9 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     macro_f_uint8ss_t_adjust(status, named->quotess, length)
+    if (F_status_is_error(status)) return status;
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
 
@@ -80,8 +85,9 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     macro_f_uint8ss_t_resize(status, named->quotess, length)
+    if (F_status_is_error(status)) return status;
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
@@ -105,7 +111,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_nameds_adjust_) || !defined(_di_f_fss_nameds_decimate_by_)
 
@@ -129,7 +137,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_nameds_decrease_by_) || !defined(_di_f_fss_nameds_increase_) || !defined(_di_f_fss_nameds_increase_by_) || !defined(_di_f_fss_nameds_resize_)
 
@@ -153,7 +163,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_nest_adjust_) || !defined(_di_f_fss_nest_decimate_by_)
 
@@ -177,7 +189,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_nest_decrease_by_) || !defined(_di_f_fss_nest_increase_) || !defined(_di_f_fss_nest_increase_by_) || !defined(_di_f_fss_nest_resize_)
 
@@ -201,7 +215,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_nests_adjust_) || !defined(_di_f_fss_nests_decimate_by_)
 
@@ -225,7 +241,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_nests_decrease_by_) || !defined(_di_f_fss_nests_increase_) || !defined(_di_f_fss_nests_increase_by_) || !defined(_di_f_fss_nests_resize_)
 
@@ -238,8 +256,9 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     macro_f_fss_contents_t_adjust(status, set->contents, length);
+    if (F_status_is_error(status)) return status;
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_fss_set_adjust_) || !defined(_di_f_fss_set_decimate_by_)
 
@@ -252,8 +271,9 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     macro_f_fss_contents_t_resize(status, set->contents, length);
+    if (F_status_is_error(status)) return status;
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_fss_set_decrease_by_) || !defined(_di_f_fss_set_increase_) || !defined(_di_f_fss_set_increase_by_) || !defined(_di_f_fss_set_resize_)
 
@@ -272,8 +292,9 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     macro_f_fss_quotess_t_adjust(status, set_quote->contents_quote, length);
+    if (F_status_is_error(status)) return status;
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_fss_set_quote_adjust_) || !defined(_di_f_fss_set_quote_decimate_by_)
 
@@ -292,8 +313,9 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     macro_f_fss_quotess_t_resize(status, set_quote->contents_quote, length);
+    if (F_status_is_error(status)) return status;
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_fss_set_quote_decrease_by_) || !defined(_di_f_fss_set_quote_increase_) || !defined(_di_f_fss_set_quote_increase_by_) || !defined(_di_f_fss_set_quote_resize_)
 
@@ -327,7 +349,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_set_quotes_adjust_) || !defined(_di_f_fss_set_quotes_decimate_by_)
 
@@ -360,7 +384,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_set_quotes_decrease_by_) || !defined(_di_f_fss_set_quotes_increase_) || !defined(_di_f_fss_set_quotes_increase_by_) || !defined(_di_f_fss_set_quotes_resize_)
 
@@ -388,7 +414,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_sets_adjust_) || !defined(_di_f_fss_sets_decimate_by_)
 
@@ -416,7 +444,9 @@ extern "C" {
       }
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_fss_sets_decrease_by_) || !defined(_di_f_fss_sets_increase_) || !defined(_di_f_fss_sets_increase_by_) || !defined(_di_f_fss_sets_resize_)
 
