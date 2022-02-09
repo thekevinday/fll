@@ -27,7 +27,7 @@ extern "C" {
         total = 0;
       }
 
-      if (!string[i]) {
+      if (i < length && !string[i]) {
         do {
           ++i;
         } while (i < length && !string[i]);
