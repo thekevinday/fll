@@ -1269,7 +1269,7 @@ extern "C" {
         slash_count = 1;
 
         if (do_prepend) {
-          status = f_string_dynamic_prepend(*prepend, destination);
+          status = f_string_dynamic_append(*prepend, destination);
           if (F_status_is_error(status)) break;
 
           do_prepend = F_false;
@@ -1350,7 +1350,7 @@ extern "C" {
         start = range->start++;
 
         if (do_prepend) {
-          status = f_string_dynamic_prepend(*prepend, destination);
+          status = f_string_dynamic_append(*prepend, destination);
           if (F_status_is_error(status)) break;
 
           do_prepend = F_false;
@@ -1425,7 +1425,7 @@ extern "C" {
 
       if (content.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
         if (do_prepend) {
-          status = f_string_dynamic_prepend(*prepend, destination);
+          status = f_string_dynamic_append(*prepend, destination);
           if (F_status_is_error(status)) break;
 
           do_prepend = F_false;
