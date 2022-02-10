@@ -51,8 +51,12 @@ extern "C" {
 
     fl_print_format("  %[%Q%]", output.stream, context.set.standout, name, context.set.standout);
     fl_print_format(" %[[%] options %[]%]", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
-    fl_print_format(" %[[%] %Q", output.stream, context.set.notable, context.set.notable, parameters);
-    fl_print_format(" %[]%]%r%r", output.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
+
+    if (parameters.used) {
+      fl_print_format(" %[[%] %Q %[]%]", output.stream, context.set.notable, context.set.notable, parameters, context.set.notable, context.set.notable);
+    }
+
+    fl_print_format("%r%r", output.stream, f_string_eol_s, f_string_eol_s);
 
     return F_none;
   }

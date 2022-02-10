@@ -152,8 +152,9 @@ extern "C" {
  * @param name
  *   The name of the program.
  * @param parameters
- *   The non-option parameters to be displayed inside the brackets.
+ *   (optional) The non-option parameters to be displayed inside the brackets.
  *   Set the first array value to EOS to disable printing of parameters.
+ *   Set parameters.used to 0 to disable.
  *
  * @return
  *   F_none on success.
