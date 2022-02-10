@@ -216,21 +216,21 @@ extern "C" {
 
         for (; range.start <= range.stop; range.start++) {
 
-          if (block.string[range.start] == fss_basic_write_pipe_content_start_s) {
+          if (block.string[range.start] == fss_basic_write_pipe_content_start_s.string[0]) {
             state = 0x2;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_basic_write_pipe_content_end_s) {
+          if (block.string[range.start] == fss_basic_write_pipe_content_end_s.string[0]) {
             state = 0x3;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_basic_write_pipe_content_ignore_s) {
+          if (block.string[range.start] == fss_basic_write_pipe_content_ignore_s.string[0]) {
 
             // This is not used by objects.
             continue;
@@ -267,7 +267,7 @@ extern "C" {
 
           for (; range.start <= range.stop; ++range.start) {
 
-            if (block.string[range.start] == fss_basic_write_pipe_content_start_s) {
+            if (block.string[range.start] == fss_basic_write_pipe_content_start_s.string[0]) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%QThis standard only supports one content per object.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
               }
@@ -277,14 +277,14 @@ extern "C" {
               break;
             }
 
-            if (block.string[range.start] == fss_basic_write_pipe_content_end_s) {
+            if (block.string[range.start] == fss_basic_write_pipe_content_end_s.string[0]) {
               state = 0x3;
               ++range.start;
 
               break;
             }
 
-            if (block.string[range.start] == fss_basic_write_pipe_content_ignore_s) {
+            if (block.string[range.start] == fss_basic_write_pipe_content_ignore_s.string[0]) {
 
               // This is not used by this program.
               continue;
@@ -294,6 +294,7 @@ extern "C" {
               fss_basic_write_error_parameter_unsupported_eol_print(main);
 
               status = F_status_set_error(F_supported_not);
+
               break;
             }
 

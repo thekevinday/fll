@@ -68,7 +68,7 @@ extern "C" {
   void fss_extended_list_read_print_content_ignore(fll_program_data_t * const main) {
 
     if (main->parameters.array[fss_extended_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_dynamic_raw(fss_extended_list_read_pipe_content_ignore, main->output.to.stream);
+      f_print_dynamic_raw(fss_extended_list_read_pipe_content_ignore_s, main->output.to.stream);
     }
   }
 #endif // _di_fss_extended_list_read_print_content_ignore_
@@ -77,7 +77,7 @@ extern "C" {
   void fss_extended_list_read_print_object_end(fll_program_data_t * const main, fss_extended_list_read_data_t * const data) {
 
     if (main->parameters.array[fss_extended_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_dynamic_raw(fss_extended_list_read_pipe_content_start, main->output.to.stream);
+      f_print_dynamic_raw(fss_extended_list_read_pipe_content_start_s, main->output.to.stream);
     }
     else {
       if ((data->option & fss_extended_list_read_data_option_object_d) && (data->option & fss_extended_list_read_data_option_content_d)) {
@@ -92,7 +92,7 @@ extern "C" {
   void fss_extended_list_read_print_set_end(fll_program_data_t * const main, fss_extended_list_read_data_t * const data) {
 
     if (main->parameters.array[fss_extended_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_character(fss_extended_list_read_pipe_content_end, main->output.to.stream);
+      f_print_dynamic_raw(fss_extended_list_read_pipe_content_end_s, main->output.to.stream);
     }
     else {
       if (data->option & fss_extended_list_read_data_option_object_d) {

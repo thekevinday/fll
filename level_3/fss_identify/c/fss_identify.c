@@ -176,12 +176,12 @@ extern "C" {
       }
       else if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_identify_parameter_line_e].values.array[main->parameters.array[fss_identify_parameter_line_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], F_console_parameter_size_d));
+        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
-        status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, &data.line);
+        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &data.line);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_identify_long_line_s, arguments->argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_identify_long_line_s, argv[index]);
         }
       }
     }
@@ -229,7 +229,7 @@ extern "C" {
       }
       else if (main->parameters.array[fss_identify_parameter_name_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].values.used - 1];
-        const f_array_length_t length = strnlen(arguments->argv[index], F_console_parameter_size_d);
+        const f_array_length_t length = argv[index].used;
         const f_string_range_t range = macro_f_string_range_t_initialize(length);
 
         if (length == 0) {
@@ -255,7 +255,7 @@ extern "C" {
 
           for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
-            status = f_utf_is_word(arguments->argv[index] + i, length, F_true);
+            status = f_utf_is_word(argv[index].string + i, length, F_true);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_true);
@@ -266,7 +266,7 @@ extern "C" {
               flockfile(main->error.to.stream);
 
               fl_print_format("%r%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, arguments->argv[index], main->error.notable);
+              fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, argv[index], main->error.notable);
               fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
               fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
               fl_print_format("%[' may only contain word characters.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
@@ -278,7 +278,7 @@ extern "C" {
               break;
             }
 
-            data.name.string[data.name.used++] = arguments->argv[index][i];
+            data.name.string[data.name.used++] = argv[index].string[i];
           } // for
         }
       }
@@ -322,16 +322,16 @@ extern "C" {
 
         file.size_read = 512;
 
-        status = f_file_stream_open(arguments->argv[main->parameters.remaining.array[i]], 0, &file);
+        status = f_file_stream_open(argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
         }
         else {
-          status = fss_identify_load_line(main, file, arguments->argv[main->parameters.remaining.array[i]], &buffer, &range);
+          status = fss_identify_load_line(main, file, argv[main->parameters.remaining.array[i]], &buffer, &range);
 
           if (F_status_is_error_not(status)) {
-            status = fss_identify_process(main, arguments->argv[main->parameters.remaining.array[i]], buffer, &range, &data);
+            status = fss_identify_process(main, argv[main->parameters.remaining.array[i]], buffer, &range, &data);
           }
         }
 

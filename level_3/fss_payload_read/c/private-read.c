@@ -255,7 +255,7 @@ extern "C" {
     f_status_t status = fll_fss_payload_read(data->buffer, state, &input, &data->objects, &data->contents, &data->delimits_object, &data->delimits_content, &data->comments);
 
     if (F_status_is_error(status)) {
-      const f_string_t file_name = fss_payload_read_file_identify(input.start, data->files);
+      const f_string_static_t file_name = fss_payload_read_file_identify(input.start, data->files);
 
       if (F_status_set_fine(status) == F_none || F_status_set_fine(status) == F_none_eos || F_status_set_fine(status) == F_none_stop || F_status_set_fine(status) == F_data_not_eos || F_status_set_fine(status) == F_data_not_stop) {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -300,7 +300,7 @@ extern "C" {
         status = fll_fss_extended_read(data->buffer, state, &input_header, &data->objects_header, &data->contents_header, &data->quotes_object_header, &data->quotes_content_header, &data->delimits_object_header, &data->delimits_content_header);
 
         if (F_status_is_error(status)) {
-          const f_string_t file_name = fss_payload_read_file_identify(input.start, data->files);
+          const f_string_static_t file_name = fss_payload_read_file_identify(input.start, data->files);
 
           fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, file_name, f_file_operation_process_s, fll_error_file_type_file_e);
 
@@ -314,16 +314,16 @@ extern "C" {
 #endif // _di_fss_payload_read_load_
 
 #ifndef _di_fss_payload_read_load_number_
-  f_status_t fss_payload_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) {
+  f_status_t fss_payload_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) {
 
     if (main->parameters.array[parameter].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], F_console_parameter_size_d));
+      const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(main->parameters.arguments.array[index], F_console_parameter_size_d));
 
-      const f_status_t status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, number);
+      const f_status_t status = fl_conversion_string_to_number_unsigned(main->parameters.arguments.array[index].string, range, number);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, name, arguments->argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, name, main->parameters.arguments.array[index]);
 
         return status;
       }
@@ -1010,7 +1010,7 @@ extern "C" {
     if (main->parameters.array[fss_payload_read_parameter_line_e].result == f_console_result_additional_e) {
       data->option |= fss_payload_read_data_option_line_d;
 
-      status = fss_payload_read_load_number(main, fss_payload_read_parameter_line_e, fss_payload_read_long_line_s, arguments, &data->line);
+      status = fss_payload_read_load_number(main, fss_payload_read_parameter_line_e, fss_payload_read_long_line_s, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1029,7 +1029,7 @@ extern "C" {
     if (main->parameters.array[fss_payload_read_parameter_select_e].result == f_console_result_additional_e) {
       data->option |= fss_payload_read_data_option_select_d;
 
-      status = fss_payload_read_load_number(main, fss_payload_read_parameter_select_e, fss_payload_read_long_select_s, arguments, &data->select);
+      status = fss_payload_read_load_number(main, fss_payload_read_parameter_select_e, fss_payload_read_long_select_s, &data->select);
       if (F_status_is_error(status)) return status;
     }
 

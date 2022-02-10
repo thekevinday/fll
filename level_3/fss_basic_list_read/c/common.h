@@ -64,9 +64,9 @@ extern "C" {
  *
  * fss_basic_list_read_pipe_*:
  *   - name:           A name used to represent the pipe when printing file names.
- *   - content_end:    A code used to reprsent the end of Content for use in binary formats.
- *   - content_ignore: A code used to reprsent the ignoring Content for use in binary formats.
- *   - content_start:  A code used to reprsent the start of Content for use in binary formats.
+ *   - content_end:    A code used to represent the end of Content for use in binary formats.
+ *   - content_ignore: A code used to represent the ignoring Content for use in binary formats.
+ *   - content_start:  A code used to represent the start of Content for use in binary formats.
  */
 #ifndef _di_fss_basic_list_read_defines_
   #define fss_basic_list_read_signal_check_d 10000

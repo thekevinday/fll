@@ -105,8 +105,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
  * @param contents
  *   The console parameter locations array for the content parameter.
  * @param location
@@ -119,7 +117,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_embedded_list_write_process_parameter_ignore_
-  extern f_status_t fss_embedded_list_write_process_parameter_ignore(fll_program_data_t * const main, const f_console_arguments_t *arguments, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) F_attribute_visibility_internal_d;
+  extern f_status_t fss_embedded_list_write_process_parameter_ignore(fll_program_data_t * const main, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_write_process_parameter_ignore_
 
 #ifdef __cplusplus

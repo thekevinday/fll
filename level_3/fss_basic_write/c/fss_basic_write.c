@@ -397,18 +397,18 @@ extern "C" {
       }
     }
 
-    f_fss_quote_t quote = F_fss_delimit_quote_double_s;
+    f_fss_quote_t quote = f_fss_quote_type_double_e;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_basic_write_parameter_double_e].result == f_console_result_found_e) {
         if (main->parameters.array[fss_basic_write_parameter_single_e].result == f_console_result_found_e) {
           if (main->parameters.array[fss_basic_write_parameter_double_e].location < main->parameters.array[fss_basic_write_parameter_single_e].location) {
-            quote = F_fss_delimit_quote_single_s;
+            quote = f_fss_quote_type_single_e;
           }
         }
       }
       else if (main->parameters.array[fss_basic_write_parameter_single_e].result == f_console_result_found_e) {
-        quote = F_fss_delimit_quote_single_s;
+        quote = f_fss_quote_type_single_e;
       }
     }
 
@@ -433,8 +433,6 @@ extern "C" {
       if (F_status_is_error_not(status)) {
         if (main->parameters.array[fss_basic_write_parameter_partial_e].result == f_console_result_found_e) {
           if (main->parameters.array[fss_basic_write_parameter_object_e].result == f_console_result_additional_e) {
-            content.used = 0;
-
             for (f_array_length_t i = 0; i < main->parameters.array[fss_basic_write_parameter_object_e].values.used; ++i) {
 
               if (fss_basic_write_signal_received(main)) {
@@ -448,8 +446,6 @@ extern "C" {
             } // for
           }
           else {
-            object.used = 0;
-
             for (f_array_length_t i = 0; i < main->parameters.array[fss_basic_write_parameter_content_e].values.used; ++i) {
 
               if (fss_basic_write_signal_received(main)) {

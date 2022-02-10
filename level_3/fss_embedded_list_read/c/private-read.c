@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_embedded_list_read_main_preprocess_depth_
-  f_status_t fss_embedded_list_read_main_preprocess_depth(fss_embedded_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_embedded_list_read_depths_t *depths) {
+  f_status_t fss_embedded_list_read_main_preprocess_depth(fss_embedded_list_read_main_t * const main, fss_embedded_list_read_depths_t *depths) {
 
     f_status_t status = F_none;
 
@@ -116,13 +116,14 @@ extern "C" {
       }
     }
 
-    // provide default level-0 depth values.
+    // Provide default level-0 depth values.
     depths->array[0].depth = 0;
     depths->array[0].index_at = 0;
     depths->array[0].index_name = 0;
     depths->array[0].value_at = 0;
 
     {
+      f_string_static_t * const argv = main->parameters.arguments.array;
       f_number_unsigned_t number = 0;
       bool first_depth = F_true;
 
@@ -133,9 +134,9 @@ extern "C" {
         }
 
         if (values_type[i] == fss_embedded_list_read_parameter_depth_e || values_type[i] == fss_embedded_list_read_parameter_at_e) {
-          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(argv[values_order[i]]));
+          const f_string_range_t range = macro_f_string_range_t_initialize(argv[values_order[i]].used);
 
-          status = fl_conversion_string_to_number_unsigned(argv[values_order[i]], range, &number);
+          status = fl_conversion_string_to_number_unsigned(argv[values_order[i]].string, range, &number);
 
           if (F_status_is_error(status)) {
             fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_depth_s, argv[values_order[i]]);
@@ -172,7 +173,7 @@ extern "C" {
           depths->array[depths->used].value_name.used = 0;
 
           if (main->parameters.array[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
-            status = fl_string_rip(argv[values_order[i]], strnlen(argv[values_order[i]], F_console_parameter_size_d), &depths->array[depths->used].value_name);
+            status = fl_string_rip(argv[values_order[i]].string, argv[values_order[i]].used, &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "fl_string_rip", F_true);
@@ -181,7 +182,7 @@ extern "C" {
             }
           }
           else {
-            status = f_string_append(argv[values_order[i]], strnlen(argv[values_order[i]], F_console_parameter_size_d), &depths->array[depths->used].value_name);
+            status = f_string_append(argv[values_order[i]].string, argv[values_order[i]].used, &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
@@ -235,7 +236,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_main_preprocess_depth_
 
 #ifndef _di_fss_embedded_list_read_main_process_file_
-  f_status_t fss_embedded_list_read_main_process_file(fss_embedded_list_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
+  f_status_t fss_embedded_list_read_main_process_file(fss_embedded_list_read_main_t * const main, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
 
     f_status_t status = F_none;
 
@@ -301,12 +302,12 @@ extern "C" {
 
       if (main->parameters.array[fss_embedded_list_read_parameter_select_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[main->parameters.array[fss_embedded_list_read_parameter_select_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index]);
+        const f_string_range_t range = macro_f_string_range_t_initialize(main->parameters.arguments.array[index].used);
 
-        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &select);
+        status = fl_conversion_string_to_number_unsigned(main->parameters.arguments.array[index].string, range, &select);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_select_s, argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_select_s, main->parameters.arguments.array[index]);
 
           return status;
         }
@@ -322,12 +323,12 @@ extern "C" {
 
     if (main->parameters.array[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[main->parameters.array[fss_embedded_list_read_parameter_line_e].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
+      const f_string_range_t range = macro_f_string_range_t_initialize(main->parameters.arguments.array[index].used);
 
-      status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &line);
+      status = fl_conversion_string_to_number_unsigned(main->parameters.arguments.array[index].string, range, &line);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_line_s, argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_line_s, main->parameters.arguments.array[index]);
 
         return status;
       }
@@ -341,15 +342,15 @@ extern "C" {
     if (main->parameters.array[fss_embedded_list_read_parameter_raw_e].result == f_console_result_found_e) {
       f_fss_delimits_t except_none = f_fss_delimits_t_initialize;
 
-      return fss_embedded_list_read_main_process_for_depth(main, arguments, filename, depths, 0, line, parents, &except_none, &except_none);
+      return fss_embedded_list_read_main_process_for_depth(main, filename, depths, 0, line, parents, &except_none, &except_none);
     }
 
-    return fss_embedded_list_read_main_process_for_depth(main, arguments, filename, depths, 0, line, parents, objects_delimits, contents_delimits);
+    return fss_embedded_list_read_main_process_for_depth(main, filename, depths, 0, line, parents, objects_delimits, contents_delimits);
   }
 #endif // _di_fss_embedded_list_read_main_process_file_
 
 #ifndef _di_fss_embedded_list_read_main_process_for_depth_
-  f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_main_t * const main, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
 
     f_fss_items_t *items = &main->nest.depth[depths.array[depths_index].depth];
 
@@ -491,7 +492,7 @@ extern "C" {
         } // for
       }
 
-      return fss_embedded_list_read_main_process_for_depth(main, arguments, filename, depths, depths_index + 1, line, parents_next, objects_delimits, contents_delimits);
+      return fss_embedded_list_read_main_process_for_depth(main, filename, depths, depths_index + 1, line, parents_next, objects_delimits, contents_delimits);
     }
 
     // Process objects.
@@ -666,7 +667,7 @@ extern "C" {
       f_print_except_dynamic_partial(main->buffer, items->array[i].content.array[0], *contents_delimits, main->output.to.stream);
 
       if (main->parameters.array[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-        f_print_character(fss_embedded_list_read_pipe_content_end_s, main->output.to.stream);
+        f_print_dynamic_raw(fss_embedded_list_read_pipe_content_end_s, main->output.to.stream);
       }
     } // for
 

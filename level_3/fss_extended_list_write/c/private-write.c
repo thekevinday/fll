@@ -209,21 +209,21 @@ extern "C" {
 
         for (; range.start <= range.stop; ++range.start) {
 
-          if (block.string[range.start] == fss_extended_list_write_pipe_content_start_s) {
+          if (block.string[range.start] == fss_extended_list_write_pipe_content_start_s.string[0]) {
             state = 0x2;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_extended_list_write_pipe_content_end_s) {
+          if (block.string[range.start] == fss_extended_list_write_pipe_content_end_s.string[0]) {
             state = 0x3;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_extended_list_write_pipe_content_ignore_s) {
+          if (block.string[range.start] == fss_extended_list_write_pipe_content_ignore_s.string[0]) {
 
             // This is not used by objects.
             continue;
@@ -260,7 +260,7 @@ extern "C" {
 
           for (; range.start <= range.stop; ++range.start) {
 
-            if (block.string[range.start] == fss_extended_list_write_pipe_content_start_s) {
+            if (block.string[range.start] == fss_extended_list_write_pipe_content_start_s.string[0]) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%QThis standard only supports one content per object.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
               }
@@ -270,14 +270,14 @@ extern "C" {
               break;
             }
 
-            if (block.string[range.start] == fss_extended_list_write_pipe_content_end_s) {
+            if (block.string[range.start] == fss_extended_list_write_pipe_content_end_s.string[0]) {
               state = 0x3;
               range.start++;
 
               break;
             }
 
-            if (block.string[range.start] == fss_extended_list_write_pipe_content_ignore_s) {
+            if (block.string[range.start] == fss_extended_list_write_pipe_content_ignore_s.string[0]) {
               if (ignore) {
                 if (range_ignore.start > range_ignore.stop) {
                   range_ignore.start = content.used;
@@ -350,7 +350,7 @@ extern "C" {
 #endif // _di_fss_extended_list_write_process_pipe_
 
 #ifndef _di_fss_extended_list_write_process_parameter_ignore_
-  f_status_t fss_extended_list_write_process_parameter_ignore(fll_program_data_t * const main, const f_console_arguments_t *arguments, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) {
+  f_status_t fss_extended_list_write_process_parameter_ignore(fll_program_data_t * const main, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) {
 
     f_status_t status = F_none;
 
@@ -361,6 +361,8 @@ extern "C" {
     f_string_range_t range = f_string_range_t_initialize;
 
     f_number_unsigned_t number = 0;
+
+    f_string_static_t * const argv = main->parameters.arguments.array;
 
     range.start = 0;
 
@@ -402,7 +404,7 @@ extern "C" {
       range.stop = strnlen(argv[index], F_console_parameter_size_d) - 1;
 
       // allow and ignore the positive sign.
-      if (range.stop > 0 && argv[index][0] == '+') {
+      if (range.stop > 0 && argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
         range.start = 1;
       }
 
@@ -422,7 +424,7 @@ extern "C" {
       range.stop = strnlen(argv[index], F_console_parameter_size_d) - 1;
 
       // allow and ignore the positive sign.
-      if (range.stop > 0 && argv[index][0] == '+') {
+      if (range.stop > 0 && argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
         range.start = 1;
       }
 

@@ -14,6 +14,7 @@ extern "C" {
 #endif // _di_fss_extended_read_program_name_
 
 #ifndef _di_fss_extended_read_defines_
+  const f_string_static_t fss_extended_read_pipe_name_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_pipe_name_s, 0, FSS_EXTENDED_READ_pipe_name_s_length);
   const f_string_static_t fss_extended_read_pipe_content_end_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_pipe_content_end_s, 0, FSS_EXTENDED_READ_pipe_content_end_s_length);
   const f_string_static_t fss_extended_read_pipe_content_ignore_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_pipe_content_ignore_s, 0, FSS_EXTENDED_READ_pipe_content_ignore_s_length);
   const f_string_static_t fss_extended_read_pipe_content_start_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_pipe_content_start_s, 0, FSS_EXTENDED_READ_pipe_content_start_s_length);

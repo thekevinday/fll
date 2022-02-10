@@ -169,6 +169,7 @@ extern "C" {
 
       if (fss_basic_list_write_signal_received(main)) {
         status = F_status_set_error(F_interrupt);
+
         break;
       }
 
@@ -258,6 +259,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
             break;
           }
 

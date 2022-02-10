@@ -61,17 +61,29 @@ extern "C" {
 
 /**
  * The program defines.
+ *
+ * fss_embedded_list_write_pipe_*:
+ *   - name:           A name used to represent the pipe when printing file names.
+ *   - content_end:    A code used to represent the end of Content for use in binary formats.
+ *   - content_ignore: A code used to represent the ignoring Content for use in binary formats.
+ *   - content_start:  A code used to represent the start of Content for use in binary formats.
  */
 #ifndef _di_fss_embedded_list_write_defines_
   #define fss_embedded_list_write_signal_check_d 10000
+
+  #define FSS_EMBEDDED_LIST_WRITE_pipe_name_s "(pipe)"
 
   #define FSS_EMBEDDED_LIST_WRITE_pipe_content_end_s    "\f"
   #define FSS_EMBEDDED_LIST_WRITE_pipe_content_ignore_s "\v"
   #define FSS_EMBEDDED_LIST_WRITE_pipe_content_start_s  "\b"
 
+  #define FSS_EMBEDDED_LIST_WRITE_pipe_name_s_length 6
+
   #define FSS_EMBEDDED_LIST_WRITE_pipe_content_end_s_length    1
   #define FSS_EMBEDDED_LIST_WRITE_pipe_content_ignore_s_length 1
   #define FSS_EMBEDDED_LIST_WRITE_pipe_content_start_s_length  1
+
+  extern const f_string_static_t fss_embedded_list_write_pipe_name_s;
 
   extern const f_string_static_t fss_embedded_list_write_pipe_content_end_s;
   extern const f_string_static_t fss_embedded_list_write_pipe_content_ignore_s;

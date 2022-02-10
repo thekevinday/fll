@@ -38,15 +38,21 @@ extern "C" {
     #define FSS_EXTENDED_LIST_READ_program_version_nano_s_length 0
   #endif // !(defined(FSS_EXTENDED_LIST_READ_program_version_nano_s) && defined(FSS_EXTENDED_LIST_READ_program_version_nano_s_length))
 
-  #define FSS_EXTENDED_LIST_READ_program_version_s FSS_EXTENDED_LIST_READ_program_version_major_s F_string_ascii_period_s FSS_EXTENDED_LIST_READ_program_version_minor_s F_string_ascii_period_s FSS_EXTENDED_LIST_READ_program_version_micro_s FSS_EXTENDED_LIST_READ_version_nano_prefix_s FSS_EXTENDED_LIST_READ_version_nano_s
+  #define FSS_EXTENDED_LIST_READ_program_version_s FSS_EXTENDED_LIST_READ_program_version_major_s F_string_ascii_period_s FSS_EXTENDED_LIST_READ_program_version_minor_s F_string_ascii_period_s FSS_EXTENDED_LIST_READ_program_version_micro_s FSS_EXTENDED_LIST_READ_program_version_nano_prefix_s FSS_EXTENDED_LIST_READ_program_version_nano_s
 
-  #define FSS_EXTENDED_LIST_READ_program_version_s_length FSS_EXTENDED_LIST_READ_program_version_major_s_length + F_string_ascii_period_s_length + FSS_EXTENDED_LIST_READ_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_EXTENDED_LIST_READ_program_version_micro_s_length + FSS_EXTENDED_LIST_READ_version_nano_prefix_s_length + FSS_EXTENDED_LIST_READ_version_nano_s_length
+  #define FSS_EXTENDED_LIST_READ_program_version_s_length FSS_EXTENDED_LIST_READ_program_version_major_s_length + F_string_ascii_period_s_length + FSS_EXTENDED_LIST_READ_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_EXTENDED_LIST_READ_program_version_micro_s_length + FSS_EXTENDED_LIST_READ_program_version_nano_prefix_s_length + FSS_EXTENDED_LIST_READ_program_version_nano_s_length
 
   extern const f_string_static_t fss_extended_list_read_program_version_s;
 #endif // _di_fss_extended_list_read_program_version_
 
 /**
  * The program name.
+ *
+ * fss_extended_list_read_pipe_*:
+ *   - name:           A name used to represent the pipe when printing file names.
+ *   - content_end:    A code used to represent the end of Content for use in binary formats.
+ *   - content_ignore: A code used to represent the ignoring Content for use in binary formats.
+ *   - content_start:  A code used to represent the start of Content for use in binary formats.
  */
 #ifndef _di_fss_extended_list_read_program_name_
   #define FSS_EXTENDED_LIST_READ_program_name_s      "fss_extended_list_read"
@@ -65,13 +71,19 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_defines_
   #define fss_extended_list_read_signal_check_d 10000
 
+  #define FSS_EXTENDED_LIST_READ_pipe_name_s "(pipe)"
+
   #define FSS_EXTENDED_LIST_READ_pipe_content_end_s    "\f"
   #define FSS_EXTENDED_LIST_READ_pipe_content_ignore_s "\v"
   #define FSS_EXTENDED_LIST_READ_pipe_content_start_s  "\b"
 
+  #define FSS_EXTENDED_LIST_READ_pipe_name_s_length 6
+
   #define FSS_EXTENDED_LIST_READ_pipe_content_end_s_length    1
   #define FSS_EXTENDED_LIST_READ_pipe_content_ignore_s_length 1
   #define FSS_EXTENDED_LIST_READ_pipe_content_start_s_length  1
+
+  extern const f_string_static_t fss_extended_list_read_pipe_name_s;
 
   extern const f_string_static_t fss_extended_list_read_pipe_content_end_s;
   extern const f_string_static_t fss_extended_list_read_pipe_content_ignore_s;

@@ -155,6 +155,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fss_embedded_list_read_main_delete(main);
+
         return F_status_set_error(status);
       }
     }
@@ -360,13 +361,13 @@ extern "C" {
           else {
             main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_e;
 
-            if (argv[index][length - 1] == fss_embedded_list_read_delimit_mode_name_greater_s.string[0]) {
+            if (argv[index].string[length - 1] == fss_embedded_list_read_delimit_mode_name_greater_s.string[0]) {
               main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_greater_e;
 
               // Shorten the length to better convert the remainder to a number.
               --length;
             }
-            else if (argv[index][length - 1] == fss_embedded_list_read_delimit_mode_name_lesser_s.string[0]) {
+            else if (argv[index].string[length - 1] == fss_embedded_list_read_delimit_mode_name_lesser_s.string[0]) {
               main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_lesser_e;
 
               // Shorten the length to better convert the remainder to a number.
@@ -376,7 +377,7 @@ extern "C" {
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // Ignore leading plus sign.
-            if (argv[index][0] == f_string_ascii_plus_s[0]) {
+            if (argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
               ++range.start;
             }
 
@@ -395,10 +396,10 @@ extern "C" {
       f_fss_delimits_t contents_delimits = f_fss_delimits_t_initialize;
       f_fss_comments_t comments = f_fss_comments_t_initialize;
 
-      f_array_length_t original_size = main->quantity.total;
+      const f_array_length_t original_size = main->quantity.total;
 
       if (F_status_is_error_not(status)) {
-        status = fss_embedded_list_read_main_preprocess_depth(main, arguments, &depths);
+        status = fss_embedded_list_read_main_preprocess_depth(main, &depths);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_preprocess_depth", F_true);
@@ -428,7 +429,7 @@ extern "C" {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
         }
         else {
-          status = fss_embedded_list_read_main_process_file(main, arguments, f_string_ascii_minus_s, depths, &objects_delimits, &contents_delimits, &comments);
+          status = fss_embedded_list_read_main_process_file(main, f_string_ascii_minus_s, depths, &objects_delimits, &contents_delimits, &comments);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
@@ -451,7 +452,7 @@ extern "C" {
 
           f_file_t file = f_file_t_initialize;
 
-          status = f_file_open(argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
+          status = f_file_open(argv[main->parameters.remaining.array[i]], 0, &file);
 
           main->quantity.total = original_size;
 
@@ -493,7 +494,7 @@ extern "C" {
             break;
           }
 
-          status = fss_embedded_list_read_main_process_file(main, arguments, argv[main->parameters.remaining.array[i]], depths, &objects_delimits, &contents_delimits, &comments);
+          status = fss_embedded_list_read_main_process_file(main, argv[main->parameters.remaining.array[i]], depths, &objects_delimits, &contents_delimits, &comments);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "fss_embedded_list_read_main_process_file", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);

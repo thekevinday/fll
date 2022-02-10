@@ -187,7 +187,7 @@ extern "C" {
         }
       }
       else if (main->parameters.array[fss_extended_write_parameter_file_e].result == f_console_result_found_e) {
-        fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s,.string fss_extended_write_long_file_s);
+        fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s.string fss_extended_write_long_file_s);
         status = F_status_set_error(F_parameter);
       }
     }
@@ -409,18 +409,18 @@ extern "C" {
       }
     }
 
-    f_fss_quote_t quote = F_fss_delimit_quote_double_s;
+    f_fss_quote_t quote = f_fss_quote_type_double_e;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_extended_write_parameter_double_e].result == f_console_result_found_e) {
         if (main->parameters.array[fss_extended_write_parameter_single_e].result == f_console_result_found_e) {
           if (main->parameters.array[fss_extended_write_parameter_double_e].location < main->parameters.array[fss_extended_write_parameter_single_e].location) {
-            quote = F_fss_delimit_quote_single_s;
+            quote = f_fss_quote_type_single_e;
           }
         }
       }
       else if (main->parameters.array[fss_extended_write_parameter_single_e].result == f_console_result_found_e) {
-        quote = F_fss_delimit_quote_single_s;
+        quote = f_fss_quote_type_single_e;
       }
     }
 
@@ -489,10 +489,7 @@ extern "C" {
 
               for (; i < main->parameters.array[fss_extended_write_parameter_content_e].values.used; ++i) {
 
-                contents.array[contents.used].string = argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[i]];
-                contents.array[contents.used].used = strnlen(contents.array[contents.used].string, F_console_parameter_size_d);
-                contents.array[contents.used].size = contents.array[contents.used].used;
-                ++contents.used;
+                contents.array[contents.used++] = argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[i]];
               } // for
 
               status = fss_extended_write_process(main, output, quote, 0, &contents, &buffer);
@@ -533,9 +530,7 @@ extern "C" {
               object_next = main->parameters.array[fss_extended_write_parameter_object_e].locations.array[i + 1];
             }
 
-            object.string = argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]];
-            object.used = strnlen(object.string, F_console_parameter_size_d);
-            object.size = object.used;
+            object = argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]];
 
             contents.used = 0;
 

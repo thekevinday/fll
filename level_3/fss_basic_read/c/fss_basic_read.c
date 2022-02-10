@@ -222,7 +222,7 @@ extern "C" {
     data.files.array = files_array;
     data.files.used = 1;
     data.files.size = main->parameters.remaining.used + 1;
-    data.files.array[0].name = "(pipe)";
+    data.files.array[0].name = fss_basic_read_pipe_name_s;
     data.files.array[0].range.start = 1;
     data.files.array[0].range.stop = 0;
 
@@ -237,7 +237,7 @@ extern "C" {
           fss_basic_read_parameter_delimit_e,
         };
 
-        const f_string_t parameter_name[] = {
+        const f_string_static_t parameter_name[] = {
           fss_basic_read_long_at_s,
           fss_basic_read_long_depth_s,
           fss_basic_read_long_line_s,
@@ -266,7 +266,7 @@ extern "C" {
 
             fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter_name[i], main->error.notable);
-            fl_print_format("%[' requires a %r.%]%r", main->error.to.stream, main->error.context, parameter_message[i], main->error.context, f_string_eol_s);
+            fl_print_format("%[' requires a %s.%]%r", main->error.to.stream, main->error.context, parameter_message[i], main->error.context, f_string_eol_s);
 
             funlockfile(main->error.to.stream);
 
@@ -286,7 +286,7 @@ extern "C" {
           fss_basic_read_parameter_total_e,
         };
 
-        const f_string_t parameter_name[] = {
+        const f_string_static_t parameter_name[] = {
           fss_basic_read_long_depth_s,
           fss_basic_read_long_line_s,
           fss_basic_read_long_pipe_s,
@@ -382,13 +382,13 @@ extern "C" {
 
             break;
           }
-          else if (fl_string_dynamic_compare_string(fss_basic_read_delimit_mode_name_none_s.string, argv[index], fss_basic_read_delimit_mode_name_none_s.used) == F_equal_to) {
+          else if (fl_string_dynamic_compare(fss_basic_read_delimit_mode_name_none_s, argv[index]) == F_equal_to) {
             data.delimit_mode = fss_basic_read_delimit_mode_none_e;
           }
-          else if (fl_string_dynamic_compare_string(fss_basic_read_delimit_mode_name_all_s.string, argv[index], fss_basic_read_delimit_mode_name_all_s.used) == F_equal_to) {
+          else if (fl_string_dynamic_compare(fss_basic_read_delimit_mode_name_all_s, argv[index]) == F_equal_to) {
             data.delimit_mode = fss_basic_read_delimit_mode_all_e;
           }
-          else if (fl_string_dynamic_compare_string(fss_basic_read_delimit_mode_name_object_s.string, argv[index], fss_basic_read_delimit_mode_name_object_s.used) == F_equal_to) {
+          else if (fl_string_dynamic_compare(fss_basic_read_delimit_mode_name_object_s, argv[index]) == F_equal_to) {
             switch (data.delimit_mode) {
               case 0:
                 data.delimit_mode = fss_basic_read_delimit_mode_object_e;
@@ -425,7 +425,7 @@ extern "C" {
               data.delimit_mode = fss_basic_read_delimit_mode_content_object_e;
             }
 
-            if (argv[index][length - 1] == fss_basic_read_delimit_mode_name_greater_s.string[0]) {
+            if (argv[index].string[length - 1] == fss_basic_read_delimit_mode_name_greater_s.string[0]) {
               if (!(data.delimit_mode == fss_basic_read_delimit_mode_none_e || data.delimit_mode == fss_basic_read_delimit_mode_all_e)) {
                 if (data.delimit_mode == fss_basic_read_delimit_mode_content_object_e) {
                   data.delimit_mode = fss_basic_read_delimit_mode_content_greater_object_e;
@@ -438,7 +438,7 @@ extern "C" {
               // Shorten the length to better convert the remainder to a number.
               --length;
             }
-            else if (argv[index][length - 1] == fss_basic_read_delimit_mode_name_lesser_s.string[0]) {
+            else if (argv[index].string[length - 1] == fss_basic_read_delimit_mode_name_lesser_s.string[0]) {
               if (!(data.delimit_mode == fss_basic_read_delimit_mode_none_e || data.delimit_mode == fss_basic_read_delimit_mode_all_e)) {
                 if (data.delimit_mode == fss_basic_read_delimit_mode_content_object_e) {
                   data.delimit_mode = fss_basic_read_delimit_mode_content_lesser_object_e;
@@ -455,7 +455,7 @@ extern "C" {
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // Ignore leading plus sign.
-            if (argv[index][0] == '+') {
+            if (argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
               ++range.start;
             }
 
@@ -541,7 +541,7 @@ extern "C" {
 
           // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
           // Guarantee that a newline exists at the end of the buffer.
-          status = f_string_append_assure(f_string_eol_s, 1, &data.buffer);
+          status = f_string_dynamic_append_assure(f_string_eol_s, &data.buffer);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
@@ -568,7 +568,7 @@ extern "C" {
           file.stream = 0;
           file.id = -1;
 
-          status = f_file_stream_open(argv[main->parameters.remaining.array[i]], 0, &file);
+          status = f_file_stream_open(argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
@@ -602,7 +602,7 @@ extern "C" {
 
               // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
               // Guarantee that a newline exists at the end of the buffer.
-              status = f_string_append_assure(f_string_eol_s, 1, &data.buffer);
+              status = f_string_dynamic_append_assure(f_string_eol_s, &data.buffer);
 
               if (F_status_is_error(status)) {
                 fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);

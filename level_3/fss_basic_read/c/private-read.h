@@ -74,7 +74,7 @@ extern "C" {
  *   On failure to identify, an empty string is returned.
  */
 #ifndef _di_fss_basic_read_file_identify_
-  extern f_string_t fss_basic_read_file_identify(const f_array_length_t at, const fss_basic_read_files_t files) F_attribute_visibility_internal_d;
+  extern f_string_static_t fss_basic_read_file_identify(const f_array_length_t at, const fss_basic_read_files_t files) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_file_identify_
 
 /**
@@ -114,8 +114,6 @@ extern "C" {
  *   An ID representing the parameter.
  * @param name
  *   The parameter name to print on error.
- * @param arguments
- *   The console arguments passed to the program.
  * @param number
  *   The location to store the loaded number.
  *
@@ -130,7 +128,7 @@ extern "C" {
  * @see fss_basic_read_depths_resize()
  */
 #ifndef _di_fss_basic_read_load_number_
-  extern f_status_t fss_basic_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_t name, const f_console_arguments_t *arguments, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_read_load_number_
 
 /**

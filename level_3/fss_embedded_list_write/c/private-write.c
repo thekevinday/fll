@@ -108,7 +108,16 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      status = fl_fss_embedded_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, &main->prepend, ignore, state, &range, buffer);
+      f_string_static_t *prepend = 0;
+
+      if (main->parameters.array[fss_embedded_list_write_parameter_prepend_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters.array[fss_embedded_list_write_parameter_prepend_e].values.array[main->parameters.array[fss_embedded_list_write_parameter_prepend_e].values.used - 1];
+
+        prepend = &main->parameters.arguments.array[index];
+      }
+
+
+      status = fl_fss_embedded_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, prepend, ignore, state, &range, buffer);
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "fl_fss_embedded_list_content_write", F_true);
@@ -213,22 +222,22 @@ extern "C" {
 
         for (; range.start <= range.stop; ++range.start) {
 
-          if (block.string[range.start] == fss_embedded_list_write_pipe_content_start_s) {
+          if (block.string[range.start] == fss_embedded_list_write_pipe_content_start_s.string[0]) {
             state = 0x2;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_embedded_list_write_pipe_content_end_s) {
+          if (block.string[range.start] == fss_embedded_list_write_pipe_content_end_s.string[0]) {
             state = 0x3;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_embedded_list_write_pipe_content_ignore_s) {
-            // this is not used by objects.
+          if (block.string[range.start] == fss_embedded_list_write_pipe_content_ignore_s.string[0]) {
+            // This is not used by objects.
             continue;
           }
 
@@ -263,7 +272,7 @@ extern "C" {
 
           for (; range.start <= range.stop; ++range.start) {
 
-            if (block.string[range.start] == fss_embedded_list_write_pipe_content_start_s) {
+            if (block.string[range.start] == fss_embedded_list_write_pipe_content_start_s.string[0]) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%QThis standard only supports one content per object.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
               }
@@ -273,14 +282,14 @@ extern "C" {
               break;
             }
 
-            if (block.string[range.start] == fss_embedded_list_write_pipe_content_end_s) {
+            if (block.string[range.start] == fss_embedded_list_write_pipe_content_end_s.string[0]) {
               state = 0x3;
               ++range.start;
 
               break;
             }
 
-            if (block.string[range.start] == fss_embedded_list_write_pipe_content_ignore_s) {
+            if (block.string[range.start] == fss_embedded_list_write_pipe_content_ignore_s.string[0]) {
               if (ignore) {
                 if (range_ignore.start > range_ignore.stop) {
                   range_ignore.start = content.used;
@@ -353,7 +362,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_write_process_pipe_
 
 #ifndef _di_fss_embedded_list_write_process_parameter_ignore_
-  f_status_t fss_embedded_list_write_process_parameter_ignore(fll_program_data_t * const main, const f_console_arguments_t *arguments, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) {
+  f_status_t fss_embedded_list_write_process_parameter_ignore(fll_program_data_t * const main, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) {
 
     f_status_t status = F_none;
 
@@ -364,6 +373,8 @@ extern "C" {
     f_string_range_t range = f_string_range_t_initialize;
 
     f_number_unsigned_t number = 0;
+
+    f_string_static_t * const argv = main->parameters.arguments.array;
 
     range.start = 0;
 
@@ -405,7 +416,7 @@ extern "C" {
       range.stop = argv[index].used - 1;
 
       // allow and ignore the positive sign.
-      if (range.stop && argv[index][0] == f_string_ascii_plus_s[0]) {
+      if (range.stop && argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
         range.start = 1;
       }
 
@@ -425,7 +436,7 @@ extern "C" {
       range.stop = argv[index].used - 1;
 
       // Allow and ignore the positive sign.
-      if (range.stop && argv[index][0] == f_string_ascii_plus_s[0]) {
+      if (range.stop && argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
         range.start = 1;
       }
 

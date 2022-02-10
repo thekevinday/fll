@@ -191,7 +191,7 @@ extern "C" {
         }
       }
       else if (main->parameters.array[fss_embedded_list_write_parameter_file_e].result == f_console_result_found_e) {
-        fss_embedded_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s.string.string, fss_embedded_list_write_long_file_s);
+        fss_embedded_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_embedded_list_write_long_file_s);
         status = F_status_set_error(F_parameter);
       }
     }
@@ -331,7 +331,7 @@ extern "C" {
 
           for (; range.start < argv[index].used; ++range.start) {
 
-            status = f_fss_is_space(main->parameter->arguments.array[index], range);
+            status = f_fss_is_space(argv[index], range);
             if (F_status_is_error(status)) break;
 
             if (status == F_false) {
@@ -399,18 +399,18 @@ extern "C" {
       }
     }
 
-    f_fss_quote_t quote = F_fss_delimit_quote_double_s;
+    f_fss_quote_t quote = f_fss_quote_type_double_e;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_embedded_list_write_parameter_double_e].result == f_console_result_found_e) {
         if (main->parameters.array[fss_embedded_list_write_parameter_single_e].result == f_console_result_found_e) {
           if (main->parameters.array[fss_embedded_list_write_parameter_double_e].location < main->parameters.array[fss_embedded_list_write_parameter_single_e].location) {
-            quote = F_fss_delimit_quote_single_s;
+            quote = f_fss_quote_type_single_e;
           }
         }
       }
       else if (main->parameters.array[fss_embedded_list_write_parameter_single_e].result == f_console_result_found_e) {
-        quote = F_fss_delimit_quote_single_s;
+        quote = f_fss_quote_type_single_e;
       }
     }
 
@@ -461,7 +461,7 @@ extern "C" {
                 break;
               }
 
-              status = fss_embedded_list_write_process_parameter_ignore(main, arguments, main->parameters.array[fss_embedded_list_write_parameter_content_e].locations, i, &ignore);
+              status = fss_embedded_list_write_process_parameter_ignore(main, main->parameters.array[fss_embedded_list_write_parameter_content_e].locations, i, &ignore);
               if (F_status_is_error(status)) break;
 
               status = fss_embedded_list_write_process(main, output, quote, 0, &argv[main->parameters.array[fss_embedded_list_write_parameter_content_e].values.array[i]], &ignore, &buffer);
@@ -478,7 +478,7 @@ extern "C" {
               break;
             }
 
-            status = fss_embedded_list_write_process_parameter_ignore(main, arguments, main->parameters.array[fss_embedded_list_write_parameter_content_e].locations, i, &ignore);
+            status = fss_embedded_list_write_process_parameter_ignore(main, main->parameters.array[fss_embedded_list_write_parameter_content_e].locations, i, &ignore);
             if (F_status_is_error(status)) break;
 
             status = fss_embedded_list_write_process(main, output, quote, &argv[main->parameters.array[fss_embedded_list_write_parameter_object_e].values.array[i]], &argv[main->parameters.array[fss_embedded_list_write_parameter_content_e].values.array[i]], &ignore, &buffer);

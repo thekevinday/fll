@@ -222,7 +222,7 @@ extern "C" {
     data.files.array = files_array;
     data.files.used = 1;
     data.files.size = main->parameters.remaining.used + 1;
-    data.files.array[0].name = "(pipe)";
+    data.files.array[0].name = fss_extended_read_pipe_name_s;
     data.files.array[0].range.start = 1;
     data.files.array[0].range.stop = 0;
 
@@ -543,10 +543,10 @@ extern "C" {
 
           // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
           // Guarantee that a newline exists at the end of the buffer.
-          status = f_string_append_assure(f_string_eol_s, 1, &data.buffer);
+          status = f_string_dynamic_append_assure(f_string_eol_s, &data.buffer);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
           }
         }
         else {
@@ -574,7 +574,7 @@ extern "C" {
           file.stream = 0;
           file.id = -1;
 
-          status = f_file_stream_open(argv[main->parameters.remaining.array[i]], 0, &file);
+          status = f_file_stream_open(argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
@@ -608,10 +608,10 @@ extern "C" {
 
               // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
               // Guarantee that a newline exists at the end of the buffer.
-              status = f_string_append_assure(f_string_eol_s, 1, &data.buffer);
+              status = f_string_dynamic_append_assure(f_string_eol_s, &data.buffer);
 
               if (F_status_is_error(status)) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+                fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
               }
             }
           }

@@ -19,8 +19,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The console arguments to pre-process.
  * @param depths
  *   This stores the pre-processed depth parameters.
  *
@@ -30,7 +28,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_embedded_list_read_main_preprocess_depth_
-  extern f_status_t fss_embedded_list_read_main_preprocess_depth(fss_embedded_list_read_main_t * const main, const f_console_arguments_t *arguments, fss_embedded_list_read_depths_t *depths) F_attribute_visibility_internal_d;
+  extern f_status_t fss_embedded_list_read_main_preprocess_depth(fss_embedded_list_read_main_t * const main, fss_embedded_list_read_depths_t *depths) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_main_preprocess_depth_
 
 /**
@@ -38,8 +36,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The console arguments passed to the program.
  * @param file_name
  *   The name of the file being processed.
  * @param depths
@@ -61,7 +57,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_embedded_list_read_main_process_file_
-  extern f_status_t fss_embedded_list_read_main_process_file(fss_embedded_list_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t file_name, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) F_attribute_visibility_internal_d;
+  extern f_status_t fss_embedded_list_read_main_process_file(fss_embedded_list_read_main_t * const main, const f_string_static_t file_name, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_main_process_file_
 
 /**
@@ -71,8 +67,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The console arguments passed to the program.
  * @param file_name
  *   The name of the file being processed.
  * @param depths
@@ -97,7 +91,7 @@ extern "C" {
  * @see fss_embedded_list_read_main_process_file()
  */
 #ifndef _di_fss_embedded_list_read_main_process_for_depth_
-  extern f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_main_t * const main, const f_console_arguments_t *arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) F_attribute_visibility_internal_d;
+  extern f_status_t fss_embedded_list_read_main_process_for_depth(fss_embedded_list_read_main_t * const main, const f_string_static_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_main_process_for_depth_
 
 /**

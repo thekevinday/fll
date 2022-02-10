@@ -230,21 +230,21 @@ extern "C" {
 
         for (; range.start <= range.stop; ++range.start) {
 
-          if (block.string[range.start] == fss_extended_write_pipe_content_start_s) {
+          if (block.string[range.start] == fss_extended_write_pipe_content_start_s.string[0]) {
             state = 0x2;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_extended_write_pipe_content_end_s) {
+          if (block.string[range.start] == fss_extended_write_pipe_content_end_s.string[0]) {
             state = 0x4;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_extended_write_pipe_content_ignore_s) {
+          if (block.string[range.start] == fss_extended_write_pipe_content_ignore_s.string[0]) {
 
             // This is not used by objects.
             continue;
@@ -287,7 +287,7 @@ extern "C" {
         if (total) {
           for (; range.start <= range.stop; ++range.start) {
 
-            if (block.string[range.start] == fss_extended_write_pipe_content_start_s) {
+            if (block.string[range.start] == fss_extended_write_pipe_content_start_s.string[0]) {
               if (contents.used + 1 > contents.size) {
                 status = f_string_dynamics_increase_by(F_fss_default_allocation_step_d, &contents);
 
@@ -303,14 +303,14 @@ extern "C" {
               continue;
             }
 
-            if (block.string[range.start] == fss_extended_write_pipe_content_end_s) {
+            if (block.string[range.start] == fss_extended_write_pipe_content_end_s.string[0]) {
               state = 0x4;
               ++range.start;
 
               break;
             }
 
-            if (block.string[range.start] == fss_extended_write_pipe_content_ignore_s) {
+            if (block.string[range.start] == fss_extended_write_pipe_content_ignore_s.string[0]) {
 
               // This is not used by this program.
               continue;
