@@ -21,7 +21,7 @@ build_indexer ar
 build_indexer_arguments rcs
 build_language c
 build_libraries -lc
-build_libraries-individual -lfll_error -lfll_print -lfll_program -lfll_status_string -lfl_console -lfl_conversion -lfl_print -lfl_string -lf_color -lf_console -lf_conversion -lf_file -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lfll_error -lfll_print -lfll_program -lfll_status_string -lfl_conversion -lfl_print -lfl_string -lf_color -lf_console -lf_conversion -lf_file -lf_memory -lf_pipe -lf_print -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_libraries_shared

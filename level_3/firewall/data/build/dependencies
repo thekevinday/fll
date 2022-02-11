@@ -20,7 +20,6 @@ f_path
 f_pipe
 f_print
 f_signal
-fl_console
 fl_control_group
 fl_conversion
 fl_environment

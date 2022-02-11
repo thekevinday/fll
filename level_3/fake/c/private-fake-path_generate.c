@@ -241,6 +241,8 @@ extern "C" {
 
         for (i = 0; i < 3; ++i) {
 
+          parameters_value[i]->used = 0;
+
           status = f_string_dynamic_append_nulless(main->path_work, parameters_value[i]);
 
           if (F_status_is_error(status)) {

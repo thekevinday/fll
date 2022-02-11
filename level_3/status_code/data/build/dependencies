@@ -13,7 +13,6 @@ f_pipe
 f_print
 f_signal
 f_status_string
-fl_console
 fl_conversion
 fl_print
 fl_string

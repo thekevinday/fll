@@ -63,7 +63,6 @@
 #include <fll/level_0/socket.h>
 
 // FLL-1 includes.
-#include <fll/level_1/console.h>
 #include <fll/level_1/control_group.h>
 #include <fll/level_1/environment.h>
 #include <fll/level_1/fss.h>

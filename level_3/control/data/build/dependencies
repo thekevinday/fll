@@ -13,7 +13,6 @@ f_pipe
 f_print
 f_signal
 f_socket
-fl_console
 fl_fss
 fl_print
 fl_string

@@ -12,7 +12,6 @@ f_file
 f_pipe
 f_print
 f_signal
-fl_console
 fl_conversion
 fl_print
 fl_string

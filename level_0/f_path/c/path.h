@@ -119,6 +119,35 @@ extern "C" {
 #endif // _di_f_path_current_
 
 /**
+ * Ensure that the given directory path string doesn't have redundant path separators.
+ *
+ * The directory path is not validated to exist.
+ *
+ * The path to a directory has the following very basic cleanup operations performed:
+ *   - Ensures that the directory always ends in a '/'.
+ *   - Ensures that multiple consecutive '/' in the path are reduced to a single '/'.
+ *   - Ensures that multiple consecutive '/' following './' is reduced to only './' ('.////' would become './').
+ *   - Ensures that multiple consecutive '/' following '../' is reduced to only '../' ('..////' would become '../').
+ *
+ * The directory string will be NULL terminated after directory.used.
+ *
+ * @param source
+ *   The south path to cleanup.
+ * @param directory
+ *   The cleaned up directory string.
+ *   The directory string is replaced by this function.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _f_path_directory_cleanup_
+  extern f_status_t f_path_directory_cleanup(const f_string_static_t source, f_string_dynamic_t *directory);
+#endif // _f_path_directory_cleanup_
+
+/**
  * Identify whether or not a string represents a path string.
  *
  * This does not check to see if the path exists or not.

@@ -34,7 +34,6 @@
 #include <fll/level_0/signal.h>
 
 // FLL-1 includes.
-#include <fll/level_1/console.h>
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/fss.h>
 #include <fll/level_1/print.h>

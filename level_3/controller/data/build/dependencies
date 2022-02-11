@@ -24,7 +24,6 @@ f_print
 f_signal
 f_socket
 f_thread
-fl_console
 fl_control_group
 fl_conversion
 fl_environment

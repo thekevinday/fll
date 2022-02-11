@@ -31,7 +31,6 @@
 #include <fll/level_0/status_string.h>
 
 // FLL-1 includes.
-#include <fll/level_1/console.h>
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>

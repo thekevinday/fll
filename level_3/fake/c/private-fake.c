@@ -375,6 +375,8 @@ extern "C" {
 
           const f_array_length_t index = main->parameters.array[parameters_id[i]].values.array[main->parameters.array[parameters_id[i]].values.used - 1];
 
+          parameters_value[i]->used = 0;
+
           status = f_string_dynamic_increase_by(main->parameters.arguments.array[index].used + 1, parameters_value[i]);
 
           if (F_status_is_error(status)) {
@@ -383,10 +385,10 @@ extern "C" {
             return status;
           }
 
-          status = fl_console_parameter_to_string_dynamic_directory(main->parameters.arguments.array[index], parameters_value[i]);
+          status = f_path_directory_cleanup(main->parameters.arguments.array[index], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(main->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (fll_error_print(main->error, F_status_set_fine(status), "f_path_directory_cleanup", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet_e) {
               flockfile(main->error.to.stream);
 
               fl_print_format("%r%[%QFailed to process parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
