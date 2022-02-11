@@ -15,10 +15,11 @@ extern "C" {
 /**
  * The data structure for FSS Identify.
  *
+ * argv:    The argument structure in the progam data parameters for simplifying syntax.
  * current: The current position within the ids, used to determine when the line is matched.
  * line:    The line number to select.
- * total:   The total ids across all files.
  * name:    The name to select.
+ * total:   The total ids across all files.
  */
 #ifndef _di_fss_identify_data_t_
   typedef struct {
@@ -26,11 +27,14 @@ extern "C" {
     f_array_length_t line;
     f_array_length_t total;
 
+    f_string_static_t *argv;
+
     f_string_dynamic_t name;
   } fss_identify_data_t;
 
   #define fss_identify_data_t_initialize \
     { \
+      0, \
       0, \
       0, \
       0, \

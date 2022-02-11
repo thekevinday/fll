@@ -19,7 +19,7 @@ extern "C" {
 
       if (!buffer.string[result.start]) continue;
 
-      if (buffer.string[result.start] == '-' || buffer.string[result.start] == '+') {
+      if (buffer.string[result.start] == f_string_ascii_minus_s.string[0] || buffer.string[result.start] == f_string_ascii_plus_s.string[0]) {
         ++result.start;
       }
 

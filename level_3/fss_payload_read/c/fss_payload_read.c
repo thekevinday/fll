@@ -21,7 +21,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    fll_program_print_help_header(file, context, fss_payload_program_name_long_s, fss_payload_program_version_s);
+    fll_program_print_help_header(file, context, fss_payload_read_program_name_long_s, fss_payload_read_program_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -50,7 +50,7 @@ extern "C" {
     fll_program_print_help_option(file, context, fss_payload_read_short_total_s, fss_payload_read_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print the total number of lines.");
     fll_program_print_help_option(file, context, fss_payload_read_short_trim_s, fss_payload_read_long_trim_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Trim Object names on select or print.");
 
-    fll_program_print_help_usage(file, context, fss_payload_program_name_s, fll_program_parameter_filenames_s);
+    fll_program_print_help_usage(file, context, fss_payload_read_program_name_s, fll_program_parameter_filenames_s);
 
     fl_print_format(" %[Notes:%]%r", file.stream, context.set.important, context.set.important, f_string_eol_s);
 
@@ -214,21 +214,21 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
-
     status = F_none;
 
     if (main->parameters.array[fss_payload_read_parameter_help_e].result == f_console_result_found_e) {
       fss_payload_read_print_help(main->output.to, main->context);
 
       fss_payload_read_main_delete(main);
+
       return status;
     }
 
     if (main->parameters.array[fss_payload_read_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, fss_payload_program_version_s);
+      fll_program_print_version(main->output.to, fss_payload_read_program_version_s);
 
       fss_payload_read_main_delete(main);
+
       return status;
     }
 
@@ -236,6 +236,7 @@ extern "C" {
     fss_payload_read_file_t files_array[main->parameters.remaining.used + 1];
     fss_payload_read_data_t data = fss_payload_read_data_t_initialize;
 
+    data.argv = main->parameters.arguments.array;
     data.files.array = files_array;
     data.files.used = 1;
     data.files.size = main->parameters.remaining.used + 1;
@@ -302,7 +303,7 @@ extern "C" {
           fss_payload_read_parameter_total_e,
         };
 
-        const f_string_t parameter_name[] = {
+        const f_string_static_t parameter_name[] = {
           fss_payload_read_long_depth_s,
           fss_payload_read_long_line_s,
           fss_payload_read_long_pipe_s,
@@ -332,6 +333,7 @@ extern "C" {
             funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
+
             break;
           }
         } // for
@@ -367,7 +369,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->parameters.array[fss_payload_read_parameter_delimit_e].result == f_console_result_additional_e) {
-        f_array_length_t location = 0;
+        f_array_length_t index = 0;
         f_array_length_t length = 0;
         uint16_t signal_check = 0;
 
@@ -379,14 +381,15 @@ extern "C" {
           if (!((++signal_check) % fss_payload_read_signal_check_d)) {
             if (fss_payload_read_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          location = main->parameters.array[fss_payload_read_parameter_delimit_e].values.array[i];
-          length = strnlen(arguments->argv[location], F_console_parameter_size_d);
+          index = main->parameters.array[fss_payload_read_parameter_delimit_e].values.array[i];
+          length = data.argv[index].used;
 
           if (!length) {
             flockfile(main->error.to.stream);
@@ -398,15 +401,16 @@ extern "C" {
             funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
+
             break;
           }
-          else if (fl_string_compare(arguments->argv[location], fss_payload_read_delimit_mode_name_none_s, length, fss_payload_read_delimit_mode_name_none_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare(data.argv[index], fss_payload_read_delimit_mode_name_none_s) == F_equal_to) {
             data.delimit_mode = fss_payload_read_delimit_mode_none_e;
           }
-          else if (fl_string_compare(arguments->argv[location], fss_payload_read_delimit_mode_name_all_s, length, fss_payload_read_delimit_mode_name_all_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare(data.argv[index], fss_payload_read_delimit_mode_name_all_s) == F_equal_to) {
             data.delimit_mode = fss_payload_read_delimit_mode_all_e;
           }
-          else if (fl_string_compare(arguments->argv[location], fss_payload_read_delimit_mode_name_object_s, length, fss_payload_read_delimit_mode_name_object_s_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare(data.argv[index], fss_payload_read_delimit_mode_name_object_s) == F_equal_to) {
             switch (data.delimit_mode) {
               case 0:
                 data.delimit_mode = fss_payload_read_delimit_mode_object_e;
@@ -443,7 +447,7 @@ extern "C" {
               data.delimit_mode = fss_payload_read_delimit_mode_content_object_e;
             }
 
-            if (arguments->argv[location][length - 1] == fss_payload_read_delimit_mode_name_greater_s.string[0]) {
+            if (data.argv[index].string[length - 1] == fss_payload_read_delimit_mode_name_greater_s.string[0]) {
               if (!(data.delimit_mode == fss_payload_read_delimit_mode_none_e || data.delimit_mode == fss_payload_read_delimit_mode_all_e)) {
                 if (data.delimit_mode == fss_payload_read_delimit_mode_content_object_e) {
                   data.delimit_mode = fss_payload_read_delimit_mode_content_greater_object_e;
@@ -456,7 +460,7 @@ extern "C" {
               // Shorten the length to better convert the remainder to a number.
               --length;
             }
-            else if (arguments->argv[location][length - 1] == fss_payload_read_delimit_mode_name_lesser_s.string[0]) {
+            else if (data.argv[index].string[length - 1] == fss_payload_read_delimit_mode_name_lesser_s.string[0]) {
               if (!(data.delimit_mode == fss_payload_read_delimit_mode_none_e || data.delimit_mode == fss_payload_read_delimit_mode_all_e)) {
                 if (data.delimit_mode == fss_payload_read_delimit_mode_content_object_e) {
                   data.delimit_mode = fss_payload_read_delimit_mode_content_lesser_object_e;
@@ -473,14 +477,14 @@ extern "C" {
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // Ignore leading plus sign.
-            if (arguments->argv[location][0] == '+') {
+            if (data.argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
               ++range.start;
             }
 
-            status = fl_conversion_string_to_number_unsigned(arguments->argv[location], range, &data.delimit_depth);
+            status = fl_conversion_string_to_number_unsigned(data.argv[index].string, range, &data.delimit_depth);
 
             if (F_status_is_error(status)) {
-              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_payload_read_long_delimit_s, arguments->argv[location]);
+              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_payload_read_long_delimit_s, data.argv[index]);
 
               break;
             }
@@ -506,7 +510,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fss_payload_read_depth_process(main, arguments, &data);
+        status = fss_payload_read_depth_process(main, &data);
       }
 
       // This standard only partially supports nesting, so any depth greater than 1 can be predicted without processing the file.
@@ -565,7 +569,7 @@ extern "C" {
         status = f_file_stream_read(file, &data.buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, f_string_ascii_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
         }
         else if (data.buffer.used) {
           data.files.array[0].range.stop = data.buffer.used - 1;
@@ -575,7 +579,7 @@ extern "C" {
           status = f_string_dynamic_append_assure(f_string_eol_s, &data.buffer);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_assure", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
           }
         }
         else {
@@ -605,10 +609,10 @@ extern "C" {
           file.stream = 0;
           file.id = -1;
 
-          status = f_file_stream_open(arguments->argv[main->parameters.remaining.array[i]], 0, &file);
+          status = f_file_stream_open(data.argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -617,7 +621,7 @@ extern "C" {
           status = f_file_size_by_id(file.id, &size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -639,12 +643,12 @@ extern "C" {
             status = f_file_stream_read(file, &data.buffer);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments->argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
               break;
             }
             else if (data.buffer.used > data.files.array[data.files.used].range.start) {
-              data.files.array[data.files.used].name = arguments->argv[main->parameters.remaining.array[i]];
+              data.files.array[data.files.used].name = data.argv[main->parameters.remaining.array[i]];
               data.files.array[data.files.used++].range.stop = data.buffer.used - 1;
             }
           }
@@ -659,7 +663,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fss_payload_read_process(main, arguments, &data);
+        status = fss_payload_read_process(main, &data);
       }
 
       fss_payload_read_data_delete_simple(&data);

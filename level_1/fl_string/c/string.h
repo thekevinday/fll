@@ -967,7 +967,7 @@ extern "C" {
  * @see f_utf_is_word()
  */
 #ifndef _di_fl_string_fll_identify_
-  extern f_status_t fl_string_fll_identify(const f_string_t buffer, f_string_range_t *range, f_fll_id_t *id);
+  extern f_status_t fl_string_fll_identify(const f_string_static_t buffer, f_string_range_t *range, f_fll_id_t *id);
 #endif // _di_fl_string_fll_identify_
 
 /**

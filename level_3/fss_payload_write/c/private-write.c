@@ -45,7 +45,7 @@ extern "C" {
 #endif // _di_fss_payload_write_error_parameter_unsupported_eol_print_
 
 #ifndef _di_fss_payload_write_error_parameter_value_missing_print_
-  void fss_payload_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_t symbol, const f_string_t parameter) {
+  void fss_payload_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;
@@ -85,7 +85,15 @@ extern "C" {
           range.stop = 0;
         }
 
-        status = fll_fss_payload_write_string(*object, *content, trim, &main->prepend, state, buffer);
+        const f_string_static_t *prepend = 0;
+
+        if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_additional_e) {
+          const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
+
+          prepend = &main->parameters.arguments.array[index];
+        }
+
+        status = fll_fss_payload_write_string(*object, *content, trim, prepend, state, buffer);
 
         if (F_status_set_fine(status) == F_none_eol) {
           fss_payload_write_error_parameter_unsupported_eol_print(main);
@@ -140,7 +148,15 @@ extern "C" {
         range.start = 0;
         range.stop = content->used - 1;
 
-        status = fl_fss_basic_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, &main->prepend, state, &range, buffer);
+        const f_string_static_t *prepend = 0;
+
+        if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_additional_e) {
+          const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
+
+          prepend = &main->parameters.arguments.array[index];
+        }
+
+        status = fl_fss_basic_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, prepend, state, &range, buffer);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fl_fss_payload_content_write", F_true);

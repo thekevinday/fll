@@ -1034,50 +1034,50 @@ extern "C" {
         char format[32];
         char buffer[128];
 
-        format[f++] = '%';
+        format[f++] = f_string_ascii_percent_s.string[0];
 
         if (flag & F_print_format_flag_sign_always_d) {
-          format[f++] = '+';
+          format[f++] = f_string_ascii_plus_s.string[0];
         }
         else if (flag & F_print_format_flag_sign_pad_d) {
-          format[f++] = ' ';
+          format[f++] = f_string_ascii_space_s.string[0];
         }
 
         if (flag & F_print_format_flag_align_left_d) {
-          format[f++] = '-';
+          format[f++] = f_string_ascii_minus_s.string[0];
         }
 
         if (flag & F_print_format_flag_zeros_leading_d) {
-          format[f++] = '0';
+          format[f++] = f_string_ascii_0_s.string[0];
         }
 
         if (flag & F_print_format_flag_width_d) {
-          format[f++] = '*';
+          format[f++] = f_string_ascii_asterisk_s.string[0];
         }
 
         if (flag & F_print_format_flag_precision_d) {
-          format[f++] = '.';
-          format[f++] = '*';
+          format[f++] = f_string_ascii_period_s.string[0];
+          format[f++] = f_string_ascii_asterisk_s.string[0];
         }
 
         if (flag & F_print_format_flag_exponent_d) {
           if (flag & F_print_format_flag_exponent_upper_d) {
-            format[f++] = 'E';
+            format[f++] = f_string_ascii_E_s.string[0];
           }
           else {
-            format[f++] = 'e';
+            format[f++] = f_string_ascii_e_s.string[0];
           }
         }
         else if (flag & F_print_format_flag_exponent_either_d) {
           if (flag & F_print_format_flag_exponent_upper_d) {
-            format[f++] = 'G';
+            format[f++] = f_string_ascii_G_s.string[0];
           }
           else {
-            format[f++] = 'g';
+            format[f++] = f_string_ascii_g_s.string[0];
           }
         }
         else {
-          format[f++] = 'f';
+          format[f++] = f_string_ascii_f_s.string[0];
         }
 
         format[f] = 0;
@@ -1415,7 +1415,7 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, (length - i) + 1);
 
-      // consider invalid data not-whitespace.
+      // Consider invalid data not-whitespace.
       if (F_status_is_error(status) || status == F_false) break;
 
       i += macro_f_utf_byte_width(string[i]);
@@ -1449,7 +1449,7 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, (length - i) + 1);
 
-      // determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;

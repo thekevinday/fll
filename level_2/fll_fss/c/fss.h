@@ -74,7 +74,7 @@ extern "C" {
  * @see fl_string_fll_identify()
  */
 #ifndef _di_fll_fss_identify_
-  extern f_status_t fll_fss_identify(const f_string_t buffer, f_string_range_t *range, f_fll_ids_t *ids);
+  extern f_status_t fll_fss_identify(const f_string_static_t buffer, f_string_range_t *range, f_fll_ids_t *ids);
 #endif // _di_fll_fss_identify_
 
 /**

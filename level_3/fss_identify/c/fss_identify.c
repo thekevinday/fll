@@ -11,7 +11,7 @@ extern "C" {
 
     flockfile(file.stream);
 
-    fll_program_print_help_header(file, context, fss_identify_program_name_long_s, fss_identify_program_version);
+    fll_program_print_help_header(file, context, fss_identify_program_name_long_s, fss_identify_program_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
     fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
@@ -140,8 +140,6 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
-
     status = F_none;
 
     if (main->parameters.array[fss_identify_parameter_help_e].result == f_console_result_found_e) {
@@ -153,7 +151,7 @@ extern "C" {
     }
 
     if (main->parameters.array[fss_identify_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, fss_identify_program_version);
+      fll_program_print_version(main->output.to, fss_identify_program_version_s);
 
       fss_identify_main_delete(main);
 
@@ -161,6 +159,8 @@ extern "C" {
     }
 
     fss_identify_data_t data = fss_identify_data_t_initialize;
+
+    data.argv = main->parameters.arguments.array;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_found_e) {
@@ -176,12 +176,12 @@ extern "C" {
       }
       else if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_identify_parameter_line_e].values.array[main->parameters.array[fss_identify_parameter_line_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
+        const f_string_range_t range = macro_f_string_range_t_initialize(data.argv[index].used);
 
-        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &data.line);
+        status = fl_conversion_string_to_number_unsigned(data.argv[index].string, range, &data.line);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_identify_long_line_s, argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_identify_long_line_s, data.argv[index]);
         }
       }
     }
@@ -229,7 +229,7 @@ extern "C" {
       }
       else if (main->parameters.array[fss_identify_parameter_name_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].values.used - 1];
-        const f_array_length_t length = argv[index].used;
+        const f_array_length_t length = data.argv[index].used;
         const f_string_range_t range = macro_f_string_range_t_initialize(length);
 
         if (length == 0) {
@@ -255,7 +255,7 @@ extern "C" {
 
           for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
-            status = f_utf_is_word(argv[index].string + i, length, F_true);
+            status = f_utf_is_word(data.argv[index].string + i, length, F_true);
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_true);
@@ -266,7 +266,7 @@ extern "C" {
               flockfile(main->error.to.stream);
 
               fl_print_format("%r%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, argv[index], main->error.notable);
+              fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, data.argv[index], main->error.notable);
               fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
               fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
               fl_print_format("%[' may only contain word characters.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
@@ -278,7 +278,7 @@ extern "C" {
               break;
             }
 
-            data.name.string[data.name.used++] = argv[index].string[i];
+            data.name.string[data.name.used++] = data.argv[index].string[i];
           } // for
         }
       }
@@ -293,10 +293,10 @@ extern "C" {
       file.stream = F_type_input_d;
       file.size_read = 512;
 
-      status = fss_identify_load_line(main, file, "-", &buffer, &range);
+      status = fss_identify_load_line(main, file, f_string_empty_s, &buffer, &range);
 
       if (F_status_is_error_not(status)) {
-        status = fss_identify_process(main, "-", buffer, &range, &data);
+        status = fss_identify_process(main, &data, f_string_ascii_minus_s, buffer, &range);
       }
     }
 
@@ -322,16 +322,16 @@ extern "C" {
 
         file.size_read = 512;
 
-        status = f_file_stream_open(argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
+        status = f_file_stream_open(data.argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
         }
         else {
-          status = fss_identify_load_line(main, file, argv[main->parameters.remaining.array[i]], &buffer, &range);
+          status = fss_identify_load_line(main, file, data.argv[main->parameters.remaining.array[i]], &buffer, &range);
 
           if (F_status_is_error_not(status)) {
-            status = fss_identify_process(main, argv[main->parameters.remaining.array[i]], buffer, &range, &data);
+            status = fss_identify_process(main, &data, data.argv[main->parameters.remaining.array[i]], buffer, &range);
           }
         }
 

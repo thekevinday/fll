@@ -25,23 +25,23 @@ extern "C" {
  *   F_false if to not apply delimits.
  */
 #ifndef _di_fss_payload_read_delimit_content_is_
-  extern f_status_t fss_payload_read_delimit_content_is(const f_array_length_t depth, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_delimit_content_is(fss_payload_read_data_t * const data, const f_array_length_t depth) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_delimit_content_is_
 
 /**
  * Determine if the given depth is to be delimited or not for an Object.
  *
- * @param depth
- *   The depth to check.
  * @param data
  *   The program data.
+ * @param depth
+ *   The depth to check.
  *
  * @return
  *   F_true if to apply delimits.
  *   F_false if to not apply delimits.
  */
 #ifndef _di_fss_payload_read_delimit_object_is_
-  extern f_status_t fss_payload_read_delimit_object_is(const f_array_length_t depth, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_delimit_object_is(fss_payload_read_data_t * const data, const f_array_length_t depth) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_delimit_object_is_
 
 /**
@@ -74,7 +74,7 @@ extern "C" {
  * @see fss_payload_read_depths_resize()
  */
 #ifndef _di_fss_payload_read_depth_process_
-  extern f_status_t fss_payload_read_depth_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_payload_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_depth_process(fll_program_data_t * const main, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_depth_process_
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  * @see fss_payload_read_process_option()
  */
 #ifndef _di_fss_payload_read_load_
-  extern f_status_t fss_payload_read_load(fll_program_data_t * const main, fss_payload_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_load(fll_program_data_t * const main, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_load_
 
 /**
@@ -128,6 +128,8 @@ extern "C" {
  *
  * @param main
  *   The main program data.
+ * @param data
+ *   The program data.
  * @param parameter
  *   An ID representing the parameter.
  * @param name
@@ -146,7 +148,7 @@ extern "C" {
  * @see fss_payload_read_depths_resize()
  */
 #ifndef _di_fss_payload_read_load_number_
-  extern f_status_t fss_payload_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_load_number(fll_program_data_t * const main, fss_payload_read_data_t * const data, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_load_number_
 
 /**
@@ -156,8 +158,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
  * @param data
  *   The program data.
  *
@@ -171,7 +171,7 @@ extern "C" {
  * @see fss_payload_read_process_option()
  */
 #ifndef _di_fss_payload_read_process_
-  extern f_status_t fss_payload_read_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_payload_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process(fll_program_data_t * const main, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_
 
 /**
@@ -191,7 +191,7 @@ extern "C" {
  * @see fss_payload_read_process_at_line()
  */
 #ifndef _di_fss_payload_read_process_at_
-  extern f_status_t fss_payload_read_process_at(fll_program_data_t * const main, fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_at(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_at_
 
 /**
@@ -211,7 +211,7 @@ extern "C" {
  * @see fss_payload_read_process_at_line()
  */
 #ifndef _di_fss_payload_read_process_at_extended_
-  extern f_status_t fss_payload_read_process_at_extended(fll_program_data_t * const main, fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_at_extended(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_at_extended_
 
 /**
@@ -219,12 +219,12 @@ extern "C" {
  *
  * @param main
  *   The main program data.
+ * @param data
+ *   The program data.
  * @param delimits_object
  *   The delimits to be applied to an Object.
  * @param delimits_content
  *   The delimits to be applied to Content.
- * @param data
- *   The program data.
  * @param line
  *   The current line being processed.
  *   This will be incremented as necessary.
@@ -234,7 +234,7 @@ extern "C" {
  *   F_success on success and the line was matched (and possibly printed).
  */
 #ifndef _di_fss_payload_read_process_at_line_
-  extern f_status_t fss_payload_read_process_at_line(fll_program_data_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_payload_read_data_t *data, f_array_length_t *line) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_at_line(fll_program_data_t * const main, fss_payload_read_data_t * const data, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_array_length_t *line) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_at_line_
 
 /**
@@ -252,7 +252,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_payload_read_process_columns_
-  extern f_status_t fss_payload_read_process_columns(fll_program_data_t * const main, fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_columns(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_columns_
 
 /**
@@ -270,7 +270,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_payload_read_process_columns_extended_
-  extern f_status_t fss_payload_read_process_columns_extended(fll_program_data_t * const main, fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_columns_extended(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_columns_extended_
 
 /**
@@ -288,7 +288,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_payload_read_process_line_
-  extern f_status_t fss_payload_read_process_line(fll_program_data_t * const main, fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_line(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_line_
 
 /**
@@ -306,7 +306,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_payload_read_process_line_extended_
-  extern f_status_t fss_payload_read_process_line_extended(fll_program_data_t * const main, fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_line_extended(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_line_extended_
 
 /**
@@ -324,7 +324,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_payload_read_process_name_
-  extern f_status_t fss_payload_read_process_name(fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_name(fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_name_
 
 /**
@@ -342,7 +342,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_payload_read_process_name_extended_
-  extern f_status_t fss_payload_read_process_name_extended(fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_name_extended(fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_name_extended_
 
 /**
@@ -350,8 +350,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
  * @param data
  *   The program data.
  *
@@ -365,7 +363,7 @@ extern "C" {
  * @see fss_payload_read_load_setting()
  */
 #ifndef _di_fss_payload_read_process_option_
-  extern f_status_t fss_payload_read_process_option(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_payload_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_option(fll_program_data_t * const main, fss_payload_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_option_
 
 /**
@@ -383,7 +381,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_payload_read_process_total_
-  extern f_status_t fss_payload_read_process_total(fll_program_data_t * const main, fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_total(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_total_
 
 /**
@@ -401,7 +399,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_payload_read_process_total_extended_
-  extern f_status_t fss_payload_read_process_total_extended(fll_program_data_t * const main, fss_payload_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_payload_read_process_total_extended(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_payload_read_process_total_extended_
 
 #ifdef __cplusplus

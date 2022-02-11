@@ -28,7 +28,7 @@ extern "C" {
 #endif // _di_fss_extended_write_error_parameter_at_least_once_print_
 
 #ifndef _di_fss_extended_write_error_parameter_value_missing_print_
-  void fss_extended_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_t symbol, const f_string_t parameter) {
+  void fss_extended_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) {
       return;

@@ -65,17 +65,23 @@ extern "C" {
 #ifndef _di_fss_payload_read_defines_
   #define fss_payload_read_signal_check_d 10000
 
-  #define FSS_PAYLOAD_READ_pipe_content_end_s    '\f'
-  #define FSS_PAYLOAD_READ_pipe_content_ignore_s '\v'
-  #define FSS_PAYLOAD_READ_pipe_content_start_s  '\b'
+  #define FSS_PAYLOAD_READ_pipe_name_s "(pipe)"
+
+  #define FSS_PAYLOAD_READ_pipe_content_end_s    "\f"
+  #define FSS_PAYLOAD_READ_pipe_content_ignore_s "\v"
+  #define FSS_PAYLOAD_READ_pipe_content_start_s  "\b"
+
+  #define FSS_PAYLOAD_READ_pipe_name_s_length 6
 
   #define FSS_PAYLOAD_READ_pipe_content_end_s_length    1
   #define FSS_PAYLOAD_READ_pipe_content_ignore_s_length 1
   #define FSS_PAYLOAD_READ_pipe_content_start_s_length  1
 
-  extern const fss_payload_read_pipe_content_end_s;
-  extern const fss_payload_read_pipe_content_ignore_s;
-  extern const fss_payload_read_pipe_content_start_s;
+  extern const f_string_static_t fss_payload_read_pipe_name_s;
+
+  extern const f_string_static_t fss_payload_read_pipe_content_end_s;
+  extern const f_string_static_t fss_payload_read_pipe_content_ignore_s;
+  extern const f_string_static_t fss_payload_read_pipe_content_start_s;
 #endif // _di_fss_payload_read_defines_
 
 /**
@@ -226,7 +232,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(fss_payload_read_short_trim_s.string, fss_payload_read_long_trim_s.string, 0, 0, f_console_type_normal_e), \
     }
 
-  #define fss_payload_total_parameters_d 23
+  #define fss_payload_read_total_parameters_d 23
 #endif // _di_fss_payload_read_parameters_
 
 /**

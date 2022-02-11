@@ -236,10 +236,10 @@ extern "C" {
 /**
  * The control data.
  *
+ * argv:    The argument structure in the progam data parameters for simplifying syntax.
  * command: The command type code.
  * cache:   A cache.
  * socket:  A socket used to connect to the controller.
- * argv:    The argument structure in fll_program_data_t.parameters for simplifying syntax.
  */
 #ifndef _di_control_data_t_
   typedef struct {

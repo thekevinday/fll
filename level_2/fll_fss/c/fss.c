@@ -6,14 +6,14 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_identify_
-  f_status_t fll_fss_identify(const f_string_t buffer, f_string_range_t *range, f_fll_ids_t *ids) {
+  f_status_t fll_fss_identify(const f_string_static_t buffer, f_string_range_t *range, f_fll_ids_t *ids) {
     #ifndef _di_level_2_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     // Skip past all NULLs.
     for (; range->start <= range->stop; ++range->start) {
-      if (buffer[range->start]) break;
+      if (buffer.string[range->start]) break;
     }
 
     if (range->start > range->stop) {
@@ -21,18 +21,18 @@ extern "C" {
     }
 
     // The first character must be a '#'.
-    if (buffer[range->start] != f_fss_pound_s.string[0]) {
+    if (buffer.string[range->start] != f_fss_pound_s.string[0]) {
 
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s.string[0]) {
+        if (buffer.string[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
         }
 
-        range->start += macro_f_utf_byte_width(buffer[range->start]);
+        range->start += macro_f_utf_byte_width(buffer.string[range->start]);
       } // for
 
       if (ids) {
@@ -44,7 +44,7 @@ extern "C" {
 
     // skip past all NULLs after the '#'.
     for (++range->start; range->start <= range->stop; ++range->start) {
-      if (buffer[range->start]) break;
+      if (buffer.string[range->start]) break;
     }
 
     if (range->start > range->stop) {
@@ -61,13 +61,13 @@ extern "C" {
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s.string[0]) {
+        if (buffer.string[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
         }
 
-        range->start += macro_f_utf_byte_width(buffer[range->start]);
+        range->start += macro_f_utf_byte_width(buffer.string[range->start]);
       } // for
 
       if (ids) {
@@ -77,7 +77,7 @@ extern "C" {
       return F_found_not;
     }
 
-    f_status_t status = f_utf_is_whitespace(buffer + range->start, (range->stop - range->start) + 1);
+    f_status_t status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_maybe) {
@@ -92,19 +92,19 @@ extern "C" {
       // Increment until stop, while taking into consideration UTF-8 character widths.
       for (; range->start <= range->stop; ) {
 
-        if (buffer[range->start] == f_string_eol_s.string[0]) {
+        if (buffer.string[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
 
           break;
         }
 
-        range->start += macro_f_utf_byte_width(buffer[range->start]);
+        range->start += macro_f_utf_byte_width(buffer.string[range->start]);
       } // for
 
       return F_found_not;
     }
 
-    if (buffer[range->start] == f_string_eol_s.string[0]) {
+    if (buffer.string[range->start] == f_string_eol_s.string[0]) {
       ++range->start;
 
       if (ids) {

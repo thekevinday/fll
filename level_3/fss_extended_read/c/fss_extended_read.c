@@ -91,18 +91,18 @@ extern "C" {
     fl_print_format("  Both the Object and Content are separated by a space.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The parameter %[%r%r%] accepts the following:%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_read_long_delimit_s, context.set.notable, f_string_eol_s);
-    fl_print_format("  - %[%r%]: Do not apply delimits.%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_none, context.set.notable, f_string_eol_s);
-    fl_print_format("  - %[%r%]: (default) Apply all delimits.%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_all, context.set.notable, f_string_eol_s);
-    fl_print_format("  - %[%r%]: Apply delimits for Objects.%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_object, context.set.notable, f_string_eol_s);
+    fl_print_format("  - %[%r%]: Do not apply delimits.%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_none_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  - %[%r%]: (default) Apply all delimits.%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_all_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  - %[%r%]: Apply delimits for Objects.%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_object_s, context.set.notable, f_string_eol_s);
     fl_print_format("  - A number, 0 or greater: apply delimits for Content at the specified depth.%r", file.stream, f_string_eol_s);
-    fl_print_format("  - A number, 0 or greater, followed by a %[%r%]: (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_greater, context.set.notable, f_string_eol_s, f_string_eol_s);
-    fl_print_format("  - A number, 0 or lesser, followed by a %[%r%]: (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%r%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_lesser, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  - A number, 0 or greater, followed by a %[%r%]: (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_greater_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  - A number, 0 or lesser, followed by a %[%r%]: (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%r%r", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_lesser_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The %[%r%r%] parameter may be specified multiple times to customize the delimit behavior.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_read_long_delimit_s, context.set.notable, f_string_eol_s);
 
     fl_print_format("  The %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_read_long_delimit_s, context.set.notable);
-    fl_print_format(" values %[%r%]", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_none, context.set.notable);
-    fl_print_format(" and %[%r%],", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_all, context.set.notable);
+    fl_print_format(" values %[%r%]", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_none_s, context.set.notable);
+    fl_print_format(" and %[%r%],", file.stream, context.set.notable, fss_extended_read_delimit_mode_name_all_s, context.set.notable);
     fl_print_format(" overrule all other delimit values.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The parameters %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_read_long_columns_s, context.set.notable);
@@ -195,8 +195,6 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
-
     status = F_none;
 
     if (main->parameters.array[fss_extended_read_parameter_help_e].result == f_console_result_found_e) {
@@ -219,6 +217,7 @@ extern "C" {
     fss_extended_read_file_t files_array[main->parameters.remaining.used + 1];
     fss_extended_read_data_t data = fss_extended_read_data_t_initialize;
 
+    data.argv = main->parameters.arguments.array;
     data.files.array = files_array;
     data.files.used = 1;
     data.files.size = main->parameters.remaining.used + 1;
@@ -285,7 +284,7 @@ extern "C" {
           fss_extended_read_parameter_total_e,
         };
 
-        const f_string_t parameter_name[] = {
+        const f_string_static_t parameter_name[] = {
           fss_extended_read_long_depth_s,
           fss_extended_read_long_line_s,
           fss_extended_read_long_pipe_s,
@@ -350,7 +349,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->parameters.array[fss_extended_read_parameter_delimit_e].result == f_console_result_additional_e) {
-        f_array_length_t location = 0;
+        f_array_length_t index = 0;
         f_array_length_t length = 0;
         uint16_t signal_check = 0;
 
@@ -362,14 +361,15 @@ extern "C" {
           if (!((++signal_check) % fss_extended_read_signal_check_d)) {
             if (fss_extended_read_signal_received(main)) {
               status = F_status_set_error(F_signal);
+
               break;
             }
 
             signal_check = 0;
           }
 
-          location = main->parameters.array[fss_extended_read_parameter_delimit_e].values.array[i];
-          length = strnlen(argv[location], F_console_parameter_size_d);
+          index = main->parameters.array[fss_extended_read_parameter_delimit_e].values.array[i];
+          length = data.argv[index].used;
 
           if (!length) {
             flockfile(main->error.to.stream);
@@ -384,13 +384,13 @@ extern "C" {
 
             break;
           }
-          else if (fl_string_compare(argv[location], fss_extended_read_delimit_mode_name_none, length, fss_extended_read_delimit_mode_name_none_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare(data.argv[index], fss_extended_read_delimit_mode_name_none_s) == F_equal_to) {
             data.delimit_mode = fss_extended_read_delimit_mode_none_e;
           }
-          else if (fl_string_compare(argv[location], fss_extended_read_delimit_mode_name_all, length, fss_extended_read_delimit_mode_name_all_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare(data.argv[index], fss_extended_read_delimit_mode_name_all_s) == F_equal_to) {
             data.delimit_mode = fss_extended_read_delimit_mode_all_e;
           }
-          else if (fl_string_compare(argv[location], fss_extended_read_delimit_mode_name_object, length, fss_extended_read_delimit_mode_name_object_length) == F_equal_to) {
+          else if (fl_string_dynamic_compare(data.argv[index], fss_extended_read_delimit_mode_name_object_s) == F_equal_to) {
             switch (data.delimit_mode) {
               case 0:
                 data.delimit_mode = fss_extended_read_delimit_mode_object_e;
@@ -427,7 +427,7 @@ extern "C" {
               data.delimit_mode = fss_extended_read_delimit_mode_content_object_e;
             }
 
-            if (argv[location][length - 1] == fss_extended_read_delimit_mode_name_greater[0]) {
+            if (data.argv[index].string[length - 1] == fss_extended_read_delimit_mode_name_greater_s.string[0]) {
               if (!(data.delimit_mode == fss_extended_read_delimit_mode_none_e || data.delimit_mode == fss_extended_read_delimit_mode_all_e)) {
                 if (data.delimit_mode == fss_extended_read_delimit_mode_content_object_e) {
                   data.delimit_mode = fss_extended_read_delimit_mode_content_greater_object_e;
@@ -440,7 +440,7 @@ extern "C" {
               // Shorten the length to better convert the remainder to a number.
               --length;
             }
-            else if (argv[location][length - 1] == fss_extended_read_delimit_mode_name_lesser[0]) {
+            else if (data.argv[index].string[length - 1] == fss_extended_read_delimit_mode_name_lesser_s.string[0]) {
               if (!(data.delimit_mode == fss_extended_read_delimit_mode_none_e || data.delimit_mode == fss_extended_read_delimit_mode_all_e)) {
                 if (data.delimit_mode == fss_extended_read_delimit_mode_content_object_e) {
                   data.delimit_mode = fss_extended_read_delimit_mode_content_lesser_object_e;
@@ -457,14 +457,14 @@ extern "C" {
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // Ignore leading plus sign.
-            if (argv[location][0] == '+') {
+            if (data.argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
               ++range.start;
             }
 
-            status = fl_conversion_string_to_number_unsigned(argv[location], range, &data.delimit_depth);
+            status = fl_conversion_string_to_number_unsigned(data.argv[index].string, range, &data.delimit_depth);
 
             if (F_status_is_error(status)) {
-              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_delimit_s, argv[location]);
+              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_delimit_s, data.argv[index]);
 
               break;
             }
@@ -490,7 +490,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fss_extended_read_depth_process(main, arguments, &data);
+        status = fss_extended_read_depth_process(main, &data);
       }
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
@@ -536,7 +536,7 @@ extern "C" {
         status = f_file_stream_read(file, &data.buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, f_string_ascii_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
         }
         else if (data.buffer.used) {
           data.files.array[0].range.stop = data.buffer.used - 1;
@@ -574,10 +574,10 @@ extern "C" {
           file.stream = 0;
           file.id = -1;
 
-          status = f_file_stream_open(argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
+          status = f_file_stream_open(data.argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -586,7 +586,7 @@ extern "C" {
           status = f_file_size_by_id(file.id, &size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -597,13 +597,13 @@ extern "C" {
             status = f_file_stream_read(file, &data.buffer);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
               break;
             }
 
             if (data.buffer.used > data.files.array[data.files.used].range.start) {
-              data.files.array[data.files.used].name = argv[main->parameters.remaining.array[i]];
+              data.files.array[data.files.used].name = data.argv[main->parameters.remaining.array[i]];
               data.files.array[data.files.used++].range.stop = data.buffer.used - 1;
 
               // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
@@ -626,7 +626,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fss_extended_read_process(main, arguments, &data);
+        status = fss_extended_read_process(main, &data);
       }
 
       fss_extended_read_data_delete_simple(&data);

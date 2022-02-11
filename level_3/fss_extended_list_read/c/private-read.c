@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_extended_list_read_delimit_content_is_
-  f_status_t fss_extended_list_read_delimit_content_is(const f_array_length_t depth, fss_extended_list_read_data_t * const data) {
+  f_status_t fss_extended_list_read_delimit_content_is(fss_extended_list_read_data_t * const data, const f_array_length_t depth) {
 
     if (data->delimit_mode == fss_extended_list_read_delimit_mode_none_e) {
       return F_false;
@@ -31,7 +31,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_delimit_content_is_
 
 #ifndef _di_fss_extended_list_read_delimit_object_is_
-  f_status_t fss_extended_list_read_delimit_object_is(const f_array_length_t depth, fss_extended_list_read_data_t * const data) {
+  f_status_t fss_extended_list_read_delimit_object_is(fss_extended_list_read_data_t * const data, const f_array_length_t depth) {
 
     switch (data->delimit_mode) {
       case fss_extended_list_read_delimit_mode_none_e:
@@ -56,7 +56,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_delimit_object_is_
 
 #ifndef _di_fss_extended_list_read_depth_process_
-  f_status_t fss_extended_list_read_depth_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_extended_list_read_data_t *data) {
+  f_status_t fss_extended_list_read_depth_process(fll_program_data_t * const main, fss_extended_list_read_data_t * const data) {
 
     f_status_t status = F_none;
 
@@ -84,8 +84,6 @@ extern "C" {
     f_array_length_t position_at = 0;
     f_array_length_t position_name = 0;
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
-
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
       if (fss_extended_list_read_signal_received(main)) {
@@ -105,12 +103,12 @@ extern "C" {
       else {
         position_depth = main->parameters.array[fss_extended_list_read_parameter_depth_e].values.array[i];
 
-        const f_string_range_t range = macro_f_string_range_t_initialize(argv[position_depth].used);
+        const f_string_range_t range = macro_f_string_range_t_initialize(data->argv[position_depth].used);
 
-        status = fl_conversion_string_to_number_unsigned(argv[position_depth].string, range, &data->depths.array[i].depth);
+        status = fl_conversion_string_to_number_unsigned(data->argv[position_depth].string, range, &data->depths.array[i].depth);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_read_long_depth_s, argv[position_depth]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_read_long_depth_s, data->argv[position_depth]);
 
           return status;
         }
@@ -129,12 +127,12 @@ extern "C" {
 
           data->depths.array[i].index_at = main->parameters.array[fss_extended_list_read_parameter_at_e].values.array[position_at];
 
-          const f_string_range_t range = macro_f_string_range_t_initialize(argv[data->depths.array[i].index_at].used);
+          const f_string_range_t range = macro_f_string_range_t_initialize(data->argv[data->depths.array[i].index_at].used);
 
-          status = fl_conversion_string_to_number_unsigned(argv[data->depths.array[i].index_at].string, range, &data->depths.array[i].value_at);
+          status = fl_conversion_string_to_number_unsigned(data->argv[data->depths.array[i].index_at].string, range, &data->depths.array[i].value_at);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_read_long_at_s, argv[data->depths.array[i].index_at]);
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_read_long_at_s, data->argv[data->depths.array[i].index_at]);
 
             return status;
           }
@@ -155,10 +153,10 @@ extern "C" {
           data->depths.array[i].index_name = main->parameters.array[fss_extended_list_read_parameter_name_e].values.array[position_name];
 
           if (main->parameters.array[fss_extended_list_read_parameter_trim_e].result == f_console_result_found_e) {
-            status = fl_string_rip(argv[data->depths.array[i].index_name].string, argv[data->depths.array[i].index_name].used, &data->depths.array[i].value_name);
+            status = fl_string_rip(data->argv[data->depths.array[i].index_name].string, data->argv[data->depths.array[i].index_name].used, &data->depths.array[i].value_name);
           }
           else {
-            status = f_string_dynamic_append(argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
+            status = f_string_dynamic_append(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
 
           if (F_status_is_error(status)) {
@@ -237,7 +235,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_file_identify_
 
 #ifndef _di_fss_extended_list_read_load_
-  f_status_t fss_extended_list_read_load(fll_program_data_t * const main, fss_extended_list_read_data_t *data) {
+  f_status_t fss_extended_list_read_load(fll_program_data_t * const main, fss_extended_list_read_data_t * const data) {
 
     f_state_t state = macro_f_state_t_initialize(fss_extended_list_read_common_allocation_large_d, fss_extended_list_read_common_allocation_small_d, 0, 0, 0, 0, 0);
     f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
@@ -270,16 +268,16 @@ extern "C" {
 #endif // _di_fss_extended_list_read_load_
 
 #ifndef _di_fss_extended_list_read_load_number_
-  f_status_t fss_extended_list_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) {
+  f_status_t fss_extended_list_read_load_number(fll_program_data_t * const main, fss_extended_list_read_data_t * const data, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) {
 
     if (main->parameters.array[parameter].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(main->parameters.arguments.array[index].used);
+      const f_string_range_t range = macro_f_string_range_t_initialize(data->argv[index].used);
 
-      const f_status_t status = fl_conversion_string_to_number_unsigned(main->parameters.arguments.array[index].string, range, number);
+      const f_status_t status = fl_conversion_string_to_number_unsigned(data->argv[index].string, range, number);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, name, main->parameters.arguments.array[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, name, data->argv[index]);
 
         return status;
       }
@@ -292,9 +290,9 @@ extern "C" {
 #endif // _di_fss_extended_list_read_load_number_
 
 #ifndef _di_fss_extended_list_read_process_
-  f_status_t fss_extended_list_read_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_extended_list_read_data_t *data) {
+  f_status_t fss_extended_list_read_process(fll_program_data_t * const main, fss_extended_list_read_data_t * const data) {
 
-    f_status_t status = fss_extended_list_read_process_option(main, arguments, data);
+    f_status_t status = fss_extended_list_read_process_option(main, data);
     if (F_status_is_error(status)) return status;
 
     // This standard does not support multiple content groups.
@@ -331,8 +329,8 @@ extern "C" {
     }
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
-    f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
-    f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(0, data) ? &data->delimits_content : &except_none;
+    f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
+    f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
 
     if (data->option & fss_extended_list_read_data_option_raw_d) {
       delimits_object = &except_none;
@@ -351,7 +349,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_process_
 
 #ifndef _di_fss_extended_list_read_process_at_
-  f_status_t fss_extended_list_read_process_at(fll_program_data_t * const main, fss_extended_list_read_data_t *data, bool names[]) {
+  f_status_t fss_extended_list_read_process_at(fll_program_data_t * const main, fss_extended_list_read_data_t * const data, bool names[]) {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
       if (data->option & (fss_extended_list_read_data_option_columns_d | fss_extended_list_read_data_option_total_d)) {
@@ -366,8 +364,8 @@ extern "C" {
     }
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
-    f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
-    f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(0, data) ? &data->delimits_content : &except_none;
+    f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
+    f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
 
     if (data->option & fss_extended_list_read_data_option_raw_d) {
       delimits_object = &except_none;
@@ -385,7 +383,7 @@ extern "C" {
         if (data->option & fss_extended_list_read_data_option_line_d) {
           f_array_length_t line = 0;
 
-          status = fss_extended_list_read_process_at_line(main, i, *delimits_object, *delimits_content, data, &line);
+          status = fss_extended_list_read_process_at_line(main, data, i, *delimits_object, *delimits_content, &line);
           if (status == F_success) return F_none;
         }
         else if (data->option & fss_extended_list_read_data_option_columns_d) {
@@ -470,7 +468,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_process_at_
 
 #ifndef _di_fss_extended_list_read_process_at_line_
-  f_status_t fss_extended_list_read_process_at_line(fll_program_data_t * const main, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_extended_list_read_data_t *data, f_array_length_t *line) {
+  f_status_t fss_extended_list_read_process_at_line(fll_program_data_t * const main, fss_extended_list_read_data_t * const data, const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, f_array_length_t *line) {
 
     if (data->option & fss_extended_list_read_data_option_object_d) {
 
@@ -566,7 +564,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_process_at_line_
 
 #ifndef _di_fss_extended_list_read_process_columns_
-  f_status_t fss_extended_list_read_process_columns(fll_program_data_t * const main, fss_extended_list_read_data_t *data, bool names[]) {
+  f_status_t fss_extended_list_read_process_columns(fll_program_data_t * const main, fss_extended_list_read_data_t * const data, bool names[]) {
 
     if (!(data->option & fss_extended_list_read_data_option_content_d)) {
       flockfile(main->output.to.stream);
@@ -596,11 +594,11 @@ extern "C" {
 #endif // _di_fss_extended_list_read_process_columns_
 
 #ifndef _di_fss_extended_list_read_process_line_
-  f_status_t fss_extended_list_read_process_line(fll_program_data_t * const main, fss_extended_list_read_data_t *data, bool names[]) {
+  f_status_t fss_extended_list_read_process_line(fll_program_data_t * const main, fss_extended_list_read_data_t * const data, bool names[]) {
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
-    f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
-    f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(0, data) ? &data->delimits_content : &except_none;
+    f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
+    f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
 
     if (data->option & fss_extended_list_read_data_option_raw_d) {
       delimits_object = &except_none;
@@ -614,7 +612,7 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      status = fss_extended_list_read_process_at_line(main, i, *delimits_object, *delimits_content, data, &line);
+      status = fss_extended_list_read_process_at_line(main, data, i, *delimits_object, *delimits_content, &line);
       if (status == F_success) break;
     } // for
 
@@ -623,7 +621,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_process_line_
 
 #ifndef _di_fss_extended_list_read_process_name_
-  f_status_t fss_extended_list_read_process_name(fss_extended_list_read_data_t *data, bool names[]) {
+  f_status_t fss_extended_list_read_process_name(fss_extended_list_read_data_t * const data, bool names[]) {
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
 
@@ -649,7 +647,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_process_name_
 
 #ifndef _di_fss_extended_list_read_process_option_
-  f_status_t fss_extended_list_read_process_option(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_extended_list_read_data_t *data) {
+  f_status_t fss_extended_list_read_process_option(fll_program_data_t * const main, fss_extended_list_read_data_t * const data) {
 
     f_status_t status = F_none;
 
@@ -672,7 +670,7 @@ extern "C" {
     if (main->parameters.array[fss_extended_list_read_parameter_line_e].result == f_console_result_additional_e) {
       data->option |= fss_extended_list_read_data_option_line_d;
 
-      status = fss_extended_list_read_load_number(main, fss_extended_list_read_parameter_line_e, fss_extended_list_read_long_line_s, &data->line);
+      status = fss_extended_list_read_load_number(main, data, fss_extended_list_read_parameter_line_e, fss_extended_list_read_long_line_s, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
@@ -691,7 +689,7 @@ extern "C" {
     if (main->parameters.array[fss_extended_list_read_parameter_select_e].result == f_console_result_additional_e) {
       data->option |= fss_extended_list_read_data_option_select_d;
 
-      status = fss_extended_list_read_load_number(main, fss_extended_list_read_parameter_select_e, fss_extended_list_read_long_select_s, &data->select);
+      status = fss_extended_list_read_load_number(main, data, fss_extended_list_read_parameter_select_e, fss_extended_list_read_long_select_s, &data->select);
       if (F_status_is_error(status)) return status;
     }
 
@@ -713,7 +711,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_process_option_
 
 #ifndef _di_fss_extended_list_read_process_total_
-  f_status_t fss_extended_list_read_process_total(fll_program_data_t * const main, fss_extended_list_read_data_t *data, bool names[]) {
+  f_status_t fss_extended_list_read_process_total(fll_program_data_t * const main, fss_extended_list_read_data_t * const data, bool names[]) {
 
     f_array_length_t total = 0;
     f_string_range_t range = f_string_range_t_initialize;

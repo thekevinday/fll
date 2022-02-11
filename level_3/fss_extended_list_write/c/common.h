@@ -71,9 +71,9 @@ extern "C" {
 #ifndef _di_fss_extended_list_write_defines_
   #define fss_extended_list_write_signal_check_d 10000
 
-  #define FSS_EXTENDED_LIST_READ_pipe_name_s "(pipe)"
+  #define FSS_EXTENDED_LIST_WRITE_pipe_name_s "(pipe)"
 
-  #define FSS_EXTENDED_LIST_READ_pipe_name_s_length 6
+  #define FSS_EXTENDED_LIST_WRITE_pipe_name_s_length 6
 
   #define FSS_EXTENDED_LIST_WRITE_pipe_content_end_s    "\f"
   #define FSS_EXTENDED_LIST_WRITE_pipe_content_ignore_s "\v"
@@ -83,7 +83,7 @@ extern "C" {
   #define FSS_EXTENDED_LIST_WRITE_pipe_content_ignore_s_length 1
   #define FSS_EXTENDED_LIST_WRITE_pipe_content_start_s_length  1
 
-  extern const f_string_static_t fss_extended_list_read_pipe_name_s;
+  extern const f_string_static_t fss_extended_list_write_pipe_name_s;
 
   extern const f_string_static_t fss_extended_list_write_pipe_content_end_s;
   extern const f_string_static_t fss_extended_list_write_pipe_content_ignore_s;

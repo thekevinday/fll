@@ -187,7 +187,7 @@ extern "C" {
         }
       }
       else if (main->parameters.array[fss_extended_write_parameter_file_e].result == f_console_result_found_e) {
-        fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s.string fss_extended_write_long_file_s);
+        fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_file_s);
         status = F_status_set_error(F_parameter);
       }
     }
@@ -339,7 +339,7 @@ extern "C" {
         if (argv[index].used) {
           f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
-          for (; range.start < length; ++range.start) {
+          for (; range.start < argv[index].used; ++range.start) {
 
             status = f_fss_is_space(argv[index], range);
             if (F_status_is_error(status)) break;
@@ -425,7 +425,6 @@ extern "C" {
     }
 
     f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
-    f_string_dynamic_t object = f_string_dynamic_t_initialize;
     f_string_dynamics_t contents = f_string_dynamics_t_initialize;
 
     if (F_status_is_error_not(status)) {
@@ -450,6 +449,7 @@ extern "C" {
         if (main->parameters.array[fss_extended_write_parameter_partial_e].result == f_console_result_found_e) {
           if (main->parameters.array[fss_extended_write_parameter_object_e].result == f_console_result_additional_e) {
             contents.used = 0;
+
             uint16_t signal_check = 0;
 
             for (f_array_length_t i = 0; i < main->parameters.array[fss_extended_write_parameter_object_e].values.used; ++i) {
@@ -464,17 +464,11 @@ extern "C" {
                 signal_check = 0;
               }
 
-              object.string = argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]];
-              object.used = strnlen(object.string, F_console_parameter_size_d);
-              object.size = object.used;
-
-              status = fss_extended_write_process(main, output, quote, &object, 0, &buffer);
+              status = fss_extended_write_process(main, output, quote, &argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]], 0, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
           else {
-            object.used = 0;
-
             status = f_string_dynamics_increase_by(main->parameters.array[fss_extended_write_parameter_content_e].values.used, &contents);
 
             if (status == F_array_too_large) {
@@ -493,16 +487,6 @@ extern "C" {
               } // for
 
               status = fss_extended_write_process(main, output, quote, 0, &contents, &buffer);
-
-              // clear the contents array of the static strings to avoid deallocation attempts on static variables.
-              for (; i < main->parameters.array[fss_extended_write_parameter_content_e].values.used; ++i) {
-                contents.array[contents.used].string = 0;
-                contents.array[contents.used].used = 0;
-                contents.array[contents.used].size = 0;
-              } // for
-
-              contents.used = 0;
-              contents.size = 0;
             }
           }
         }
@@ -518,6 +502,7 @@ extern "C" {
             if (!((++signal_check) % fss_extended_write_signal_check_d)) {
               if (fss_extended_write_signal_received(main)) {
                 status = F_status_set_error(F_interrupt);
+
                 break;
               }
 
@@ -529,8 +514,6 @@ extern "C" {
             if (i + 1 < main->parameters.array[fss_extended_write_parameter_object_e].values.used) {
               object_next = main->parameters.array[fss_extended_write_parameter_object_e].locations.array[i + 1];
             }
-
-            object = argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]];
 
             contents.used = 0;
 
@@ -554,10 +537,10 @@ extern "C" {
                 contents.array[contents.used].used = 0;
               }
 
-              status = f_string_append(argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[j]], strnlen(argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[j]], F_console_parameter_size_d), &contents.array[contents.used]);
+              status = f_string_dynamic_append(argv[main->parameters.array[fss_extended_write_parameter_content_e].values.array[j]], &contents.array[contents.used]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
+                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
 
                 break;
               }
@@ -567,7 +550,7 @@ extern "C" {
 
             if (F_status_is_error(status)) break;
 
-            status = fss_extended_write_process(main, output, quote, &object, &contents, &buffer);
+            status = fss_extended_write_process(main, output, quote, &argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]], &contents, &buffer);
             if (F_status_is_error(status)) break;
           } // for
         }
@@ -590,14 +573,6 @@ extern "C" {
       }
 
       f_string_dynamic_resize(0, &escaped);
-
-      // Object, though being a "dynamic" type, is being used statically, so clear them up to avoid invalid free().
-      object.string = 0;
-      object.used = 0;
-      object.size = 0;
-
-      // Reset contents used, it is dynamically allocated so leave everything else alone.
-      contents.used = 0;
     }
 
     if (main->parameters.array[fss_extended_write_parameter_file_e].result == f_console_result_additional_e) {
@@ -618,7 +593,6 @@ extern "C" {
     }
 
     f_string_dynamic_resize(0, &buffer);
-    f_string_dynamic_resize(0, &object);
     f_string_dynamics_resize(0, &contents);
     fss_extended_write_main_delete(main);
 

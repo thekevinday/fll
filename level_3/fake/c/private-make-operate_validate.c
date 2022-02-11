@@ -1004,10 +1004,10 @@ extern "C" {
                 range.start = 0;
                 range.stop = arguments.array[i].used - 1;
 
-                if (arguments.array[i].string[0] == '+') {
+                if (arguments.array[i].string[0] == f_string_ascii_plus_s.string[0]) {
                   range.start = 1;
                 }
-                else if (arguments.array[i].string[0] == '-') {
+                else if (arguments.array[i].string[0] == f_string_ascii_minus_s.string[0]) {
                   range.start = 1;
                   is_negative = F_true;
                 }

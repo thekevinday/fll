@@ -116,7 +116,6 @@ extern "C" {
         prepend = &main->parameters.arguments.array[index];
       }
 
-
       status = fl_fss_embedded_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, prepend, ignore, state, &range, buffer);
 
       if (F_status_is_error(status)) {

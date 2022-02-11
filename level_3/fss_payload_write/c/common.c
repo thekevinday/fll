@@ -10,7 +10,7 @@ extern "C" {
   const f_string_static_t fss_payload_write_pipe_content_start_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_pipe_content_start_s, 0, FSS_PAYLOAD_WRITE_pipe_content_start_s_length);
 #endif // _di_fss_payload_write_defines_
 
-##ifndef _di_fss_payload_write_parameters_
+#ifndef _di_fss_payload_write_parameters_
   const f_string_static_t fss_payload_write_short_file_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_short_file_s, 0, FSS_PAYLOAD_WRITE_short_file_s_length);
   const f_string_static_t fss_payload_write_short_content_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_short_content_s, 0, FSS_PAYLOAD_WRITE_short_content_s_length);
   const f_string_static_t fss_payload_write_short_double_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_short_double_s, 0, FSS_PAYLOAD_WRITE_short_double_s_length);

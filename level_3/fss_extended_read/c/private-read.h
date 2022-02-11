@@ -51,8 +51,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
  * @param data
  *   The program data.
  *
@@ -72,7 +70,7 @@ extern "C" {
  * @see fss_extended_read_depths_resize()
  */
 #ifndef _di_fss_extended_read_depth_process_
-  extern f_status_t fss_extended_read_depth_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_depth_process(fll_program_data_t * const main, fss_extended_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_depth_process_
 
 /**
@@ -116,7 +114,7 @@ extern "C" {
  * @see fss_extended_read_process_option()
  */
 #ifndef _di_fss_extended_read_load_
-  extern f_status_t fss_extended_read_load(fll_program_data_t * const main, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_load(fll_program_data_t * const main, fss_extended_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_load_
 
 /**
@@ -126,6 +124,8 @@ extern "C" {
  *
  * @param main
  *   The main program data.
+ * @param data
+ *   The program data.
  * @param parameter
  *   An ID representing the parameter.
  * @param name
@@ -144,7 +144,7 @@ extern "C" {
  * @see fss_extended_read_depths_resize()
  */
 #ifndef _di_fss_extended_read_load_number_
-  extern f_status_t fss_extended_read_load_number(fll_program_data_t * const main, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_load_number(fll_program_data_t * const main, fss_extended_read_data_t * const data, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_load_number_
 
 /**
@@ -154,8 +154,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
  * @param data
  *   The program data.
  *
@@ -169,7 +167,7 @@ extern "C" {
  * @see fss_extended_read_process_option()
  */
 #ifndef _di_fss_extended_read_process_
-  extern f_status_t fss_extended_read_process(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_process(fll_program_data_t * const main, fss_extended_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_
 
 /**
@@ -187,7 +185,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_at_
-  extern f_status_t fss_extended_read_process_at(fll_program_data_t * const main, fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_process_at(fll_program_data_t * const main, fss_extended_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_at_
 
 /**
@@ -205,7 +203,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_columns_
-  extern f_status_t fss_extended_read_process_columns(fll_program_data_t * const main, fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_process_columns(fll_program_data_t * const main, fss_extended_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_columns_
 
 /**
@@ -223,7 +221,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_line_
-  extern f_status_t fss_extended_read_process_line(fll_program_data_t * const main, fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_process_line(fll_program_data_t * const main, fss_extended_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_line_
 
 /**
@@ -241,7 +239,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_name_
-  extern f_status_t fss_extended_read_process_name(fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_process_name(fss_extended_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_name_
 
 /**
@@ -249,8 +247,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
  * @param data
  *   The program data.
  *
@@ -264,7 +260,7 @@ extern "C" {
  * @see fss_extended_read_load_setting()
  */
 #ifndef _di_fss_extended_read_process_option_
-  extern f_status_t fss_extended_read_process_option(fll_program_data_t * const main, const f_console_arguments_t *arguments, fss_extended_read_data_t *data) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_process_option(fll_program_data_t * const main, fss_extended_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_option_
 
 /**
@@ -282,51 +278,8 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_process_total_
-  extern f_status_t fss_extended_read_process_total(fll_program_data_t * const main, fss_extended_read_data_t *data, bool names[]) F_attribute_visibility_internal_d;
+  extern f_status_t fss_extended_read_process_total(fll_program_data_t * const main, fss_extended_read_data_t * const data, bool names[]) F_attribute_visibility_internal_d;
 #endif // _di_fss_extended_read_process_total_
-
-/**
- * Determine if the given depth is to be delimited or not.
- *
- * @param main
- *   The main program data.
- * @param depth
- *   The depth to check.
- *
- * @return
- *   F_true if delimited.
- *   F_false if not delimited.
- */
-#ifndef _di_fss_extended_read_is_delimited_at_depth_
-  extern f_status_t fss_extended_read_is_delimited_at_depth(fll_program_data_t * const main, const f_array_length_t depth) F_attribute_visibility_internal_d;
-#endif // _di_fss_extended_read_is_delimited_at_depth_
-
-/**
- * Process a given file.
- *
- * @param main
- *   The main program data.
- * @param arguments
- *   The console arguments passed to the program.
- * @param file_name
- *   The name of the file being processed.
- * @param depths
- *   The processed depth parameters.
- * @param objects_delimits
- *   An array of delimits detected during processing, for top-level objects.
- * @param contents_delimits
- *   An array of delimits detected during processing, for contents.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- *
- * @see fss_extended_read_main_preprocess_depth()
- */
-#ifndef _di_fss_extended_read_main_process_file_
-  extern f_status_t fss_extended_read_main_process_file(fll_program_data_t * const main, const f_console_arguments_t arguments, const f_string_t file_name, const fss_extended_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) F_attribute_visibility_internal_d;
-#endif // _di_fss_extended_read_main_process_file_
 
 #ifdef __cplusplus
 } // extern "C"

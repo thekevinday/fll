@@ -108,7 +108,15 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      status = fl_fss_extended_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, &main->prepend, ignore, state, &range, buffer);
+      const f_string_static_t *prepend = 0;
+
+      if (main->parameters.array[fss_extended_list_write_parameter_prepend_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = main->parameters.array[fss_extended_list_write_parameter_prepend_e].values.array[main->parameters.array[fss_extended_list_write_parameter_prepend_e].values.used - 1];
+
+        prepend = &main->parameters.arguments.array[index];
+      }
+
+      status = fl_fss_extended_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, prepend, ignore, state, &range, buffer);
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "fl_fss_extended_list_content_write", F_true);
@@ -401,7 +409,7 @@ extern "C" {
       index = main->parameters.array[fss_extended_list_write_parameter_ignore_e].values.array[i * 2];
 
       range.start = 0;
-      range.stop = strnlen(argv[index], F_console_parameter_size_d) - 1;
+      range.stop = argv[index].used - 1;
 
       // allow and ignore the positive sign.
       if (range.stop > 0 && argv[index].string[0] == f_string_ascii_plus_s.string[0]) {
@@ -421,7 +429,7 @@ extern "C" {
       index = main->parameters.array[fss_extended_list_write_parameter_ignore_e].values.array[(i * 2) + 1];
 
       range.start = 0;
-      range.stop = strnlen(argv[index], F_console_parameter_size_d) - 1;
+      range.stop = argv[index].used - 1;
 
       // allow and ignore the positive sign.
       if (range.stop > 0 && argv[index].string[0] == f_string_ascii_plus_s.string[0]) {

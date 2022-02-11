@@ -255,17 +255,17 @@ extern "C" {
  *   - object:                 Objects arre to have delimits applied.
  */
 #ifndef _di_fss_extended_read_delimit_mode_
-  #define FSS_EXTENDED_READ_delimit_mode_name_none    "none"
-  #define FSS_EXTENDED_READ_delimit_mode_name_all     "all"
-  #define FSS_EXTENDED_READ_delimit_mode_name_object  "object"
-  #define FSS_EXTENDED_READ_delimit_mode_name_greater "+"
-  #define FSS_EXTENDED_READ_delimit_mode_name_lesser  "-"
+  #define FSS_EXTENDED_READ_delimit_mode_name_none_s    "none"
+  #define FSS_EXTENDED_READ_delimit_mode_name_all_s     "all"
+  #define FSS_EXTENDED_READ_delimit_mode_name_object_s  "object"
+  #define FSS_EXTENDED_READ_delimit_mode_name_greater_s "+"
+  #define FSS_EXTENDED_READ_delimit_mode_name_lesser_s  "-"
 
-  #define FSS_EXTENDED_READ_delimit_mode_name_none_length    4
-  #define FSS_EXTENDED_READ_delimit_mode_name_all_length     3
-  #define FSS_EXTENDED_READ_delimit_mode_name_object_length  6
-  #define FSS_EXTENDED_READ_delimit_mode_name_greater_length 1
-  #define FSS_EXTENDED_READ_delimit_mode_name_lesser_length  1
+  #define FSS_EXTENDED_READ_delimit_mode_name_none_s_length    4
+  #define FSS_EXTENDED_READ_delimit_mode_name_all_s_length     3
+  #define FSS_EXTENDED_READ_delimit_mode_name_object_s_length  6
+  #define FSS_EXTENDED_READ_delimit_mode_name_greater_s_length 1
+  #define FSS_EXTENDED_READ_delimit_mode_name_lesser_s_length  1
 
   extern const f_string_static_t fss_extended_read_delimit_mode_name_none_s;
   extern const f_string_static_t fss_extended_read_delimit_mode_name_all_s;

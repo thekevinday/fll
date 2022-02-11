@@ -37,8 +37,8 @@ extern "C" {
 /**
  * The program data.
  *
+ * argv:      The argument structure in the progam data parameters for simplifying syntax.
  * main:      The main program data.
- * argv:      The argument structure in fll_program_data_t.parameters for simplifying syntax.
  * file:      The output file for writing the processed data to (may potentially default to "output").
  * mode:      The input/output mode (see utf8_modes).
  * valid:     Designate the output context set for valid characters.

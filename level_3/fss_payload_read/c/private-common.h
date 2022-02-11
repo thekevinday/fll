@@ -141,6 +141,7 @@ extern "C" {
  *   - total:    The total lines found and selected is printed instead of the Content.
  *   - trim:     Empty space before and after Objects and Content will not be printed (They will be trimmed).
  *
+ * argv:                    The argument structure in the progam data parameters for simplifying syntax.
  * options:                 Bitwise flags representing parameters.
  * delimit_mode:            The delimit mode.
  * delimit_depth:           The delimit depth.
@@ -180,6 +181,8 @@ extern "C" {
     f_number_unsigned_t select;
     f_number_unsigned_t line;
 
+    f_string_static_t *argv;
+
     fss_payload_read_files_t files;
     fss_payload_read_depths_t depths;
 
@@ -202,6 +205,7 @@ extern "C" {
     { \
       0, \
       fss_payload_read_delimit_mode_all_e, \
+      0, \
       0, \
       0, \
       0, \

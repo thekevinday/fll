@@ -182,10 +182,10 @@ extern "C" {
             }
           }
           else {
-            status = f_string_append(argv[values_order[i]].string, argv[values_order[i]].used, &depths->array[depths->used].value_name);
+            status = f_string_dynamic_append(argv[values_order[i]], &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
 
               return status;
             }

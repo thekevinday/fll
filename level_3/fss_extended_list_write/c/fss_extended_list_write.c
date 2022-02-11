@@ -325,16 +325,12 @@ extern "C" {
       else if (main->parameters.array[fss_extended_list_write_parameter_prepend_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_extended_list_write_parameter_prepend_e].values.array[main->parameters.array[fss_extended_list_write_parameter_prepend_e].values.used - 1];
 
-        if (length) {
-          f_string_range_t range = macro_f_string_range_t_initialize(length);
+        if (argv[index].used) {
+          f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
-          main->prepend.string = argv[index];
-          main->prepend.used = length;
-          main->prepend.size = length;
+          for (; range.start < argv[index].used; ++range.start) {
 
-          for (; range.start < length; ++range.start) {
-
-            status = f_fss_is_space(main->prepend, range);
+            status = f_fss_is_space(argv[index], range);
             if (F_status_is_error(status)) break;
 
             if (status == F_false) {
@@ -402,7 +398,7 @@ extern "C" {
       }
     }
 
-    f_fss_quote_t quote = f_fss_delimit_quote_double_s;
+    f_fss_quote_t quote = f_fss_quote_type_double_e;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_extended_list_write_parameter_double_e].result == f_console_result_found_e) {

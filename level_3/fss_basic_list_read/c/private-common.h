@@ -140,6 +140,7 @@ extern "C" {
  *   - total:   The total lines found and selected is printed instead of the Content.
  *   - trim:    Empty space before and after Objects and Content will not be printed (They will be trimmed).
  *
+ * argv:             The argument structure in the progam data parameters for simplifying syntax.
  * options:          Bitwise flags representing parameters.
  * delimit_mode:     The delimit mode.
  * delimit_depth:    The delimit depth.

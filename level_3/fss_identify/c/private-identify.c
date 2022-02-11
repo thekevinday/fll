@@ -22,6 +22,7 @@ extern "C" {
       if (!((++signal_check) % fss_identify_signal_check_d)) {
         if (fss_identify_signal_received(main)) {
           status = F_status_set_error(F_interrupt);
+
           break;
         }
 
@@ -32,7 +33,7 @@ extern "C" {
         status = f_string_dynamic_resize(buffer->size + file.size_read, buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, name.used ? name : f_string_ascii_s, f_file_operation_read_s, name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, name.used ? name : f_string_ascii_minus_s, f_file_operation_read_s, name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
           return status;
         }
@@ -41,7 +42,7 @@ extern "C" {
       status = f_file_stream_read_block(file, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, name.used ? name : f_string_ascii_s, f_file_operation_read_s, name ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, name.used ? name : f_string_ascii_minus_s, f_file_operation_read_s, name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
         return status;
       }
@@ -56,7 +57,7 @@ extern "C" {
 
     } while (F_status_is_error_not(status) && status != F_none_eof);
 
-    // reset the start point to prepare the buffer for processing.
+    // Reset the start point to prepare the buffer for processing.
     range->start = 0;
 
     return status;
@@ -64,15 +65,15 @@ extern "C" {
 #endif // _di_fss_identify_load_line_
 
 #ifndef _di_fss_identify_process_
-  f_status_t fss_identify_process(fll_program_data_t * const main, const f_string_t name, const f_string_static_t buffer, f_string_range_t *range, fss_identify_data_t *data) {
+  f_status_t fss_identify_process(fll_program_data_t * const main, fss_identify_data_t * const data, const f_string_static_t name, const f_string_static_t buffer, f_string_range_t *range) {
 
     f_status_t status = F_none;
     f_fll_ids_t ids = f_fll_ids_t_initialize;
 
-    status = fll_fss_identify(buffer.string, range, &ids);
+    status = fll_fss_identify(buffer, range, &ids);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, name.used ? name : f_string_ascii_s, f_file_operation_read_s, name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, name.used ? name : f_string_ascii_pipe_s, f_file_operation_read_s, name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
       f_type_fll_ids_resize(0, &ids);
 
