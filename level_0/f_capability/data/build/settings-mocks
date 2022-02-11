@@ -29,7 +29,7 @@ build_libraries -lc -lcap
 build_libraries-individual -lf_memory -lf_string -lf_type_array
 build_libraries_shared
 build_libraries_static
-build_sources_library capability.c ../../tests/c/mock-capability.c
+build_sources_library capability.c ../../tests/unit/c/mock-capability.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_program

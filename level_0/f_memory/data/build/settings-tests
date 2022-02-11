@@ -22,9 +22,9 @@ build_script no
 build_shared yes
 build_static no
 
-path_headers tests/c
+path_headers tests/unit/c
 path_headers_preserve no
-path_sources tests/c
+path_sources tests/unit/c
 path_standard no
 
 search_exclusive yes

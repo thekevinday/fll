@@ -24,7 +24,7 @@ build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 build_libraries_shared
 build_libraries_static
-build_sources_library account.c private-account.c ../../tests/c/mock-account.c
+build_sources_library account.c private-account.c ../../tests/unit/c/mock-account.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_program
