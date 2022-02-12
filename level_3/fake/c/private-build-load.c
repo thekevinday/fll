@@ -142,11 +142,11 @@ extern "C" {
       bool failed = F_false;
 
       f_string_static_t * const settings[] = {
-        &setting->project_name,
+        &setting->build_name,
       };
 
       f_string_static_t names[] = {
-        fake_build_setting_name_project_name_s,
+        fake_build_setting_name_build_name_s,
       };
 
       for (uint8_t i = 0; i < 1; ++i) {
@@ -193,6 +193,7 @@ extern "C" {
     f_string_dynamics_t build_compiler = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_indexer = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_language = f_string_dynamics_t_initialize;
+    f_string_dynamics_t build_name = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_script = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_shared = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_static = f_string_dynamics_t_initialize;
@@ -209,7 +210,6 @@ extern "C" {
     f_string_dynamics_t path_standard = f_string_dynamics_t_initialize;
     f_string_dynamics_t process_post = f_string_dynamics_t_initialize;
     f_string_dynamics_t process_pre = f_string_dynamics_t_initialize;
-    f_string_dynamics_t project_name = f_string_dynamics_t_initialize;
     f_string_dynamics_t search_exclusive = f_string_dynamics_t_initialize;
     f_string_dynamics_t search_shared = f_string_dynamics_t_initialize;
     f_string_dynamics_t search_static = f_string_dynamics_t_initialize;
@@ -232,6 +232,7 @@ extern "C" {
       fake_build_setting_name_build_libraries_s,
       fake_build_setting_name_build_libraries_shared_s,
       fake_build_setting_name_build_libraries_static_s,
+      fake_build_setting_name_build_name_s,
       fake_build_setting_name_build_script_s,
       fake_build_setting_name_build_shared_s,
       fake_build_setting_name_build_sources_headers_s,
@@ -280,7 +281,6 @@ extern "C" {
       fake_build_setting_name_path_standard_s,
       fake_build_setting_name_process_post_s,
       fake_build_setting_name_process_pre_s,
-      fake_build_setting_name_project_name_s,
       fake_build_setting_name_search_exclusive_s,
       fake_build_setting_name_search_shared_s,
       fake_build_setting_name_search_static_s,
@@ -304,6 +304,7 @@ extern "C" {
       &setting->build_libraries,
       &setting->build_libraries_shared,
       &setting->build_libraries_static,
+      &build_name,
       &build_script,
       &build_shared,
       &setting->build_sources_headers,
@@ -352,7 +353,6 @@ extern "C" {
       &path_standard,
       &process_post,
       &process_pre,
-      &project_name,
       &search_exclusive,
       &search_shared,
       &search_static,
@@ -589,6 +589,7 @@ extern "C" {
         fake_build_setting_name_build_compiler_s,
         fake_build_setting_name_build_indexer_s,
         fake_build_setting_name_build_language_s,
+        fake_build_setting_name_build_name_s,
         fake_build_setting_name_build_script_s,
         fake_build_setting_name_build_shared_s,
         fake_build_setting_name_build_static_s,
@@ -605,7 +606,6 @@ extern "C" {
         fake_build_setting_name_path_standard_s,
         fake_build_setting_name_process_post_s,
         fake_build_setting_name_process_pre_s,
-        fake_build_setting_name_project_name_s,
         fake_build_setting_name_search_exclusive_s,
         fake_build_setting_name_search_shared_s,
         fake_build_setting_name_search_static_s,
@@ -625,6 +625,7 @@ extern "C" {
         &build_compiler,
         &build_indexer,
         &build_language,
+        &build_name,
         &build_script,
         &build_shared,
         &build_static,
@@ -641,7 +642,6 @@ extern "C" {
         &path_standard,
         &process_post,
         &process_pre,
-        &project_name,
         &search_exclusive,
         &search_shared,
         &search_static,
@@ -661,6 +661,7 @@ extern "C" {
         0,                               // build_compiler
         0,                               // build_indexer
         0,                               // build_language
+        0,                               // build_name
         &setting->build_script,          // build_script
         &setting->build_shared,          // build_shared
         &setting->build_static,          // build_static
@@ -677,7 +678,6 @@ extern "C" {
         &setting->path_standard,         // path_standard
         0,                               // process_post
         0,                               // process_pre
-        0,                               // project_name
         &setting->search_exclusive,      // search_exclusive
         &setting->search_shared,         // search_shared
         &setting->search_static,         // search_static
@@ -687,6 +687,7 @@ extern "C" {
         &setting->build_compiler,        // build_compiler
         &setting->build_indexer,         // build_indexer
         0,                               // build_language
+        &setting->build_name,            // build_name
         0,                               // build_script
         0,                               // build_shared
         0,                               // build_static
@@ -703,7 +704,6 @@ extern "C" {
         0,                               // path_standard
         &setting->process_post,          // process_post
         &setting->process_pre,           // process_pre
-        &setting->project_name,          // project_name
         0,                               // search_exclusive
         0,                               // search_shared
         0,                               // search_static
@@ -728,6 +728,7 @@ extern "C" {
         0,                               // build_compiler
         0,                               // build_indexer
         0,                               // build_language
+        0,                               // build_name
         0,                               // build_script
         0,                               // build_shared
         0,                               // build_static
@@ -744,7 +745,6 @@ extern "C" {
         0,                               // path_standard
         0,                               // process_post
         0,                               // process_pre
-        0,                               // project_name
         0,                               // search_exclusive
         0,                               // search_shared
         0,                               // search_static
@@ -764,6 +764,7 @@ extern "C" {
         0,                               // build_compiler
         0,                               // build_indexer
         0,                               // build_language
+        0,                               // build_name
         0,                               // build_script
         0,                               // build_shared
         0,                               // build_static
@@ -780,7 +781,6 @@ extern "C" {
         0,                               // path_standard
         0,                               // process_post
         0,                               // process_pre
-        0,                               // project_name
         0,                               // search_exclusive
         0,                               // search_shared
         0,                               // search_static
@@ -800,6 +800,7 @@ extern "C" {
         f_string_empty_s,                // build_compiler
         f_string_empty_s,                // build_indexer
         f_string_empty_s,                // build_language
+        f_string_empty_s,                // build_name
         f_string_empty_s,                // build_script
         f_string_empty_s,                // build_shared
         f_string_empty_s,                // build_static
@@ -816,7 +817,6 @@ extern "C" {
         f_string_empty_s,                // path_standard
         f_string_empty_s,                // process_post
         f_string_empty_s,                // process_pre
-        f_string_empty_s,                // project_name
         f_string_empty_s,                // search_exclusive
         f_string_empty_s,                // search_shared
         f_string_empty_s,                // search_static
@@ -837,6 +837,7 @@ extern "C" {
         3,                               // build_compiler
         3,                               // build_indexer
         4,                               // build_language
+        3,                               // build_name
         1,                               // build_script
         1,                               // build_shared
         1,                               // build_static
@@ -853,7 +854,6 @@ extern "C" {
         1,                               // path_standard
         3,                               // process_post
         3,                               // process_pre
-        3,                               // project_name
         1,                               // search_exclusive
         1,                               // search_shared
         1,                               // search_static
@@ -1162,6 +1162,7 @@ extern "C" {
     f_string_dynamics_resize(0, &build_compiler);
     f_string_dynamics_resize(0, &build_indexer);
     f_string_dynamics_resize(0, &build_language);
+    f_string_dynamics_resize(0, &build_name);
     f_string_dynamics_resize(0, &build_script);
     f_string_dynamics_resize(0, &build_shared);
     f_string_dynamics_resize(0, &build_static);
@@ -1178,7 +1179,6 @@ extern "C" {
     f_string_dynamics_resize(0, &path_standard);
     f_string_dynamics_resize(0, &process_post);
     f_string_dynamics_resize(0, &process_pre);
-    f_string_dynamics_resize(0, &project_name);
     f_string_dynamics_resize(0, &search_exclusive);
     f_string_dynamics_resize(0, &search_shared);
     f_string_dynamics_resize(0, &search_static);

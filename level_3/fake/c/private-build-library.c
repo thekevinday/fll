@@ -95,7 +95,7 @@ extern "C" {
 
     f_array_length_t strings_length = 1;
 
-    parameter_file_name.used = fake_build_parameter_library_name_prefix_s.used + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_shared_s.used;
+    parameter_file_name.used = fake_build_parameter_library_name_prefix_s.used + data_build.setting.build_name.used + fake_build_parameter_library_name_suffix_shared_s.used;
 
     if (data_build.setting.version_major.used) {
       parameter_file_name_major.used = parameter_file_name.used + data_build.setting.version_major_prefix.used + data_build.setting.version_major.used;
@@ -155,10 +155,10 @@ extern "C" {
       offset = fake_build_parameter_library_name_prefix_s.used;
 
       for (i = 0; i < strings_length; ++i) {
-        memcpy(strings[i] + offset, data_build.setting.project_name.string, data_build.setting.project_name.used);
+        memcpy(strings[i] + offset, data_build.setting.build_name.string, data_build.setting.build_name.used);
       } // for
 
-      offset += data_build.setting.project_name.used;
+      offset += data_build.setting.build_name.used;
 
       for (i = 0; i < strings_length; ++i) {
         memcpy(strings[i] + offset, fake_build_parameter_library_name_suffix_shared_s.string, fake_build_parameter_library_name_suffix_shared_s.used);
@@ -489,7 +489,7 @@ extern "C" {
     if (F_status_is_error_not(*status)) {
       f_string_static_t destination = f_string_static_t_initialize;
       destination.used = main->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s.used;
-      destination.used += data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_s.used;
+      destination.used += data_build.setting.build_name.used + fake_build_parameter_library_name_suffix_static_s.used;
 
       char destination_string[destination.used + 1];
       destination.string = destination_string;
@@ -503,8 +503,8 @@ extern "C" {
       memcpy(destination_string + destination.used, fake_build_parameter_library_name_prefix_s.string, fake_build_parameter_library_name_prefix_s.used);
       destination.used += fake_build_parameter_library_name_prefix_s.used;
 
-      memcpy(destination_string + destination.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
-      destination.used += data_build.setting.project_name.used;
+      memcpy(destination_string + destination.used, data_build.setting.build_name.string, data_build.setting.build_name.used);
+      destination.used += data_build.setting.build_name.used;
 
       memcpy(destination_string + destination.used, fake_build_parameter_library_name_suffix_static_s.string, fake_build_parameter_library_name_suffix_static_s.used);
       destination.used += fake_build_parameter_library_name_suffix_static_s.used;

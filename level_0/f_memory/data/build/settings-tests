@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name test-f_memory
+build_name test-f_memory
 
 version_major 0
 version_file major

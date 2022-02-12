@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fss_embedded_list_write
+build_name fss_embedded_list_write
 
 version_major 0
 version_minor 5

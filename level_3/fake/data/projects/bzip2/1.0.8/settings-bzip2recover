@@ -9,7 +9,7 @@
 #   4) copy this file (settings-bzip2recover) into the created directory path "data/build/".
 #   5) use the featureless make build operation to build, such as: "fake build -s settings-bzip2recover".
 
-project_name bzip2recover
+build_name bzip2recover
 
 version_major 1
 version_minor 0

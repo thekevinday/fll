@@ -793,8 +793,8 @@ extern "C" {
       if (main->output.verbosity != f_console_verbosity_quiet_e) {
         flockfile(main->output.to.stream);
 
-        fl_print_format("%r%[Building project%] ", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important);
-        fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, data_build.setting.project_name, main->context.set.notable);
+        fl_print_format("%r%[Building%] ", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important);
+        fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, data_build.setting.build_name, main->context.set.notable);
         fl_print_format("%[.%]%r", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s);
 
         funlockfile(main->output.to.stream);

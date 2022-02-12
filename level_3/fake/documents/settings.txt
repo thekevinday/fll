@@ -45,6 +45,11 @@ Settings Documentation:
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These are applied to only static builds.
 
+  - build_name\:
+    The name of the build, which often represent the project name.
+    If program sources are specified, then this will be used as the program name.
+    If library sources are specified, then this will be used in the library name, such as "libX.so" where "X" would be the "build_name" value.
+
   - build_script\:
     When "yes", the build process will build any scripts, such as a Bash script.
     This is currently not implemented.
@@ -309,11 +314,6 @@ Settings Documentation:
       Sources Path parameter, such as "-S X', whereas "X" is any valid argument associated with "-S".
       Work Path parameter, such as "-w X', whereas "X" is any valid argument associated with "-w".
 
-  - project_name\:
-    The name of the project.
-    If program sources are specified, then this will be used as the program name.
-    If library sources are specified, then this will be used in the library name, such as "libX.so" where "X" would be the "project_name" value.
-
   - search_exclusive\:
     When "yes", the search path during compile for shared libraries will only include shared library paths.
     When "no", the search path during compile time for shared libraries will include shared library paths followed by static library paths.
@@ -336,10 +336,10 @@ Settings Documentation:
     A Symbolic link is created against this created file such that "libX.so" is a link to "libX.so.A".
     For all files other than when file is "major", another symbolic link is created against this such that "libX.so.A" is a link to "libX.so.A.X" such that X is the respective "B", "B.C', or "B.C.D" as described below.
     The default file is "major".
-    When "major" is used, the file created is "libX.so.A", whereas "X" is the "project_name" and "A" is the major version.
-    When "minor" is used, the file created is "libX.so.A.B", whereas "X" is the "project_name" and "A.B" is the major and minor versions, respectively.
-    When "micro" is used, the file created is "libX.so.A.B.C", whereas "X" is the "project_name" and "A.B.C" is the major, minor, and micro versions, respectively.
-    When "nano" is used, the file created is "libX.so.A.B.C.D", whereas "X" is the "project_name" and "A.B.C.D" is the major, minor, micro, and nano versions, respectively.
+    When "major" is used, the file created is "libX.so.A", whereas "X" is the "build_name" and "A" is the major version.
+    When "minor" is used, the file created is "libX.so.A.B", whereas "X" is the "build_name" and "A.B" is the major and minor versions, respectively.
+    When "micro" is used, the file created is "libX.so.A.B.C", whereas "X" is the "build_name" and "A.B.C" is the major, minor, and micro versions, respectively.
+    When "nano" is used, the file created is "libX.so.A.B.C.D", whereas "X" is the "build_name" and "A.B.C.D" is the major, minor, micro, and nano versions, respectively.
 
   - version_major\:
     The major version number (or in theory any characters allowed in a filename).
@@ -397,7 +397,7 @@ Settings Documentation:
     Designates which version should be used when linking the shared library.
     Any version prefixes are used as defined.
     The default target is "micro".
-    When "major" is used, a shared library is generated with "-Wl,-soname,libX.so.A", whereas "X" is the "project_name" and "A" is the major version.
-    When "minor" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B", whereas "X" is the "project_name" and "A.B" is the major and minor versions, respectively.
-    When "micro" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B.C", whereas "X" is the "project_name" and "A.B.C" is the major, minor, and micro versions, respectively.
-    When "nano" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B.C.D", whereas "X" is the "project_name" and "A.B.C.D" is the major, minor, micro, and nano versions, respectively.
+    When "major" is used, a shared library is generated with "-Wl,-soname,libX.so.A", whereas "X" is the "build_name" and "A" is the major version.
+    When "minor" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B", whereas "X" is the "build_name" and "A.B" is the major and minor versions, respectively.
+    When "micro" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B.C", whereas "X" is the "build_name" and "A.B.C" is the major, minor, and micro versions, respectively.
+    When "nano" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B.C.D", whereas "X" is the "build_name" and "A.B.C.D" is the major, minor, micro, and nano versions, respectively.

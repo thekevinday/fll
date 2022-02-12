@@ -11,7 +11,7 @@
 #
 # This depends on a c-library with realtime and pthread support.
 
-project_name cmocka
+build_name cmocka
 
 version_major 1
 version_minor 1

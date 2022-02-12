@@ -192,7 +192,7 @@ bootstrap_main() {
     return 1
   fi
 
-  project_built="${path_build_stage}${variables[$(bootstrap_id project_name)]}"
+  project_built="${path_build_stage}${variables[$(bootstrap_id build_name)]}"
   if [[ $process != "" ]] ; then
     project_built="${project_built}-$process"
   fi
@@ -228,9 +228,9 @@ bootstrap_main() {
     fi
   fi
 
-  if [[ ${variables[$(bootstrap_id project_name)]} == "" ]] ; then
+  if [[ ${variables[$(bootstrap_id build_name)]} == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the required setting '${c_notice}project_name$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: the required setting '${c_notice}build_name$c_error' is not specified in the build settings file '$c_notice$settings_file$c_error'.$c_reset"
     fi
 
     bootstrap_cleanup
@@ -300,7 +300,7 @@ bootstrap_main() {
     return 1
   fi
 
-  project_label="${variables[$(bootstrap_id project_name)]}"
+  project_label="${variables[$(bootstrap_id build_name)]}"
 
   if [[ "${variables[$(bootstrap_id version_major)]}" != "" ]] ; then
     project_label="${project_label}-${variables[$(bootstrap_id version_major)]}"
@@ -324,7 +324,7 @@ bootstrap_main() {
   elif [[ $operation == "build" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Building Project:${c_reset} $c_notice$project_label${c_highlight}.$c_reset"
+      echo -e "${c_highlight}Building:${c_reset} $c_notice$project_label${c_highlight}.$c_reset"
     fi
 
     if [[ ! -f ${project_built}.prepared ]] ; then
@@ -485,7 +485,7 @@ bootstrap_id() {
     "path_standard") echo -n 52;;
     "process_post") echo -n 53;;
     "process_pre") echo -n 54;;
-    "project_name") echo -n 55;;
+    "build_name") echo -n 55;;
     "search_exclusive") echo -n 56;;
     "search_shared") echo -n 57;;
     "search_static") echo -n 58;;
@@ -569,7 +569,7 @@ bootstrap_load_settings() {
     return 1
   fi
 
-  for i in build_compiler build_indexer build_indexer_arguments build_language build_libraries build_libraries_shared build_libraries_static build_script build_shared build_sources_headers build_sources_headers_shared build_sources_headers_static build_sources_library build_sources_library_shared build_sources_library_static build_sources_program build_sources_program_shared build_sources_program_static build_sources_script build_sources_setting build_static defines defines_library defines_library_shared defines_library_static defines_program defines_shared defines_program_shared defines_program_static defines_static environment flags flags_library flags_program flags_shared flags_static modes modes_default path_headers path_headers_preserve path_language path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre project_name search_exclusive search_shared search_static version_major version_major_prefix version_micro version_micro_prefix version_minor version_minor_prefix version_nano version_nano_prefix version_target ; do
+  for i in build_compiler build_indexer build_indexer_arguments build_language build_libraries build_libraries_shared build_libraries_static build_script build_shared build_sources_headers build_sources_headers_shared build_sources_headers_static build_sources_library build_sources_library_shared build_sources_library_static build_sources_program build_sources_program_shared build_sources_program_static build_sources_script build_sources_setting build_static defines defines_library defines_library_shared defines_library_static defines_program defines_shared defines_program_shared defines_program_static defines_static environment flags flags_library flags_program flags_shared flags_static modes modes_default path_headers path_headers_preserve path_language path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre build_name search_exclusive search_shared search_static version_major version_major_prefix version_micro version_micro_prefix version_minor version_minor_prefix version_nano version_nano_prefix version_target ; do
     variables[$(bootstrap_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }
@@ -624,7 +624,7 @@ bootstrap_prepare_build() {
 
 bootstrap_operation_build() {
   local failure=
-  local name=${variables[$(bootstrap_id project_name)]}
+  local build_name=${variables[$(bootstrap_id build_name)]}
   local major=${variables[$(bootstrap_id version_major)]}
   local major_prefix=${variables[$(bootstrap_id version_major_prefix)]}
   local minor=${variables[$(bootstrap_id version_minor)]}
@@ -1118,26 +1118,26 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $compiler $sources -shared -Wl,-soname,lib$name.so.$version_target -o ${path_build}libraries/shared/lib$name.so.$version_file $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared
+        echo $compiler $sources -shared -Wl,-soname,lib$build_name.so.$version_target -o ${path_build}libraries/shared/lib$build_name.so.$version_file $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared
       fi
 
-      $compiler $sources -shared -Wl,-soname,lib$name.so.$version_target -o ${path_build}libraries/shared/lib$name.so.$version_file $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared || failure=1
+      $compiler $sources -shared -Wl,-soname,lib$build_name.so.$version_target -o ${path_build}libraries/shared/lib$build_name.so.$version_file $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared || failure=1
 
       if [[ $failure == "" ]] ; then
         if [[ $file != "major" ]] ; then
           if [[ $file == "minor" ]] ; then
-            ln $verbose -sf lib$name.so.$version_file ${path_build}libraries/shared/lib$name.so.$major_prefix$major || failure=1
+            ln $verbose -sf lib$build_name.so.$version_file ${path_build}libraries/shared/lib$build_name.so.$major_prefix$major || failure=1
           else
-            ln $verbose -sf lib$name.so.$major_prefix$major$minor_prefix$minor ${path_build}libraries/shared/lib$name.so.$major_prefix$major || failure=1
+            ln $verbose -sf lib$build_name.so.$major_prefix$major$minor_prefix$minor ${path_build}libraries/shared/lib$build_name.so.$major_prefix$major || failure=1
 
             if [[ $failure == "" ]] ; then
               if [[ $file == "micro" ]] ; then
-                ln $verbose -sf lib$name.so.$version_file ${path_build}libraries/shared/lib$name.so.$major_prefix$major$minor_prefix$minor || failure=1
+                ln $verbose -sf lib$build_name.so.$version_file ${path_build}libraries/shared/lib$build_name.so.$major_prefix$major$minor_prefix$minor || failure=1
               else
-                ln $verbose -sf lib$name.so.$major_prefix$major$minor_prefix$minor$micro_prefix$micro ${path_build}libraries/shared/lib$name.so.$major_prefix$major$minor_prefix$minor || failure=1
+                ln $verbose -sf lib$build_name.so.$major_prefix$major$minor_prefix$minor$micro_prefix$micro ${path_build}libraries/shared/lib$build_name.so.$major_prefix$major$minor_prefix$minor || failure=1
 
                 if [[ $failure == "" ]] ; then
-                  ln $verbose -sf lib$name.so.$version_file ${path_build}libraries/shared/lib$name.so.$major_prefix$major$minor_prefix$minor_prefix$minor$micro_prefix$micro || failure=1
+                  ln $verbose -sf lib$build_name.so.$version_file ${path_build}libraries/shared/lib$build_name.so.$major_prefix$major$minor_prefix$minor_prefix$minor$micro_prefix$micro || failure=1
                 fi
               fi
             fi
@@ -1145,7 +1145,7 @@ bootstrap_operation_build() {
         fi
 
         if [[ $failure == "" ]] ; then
-          ln $verbose -sf lib$name.so.$major_prefix$major ${path_build}libraries/shared/lib$name.so || failure=1
+          ln $verbose -sf lib$build_name.so.$major_prefix$major ${path_build}libraries/shared/lib$build_name.so || failure=1
         fi
       fi
     fi
@@ -1155,7 +1155,7 @@ bootstrap_operation_build() {
       links=
 
       if [[ $sources_library != "" || $sources_library_shared != "" ]] ; then
-        links="-l$name "
+        links="-l$build_name "
       fi
 
       for i in $sources_program $sources_program_shared ; do
@@ -1163,10 +1163,10 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared
+        echo $compiler $sources -o ${path_build}programs/shared/$build_name $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared
       fi
 
-      $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared || failure=1
+      $compiler $sources -o ${path_build}programs/shared/$build_name $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared || failure=1
     fi
 
     if [[ $failure == "" ]] ; then
@@ -1206,10 +1206,10 @@ bootstrap_operation_build() {
       if [[ $failure == "" && ( $sources_library != "" || $sources_library_static != "" ) ]] ; then
 
         if [[ $verbosity == "verbose" ]] ; then
-          echo $indexer $indexer_arguments ${path_build}libraries/static/lib$name.a $sources
+          echo $indexer $indexer_arguments ${path_build}libraries/static/lib$build_name.a $sources
         fi
 
-        $indexer $indexer_arguments ${path_build}libraries/static/lib$name.a $sources || failure=1
+        $indexer $indexer_arguments ${path_build}libraries/static/lib$build_name.a $sources || failure=1
       fi
     fi
 
@@ -1218,7 +1218,7 @@ bootstrap_operation_build() {
       links=
 
       if [[ $sources_library != "" || $sources_library_static != "" ]] ; then
-        links="-l$name "
+        links="-l$build_name "
       fi
 
       for i in $sources_program $sources_program_static ; do
@@ -1226,10 +1226,10 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static
+        echo $compiler $sources -static -o ${path_build}programs/static/$build_name $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static
       fi
 
-      $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static || failure=1
+      $compiler $sources -static -o ${path_build}programs/static/$build_name $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static || failure=1
     fi
 
     if [[ $failure == "" ]] ; then

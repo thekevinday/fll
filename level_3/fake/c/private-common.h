@@ -32,6 +32,7 @@ extern "C" {
 
     f_string_dynamic_t build_compiler;
     f_string_dynamic_t build_indexer;
+    f_string_dynamic_t build_name;
     f_string_dynamic_t path_headers;
     f_string_dynamic_t path_language;
     f_string_dynamic_t path_library_script;
@@ -43,7 +44,6 @@ extern "C" {
     f_string_dynamic_t path_sources;
     f_string_dynamic_t process_post;
     f_string_dynamic_t process_pre;
-    f_string_dynamic_t project_name;
     f_string_dynamic_t version_major;
     f_string_dynamic_t version_major_prefix;
     f_string_dynamic_t version_micro;
@@ -166,6 +166,7 @@ extern "C" {
   #define macro_fake_build_setting_t_delete_simple(setting) \
     macro_f_string_dynamic_t_delete_simple(setting.build_compiler) \
     macro_f_string_dynamic_t_delete_simple(setting.build_indexer) \
+    macro_f_string_dynamic_t_delete_simple(setting.build_name) \
     macro_f_string_dynamic_t_delete_simple(setting.path_headers) \
     macro_f_string_dynamic_t_delete_simple(setting.path_language) \
     macro_f_string_dynamic_t_delete_simple(setting.path_library_script) \
@@ -177,7 +178,6 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(setting.path_sources) \
     macro_f_string_dynamic_t_delete_simple(setting.process_post) \
     macro_f_string_dynamic_t_delete_simple(setting.process_pre) \
-    macro_f_string_dynamic_t_delete_simple(setting.project_name) \
     macro_f_string_dynamic_t_delete_simple(setting.version_major) \
     macro_f_string_dynamic_t_delete_simple(setting.version_major_prefix) \
     macro_f_string_dynamic_t_delete_simple(setting.version_micro) \
@@ -224,12 +224,13 @@ extern "C" {
     macro_f_string_dynamics_t_delete_simple(setting.modes_default)
 
   #define FAKE_build_setting_name_build_compiler_s               "build_compiler"
+  #define FAKE_build_setting_name_build_indexer_s                "build_indexer"
+  #define FAKE_build_setting_name_build_indexer_arguments_s      "build_indexer_arguments"
   #define FAKE_build_setting_name_build_language_s               "build_language"
   #define FAKE_build_setting_name_build_libraries_s              "build_libraries"
   #define FAKE_build_setting_name_build_libraries_shared_s       "build_libraries_shared"
   #define FAKE_build_setting_name_build_libraries_static_s       "build_libraries_static"
-  #define FAKE_build_setting_name_build_indexer_s                "build_indexer"
-  #define FAKE_build_setting_name_build_indexer_arguments_s      "build_indexer_arguments"
+  #define FAKE_build_setting_name_build_name_s                   "build_name"
   #define FAKE_build_setting_name_build_script_s                 "build_script"
   #define FAKE_build_setting_name_build_shared_s                 "build_shared"
   #define FAKE_build_setting_name_build_sources_headers_s        "build_sources_headers"
@@ -278,7 +279,6 @@ extern "C" {
   #define FAKE_build_setting_name_path_standard_s                "path_standard"
   #define FAKE_build_setting_name_process_post_s                 "process_post"
   #define FAKE_build_setting_name_process_pre_s                  "process_pre"
-  #define FAKE_build_setting_name_project_name_s                 "project_name"
   #define FAKE_build_setting_name_search_exclusive_s             "search_exclusive"
   #define FAKE_build_setting_name_search_shared_s                "search_shared"
   #define FAKE_build_setting_name_search_static_s                "search_static"
@@ -294,12 +294,13 @@ extern "C" {
   #define FAKE_build_setting_name_version_target_s               "version_target"
 
   #define FAKE_build_setting_name_build_compiler_s_length               14
+  #define FAKE_build_setting_name_build_indexer_s_length                13
+  #define FAKE_build_setting_name_build_indexer_arguments_s_length      23
   #define FAKE_build_setting_name_build_language_s_length               14
   #define FAKE_build_setting_name_build_libraries_s_length              15
   #define FAKE_build_setting_name_build_libraries_shared_s_length       22
   #define FAKE_build_setting_name_build_libraries_static_s_length       22
-  #define FAKE_build_setting_name_build_indexer_s_length                13
-  #define FAKE_build_setting_name_build_indexer_arguments_s_length      23
+  #define FAKE_build_setting_name_build_name_s_length                   10
   #define FAKE_build_setting_name_build_script_s_length                 12
   #define FAKE_build_setting_name_build_shared_s_length                 12
   #define FAKE_build_setting_name_build_sources_headers_s_length        21
@@ -348,7 +349,6 @@ extern "C" {
   #define FAKE_build_setting_name_path_standard_s_length                13
   #define FAKE_build_setting_name_process_post_s_length                 12
   #define FAKE_build_setting_name_process_pre_s_length                  11
-  #define FAKE_build_setting_name_project_name_s_length                 12
   #define FAKE_build_setting_name_search_exclusive_s_length             16
   #define FAKE_build_setting_name_search_shared_s_length                13
   #define FAKE_build_setting_name_search_static_s_length                13
@@ -364,12 +364,13 @@ extern "C" {
   #define FAKE_build_setting_name_version_target_s_length               14
 
   extern const f_string_static_t fake_build_setting_name_build_compiler_s;
+  extern const f_string_static_t fake_build_setting_name_build_indexer_s;
+  extern const f_string_static_t fake_build_setting_name_build_indexer_arguments_s;
   extern const f_string_static_t fake_build_setting_name_build_language_s;
   extern const f_string_static_t fake_build_setting_name_build_libraries_s;
   extern const f_string_static_t fake_build_setting_name_build_libraries_shared_s;
   extern const f_string_static_t fake_build_setting_name_build_libraries_static_s;
-  extern const f_string_static_t fake_build_setting_name_build_indexer_s;
-  extern const f_string_static_t fake_build_setting_name_build_indexer_arguments_s;
+  extern const f_string_static_t fake_build_setting_name_build_name_s;
   extern const f_string_static_t fake_build_setting_name_build_script_s;
   extern const f_string_static_t fake_build_setting_name_build_shared_s;
   extern const f_string_static_t fake_build_setting_name_build_sources_headers_s;
@@ -418,7 +419,6 @@ extern "C" {
   extern const f_string_static_t fake_build_setting_name_path_standard_s;
   extern const f_string_static_t fake_build_setting_name_process_post_s;
   extern const f_string_static_t fake_build_setting_name_process_pre_s;
-  extern const f_string_static_t fake_build_setting_name_project_name_s;
   extern const f_string_static_t fake_build_setting_name_search_exclusive_s;
   extern const f_string_static_t fake_build_setting_name_search_shared_s;
   extern const f_string_static_t fake_build_setting_name_search_static_s;

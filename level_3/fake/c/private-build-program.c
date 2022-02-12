@@ -80,14 +80,14 @@ extern "C" {
 
     if (F_status_is_error_not(*status)) {
       f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
-      parameter_file_name_path.used = main->path_build_programs_shared.used + data_build.setting.project_name.used;
+      parameter_file_name_path.used = main->path_build_programs_shared.used + data_build.setting.build_name.used;
 
       char parameter_file_name_path_string[parameter_file_name_path.used + 1];
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
       memcpy(parameter_file_name_path_string, main->path_build_programs_shared.string, main->path_build_programs_shared.used);
-      memcpy(parameter_file_name_path_string + main->path_build_programs_shared.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
+      memcpy(parameter_file_name_path_string + main->path_build_programs_shared.used, data_build.setting.build_name.string, data_build.setting.build_name.used);
 
       const f_string_static_t values[] = {
         fake_build_parameter_library_output_s,
@@ -103,17 +103,17 @@ extern "C" {
       } // for
     }
 
-    // If project-specific library sources exist, then the -lproject_name needs to be added to the arguments.
+    // If project-specific library sources exist, then the -lbuild_name needs to be added to the arguments.
     if (F_status_is_error_not(*status) && data_build.setting.build_sources_library.used) {
       f_string_static_t link_project_library = f_string_static_t_initialize;
-      link_project_library.used = fake_build_parameter_library_link_file_s.used + data_build.setting.project_name.used;
+      link_project_library.used = fake_build_parameter_library_link_file_s.used + data_build.setting.build_name.used;
 
       char link_project_library_string[link_project_library.used + 1];
       link_project_library.string = link_project_library_string;
       link_project_library_string[link_project_library.used] = 0;
 
       memcpy(link_project_library_string, fake_build_parameter_library_link_file_s.string, fake_build_parameter_library_link_file_s.used);
-      memcpy(link_project_library_string + fake_build_parameter_library_link_file_s.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
+      memcpy(link_project_library_string + fake_build_parameter_library_link_file_s.used, data_build.setting.build_name.string, data_build.setting.build_name.used);
 
       *status = fll_execute_arguments_add(link_project_library, &arguments);
     }
@@ -201,7 +201,7 @@ extern "C" {
 
     if (F_status_is_error_not(*status)) {
       f_string_static_t source_library = f_string_static_t_initialize;
-      source_library.used = main->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s.used + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_s.used;
+      source_library.used = main->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s.used + data_build.setting.build_name.used + fake_build_parameter_library_name_suffix_static_s.used;
 
       char source_library_string[source_library.used + 1];
       source_library.string = source_library_string;
@@ -216,22 +216,22 @@ extern "C" {
         memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_prefix_s.string, fake_build_parameter_library_name_prefix_s.used);
         source_library.used += fake_build_parameter_library_name_prefix_s.used;
 
-        memcpy(source_library_string + source_library.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
-        source_library.used += data_build.setting.project_name.used;
+        memcpy(source_library_string + source_library.used, data_build.setting.build_name.string, data_build.setting.build_name.used);
+        source_library.used += data_build.setting.build_name.used;
 
         memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_suffix_static_s.string, fake_build_parameter_library_name_suffix_static_s.used);
         source_library.used += fake_build_parameter_library_name_suffix_static_s.used;
       }
 
       f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
-      parameter_file_name_path.used = main->path_build_programs_static.used + data_build.setting.project_name.used;
+      parameter_file_name_path.used = main->path_build_programs_static.used + data_build.setting.build_name.used;
 
       char parameter_file_name_path_string[parameter_file_name_path.used + 1];
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
       memcpy(parameter_file_name_path_string, main->path_build_programs_static.string, main->path_build_programs_static.used);
-      memcpy(parameter_file_name_path_string + main->path_build_programs_static.used, data_build.setting.project_name.string, data_build.setting.project_name.used);
+      memcpy(parameter_file_name_path_string + main->path_build_programs_static.used, data_build.setting.build_name.string, data_build.setting.build_name.used);
 
       const f_string_static_t values[] = {
         source_library,

@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name f_serialize
+build_name f_serialize
 
 version_major 0
 version_minor 5

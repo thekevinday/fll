@@ -5,7 +5,7 @@
 # This should exaclty match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
 #
 
-project_name f_capability
+build_name f_capability
 
 version_major 0
 version_minor 5

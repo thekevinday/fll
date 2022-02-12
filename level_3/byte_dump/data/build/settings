@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name byte_dump
+build_name byte_dump
 
 version_major 0
 version_minor 5

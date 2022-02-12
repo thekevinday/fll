@@ -25,7 +25,7 @@ extern "C" {
     }
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%r%[Making project.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Making.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_status_t status = F_none;
@@ -647,6 +647,7 @@ extern "C" {
       const f_string_static_t dynamic_name[] = {
         fake_build_setting_name_build_compiler_s,
         fake_build_setting_name_build_indexer_s,
+        fake_build_setting_name_build_name_s,
         fake_build_setting_name_path_headers_s,
         fake_build_setting_name_path_language_s,
         fake_build_setting_name_path_library_script_s,
@@ -658,7 +659,6 @@ extern "C" {
         fake_build_setting_name_path_sources_s,
         fake_build_setting_name_process_post_s,
         fake_build_setting_name_process_pre_s,
-        fake_build_setting_name_project_name_s,
         fake_build_setting_name_version_major_s,
         fake_build_setting_name_version_micro_s,
         fake_build_setting_name_version_minor_s,
@@ -667,6 +667,7 @@ extern "C" {
       const f_string_dynamic_t dynamic_value[] = {
         data_make->setting_build.build_compiler,
         data_make->setting_build.build_indexer,
+        data_make->setting_build.build_name,
         data_make->setting_build.path_headers,
         data_make->setting_build.path_language,
         data_make->setting_build.path_library_script,
@@ -678,7 +679,6 @@ extern "C" {
         data_make->setting_build.path_sources,
         data_make->setting_build.process_post,
         data_make->setting_build.process_pre,
-        data_make->setting_build.project_name,
         data_make->setting_build.version_major,
         data_make->setting_build.version_micro,
         data_make->setting_build.version_minor,

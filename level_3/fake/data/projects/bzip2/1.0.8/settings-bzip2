@@ -9,7 +9,7 @@
 #   4) Copy this file (settings-bzip2) into the created directory path "data/build/".
 #   5) Use the featureless make build operation to build, such as: "fake build -s settings-bzip2".
 
-project_name bzip2
+build_name bzip2
 
 version_major 1
 version_minor 0

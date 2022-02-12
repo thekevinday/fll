@@ -17,6 +17,7 @@ Settings Specification:
     - build_libraries: Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
     - build_libraries_shared: Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
     - build_libraries_static: Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
+    - build_name: Must only contain characters allowed in a filename.
     - build_script: Must only one of: "yes" or "no".
     - build_shared: Must only one of: "yes" or "no".
     - build_sources_headers: Must only contain any number of valid filenames.
@@ -65,7 +66,6 @@ Settings Specification:
     - path_standard: Must only one of: "yes" or "no".
     - process_post: Must contain only a single valid filename.
     - process_pre: Must contain only a single valid filename.
-    - project_name: Must only contain characters allowed in a filename.
     - search_exclusive: Must only one of: "yes" or "no".
     - search_shared: Must only one of: "yes" or "no".
     - search_static: Must only one of: "yes" or "no".
