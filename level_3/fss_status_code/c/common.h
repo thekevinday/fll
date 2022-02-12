@@ -55,8 +55,8 @@ extern "C" {
   #define FSS_STATUS_CODE_program_name_s_length      15
   #define FSS_STATUS_CODE_program_name_long_s_length 15
 
-  const f_string_static_t fss_status_code_program_name_s;
-  const f_string_static_t fss_status_code_program_name_long_s;
+  extern const f_string_static_t fss_status_code_program_name_s;
+  extern const f_string_static_t fss_status_code_program_name_long_s;
 #endif // _di_fss_status_code_program_name_
 
 /**

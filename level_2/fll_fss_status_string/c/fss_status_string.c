@@ -16,11 +16,11 @@ extern "C" {
   #endif // _di_fll_fss_status_warning_
 
   #ifndef _di_fll_fss_status_success_
-    const f_string_static_t fll_fss_status_found_object_s = macro_f_string_static_t_initialize(FLL_fss_status_found_object_s, 0, FLL_fss_status_found_object_s_length);
     const f_string_static_t fll_fss_status_found_content_s = macro_f_string_static_t_initialize(FLL_fss_status_found_content_s, 0, FLL_fss_status_found_content_s_length);
-    const f_string_static_t fll_fss_status_found_object_not_s = macro_f_string_static_t_initialize(FLL_fss_status_found_object_not_s, 0, FLL_fss_status_found_object_not_s_length);
     const f_string_static_t fll_fss_status_found_content_not_s = macro_f_string_static_t_initialize(FLL_fss_status_found_content_not_s, 0, FLL_fss_status_found_content_not_s_length);
+    const f_string_static_t fll_fss_status_found_object_s = macro_f_string_static_t_initialize(FLL_fss_status_found_object_s, 0, FLL_fss_status_found_object_s_length);
     const f_string_static_t fll_fss_status_found_object_content_not_s = macro_f_string_static_t_initialize(FLL_fss_status_found_object_content_not_s, 0, FLL_fss_status_found_object_content_not_s_length);
+    const f_string_static_t fll_fss_status_found_object_not_s = macro_f_string_static_t_initialize(FLL_fss_status_found_object_not_s, 0, FLL_fss_status_found_object_not_s_length);
   #endif // _di_fll_fss_status_success_
 
   #ifndef _di_fll_fss_status_codes_

@@ -35,8 +35,8 @@ extern "C" {
     #define FLL_fss_status_format_s_length     12
     #define FLL_fss_status_format_eos_s_length 16
 
-    const f_string_static_t fll_fss_status_format_s;
-    const f_string_static_t fll_fss_status_format_eos_s;
+    extern const f_string_static_t fll_fss_status_format_s;
+    extern const f_string_static_t fll_fss_status_format_eos_s;
   #endif // _di_fll_fss_status_error_
 
   #ifndef _di_fll_fss_status_warning_
@@ -46,28 +46,28 @@ extern "C" {
     #define FLL_fss_status_accepted_invalid_s_length     22
     #define FLL_fss_status_accepted_invalid_eos_s_length 26
 
-    const f_string_static_t fll_fss_status_accepted_invalid_s;
-    const f_string_static_t fll_fss_status_accepted_invalid_eos_s;
+    extern const f_string_static_t fll_fss_status_accepted_invalid_s;
+    extern const f_string_static_t fll_fss_status_accepted_invalid_eos_s;
   #endif // _di_fll_fss_status_warning_
 
   #ifndef _di_fll_fss_status_success_
-    #define FLL_fss_status_found_object_s             "F_fss_found_object"
     #define FLL_fss_status_found_content_s            "F_fss_found_content"
-    #define FLL_fss_status_found_object_not_s         "F_fss_found_object_not"
     #define FLL_fss_status_found_content_not_s        "F_fss_found_content_not"
+    #define FLL_fss_status_found_object_s             "F_fss_found_object"
     #define FLL_fss_status_found_object_content_not_s "F_fss_found_object_content_not"
+    #define FLL_fss_status_found_object_not_s         "F_fss_found_object_not"
 
-    #define FLL_fss_status_found_object_s_length             18
     #define FLL_fss_status_found_content_s_length            19
-    #define FLL_fss_status_found_object_not_s_length         22
     #define FLL_fss_status_found_content_not_s_length        23
+    #define FLL_fss_status_found_object_s_length             18
     #define FLL_fss_status_found_object_content_not_s_length 30
+    #define FLL_fss_status_found_object_not_s_length         22
 
-    const f_string_static_t fll_fss_status_found_object_s;
-    const f_string_static_t fll_fss_status_found_content_s;
-    const f_string_static_t fll_fss_status_found_object_not_s;
-    const f_string_static_t fll_fss_status_found_content_not_s;
-    const f_string_static_t fll_fss_status_found_object_content_not_s;
+    extern const f_string_static_t fll_fss_status_found_content_s;
+    extern const f_string_static_t fll_fss_status_found_content_not_s;
+    extern const f_string_static_t fll_fss_status_found_object_s;
+    extern const f_string_static_t fll_fss_status_found_object_content_not_s;
+    extern const f_string_static_t fll_fss_status_found_object_not_s;
   #endif // _di_fll_fss_status_success_
 
   #ifndef _di_fll_fss_status_codes_
@@ -75,7 +75,7 @@ extern "C" {
 
     #define FLL_fss_status_found_comment_s_length 19
 
-    const f_string_static_t fll_fss_status_found_comment_s;
+    extern const f_string_static_t fll_fss_status_found_comment_s;
   #endif // _di_fll_fss_status_codes_
 
   #define FLL_fss_status_status_code_first_s "F_fss_status_code_first"
@@ -84,8 +84,8 @@ extern "C" {
   #define FLL_fss_status_status_code_first_s_length 23
   #define FLL_fss_status_status_code_last_s_length  21
 
-  const f_string_static_t fll_fss_status_status_code_first_s;
-  const f_string_static_t fll_fss_status_status_code_last_s;
+  extern const f_string_static_t fll_fss_status_status_code_first_s;
+  extern const f_string_static_t fll_fss_status_status_code_last_s;
 #endif // _di_fll_fss_status_string_
 
 /**

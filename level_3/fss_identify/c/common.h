@@ -42,7 +42,7 @@ extern "C" {
 
   #define FSS_IDENTIFY_program_version_s_length FSS_IDENTIFY_program_version_major_s_length + F_string_ascii_period_s_length + FSS_IDENTIFY_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_IDENTIFY_program_version_micro_s_length + FSS_IDENTIFY_program_version_nano_prefix_s_length + FSS_IDENTIFY_program_version_nano_s_length
 
-  const f_string_static_t fss_identify_program_version_s;
+  extern const f_string_static_t fss_identify_program_version_s;
 #endif // _di_fss_identify_program_version_
 
 /**
@@ -55,8 +55,8 @@ extern "C" {
   #define FSS_IDENTIFY_program_name_s_length      12
   #define FSS_IDENTIFY_program_name_long_s_length 12
 
-  const f_string_static_t fss_identify_program_name_s;
-  const f_string_static_t fss_identify_program_name_long_s;
+  extern const f_string_static_t fss_identify_program_name_s;
+  extern const f_string_static_t fss_identify_program_name_long_s;
 #endif // _di_fss_identify_program_name_
 
 /**
