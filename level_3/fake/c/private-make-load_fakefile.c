@@ -252,7 +252,7 @@ extern "C" {
       f_string_range_t *range_indexer = 0;
 
       data_make->setting_make.parameter.array[0].value.used = 1;
-      data_make->setting_make.load_build = F_true;
+      data_make->setting_make.load_build = F_false;
       data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
 
       if (settings.objects.used) {

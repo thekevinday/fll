@@ -1,7 +1,6 @@
 # fss-0005 iki-0002
 
 settings:
-  load_build yes
   fail exit
 
   compiler gcc
