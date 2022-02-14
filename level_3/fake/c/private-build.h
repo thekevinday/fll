@@ -88,7 +88,7 @@ extern "C" {
  *   The files to copy from source to destination.
  * @param file_stage
  *   The specific stage file path.
- * @param perserve
+ * @param perserve_offset
  *   When a positive number, this represents the amount of characters at the front of each file to ignore.
  *   Everything after that is preserved, and the directory is created if necessary.
  *
@@ -96,7 +96,7 @@ extern "C" {
  *   Set to 0 to disable.
  *
  *   Example: 'sources/c/level_0/fss.h' with a preseve of 10, would result in the path of 'level_0/fss.h' being preserved.
- *            Whereas a preserve of 0 would result in a path of 'fss.h' being used (the 'level_0/' directory is not preserved).
+ *            Whereas a perserve_offset of 0 would result in a path of 'fss.h' being used (the 'level_0/' directory is not preserved).
  * @param status
  *   The return status.
  *
@@ -106,7 +106,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_copy_
 
 /**

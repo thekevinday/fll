@@ -201,7 +201,7 @@ extern "C" {
     f_string_dynamics_t build_sources_object_static = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_static = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_headers = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_headers_preserve = f_string_dynamics_t_initialize;
+    f_string_dynamics_t preserve_path_headers = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_language = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_library_script = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_library_shared = f_string_dynamics_t_initialize;
@@ -291,7 +291,7 @@ extern "C" {
       fake_build_setting_name_modes_s,
       fake_build_setting_name_modes_default_s,
       fake_build_setting_name_path_headers_s,
-      fake_build_setting_name_path_headers_preserve_s,
+      fake_build_setting_name_preserve_path_headers_s,
       fake_build_setting_name_path_language_s,
       fake_build_setting_name_path_library_script_s,
       fake_build_setting_name_path_library_shared_s,
@@ -382,7 +382,7 @@ extern "C" {
       &setting->modes,
       &setting->modes_default,
       &path_headers,
-      &path_headers_preserve,
+      &preserve_path_headers,
       &path_language,
       &path_library_script,
       &path_library_shared,
@@ -661,7 +661,7 @@ extern "C" {
         fake_build_setting_name_build_sources_object_static_s,
         fake_build_setting_name_build_static_s,
         fake_build_setting_name_path_headers_s,
-        fake_build_setting_name_path_headers_preserve_s,
+        fake_build_setting_name_preserve_path_headers_s,
         fake_build_setting_name_path_language_s,
         fake_build_setting_name_path_library_script_s,
         fake_build_setting_name_path_library_shared_s,
@@ -704,7 +704,7 @@ extern "C" {
         &build_sources_object_static,
         &build_static,
         &path_headers,
-        &path_headers_preserve,
+        &preserve_path_headers,
         &path_language,
         &path_library_script,
         &path_library_shared,
@@ -747,7 +747,7 @@ extern "C" {
         0,                                           // build_sources_object_static
         &setting->build_static,                      // build_static
         0,                                           // path_headers
-        &setting->path_headers_preserve,             // path_headers_preserve
+        &setting->preserve_path_headers,             // preserve_path_headers
         0,                                           // path_language
         0,                                           // path_library_script
         0,                                           // path_library_shared
@@ -780,7 +780,7 @@ extern "C" {
         &setting->build_sources_object_static,       // build_sources_object_static
         0,                                           // build_static
         &setting->path_headers,                      // path_headers
-        0,                                           // path_headers_preserve
+        0,                                           // preserve_path_headers
         &setting->path_language,                     // path_language
         &setting->path_library_script,               // path_library_script
         &setting->path_library_shared,               // path_library_shared
@@ -823,7 +823,7 @@ extern "C" {
         f_string_empty_s,                            // build_sources_object_static
         f_string_empty_s,                            // build_static
         f_string_empty_s,                            // path_headers
-        f_string_empty_s,                            // path_headers_preserve
+        f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // path_language
         fake_path_part_script_s,                     // path_library_script
         fake_path_part_shared_s,                     // path_library_shared
@@ -872,7 +872,7 @@ extern "C" {
         0,                                           // build_sources_object_static
         0,                                           // build_static
         0,                                           // path_headers
-        0,                                           // path_headers_preserve
+        0,                                           // preserve_path_headers
         0,                                           // path_language
         0,                                           // path_library_script
         0,                                           // path_library_shared
@@ -915,7 +915,7 @@ extern "C" {
         0,                                           // build_sources_object_static
         0,                                           // build_static
         0,                                           // path_headers
-        0,                                           // path_headers_preserve
+        0,                                           // preserve_path_headers
         0,                                           // path_language
         0,                                           // path_library_script
         0,                                           // path_library_shared
@@ -958,7 +958,7 @@ extern "C" {
         f_string_empty_s,                            // build_sources_object_static
         f_string_empty_s,                            // build_static
         f_string_empty_s,                            // path_headers
-        f_string_empty_s,                            // path_headers_preserve
+        f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // path_language
         f_string_empty_s,                            // path_library_script
         f_string_empty_s,                            // path_library_shared
@@ -1002,7 +1002,7 @@ extern "C" {
         3,                                           // build_sources_object_static
         1,                                           // build_static
         2,                                           // path_headers
-        1,                                           // path_headers_preserve
+        1,                                           // preserve_path_headers
         2,                                           // path_language
         2,                                           // path_library_script
         2,                                           // path_library_shared
@@ -1267,7 +1267,7 @@ extern "C" {
     f_string_dynamics_resize(0, &build_sources_object_static);
     f_string_dynamics_resize(0, &build_static);
     f_string_dynamics_resize(0, &path_headers);
-    f_string_dynamics_resize(0, &path_headers_preserve);
+    f_string_dynamics_resize(0, &preserve_path_headers);
     f_string_dynamics_resize(0, &path_language);
     f_string_dynamics_resize(0, &path_library_script);
     f_string_dynamics_resize(0, &path_library_shared);

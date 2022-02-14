@@ -24,7 +24,7 @@ extern "C" {
     bool build_static;
 
     bool path_standard;
-    bool path_headers_preserve;
+    bool preserve_path_headers;
 
     bool search_exclusive;
     bool search_shared;
@@ -345,7 +345,7 @@ extern "C" {
   #define FAKE_build_setting_name_modes_s                        "modes"
   #define FAKE_build_setting_name_modes_default_s                "modes_default"
   #define FAKE_build_setting_name_path_headers_s                 "path_headers"
-  #define FAKE_build_setting_name_path_headers_preserve_s        "path_headers_preserve"
+  #define FAKE_build_setting_name_preserve_path_headers_s        "preserve_path_headers"
   #define FAKE_build_setting_name_path_language_s                "path_language"
   #define FAKE_build_setting_name_path_library_script_s          "path_library_script"
   #define FAKE_build_setting_name_path_library_shared_s          "path_library_shared"
@@ -440,7 +440,7 @@ extern "C" {
   #define FAKE_build_setting_name_modes_s_length                        5
   #define FAKE_build_setting_name_modes_default_s_length                13
   #define FAKE_build_setting_name_path_headers_s_length                 12
-  #define FAKE_build_setting_name_path_headers_preserve_s_length        21
+  #define FAKE_build_setting_name_preserve_path_headers_s_length        21
   #define FAKE_build_setting_name_path_language_s_length                13
   #define FAKE_build_setting_name_path_library_script_s_length          19
   #define FAKE_build_setting_name_path_library_shared_s_length          19
@@ -535,7 +535,7 @@ extern "C" {
   extern const f_string_static_t fake_build_setting_name_modes_s;
   extern const f_string_static_t fake_build_setting_name_modes_default_s;
   extern const f_string_static_t fake_build_setting_name_path_headers_s;
-  extern const f_string_static_t fake_build_setting_name_path_headers_preserve_s;
+  extern const f_string_static_t fake_build_setting_name_preserve_path_headers_s;
   extern const f_string_static_t fake_build_setting_name_path_language_s;
   extern const f_string_static_t fake_build_setting_name_path_library_script_s;
   extern const f_string_static_t fake_build_setting_name_path_library_shared_s;

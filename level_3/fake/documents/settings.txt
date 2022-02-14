@@ -343,13 +343,7 @@ Settings Documentation:
     A sub-path in which headers are to be installed under.
     For example, the FLL project might use the "level_0", "level_1", etc.. headers without requiring that structure within the source.
     A resulting build destination for a path_headers of "level_0" would be something like "build/includes/level_0/".
-    If "path_headers" is "level_0", "path_headers_preserve" is "yes", and "build_sources_headers" has "xxx/a.h yyy/zzz/b.h", then the headers would be at: "build/includes/level_0/xxx/a.h build/includes/level_0/yyy/zzz/b.h"
-
-  - path_headers_preserve\:
-    When this is "yes", then the relative directory structure in the source (as defined in "build_sources_headers") is preserved.
-    If the "build_sources_headers" has the header files "xxx/a.h yyy/zzz/b.h" and this is "yes", then the directories "xxx/" and "yyy/zzz/" are created and the files are stored within them.
-    If the "build_sources_headers" has the header files "xxx/a.h yyy/zzz/b.h" and this is "no", then the directories "xxx/" and "yyy/zzz/" are stripped before installing.
-    When this is "no" and the "build_sources_headers" has header files "xxx/a.h yyy/a.h", then one of the "a.h" files will be overwritten, depending on order they were supplied.
+    If "path_headers" is "level_0", "preserve_path_headers" is "yes", and "build_sources_headers" has "xxx/a.h yyy/zzz/b.h", then the headers would be at: "build/includes/level_0/xxx/a.h build/includes/level_0/yyy/zzz/b.h"
 
   - path_language\:
     A sub-path in which to find the source files for the currently defined language.
@@ -420,6 +414,12 @@ Settings Documentation:
     When the parameter -S/--sources is specified, such as "-S xxx", then when this is set to "yes" is used then the path would be "xxx/c/" and when this is set to "no" then the path would be "xxx/".
 
     This defaults to "yes".
+
+  - preserve_path_headers\:
+    When this is "yes", then the relative directory structure in the source (as defined in "build_sources_headers") is preserved.
+    If the "build_sources_headers" has the header files "xxx/a.h yyy/zzz/b.h" and this is "yes", then the directories "xxx/" and "yyy/zzz/" are created and the files are stored within them.
+    If the "build_sources_headers" has the header files "xxx/a.h yyy/zzz/b.h" and this is "no", then the directories "xxx/" and "yyy/zzz/" are stripped before installing.
+    When this is "no" and the "build_sources_headers" has header files "xxx/a.h yyy/a.h", then one of the "a.h" files will be overwritten, depending on order they were supplied.
 
   - process_post\:
     The filename (relative to the "data/build/" directory) of a script to execute after the "build" operation successfully completes.

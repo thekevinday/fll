@@ -52,7 +52,7 @@ build_shared yes
 build_static no
 
 path_headers fll
-path_headers_preserve yes
+preserve_path_headers yes
 path_library_script script
 path_library_shared shared
 path_library_static static

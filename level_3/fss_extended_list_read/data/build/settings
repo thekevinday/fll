@@ -51,7 +51,7 @@ build_shared yes
 build_static no
 
 path_headers program/fss_extended_list_read
-path_headers_preserve no
+preserve_path_headers no
 path_library_script script
 path_library_shared shared
 path_library_static static

@@ -69,7 +69,6 @@ Settings Specification:
     - modes: Any valid word character, '-', or '+'.
     - modes_default: May only be a single complete Content word defined in "modes" Object.
     - path_headers: Must be a single valid path.
-    - path_headers_preserve: Must only be one of "yes" or "no".
     - path_language: Must be a single valid path.
     - path_library_script: Must be a single valid path.
     - path_library_shared: Must be a single valid path.
@@ -83,6 +82,7 @@ Settings Specification:
     - path_sources: Must only be a valid directory path or not specified.
     - path_sources_object: Must only be a valid directory path or not specified.
     - path_standard: Must only one of: "yes" or "no".
+    - preserve_path_headers: Must only be one of "yes" or "no".
     - process_post: Must contain only a single valid filename.
     - process_pre: Must contain only a single valid filename.
     - search_exclusive: Must only one of: "yes" or "no".

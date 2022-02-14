@@ -344,7 +344,7 @@ extern "C" {
 #endif // _di_fake_build_arguments_standard_add_
 
 #ifndef _di_fake_build_copy_
-  void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) {
+  void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status) {
 
     if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return;
 
@@ -479,7 +479,7 @@ extern "C" {
           break;
         }
 
-        if (preserve && preserve < path_source.used) {
+        if (perserve_offset && perserve_offset < path_source.used) {
           *status = f_string_dynamic_append_nulless(destination, &destination_directory);
 
           if (F_status_is_error(*status)) {
@@ -488,8 +488,8 @@ extern "C" {
             break;
           }
 
-          buffer.string = path_source.string + preserve;
-          buffer.used = path_source.used - preserve;
+          buffer.string = path_source.string + perserve_offset;
+          buffer.used = path_source.used - perserve_offset;
 
           *status = f_file_name_directory(buffer, &destination_directory);
 
@@ -515,7 +515,7 @@ extern "C" {
             break;
           }
 
-          *status = f_string_append(path_source.string + preserve, path_source.used - preserve, &destination_file);
+          *status = f_string_append(path_source.string + perserve_offset, path_source.used - perserve_offset, &destination_file);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main->error, F_status_set_fine(*status), "f_string_append", F_true);
@@ -942,14 +942,14 @@ extern "C" {
 
         path_headers_string[path_headers.used] = 0;
 
-        fake_build_copy(main, mode, fake_build_header_files_s, path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_headers.used : 0, &status);
+        fake_build_copy(main, mode, fake_build_header_files_s, path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.preserve_path_headers ? path_sources.used : 0, &status);
 
         if (data_build.setting.build_shared) {
-          fake_build_copy(main, mode, fake_build_header_files_shared_s, path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_headers.used : 0, &status);
+          fake_build_copy(main, mode, fake_build_header_files_shared_s, path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.preserve_path_headers ? path_sources.used : 0, &status);
         }
 
         if (data_build.setting.build_static) {
-          fake_build_copy(main, mode, fake_build_header_files_static_s, path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_headers.used : 0, &status);
+          fake_build_copy(main, mode, fake_build_header_files_static_s, path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.preserve_path_headers ? path_sources.used : 0, &status);
         }
       }
 
