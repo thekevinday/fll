@@ -25,9 +25,18 @@ build_libraries-individual -lfl_control_group -lfl_environment -lf_account -lf_c
 build_libraries-individual_threadless -lfl_control_group -lfl_environment -lf_account -lf_capability -lf_control_group -lf_environment -lf_execute -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_type_array -lf_utf
 build_libraries_shared
 build_libraries_static
+build_objects_library
+build_objects_library_shared
+build_objects_library_static
+build_objects_program
+build_objects_program_shared
+build_objects_program_static
 build_sources_library execute.c private-execute.c
 build_sources_library_shared
 build_sources_library_static
+build_sources_object
+build_sources_object_shared
+build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
@@ -45,10 +54,14 @@ path_headers_preserve no
 path_library_script script
 path_library_shared shared
 path_library_static static
+path_object_script script
+path_object_shared shared
+path_object_static static
 path_program_script script
 path_program_shared shared
 path_program_static static
 path_sources
+path_sources_object
 path_standard yes
 
 search_exclusive yes
@@ -61,6 +74,9 @@ defines-individual_threadless -D_di_pthread_support_
 defines_library
 defines_library_shared
 defines_library_static
+defines_object
+defines_object_shared
+defines_object_static
 defines_program
 defines_program_shared
 defines_program_static
@@ -72,12 +88,9 @@ flags-individual -pthread
 flags_library -fPIC
 flags_library_shared
 flags_library_static
-flags_program -fPIE
-flags_program_shared
-flags_program_static
-flags_library -fPIC
-flags_library_shared
-flags_library_static
+flags_object -fPIC
+flags_object_shared
+flags_object_static
 flags_program -fPIE
 flags_program_shared
 flags_program_static

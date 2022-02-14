@@ -25,7 +25,7 @@ extern "C" {
     }
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%r%[Making.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Now making.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
     f_status_t status = F_none;
@@ -138,7 +138,7 @@ extern "C" {
 #endif // _di_fake_make_operate_
 
 #ifndef _di_fake_make_operate_expand_
-  void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_fss_content_t content, const f_fss_quotes_t quotes, f_string_dynamics_t *arguments, f_status_t *status) {
+  void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_fss_content_t content, const f_fss_quotes_t quotes, f_string_dynamics_t * const arguments, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return;
     if (!content.used) return;
@@ -569,7 +569,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_
 
 #ifndef _di_fake_make_operate_expand_build_
-  f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) {
+  f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) {
 
     f_status_t status = F_none;
     f_string_dynamic_t value = f_string_dynamic_t_initialize;
@@ -691,7 +691,7 @@ extern "C" {
         if (status == F_equal_to) {
           unmatched = F_false;
 
-          status = f_string_dynamic_append(dynamic_value[i], &value);
+          status = f_string_dynamic_append_nulless(dynamic_value[i], &value);
 
           break;
         }
@@ -833,7 +833,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_build_
 
 #ifndef _di_fake_make_operate_expand_context_
-  f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) {
+  f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) {
 
     f_status_t status = F_none;
     const f_string_static_t *context = 0;
@@ -899,7 +899,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_context_
 
 #ifndef _di_fake_make_operate_expand_environment_
-  f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) {
+  f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) {
 
     f_status_t status = F_none;
 
@@ -948,7 +948,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_environment_
 
 #ifndef _di_fake_make_operate_section_
-  int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t *section_stack, f_status_t *status) {
+  int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t * const section_stack, f_status_t * const status) {
 
     if (F_status_is_error(*status) || *status == F_child) return data_make->main->child;
 

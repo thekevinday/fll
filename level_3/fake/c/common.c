@@ -133,6 +133,9 @@ extern "C" {
     f_string_dynamic_resize(0, &main->path_build_libraries_shared);
     f_string_dynamic_resize(0, &main->path_build_libraries_static);
     f_string_dynamic_resize(0, &main->path_build_objects);
+    f_string_dynamic_resize(0, &main->path_build_objects_script);
+    f_string_dynamic_resize(0, &main->path_build_objects_shared);
+    f_string_dynamic_resize(0, &main->path_build_objects_static);
     f_string_dynamic_resize(0, &main->path_build_programs);
     f_string_dynamic_resize(0, &main->path_build_programs_script);
     f_string_dynamic_resize(0, &main->path_build_programs_shared);
@@ -155,6 +158,12 @@ extern "C" {
     f_string_dynamic_resize(0, &main->path_sources_c);
     f_string_dynamic_resize(0, &main->path_sources_cpp);
     f_string_dynamic_resize(0, &main->path_sources_script);
+
+    f_string_dynamic_resize(0, &main->path_sources_object);
+    f_string_dynamic_resize(0, &main->path_sources_object_bash);
+    f_string_dynamic_resize(0, &main->path_sources_object_c);
+    f_string_dynamic_resize(0, &main->path_sources_object_cpp);
+    f_string_dynamic_resize(0, &main->path_sources_object_script);
 
     f_string_dynamic_resize(0, &main->path_work);
     f_string_dynamic_resize(0, &main->path_work_includes);

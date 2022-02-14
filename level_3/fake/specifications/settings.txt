@@ -18,6 +18,12 @@ Settings Specification:
     - build_libraries_shared: Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
     - build_libraries_static: Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
     - build_name: Must only contain characters allowed in a filename.
+    - build_objects_library: Must only contain any number of valid object file names relative to the appropriate "path_object_*" path.
+    - build_objects_library_shared: Must only contain any number of valid object file names relative to the "path_object_shared" path.
+    - build_objects_library_static: Must only contain any number of valid object file names relative to the "path_object_static" path.
+    - build_objects_program: Must only contain any number of valid object file names relative to the appropriate "path_object_*" path.
+    - build_objects_program_shared: Must only contain any number of valid object file names relative to the "path_object_shared" path.
+    - build_objects_program_static: Must only contain any number of valid object file names relative to the "path_object_static" path.
     - build_script: Must only one of: "yes" or "no".
     - build_shared: Must only one of: "yes" or "no".
     - build_sources_headers: Must only contain any number of valid filenames.
@@ -26,16 +32,22 @@ Settings Specification:
     - build_sources_library: Must only contain any number of valid filenames.
     - build_sources_library_shared: Must only contain any number of valid filenames.
     - build_sources_library_static: Must only contain any number of valid filenames.
+    - build_sources_object: Must only contain any number of valid filenames.
+    - build_sources_object_shared: Must only contain any number of valid filenames.
+    - build_sources_object_static: Must only contain any number of valid filenames.
     - build_sources_program: Must only contain any number of valid filenames.
     - build_sources_program_shared: Must only contain any number of valid filenames.
     - build_sources_program_static: Must only contain any number of valid filenames.
     - build_sources_script: Must only contain any number of valid filenames.
     - build_sources_setting: Must only contain any number of valid filenames.
     - build_static: Must only one of: "yes" or "no".
-    - defines": Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    - defines: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     - defines_library: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     - defines_library_shared: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     - defines_library_static: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    - defines_object: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    - defines_object_shared: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
+    - defines_object_static: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     - defines_program: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     - defines_program_shared: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
     - defines_program_static: Must only contain any number of valid macro names supported by the compiler specified in "build_compiler".
@@ -46,6 +58,9 @@ Settings Specification:
     - flags_library: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     - flags_library_shared: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     - flags_library_static: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    - flags_object: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    - flags_object_shared: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    - flags_object_static: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     - flags_program: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     - flags_program_shared: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     - flags_program_static: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
@@ -59,10 +74,14 @@ Settings Specification:
     - path_library_script: Must be a single valid path.
     - path_library_shared: Must be a single valid path.
     - path_library_static: Must be a single valid path.
+    - path_object_script: Must be a single valid path.
+    - path_object_shared: Must be a single valid path.
+    - path_object_static: Must be a single valid path.
     - path_program_script: Must be a single valid path.
     - path_program_shared: Must be a single valid path.
     - path_program_static: Must be a single valid path.
     - path_sources: Must only be a valid directory path or not specified.
+    - path_sources_object: Must only be a valid directory path or not specified.
     - path_standard: Must only one of: "yes" or "no".
     - process_post: Must contain only a single valid filename.
     - process_pre: Must contain only a single valid filename.
@@ -72,10 +91,10 @@ Settings Specification:
     - version_file: Must only be one of: "major", "minor", "micro", or "nano".
     - version_major: Must only be a single value containing valid filename characters.
     - version_major_prefix: Must be zero or more valid filename characters.
-    - version_minor: Must only be a single value containing valid filename characters.
-    - version_minor_prefix: Must be zero or more valid filename characters.
     - version_micro: Must only be a single value containing valid filename characters.
     - version_micro_prefix: Must be zero or more valid filename characters.
+    - version_minor: Must only be a single value containing valid filename characters.
+    - version_minor_prefix: Must be zero or more valid filename characters.
     - version_nano: Must only be a single value containing valid filename characters.
     - version_nano_prefix: Must be zero or more valid filename characters.
     - version_target: Must only be one of: "major", "minor", "micro", or "nano".
@@ -84,12 +103,21 @@ Settings Specification:
     - build_libraries
     - build_libraries_shared
     - build_libraries_static
+    - build_objects_library
+    - build_objects_library_shared
+    - build_objects_library_static
+    - build_objects_program
+    - build_objects_program_shared
+    - build_objects_program_static
     - build_sources_headers
     - build_sources_headers_shared
     - build_sources_headers_static
     - build_sources_library
     - build_sources_library_shared
     - build_sources_library_static
+    - build_sources_object
+    - build_sources_object_shared
+    - build_sources_object_static
     - build_sources_program
     - build_sources_program_shared
     - build_sources_program_static
@@ -99,6 +127,9 @@ Settings Specification:
     - defines_library
     - defines_library_shared
     - defines_library_static
+    - defines_object
+    - defines_object_shared
+    - defines_object_static
     - defines_program
     - defines_program_shared
     - defines_program_static
@@ -109,6 +140,9 @@ Settings Specification:
     - flags_library
     - flags_library_shared
     - flags_library_static
+    - flags_object
+    - flags_object_shared
+    - flags_object_static
     - flags_program
     - flags_program_shared
     - flags_program_static

@@ -1176,10 +1176,10 @@ extern "C" {
         return status;
       }
 
-      status = f_string_dynamic_append(arguments.array[0], &data_make->setting_make.parameter.array[data_make->setting_make.parameter.used].name);
+      status = f_string_dynamic_append_nulless(arguments.array[0], &data_make->setting_make.parameter.array[data_make->setting_make.parameter.used].name);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
         return status;
       }
@@ -1208,10 +1208,10 @@ extern "C" {
 
       for (f_array_length_t j = 0; j < data_make->setting_make.parameter.array[i].value.size; ++j) {
 
-        status = f_string_dynamic_append(arguments.array[j + 1], &data_make->setting_make.parameter.array[i].value.array[j]);
+        status = f_string_dynamic_append_nulless(arguments.array[j + 1], &data_make->setting_make.parameter.array[i].value.array[j]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+          fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
           return status;
         }
@@ -1300,10 +1300,10 @@ extern "C" {
       // Copy the entire real path, including the trailing NULL.
       ++data_make->path_cache.used;
 
-      status = f_string_dynamic_append(data_make->path_cache, &data_make->path.stack.array[data_make->path.stack.used]);
+      status = f_string_dynamic_append_nulless(data_make->path_cache, &data_make->path.stack.array[data_make->path.stack.used]);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
         return status;
       }

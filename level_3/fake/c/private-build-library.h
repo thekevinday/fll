@@ -15,10 +15,15 @@ extern "C" {
 /**
  * Build the script libraries.
  *
+ * If there ever are scripting languages that have a concept of libraries, then this function is here to do the job.
+ * None of the built in languages support this so this function does nothing.
+ *
+ * One potential use of this function could be to construct a script from pieces, effectively building an "library".
+ *
  * @param main
  *   The main program data.
  * @param data_build
- *   All build related data.
+ *   The build data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -33,7 +38,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_library_script_
-  extern int fake_build_library_script(fake_main_t * const main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_build_library_script(fake_main_t * const main, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_library_script_
 
 /**
@@ -42,7 +47,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_build
- *   All build related data.
+ *   The build data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -57,7 +62,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_library_shared_
-  extern int fake_build_library_shared(fake_main_t * const main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_build_library_shared(fake_main_t * const main, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_library_shared_
 
 /**
@@ -66,7 +71,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_build
- *   All build related data.
+ *   The build data.
  * @param mode
  *   The file mode.
  * @param file_stage
@@ -81,7 +86,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_library_static_
-  extern int fake_build_library_static(fake_main_t * const main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_build_library_static(fake_main_t * const main, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_library_static_
 
 #ifdef __cplusplus

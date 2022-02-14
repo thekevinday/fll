@@ -974,7 +974,7 @@ extern "C" {
         precision = va_arg(*ap, int);
       }
 
-      // @fixme precision and with can be used togethor, see: "'%10.2f'".
+      // @fixme precision and width can be used together, see: "'%10.2f'".
       if (flag & F_print_format_flag_width_d) {
         conversion_data.width = width;
       }

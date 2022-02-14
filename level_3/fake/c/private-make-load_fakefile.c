@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_load_fakefile_
-  void fake_make_load_fakefile(fake_make_data_t * const data_make, f_status_t *status) {
+  void fake_make_load_fakefile(fake_make_data_t * const data_make, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return;
 
@@ -537,10 +537,10 @@ extern "C" {
           // Include the terminating NULL when copying.
           ++name_define.used;
 
-          status = f_string_dynamic_append(name_define, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
+          status = f_string_dynamic_append_nulless(name_define, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
             break;
           }

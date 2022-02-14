@@ -35,7 +35,7 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  */
 #ifndef _di_fake_execute_
-  extern int fake_execute(fake_main_t * const main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_execute(fake_main_t * const main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_execute_
 
 /**
@@ -56,7 +56,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_file_buffer_
-  extern f_status_t fake_file_buffer(fake_main_t * const main, const f_string_static_t path_file, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fake_file_buffer(fake_main_t * const main, const f_string_static_t path_file, f_string_dynamic_t * const buffer) F_attribute_visibility_internal_d;
 #endif // _di_fake_file_buffer_
 
 /**

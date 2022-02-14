@@ -39,7 +39,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_process_
-  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, const bool success, fake_state_process_t *state_process, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, const bool success, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_
 
 /**

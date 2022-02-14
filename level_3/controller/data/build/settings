@@ -28,6 +28,12 @@ build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_libraries_shared
 build_libraries_static
+build_objects_library
+build_objects_library_shared
+build_objects_library_static
+build_objects_program
+build_objects_program_shared
+build_objects_program_static
 build_sources_library controller.c common.c
 build_sources_library common/private-common.c common/private-cache.c common/private-control.c common/private-entry.c common/private-lock.c common/private-process.c common/private-rule.c common/private-setting.c common/private-task.c common/private-thread.c
 build_sources_library control/private-control.c control/private-control_print.c
@@ -40,6 +46,9 @@ build_sources_library lock/private-lock.c lock/private-lock_print.c
 build_sources_library thread/private-thread.c thread/private-thread_control.c thread/private-thread_entry.c thread/private-thread_process.c thread/private-thread_rule.c thread/private-thread_signal.c
 build_sources_library_shared
 build_sources_library_static
+build_sources_object
+build_sources_object_shared
+build_sources_object_static
 build_sources_program main.c
 build_sources_program_shared
 build_sources_program_static
@@ -57,10 +66,14 @@ path_headers_preserve no
 path_library_script script
 path_library_shared shared
 path_library_static static
+path_object_script script
+path_object_shared shared
+path_object_static static
 path_program_script script
 path_program_shared shared
 path_program_static static
 path_sources
+path_sources_object
 path_standard yes
 
 search_exclusive yes
@@ -73,6 +86,9 @@ defines-as_init -D_controller_as_init_
 defines_library
 defines_library_shared
 defines_library_static
+defines_object
+defines_object_shared
+defines_object_static
 defines_program
 defines_program_shared
 defines_program_static
@@ -83,6 +99,9 @@ flags -O2 -z now -g -fdiagnostics-color=always -pthread -Wno-logical-not-parenth
 flags_library -fPIC
 flags_library_shared
 flags_library_static
+flags_object -fPIC
+flags_object_shared
+flags_object_static
 flags_program -fPIE
 flags_program_shared
 flags_program_static

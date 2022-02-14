@@ -25,10 +25,19 @@ build_libraries-level
 build_libraries-level_threadless
 build_libraries_shared
 build_libraries_static
+build_objects_library
+build_objects_library_shared
+build_objects_library_static
+build_objects_program
+build_objects_program_shared
+build_objects_program_static
 build_sources_library account.c private-account.c capability.c color.c color-common.c console.c console-common.c control_group.c control_group-common.c conversion.c conversion-common.c private-conversion.c directory.c private-directory.c environment.c private-environment.c execute.c file.c file-common.c private-file.c fss.c private-fss.c fss-common.c fss_named.c fss_nest.c fss_set.c iki.c iki-common.c private-iki.c limit.c memory.c memory_structure.c private-memory.c path.c path-common.c private-path.c pipe.c print.c print_to.c print-common.c private-print.c private-print_to.c serialize.c serialize-common.c private-serialize.c signal.c socket.c status_string.c string.c string-common.c private-string.c string_dynamic.c string_map.c string_quantity.c string_range.c string_triple.c type_array.c private-type_array.c utf.c utf-common.c utf_dynamic.c utf_map.c utf_string.c utf_triple.c private-utf.c private-utf-is_unassigned.c private-utf_string.c
 build_sources_library-level thread.c private-thread.c
 build_sources_library_shared
 build_sources_library_static
+build_sources_object
+build_sources_object_shared
+build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
@@ -47,9 +56,15 @@ path_headers_preserve no
 path_library_script script
 path_library_shared shared
 path_library_static static
+path_object_script script
+path_object_shared shared
+path_object_static static
 path_program_script script
 path_program_shared shared
 path_program_static static
+path_sources
+path_sources_object
+path_standard yes
 
 search_exclusive yes
 search_shared yes
@@ -62,6 +77,9 @@ defines-level_threadless -D_di_pthread_support_
 defines_library
 defines_library_shared
 defines_library_static
+defines_object
+defines_object_shared
+defines_object_static
 defines_program
 defines_program_shared
 defines_program_static
@@ -73,6 +91,9 @@ flags-level -pthread
 flags_library -fPIC
 flags_library_shared
 flags_library_static
+flags_object -fPIC
+flags_object_shared
+flags_object_static
 flags_program -fPIE
 flags_program_shared
 flags_program_static

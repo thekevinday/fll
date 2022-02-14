@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_load_parameters_
-  void fake_make_load_parameters(fake_make_data_t * const data_make, f_status_t *status) {
+  void fake_make_load_parameters(fake_make_data_t * const data_make, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return;
 
@@ -210,22 +210,22 @@ extern "C" {
           }
 
           if (console[i]->type == f_console_type_normal_e) {
-            *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &destination[i]->array[destination[i]->used]);
+            *status = f_string_dynamic_append_nulless(f_console_symbol_short_enable_s, &destination[i]->array[destination[i]->used]);
           }
           else if (console[i]->type == f_console_type_inverse_e) {
-            *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &destination[i]->array[destination[i]->used]);
+            *status = f_string_dynamic_append_nulless(f_console_symbol_short_disable_s, &destination[i]->array[destination[i]->used]);
           }
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamic_append(parameter[i], &destination[i]->array[destination[i]->used]);
+            *status = f_string_dynamic_append_nulless(parameter[i], &destination[i]->array[destination[i]->used]);
           }
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamic_append(destination[i]->array[destination[i]->used], &destination_option[i]->array[destination_option[i]->used]);
+            *status = f_string_dynamic_append_nulless(destination[i]->array[destination[i]->used], &destination_option[i]->array[destination_option[i]->used]);
           }
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+            fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
             return;
           }
@@ -241,14 +241,14 @@ extern "C" {
             return;
           }
 
-          *status = f_string_dynamic_append(source[i]->array[j], &destination[i]->array[destination[i]->used]);
+          *status = f_string_dynamic_append_nulless(source[i]->array[j], &destination[i]->array[destination[i]->used]);
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamic_append(source[i]->array[j], &destination_value[i]->array[destination_value[i]->used]);
+            *status = f_string_dynamic_append_nulless(source[i]->array[j], &destination_value[i]->array[destination_value[i]->used]);
           }
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+            fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
             return;
           }
@@ -349,22 +349,22 @@ extern "C" {
         }
 
         if (console[i]->type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &destination[i]->array[destination[i]->used]);
+          *status = f_string_dynamic_append_nulless(f_console_symbol_short_enable_s, &destination[i]->array[destination[i]->used]);
         }
         else if (console[i]->type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &destination[i]->array[destination[i]->used]);
+          *status = f_string_dynamic_append_nulless(f_console_symbol_short_disable_s, &destination[i]->array[destination[i]->used]);
         }
 
         if (F_status_is_error_not(*status)) {
-          *status = f_string_dynamic_append(parameter[i], &destination[i]->array[destination[i]->used]);
+          *status = f_string_dynamic_append_nulless(parameter[i], &destination[i]->array[destination[i]->used]);
         }
 
         if (F_status_is_error_not(*status)) {
-          *status = f_string_dynamic_append(destination[i]->array[destination[i]->used], &destination_option[i]->array[destination_option[i]->used]);
+          *status = f_string_dynamic_append_nulless(destination[i]->array[destination[i]->used], &destination_option[i]->array[destination_option[i]->used]);
         }
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+          fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
           return;
         }
@@ -380,14 +380,14 @@ extern "C" {
           return;
         }
 
-        *status = f_string_dynamic_append(*source[i], &destination[i]->array[destination[i]->used]);
+        *status = f_string_dynamic_append_nulless(*source[i], &destination[i]->array[destination[i]->used]);
 
         if (F_status_is_error_not(*status)) {
-          *status = f_string_dynamic_append(*source[i], &destination_value[i]->array[destination_value[i]->used]);
+          *status = f_string_dynamic_append_nulless(*source[i], &destination_value[i]->array[destination_value[i]->used]);
         }
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+          fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
           return;
         }

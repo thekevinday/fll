@@ -33,6 +33,22 @@ extern "C" {
 #endif // _di_fake_build_strings_
 
 /**
+ * Build Types.
+ *
+ * fake_build_type_*:
+ *   - library: A library build type.
+ *   - object:  An object build type.
+ *   - program: A program build type.
+ */
+#ifndef _di_fake_build_types_
+  enum {
+    fake_build_type_library_e = 1,
+    fake_build_type_object_e,
+    fake_build_type_program_e,
+  };
+#endif // _di_fake_build_types_
+
+/**
  * Add the standard arguments for building a library/program.
  *
  * @param main
@@ -42,9 +58,8 @@ extern "C" {
  * @param is_shared
  *   Set to TRUE to designate that this is adding for a shared library/program.
  *   Set to FALSE to designate that this is adding for a static library/program.
- * @param is_library
- *   Set to TRUE to designate that this is adding for a library.
- *   Set to FALSE to designate that this is adding for a program.
+ * @param type
+ *   A build type from the fake_build_type_* enumeration.
  * @param arguments
  *   The arguments array to append to.
  * @param status
@@ -53,7 +68,7 @@ extern "C" {
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_arguments_standard_add_
-  extern void fake_build_arguments_standard_add(fake_main_t * const main, const fake_build_data_t data_build, const bool is_shared, const bool is_library, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_arguments_standard_add(fake_main_t * const main, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_arguments_standard_add_
 
 /**
@@ -100,7 +115,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_build
- *   All build related main.
+ *   The build data.
  * @param process_script
  *   The setting_data file name fo the appropriate process script.
  *   This is expected to be either setting.process_pre or setting.process_post.
@@ -116,7 +131,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern int fake_build_execute_process_script(fake_main_t * const main, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_build_execute_process_script(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_execute_process_script_
 
 /**
@@ -139,6 +154,32 @@ extern "C" {
 #endif // _di_fake_build_get_file_name_without_extension_
 
 /**
+ * Add the pre-compiled objects to the execute arguments array (such as "build_objects_library").
+ *
+ * @param main
+ *   The main program data.
+ * @param data_build
+ *   The build data.
+ * @param path
+ *   The sub-path to find the object files within.
+ * @param generic
+ *   The generic sources to add.
+ * @param specific
+ *   The specific sources to add.
+ * @param arguments
+ *   The execute arguments array being updated.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_objects_add_
+  extern f_status_t fake_build_objects_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+#endif // _di_fake_build_objects_add_
+
+
+/**
  * Execute the build operation.
  *
  * @param setting_file
@@ -155,6 +196,52 @@ extern "C" {
 #ifndef _di_fake_build_operate_
   extern f_status_t fake_build_operate(const f_string_static_t setting_file, fake_main_t *main) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_operate_
+
+/**
+ * Add the sources to the execute arguments array.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_build
+ *   The build data.
+ * @param generic
+ *   The generic sources to add.
+ * @param specific
+ *   The specific sources to add.
+ * @param arguments
+ *   The execute arguments array being updated.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_sources_add_
+  extern f_status_t fake_build_sources_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+#endif // _di_fake_build_sources_add_
+
+/**
+ * Add the sources object to the execute arguments array.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_build
+ *   The build data.
+ * @param generic
+ *   The generic sources to add.
+ * @param specific
+ *   The specific sources to add.
+ * @param arguments
+ *   The execute arguments array being updated.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_build_sources_object_add_
+  extern f_status_t fake_build_sources_object_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+#endif // _di_fake_build_sources_object_add_
 
 /**
  * Touch the given build stage file, but only if there are no current errors in status.

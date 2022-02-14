@@ -27,14 +27,9 @@ build_libraries_static
 build_sources_library account.c private-account.c ../../tests/unit/c/mock-account.c
 build_sources_library_shared
 build_sources_library_static
-build_sources_program
-build_sources_program_shared
-build_sources_program_static
 build_sources_headers account.h account-common.h
 build_sources_headers_shared
 build_sources_headers_static
-build_sources_script
-build_sources_setting
 build_script yes
 build_shared yes
 build_static no
@@ -44,10 +39,6 @@ path_headers_preserve no
 path_library_script script
 path_library_shared shared
 path_library_static static
-path_program_script script
-path_program_shared shared
-path_program_static static
-path_sources
 path_standard yes
 
 search_exclusive yes
@@ -58,9 +49,6 @@ defines
 defines_library
 defines_library_shared
 defines_library_static
-defines_program
-defines_program_shared
-defines_program_static
 defines_static
 defines_shared
 
@@ -68,9 +56,6 @@ flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno
 flags_library -fPIC
 flags_library_shared
 flags_library_static
-flags_program -fPIE
-flags_program_shared
-flags_program_static
 flags_shared
 flags_static
 

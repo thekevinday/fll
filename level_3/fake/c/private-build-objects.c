@@ -11,18 +11,29 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_build_objects_static_
-  int fake_build_objects_static(fake_main_t * const main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+  int fake_build_objects_static(fake_main_t * const main, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t * const status) {
 
     if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return main->child;
-    if (!data_build.setting.build_sources_library.used) return 0;
+    if (!data_build->setting.build_sources_library.used) return 0;
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%r%[Compiling static objects.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Compiling objects for static library.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
+    }
+
+    f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
+
+    *status = fake_build_objects_add(main, data_build, &main->path_build_objects_static, &data_build->setting.build_objects_library, &data_build->setting.build_objects_library_static, &arguments);
+
+    if (F_status_is_error(*status)) {
+      fll_error_print(main->error, F_status_set_fine(*status), "fake_build_objects_add", F_true);
+
+      f_string_dynamics_resize(0, &arguments);
+
+      return 0;
     }
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_path = f_string_dynamic_t_initialize;
-    f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
     f_string_static_t destination = f_string_static_t_initialize;
     f_string_static_t source = f_string_static_t_initialize;
 
@@ -30,20 +41,20 @@ extern "C" {
 
     int result = main->child;
 
-    if (data_build.setting.path_standard) {
+    if (data_build->setting.path_standard) {
       path_sources = &main->path_sources_c;
 
-      if (data_build.setting.build_language == fake_build_language_type_cpp_e) {
+      if (data_build->setting.build_language == fake_build_language_type_cpp_e) {
         path_sources = &main->path_sources_cpp;
       }
     }
     else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
-      path_sources = &data_build.setting.path_sources;
+      path_sources = &data_build->setting.path_sources;
     }
 
     const f_string_dynamics_t *sources[2] = {
-      &data_build.setting.build_sources_library,
-      &data_build.setting.build_sources_library_static,
+      &data_build->setting.build_sources_library,
+      &data_build->setting.build_sources_library_static,
     };
 
     f_array_length_t i = 0;
@@ -192,7 +203,7 @@ extern "C" {
           if (F_status_is_error(*status)) break;
         } // for
 
-        fake_build_arguments_standard_add(main, data_build, F_false, F_true, &arguments, status);
+        fake_build_arguments_standard_add(main, data_build, F_false, fake_build_type_library_e, &arguments, status);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
@@ -200,7 +211,7 @@ extern "C" {
           break;
         }
 
-        result = fake_execute(main, data_build.environment, data_build.setting.build_compiler, arguments, status);
+        result = fake_execute(main, data_build->environment, data_build->setting.build_compiler, arguments, status);
 
         macro_f_string_dynamics_t_delete_simple(arguments);
 

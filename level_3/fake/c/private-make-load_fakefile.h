@@ -31,7 +31,7 @@ extern "C" {
  * @see fake_build_load_setting()
  */
 #ifndef _di_fake_make_load_fakefile_
-  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_
 
 /**

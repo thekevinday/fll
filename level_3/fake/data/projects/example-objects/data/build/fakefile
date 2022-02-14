@@ -1,0 +1,11 @@
+# fss-0005 iki-0002
+#
+# This is an example using objects.
+# This file builds all of the other parts together.
+
+main:
+  build settings-f
+  build settings-a
+  build settings-k
+  build settings-e
+  build settings

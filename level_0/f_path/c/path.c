@@ -153,7 +153,7 @@ extern "C" {
       directory->string[directory->used++] = f_path_separator_s.string[0];
     }
 
-    directory->string[directory->used++] = 0;
+    directory->string[directory->used] = 0;
 
     return F_none;
   }

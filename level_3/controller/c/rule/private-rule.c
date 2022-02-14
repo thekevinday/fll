@@ -5752,6 +5752,7 @@ extern "C" {
                   }
                 }
                 else {
+
                   // @fixme change this to handle UTF-8 characters (cannot use f_print_character_safely() as it is not UTF-8 safe as-is).
                   f_print_character_safely(parameter->string[k], main->output.to.stream);
                 }

@@ -32,7 +32,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_
-  extern void fake_build_load_setting(fake_main_t * const main, const f_string_static_t setting_file, fake_build_setting_t *setting, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_setting(fake_main_t * const main, const f_string_static_t setting_file, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_setting_
 
 /**
@@ -56,7 +56,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_defaults_
-  extern void fake_build_load_setting_defaults(fake_main_t * const main, fake_build_setting_t *setting, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_setting_defaults(fake_main_t * const main, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_setting_defaults_
 
 /**
@@ -84,10 +84,20 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *   Errors (with error bit) from: f_path_directory_cleanup().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: fll_fss_snatch_apart().
+ *
+ * @see f_path_directory_cleanup()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_terminate_after()
+ * @see fll_fss_snatch_apart()
  */
 #ifndef _di_fake_build_load_setting_process_
-  extern void fake_build_load_setting_process(fake_main_t * const main, const bool checks, const f_string_static_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_setting_process(fake_main_t * const main, const bool checks, const f_string_static_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_setting_process_
 
 /**
@@ -96,7 +106,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param data_build
- *   All build related data.
+ *   The build data.
  * @param environment
  *   The environment data.
  * @param status
@@ -108,7 +118,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_environment_
-  extern void fake_build_load_environment(fake_main_t * const main, const fake_build_data_t data_build, f_string_maps_t *environment, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_environment(fake_main_t * const main, fake_build_data_t * const data_build, f_string_maps_t * const environment, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_environment_
 
 /**
@@ -129,7 +139,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_stage_
-  extern void fake_build_load_stage(fake_main_t * const main, const f_string_static_t settings_file, fake_build_stage_t *stage, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_stage(fake_main_t * const main, const f_string_static_t settings_file, fake_build_stage_t * const stage, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_stage_
 
 #ifdef __cplusplus

@@ -11,32 +11,25 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_build_skeleton_
-  void fake_build_skeleton(fake_main_t * const main, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+  void fake_build_skeleton(fake_main_t * const main, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t * const status) {
 
     if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return;
 
     f_string_static_t path_headers = f_string_static_t_initialize;
-    f_array_length_t directory_headers_length = main->path_build_includes.used + data_build.setting.path_headers.used;
+    path_headers.used = main->path_build_includes.used + data_build->setting.path_headers.used;
 
-    char directory_headers[directory_headers_length + 1];
+    char path_headers_string[path_headers.used + 1];
+    path_headers.string = path_headers_string;
 
-    if (data_build.setting.path_headers.used) {
-      memcpy(directory_headers, main->path_build_includes.string, main->path_build_includes.used);
-      memcpy(directory_headers + main->path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
-
-      directory_headers[directory_headers_length] = 0;
-
-      path_headers.string = directory_headers;
-      path_headers.used = directory_headers_length;
-      path_headers.size = directory_headers_length + 1;
+    if (data_build->setting.path_headers.used) {
+      memcpy(path_headers_string, main->path_build_includes.string, main->path_build_includes.used);
+      memcpy(path_headers_string + main->path_build_includes.used, data_build->setting.path_headers.string, data_build->setting.path_headers.used);
     }
     else {
-      directory_headers[0] = 0;
-
-      path_headers.string = directory_headers;
       path_headers.used = 0;
-      path_headers.size = directory_headers_length + 1;
     }
+
+    path_headers_string[path_headers.used] = 0;
 
     const f_string_static_t *directorys[] = {
       &main->path_build,
@@ -47,6 +40,9 @@ extern "C" {
       &main->path_build_libraries_shared,
       &main->path_build_libraries_static,
       &main->path_build_objects,
+      &main->path_build_objects_script,
+      &main->path_build_objects_shared,
+      &main->path_build_objects_static,
       &main->path_build_programs,
       &main->path_build_programs_script,
       &main->path_build_programs_shared,
@@ -60,11 +56,14 @@ extern "C" {
       fll_print_format("%r%[Creating base build directories.%]%r", main->output.to.stream, f_string_eol_s, main->context.set.important, main->context.set.important, f_string_eol_s);
     }
 
-    for (uint8_t i = 0; i < 15; ++i) {
+    bool created = F_false;
+
+    for (uint8_t i = 0; i < 18; ++i) {
 
       if (!directorys[i]->used) continue;
 
-      // @todo implement this in a common function and use across project for creating parent directories.
+      created = F_false;
+
       for (f_array_length_t j = 0; j < directorys[i]->used; ++j) {
 
         if (directorys[i]->string[j] != f_path_separator_s.string[0]) continue;
@@ -81,6 +80,8 @@ extern "C" {
 
         if (*status == F_file_found_not) {
           *status = f_directory_create(*directorys[i], mode);
+
+          created = F_true;
         }
 
         directorys[i]->string[j] = f_path_separator_s.string[0];
@@ -88,22 +89,32 @@ extern "C" {
         if (F_status_is_error(*status)) break;
       } // for
 
-      if (F_status_is_fine(*status)) {
-        *status = f_directory_create(*directorys[i], mode);
+      if (F_status_is_fine(*status) && directorys[i]->string[directorys[i]->used - 1] != f_path_separator_s.string[0]) {
+        *status = f_directory_exists(*directorys[i]);
+
+        if (F_status_is_error_not(*status)) {
+          if (*status == F_false) {
+            *status = f_directory_create(*directorys[i], mode);
+
+            created = F_true;
+          }
+        }
       }
 
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
           *status = F_none;
+
           continue;
         }
 
         fll_error_file_print(main->error, F_status_set_fine(*status), "f_directory_create", F_true, *directorys[i], f_file_operation_create_s, fll_error_file_type_directory_e);
+
         return;
       }
 
-      if (main->error.verbosity == f_console_verbosity_verbose_e) {
-        fll_print_format("Created directory '%Q'.%r", main->output.to.stream, directorys[i], f_string_eol_s);
+      if (created && main->error.verbosity == f_console_verbosity_verbose_e) {
+        fll_print_format("Created directory '%Q'.%r", main->output.to.stream, *directorys[i], f_string_eol_s);
       }
     } // for
 

@@ -1,0 +1,22 @@
+# fss-0001
+#
+# This is an example using objects.
+
+build_name example-objects
+
+version_major 0
+version_minor 0
+version_micro 1
+version_file micro
+version_target major
+
+build_libraries -lc
+build_objects_program f.o a.o k.o e.o
+build_sources_program fake.c
+build_script no
+
+path_sources sources
+path_standard no
+
+flags -z now -g -fdiagnostics-color=always
+flags_object_shared -fPIC

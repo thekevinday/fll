@@ -4,6 +4,7 @@
 #include "private-build.h"
 #include "private-build-library.h"
 #include "private-build-load.h"
+#include "private-build-object.h"
 #include "private-build-objects.h"
 #include "private-build-program.h"
 #include "private-build-skeleton.h"
@@ -23,44 +24,46 @@ extern "C" {
 #endif // _di_fake_build_strings_
 
 #ifndef _di_fake_build_arguments_standard_add_
-  void fake_build_arguments_standard_add(fake_main_t * const main, const fake_build_data_t data_build, const bool is_shared, const bool is_library, f_string_dynamics_t *arguments, f_status_t *status) {
+  void fake_build_arguments_standard_add(fake_main_t * const main, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments, f_status_t *status) {
 
     if (F_status_is_error(*status)) return;
 
-    f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_s.used + main->path_build_libraries_shared.used;
+    {
+      f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_s.used + main->path_build_libraries_shared.used;
 
-    char build_libraries[build_libraries_length + 1];
+      char build_libraries[build_libraries_length + 1];
 
-    memcpy(build_libraries, fake_build_parameter_library_link_path_s.string, fake_build_parameter_library_link_path_s.used);
+      memcpy(build_libraries, fake_build_parameter_library_link_path_s.string, fake_build_parameter_library_link_path_s.used);
 
-    if (is_shared) {
-      memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, main->path_build_libraries_shared.string, main->path_build_libraries_shared.used);
+      if (is_shared) {
+        memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, main->path_build_libraries_shared.string, main->path_build_libraries_shared.used);
+      }
+      else {
+        memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, main->path_build_libraries_static.string, main->path_build_libraries_static.used);
+      }
+
+      build_libraries[build_libraries_length] = 0;
+
+      f_array_length_t build_includes_length = fake_build_parameter_library_include_s.used + main->path_build_includes.used;
+
+      char build_includes[build_includes_length + 1];
+
+      memcpy(build_includes, fake_build_parameter_library_include_s.string, fake_build_parameter_library_include_s.used);
+      memcpy(build_includes + fake_build_parameter_library_include_s.used, main->path_build_includes.string, main->path_build_includes.used);
+
+      const f_string_static_t values[] = {
+        macro_f_string_static_t_initialize(build_libraries, 0, build_libraries_length),
+        macro_f_string_static_t_initialize(build_includes, 0, build_includes_length),
+      };
+
+      for (uint8_t i = 0; i < 2; ++i) {
+
+        if (!values[i].used) continue;
+
+        *status = fll_execute_arguments_add(values[i], arguments);
+        if (F_status_is_error(*status)) break;
+      } // for
     }
-    else {
-      memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, main->path_build_libraries_static.string, main->path_build_libraries_static.used);
-    }
-
-    build_libraries[build_libraries_length] = 0;
-
-    f_array_length_t build_includes_length = fake_build_parameter_library_include_s.used + main->path_build_includes.used;
-
-    char build_includes[build_includes_length + 1];
-
-    memcpy(build_includes, fake_build_parameter_library_include_s.string, fake_build_parameter_library_include_s.used);
-    memcpy(build_includes + fake_build_parameter_library_include_s.used, main->path_build_includes.string, main->path_build_includes.used);
-
-    const f_string_static_t values[] = {
-      macro_f_string_static_t_initialize(build_libraries, 0, build_libraries_length),
-      macro_f_string_static_t_initialize(build_includes, 0, build_includes_length),
-    };
-
-    for (uint8_t i = 0; i < 2; ++i) {
-
-      if (!values[i].used) continue;
-
-      *status = fll_execute_arguments_add(values[i], arguments);
-      if (F_status_is_error(*status)) break;
-    } // for
 
     if (main->path_work.used && F_status_is_error_not(*status)) {
       f_string_static_t buffer = f_string_static_t_initialize;
@@ -78,7 +81,7 @@ extern "C" {
         *status = fll_execute_arguments_add(buffer, arguments);
       }
 
-      if (data_build.setting.search_shared && (is_shared || !data_build.setting.search_exclusive) && F_status_is_error_not(*status)) {
+      if (data_build->setting.search_shared && (is_shared || !data_build->setting.search_exclusive) && F_status_is_error_not(*status)) {
         buffer.used = fake_build_parameter_library_link_path_s.used + main->path_work_libraries_shared.used;
 
         char buffer_string[buffer.used + 1];
@@ -91,7 +94,7 @@ extern "C" {
         *status = fll_execute_arguments_add(buffer, arguments);
       }
 
-      if (data_build.setting.search_static && (!is_shared || !data_build.setting.search_exclusive) && F_status_is_error_not(*status)) {
+      if (data_build->setting.search_static && (!is_shared || !data_build->setting.search_exclusive) && F_status_is_error_not(*status)) {
         buffer.used = fake_build_parameter_library_link_path_s.used + main->path_work_libraries_static.used;
 
         char buffer_string[buffer.used + 1];
@@ -107,176 +110,226 @@ extern "C" {
 
     f_array_length_t i = 0;
 
-    for (i = 0; i < data_build.setting.build_libraries.used && F_status_is_error_not(*status); ++i) {
+    for (i = 0; i < data_build->setting.build_libraries.used && F_status_is_error_not(*status); ++i) {
 
-      if (!data_build.setting.build_libraries.array[i].used) continue;
+      if (!data_build->setting.build_libraries.array[i].used) continue;
 
-      *status = fll_execute_arguments_add(data_build.setting.build_libraries.array[i], arguments);
+      *status = fll_execute_arguments_add(data_build->setting.build_libraries.array[i], arguments);
     } // for
 
     if (is_shared) {
-      for (i = 0; i < data_build.setting.build_libraries_shared.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build->setting.build_libraries_shared.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.build_libraries_shared.array[i].used) continue;
+        if (!data_build->setting.build_libraries_shared.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.build_libraries_shared.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.build_libraries_shared.array[i], arguments);
       } // for
     }
     else {
-      for (i = 0; i < data_build.setting.build_libraries_static.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build->setting.build_libraries_static.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.build_libraries_static.array[i].used) continue;
+        if (!data_build->setting.build_libraries_static.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.build_libraries_static.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.build_libraries_static.array[i], arguments);
       } // for
     }
 
-    for (i = 0; i < data_build.setting.flags.used && F_status_is_error_not(*status); ++i) {
+    for (i = 0; i < data_build->setting.flags.used && F_status_is_error_not(*status); ++i) {
 
-      if (!data_build.setting.flags.array[i].used) continue;
+      if (!data_build->setting.flags.array[i].used) continue;
 
-      *status = fll_execute_arguments_add(data_build.setting.flags.array[i], arguments);
+      *status = fll_execute_arguments_add(data_build->setting.flags.array[i], arguments);
     } // for
 
     if (is_shared) {
-      for (i = 0; i < data_build.setting.flags_shared.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build->setting.flags_shared.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.flags_shared.array[i].used) continue;
+        if (!data_build->setting.flags_shared.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.flags_shared.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.flags_shared.array[i], arguments);
       } // for
     }
     else {
-      for (i = 0; i < data_build.setting.flags_static.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build->setting.flags_static.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.flags_static.array[i].used) continue;
+        if (!data_build->setting.flags_static.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.flags_static.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.flags_static.array[i], arguments);
       } // for
     }
 
-    if (is_library) {
-      for (i = 0; i < data_build.setting.flags_library.used && F_status_is_error_not(*status); ++i) {
+    if (type == fake_build_type_library_e) {
+      for (i = 0; i < data_build->setting.flags_library.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.flags_library.array[i].used) continue;
+        if (!data_build->setting.flags_library.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.flags_library.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.flags_library.array[i], arguments);
       } // for
 
       if (is_shared) {
-        for (i = 0; i < data_build.setting.flags_library_shared.used && F_status_is_error_not(*status); ++i) {
+        for (i = 0; i < data_build->setting.flags_library_shared.used && F_status_is_error_not(*status); ++i) {
 
-          if (!data_build.setting.flags_library_shared.array[i].used) continue;
+          if (!data_build->setting.flags_library_shared.array[i].used) continue;
 
-          *status = fll_execute_arguments_add(data_build.setting.flags_library_shared.array[i], arguments);
+          *status = fll_execute_arguments_add(data_build->setting.flags_library_shared.array[i], arguments);
         } // for
       }
       else {
-        for (i = 0; i < data_build.setting.flags_library_static.used && F_status_is_error_not(*status); ++i) {
+        for (i = 0; i < data_build->setting.flags_library_static.used && F_status_is_error_not(*status); ++i) {
 
-          if (!data_build.setting.flags_library_static.array[i].used) continue;
+          if (!data_build->setting.flags_library_static.array[i].used) continue;
 
-          *status = fll_execute_arguments_add(data_build.setting.flags_library_static.array[i], arguments);
+          *status = fll_execute_arguments_add(data_build->setting.flags_library_static.array[i], arguments);
+        } // for
+      }
+    }
+    else if (type == fake_build_type_object_e) {
+      for (i = 0; i < data_build->setting.flags_object.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build->setting.flags_object.array[i].used) continue;
+
+        *status = fll_execute_arguments_add(data_build->setting.flags_object.array[i], arguments);
+      } // for
+
+      if (is_shared) {
+        for (i = 0; i < data_build->setting.flags_object_shared.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build->setting.flags_object_shared.array[i].used) continue;
+
+          *status = fll_execute_arguments_add(data_build->setting.flags_object_shared.array[i], arguments);
+        } // for
+      }
+      else {
+        for (i = 0; i < data_build->setting.flags_object_static.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build->setting.flags_object_static.array[i].used) continue;
+
+          *status = fll_execute_arguments_add(data_build->setting.flags_object_static.array[i], arguments);
         } // for
       }
     }
     else {
-      for (i = 0; i < data_build.setting.flags_program.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build->setting.flags_program.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.flags_program.array[i].used) continue;
+        if (!data_build->setting.flags_program.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.flags_program.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.flags_program.array[i], arguments);
       } // for
 
       if (is_shared) {
-        for (i = 0; i < data_build.setting.flags_program_shared.used && F_status_is_error_not(*status); ++i) {
+        for (i = 0; i < data_build->setting.flags_program_shared.used && F_status_is_error_not(*status); ++i) {
 
-          if (!data_build.setting.flags_program_shared.array[i].used) continue;
+          if (!data_build->setting.flags_program_shared.array[i].used) continue;
 
-          *status = fll_execute_arguments_add(data_build.setting.flags_program_shared.array[i], arguments);
+          *status = fll_execute_arguments_add(data_build->setting.flags_program_shared.array[i], arguments);
         } // for
       }
       else {
-        for (i = 0; i < data_build.setting.flags_program_static.used && F_status_is_error_not(*status); ++i) {
+        for (i = 0; i < data_build->setting.flags_program_static.used && F_status_is_error_not(*status); ++i) {
 
-          if (!data_build.setting.flags_program_static.array[i].used) continue;
+          if (!data_build->setting.flags_program_static.array[i].used) continue;
 
-          *status = fll_execute_arguments_add(data_build.setting.flags_program_static.array[i], arguments);
+          *status = fll_execute_arguments_add(data_build->setting.flags_program_static.array[i], arguments);
         } // for
       }
     }
 
-    for (i = 0; i < data_build.setting.defines.used && F_status_is_error_not(*status); ++i) {
+    for (i = 0; i < data_build->setting.defines.used && F_status_is_error_not(*status); ++i) {
 
-      if (!data_build.setting.defines.array[i].used) continue;
+      if (!data_build->setting.defines.array[i].used) continue;
 
-      *status = fll_execute_arguments_add(data_build.setting.defines.array[i], arguments);
+      *status = fll_execute_arguments_add(data_build->setting.defines.array[i], arguments);
     } // for
 
     if (is_shared) {
-      for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build->setting.defines_shared.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.defines_shared.array[i].used) continue;
+        if (!data_build->setting.defines_shared.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.defines_shared.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.defines_shared.array[i], arguments);
       } // for
     }
     else {
-      for (i = 0; i < data_build.setting.defines_static.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build->setting.defines_static.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.defines_static.array[i].used) continue;
+        if (!data_build->setting.defines_static.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.defines_static.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.defines_static.array[i], arguments);
       } // for
     }
 
-    if (is_library) {
-      for (i = 0; i < data_build.setting.defines_library.used && F_status_is_error_not(*status); ++i) {
+    if (type == fake_build_type_library_e) {
+      for (i = 0; i < data_build->setting.defines_library.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.defines_library.array[i].used) continue;
+        if (!data_build->setting.defines_library.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.defines_library.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.defines_library.array[i], arguments);
       } // for
 
       if (is_shared) {
-        for (i = 0; i < data_build.setting.defines_library_shared.used && F_status_is_error_not(*status); ++i) {
+        for (i = 0; i < data_build->setting.defines_library_shared.used && F_status_is_error_not(*status); ++i) {
 
-          if (!data_build.setting.defines_library_shared.array[i].used) continue;
+          if (!data_build->setting.defines_library_shared.array[i].used) continue;
 
-          *status = fll_execute_arguments_add(data_build.setting.defines_library_shared.array[i], arguments);
+          *status = fll_execute_arguments_add(data_build->setting.defines_library_shared.array[i], arguments);
         } // for
       }
       else {
-        for (i = 0; i < data_build.setting.defines_library_static.used && F_status_is_error_not(*status); ++i) {
+        for (i = 0; i < data_build->setting.defines_library_static.used && F_status_is_error_not(*status); ++i) {
 
-          if (!data_build.setting.defines_library_static.array[i].used) continue;
+          if (!data_build->setting.defines_library_static.array[i].used) continue;
 
-          *status = fll_execute_arguments_add(data_build.setting.defines_library_static.array[i], arguments);
+          *status = fll_execute_arguments_add(data_build->setting.defines_library_static.array[i], arguments);
+        } // for
+      }
+    }
+    else if (type == fake_build_type_object_e) {
+      for (i = 0; i < data_build->setting.defines_object.used && F_status_is_error_not(*status); ++i) {
+
+        if (!data_build->setting.defines_object.array[i].used) continue;
+
+        *status = fll_execute_arguments_add(data_build->setting.defines_object.array[i], arguments);
+      } // for
+
+      if (is_shared) {
+        for (i = 0; i < data_build->setting.defines_object_shared.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build->setting.defines_object_shared.array[i].used) continue;
+
+          *status = fll_execute_arguments_add(data_build->setting.defines_object_shared.array[i], arguments);
+        } // for
+      }
+      else {
+        for (i = 0; i < data_build->setting.defines_object_static.used && F_status_is_error_not(*status); ++i) {
+
+          if (!data_build->setting.defines_object_static.array[i].used) continue;
+
+          *status = fll_execute_arguments_add(data_build->setting.defines_object_static.array[i], arguments);
         } // for
       }
     }
     else {
-      for (i = 0; i < data_build.setting.defines_program.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build->setting.defines_program.used && F_status_is_error_not(*status); ++i) {
 
-        if (!data_build.setting.defines_program.array[i].used) continue;
+        if (!data_build->setting.defines_program.array[i].used) continue;
 
-        *status = fll_execute_arguments_add(data_build.setting.defines_program.array[i], arguments);
+        *status = fll_execute_arguments_add(data_build->setting.defines_program.array[i], arguments);
       } // for
 
       if (is_shared) {
-        for (i = 0; i < data_build.setting.defines_program_shared.used && F_status_is_error_not(*status); ++i) {
+        for (i = 0; i < data_build->setting.defines_program_shared.used && F_status_is_error_not(*status); ++i) {
 
-          if (!data_build.setting.defines_program_shared.array[i].used) continue;
+          if (!data_build->setting.defines_program_shared.array[i].used) continue;
 
-          *status = fll_execute_arguments_add(data_build.setting.defines_program_shared.array[i], arguments);
+          *status = fll_execute_arguments_add(data_build->setting.defines_program_shared.array[i], arguments);
         } // for
       }
       else {
-        for (i = 0; i < data_build.setting.defines_program_static.used && F_status_is_error_not(*status); ++i) {
+        for (i = 0; i < data_build->setting.defines_program_static.used && F_status_is_error_not(*status); ++i) {
 
-          if (!data_build.setting.defines_program_static.array[i].used) continue;
+          if (!data_build->setting.defines_program_static.array[i].used) continue;
 
-          *status = fll_execute_arguments_add(data_build.setting.defines_program_static.array[i], arguments);
+          *status = fll_execute_arguments_add(data_build->setting.defines_program_static.array[i], arguments);
         } // for
       }
     }
@@ -369,10 +422,10 @@ extern "C" {
       if (*status == F_true) {
         destination_directory.used = 0;
 
-        *status = f_string_dynamic_append(destination, &destination_directory);
+        *status = f_string_dynamic_append_nulless(destination, &destination_directory);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
           break;
         }
@@ -522,7 +575,7 @@ extern "C" {
 #endif // _di_fake_build_copy_
 
 #ifndef _di_fake_build_execute_process_script_
-  int fake_build_execute_process_script(fake_main_t * const main, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
+  int fake_build_execute_process_script(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
 
     if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return main->child;
     if (!process_script.used) return 0;
@@ -697,7 +750,7 @@ extern "C" {
     f_signal_set_empty(&signals.block);
     f_signal_set_fill(&signals.block_not);
 
-    fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(FL_execute_parameter_option_path_d, 0, &data_build.environment, &signals, 0);
+    fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(FL_execute_parameter_option_path_d, 0, &data_build->environment, &signals, 0);
 
     *status = fll_execute_program(path, arguments, &parameter, 0, (void *) &return_code);
 
@@ -772,6 +825,44 @@ extern "C" {
   }
 #endif // _di_fake_build_get_file_name_without_extension_
 
+#ifndef _di_fake_build_objects_add_
+  f_status_t fake_build_objects_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) {
+
+    f_status_t status = F_none;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+
+    f_string_static_t source = f_string_static_t_initialize;
+
+    const f_string_statics_t *sources[2] = {
+      generic,
+      specific,
+    };
+
+    for (; i < 2; ++i) {
+
+      for (j = 0; j < sources[i]->used; ++j) {
+
+        if (!sources[i]->array[j].used) continue;
+
+        source.used = path->used + sources[i]->array[j].used;
+
+        char source_string[source.used + 1];
+        source.string = source_string;
+        source_string[source.used] = 0;
+
+        memcpy(source_string, path->string, path->used);
+        memcpy(source_string + path->used, sources[i]->array[j].string, sources[i]->array[j].used);
+
+        status = fll_execute_arguments_add(source, arguments);
+        if (F_status_is_error(status)) return status;
+      } // for
+    } // for
+
+    return F_none;
+  }
+#endif // _di_fake_build_objects_add_
+
 #ifndef _di_fake_build_operate_
   f_status_t fake_build_operate(const f_string_static_t setting_file, fake_main_t *main) {
 
@@ -803,18 +894,20 @@ extern "C" {
 
     fake_build_load_stage(main, setting_file, &stage, &status);
 
-    fake_build_load_environment(main, data_build, &data_build.environment, &status);
+    fake_build_load_environment(main, &data_build, &data_build.environment, &status);
 
-    fake_build_skeleton(main, data_build, mode.directory, stage.file_skeleton, &status);
+    fake_build_skeleton(main, &data_build, mode.directory, stage.file_skeleton, &status);
 
-    main->child = fake_build_execute_process_script(main, data_build, data_build.setting.process_pre, stage.file_process_pre, &status);
+    main->child = fake_build_execute_process_script(main, &data_build, data_build.setting.process_pre, stage.file_process_pre, &status);
 
     fake_build_copy(main, mode, fake_build_setting_files_s, main->path_data_settings, main->path_build_settings, data_build.setting.build_sources_setting, stage.file_sources_settings, 0, &status);
 
     if (data_build.setting.build_language == fake_build_language_type_bash_e) {
-      fake_build_library_script(main, data_build, mode, stage.file_libraries_script, &status);
+      fake_build_object_script(main, &data_build, mode, stage.file_object_script, &status);
 
-      fake_build_program_script(main, data_build, mode, stage.file_programs_script, &status);
+      fake_build_library_script(main, &data_build, mode, stage.file_library_script, &status);
+
+      fake_build_program_script(main, &data_build, mode, stage.file_program_script, &status);
 
       if (data_build.setting.build_script) {
         fake_build_copy(main, mode, fake_build_scripts_s, main->path_sources_script, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
@@ -835,48 +928,47 @@ extern "C" {
           path_sources = data_build.setting.path_sources;
         }
 
-        const f_array_length_t path_sources_base_length = path_sources.used;
-
         f_string_static_t path_headers = f_string_static_t_initialize;
-        f_array_length_t directory_headers_length = main->path_build_includes.used + data_build.setting.path_headers.used;
+        path_headers.used = main->path_build_includes.used + data_build.setting.path_headers.used;
 
-        char directory_headers[directory_headers_length + 1];
+        char path_headers_string[path_headers.used + 1];
+        path_headers.string = path_headers_string;
 
-        memcpy(directory_headers, main->path_build_includes.string, main->path_build_includes.used);
+        memcpy(path_headers_string, main->path_build_includes.string, main->path_build_includes.used);
 
         if (data_build.setting.path_headers.used) {
-          memcpy(directory_headers + main->path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
+          memcpy(path_headers_string + main->path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
         }
 
-        directory_headers[directory_headers_length] = 0;
+        path_headers_string[path_headers.used] = 0;
 
-        path_headers.string = directory_headers;
-        path_headers.used = directory_headers_length;
-        path_headers.size = directory_headers_length + 1;
-
-        fake_build_copy(main, mode, fake_build_header_files_s, path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+        fake_build_copy(main, mode, fake_build_header_files_s, path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_headers.used : 0, &status);
 
         if (data_build.setting.build_shared) {
-          fake_build_copy(main, mode, fake_build_header_files_shared_s, path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+          fake_build_copy(main, mode, fake_build_header_files_shared_s, path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_headers.used : 0, &status);
         }
 
         if (data_build.setting.build_static) {
-          fake_build_copy(main, mode, fake_build_header_files_static_s, path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+          fake_build_copy(main, mode, fake_build_header_files_static_s, path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_headers.used : 0, &status);
         }
       }
 
       if (data_build.setting.build_shared) {
-        main->child = fake_build_library_shared(main, data_build, mode, stage.file_libraries_shared, &status);
+        main->child = fake_build_object_shared(main, &data_build, mode, stage.file_object_shared, &status);
 
-        main->child = fake_build_program_shared(main, data_build, mode, stage.file_programs_shared, &status);
+        main->child = fake_build_library_shared(main, &data_build, mode, stage.file_library_shared, &status);
+
+        main->child = fake_build_program_shared(main, &data_build, mode, stage.file_program_shared, &status);
       }
 
       if (data_build.setting.build_static) {
-        main->child = fake_build_objects_static(main, data_build, mode, stage.file_objects_static, &status);
+        main->child = fake_build_object_static(main, &data_build, mode, stage.file_object_static, &status);
 
-        main->child = fake_build_library_static(main, data_build, mode, stage.file_libraries_static, &status);
+        main->child = fake_build_objects_static(main, &data_build, mode, stage.file_objects_static, &status);
 
-        main->child = fake_build_program_static(main, data_build, mode, stage.file_programs_static, &status);
+        main->child = fake_build_library_static(main, &data_build, mode, stage.file_library_static, &status);
+
+        main->child = fake_build_program_static(main, &data_build, mode, stage.file_program_static, &status);
       }
 
       if (data_build.setting.build_script) {
@@ -884,7 +976,7 @@ extern "C" {
       }
     }
 
-    fake_build_execute_process_script(main, data_build, data_build.setting.process_post, stage.file_process_post, &status);
+    fake_build_execute_process_script(main, &data_build, data_build.setting.process_post, stage.file_process_post, &status);
 
     macro_fake_build_main_delete_simple(data_build);
     macro_fake_build_stage_t_delete_simple(stage);
@@ -892,6 +984,108 @@ extern "C" {
     return status;
   }
 #endif // _di_fake_build_operate_
+
+#ifndef _di_fake_build_sources_add_
+  f_status_t fake_build_sources_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) {
+
+    f_status_t status = F_none;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+
+    f_string_static_t source = f_string_static_t_initialize;
+
+    // @fixme review this, these paths (like path_sources_object) need to be build on a per-settings basis rather than using a global value.
+    f_string_dynamic_t *path_sources = &main->path_sources;
+    const f_string_statics_t *sources[2] = {
+      generic,
+      specific,
+    };
+
+    if (data_build->setting.path_standard) {
+      if (data_build->setting.build_language == fake_build_language_type_c_e) {
+        path_sources = &main->path_sources_c;
+      }
+      else {
+        path_sources = &main->path_sources_cpp;
+      }
+    }
+    else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
+      path_sources = &data_build->setting.path_sources;
+    }
+
+    for (; i < 2; ++i) {
+
+      for (j = 0; j < sources[i]->used; ++j) {
+
+        if (!sources[i]->array[j].used) continue;
+
+        source.used = path_sources->used + sources[i]->array[j].used;
+
+        char source_string[source.used + 1];
+        source.string = source_string;
+        source_string[source.used] = 0;
+
+        memcpy(source_string, path_sources->string, path_sources->used);
+        memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
+
+        status = fll_execute_arguments_add(source, arguments);
+        if (F_status_is_error(status)) return status;
+      } // for
+    } // for
+
+    return F_none;
+  }
+#endif // _di_fake_build_sources_add_
+
+#ifndef _di_fake_build_sources_object_add_
+  f_status_t fake_build_sources_object_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments) {
+
+    if (!generic->used && !specific->used) return F_none;
+
+    f_status_t status = F_none;
+
+    f_string_static_t source = f_string_static_t_initialize;
+    f_string_dynamic_t *path_sources = &main->path_sources_object;
+
+    // @fixme review this, these paths (like path_sources_object) need to be build on a per-settings basis rather than using a global value.
+    if (data_build->setting.path_standard) {
+      if (data_build->setting.build_language == fake_build_language_type_c_e) {
+        path_sources = &main->path_sources_object_c;
+      }
+      else {
+        path_sources = &main->path_sources_object_cpp;
+      }
+    }
+    else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
+      path_sources = &data_build->setting.path_sources_object;
+    }
+
+    if (specific->used) {
+      source.used = path_sources->used + specific->used;
+    }
+    else {
+      source.used = path_sources->used + generic->used;
+    }
+
+    char source_string[source.used + 1];
+    source.string = source_string;
+    source_string[source.used] = 0;
+
+    memcpy(source_string, path_sources->string, path_sources->used);
+
+    if (specific->used) {
+      memcpy(source_string + path_sources->used, specific->string, specific->used);
+    }
+    else {
+      memcpy(source_string + path_sources->used, generic->string, generic->used);
+    }
+
+    status = fll_execute_arguments_add(source, arguments);
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fake_build_sources_object_add_
 
 #ifndef _di_fake_build_touch_
   void fake_build_touch(fake_main_t * const main, const f_string_dynamic_t file, f_status_t *status) {

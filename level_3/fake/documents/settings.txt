@@ -8,6 +8,8 @@ Settings Documentation:
   - build_compiler\:
     This represents the name of the compiler program to use, such as "gcc".
 
+    This defaults to "gcc" (the GNU C Compiler).
+
     The programs "gcc" and "clang" are known to work.
     Many of the parameters in the settings file can be changed if using a non-GCC, but there may be certain hard-coded functionality that may need to be changed.
 
@@ -15,7 +17,7 @@ Settings Documentation:
     This represents the name of the indexer program to use, such as "ar".
     An indexer is often called a linker.
 
-    The default behavior is to support the GNU "ar" program.
+    This defaults to "ar" (the GNU "ar" program).
     Similar to "build_compiler", any linker that supports the "ar" program parameters is effectively supported.
 
   - build_indexer_arguments\:
@@ -42,6 +44,46 @@ Settings Documentation:
   - build_libraries_static\:
     A collection of libraries to be linked against.
     This should include the compiler specific parameter parts, such as the "-l" prefix in "-lc".
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only static builds.
+
+  - build_objects_library\:
+    A collection of object files to be compile with when building libraries.
+    These are intended to represent already compiled object files.
+    These paths are relative to the path_object_script, path_object_shared, or path_object_static.
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+
+  - build_objects_library_shared\:
+    A collection of object files to be compile with when building shared libraries.
+    These are intended to represent already compiled object files.
+    These paths are relative to the path_object_shared.
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only shared builds.
+
+  - build_objects_library_static\:
+    A collection of object files to be compile with when building static libraries.
+    These are intended to represent already compiled object files.
+    These paths are relative to the path_object_static.
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only static builds.
+
+  - build_objects_program\:
+    A collection of object files to be compile with when building programs.
+    These are intended to represent already compiled object files.
+    These paths are relative to the path_object_script, path_object_shared, or path_object_static.
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+
+  - build_objects_program_shared\:
+    A collection of object files to be compile with when building shared programs.
+    These are intended to represent already compiled object files.
+    These paths are relative to the path_object_shared.
+    The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only shared builds.
+
+  - build_objects_program_static\:
+    A collection of object files to be compile with when building static programs.
+    These are intended to represent already compiled object files.
+    These paths are relative to the path_object_static.
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
     These are applied to only static builds.
 
@@ -92,6 +134,29 @@ Settings Documentation:
     A collection of library related source files.
     May include a relative sub-path to each individual source file (such as: "level_0/a.c level_0/b.c level_1/c.c").
     The order of these may matter if the compiler (such as GCC or a linker via GCC) is order sensitive.
+    These are applied to only static builds.
+
+  - build_sources_object\:
+    A single source file used for generating an object file.
+    The source file is located within the path designated by "path_sources_object".
+    The built object does not get linked and therefore no linker arguments apply.
+    The built object file is named using the "build_name" with the ".o" extension.
+    May include a relative sub-path to each individual source file (such as: "level_0/a.c").
+
+  - build_sources_object_shared\:
+    A single source file used for generating an object file.
+    The source file is located within the path designated by "path_sources_object".
+    The built object does not get linked and therefore no linker arguments apply.
+    The built object file is named using the "build_name" with the ".o" extension.
+    May include a relative sub-path to each individual source file (such as: "level_0/a.c").
+    These are applied to only shared builds.
+
+  - build_sources_object_static\:
+    A single source file used for generating an object file.
+    The source file is located within the path designated by "path_sources_object".
+    The built object does not get linked and therefore no linker arguments apply.
+    The built object file is named using the "build_name" with the ".o" extension.
+    May include a relative sub-path to each individual source file (such as: "level_0/a.c").
     These are applied to only static builds.
 
   - build_sources_program\:
@@ -151,6 +216,24 @@ Settings Documentation:
     These will be appended to the compiler for compiled languages such as C and C++.
     These are applied to only static library builds.
 
+  - defines_object\:
+    A collection of macro names.
+    This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
+    These will be appended to the compiler for compiled languages such as C and C++.
+    These are applied to only object builds.
+
+  - defines_object_shared\:
+    A collection of macro names.
+    This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
+    These will be appended to the compiler for compiled languages such as C and C++.
+    These are applied to only shared object builds.
+
+  - defines_object_static\:
+    A collection of macro names.
+    This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
+    These will be appended to the compiler for compiled languages such as C and C++.
+    These are applied to only static object builds.
+
   - defines_program\:
     A collection of macro names.
     This includes the any compiler specific parameters required by the "build_compiler", such as the "-D" used by gcc and clang.
@@ -207,6 +290,21 @@ Settings Documentation:
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to only library static builds.
 
+  - flags_object\:
+    A collection of any flag supported by the "build_compiler", such as gcc.
+    This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
+    These are applied when building an object.
+
+  - flags_object_shared\:
+    A collection of any flag supported by the "build_compiler", such as gcc.
+    This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
+    These are applied to only object shared builds.
+
+  - flags_object_static\:
+    A collection of any flag supported by the "build_compiler", such as gcc.
+    This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
+    These are applied to only object static builds.
+
   - flags_program\:
     A collection of any flag supported by the "build_compiler", such as gcc.
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
@@ -248,7 +346,7 @@ Settings Documentation:
     If "path_headers" is "level_0", "path_headers_preserve" is "yes", and "build_sources_headers" has "xxx/a.h yyy/zzz/b.h", then the headers would be at: "build/includes/level_0/xxx/a.h build/includes/level_0/yyy/zzz/b.h"
 
   - path_headers_preserve\:
-    When "yes" the relative directory structure in the source (as defined in "build_sources_headers") is preserved.
+    When this is "yes", then the relative directory structure in the source (as defined in "build_sources_headers") is preserved.
     If the "build_sources_headers" has the header files "xxx/a.h yyy/zzz/b.h" and this is "yes", then the directories "xxx/" and "yyy/zzz/" are created and the files are stored within them.
     If the "build_sources_headers" has the header files "xxx/a.h yyy/zzz/b.h" and this is "no", then the directories "xxx/" and "yyy/zzz/" are stripped before installing.
     When this is "no" and the "build_sources_headers" has header files "xxx/a.h yyy/a.h", then one of the "a.h" files will be overwritten, depending on order they were supplied.
@@ -258,33 +356,70 @@ Settings Documentation:
     If the "build_language" is changed, it is recommended to change this as well to match.
 
   - path_library_script\:
-    A sub-path representing when the built library script files are placed.
+    A sub-path representing the destination where the built library script files are placed.
+
+    This defaults to "script".
     This is currently not implemented.
 
   - path_library_shared\:
-    A sub-path representing when the built shared library files are placed.
+    A sub-path representing the destination where the built shared library files are placed.
+
+    This defaults to "shared".
 
   - path_library_static\:
-    A sub-path representing when the built shared library files are placed.
+    A sub-path representing the destination where the built shared library files are placed.
+
+    This defaults to "static".
+
+  - path_object_script\:
+    A sub-path representing the destination where the built object script files are placed.
+
+    This defaults to "script".
+    This is currently not implemented.
+
+  - path_object_shared\:
+    A sub-path representing the destination where the built object library files are placed.
+
+    This defaults to "shared".
+
+  - path_object_static\:
+    A sub-path representing the destination where the built object library files are placed.
+
+    This defaults to "static".
 
   - path_program_script\:
-    A sub-path representing when the built program script files are placed.
+    A sub-path representing the destination where the built program script files are placed.
+
+    This defaults to "script".
     This is currently not implemented.
 
   - path_program_shared\:
-    A sub-path representing when the built shared program files are placed.
+    A sub-path representing the destination where the built shared program files are placed.
+
+    This defaults to "shared".
 
   - path_program_static\:
-    A sub-path representing when the built shared program files are placed.
+    A sub-path representing the destination where built shared program files are placed.
+
+    This defaults to "static".
 
   - path_sources\:
-    A sub-path representing when the built shared program files are placed.
+    A sub-path representing where the source files are found.
+
+    This defaults to "sources".
+
+  - path_sources_object\:
+    A sub-path representing where the object source files are found.
+    This is used by "build_sources_object".
+
+    This defaults to "sources".
 
   - path_standard\:
-    When "yes", the sources path will be built using the sources path with the language, such as "sources/c/", ignoring "path_sources" completely.
+    When "yes", the sources path will be built using the sources path with the language, such as "sources/c/".
     When "no", the default sources path structure is not used and instead "path_sources" is used.
-    When the parameter -S/--sources is specified, such as "-S xxx", then when "yes" is used path would be "xxx/c/" and when "no" path would be "xxx/".
-    The default behavior is "yes".
+    When the parameter -S/--sources is specified, such as "-S xxx", then when this is set to "yes" is used then the path would be "xxx/c/" and when this is set to "no" then the path would be "xxx/".
+
+    This defaults to "yes".
 
   - process_post\:
     The filename (relative to the "data/build/" directory) of a script to execute after the "build" operation successfully completes.
@@ -324,7 +459,8 @@ Settings Documentation:
   - search_shared\:
     When "yes", shared library paths are searched during compile.
     Both this and "search_static" cannot be "no" at the same time.
-    The default behavior is "yes".
+
+    This defaults to "yes".
 
   - search_shared\:
     When "yes", static library paths are searched during compile.
@@ -350,9 +486,10 @@ Settings Documentation:
   - version_major_prefix\:
     The version major prefix is the character used to designate the start of the major version.
     This can zero or more characters.
-    The default is an empty string.
     With a structure of "A.B.C", the major version prefix would be before the "A".
     This is only added if "version_major" is not empty.
+
+    This defaults to the ASCII period character ".".
 
   - version_minor\:
     The minor version number (or in theory any characters allowed in a filename).
@@ -363,9 +500,10 @@ Settings Documentation:
   - version_minor_prefix\:
     The version minor prefix is the character used to separate the major from the minor.
     This can zero or more characters.
-    The default prefix is an ASCII period character "." if and only if "version_minor" is not an empty string.
     With a structure of "A.B.C", the minor version prefix would be the "." before the "B".
     This is only added if "version_minor" is not empty.
+
+    This defaults to the ASCII period character ".".
 
   - version_micro\:
     The micro version number (or in theory any characters allowed in a filename).
@@ -376,9 +514,10 @@ Settings Documentation:
   - version_micro_prefix\:
     The version micro prefix is the character used to separate the minor from the micro.
     This can zero or more characters.
-    The default prefix is an ASCII period character "." if and only if "version_micro" is not an empty string.
     With a structure of "A.B.C", the micro version prefix would be the "." before the "C".
     This is only added if "version_micro" is not empty.
+
+    This defaults to the ASCII period character ".".
 
   - version_nano\:
     The nano version number (or in theory any characters allowed in a filename).
@@ -389,9 +528,10 @@ Settings Documentation:
   - version_nano_prefix\:
     The version nano prefix is the character used to separate the micro from the nano.
     This can zero or more characters.
-    The default prefix is an ASCII period character "." if and only if "version_nano" is not an empty string.
     With a structure of "A.B.C.D", the minor version would be the "." before the "D".
     This is only added if "version_nano" is not empty.
+
+    This defaults to the ASCII period character ".".
 
   - version_target\:
     Designates which version should be used when linking the shared library.

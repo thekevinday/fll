@@ -25,10 +25,19 @@ build_libraries-monolithic
 build_libraries-monolithic_threadless
 build_libraries_shared
 build_libraries_static
+build_objects_library
+build_objects_library_shared
+build_objects_library_static
+build_objects_program
+build_objects_program_shared
+build_objects_program_static
 build_sources_library level_0/account.c level_0/private-account.c level_0/capability.c level_0/color.c level_0/color-common.c level_0/console.c level_0/console-common.c level_0/control_group.c level_0/control_group-common.c level_0/conversion.c level_0/conversion-common.c level_0/private-conversion.c level_0/directory.c level_0/private-directory.c level_0/environment.c level_0/private-environment.c level_0/execute.c level_0/file.c level_0/file-common.c level_0/private-file.c level_0/fss.c level_0/private-fss.c level_0/fss-common.c level_0/fss_named.c level_0/fss_nest.c level_0/fss_set.c level_0/iki.c level_0/iki-common.c level_0/private-iki.c level_0/limit.c level_0/memory.c level_0/memory_structure.c level_0/private-memory.c level_0/path.c level_0/path-common.c level_0/private-path.c level_0/pipe.c level_0/print.c level_0/print_to.c level_0/print-common.c level_0/private-print.c level_0/private-print_to.c level_0/serialize.c level_0/serialize-common.c level_0/private-serialize.c level_0/signal.c level_0/socket.c level_0/status_string.c level_0/string.c level_0/string-common.c level_0/private-string.c level_0/string_dynamic.c level_0/string_map.c level_0/string_quantity.c level_0/string_range.c level_0/string_triple.c level_0/type_array.c level_0/private-type_array.c level_0/utf.c level_0/utf-common.c level_0/utf_dynamic.c level_0/utf_map.c level_0/utf_string.c level_0/utf_triple.c level_0/private-utf.c level_0/private-utf-is_unassigned.c level_0/private-utf_string.c level_1/control_group.c level_1/conversion.c level_1/private-conversion.c level_1/directory.c level_1/private-directory.c level_1/environment.c level_1/private-fss.c level_1/fss_basic.c level_1/fss_basic_list.c level_1/fss_embedded_list.c level_1/fss_extended.c level_1/fss_extended_list.c level_1/iki.c level_1/print.c level_1/print-common.c level_1/private-print.c level_1/signal.c level_1/string.c level_1/private-string.c level_1/utf.c level_1/private-utf.c level_1/utf_file.c level_1/private-utf_file.c level_2/control_group.c level_2/error.c level_2/error-common.c level_2/private-error.c level_2/execute.c level_2/private-execute.c level_2/file.c level_2/private-file.c level_2/fss.c level_2/private-fss.c level_2/fss_basic.c level_2/fss_basic_list.c level_2/fss_embedded_list.c level_2/fss_extended.c level_2/fss_extended_list.c level_2/fss_payload.c level_2/fss_status_string.c level_2/iki.c level_2/private-iki.c level_2/path.c level_2/print.c level_2/program.c level_2/program-common.c level_2/status_string.c
 build_sources_library-monolithic level_0/thread.c level_0/private-thread.c
 build_sources_library_shared
 build_sources_library_static
+build_sources_object
+build_sources_object_shared
+build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
@@ -47,9 +56,15 @@ path_headers_preserve yes
 path_library_script script
 path_library_shared shared
 path_library_static static
+path_object_script script
+path_object_shared shared
+path_object_static static
 path_program_script script
 path_program_shared shared
 path_program_static static
+path_sources
+path_sources_object
+path_standard yes
 
 search_exclusive yes
 search_shared yes
@@ -62,6 +77,9 @@ defines-monolithic_threadless -D_di_pthread_support_
 defines_library
 defines_library_shared
 defines_library_static
+defines_object
+defines_object_shared
+defines_object_static
 defines_program
 defines_program_shared
 defines_program_static
@@ -73,6 +91,9 @@ flags-monolithic -pthread
 flags_library -fPIC
 flags_library_shared
 flags_library_static
+flags_object -fPIC
+flags_object_shared
+flags_object_static
 flags_program -fPIE
 flags_program_shared
 flags_program_static

@@ -135,6 +135,10 @@ if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]
   ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m $build_mode &&
 
   ./install.sh $verbose $color $shared $static -w $install_path
+elif [[ $1 != "individual" && $1 != "level" && $1 != "monolithic" ]] ; then
+  echo
+  echo "ERROR: '$1' is not a supported build mode."
+  echo
 fi
 
 # regardless of what happens always return to the starting directory.

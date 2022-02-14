@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_execute_
-  int fake_execute(fake_main_t * const main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
+  int fake_execute(fake_main_t * const main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return 1;
 
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_fake_execute_
 
 #ifndef _di_fake_file_buffer_
-  f_status_t fake_file_buffer(fake_main_t * const main, const f_string_static_t path_file, f_string_dynamic_t *buffer) {
+  f_status_t fake_file_buffer(fake_main_t * const main, const f_string_static_t path_file, f_string_dynamic_t * const buffer) {
 
     f_file_t file = f_file_t_initialize;
     f_string_t name_function = "f_file_exists";

@@ -30,6 +30,8 @@ extern "C" {
 /**
  * Generate all appropriate paths based on runtime information from dynamic strings.
  *
+ * The given source is applied to each destination.
+ *
  * @param main
  *   The main program data.
  * @param source

@@ -55,7 +55,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_fss_content_t content, const f_fss_quotes_t quoteds, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_fss_content_t content, const f_fss_quotes_t quoteds, f_string_dynamics_t * const arguments, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_
 
 /**
@@ -79,7 +79,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_context_
-  extern f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_context_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_operate_expand_environment_
-  extern f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_environment_
 
 /**
@@ -133,7 +133,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_build_
-  extern f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_build_
 
 /**
@@ -159,7 +159,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_section_
-  int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t *section_stack, f_status_t *status) F_attribute_visibility_internal_d;
+  int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t *section_stack, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_section_
 
 #ifdef __cplusplus
