@@ -51,7 +51,6 @@ build_shared yes
 build_static no
 
 path_headers program/fss_extended_list_read
-preserve_path_headers no
 path_library_script script
 path_library_shared shared
 path_library_static static
@@ -63,7 +62,9 @@ path_program_shared shared
 path_program_static static
 path_sources
 path_sources_object
-path_standard yes
+
+has_path_standard yes
+preserve_path_headers no
 
 search_exclusive yes
 search_shared yes

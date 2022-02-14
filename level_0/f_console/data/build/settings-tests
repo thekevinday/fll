@@ -25,9 +25,10 @@ build_shared yes
 build_static no
 
 path_headers tests/unit/c
-preserve_path_headers no
 path_sources tests/unit/c
-path_standard no
+
+has_path_standard no
+preserve_path_headers no
 
 search_exclusive yes
 search_shared yes

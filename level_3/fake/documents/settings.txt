@@ -330,6 +330,13 @@ Settings Documentation:
     This includes the any compiler specific parameters to defined this, such as the "-f" used by gcc and clang.
     These are applied to only static builds.
 
+  - has_path_standard\:
+    When "yes", the sources path will be built using the sources path with the language, such as "sources/c/".
+    When "no", the default sources path structure is not used and instead "path_sources" is used.
+    When the parameter -S/--sources is specified, such as "-S xxx", then when this is set to "yes" is used then the path would be "xxx/c/" and when this is set to "no" then the path would be "xxx/".
+
+    This defaults to "yes".
+
   - modes\:
     A collection of available build modes.
     Build modes provide custom variants of the build process where certain settings are appended onto others.
@@ -407,13 +414,6 @@ Settings Documentation:
     This is used by "build_sources_object".
 
     This defaults to "sources".
-
-  - path_standard\:
-    When "yes", the sources path will be built using the sources path with the language, such as "sources/c/".
-    When "no", the default sources path structure is not used and instead "path_sources" is used.
-    When the parameter -S/--sources is specified, such as "-S xxx", then when this is set to "yes" is used then the path would be "xxx/c/" and when this is set to "no" then the path would be "xxx/".
-
-    This defaults to "yes".
 
   - preserve_path_headers\:
     When this is "yes", then the relative directory structure in the source (as defined in "build_sources_headers") is preserved.

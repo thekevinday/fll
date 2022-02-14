@@ -491,22 +491,22 @@ bootstrap_id() {
     "flags_program_static") echo -n 53;;
     "flags_shared") echo -n 54;;
     "flags_static") echo -n 55;;
-    "modes") echo -n 56;;
-    "modes_default") echo -n 57;;
-    "path_headers") echo -n 58;;
-    "path_language") echo -n 59;;
-    "path_library_script") echo -n 60;;
-    "path_library_shared") echo -n 61;;
-    "path_library_static") echo -n 62;;
-    "path_object_script") echo -n 63;;
-    "path_object_shared") echo -n 64;;
-    "path_object_static") echo -n 65;;
-    "path_program_script") echo -n 66;;
-    "path_program_shared") echo -n 67;;
-    "path_program_static") echo -n 68;;
-    "path_sources") echo -n 69;;
-    "path_sources_object") echo -n 70;;
-    "path_standard") echo -n 71;;
+    "has_path_standard") echo -n 56;;
+    "modes") echo -n 57;;
+    "modes_default") echo -n 58;;
+    "path_headers") echo -n 59;;
+    "path_language") echo -n 60;;
+    "path_library_script") echo -n 61;;
+    "path_library_shared") echo -n 62;;
+    "path_library_static") echo -n 63;;
+    "path_object_script") echo -n 64;;
+    "path_object_shared") echo -n 65;;
+    "path_object_static") echo -n 66;;
+    "path_program_script") echo -n 67;;
+    "path_program_shared") echo -n 68;;
+    "path_program_static") echo -n 69;;
+    "path_sources") echo -n 70;;
+    "path_sources_object") echo -n 71;;
     "preserve_path_headers") echo -n 72;;
     "process_post") echo -n 73;;
     "process_pre") echo -n 74;;
@@ -580,8 +580,8 @@ bootstrap_id() {
     "flags_program_static-$mode") echo -n 141;;
     "flags_shared-$mode") echo -n 142;;
     "flags_static-$mode") echo -n 143;;
-    "path_headers-$mode") echo -n 144;;
-    "preserve_path_headers-$mode") echo -n 145;;
+    "has_path_standard-$mode") echo -n 144;;
+    "path_headers-$mode") echo -n 145;;
     "path_language-$mode") echo -n 146;;
     "path_library_script-$mode") echo -n 147;;
     "path_library_shared-$mode") echo -n 148;;
@@ -594,7 +594,7 @@ bootstrap_id() {
     "path_program_static-$mode") echo -n 155;;
     "path_sources-$mode") echo -n 156;;
     "path_sources_object-$mode") echo -n 157;;
-    "path_standard-$mode") echo -n 158;;
+    "preserve_path_headers-$mode") echo -n 158;;
     "process_post-$mode") echo -n 159;;
     "process_pre-$mode") echo -n 160;;
     "search_exclusive-$mode") echo -n 161;;
@@ -611,18 +611,18 @@ bootstrap_id() {
     "version_nano_prefix-$mode") echo -n 172;;
     "version_target-$mode") echo -n 173;;
 
-    "has-path_library_script") echo -n 175;;
-    "has-path_library_shared") echo -n 176;;
-    "has-path_library_static") echo -n 177;;
-    "has-path_object_script") echo -n 178;;
-    "has-path_object_shared") echo -n 179;;
-    "has-path_object_static") echo -n 180;;
-    "has-path_program_script") echo -n 181;;
-    "has-path_program_shared") echo -n 182;;
-    "has-path_program_static") echo -n 183;;
-    "has-path_sources") echo -n 184;;
-    "has-path_sources_object") echo -n 185;;
-    "has-path_standard") echo -n 186;;
+    "has-has_path_standard") echo -n 175;;
+    "has-path_library_script") echo -n 176;;
+    "has-path_library_shared") echo -n 177;;
+    "has-path_library_static") echo -n 178;;
+    "has-path_object_script") echo -n 179;;
+    "has-path_object_shared") echo -n 180;;
+    "has-path_object_static") echo -n 181;;
+    "has-path_program_script") echo -n 182;;
+    "has-path_program_shared") echo -n 183;;
+    "has-path_program_static") echo -n 184;;
+    "has-path_sources") echo -n 185;;
+    "has-path_sources_object") echo -n 186;;
     "has-search_shared") echo -n 187;;
     "has-version_major_prefix") echo -n 188;;
     "has-version_micro_prefix") echo -n 189;;
@@ -666,7 +666,7 @@ bootstrap_load_settings() {
     fi
   done
 
-  for i in environment flags flags_library flags_library_shared flags_library_static flags_object flags_object_shared flags_object_static flags_program flags_program_shared flags_program_static flags_shared flags_static modes modes_default path_headers path_language path_library_script path_library_shared path_library_static path_object_script path_object_shared path_object_static path_program_script path_program_shared path_program_static path_sources path_sources_object path_standard preserve_path_headers process_post process_pre search_exclusive search_shared search_static version_file version_major version_major_prefix version_micro version_micro_prefix version_minor version_minor_prefix version_nano version_nano_prefix version_target ; do
+  for i in environment flags flags_library flags_library_shared flags_library_static flags_object flags_object_shared flags_object_static flags_program flags_program_shared flags_program_static flags_shared flags_static has_path_standard modes modes_default path_headers path_language path_library_script path_library_shared path_library_static path_object_script path_object_shared path_object_static path_program_script path_program_shared path_program_static path_sources path_sources_object preserve_path_headers process_post process_pre search_exclusive search_shared search_static version_file version_major version_major_prefix version_micro version_micro_prefix version_minor version_minor_prefix version_nano version_nano_prefix version_target ; do
     key=$(bootstrap_id $i)
 
     if [[ $key == "" ]] ; then
@@ -695,7 +695,7 @@ bootstrap_load_settings_mode() {
     fi
   done
 
-  for i in environment-$mode flags-$mode flags_library-$mode flags_library_shared-$mode flags_library_static-$mode flags_object-$mode flags_object_shared-$mode flags_object_static-$mode flags_program-$mode flags_program_shared-$mode flags_program_static-$mode flags_shared-$mode flags_static-$mode path_headers-$mode path_language-$mode path_library_script-$mode path_library_shared-$mode path_library_static-$mode path_object_script-$mode path_object_shared-$mode path_object_static-$mode path_program_script-$mode path_program_shared-$mode path_program_static-$mode path_sources-$mode path_sources_object-$mode path_standard-$mode preserve_path_headers-$mode process_post-$mode process_pre-$mode search_exclusive-$mode search_shared-$mode search_static-$mode version_file-$mode version_major-$mode version_major_prefix-$mode version_micro-$mode version_micro_prefix-$mode version_minor-$mode version_minor_prefix-$mode version_nano-$mode version_nano_prefix-$mode version_target-$mode ; do
+  for i in environment-$mode flags-$mode flags_library-$mode flags_library_shared-$mode flags_library_static-$mode flags_object-$mode flags_object_shared-$mode flags_object_static-$mode flags_program-$mode flags_program_shared-$mode flags_program_static-$mode flags_shared-$mode flags_static-$mode has_path_standard-$mode path_headers-$mode path_language-$mode path_library_script-$mode path_library_shared-$mode path_library_static-$mode path_object_script-$mode path_object_shared-$mode path_object_static-$mode path_program_script-$mode path_program_shared-$mode path_program_static-$mode path_sources-$mode path_sources_object-$mode preserve_path_headers-$mode process_post-$mode process_pre-$mode search_exclusive-$mode search_shared-$mode search_static-$mode version_file-$mode version_major-$mode version_major_prefix-$mode version_micro-$mode version_micro_prefix-$mode version_minor-$mode version_minor_prefix-$mode version_nano-$mode version_nano_prefix-$mode version_target-$mode ; do
     key=$(bootstrap_id $i)
 
     if [[ $key == "" ]] ; then
@@ -711,7 +711,7 @@ bootstrap_load_settings_mode() {
 bootstrap_load_settings_has() {
   local i=
 
-  for i in build_compiler build_indexer build_shared-$mode path_library_script path_library_shared path_library_static path_object_script path_object_shared path_object_static path_program_script path_program_shared path_program_static path_sources path_sources_object path_standard search_shared version_major_prefix version_minor_prefix version_micro_prefix version_nano_prefix ; do
+  for i in build_compiler build_indexer build_shared has_path_standard path_library_script path_library_shared path_library_static path_object_script path_object_shared path_object_static path_program_script path_program_shared path_program_static path_sources path_sources_object search_shared version_major_prefix version_minor_prefix version_micro_prefix version_nano_prefix ; do
     if [[ $(grep -s -o "^[[:space:]]*$i\>" $settings_file | sed -e "s|^[[:space:]]*||") ]] ; then
       variables[$(bootstrap_id has-$i)]="yes"
     else
@@ -719,7 +719,7 @@ bootstrap_load_settings_has() {
     fi
   done
 
-  for i in build_compiler-$mode build_indexer-$mode build_shared-$mode path_library_script-$mode path_library_shared-$mode path_library_static-$mode path_object_script-$mode path_object_shared-$mode path_object_static-$mode path_program_script-$mode path_program_shared-$mode path_program_static-$mode path_sources-$mode path_sources_object-$mode path_standard-$mode search_shared-$mode version_major_prefix-$mode version_minor_prefix-$mode version_micro_prefix-$mode version_nano_prefix-$mode ; do
+  for i in build_compiler-$mode build_indexer-$mode build_shared-$mode has_path_standard-$mode path_library_script-$mode path_library_shared-$mode path_library_static-$mode path_object_script-$mode path_object_shared-$mode path_object_static-$mode path_program_script-$mode path_program_shared-$mode path_program_static-$mode path_sources-$mode path_sources_object-$mode search_shared-$mode version_major_prefix-$mode version_minor_prefix-$mode version_micro_prefix-$mode version_nano_prefix-$mode ; do
     if [[ $(grep -s -o "^[[:space:]]*$i-$mode\>" $settings_file | sed -e "s|^[[:space:]]*||") ]] ; then
       variables[$(bootstrap_id has-$i)]="yes"
     else
@@ -827,7 +827,7 @@ bootstrap_operation_build() {
   local path_program_script=${variables[$(bootstrap_id path_program_script)]}
   local path_program_shared=${variables[$(bootstrap_id path_program_shared)]}
   local path_program_static=${variables[$(bootstrap_id path_program_static)]}
-  local path_standard=${variables[$(bootstrap_id path_standard)]}
+  local has_path_standard=${variables[$(bootstrap_id has_path_standard)]}
   local search_exclusive=${variables[$(bootstrap_id search_exclusive)]}
   local search_shared=${variables[$(bootstrap_id search_shared)]}
   local search_static=${variables[$(bootstrap_id search_static)]}
@@ -1263,8 +1263,8 @@ bootstrap_operation_build_prepare_defaults() {
     path_sources_object="sources/"
   fi
 
-  if [[ ${variables[$(bootstrap_id has-path_standard)]} != "yes" ]] ; then
-    path_standard="yes"
+  if [[ ${variables[$(bootstrap_id has-has_path_standard)]} != "yes" ]] ; then
+    has_path_standard="yes"
   fi
 
   if [[ ${variables[$(bootstrap_id has-search_shared)]} != "yes" ]] ; then
@@ -1635,11 +1635,11 @@ bootstrap_operation_build_prepare_paths() {
     path_headers=$(echo $path_headers | sed -e 's|//*|/|g' -e 's|/*$|/|')
   fi
 
-  if [[ ${variables[$(bootstrap_id path_standard-$mode)]} != "" ]] ; then
-    path_standard=${variables[$(bootstrap_id path_standard-$mode)]}
+  if [[ ${variables[$(bootstrap_id has_path_standard-$mode)]} != "" ]] ; then
+    has_path_standard=${variables[$(bootstrap_id has_path_standard-$mode)]}
   fi
 
-  if [[ $path_standard == "no" ]] ; then
+  if [[ $has_path_standard == "no" ]] ; then
     path_language=
   else
     if [[ ${variables[$(bootstrap_id path_language-$mode)]} != "" ]] ; then

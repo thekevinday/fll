@@ -66,6 +66,7 @@ Settings Specification:
     - flags_program_static: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     - flags_shared: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
     - flags_static: Must only contain any number of parameters supported by the compiler specified in "build_compiler".
+    - has_path_standard: Must only one of: "yes" or "no".
     - modes: Any valid word character, '-', or '+'.
     - modes_default: May only be a single complete Content word defined in "modes" Object.
     - path_headers: Must be a single valid path.
@@ -81,7 +82,6 @@ Settings Specification:
     - path_program_static: Must be a single valid path.
     - path_sources: Must only be a valid directory path or not specified.
     - path_sources_object: Must only be a valid directory path or not specified.
-    - path_standard: Must only one of: "yes" or "no".
     - preserve_path_headers: Must only be one of "yes" or "no".
     - process_post: Must contain only a single valid filename.
     - process_pre: Must contain only a single valid filename.

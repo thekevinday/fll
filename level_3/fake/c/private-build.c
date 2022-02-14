@@ -917,7 +917,7 @@ extern "C" {
       if (data_build.setting.build_sources_headers.used) {
         f_string_static_t path_sources = main->path_sources;
 
-        if (data_build.setting.path_standard) {
+        if (data_build.setting.has_path_standard) {
           path_sources = main->path_sources_c;
 
           if (data_build.setting.build_language == fake_build_language_type_cpp_e) {
@@ -1001,7 +1001,7 @@ extern "C" {
       specific,
     };
 
-    if (data_build->setting.path_standard) {
+    if (data_build->setting.has_path_standard) {
       if (data_build->setting.build_language == fake_build_language_type_c_e) {
         path_sources = &main->path_sources_c;
       }
@@ -1048,7 +1048,7 @@ extern "C" {
     f_string_dynamic_t *path_sources = &main->path_sources_object;
 
     // @fixme review this, these paths (like path_sources_object) need to be build on a per-settings basis rather than using a global value.
-    if (data_build->setting.path_standard) {
+    if (data_build->setting.has_path_standard) {
       if (data_build->setting.build_language == fake_build_language_type_c_e) {
         path_sources = &main->path_sources_object_c;
       }

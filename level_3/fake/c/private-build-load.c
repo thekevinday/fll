@@ -200,8 +200,8 @@ extern "C" {
     f_string_dynamics_t build_sources_object_shared = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_sources_object_static = f_string_dynamics_t_initialize;
     f_string_dynamics_t build_static = f_string_dynamics_t_initialize;
+    f_string_dynamics_t has_path_standard = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_headers = f_string_dynamics_t_initialize;
-    f_string_dynamics_t preserve_path_headers = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_language = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_library_script = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_library_shared = f_string_dynamics_t_initialize;
@@ -214,7 +214,7 @@ extern "C" {
     f_string_dynamics_t path_program_static = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_sources = f_string_dynamics_t_initialize;
     f_string_dynamics_t path_sources_object = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_standard = f_string_dynamics_t_initialize;
+    f_string_dynamics_t preserve_path_headers = f_string_dynamics_t_initialize;
     f_string_dynamics_t process_post = f_string_dynamics_t_initialize;
     f_string_dynamics_t process_pre = f_string_dynamics_t_initialize;
     f_string_dynamics_t search_exclusive = f_string_dynamics_t_initialize;
@@ -288,6 +288,7 @@ extern "C" {
       fake_build_setting_name_flags_program_static_s,
       fake_build_setting_name_flags_shared_s,
       fake_build_setting_name_flags_static_s,
+      fake_build_setting_name_has_path_standard_s,
       fake_build_setting_name_modes_s,
       fake_build_setting_name_modes_default_s,
       fake_build_setting_name_path_headers_s,
@@ -304,7 +305,6 @@ extern "C" {
       fake_build_setting_name_path_program_static_s,
       fake_build_setting_name_path_sources_s,
       fake_build_setting_name_path_sources_object_s,
-      fake_build_setting_name_path_standard_s,
       fake_build_setting_name_process_post_s,
       fake_build_setting_name_process_pre_s,
       fake_build_setting_name_search_exclusive_s,
@@ -379,10 +379,10 @@ extern "C" {
       &setting->flags_program_static,
       &setting->flags_shared,
       &setting->flags_static,
+      &has_path_standard,
       &setting->modes,
       &setting->modes_default,
       &path_headers,
-      &preserve_path_headers,
       &path_language,
       &path_library_script,
       &path_library_shared,
@@ -395,7 +395,7 @@ extern "C" {
       &path_program_static,
       &path_sources,
       &path_sources_object,
-      &path_standard,
+      &preserve_path_headers,
       &process_post,
       &process_pre,
       &search_exclusive,
@@ -660,8 +660,8 @@ extern "C" {
         fake_build_setting_name_build_sources_object_shared_s,
         fake_build_setting_name_build_sources_object_static_s,
         fake_build_setting_name_build_static_s,
+        fake_build_setting_name_has_path_standard_s,
         fake_build_setting_name_path_headers_s,
-        fake_build_setting_name_preserve_path_headers_s,
         fake_build_setting_name_path_language_s,
         fake_build_setting_name_path_library_script_s,
         fake_build_setting_name_path_library_shared_s,
@@ -674,7 +674,7 @@ extern "C" {
         fake_build_setting_name_path_program_static_s,
         fake_build_setting_name_path_sources_s,
         fake_build_setting_name_path_sources_object_s,
-        fake_build_setting_name_path_standard_s,
+        fake_build_setting_name_preserve_path_headers_s,
         fake_build_setting_name_process_post_s,
         fake_build_setting_name_process_pre_s,
         fake_build_setting_name_search_exclusive_s,
@@ -703,8 +703,8 @@ extern "C" {
         &build_sources_object_shared,
         &build_sources_object_static,
         &build_static,
+        &has_path_standard,
         &path_headers,
-        &preserve_path_headers,
         &path_language,
         &path_library_script,
         &path_library_shared,
@@ -717,7 +717,7 @@ extern "C" {
         &path_program_static,
         &path_sources,
         &path_sources_object,
-        &path_standard,
+        &preserve_path_headers,
         &process_post,
         &process_pre,
         &search_exclusive,
@@ -746,8 +746,8 @@ extern "C" {
         0,                                           // build_sources_object_shared
         0,                                           // build_sources_object_static
         &setting->build_static,                      // build_static
+        &setting->has_path_standard,                 // has_path_standard
         0,                                           // path_headers
-        &setting->preserve_path_headers,             // preserve_path_headers
         0,                                           // path_language
         0,                                           // path_library_script
         0,                                           // path_library_shared
@@ -760,7 +760,7 @@ extern "C" {
         0,                                           // path_program_static
         0,                                           // path_sources
         0,                                           // path_sources_object
-        &setting->path_standard,                     // path_standard
+        &setting->preserve_path_headers,             // preserve_path_headers
         0,                                           // process_post
         0,                                           // process_pre
         &setting->search_exclusive,                  // search_exclusive
@@ -779,8 +779,8 @@ extern "C" {
         &setting->build_sources_object_shared,       // build_sources_object_shared
         &setting->build_sources_object_static,       // build_sources_object_static
         0,                                           // build_static
+        0,                                           // has_path_standard
         &setting->path_headers,                      // path_headers
-        0,                                           // preserve_path_headers
         &setting->path_language,                     // path_language
         &setting->path_library_script,               // path_library_script
         &setting->path_library_shared,               // path_library_shared
@@ -793,7 +793,7 @@ extern "C" {
         &setting->path_program_static,               // path_program_static
         &setting->path_sources,                      // path_sources
         &setting->path_sources_object,               // path_sources_object
-        0,                                           // path_standard
+        0,                                           // preserve_path_headers
         &setting->process_post,                      // process_post
         &setting->process_pre,                       // process_pre
         0,                                           // search_exclusive
@@ -822,8 +822,8 @@ extern "C" {
         f_string_empty_s,                            // build_sources_object_shared
         f_string_empty_s,                            // build_sources_object_static
         f_string_empty_s,                            // build_static
+        fake_build_setting_default_yes_s,            // has_path_standard
         f_string_empty_s,                            // path_headers
-        f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // path_language
         fake_path_part_script_s,                     // path_library_script
         fake_path_part_shared_s,                     // path_library_shared
@@ -836,7 +836,7 @@ extern "C" {
         fake_path_part_static_s,                     // path_program_static
         f_string_empty_s,                            // path_sources
         f_string_empty_s,                            // path_sources_object
-        fake_build_setting_default_yes_s,            // path_standard
+        f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // process_post
         f_string_empty_s,                            // process_pre
         fake_build_setting_default_yes_s,            // search_exclusive
@@ -871,8 +871,8 @@ extern "C" {
         0,                                           // build_sources_object_shared
         0,                                           // build_sources_object_static
         0,                                           // build_static
+        0,                                           // has_path_standard
         0,                                           // path_headers
-        0,                                           // preserve_path_headers
         0,                                           // path_language
         0,                                           // path_library_script
         0,                                           // path_library_shared
@@ -885,7 +885,7 @@ extern "C" {
         0,                                           // path_program_static
         0,                                           // path_sources
         0,                                           // path_sources_object
-        0,                                           // path_standard
+        0,                                           // preserve_path_headers
         0,                                           // process_post
         0,                                           // process_pre
         0,                                           // search_exclusive
@@ -914,8 +914,8 @@ extern "C" {
         0,                                           // build_sources_object_shared
         0,                                           // build_sources_object_static
         0,                                           // build_static
+        0,                                           // has_path_standard
         0,                                           // path_headers
-        0,                                           // preserve_path_headers
         0,                                           // path_language
         0,                                           // path_library_script
         0,                                           // path_library_shared
@@ -928,7 +928,7 @@ extern "C" {
         0,                                           // path_program_static
         0,                                           // path_sources
         0,                                           // path_sources_object
-        0,                                           // path_standard
+        0,                                           // preserve_path_headers
         0,                                           // process_post
         0,                                           // process_pre
         0,                                           // search_exclusive
@@ -957,8 +957,8 @@ extern "C" {
         f_string_empty_s,                            // build_sources_object_shared
         f_string_empty_s,                            // build_sources_object_static
         f_string_empty_s,                            // build_static
+        f_string_empty_s,                            // has_path_standard
         f_string_empty_s,                            // path_headers
-        f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // path_language
         f_string_empty_s,                            // path_library_script
         f_string_empty_s,                            // path_library_shared
@@ -971,7 +971,7 @@ extern "C" {
         f_string_empty_s,                            // path_program_static
         f_string_empty_s,                            // path_sources
         f_string_empty_s,                            // path_sources_object
-        f_string_empty_s,                            // path_standard
+        f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // process_post
         f_string_empty_s,                            // process_pre
         f_string_empty_s,                            // search_exclusive
@@ -1001,8 +1001,8 @@ extern "C" {
         3,                                           // build_sources_object_shared
         3,                                           // build_sources_object_static
         1,                                           // build_static
+        1,                                           // has_path_standard
         2,                                           // path_headers
-        1,                                           // preserve_path_headers
         2,                                           // path_language
         2,                                           // path_library_script
         2,                                           // path_library_shared
@@ -1015,7 +1015,7 @@ extern "C" {
         2,                                           // path_program_static
         2,                                           // path_sources
         2,                                           // path_sources_object
-        1,                                           // path_standard
+        1,                                           // preserve_path_headers
         3,                                           // process_post
         3,                                           // process_pre
         1,                                           // search_exclusive
@@ -1266,8 +1266,8 @@ extern "C" {
     f_string_dynamics_resize(0, &build_sources_object_shared);
     f_string_dynamics_resize(0, &build_sources_object_static);
     f_string_dynamics_resize(0, &build_static);
+    f_string_dynamics_resize(0, &has_path_standard);
     f_string_dynamics_resize(0, &path_headers);
-    f_string_dynamics_resize(0, &preserve_path_headers);
     f_string_dynamics_resize(0, &path_language);
     f_string_dynamics_resize(0, &path_library_script);
     f_string_dynamics_resize(0, &path_library_shared);
@@ -1280,7 +1280,7 @@ extern "C" {
     f_string_dynamics_resize(0, &path_program_static);
     f_string_dynamics_resize(0, &path_sources);
     f_string_dynamics_resize(0, &path_sources_object);
-    f_string_dynamics_resize(0, &path_standard);
+    f_string_dynamics_resize(0, &preserve_path_headers);
     f_string_dynamics_resize(0, &process_post);
     f_string_dynamics_resize(0, &process_pre);
     f_string_dynamics_resize(0, &search_exclusive);

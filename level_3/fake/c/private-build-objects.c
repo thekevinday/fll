@@ -41,7 +41,7 @@ extern "C" {
 
     int result = main->child;
 
-    if (data_build->setting.path_standard) {
+    if (data_build->setting.has_path_standard) {
       path_sources = &main->path_sources_c;
 
       if (data_build->setting.build_language == fake_build_language_type_cpp_e) {
