@@ -13,8 +13,6 @@ extern "C" {
 #ifndef _di_fake_clean_operate_
   f_status_t fake_clean_operate(fake_main_t * const main) {
 
-    f_status_t status = F_none;
-
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
       flockfile(main->output.to.stream);
 
@@ -25,9 +23,7 @@ extern "C" {
       funlockfile(main->output.to.stream);
     }
 
-    if (fake_signal_received(main)) {
-      return F_status_set_error(F_interrupt);
-    }
+    f_status_t status = F_none;
 
     if (main->error.verbosity == f_console_verbosity_verbose_e) {
       status = f_directory_remove_custom(main->path_build, F_directory_descriptors_max_d, F_true, fake_clean_remove_recursively_verbosely);
@@ -36,15 +32,15 @@ extern "C" {
       status = f_directory_remove(main->path_build, F_directory_descriptors_max_d, F_true);
     }
 
-    if (F_status_set_fine(status) == F_file_found_not) {
+    if (F_status_set_fine(status) == F_file_found_not || F_status_set_fine(status) == F_directory) {
       if (main->error.verbosity == f_console_verbosity_verbose_e) {
-        flockfile(main->output.to.stream);
+        flockfile(main->warning.to.stream);
 
-        f_print_terminated("The build directory '", main->output.to.stream);
-        fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, main->path_build, main->context.set.notable);
-        fl_print_format("' does not exist.%r", main->output.to.stream, f_string_eol_s);
+        f_print_terminated("The build directory '", main->warning.to.stream);
+        fl_print_format("%[%Q%]", main->warning.to.stream, main->context.set.notable, main->path_build, main->context.set.notable);
+        fl_print_format("' does not exist.%r", main->warning.to.stream, f_string_eol_s);
 
-        funlockfile(main->output.to.stream);
+        funlockfile(main->warning.to.stream);
       }
 
       status = F_none;

@@ -309,7 +309,6 @@ extern "C" {
         }
         else if (main->operation == fake_operation_clean_e) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(main);
             validate_parameter_directories = F_false;
           }
 
