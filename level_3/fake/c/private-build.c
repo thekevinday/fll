@@ -864,7 +864,7 @@ extern "C" {
 #endif // _di_fake_build_objects_add_
 
 #ifndef _di_fake_build_operate_
-  f_status_t fake_build_operate(const f_string_static_t setting_file, fake_main_t *main) {
+  f_status_t fake_build_operate(fake_main_t * const main, const f_string_static_t setting_file) {
 
     if (fake_signal_received(main)) {
       return F_status_set_error(F_interrupt);
@@ -910,23 +910,32 @@ extern "C" {
       fake_build_program_script(main, &data_build, mode, stage.file_program_script, &status);
 
       if (data_build.setting.build_script) {
-        fake_build_copy(main, mode, fake_build_scripts_s, main->path_sources_script, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
+        f_string_static_t source = f_string_static_t_initialize;
+
+        fake_build_path_source_length(main, &data_build, &data_build.setting.path_sources, &source);
+
+        char source_string[source.used + fake_path_part_script_s.used + 1];
+        source.string = source_string;
+
+        fake_build_path_source_string(main, &data_build, &data_build.setting.path_sources, &source);
+
+        memcpy(source_string + source.used, fake_path_part_script_s.string, fake_path_part_script_s.used);
+        source.used += fake_path_part_script_s.used;
+        source.string[source.used] = 0;
+
+        fake_build_copy(main, mode, fake_build_scripts_s, source, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
       }
     }
     else {
       if (data_build.setting.build_sources_headers.used) {
-        f_string_static_t path_sources = main->path_sources;
+        f_string_static_t source = f_string_static_t_initialize;
 
-        if (data_build.setting.has_path_standard) {
-          path_sources = main->path_sources_c;
+        fake_build_path_source_length(main, &data_build, &data_build.setting.path_sources, &source);
 
-          if (data_build.setting.build_language == fake_build_language_type_cpp_e) {
-            path_sources = main->path_sources_cpp;
-          }
-        }
-        else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
-          path_sources = data_build.setting.path_sources;
-        }
+        char source_string[source.used + 1];
+        source.string = source_string;
+
+        fake_build_path_source_string(main, &data_build, &data_build.setting.path_sources, &source);
 
         f_string_static_t path_headers = f_string_static_t_initialize;
         path_headers.used = main->path_build_includes.used + data_build.setting.path_headers.used;
@@ -942,14 +951,14 @@ extern "C" {
 
         path_headers_string[path_headers.used] = 0;
 
-        fake_build_copy(main, mode, fake_build_header_files_s, path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.preserve_path_headers ? path_sources.used : 0, &status);
+        fake_build_copy(main, mode, fake_build_header_files_s, source, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.preserve_path_headers ? source.used : 0, &status);
 
         if (data_build.setting.build_shared) {
-          fake_build_copy(main, mode, fake_build_header_files_shared_s, path_sources, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.preserve_path_headers ? path_sources.used : 0, &status);
+          fake_build_copy(main, mode, fake_build_header_files_shared_s, source, path_headers, data_build.setting.build_sources_headers_shared, stage.file_sources_headers, data_build.setting.preserve_path_headers ? source.used : 0, &status);
         }
 
         if (data_build.setting.build_static) {
-          fake_build_copy(main, mode, fake_build_header_files_static_s, path_sources, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.preserve_path_headers ? path_sources.used : 0, &status);
+          fake_build_copy(main, mode, fake_build_header_files_static_s, source, path_headers, data_build.setting.build_sources_headers_static, stage.file_sources_headers, data_build.setting.preserve_path_headers ? source.used : 0, &status);
         }
       }
 
@@ -972,7 +981,20 @@ extern "C" {
       }
 
       if (data_build.setting.build_script) {
-        fake_build_copy(main, mode, fake_build_scripts_s, main->path_sources_script, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
+        f_string_static_t source = f_string_static_t_initialize;
+
+        fake_build_path_source_length(main, &data_build, &data_build.setting.path_sources, &source);
+
+        char source_string[source.used + fake_path_part_script_s.used + 1];
+        source.string = source_string;
+
+        fake_build_path_source_string(main, &data_build, &data_build.setting.path_sources, &source);
+
+        memcpy(source_string + source.used, fake_path_part_script_s.string, fake_path_part_script_s.used);
+        source.used += fake_path_part_script_s.used;
+        source.string[source.used] = 0;
+
+        fake_build_copy(main, mode, fake_build_scripts_s, source, main->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
       }
     }
 
@@ -985,6 +1007,64 @@ extern "C" {
   }
 #endif // _di_fake_build_operate_
 
+#ifndef _di_fake_build_path_source_length_
+  void fake_build_path_source_length(fake_main_t * const main, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) {
+
+    source->used = main->path_sources.used;
+
+    if (setting_path_source->used) {
+      source->used += setting_path_source->used;
+    }
+
+    if (data_build->setting.has_path_standard) {
+      if (data_build->setting.build_language == fake_build_language_type_c_e) {
+        source->used += fake_build_language_c_s.used;
+      }
+      else if (data_build->setting.build_language == fake_build_language_type_cpp_e) {
+        source->used += fake_build_language_cpp_s.used;
+      }
+      else if (data_build->setting.build_language == fake_build_language_type_bash_e) {
+        source->used += fake_build_language_bash_s.used;
+      }
+
+      source->used += f_path_separator_s.used;
+    }
+  }
+#endif // _di_fake_build_path_source_length_
+
+#ifndef _di_fake_build_path_source_string_
+  void fake_build_path_source_string(fake_main_t * const main, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) {
+
+    source->used = 0;
+
+    memcpy(source->string, main->path_sources.string, main->path_sources.used);
+    source->used += main->path_sources.used;
+
+    memcpy(source->string + source->used, setting_path_source->string, setting_path_source->used);
+    source->used += setting_path_source->used;
+
+    if (data_build->setting.has_path_standard) {
+      if (data_build->setting.build_language == fake_build_language_type_c_e) {
+        memcpy(source->string + source->used, fake_build_language_c_s.string, fake_build_language_c_s.used);
+        source->used += fake_build_language_c_s.used;
+      }
+      else if (data_build->setting.build_language == fake_build_language_type_cpp_e) {
+        memcpy(source->string + source->used, fake_build_language_cpp_s.string, fake_build_language_cpp_s.used);
+        source->used += fake_build_language_cpp_s.used;
+      }
+      else if (data_build->setting.build_language == fake_build_language_type_bash_e) {
+        memcpy(source->string + source->used, fake_build_language_bash_s.string, fake_build_language_bash_s.used);
+        source->used += fake_build_language_bash_s.used;
+      }
+
+      memcpy(source->string + source->used, f_path_separator_s.string, f_path_separator_s.used);
+      source->used += f_path_separator_s.used;
+    }
+
+    source->string[source->used] = 0;
+  }
+#endif // _di_fake_build_path_source_string_
+
 #ifndef _di_fake_build_sources_add_
   f_status_t fake_build_sources_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) {
 
@@ -992,26 +1072,12 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    f_string_static_t source = f_string_static_t_initialize;
-
-    // @fixme review this, these paths (like path_sources_object) need to be build on a per-settings basis rather than using a global value.
-    f_string_dynamic_t *path_sources = &main->path_sources;
     const f_string_statics_t *sources[2] = {
       generic,
       specific,
     };
 
-    if (data_build->setting.has_path_standard) {
-      if (data_build->setting.build_language == fake_build_language_type_c_e) {
-        path_sources = &main->path_sources_c;
-      }
-      else {
-        path_sources = &main->path_sources_cpp;
-      }
-    }
-    else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
-      path_sources = &data_build->setting.path_sources;
-    }
+    f_string_static_t source = f_string_static_t_initialize;
 
     for (; i < 2; ++i) {
 
@@ -1019,14 +1085,16 @@ extern "C" {
 
         if (!sources[i]->array[j].used) continue;
 
-        source.used = path_sources->used + sources[i]->array[j].used;
+        fake_build_path_source_length(main, data_build, &data_build->setting.path_sources, &source);
 
-        char source_string[source.used + 1];
+        char source_string[source.used + sources[i]->array[j].used + 1];
         source.string = source_string;
-        source_string[source.used] = 0;
 
-        memcpy(source_string, path_sources->string, path_sources->used);
-        memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
+        fake_build_path_source_string(main, data_build, &data_build->setting.path_sources, &source);
+
+        memcpy(source_string + source.used, sources[i]->array[j].string, sources[i]->array[j].used);
+        source.used += sources[i]->array[j].used;
+        source.string[source.used] = 0;
 
         status = fll_execute_arguments_add(source, arguments);
         if (F_status_is_error(status)) return status;
@@ -1042,45 +1110,34 @@ extern "C" {
 
     if (!generic->used && !specific->used) return F_none;
 
-    f_status_t status = F_none;
-
     f_string_static_t source = f_string_static_t_initialize;
-    f_string_dynamic_t *path_sources = &main->path_sources_object;
 
-    // @fixme review this, these paths (like path_sources_object) need to be build on a per-settings basis rather than using a global value.
-    if (data_build->setting.has_path_standard) {
-      if (data_build->setting.build_language == fake_build_language_type_c_e) {
-        path_sources = &main->path_sources_object_c;
-      }
-      else {
-        path_sources = &main->path_sources_object_cpp;
-      }
-    }
-    else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
-      path_sources = &data_build->setting.path_sources_object;
-    }
+    fake_build_path_source_length(main, data_build, &data_build->setting.path_sources_object, &source);
 
     if (specific->used) {
-      source.used = path_sources->used + specific->used;
+      source.used += specific->used;
     }
     else {
-      source.used = path_sources->used + generic->used;
+      source.used += generic->used;
     }
 
     char source_string[source.used + 1];
     source.string = source_string;
-    source_string[source.used] = 0;
 
-    memcpy(source_string, path_sources->string, path_sources->used);
+    fake_build_path_source_string(main, data_build, &data_build->setting.path_sources_object, &source);
 
     if (specific->used) {
-      memcpy(source_string + path_sources->used, specific->string, specific->used);
+      memcpy(source_string + source.used, specific->string, specific->used);
+      source.used += specific->used;
     }
     else {
-      memcpy(source_string + path_sources->used, generic->string, generic->used);
+      memcpy(source_string + source.used, generic->string, generic->used);
+      source.used += generic->used;
     }
 
-    status = fll_execute_arguments_add(source, arguments);
+    source_string[source.used] = 0;
+
+    const f_status_t status = fll_execute_arguments_add(source, arguments);
     if (F_status_is_error(status)) return status;
 
     return F_none;

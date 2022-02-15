@@ -37,6 +37,7 @@ extern "C" {
   const f_string_static_t fake_path_part_script_s = macro_f_string_static_t_initialize(FAKE_path_part_script_s, 0, FAKE_path_part_script_s_length);
   const f_string_static_t fake_path_part_settings_s = macro_f_string_static_t_initialize(FAKE_path_part_settings_s, 0, FAKE_path_part_settings_s_length);
   const f_string_static_t fake_path_part_shared_s = macro_f_string_static_t_initialize(FAKE_path_part_shared_s, 0, FAKE_path_part_shared_s_length);
+  const f_string_static_t fake_path_part_specifications_s = macro_f_string_static_t_initialize(FAKE_path_part_specifications_s, 0, FAKE_path_part_specifications_s_length);
   const f_string_static_t fake_path_part_stage_s = macro_f_string_static_t_initialize(FAKE_path_part_stage_s, 0, FAKE_path_part_stage_s_length);
   const f_string_static_t fake_path_part_static_s = macro_f_string_static_t_initialize(FAKE_path_part_static_s, 0, FAKE_path_part_static_s_length);
 #endif // _di_fake_path_
@@ -154,16 +155,6 @@ extern "C" {
     f_string_dynamic_resize(0, &main->path_licenses);
 
     f_string_dynamic_resize(0, &main->path_sources);
-    f_string_dynamic_resize(0, &main->path_sources_bash);
-    f_string_dynamic_resize(0, &main->path_sources_c);
-    f_string_dynamic_resize(0, &main->path_sources_cpp);
-    f_string_dynamic_resize(0, &main->path_sources_script);
-
-    f_string_dynamic_resize(0, &main->path_sources_object);
-    f_string_dynamic_resize(0, &main->path_sources_object_bash);
-    f_string_dynamic_resize(0, &main->path_sources_object_c);
-    f_string_dynamic_resize(0, &main->path_sources_object_cpp);
-    f_string_dynamic_resize(0, &main->path_sources_object_script);
 
     f_string_dynamic_resize(0, &main->path_work);
     f_string_dynamic_resize(0, &main->path_work_includes);

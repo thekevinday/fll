@@ -173,7 +173,7 @@ extern "C" {
       }
     }
 
-    fake_build_load_setting_defaults(main, setting, status);
+    fake_build_load_setting_override(main, setting, status);
   }
 #endif // _di_fake_build_load_setting_
 
@@ -292,7 +292,6 @@ extern "C" {
       fake_build_setting_name_modes_s,
       fake_build_setting_name_modes_default_s,
       fake_build_setting_name_path_headers_s,
-      fake_build_setting_name_preserve_path_headers_s,
       fake_build_setting_name_path_language_s,
       fake_build_setting_name_path_library_script_s,
       fake_build_setting_name_path_library_shared_s,
@@ -305,6 +304,7 @@ extern "C" {
       fake_build_setting_name_path_program_static_s,
       fake_build_setting_name_path_sources_s,
       fake_build_setting_name_path_sources_object_s,
+      fake_build_setting_name_preserve_path_headers_s,
       fake_build_setting_name_process_post_s,
       fake_build_setting_name_process_pre_s,
       fake_build_setting_name_search_exclusive_s,
@@ -834,7 +834,7 @@ extern "C" {
         fake_path_part_script_s,                     // path_program_script
         fake_path_part_shared_s,                     // path_program_shared
         fake_path_part_static_s,                     // path_program_static
-        f_string_empty_s,                            // path_sources
+        fake_default_path_sources_s,                 // path_sources
         f_string_empty_s,                            // path_sources_object
         f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // process_post
@@ -1299,53 +1299,29 @@ extern "C" {
   }
 #endif // _di_fake_build_load_setting_process_
 
-#ifndef _di_fake_build_load_setting_defaults_
-  void fake_build_load_setting_defaults(fake_main_t * const main, fake_build_setting_t * const setting, f_status_t * const status) {
+#ifndef _di_fake_build_load_setting_override_
+  void fake_build_load_setting_override(fake_main_t * const main, fake_build_setting_t * const setting, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return;
 
-    if (fake_signal_received(main)) {
-      *status = F_status_set_error(F_interrupt);
+    if (main->parameters.array[fake_parameter_path_sources_e].result == f_console_result_additional_e && main->path_sources.used) {
+      *status = f_string_dynamic_append_assure(f_path_separator_s, &main->path_sources);
 
-      return;
+      if (F_status_is_error(*status)) {
+        fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
+
+        return;
+      }
+
+      *status = f_string_dynamic_terminate_after(&main->path_sources);
+
+      if (F_status_is_error(*status)) {
+        fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
+
+        return;
+      }
     }
 
-    {
-      const f_string_static_t sources[] = {
-        fake_build_setting_default_version_s,
-        fake_build_setting_default_version_s,
-        fake_build_setting_default_version_s,
-      };
-
-      f_string_dynamic_t * const destinations[] = {
-        &setting->version_major,
-        &setting->version_minor,
-        &setting->version_micro,
-      };
-
-      for (uint8_t i = 0; i < 3; ++i) {
-
-        if (destinations[i]->used) continue;
-
-        *status = f_string_dynamic_append_assure(sources[i], destinations[i]);
-
-        if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
-          break;
-        }
-
-        *status = f_string_dynamic_terminate_after(destinations[i]);
-
-        if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-          break;
-        }
-      } // for
-    }
-
-    if (F_status_is_error(*status)) return;
-
-    // Override setting file when any of these are specified in the command line.
     if (main->parameters.array[fake_parameter_shared_disabled_e].result == f_console_result_found_e) {
       if (main->parameters.array[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
         if (main->parameters.array[fake_parameter_shared_enabled_e].location > main->parameters.array[fake_parameter_shared_disabled_e].location) {
@@ -1436,7 +1412,7 @@ extern "C" {
       }
     }
   }
-#endif // _di_fake_build_load_setting_defaults_
+#endif // _di_fake_build_load_setting_override_
 
 #ifndef _di_fake_build_load_stage_
   void fake_build_load_stage(fake_main_t * const main, const f_string_static_t settings_file, fake_build_stage_t * const stage, f_status_t * const status) {

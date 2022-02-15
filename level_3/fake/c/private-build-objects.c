@@ -37,20 +37,7 @@ extern "C" {
     f_string_static_t destination = f_string_static_t_initialize;
     f_string_static_t source = f_string_static_t_initialize;
 
-    const f_string_static_t *path_sources = &main->path_sources;
-
     int result = main->child;
-
-    if (data_build->setting.has_path_standard) {
-      path_sources = &main->path_sources_c;
-
-      if (data_build->setting.build_language == fake_build_language_type_cpp_e) {
-        path_sources = &main->path_sources_cpp;
-      }
-    }
-    else if (main->parameters.array[fake_parameter_path_sources_e].result != f_console_result_additional_e) {
-      path_sources = &data_build->setting.path_sources;
-    }
 
     const f_string_dynamics_t *sources[2] = {
       &data_build->setting.build_sources_library,
@@ -67,14 +54,17 @@ extern "C" {
 
         file_name.used = 0;
         destination_path.used = 0;
-        source.used = path_sources->used + sources[i]->array[j].used;
 
-        char source_string[source.used + 1];
+        fake_build_path_source_length(main, data_build, &data_build->setting.path_sources_object, &source);
+
+        char source_string[source.used + sources[i]->array[j].used + 1];
         source.string = source_string;
-        source_string[source.used] = 0;
 
-        memcpy(source_string, path_sources->string, path_sources->used);
-        memcpy(source_string + path_sources->used, sources[i]->array[j].string, sources[i]->array[j].used);
+        fake_build_path_source_string(main, data_build, &data_build->setting.path_sources_object, &source);
+
+        memcpy(source_string + source.used, sources[i]->array[j].string, sources[i]->array[j].used);
+        source.used += sources[i]->array[j].used;
+        source.string[source.used] = 0;
 
         *status = fake_build_get_file_name_without_extension(main, sources[i]->array[j], &file_name);
 

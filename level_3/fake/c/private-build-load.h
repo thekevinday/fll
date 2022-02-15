@@ -36,7 +36,7 @@ extern "C" {
 #endif // _di_fake_build_load_setting_
 
 /**
- * Assign build setting defaults.
+ * Override build settings based on command line arguments.
  *
  * @param main
  *   The main program data.
@@ -55,9 +55,9 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_build_load_setting_defaults_
-  extern void fake_build_load_setting_defaults(fake_main_t * const main, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
-#endif // _di_fake_build_load_setting_defaults_
+#ifndef _di_fake_build_load_setting_override_
+  extern void fake_build_load_setting_override(fake_main_t * const main, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
+#endif // _di_fake_build_load_setting_override_
 
 /**
  * Load and process the setting buffer.

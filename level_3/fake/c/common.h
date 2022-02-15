@@ -84,41 +84,43 @@ extern "C" {
  * These structures are hard-coded by their individual pieces to be constructed later on.
  */
 #ifndef _di_fake_path_
-  #define FAKE_path_part_bash_s      "bash"      F_path_separator_s
-  #define FAKE_path_part_build_s     "build"     F_path_separator_s
-  #define FAKE_path_part_c_s         "c"         F_path_separator_s
-  #define FAKE_path_part_cpp_s       "c++"       F_path_separator_s
-  #define FAKE_path_part_data_s      "data"      F_path_separator_s
-  #define FAKE_path_part_documents_s "documents" F_path_separator_s
-  #define FAKE_path_part_includes_s  "includes"  F_path_separator_s
-  #define FAKE_path_part_libraries_s "libraries" F_path_separator_s
-  #define FAKE_path_part_licenses_s  "licenses"  F_path_separator_s
-  #define FAKE_path_part_objects_s   "objects"   F_path_separator_s
-  #define FAKE_path_part_process_s   "process"   F_path_separator_s
-  #define FAKE_path_part_programs_s  "programs"  F_path_separator_s
-  #define FAKE_path_part_script_s    "script"    F_path_separator_s
-  #define FAKE_path_part_settings_s  "settings"  F_path_separator_s
-  #define FAKE_path_part_shared_s    "shared"    F_path_separator_s
-  #define FAKE_path_part_stage_s     "stage"     F_path_separator_s
-  #define FAKE_path_part_static_s    "static"    F_path_separator_s
+  #define FAKE_path_part_bash_s           "bash"           F_path_separator_s
+  #define FAKE_path_part_build_s          "build"          F_path_separator_s
+  #define FAKE_path_part_c_s              "c"              F_path_separator_s
+  #define FAKE_path_part_cpp_s            "c++"            F_path_separator_s
+  #define FAKE_path_part_data_s           "data"           F_path_separator_s
+  #define FAKE_path_part_documents_s      "documents"      F_path_separator_s
+  #define FAKE_path_part_includes_s       "includes"       F_path_separator_s
+  #define FAKE_path_part_libraries_s      "libraries"      F_path_separator_s
+  #define FAKE_path_part_licenses_s       "licenses"       F_path_separator_s
+  #define FAKE_path_part_objects_s        "objects"        F_path_separator_s
+  #define FAKE_path_part_process_s        "process"        F_path_separator_s
+  #define FAKE_path_part_programs_s       "programs"       F_path_separator_s
+  #define FAKE_path_part_script_s         "script"         F_path_separator_s
+  #define FAKE_path_part_settings_s       "settings"       F_path_separator_s
+  #define FAKE_path_part_shared_s         "shared"         F_path_separator_s
+  #define FAKE_path_part_specifications_s "specifications" F_path_separator_s
+  #define FAKE_path_part_stage_s          "stage"          F_path_separator_s
+  #define FAKE_path_part_static_s         "static"         F_path_separator_s
 
-  #define FAKE_path_part_bash_s_length      5 + F_path_separator_s_length
-  #define FAKE_path_part_build_s_length     6 + F_path_separator_s_length
-  #define FAKE_path_part_c_s_length         2 + F_path_separator_s_length
-  #define FAKE_path_part_cpp_s_length       4 + F_path_separator_s_length
-  #define FAKE_path_part_data_s_length      5 + F_path_separator_s_length
-  #define FAKE_path_part_documents_s_length 10 + F_path_separator_s_length
-  #define FAKE_path_part_includes_s_length  9 + F_path_separator_s_length
-  #define FAKE_path_part_libraries_s_length 10 + F_path_separator_s_length
-  #define FAKE_path_part_licenses_s_length  9 + F_path_separator_s_length
-  #define FAKE_path_part_objects_s_length   8 + F_path_separator_s_length
-  #define FAKE_path_part_process_s_length   8 + F_path_separator_s_length
-  #define FAKE_path_part_programs_s_length  9 + F_path_separator_s_length
-  #define FAKE_path_part_script_s_length    7 + F_path_separator_s_length
-  #define FAKE_path_part_settings_s_length  9 + F_path_separator_s_length
-  #define FAKE_path_part_shared_s_length    7 + F_path_separator_s_length
-  #define FAKE_path_part_stage_s_length     6 + F_path_separator_s_length
-  #define FAKE_path_part_static_s_length    7 + F_path_separator_s_length
+  #define FAKE_path_part_bash_s_length           4 + F_path_separator_s_length
+  #define FAKE_path_part_build_s_length          5 + F_path_separator_s_length
+  #define FAKE_path_part_c_s_length              1 + F_path_separator_s_length
+  #define FAKE_path_part_cpp_s_length            3 + F_path_separator_s_length
+  #define FAKE_path_part_data_s_length           4 + F_path_separator_s_length
+  #define FAKE_path_part_documents_s_length      9 + F_path_separator_s_length
+  #define FAKE_path_part_includes_s_length       8 + F_path_separator_s_length
+  #define FAKE_path_part_libraries_s_length      9 + F_path_separator_s_length
+  #define FAKE_path_part_licenses_s_length       8 + F_path_separator_s_length
+  #define FAKE_path_part_objects_s_length        7 + F_path_separator_s_length
+  #define FAKE_path_part_process_s_length        7 + F_path_separator_s_length
+  #define FAKE_path_part_programs_s_length       8 + F_path_separator_s_length
+  #define FAKE_path_part_script_s_length         6 + F_path_separator_s_length
+  #define FAKE_path_part_settings_s_length       8 + F_path_separator_s_length
+  #define FAKE_path_part_shared_s_length         6 + F_path_separator_s_length
+  #define FAKE_path_part_specifications_s_length 14 + F_path_separator_s_length
+  #define FAKE_path_part_stage_s_length          5 + F_path_separator_s_length
+  #define FAKE_path_part_static_s_length         6 + F_path_separator_s_length
 
   extern const f_string_static_t fake_path_part_bash_s;
   extern const f_string_static_t fake_path_part_build_s;
@@ -135,6 +137,7 @@ extern "C" {
   extern const f_string_static_t fake_path_part_script_s;
   extern const f_string_static_t fake_path_part_settings_s;
   extern const f_string_static_t fake_path_part_shared_s;
+  extern const f_string_static_t fake_path_part_specifications_s;
   extern const f_string_static_t fake_path_part_stage_s;
   extern const f_string_static_t fake_path_part_static_s;
 #endif // _di_fake_path_
@@ -507,16 +510,6 @@ extern "C" {
     f_string_dynamic_t path_licenses;
 
     f_string_dynamic_t path_sources;
-    f_string_dynamic_t path_sources_bash;
-    f_string_dynamic_t path_sources_c;
-    f_string_dynamic_t path_sources_cpp;
-    f_string_dynamic_t path_sources_script;
-
-    f_string_dynamic_t path_sources_object;
-    f_string_dynamic_t path_sources_object_bash;
-    f_string_dynamic_t path_sources_object_c;
-    f_string_dynamic_t path_sources_object_cpp;
-    f_string_dynamic_t path_sources_object_script;
 
     f_string_dynamic_t path_work;
     f_string_dynamic_t path_work_includes;
@@ -556,15 +549,6 @@ extern "C" {
       0, \
       0, \
       0, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \

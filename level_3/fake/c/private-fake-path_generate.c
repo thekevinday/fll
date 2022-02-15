@@ -20,15 +20,11 @@ extern "C" {
       const f_string_dynamic_t *parameters_source[] = {
         &main->path_build,
         &main->path_data,
-        &main->path_sources,
-        &main->path_sources_object,
       };
 
       const uint8_t parameters_size[] = {
         7,
         2,
-        4,
-        4,
       };
 
       f_string_dynamic_t *parameters_value_0[] = {
@@ -46,28 +42,12 @@ extern "C" {
         &main->path_data_settings,
       };
 
-      f_string_dynamic_t *parameters_value_2[] = {
-        &main->path_sources_bash,
-        &main->path_sources_c,
-        &main->path_sources_cpp,
-        &main->path_sources_script,
-      };
-
-      f_string_dynamic_t *parameters_value_3[] = {
-        &main->path_sources_object_bash,
-        &main->path_sources_object_c,
-        &main->path_sources_object_cpp,
-        &main->path_sources_object_script,
-      };
-
       f_string_dynamic_t **const parameters_value[] = {
         parameters_value_0,
         parameters_value_1,
-        parameters_value_2,
-        parameters_value_3,
       };
 
-      for (i = 0; i < 4; ++i) {
+      for (i = 0; i < 2; ++i) {
 
         // Initialize all string lengths to 0.
         for (uint8_t j = 0; j < parameters_size[i]; ++j) {
@@ -97,14 +77,6 @@ extern "C" {
         fake_path_part_settings_s,
         fake_path_part_documents_s,
         fake_path_part_licenses_s,
-        fake_path_part_bash_s,
-        fake_path_part_c_s,
-        fake_path_part_cpp_s,
-        fake_path_part_script_s,
-        fake_path_part_bash_s,
-        fake_path_part_c_s,
-        fake_path_part_cpp_s,
-        fake_path_part_script_s,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
@@ -119,17 +91,9 @@ extern "C" {
         &main->path_data_settings,
         &main->path_documents,
         &main->path_licenses,
-        &main->path_sources_bash,
-        &main->path_sources_c,
-        &main->path_sources_cpp,
-        &main->path_sources_script,
-        &main->path_sources_object_bash,
-        &main->path_sources_object_c,
-        &main->path_sources_object_cpp,
-        &main->path_sources_object_script,
       };
 
-      for (i = 0; i < 19; ++i) {
+      for (i = 0; i < 11; ++i) {
 
         status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
@@ -408,11 +372,9 @@ extern "C" {
         &main->path_build_stage,
         &main->path_data_build,
         &main->path_data_settings,
+        &main->path_documents,
         &main->path_licenses,
-        &main->path_sources_bash,
-        &main->path_sources_c,
-        &main->path_sources_cpp,
-        &main->path_sources_script,
+        &main->path_sources,
         &main->path_work_includes,
         &main->path_work_libraries,
         &main->path_work_libraries_script,
@@ -424,6 +386,8 @@ extern "C" {
         &main->path_work_programs_static,
         &main->file_data_build_defines,
         &main->file_data_build_dependencies,
+        &main->file_data_build_process_post_s,
+        &main->file_data_build_process_pre_s,
         &main->file_data_build_fakefile,
         &main->file_data_build_settings,
         &main->file_documents_readme,

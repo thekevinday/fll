@@ -334,32 +334,28 @@ extern "C" {
       const uint8_t parameters_id[] = {
         fake_parameter_path_build_e,
         fake_parameter_path_data_e,
-        fake_parameter_path_sources_e,
         fake_parameter_path_work_e,
       };
 
       const f_string_static_t parameters_name[] = {
         fake_long_path_build_s,
         fake_long_path_data_s,
-        fake_long_path_sources_s,
         fake_long_path_work_s,
       };
 
       const f_string_static_t parameter_defaults[] = {
         fake_default_path_build_s,
         fake_default_path_data_s,
-        fake_default_path_sources_s,
         fake_default_path_work_s,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
         &main->path_build,
         &main->path_data,
-        &main->path_sources,
         &main->path_work,
       };
 
-      for (uint8_t i = 0; i < 4; ++i) {
+      for (uint8_t i = 0; i < 3; ++i) {
 
         if (main->parameters.array[parameters_id[i]].result == f_console_result_found_e) {
           fake_print_error_parameter_missing_value(main, parameters_name[i]);

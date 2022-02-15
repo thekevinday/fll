@@ -304,7 +304,7 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            status = fake_build_operate(f_string_empty_s, main);
+            status = fake_build_operate(main, f_string_empty_s);
           }
         }
         else if (main->operation == fake_operation_clean_e) {

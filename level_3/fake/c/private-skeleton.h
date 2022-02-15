@@ -44,7 +44,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_directory_create_
-  extern f_status_t fake_skeleton_operate_directory_create(fake_main_t * const main, const f_string_dynamic_t path) F_attribute_visibility_internal_d;
+  extern f_status_t fake_skeleton_operate_directory_create(fake_main_t * const main, const f_string_static_t path) F_attribute_visibility_internal_d;
 #endif // _di_fake_skeleton_operate_directory_create_
 
 /**
@@ -67,8 +67,42 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_file_create_
-  extern f_status_t fake_skeleton_operate_file_create(fake_main_t * const main, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) F_attribute_visibility_internal_d;
+  extern f_status_t fake_skeleton_operate_file_create(fake_main_t * const main, const f_string_static_t path, const bool executable, const f_string_static_t content) F_attribute_visibility_internal_d;
 #endif // _di_fake_skeleton_operate_file_create_
+
+/**
+ * Calculate the length of the sources path so that it can be used to manually construct a static string.
+ *
+ * @param main
+ *   The main program data.
+ * @param partial
+ *   The partial path string, such as "bash".
+ * @param source
+ *   The static string.
+ *   The path_sources.string is not expected to be defined at this point.
+ *   The path_sources.used is updated.
+ *   The path_sources.size is ignored.
+ */
+#ifndef _di_fake_skeleton_path_source_length_
+  extern void fake_skeleton_path_source_length(fake_main_t * const main, const f_string_static_t *partial, f_string_static_t * const source) F_attribute_visibility_internal_d;
+#endif // _di_fake_skeleton_path_source_length_
+
+/**
+ * Construct a static string array of the sources path.
+ *
+ * @param main
+ *   The main program data.
+ * @param partial
+ *   The partial path string, such as "bash".
+ * @param source
+ *   The static string.
+ *   The path_sources.string is expected to be defined and set to a size from path_sources.used + 1.
+ *   The path_sources.used is updated.
+ *   The path_sources.size is ignored.
+ */
+#ifndef _di_fake_skeleton_path_source_string_
+  extern void fake_skeleton_path_source_string(fake_main_t * const main, const f_string_static_t *partial, f_string_static_t * const source) F_attribute_visibility_internal_d;
+#endif // _di_fake_skeleton_path_source_string_
 
 #ifdef __cplusplus
 } // extern "C"

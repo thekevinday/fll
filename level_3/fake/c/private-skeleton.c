@@ -17,10 +17,44 @@ extern "C" {
 
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
       fll_print_format("%rGenerating skeleton structure.%r", main->output.to.stream, f_string_eol_s, f_string_eol_s);
+
+      if (main->output.verbosity == f_console_verbosity_verbose_e) {
+        fll_print_dynamic(f_string_eol_s, main->output.to.stream);
+      }
     }
 
     {
-      const f_string_dynamic_t *parameters_value[] = {
+      f_string_static_t sources = f_string_static_t_initialize;
+      f_string_static_t sources_bash = f_string_static_t_initialize;
+      f_string_static_t sources_c = f_string_static_t_initialize;
+      f_string_static_t sources_cpp = f_string_static_t_initialize;
+      f_string_static_t sources_script = f_string_static_t_initialize;
+
+      fake_skeleton_path_source_length(main, &f_string_empty_s, &sources);
+      fake_skeleton_path_source_length(main, &fake_path_part_bash_s, &sources_bash);
+      fake_skeleton_path_source_length(main, &fake_path_part_c_s, &sources_c);
+      fake_skeleton_path_source_length(main, &fake_path_part_cpp_s, &sources_cpp);
+      fake_skeleton_path_source_length(main, &fake_path_part_script_s, &sources_script);
+
+      char sources_string[sources.used + 1];
+      char sources_bash_string[sources_bash.used + 1];
+      char sources_c_string[sources_c.used + 1];
+      char sources_cpp_string[sources_cpp.used + 1];
+      char sources_script_string[sources_script.used + 1];
+
+      sources.string = sources_string;
+      sources_bash.string = sources_bash_string;
+      sources_c.string = sources_c_string;
+      sources_cpp.string = sources_cpp_string;
+      sources_script.string = sources_script_string;
+
+      fake_skeleton_path_source_string(main, &f_string_empty_s, &sources);
+      fake_skeleton_path_source_string(main, &fake_path_part_bash_s, &sources_bash);
+      fake_skeleton_path_source_string(main, &fake_path_part_c_s, &sources_c);
+      fake_skeleton_path_source_string(main, &fake_path_part_cpp_s, &sources_cpp);
+      fake_skeleton_path_source_string(main, &fake_path_part_script_s, &sources_script);
+
+      const f_string_static_t *parameters_value[] = {
         &main->path_build,
         &main->path_data,
         &main->path_data_build,
@@ -28,9 +62,11 @@ extern "C" {
         &main->path_documents,
         &main->path_licenses,
         &main->path_sources,
-        &main->path_sources_bash,
-        &main->path_sources_c,
-        &main->path_sources_cpp,
+        &sources,
+        &sources_bash,
+        &sources_c,
+        &sources_cpp,
+        &sources_script,
         &main->path_work,
         &main->path_work_includes,
         &main->path_work_libraries,
@@ -41,9 +77,10 @@ extern "C" {
         &main->path_work_programs_script,
         &main->path_work_programs_shared,
         &main->path_work_programs_static,
+        &fake_path_part_specifications_s,
       };
 
-      for (uint8_t i = 0; i < 20; ++i) {
+      for (uint8_t i = 0; i < 23; ++i) {
 
         status = fake_skeleton_operate_directory_create(main, *parameters_value[i]);
 
@@ -53,6 +90,10 @@ extern "C" {
           return status;
         }
       } // for
+
+      if (main->output.verbosity == f_console_verbosity_verbose_e) {
+        fll_print_dynamic(f_string_eol_s, main->output.to.stream);
+      }
     }
 
     if (F_status_is_error_not(status)) {
@@ -90,13 +131,11 @@ extern "C" {
 #endif // _di_fake_skeleton_operate_
 
 #ifndef _di_fake_skeleton_operate_directory_create_
-  f_status_t fake_skeleton_operate_directory_create(fake_main_t * const main, const f_string_dynamic_t path) {
-
-    f_status_t status = F_none;
+  f_status_t fake_skeleton_operate_directory_create(fake_main_t * const main, const f_string_static_t path) {
 
     if (!path.used) return F_none;
 
-    status = f_directory_exists(path);
+    f_status_t status = f_directory_exists(path);
 
     if (status == F_true) {
       if (main->error.verbosity == f_console_verbosity_verbose_e) {
@@ -154,7 +193,7 @@ extern "C" {
 #endif // _di_fake_skeleton_operate_directory_create_
 
 #ifndef _di_fake_skeleton_operate_file_create_
-  f_status_t fake_skeleton_operate_file_create(fake_main_t * const main, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) {
+  f_status_t fake_skeleton_operate_file_create(fake_main_t * const main, const f_string_static_t path, const bool executable, const f_string_static_t content) {
 
     f_status_t status = F_none;
 
@@ -240,6 +279,7 @@ extern "C" {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_write", F_true, path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
           f_file_stream_close(F_true, &file);
+
           return status;
         }
 
@@ -259,6 +299,31 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_skeleton_operate_file_create_
+
+#ifndef _di_fake_skeleton_path_source_length_
+  void fake_skeleton_path_source_length(fake_main_t * const main, const f_string_static_t *partial, f_string_static_t * const source) {
+
+    source->used = main->path_sources.used + fake_default_path_sources_s.used + partial->used;
+  }
+#endif // _di_fake_skeleton_path_source_length_
+
+#ifndef _di_fake_skeleton_path_source_string_
+  void fake_skeleton_path_source_string(fake_main_t * const main, const f_string_static_t *partial, f_string_static_t * const source) {
+
+    source->used = 0;
+
+    memcpy(source->string, main->path_sources.string, main->path_sources.used);
+    source->used += main->path_sources.used;
+
+    memcpy(source->string, fake_default_path_sources_s.string, fake_default_path_sources_s.used);
+    source->used += fake_default_path_sources_s.used;
+
+    memcpy(source->string + source->used, partial->string, partial->used);
+    source->used += partial->used;
+
+    source->string[source->used] = 0;
+  }
+#endif // _di_fake_skeleton_path_source_string_
 
 #ifdef __cplusplus
 } // extern "C"

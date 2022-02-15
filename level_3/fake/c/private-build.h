@@ -178,15 +178,14 @@ extern "C" {
   extern f_status_t fake_build_objects_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_objects_add_
 
-
 /**
  * Execute the build operation.
  *
+ * @param main
+ *   The main program data.
  * @param setting_file
  *   The name of the settings file to use.
  *   If setting_file.used is 0, then the default or program parameter supplied file is used.
- * @param main
- *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -194,8 +193,46 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_status_t fake_build_operate(const f_string_static_t setting_file, fake_main_t *main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_operate(fake_main_t * const main, const f_string_static_t setting_file) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_operate_
+
+/**
+ * Calculate the length of the sources path so that it can be used to manually construct a static string.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_build
+ *   The build data.
+ * @param setting_path_source
+ *   The source path from the build settings file.
+ * @param source
+ *   The static string.
+ *   The path_sources.string is not expected to be defined at this point.
+ *   The path_sources.used is updated.
+ *   The path_sources.size is ignored.
+ */
+#ifndef _di_fake_build_path_source_length_
+  extern void fake_build_path_source_length(fake_main_t * const main, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) F_attribute_visibility_internal_d;
+#endif // _di_fake_build_path_source_length_
+
+/**
+ * Construct a static string array of the sources path.
+ *
+ * @param main
+ *   The main program data.
+ * @param data_build
+ *   The build data.
+ * @param setting_path_source
+ *   The source path from the build settings file.
+ * @param source
+ *   The static string.
+ *   The path_sources.string is expected to be defined and set to a size from path_sources.used + 1.
+ *   The path_sources.used is updated.
+ *   The path_sources.size is ignored.
+ */
+#ifndef _di_fake_build_path_source_string_
+  extern void fake_build_path_source_string(fake_main_t * const main, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) F_attribute_visibility_internal_d;
+#endif // _di_fake_build_path_source_string_
 
 /**
  * Add the sources to the execute arguments array.
