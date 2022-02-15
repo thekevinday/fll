@@ -11,7 +11,7 @@ void test__f_type_array_cells_decrease_by__works(void **state) {
   f_cells_t data = f_cells_t_initialize;
 
   {
-    const f_status_t status = f_type_cells_resize(length, &data);
+    const f_status_t status = f_cells_resize(length, &data);
 
     assert_int_equal(status, F_none);
     assert_int_equal(data.used, 0);
@@ -19,7 +19,7 @@ void test__f_type_array_cells_decrease_by__works(void **state) {
   }
 
   {
-    const f_status_t status = f_type_cells_decrease_by(length, &data);
+    const f_status_t status = f_cells_decrease_by(length, &data);
 
     assert_int_equal(status, F_none);
     assert_int_equal(data.used, 0);
@@ -35,7 +35,7 @@ void test__f_type_array_cells_decrease_by__fails_on_invalid_parameter(void **sta
   f_cells_t data = f_cells_t_initialize;
 
   {
-    const f_status_t status = f_type_cells_decrease_by(length, 0);
+    const f_status_t status = f_cells_decrease_by(length, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
     assert_int_equal(data.used, 0);

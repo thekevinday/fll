@@ -16,7 +16,7 @@ void test__f_type_array_cellss_append__works(void **state) {
   const f_cell_t cell_1 = { row: 3, column: 4 };
 
   {
-    const f_status_t status = f_type_cellss_resize(length, &source);
+    const f_status_t status = f_cellss_resize(length, &source);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -26,7 +26,7 @@ void test__f_type_array_cellss_append__works(void **state) {
   {
     for (; source.used < length; ++source.used) {
 
-      const f_status_t status = f_type_cells_resize(length_inner, &source.array[source.used]);
+      const f_status_t status = f_cells_resize(length_inner, &source.array[source.used]);
 
       assert_int_equal(status, F_none);
 
@@ -36,7 +36,7 @@ void test__f_type_array_cellss_append__works(void **state) {
   }
 
   {
-    const f_status_t status = f_type_cellss_append(source, &destination);
+    const f_status_t status = f_cellss_append(source, &destination);
 
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, source.used);
@@ -74,7 +74,7 @@ void test__f_type_array_cellss_append__returns_data_not(void **state) {
   f_cellss_t destination = f_cells_t_initialize;
 
   {
-    const f_status_t status = f_type_cellss_resize(length, &source);
+    const f_status_t status = f_cellss_resize(length, &source);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -82,7 +82,7 @@ void test__f_type_array_cellss_append__returns_data_not(void **state) {
   }
 
   {
-    const f_status_t status = f_type_cellss_append(source, &destination);
+    const f_status_t status = f_cellss_append(source, &destination);
 
     assert_int_equal(status, F_data_not);
     assert_int_equal(destination.used, 0);
@@ -99,7 +99,7 @@ void test__f_type_array_cellss_append__fails_on_invalid_parameter(void **state) 
   f_cellss_t data = f_cells_t_initialize;
 
   {
-    const f_status_t status = f_type_cellss_append(data, 0);
+    const f_status_t status = f_cellss_append(data, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
     assert_int_equal(data.used, 0);

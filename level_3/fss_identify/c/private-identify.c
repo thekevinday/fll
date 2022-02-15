@@ -75,7 +75,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, name.used ? name : f_string_ascii_pipe_s, f_file_operation_read_s, name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
-      f_type_fll_ids_resize(0, &ids);
+      f_fll_ids_resize(0, &ids);
 
       return status;
     }
@@ -132,7 +132,7 @@ extern "C" {
       } // for
     }
 
-    f_type_fll_ids_resize(0, &ids);
+    f_fll_ids_resize(0, &ids);
 
     return F_none;
   }

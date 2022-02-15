@@ -31,9 +31,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_statuss_adjust_
-  extern f_status_t f_type_statuss_adjust(const f_array_length_t length, f_statuss_t *statuss);
-#endif // _di_f_type_statuss_adjust_
+#ifndef _di_f_statuss_adjust_
+  extern f_status_t f_statuss_adjust(const f_array_length_t length, f_statuss_t *statuss);
+#endif // _di_f_statuss_adjust_
 
 /**
  * Append the source statuss onto the destination.
@@ -51,9 +51,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statuss_append_
-  extern f_status_t f_type_statuss_append(const f_statuss_t source, f_statuss_t *destination);
-#endif // _di_f_type_statuss_append_
+#ifndef _di_f_statuss_append_
+  extern f_status_t f_statuss_append(const f_statuss_t source, f_statuss_t *destination);
+#endif // _di_f_statuss_append_
 
 /**
  * Resize the string statuss array to a smaller size.
@@ -74,9 +74,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_statuss_decimate_by_
-  extern f_status_t f_type_statuss_decimate_by(const f_array_length_t amount, f_statuss_t *statuss);
-#endif // _di_f_type_statuss_decimate_by_
+#ifndef _di_f_statuss_decimate_by_
+  extern f_status_t f_statuss_decimate_by(const f_array_length_t amount, f_statuss_t *statuss);
+#endif // _di_f_statuss_decimate_by_
 
 /**
  * Resize the string statuss array to a smaller size.
@@ -97,9 +97,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statuss_decrease_by_
-  extern f_status_t f_type_statuss_decrease_by(const f_array_length_t amount, f_statuss_t *statuss);
-#endif // _di_f_type_statuss_decrease_by_
+#ifndef _di_f_statuss_decrease_by_
+  extern f_status_t f_statuss_decrease_by(const f_array_length_t amount, f_statuss_t *statuss);
+#endif // _di_f_statuss_decrease_by_
 
 /**
  * Increase the size of the string statuss array, but only if necesary.
@@ -122,9 +122,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statuss_increase_
-  extern f_status_t f_type_statuss_increase(const uint16_t step, f_statuss_t *statuss);
-#endif // _di_f_type_statuss_increase_
+#ifndef _di_f_statuss_increase_
+  extern f_status_t f_statuss_increase(const uint16_t step, f_statuss_t *statuss);
+#endif // _di_f_statuss_increase_
 
 /**
  * Resize the string statuss array to a larger size.
@@ -147,9 +147,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statuss_increase_by_
-  extern f_status_t f_type_statuss_increase_by(const f_array_length_t amount, f_statuss_t *statuss);
-#endif // _di_f_type_statuss_increase_by_
+#ifndef _di_f_statuss_increase_by_
+  extern f_status_t f_statuss_increase_by(const f_array_length_t amount, f_statuss_t *statuss);
+#endif // _di_f_statuss_increase_by_
 
 /**
  * Resize the string statuss array.
@@ -166,9 +166,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statuss_resize_
-  extern f_status_t f_type_statuss_resize(const f_array_length_t length, f_statuss_t *statuss);
-#endif // _di_f_type_statuss_resize_
+#ifndef _di_f_statuss_resize_
+  extern f_status_t f_statuss_resize(const f_array_length_t length, f_statuss_t *statuss);
+#endif // _di_f_statuss_resize_
 
 /**
  * Resize the string statusss array.
@@ -186,9 +186,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_statusss_adjust_
-  extern f_status_t f_type_statusss_adjust(const f_array_length_t length, f_statusss_t *statusss);
-#endif // _di_f_type_statusss_adjust_
+#ifndef _di_f_statusss_adjust_
+  extern f_status_t f_statusss_adjust(const f_array_length_t length, f_statusss_t *statusss);
+#endif // _di_f_statusss_adjust_
 
 /**
  * Append the source statusss onto the destination.
@@ -206,9 +206,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statusss_append_
-  extern f_status_t f_type_statusss_append(const f_statusss_t source, f_statusss_t *destination);
-#endif // _di_f_type_statusss_append_
+#ifndef _di_f_statusss_append_
+  extern f_status_t f_statusss_append(const f_statusss_t source, f_statusss_t *destination);
+#endif // _di_f_statusss_append_
 
 /**
  * Resize the string statusss array.
@@ -226,9 +226,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_statusss_adjust_
-  extern f_status_t f_type_statusss_adjust(const f_array_length_t length, f_statusss_t *statusss);
-#endif // _di_f_type_statusss_adjust_
+#ifndef _di_f_statusss_adjust_
+  extern f_status_t f_statusss_adjust(const f_array_length_t length, f_statusss_t *statusss);
+#endif // _di_f_statusss_adjust_
 
 /**
  * Resize the string statusss array to a smaller size.
@@ -250,9 +250,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_statusss_decimate_by_
-  extern f_status_t f_type_statusss_decimate_by(const f_array_length_t amount, f_statusss_t *statusss);
-#endif // _di_f_type_statusss_decimate_by_
+#ifndef _di_f_statusss_decimate_by_
+  extern f_status_t f_statusss_decimate_by(const f_array_length_t amount, f_statusss_t *statusss);
+#endif // _di_f_statusss_decimate_by_
 
 /**
  * Resize the string statusss array to a smaller size.
@@ -274,9 +274,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statusss_decrease_by_
-  extern f_status_t f_type_statusss_decrease_by(const f_array_length_t amount, f_statusss_t *statusss);
-#endif // _di_f_type_statusss_decrease_by_
+#ifndef _di_f_statusss_decrease_by_
+  extern f_status_t f_statusss_decrease_by(const f_array_length_t amount, f_statusss_t *statusss);
+#endif // _di_f_statusss_decrease_by_
 
 /**
  * Increase the size of the string statusss array, but only if necessary.
@@ -299,9 +299,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statusss_increase_
-  extern f_status_t f_type_statusss_increase(const uint16_t step, f_statusss_t *statusss);
-#endif // _di_f_type_statusss_increase_
+#ifndef _di_f_statusss_increase_
+  extern f_status_t f_statusss_increase(const uint16_t step, f_statusss_t *statusss);
+#endif // _di_f_statusss_increase_
 
 /**
  * Resize the string statusss array to a larger size.
@@ -324,9 +324,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statusss_increase_by_
-  extern f_status_t f_type_statusss_increase_by(const f_array_length_t amount, f_statusss_t *statusss);
-#endif // _di_f_type_statusss_increase_by_
+#ifndef _di_f_statusss_increase_by_
+  extern f_status_t f_statusss_increase_by(const f_array_length_t amount, f_statusss_t *statusss);
+#endif // _di_f_statusss_increase_by_
 
 /**
  * Resize the string statusss array.
@@ -344,9 +344,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_statusss_resize_
-  extern f_status_t f_type_statusss_resize(const f_array_length_t length, f_statusss_t *statusss);
-#endif // _di_f_type_statusss_resize_
+#ifndef _di_f_statusss_resize_
+  extern f_status_t f_statusss_resize(const f_array_length_t length, f_statusss_t *statusss);
+#endif // _di_f_statusss_resize_
 
 #ifdef __cplusplus
 } // extern "C"

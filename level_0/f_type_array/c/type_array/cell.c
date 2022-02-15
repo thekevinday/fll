@@ -6,60 +6,60 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_type_cells_adjust_
-  f_status_t f_type_cells_adjust(const f_array_length_t length, f_cells_t *cells) {
+#ifndef _di_f_cells_adjust_
+  f_status_t f_cells_adjust(const f_array_length_t length, f_cells_t *cells) {
     #ifndef _di_level_0_parameter_checking_
       if (!cells) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_type_cells_adjust(length, cells);
+    return private_f_cells_adjust(length, cells);
   }
-#endif // _di_f_type_cells_adjust_
+#endif // _di_f_cells_adjust_
 
-#ifndef _di_f_type_cells_append_
-  f_status_t f_type_cells_append(const f_cells_t source, f_cells_t *destination) {
+#ifndef _di_f_cells_append_
+  f_status_t f_cells_append(const f_cells_t source, f_cells_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!source.used) return F_data_not;
 
-    return private_f_type_cells_append(source, destination);
+    return private_f_cells_append(source, destination);
   }
-#endif // _di_f_type_cells_append_
+#endif // _di_f_cells_append_
 
-#ifndef _di_f_type_cells_decimate_by_
-  f_status_t f_type_cells_decimate_by(const f_array_length_t amount, f_cells_t *cells) {
+#ifndef _di_f_cells_decimate_by_
+  f_status_t f_cells_decimate_by(const f_array_length_t amount, f_cells_t *cells) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!cells) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (cells->size - amount > 0) {
-      return private_f_type_cells_adjust(cells->size - amount, cells);
+      return private_f_cells_adjust(cells->size - amount, cells);
     }
 
-    return private_f_type_cells_adjust(0, cells);
+    return private_f_cells_adjust(0, cells);
   }
-#endif // _di_f_type_cells_decimate_by_
+#endif // _di_f_cells_decimate_by_
 
-#ifndef _di_f_type_cells_decrease_by_
-  f_status_t f_type_cells_decrease_by(const f_array_length_t amount, f_cells_t *cells) {
+#ifndef _di_f_cells_decrease_by_
+  f_status_t f_cells_decrease_by(const f_array_length_t amount, f_cells_t *cells) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!cells) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (cells->size - amount > 0) {
-      return private_f_type_cells_resize(cells->size - amount, cells);
+      return private_f_cells_resize(cells->size - amount, cells);
     }
 
-    return private_f_type_cells_resize(0, cells);
+    return private_f_cells_resize(0, cells);
   }
-#endif // _di_f_type_cells_decrease_by_
+#endif // _di_f_cells_decrease_by_
 
-#ifndef _di_f_type_cells_increase_
-  f_status_t f_type_cells_increase(const uint16_t step, f_cells_t *cells) {
+#ifndef _di_f_cells_increase_
+  f_status_t f_cells_increase(const uint16_t step, f_cells_t *cells) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!cells) return F_status_set_error(F_parameter);
@@ -76,15 +76,15 @@ extern "C" {
         size = F_array_length_t_size_d;
       }
 
-      return private_f_type_cells_resize(size, cells);
+      return private_f_cells_resize(size, cells);
     }
 
     return F_data_not;
   }
-#endif // _di_f_type_cells_increase_
+#endif // _di_f_cells_increase_
 
-#ifndef _di_f_type_cells_increase_by_
-  f_status_t f_type_cells_increase_by(const f_array_length_t amount, f_cells_t *cells) {
+#ifndef _di_f_cells_increase_by_
+  f_status_t f_cells_increase_by(const f_array_length_t amount, f_cells_t *cells) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!cells) return F_status_set_error(F_parameter);
@@ -95,35 +95,35 @@ extern "C" {
         return F_status_set_error(F_array_too_large);
       }
 
-      return private_f_type_cells_resize(cells->used + amount, cells);
+      return private_f_cells_resize(cells->used + amount, cells);
     }
 
     return F_data_not;
   }
-#endif // _di_f_type_cells_increase_by_
+#endif // _di_f_cells_increase_by_
 
-#ifndef _di_f_type_cells_resize_
-  f_status_t f_type_cells_resize(const f_array_length_t length, f_cells_t *cells) {
+#ifndef _di_f_cells_resize_
+  f_status_t f_cells_resize(const f_array_length_t length, f_cells_t *cells) {
     #ifndef _di_level_0_parameter_checking_
       if (!cells) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_type_cells_resize(length, cells);
+    return private_f_cells_resize(length, cells);
   }
-#endif // _di_f_type_cells_resize_
+#endif // _di_f_cells_resize_
 
-#ifndef _di_f_type_cellss_adjust_
-  f_status_t f_type_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss) {
+#ifndef _di_f_cellss_adjust_
+  f_status_t f_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss) {
     #ifndef _di_level_0_parameter_checking_
       if (!cellss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_type_cellss_adjust(length, cellss);
+    return private_f_cellss_adjust(length, cellss);
   }
-#endif // _di_f_type_cellss_adjust_
+#endif // _di_f_cellss_adjust_
 
-#ifndef _di_f_type_cellss_append_
-  f_status_t f_type_cellss_append(const f_cellss_t source, f_cellss_t *destination) {
+#ifndef _di_f_cellss_append_
+  f_status_t f_cellss_append(const f_cellss_t source, f_cellss_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -133,51 +133,51 @@ extern "C" {
     f_status_t status = F_none;
 
     if (destination->used + source.used > destination->size) {
-      status = private_f_type_cellss_resize(destination->used + source.used, destination);
+      status = private_f_cellss_resize(destination->used + source.used, destination);
       if (F_status_is_error(status)) return status;
     }
 
     for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
-      status = private_f_type_cells_append(source.array[i], &destination->array[destination->used]);
+      status = private_f_cells_append(source.array[i], &destination->array[destination->used]);
       if (F_status_is_error(status)) return status;
     } // for
 
     return F_none;
   }
-#endif // _di_f_type_cellss_append_
+#endif // _di_f_cellss_append_
 
-#ifndef _di_f_type_cellss_decimate_by_
-  f_status_t f_type_cellss_decimate_by(const f_array_length_t amount, f_cellss_t *cellss) {
+#ifndef _di_f_cellss_decimate_by_
+  f_status_t f_cellss_decimate_by(const f_array_length_t amount, f_cellss_t *cellss) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!cellss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (cellss->size - amount > 0) {
-      return private_f_type_cellss_adjust(cellss->size - amount, cellss);
+      return private_f_cellss_adjust(cellss->size - amount, cellss);
     }
 
-    return private_f_type_cellss_adjust(0, cellss);
+    return private_f_cellss_adjust(0, cellss);
   }
-#endif // _di_f_type_cellss_decimate_by_
+#endif // _di_f_cellss_decimate_by_
 
-#ifndef _di_f_type_cellss_decrease_by_
-  f_status_t f_type_cellss_decrease_by(const f_array_length_t amount, f_cellss_t *cellss) {
+#ifndef _di_f_cellss_decrease_by_
+  f_status_t f_cellss_decrease_by(const f_array_length_t amount, f_cellss_t *cellss) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!cellss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (cellss->size - amount > 0) {
-      return private_f_type_cellss_resize(cellss->size - amount, cellss);
+      return private_f_cellss_resize(cellss->size - amount, cellss);
     }
 
-    return private_f_type_cellss_resize(0, cellss);
+    return private_f_cellss_resize(0, cellss);
   }
-#endif // _di_f_type_cellss_decrease_by_
+#endif // _di_f_cellss_decrease_by_
 
-#ifndef _di_f_type_cellss_increase_
-  f_status_t f_type_cellss_increase(const uint16_t step, f_cellss_t *cellss) {
+#ifndef _di_f_cellss_increase_
+  f_status_t f_cellss_increase(const uint16_t step, f_cellss_t *cellss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!cellss) return F_status_set_error(F_parameter);
@@ -194,15 +194,15 @@ extern "C" {
         size = F_array_length_t_size_d;
       }
 
-      return private_f_type_cellss_resize(size, cellss);
+      return private_f_cellss_resize(size, cellss);
     }
 
     return F_data_not;
   }
-#endif // _di_f_type_cellss_increase_
+#endif // _di_f_cellss_increase_
 
-#ifndef _di_f_type_cellss_increase_by_
-  f_status_t f_type_cellss_increase_by(const f_array_length_t amount, f_cellss_t *cellss) {
+#ifndef _di_f_cellss_increase_by_
+  f_status_t f_cellss_increase_by(const f_array_length_t amount, f_cellss_t *cellss) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!cellss) return F_status_set_error(F_parameter);
@@ -213,22 +213,22 @@ extern "C" {
         return F_status_set_error(F_array_too_large);
       }
 
-      return private_f_type_cellss_resize(cellss->used + amount, cellss);
+      return private_f_cellss_resize(cellss->used + amount, cellss);
     }
 
     return F_data_not;
   }
-#endif // _di_f_type_cellss_increase_by_
+#endif // _di_f_cellss_increase_by_
 
-#ifndef _di_f_type_cellss_resize_
-  f_status_t f_type_cellss_resize(const f_array_length_t length, f_cellss_t *cellss) {
+#ifndef _di_f_cellss_resize_
+  f_status_t f_cellss_resize(const f_array_length_t length, f_cellss_t *cellss) {
     #ifndef _di_level_0_parameter_checking_
       if (!cellss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_type_cellss_resize(length, cellss);
+    return private_f_cellss_resize(length, cellss);
   }
-#endif // _di_f_type_cellss_resize_
+#endif // _di_f_cellss_resize_
 
 #ifdef __cplusplus
 } // extern "C"

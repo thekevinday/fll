@@ -406,7 +406,7 @@ extern "C" {
 
     f_string_ranges_resize(0, &objects);
     f_string_rangess_resize(0, &contents);
-    f_type_array_lengths_resize(0, &delimits);
+    f_array_lengths_resize(0, &delimits);
 
     data->cache.buffer_large.used = 0;
     data->cache.buffer_small.used = 0;

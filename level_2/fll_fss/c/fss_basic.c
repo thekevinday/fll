@@ -29,7 +29,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       if (objects_quoted) {
-        status = f_type_uint8s_increase(state.step_small, objects_quoted);
+        status = f_uint8s_increase(state.step_small, objects_quoted);
         if (F_status_is_error(status)) return status;
       }
 

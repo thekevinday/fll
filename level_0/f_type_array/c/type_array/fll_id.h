@@ -31,9 +31,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_fll_ids_adjust_
-  extern f_status_t f_type_fll_ids_adjust(const f_array_length_t length, f_fll_ids_t *ids);
-#endif // _di_f_type_fll_ids_adjust_
+#ifndef _di_f_fll_ids_adjust_
+  extern f_status_t f_fll_ids_adjust(const f_array_length_t length, f_fll_ids_t *ids);
+#endif // _di_f_fll_ids_adjust_
 
 /**
  * Append the source ids onto the destination.
@@ -51,9 +51,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_ids_append_
-  extern f_status_t f_type_fll_ids_append(const f_fll_ids_t source, f_fll_ids_t *destination);
-#endif // _di_f_type_fll_ids_append_
+#ifndef _di_f_fll_ids_append_
+  extern f_status_t f_fll_ids_append(const f_fll_ids_t source, f_fll_ids_t *destination);
+#endif // _di_f_fll_ids_append_
 
 /**
  * Resize the string ids array to a smaller size.
@@ -74,9 +74,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_fll_ids_decimate_by_
-  extern f_status_t f_type_fll_ids_decimate_by(const f_array_length_t amount, f_fll_ids_t *ids);
-#endif // _di_f_type_fll_ids_decimate_by_
+#ifndef _di_f_fll_ids_decimate_by_
+  extern f_status_t f_fll_ids_decimate_by(const f_array_length_t amount, f_fll_ids_t *ids);
+#endif // _di_f_fll_ids_decimate_by_
 
 /**
  * Resize the string ids array to a smaller size.
@@ -97,9 +97,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_ids_decrease_by_
-  extern f_status_t f_type_fll_ids_decrease_by(const f_array_length_t amount, f_fll_ids_t *ids);
-#endif // _di_f_type_fll_ids_decrease_by_
+#ifndef _di_f_fll_ids_decrease_by_
+  extern f_status_t f_fll_ids_decrease_by(const f_array_length_t amount, f_fll_ids_t *ids);
+#endif // _di_f_fll_ids_decrease_by_
 
 /**
  * Increase the size of the string ids array, but only if necesary.
@@ -122,9 +122,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_ids_increase_
-  extern f_status_t f_type_fll_ids_increase(const uint16_t step, f_fll_ids_t *ids);
-#endif // _di_f_type_fll_ids_increase_
+#ifndef _di_f_fll_ids_increase_
+  extern f_status_t f_fll_ids_increase(const uint16_t step, f_fll_ids_t *ids);
+#endif // _di_f_fll_ids_increase_
 
 /**
  * Resize the string ids array to a larger size.
@@ -147,9 +147,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_ids_increase_by_
-  extern f_status_t f_type_fll_ids_increase_by(const f_array_length_t amount, f_fll_ids_t *ids);
-#endif // _di_f_type_fll_ids_increase_by_
+#ifndef _di_f_fll_ids_increase_by_
+  extern f_status_t f_fll_ids_increase_by(const f_array_length_t amount, f_fll_ids_t *ids);
+#endif // _di_f_fll_ids_increase_by_
 
 /**
  * Resize the string ids array.
@@ -166,9 +166,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_ids_resize_
-  extern f_status_t f_type_fll_ids_resize(const f_array_length_t length, f_fll_ids_t *ids);
-#endif // _di_f_type_fll_ids_resize_
+#ifndef _di_f_fll_ids_resize_
+  extern f_status_t f_fll_ids_resize(const f_array_length_t length, f_fll_ids_t *ids);
+#endif // _di_f_fll_ids_resize_
 
 /**
  * Resize the string idss array.
@@ -186,9 +186,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_fll_idss_adjust_
-  extern f_status_t f_type_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss);
-#endif // _di_f_type_fll_idss_adjust_
+#ifndef _di_f_fll_idss_adjust_
+  extern f_status_t f_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss);
+#endif // _di_f_fll_idss_adjust_
 
 /**
  * Append the source idss onto the destination.
@@ -206,9 +206,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_idss_append_
-  extern f_status_t f_type_fll_idss_append(const f_fll_idss_t source, f_fll_idss_t *destination);
-#endif // _di_f_type_fll_idss_append_
+#ifndef _di_f_fll_idss_append_
+  extern f_status_t f_fll_idss_append(const f_fll_idss_t source, f_fll_idss_t *destination);
+#endif // _di_f_fll_idss_append_
 
 /**
  * Resize the string idss array.
@@ -226,9 +226,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_fll_idss_adjust_
-  extern f_status_t f_type_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss);
-#endif // _di_f_type_fll_idss_adjust_
+#ifndef _di_f_fll_idss_adjust_
+  extern f_status_t f_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss);
+#endif // _di_f_fll_idss_adjust_
 
 /**
  * Resize the string idss array to a smaller size.
@@ -250,9 +250,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_fll_idss_decimate_by_
-  extern f_status_t f_type_fll_idss_decimate_by(const f_array_length_t amount, f_fll_idss_t *idss);
-#endif // _di_f_type_fll_idss_decimate_by_
+#ifndef _di_f_fll_idss_decimate_by_
+  extern f_status_t f_fll_idss_decimate_by(const f_array_length_t amount, f_fll_idss_t *idss);
+#endif // _di_f_fll_idss_decimate_by_
 
 /**
  * Resize the string idss array to a smaller size.
@@ -274,9 +274,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_idss_decrease_by_
-  extern f_status_t f_type_fll_idss_decrease_by(const f_array_length_t amount, f_fll_idss_t *idss);
-#endif // _di_f_type_fll_idss_decrease_by_
+#ifndef _di_f_fll_idss_decrease_by_
+  extern f_status_t f_fll_idss_decrease_by(const f_array_length_t amount, f_fll_idss_t *idss);
+#endif // _di_f_fll_idss_decrease_by_
 
 /**
  * Increase the size of the string idss array, but only if necessary.
@@ -299,9 +299,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_idss_increase_
-  extern f_status_t f_type_fll_idss_increase(const uint16_t step, f_fll_idss_t *idss);
-#endif // _di_f_type_fll_idss_increase_
+#ifndef _di_f_fll_idss_increase_
+  extern f_status_t f_fll_idss_increase(const uint16_t step, f_fll_idss_t *idss);
+#endif // _di_f_fll_idss_increase_
 
 /**
  * Resize the string idss array to a larger size.
@@ -324,9 +324,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_idss_increase_by_
-  extern f_status_t f_type_fll_idss_increase_by(const f_array_length_t amount, f_fll_idss_t *idss);
-#endif // _di_f_type_fll_idss_increase_by_
+#ifndef _di_f_fll_idss_increase_by_
+  extern f_status_t f_fll_idss_increase_by(const f_array_length_t amount, f_fll_idss_t *idss);
+#endif // _di_f_fll_idss_increase_by_
 
 /**
  * Resize the string idss array.
@@ -344,9 +344,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_fll_idss_resize_
-  extern f_status_t f_type_fll_idss_resize(const f_array_length_t length, f_fll_idss_t *idss);
-#endif // _di_f_type_fll_idss_resize_
+#ifndef _di_f_fll_idss_resize_
+  extern f_status_t f_fll_idss_resize(const f_array_length_t length, f_fll_idss_t *idss);
+#endif // _di_f_fll_idss_resize_
 
 #ifdef __cplusplus
 } // extern "C"

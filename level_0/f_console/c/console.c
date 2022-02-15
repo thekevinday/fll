@@ -202,7 +202,7 @@ extern "C" {
       if (needs_value.used > 0) {
         i = needs_value.array[0];
 
-        status = f_type_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].values);
+        status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].values);
         if (F_status_is_error(status)) break;
 
         parameters->array[i].result = f_console_result_additional_e;
@@ -301,10 +301,10 @@ extern "C" {
               continue;
             }
 
-            status = f_type_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations);
+            status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations);
             if (F_status_is_error(status)) break;
 
-            status = f_type_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations_sub);
+            status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations_sub);
             if (F_status_is_error(status)) break;
 
             found = F_true;
@@ -325,7 +325,7 @@ extern "C" {
 
             if (parameters->array[i].values_total) {
               if (needs_value.used + parameters->array[i].values_total > needs_value.size) {
-                status = f_type_array_lengths_resize(needs_value.used + parameters->array[i].values_total, &needs_value);
+                status = f_array_lengths_resize(needs_value.used + parameters->array[i].values_total, &needs_value);
                 if (F_status_is_error(status)) break;
               }
 
@@ -353,10 +353,10 @@ extern "C" {
 
           if (strncmp(arguments.argv[location], parameters->array[i].symbol_other, parameters->arguments.array[location].used + 1) != 0) continue;
 
-          status = f_type_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations);
+          status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations);
           if (F_status_is_error(status)) break;
 
-          status = f_type_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations_sub);
+          status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations_sub);
           if (F_status_is_error(status)) break;
 
           parameters->array[i].locations.array[parameters->array[i].locations.used++] = location;
@@ -368,7 +368,7 @@ extern "C" {
 
           if (parameters->array[i].values_total) {
             if (needs_value.used + parameters->array[i].values_total > needs_value.size) {
-              status = f_type_array_lengths_resize(needs_value.used + parameters->array[i].values_total, &needs_value);
+              status = f_array_lengths_resize(needs_value.used + parameters->array[i].values_total, &needs_value);
               if (F_status_is_error(status)) break;
             }
 
@@ -388,7 +388,7 @@ extern "C" {
       if (!found) {
 
         // Populate list of remaining parameters->array that are not associated with anything.
-        status = f_type_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->remaining);
+        status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->remaining);
         if (F_status_is_error(status)) break;
 
         parameters->remaining.array[parameters->remaining.used++] = location;
@@ -406,7 +406,7 @@ extern "C" {
     } // for
 
     if (F_status_is_error(status)) {
-      f_type_array_lengths_resize(0, &needs_value);
+      f_array_lengths_resize(0, &needs_value);
 
       return status;
     }
@@ -418,7 +418,7 @@ extern "C" {
       status = F_none;
     }
 
-    f_type_array_lengths_resize(0, &needs_value);
+    f_array_lengths_resize(0, &needs_value);
 
     return status;
   }

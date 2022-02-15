@@ -408,10 +408,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamics_resize().
- *   Errors (with error bit) from: f_type_array_lengths_resize().
+ *   Errors (with error bit) from: f_array_lengths_resize().
  *
  * @see f_string_dynamics_resize()
- * @see f_type_array_lengths_resize()
+ * @see f_array_lengths_resize()
  */
 #ifndef _di_f_console_parameters_delete_
   extern f_status_t f_console_parameters_delete(f_console_parameters_t * const parameters);
@@ -429,10 +429,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamics_adjust().
- *   Errors (with error bit) from: f_type_array_lengths_adjust().
+ *   Errors (with error bit) from: f_array_lengths_adjust().
  *
  * @see f_string_dynamics_adjust()
- * @see f_type_array_lengths_adjust()
+ * @see f_array_lengths_adjust()
  */
 #ifndef _di_f_console_parameters_destroy_
   extern f_status_t f_console_parameters_destroy(f_console_parameters_t * const parameters);

@@ -31,12 +31,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
- * @see f_type_int64s_adjust()
- * @see f_type_int64s_decimate_by()
+ * @see f_int64s_adjust()
+ * @see f_int64s_decimate_by()
  */
-#if !defined(_di_f_type_int64s_adjust_) || !defined(_di_f_type_int64s_decimate_by_)
-  extern f_status_t private_f_type_int64s_adjust(const f_array_length_t length, f_int64s_t *int64s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int64s_adjust_) || !defined(_di_f_type_int64s_decimate_by_)
+#if !defined(_di_f_int64s_adjust_) || !defined(_di_f_int64s_decimate_by_)
+  extern f_status_t private_f_int64s_adjust(const f_array_length_t length, f_int64s_t *int64s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int64s_adjust_) || !defined(_di_f_int64s_decimate_by_)
 
 /**
  * Private implementation for appending the int64 array.
@@ -53,12 +53,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int64s_append()
- * @see f_type_int64ss_append()
+ * @see f_int64s_append()
+ * @see f_int64ss_append()
  */
-#if !defined(_di_f_type_int64s_append_) || !defined(_di_f_type_int64ss_append_)
-  extern f_status_t private_f_type_int64s_append(const f_int64s_t source, f_int64s_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int64s_append_) || !defined(_di_f_type_int64ss_append_)
+#if !defined(_di_f_int64s_append_) || !defined(_di_f_int64ss_append_)
+  extern f_status_t private_f_int64s_append(const f_int64s_t source, f_int64s_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int64s_append_) || !defined(_di_f_int64ss_append_)
 
 /**
  * Private implementation for resizing the int64s array.
@@ -76,14 +76,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int64s_resize()
- * @see f_type_int64s_append()
- * @see f_type_int64s_decimate_by()
- * @see f_type_int64ss_append()
+ * @see f_int64s_resize()
+ * @see f_int64s_append()
+ * @see f_int64s_decimate_by()
+ * @see f_int64ss_append()
  */
-#if !defined(_di_f_type_int64s_resize_) || !defined(_di_f_type_int64s_append_) || !defined(_di_f_type_int64s_decimate_by_) || !defined(_di_f_type_int64ss_append_)
-  extern f_status_t private_f_type_int64s_resize(const f_array_length_t length, f_int64s_t *int64s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int64s_resize_) || !defined(_di_f_type_int64s_append_) || !defined(_di_f_type_int64s_decimate_by_) || !defined(_di_f_type_int64ss_append_)
+#if !defined(_di_f_int64s_resize_) || !defined(_di_f_int64s_append_) || !defined(_di_f_int64s_decimate_by_) || !defined(_di_f_int64ss_append_)
+  extern f_status_t private_f_int64s_resize(const f_array_length_t length, f_int64s_t *int64s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int64s_resize_) || !defined(_di_f_int64s_append_) || !defined(_di_f_int64s_decimate_by_) || !defined(_di_f_int64ss_append_)
 
 /**
  * Private implementation for resizing the int64ss array.
@@ -106,12 +106,12 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  *
- * @see f_type_int64ss_adjust()
- * @see f_type_int64ss_decimate_by()
+ * @see f_int64ss_adjust()
+ * @see f_int64ss_decimate_by()
  */
-#if !defined(_di_f_type_int64ss_adjust_) || !defined(_di_f_type_int64ss_decimate_by_)
-  extern f_status_t private_f_type_int64ss_adjust(const f_array_length_t length, f_int64ss_t *int64ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int64ss_adjust_) || !defined(_di_f_type_int64ss_decimate_by_)
+#if !defined(_di_f_int64ss_adjust_) || !defined(_di_f_int64ss_decimate_by_)
+  extern f_status_t private_f_int64ss_adjust(const f_array_length_t length, f_int64ss_t *int64ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int64ss_adjust_) || !defined(_di_f_int64ss_decimate_by_)
 
 /**
  * Private implementation for resizing the int64ss array.
@@ -134,14 +134,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int64ss_decrease_by()
- * @see f_type_int64ss_increase()
- * @see f_type_int64ss_increase_by()
- * @see f_type_int64ss_resize()
+ * @see f_int64ss_decrease_by()
+ * @see f_int64ss_increase()
+ * @see f_int64ss_increase_by()
+ * @see f_int64ss_resize()
  */
-#if !defined(_di_f_type_int64ss_decrease_by_) || !defined(_di_f_type_int64ss_increase_) || !defined(_di_f_type_int64ss_increase_by_) || !defined(_di_f_type_int64ss_resize_)
-  extern f_status_t private_f_type_int64ss_resize(const f_array_length_t length, f_int64ss_t *int64ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int64ss_decrease_by_) || !defined(_di_f_type_int64ss_increase_) || !defined(_di_f_type_int64ss_increase_by_) || !defined(_di_f_type_int64ss_resize_)
+#if !defined(_di_f_int64ss_decrease_by_) || !defined(_di_f_int64ss_increase_) || !defined(_di_f_int64ss_increase_by_) || !defined(_di_f_int64ss_resize_)
+  extern f_status_t private_f_int64ss_resize(const f_array_length_t length, f_int64ss_t *int64ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int64ss_decrease_by_) || !defined(_di_f_int64ss_increase_) || !defined(_di_f_int64ss_increase_by_) || !defined(_di_f_int64ss_resize_)
 
 /**
  * Private implementation for resizing the uint64s array.
@@ -159,12 +159,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
- * @see f_type_uint64s_adjust()
- * @see f_type_uint64s_decimate_by()
+ * @see f_uint64s_adjust()
+ * @see f_uint64s_decimate_by()
  */
-#if !defined(_di_f_type_uint64s_adjust_) || !defined(_di_f_type_uint64s_decimate_by_)
-  extern f_status_t private_f_type_uint64s_adjust(const f_array_length_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint64s_adjust_) || !defined(_di_f_type_uint64s_decimate_by_)
+#if !defined(_di_f_uint64s_adjust_) || !defined(_di_f_uint64s_decimate_by_)
+  extern f_status_t private_f_uint64s_adjust(const f_array_length_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint64s_adjust_) || !defined(_di_f_uint64s_decimate_by_)
 
 /**
  * Private implementation for appending the uint64 array.
@@ -181,12 +181,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint64s_append()
- * @see f_type_uint64ss_append()
+ * @see f_uint64s_append()
+ * @see f_uint64ss_append()
  */
-#if !defined(_di_f_type_uint64s_append_) || !defined(_di_f_type_uint64ss_append_)
-  extern f_status_t private_f_type_uint64s_append(const f_uint64s_t source, f_uint64s_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint64s_append_) || !defined(_di_f_type_uint64ss_append_)
+#if !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64ss_append_)
+  extern f_status_t private_f_uint64s_append(const f_uint64s_t source, f_uint64s_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64ss_append_)
 
 /**
  * Private implementation for resizing the uint64s array.
@@ -204,14 +204,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint64s_resize()
- * @see f_type_uint64s_append()
- * @see f_type_uint64s_decimate_by()
- * @see f_type_uint64ss_append()
+ * @see f_uint64s_resize()
+ * @see f_uint64s_append()
+ * @see f_uint64s_decimate_by()
+ * @see f_uint64ss_append()
  */
-#if !defined(_di_f_type_uint64s_resize_) || !defined(_di_f_type_uint64s_append_) || !defined(_di_f_type_uint64s_decimate_by_) || !defined(_di_f_type_uint64ss_append_)
-  extern f_status_t private_f_type_uint64s_resize(const f_array_length_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint64s_resize_) || !defined(_di_f_type_uint64s_append_) || !defined(_di_f_type_uint64s_decimate_by_) || !defined(_di_f_type_uint64ss_append_)
+#if !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decimate_by_) || !defined(_di_f_uint64ss_append_)
+  extern f_status_t private_f_uint64s_resize(const f_array_length_t length, f_uint64s_t *uint64s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint64s_resize_) || !defined(_di_f_uint64s_append_) || !defined(_di_f_uint64s_decimate_by_) || !defined(_di_f_uint64ss_append_)
 
 /**
  * Private implementation for resizing the uint64ss array.
@@ -234,12 +234,12 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  *
- * @see f_type_uint64ss_adjust()
- * @see f_type_uint64ss_decimate_by()
+ * @see f_uint64ss_adjust()
+ * @see f_uint64ss_decimate_by()
  */
-#if !defined(_di_f_type_uint64ss_adjust_) || !defined(_di_f_type_uint64ss_decimate_by_)
-  extern f_status_t private_f_type_uint64ss_adjust(const f_array_length_t length, f_uint64ss_t *uint64ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint64ss_adjust_) || !defined(_di_f_type_uint64ss_decimate_by_)
+#if !defined(_di_f_uint64ss_adjust_) || !defined(_di_f_uint64ss_decimate_by_)
+  extern f_status_t private_f_uint64ss_adjust(const f_array_length_t length, f_uint64ss_t *uint64ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint64ss_adjust_) || !defined(_di_f_uint64ss_decimate_by_)
 
 /**
  * Private implementation for resizing the uint64ss array.
@@ -262,14 +262,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint64ss_decrease_by()
- * @see f_type_uint64ss_increase()
- * @see f_type_uint64ss_increase_by()
- * @see f_type_uint64ss_resize()
+ * @see f_uint64ss_decrease_by()
+ * @see f_uint64ss_increase()
+ * @see f_uint64ss_increase_by()
+ * @see f_uint64ss_resize()
  */
-#if !defined(_di_f_type_uint64ss_decrease_by_) || !defined(_di_f_type_uint64ss_increase_) || !defined(_di_f_type_uint64ss_increase_by_) || !defined(_di_f_type_uint64ss_resize_)
-  extern f_status_t private_f_type_uint64ss_resize(const f_array_length_t length, f_uint64ss_t *uint64ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint64ss_decrease_by_) || !defined(_di_f_type_uint64ss_increase_) || !defined(_di_f_type_uint64ss_increase_by_) || !defined(_di_f_type_uint64ss_resize_)
+#if !defined(_di_f_uint64ss_decrease_by_) || !defined(_di_f_uint64ss_increase_) || !defined(_di_f_uint64ss_increase_by_) || !defined(_di_f_uint64ss_resize_)
+  extern f_status_t private_f_uint64ss_resize(const f_array_length_t length, f_uint64ss_t *uint64ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint64ss_decrease_by_) || !defined(_di_f_uint64ss_increase_) || !defined(_di_f_uint64ss_increase_by_) || !defined(_di_f_uint64ss_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

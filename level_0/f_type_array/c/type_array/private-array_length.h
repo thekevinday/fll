@@ -31,12 +31,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
- * @see f_type_array_lengths_adjust()
- * @see f_type_array_lengths_decimate_by()
+ * @see f_array_lengths_adjust()
+ * @see f_array_lengths_decimate_by()
  */
-#if !defined(_di_f_type_array_lengths_adjust_) || !defined(_di_f_type_array_lengths_decimate_by_)
-  extern f_status_t private_f_type_array_lengths_adjust(const f_array_length_t length, f_array_lengths_t *lengths) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_array_lengths_adjust_) || !defined(_di_f_type_array_lengths_decimate_by_)
+#if !defined(_di_f_array_lengths_adjust_) || !defined(_di_f_array_lengths_decimate_by_)
+  extern f_status_t private_f_array_lengths_adjust(const f_array_length_t length, f_array_lengths_t *lengths) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_array_lengths_adjust_) || !defined(_di_f_array_lengths_decimate_by_)
 
 /**
  * Private implementation for appending the array_length array.
@@ -53,12 +53,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_array_lengths_append()
- * @see f_type_array_lengthss_append()
+ * @see f_array_lengths_append()
+ * @see f_array_lengthss_append()
  */
-#if !defined(_di_f_type_array_lengths_append_) || !defined(_di_f_type_array_lengthss_append_)
-  extern f_status_t private_f_type_array_lengths_append(const f_array_lengths_t source, f_array_lengths_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_array_lengths_append_) || !defined(_di_f_type_array_lengthss_append_)
+#if !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengthss_append_)
+  extern f_status_t private_f_array_lengths_append(const f_array_lengths_t source, f_array_lengths_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengthss_append_)
 
 /**
  * Private implementation for resizing the array_lengths array.
@@ -76,14 +76,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_array_lengths_resize()
- * @see f_type_array_lengths_append()
- * @see f_type_array_lengths_decimate_by()
- * @see f_type_array_lengthss_append()
+ * @see f_array_lengths_resize()
+ * @see f_array_lengths_append()
+ * @see f_array_lengths_decimate_by()
+ * @see f_array_lengthss_append()
  */
-#if !defined(_di_f_type_array_lengths_resize_) || !defined(_di_f_type_array_lengths_append_) || !defined(_di_f_type_array_lengths_decimate_by_) || !defined(_di_f_type_array_lengthss_append_)
-  extern f_status_t private_f_type_array_lengths_resize(const f_array_length_t length, f_array_lengths_t *lengths) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_array_lengths_resize_) || !defined(_di_f_type_array_lengths_append_) || !defined(_di_f_type_array_lengths_decimate_by_) || !defined(_di_f_type_array_lengthss_append_)
+#if !defined(_di_f_array_lengths_resize_) || !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengths_decimate_by_) || !defined(_di_f_array_lengthss_append_)
+  extern f_status_t private_f_array_lengths_resize(const f_array_length_t length, f_array_lengths_t *lengths) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_array_lengths_resize_) || !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengths_decimate_by_) || !defined(_di_f_array_lengthss_append_)
 
 /**
  * Private implementation for resizing the lengthss array.
@@ -106,12 +106,12 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  *
- * @see f_type_array_lengthss_adjust()
- * @see f_type_array_lengthss_decimate_by()
+ * @see f_array_lengthss_adjust()
+ * @see f_array_lengthss_decimate_by()
  */
-#if !defined(_di_f_type_array_lengthss_adjust_) || !defined(_di_f_type_array_lengthss_decimate_by_)
-  extern f_status_t private_f_type_array_lengthss_adjust(const f_array_length_t length, f_array_lengthss_t *lengthss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_array_lengthss_adjust_) || !defined(_di_f_type_array_lengthss_decimate_by_)
+#if !defined(_di_f_array_lengthss_adjust_) || !defined(_di_f_array_lengthss_decimate_by_)
+  extern f_status_t private_f_array_lengthss_adjust(const f_array_length_t length, f_array_lengthss_t *lengthss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_array_lengthss_adjust_) || !defined(_di_f_array_lengthss_decimate_by_)
 
 /**
  * Private implementation for resizing the lengthss array.
@@ -134,14 +134,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_array_lengthss_decrease_by()
- * @see f_type_array_lengthss_increase()
- * @see f_type_array_lengthss_increase_by()
- * @see f_type_array_lengthss_resize()
+ * @see f_array_lengthss_decrease_by()
+ * @see f_array_lengthss_increase()
+ * @see f_array_lengthss_increase_by()
+ * @see f_array_lengthss_resize()
  */
-#if !defined(_di_f_type_array_lengthss_decrease_by_) || !defined(_di_f_type_array_lengthss_increase_) || !defined(_di_f_type_array_lengthss_increase_by_) || !defined(_di_f_type_array_lengthss_resize_)
-  extern f_status_t private_f_type_array_lengthss_resize(const f_array_length_t length, f_array_lengthss_t *lengthss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_array_lengthss_decrease_by_) || !defined(_di_f_type_array_lengthss_increase_) || !defined(_di_f_type_array_lengthss_increase_by_) || !defined(_di_f_type_array_lengthss_resize_)
+#if !defined(_di_f_array_lengthss_decrease_by_) || !defined(_di_f_array_lengthss_increase_) || !defined(_di_f_array_lengthss_increase_by_) || !defined(_di_f_array_lengthss_resize_)
+  extern f_status_t private_f_array_lengthss_resize(const f_array_length_t length, f_array_lengthss_t *lengthss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_array_lengthss_decrease_by_) || !defined(_di_f_array_lengthss_increase_) || !defined(_di_f_array_lengthss_increase_by_) || !defined(_di_f_array_lengthss_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

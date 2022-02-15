@@ -30,12 +30,12 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       if (objects_quoted) {
-        status = f_type_uint8s_increase(state.step_small, objects_quoted);
+        status = f_uint8s_increase(state.step_small, objects_quoted);
         if (F_status_is_error(status)) return status;
       }
 
       if (contents_quoted) {
-        status = f_type_uint8ss_increase(state.step_small, contents_quoted);
+        status = f_uint8ss_increase(state.step_small, contents_quoted);
         if (F_status_is_error(status)) return status;
       }
 
@@ -61,7 +61,7 @@ extern "C" {
             ++contents->used;
 
             if (contents_quoted) {
-              status2 = f_type_uint8s_increase(state.step_small, &contents_quoted->array[contents_quoted->used]);
+              status2 = f_uint8s_increase(state.step_small, &contents_quoted->array[contents_quoted->used]);
               if (F_status_is_error(status2)) return status2;
 
               ++contents_quoted->used;
@@ -89,7 +89,7 @@ extern "C" {
           found_data = F_true;
 
           if (contents_quoted) {
-            status2 = f_type_uint8s_increase(state.step_small, &contents_quoted->array[contents_quoted->used]);
+            status2 = f_uint8s_increase(state.step_small, &contents_quoted->array[contents_quoted->used]);
             if (F_status_is_error(status2)) return status2;
 
             quoted_content = &contents_quoted->array[contents_quoted->used];

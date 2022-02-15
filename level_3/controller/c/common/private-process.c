@@ -67,7 +67,7 @@ extern "C" {
 
     f_string_dynamics_resize(0, &process->path_pids);
 
-    f_type_array_lengths_resize(0, &process->stack);
+    f_array_lengths_resize(0, &process->stack);
   }
 #endif // _di_controller_process_delete_simple_
 

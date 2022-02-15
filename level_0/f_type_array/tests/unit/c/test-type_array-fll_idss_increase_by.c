@@ -11,7 +11,7 @@ void test__f_type_array_fll_idss_increase_by__works(void **state) {
   f_fll_idss_t data = f_fll_ids_t_initialize;
 
   {
-    const f_status_t status = f_type_fll_idss_resize(length, &data);
+    const f_status_t status = f_fll_idss_resize(length, &data);
 
     assert_int_equal(status, F_none);
     assert_int_equal(data.used, 0);
@@ -21,7 +21,7 @@ void test__f_type_array_fll_idss_increase_by__works(void **state) {
   {
     data.used = length;
 
-    const f_status_t status = f_type_fll_idss_increase_by(length, &data);
+    const f_status_t status = f_fll_idss_increase_by(length, &data);
 
     assert_int_equal(status, F_none);
     assert_int_equal(data.used, length);
@@ -37,7 +37,7 @@ void test__f_type_array_fll_idss_increase_by__fails_on_invalid_parameter(void **
   f_fll_idss_t data = f_fll_ids_t_initialize;
 
   {
-    const f_status_t status = f_type_fll_idss_increase_by(length, 0);
+    const f_status_t status = f_fll_idss_increase_by(length, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
     assert_int_equal(data.used, 0);

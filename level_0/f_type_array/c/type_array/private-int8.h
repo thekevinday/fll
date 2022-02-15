@@ -31,12 +31,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
- * @see f_type_int8s_adjust()
- * @see f_type_int8s_decimate_by()
+ * @see f_int8s_adjust()
+ * @see f_int8s_decimate_by()
  */
-#if !defined(_di_f_type_int8s_adjust_) || !defined(_di_f_type_int8s_decimate_by_)
-  extern f_status_t private_f_type_int8s_adjust(const f_array_length_t length, f_int8s_t *int8s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int8s_adjust_) || !defined(_di_f_type_int8s_decimate_by_)
+#if !defined(_di_f_int8s_adjust_) || !defined(_di_f_int8s_decimate_by_)
+  extern f_status_t private_f_int8s_adjust(const f_array_length_t length, f_int8s_t *int8s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int8s_adjust_) || !defined(_di_f_int8s_decimate_by_)
 
 /**
  * Private implementation for appending the int8 array.
@@ -53,12 +53,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int8s_append()
- * @see f_type_int8ss_append()
+ * @see f_int8s_append()
+ * @see f_int8ss_append()
  */
-#if !defined(_di_f_type_int8s_append_) || !defined(_di_f_type_int8ss_append_)
-  extern f_status_t private_f_type_int8s_append(const f_int8s_t source, f_int8s_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int8s_append_) || !defined(_di_f_type_int8ss_append_)
+#if !defined(_di_f_int8s_append_) || !defined(_di_f_int8ss_append_)
+  extern f_status_t private_f_int8s_append(const f_int8s_t source, f_int8s_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int8s_append_) || !defined(_di_f_int8ss_append_)
 
 /**
  * Private implementation for resizing the int8s array.
@@ -76,14 +76,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int8s_resize()
- * @see f_type_int8s_append()
- * @see f_type_int8s_decimate_by()
- * @see f_type_int8ss_append()
+ * @see f_int8s_resize()
+ * @see f_int8s_append()
+ * @see f_int8s_decimate_by()
+ * @see f_int8ss_append()
  */
-#if !defined(_di_f_type_int8s_resize_) || !defined(_di_f_type_int8s_append_) || !defined(_di_f_type_int8s_decimate_by_) || !defined(_di_f_type_int8ss_append_)
-  extern f_status_t private_f_type_int8s_resize(const f_array_length_t length, f_int8s_t *int8s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int8s_resize_) || !defined(_di_f_type_int8s_append_) || !defined(_di_f_type_int8s_decimate_by_) || !defined(_di_f_type_int8ss_append_)
+#if !defined(_di_f_int8s_resize_) || !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_decimate_by_) || !defined(_di_f_int8ss_append_)
+  extern f_status_t private_f_int8s_resize(const f_array_length_t length, f_int8s_t *int8s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int8s_resize_) || !defined(_di_f_int8s_append_) || !defined(_di_f_int8s_decimate_by_) || !defined(_di_f_int8ss_append_)
 
 /**
  * Private implementation for resizing the int8ss array.
@@ -106,12 +106,12 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  *
- * @see f_type_int8ss_adjust()
- * @see f_type_int8ss_decimate_by()
+ * @see f_int8ss_adjust()
+ * @see f_int8ss_decimate_by()
  */
-#if !defined(_di_f_type_int8ss_adjust_) || !defined(_di_f_type_int8ss_decimate_by_)
-  extern f_status_t private_f_type_int8ss_adjust(const f_array_length_t length, f_int8ss_t *int8ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int8ss_adjust_) || !defined(_di_f_type_int8ss_decimate_by_)
+#if !defined(_di_f_int8ss_adjust_) || !defined(_di_f_int8ss_decimate_by_)
+  extern f_status_t private_f_int8ss_adjust(const f_array_length_t length, f_int8ss_t *int8ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int8ss_adjust_) || !defined(_di_f_int8ss_decimate_by_)
 
 /**
  * Private implementation for resizing the int8ss array.
@@ -134,14 +134,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int8ss_decrease_by()
- * @see f_type_int8ss_increase()
- * @see f_type_int8ss_increase_by()
- * @see f_type_int8ss_resize()
+ * @see f_int8ss_decrease_by()
+ * @see f_int8ss_increase()
+ * @see f_int8ss_increase_by()
+ * @see f_int8ss_resize()
  */
-#if !defined(_di_f_type_int8ss_decrease_by_) || !defined(_di_f_type_int8ss_increase_) || !defined(_di_f_type_int8ss_increase_by_) || !defined(_di_f_type_int8ss_resize_)
-  extern f_status_t private_f_type_int8ss_resize(const f_array_length_t length, f_int8ss_t *int8ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int8ss_decrease_by_) || !defined(_di_f_type_int8ss_increase_) || !defined(_di_f_type_int8ss_increase_by_) || !defined(_di_f_type_int8ss_resize_)
+#if !defined(_di_f_int8ss_decrease_by_) || !defined(_di_f_int8ss_increase_) || !defined(_di_f_int8ss_increase_by_) || !defined(_di_f_int8ss_resize_)
+  extern f_status_t private_f_int8ss_resize(const f_array_length_t length, f_int8ss_t *int8ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int8ss_decrease_by_) || !defined(_di_f_int8ss_increase_) || !defined(_di_f_int8ss_increase_by_) || !defined(_di_f_int8ss_resize_)
 
 /**
  * Private implementation for resizing the uint8s array.
@@ -159,12 +159,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
- * @see f_type_uint8s_adjust()
- * @see f_type_uint8s_decimate_by()
+ * @see f_uint8s_adjust()
+ * @see f_uint8s_decimate_by()
  */
-#if !defined(_di_f_type_uint8s_adjust_) || !defined(_di_f_type_uint8s_decimate_by_)
-  extern f_status_t private_f_type_uint8s_adjust(const f_array_length_t length, f_uint8s_t *uint8s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint8s_adjust_) || !defined(_di_f_type_uint8s_decimate_by_)
+#if !defined(_di_f_uint8s_adjust_) || !defined(_di_f_uint8s_decimate_by_)
+  extern f_status_t private_f_uint8s_adjust(const f_array_length_t length, f_uint8s_t *uint8s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint8s_adjust_) || !defined(_di_f_uint8s_decimate_by_)
 
 /**
  * Private implementation for appending the uint8 array.
@@ -181,12 +181,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint8s_append()
- * @see f_type_uint8ss_append()
+ * @see f_uint8s_append()
+ * @see f_uint8ss_append()
  */
-#if !defined(_di_f_type_uint8s_append_) || !defined(_di_f_type_uint8ss_append_)
-  extern f_status_t private_f_type_uint8s_append(const f_uint8s_t source, f_uint8s_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint8s_append_) || !defined(_di_f_type_uint8ss_append_)
+#if !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8ss_append_)
+  extern f_status_t private_f_uint8s_append(const f_uint8s_t source, f_uint8s_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8ss_append_)
 
 /**
  * Private implementation for resizing the uint8s array.
@@ -204,14 +204,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint8s_resize()
- * @see f_type_uint8s_append()
- * @see f_type_uint8s_decimate_by()
- * @see f_type_uint8ss_append()
+ * @see f_uint8s_resize()
+ * @see f_uint8s_append()
+ * @see f_uint8s_decimate_by()
+ * @see f_uint8ss_append()
  */
-#if !defined(_di_f_type_uint8s_resize_) || !defined(_di_f_type_uint8s_append_) || !defined(_di_f_type_uint8s_decimate_by_) || !defined(_di_f_type_uint8ss_append_)
-  extern f_status_t private_f_type_uint8s_resize(const f_array_length_t length, f_uint8s_t *uint8s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint8s_resize_) || !defined(_di_f_type_uint8s_append_) || !defined(_di_f_type_uint8s_decimate_by_) || !defined(_di_f_type_uint8ss_append_)
+#if !defined(_di_f_uint8s_resize_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8s_decimate_by_) || !defined(_di_f_uint8ss_append_)
+  extern f_status_t private_f_uint8s_resize(const f_array_length_t length, f_uint8s_t *uint8s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint8s_resize_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8s_decimate_by_) || !defined(_di_f_uint8ss_append_)
 
 /**
  * Private implementation for resizing the uint8ss array.
@@ -234,12 +234,12 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  *
- * @see f_type_uint8ss_adjust()
- * @see f_type_uint8ss_decimate_by()
+ * @see f_uint8ss_adjust()
+ * @see f_uint8ss_decimate_by()
  */
-#if !defined(_di_f_type_uint8ss_adjust_) || !defined(_di_f_type_uint8ss_decimate_by_)
-  extern f_status_t private_f_type_uint8ss_adjust(const f_array_length_t length, f_uint8ss_t *uint8ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint8ss_adjust_) || !defined(_di_f_type_uint8ss_decimate_by_)
+#if !defined(_di_f_uint8ss_adjust_) || !defined(_di_f_uint8ss_decimate_by_)
+  extern f_status_t private_f_uint8ss_adjust(const f_array_length_t length, f_uint8ss_t *uint8ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint8ss_adjust_) || !defined(_di_f_uint8ss_decimate_by_)
 
 /**
  * Private implementation for resizing the uint8ss array.
@@ -262,14 +262,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint8ss_decrease_by()
- * @see f_type_uint8ss_increase()
- * @see f_type_uint8ss_increase_by()
- * @see f_type_uint8ss_resize()
+ * @see f_uint8ss_decrease_by()
+ * @see f_uint8ss_increase()
+ * @see f_uint8ss_increase_by()
+ * @see f_uint8ss_resize()
  */
-#if !defined(_di_f_type_uint8ss_decrease_by_) || !defined(_di_f_type_uint8ss_increase_) || !defined(_di_f_type_uint8ss_increase_by_) || !defined(_di_f_type_uint8ss_resize_)
-  extern f_status_t private_f_type_uint8ss_resize(const f_array_length_t length, f_uint8ss_t *uint8ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint8ss_decrease_by_) || !defined(_di_f_type_uint8ss_increase_) || !defined(_di_f_type_uint8ss_increase_by_) || !defined(_di_f_type_uint8ss_resize_)
+#if !defined(_di_f_uint8ss_decrease_by_) || !defined(_di_f_uint8ss_increase_) || !defined(_di_f_uint8ss_increase_by_) || !defined(_di_f_uint8ss_resize_)
+  extern f_status_t private_f_uint8ss_resize(const f_array_length_t length, f_uint8ss_t *uint8ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint8ss_decrease_by_) || !defined(_di_f_uint8ss_increase_) || !defined(_di_f_uint8ss_increase_by_) || !defined(_di_f_uint8ss_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -48,20 +48,20 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < parameters->used; ++i) {
 
-      status = f_type_array_lengths_resize(0, &parameters->array[i].locations);
+      status = f_array_lengths_resize(0, &parameters->array[i].locations);
       if (F_status_is_error(status)) return status;
 
-      status = f_type_array_lengths_resize(0, &parameters->array[i].locations_sub);
+      status = f_array_lengths_resize(0, &parameters->array[i].locations_sub);
       if (F_status_is_error(status)) return status;
 
-      status = f_type_array_lengths_resize(0, &parameters->array[i].values);
+      status = f_array_lengths_resize(0, &parameters->array[i].values);
       if (F_status_is_error(status)) return status;
     } // for
 
     status = f_string_dynamics_resize(0, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
-    status = f_type_array_lengths_resize(0, &parameters->remaining);
+    status = f_array_lengths_resize(0, &parameters->remaining);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -78,20 +78,20 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < parameters->used; ++i) {
 
-      status = f_type_array_lengths_adjust(0, &parameters->array[i].locations);
+      status = f_array_lengths_adjust(0, &parameters->array[i].locations);
       if (F_status_is_error(status)) return status;
 
-      status = f_type_array_lengths_adjust(0, &parameters->array[i].locations_sub);
+      status = f_array_lengths_adjust(0, &parameters->array[i].locations_sub);
       if (F_status_is_error(status)) return status;
 
-      status = f_type_array_lengths_adjust(0, &parameters->array[i].values);
+      status = f_array_lengths_adjust(0, &parameters->array[i].values);
       if (F_status_is_error(status)) return status;
     } // for
 
     status = f_string_dynamics_adjust(0, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
-    status = f_type_array_lengths_adjust(0, &parameters->remaining);
+    status = f_array_lengths_adjust(0, &parameters->remaining);
     if (F_status_is_error(status)) return status;
 
     return F_none;

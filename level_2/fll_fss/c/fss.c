@@ -120,7 +120,7 @@ extern "C" {
 
     do {
       if (ids && ids->used + 1 > ids->size) {
-        status = f_type_fll_ids_increase(F_fss_default_allocation_step_small_d, ids);
+        status = f_fll_ids_increase(F_fss_default_allocation_step_small_d, ids);
       }
 
       if (F_status_is_error_not(status)) {
@@ -149,7 +149,7 @@ extern "C" {
       }
 
       if (ids) {
-        status = f_type_fll_ids_increase(F_fss_default_allocation_step_small_d, ids);
+        status = f_fll_ids_increase(F_fss_default_allocation_step_small_d, ids);
 
         if (F_status_is_error(status)) {
           if (ids) {
@@ -281,7 +281,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            status = f_type_array_lengths_increase_by(content->used, indexs[j]);
+            status = f_array_lengths_increase_by(content->used, indexs[j]);
             if (F_status_is_error(status)) return status;
           }
         }

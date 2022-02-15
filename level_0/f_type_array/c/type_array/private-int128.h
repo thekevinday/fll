@@ -31,12 +31,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
- * @see f_type_int128s_adjust()
- * @see f_type_int128s_decimate_by()
+ * @see f_int128s_adjust()
+ * @see f_int128s_decimate_by()
  */
-#if !defined(_di_f_type_int128s_adjust_) || !defined(_di_f_type_int128s_decimate_by_)
-  extern f_status_t private_f_type_int128s_adjust(const f_array_length_t length, f_int128s_t *int128s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int128s_adjust_) || !defined(_di_f_type_int128s_decimate_by_)
+#if !defined(_di_f_int128s_adjust_) || !defined(_di_f_int128s_decimate_by_)
+  extern f_status_t private_f_int128s_adjust(const f_array_length_t length, f_int128s_t *int128s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int128s_adjust_) || !defined(_di_f_int128s_decimate_by_)
 
 /**
  * Private implementation for appending the int128 array.
@@ -53,12 +53,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int128s_append()
- * @see f_type_int128ss_append()
+ * @see f_int128s_append()
+ * @see f_int128ss_append()
  */
-#if !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128ss_append_)
-  extern f_status_t private_f_type_int128s_append(const f_int128s_t source, f_int128s_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128ss_append_)
+#if !defined(_di_f_int128s_append_) || !defined(_di_f_int128ss_append_)
+  extern f_status_t private_f_int128s_append(const f_int128s_t source, f_int128s_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int128s_append_) || !defined(_di_f_int128ss_append_)
 
 /**
  * Private implementation for resizing the int128s array.
@@ -76,14 +76,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int128s_resize()
- * @see f_type_int128s_append()
- * @see f_type_int128s_decimate_by()
- * @see f_type_int128ss_append()
+ * @see f_int128s_resize()
+ * @see f_int128s_append()
+ * @see f_int128s_decimate_by()
+ * @see f_int128ss_append()
  */
-#if !defined(_di_f_type_int128s_resize_) || !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128s_decimate_by_) || !defined(_di_f_type_int128ss_append_)
-  extern f_status_t private_f_type_int128s_resize(const f_array_length_t length, f_int128s_t *int128s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int128s_resize_) || !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128s_decimate_by_) || !defined(_di_f_type_int128ss_append_)
+#if !defined(_di_f_int128s_resize_) || !defined(_di_f_int128s_append_) || !defined(_di_f_int128s_decimate_by_) || !defined(_di_f_int128ss_append_)
+  extern f_status_t private_f_int128s_resize(const f_array_length_t length, f_int128s_t *int128s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int128s_resize_) || !defined(_di_f_int128s_append_) || !defined(_di_f_int128s_decimate_by_) || !defined(_di_f_int128ss_append_)
 
 /**
  * Private implementation for resizing the int128ss array.
@@ -106,12 +106,12 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  *
- * @see f_type_int128ss_adjust()
- * @see f_type_int128ss_decimate_by()
+ * @see f_int128ss_adjust()
+ * @see f_int128ss_decimate_by()
  */
-#if !defined(_di_f_type_int128ss_adjust_) || !defined(_di_f_type_int128ss_decimate_by_)
-  extern f_status_t private_f_type_int128ss_adjust(const f_array_length_t length, f_int128ss_t *int128ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int128ss_adjust_) || !defined(_di_f_type_int128ss_decimate_by_)
+#if !defined(_di_f_int128ss_adjust_) || !defined(_di_f_int128ss_decimate_by_)
+  extern f_status_t private_f_int128ss_adjust(const f_array_length_t length, f_int128ss_t *int128ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int128ss_adjust_) || !defined(_di_f_int128ss_decimate_by_)
 
 /**
  * Private implementation for resizing the int128ss array.
@@ -134,14 +134,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_int128ss_decrease_by()
- * @see f_type_int128ss_increase()
- * @see f_type_int128ss_increase_by()
- * @see f_type_int128ss_resize()
+ * @see f_int128ss_decrease_by()
+ * @see f_int128ss_increase()
+ * @see f_int128ss_increase_by()
+ * @see f_int128ss_resize()
  */
-#if !defined(_di_f_type_int128ss_decrease_by_) || !defined(_di_f_type_int128ss_increase_) || !defined(_di_f_type_int128ss_increase_by_) || !defined(_di_f_type_int128ss_resize_)
-  extern f_status_t private_f_type_int128ss_resize(const f_array_length_t length, f_int128ss_t *int128ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_int128ss_decrease_by_) || !defined(_di_f_type_int128ss_increase_) || !defined(_di_f_type_int128ss_increase_by_) || !defined(_di_f_type_int128ss_resize_)
+#if !defined(_di_f_int128ss_decrease_by_) || !defined(_di_f_int128ss_increase_) || !defined(_di_f_int128ss_increase_by_) || !defined(_di_f_int128ss_resize_)
+  extern f_status_t private_f_int128ss_resize(const f_array_length_t length, f_int128ss_t *int128ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_int128ss_decrease_by_) || !defined(_di_f_int128ss_increase_) || !defined(_di_f_int128ss_increase_by_) || !defined(_di_f_int128ss_resize_)
 
 /**
  * Private implementation for resizing the uint128s array.
@@ -159,12 +159,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  *
- * @see f_type_uint128s_adjust()
- * @see f_type_uint128s_decimate_by()
+ * @see f_uint128s_adjust()
+ * @see f_uint128s_decimate_by()
  */
-#if !defined(_di_f_type_uint128s_adjust_) || !defined(_di_f_type_uint128s_decimate_by_)
-  extern f_status_t private_f_type_uint128s_adjust(const f_array_length_t length, f_uint128s_t *uint128s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint128s_adjust_) || !defined(_di_f_type_uint128s_decimate_by_)
+#if !defined(_di_f_uint128s_adjust_) || !defined(_di_f_uint128s_decimate_by_)
+  extern f_status_t private_f_uint128s_adjust(const f_array_length_t length, f_uint128s_t *uint128s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint128s_adjust_) || !defined(_di_f_uint128s_decimate_by_)
 
 /**
  * Private implementation for appending the uint128 array.
@@ -181,12 +181,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint128s_append()
- * @see f_type_uint128ss_append()
+ * @see f_uint128s_append()
+ * @see f_uint128ss_append()
  */
-#if !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128ss_append_)
-  extern f_status_t private_f_type_uint128s_append(const f_uint128s_t source, f_uint128s_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128ss_append_)
+#if !defined(_di_f_uint128s_append_) || !defined(_di_f_uint128ss_append_)
+  extern f_status_t private_f_uint128s_append(const f_uint128s_t source, f_uint128s_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint128s_append_) || !defined(_di_f_uint128ss_append_)
 
 /**
  * Private implementation for resizing the uint128s array.
@@ -204,14 +204,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint128s_resize()
- * @see f_type_uint128s_append()
- * @see f_type_uint128s_decimate_by()
- * @see f_type_uint128ss_append()
+ * @see f_uint128s_resize()
+ * @see f_uint128s_append()
+ * @see f_uint128s_decimate_by()
+ * @see f_uint128ss_append()
  */
-#if !defined(_di_f_type_uint128s_resize_) || !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128s_decimate_by_) || !defined(_di_f_type_uint128ss_append_)
-  extern f_status_t private_f_type_uint128s_resize(const f_array_length_t length, f_uint128s_t *uint128s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint128s_resize_) || !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128s_decimate_by_) || !defined(_di_f_type_uint128ss_append_)
+#if !defined(_di_f_uint128s_resize_) || !defined(_di_f_uint128s_append_) || !defined(_di_f_uint128s_decimate_by_) || !defined(_di_f_uint128ss_append_)
+  extern f_status_t private_f_uint128s_resize(const f_array_length_t length, f_uint128s_t *uint128s) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint128s_resize_) || !defined(_di_f_uint128s_append_) || !defined(_di_f_uint128s_decimate_by_) || !defined(_di_f_uint128ss_append_)
 
 /**
  * Private implementation for resizing the uint128ss array.
@@ -234,12 +234,12 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  *
- * @see f_type_uint128ss_adjust()
- * @see f_type_uint128ss_decimate_by()
+ * @see f_uint128ss_adjust()
+ * @see f_uint128ss_decimate_by()
  */
-#if !defined(_di_f_type_uint128ss_adjust_) || !defined(_di_f_type_uint128ss_decimate_by_)
-  extern f_status_t private_f_type_uint128ss_adjust(const f_array_length_t length, f_uint128ss_t *uint128ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint128ss_adjust_) || !defined(_di_f_type_uint128ss_decimate_by_)
+#if !defined(_di_f_uint128ss_adjust_) || !defined(_di_f_uint128ss_decimate_by_)
+  extern f_status_t private_f_uint128ss_adjust(const f_array_length_t length, f_uint128ss_t *uint128ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint128ss_adjust_) || !defined(_di_f_uint128ss_decimate_by_)
 
 /**
  * Private implementation for resizing the uint128ss array.
@@ -262,14 +262,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_type_uint128ss_decrease_by()
- * @see f_type_uint128ss_increase()
- * @see f_type_uint128ss_increase_by()
- * @see f_type_uint128ss_resize()
+ * @see f_uint128ss_decrease_by()
+ * @see f_uint128ss_increase()
+ * @see f_uint128ss_increase_by()
+ * @see f_uint128ss_resize()
  */
-#if !defined(_di_f_type_uint128ss_decrease_by_) || !defined(_di_f_type_uint128ss_increase_) || !defined(_di_f_type_uint128ss_increase_by_) || !defined(_di_f_type_uint128ss_resize_)
-  extern f_status_t private_f_type_uint128ss_resize(const f_array_length_t length, f_uint128ss_t *uint128ss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_type_uint128ss_decrease_by_) || !defined(_di_f_type_uint128ss_increase_) || !defined(_di_f_type_uint128ss_increase_by_) || !defined(_di_f_type_uint128ss_resize_)
+#if !defined(_di_f_uint128ss_decrease_by_) || !defined(_di_f_uint128ss_increase_) || !defined(_di_f_uint128ss_increase_by_) || !defined(_di_f_uint128ss_resize_)
+  extern f_status_t private_f_uint128ss_resize(const f_array_length_t length, f_uint128ss_t *uint128ss) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_uint128ss_decrease_by_) || !defined(_di_f_uint128ss_increase_) || !defined(_di_f_uint128ss_increase_by_) || !defined(_di_f_uint128ss_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

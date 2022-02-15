@@ -329,7 +329,7 @@ extern "C" {
     macro_f_fss_objects_t_resize(status, objects, state.step_small)
 
     if (F_status_is_error(status)) {
-      f_type_array_lengths_resize(0, &positions_start);
+      f_array_lengths_resize(0, &positions_start);
 
       return status;
     }
@@ -339,7 +339,7 @@ extern "C" {
     macro_f_array_lengths_t_resize(status, slashes, state.step_small)
 
     if (F_status_is_error(status)) {
-      f_type_array_lengths_resize(0, &positions_start);
+      f_array_lengths_resize(0, &positions_start);
       macro_f_fss_objects_t_delete_simple(objects);
 
       return status;
@@ -833,9 +833,9 @@ extern "C" {
 
             private_macro_fl_fss_nest_return_on_overflow_delimited((buffer), (*range), (*found), positions_start, objects, slashes, F_none_eos, F_none_stop)
 
-            f_type_array_lengths_resize(0, &positions_start);
+            f_array_lengths_resize(0, &positions_start);
             macro_f_fss_objects_t_delete_simple(objects);
-            f_type_array_lengths_resize(0, &slashes);
+            f_array_lengths_resize(0, &slashes);
 
             return F_fss_found_content;
           }
@@ -945,9 +945,9 @@ extern "C" {
       if (F_status_is_error(status)) break;
     } // while
 
-    f_type_array_lengths_resize(0, &positions_start);
+    f_array_lengths_resize(0, &positions_start);
     macro_f_fss_objects_t_delete_simple(objects);
-    f_type_array_lengths_resize(0, &slashes);
+    f_array_lengths_resize(0, &slashes);
 
     delimits->used = delimits_used;
     comments->used = comments_used;

@@ -49,9 +49,9 @@ extern "C" {
 /**
  * A status intended to be used as the return value status of some function or operation.
  */
-#ifndef _di_f_type_status_t_
+#ifndef _di_f_status_t_
   typedef uint16_t f_status_t;
-#endif // _di_f_type_status_t_
+#endif // _di_f_status_t_
 
 /**
  * A representation of a state to be shared between different levels for some function.
@@ -139,7 +139,7 @@ extern "C" {
  * This should work in GCC, but other compilers this may not be available.
  * When not supported, these will fallback to 64-bit.
  */
-#ifndef _di_f_type_int_128_t_
+#ifndef _di_f_int_128_t_
   #ifdef __SIZEOF_INT128__
     typedef __int128_t  f_int_128_t;
     typedef __uint128_t f_uint_128_t;
@@ -147,7 +147,7 @@ extern "C" {
     typedef int64_t  f_int_128_t;
     typedef uint64_t f_uint_128_t;
   #endif // __SIZEOF_INT128__
-#endif // _di_f_type_int_128_t_
+#endif // _di_f_int_128_t_
 
 /**
  * Defines the maximum size to be supported.
@@ -180,7 +180,7 @@ extern "C" {
   #define F_type_size_64_positive_d 0x7ffffffffffffffe
   #define F_type_size_64_unsigned_d 0xfffffffffffffffe
 
-  #ifndef _di_f_type_int_128_t_
+  #ifndef _di_f_int_128_t_
     #define F_type_size_128_negative_d 0x7fffffffffffffffffffffff
     #define F_type_size_128_positive_d 0x7ffffffffffffffffffffffe
     #define F_type_size_128_unsigned_d 0xfffffffffffffffffffffffe
@@ -188,7 +188,7 @@ extern "C" {
     #define F_type_size_128_negative_d F_type_size_64_negative_d
     #define F_type_size_128_positive_d F_type_size_64_positive_d
     #define F_type_size_128_unsigned_d F_type_size_64_unsigned_d
-  #endif // _di_f_type_int_128_t_
+  #endif // _di_f_int_128_t_
 
   #define F_type_size_max_8_negative_d 0x80
   #define F_type_size_max_8_positive_d 0x7f
@@ -206,7 +206,7 @@ extern "C" {
   #define F_type_size_max_64_positive_d 0x7fffffffffffffff
   #define F_type_size_max_64_unsigned_d 0xffffffffffffffff
 
-  #ifndef _di_f_type_int_128_t_
+  #ifndef _di_f_int_128_t_
     #define F_type_size_max_128_negative_d 0x800000000000000000000000
     #define F_type_size_max_128_positive_d 0x7fffffffffffffffffffffff
     #define F_type_size_max_128_unsigned_d 0xffffffffffffffffffffffff
@@ -214,7 +214,7 @@ extern "C" {
     #define F_type_size_max_128_negative_d F_type_size_max_64_negative_d
     #define F_type_size_max_128_positive_d F_type_size_max_64_positive_d
     #define F_type_size_max_128_unsigned_d F_type_size_max_64_unsigned_d
-  #endif // _di_f_type_int_128_t_
+  #endif // _di_f_int_128_t_
 #endif // _di_f_type_sizes_
 
 /**
@@ -985,7 +985,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_type_statuss_t_
+#ifndef _di_f_statuss_t_
   typedef struct {
     f_status_t *array;
 
@@ -994,7 +994,7 @@ extern "C" {
   } f_statuss_t;
 
   #define f_statuss_t_initialize { 0, 0, 0 }
-#endif // _di_f_type_statuss_t_
+#endif // _di_f_statuss_t_
 
 /**
  * This holds an array of f_statuss_t.
@@ -1005,7 +1005,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_type_statusss_t_
+#ifndef _di_f_statusss_t_
   typedef struct {
     f_statuss_t *array;
 
@@ -1014,7 +1014,7 @@ extern "C" {
   } f_statusss_t;
 
   #define f_statusss_t_initialize { 0, 0, 0 }
-#endif // _di_f_type_statusss_t_
+#endif // _di_f_statusss_t_
 
 /**
  * This holds an array of f_state_t.
@@ -1025,7 +1025,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_type_states_t_
+#ifndef _di_f_states_t_
   typedef struct {
     f_state_t *array;
 
@@ -1034,7 +1034,7 @@ extern "C" {
   } f_states_t;
 
   #define f_states_t_initialize { 0, 0, 0 }
-#endif // _di_f_type_states_t_
+#endif // _di_f_states_t_
 
 /**
  * This holds an array of f_states_t.
@@ -1045,7 +1045,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_type_statess_t_
+#ifndef _di_f_statess_t_
   typedef struct {
     f_states_t *array;
 
@@ -1054,7 +1054,7 @@ extern "C" {
   } f_statess_t;
 
   #define f_statess_t_initialize { 0, 0, 0 }
-#endif // _di_f_type_statess_t_
+#endif // _di_f_statess_t_
 
 /**
  * An FLL Identifier represents a way to identify FLL related text files and possibly binary files.

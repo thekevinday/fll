@@ -11,7 +11,7 @@ void test__f_type_array_states_resize__works(void **state) {
   f_states_t data = f_states_t_initialize;
 
   {
-    const f_status_t status = f_type_states_resize(length, &data);
+    const f_status_t status = f_states_resize(length, &data);
 
     assert_int_equal(status, F_none);
     assert_int_equal(data.used, 0);
@@ -27,7 +27,7 @@ void test__f_type_array_states_resize__fails_on_invalid_parameter(void **state) 
   f_states_t data = f_states_t_initialize;
 
   {
-    const f_status_t status = f_type_states_resize(length, 0);
+    const f_status_t status = f_states_resize(length, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
     assert_int_equal(data.used, 0);

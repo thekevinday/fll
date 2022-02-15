@@ -65,11 +65,11 @@ extern "C" {
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- *   Errors (with error bit) from: f_type_fll_ids_increase().
+ *   Errors (with error bit) from: f_fll_ids_increase().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *   Errors (with error bit) from: fl_string_fll_identify().
  *
- * @see f_type_fll_ids_increase()
+ * @see f_fll_ids_increase()
  * @see f_utf_is_whitespace()
  * @see fl_string_fll_identify()
  */

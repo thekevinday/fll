@@ -16,7 +16,7 @@ void test__f_type_array_statess_append__works(void **state) {
   const f_state_t state_1 = { step_large: 20, step_small: 2, handle: 0, interrupt: 0, callbacks: 0, custom: 0, data: 0 };
 
   {
-    const f_status_t status = f_type_statess_resize(length, &source);
+    const f_status_t status = f_statess_resize(length, &source);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -26,7 +26,7 @@ void test__f_type_array_statess_append__works(void **state) {
   {
     for (; source.used < length; ++source.used) {
 
-      const f_status_t status = f_type_states_resize(length_inner, &source.array[source.used]);
+      const f_status_t status = f_states_resize(length_inner, &source.array[source.used]);
 
       assert_int_equal(status, F_none);
 
@@ -36,7 +36,7 @@ void test__f_type_array_statess_append__works(void **state) {
   }
 
   {
-    const f_status_t status = f_type_statess_append(source, &destination);
+    const f_status_t status = f_statess_append(source, &destination);
 
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, source.used);
@@ -84,7 +84,7 @@ void test__f_type_array_statess_append__returns_data_not(void **state) {
   f_statess_t destination = f_states_t_initialize;
 
   {
-    const f_status_t status = f_type_statess_resize(length, &source);
+    const f_status_t status = f_statess_resize(length, &source);
 
     assert_int_equal(status, F_none);
     assert_int_equal(source.used, 0);
@@ -92,7 +92,7 @@ void test__f_type_array_statess_append__returns_data_not(void **state) {
   }
 
   {
-    const f_status_t status = f_type_statess_append(source, &destination);
+    const f_status_t status = f_statess_append(source, &destination);
 
     assert_int_equal(status, F_data_not);
     assert_int_equal(destination.used, 0);
@@ -109,7 +109,7 @@ void test__f_type_array_statess_append__fails_on_invalid_parameter(void **state)
   f_statess_t data = f_states_t_initialize;
 
   {
-    const f_status_t status = f_type_statess_append(data, 0);
+    const f_status_t status = f_statess_append(data, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
     assert_int_equal(data.used, 0);

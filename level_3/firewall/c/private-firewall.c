@@ -713,7 +713,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
                 }
 
                 if (F_status_is_error(status)) {
-                  f_type_array_lengths_resize(0, &delimits);
+                  f_array_lengths_resize(0, &delimits);
 
                   break;
                 }
@@ -740,7 +740,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
                   status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
                   if (status == F_child) {
-                    f_type_array_lengths_resize(0, &delimits);
+                    f_array_lengths_resize(0, &delimits);
 
                     f_string_dynamic_resize(0, &ip_list);
                     f_string_dynamics_resize(0, &arguments);
@@ -774,7 +774,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
                 --arguments.used;
               }
 
-              f_type_array_lengths_resize(0, &delimits);
+              f_array_lengths_resize(0, &delimits);
             }
           }
 
@@ -1344,7 +1344,7 @@ f_status_t firewall_delete_local_data(firewall_local_data_t * const local) {
   local->chain = 0;
 
   f_string_dynamic_resize(0, &local->buffer);
-  f_type_array_lengths_resize(0, &local->chain_ids);
+  f_array_lengths_resize(0, &local->chain_ids);
 
   f_string_ranges_resize(0, &local->chain_objects);
   f_string_rangess_resize(0, &local->chain_contents);

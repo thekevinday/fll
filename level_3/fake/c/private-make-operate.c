@@ -130,7 +130,7 @@ extern "C" {
 
     f_file_stream_close(F_true, &data_make.path.top);
 
-    f_type_array_lengths_resize(0, &section_stack);
+    f_array_lengths_resize(0, &section_stack);
     fake_make_data_delete(&data_make);
 
     return status;
@@ -961,10 +961,10 @@ extern "C" {
     }
 
     // Add the operation id to the operation stack.
-    *status = f_type_array_lengths_increase(fake_default_allocation_small_d, section_stack);
+    *status = f_array_lengths_increase(fake_default_allocation_small_d, section_stack);
 
     if (F_status_is_error(*status)) {
-      fll_error_print(data_make->error, F_status_set_fine(*status), "f_type_array_lengths_increase", F_true);
+      fll_error_print(data_make->error, F_status_set_fine(*status), "f_array_lengths_increase", F_true);
 
       return 0;
     }

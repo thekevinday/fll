@@ -908,7 +908,7 @@ extern "C" {
     }
 
     if (source.affinity.used) {
-      status = f_type_int32s_append(source.affinity, &destination->affinity);
+      status = f_int32s_append(source.affinity, &destination->affinity);
       if (F_status_is_error(status)) return status;
     }
 
@@ -921,7 +921,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (source.groups.used) {
-      status = f_type_int32s_append(source.groups, &destination->groups);
+      status = f_int32s_append(source.groups, &destination->groups);
       if (F_status_is_error(status)) return status;
     }
 
@@ -2895,11 +2895,11 @@ extern "C" {
 
     if (F_status_is_error_not(status) && stack.used) {
       if (process->stack.size < stack.used) {
-        status = f_type_array_lengths_resize(stack.used, &process->stack);
+        status = f_array_lengths_resize(stack.used, &process->stack);
       }
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_type_array_lengths_resize", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_array_lengths_resize", F_true);
       }
       else {
         for (f_array_length_t i = 0; i < stack.used; ++i) {
@@ -3125,10 +3125,10 @@ extern "C" {
         }
 
         if (F_status_is_error_not(status)) {
-          status = f_type_array_lengths_increase(controller_common_allocation_small_d, &process->stack);
+          status = f_array_lengths_increase(controller_common_allocation_small_d, &process->stack);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_type_array_lengths_increase", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_array_lengths_increase", F_true);
           }
           else {
             f_thread_unlock(&process->lock);

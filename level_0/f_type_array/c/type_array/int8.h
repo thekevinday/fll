@@ -31,9 +31,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_int8s_adjust_
-  extern f_status_t f_type_int8s_adjust(const f_array_length_t length, f_int8s_t *int8s);
-#endif // _di_f_type_int8s_adjust_
+#ifndef _di_f_int8s_adjust_
+  extern f_status_t f_int8s_adjust(const f_array_length_t length, f_int8s_t *int8s);
+#endif // _di_f_int8s_adjust_
 
 /**
  * Append the source int8s onto the destination.
@@ -51,9 +51,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8s_append_
-  extern f_status_t f_type_int8s_append(const f_int8s_t source, f_int8s_t *destination);
-#endif // _di_f_type_int8s_append_
+#ifndef _di_f_int8s_append_
+  extern f_status_t f_int8s_append(const f_int8s_t source, f_int8s_t *destination);
+#endif // _di_f_int8s_append_
 
 /**
  * Resize the int8s array to a smaller size.
@@ -74,9 +74,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_int8s_decimate_by_
-  extern f_status_t f_type_int8s_decimate_by(const f_array_length_t amount, f_int8s_t *int8s);
-#endif // _di_f_type_int8s_decimate_by_
+#ifndef _di_f_int8s_decimate_by_
+  extern f_status_t f_int8s_decimate_by(const f_array_length_t amount, f_int8s_t *int8s);
+#endif // _di_f_int8s_decimate_by_
 
 /**
  * Resize the int8s array to a smaller size.
@@ -97,9 +97,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8s_decrease_by_
-  extern f_status_t f_type_int8s_decrease_by(const f_array_length_t amount, f_int8s_t *int8s);
-#endif // _di_f_type_int8s_decrease_by_
+#ifndef _di_f_int8s_decrease_by_
+  extern f_status_t f_int8s_decrease_by(const f_array_length_t amount, f_int8s_t *int8s);
+#endif // _di_f_int8s_decrease_by_
 
 /**
  * Increase the size of the int8s array, but only if necesary.
@@ -122,9 +122,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8s_increase_
-  extern f_status_t f_type_int8s_increase(const uint16_t step, f_int8s_t *int8s);
-#endif // _di_f_type_int8s_increase_
+#ifndef _di_f_int8s_increase_
+  extern f_status_t f_int8s_increase(const uint16_t step, f_int8s_t *int8s);
+#endif // _di_f_int8s_increase_
 
 /**
  * Resize the int8s array to a larger size.
@@ -147,9 +147,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8s_increase_by_
-  extern f_status_t f_type_int8s_increase_by(const f_array_length_t amount, f_int8s_t *int8s);
-#endif // _di_f_type_int8s_increase_by_
+#ifndef _di_f_int8s_increase_by_
+  extern f_status_t f_int8s_increase_by(const f_array_length_t amount, f_int8s_t *int8s);
+#endif // _di_f_int8s_increase_by_
 
 /**
  * Resize the int8s array.
@@ -166,9 +166,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8s_resize_
-  extern f_status_t f_type_int8s_resize(const f_array_length_t length, f_int8s_t *int8s);
-#endif // _di_f_type_int8s_resize_
+#ifndef _di_f_int8s_resize_
+  extern f_status_t f_int8s_resize(const f_array_length_t length, f_int8s_t *int8s);
+#endif // _di_f_int8s_resize_
 
 /**
  * Resize the int8ss array.
@@ -186,9 +186,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_int8ss_adjust_
-  extern f_status_t f_type_int8ss_adjust(const f_array_length_t length, f_int8ss_t *int8ss);
-#endif // _di_f_type_int8ss_adjust_
+#ifndef _di_f_int8ss_adjust_
+  extern f_status_t f_int8ss_adjust(const f_array_length_t length, f_int8ss_t *int8ss);
+#endif // _di_f_int8ss_adjust_
 
 /**
  * Append the source int8ss onto the destination.
@@ -206,9 +206,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8ss_append_
-  extern f_status_t f_type_int8ss_append(const f_int8ss_t source, f_int8ss_t *destination);
-#endif // _di_f_type_int8ss_append_
+#ifndef _di_f_int8ss_append_
+  extern f_status_t f_int8ss_append(const f_int8ss_t source, f_int8ss_t *destination);
+#endif // _di_f_int8ss_append_
 
 /**
  * Resize the int8ss array.
@@ -226,9 +226,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_int8ss_adjust_
-  extern f_status_t f_type_int8ss_adjust(const f_array_length_t length, f_int8ss_t *int8ss);
-#endif // _di_f_type_int8ss_adjust_
+#ifndef _di_f_int8ss_adjust_
+  extern f_status_t f_int8ss_adjust(const f_array_length_t length, f_int8ss_t *int8ss);
+#endif // _di_f_int8ss_adjust_
 
 /**
  * Resize the int8ss array to a smaller size.
@@ -250,9 +250,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_int8ss_decimate_by_
-  extern f_status_t f_type_int8ss_decimate_by(const f_array_length_t amount, f_int8ss_t *int8ss);
-#endif // _di_f_type_int8ss_decimate_by_
+#ifndef _di_f_int8ss_decimate_by_
+  extern f_status_t f_int8ss_decimate_by(const f_array_length_t amount, f_int8ss_t *int8ss);
+#endif // _di_f_int8ss_decimate_by_
 
 /**
  * Resize the int8ss array to a smaller size.
@@ -274,9 +274,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8ss_decrease_by_
-  extern f_status_t f_type_int8ss_decrease_by(const f_array_length_t amount, f_int8ss_t *int8ss);
-#endif // _di_f_type_int8ss_decrease_by_
+#ifndef _di_f_int8ss_decrease_by_
+  extern f_status_t f_int8ss_decrease_by(const f_array_length_t amount, f_int8ss_t *int8ss);
+#endif // _di_f_int8ss_decrease_by_
 
 /**
  * Increase the size of the int8ss array, but only if necessary.
@@ -299,9 +299,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8ss_increase_
-  extern f_status_t f_type_int8ss_increase(const uint16_t step, f_int8ss_t *int8ss);
-#endif // _di_f_type_int8ss_increase_
+#ifndef _di_f_int8ss_increase_
+  extern f_status_t f_int8ss_increase(const uint16_t step, f_int8ss_t *int8ss);
+#endif // _di_f_int8ss_increase_
 
 /**
  * Resize the int8ss array to a larger size.
@@ -324,9 +324,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8ss_increase_by_
-  extern f_status_t f_type_int8ss_increase_by(const f_array_length_t amount, f_int8ss_t *int8ss);
-#endif // _di_f_type_int8ss_increase_by_
+#ifndef _di_f_int8ss_increase_by_
+  extern f_status_t f_int8ss_increase_by(const f_array_length_t amount, f_int8ss_t *int8ss);
+#endif // _di_f_int8ss_increase_by_
 
 /**
  * Resize the int8ss array.
@@ -344,9 +344,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_int8ss_resize_
-  extern f_status_t f_type_int8ss_resize(const f_array_length_t length, f_int8ss_t *int8ss);
-#endif // _di_f_type_int8ss_resize_
+#ifndef _di_f_int8ss_resize_
+  extern f_status_t f_int8ss_resize(const f_array_length_t length, f_int8ss_t *int8ss);
+#endif // _di_f_int8ss_resize_
 
 /**
  * Resize the string uint8s array.
@@ -363,9 +363,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_uint8s_adjust_
-  extern f_status_t f_type_uint8s_adjust(const f_array_length_t length, f_uint8s_t *uint8s);
-#endif // _di_f_type_uint8s_adjust_
+#ifndef _di_f_uint8s_adjust_
+  extern f_status_t f_uint8s_adjust(const f_array_length_t length, f_uint8s_t *uint8s);
+#endif // _di_f_uint8s_adjust_
 
 /**
  * Append the source uint8s onto the destination.
@@ -383,9 +383,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8s_append_
-  extern f_status_t f_type_uint8s_append(const f_uint8s_t source, f_uint8s_t *destination);
-#endif // _di_f_type_uint8s_append_
+#ifndef _di_f_uint8s_append_
+  extern f_status_t f_uint8s_append(const f_uint8s_t source, f_uint8s_t *destination);
+#endif // _di_f_uint8s_append_
 
 /**
  * Resize the string uint8s array to a smaller size.
@@ -406,9 +406,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_uint8s_decimate_by_
-  extern f_status_t f_type_uint8s_decimate_by(const f_array_length_t amount, f_uint8s_t *uint8s);
-#endif // _di_f_type_uint8s_decimate_by_
+#ifndef _di_f_uint8s_decimate_by_
+  extern f_status_t f_uint8s_decimate_by(const f_array_length_t amount, f_uint8s_t *uint8s);
+#endif // _di_f_uint8s_decimate_by_
 
 /**
  * Resize the string uint8s array to a smaller size.
@@ -429,9 +429,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8s_decrease_by_
-  extern f_status_t f_type_uint8s_decrease_by(const f_array_length_t amount, f_uint8s_t *uint8s);
-#endif // _di_f_type_uint8s_decrease_by_
+#ifndef _di_f_uint8s_decrease_by_
+  extern f_status_t f_uint8s_decrease_by(const f_array_length_t amount, f_uint8s_t *uint8s);
+#endif // _di_f_uint8s_decrease_by_
 
 /**
  * Increase the size of the string uint8s array, but only if necesary.
@@ -454,9 +454,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8s_increase_
-  extern f_status_t f_type_uint8s_increase(const uint16_t step, f_uint8s_t *uint8s);
-#endif // _di_f_type_uint8s_increase_
+#ifndef _di_f_uint8s_increase_
+  extern f_status_t f_uint8s_increase(const uint16_t step, f_uint8s_t *uint8s);
+#endif // _di_f_uint8s_increase_
 
 /**
  * Resize the string uint8s array to a larger size.
@@ -479,9 +479,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8s_increase_by_
-  extern f_status_t f_type_uint8s_increase_by(const f_array_length_t amount, f_uint8s_t *uint8s);
-#endif // _di_f_type_uint8s_increase_by_
+#ifndef _di_f_uint8s_increase_by_
+  extern f_status_t f_uint8s_increase_by(const f_array_length_t amount, f_uint8s_t *uint8s);
+#endif // _di_f_uint8s_increase_by_
 
 /**
  * Resize the string uint8s array.
@@ -498,9 +498,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8s_resize_
-  extern f_status_t f_type_uint8s_resize(const f_array_length_t length, f_uint8s_t *uint8s);
-#endif // _di_f_type_uint8s_resize_
+#ifndef _di_f_uint8s_resize_
+  extern f_status_t f_uint8s_resize(const f_array_length_t length, f_uint8s_t *uint8s);
+#endif // _di_f_uint8s_resize_
 
 /**
  * Resize the string uint8ss array.
@@ -518,9 +518,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_uint8ss_adjust_
-  extern f_status_t f_type_uint8ss_adjust(const f_array_length_t length, f_uint8ss_t *uint8ss);
-#endif // _di_f_type_uint8ss_adjust_
+#ifndef _di_f_uint8ss_adjust_
+  extern f_status_t f_uint8ss_adjust(const f_array_length_t length, f_uint8ss_t *uint8ss);
+#endif // _di_f_uint8ss_adjust_
 
 /**
  * Append the source uint8ss onto the destination.
@@ -538,9 +538,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8ss_append_
-  extern f_status_t f_type_uint8ss_append(const f_uint8ss_t source, f_uint8ss_t *destination);
-#endif // _di_f_type_uint8ss_append_
+#ifndef _di_f_uint8ss_append_
+  extern f_status_t f_uint8ss_append(const f_uint8ss_t source, f_uint8ss_t *destination);
+#endif // _di_f_uint8ss_append_
 
 /**
  * Resize the string uint8ss array.
@@ -558,9 +558,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_uint8ss_adjust_
-  extern f_status_t f_type_uint8ss_adjust(const f_array_length_t length, f_uint8ss_t *uint8ss);
-#endif // _di_f_type_uint8ss_adjust_
+#ifndef _di_f_uint8ss_adjust_
+  extern f_status_t f_uint8ss_adjust(const f_array_length_t length, f_uint8ss_t *uint8ss);
+#endif // _di_f_uint8ss_adjust_
 
 /**
  * Resize the string uint8ss array to a smaller size.
@@ -582,9 +582,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_uint8ss_decimate_by_
-  extern f_status_t f_type_uint8ss_decimate_by(const f_array_length_t amount, f_uint8ss_t *uint8ss);
-#endif // _di_f_type_uint8ss_decimate_by_
+#ifndef _di_f_uint8ss_decimate_by_
+  extern f_status_t f_uint8ss_decimate_by(const f_array_length_t amount, f_uint8ss_t *uint8ss);
+#endif // _di_f_uint8ss_decimate_by_
 
 /**
  * Resize the string uint8ss array to a smaller size.
@@ -606,9 +606,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8ss_decrease_by_
-  extern f_status_t f_type_uint8ss_decrease_by(const f_array_length_t amount, f_uint8ss_t *uint8ss);
-#endif // _di_f_type_uint8ss_decrease_by_
+#ifndef _di_f_uint8ss_decrease_by_
+  extern f_status_t f_uint8ss_decrease_by(const f_array_length_t amount, f_uint8ss_t *uint8ss);
+#endif // _di_f_uint8ss_decrease_by_
 
 /**
  * Increase the size of the string uint8ss array, but only if necessary.
@@ -631,9 +631,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8ss_increase_
-  extern f_status_t f_type_uint8ss_increase(const uint16_t step, f_uint8ss_t *uint8ss);
-#endif // _di_f_type_uint8ss_increase_
+#ifndef _di_f_uint8ss_increase_
+  extern f_status_t f_uint8ss_increase(const uint16_t step, f_uint8ss_t *uint8ss);
+#endif // _di_f_uint8ss_increase_
 
 /**
  * Resize the string uint8ss array to a larger size.
@@ -656,9 +656,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8ss_increase_by_
-  extern f_status_t f_type_uint8ss_increase_by(const f_array_length_t amount, f_uint8ss_t *uint8ss);
-#endif // _di_f_type_uint8ss_increase_by_
+#ifndef _di_f_uint8ss_increase_by_
+  extern f_status_t f_uint8ss_increase_by(const f_array_length_t amount, f_uint8ss_t *uint8ss);
+#endif // _di_f_uint8ss_increase_by_
 
 /**
  * Resize the string uint8ss array.
@@ -676,9 +676,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_uint8ss_resize_
-  extern f_status_t f_type_uint8ss_resize(const f_array_length_t length, f_uint8ss_t *uint8ss);
-#endif // _di_f_type_uint8ss_resize_
+#ifndef _di_f_uint8ss_resize_
+  extern f_status_t f_uint8ss_resize(const f_array_length_t length, f_uint8ss_t *uint8ss);
+#endif // _di_f_uint8ss_resize_
 
 #ifdef __cplusplus
 } // extern "C"

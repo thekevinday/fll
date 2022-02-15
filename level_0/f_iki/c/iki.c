@@ -262,7 +262,7 @@ extern "C" {
 
             // This is a valid vocabulary name and content, but if it is delimited, save the delimit and ignore.
             if (vocabulary_delimited) {
-              status = f_type_array_lengths_increase(state.step_small, delimits);
+              status = f_array_lengths_increase(state.step_small, delimits);
               if (F_status_is_error(status)) break;
 
               delimits->array[delimits->used++] = vocabulary_slash_first;
@@ -324,7 +324,7 @@ extern "C" {
                   ++content_slash_delimits;
                 }
 
-                status = f_type_array_lengths_increase_by(content_slash_delimits, delimits);
+                status = f_array_lengths_increase_by(content_slash_delimits, delimits);
                 if (F_status_is_error(status)) break;
 
                 content_range.start = content_slash_first;
@@ -348,7 +348,7 @@ extern "C" {
 
                   // This is a valid vocabulary name and content, but if it is delimited, save the delimit and ignore.
                   if (vocabulary_delimited) {
-                    status = f_type_array_lengths_increase(state.step_small, delimits);
+                    status = f_array_lengths_increase(state.step_small, delimits);
                     if (F_status_is_error(status)) break;
 
                     delimits->array[delimits->used++] = vocabulary_slash_first;

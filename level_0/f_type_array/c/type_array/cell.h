@@ -31,9 +31,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_cells_adjust_
-  extern f_status_t f_type_cells_adjust(const f_array_length_t length, f_cells_t *cells);
-#endif // _di_f_type_cells_adjust_
+#ifndef _di_f_cells_adjust_
+  extern f_status_t f_cells_adjust(const f_array_length_t length, f_cells_t *cells);
+#endif // _di_f_cells_adjust_
 
 /**
  * Append the source cells onto the destination.
@@ -51,9 +51,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cells_append_
-  extern f_status_t f_type_cells_append(const f_cells_t source, f_cells_t *destination);
-#endif // _di_f_type_cells_append_
+#ifndef _di_f_cells_append_
+  extern f_status_t f_cells_append(const f_cells_t source, f_cells_t *destination);
+#endif // _di_f_cells_append_
 
 /**
  * Resize the string cells array to a smaller size.
@@ -74,9 +74,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_adjust().
  */
-#ifndef _di_f_type_cells_decimate_by_
-  extern f_status_t f_type_cells_decimate_by(const f_array_length_t amount, f_cells_t *cells);
-#endif // _di_f_type_cells_decimate_by_
+#ifndef _di_f_cells_decimate_by_
+  extern f_status_t f_cells_decimate_by(const f_array_length_t amount, f_cells_t *cells);
+#endif // _di_f_cells_decimate_by_
 
 /**
  * Resize the string cells array to a smaller size.
@@ -97,9 +97,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cells_decrease_by_
-  extern f_status_t f_type_cells_decrease_by(const f_array_length_t amount, f_cells_t *cells);
-#endif // _di_f_type_cells_decrease_by_
+#ifndef _di_f_cells_decrease_by_
+  extern f_status_t f_cells_decrease_by(const f_array_length_t amount, f_cells_t *cells);
+#endif // _di_f_cells_decrease_by_
 
 /**
  * Increase the size of the string cells array, but only if necesary.
@@ -122,9 +122,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cells_increase_
-  extern f_status_t f_type_cells_increase(const uint16_t step, f_cells_t *cells);
-#endif // _di_f_type_cells_increase_
+#ifndef _di_f_cells_increase_
+  extern f_status_t f_cells_increase(const uint16_t step, f_cells_t *cells);
+#endif // _di_f_cells_increase_
 
 /**
  * Resize the string cells array to a larger size.
@@ -147,9 +147,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cells_increase_by_
-  extern f_status_t f_type_cells_increase_by(const f_array_length_t amount, f_cells_t *cells);
-#endif // _di_f_type_cells_increase_by_
+#ifndef _di_f_cells_increase_by_
+  extern f_status_t f_cells_increase_by(const f_array_length_t amount, f_cells_t *cells);
+#endif // _di_f_cells_increase_by_
 
 /**
  * Resize the string cells array.
@@ -166,9 +166,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cells_resize_
-  extern f_status_t f_type_cells_resize(const f_array_length_t length, f_cells_t *cells);
-#endif // _di_f_type_cells_resize_
+#ifndef _di_f_cells_resize_
+  extern f_status_t f_cells_resize(const f_array_length_t length, f_cells_t *cells);
+#endif // _di_f_cells_resize_
 
 /**
  * Resize the string cellss array.
@@ -186,9 +186,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_cellss_adjust_
-  extern f_status_t f_type_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss);
-#endif // _di_f_type_cellss_adjust_
+#ifndef _di_f_cellss_adjust_
+  extern f_status_t f_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss);
+#endif // _di_f_cellss_adjust_
 
 /**
  * Append the source cellss onto the destination.
@@ -206,9 +206,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cellss_append_
-  extern f_status_t f_type_cellss_append(const f_cellss_t source, f_cellss_t *destination);
-#endif // _di_f_type_cellss_append_
+#ifndef _di_f_cellss_append_
+  extern f_status_t f_cellss_append(const f_cellss_t source, f_cellss_t *destination);
+#endif // _di_f_cellss_append_
 
 /**
  * Resize the string cellss array.
@@ -226,9 +226,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_cellss_adjust_
-  extern f_status_t f_type_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss);
-#endif // _di_f_type_cellss_adjust_
+#ifndef _di_f_cellss_adjust_
+  extern f_status_t f_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss);
+#endif // _di_f_cellss_adjust_
 
 /**
  * Resize the string cellss array to a smaller size.
@@ -250,9 +250,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *   Errors (with error bit) from: f_memory_destroy().
  */
-#ifndef _di_f_type_cellss_decimate_by_
-  extern f_status_t f_type_cellss_decimate_by(const f_array_length_t amount, f_cellss_t *cellss);
-#endif // _di_f_type_cellss_decimate_by_
+#ifndef _di_f_cellss_decimate_by_
+  extern f_status_t f_cellss_decimate_by(const f_array_length_t amount, f_cellss_t *cellss);
+#endif // _di_f_cellss_decimate_by_
 
 /**
  * Resize the string cellss array to a smaller size.
@@ -274,9 +274,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cellss_decrease_by_
-  extern f_status_t f_type_cellss_decrease_by(const f_array_length_t amount, f_cellss_t *cellss);
-#endif // _di_f_type_cellss_decrease_by_
+#ifndef _di_f_cellss_decrease_by_
+  extern f_status_t f_cellss_decrease_by(const f_array_length_t amount, f_cellss_t *cellss);
+#endif // _di_f_cellss_decrease_by_
 
 /**
  * Increase the size of the string cellss array, but only if necessary.
@@ -299,9 +299,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cellss_increase_
-  extern f_status_t f_type_cellss_increase(const uint16_t step, f_cellss_t *cellss);
-#endif // _di_f_type_cellss_increase_
+#ifndef _di_f_cellss_increase_
+  extern f_status_t f_cellss_increase(const uint16_t step, f_cellss_t *cellss);
+#endif // _di_f_cellss_increase_
 
 /**
  * Resize the string cellss array to a larger size.
@@ -324,9 +324,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cellss_increase_by_
-  extern f_status_t f_type_cellss_increase_by(const f_array_length_t amount, f_cellss_t *cellss);
-#endif // _di_f_type_cellss_increase_by_
+#ifndef _di_f_cellss_increase_by_
+  extern f_status_t f_cellss_increase_by(const f_array_length_t amount, f_cellss_t *cellss);
+#endif // _di_f_cellss_increase_by_
 
 /**
  * Resize the string cellss array.
@@ -344,9 +344,9 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_delete().
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_type_cellss_resize_
-  extern f_status_t f_type_cellss_resize(const f_array_length_t length, f_cellss_t *cellss);
-#endif // _di_f_type_cellss_resize_
+#ifndef _di_f_cellss_resize_
+  extern f_status_t f_cellss_resize(const f_array_length_t length, f_cellss_t *cellss);
+#endif // _di_f_cellss_resize_
 
 #ifdef __cplusplus
 } // extern "C"
