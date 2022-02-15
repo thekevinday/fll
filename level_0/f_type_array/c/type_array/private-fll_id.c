@@ -1,0 +1,118 @@
+#include "../type_array.h"
+#include "private-fll_id.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#if !defined(_di_f_type_fll_ids_adjust_) || !defined(_di_f_type_fll_ids_decimate_by_)
+  f_status_t private_f_type_fll_ids_adjust(const f_array_length_t length, f_fll_ids_t *ids) {
+
+    const f_status_t status = f_memory_adjust(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
+
+    if (F_status_is_error_not(status)) {
+      ids->size = length;
+
+      if (ids->used > ids->size) {
+        ids->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_fll_ids_adjust_) || !defined(_di_f_type_fll_ids_decimate_by_)
+
+#if !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_idss_append_)
+  extern f_status_t private_f_type_fll_ids_append(const f_fll_ids_t source, f_fll_ids_t *destination) {
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_type_fll_ids_adjust(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+      destination->array[destination->used] = source.array[i];
+    } // for
+
+    return F_none;
+  }
+#endif // !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_idss_append_)
+
+#if !defined(_di_f_type_fll_ids_resize_) || !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_ids_decimate_by_) || !defined(_di_f_type_fll_idss_append_)
+  f_status_t private_f_type_fll_ids_resize(const f_array_length_t length, f_fll_ids_t *ids) {
+
+    const f_status_t status = f_memory_resize(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
+
+    if (F_status_is_error_not(status)) {
+      ids->size = length;
+
+      if (ids->used > ids->size) {
+        ids->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_fll_ids_resize_) || !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_ids_decimate_by_) || !defined(_di_f_type_fll_idss_append_)
+
+#if !defined(_di_f_type_fll_idss_adjust_) || !defined(_di_f_type_fll_idss_decimate_by_)
+  f_status_t private_f_type_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < idss->size; ++i) {
+
+      status = f_memory_destroy(idss->array[i].size, sizeof(f_fll_ids_t), (void **) & idss->array[i].array);
+      if (F_status_is_error(status)) return status;
+
+      idss->array[i].size = 0;
+      idss->array[i].used = 0;
+    } // for
+
+    status = f_memory_adjust(idss->size, length, sizeof(f_fll_ids_t), (void **) & idss->array);
+
+    if (F_status_is_error_not(status)) {
+      idss->size = length;
+
+      if (idss->used > idss->size) {
+        idss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_fll_idss_adjust_) || !defined(_di_f_type_fll_idss_decimate_by_)
+
+#if !defined(_di_f_type_fll_idss_decrease_by_) || !defined(_di_f_type_fll_idss_increase_) || !defined(_di_f_type_fll_idss_increase_by_) || !defined(_di_f_type_fll_idss_resize_)
+  f_status_t private_f_type_fll_idss_resize(const f_array_length_t length, f_fll_idss_t *idss) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < idss->size; ++i) {
+
+      status = f_memory_delete(idss->array[i].size, sizeof(f_fll_ids_t), (void **) & idss->array[i].array);
+      if (F_status_is_error(status)) return status;
+
+      idss->array[i].size = 0;
+      idss->array[i].used = 0;
+    } // for
+
+    status = f_memory_resize(idss->size, length, sizeof(f_fll_ids_t), (void **) & idss->array);
+
+    if (F_status_is_error_not(status)) {
+      idss->size = length;
+
+      if (idss->used > idss->size) {
+        idss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_fll_idss_decrease_by_) || !defined(_di_f_type_fll_idss_increase_) || !defined(_di_f_type_fll_idss_increase_by_) || !defined(_di_f_type_fll_idss_resize_)
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

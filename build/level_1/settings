@@ -31,7 +31,17 @@ build_objects_library_static
 build_objects_program
 build_objects_program_shared
 build_objects_program_static
-build_sources_library control_group.c conversion.c private-conversion.c directory.c private-directory.c environment.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c iki.c print.c print-common.c private-print.c signal.c string.c private-string.c utf.c private-utf.c utf_file.c private-utf_file.c
+build_sources_library control_group.c
+build_sources_library conversion.c private-conversion.c
+build_sources_library directory.c private-directory.c
+build_sources_library environment.c
+build_sources_library private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c
+build_sources_library iki.c
+build_sources_library print.c print-common.c private-print.c
+build_sources_library signal.c
+build_sources_library string.c
+build_sources_library private-string.c
+build_sources_library utf.c private-utf.c utf_file.c private-utf_file.c
 build_sources_library-level
 build_sources_library_shared
 build_sources_library_static
@@ -41,7 +51,17 @@ build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers control_group.h conversion.h directory.h directory-common.h environment.h execute.h execute-common.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h iki.h print.h print-common.h signal.h signal-common.h string.h utf.h utf_file.h
+build_sources_headers control_group.h
+build_sources_headers conversion.h
+build_sources_headers directory.h directory-common.h
+build_sources_headers environment.h
+build_sources_headers execute.h execute-common.h
+build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h
+build_sources_headers iki.h
+build_sources_headers print.h print-common.h
+build_sources_headers signal.h signal-common.h
+build_sources_headers string.h
+build_sources_headers utf.h utf_file.h
 build_sources_headers-level
 build_sources_headers_shared
 build_sources_headers_static
@@ -65,7 +85,7 @@ path_sources
 path_sources_object
 
 has_path_standard yes
-preserve_path_headers no
+preserve_path_headers yes
 
 search_exclusive yes
 search_shared yes

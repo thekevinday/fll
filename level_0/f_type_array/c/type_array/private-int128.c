@@ -1,0 +1,226 @@
+#include "../type_array.h"
+#include "private-int128.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#if !defined(_di_f_type_int128s_adjust_) || !defined(_di_f_type_int128s_decimate_by_)
+  f_status_t private_f_type_int128s_adjust(const f_array_length_t length, f_int128s_t *int128s) {
+
+    const f_status_t status = f_memory_adjust(int128s->size, length, sizeof(f_int128_t), (void **) & int128s->array);
+
+    if (F_status_is_error_not(status)) {
+      int128s->size = length;
+
+      if (int128s->used > int128s->size) {
+        int128s->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_int128s_adjust_) || !defined(_di_f_type_int128s_decimate_by_)
+
+#if !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128ss_append_)
+  extern f_status_t private_f_type_int128s_append(const f_int128s_t source, f_int128s_t *destination) {
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_type_int128s_adjust(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+      destination->array[destination->used] = source.array[i];
+    } // for
+
+    return F_none;
+  }
+#endif // !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128ss_append_)
+
+#if !defined(_di_f_type_int128s_resize_) || !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128s_decimate_by_) || !defined(_di_f_type_int128ss_append_)
+  f_status_t private_f_type_int128s_resize(const f_array_length_t length, f_int128s_t *int128s) {
+
+    const f_status_t status = f_memory_resize(int128s->size, length, sizeof(f_int128_t), (void **) & int128s->array);
+
+    if (F_status_is_error_not(status)) {
+      int128s->size = length;
+
+      if (int128s->used > int128s->size) {
+        int128s->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_int128s_resize_) || !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128s_decimate_by_) || !defined(_di_f_type_int128ss_append_)
+
+#if !defined(_di_f_type_int128ss_adjust_) || !defined(_di_f_type_int128ss_decimate_by_)
+  f_status_t private_f_type_int128ss_adjust(const f_array_length_t length, f_int128ss_t *int128ss) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < int128ss->size; ++i) {
+
+      status = f_memory_destroy(int128ss->array[i].size, sizeof(f_int128s_t), (void **) & int128ss->array[i].array);
+      if (F_status_is_error(status)) return status;
+
+      int128ss->array[i].size = 0;
+      int128ss->array[i].used = 0;
+    } // for
+
+    status = f_memory_adjust(int128ss->size, length, sizeof(f_int128s_t), (void **) & int128ss->array);
+
+    if (F_status_is_error_not(status)) {
+      int128ss->size = length;
+
+      if (int128ss->used > int128ss->size) {
+        int128ss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_int128ss_adjust_) || !defined(_di_f_type_int128ss_decimate_by_)
+
+#if !defined(_di_f_type_int128ss_decrease_by_) || !defined(_di_f_type_int128ss_increase_) || !defined(_di_f_type_int128ss_increase_by_) || !defined(_di_f_type_int128ss_resize_)
+  f_status_t private_f_type_int128ss_resize(const f_array_length_t length, f_int128ss_t *int128ss) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < int128ss->size; ++i) {
+
+      status = f_memory_delete(int128ss->array[i].size, sizeof(f_int128s_t), (void **) & int128ss->array[i].array);
+      if (F_status_is_error(status)) return status;
+
+      int128ss->array[i].size = 0;
+      int128ss->array[i].used = 0;
+    } // for
+
+    status = f_memory_resize(int128ss->size, length, sizeof(f_int128s_t), (void **) & int128ss->array);
+
+    if (F_status_is_error_not(status)) {
+      int128ss->size = length;
+
+      if (int128ss->used > int128ss->size) {
+        int128ss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_int128ss_decrease_by_) || !defined(_di_f_type_int128ss_increase_) || !defined(_di_f_type_int128ss_increase_by_) || !defined(_di_f_type_int128ss_resize_)
+
+#if !defined(_di_f_type_uint128s_adjust_) || !defined(_di_f_type_uint128s_decimate_by_)
+  f_status_t private_f_type_uint128s_adjust(const f_array_length_t length, f_uint128s_t *uint128s) {
+
+    const f_status_t status = f_memory_adjust(uint128s->size, length, sizeof(f_uint128_t), (void **) & uint128s->array);
+
+    if (F_status_is_error_not(status)) {
+      uint128s->size = length;
+
+      if (uint128s->used > uint128s->size) {
+        uint128s->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_uint128s_adjust_) || !defined(_di_f_type_uint128s_decimate_by_)
+
+#if !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128ss_append_)
+  extern f_status_t private_f_type_uint128s_append(const f_uint128s_t source, f_uint128s_t *destination) {
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_type_uint128s_adjust(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+      destination->array[destination->used] = source.array[i];
+    } // for
+
+    return F_none;
+  }
+#endif // !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128ss_append_)
+
+#if !defined(_di_f_type_uint128s_resize_) || !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128s_decimate_by_) || !defined(_di_f_type_uint128ss_append_)
+  f_status_t private_f_type_uint128s_resize(const f_array_length_t length, f_uint128s_t *uint128s) {
+
+    const f_status_t status = f_memory_resize(uint128s->size, length, sizeof(f_uint128_t), (void **) & uint128s->array);
+
+    if (F_status_is_error_not(status)) {
+      uint128s->size = length;
+
+      if (uint128s->used > uint128s->size) {
+        uint128s->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_uint128s_resize_) || !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128s_decimate_by_) || !defined(_di_f_type_uint128ss_append_)
+
+#if !defined(_di_f_type_uint128ss_adjust_) || !defined(_di_f_type_uint128ss_decimate_by_)
+  f_status_t private_f_type_uint128ss_adjust(const f_array_length_t length, f_uint128ss_t *uint128ss) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < uint128ss->size; ++i) {
+
+      status = f_memory_destroy(uint128ss->array[i].size, sizeof(f_uint128s_t), (void **) & uint128ss->array[i].array);
+      if (F_status_is_error(status)) return status;
+
+      uint128ss->array[i].size = 0;
+      uint128ss->array[i].used = 0;
+    } // for
+
+    status = f_memory_adjust(uint128ss->size, length, sizeof(f_uint128s_t), (void **) & uint128ss->array);
+
+    if (F_status_is_error_not(status)) {
+      uint128ss->size = length;
+
+      if (uint128ss->used > uint128ss->size) {
+        uint128ss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_uint128ss_adjust_) || !defined(_di_f_type_uint128ss_decimate_by_)
+
+#if !defined(_di_f_type_uint128ss_decrease_by_) || !defined(_di_f_type_uint128ss_increase_) || !defined(_di_f_type_uint128ss_increase_by_) || !defined(_di_f_type_uint128ss_resize_)
+  f_status_t private_f_type_uint128ss_resize(const f_array_length_t length, f_uint128ss_t *uint128ss) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < uint128ss->size; ++i) {
+
+      status = f_memory_delete(uint128ss->array[i].size, sizeof(f_uint128s_t), (void **) & uint128ss->array[i].array);
+      if (F_status_is_error(status)) return status;
+
+      uint128ss->array[i].size = 0;
+      uint128ss->array[i].used = 0;
+    } // for
+
+    status = f_memory_resize(uint128ss->size, length, sizeof(f_uint128s_t), (void **) & uint128ss->array);
+
+    if (F_status_is_error_not(status)) {
+      uint128ss->size = length;
+
+      if (uint128ss->used > uint128ss->size) {
+        uint128ss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_type_uint128ss_decrease_by_) || !defined(_di_f_type_uint128ss_increase_) || !defined(_di_f_type_uint128ss_increase_by_) || !defined(_di_f_type_uint128ss_resize_)
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

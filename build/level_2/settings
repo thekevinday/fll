@@ -31,7 +31,17 @@ build_objects_library_static
 build_objects_program
 build_objects_program_shared
 build_objects_program_static
-build_sources_library control_group.c error.c error-common.c private-error.c execute.c private-execute.c file.c private-file.c fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_payload.c fss_status_string.c iki.c private-iki.c path.c print.c program.c program-common.c status_string.c
+build_sources_library control_group.c
+build_sources_library error.c error-common.c private-error.c
+build_sources_library execute.c private-execute.c
+build_sources_library file.c private-file.c
+build_sources_library fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_payload.c
+build_sources_library fss_status_string.c
+build_sources_library iki.c private-iki.c
+build_sources_library path.c
+build_sources_library print.c
+build_sources_library program.c program-common.c
+build_sources_library status_string.c
 build_sources_library-level
 build_sources_library_shared
 build_sources_library_static
@@ -41,7 +51,17 @@ build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers control_group.h error.h error-common.h execute.h file.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_payload.h fss_status_string.h iki.h path.h print.h program.h program-common.h status_string.h
+build_sources_headers control_group.h
+build_sources_headers error.h error-common.h
+build_sources_headers execute.h
+build_sources_headers file.h
+build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_payload.h
+build_sources_headers fss_status_string.h
+build_sources_headers iki.h
+build_sources_headers path.h
+build_sources_headers print.h
+build_sources_headers program.h program-common.h
+build_sources_headers status_string.h
 build_sources_headers-level
 build_sources_headers_shared
 build_sources_headers_static
@@ -65,7 +85,7 @@ path_sources
 path_sources_object
 
 has_path_standard yes
-preserve_path_headers no
+preserve_path_headers yes
 
 search_exclusive yes
 search_shared yes

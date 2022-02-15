@@ -8,8 +8,8 @@
  * These are provided for internal reduction in redundant code.
  * These should not be exposed/used outside of this project.
  */
-#ifndef _PRIVATE_F_type_array_h
-#define _PRIVATE_F_type_array_h
+#ifndef _PRIVATE_F_type_array_cell_h
+#define _PRIVATE_F_type_array_cell_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -1938,4 +1938,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_F_type_array_h
+#endif // _PRIVATE_F_type_array_cell_h
