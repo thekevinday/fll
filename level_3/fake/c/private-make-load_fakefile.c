@@ -534,8 +534,15 @@ extern "C" {
             break;
           }
 
-          // Include the terminating NULL when copying.
-          ++name_define.used;
+          data_make->setting_build.environment.array[data_make->setting_build.environment.used].used = 0;
+
+          status = f_string_dynamic_increase_by(name_define.used + 1, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
+            break;
+          }
 
           status = f_string_dynamic_append_nulless(name_define, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
 
@@ -545,8 +552,15 @@ extern "C" {
             break;
           }
 
-          // Set the terminating NULL to not being normally included.
-          --data_make->setting_build.environment.array[data_make->setting_build.environment.used++].used;
+          status = f_string_dynamic_terminate_after(&data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+
+            break;
+          }
+
+          ++data_make->setting_build.environment.used;
         }
         else if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
           flockfile(data_make->main->warning.to.stream);
