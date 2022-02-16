@@ -10,7 +10,7 @@
 #ifndef _F_type_h
 #define _F_type_h
 
-// include pre-requirements
+// Include pre-requirements.
 #ifndef _GNU_SOURCE
   #define _GNU_SOURCE
 #endif // _GNU_SOURCE

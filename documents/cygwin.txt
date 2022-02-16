@@ -8,10 +8,10 @@ Cygwin:
   The resulting binary could be transfered to another machine and runs if the cygwin.dll is copied with it (placed along the byte_dump.exe).
 
   To compile the FLL, some functionality needs to be disabled.
-  Fortunately, FLL is specifically designed to be hackable so the process is easier that it might otherwise be.
+  Fortunately, FLL is specifically designed to be hackable so the process is easier than it might otherwise be.
 
   For a monolithic build, compiled statically, add the following to "defines" in the "data/build/settings" file (of the packaged source).
-    "-D_di_libcap_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_ -D_di_f_attribute_visibility_ -Df_attribute_visibility_hidden -Df_attribute_visibility_internal -Df_attribute_visibility_protected -Df_attribute_visibility_public"
+    "-D_di_libcap_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_ -D_di_compiler_attributes_ -DF_attribute_visibility_hidden_d -DF_attribute_visibility_internal_d -DF_attribute_visibility_protected_d -DF_attribute_visibility_public_d -DF_attribute_weak_d"
 
   Before packaging "data/build/settings", the build settings files are either found inside the individual projects or under the build directory at the root of the source repository.
 
