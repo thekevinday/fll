@@ -10,7 +10,7 @@
 #ifndef _FLL_program_h
 #define _FLL_program_h
 
-// libc include
+// Libc includes.
 #include <stdio.h>
 
 // FLL-0 includes.
@@ -29,8 +29,8 @@
 #include <fll/level_1/string.h>
 #include <fll/level_1/print.h>
 
-// fll-2 program includes
-#include <fll/level_2/program-common.h>
+// FLL-2 program includes.
+#include <fll/level_2/program/common.h>
 
 #ifdef __cplusplus
 extern "C" {

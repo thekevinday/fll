@@ -30,13 +30,13 @@
 #include <fll/level_0/signal.h>
 
 // FLL-1 includes.
-#include <fll/level_1/fss_extended.h>
+#include <fll/level_1/fss/extended.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
-#include <fll/level_2/fss_extended.h>
+#include <fll/level_2/fss/extended.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 

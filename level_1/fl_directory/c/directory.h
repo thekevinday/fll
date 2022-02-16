@@ -41,7 +41,7 @@
 #include <fll/level_0/path.h>
 
 // FLL-1 directory includes.
-#include <fll/level_1/directory-common.h>
+#include <fll/level_1/directory/common.h>
 
 #ifdef __cplusplus
 extern "C" {

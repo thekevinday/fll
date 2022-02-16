@@ -74,10 +74,10 @@
 #include <fll/level_2/error.h>
 #include <fll/level_2/execute.h>
 #include <fll/level_2/fss.h>
-#include <fll/level_2/fss_basic_list.h>
-#include <fll/level_2/fss_extended.h>
-#include <fll/level_2/fss_extended_list.h>
-#include <fll/level_2/fss_payload.h>
+#include <fll/level_2/fss/basic_list.h>
+#include <fll/level_2/fss/extended.h>
+#include <fll/level_2/fss/extended_list.h>
+#include <fll/level_2/fss/payload.h>
 #include <fll/level_2/path.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>

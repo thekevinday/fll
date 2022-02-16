@@ -10,7 +10,7 @@
 #ifndef _F_execute_h
 #define _F_execute_h
 
-// include pre-requirements
+// Include pre-requirements.
 #define _GNU_SOURCE
 
 // Libc includes.
@@ -23,8 +23,8 @@
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 
-// fll-0 execute includes
-#include <fll/level_0/execute-common.h>
+// FLL-0 execute includes.
+#include <fll/level_0/execute/common.h>
 
 #ifdef __cplusplus
 extern "C" {

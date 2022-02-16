@@ -63,7 +63,7 @@ path_sources
 path_sources_object
 
 has_path_standard yes
-preserve_path_headers no
+preserve_path_headers yes
 
 search_exclusive yes
 search_shared yes

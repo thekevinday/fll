@@ -18,7 +18,7 @@
 #include <fll/level_0/memory.h>
 
 // FLL-0 type_array includes.
-#include <fll/level_0/type_array-common.h>
+#include <fll/level_0/type_array/common.h>
 #include <fll/level_0/type_array/array_length.h>
 #include <fll/level_0/type_array/cell.h>
 #include <fll/level_0/type_array/fll_id.h>

@@ -10,7 +10,7 @@
 #ifndef _F_thread_h
 #define _F_thread_h
 
-// include pre-requirements
+// Include pre-requirements.
 #define _GNU_SOURCE
 
 // Libc includes.
@@ -28,8 +28,8 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-0 thread includes
-#include <fll/level_0/thread-common.h>
+// FLL-0 thread includes.
+#include <fll/level_0/thread/common.h>
 
 #ifdef __cplusplus
 extern "C" {

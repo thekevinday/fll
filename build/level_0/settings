@@ -33,27 +33,29 @@ build_objects_program_shared
 build_objects_program_static
 build_sources_library account.c private-account.c
 build_sources_library capability.c
-build_sources_library color.c color-common.c
-build_sources_library console.c console-common.c
-build_sources_library control_group.c control_group-common.c
-build_sources_library conversion.c conversion-common.c private-conversion.c
+build_sources_library color.c color/common.c
+build_sources_library console.c console/common.c
+build_sources_library control_group.c control_group/common.c
+build_sources_library conversion.c private-conversion.c conversion/common.c
 build_sources_library directory.c private-directory.c
 build_sources_library environment.c private-environment.c
 build_sources_library execute.c
-build_sources_library file.c file-common.c private-file.c
-build_sources_library fss.c private-fss.c fss-common.c fss_named.c fss_nest.c fss_set.c
-build_sources_library iki.c iki-common.c private-iki.c
+build_sources_library file.c file/common.c private-file.c
+build_sources_library fss.c private-fss.c fss/common.c fss/named.c fss/nest.c fss/set.c
+build_sources_library iki.c iki/common.c private-iki.c
 build_sources_library limit.c
-build_sources_library memory.c memory_structure.c private-memory.c
-build_sources_library path.c path-common.c private-path.c
-build_sources_library pipe.c print.c print_to.c print-common.c private-print.c private-print_to.c
-build_sources_library serialize.c serialize-common.c private-serialize.c
+build_sources_library memory.c private-memory.c memory/structure.c
+build_sources_library path.c private-path.c path/common.c
+build_sources_library pipe.c
+build_sources_library print.c private-print.c print/common.c print/to.c print/private-to.c
+build_sources_library serialize.c private-serialize.c serialize/common.c
 build_sources_library signal.c
 build_sources_library socket.c
-build_sources_library status_string.c string.c string-common.c private-string.c string_dynamic.c string_map.c string_quantity.c string_range.c string_triple.c
+build_sources_library status_string.c
+build_sources_library string.c private-string.c string/common.c string/dynamic.c string/map.c string/quantity.c string/range.c string/triple.c
 build_sources_library type_array/array_length.c type_array/cell.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/state.c type_array/status.c
 build_sources_library type_array/private-array_length.c type_array/private-cell.c type_array/private-fll_id.c type_array/private-int8.c type_array/private-int16.c type_array/private-int32.c type_array/private-int64.c type_array/private-int128.c type_array/private-state.c type_array/private-status.c
-build_sources_library utf.c utf-common.c utf_dynamic.c utf_map.c utf_string.c utf_triple.c private-utf.c private-utf-is_unassigned.c private-utf_string.c
+build_sources_library utf.c private-utf.c utf/common.c utf/dynamic.c utf/map.c utf/private-is_unassigned.c utf/private-string.c utf/string.c utf/triple.c
 build_sources_library-level thread.c private-thread.c
 build_sources_library_shared
 build_sources_library_static
@@ -63,33 +65,34 @@ build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers account.h account-common.h
-build_sources_headers capability.h capability-common.h
-build_sources_headers color.h color-common.h
-build_sources_headers console.h console-common.h
-build_sources_headers control_group.h control_group-common.h
-build_sources_headers conversion.h conversion-common.h
-build_sources_headers directory.h directory_type.h directory-common.h
-build_sources_headers environment.h environment-common.h
-build_sources_headers execute.h execute-common.h
-build_sources_headers file.h file-common.h
-build_sources_headers fss.h fss-common.h fss_comment.h fss_delimit.h fss_named.h fss_nest.h fss_quote.h fss_set.h
-build_sources_headers iki.h iki-common.h
-build_sources_headers limit.h limit-common.h
-build_sources_headers memory.h memory_structure.h memory-common.h
-build_sources_headers path.h path-common.h
+build_sources_headers account.h account/common.h
+build_sources_headers capability.h capability/common.h
+build_sources_headers color.h color/common.h
+build_sources_headers console.h console/common.h
+build_sources_headers control_group.h control_group/common.h
+build_sources_headers conversion.h conversion/common.h
+build_sources_headers directory.h directory/common.h directory/type.h
+build_sources_headers environment.h environment/common.h
+build_sources_headers execute.h execute/common.h
+build_sources_headers file.h file/common.h
+build_sources_headers fss.h fss/comment.h fss/common.h fss/delimit.h fss/named.h fss/nest.h fss/quote.h fss/set.h
+build_sources_headers iki.h iki/common.h
+build_sources_headers limit.h limit/common.h
+build_sources_headers memory.h memory/structure.h memory/common.h
+build_sources_headers path.h path/common.h
 build_sources_headers pipe.h
-build_sources_headers print.h print_to.h print-common.h
-build_sources_headers serialize.h serialize-common.h
-build_sources_headers signal.h signal-common.h
-build_sources_headers socket.h socket-common.h
-build_sources_headers status.h status_string.h
-build_sources_headers string.h string-common.h string_dynamic.h string_map.h string_quantity.h string_range.h string_triple.h
+build_sources_headers print.h print/to.h print/common.h
+build_sources_headers serialize.h serialize/common.h
+build_sources_headers signal.h signal/common.h
+build_sources_headers socket.h socket/common.h
+build_sources_headers status.h
+build_sources_headers status_string.h
+build_sources_headers string.h string/common.h string/dynamic.h string/map.h string/quantity.h string/range.h string/triple.h
 build_sources_headers type.h
-build_sources_headers type_array.h type_array-common.h
+build_sources_headers type_array.h type_array/common.h
 build_sources_headers type_array/array_length.h type_array/cell.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/state.h type_array/status.h
-build_sources_headers utf.h utf-common.h utf_dynamic.h utf_map.h utf_string.h utf_triple.h
-build_sources_headers-level thread.h thread-common.h
+build_sources_headers utf.h utf/common.h utf/dynamic.h utf/map.h utf/string.h utf/triple.h
+build_sources_headers-level thread.h thread/common.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script

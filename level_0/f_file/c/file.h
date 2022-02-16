@@ -28,7 +28,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-// non-standard libc includs
+// Non-standard libc includes.
 #include <sys/sysmacros.h>
 
 // FLL-0 includes.
@@ -37,8 +37,8 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-0 file includes
-#include <fll/level_0/file-common.h>
+// FLL-0 file includes.
+#include <fll/level_0/file/common.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -28,9 +28,9 @@
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
 
-// fll-0 print includes
-#include <fll/level_0/print-common.h>
-#include <fll/level_0/print_to.h>
+// FLL-0 print includes.
+#include <fll/level_0/print/common.h>
+#include <fll/level_0/print/to.h>
 
 #ifdef __cplusplus
 extern "C" {

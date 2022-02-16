@@ -21,13 +21,13 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/type.h>
 
-// fll-0 string includes
-#include <fll/level_0/string-common.h>
-#include <fll/level_0/string_dynamic.h>
-#include <fll/level_0/string_map.h>
-#include <fll/level_0/string_quantity.h>
-#include <fll/level_0/string_range.h>
-#include <fll/level_0/string_triple.h>
+// FLL-0 string includes.
+#include <fll/level_0/string/common.h>
+#include <fll/level_0/string/range.h>
+#include <fll/level_0/string/dynamic.h>
+#include <fll/level_0/string/map.h>
+#include <fll/level_0/string/quantity.h>
+#include <fll/level_0/string/triple.h>
 
 #ifdef __cplusplus
 extern "C" {

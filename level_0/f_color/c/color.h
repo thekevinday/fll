@@ -24,8 +24,8 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-0 color includes.
-#include <fll/level_0/color-common.h>
+// FLL-0 color includes.
+#include <fll/level_0/color/common.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -19,9 +19,9 @@
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 
-// fll-0 memory includes
-#include <fll/level_0/memory-common.h>
-#include <fll/level_0/memory_structure.h>
+// FLL-0 memory includes.
+#include <fll/level_0/memory/common.h>
+#include <fll/level_0/memory/structure.h>
 
 #ifdef __cplusplus
 extern "C" {

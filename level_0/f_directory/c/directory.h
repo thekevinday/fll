@@ -21,7 +21,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-// work-around for out-dated systems.
+// Work-around for systems requiring special defines to properly include ftw.h.
 #ifndef __USE_XOPEN_EXTENDED
   #define __USE_XOPEN_EXTENDED
   #include <ftw.h>
@@ -35,10 +35,10 @@
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
-#include <fll/level_0/directory_type.h>
 
-// fll-0 directory includes
-#include <fll/level_0/directory-common.h>
+// FLL-0 directory includes.
+#include <fll/level_0/directory/common.h>
+#include <fll/level_0/directory/type.h>
 
 #ifdef __cplusplus
 extern "C" {

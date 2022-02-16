@@ -39,7 +39,7 @@ build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers environment.h environment-common.h
+build_sources_headers environment.h environment/common.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script
@@ -62,7 +62,7 @@ path_sources
 path_sources_object
 
 has_path_standard yes
-preserve_path_headers no
+preserve_path_headers yes
 
 search_exclusive yes
 search_shared yes

@@ -27,7 +27,7 @@ build_libraries_static
 build_sources_library account.c private-account.c ../../tests/unit/c/mock-account.c
 build_sources_library_shared
 build_sources_library_static
-build_sources_headers account.h account-common.h
+build_sources_headers account.h account/common.h
 build_sources_headers_shared
 build_sources_headers_static
 build_script yes

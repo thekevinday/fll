@@ -41,8 +41,8 @@
 #include <fll/level_0/type_array.h>
 #include <fll/level_0/string.h>
 
-// fll-0 capability includes
-#include <fll/level_0/capability-common.h>
+// FLL-0 capability includes.
+#include <fll/level_0/capability/common.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -48,11 +48,11 @@
 #include <fll/level_0/string.h>
 
 // FLL-0 utf includes.
-#include <fll/level_0/utf-common.h>
-#include <fll/level_0/utf_dynamic.h>
-#include <fll/level_0/utf_map.h>
-#include <fll/level_0/utf_string.h>
-#include <fll/level_0/utf_triple.h>
+#include <fll/level_0/utf/common.h>
+#include <fll/level_0/utf/dynamic.h>
+#include <fll/level_0/utf/map.h>
+#include <fll/level_0/utf/string.h>
+#include <fll/level_0/utf/triple.h>
 
 #ifdef __cplusplus
 extern "C" {

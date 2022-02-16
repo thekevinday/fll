@@ -35,13 +35,13 @@ build_sources_library control_group.c
 build_sources_library conversion.c private-conversion.c
 build_sources_library directory.c private-directory.c
 build_sources_library environment.c
-build_sources_library private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c
+build_sources_library private-fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss/extended.c fss/extended_list.c
 build_sources_library iki.c
-build_sources_library print.c print-common.c private-print.c
+build_sources_library print.c private-print.c print/common.c
 build_sources_library signal.c
-build_sources_library string.c
-build_sources_library private-string.c
-build_sources_library utf.c private-utf.c utf_file.c private-utf_file.c
+build_sources_library string.c private-string.c
+build_sources_library utf.c private-utf.c
+build_sources_library utf_file.c private-utf_file.c
 build_sources_library-level
 build_sources_library_shared
 build_sources_library_static
@@ -53,15 +53,16 @@ build_sources_program_shared
 build_sources_program_static
 build_sources_headers control_group.h
 build_sources_headers conversion.h
-build_sources_headers directory.h directory-common.h
+build_sources_headers directory.h directory/common.h
 build_sources_headers environment.h
-build_sources_headers execute.h execute-common.h
-build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h
+build_sources_headers execute.h execute/common.h
+build_sources_headers fss.h fss/basic.h fss/basic_list.h fss/embedded_list.h fss/extended.h fss/extended_list.h
 build_sources_headers iki.h
-build_sources_headers print.h print-common.h
-build_sources_headers signal.h signal-common.h
+build_sources_headers print.h print/common.h
+build_sources_headers signal.h signal/common.h
 build_sources_headers string.h
-build_sources_headers utf.h utf_file.h
+build_sources_headers utf.h
+build_sources_headers utf_file.h
 build_sources_headers-level
 build_sources_headers_shared
 build_sources_headers_static

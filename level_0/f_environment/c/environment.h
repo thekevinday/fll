@@ -20,8 +20,8 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-0 environment includes
-#include <fll/level_0/environment-common.h>
+// FLL-0 environment includes.
+#include <fll/level_0/environment/common.h>
 
 #ifdef __cplusplus
 extern "C" {

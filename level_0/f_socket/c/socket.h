@@ -25,8 +25,8 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-0 socket includes
-#include <fll/level_0/socket-common.h>
+// FLL-0 socket includes.
+#include <fll/level_0/socket/common.h>
 
 #ifdef __cplusplus
 extern "C" {

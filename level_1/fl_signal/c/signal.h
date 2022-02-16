@@ -20,8 +20,8 @@
 #include <fll/level_0/status.h>
 #include <fll/level_0/signal.h>
 
-// fll-1 signal includes
-#include <fll/level_1/signal-common.h>
+// FLL-1 signal includes.
+#include <fll/level_1/signal/common.h>
 
 #ifdef __cplusplus
 extern "C" {

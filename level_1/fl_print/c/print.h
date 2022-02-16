@@ -26,8 +26,8 @@
 #include <fll/level_0/file.h>
 #include <fll/level_0/print.h>
 
-// fll-1 print includes.
-#include <fll/level_1/print-common.h>
+// FLL-1 print includes.
+#include <fll/level_1/print/common.h>
 
 #ifdef __cplusplus
 extern "C" {

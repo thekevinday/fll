@@ -27,8 +27,8 @@
 // FLL-1 includes.
 #include <fll/level_1/print.h>
 
-// fll-2 error includes
-#include <fll/level_2/error-common.h>
+// FLL-2 error includes.
+#include <fll/level_2/error/common.h>
 
 #ifdef __cplusplus
 extern "C" {

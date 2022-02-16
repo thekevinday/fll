@@ -26,8 +26,8 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 
-// fll-0 path includes
-#include <fll/level_0/path-common.h>
+// FLL-0 path includes.
+#include <fll/level_0/path/common.h>
 
 #ifdef __cplusplus
 extern "C" {

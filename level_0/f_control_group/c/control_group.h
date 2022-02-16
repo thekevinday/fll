@@ -25,7 +25,7 @@
 #include <fll/level_0/string.h>
 
 // FLL-1 control includes.
-#include <fll/level_0/control_group-common.h>
+#include <fll/level_0/control_group/common.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -22,8 +22,8 @@
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
 
-// fll-0 serialize includes
-#include <fll/level_0/serialize-common.h>
+// FLL-0 serialize includes.
+#include <fll/level_0/serialize/common.h>
 
 #ifdef __cplusplus
 extern "C" {

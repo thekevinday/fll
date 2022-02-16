@@ -25,8 +25,8 @@
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
 
-// fll-0 iki includes
-#include <fll/level_0/iki-common.h>
+// FLL-0 iki includes.
+#include <fll/level_0/iki/common.h>
 
 #ifdef __cplusplus
 extern "C" {

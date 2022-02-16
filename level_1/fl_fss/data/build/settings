@@ -30,7 +30,7 @@ build_objects_library_static
 build_objects_program
 build_objects_program_shared
 build_objects_program_static
-build_sources_library private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c
+build_sources_library private-fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss/extended.c fss/extended_list.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_object
@@ -39,7 +39,7 @@ build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h
+build_sources_headers fss.h fss/basic.h fss/basic_list.h fss/embedded_list.h fss/extended.h fss/extended_list.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script
@@ -62,7 +62,7 @@ path_sources
 path_sources_object
 
 has_path_standard yes
-preserve_path_headers no
+preserve_path_headers yes
 
 search_exclusive yes
 search_shared yes
