@@ -69,7 +69,7 @@ extern "C" {
     f_status_t status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
-    if (status == F_false) return F_status_set_error(F_directory);
+    if (status == F_false) return F_status_set_error(F_directory_not);
 
     struct stat source_stat;
 
@@ -150,11 +150,11 @@ extern "C" {
     f_status_t status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
-    if (status == F_false) return F_status_set_error(F_directory);
+    if (status == F_false) return F_status_set_error(F_directory_not);
 
     status = f_directory_exists(destination);
     if (F_status_is_error(status)) return status;
-    if (status == F_false) return F_status_set_error(F_directory);
+    if (status == F_false) return F_status_set_error(F_directory_not);
 
     f_string_static_t static_source = macro_f_string_static_t_initialize2(source.string, source.used);
     f_string_static_t static_destination = macro_f_string_static_t_initialize2(destination.string, destination.used);
@@ -210,7 +210,7 @@ extern "C" {
     f_status_t status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
-    if (status == F_false) return F_status_set_error(F_directory);
+    if (status == F_false) return F_status_set_error(F_directory_not);
 
     status = f_directory_exists(destination);
     if (F_status_is_error(status)) return status;
@@ -280,11 +280,11 @@ extern "C" {
     f_status_t status = f_directory_exists(source);
 
     if (F_status_is_error(status)) return status;
-    if (status == F_false) return F_status_set_error(F_directory);
+    if (status == F_false) return F_status_set_error(F_directory_not);
 
     status = f_directory_exists(destination);
     if (F_status_is_error(status)) return status;
-    if (status == F_false) return F_status_set_error(F_directory);
+    if (status == F_false) return F_status_set_error(F_directory_not);
 
     f_string_static_t static_source = macro_f_string_static_t_initialize2(source.string, source.used);
     f_string_static_t static_destination = macro_f_string_static_t_initialize2(destination.string, destination.used);

@@ -112,6 +112,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if source.used or destination.used is 0.
  *
+ *   F_directory_not (with error bit) if the source directory does not exist.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors (with error bit) from: f_directory_create().
@@ -155,6 +156,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if source.used or destination.used is 0.
  *
+ *   F_directory_not (with error bit) if either the source or destination directory does not exist.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors (with error bit) from: f_directory_exists().
@@ -190,6 +192,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if source.used or destination.used is 0.
  *
+ *   F_directory_found (with error bit) if the destination directory is found and recurse.exclusive is TRUE.
+ *   F_directory_not (with error bit) if the source directory does not exist.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors (with error bit) from: f_directory_create().
@@ -231,6 +235,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if source.used or destination.used is 0.
  *
+ *   F_directory_not (with error bit) if either the source or the destination directory does not exist.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors (with error bit) from: f_directory_exists().
