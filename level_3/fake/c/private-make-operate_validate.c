@@ -1404,7 +1404,7 @@ extern "C" {
       return F_false;
     }
 
-    for (f_array_length_t i = 0; i < name.used; ++i) {
+    for (f_array_length_t i = 1; i < name.used; ++i) {
 
       if (!(isalnum(name.string[i]) || name.string[i] == '_')) {
         return F_false;
