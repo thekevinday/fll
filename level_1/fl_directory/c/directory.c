@@ -27,15 +27,16 @@ extern "C" {
       f_array_length_t at_path = 0;
       f_string_static_t tree = f_string_static_t_initialize;
 
-      char tree_string[path.used];
+      char tree_string[path.used + 1];
       tree.string = tree_string;
       tree.used = path.used;
+      tree_string[path.used] = 0;
 
-      for (; path.string[at_path]; ++at_path) {
+      for (; at_path < path.used; ++at_path) {
 
         if (at_path && path.string[at_path] == f_path_separator_s.string[0]) {
           memcpy(tree.string, path.string + at_tree, at_path - at_tree);
-          tree.string[at_path] = 0;
+          tree.string[at_path - at_tree] = 0;
 
           status = f_directory_exists(tree);
           if (F_status_is_error(status)) return status;
