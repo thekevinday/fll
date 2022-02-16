@@ -1400,13 +1400,14 @@ extern "C" {
 
     path_to_name = basename(path_argument);
 
-    f_array_length_t size = strnlen(path_to_name, path.used);
+    const f_array_length_t size = strnlen(path_to_name, path.used);
 
-    const f_status_t status = f_string_dynamic_increase_by(size, name_base);
+    const f_status_t status = f_string_dynamic_increase_by(size + 1, name_base);
     if (F_status_is_error(status)) return status;
 
     memcpy(name_base->string + name_base->used, path_to_name, size);
     name_base->used += size;
+    name_base->string[name_base->used] = 0;
 
     return F_none;
   }
@@ -1431,15 +1432,21 @@ extern "C" {
 
     path_to_name = dirname(path_argument);
 
-    f_array_length_t size = strnlen(path_to_name, path.used);
+    const f_array_length_t size = strnlen(path_to_name, path.used);
+
+    // Do not treat '.' as a directory.
+    if (size == 1 && f_string_ascii_plus_s.string[0]) {
+      return F_none;
+    }
 
     {
-      const f_status_t status = f_string_dynamic_increase_by(size, name_directory);
+      const f_status_t status = f_string_dynamic_increase_by(size + 1, name_directory);
       if (F_status_is_error(status)) return status;
     }
 
     memcpy(name_directory->string + name_directory->used, path_to_name, size);
     name_directory->used += size;
+    name_directory->string[name_directory->used] = 0;
 
     return F_none;
   }

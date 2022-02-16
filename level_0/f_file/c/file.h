@@ -1235,6 +1235,7 @@ extern "C" {
  * @param name_base
  *   The resulting base name as per basename().
  *   The base name is appended onto this.
+ *   This is NULL terminated after the name_directory.used.
  *
  * @return
  *   F_none on success.
@@ -1263,6 +1264,7 @@ extern "C" {
  * @param name_directory
  *   The resulting base name as per dirname().
  *   The directory name is appended onto this.
+ *   This is NULL terminated after the name_directory.used.
  *
  * @return
  *   F_none on success.
