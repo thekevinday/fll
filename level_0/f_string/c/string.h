@@ -24,6 +24,7 @@
 // FLL-0 string includes.
 #include <fll/level_0/string/common.h>
 #include <fll/level_0/string/range.h>
+#include <fll/level_0/string/static.h>
 #include <fll/level_0/string/dynamic.h>
 #include <fll/level_0/string/map.h>
 #include <fll/level_0/string/quantity.h>

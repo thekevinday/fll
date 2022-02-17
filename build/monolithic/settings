@@ -52,7 +52,7 @@ build_sources_library level_0/serialize.c level_0/private-serialize.c level_0/se
 build_sources_library level_0/signal.c
 build_sources_library level_0/socket.c
 build_sources_library level_0/status_string.c
-build_sources_library level_0/string.c level_0/private-string.c level_0/string/common.c level_0/string/dynamic.c level_0/string/map.c level_0/string/quantity.c level_0/string/range.c level_0/string/triple.c
+build_sources_library level_0/string.c level_0/private-string.c level_0/string/common.c level_0/string/dynamic.c level_0/string/map.c level_0/string/quantity.c level_0/string/range.c level_0/string/static.c level_0/string/triple.c
 build_sources_library level_0/type_array/array_length.c level_0/type_array/cell.c level_0/type_array/fll_id.c level_0/type_array/int8.c level_0/type_array/int16.c level_0/type_array/int32.c level_0/type_array/int64.c level_0/type_array/int128.c level_0/type_array/state.c level_0/type_array/status.c
 build_sources_library level_0/type_array/private-array_length.c level_0/type_array/private-cell.c level_0/type_array/private-fll_id.c level_0/type_array/private-int8.c level_0/type_array/private-int16.c level_0/type_array/private-int32.c level_0/type_array/private-int64.c level_0/type_array/private-int128.c level_0/type_array/private-state.c level_0/type_array/private-status.c
 build_sources_library level_0/utf.c level_0/private-utf.c level_0/utf/common.c level_0/utf/dynamic.c level_0/utf/map.c level_0/utf/string.c level_0/utf/triple.c level_0/utf/private-is_unassigned.c level_0/utf/private-string.c
@@ -109,7 +109,7 @@ build_sources_headers level_0/signal.h level_0/signal/common.h
 build_sources_headers level_0/socket.h level_0/socket/common.h
 build_sources_headers level_0/status.h
 build_sources_headers level_0/status_string.h
-build_sources_headers level_0/string.h level_0/string/common.h level_0/string/dynamic.h level_0/string/map.h level_0/string/quantity.h level_0/string/range.h level_0/string/triple.h
+build_sources_headers level_0/string.h level_0/string/common.h level_0/string/dynamic.h level_0/string/map.h level_0/string/quantity.h level_0/string/range.h level_0/string/static.h level_0/string/triple.h
 build_sources_headers level_0/type.h
 build_sources_headers level_0/type_array.h level_0/type_array/common.h
 build_sources_headers level_0/type_array/array_length.h level_0/type_array/cell.h level_0/type_array/fll_id.h level_0/type_array/int8.h level_0/type_array/int16.h level_0/type_array/int32.h level_0/type_array/int64.h level_0/type_array/int128.h level_0/type_array/state.h level_0/type_array/status.h

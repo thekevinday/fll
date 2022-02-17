@@ -52,7 +52,7 @@ build_sources_library serialize.c private-serialize.c serialize/common.c
 build_sources_library signal.c
 build_sources_library socket.c
 build_sources_library status_string.c
-build_sources_library string.c private-string.c string/common.c string/dynamic.c string/map.c string/quantity.c string/range.c string/triple.c
+build_sources_library string.c private-string.c string/common.c string/dynamic.c string/map.c string/quantity.c string/range.c string/static.c string/triple.c
 build_sources_library type_array/array_length.c type_array/cell.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/state.c type_array/status.c
 build_sources_library type_array/private-array_length.c type_array/private-cell.c type_array/private-fll_id.c type_array/private-int8.c type_array/private-int16.c type_array/private-int32.c type_array/private-int64.c type_array/private-int128.c type_array/private-state.c type_array/private-status.c
 build_sources_library utf.c private-utf.c utf/common.c utf/dynamic.c utf/map.c utf/private-is_unassigned.c utf/private-string.c utf/string.c utf/triple.c
@@ -87,7 +87,7 @@ build_sources_headers signal.h signal/common.h
 build_sources_headers socket.h socket/common.h
 build_sources_headers status.h
 build_sources_headers status_string.h
-build_sources_headers string.h string/common.h string/dynamic.h string/map.h string/quantity.h string/range.h string/triple.h
+build_sources_headers string.h string/common.h string/dynamic.h string/map.h string/quantity.h string/range.h string/static.h string/triple.h
 build_sources_headers type.h
 build_sources_headers type_array.h type_array/common.h
 build_sources_headers type_array/array_length.h type_array/cell.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/state.h type_array/status.h

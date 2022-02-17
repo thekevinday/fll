@@ -30,7 +30,7 @@ build_objects_library_static
 build_objects_program
 build_objects_program_shared
 build_objects_program_static
-build_sources_library string.c private-string.c string/common.c string/dynamic.c string/map.c string/quantity.c string/range.c string/triple.c
+build_sources_library string.c private-string.c string/common.c string/dynamic.c string/map.c string/quantity.c string/range.c string/static.c string/triple.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_object
@@ -39,7 +39,7 @@ build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers string.h string/common.h string/dynamic.h string/map.h string/quantity.h string/range.h string/triple.h
+build_sources_headers string.h string/common.h string/dynamic.h string/map.h string/quantity.h string/range.h string/static.h string/triple.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script
