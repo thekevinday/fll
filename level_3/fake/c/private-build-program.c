@@ -147,7 +147,7 @@ extern "C" {
       return 0;
     }
 
-    {
+    if (F_status_is_error_not(*status)) {
       f_string_static_t source_library = f_string_static_t_initialize;
       source_library.used = main->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s.used + data_build->setting.build_name.used + fake_build_parameter_library_name_suffix_static_s.used;
 

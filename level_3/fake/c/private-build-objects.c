@@ -52,15 +52,17 @@ extern "C" {
 
       for (j = 0; j < sources[i]->used; ++j) {
 
+        if (!sources[i]->array[j].used) continue;
+
         file_name.used = 0;
         destination_path.used = 0;
 
-        fake_build_path_source_length(main, data_build, &data_build->setting.path_sources_object, &source);
+        fake_build_path_source_length(main, data_build, &data_build->setting.path_sources, &source);
 
         char source_string[source.used + sources[i]->array[j].used + 1];
         source.string = source_string;
 
-        fake_build_path_source_string(main, data_build, &data_build->setting.path_sources_object, &source);
+        fake_build_path_source_string(main, data_build, &data_build->setting.path_sources, &source);
 
         memcpy(source_string + source.used, sources[i]->array[j].string, sources[i]->array[j].used);
         source.used += sources[i]->array[j].used;
