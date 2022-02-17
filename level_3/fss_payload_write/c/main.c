@@ -1,8 +1,8 @@
 #include "fss_payload_write.h"
 
-int main(const int argc, const f_string_t *argv) {
+int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  const f_console_arguments_t arguments = { argc, argv };
+  const f_console_arguments_t arguments = { argc, argv, envp };
   fll_program_data_t data = fll_program_data_t_initialize;
 
   if (f_pipe_input_exists()) {

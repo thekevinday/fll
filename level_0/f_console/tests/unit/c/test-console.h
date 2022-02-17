@@ -24,6 +24,7 @@
 
 // test includes.
 #include "test-console-identify.h"
+#include "test-console-environment_process.h"
 #include "test-console-parameter_prioritize_left.h"
 #include "test-console-parameter_prioritize_right.h"
 #include "test-console-parameter_process.h"

@@ -1,8 +1,8 @@
 #include "byte_dump.h"
 
-int main(const int argc, const f_string_t *argv) {
+int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  const f_console_arguments_t arguments = { argc, argv };
+  const f_console_arguments_t arguments = { argc, argv, envp };
   byte_dump_main_t data = byte_dump_main_t_initialize;
 
   if (f_pipe_input_exists()) {

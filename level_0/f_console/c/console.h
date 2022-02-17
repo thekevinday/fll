@@ -29,6 +29,30 @@ extern "C" {
 #endif
 
 /**
+ * Transcribe the NULL terminated environment strings into maps.
+ *
+ * All values are appended to the environment maps.
+ *
+ * @param parameters
+ *   The parameters to process.
+ * @param environment
+ *   Maps representing the environment variable names and values.
+ *   Both the name and the value strings may not be NULL terminated.
+ *   Both the name and the value strings may be pointers to the envp memory addresses.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if the arguments.envp pointer is NULL or there are no environment variables in arguments.envp.
+ *
+ *   Errors (with error bit) from: f_string_maps_increase_by().
+ *
+ * @see f_string_maps_increase_by()
+ */
+#ifndef _di_f_console_environment_process_
+  extern f_status_t f_console_environment_process(const f_console_arguments_t arguments, f_string_maps_t * const environment);
+#endif // _di_f_console_environment_process_
+
+/**
  * Determine the type code represented by the given input parameter.
  *
  * @param input
@@ -41,7 +65,7 @@ extern "C" {
  *   F_data_not the input string is empty.
  */
 #ifndef _di_f_console_identify_
-  extern f_status_t f_console_identify(const f_string_t input, f_console_id_t *result);
+  extern f_status_t f_console_identify(const f_string_t input, f_console_id_t * const result);
 #endif // _di_f_console_identify_
 
 /**
@@ -72,7 +96,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_left_
-  extern f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
+  extern f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t * const decision);
 #endif // _di_f_console_parameter_prioritize_left_
 
 /**
@@ -103,7 +127,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_right_
-  extern f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
+  extern f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t * const decision);
 #endif // _di_f_console_parameter_prioritize_right_
 
 /**
@@ -136,7 +160,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if "values" parameters were expected but not found.
+ *   F_data_not if argc is 0, argv is a NULL pointer, or if argv[0] is NULL.
+ *   F_complete_not if "values" parameters were expected but not found.
  *
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.

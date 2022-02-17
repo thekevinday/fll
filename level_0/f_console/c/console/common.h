@@ -389,11 +389,12 @@ extern "C" {
     const f_number_unsigned_t argc;
 
     const f_string_t *argv;
+    const f_string_t *envp;
   } f_console_arguments_t;
 
-  #define f_console_arguments_t_initialize { 0, 0 }
+  #define f_console_arguments_t_initialize { 0, 0, 0 }
 
-  #define macro_f_console_arguments_t_initialize(argc, argv) { argc, argv }
+  #define macro_f_console_arguments_t_initialize(argc, argv, envp) { argc, argv, envp }
 #endif // _di_f_console_arguments_t_
 
 /**

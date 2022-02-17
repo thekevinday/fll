@@ -21,7 +21,7 @@ extern "C" {
  *      therefore this gets defined here.
  */
 #ifdef _en_BUG_strnlen_
-  extern size_t strnlen (const char *string, size_t max_length);
+  extern size_t strnlen(const char *string, size_t max_length);
 #endif // _en_BUG_strnlen_
 
 /**

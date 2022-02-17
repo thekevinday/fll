@@ -20,6 +20,20 @@
 extern void test__f_console_parameter_process__no_arguments(void **state);
 
 /**
+ * Test that function works with no (argv) arguments and does not have program name.
+ *
+ * @see f_console_parameter_process()
+ */
+extern void test__f_console_parameter_process__no_arguments_no_program(void **state);
+
+/**
+ * Test that function works with (argv) arguments as a NULL pointer.
+ *
+ * @see f_console_parameter_process()
+ */
+extern void test__f_console_parameter_process__null_arguments(void **state);
+
+/**
  * Test that function works with all (argv) arguments do not match any defined parameter.
  *
  * @see f_console_parameter_process()
