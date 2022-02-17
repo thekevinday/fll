@@ -45,6 +45,24 @@ extern "C" {
 #endif // _di_f_color_code_t_
 
 /**
+ * Terminal environment variable strings that may relate to color processing.
+ *
+ * f_color_terminal_*:
+ *   - name:        The standard terminal environment variable name.
+ *   - value_linux: The value representing the Linux terminal.
+ */
+#ifndef _di_f_color_terminal_s_
+  #define F_color_terminal_name_s        "TERM"
+  #define F_color_terminal_value_linux_s "linux"
+
+  #define F_color_terminal_name_s_length        4
+  #define F_color_terminal_value_linux_s_length 5
+
+  extern const f_string_static_t f_color_terminal_name_s;
+  extern const f_string_static_t f_color_terminal_value_linux_s;
+#endif // _di_f_color_terminal_s_
+
+/**
  * Provide a global color related strings.
  *
  * F_color_string_*:
