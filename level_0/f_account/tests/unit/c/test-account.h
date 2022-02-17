@@ -22,10 +22,10 @@
 // FLL-0 includes.
 #include <fll/level_0/account.h>
 
-// mock includes.
+// Mock includes.
 #include "mock-account.h"
 
-// test includes.
+// Test includes.
 #include "test-account-by_id.h"
 #include "test-account-by_name.h"
 #include "test-account-group_id_by_name.h"

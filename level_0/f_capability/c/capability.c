@@ -7,7 +7,7 @@ extern "C" {
 #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_ambient_get_
-    f_status_t f_capability_ambient_get(const f_capability_value_t value, int *ambient) {
+    f_status_t f_capability_ambient_get(const f_capability_value_t value, int * const ambient) {
       #ifndef _di_level_0_parameter_checking_
         if (!ambient) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -33,7 +33,7 @@ extern "C" {
 #ifdef _di_libcap_
 
   #ifndef _di_f_capability_clear_
-    f_status_t f_capability_clear(f_capability_t *capability) {
+    f_status_t f_capability_clear(f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -43,7 +43,7 @@ extern "C" {
   #endif // _di_f_capability_clear_
 
   #ifndef _di_f_capability_clear_flag_
-    f_status_t f_capability_clear_flag(const f_capability_flag_t flag, f_capability_t *capability) {
+    f_status_t f_capability_clear_flag(const f_capability_flag_t flag, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -53,13 +53,13 @@ extern "C" {
   #endif // _di_f_capability_clear_flag_
 
   #ifndef _di_f_capability_compare_
-    f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags) {
+    f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int * const flags) {
       return F_status_set_error(F_implemented_not);
     }
   #endif // _di_f_capability_compare_
 
   #ifndef _di_f_capability_copy_
-    f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination) {
+    f_status_t f_capability_copy(const f_capability_t source, f_capability_t * const destination) {
       #ifndef _di_level_0_parameter_checking_
         if (!destination) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -69,7 +69,7 @@ extern "C" {
   #endif // _di_f_capability_copy_
 
   #ifndef _di_f_capability_copy_external_
-    f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void *external, ssize_t *size) {
+    f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void * const external, ssize_t * const size) {
       #ifndef _di_level_0_parameter_checking_
         if (!external) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -79,7 +79,7 @@ extern "C" {
   #endif // _di_f_capability_copy_external_
 
   #ifndef _di_f_capability_copy_internal_
-    f_status_t f_capability_copy_internal(const void *external, f_capability_t *capability) {
+    f_status_t f_capability_copy_internal(const void *external, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!external) return F_status_set_error(F_parameter);
         if (!capability) return F_status_set_error(F_parameter);
@@ -100,7 +100,7 @@ extern "C" {
   #endif // _di_f_capability_delete_
 
   #ifndef _di_f_capability_file_descriptor_get_
-    f_status_t f_capability_file_descriptor_get(const int descriptor, f_capability_t *capability) {
+    f_status_t f_capability_file_descriptor_get(const int descriptor, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -116,7 +116,7 @@ extern "C" {
   #endif // _di_f_capability_file_descriptor_set_
 
   #ifndef _di_f_capability_file_get_
-    f_status_t f_capability_file_get(const f_string_t path, f_capability_t *capability) {
+    f_status_t f_capability_file_get(const f_string_static_t path, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -126,13 +126,13 @@ extern "C" {
   #endif // _di_f_capability_file_get_
 
   #ifndef _di_f_capability_file_set_
-    f_status_t f_capability_file_set(const f_string_t path, const f_capability_t capability) {
+    f_status_t f_capability_file_set(const f_string_static_t path, const f_capability_t capability) {
       return F_status_set_error(F_implemented_not);
     }
   #endif // _di_f_capability_file_set_
 
   #ifndef _di_f_capability_flag_get_
-    f_status_t f_capability_flag_get(const f_capability_t capability, const f_capability_value_t code, const f_capability_flag_t flag, f_capability_flag_value_t *enabled) {
+    f_status_t f_capability_flag_get(const f_capability_t capability, const f_capability_value_t code, const f_capability_flag_t flag, f_capability_flag_value_t * const enabled) {
       #ifndef _di_level_0_parameter_checking_
         if (!enabled) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -142,7 +142,7 @@ extern "C" {
   #endif // _di_f_capability_flag_get_
 
   #ifndef _di_f_capability_flag_set_
-    f_status_t f_capability_flag_set(const f_capability_flag_t flag, const f_capability_flag_value_t enabled, const f_int32s_t codes, f_capability_t *capability) {
+    f_status_t f_capability_flag_set(const f_capability_flag_t flag, const f_capability_flag_value_t enabled, const f_int32s_t codes, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -152,7 +152,7 @@ extern "C" {
   #endif // _di_f_capability_flag_set_
 
   #ifndef _di_f_capability_from_name_
-    f_status_t f_capability_from_name(const f_string_t name, f_capability_value_t *code) {
+    f_status_t f_capability_from_name(const f_string_static_t name, f_capability_value_t * const code) {
       #ifndef _di_level_0_parameter_checking_
         if (!code) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -162,7 +162,7 @@ extern "C" {
   #endif // _di_f_capability_from_name_
 
   #ifndef _di_f_capability_from_text_
-    f_status_t f_capability_from_text(const f_string_t text, f_capability_t *capability) {
+    f_status_t f_capability_from_text(const f_string_static_t text, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -186,7 +186,7 @@ extern "C" {
 #ifdef _di_libcap_
 
   #ifndef _di_f_capability_initialize_
-    f_status_t f_capability_initialize(f_capability_t *capability) {
+    f_status_t f_capability_initialize(f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -200,7 +200,7 @@ extern "C" {
 #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_mode_get_
-    f_status_t f_capability_mode_get(f_capability_mode_t *mode) {
+    f_status_t f_capability_mode_get(f_capability_mode_t * const mode) {
       #ifndef _di_level_0_parameter_checking_
         if (!mode) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -210,7 +210,7 @@ extern "C" {
   #endif // _di_f_capability_mode_get_
 
   #ifndef _di_f_capability_mode_get_name_
-    f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_constant_t *name) {
+    f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_static_t * const name) {
       #ifndef _di_level_0_parameter_checking_
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -226,7 +226,7 @@ extern "C" {
   #endif // _di_f_capability_mode_set_
 
   #ifndef _di_f_capability_owner_get_
-    f_status_t f_capability_owner_get(const f_capability_t capability, uid_t *id_user) {
+    f_status_t f_capability_owner_get(const f_capability_t capability, uid_t * const id_user) {
       #ifndef _di_level_0_parameter_checking_
         if (!id_user) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -246,7 +246,7 @@ extern "C" {
 #ifdef _di_libcap_
 
   #ifndef _di_f_capability_process_bound_drop_
-    f_status_t f_capability_process_bound_drop(f_capability_value_t code, int *bound) {
+    f_status_t f_capability_process_bound_drop(f_capability_value_t code, int * const bound) {
       #ifndef _di_level_0_parameter_checking_
         if (!bound) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -256,7 +256,7 @@ extern "C" {
   #endif // _di_f_capability_process_bound_drop_
 
   #ifndef _di_f_capability_process_bound_get_
-    f_status_t f_capability_process_bound_get(f_capability_value_t code, int *bound) {
+    f_status_t f_capability_process_bound_get(f_capability_value_t code, int * const bound) {
       #ifndef _di_level_0_parameter_checking_
         if (!bound) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -266,7 +266,7 @@ extern "C" {
   #endif // _di_f_capability_process_bound_get_
 
   #ifndef _di_f_capability_process_get_
-    f_status_t f_capability_process_get(f_capability_t *capability) {
+    f_status_t f_capability_process_get(f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -276,7 +276,7 @@ extern "C" {
   #endif // _di_f_capability_process_get_
 
   #ifndef _di_f_capability_process_get_by_id_
-    f_status_t f_capability_process_get_by_id(const pid_t id, f_capability_t *capability) {
+    f_status_t f_capability_process_get_by_id(const pid_t id, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -296,7 +296,7 @@ extern "C" {
 #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_security_bits_get_
-    f_status_t f_capability_security_bits_get(f_capability_bits_t *bits) {
+    f_status_t f_capability_security_bits_get(f_capability_bits_t * const bits) {
       #ifndef _di_level_0_parameter_checking_
         if (!bits) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -316,7 +316,7 @@ extern "C" {
 #ifdef _di_libcap_
 
   #ifndef _di_f_capability_size_
-    f_status_t f_capability_size(const f_capability_t capability, ssize_t *size) {
+    f_status_t f_capability_size(const f_capability_t capability, ssize_t * const size) {
       #ifndef _di_level_0_parameter_checking_
         if (!size) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -352,7 +352,7 @@ extern "C" {
   #endif // _di_f_capability_supported_code_
 
   #ifndef _di_f_capability_to_name_
-    f_status_t f_capability_to_name(const int code, f_string_dynamic_t *name) {
+    f_status_t f_capability_to_name(const int code, f_string_dynamic_t * const name) {
       #ifndef _di_level_0_parameter_checking_
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -362,7 +362,7 @@ extern "C" {
   #endif // _di_f_capability_to_name_
 
   #ifndef _di_f_capability_to_text_
-    f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t *text) {
+    f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t * const text) {
       #ifndef _di_level_0_parameter_checking_
         if (!text) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -386,7 +386,7 @@ extern "C" {
 #if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_ambient_get_
-    f_status_t f_capability_ambient_get(const f_capability_value_t value, int *ambient) {
+    f_status_t f_capability_ambient_get(const f_capability_value_t value, int * const ambient) {
       #ifndef _di_level_0_parameter_checking_
         if (!ambient) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -438,7 +438,7 @@ extern "C" {
 #ifndef _di_libcap_
 
   #ifndef _di_f_capability_clear_
-    f_status_t f_capability_clear(f_capability_t *capability) {
+    f_status_t f_capability_clear(f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -456,7 +456,7 @@ extern "C" {
   #endif // _di_f_capability_clear_
 
   #ifndef _di_f_capability_clear_flag_
-    f_status_t f_capability_clear_flag(const f_capability_flag_t flag, f_capability_t *capability) {
+    f_status_t f_capability_clear_flag(const f_capability_flag_t flag, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -472,7 +472,7 @@ extern "C" {
   #endif // _di_f_capability_clear_flag_
 
   #ifndef _di_f_capability_compare_
-    f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags) {
+    f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int * const flags) {
 
       if (flags) {
         *flags = 0;
@@ -499,7 +499,7 @@ extern "C" {
   #endif // _di_f_capability_compare_
 
   #ifndef _di_f_capability_copy_
-    f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination) {
+    f_status_t f_capability_copy(const f_capability_t source, f_capability_t * const destination) {
       #ifndef _di_level_0_parameter_checking_
         if (!destination) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -518,7 +518,7 @@ extern "C" {
   #endif // _di_f_capability_copy_
 
   #ifndef _di_f_capability_copy_external_
-    f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void *external, ssize_t *size) {
+    f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void * const external, ssize_t * const size) {
       #ifndef _di_level_0_parameter_checking_
         if (!external) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -540,7 +540,7 @@ extern "C" {
   #endif // _di_f_capability_copy_external_
 
   #ifndef _di_f_capability_copy_internal_
-    f_status_t f_capability_copy_internal(const void *external, f_capability_t *capability) {
+    f_status_t f_capability_copy_internal(const void * const external, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!external) return F_status_set_error(F_parameter);
         if (!capability) return F_status_set_error(F_parameter);
@@ -561,7 +561,7 @@ extern "C" {
   #endif // _di_f_capability_copy_internal_
 
   #ifndef _di_f_capability_delete_
-    f_status_t f_capability_delete(f_capability_t *capability) {
+    f_status_t f_capability_delete(f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -580,7 +580,7 @@ extern "C" {
   #endif // _di_f_capability_delete_
 
   #ifndef _di_f_capability_file_descriptor_get_
-    f_status_t f_capability_file_descriptor_get(const int descriptor, f_capability_t *capability) {
+    f_status_t f_capability_file_descriptor_get(const int descriptor, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -627,12 +627,12 @@ extern "C" {
   #endif // _di_f_capability_file_descriptor_set_
 
   #ifndef _di_f_capability_file_get_
-    f_status_t f_capability_file_get(const f_string_t path, f_capability_t *capability) {
+    f_status_t f_capability_file_get(const f_string_static_t path, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      *capability = cap_get_file(path);
+      *capability = cap_get_file(path.string);
 
       if (*capability) {
         return F_none;
@@ -652,9 +652,9 @@ extern "C" {
   #endif // _di_f_capability_file_get_
 
   #ifndef _di_f_capability_file_set_
-    f_status_t f_capability_file_set(const f_string_t path, const f_capability_t capability) {
+    f_status_t f_capability_file_set(const f_string_static_t path, const f_capability_t capability) {
 
-      const int result = cap_set_file(path, capability);
+      const int result = cap_set_file(path.string, capability);
 
       if (result == -1) {
         if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -674,7 +674,7 @@ extern "C" {
   #endif // _di_f_capability_file_set_
 
   #ifndef _di_f_capability_flag_get_
-    f_status_t f_capability_flag_get(const f_capability_t capability, const f_capability_value_t code, const f_capability_flag_t flag, f_capability_flag_value_t *enabled) {
+    f_status_t f_capability_flag_get(const f_capability_t capability, const f_capability_value_t code, const f_capability_flag_t flag, f_capability_flag_value_t * const enabled) {
       #ifndef _di_level_0_parameter_checking_
         if (!enabled) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -690,7 +690,7 @@ extern "C" {
   #endif // _di_f_capability_flag_get_
 
   #ifndef _di_f_capability_flag_set_
-    f_status_t f_capability_flag_set(const f_capability_flag_t flag, const f_capability_flag_value_t enabled, const f_int32s_t codes, f_capability_t *capability) {
+    f_status_t f_capability_flag_set(const f_capability_flag_t flag, const f_capability_flag_value_t enabled, const f_int32s_t codes, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -706,12 +706,12 @@ extern "C" {
   #endif // _di_f_capability_flag_set_
 
   #ifndef _di_f_capability_from_name_
-    f_status_t f_capability_from_name(const f_string_t name, f_capability_value_t *code) {
+    f_status_t f_capability_from_name(const f_string_static_t name, f_capability_value_t * const code) {
       #ifndef _di_level_0_parameter_checking_
         if (!code) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      if (cap_from_name(name, code) == -1) {
+      if (cap_from_name(name.string, code) == -1) {
         if (errno == EINVAL) return F_status_set_error(F_parameter);
         if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
@@ -723,12 +723,12 @@ extern "C" {
   #endif // _di_f_capability_from_name_
 
   #ifndef _di_f_capability_from_text_
-    f_status_t f_capability_from_text(const f_string_t text, f_capability_t *capability) {
+    f_status_t f_capability_from_text(const f_string_static_t text, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      *capability = cap_from_text(text);
+      *capability = cap_from_text(text.string);
 
       if (*capability) {
         return F_none;
@@ -765,7 +765,7 @@ extern "C" {
 #ifndef _di_libcap_
 
   #ifndef _di_f_capability_initialize_
-    f_status_t f_capability_initialize(f_capability_t *capability) {
+    f_status_t f_capability_initialize(f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -800,13 +800,15 @@ extern "C" {
   #endif // _di_f_capability_mode_get_
 
   #ifndef _di_f_capability_mode_get_name_
-    f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_constant_t *name) {
+    f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_static_t * const name) {
       #ifndef _di_level_0_parameter_checking_
         if (!mode) return F_status_set_error(F_parameter);
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      *name = cap_mode_name(mode);
+      name.string = cap_mode_name(mode);
+      name.used = strnlen(name.string, F_string_t_size_d);
+      name.size = 0;
 
       return F_none;
     }
@@ -828,7 +830,7 @@ extern "C" {
   #endif // _di_f_capability_mode_set_
 
   #ifndef _di_f_capability_owner_get_
-    f_status_t f_capability_owner_get(const f_capability_t capability, uid_t *id_user) {
+    f_status_t f_capability_owner_get(const f_capability_t capability, uid_t * const id_user) {
       #ifndef _di_level_0_parameter_checking_
         if (!id_user) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -864,7 +866,7 @@ extern "C" {
 #ifndef _di_libcap_
 
   #ifndef _di_f_capability_process_bound_drop_
-    f_status_t f_capability_process_bound_drop(f_capability_value_t value, int *bound) {
+    f_status_t f_capability_process_bound_drop(f_capability_value_t value, int * const bound) {
       #ifndef _di_level_0_parameter_checking_
         if (!bound) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -884,7 +886,7 @@ extern "C" {
   #endif // _di_f_capability_process_bound_drop_
 
   #ifndef _di_f_capability_process_bound_get_
-    f_status_t f_capability_process_bound_get(f_capability_value_t value, int *bound) {
+    f_status_t f_capability_process_bound_get(f_capability_value_t value, int * const bound) {
       #ifndef _di_level_0_parameter_checking_
         if (!bound) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -900,7 +902,7 @@ extern "C" {
   #endif // _di_f_capability_process_bound_get_
 
   #ifndef _di_f_capability_process_get_
-    f_status_t f_capability_process_get(f_capability_t *capability) {
+    f_status_t f_capability_process_get(f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -919,7 +921,7 @@ extern "C" {
   #endif // _di_f_capability_process_get_
 
   #ifndef _di_f_capability_process_get_by_id_
-    f_status_t f_capability_process_get_by_id(const pid_t id, f_capability_t *capability) {
+    f_status_t f_capability_process_get_by_id(const pid_t id, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!capability) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -954,7 +956,7 @@ extern "C" {
 #if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_security_bits_get_
-    f_status_t f_capability_security_bits_get(f_capability_bits_t *bits) {
+    f_status_t f_capability_security_bits_get(f_capability_bits_t * const bits) {
       #ifndef _di_level_0_parameter_checking_
         if (!bits) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -985,7 +987,7 @@ extern "C" {
 #ifndef _di_libcap_
 
   #ifndef _di_f_capability_size_
-    f_status_t f_capability_size(const f_capability_t capability, ssize_t *size) {
+    f_status_t f_capability_size(const f_capability_t capability, ssize_t * const size) {
       #ifndef _di_level_0_parameter_checking_
         if (!size) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -1041,7 +1043,7 @@ extern "C" {
   #endif // _di_f_capability_supported_code_
 
   #ifndef _di_f_capability_to_name_
-    f_status_t f_capability_to_name(const int code, f_string_dynamic_t *name) {
+    f_status_t f_capability_to_name(const int code, f_string_dynamic_t * const name) {
       #ifndef _di_level_0_parameter_checking_
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -1082,7 +1084,7 @@ extern "C" {
   #endif // _di_f_capability_to_name_
 
   #ifndef _di_f_capability_to_text_
-    f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t *text) {
+    f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t * const text) {
       #ifndef _di_level_0_parameter_checking_
         if (!text) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_

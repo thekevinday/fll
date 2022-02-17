@@ -22,10 +22,10 @@
 // FLL-0 includes.
 #include <fll/level_0/color.h>
 
-// mock includes.
+// Mock includes.
 #include "mock-color.h"
 
-// test includes.
+// Test includes.
 #include "test-color-load_context.h"
 #include "test-color-save_1.h"
 #include "test-color-save_2.h"

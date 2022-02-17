@@ -22,7 +22,7 @@
 // FLL-0 includes.
 #include <fll/level_0/console.h>
 
-// test includes.
+// Test includes.
 #include "test-console-identify.h"
 #include "test-console-environment_process.h"
 #include "test-console-parameter_prioritize_left.h"

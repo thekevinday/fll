@@ -22,10 +22,10 @@
 // FLL-0 includes.
 #include <fll/level_0/conversion.h>
 
-// mock includes.
+// Mock includes.
 #include "mock-conversion.h"
 
-// test includes.
+// Test includes.
 #include "test-conversion-character_is_binary.h"
 #include "test-conversion-character_is_decimal.h"
 #include "test-conversion-character_is_duodecimal.h"

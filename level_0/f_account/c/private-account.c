@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
-  f_status_t private_f_account_from_passwd(const struct passwd password, const f_array_length_t password_length, f_account_t *account) {
+  f_status_t private_f_account_from_passwd(const struct passwd password, const f_array_length_t password_length, f_account_t * const account) {
 
     f_status_t status = F_none;
 

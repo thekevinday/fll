@@ -8,8 +8,12 @@ extern "C" {
 void test__f_account_id_by_name__fails(void **state) {
 
   const long size = 20;
-  char *name = "name";
   uid_t uid = 0;
+
+  f_string_t name_string = "name";
+  f_string_static_t name = f_string_static_t_initialize;
+  name.string = name_string;
+  name.used = 4;
 
   int errnos[] = {
     EINTR,
@@ -47,8 +51,12 @@ void test__f_account_id_by_name__not_found(void **state) {
 
   const long size = 20;
   struct passwd password;
-  char *name = "name";
   uid_t uid = 0;
+
+  f_string_t name_string = "name";
+  f_string_static_t name = f_string_static_t_initialize;
+  name.string = name_string;
+  name.used = 4;
 
   {
     will_return(__wrap_sysconf, size);
@@ -65,7 +73,7 @@ void test__f_account_id_by_name__not_found(void **state) {
 #ifndef _di_level_0_parameter_checking_
   void test__f_account_id_by_name__parameter_checking(void **state) {
 
-    const f_string_t name = f_string_t_initialize;
+    const f_string_static_t name = f_string_static_t_initialize;
 
     {
       const f_status_t status = f_account_id_by_name(name, 0);
@@ -82,6 +90,8 @@ void test__f_account_id_by_name__works(void **state) {
   struct passwd pointer;
   uid_t uid = 0;
 
+  f_string_static_t name = f_string_static_t_initialize;
+
   password.pw_uid = 1;
   password.pw_gid = 2;
   password.pw_dir = "pw_dir";
@@ -96,7 +106,10 @@ void test__f_account_id_by_name__works(void **state) {
     will_return(__wrap_getpwnam_r, &password);
     will_return(__wrap_getpwnam_r, &pointer);
 
-    const f_status_t status = f_account_id_by_name(password.pw_name, &uid);
+    name.string = password.pw_name;
+    name.used = strlen(password.pw_name);
+
+    const f_status_t status = f_account_id_by_name(name, &uid);
 
     assert_int_equal(status, F_none);
     assert_int_equal(uid, password.pw_uid);

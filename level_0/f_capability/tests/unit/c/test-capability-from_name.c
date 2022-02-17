@@ -8,7 +8,7 @@ extern "C" {
 void test__f_capability_from_name__fails(void **state) {
 
   #if !defined(_di_libcap_)
-    const f_string_t name = f_string_t_initialize;
+    const f_string_static_t name = f_string_static_t_initialize;
     f_capability_value_t capability_value = f_capability_value_t_initialize;
 
     int errnos[] = {
@@ -38,7 +38,7 @@ void test__f_capability_from_name__fails(void **state) {
 #ifndef _di_level_0_parameter_checking_
   void test__f_capability_from_name__parameter_checking(void **state) {
 
-    const f_string_t name = f_string_t_initialize;
+    const f_string_static_t name = f_string_static_t_initialize;
 
     {
       const f_status_t status = f_capability_from_name(name, 0);
@@ -50,7 +50,7 @@ void test__f_capability_from_name__fails(void **state) {
 
 void test__f_capability_from_name__works(void **state) {
 
-  const f_string_t name = f_string_t_initialize;
+  const f_string_static_t name = f_string_static_t_initialize;
   f_capability_value_t capability_value = f_capability_value_t_initialize;
 
   #if defined(_di_libcap_)

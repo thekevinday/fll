@@ -68,7 +68,7 @@ extern "C" {
  * @see cap_set_ambient()
  */
 #ifndef _di_f_capability_ambient_get_
-  extern f_status_t f_capability_ambient_get(const f_capability_value_t value, int *ambient);
+  extern f_status_t f_capability_ambient_get(const f_capability_value_t value, int * const ambient);
 #endif // _di_f_capability_ambient_get_
 
 /**
@@ -131,7 +131,7 @@ extern "C" {
  * @see cap_clear()
  */
 #ifndef _di_f_capability_clear_
-  extern f_status_t f_capability_clear(f_capability_t *capability);
+  extern f_status_t f_capability_clear(f_capability_t * const capability);
 #endif // _di_f_capability_clear_
 
 /**
@@ -154,7 +154,7 @@ extern "C" {
  * @see cap_clear_flag()
  */
 #ifndef _di_f_capability_clear_flag_
-  extern f_status_t f_capability_clear_flag(const f_capability_flag_t flag, f_capability_t *capability);
+  extern f_status_t f_capability_clear_flag(const f_capability_flag_t flag, f_capability_t * const capability);
 #endif // _di_f_capability_clear_flag_
 
 /**
@@ -180,7 +180,7 @@ extern "C" {
  * @see cap_compare()
  */
 #ifndef _di_f_capability_compare_
-  extern f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags);
+  extern f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int * const flags);
 #endif // _di_f_capability_compare_
 
 /**
@@ -204,7 +204,7 @@ extern "C" {
  * @see cap_dup()
  */
 #ifndef _di_f_capability_copy_
-  extern f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination);
+  extern f_status_t f_capability_copy(const f_capability_t source, f_capability_t * const destination);
 #endif // _di_f_capability_copy_
 
 /**
@@ -233,7 +233,7 @@ extern "C" {
  * @see cap_copy_ext()
  */
 #ifndef _di_f_capability_copy_external_
-  extern f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void *external, ssize_t *size);
+  extern f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void * const external, ssize_t * const size);
 #endif // _di_f_capability_copy_external_
 
 /**
@@ -258,7 +258,7 @@ extern "C" {
  * @see cap_copy_int()
  */
 #ifndef _di_f_capability_copy_internal_
-  extern f_status_t f_capability_copy_internal(const void *external, f_capability_t *capability);
+  extern f_status_t f_capability_copy_internal(const void * const external, f_capability_t * const capability);
 #endif // _di_f_capability_copy_internal_
 
 /**
@@ -280,7 +280,7 @@ extern "C" {
  * @see cap_free()
  */
 #ifndef _di_f_capability_delete_
-  extern f_status_t f_capability_delete(f_capability_t *capability);
+  extern f_status_t f_capability_delete(f_capability_t * const capability);
 #endif // _di_f_capability_delete_
 
 /**
@@ -311,7 +311,7 @@ extern "C" {
  * @see cap_get_fd()
  */
 #ifndef _di_f_capability_file_descriptor_get_
-  extern f_status_t f_capability_file_descriptor_get(const int descriptor, f_capability_t *capability);
+  extern f_status_t f_capability_file_descriptor_get(const int descriptor, f_capability_t * const capability);
 #endif // _di_f_capability_file_descriptor_get_
 
 /**
@@ -372,7 +372,7 @@ extern "C" {
  * @see cap_get_file()
  */
 #ifndef _di_f_capability_file_get_
-  extern f_status_t f_capability_file_get(const f_string_t path, f_capability_t *capability);
+  extern f_status_t f_capability_file_get(const f_string_static_t path, f_capability_t * const capability);
 #endif // _di_f_capability_file_get_
 
 /**
@@ -402,7 +402,7 @@ extern "C" {
  * @see cap_set_file()
  */
 #ifndef _di_f_capability_file_set_
-  extern f_status_t f_capability_file_set(const f_string_t path, const f_capability_t capability);
+  extern f_status_t f_capability_file_set(const f_string_static_t path, const f_capability_t capability);
 #endif // _di_f_capability_file_set_
 
 /**
@@ -429,7 +429,7 @@ extern "C" {
  * @see cap_get_flag()
  */
 #ifndef _di_f_capability_flag_get_
-  extern f_status_t f_capability_flag_get(const f_capability_t capability, const f_capability_value_t code, const f_capability_flag_t flag, f_capability_flag_value_t *enabled);
+  extern f_status_t f_capability_flag_get(const f_capability_t capability, const f_capability_value_t code, const f_capability_flag_t flag, f_capability_flag_value_t * const enabled);
 #endif // _di_f_capability_flag_get
 
 /**
@@ -456,7 +456,7 @@ extern "C" {
  * @see cap_set_flag()
  */
 #ifndef _di_f_capability_flag_set_
-  extern f_status_t f_capability_flag_set(const f_capability_flag_t flag, const f_capability_flag_value_t enabled, const f_int32s_t codes, f_capability_t *capability);
+  extern f_status_t f_capability_flag_set(const f_capability_flag_t flag, const f_capability_flag_value_t enabled, const f_int32s_t codes, f_capability_t * const capability);
 #endif // _di_f_capability_flag_set_
 
 /**
@@ -480,17 +480,18 @@ extern "C" {
  * @see cap_from_name()
  */
 #ifndef _di_f_capability_from_name_
-  extern f_status_t f_capability_from_name(const f_string_t name, f_capability_value_t *code);
+  extern f_status_t f_capability_from_name(const f_string_static_t name, f_capability_value_t * const code);
 #endif // _di_f_capability_from_name_
 
 /**
  * Get the capability represented by the given string.
  *
  * @param text
- *   The human-readable NULL terminated string representing the capabilities (such as "cap_chown+ep").
+ *   The human-readable string representing the capabilities (such as "cap_chown+ep").
+ *   This must be a NULL terminated string.
  * @param capability
  *   The determined capabilities.
- *   This must be freed via f_capability_delete() when finished with.
+ *   This must be freed via f_capability_delete().
  *
  * @return
  *   F_none on success.
@@ -504,7 +505,7 @@ extern "C" {
  * @see cap_from_text()
  */
 #ifndef _di_f_capability_from_text_
-  extern f_status_t f_capability_from_text(const f_string_t text, f_capability_t *capability);
+  extern f_status_t f_capability_from_text(const f_string_static_t text, f_capability_t * const capability);
 #endif // _di_f_capability_from_text_
 
 /**
@@ -558,7 +559,7 @@ extern "C" {
  * @see cap_init()
  */
 #ifndef _di_f_capability_initialize_
-  extern f_status_t f_capability_initialize(f_capability_t *capability);
+  extern f_status_t f_capability_initialize(f_capability_t * const capability);
 #endif // _di_f_capability_initialize_
 
 /**
@@ -577,7 +578,7 @@ extern "C" {
  * @see cap_get_mode()
  */
 #ifndef _di_f_capability_mode_get_
-  extern f_status_t f_capability_mode_get(f_capability_mode_t *mode);
+  extern f_status_t f_capability_mode_get(f_capability_mode_t * const mode);
 #endif // _di_f_capability_mode_get_
 
 /**
@@ -587,8 +588,7 @@ extern "C" {
  *   The capability mode.
  * @param name
  *   The name of the mode.
- *   This is a NULL terminated string.
- *   This is not an allocated string.
+ *   This is NULL terminated after the name.used.
  *
  * @return
  *   F_none on success.
@@ -600,7 +600,7 @@ extern "C" {
  * @see cap_get_mode()
  */
 #ifndef _di_f_capability_mode_get_name_
-  extern f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_constant_t *name);
+  extern f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_static_t * const name);
 #endif // _di_f_capability_mode_get_name_
 
 /**
@@ -643,7 +643,7 @@ extern "C" {
  * @see cap_get_owner()
  */
 #ifndef _di_f_capability_owner_get_
-  extern f_status_t f_capability_owner_get(const f_capability_t capability, uid_t *id_user);
+  extern f_status_t f_capability_owner_get(const f_capability_t capability, uid_t * const id_user);
 #endif // _di_f_capability_owner_get_
 
 /**
@@ -704,7 +704,7 @@ extern "C" {
  * @see cap_drop_bound()
  */
 #ifndef _di_f_capability_process_bound_drop_
-  extern f_status_t f_capability_process_bound_drop(f_capability_value_t value, int *bound);
+  extern f_status_t f_capability_process_bound_drop(f_capability_value_t value, int * const bound);
 #endif // _di_f_capability_process_bound_drop_
 
 /**
@@ -727,7 +727,7 @@ extern "C" {
  * @see cap_get_bound()
  */
 #ifndef _di_f_capability_process_bound_get_
-  extern f_status_t f_capability_process_bound_get(f_capability_value_t value, int *bound);
+  extern f_status_t f_capability_process_bound_get(f_capability_value_t value, int * const bound);
 #endif // _di_f_capability_process_bound_get_
 
 /**
@@ -748,7 +748,7 @@ extern "C" {
  * @see cap_get_proc()
  */
 #ifndef _di_f_capability_process_get_
-  extern f_status_t f_capability_process_get(f_capability_t *capability);
+  extern f_status_t f_capability_process_get(f_capability_t * const capability);
 #endif // _di_f_capability_process_get_
 
 /**
@@ -772,7 +772,7 @@ extern "C" {
  * @see cap_get_pid()
  */
 #ifndef _di_f_capability_process_get_by_id_
-  extern f_status_t f_capability_process_get_by_id(const pid_t id, f_capability_t *capability);
+  extern f_status_t f_capability_process_get_by_id(const pid_t id, f_capability_t * const capability);
 #endif // _di_f_capability_process_get_by_id_
 
 /**
@@ -813,7 +813,7 @@ extern "C" {
  * @see cap_get_secbits()
  */
 #ifndef _di_f_capability_security_bits_get_
-  extern f_status_t f_capability_security_bits_get(f_capability_bits_t *bits);
+  extern f_status_t f_capability_security_bits_get(f_capability_bits_t * const bits);
 #endif // _di_f_capability_security_bits_get_
 
 /**
@@ -859,7 +859,7 @@ extern "C" {
  * @see cap_size()
  */
 #ifndef _di_f_capability_size_
-  extern f_status_t f_capability_size(const f_capability_t capability, ssize_t *size);
+  extern f_status_t f_capability_size(const f_capability_t capability, ssize_t * const size);
 #endif // _di_f_capability_size_
 
 /**
@@ -913,7 +913,7 @@ extern "C" {
  * @param name
  *   The determined name.
  *   The name is appended into this variable.
- *   This is not NULL terminated.
+ *   This is NULL terminated after the name.used.
  *
  * @return
  *   F_none on success.
@@ -933,18 +933,19 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_capability_to_name_
-  extern f_status_t f_capability_to_name(const f_capability_value_t code, f_string_dynamic_t *name);
+  extern f_status_t f_capability_to_name(const f_capability_value_t code, f_string_dynamic_t * const name);
 #endif // _di_f_capability_to_name_
 
 /**
- * Convert the capability to a human-readable NULL terminated string.
+ * Convert the capability to a human-readable string.
  *
  * This will append the string to text.
  *
  * @param capability
  *   The capability code.
  * @param text
- *   The determined human-readable NULL terminated string.
+ *   The determined human-readable string.
+ *   This is NULL terminated after the text.used.
  *
  * @return
  *   F_none on success.
@@ -964,7 +965,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_capability_to_text_
-  extern f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t *text);
+  extern f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t * const text);
 #endif // _di_f_capability_to_text_
 
 /**

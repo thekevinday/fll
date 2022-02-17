@@ -4729,7 +4729,7 @@ extern "C" {
             }
           }
 
-          status = f_capability_from_text(cache->action.generic.string, &rule->capability);
+          status = f_capability_from_text(cache->action.generic, &rule->capability);
 
           if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
             if (F_status_set_fine(status) == F_memory_not) {

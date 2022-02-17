@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_account_by_id_
-  f_status_t f_account_by_id(const uid_t id, f_account_t *account) {
+  f_status_t f_account_by_id(const uid_t id, f_account_t * const account) {
     #ifndef _di_level_0_parameter_checking_
       if (!account) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -87,7 +87,7 @@ extern "C" {
 #endif // _di_f_account_by_id_
 
 #ifndef _di_f_account_by_name_
-  f_status_t f_account_by_name(const f_string_t name, f_account_t *account) {
+  f_status_t f_account_by_name(const f_string_static_t name, f_account_t * const account) {
     #ifndef _di_level_0_parameter_checking_
       if (!account) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -117,7 +117,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
-      const int result = getpwnam_r(name, &password, buffer, length, &pointer);
+      const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
       if (result) {
         if (errno == EINTR) return F_status_set_error(F_interrupt);
@@ -146,7 +146,7 @@ extern "C" {
 
     char buffer[F_account_pwd_length_fallback_second_d];
 
-    const int result = getpwnam_r(name, &password, buffer, length, &pointer);
+    const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
     if (result) {
       if (errno == EINTR) return F_status_set_error(F_interrupt);
@@ -168,7 +168,7 @@ extern "C" {
 #endif // _di_f_account_by_name_
 
 #ifndef _di_f_account_group_id_by_name_
-  f_status_t f_account_group_id_by_name(const f_string_t name, gid_t *id) {
+  f_status_t f_account_group_id_by_name(const f_string_static_t name, gid_t * const id) {
     #ifndef _di_level_0_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -190,7 +190,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
-      int result = getgrnam_r(name, &group_data, buffer, length, &pointer);
+      int result = getgrnam_r(name.string, &group_data, buffer, length, &pointer);
 
       if (result) {
         if (errno == EINTR) return F_status_set_error(F_interrupt);
@@ -221,7 +221,7 @@ extern "C" {
 
     char buffer[F_account_pwd_length_fallback_second_d];
 
-    const int result = getgrnam_r(name, &group_data, buffer, length, &pointer);
+    const int result = getgrnam_r(name.string, &group_data, buffer, length, &pointer);
 
     if (result) {
       if (errno == EINTR) return F_status_set_error(F_interrupt);
@@ -245,7 +245,7 @@ extern "C" {
 #endif // _di_f_account_group_id_by_name_
 
 #ifndef _di_f_account_group_name_by_id_
-  f_status_t f_account_group_name_by_id(const gid_t id, f_string_dynamic_t *name) {
+  f_status_t f_account_group_name_by_id(const gid_t id, f_string_dynamic_t * const name) {
     #ifndef _di_level_0_parameter_checking_
       if (!name) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -342,7 +342,7 @@ extern "C" {
 #endif // _di_f_account_group_name_by_id_
 
 #ifndef _di_f_account_id_by_name_
-  f_status_t f_account_id_by_name(const f_string_t name, uid_t *id) {
+  f_status_t f_account_id_by_name(const f_string_static_t name, uid_t * const id) {
     #ifndef _di_level_0_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -364,7 +364,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
-      const int result = getpwnam_r(name, &password, buffer, length, &pointer);
+      const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
       if (result) {
         if (errno == EINTR) return F_status_set_error(F_interrupt);
@@ -395,7 +395,7 @@ extern "C" {
 
     char buffer[F_account_pwd_length_fallback_second_d];
 
-    const int result = getpwnam_r(name, &password, buffer, length, &pointer);
+    const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
     if (result) {
       if (errno == EINTR) return F_status_set_error(F_interrupt);
@@ -419,7 +419,7 @@ extern "C" {
 #endif // _di_f_account_id_by_name_
 
 #ifndef _di_f_account_name_by_id_
-  f_status_t f_account_name_by_id(const uid_t id, f_string_dynamic_t *name) {
+  f_status_t f_account_name_by_id(const uid_t id, f_string_dynamic_t * const name) {
     #ifndef _di_level_0_parameter_checking_
       if (!name) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

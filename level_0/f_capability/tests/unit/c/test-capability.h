@@ -22,10 +22,10 @@
 // FLL-0 includes.
 #include <fll/level_0/capability.h>
 
-// mock includes.
+// Mock includes.
 #include "mock-capability.h"
 
-// test includes.
+// Test includes.
 #include "test-capability-ambient_get.h"
 #include "test-capability-ambient_reset.h"
 #include "test-capability-ambient_set.h"

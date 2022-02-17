@@ -22,7 +22,7 @@
 // FLL-0 includes.
 #include <fll/level_0/control_group.h>
 
-// test includes.
+// Test includes.
 #include "test-control_group-copy.h"
 
 #ifdef __cplusplus

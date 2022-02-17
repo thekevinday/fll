@@ -56,7 +56,7 @@ extern "C" {
  * @see getpwuid_r()
  */
 #ifndef _di_f_account_by_id_
-  extern f_status_t f_account_by_id(const uid_t id, f_account_t *account);
+  extern f_status_t f_account_by_id(const uid_t id, f_account_t * const account);
 #endif // _di_f_account_by_id_
 
 /**
@@ -84,7 +84,7 @@ extern "C" {
  * @see getpwnam_r()
  */
 #ifndef _di_f_account_by_name_
-  extern f_status_t f_account_by_name(const f_string_t name, f_account_t *account);
+  extern f_status_t f_account_by_name(const f_string_static_t name, f_account_t * const account);
 #endif // _di_f_account_by_name_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  * @see getgrnam_r()
  */
 #ifndef _di_f_account_group_id_by_name_
-  extern f_status_t f_account_group_id_by_name(const f_string_t name, gid_t *id);
+  extern f_status_t f_account_group_id_by_name(const f_string_static_t name, gid_t * const id);
 #endif // _di_f_account_group_id_by_name_
 
 /**
@@ -121,7 +121,7 @@ extern "C" {
  *   The id of the group.
  * @param name
  *   This is replaced with by the group name.
- *   The name will be NULL terminated.
+ *   The name will be NULL terminated after the name.used.
  *
  * @return
  *   F_none on success.
@@ -138,7 +138,7 @@ extern "C" {
  * @see getgrgid_r()
  */
 #ifndef _di_f_account_group_name_by_id_
-  extern f_status_t f_account_group_name_by_id(const gid_t id, f_string_dynamic_t *name);
+  extern f_status_t f_account_group_name_by_id(const gid_t id, f_string_dynamic_t * const name);
 #endif // _di_f_account_group_name_by_id_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see getpwnam_r()
  */
 #ifndef _di_f_account_id_by_name_
-  extern f_status_t f_account_id_by_name(const f_string_t name, uid_t *id);
+  extern f_status_t f_account_id_by_name(const f_string_static_t name, uid_t * const id);
 #endif // _di_f_account_id_by_name_
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  *   The id of the user.
  * @param name
  *   This is replaced with by the user name.
- *   The name will be NULL terminated.
+ *   The name will be NULL terminated after the name.used.
  *
  * @return
  *   F_none on success.
@@ -192,7 +192,7 @@ extern "C" {
  * @see getpwuid_r()
  */
 #ifndef _di_f_account_name_by_id_
-  extern f_status_t f_account_name_by_id(const uid_t id, f_string_dynamic_t *name);
+  extern f_status_t f_account_name_by_id(const uid_t id, f_string_dynamic_t * const name);
 #endif // _di_f_account_name_by_id_
 
 #ifdef __cplusplus

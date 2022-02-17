@@ -22,7 +22,7 @@
 // FLL-0 includes.
 #include <fll/level_0/memory.h>
 
-// test includes.
+// Test includes.
 #include "test-memory-adjust.h"
 #include "test-memory-delete.h"
 #include "test-memory-destroy.h"

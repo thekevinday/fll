@@ -8,7 +8,7 @@ extern "C" {
 void test__f_capability_from_text__fails(void **state) {
 
   #if !defined(_di_libcap_)
-    const f_string_t text = f_string_t_initialize;
+    const f_string_static_t text = f_string_static_t_initialize;
     f_capability_t capability = f_capability_t_initialize;
 
     int errnos[] = {
@@ -38,7 +38,7 @@ void test__f_capability_from_text__fails(void **state) {
 #ifndef _di_level_0_parameter_checking_
   void test__f_capability_from_text__parameter_checking(void **state) {
 
-    const f_string_t text = f_string_t_initialize;
+    const f_string_static_t text = f_string_static_t_initialize;
 
     {
       const f_status_t status = f_capability_from_text(text, 0);
@@ -50,7 +50,7 @@ void test__f_capability_from_text__fails(void **state) {
 
 void test__f_capability_from_text__works(void **state) {
 
-  const f_string_t text = f_string_t_initialize;
+  const f_string_static_t text = f_string_static_t_initialize;
   f_capability_t capability = f_capability_t_initialize;
 
   #if defined(_di_libcap_)

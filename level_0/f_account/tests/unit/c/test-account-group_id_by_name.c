@@ -8,8 +8,12 @@ extern "C" {
 void test__f_account_group_id_by_name__fails(void **state) {
 
   const long size = 20;
-  char *name = "name";
   gid_t gid = 0;
+
+  f_string_t name_string = "name";
+  f_string_static_t name = f_string_static_t_initialize;
+  name.string = name_string;
+  name.used = 4;
 
   int errnos[] = {
     EINTR,
@@ -47,8 +51,12 @@ void test__f_account_group_id_by_name__not_found(void **state) {
 
   const long size = 20;
   struct group group_data;
-  char *name = "name";
   gid_t gid = 0;
+
+  f_string_t name_string = "name";
+  f_string_static_t name = f_string_static_t_initialize;
+  name.string = name_string;
+  name.used = 4;
 
   {
     will_return(__wrap_sysconf, size);
@@ -65,7 +73,7 @@ void test__f_account_group_id_by_name__not_found(void **state) {
 #ifndef _di_level_0_parameter_checking_
   void test__f_account_group_id_by_name__parameter_checking(void **state) {
 
-    const f_string_t name = f_string_t_initialize;
+    const f_string_static_t name = f_string_static_t_initialize;
 
     {
       const f_status_t status = f_account_group_id_by_name(name, 0);
@@ -83,6 +91,8 @@ void test__f_account_group_id_by_name__works(void **state) {
   char *pointers[] = { "gr_mem", 0 };
   gid_t gid = 0;
 
+  f_string_static_t name = f_string_static_t_initialize;
+
   group_data.gr_gid = 1;
   group_data.gr_name = "gr_name";
   group_data.gr_passwd = "gr_passwd";
@@ -94,7 +104,10 @@ void test__f_account_group_id_by_name__works(void **state) {
     will_return(__wrap_getgrnam_r, &group_data);
     will_return(__wrap_getgrnam_r, &pointer);
 
-    const f_status_t status = f_account_group_id_by_name(group_data.gr_name, &gid);
+    name.string = group_data.gr_name;
+    name.used = strlen(group_data.gr_name);
+
+    const f_status_t status = f_account_group_id_by_name(name, &gid);
 
     assert_int_equal(status, F_none);
     assert_int_equal(gid, group_data.gr_gid);

@@ -335,7 +335,7 @@ extern "C" {
         status = controller_dynamic_rip_nulless_terminated(buffer, range, &cache->action.generic);
         if (F_status_is_error(status)) return status;
 
-        status = f_account_id_by_name(cache->action.generic.string, id);
+        status = f_account_id_by_name(cache->action.generic, id);
         if (F_status_is_error(status)) return status;
 
         if (status == F_exist_not) {
@@ -370,7 +370,7 @@ extern "C" {
         status = controller_dynamic_rip_nulless_terminated(buffer, range, &cache->action.generic);
         if (F_status_is_error(status)) return status;
 
-        status = f_account_group_id_by_name(cache->action.generic.string, id);
+        status = f_account_group_id_by_name(cache->action.generic, id);
         if (F_status_is_error(status)) return status;
 
         if (status == F_exist_not) {

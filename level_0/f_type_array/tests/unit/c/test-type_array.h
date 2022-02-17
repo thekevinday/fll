@@ -24,7 +24,7 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/type_array.h>
 
-// test includes.
+// Test includes.
 #include "test-type_array-array_lengths_adjust.h"
 #include "test-type_array-array_lengths_append.h"
 #include "test-type_array-array_lengths_decimate_by.h"
