@@ -391,18 +391,26 @@ extern "C" {
 
           action->parameters.array[j].used = 0;
 
-          status = f_string_dynamic_partial_append_nulless(cache->buffer_file, cache->content_actions.array[i].array[j], &action->parameters.array[j]);
+          if (cache->content_actions.array[i].array[j].start > cache->content_actions.array[i].array[j].stop) continue;
+
+          status = f_string_dynamic_increase_by((cache->content_actions.array[i].array[j].stop - cache->content_actions.array[i].array[j].start) + 1, &action->parameters.array[j]);
 
           if (F_status_is_error(status)) {
-            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, global.thread);
+            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true, global.thread);
+          }
+          else {
+            status = f_string_dynamic_partial_append_nulless(cache->buffer_file, cache->content_actions.array[i].array[j], &action->parameters.array[j]);
 
-            action->status = status;
-
-            if (F_status_is_error_not(status_action)) {
-              status_action = status;
+            if (F_status_is_error(status)) {
+              controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, global.thread);
             }
+            else {
+              status = f_string_dynamic_terminate_after(&action->parameters.array[j]);
 
-            break;
+              if (F_status_is_error(status)) {
+                controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, global.thread);
+              }
+            }
           }
 
           ++action->parameters.used;
