@@ -13,10 +13,11 @@ environment
 process_pre
 process_post
 
-modes level level_threadless
+modes level level_threadless clang
 modes_default level
 
 build_compiler gcc
+build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
@@ -107,7 +108,8 @@ defines_program_static
 defines_static
 defines_shared
 
-flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
 flags-level -pthread
 flags_library -fPIC
 flags_library_shared

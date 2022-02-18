@@ -13,10 +13,12 @@ environment
 process_pre process_pre.sh
 process_post process_post.sh
 
-modes individual level monolithic
+modes individual level monolithic clang
 modes_default monolithic
 
 build_compiler gcc
+build_compiler-clang clang
+build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
@@ -84,7 +86,8 @@ defines_program_static
 defines_static
 defines_shared
 
-flags -O2 -z now -g -fdiagnostics-color=always -pthread -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags -O2 -z now -g -pthread -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
 flags_library -fPIC
 flags_library_shared
 flags_library_static

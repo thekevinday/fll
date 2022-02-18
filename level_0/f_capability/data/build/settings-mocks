@@ -18,10 +18,11 @@ environment
 process_pre
 process_post
 
-modes individual
+modes individual level monolithic clang
 modes_default individual
 
 build_compiler gcc
+build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
@@ -63,7 +64,8 @@ defines_library_static
 defines_static
 defines_shared
 
-flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
 flags_library -fPIC
 flags_library_shared
 flags_library_static
