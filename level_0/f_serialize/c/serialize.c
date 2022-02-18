@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_serialize_simple_
-  f_status_t f_serialize_simple(const f_string_static_t value, f_string_dynamic_t *serialize) {
+  f_status_t f_serialize_simple(const f_string_static_t value, f_string_dynamic_t * const serialize) {
     #ifndef _di_level_0_parameter_checking_
       if (!serialize) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -33,7 +33,7 @@ extern "C" {
 #endif // _di_f_serialize_simple_
 
 #ifndef _di_f_serialize_un_simple_
-  f_status_t f_serialize_un_simple(const f_string_static_t serialize, f_string_dynamics_t *strings) {
+  f_status_t f_serialize_un_simple(const f_string_static_t serialize, f_string_dynamics_t * const strings) {
     #ifndef _di_level_0_parameter_checking_
       if (!serialize.used) return F_status_set_error(F_parameter);
       if (!strings) return F_status_set_error(F_parameter);
@@ -102,7 +102,7 @@ extern "C" {
 #endif // _di_f_serialize_un_simple_
 
 #ifndef _di_f_serialize_un_simple_map_
-  f_status_t f_serialize_un_simple_map(const f_string_static_t serialize, f_string_ranges_t *locations) {
+  f_status_t f_serialize_un_simple_map(const f_string_static_t serialize, f_string_ranges_t * const locations) {
     #ifndef _di_level_0_parameter_checking_
       if (!serialize.used) return F_status_set_error(F_parameter);
       if (!locations) return F_status_set_error(F_parameter);
@@ -158,7 +158,7 @@ extern "C" {
 #endif // _di_f_serialize_un_simple_map_
 
 #ifndef _di_f_serialize_un_simple_find_
-  f_status_t f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t *range) {
+  f_status_t f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!serialize.used) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
@@ -169,7 +169,7 @@ extern "C" {
 #endif // _di_f_serialize_un_simple_find_
 
 #ifndef _di_f_serialize_un_simple_get_
-  f_status_t f_serialize_un_simple_get(const f_string_static_t serialize, const f_array_length_t index, f_string_dynamic_t *dynamic) {
+  f_status_t f_serialize_un_simple_get(const f_string_static_t serialize, const f_array_length_t index, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!serialize.used) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);

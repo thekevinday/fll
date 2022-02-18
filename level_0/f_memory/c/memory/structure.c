@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_memory_structure_adjust_
-  f_status_t f_memory_structure_adjust(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
+  f_status_t f_memory_structure_adjust(const size_t length_new, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!type_size) return F_status_set_error(F_parameter);
       if (!structure) return F_status_set_error(F_parameter);
@@ -19,7 +19,7 @@ extern "C" {
 #endif // _di_f_memory_structure_adjust_
 
 #ifndef _di_f_memory_structure_decimate_by_
-  f_status_t f_memory_structure_decimate_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
+  f_status_t f_memory_structure_decimate_by(const f_array_length_t amount, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!type_size) return F_status_set_error(F_parameter);
       if (!structure) return F_status_set_error(F_parameter);
@@ -36,7 +36,7 @@ extern "C" {
 #endif // _di_f_memory_structure_decimate_by_
 
 #ifndef _di_f_memory_structure_decrease_by_
-  f_status_t f_memory_structure_decrease_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
+  f_status_t f_memory_structure_decrease_by(const f_array_length_t amount, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!type_size) return F_status_set_error(F_parameter);
       if (!structure) return F_status_set_error(F_parameter);
@@ -53,7 +53,7 @@ extern "C" {
 #endif // _di_f_memory_structure_decrease_by_
 
 #ifndef _di_f_memory_structure_increase_
-  f_status_t f_memory_structure_increase(const uint16_t step, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
+  f_status_t f_memory_structure_increase(const uint16_t step, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!type_size) return F_status_set_error(F_parameter);
@@ -81,7 +81,7 @@ extern "C" {
 #endif // _di_f_memory_structure_increase_
 
 #ifndef _di_f_memory_structure_increase_by_
-  f_status_t f_memory_structure_increase_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
+  f_status_t f_memory_structure_increase_by(const f_array_length_t amount, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!type_size) return F_status_set_error(F_parameter);
       if (!structure) return F_status_set_error(F_parameter);
@@ -102,7 +102,7 @@ extern "C" {
 #endif // _di_f_memory_structure_increase_by_
 
 #ifndef _di_f_memory_structure_resize_
-  f_status_t f_memory_structure_resize(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
+  f_status_t f_memory_structure_resize(const size_t length_new, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!type_size) return F_status_set_error(F_parameter);
       if (!structure) return F_status_set_error(F_parameter);

@@ -1723,7 +1723,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_status_string_to_
-  extern f_status_t f_status_string_to(const f_status_t code, f_string_static_t *name);
+  extern f_status_t f_status_string_to(const f_status_t code, f_string_static_t * const name);
 #endif // _di_f_status_string_to_
 
 #ifdef __cplusplus

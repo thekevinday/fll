@@ -79,7 +79,7 @@ extern "C" {
  * @see pthread_attr_getaffinity_np()
  */
 #ifndef _di_f_thread_attribute_affinity_get_
-  extern f_status_t f_thread_attribute_affinity_get(const f_thread_attribute_t attribute, const size_t affinity_size, cpu_set_t *affinity_set);
+  extern f_status_t f_thread_attribute_affinity_get(const f_thread_attribute_t attribute, const size_t affinity_size, cpu_set_t * const affinity_set);
 #endif // _di_f_thread_attribute_affinity_get_
 
 /**
@@ -103,7 +103,7 @@ extern "C" {
  * @see pthread_attr_setaffinity_np()
  */
 #ifndef _di_f_thread_attribute_affinity_set_
-  extern f_status_t f_thread_attribute_affinity_set(const size_t affinity_size, const cpu_set_t *affinity_set, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_affinity_set(const size_t affinity_size, const cpu_set_t *affinity_set, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_affinity_set_
 
 /**
@@ -124,7 +124,7 @@ extern "C" {
  * @see pthread_condattr_getclock()
  */
 #ifndef _di_f_thread_attribute_clock_get_
-  extern f_status_t f_thread_attribute_clock_get(const f_thread_condition_attribute_t *attribute, clockid_t *id);
+  extern f_status_t f_thread_attribute_clock_get(const f_thread_condition_attribute_t *attribute, clockid_t * const id);
 #endif // _di_f_thread_attribute_clock_get_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  * @see pthread_condattr_setclock()
  */
 #ifndef _di_f_thread_attribute_clock_set_
-  extern f_status_t f_thread_attribute_clock_set(const clockid_t id, f_thread_condition_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_clock_set(const clockid_t id, f_thread_condition_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_clock_set_
 
 /**
@@ -166,7 +166,7 @@ extern "C" {
  * @see pthread_condattr_getpshared()
  */
 #ifndef _di_f_thread_attribute_condition_shared_get_
-  extern f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t *attribute, int *shared);
+  extern f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t *attribute, int * const shared);
 #endif // _di_f_thread_attribute_condition_shared_get_
 
 /**
@@ -187,7 +187,7 @@ extern "C" {
  * @see pthread_condattr_setpshared()
  */
 #ifndef _di_f_thread_attribute_condition_shared_set_
-  extern f_status_t f_thread_attribute_condition_shared_set(const int shared, f_thread_condition_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_condition_shared_set(const int shared, f_thread_condition_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_condition_shared_set_
 
 /**
@@ -208,7 +208,7 @@ extern "C" {
  * @see pthread_attr_init()
  */
 #ifndef _di_f_thread_attribute_create_
-  extern f_status_t f_thread_attribute_create(f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_create(f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_create_
 
 /**
@@ -227,7 +227,7 @@ extern "C" {
  * @see pthread_getattr_default_np()
  */
 #ifndef _di_f_thread_attribute_default_get_
-  extern f_status_t f_thread_attribute_default_get(f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_default_get(f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_default_get_
 
 /**
@@ -247,7 +247,7 @@ extern "C" {
  * @see pthread_setattr_default_np()
  */
 #ifndef _di_f_thread_attribute_default_set_
-  extern f_status_t f_thread_attribute_default_set(f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_default_set(f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_default_set_
 
 /**
@@ -271,7 +271,7 @@ extern "C" {
  * @see pthread_attr_destroy()
  */
 #ifndef _di_f_thread_attribute_delete_
-  extern f_status_t f_thread_attribute_delete(f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_delete(f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_delete_
 
 /**
@@ -292,7 +292,7 @@ extern "C" {
  * @see pthread_attr_getdetachstate()
  */
 #ifndef _di_f_thread_attribute_detach_get_
-  extern f_status_t f_thread_attribute_detach_get(const f_thread_attribute_t attribute, int *state);
+  extern f_status_t f_thread_attribute_detach_get(const f_thread_attribute_t attribute, int * const state);
 #endif // _di_f_thread_attribute_detach_get_
 
 /**
@@ -313,7 +313,7 @@ extern "C" {
  * @see pthread_attr_setdetachstate()
  */
 #ifndef _di_f_thread_attribute_detach_set_
-  extern f_status_t f_thread_attribute_detach_set(const int state, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_detach_set(const int state, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_detach_set_
 
 /**
@@ -334,7 +334,7 @@ extern "C" {
  * @see pthread_attr_getguardsize()
  */
 #ifndef _di_f_thread_attribute_guard_get_
-  extern f_status_t f_thread_attribute_guard_get(const f_thread_attribute_t attribute, size_t *guard);
+  extern f_status_t f_thread_attribute_guard_get(const f_thread_attribute_t attribute, size_t * const guard);
 #endif // _di_f_thread_attribute_guard_get_
 
 /**
@@ -355,7 +355,7 @@ extern "C" {
  * @see pthread_attr_setguardsize()
  */
 #ifndef _di_f_thread_attribute_guard_set_
-  extern f_status_t f_thread_attribute_guard_set(const size_t guard, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_guard_set(const size_t guard, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_guard_set_
 
 /**
@@ -376,7 +376,7 @@ extern "C" {
  * @see pthread_attr_getinheritsched()
  */
 #ifndef _di_f_thread_attribute_scheduler_inherit_get_
-  extern f_status_t f_thread_attribute_scheduler_inherit_get(const f_thread_attribute_t attribute, int *inherit);
+  extern f_status_t f_thread_attribute_scheduler_inherit_get(const f_thread_attribute_t attribute, int * const inherit);
 #endif // _di_f_thread_attribute_scheduler_inherit_get_
 
 /**
@@ -397,7 +397,7 @@ extern "C" {
  * @see pthread_attr_setinheritsched()
  */
 #ifndef _di_f_thread_attribute_scheduler_inherit_set_
-  extern f_status_t f_thread_attribute_scheduler_inherit_set(const int inherit, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_scheduler_inherit_set(const int inherit, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_scheduler_inherit_set_
 
 /**
@@ -418,7 +418,7 @@ extern "C" {
  * @see pthread_attr_getschedparam()
  */
 #ifndef _di_f_thread_attribute_scheduler_parameter_get_
-  extern f_status_t f_thread_attribute_scheduler_parameter_get(const f_thread_attribute_t attribute, struct sched_param *parameter);
+  extern f_status_t f_thread_attribute_scheduler_parameter_get(const f_thread_attribute_t attribute, struct sched_param * const parameter);
 #endif // _di_f_thread_attribute_scheduler_parameter_get_
 
 /**
@@ -439,7 +439,7 @@ extern "C" {
  * @see pthread_attr_setschedparam()
  */
 #ifndef _di_f_thread_attribute_scheduler_parameter_set_
-  extern f_status_t f_thread_attribute_scheduler_parameter_set(const struct sched_param parameter, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_scheduler_parameter_set(const struct sched_param parameter, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_scheduler_parameter_set_
 
 /**
@@ -460,7 +460,7 @@ extern "C" {
  * @see pthread_attr_getschedpolicy()
  */
 #ifndef _di_f_thread_attribute_scheduler_policy_get_
-  extern f_status_t f_thread_attribute_scheduler_policy_get(const f_thread_attribute_t attribute, int *policy);
+  extern f_status_t f_thread_attribute_scheduler_policy_get(const f_thread_attribute_t attribute, int * const policy);
 #endif // _di_f_thread_attribute_scheduler_policy_get_
 
 /**
@@ -481,7 +481,7 @@ extern "C" {
  * @see pthread_attr_setschedpolicy()
  */
 #ifndef _di_f_thread_attribute_scheduler_policy_set_
-  extern f_status_t f_thread_attribute_scheduler_policy_set(const int policy, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_scheduler_policy_set(const int policy, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_scheduler_policy_set_
 
 /**
@@ -502,7 +502,7 @@ extern "C" {
  * @see pthread_attr_getscope()
  */
 #ifndef _di_f_thread_attribute_scope_get_
-  extern f_status_t f_thread_attribute_scope_get(const f_thread_attribute_t attribute, int *scope);
+  extern f_status_t f_thread_attribute_scope_get(const f_thread_attribute_t attribute, int * const scope);
 #endif // _di_f_thread_attribute_scope_get_
 
 /**
@@ -524,7 +524,7 @@ extern "C" {
  * @see pthread_attr_setscope()
  */
 #ifndef _di_f_thread_attribute_scope_set_
-  extern f_status_t f_thread_attribute_scope_set(const int scope, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_scope_set(const int scope, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_scope_set_
 
 /**
@@ -548,7 +548,7 @@ extern "C" {
  * @see pthread_attr_getstack()
  */
 #ifndef _di_f_thread_attribute_stack_get_
-  extern f_status_t f_thread_attribute_stack_get(const f_thread_attribute_t attribute, size_t *stack_size, void **stack);
+  extern f_status_t f_thread_attribute_stack_get(const f_thread_attribute_t attribute, size_t * const stack_size, void **stack);
 #endif // _di_f_thread_attribute_stack_get_
 
 /**
@@ -572,7 +572,7 @@ extern "C" {
  * @see pthread_attr_setstack()
  */
 #ifndef _di_f_thread_attribute_stack_set_
-  extern f_status_t f_thread_attribute_stack_set(const size_t stack_size, void * const stack, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_stack_set(const size_t stack_size, void * const stack, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_stack_set_
 
 /**
@@ -593,7 +593,7 @@ extern "C" {
  * @see pthread_attr_getstacksize()
  */
 #ifndef _di_f_thread_attribute_stack_size_get_
-  extern f_status_t f_thread_attribute_stack_size_get(const f_thread_attribute_t attribute, size_t *stack_size);
+  extern f_status_t f_thread_attribute_stack_size_get(const f_thread_attribute_t attribute, size_t * const stack_size);
 #endif // _di_f_thread_attribute_stack_size_get_
 
 /**
@@ -614,7 +614,7 @@ extern "C" {
  * @see pthread_attr_setstacksize()
  */
 #ifndef _di_f_thread_attribute_stack_size_set_
-  extern f_status_t f_thread_attribute_stack_size_set(const size_t stack_size, f_thread_attribute_t *attribute);
+  extern f_status_t f_thread_attribute_stack_size_set(const size_t stack_size, f_thread_attribute_t * const attribute);
 #endif // _di_f_thread_attribute_stack_size_set_
 
 /**
@@ -632,7 +632,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_attributes_adjust_
-  extern f_status_t f_thread_attributes_adjust(const f_array_length_t length, f_thread_attributes_t *attributes);
+  extern f_status_t f_thread_attributes_adjust(const f_array_length_t length, f_thread_attributes_t * const attributes);
 #endif // _di_f_thread_attributes_adjust_
 
 /**
@@ -654,7 +654,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_attributes_decimate_by_
-  extern f_status_t f_thread_attributes_decimate_by(const f_array_length_t amount, f_thread_attributes_t *attributes);
+  extern f_status_t f_thread_attributes_decimate_by(const f_array_length_t amount, f_thread_attributes_t * const attributes);
 #endif // _di_f_thread_attributes_decimate_by_
 
 /**
@@ -676,7 +676,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_attributes_decrease_by_
-  extern f_status_t f_thread_attributes_decrease_by(const f_array_length_t amount, f_thread_attributes_t *attributes);
+  extern f_status_t f_thread_attributes_decrease_by(const f_array_length_t amount, f_thread_attributes_t * const attributes);
 #endif // _di_f_thread_attributes_decrease_by_
 
 /**
@@ -700,7 +700,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_attributes_increase_
-  extern f_status_t f_thread_attributes_increase(const uint16_t step, f_thread_attributes_t *attributes);
+  extern f_status_t f_thread_attributes_increase(const uint16_t step, f_thread_attributes_t * const attributes);
 #endif // _di_f_thread_attributes_increase_
 
 /**
@@ -724,7 +724,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_attributes_increase_by_
-  extern f_status_t f_thread_attributes_increase_by(const f_array_length_t amount, f_thread_attributes_t *attributes);
+  extern f_status_t f_thread_attributes_increase_by(const f_array_length_t amount, f_thread_attributes_t * const attributes);
 #endif // _di_f_thread_attributes_increase_by_
 
 /**
@@ -742,7 +742,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_attributes_resize_
-  extern f_status_t f_thread_attributes_resize(const f_array_length_t length, f_thread_attributes_t *attributes);
+  extern f_status_t f_thread_attributes_resize(const f_array_length_t length, f_thread_attributes_t * const attributes);
 #endif // _di_f_thread_attributes_resize_
 
 /**
@@ -763,7 +763,7 @@ extern "C" {
  * @see pthread_barrierattr_init()
  */
 #ifndef _di_f_thread_barrier_attribute_create_
-  extern f_status_t f_thread_barrier_attribute_create(f_thread_barrier_attribute_t *attribute);
+  extern f_status_t f_thread_barrier_attribute_create(f_thread_barrier_attribute_t * const attribute);
 #endif // _di_f_thread_barrier_attribute_create_
 
 /**
@@ -808,7 +808,7 @@ extern "C" {
  * @see pthread_barrierattr_getpshared()
  */
 #ifndef _di_f_thread_barrier_attribute_shared_get_
-  extern f_status_t f_thread_barrier_attribute_shared_get(const f_thread_barrier_attribute_t *attribute, int *shared);
+  extern f_status_t f_thread_barrier_attribute_shared_get(const f_thread_barrier_attribute_t *attribute, int * const shared);
 #endif // _di_f_thread_barrier_attribute_shared_get_
 
 /**
@@ -829,7 +829,7 @@ extern "C" {
  * @see pthread_barrierattr_setpshared()
  */
 #ifndef _di_f_thread_barrier_attribute_shared_set_
-  extern f_status_t f_thread_barrier_attribute_shared_set(const int shared, f_thread_barrier_attribute_t *attribute);
+  extern f_status_t f_thread_barrier_attribute_shared_set(const int shared, f_thread_barrier_attribute_t * const attribute);
 #endif // _di_f_thread_barrier_attribute_shared_set_
 
 /**
@@ -847,7 +847,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barrier_attributes_adjust_
-  extern f_status_t f_thread_barrier_attributes_adjust(const f_array_length_t length, f_thread_barrier_attributes_t *attributes);
+  extern f_status_t f_thread_barrier_attributes_adjust(const f_array_length_t length, f_thread_barrier_attributes_t * const attributes);
 #endif // _di_f_thread_barrier_attributes_adjust_
 
 /**
@@ -869,7 +869,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barrier_attributes_decimate_by_
-  extern f_status_t f_thread_barrier_attributes_decimate_by(const f_array_length_t amount, f_thread_barrier_attributes_t *attributes);
+  extern f_status_t f_thread_barrier_attributes_decimate_by(const f_array_length_t amount, f_thread_barrier_attributes_t * const attributes);
 #endif // _di_f_thread_barrier_attributes_decimate_by_
 
 /**
@@ -891,7 +891,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barrier_attributes_decrease_by_
-  extern f_status_t f_thread_barrier_attributes_decrease_by(const f_array_length_t amount, f_thread_barrier_attributes_t *attributes);
+  extern f_status_t f_thread_barrier_attributes_decrease_by(const f_array_length_t amount, f_thread_barrier_attributes_t * const attributes);
 #endif // _di_f_thread_barrier_attributes_decrease_by_
 
 /**
@@ -915,7 +915,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barrier_attributes_increase_
-  extern f_status_t f_thread_barrier_attributes_increase(const uint16_t step, f_thread_barrier_attributes_t *attributes);
+  extern f_status_t f_thread_barrier_attributes_increase(const uint16_t step, f_thread_barrier_attributes_t * const attributes);
 #endif // _di_f_thread_barrier_attributes_increase_
 
 /**
@@ -939,7 +939,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barrier_attributes_increase_by_
-  extern f_status_t f_thread_barrier_attributes_increase_by(const f_array_length_t amount, f_thread_barrier_attributes_t *attributes);
+  extern f_status_t f_thread_barrier_attributes_increase_by(const f_array_length_t amount, f_thread_barrier_attributes_t * const attributes);
 #endif // _di_f_thread_barrier_attributes_increase_by_
 
 /**
@@ -957,7 +957,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barrier_attributes_resize_
-  extern f_status_t f_thread_barrier_attributes_resize(const f_array_length_t length, f_thread_barrier_attributes_t *attributes);
+  extern f_status_t f_thread_barrier_attributes_resize(const f_array_length_t length, f_thread_barrier_attributes_t * const attributes);
 #endif // _di_f_thread_barrier_attributes_resize_
 
 /**
@@ -978,7 +978,7 @@ extern "C" {
  * @see pthread_barrier_init()
  */
 #ifndef _di_f_thread_barrier_create_
-  extern f_status_t f_thread_barrier_create(const unsigned int count, f_thread_barrier_attribute_t * const attribute, f_thread_barrier_t *barrier);
+  extern f_status_t f_thread_barrier_create(const unsigned int count, f_thread_barrier_attribute_t * const attribute, f_thread_barrier_t * const barrier);
 #endif // _di_f_thread_barrier_create_
 
 /**
@@ -1022,7 +1022,7 @@ extern "C" {
  * @see pthread_barrier_wait()
  */
 #ifndef _di_f_thread_barrier_wait_
-  extern f_status_t f_thread_barrier_wait(f_thread_barrier_t *barrier, int *result);
+  extern f_status_t f_thread_barrier_wait(f_thread_barrier_t * const barrier, int * const result);
 #endif // _di_f_thread_barrier_wait_
 
 /**
@@ -1040,7 +1040,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_adjust_
-  extern f_status_t f_thread_barriers_adjust(const f_array_length_t length, f_thread_barriers_t *barriers);
+  extern f_status_t f_thread_barriers_adjust(const f_array_length_t length, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_adjust_
 
 /**
@@ -1062,7 +1062,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_decimate_by_
-  extern f_status_t f_thread_barriers_decimate_by(const f_array_length_t amount, f_thread_barriers_t *barriers);
+  extern f_status_t f_thread_barriers_decimate_by(const f_array_length_t amount, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_decimate_by_
 
 /**
@@ -1084,7 +1084,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_decrease_by_
-  extern f_status_t f_thread_barriers_decrease_by(const f_array_length_t amount, f_thread_barriers_t *barriers);
+  extern f_status_t f_thread_barriers_decrease_by(const f_array_length_t amount, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_decrease_by_
 
 /**
@@ -1108,7 +1108,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_increase_
-  extern f_status_t f_thread_barriers_increase(const uint16_t step, f_thread_barriers_t *barriers);
+  extern f_status_t f_thread_barriers_increase(const uint16_t step, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_increase_
 
 /**
@@ -1132,7 +1132,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_increase_by_
-  extern f_status_t f_thread_barriers_increase_by(const f_array_length_t amount, f_thread_barriers_t *barriers);
+  extern f_status_t f_thread_barriers_increase_by(const f_array_length_t amount, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_increase_by_
 
 /**
@@ -1150,7 +1150,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_resize_
-  extern f_status_t f_thread_barriers_resize(const f_array_length_t length, f_thread_barriers_t *barriers);
+  extern f_status_t f_thread_barriers_resize(const f_array_length_t length, f_thread_barriers_t * const barriers);
 #endif // _di_f_thread_barriers_resize_
 
 /**
@@ -1203,7 +1203,7 @@ extern "C" {
  * @see pthread_setcancelstate()
  */
 #ifndef _di_f_thread_cancel_state_set_
-  extern f_status_t f_thread_cancel_state_set(const int state, int *previous);
+  extern f_status_t f_thread_cancel_state_set(const int state, int * const previous);
 #endif // _di_f_thread_cancel_state_set_
 
 /**
@@ -1241,7 +1241,7 @@ extern "C" {
  * @see pthread_setcanceltype()
  */
 #ifndef _di_f_thread_cancel_type_set_
-  extern f_status_t f_thread_cancel_type_set(const int type, int *previous);
+  extern f_status_t f_thread_cancel_type_set(const int type, int * const previous);
 #endif // _di_f_thread_cancel_type_set_
 
 /**
@@ -1263,7 +1263,7 @@ extern "C" {
  * @see pthread_getcpuclockid()
  */
 #ifndef _di_f_thread_clock_get_id_
-  extern f_status_t f_thread_clock_get_id(const f_thread_id_t id_thread, clockid_t *id_clock);
+  extern f_status_t f_thread_clock_get_id(const f_thread_id_t id_thread, clockid_t * const id_clock);
 #endif // _di_f_thread_clock_get_id_
 
 /**
@@ -1302,7 +1302,7 @@ extern "C" {
  * @see pthread_getconcurrency()
  */
 #ifndef _di_f_thread_attribute_concurrency_get_
-  extern f_status_t f_thread_attribute_concurrency_get(int *level);
+  extern f_status_t f_thread_attribute_concurrency_get(int * const level);
 #endif // _di_f_thread_attribute_concurrency_get_
 
 /**
@@ -1344,7 +1344,7 @@ extern "C" {
  * @see pthread_condattr_init()
  */
 #ifndef _di_f_thread_condition_attribute_create_
-  extern f_status_t f_thread_condition_attribute_create(f_thread_condition_attribute_t *attribute);
+  extern f_status_t f_thread_condition_attribute_create(f_thread_condition_attribute_t * const attribute);
 #endif // _di_f_thread_condition_attribute_create_
 
 /**
@@ -1385,7 +1385,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_condition_attributes_adjust_
-  extern f_status_t f_thread_condition_attributes_adjust(const f_array_length_t length, f_thread_condition_attributes_t *attributes);
+  extern f_status_t f_thread_condition_attributes_adjust(const f_array_length_t length, f_thread_condition_attributes_t * const attributes);
 #endif // _di_f_thread_condition_attributes_adjust_
 
 /**
@@ -1407,7 +1407,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_condition_attributes_decimate_by_
-  extern f_status_t f_thread_condition_attributes_decimate_by(const f_array_length_t amount, f_thread_condition_attributes_t *attributes);
+  extern f_status_t f_thread_condition_attributes_decimate_by(const f_array_length_t amount, f_thread_condition_attributes_t * const attributes);
 #endif // _di_f_thread_condition_attributes_decimate_by_
 
 /**
@@ -1429,7 +1429,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_condition_attributes_decrease_by_
-  extern f_status_t f_thread_condition_attributes_decrease_by(const f_array_length_t amount, f_thread_condition_attributes_t *attributes);
+  extern f_status_t f_thread_condition_attributes_decrease_by(const f_array_length_t amount, f_thread_condition_attributes_t * const attributes);
 #endif // _di_f_thread_condition_attributes_decrease_by_
 
 /**
@@ -1453,7 +1453,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_condition_attributes_increase_
-  extern f_status_t f_thread_condition_attributes_increase(const uint16_t step, f_thread_condition_attributes_t *attributes);
+  extern f_status_t f_thread_condition_attributes_increase(const uint16_t step, f_thread_condition_attributes_t * const attributes);
 #endif // _di_f_thread_condition_attributes_increase_
 
 /**
@@ -1477,7 +1477,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_condition_attributes_increase_by_
-  extern f_status_t f_thread_condition_attributes_increase_by(const f_array_length_t amount, f_thread_condition_attributes_t *attributes);
+  extern f_status_t f_thread_condition_attributes_increase_by(const f_array_length_t amount, f_thread_condition_attributes_t * const attributes);
 #endif // _di_f_thread_condition_attributes_increase_by_
 
 /**
@@ -1495,7 +1495,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_condition_attributes_resize_
-  extern f_status_t f_thread_condition_attributes_resize(const f_array_length_t length, f_thread_condition_attributes_t *attributes);
+  extern f_status_t f_thread_condition_attributes_resize(const f_array_length_t length, f_thread_condition_attributes_t * const attributes);
 #endif // _di_f_thread_condition_attributes_resize_
 
 /**
@@ -1517,7 +1517,7 @@ extern "C" {
  * @see pthread_cond_init()
  */
 #ifndef _di_f_thread_condition_create_
-  extern f_status_t f_thread_condition_create(const f_thread_condition_attribute_t *attribute, f_thread_condition_t *condition);
+  extern f_status_t f_thread_condition_create(const f_thread_condition_attribute_t *attribute, f_thread_condition_t * const condition);
 #endif // _di_f_thread_condition_create_
 
 /**
@@ -1558,7 +1558,7 @@ extern "C" {
  * @see pthread_cond_broadcast()
  */
 #ifndef _di_f_thread_condition_signal_all_
-  extern f_status_t f_thread_condition_signal_all(f_thread_condition_t *condition);
+  extern f_status_t f_thread_condition_signal_all(f_thread_condition_t * const condition);
 #endif // _di_f_thread_condition_signal_all_
 
 /**
@@ -1579,7 +1579,7 @@ extern "C" {
  * @see pthread_cond_signal()
  */
 #ifndef _di_f_thread_condition_signal_
-  extern f_status_t f_thread_condition_signal(f_thread_condition_t *condition);
+  extern f_status_t f_thread_condition_signal(f_thread_condition_t * const condition);
 #endif // _di_f_thread_condition_signal_
 
 /**
@@ -1605,7 +1605,7 @@ extern "C" {
  * @see pthread_cond_wait()
  */
 #ifndef _di_f_thread_condition_wait_
-  extern f_status_t f_thread_condition_wait(f_thread_condition_t *condition, f_thread_mutex_t *mutex);
+  extern f_status_t f_thread_condition_wait(f_thread_condition_t * const condition, f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_condition_wait_
 
 /**
@@ -1636,7 +1636,7 @@ extern "C" {
  * @see pthread_cond_timedwait()
  */
 #ifndef _di_f_thread_condition_wait_timed_
-  extern f_status_t f_thread_condition_wait_timed(const struct timespec *wait, f_thread_condition_t *condition, f_thread_mutex_t *mutex);
+  extern f_status_t f_thread_condition_wait_timed(const struct timespec *wait, f_thread_condition_t * const condition, f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_condition_wait_timed_
 
 /**
@@ -1654,7 +1654,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_conditions_adjust_
-  extern f_status_t f_thread_conditions_adjust(const f_array_length_t length, f_thread_conditions_t *conditions);
+  extern f_status_t f_thread_conditions_adjust(const f_array_length_t length, f_thread_conditions_t * const conditions);
 #endif // _di_f_thread_conditions_adjust_
 
 /**
@@ -1676,7 +1676,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_conditions_decimate_by_
-  extern f_status_t f_thread_conditions_decimate_by(const f_array_length_t amount, f_thread_conditions_t *conditions);
+  extern f_status_t f_thread_conditions_decimate_by(const f_array_length_t amount, f_thread_conditions_t * const conditions);
 #endif // _di_f_thread_conditions_decimate_by_
 
 /**
@@ -1698,7 +1698,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_conditions_decrease_by_
-  extern f_status_t f_thread_conditions_decrease_by(const f_array_length_t amount, f_thread_conditions_t *conditions);
+  extern f_status_t f_thread_conditions_decrease_by(const f_array_length_t amount, f_thread_conditions_t * const conditions);
 #endif // _di_f_thread_conditions_decrease_by_
 
 /**
@@ -1722,7 +1722,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_conditions_increase_
-  extern f_status_t f_thread_conditions_increase(const uint16_t step, f_thread_conditions_t *conditions);
+  extern f_status_t f_thread_conditions_increase(const uint16_t step, f_thread_conditions_t * const conditions);
 #endif // _di_f_thread_conditions_increase_
 
 /**
@@ -1746,7 +1746,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_conditions_increase_by_
-  extern f_status_t f_thread_conditions_increase_by(const f_array_length_t amount, f_thread_conditions_t *conditions);
+  extern f_status_t f_thread_conditions_increase_by(const f_array_length_t amount, f_thread_conditions_t * const conditions);
 #endif // _di_f_thread_conditions_increase_by_
 
 /**
@@ -1764,7 +1764,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_conditions_resize_
-  extern f_status_t f_thread_conditions_resize(const f_array_length_t length, f_thread_conditions_t *conditions);
+  extern f_status_t f_thread_conditions_resize(const f_array_length_t length, f_thread_conditions_t * const conditions);
 #endif // _di_f_thread_conditions_resize_
 
 /**
@@ -1794,7 +1794,7 @@ extern "C" {
  * @see pthread_create()
  */
 #ifndef _di_f_thread_create_
-  extern f_status_t f_thread_create(const f_thread_attribute_t *attribute, f_thread_id_t *id, void *(*routine) (void *), void *argument);
+  extern f_status_t f_thread_create(const f_thread_attribute_t * const attribute, f_thread_id_t * const id, void *(*routine) (void *), void *argument);
 #endif // _di_f_thread_create_
 
 /**
@@ -1951,7 +1951,7 @@ extern "C" {
  * @see pthread_key_create()
  */
 #ifndef _di_f_thread_key_create_
-  extern f_status_t f_thread_key_create(void (*routine) (void *), f_thread_key_t *key);
+  extern f_status_t f_thread_key_create(void (*routine) (void *), f_thread_key_t * const key);
 #endif // _di_f_thread_key_create_
 
 /**
@@ -2031,7 +2031,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_keys_adjust_
-  extern f_status_t f_thread_keys_adjust(const f_array_length_t length, f_thread_keys_t *keys);
+  extern f_status_t f_thread_keys_adjust(const f_array_length_t length, f_thread_keys_t * const keys);
 #endif // _di_f_thread_keys_adjust_
 
 /**
@@ -2053,7 +2053,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_keys_decimate_by_
-  extern f_status_t f_thread_keys_decimate_by(const f_array_length_t amount, f_thread_keys_t *keys);
+  extern f_status_t f_thread_keys_decimate_by(const f_array_length_t amount, f_thread_keys_t * const keys);
 #endif // _di_f_thread_keys_decimate_by_
 
 /**
@@ -2075,7 +2075,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_keys_decrease_by_
-  extern f_status_t f_thread_keys_decrease_by(const f_array_length_t amount, f_thread_keys_t *keys);
+  extern f_status_t f_thread_keys_decrease_by(const f_array_length_t amount, f_thread_keys_t * const keys);
 #endif // _di_f_thread_keys_decrease_by_
 
 /**
@@ -2099,7 +2099,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_keys_increase_
-  extern f_status_t f_thread_keys_increase(const uint16_t step, f_thread_keys_t *keys);
+  extern f_status_t f_thread_keys_increase(const uint16_t step, f_thread_keys_t * const keys);
 #endif // _di_f_thread_keys_increase_
 
 /**
@@ -2123,7 +2123,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_keys_increase_by_
-  extern f_status_t f_thread_keys_increase_by(const f_array_length_t amount, f_thread_keys_t *keys);
+  extern f_status_t f_thread_keys_increase_by(const f_array_length_t amount, f_thread_keys_t * const keys);
 #endif // _di_f_thread_keys_increase_by_
 
 /**
@@ -2141,7 +2141,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_keys_resize_
-  extern f_status_t f_thread_keys_resize(const f_array_length_t length, f_thread_keys_t *keys);
+  extern f_status_t f_thread_keys_resize(const f_array_length_t length, f_thread_keys_t * const keys);
 #endif // _di_f_thread_keys_resize_
 
 /**
@@ -2164,7 +2164,7 @@ extern "C" {
  * @see pthread_rwlockattr_init()
  */
 #ifndef _di_f_thread_lock_attribute_create_
-  extern f_status_t f_thread_lock_attribute_create(f_thread_lock_attribute_t *attribute);
+  extern f_status_t f_thread_lock_attribute_create(f_thread_lock_attribute_t * const attribute);
 #endif // _di_f_thread_lock_attribute_create_
 
 /**
@@ -2208,7 +2208,7 @@ extern "C" {
  * @see pthread_rwlockattr_getpshared()
  */
 #ifndef _di_f_thread_lock_attribute_shared_get_
-  extern f_status_t f_thread_lock_attribute_shared_get(const f_thread_lock_attribute_t *attribute, int *shared);
+  extern f_status_t f_thread_lock_attribute_shared_get(const f_thread_lock_attribute_t *attribute, int * const shared);
 #endif // _di_f_thread_lock_attribute_shared_get_
 
 /**
@@ -2229,7 +2229,7 @@ extern "C" {
  * @see pthread_rwlockattr_setpshared()
  */
 #ifndef _di_f_thread_lock_attribute_shared_set_
-  extern f_status_t f_thread_lock_attribute_shared_set(const int shared, f_thread_lock_attribute_t *attribute);
+  extern f_status_t f_thread_lock_attribute_shared_set(const int shared, f_thread_lock_attribute_t * const attribute);
 #endif // _di_f_thread_lock_attribute_shared_set_
 
 /**
@@ -2247,7 +2247,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_lock_attributes_adjust_
-  extern f_status_t f_thread_lock_attributes_adjust(const f_array_length_t length, f_thread_lock_attributes_t *attributes);
+  extern f_status_t f_thread_lock_attributes_adjust(const f_array_length_t length, f_thread_lock_attributes_t * const attributes);
 #endif // _di_f_thread_lock_attributes_adjust_
 
 /**
@@ -2269,7 +2269,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_lock_attributes_decimate_by_
-  extern f_status_t f_thread_lock_attributes_decimate_by(const f_array_length_t amount, f_thread_lock_attributes_t *attributes);
+  extern f_status_t f_thread_lock_attributes_decimate_by(const f_array_length_t amount, f_thread_lock_attributes_t * const attributes);
 #endif // _di_f_thread_lock_attributes_decimate_by_
 
 /**
@@ -2291,7 +2291,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_lock_attributes_decrease_by_
-  extern f_status_t f_thread_lock_attributes_decrease_by(const f_array_length_t amount, f_thread_lock_attributes_t *attributes);
+  extern f_status_t f_thread_lock_attributes_decrease_by(const f_array_length_t amount, f_thread_lock_attributes_t * const attributes);
 #endif // _di_f_thread_lock_attributes_decrease_by_
 
 /**
@@ -2315,7 +2315,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_lock_attributes_increase_
-  extern f_status_t f_thread_lock_attributes_increase(const uint16_t step, f_thread_lock_attributes_t *attributes);
+  extern f_status_t f_thread_lock_attributes_increase(const uint16_t step, f_thread_lock_attributes_t * const attributes);
 #endif // _di_f_thread_lock_attributes_increase_
 
 /**
@@ -2339,7 +2339,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_lock_attributes_increase_by_
-  extern f_status_t f_thread_lock_attributes_increase_by(const f_array_length_t amount, f_thread_lock_attributes_t *attributes);
+  extern f_status_t f_thread_lock_attributes_increase_by(const f_array_length_t amount, f_thread_lock_attributes_t * const attributes);
 #endif // _di_f_thread_lock_attributes_increase_by_
 
 /**
@@ -2357,7 +2357,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_lock_attributes_resize_
-  extern f_status_t f_thread_lock_attributes_resize(const f_array_length_t length, f_thread_lock_attributes_t *attributes);
+  extern f_status_t f_thread_lock_attributes_resize(const f_array_length_t length, f_thread_lock_attributes_t * const attributes);
 #endif // _di_f_thread_lock_attributes_resize_
 
 /**
@@ -2380,7 +2380,7 @@ extern "C" {
  * @see pthread_rwlock_init()
  */
 #ifndef _di_f_thread_lock_create_
-  extern f_status_t f_thread_lock_create(const f_thread_lock_attribute_t *attribute, f_thread_lock_t *lock);
+  extern f_status_t f_thread_lock_create(const f_thread_lock_attribute_t *attribute, f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_create_
 
 /**
@@ -2426,7 +2426,7 @@ extern "C" {
  * @see pthread_rwlock_rdlock()
  */
 #ifndef _di_f_thread_lock_read_
-  extern f_status_t f_thread_lock_read(f_thread_lock_t *lock);
+  extern f_status_t f_thread_lock_read(f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_read_
 
 /**
@@ -2454,7 +2454,7 @@ extern "C" {
  * @see pthread_rwlock_timedrdlock()
  */
 #ifndef _di_f_thread_lock_read_timed_
-  extern f_status_t f_thread_lock_read_timed(const struct timespec *timeout, f_thread_lock_t *lock);
+  extern f_status_t f_thread_lock_read_timed(const struct timespec *timeout, f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_read_timed_
 
 /**
@@ -2479,7 +2479,7 @@ extern "C" {
  * @see pthread_rwlock_tryrdlock()
  */
 #ifndef _di_f_thread_lock_read_try_
-  extern f_status_t f_thread_lock_read_try(f_thread_lock_t *lock);
+  extern f_status_t f_thread_lock_read_try(f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_read_try_
 
 /**
@@ -2502,7 +2502,7 @@ extern "C" {
  * @see pthread_rwlock_wrlock()
  */
 #ifndef _di_f_thread_lock_write_
-  extern f_status_t f_thread_lock_write(f_thread_lock_t *lock);
+  extern f_status_t f_thread_lock_write(f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_write_
 
 /**
@@ -2529,7 +2529,7 @@ extern "C" {
  * @see pthread_rwlock_timedwrlock()
  */
 #ifndef _di_f_thread_lock_write_timed_
-  extern f_status_t f_thread_lock_write_timed(const struct timespec *timeout, f_thread_lock_t *lock);
+  extern f_status_t f_thread_lock_write_timed(const struct timespec *timeout, f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_write_timed_
 
 /**
@@ -2554,7 +2554,7 @@ extern "C" {
  * @see pthread_rwlock_trywrlock()
  */
 #ifndef _di_f_thread_lock_write_try_
-  extern f_status_t f_thread_lock_write_try(f_thread_lock_t *lock);
+  extern f_status_t f_thread_lock_write_try(f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_write_try_
 
 /**
@@ -2572,7 +2572,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_locks_adjust_
-  extern f_status_t f_thread_locks_adjust(const f_array_length_t length, f_thread_locks_t *locks);
+  extern f_status_t f_thread_locks_adjust(const f_array_length_t length, f_thread_locks_t * const locks);
 #endif // _di_f_thread_locks_adjust_
 
 /**
@@ -2594,7 +2594,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_locks_decimate_by_
-  extern f_status_t f_thread_locks_decimate_by(const f_array_length_t amount, f_thread_locks_t *locks);
+  extern f_status_t f_thread_locks_decimate_by(const f_array_length_t amount, f_thread_locks_t * const locks);
 #endif // _di_f_thread_locks_decimate_by_
 
 /**
@@ -2616,7 +2616,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_locks_decrease_by_
-  extern f_status_t f_thread_locks_decrease_by(const f_array_length_t amount, f_thread_locks_t *locks);
+  extern f_status_t f_thread_locks_decrease_by(const f_array_length_t amount, f_thread_locks_t * const locks);
 #endif // _di_f_thread_locks_decrease_by_
 
 /**
@@ -2640,7 +2640,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_locks_increase_
-  extern f_status_t f_thread_locks_increase(const uint16_t step, f_thread_locks_t *locks);
+  extern f_status_t f_thread_locks_increase(const uint16_t step, f_thread_locks_t * const locks);
 #endif // _di_f_thread_locks_increase_
 
 /**
@@ -2664,7 +2664,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_locks_increase_by_
-  extern f_status_t f_thread_locks_increase_by(const f_array_length_t amount, f_thread_locks_t *locks);
+  extern f_status_t f_thread_locks_increase_by(const f_array_length_t amount, f_thread_locks_t * const locks);
 #endif // _di_f_thread_locks_increase_by_
 
 /**
@@ -2682,7 +2682,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_locks_resize_
-  extern f_status_t f_thread_locks_resize(const f_array_length_t length, f_thread_locks_t *locks);
+  extern f_status_t f_thread_locks_resize(const f_array_length_t length, f_thread_locks_t * const locks);
 #endif // _di_f_thread_locks_resize_
 
 /**
@@ -2704,7 +2704,7 @@ extern "C" {
  * @see pthread_mutexattr_init()
  */
 #ifndef _di_f_thread_mutex_attribute_create_
-  extern f_status_t f_thread_mutex_attribute_create(f_thread_mutex_attribute_t *attribute);
+  extern f_status_t f_thread_mutex_attribute_create(f_thread_mutex_attribute_t * const attribute);
 #endif // _di_f_thread_mutex_attribute_create_
 
 /**
@@ -2746,7 +2746,7 @@ extern "C" {
  * @see pthread_mutexattr_getprioceiling()
  */
 #ifndef _di_f_thread_mutex_attribute_priority_ceiling_get_
-  extern f_status_t f_thread_mutex_attribute_priority_ceiling_get(const f_thread_mutex_attribute_t *attribute, int *ceiling);
+  extern f_status_t f_thread_mutex_attribute_priority_ceiling_get(const f_thread_mutex_attribute_t *attribute, int * const ceiling);
 #endif // _di_f_thread_mutex_attribute_priority_ceiling_get_
 
 /**
@@ -2766,7 +2766,7 @@ extern "C" {
  * @see pthread_mutexattr_setprioceiling()
  */
 #ifndef _di_f_thread_mutex_attribute_priority_ceiling_set_
-  extern f_status_t f_thread_mutex_attribute_priority_ceiling_set(const int ceiling, f_thread_mutex_attribute_t *attribute);
+  extern f_status_t f_thread_mutex_attribute_priority_ceiling_set(const int ceiling, f_thread_mutex_attribute_t * const attribute);
 #endif // _di_f_thread_mutex_attribute_priority_ceiling_set_
 
 /**
@@ -2787,7 +2787,7 @@ extern "C" {
  * @see pthread_mutexattr_getpshared()
  */
 #ifndef _di_f_thread_mutex_attribute_shared_get_
-  extern f_status_t f_thread_mutex_attribute_shared_get(const f_thread_mutex_attribute_t *attribute, int *shared);
+  extern f_status_t f_thread_mutex_attribute_shared_get(const f_thread_mutex_attribute_t *attribute, int * const shared);
 #endif // _di_f_thread_mutex_attribute_shared_get_
 
 /**
@@ -2808,7 +2808,7 @@ extern "C" {
  * @see pthread_mutexattr_setpshared()
  */
 #ifndef _di_f_thread_mutex_attribute_shared_set_
-  extern f_status_t f_thread_mutex_attribute_shared_set(const int shared, f_thread_mutex_attribute_t *attribute);
+  extern f_status_t f_thread_mutex_attribute_shared_set(const int shared, f_thread_mutex_attribute_t * const attribute);
 #endif // _di_f_thread_mutex_attribute_shared_set_
 
 /**
@@ -2829,7 +2829,7 @@ extern "C" {
  * @see pthread_mutexattr_gettype()
  */
 #ifndef _di_f_thread_mutex_attribute_type_get_
-  extern f_status_t f_thread_mutex_attribute_type_get(const f_thread_mutex_attribute_t *attribute, int *type);
+  extern f_status_t f_thread_mutex_attribute_type_get(const f_thread_mutex_attribute_t *attribute, int * const type);
 #endif // _di_f_thread_mutex_attribute_type_get_
 
 /**
@@ -2850,7 +2850,7 @@ extern "C" {
  * @see pthread_mutexattr_settype()
  */
 #ifndef _di_f_thread_mutex_attribute_type_set_
-  extern f_status_t f_thread_mutex_attribute_type_set(const int type, f_thread_mutex_attribute_t *attribute);
+  extern f_status_t f_thread_mutex_attribute_type_set(const int type, f_thread_mutex_attribute_t * const attribute);
 #endif // _di_f_thread_mutex_attribute_type_set_
 
 /**
@@ -2872,7 +2872,7 @@ extern "C" {
  * @see pthread_mutexattr_getprotocol()
  */
 #ifndef _di_f_thread_mutex_attribute_protocol_get_
-  extern f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t *attribute, int *protocol);
+  extern f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t *attribute, int * const protocol);
 #endif // _di_f_thread_mutex_attribute_protocol_get_
 
 /**
@@ -2895,7 +2895,7 @@ extern "C" {
  * @see pthread_mutexattr_setprotocol()
  */
 #ifndef _di_f_thread_mutex_attribute_protocol_set_
-  extern f_status_t f_thread_mutex_attribute_protocol_set(const int protocol, f_thread_mutex_attribute_t *attribute);
+  extern f_status_t f_thread_mutex_attribute_protocol_set(const int protocol, f_thread_mutex_attribute_t * const attribute);
 #endif // _di_f_thread_mutex_attribute_protocol_set_
 
 /**
@@ -2913,7 +2913,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_adjust_
-  extern f_status_t f_thread_mutex_attributes_adjust(const f_array_length_t length, f_thread_mutex_attributes_t *attributes);
+  extern f_status_t f_thread_mutex_attributes_adjust(const f_array_length_t length, f_thread_mutex_attributes_t * const attributes);
 #endif // _di_f_thread_mutex_attributes_adjust_
 
 /**
@@ -2935,7 +2935,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_decimate_by_
-  extern f_status_t f_thread_mutex_attributes_decimate_by(const f_array_length_t amount, f_thread_mutex_attributes_t *attributes);
+  extern f_status_t f_thread_mutex_attributes_decimate_by(const f_array_length_t amount, f_thread_mutex_attributes_t * const attributes);
 #endif // _di_f_thread_mutex_attributes_decimate_by_
 
 /**
@@ -2957,7 +2957,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_decrease_by_
-  extern f_status_t f_thread_mutex_attributes_decrease_by(const f_array_length_t amount, f_thread_mutex_attributes_t *attributes);
+  extern f_status_t f_thread_mutex_attributes_decrease_by(const f_array_length_t amount, f_thread_mutex_attributes_t * const attributes);
 #endif // _di_f_thread_mutex_attributes_decrease_by_
 
 /**
@@ -2981,7 +2981,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_increase_
-  extern f_status_t f_thread_mutex_attributes_increase(const uint16_t step, f_thread_mutex_attributes_t *attributes);
+  extern f_status_t f_thread_mutex_attributes_increase(const uint16_t step, f_thread_mutex_attributes_t * const attributes);
 #endif // _di_f_thread_mutex_attributes_increase_
 
 /**
@@ -3005,7 +3005,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_increase_by_
-  extern f_status_t f_thread_mutex_attributes_increase_by(const f_array_length_t amount, f_thread_mutex_attributes_t *attributes);
+  extern f_status_t f_thread_mutex_attributes_increase_by(const f_array_length_t amount, f_thread_mutex_attributes_t * const attributes);
 #endif // _di_f_thread_mutex_attributes_increase_by_
 
 /**
@@ -3023,7 +3023,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_resize_
-  extern f_status_t f_thread_mutex_attributes_resize(const f_array_length_t length, f_thread_mutex_attributes_t *attributes);
+  extern f_status_t f_thread_mutex_attributes_resize(const f_array_length_t length, f_thread_mutex_attributes_t * const attributes);
 #endif // _di_f_thread_mutex_attributes_resize_
 
 /**
@@ -3049,7 +3049,7 @@ extern "C" {
  * @see pthread_mutex_init()
  */
 #ifndef _di_f_thread_mutex_create_
-  extern f_status_t f_thread_mutex_create(f_thread_mutex_attribute_t * const attribute, f_thread_mutex_t *mutex);
+  extern f_status_t f_thread_mutex_create(f_thread_mutex_attribute_t * const attribute, f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_mutex_create_
 
 /**
@@ -3095,7 +3095,7 @@ extern "C" {
  * @see pthread_mutex_lock()
  */
 #ifndef _di_f_thread_mutex_lock_
-  extern f_status_t f_thread_mutex_lock(f_thread_mutex_t *mutex);
+  extern f_status_t f_thread_mutex_lock(f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_mutex_lock_
 
 /**
@@ -3126,7 +3126,7 @@ extern "C" {
  * @see pthread_mutex_timedlock()
  */
 #ifndef _di_f_thread_mutex_lock_timed_
-  extern f_status_t f_thread_mutex_lock_timed(const struct timespec *timeout, f_thread_mutex_t *mutex);
+  extern f_status_t f_thread_mutex_lock_timed(const struct timespec *timeout, f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_mutex_lock_timed_
 
 /**
@@ -3151,7 +3151,7 @@ extern "C" {
  * @see pthread_mutex_trylock()
  */
 #ifndef _di_f_thread_mutex_lock_try_
-  extern f_status_t f_thread_mutex_lock_try(f_thread_mutex_t *mutex);
+  extern f_status_t f_thread_mutex_lock_try(f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_mutex_lock_try_
 
 /**
@@ -3173,7 +3173,7 @@ extern "C" {
  * @see pthread_mutex_getprioceiling()
  */
 #ifndef _di_f_thread_mutex_priority_ceiling_get_
-  extern f_status_t f_thread_mutex_priority_ceiling_get(f_thread_mutex_t *mutex, int *ceiling);
+  extern f_status_t f_thread_mutex_priority_ceiling_get(f_thread_mutex_t * const mutex, int * const ceiling);
 #endif // _di_f_thread_mutex_priority_ceiling_get_
 
 /**
@@ -3202,7 +3202,7 @@ extern "C" {
  * @see pthread_mutex_setprioceiling()
  */
 #ifndef _di_f_thread_mutex_priority_ceiling_set_
-  extern f_status_t f_thread_mutex_priority_ceiling_set(const int ceiling, f_thread_mutex_t *mutex, int *previous);
+  extern f_status_t f_thread_mutex_priority_ceiling_set(const int ceiling, f_thread_mutex_t * const mutex, int * const previous);
 #endif // _di_f_thread_mutex_priority_ceiling_set_
 
 /**
@@ -3223,7 +3223,7 @@ extern "C" {
  * @see pthread_mutex_unlock()
  */
 #ifndef _di_f_thread_mutex_unlock_
-  extern f_status_t f_thread_mutex_unlock(f_thread_mutex_t *mutex);
+  extern f_status_t f_thread_mutex_unlock(f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_mutex_unlock_
 
 /**
@@ -3241,7 +3241,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutexs_adjust_
-  extern f_status_t f_thread_mutexs_adjust(const f_array_length_t length, f_thread_mutexs_t *mutexs);
+  extern f_status_t f_thread_mutexs_adjust(const f_array_length_t length, f_thread_mutexs_t * const mutexs);
 #endif // _di_f_thread_mutexs_adjust_
 
 /**
@@ -3263,7 +3263,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutexs_decimate_by_
-  extern f_status_t f_thread_mutexs_decimate_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs);
+  extern f_status_t f_thread_mutexs_decimate_by(const f_array_length_t amount, f_thread_mutexs_t * const mutexs);
 #endif // _di_f_thread_mutexs_decimate_by_
 
 /**
@@ -3285,7 +3285,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutexs_decrease_by_
-  extern f_status_t f_thread_mutexs_decrease_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs);
+  extern f_status_t f_thread_mutexs_decrease_by(const f_array_length_t amount, f_thread_mutexs_t * const mutexs);
 #endif // _di_f_thread_mutexs_decrease_by_
 
 /**
@@ -3309,7 +3309,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutexs_increase_
-  extern f_status_t f_thread_mutexs_increase(const uint16_t step, f_thread_mutexs_t *mutexs);
+  extern f_status_t f_thread_mutexs_increase(const uint16_t step, f_thread_mutexs_t * const mutexs);
 #endif // _di_f_thread_mutexs_increase_
 
 /**
@@ -3333,7 +3333,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutexs_increase_by_
-  extern f_status_t f_thread_mutexs_increase_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs);
+  extern f_status_t f_thread_mutexs_increase_by(const f_array_length_t amount, f_thread_mutexs_t * const mutexs);
 #endif // _di_f_thread_mutexs_increase_by_
 
 /**
@@ -3351,7 +3351,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutexs_resize_
-  extern f_status_t f_thread_mutexs_resize(const f_array_length_t length, f_thread_mutexs_t *mutexs);
+  extern f_status_t f_thread_mutexs_resize(const f_array_length_t length, f_thread_mutexs_t * const mutexs);
 #endif // _di_f_thread_mutexs_resize_
 
 /**
@@ -3372,7 +3372,7 @@ extern "C" {
  * @see pthread_once()
  */
 #ifndef _di_f_thread_once_
-  extern f_status_t f_thread_once(void (*routine) (void), f_thread_once_t *once);
+  extern f_status_t f_thread_once(void (*routine) (void), f_thread_once_t * const once);
 #endif // _di_f_thread_once_
 
 /**
@@ -3396,7 +3396,7 @@ extern "C" {
  * @see pthread_getschedparam()
  */
 #ifndef _di_f_thread_scheduler_parameter_get_
-  extern f_status_t f_thread_scheduler_parameter_get(const f_thread_id_t id, int *policy, struct sched_param *parameter);
+  extern f_status_t f_thread_scheduler_parameter_get(const f_thread_id_t id, int * const policy, struct sched_param * const parameter);
 #endif // _di_f_thread_scheduler_parameter_get_
 
 /**
@@ -3469,7 +3469,7 @@ extern "C" {
  * @see sem_init()
  */
 #ifndef _di_f_thread_semaphore_create_
-  extern f_status_t f_thread_semaphore_create(const bool shared, const unsigned int value, f_thread_semaphore_t *semaphore);
+  extern f_status_t f_thread_semaphore_create(const bool shared, const unsigned int value, f_thread_semaphore_t * const semaphore);
 #endif // _di_f_thread_semaphore_create_
 
 /**
@@ -3531,7 +3531,7 @@ extern "C" {
  * @see sem_open()
  */
 #ifndef _di_f_thread_semaphore_file_create_
-  extern f_status_t f_thread_semaphore_file_create(const f_string_t name, const int flag, mode_t mode, unsigned int value, f_thread_semaphore_t *semaphore);
+  extern f_status_t f_thread_semaphore_file_create(const f_string_static_t name, const int flag, mode_t mode, unsigned int value, f_thread_semaphore_t *semaphore);
 #endif // _di_f_thread_semaphore_file_create_
 
 /**
@@ -3584,7 +3584,7 @@ extern "C" {
  * @see f_thread_semaphore_file_delete()
  */
 #ifndef _di_f_thread_semaphore_file_destroy_
-  extern f_status_t f_thread_semaphore_file_destroy(const f_string_t name);
+  extern f_status_t f_thread_semaphore_file_destroy(const f_string_static_t name);
 #endif // _di_f_thread_semaphore_file_destroy_
 
 /**
@@ -3606,7 +3606,7 @@ extern "C" {
  * @see sem_wait()
  */
 #ifndef _di_f_thread_semaphore_lock_
-  extern f_status_t f_thread_semaphore_lock(f_thread_semaphore_t *semaphore);
+  extern f_status_t f_thread_semaphore_lock(f_thread_semaphore_t * const semaphore);
 #endif // _di_f_thread_semaphore_lock_
 
 /**
@@ -3633,7 +3633,7 @@ extern "C" {
  * @see sem_timedwait()
  */
 #ifndef _di_f_thread_semaphore_lock_timed_
-  extern f_status_t f_thread_semaphore_lock_timed(const struct timespec *timeout, f_thread_semaphore_t *semaphore);
+  extern f_status_t f_thread_semaphore_lock_timed(const struct timespec *timeout, f_thread_semaphore_t * const semaphore);
 #endif // _di_f_thread_semaphore_lock_timed_
 
 /**
@@ -3658,7 +3658,7 @@ extern "C" {
  * @see sem_trywait()
  */
 #ifndef _di_f_thread_semaphore_lock_try_
-  extern f_status_t f_thread_semaphore_lock_try(f_thread_semaphore_t *semaphore);
+  extern f_status_t f_thread_semaphore_lock_try(f_thread_semaphore_t * const semaphore);
 #endif // _di_f_thread_semaphore_lock_try_
 
 /**
@@ -3678,7 +3678,7 @@ extern "C" {
  * @see sem_post()
  */
 #ifndef _di_f_thread_semaphore_unlock_
-  extern f_status_t f_thread_semaphore_unlock(f_thread_semaphore_t *semaphore);
+  extern f_status_t f_thread_semaphore_unlock(f_thread_semaphore_t * const semaphore);
 #endif // _di_f_thread_semaphore_unlock_
 
 /**
@@ -3699,7 +3699,7 @@ extern "C" {
  * @see sem_getvalue()
  */
 #ifndef _di_f_thread_semaphore_value_get_
-  extern f_status_t f_thread_semaphore_value_get(f_thread_semaphore_t *semaphore, int *value);
+  extern f_status_t f_thread_semaphore_value_get(f_thread_semaphore_t * const semaphore, int * const value);
 #endif // _di_f_thread_semaphore_value_get_
 
 /**
@@ -3717,7 +3717,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_semaphores_adjust_
-  extern f_status_t f_thread_semaphores_adjust(const f_array_length_t length, f_thread_semaphores_t *semaphores);
+  extern f_status_t f_thread_semaphores_adjust(const f_array_length_t length, f_thread_semaphores_t * const semaphores);
 #endif // _di_f_thread_semaphores_adjust_
 
 /**
@@ -3739,7 +3739,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_semaphores_decimate_by_
-  extern f_status_t f_thread_semaphores_decimate_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores);
+  extern f_status_t f_thread_semaphores_decimate_by(const f_array_length_t amount, f_thread_semaphores_t * const semaphores);
 #endif // _di_f_thread_semaphores_decimate_by_
 
 /**
@@ -3761,7 +3761,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_semaphores_decrease_by_
-  extern f_status_t f_thread_semaphores_decrease_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores);
+  extern f_status_t f_thread_semaphores_decrease_by(const f_array_length_t amount, f_thread_semaphores_t * const semaphores);
 #endif // _di_f_thread_semaphores_decrease_by_
 
 /**
@@ -3785,7 +3785,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_semaphores_increase_
-  extern f_status_t f_thread_semaphores_increase(const uint16_t step, f_thread_semaphores_t *semaphores);
+  extern f_status_t f_thread_semaphores_increase(const uint16_t step, f_thread_semaphores_t * const semaphores);
 #endif // _di_f_thread_semaphores_increase_
 
 /**
@@ -3809,7 +3809,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_semaphores_increase_by_
-  extern f_status_t f_thread_semaphores_increase_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores);
+  extern f_status_t f_thread_semaphores_increase_by(const f_array_length_t amount, f_thread_semaphores_t * const semaphores);
 #endif // _di_f_thread_semaphores_increase_by_
 
 /**
@@ -3827,7 +3827,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_semaphores_resize_
-  extern f_status_t f_thread_semaphores_resize(const f_array_length_t length, f_thread_semaphores_t *semaphores);
+  extern f_status_t f_thread_semaphores_resize(const f_array_length_t length, f_thread_semaphores_t * const semaphores);
 #endif // _di_f_thread_semaphores_resize_
 
 /**
@@ -3845,7 +3845,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_adjust_
-  extern f_status_t f_thread_sets_adjust(const f_array_length_t length, f_thread_sets_t *sets);
+  extern f_status_t f_thread_sets_adjust(const f_array_length_t length, f_thread_sets_t * const sets);
 #endif // _di_f_thread_sets_adjust_
 
 /**
@@ -3867,7 +3867,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_decimate_by_
-  extern f_status_t f_thread_sets_decimate_by(const f_array_length_t amount, f_thread_sets_t *sets);
+  extern f_status_t f_thread_sets_decimate_by(const f_array_length_t amount, f_thread_sets_t * const sets);
 #endif // _di_f_thread_sets_decimate_by_
 
 /**
@@ -3889,7 +3889,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_decrease_by_
-  extern f_status_t f_thread_sets_decrease_by(const f_array_length_t amount, f_thread_sets_t *sets);
+  extern f_status_t f_thread_sets_decrease_by(const f_array_length_t amount, f_thread_sets_t * const sets);
 #endif // _di_f_thread_sets_decrease_by_
 
 /**
@@ -3913,7 +3913,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_increase_
-  extern f_status_t f_thread_sets_increase(const uint16_t step, f_thread_sets_t *sets);
+  extern f_status_t f_thread_sets_increase(const uint16_t step, f_thread_sets_t * const sets);
 #endif // _di_f_thread_sets_increase_
 
 /**
@@ -3937,7 +3937,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_increase_by_
-  extern f_status_t f_thread_sets_increase_by(const f_array_length_t amount, f_thread_sets_t *sets);
+  extern f_status_t f_thread_sets_increase_by(const f_array_length_t amount, f_thread_sets_t * const sets);
 #endif // _di_f_thread_sets_increase_by_
 
 /**
@@ -3955,7 +3955,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_resize_
-  extern f_status_t f_thread_sets_resize(const f_array_length_t length, f_thread_sets_t *sets);
+  extern f_status_t f_thread_sets_resize(const f_array_length_t length, f_thread_sets_t * const sets);
 #endif // _di_f_thread_sets_resize_
 
 /**
@@ -4006,7 +4006,7 @@ extern "C" {
  * @see pthread_sigmask()
  */
 #ifndef _di_f_thread_signal_mask_
-  extern f_status_t f_thread_signal_mask(const int how, const sigset_t *next, sigset_t *current);
+  extern f_status_t f_thread_signal_mask(const int how, const sigset_t * const next, sigset_t * const current);
 #endif // _di_f_thread_signal_mask_
 
 /**
@@ -4055,7 +4055,7 @@ extern "C" {
  * @see pthread_spin_init()
  */
 #ifndef _di_f_thread_spin_create_
-  extern f_status_t f_thread_spin_create(const int shared, f_thread_spin_t *spin);
+  extern f_status_t f_thread_spin_create(const int shared, f_thread_spin_t * const spin);
 #endif // _di_f_thread_spin_create_
 
 /**
@@ -4101,7 +4101,7 @@ extern "C" {
  * @see pthread_spin_lock()
  */
 #ifndef _di_f_thread_spin_lock_
-  extern f_status_t f_thread_spin_lock(f_thread_spin_t *spin);
+  extern f_status_t f_thread_spin_lock(f_thread_spin_t * const spin);
 #endif // _di_f_thread_spin_lock_
 
 /**
@@ -4126,7 +4126,7 @@ extern "C" {
  * @see pthread_spin_trylock()
  */
 #ifndef _di_f_thread_spin_lock_try_
-  extern f_status_t f_thread_spin_lock_try(f_thread_spin_t *spin);
+  extern f_status_t f_thread_spin_lock_try(f_thread_spin_t * const spin);
 #endif // _di_f_thread_spin_lock_try_
 
 /**
@@ -4147,7 +4147,7 @@ extern "C" {
  * @see pthread_spin_unlock()
  */
 #ifndef _di_f_thread_spin_unlock_
-  extern f_status_t f_thread_spin_unlock(f_thread_spin_t *spin);
+  extern f_status_t f_thread_spin_unlock(f_thread_spin_t * const spin);
 #endif // _di_f_thread_spin_unlock_
 
 /**
@@ -4165,7 +4165,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_adjust_
-  extern f_status_t f_thread_spins_adjust(const f_array_length_t length, f_thread_spins_t *spins);
+  extern f_status_t f_thread_spins_adjust(const f_array_length_t length, f_thread_spins_t * const spins);
 #endif // _di_f_thread_spins_adjust_
 
 /**
@@ -4187,7 +4187,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_decimate_by_
-  extern f_status_t f_thread_spins_decimate_by(const f_array_length_t amount, f_thread_spins_t *spins);
+  extern f_status_t f_thread_spins_decimate_by(const f_array_length_t amount, f_thread_spins_t * const spins);
 #endif // _di_f_thread_spins_decimate_by_
 
 /**
@@ -4209,7 +4209,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_decrease_by_
-  extern f_status_t f_thread_spins_decrease_by(const f_array_length_t amount, f_thread_spins_t *spins);
+  extern f_status_t f_thread_spins_decrease_by(const f_array_length_t amount, f_thread_spins_t * const spins);
 #endif // _di_f_thread_spins_decrease_by_
 
 /**
@@ -4233,7 +4233,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_increase_
-  extern f_status_t f_thread_spins_increase(const uint16_t step, f_thread_spins_t *spins);
+  extern f_status_t f_thread_spins_increase(const uint16_t step, f_thread_spins_t * const spins);
 #endif // _di_f_thread_spins_increase_
 
 /**
@@ -4257,7 +4257,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_increase_by_
-  extern f_status_t f_thread_spins_increase_by(const f_array_length_t amount, f_thread_spins_t *spins);
+  extern f_status_t f_thread_spins_increase_by(const f_array_length_t amount, f_thread_spins_t * const spins);
 #endif // _di_f_thread_spins_increase_by_
 
 /**
@@ -4275,7 +4275,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_resize_
-  extern f_status_t f_thread_spins_resize(const f_array_length_t length, f_thread_spins_t *spins);
+  extern f_status_t f_thread_spins_resize(const f_array_length_t length, f_thread_spins_t * const spins);
 #endif // _di_f_thread_spins_resize_
 
 /**
@@ -4296,7 +4296,7 @@ extern "C" {
  * @see pthread_rwlock_unlock()
  */
 #ifndef _di_f_thread_unlock_
-  extern f_status_t f_thread_unlock(f_thread_lock_t *lock);
+  extern f_status_t f_thread_unlock(f_thread_lock_t * const lock);
 #endif // _di_f_thread_unlock_
 
 #ifdef __cplusplus

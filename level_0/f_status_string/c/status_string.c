@@ -591,7 +591,7 @@ extern "C" {
 #endif // _di_F_status_string_
 
 #ifndef _di_f_status_string_to_
-  f_status_t f_status_string_to(const f_status_t code, f_string_static_t *name) {
+  f_status_t f_status_string_to(const f_status_t code, f_string_static_t * const name) {
     #ifndef _di_level_0_parameter_checking_
       if (!name) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

@@ -44,7 +44,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_structure_adjust_
-  extern f_status_t f_memory_structure_adjust(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
+  extern f_status_t f_memory_structure_adjust(const size_t length_new, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size);
 #endif // _di_f_memory_structure_adjust_
 
 /**
@@ -76,7 +76,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_structure_decimate_by_
-  extern f_status_t f_memory_structure_decimate_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
+  extern f_status_t f_memory_structure_decimate_by(const f_array_length_t amount, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size);
 #endif // _di_f_memory_structure_decimate_by_
 
 /**
@@ -108,7 +108,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_structure_decrease_by_
-  extern f_status_t f_memory_structure_decrease_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
+  extern f_status_t f_memory_structure_decrease_by(const f_array_length_t amount, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size);
 #endif // _di_f_memory_structure_decrease_by_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_structure_increase_
-  extern f_status_t f_memory_structure_increase(const uint16_t step, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
+  extern f_status_t f_memory_structure_increase(const uint16_t step, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size);
 #endif // _di_f_memory_structure_increase_
 
 /**
@@ -176,7 +176,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_structure_increase_by_
-  extern f_status_t f_memory_structure_increase_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
+  extern f_status_t f_memory_structure_increase_by(const f_array_length_t amount, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size);
 #endif // _di_f_memory_structure_increase_by_
 
 /**
@@ -206,7 +206,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_structure_resize_
-  extern f_status_t f_memory_structure_resize(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
+  extern f_status_t f_memory_structure_resize(const size_t length_new, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size);
 #endif // _di_f_memory_structure_resize_
 
 #ifdef __cplusplus

@@ -1235,7 +1235,7 @@ extern "C" {
 
     --data_make->path.stack.used;
 
-    status = f_path_change(argument->string);
+    status = f_path_change(*argument);
 
     if (F_status_is_error(status)) {
       fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", *argument);
@@ -1277,7 +1277,7 @@ extern "C" {
       return status;
     }
 
-    status = f_path_change(arguments.array[0].string);
+    status = f_path_change(arguments.array[0]);
 
     if (F_status_is_error(status)) {
       fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0]);

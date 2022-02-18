@@ -2016,7 +2016,7 @@ extern "C" {
           break;
         }
 
-        if (f_path_is_relative(global.setting->path_control.string, global.setting->path_control.used) == F_true) {
+        if (f_path_is_relative(global.setting->path_control) == F_true) {
 
           // Use the PID file path for creating a relative path to the control socket.
           status = f_file_name_directory(global.setting->path_pid, &cache->action.generic);

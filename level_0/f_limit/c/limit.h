@@ -56,7 +56,7 @@ extern "C" {
  * @see prlimit()
  */
 #ifndef _di_f_limit_process_
-  extern f_status_t f_limit_process(const pid_t id, const int type, const f_limit_value_t *value_next, f_limit_value_t *value_current);
+  extern f_status_t f_limit_process(const pid_t id, const int type, const f_limit_value_t * const value_next, f_limit_value_t * const value_current);
 #endif // _di_f_limit_process_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  * @see f_memory_structure_increase_by()
  */
 #ifndef _di_f_limit_sets_copy_
-  extern f_status_t f_limit_sets_copy(const f_limit_sets_t source, f_limit_sets_t *destination);
+  extern f_status_t f_limit_sets_copy(const f_limit_sets_t source, f_limit_sets_t * const destination);
 #endif // _di_f_limit_sets_copy_
 
 /**
@@ -98,7 +98,7 @@ extern "C" {
  * @see f_memory_structure_increase_by()
  */
 #ifndef _di_f_limit_values_copy_
-  extern f_status_t f_limit_values_copy(const f_limit_values_t source, f_limit_values_t *destination);
+  extern f_status_t f_limit_values_copy(const f_limit_values_t source, f_limit_values_t * const destination);
 #endif // _di_f_limit_values_copy_
 
 #ifdef __cplusplus

@@ -252,7 +252,7 @@ extern "C" {
  * @see socketpair()
  */
 #ifndef _di_f_socket_create_pair_
-  extern f_status_t f_socket_create_pair(const int domain, const int protocol, const int type, int *id_1, int *id_2);
+  extern f_status_t f_socket_create_pair(const int domain, const int protocol, const int type, int * const id_1, int * const id_2);
 #endif // _di_f_socket_create_pair_
 
 /**
@@ -360,7 +360,7 @@ extern "C" {
  * @see getsockopt()
  */
 #ifndef _di_f_socket_option_get_
-  extern f_status_t f_socket_option_get(f_socket_t * const socket, const int level, const int option, void *value, socklen_t *length);
+  extern f_status_t f_socket_option_get(f_socket_t * const socket, const int level, const int option, void * const value, socklen_t * const length);
 #endif // _di_f_socket_option_get_
 
 /**
@@ -393,7 +393,7 @@ extern "C" {
  * @see setsockopt()
  */
 #ifndef _di_f_socket_option_set_
-  extern f_status_t f_socket_option_set(f_socket_t * const socket, const int level, const int option, const void *value, const socklen_t length);
+  extern f_status_t f_socket_option_set(f_socket_t * const socket, const int level, const int option, const void * const value, const socklen_t length);
 #endif // _di_f_socket_option_set_
 
 /**
@@ -438,7 +438,7 @@ extern "C" {
  * @see recvfrom()
  */
 #ifndef _di_f_socket_read_
-  extern f_status_t f_socket_read(f_socket_t * const socket, const int flags, void *buffer, size_t *length);
+  extern f_status_t f_socket_read(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length);
 #endif // _di_f_socket_read_
 
 /**
@@ -480,7 +480,7 @@ extern "C" {
  * @see recvmsg()
  */
 #ifndef _di_f_socket_read_message_
-  extern f_status_t f_socket_read_message(f_socket_t * const socket, const int flags, struct msghdr *header, size_t *length);
+  extern f_status_t f_socket_read_message(f_socket_t * const socket, const int flags, struct msghdr * const header, size_t * const length);
 #endif // _di_f_socket_read_message_
 
 /**
@@ -529,7 +529,7 @@ extern "C" {
  * @see sendto()
  */
 #ifndef _di_f_socket_write_
-  extern f_status_t f_socket_write(f_socket_t * const socket, const int flags, void *buffer, size_t *length);
+  extern f_status_t f_socket_write(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length);
 #endif // _di_f_socket_write_
 
 /**
@@ -575,7 +575,7 @@ extern "C" {
  * @see sendmsg()
  */
 #ifndef _di_f_socket_write_message_
-  extern f_status_t f_socket_write_message(f_socket_t * const socket, const int flags, struct msghdr *header, size_t *length);
+  extern f_status_t f_socket_write_message(f_socket_t * const socket, const int flags, struct msghdr * const header, size_t * const length);
 #endif // _di_f_socket_write_message_
 
 #ifdef __cplusplus

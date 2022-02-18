@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
-  f_status_t private_f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t *location) {
+  f_status_t private_f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t * const location) {
 
     f_array_length_t i = 0;
     f_array_length_t start = 0;

@@ -50,7 +50,7 @@ extern "C" {
   #define F_path_present_working_old_s "OLDPWD"
 
   #define F_path_environment_s_length         4
-  #define F_path_home_wildcard_s_length       1
+  #define F_path_home_wildcard_s_length       F_string_ascii_tilde_s_length
   #define F_path_present_working_s_length     3
   #define F_path_present_working_old_s_length 6
 

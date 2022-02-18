@@ -146,7 +146,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_binary_
-  extern f_status_t f_conversion_character_to_binary(const char character, uint8_t *number);
+  extern f_status_t f_conversion_character_to_binary(const char character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_binary_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_decimal_
-  extern f_status_t f_conversion_character_to_decimal(const char character, uint8_t *number);
+  extern f_status_t f_conversion_character_to_decimal(const char character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_decimal_
 
 /**
@@ -184,7 +184,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_duodecimal_
-  extern f_status_t f_conversion_character_to_duodecimal(const char character, uint8_t *number);
+  extern f_status_t f_conversion_character_to_duodecimal(const char character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_duodecimal_
 
 /**
@@ -203,7 +203,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  extern f_status_t f_conversion_character_to_hexidecimal(const char character, uint8_t *number);
+  extern f_status_t f_conversion_character_to_hexidecimal(const char character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 /**
@@ -222,7 +222,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_octal_
-  extern f_status_t f_conversion_character_to_octal(const char character, uint8_t *number);
+  extern f_status_t f_conversion_character_to_octal(const char character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_octal_
 
 /**
@@ -256,7 +256,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_conversion_number_signed_print_
-  extern f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE *output);
+  extern f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE * const output);
 #endif // _di_f_conversion_number_signed_print_
 
 /**
@@ -284,7 +284,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_conversion_number_signed_to_string_
-  extern f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const f_conversion_data_t data, f_string_dynamic_t *destination);
+  extern f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const f_conversion_data_t data, f_string_dynamic_t * const destination);
 #endif // _di_f_conversion_number_signed_to_string_
 
 /**
@@ -320,7 +320,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_conversion_number_unsigned_print_
-  extern f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE *output);
+  extern f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE * const output);
 #endif // _di_f_conversion_number_unsigned_print_
 
 /**
@@ -348,7 +348,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_conversion_number_unsigned_to_string_
-  extern f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, f_string_dynamic_t *destination);
+  extern f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, f_string_dynamic_t * const destination);
 #endif // _di_f_conversion_number_unsigned_to_string_
 
 #ifdef __cplusplus

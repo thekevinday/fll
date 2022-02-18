@@ -119,7 +119,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_ranges_adjust_
-  extern f_status_t f_string_ranges_adjust(const f_array_length_t length, f_string_ranges_t *ranges);
+  extern f_status_t f_string_ranges_adjust(const f_array_length_t length, f_string_ranges_t * const ranges);
 #endif // _di_f_string_ranges_adjust_
 
 /**
@@ -139,7 +139,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_ranges_append_
-  extern f_status_t f_string_ranges_append(const f_string_ranges_t source, f_string_ranges_t *destination);
+  extern f_status_t f_string_ranges_append(const f_string_ranges_t source, f_string_ranges_t * const destination);
 #endif // _di_f_string_ranges_append_
 
 /**
@@ -162,7 +162,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_ranges_decimate_by_
-  extern f_status_t f_string_ranges_decimate_by(const f_array_length_t amount, f_string_ranges_t *ranges);
+  extern f_status_t f_string_ranges_decimate_by(const f_array_length_t amount, f_string_ranges_t * const ranges);
 #endif // _di_f_string_ranges_decimate_by_
 
 /**
@@ -185,7 +185,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_ranges_decrease_by_
-  extern f_status_t f_string_ranges_decrease_by(const f_array_length_t amount, f_string_ranges_t *ranges);
+  extern f_status_t f_string_ranges_decrease_by(const f_array_length_t amount, f_string_ranges_t * const ranges);
 #endif // _di_f_string_ranges_decrease_by_
 
 /**
@@ -210,7 +210,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_ranges_increase_
-  extern f_status_t f_string_ranges_increase(const uint16_t step, f_string_ranges_t *ranges);
+  extern f_status_t f_string_ranges_increase(const uint16_t step, f_string_ranges_t * const ranges);
 #endif // _di_f_string_ranges_increase_
 
 /**
@@ -235,7 +235,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_ranges_increase_by_
-  extern f_status_t f_string_ranges_increase_by(const f_array_length_t amount, f_string_ranges_t *ranges);
+  extern f_status_t f_string_ranges_increase_by(const f_array_length_t amount, f_string_ranges_t * const ranges);
 #endif // _di_f_string_ranges_increase_by_
 
 /**
@@ -254,7 +254,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_ranges_resize_
-  extern f_status_t f_string_ranges_resize(const f_array_length_t length, f_string_ranges_t *ranges);
+  extern f_status_t f_string_ranges_resize(const f_array_length_t length, f_string_ranges_t * const ranges);
 #endif // _di_f_string_ranges_resize_
 
 /**
@@ -273,7 +273,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_rangess_adjust_
-  extern f_status_t f_string_rangess_adjust(const f_array_length_t length, f_string_rangess_t *rangess);
+  extern f_status_t f_string_rangess_adjust(const f_array_length_t length, f_string_rangess_t * const rangess);
 #endif // _di_f_string_rangess_adjust_
 
 /**
@@ -296,7 +296,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_rangess_decimate_by_
-  extern f_status_t f_string_rangess_decimate_by(const f_array_length_t amount, f_string_rangess_t *rangess);
+  extern f_status_t f_string_rangess_decimate_by(const f_array_length_t amount, f_string_rangess_t * const rangess);
 #endif // _di_f_string_rangess_decimate_by_
 
 /**
@@ -319,7 +319,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_rangess_decrease_by_
-  extern f_status_t f_string_rangess_decrease_by(const f_array_length_t amount, f_string_rangess_t *rangess);
+  extern f_status_t f_string_rangess_decrease_by(const f_array_length_t amount, f_string_rangess_t * const rangess);
 #endif // _di_f_string_rangess_decrease_by_
 
 /**
@@ -344,7 +344,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_rangess_increase_
-  extern f_status_t f_string_rangess_increase(const uint16_t step, f_string_rangess_t *rangess);
+  extern f_status_t f_string_rangess_increase(const uint16_t step, f_string_rangess_t * const rangess);
 #endif // _di_f_string_rangess_increase_
 
 /**
@@ -369,7 +369,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_rangess_increase_by_
-  extern f_status_t f_string_rangess_increase_by(const f_array_length_t amount, f_string_rangess_t *rangess);
+  extern f_status_t f_string_rangess_increase_by(const f_array_length_t amount, f_string_rangess_t * const rangess);
 #endif // _di_f_string_rangess_increase_by_
 
 /**
@@ -388,7 +388,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_rangess_resize_
-  extern f_status_t f_string_rangess_resize(const f_array_length_t length, f_string_rangess_t *rangess);
+  extern f_status_t f_string_rangess_resize(const f_array_length_t length, f_string_rangess_t * const rangess);
 #endif // _di_f_string_rangess_resize_
 
 #ifdef __cplusplus

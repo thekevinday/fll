@@ -157,7 +157,7 @@ extern "C" {
 #endif // _di_f_socket_create_
 
 #ifndef _di_f_socket_create_pair_
-  f_status_t f_socket_create_pair(const int domain, const int protocol, const int type, int *id_1, int *id_2) {
+  f_status_t f_socket_create_pair(const int domain, const int protocol, const int type, int * const id_1, int * const id_2) {
     #ifndef _di_level_0_parameter_checking_
       if (!id_1) return F_status_set_error(F_parameter);
       if (!id_2) return F_status_set_error(F_parameter);
@@ -256,7 +256,7 @@ extern "C" {
 #endif // _di_f_socket_listen_
 
 #ifndef _di_f_socket_option_get_
-  f_status_t f_socket_option_get(f_socket_t * const socket, const int level, const int option, void *value, socklen_t *length) {
+  f_status_t f_socket_option_get(f_socket_t * const socket, const int level, const int option, void * const value, socklen_t * const length) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!value) return F_status_set_error(F_parameter);
@@ -278,7 +278,7 @@ extern "C" {
 #endif // _di_f_socket_option_get_
 
 #ifndef _di_f_socket_option_set_
-  f_status_t f_socket_option_set(f_socket_t * const socket, const int level, const int option, const void *value, const socklen_t length) {
+  f_status_t f_socket_option_set(f_socket_t * const socket, const int level, const int option, const void * const value, const socklen_t length) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!value) return F_status_set_error(F_parameter);
@@ -299,7 +299,7 @@ extern "C" {
 #endif // _di_f_socket_option_set_
 
 #ifndef _di_f_socket_read_
-  f_status_t f_socket_read(f_socket_t * const socket, const int flags, void *buffer, size_t *length) {
+  f_status_t f_socket_read(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!buffer) return F_status_set_error(F_parameter);
@@ -337,7 +337,7 @@ extern "C" {
 #endif // _di_f_socket_read_
 
 #ifndef _di_f_socket_read_message_
-  f_status_t f_socket_read_message(f_socket_t * const socket, const int flags, struct msghdr *header, size_t *length) {
+  f_status_t f_socket_read_message(f_socket_t * const socket, const int flags, struct msghdr * const header, size_t * const length) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!header) return F_status_set_error(F_parameter);
@@ -377,7 +377,7 @@ extern "C" {
 #endif // _di_f_socket_read_message_
 
 #ifndef _di_f_socket_write_
-  f_status_t f_socket_write(f_socket_t * const socket, const int flags, void *buffer, size_t *length) {
+  f_status_t f_socket_write(f_socket_t * const socket, const int flags, void * const buffer, size_t * const length) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!buffer) return F_status_set_error(F_parameter);
@@ -418,7 +418,7 @@ extern "C" {
 #endif // _di_f_socket_write_
 
 #ifndef _di_f_socket_write_message_
-  f_status_t f_socket_write_message(f_socket_t * const socket, const int flags, struct msghdr *header, size_t *length) {
+  f_status_t f_socket_write_message(f_socket_t * const socket, const int flags, struct msghdr * const header, size_t * const length) {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!header) return F_status_set_error(F_parameter);

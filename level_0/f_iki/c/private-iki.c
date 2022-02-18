@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_iki_read_)
-  f_status_t private_f_iki_seek_special(const f_string_static_t buffer, f_string_range_t *range) {
+  f_status_t private_f_iki_seek_special(const f_string_static_t buffer, f_string_range_t * const range) {
 
     f_status_t status = F_none;
     f_array_length_t width_max = 0;

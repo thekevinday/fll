@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_limit_process_
-  f_status_t f_limit_process(const pid_t id, const int type, const f_limit_value_t *value_next, f_limit_value_t *value_current) {
+  f_status_t f_limit_process(const pid_t id, const int type, const f_limit_value_t * const value_next, f_limit_value_t * const value_current) {
     #ifndef _di_level_0_parameter_checking_
       if (!value_next && !value_current) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -24,7 +24,7 @@ extern "C" {
 #endif // _di_f_limit_process_
 
 #ifndef _di_f_limit_sets_copy_
-  f_status_t f_limit_sets_copy(const f_limit_sets_t source, f_limit_sets_t *destination) {
+  f_status_t f_limit_sets_copy(const f_limit_sets_t source, f_limit_sets_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -49,7 +49,7 @@ extern "C" {
 #endif // _di_f_limit_sets_copy_
 
 #ifndef _di_f_limit_values_copy_
-  f_status_t f_limit_values_copy(const f_limit_values_t source, f_limit_values_t *destination) {
+  f_status_t f_limit_values_copy(const f_limit_values_t source, f_limit_values_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

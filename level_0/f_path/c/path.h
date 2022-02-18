@@ -56,7 +56,7 @@ extern "C" {
  * @see chdir()
  */
 #ifndef _di_f_path_change_
-  extern f_status_t f_path_change(const f_string_t path);
+  extern f_status_t f_path_change(const f_string_static_t path);
 #endif // _di_f_path_change_
 
 /**
@@ -115,7 +115,7 @@ extern "C" {
  * @see getcwd()
  */
 #ifndef _di_f_path_current_
-  extern f_status_t f_path_current(const bool real, f_string_dynamic_t *path);
+  extern f_status_t f_path_current(const bool real, f_string_dynamic_t * const path);
 #endif // _di_f_path_current_
 
 /**
@@ -144,7 +144,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _f_path_directory_cleanup_
-  extern f_status_t f_path_directory_cleanup(const f_string_static_t source, f_string_dynamic_t *directory);
+  extern f_status_t f_path_directory_cleanup(const f_string_static_t source, f_string_dynamic_t * const directory);
 #endif // _f_path_directory_cleanup_
 
 /**
@@ -158,8 +158,6 @@ extern "C" {
  *
  * @param path
  *   The string that may or may not represent a path.
- * @param length
- *   Length of the string.
  *
  * @return
  *   F_true if the string is a path string.
@@ -167,7 +165,7 @@ extern "C" {
  *   F_data_not if the string has a length of 0 or the string is NULL.
  */
 #ifndef _di_f_path_is_
-  extern f_status_t f_path_is(const f_string_t path, const f_array_length_t length);
+  extern f_status_t f_path_is(const f_string_static_t path);
 #endif // _di_f_path_is_
 
 /**
@@ -181,8 +179,6 @@ extern "C" {
  *
  * @param path
  *   The string that may or may not represent a relative path.
- * @param length
- *   Length of the path string.
  *
  * @return
  *   F_true if the string is a relative path string.
@@ -190,7 +186,7 @@ extern "C" {
  *   F_data_not if the string has a length of 0 or the string is NULL.
  */
 #ifndef _di_f_path_is_relative_
-  extern f_status_t f_path_is_relative(const f_string_t path, const f_array_length_t length);
+  extern f_status_t f_path_is_relative(const f_string_static_t path);
 #endif // _di_f_path_is_relative_
 
 /**
@@ -205,8 +201,6 @@ extern "C" {
  *
  * @param path
  *   The string that may or may not represent a relative path.
- * @param length
- *   Length of the path string.
  *
  * @return
  *   F_true if the string is a relative path string.
@@ -214,7 +208,7 @@ extern "C" {
  *   F_data_not if the string has a length of 0 or the string is NULL.
  */
 #ifndef _di_f_path_is_relative_current_
-  extern f_status_t f_path_is_relative_current(const f_string_t path, const f_array_length_t length);
+  extern f_status_t f_path_is_relative_current(const f_string_static_t path);
 #endif // _di_f_path_is_relative_current_
 
 /**
@@ -251,7 +245,7 @@ extern "C" {
  * @see realpath()
  */
 #ifndef _di_f_path_real_
-  extern f_status_t f_path_real(const f_string_t path, f_string_dynamic_t *real);
+  extern f_status_t f_path_real(const f_string_static_t path, f_string_dynamic_t * const real);
 #endif // _di_f_path_real_
 
 #ifdef __cplusplus

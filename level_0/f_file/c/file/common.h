@@ -201,26 +201,26 @@ extern "C" {
   #define F_file_flag_truncate_d           O_TRUNC
   #define F_file_flag_write_only_d         O_WRONLY
 
-  // file open flags pre-combined with create.
+  // File open flags pre-combined with create.
   #define F_file_flag_create_ro_d (O_CREAT | O_RDONLY)
   #define F_file_flag_create_wo_d (O_CREAT | O_WRONLY)
   #define F_file_flag_create_rw_d (O_CREAT | O_RDRW)
 
-  // file open flags pre-combined will fail if file exists.
+  // File open flags pre-combined will fail if file exists.
   #define F_file_flag_create_new_ro_d (O_CREAT | O_EXCL | O_RDONLY)
   #define F_file_flag_create_new_wo_d (O_CREAT | O_EXCL | O_WRONLY)
   #define F_file_flag_create_new_rw_d (O_CREAT | O_EXCL | O_RDRW)
 
-  // file open flags pre-combined will truncate any existing files to 0.
+  // File open flags pre-combined will truncate any existing files to 0.
   #define F_file_flag_truncate_ro_d (O_CREAT | O_TRUNC | O_RDONLY)
   #define F_file_flag_truncate_rw_d (O_CREAT | O_TRUNC | O_RDRW)
   #define F_file_flag_truncate_wo_d (O_CREAT | O_TRUNC | O_WRONLY)
 
-  // file open flags pre-combined will truncate any existing files to 0.
+  // File open flags pre-combined will truncate any existing files to 0.
   #define F_file_flag_append_rw_d (O_CREAT | O_APPEND | O_RDRW)
   #define F_file_flag_append_wo_d (O_CREAT | O_APPEND | O_WRONLY)
 
-  // file open flags pre-combined with synchronous io.
+  // File open flags pre-combined with synchronous io.
   #define F_file_flag_sync_ro_d            (O_SYNC | O_RDONLY)
   #define F_file_flag_sync_wo_d            (O_SYNC | O_WRONLY)
   #define F_file_flag_sync_rw_d            (O_SYNC | O_RDRW)
@@ -231,7 +231,7 @@ extern "C" {
   #define F_file_flag_sync_create_new_wo_d (O_SYNC | O_CREAT | O_EXCL | O_WRONLY)
   #define F_file_flag_sync_create_new_rw_d (O_SYNC | O_CREAT | O_EXCL | O_RDRW)
 
-  // file open flags pre-combined with asynchronous io.
+  // File open flags pre-combined with asynchronous io.
   #define F_file_flag_async_ro_d            (O_ASYNC | O_RDONLY)
   #define F_file_flag_async_wo_d            (O_ASYNC | O_WRONLY)
   #define F_file_flag_async_rw_d            (O_ASYNC | O_RDRW)
@@ -242,7 +242,7 @@ extern "C" {
   #define F_file_flag_async_create_new_wo_d (O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
   #define F_file_flag_async_create_new_rw_d (O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
 
-  // file open flags pre-combined with direct io (which works synchronously).
+  // File open flags pre-combined with direct io (which works synchronously).
   #define F_file_flag_direct_ro_d            (O_DIRECT | O_RDONLY)
   #define F_file_flag_direct_wo_d            (O_DIRECT | O_WRONLY)
   #define F_file_flag_direct_rw_d            (O_DIRECT | O_RDRW)
@@ -253,7 +253,7 @@ extern "C" {
   #define F_file_flag_direct_create_new_wo_d (O_DIRECT | O_CREAT | O_EXCL | O_WRONLY)
   #define F_file_flag_direct_create_new_rw_d (O_DIRECT | O_CREAT | O_EXCL | O_RDRW)
 
-  // file open flags pre-combined with large_file.
+  // File open flags pre-combined with large_file.
   #define F_file_flag_large_ro_d                  (O_LARGEFILE | O_RDONLY)
   #define F_file_flag_large_wo_d                  (O_LARGEFILE | O_WRONLY)
   #define F_file_flag_large_rw_d                  (O_LARGEFILE | O_RDRW)

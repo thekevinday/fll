@@ -38,7 +38,7 @@ build_sources_library level_0/console.c level_0/console/common.c
 build_sources_library level_0/control_group.c level_0/control_group/common.c
 build_sources_library level_0/conversion.c level_0/private-conversion.c level_0/conversion/common.c
 build_sources_library level_0/directory.c level_0/private-directory.c
-build_sources_library level_0/environment.c level_0/private-environment.c
+build_sources_library level_0/environment.c
 build_sources_library level_0/execute.c
 build_sources_library level_0/file.c level_0/file/common.c level_0/private-file.c
 build_sources_library level_0/fss.c level_0/private-fss.c level_0/fss/common.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/set.c

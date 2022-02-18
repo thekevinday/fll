@@ -52,7 +52,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_apply_delimit_
-  extern f_status_t fl_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t *buffer);
+  extern f_status_t fl_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t * const buffer);
 #endif // _di_fl_fss_apply_delimit_
 
 /**
@@ -73,7 +73,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_apply_delimit_between_
-  extern f_status_t fl_fss_apply_delimit_between(const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t *buffer);
+  extern f_status_t fl_fss_apply_delimit_between(const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t * const buffer);
 #endif // _di_fl_fss_apply_delimit_between_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_
-  extern f_status_t f_fss_count_lines(const f_string_static_t buffer, const f_array_length_t before, f_array_length_t *line);
+  extern f_status_t f_fss_count_lines(const f_string_static_t buffer, const f_array_length_t before, f_array_length_t * const line);
 #endif // _di_f_fss_count_lines_
 
 /**
@@ -121,7 +121,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_range_
-  extern f_status_t f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_array_length_t before, f_array_length_t *line);
+  extern f_status_t f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_array_length_t before, f_array_length_t * const line);
 #endif // _di_f_fss_count_lines_range_
 
 /**
@@ -216,7 +216,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_seek_to_eol_
-  extern f_status_t f_fss_seek_to_eol(const f_string_dynamic_t buffer, f_string_range_t *range);
+  extern f_status_t f_fss_seek_to_eol(const f_string_dynamic_t buffer, f_string_range_t * const range);
 #endif // _di_f_fss_seek_to_eol_
 
 /**
@@ -240,7 +240,7 @@ extern "C" {
  *   F_utf (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
  */
 #ifndef _di_f_fss_shift_delimit_
-  extern f_status_t f_fss_shift_delimit(const f_string_range_t range, f_string_dynamic_t *buffer);
+  extern f_status_t f_fss_shift_delimit(const f_string_range_t range, f_string_dynamic_t * const buffer);
 #endif // _di_f_fss_shift_delimit_
 
 /**
@@ -260,7 +260,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_skip_past_delimit_
-  extern f_status_t f_fss_skip_past_delimit(const f_string_static_t buffer, f_string_range_t *range);
+  extern f_status_t f_fss_skip_past_delimit(const f_string_static_t buffer, f_string_range_t * const range);
 #endif // _di_f_fss_skip_past_delimit_
 
 /**
@@ -295,7 +295,7 @@ extern "C" {
  * @see f_utf_is_zero_width()
  */
 #ifndef _di_f_fss_skip_past_space_
-  extern f_status_t f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t *range);
+  extern f_status_t f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t * const range);
 #endif // _di_f_fss_skip_past_space_
 
 /**
@@ -328,7 +328,7 @@ extern "C" {
  * @see f_utf_is_zero_width()
  */
 #ifndef _di_f_fss_skip_past_non_graph_
-  extern f_status_t f_fss_skip_past_non_graph(const f_string_static_t buffer, f_string_range_t *range);
+  extern f_status_t f_fss_skip_past_non_graph(const f_string_static_t buffer, f_string_range_t * const range);
 #endif // _di_f_fss_skip_past_non_graph_
 
 #ifdef __cplusplus

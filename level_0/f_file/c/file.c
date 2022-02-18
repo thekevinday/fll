@@ -400,7 +400,7 @@ extern "C" {
 #endif // _di_f_file_flush_
 
 #ifndef _di_f_file_group_read_
-  f_status_t f_file_group_read(const f_string_static_t path, gid_t *group) {
+  f_status_t f_file_group_read(const f_string_static_t path, gid_t * const group) {
     #ifndef _di_level_0_parameter_checking_
       if (!group) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -565,7 +565,7 @@ extern "C" {
 #endif // _di_f_file_link_hard_at_
 
 #ifndef _di_f_file_link_read_
-  f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+  f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
     #ifndef _di_level_0_parameter_checking_
       if (!link_stat.st_size) return F_status_set_error(F_parameter);
       if (!target) return F_status_set_error(F_parameter);
@@ -580,7 +580,7 @@ extern "C" {
 #endif // _di_f_file_link_read_
 
 #ifndef _di_f_file_link_read_at_
-  f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+  f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
     #ifndef _di_level_0_parameter_checking_
       if (!link_stat.st_size) return F_status_set_error(F_parameter);
       if (!target) return F_status_set_error(F_parameter);
@@ -898,7 +898,7 @@ extern "C" {
 #endif // _di_f_file_mode_determine_
 
 #ifndef _di_f_file_mode_from_string_
-  f_status_t f_file_mode_from_string(const f_string_static_t code, const mode_t umask, f_file_mode_t *mode, uint8_t *replace) {
+  f_status_t f_file_mode_from_string(const f_string_static_t code, const mode_t umask, f_file_mode_t * const mode, uint8_t * const replace) {
     #ifndef _di_level_0_parameter_checking_
       if (!mode) return F_status_set_error(F_parameter);
       if (!replace) return F_status_set_error(F_parameter);
@@ -1249,7 +1249,7 @@ extern "C" {
 #endif // _di_f_file_mode_from_string_
 
 #ifndef _di_f_file_mode_read_
-  f_status_t f_file_mode_read(const f_string_static_t path, mode_t *mode) {
+  f_status_t f_file_mode_read(const f_string_static_t path, mode_t * const mode) {
     #ifndef _di_level_0_parameter_checking_
       if (!mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1274,7 +1274,7 @@ extern "C" {
 #endif // _di_f_file_mode_read_
 
 #ifndef _di_f_file_mode_read_at_
-  f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, mode_t *mode) {
+  f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, mode_t * const mode) {
     #ifndef _di_level_0_parameter_checking_
       if (!mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1320,7 +1320,7 @@ extern "C" {
 #endif // _di_f_file_mode_set_at_
 
 #ifndef _di_f_file_mode_to_mode_
-  f_status_t f_file_mode_to_mode(const f_file_mode_t from, mode_t *to) {
+  f_status_t f_file_mode_to_mode(const f_file_mode_t from, mode_t * const to) {
     #ifndef _di_level_0_parameter_checking_
       if (!to) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1382,7 +1382,7 @@ extern "C" {
 #endif // _di_f_file_mode_to_mode_
 
 #ifndef _di_f_file_name_base_
-  f_status_t f_file_name_base(const f_string_static_t path, f_string_dynamic_t *name_base) {
+  f_status_t f_file_name_base(const f_string_static_t path, f_string_dynamic_t * const name_base) {
     #ifndef _di_level_0_parameter_checking_
       if (!name_base) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1414,7 +1414,7 @@ extern "C" {
 #endif // _di_f_file_name_base_
 
 #ifndef _di_f_file_name_directory_
-  f_status_t f_file_name_directory(const f_string_static_t path, f_string_dynamic_t *name_directory) {
+  f_status_t f_file_name_directory(const f_string_static_t path, f_string_dynamic_t * const name_directory) {
     #ifndef _di_level_0_parameter_checking_
       if (!name_directory) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1453,7 +1453,7 @@ extern "C" {
 #endif // _di_f_file_name_directory_
 
 #ifndef _di_f_file_open_
-  f_status_t f_file_open(const f_string_static_t path, const mode_t mode, f_file_t *file) {
+  f_status_t f_file_open(const f_string_static_t path, const mode_t mode, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1467,7 +1467,7 @@ extern "C" {
 #endif // _di_f_file_open_
 
 #ifndef _di_f_file_open_at_
-  f_status_t f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t *file) {
+  f_status_t f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1481,7 +1481,7 @@ extern "C" {
 #endif // _di_f_file_open_at_
 
 #ifndef _di_f_file_owner_read_
-  f_status_t f_file_owner_read(const f_string_static_t path, uid_t *owner) {
+  f_status_t f_file_owner_read(const f_string_static_t path, uid_t * const owner) {
     #ifndef _di_level_0_parameter_checking_
       if (!owner) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1506,7 +1506,7 @@ extern "C" {
 #endif // _di_f_file_owner_read_
 
 #ifndef _di_f_file_read_
-  f_status_t f_file_read(const f_file_t file, f_string_dynamic_t *buffer) {
+  f_status_t f_file_read(const f_file_t file, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1546,7 +1546,7 @@ extern "C" {
 #endif // _di_f_file_read_
 
 #ifndef _di_f_file_read_block_
-  f_status_t f_file_read_block(const f_file_t file, f_string_dynamic_t *buffer) {
+  f_status_t f_file_read_block(const f_file_t file, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1589,7 +1589,7 @@ extern "C" {
 #endif // _di_f_file_read_block_
 
 #ifndef _di_f_file_read_until_
-  f_status_t f_file_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer) {
+  f_status_t f_file_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1793,7 +1793,7 @@ extern "C" {
 #endif // _di_f_file_role_change_at_
 
 #ifndef _di_f_file_seek_
-  f_status_t f_file_seek(const int id, const int whence, const f_array_length_t offset, f_array_length_t *seeked) {
+  f_status_t f_file_seek(const int id, const int whence, const f_array_length_t offset, f_array_length_t * const seeked) {
     #ifndef _di_level_0_parameter_checking_
       if (id <= 0) return F_status_set_error(F_parameter);
       if (whence < 0) return F_status_set_error(F_parameter);
@@ -1816,7 +1816,7 @@ extern "C" {
 #endif // _di_f_file_seek_
 
 #ifndef _di_f_file_size_
-  f_status_t f_file_size(const f_string_static_t path, const bool dereference, f_array_length_t *size) {
+  f_status_t f_file_size(const f_string_static_t path, const bool dereference, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1841,7 +1841,7 @@ extern "C" {
 #endif // _di_f_file_size_
 
 #ifndef _di_f_file_size_at_
-  f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t *size) {
+  f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (at_id <= 0) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
@@ -1867,7 +1867,7 @@ extern "C" {
 #endif // _di_f_file_size_at_
 
 #ifndef _di_f_file_size_by_id_
-  f_status_t f_file_size_by_id(const int id, f_array_length_t *size) {
+  f_status_t f_file_size_by_id(const int id, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (id <= 0) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
@@ -1889,7 +1889,7 @@ extern "C" {
 #endif // _di_f_file_size_by_id_
 
 #ifndef _di_f_file_stat_
-  f_status_t f_file_stat(const f_string_static_t path, const bool dereference, struct stat *stat_file) {
+  f_status_t f_file_stat(const f_string_static_t path, const bool dereference, struct stat * const stat_file) {
     #ifndef _di_level_0_parameter_checking_
       if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1903,7 +1903,7 @@ extern "C" {
 #endif // _di_f_file_stat_
 
 #ifndef _di_f_file_stat_at_
-  f_status_t f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat *stat_file) {
+  f_status_t f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat * const stat_file) {
     #ifndef _di_level_0_parameter_checking_
       if (at_id <= 0) return F_status_set_error(F_parameter);
       if (!stat_file) return F_status_set_error(F_parameter);
@@ -1918,7 +1918,7 @@ extern "C" {
 #endif // _di_f_file_stat_at_
 
 #ifndef _di_f_file_stat_by_id_
-  f_status_t f_file_stat_by_id(const int id, struct stat *stat_file) {
+  f_status_t f_file_stat_by_id(const int id, struct stat * const stat_file) {
     #ifndef _di_level_0_parameter_checking_
       if (id <= 0) return F_status_set_error(F_parameter);
       if (!stat_file) return F_status_set_error(F_parameter);
@@ -1929,7 +1929,7 @@ extern "C" {
 #endif // _di_f_file_stat_by_id_
 
 #ifndef _di_f_file_stream_close_
-  f_status_t f_file_stream_close(const bool complete, f_file_t *file) {
+  f_status_t f_file_stream_close(const bool complete, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1977,7 +1977,7 @@ extern "C" {
 #endif // _di_f_file_stream_close_
 
 #ifndef _di_f_file_stream_descriptor_
-  f_status_t f_file_stream_descriptor(const f_string_static_t mode, f_file_t *file) {
+  f_status_t f_file_stream_descriptor(const f_string_static_t mode, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
       if (file->id == -1) return F_status_set_error(F_parameter);
@@ -2012,7 +2012,7 @@ extern "C" {
 
 
 #ifndef _di_f_file_stream_open_
-  f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t *file) {
+  f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2059,7 +2059,7 @@ extern "C" {
 #endif // _di_f_file_stream_open_
 
 #ifndef _di_f_file_stream_read_
-  f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t *buffer) {
+  f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2109,7 +2109,7 @@ extern "C" {
 #endif // _di_f_file_stream_read_
 
 #ifndef _di_f_file_stream_read_block_
-  f_status_t f_file_stream_read_block(const f_file_t file, f_string_dynamic_t *buffer) {
+  f_status_t f_file_stream_read_block(const f_file_t file, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2150,7 +2150,7 @@ extern "C" {
 #endif // _di_f_file_stream_read_block_
 
 #ifndef _di_f_file_stream_read_until_
-  f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer) {
+  f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2211,7 +2211,7 @@ extern "C" {
 #endif // _di_f_file_stream_read_until_
 
 #ifndef _di_f_file_stream_reopen_
-  f_status_t f_file_stream_reopen(const f_string_static_t path, const f_string_static_t mode, f_file_t *file) {
+  f_status_t f_file_stream_reopen(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2256,7 +2256,7 @@ extern "C" {
 #endif // _di_f_file_stream_reopen_
 
 #ifndef _di_f_file_stream_write_
-  f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
+  f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2301,7 +2301,7 @@ extern "C" {
 #endif // _di_f_file_stream_write_
 
 #ifndef _di_f_file_stream_write_block_
-  f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
+  f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2360,7 +2360,7 @@ extern "C" {
 #endif // _di_f_file_stream_write_block_
 
 #ifndef _di_f_file_stream_write_until_
-  f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (!total) return F_status_set_error(F_parameter);
@@ -2420,7 +2420,7 @@ extern "C" {
 #endif // _di_f_file_stream_write_until_
 
 #ifndef _di_f_file_stream_write_range_
-  f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written) {
+  f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
@@ -2567,7 +2567,7 @@ extern "C" {
 #endif // _di_f_file_touch_at_
 
 #ifndef _di_f_file_type_
-  f_status_t f_file_type(const f_string_static_t path, int *type) {
+  f_status_t f_file_type(const f_string_static_t path, int * const type) {
     #ifndef _di_level_0_parameter_checking_
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2600,7 +2600,7 @@ extern "C" {
 #endif // _di_f_file_type_
 
 #ifndef _di_f_file_type_at_
-  f_status_t f_file_type_at(const int at_id, const f_string_static_t path, const int flag, int *type) {
+  f_status_t f_file_type_at(const int at_id, const f_string_static_t path, const int flag, int * const type) {
     #ifndef _di_level_0_parameter_checking_
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2634,7 +2634,7 @@ extern "C" {
 #endif // _di_f_file_type_at_
 
 #ifndef _di_f_file_umask_get_
-  f_status_t f_file_umask_get(mode_t *mask) {
+  f_status_t f_file_umask_get(mode_t * const mask) {
 
     // Bad design in POSIX where there is no get umask without setting it.
     *mask = umask(0);
@@ -2656,7 +2656,7 @@ extern "C" {
 #endif // _di_f_file_umask_set_
 
 #ifndef _di_f_file_write_
-  f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
+  f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2699,7 +2699,7 @@ extern "C" {
 #endif // _di_f_file_write_
 
 #ifndef _di_f_file_write_block_
-  f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
+  f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2756,7 +2756,7 @@ extern "C" {
 #endif // _di_f_file_write_block_
 
 #ifndef _di_f_file_write_until_
-  f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (!total) return F_status_set_error(F_parameter);
@@ -2814,7 +2814,7 @@ extern "C" {
 #endif // _di_f_file_write_until_
 
 #ifndef _di_f_file_write_range_
-  f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written) {
+  f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);

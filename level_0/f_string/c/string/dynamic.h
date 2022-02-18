@@ -114,7 +114,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_dynamic_adjust_
-  extern f_status_t f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t *dynamic);
+  extern f_status_t f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t * const dynamic);
 #endif // _di_f_string_dynamic_adjust_
 
 /**
@@ -226,7 +226,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_decrease_by_
-  extern f_status_t f_string_dynamic_decrease_by(const f_array_length_t amount, f_string_dynamic_t *dynamic);
+  extern f_status_t f_string_dynamic_decrease_by(const f_array_length_t amount, f_string_dynamic_t * const dynamic);
 #endif // _di_f_string_dynamic_decrease_by_
 
 /**
@@ -252,7 +252,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_increase_
-  extern f_status_t f_string_dynamic_increase(const uint16_t step, f_string_dynamic_t *dynamic);
+  extern f_status_t f_string_dynamic_increase(const uint16_t step, f_string_dynamic_t * const dynamic);
 #endif // _di_f_string_dynamic_increase_
 
 /**
@@ -277,7 +277,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_increase_by_
-  extern f_status_t f_string_dynamic_increase_by(const f_array_length_t amount, f_string_dynamic_t *dynamic);
+  extern f_status_t f_string_dynamic_increase_by(const f_array_length_t amount, f_string_dynamic_t * const dynamic);
 #endif // _di_f_string_dynamic_increase_by_
 
 /**
@@ -828,7 +828,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_resize_
-  extern f_status_t f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t *buffer);
+  extern f_status_t f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t * const buffer);
 #endif // _di_f_string_dynamic_resize_
 
 /**
@@ -852,7 +852,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_
-  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_string_range_t *range);
+  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_string_range_t * const range);
 #endif // _di_f_string_dynamic_seek_line_
 
 /**
@@ -878,7 +878,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_to_
-  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const char seek_to_this, f_string_range_t *range);
+  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const char seek_to_this, f_string_range_t * const range);
 #endif // _di_f_string_dynamic_seek_line_to_
 
 /**
@@ -904,7 +904,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_to_
-  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const char seek_to_this, f_string_range_t *range);
+  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const char seek_to_this, f_string_range_t * const range);
 #endif // _di_f_string_dynamic_seek_to_
 
 /**
@@ -992,7 +992,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamics_append_
-  extern f_status_t f_string_dynamics_append(const f_string_dynamics_t source, f_string_dynamics_t *destination);
+  extern f_status_t f_string_dynamics_append(const f_string_dynamics_t source, f_string_dynamics_t * const destination);
 #endif // _di_f_string_dynamics_append_
 
 /**
@@ -1149,7 +1149,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamicss_append_
-  extern f_status_t f_string_dynamicss_append(const f_string_dynamicss_t source, f_string_dynamicss_t *destination);
+  extern f_status_t f_string_dynamicss_append(const f_string_dynamicss_t source, f_string_dynamicss_t * const destination);
 #endif // _di_f_string_dynamicss_append_
 
 /**

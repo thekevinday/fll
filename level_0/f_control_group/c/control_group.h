@@ -51,7 +51,7 @@ extern "C" {
  * @see f_string_dynamics_append()
  */
 #ifndef _di_f_control_group_copy_
-  extern f_status_t f_control_group_copy(const f_control_group_t source, f_control_group_t *destination);
+  extern f_status_t f_control_group_copy(const f_control_group_t source, f_control_group_t * const destination);
 #endif // _di_f_control_group_copy_
 
 #ifdef __cplusplus

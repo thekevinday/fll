@@ -93,7 +93,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_environment_get_
-  extern f_status_t f_environment_get(const f_string_static_t name, f_string_dynamic_t *value);
+  extern f_status_t f_environment_get(const f_string_static_t name, f_string_dynamic_t * const value);
 #endif // _di_f_environment_get_
 
 /**

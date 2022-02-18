@@ -546,7 +546,7 @@ extern "C" {
  * @see fileno()
  */
 #ifndef _di_f_file_descriptor_
-  extern f_status_t f_file_descriptor(f_file_t *file);
+  extern f_status_t f_file_descriptor(f_file_t * const file);
 #endif // _di_f_file_descriptor_
 
 /**
@@ -657,7 +657,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_group_read_
-  extern f_status_t f_file_group_read(const f_string_static_t path, uid_t *group);
+  extern f_status_t f_file_group_read(const f_string_static_t path, uid_t * const group);
 #endif // _di_f_file_group_read_
 
 /**
@@ -919,7 +919,7 @@ extern "C" {
  * @see readlink()
  */
 #ifndef _di_f_file_link_read_
-  extern f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target);
+  extern f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target);
 #endif // _di_f_file_link_read_
 
 /**
@@ -958,7 +958,7 @@ extern "C" {
  * @see readlinkat()
  */
 #ifndef _di_f_file_link_read_at_
-  extern f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target);
+  extern f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target);
 #endif // _di_f_file_link_read_at_
 
 /**
@@ -988,7 +988,7 @@ extern "C" {
  * @see f_file_mode_from_string()
  */
 #ifndef _di_f_file_mode_determine_
-  extern f_status_t f_file_mode_determine(const mode_t mode_file, const f_file_mode_t mode_change, const uint8_t mode_replace, const bool directory_is, mode_t *mode);
+  extern f_status_t f_file_mode_determine(const mode_t mode_file, const f_file_mode_t mode_change, const uint8_t mode_replace, const bool directory_is, mode_t * const mode);
 #endif // _di_f_file_mode_determine_
 
 /**
@@ -1078,7 +1078,7 @@ extern "C" {
  * @see private_f_file_mode_determine()
  */
 #ifndef _di_f_file_mode_from_string_
-  extern f_status_t f_file_mode_from_string(const f_string_static_t code, const mode_t umask, f_file_mode_t *mode, uint8_t *replace);
+  extern f_status_t f_file_mode_from_string(const f_string_static_t code, const mode_t umask, f_file_mode_t * const mode, uint8_t * const replace);
 #endif // _di_f_file_mode_from_string_
 
 /**
@@ -1105,7 +1105,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_mode_read_
-  extern f_status_t f_file_mode_read(const f_string_static_t path, mode_t *mode);
+  extern f_status_t f_file_mode_read(const f_string_static_t path, mode_t * const mode);
 #endif // _di_f_file_mode_read_
 
 /**
@@ -1134,7 +1134,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_mode_read_at_
-  extern f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, mode_t *mode);
+  extern f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, mode_t * const mode);
 #endif // _di_f_file_mode_read_at_
 
 /**
@@ -1223,7 +1223,7 @@ extern "C" {
  * @see f_file_mode_from_string()
  */
 #ifndef _di_f_file_mode_to_mode_
-  extern f_status_t f_file_mode_to_mode(const f_file_mode_t from, mode_t *to);
+  extern f_status_t f_file_mode_to_mode(const f_file_mode_t from, mode_t * const to);
 #endif // _di_f_file_mode_to_mode_
 
 /**
@@ -1252,7 +1252,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_file_name_base_
-  extern f_status_t f_file_name_base(const f_string_static_t path, f_string_dynamic_t *name_base);
+  extern f_status_t f_file_name_base(const f_string_static_t path, f_string_dynamic_t * const name_base);
 #endif // _di_f_file_name_base_
 
 /**
@@ -1281,7 +1281,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_file_name_directory_
-  extern f_status_t f_file_name_directory(const f_string_static_t path, f_string_dynamic_t *name_directory);
+  extern f_status_t f_file_name_directory(const f_string_static_t path, f_string_dynamic_t * const name_directory);
 #endif // _di_f_file_name_directory_
 
 /**
@@ -1324,7 +1324,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_file_open_
-  extern f_status_t f_file_open(const f_string_static_t path, const mode_t mode, f_file_t *file);
+  extern f_status_t f_file_open(const f_string_static_t path, const mode_t mode, f_file_t * const file);
 #endif // _di_f_file_open_
 
 /**
@@ -1356,7 +1356,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_open_at_
-  extern f_status_t f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t *file);
+  extern f_status_t f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file);
 #endif // _di_f_file_open_at_
 
 /**
@@ -1383,7 +1383,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_owner_read_
-  extern f_status_t f_file_owner_read(const f_string_static_t path, uid_t *owner);
+  extern f_status_t f_file_owner_read(const f_string_static_t path, uid_t * const owner);
 #endif // _di_f_file_owner_read_
 
 /**
@@ -1417,7 +1417,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_file_read_
-  extern f_status_t f_file_read(const f_file_t file, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_read(const f_file_t file, f_string_dynamic_t * const buffer);
 #endif // _di_f_file_read_
 
 /**
@@ -1448,7 +1448,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_block_
-  extern f_status_t f_file_read_block(const f_file_t file, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_read_block(const f_file_t file, f_string_dynamic_t * const buffer);
 #endif // _di_f_file_read_block_
 
 /**
@@ -1485,7 +1485,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_until_
-  extern f_status_t f_file_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t * const buffer);
 #endif // _di_f_file_read_until_
 
 /**
@@ -1754,7 +1754,7 @@ extern "C" {
  * @see lseek
  */
 #ifndef _di_f_file_seek_
-  extern f_status_t f_file_seek(const int id, const int whence, const f_array_length_t offset, f_array_length_t *seeked);
+  extern f_status_t f_file_seek(const int id, const int whence, const f_array_length_t offset, f_array_length_t * const seeked);
 #endif // _di_f_file_seek_
 
 /**
@@ -1783,7 +1783,7 @@ extern "C" {
  * @see f_file_stat()
  */
 #ifndef _di_f_file_size_
-  extern f_status_t f_file_size(const f_string_static_t path, const bool dereference, f_array_length_t *size);
+  extern f_status_t f_file_size(const f_string_static_t path, const bool dereference, f_array_length_t * const size);
 #endif // _di_f_file_size_
 
 /**
@@ -1814,7 +1814,7 @@ extern "C" {
  * @see f_file_stat_at()
  */
 #ifndef _di_f_file_size_at_
-  extern f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t *size);
+  extern f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t * const size);
 #endif // _di_f_file_size_at_
 
 /**
@@ -1840,7 +1840,7 @@ extern "C" {
  * @see f_file_stat_by_id()
  */
 #ifndef _di_f_file_size_by_id_
-  extern f_status_t f_file_size_by_id(const int id, f_array_length_t *size);
+  extern f_status_t f_file_size_by_id(const int id, f_array_length_t * const size);
 #endif // _di_f_file_size_by_id_
 
 /**
@@ -1869,7 +1869,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_stat_
-  extern f_status_t f_file_stat(const f_string_static_t path, const bool dereference, struct stat *stat_file);
+  extern f_status_t f_file_stat(const f_string_static_t path, const bool dereference, struct stat * const stat_file);
 #endif // _di_f_file_stat_
 
 /**
@@ -1899,7 +1899,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_stat_at_
-  extern f_status_t f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat *stat_file);
+  extern f_status_t f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat * const stat_file);
 #endif // _di_f_file_stat_at_
 
 /**
@@ -1925,7 +1925,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_stat_by_id_
-  extern f_status_t f_file_stat_by_id(const int id, struct stat *stat_file);
+  extern f_status_t f_file_stat_by_id(const int id, struct stat * const stat_file);
 #endif // _di_f_file_stat_by_id_
 
 /**
@@ -1965,7 +1965,7 @@ extern "C" {
  * @see fclose()
  */
 #ifndef _di_f_file_stream_close_
-  extern f_status_t f_file_stream_close(const bool complete, f_file_t *file);
+  extern f_status_t f_file_stream_close(const bool complete, f_file_t * const file);
 #endif // _di_f_file_stream_close_
 
 /**
@@ -1997,7 +1997,7 @@ extern "C" {
  * @see fdopen()
  */
 #ifndef _di_f_file_stream_descriptor_
-  extern f_status_t f_file_stream_descriptor(const f_string_static_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_descriptor(const f_string_static_t mode, f_file_t * const file);
 #endif // _di_f_file_stream_descriptor_
 
 /**
@@ -2050,7 +2050,7 @@ extern "C" {
  * @see fopen()
  */
 #ifndef _di_f_file_stream_open_
-  extern f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file);
 #endif // _di_f_file_stream_open_
 
 /**
@@ -2083,7 +2083,7 @@ extern "C" {
  * @see funlockfile()
  */
 #ifndef _di_f_file_stream_read_
-  extern f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t * const buffer);
 #endif // _di_f_file_stream_read_
 
 /**
@@ -2115,7 +2115,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_block_
-  extern f_status_t f_file_stream_read_block(const f_file_t file, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read_block(const f_file_t file, f_string_dynamic_t * const buffer);
 #endif // _di_f_file_stream_read_block_
 
 /**
@@ -2159,7 +2159,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_file_stream_read_until_
-  extern f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t * const buffer);
 #endif // _di_f_file_stream_read_until_
 
 /**
@@ -2206,7 +2206,7 @@ extern "C" {
  * @see freopen()
  */
 #ifndef _di_f_file_stream_reopen_
-  extern f_status_t f_file_stream_reopen(const f_string_static_t path, const f_string_static_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_reopen(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file);
 #endif // _di_f_file_stream_reopen_
 
 /**
@@ -2238,7 +2238,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_
-  extern f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written);
+  extern f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written);
 #endif // _di_f_file_stream_write_
 
 /**
@@ -2272,7 +2272,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_block_
-  extern f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written);
+  extern f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written);
 #endif // _di_f_file_stream_write_block_
 
 /**
@@ -2307,7 +2307,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_until_
-  extern f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written);
+  extern f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written);
 #endif // _di_f_file_stream_write_until_
 
 /**
@@ -2341,7 +2341,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_range_
-  extern f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written);
+  extern f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written);
 #endif // _di_f_file_stream_write_range_
 
 
@@ -2456,7 +2456,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_type_
-  extern f_status_t f_file_type(const f_string_static_t path, int *type);
+  extern f_status_t f_file_type(const f_string_static_t path, int * const type);
 #endif //  _di_f_file_type_
 
 /**
@@ -2486,7 +2486,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_type_at_
-  extern f_status_t f_file_type_at(const int at_id, const f_string_static_t path, const int flag, int *type);
+  extern f_status_t f_file_type_at(const int at_id, const f_string_static_t path, const int flag, int * const type);
 #endif // _di_f_file_type_at_
 
 /**
@@ -2503,7 +2503,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_f_file_umask_get_
-  extern f_status_t f_file_umask_get(mode_t *mask);
+  extern f_status_t f_file_umask_get(mode_t * const mask);
 #endif // _di_f_file_umask_get_
 
 /**
@@ -2548,7 +2548,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_
-  extern f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written);
+  extern f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written);
 #endif // _di_f_file_write_
 
 /**
@@ -2581,7 +2581,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_block_
-  extern f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written);
+  extern f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written);
 #endif // _di_f_file_write_block_
 
 /**
@@ -2615,7 +2615,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_until_
-  extern f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written);
+  extern f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written);
 #endif // _di_f_file_write_until_
 
 /**
@@ -2648,7 +2648,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_range_
-  extern f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written);
+  extern f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written);
 #endif // _di_f_file_write_range_
 
 #ifdef __cplusplus

@@ -19,7 +19,7 @@ extern "C" {
 
 #ifdef _di_path_tree_s_
 
-  // KFS Root Level
+  // KFS Root Level.
   const f_string_static_t f_path_tree_devices_s = macro_f_string_static_t_initialize(F_path_tree_devices_s, 0, F_path_tree_devices_s_length);
   const f_string_static_t f_path_tree_external_s = macro_f_string_static_t_initialize(F_path_tree_external_s, 0, F_path_tree_external_s_length);
   const f_string_static_t f_path_tree_libraries_s = macro_f_string_static_t_initialize(F_path_tree_libraries_s, 0, F_path_tree_libraries_s_length);
@@ -29,13 +29,13 @@ extern "C" {
   const f_string_static_t f_path_tree_run_s = macro_f_string_static_t_initialize(F_path_tree_run_s, 0, F_path_tree_run_s_length);
   const f_string_static_t f_path_tree_binary_s = macro_f_string_static_t_initialize(F_path_tree_binary_s, 0, F_path_tree_binary_s_length);
 
-  // FHS Root Level
+  // FHS Root Level.
   const f_string_static_t f_path_tree_boot_s = macro_f_string_static_t_initialize(F_path_tree_boot_s, 0, F_path_tree_boot_s_length);
   const f_string_static_t f_path_tree_hardware_s = macro_f_string_static_t_initialize(F_path_tree_hardware_s, 0, F_path_tree_hardware_s_length);
   const f_string_static_t f_path_tree_processes_s = macro_f_string_static_t_initialize(F_path_tree_processes_s, 0, F_path_tree_processes_s_length);
   const f_string_static_t f_path_tree_system_s = macro_f_string_static_t_initialize(F_path_tree_system_s, 0, F_path_tree_system_s_length);
 
-  // Program Level
+  // Program Level.
   const f_string_static_t f_path_tree_programs_public_s = macro_f_string_static_t_initialize(F_path_tree_programs_public_s, 0, F_path_tree_programs_public_s_length);
   const f_string_static_t f_path_tree_programs_system_s = macro_f_string_static_t_initialize(F_path_tree_programs_system_s, 0, F_path_tree_programs_system_s_length);
   const f_string_static_t f_path_tree_programs_remote_s = macro_f_string_static_t_initialize(F_path_tree_programs_remote_s, 0, F_path_tree_programs_remote_s_length);
@@ -46,7 +46,7 @@ extern "C" {
   const f_string_static_t f_path_tree_programs_boot_s = macro_f_string_static_t_initialize(F_path_tree_programs_boot_s, 0, F_path_tree_programs_boot_s_length);
   const f_string_static_t f_path_tree_programs_sboot_s = macro_f_string_static_t_initialize(F_path_tree_programs_sboot_s, 0, F_path_tree_programs_sboot_s_length);
 
-  // Library Level
+  // Library Level.
   const f_string_static_t f_path_tree_libraries_public_s = macro_f_string_static_t_initialize(F_path_tree_libraries_public_s, 0, F_path_tree_libraries_public_s_length);
   const f_string_static_t f_path_tree_libraries_system_s = macro_f_string_static_t_initialize(F_path_tree_libraries_system_s, 0, F_path_tree_libraries_system_s_length);
   const f_string_static_t f_path_tree_libraries_remote_s = macro_f_string_static_t_initialize(F_path_tree_libraries_remote_s, 0, F_path_tree_libraries_remote_s_length);
@@ -55,25 +55,25 @@ extern "C" {
   const f_string_static_t f_path_tree_libraries_users_s = macro_f_string_static_t_initialize(F_path_tree_libraries_users_s, 0, F_path_tree_libraries_users_s_length);
   const f_string_static_t f_path_tree_libraries_boot_s = macro_f_string_static_t_initialize(F_path_tree_libraries_boot_s, 0, F_path_tree_libraries_boot_s_length);
 
-  // Home Level
+  // Home Level.
   const f_string_static_t f_path_tree_home_services_s = macro_f_string_static_t_initialize(F_path_tree_home_services_s, 0, F_path_tree_home_services_s_length);
   const f_string_static_t f_path_tree_home_share_s = macro_f_string_static_t_initialize(F_path_tree_home_share_s, 0, F_path_tree_home_share_s_length);
   const f_string_static_t f_path_tree_home_users_s = macro_f_string_static_t_initialize(F_path_tree_home_users_s, 0, F_path_tree_home_users_s_length);
   const f_string_static_t f_path_tree_home_websites_s = macro_f_string_static_t_initialize(F_path_tree_home_websites_s, 0, F_path_tree_home_websites_s_length);
 
-  // System Level
+  // System Level.
   const f_string_static_t f_path_tree_system_logs_s = macro_f_string_static_t_initialize(F_path_tree_system_logs_s, 0, F_path_tree_system_logs_s_length);
   const f_string_static_t f_path_tree_system_settings_s = macro_f_string_static_t_initialize(F_path_tree_system_settings_s, 0, F_path_tree_system_settings_s_length);
   const f_string_static_t f_path_tree_system_data_s = macro_f_string_static_t_initialize(F_path_tree_system_data_s, 0, F_path_tree_system_data_s_length);
   const f_string_static_t f_path_tree_system_variables_s = macro_f_string_static_t_initialize(F_path_tree_system_variables_s, 0, F_path_tree_system_variables_s_length);
 
-  // Temporary Level
+  // Temporary Level.
   const f_string_static_t f_path_tree_temporary_public_s = macro_f_string_static_t_initialize(F_path_tree_temporary_public_s, 0, F_path_tree_temporary_public_s_length);
   const f_string_static_t f_path_tree_temporary_services_s = macro_f_string_static_t_initialize(F_path_tree_temporary_services_s, 0, F_path_tree_temporary_services_s_length);
   const f_string_static_t f_path_tree_temporary_users_s = macro_f_string_static_t_initialize(F_path_tree_temporary_users_s, 0, F_path_tree_temporary_users_s_length);
   const f_string_static_t f_path_tree_temporary_variables_s = macro_f_string_static_t_initialize(F_path_tree_temporary_variables_s, 0, F_path_tree_temporary_variables_s_length);
 
-  // Private User Directories
+  // Private User Directories.
   const f_string_static_t f_path_user_downloads_s = macro_f_string_static_t_initialize(F_path_user_downloads_s, 0, F_path_user_downloads_s_length);
   const f_string_static_t f_path_user_desktop_s = macro_f_string_static_t_initialize(F_path_user_desktop_s, 0, F_path_user_desktop_s_length);
   const f_string_static_t f_path_user_private_s = macro_f_string_static_t_initialize(F_path_user_private_s, 0, F_path_user_private_s_length);

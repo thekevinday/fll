@@ -1,5 +1,4 @@
 #include "environment.h"
-#include "private-environment.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,7 +31,7 @@ extern "C" {
 #endif // _di_f_environment_exists_
 
 #ifndef _di_f_environment_get_
-  f_status_t f_environment_get(const f_string_static_t name, f_string_dynamic_t *value) {
+  f_status_t f_environment_get(const f_string_static_t name, f_string_dynamic_t * const value) {
     #ifndef _di_level_0_parameter_checking_
       if (!value) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

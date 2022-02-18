@@ -402,7 +402,7 @@ extern "C" {
 #endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+  f_status_t private_f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
 
     // create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
@@ -439,7 +439,7 @@ extern "C" {
 #endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+  f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
 
     // Create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
@@ -522,7 +522,7 @@ extern "C" {
 #endif // !defined(_di_f_file_mode_set_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_open(const f_string_static_t path, const mode_t mode, f_file_t *file) {
+  f_status_t private_f_file_open(const f_string_static_t path, const mode_t mode, f_file_t * const file) {
 
     if (!mode) {
       file->id = open(path.string, file->flag);
@@ -560,7 +560,7 @@ extern "C" {
 #endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t *file) {
+  f_status_t private_f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file) {
 
     if (!mode) {
       file->id = openat(at_id, path.string, file->flag);
@@ -697,7 +697,7 @@ extern "C" {
 #endif // !defined(_di_f_file_role_change_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_stat(const f_string_static_t path, const bool dereference, struct stat *file_stat) {
+  f_status_t private_f_file_stat(const f_string_static_t path, const bool dereference, struct stat * const file_stat) {
 
     if ((dereference ? stat(path.string, file_stat) : lstat(path.string, file_stat)) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
@@ -717,7 +717,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat *file_stat) {
+  f_status_t private_f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat * const file_stat) {
 
     if (fstatat(at_id, path.string, file_stat, flag) < 0) {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
@@ -739,7 +739,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
-  f_status_t private_f_file_stat_by_id(const int id, struct stat *file_stat) {
+  f_status_t private_f_file_stat_by_id(const int id, struct stat * const file_stat) {
 
     const int result = fstat(id, file_stat);
 
@@ -790,7 +790,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
-  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
 
     *written = 0;
 
@@ -840,7 +840,7 @@ extern "C" {
 #endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
 
 #if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
-  f_status_t private_f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t private_f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
 
     *written = 0;
 

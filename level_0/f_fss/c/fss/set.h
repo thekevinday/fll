@@ -166,7 +166,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_adjust_
-  extern f_status_t f_fss_set_adjust(const f_array_length_t length, f_fss_set_t *set);
+  extern f_status_t f_fss_set_adjust(const f_array_length_t length, f_fss_set_t * const set);
 #endif // _di_f_fss_set_adjust_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_decimate_by_
-  extern f_status_t f_fss_set_decimate_by(const f_array_length_t amount, f_fss_set_t *set);
+  extern f_status_t f_fss_set_decimate_by(const f_array_length_t amount, f_fss_set_t * const set);
 #endif // _di_f_fss_set_decimate_by_
 
 /**
@@ -210,7 +210,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_decrease_by_
-  extern f_status_t f_fss_set_decrease_by(const f_array_length_t amount, f_fss_set_t *set);
+  extern f_status_t f_fss_set_decrease_by(const f_array_length_t amount, f_fss_set_t * const set);
 #endif // _di_f_fss_set_decrease_by_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_increase_
-  extern f_status_t f_fss_set_increase(const uint16_t step, f_fss_set_t *set);
+  extern f_status_t f_fss_set_increase(const uint16_t step, f_fss_set_t * const set);
 #endif // _di_f_fss_set_increase_
 
 /**
@@ -258,7 +258,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_set_increase_by_
-  extern f_status_t f_fss_set_increase_by(const f_array_length_t amount, f_fss_set_t *set);
+  extern f_status_t f_fss_set_increase_by(const f_array_length_t amount, f_fss_set_t * const set);
 #endif // _di_f_fss_set_increase_by_
 
 /**
@@ -276,7 +276,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_resize_
-  extern f_status_t f_fss_set_resize(const f_array_length_t length, f_fss_set_t *set);
+  extern f_status_t f_fss_set_resize(const f_array_length_t length, f_fss_set_t * const set);
 #endif // _di_f_fss_set_resize_
 
 /**
@@ -294,7 +294,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_adjust_
-  extern f_status_t f_fss_set_quote_adjust(const f_array_length_t length, f_fss_set_quote_t *set_quote);
+  extern f_status_t f_fss_set_quote_adjust(const f_array_length_t length, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_adjust_
 
 /**
@@ -316,7 +316,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_decimate_by_
-  extern f_status_t f_fss_set_quote_decimate_by(const f_array_length_t amount, f_fss_set_quote_t *set_quote);
+  extern f_status_t f_fss_set_quote_decimate_by(const f_array_length_t amount, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_decimate_by_
 
 /**
@@ -338,7 +338,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_decrease_by_
-  extern f_status_t f_fss_set_quote_decrease_by(const f_array_length_t amount, f_fss_set_quote_t *set_quote);
+  extern f_status_t f_fss_set_quote_decrease_by(const f_array_length_t amount, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_decrease_by_
 
 /**
@@ -362,7 +362,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_increase_
-  extern f_status_t f_fss_set_quote_increase(const uint16_t step, f_fss_set_quote_t *set_quote);
+  extern f_status_t f_fss_set_quote_increase(const uint16_t step, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_increase_
 
 /**
@@ -386,7 +386,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_set_quote_increase_by_
-  extern f_status_t f_fss_set_quote_increase_by(const f_array_length_t amount, f_fss_set_quote_t *set_quote);
+  extern f_status_t f_fss_set_quote_increase_by(const f_array_length_t amount, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_increase_by_
 
 /**
@@ -404,7 +404,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_resize_
-  extern f_status_t f_fss_set_quote_resize(const f_array_length_t length, f_fss_set_quote_t *set_quote);
+  extern f_status_t f_fss_set_quote_resize(const f_array_length_t length, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_resize_
 
 /**
@@ -422,7 +422,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_adjust_
-  extern f_status_t f_fss_set_quotes_adjust(const f_array_length_t length, f_fss_set_quotes_t *set_quotes);
+  extern f_status_t f_fss_set_quotes_adjust(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_adjust_
 
 /**
@@ -444,7 +444,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_decimate_by_
-  extern f_status_t f_fss_set_quotes_decimate_by(const f_array_length_t amount, f_fss_set_quotes_t *set_quotes);
+  extern f_status_t f_fss_set_quotes_decimate_by(const f_array_length_t amount, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_decimate_by_
 
 /**
@@ -466,7 +466,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_decrease_by_
-  extern f_status_t f_fss_set_quotes_decrease_by(const f_array_length_t amount, f_fss_set_quotes_t *set_quotes);
+  extern f_status_t f_fss_set_quotes_decrease_by(const f_array_length_t amount, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_decrease_by_
 
 /**
@@ -490,7 +490,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_increase_
-  extern f_status_t f_fss_set_quotes_increase(const uint16_t step, f_fss_set_quotes_t *set_quotes);
+  extern f_status_t f_fss_set_quotes_increase(const uint16_t step, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_increase_
 
 /**
@@ -514,7 +514,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_set_quotes_increase_by_
-  extern f_status_t f_fss_set_quotes_increase_by(const f_array_length_t amount, f_fss_set_quotes_t *set_quotes);
+  extern f_status_t f_fss_set_quotes_increase_by(const f_array_length_t amount, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_increase_by_
 
 /**
@@ -532,7 +532,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_resize_
-  extern f_status_t f_fss_set_quotes_resize(const f_array_length_t length, f_fss_set_quotes_t *set_quotes);
+  extern f_status_t f_fss_set_quotes_resize(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_resize_
 
 /**
@@ -550,7 +550,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_adjust_
-  extern f_status_t f_fss_sets_adjust(const f_array_length_t length, f_fss_sets_t *sets);
+  extern f_status_t f_fss_sets_adjust(const f_array_length_t length, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_adjust_
 
 /**
@@ -572,7 +572,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_decimate_by_
-  extern f_status_t f_fss_sets_decimate_by(const f_array_length_t amount, f_fss_sets_t *sets);
+  extern f_status_t f_fss_sets_decimate_by(const f_array_length_t amount, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_decimate_by_
 
 /**
@@ -594,7 +594,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_decrease_by_
-  extern f_status_t f_fss_sets_decrease_by(const f_array_length_t amount, f_fss_sets_t *sets);
+  extern f_status_t f_fss_sets_decrease_by(const f_array_length_t amount, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_decrease_by_
 
 /**
@@ -618,7 +618,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_increase_
-  extern f_status_t f_fss_sets_increase(const uint16_t step, f_fss_sets_t *sets);
+  extern f_status_t f_fss_sets_increase(const uint16_t step, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_increase_
 
 /**
@@ -642,7 +642,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_fss_sets_increase_by_
-  extern f_status_t f_fss_sets_increase_by(const f_array_length_t amount, f_fss_sets_t *sets);
+  extern f_status_t f_fss_sets_increase_by(const f_array_length_t amount, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_increase_by_
 
 /**
@@ -660,7 +660,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_resize_
-  extern f_status_t f_fss_sets_resize(const f_array_length_t length, f_fss_sets_t *sets);
+  extern f_status_t f_fss_sets_resize(const f_array_length_t length, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_resize_
 
 #ifdef __cplusplus

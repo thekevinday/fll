@@ -256,7 +256,7 @@ extern "C" {
     f_print_format_type_string_static_e,
     f_print_format_type_string_static_raw_e,
     f_print_format_type_string_static_safe_e,
-    f_print_format_type_string_static_safe_raw_e, // @todo not yet implemented.
+    f_print_format_type_string_static_safe_raw_e,
     f_print_format_type_unsigned_8_e,
     f_print_format_type_unsigned_16_e,
     f_print_format_type_unsigned_32_e,

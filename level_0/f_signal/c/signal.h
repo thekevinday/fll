@@ -50,7 +50,7 @@ extern "C" {
  * @see close()
  */
 #ifndef _di_f_signal_close_
-  extern f_status_t f_signal_close(f_signal_t *signal);
+  extern f_status_t f_signal_close(f_signal_t * const signal);
 #endif // _di_f_signal_close_
 
 /**
@@ -76,7 +76,7 @@ extern "C" {
  * @see signalfd()
  */
 #ifndef _di_f_signal_open_
-  extern f_status_t f_signal_open(f_signal_t *signal);
+  extern f_status_t f_signal_open(f_signal_t * const signal);
 #endif // _di_f_signal_open_
 
 /**
@@ -110,7 +110,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_signal_read_
-  extern f_status_t f_signal_read(const f_signal_t signal, const int timeout, struct signalfd_siginfo *information);
+  extern f_status_t f_signal_read(const f_signal_t signal, const int timeout, struct signalfd_siginfo * const information);
 #endif // _di_f_signal_read_
 
 /**
@@ -155,7 +155,7 @@ extern "C" {
  * @see sigaddset()
  */
 #ifndef _di_f_signal_set_add_
-  extern f_status_t f_signal_set_add(const int signal, sigset_t *set);
+  extern f_status_t f_signal_set_add(const int signal, sigset_t * const set);
 #endif // _di_f_signal_set_add_
 
 /**
@@ -176,7 +176,7 @@ extern "C" {
  * @see sigdelset()
  */
 #ifndef _di_f_signal_set_delete_
-  extern f_status_t f_signal_set_delete(const int signal, sigset_t *set);
+  extern f_status_t f_signal_set_delete(const int signal, sigset_t * const set);
 #endif // _di_f_signal_set_delete_
 
 /**
@@ -195,7 +195,7 @@ extern "C" {
  * @see sigemptyset()
  */
 #ifndef _di_f_signal_set_empty_
-  extern f_status_t f_signal_set_empty(sigset_t *set);
+  extern f_status_t f_signal_set_empty(sigset_t * const set);
 #endif // _di_f_signal_set_empty_
 
 /**
@@ -214,7 +214,7 @@ extern "C" {
  * @see sigfillset()
  */
 #ifndef _di_f_signal_set_fill_
-  extern f_status_t f_signal_set_fill(sigset_t *set);
+  extern f_status_t f_signal_set_fill(sigset_t * const set);
 #endif // _di_f_signal_set_fill_
 
 /**
@@ -242,7 +242,7 @@ extern "C" {
  * @see sigprocmask()
  */
 #ifndef _di_f_signal_mask_
-  extern f_status_t f_signal_mask(const int how, const sigset_t *next, sigset_t *current);
+  extern f_status_t f_signal_mask(const int how, const sigset_t * const next, sigset_t * const current);
 #endif // _di_f_signal_mask_
 
 /**
@@ -290,7 +290,7 @@ extern "C" {
  * @see sigismember()
  */
 #ifndef _di_f_signal_set_has_
-  extern f_status_t f_signal_set_has(const int signal, const sigset_t *set);
+  extern f_status_t f_signal_set_has(const int signal, const sigset_t * const set);
 #endif // _di_f_signal_set_has_
 
 /**
@@ -313,7 +313,7 @@ extern "C" {
  * @see sigwaitinfo()
  */
 #ifndef _di_f_signal_wait_
-  extern f_status_t f_signal_wait(const sigset_t *set, siginfo_t *information);
+  extern f_status_t f_signal_wait(const sigset_t * const set, siginfo_t * const information);
 #endif // _di_f_signal_wait_
 
 /**
@@ -339,7 +339,7 @@ extern "C" {
  * @see sigtimedwait()
  */
 #ifndef _di_f_signal_wait_until_
-  extern f_status_t f_signal_wait_until(const sigset_t *set, const struct timespec *timeout, siginfo_t *information);
+  extern f_status_t f_signal_wait_until(const sigset_t *set, const struct timespec *timeout, siginfo_t * const information);
 #endif // _di_f_signal_wait_until_
 
 #ifdef __cplusplus

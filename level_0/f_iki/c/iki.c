@@ -52,7 +52,7 @@ extern "C" {
 #endif // _di_f_iki_object_partial_is_
 
 #ifndef _di_f_iki_read_
-  f_status_t f_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_iki_delimits_t *delimits) {
+  f_status_t f_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_variable_t * const variable, f_iki_vocabulary_t * const vocabulary, f_iki_content_t * const content, f_iki_delimits_t * const delimits) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);

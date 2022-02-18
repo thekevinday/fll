@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_apply_delimit_
-  f_status_t fl_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t *buffer) {
+  f_status_t fl_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -23,7 +23,7 @@ extern "C" {
 #endif // _di_fl_fss_apply_delimit_
 
 #ifndef _di_fl_fss_apply_delimit_between_
-  f_status_t fl_fss_apply_delimit_between(const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t *buffer) {
+  f_status_t fl_fss_apply_delimit_between(const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -40,7 +40,7 @@ extern "C" {
 #endif // _di_fl_fss_apply_delimit_between_
 
 #ifndef _di_f_fss_count_lines_
-  f_status_t f_fss_count_lines(const f_string_static_t buffer, const f_array_length_t before, f_array_length_t *line) {
+  f_status_t f_fss_count_lines(const f_string_static_t buffer, const f_array_length_t before, f_array_length_t * const line) {
     #ifndef _di_level_0_parameter_checking_
       if (!line) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -65,7 +65,7 @@ extern "C" {
 #endif // _di_f_fss_count_lines_
 
 #ifndef _di_f_fss_count_lines_range_
-  f_status_t f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_array_length_t before, f_array_length_t *line) {
+  f_status_t f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_array_length_t before, f_array_length_t * const line) {
     #ifndef _di_level_0_parameter_checking_
       if (!line) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -157,7 +157,7 @@ extern "C" {
 #endif // _di_f_fss_is_zero_width_
 
 #ifndef _di_f_fss_seek_to_eol_
-  f_status_t f_fss_seek_to_eol(const f_string_dynamic_t buffer, f_string_range_t *range) {
+  f_status_t f_fss_seek_to_eol(const f_string_dynamic_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -174,7 +174,7 @@ extern "C" {
 #endif // _di_f_fss_seek_to_eol_
 
 #ifndef _di_f_fss_shift_delimit_
-  f_status_t f_fss_shift_delimit(const f_string_range_t range, f_string_dynamic_t *buffer) {
+  f_status_t f_fss_shift_delimit(const f_string_range_t range, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -243,7 +243,7 @@ extern "C" {
 #endif // _di_f_fss_shift_delimit_
 
 #ifndef _di_f_fss_skip_past_delimit_
-  f_status_t f_fss_skip_past_delimit(const f_string_static_t buffer, f_string_range_t *range) {
+  f_status_t f_fss_skip_past_delimit(const f_string_static_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -260,7 +260,7 @@ extern "C" {
 #endif // _di_f_fss_skip_past_delimit_
 
 #ifndef _di_f_fss_skip_past_space_
-  f_status_t f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t *range) {
+  f_status_t f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -356,7 +356,7 @@ extern "C" {
 #endif // _di_f_fss_skip_past_space_
 
 #ifndef _di_f_fss_skip_past_non_graph_
-  f_status_t f_fss_skip_past_non_graph(const f_string_static_t buffer, f_string_range_t *range) {
+  f_status_t f_fss_skip_past_non_graph(const f_string_static_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

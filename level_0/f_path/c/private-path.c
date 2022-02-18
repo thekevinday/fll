@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
-  f_status_t private_f_path_real(const f_string_t path, f_string_dynamic_t *real) {
+  f_status_t private_f_path_real(const f_string_t path, f_string_dynamic_t * const real) {
 
     char buffer[F_path_length_max_d];
 
@@ -25,10 +25,10 @@ extern "C" {
 
     const f_array_length_t length = strnlen(buffer, F_path_length_max_d);
 
-    if (length + 1 > real->size) {
-      f_status_t status = F_none;
+    {
+      real->used = 0;
 
-      macro_f_string_dynamic_t_resize(status, (*real), length + 1);
+      const f_status_t status = f_string_dynamic_increase_by(length + 1, real);
       if (F_status_is_error(status)) return status;
     }
 

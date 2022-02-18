@@ -86,7 +86,7 @@ extern "C" {
  * @see f_utf_is_word_dash_plus()
  */
 #if !defined(_di_f_iki_read_)
-  extern f_status_t private_f_iki_seek_special(const f_string_static_t buffer, f_string_range_t *range) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_seek_special(const f_string_static_t buffer, f_string_range_t * const range) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_read_)
 
 #ifdef __cplusplus

@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_control_group_copy_
-  f_status_t f_control_group_copy(const f_control_group_t source, f_control_group_t *destination) {
+  f_status_t f_control_group_copy(const f_control_group_t source, f_control_group_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

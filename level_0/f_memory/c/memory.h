@@ -55,7 +55,7 @@ extern "C" {
  * @see realloc()
  */
 #ifndef _di_f_memory_adjust_
-  extern f_status_t f_memory_adjust(const size_t old_length, const size_t new_length, const size_t size, void **pointer);
+  extern f_status_t f_memory_adjust(const size_t old_length, const size_t new_length, const size_t size, void ** const pointer);
 #endif // _di_f_memory_adjust_
 
 /**
@@ -83,7 +83,7 @@ extern "C" {
  * @see free()
  */
 #ifndef _di_f_memory_delete_
-  extern f_status_t f_memory_delete(const size_t length, const size_t size, void **pointer);
+  extern f_status_t f_memory_delete(const size_t length, const size_t size, void ** const pointer);
 #endif // _di_f_memory_delete_
 
 /**
@@ -110,7 +110,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_destroy_
-  extern f_status_t f_memory_destroy(const size_t length, const size_t size, void **pointer);
+  extern f_status_t f_memory_destroy(const size_t length, const size_t size, void ** const pointer);
 #endif // _di_f_memory_destroy_
 
 /**
@@ -136,7 +136,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_new_
-  extern f_status_t f_memory_new(const size_t length, const size_t size, void **pointer);
+  extern f_status_t f_memory_new(const size_t length, const size_t size, void ** const pointer);
 #endif // _di_f_memory_new_
 
 /**
@@ -164,7 +164,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_new_aligned_
-  extern f_status_t f_memory_new_aligned(const size_t length, const size_t alignment, void **pointer);
+  extern f_status_t f_memory_new_aligned(const size_t length, const size_t alignment, void ** const pointer);
 #endif // _di_f_memory_new_aligned_
 
 /**
@@ -195,7 +195,7 @@ extern "C" {
  * @see realloc()
  */
 #ifndef _di_f_memory_resize_
-  extern f_status_t f_memory_resize(const size_t old_length, const size_t new_length, const size_t size, void **pointer);
+  extern f_status_t f_memory_resize(const size_t old_length, const size_t new_length, const size_t size, void ** const pointer);
 #endif // _di_f_memory_resize_
 
 #ifdef __cplusplus

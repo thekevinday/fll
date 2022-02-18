@@ -62,7 +62,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_
-  extern f_status_t f_print(const f_string_t string, const f_array_length_t length, FILE *output);
+  extern f_status_t f_print(const f_string_t string, const f_array_length_t length, FILE * const output);
 #endif // _di_f_print_
 
 /**
@@ -85,7 +85,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_character_
-  extern f_status_t f_print_character(const char character, FILE *output);
+  extern f_status_t f_print_character(const char character, FILE * const output);
 #endif // _di_f_print_character_
 
 /**
@@ -116,7 +116,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_character_safely_
-  extern f_status_t f_print_character_safely(const char character, FILE *output);
+  extern f_status_t f_print_character_safely(const char character, FILE * const output);
 #endif // _di_f_print_character_safely_
 
 /**
@@ -167,7 +167,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_
-  extern f_status_t f_print_dynamic(const f_string_static_t buffer, FILE *output);
+  extern f_status_t f_print_dynamic(const f_string_static_t buffer, FILE * const output);
 #endif // _di_f_print_dynamic_
 
 /**
@@ -196,7 +196,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_partial_
-  extern f_status_t f_print_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+  extern f_status_t f_print_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE * const output);
 #endif // _di_f_print_dynamic_partial_
 
 /**
@@ -227,7 +227,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_partial_raw_
-  extern f_status_t f_print_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+  extern f_status_t f_print_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE * const output);
 #endif // _di_f_print_dynamic_partial_raw_
 
 /**
@@ -263,7 +263,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_partial_raw_safely_
-  extern f_status_t f_print_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+  extern f_status_t f_print_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, FILE * const output);
 #endif // _di_f_print_dynamic_partial_raw_safely_
 
 /**
@@ -297,7 +297,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_partial_safely_
-  extern f_status_t f_print_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+  extern f_status_t f_print_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, FILE * const output);
 #endif // _di_f_print_dynamic_partial_safely_
 
 /**
@@ -326,7 +326,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_raw_
-  extern f_status_t f_print_dynamic_raw(const f_string_static_t buffer, FILE *output);
+  extern f_status_t f_print_dynamic_raw(const f_string_static_t buffer, FILE * const output);
 #endif // _di_f_print_dynamic_raw_
 
 /**
@@ -360,7 +360,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_raw_safely_
-  extern f_status_t f_print_dynamic_raw_safely(const f_string_static_t buffer, FILE *output);
+  extern f_status_t f_print_dynamic_raw_safely(const f_string_static_t buffer, FILE * const output);
 #endif // _di_f_print_dynamic_raw_safely_
 
 /**
@@ -392,7 +392,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_safely_
-  extern f_status_t f_print_dynamic_safely(const f_string_static_t buffer, FILE *output);
+  extern f_status_t f_print_dynamic_safely(const f_string_static_t buffer, FILE * const output);
 #endif // _di_f_print_dynamic_safely_
 
 /**
@@ -429,7 +429,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_
-  extern f_status_t f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_
 
 /**
@@ -460,7 +460,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_dynamic_
-  extern f_status_t f_print_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_dynamic_
 
 /**
@@ -493,7 +493,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_
-  extern f_status_t f_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_dynamic_partial_
 
 /**
@@ -528,7 +528,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_
-  extern f_status_t f_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_dynamic_partial_raw_
 
 /**
@@ -568,7 +568,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_safely_
-  extern f_status_t f_print_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_dynamic_partial_raw_safely_
 
 /**
@@ -606,7 +606,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_except_partial_safely_
-  extern f_status_t f_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_dynamic_partial_safely_
 
 /**
@@ -639,7 +639,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_dynamic_raw_
-  extern f_status_t f_print_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_dynamic_raw_
 
 /**
@@ -677,7 +677,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_dynamic_raw_safely_
-  extern f_status_t f_print_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_dynamic_raw_safely_
 
 /**
@@ -713,7 +713,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_dynamic_safely_
-  extern f_status_t f_print_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_dynamic_safely_
 
 /**
@@ -754,7 +754,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_
-  extern f_status_t f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_
 
 /**
@@ -789,7 +789,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_dynamic_
-  extern f_status_t f_print_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_dynamic_
 
 /**
@@ -826,7 +826,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_
-  extern f_status_t f_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_dynamic_partial_
 
 /**
@@ -865,7 +865,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_
-  extern f_status_t f_print_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_dynamic_partial_raw_
 
 /**
@@ -906,7 +906,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_safely_
-  extern f_status_t f_print_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_dynamic_partial_raw_safely_
 
 /**
@@ -945,7 +945,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_except_partial_safely_
-  extern f_status_t f_print_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_dynamic_partial_safely_
 
 /**
@@ -982,7 +982,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_dynamic_raw_
-  extern f_status_t f_print_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_dynamic_raw_
 
 /**
@@ -1024,7 +1024,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_in_dynamic_raw_safely_
-  extern f_status_t f_print_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_dynamic_raw_safely_
 
 /**
@@ -1064,7 +1064,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_in_dynamic_safely_
-  extern f_status_t f_print_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_dynamic_safely_
 
 /**
@@ -1107,7 +1107,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_raw_
-  extern f_status_t f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_raw_
 
 /**
@@ -1155,7 +1155,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_in_raw_safely_
-  extern f_status_t f_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_raw_safely_
 
 /**
@@ -1201,7 +1201,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_in_safely_
-  extern f_status_t f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const output);
 #endif // _di_f_print_except_in_safely_
 
 /**
@@ -1240,7 +1240,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_raw_
-  extern f_status_t f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_raw_
 
 /**
@@ -1282,7 +1282,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_raw_safely_
-  extern f_status_t f_print_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_raw_safely_
 
 /**
@@ -1322,7 +1322,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_safely_
-  extern f_status_t f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE * const output);
 #endif // _di_f_print_except_safely_
 
 /**
@@ -1353,7 +1353,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_raw_
-  extern f_status_t f_print_raw(const f_string_t string, const f_array_length_t length, FILE *output);
+  extern f_status_t f_print_raw(const f_string_t string, const f_array_length_t length, FILE * const output);
 #endif // _di_f_print_raw_
 
 /**
@@ -1389,7 +1389,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_raw_safely_
-  extern f_status_t f_print_raw_safely(const f_string_t string, const f_array_length_t length, FILE *output);
+  extern f_status_t f_print_raw_safely(const f_string_t string, const f_array_length_t length, FILE * const output);
 #endif // _di_f_print_raw_safely_
 
 /**
@@ -1416,7 +1416,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_raw_terminated_
-  extern f_status_t f_print_raw_terminated(const f_string_t string, FILE *output);
+  extern f_status_t f_print_raw_terminated(const f_string_t string, FILE * const output);
 #endif // _di_f_print_raw_terminated_
 
 /**
@@ -1450,7 +1450,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_safely_
-  extern f_status_t f_print_safely(const f_string_t string, const f_array_length_t length, FILE *output);
+  extern f_status_t f_print_safely(const f_string_t string, const f_array_length_t length, FILE * const output);
 #endif // _di_f_print_safely_
 
 /**
@@ -1511,7 +1511,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_safely_terminated_
-  extern f_status_t f_print_safely_terminated(const f_string_t string, FILE *output);
+  extern f_status_t f_print_safely_terminated(const f_string_t string, FILE * const output);
 #endif // _di_f_print_safely_terminated_
 
 /**
@@ -1538,7 +1538,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_terminated_
-  extern f_status_t f_print_terminated(const f_string_t string, FILE *output);
+  extern f_status_t f_print_terminated(const f_string_t string, FILE * const output);
 #endif // _di_f_print_terminated_
 
 #ifdef __cplusplus

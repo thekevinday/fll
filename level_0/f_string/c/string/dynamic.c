@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_dynamic_adjust_
-  f_status_t f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t *dynamic) {
+  f_status_t f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -130,7 +130,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_append_nulless_
 
 #ifndef _di_f_string_dynamic_decimate_by_
-  f_status_t f_string_dynamic_decimate_by(const f_array_length_t amount, f_string_dynamic_t *dynamic) {
+  f_status_t f_string_dynamic_decimate_by(const f_array_length_t amount, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
@@ -145,7 +145,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_decimate_by_
 
 #ifndef _di_f_string_dynamic_decrease_by_
-  f_status_t f_string_dynamic_decrease_by(const f_array_length_t amount, f_string_dynamic_t *dynamic) {
+  f_status_t f_string_dynamic_decrease_by(const f_array_length_t amount, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
@@ -160,7 +160,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_decrease_by_
 
 #ifndef _di_f_string_dynamic_increase_
-  f_status_t f_string_dynamic_increase(const uint16_t step, f_string_dynamic_t *dynamic) {
+  f_status_t f_string_dynamic_increase(const uint16_t step, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
@@ -185,7 +185,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_increase_
 
 #ifndef _di_f_string_dynamic_increase_by_
-  f_status_t f_string_dynamic_increase_by(const f_array_length_t amount, f_string_dynamic_t *dynamic) {
+  f_status_t f_string_dynamic_increase_by(const f_array_length_t amount, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -755,7 +755,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_prepend_nulless_
 
 #ifndef _di_f_string_dynamic_resize_
-  f_status_t f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t *buffer) {
+  f_status_t f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -765,7 +765,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_resize_
 
 #ifndef _di_f_string_dynamic_seek_line_
-  f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_string_range_t *range) {
+  f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -786,7 +786,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_seek_line_
 
 #ifndef _di_f_string_dynamic_seek_line_to_
-  f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const char seek_to_this, f_string_range_t *range) {
+  f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const char seek_to_this, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -809,7 +809,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_seek_line_to_
 
 #ifndef _di_f_string_dynamic_seek_to_
-  f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const char seek_to_this, f_string_range_t *range) {
+  f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const char seek_to_this, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -892,7 +892,7 @@ extern "C" {
 #endif // _di_f_string_dynamics_adjust_
 
 #ifndef _di_f_string_dynamics_append_
-  f_status_t f_string_dynamics_append(const f_string_dynamics_t source, f_string_dynamics_t *destination) {
+  f_status_t f_string_dynamics_append(const f_string_dynamics_t source, f_string_dynamics_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -999,7 +999,7 @@ extern "C" {
 #endif // _di_f_string_dynamicss_adjust_
 
 #ifndef _di_f_string_dynamicss_append_
-  f_status_t f_string_dynamicss_append(const f_string_dynamicss_t source, f_string_dynamicss_t *destination) {
+  f_status_t f_string_dynamicss_append(const f_string_dynamicss_t source, f_string_dynamicss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

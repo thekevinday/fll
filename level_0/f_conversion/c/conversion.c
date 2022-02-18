@@ -77,7 +77,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_octal_
 
 #ifndef _di_f_conversion_character_to_binary_
-  f_status_t f_conversion_character_to_binary(const char character, uint8_t *number) {
+  f_status_t f_conversion_character_to_binary(const char character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -95,7 +95,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_binary_
 
 #ifndef _di_f_conversion_character_to_decimal_
-  f_status_t f_conversion_character_to_decimal(const char character, uint8_t *number) {
+  f_status_t f_conversion_character_to_decimal(const char character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -111,7 +111,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_decimal_
 
 #ifndef _di_f_conversion_character_to_duodecimal_
-  f_status_t f_conversion_character_to_duodecimal(const char character, uint8_t *number) {
+  f_status_t f_conversion_character_to_duodecimal(const char character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -133,7 +133,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_duodecimal_
 
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  f_status_t f_conversion_character_to_hexidecimal(const char character, uint8_t *number) {
+  f_status_t f_conversion_character_to_hexidecimal(const char character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -155,7 +155,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 #ifndef _di_f_conversion_character_to_octal_
-  f_status_t f_conversion_character_to_octal(const char character, uint8_t *number) {
+  f_status_t f_conversion_character_to_octal(const char character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -171,7 +171,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_octal_
 
 #ifndef _di_f_conversion_number_signed_print_
-  f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE *output) {
+  f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE * const output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
       if (data.base < 2 || data.base > 16) return F_status_set_error(F_parameter);
@@ -186,7 +186,7 @@ extern "C" {
 #endif // _di_f_conversion_number_signed_print_
 
 #ifndef _di_f_conversion_number_signed_to_string_
-  f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const f_conversion_data_t data, f_string_dynamic_t *destination) {
+  f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const f_conversion_data_t data, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
       if (data.base < 2 || data.base > 16) return F_status_set_error(F_parameter);
@@ -201,7 +201,7 @@ extern "C" {
 #endif // _di_f_conversion_number_signed_to_string_
 
 #ifndef _di_f_conversion_number_unsigned_print_
-  f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE *output) {
+  f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE * const output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
       if (data.base < 2 || data.base > 16) return F_status_set_error(F_parameter);
@@ -212,7 +212,7 @@ extern "C" {
 #endif // _di_f_conversion_number_unsigned_print_
 
 #ifndef _di_f_conversion_number_unsigned_to_string_
-  f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, f_string_dynamic_t *destination) {
+  f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
       if (data.base < 2 || data.base > 16) return F_status_set_error(F_parameter);
