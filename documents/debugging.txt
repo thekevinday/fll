@@ -1,0 +1,49 @@
+# fss-0002
+
+Debugging:
+  There are various tools out there to assist in investigating for problems and debugging the compiled code.
+  This documentation briefly touches on a small set of these used by this project.
+
+  The following are notable tools to consider when debugging\:
+    - strace
+    - gdb
+    - valgrind
+    - GCC's -fanalyzer (and CLang's equivalent)
+    - massif-visualizer
+    - valkyrie
+
+Valgrind:
+  The "valgrind" program has three important tools:
+    1) The default tool, which is to check for memory leaks.
+    2) The thread anyalzing tool called "helgrind".
+    3) The heap usage analyzing tool called "massif".
+
+  The default behavior shows memory leaks when run against a program (such as fake), a messages like the following are desired\:
+    - "in use at exit: 0 bytes in 0 blocks".
+    - "All heap blocks were freed -- no leaks are possible".
+
+  The "..total heap usage" is just that a total heap usage throughout the lifespan of the program.
+  This does not represent the total usage at any moment in time (for that look into massif).
+
+  Example execution\:
+    valgrind fake make
+
+  The thread analyzing tool called "helgrind" is described in the "threads.txt" documentation given that it is thread-focused.
+
+  The heap usage analyzing tool called "massif" is a helpful in identifying situations where the compiled code is using large amounts of memory.
+  A massif file is generated on exit and a good tool for visualizng this is called "massif-visualizer".
+
+  Example execution\:
+    valgrind --tool=massif fake make
+    massif-visualizer massif.out.1234
+
+  A GUI that is helpful in using valgrind is called "valkyrie".
+  The "valkyrie" program does not support massif at the time of this writing but it eventually may.
+  The "valkyrie" program does support the default valgrind tool and the helgrind tools.
+
+GCC's -fanalyzer (and CLang's equivalent):
+  The code analyzer provided by GCC (and also CLang, through similar means) attempts to determine insecure or otherwise bad coding practices.
+
+  This focuses on the GCC -fanalzyer.
+
+  The analzyer is easily enabled by just appending "-fanalyzer" to the "flags" in data/build/settings or directly passing "-fanalyzer" to the gcc command.o
