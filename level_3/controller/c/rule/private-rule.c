@@ -685,7 +685,7 @@ extern "C" {
   f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_array_length_t * const index, f_number_unsigned_t * const number) {
 
     f_status_t status = F_none;
-    f_number_unsigned_t parsed = 0;
+    f_number_signed_t parsed = 0;
 
     if (*index + 1 == cache->content_action.used) {
       status = F_status_set_error(F_valid_not);
@@ -744,7 +744,7 @@ extern "C" {
       return status;
     }
 
-    *number = parsed;
+    *number = (f_number_unsigned_t) parsed;
 
     return F_none;
   }
