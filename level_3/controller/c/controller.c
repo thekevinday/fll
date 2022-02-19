@@ -195,16 +195,6 @@ extern "C" {
       return status;
     }
 
-    status = f_string_dynamic_terminate_after(&setting.name_entry);
-
-    if (F_status_is_error(status)) {
-      fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-      controller_main_delete(main);
-
-      return status;
-    }
-
     if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e) {
       main->as_init = F_true;
     }
@@ -308,13 +298,6 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
       }
-      else {
-        status = f_string_dynamic_terminate_after(&setting.path_pid);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-        }
-      }
     }
 
     if (F_status_is_error_not(status)) {
@@ -345,13 +328,6 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
-            }
-            else {
-              status = f_string_dynamic_terminate_after(&setting.path_cgroup);
-
-              if (F_status_is_error(status)) {
-                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-              }
             }
           }
         }
@@ -438,13 +414,6 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
-          }
-          else {
-            status = f_string_dynamic_terminate_after(&setting.path_cgroup);
-
-            if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-            }
           }
         }
       }

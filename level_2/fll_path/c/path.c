@@ -139,9 +139,6 @@ extern "C" {
       --canonical->used;
     }
 
-    status = f_string_dynamic_terminate_after(canonical);
-    if (F_status_is_error(status)) return status;
-
     return F_none;
   }
 #endif // _di_fll_path_canonical_

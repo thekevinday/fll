@@ -77,14 +77,12 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_apply_delimit().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: fl_string_dynamic_rip_nulless().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *   Errors (with error bit) from: fll_fss_extended_read().
  *
  * @see controller_entry_actions_increase_by()
  * @see f_fss_count_lines()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase_by()
  * @see fl_fss_apply_delimit()
  * @see fl_string_dynamic_rip_nulless()
@@ -112,14 +110,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: macro_f_array_lengths_t_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  *   This will detect and report all errors, but only the first error is returned.
  *   Memory related errors return immediately.
 
  * @see macro_f_array_lengths_t_increase_by()
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_entry_preprocess_
   extern f_status_t controller_entry_preprocess(const controller_global_t global, const bool is_entry, controller_cache_t * const cache) F_attribute_visibility_internal_d;

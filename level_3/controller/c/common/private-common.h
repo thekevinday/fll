@@ -150,6 +150,9 @@ extern "C" {
   #define CONTROLLER_with_s          "with"
   #define CONTROLLER_yes_s           "yes"
 
+  #define CONTROLLER_Entry_s "Entry"
+  #define CONTROLLER_Exit_s  "Exit"
+
   #define CONTROLLER_action_s_length        6
   #define CONTROLLER_actions_s_length       7
   #define CONTROLLER_affinity_s_length      8
@@ -269,6 +272,9 @@ extern "C" {
   #define CONTROLLER_with_s_length          4
   #define CONTROLLER_yes_s_length           3
 
+  #define CONTROLLER_Entry_s_length 5
+  #define CONTROLLER_Exit_s_length  4
+
   extern const f_string_static_t controller_action_s;
   extern const f_string_static_t controller_actions_s;
   extern const f_string_static_t controller_affinity_s;
@@ -387,6 +393,9 @@ extern "C" {
   extern const f_string_static_t controller_wish_s;
   extern const f_string_static_t controller_with_s;
   extern const f_string_static_t controller_yes_s;
+
+  extern const f_string_static_t controller_Entry_s;
+  extern const f_string_static_t controller_Exit_s;
 #endif // _di_controller_string_s_
 
 /**

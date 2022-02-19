@@ -33,30 +33,21 @@ extern "C" {
 #ifndef _di_controller_string_dynamic_rip_nulless_terminated_
   f_status_t controller_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
 
-    f_status_t status = fl_string_dynamic_rip_nulless(source, range, destination);
-    if (F_status_is_error(status)) return status;
-
-    return f_string_dynamic_terminate_after(destination);
+    return fl_string_dynamic_rip_nulless(source, range, destination);
   }
 #endif // _di_controller_string_dynamic_rip_nulless_terminated_
 
 #ifndef _di_controller_string_dynamic_append_terminated_
   f_status_t controller_dynamic_append_terminated(const f_string_static_t source, f_string_dynamic_t *destination) {
 
-    f_status_t status = f_string_dynamic_append_nulless(source, destination);
-    if (F_status_is_error(status)) return status;
-
-    return f_string_dynamic_terminate_after(destination);
+    return f_string_dynamic_append_nulless(source, destination);
   }
 #endif // _di_controller_string_dynamic_append_terminated_
 
 #ifndef _di_controller_string_dynamic_partial_append_terminated_
   f_status_t controller_dynamic_partial_append_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
 
-    f_status_t status = f_string_dynamic_partial_append(source, range, destination);
-    if (F_status_is_error(status)) return status;
-
-    return f_string_dynamic_terminate_after(destination);
+    return f_string_dynamic_partial_append(source, range, destination);
   }
 #endif // _di_controller_string_dynamic_partial_append_terminated_
 
@@ -91,14 +82,6 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
-
-      return status;
-    }
-
-    status = f_string_dynamic_terminate_after(&cache->action.name_file);
-
-    if (F_status_is_error(status)) {
-      controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
 
       return status;
     }

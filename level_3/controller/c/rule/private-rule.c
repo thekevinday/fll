@@ -85,14 +85,6 @@ extern "C" {
         return status;
       }
 
-      status = f_string_dynamic_terminate_after(&parameters->array[0]);
-
-      if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-        return status;
-      }
-
       ++parameters->used;
     }
 
@@ -116,14 +108,6 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
-
-          return status;
-        }
-
-        status = f_string_dynamic_terminate_after(&parameters->array[parameters->used]);
-
-        if (F_status_is_error(status)) {
-          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
 
           return status;
         }
@@ -351,12 +335,6 @@ extern "C" {
               if (F_status_is_error(status)) {
                 controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
               }
-
-              status = f_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
-
-              if (F_status_is_error(status)) {
-                controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-              }
               else {
                 actions->array[actions->used++].parameters.used = 1;
               }
@@ -461,13 +439,6 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_rip", F_true);
-          }
-          else {
-            status = f_string_dynamic_terminate_after(&item->pid_file);
-
-            if (F_status_is_error(status)) {
-              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-            }
           }
         }
         else if (type == controller_rule_action_type_rerun_e) {
@@ -660,14 +631,7 @@ extern "C" {
               controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_partial_mash_nulless", F_true);
             }
             else {
-              status = f_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
-
-              if (F_status_is_error(status)) {
-                controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-              }
-              else {
-                actions->array[actions->used++].parameters.used = 1;
-              }
+              actions->array[actions->used++].parameters.used = 1;
             }
           }
         }
@@ -789,8 +753,6 @@ extern "C" {
 #ifndef _di_controller_rule_copy_
   f_status_t controller_rule_copy(const controller_rule_t source, controller_rule_t *destination) {
 
-    f_status_t status = F_none;
-
     // Delete the third party structures.
     macro_f_control_group_t_delete_simple(destination->cgroup)
     f_capability_delete(&destination->capability);
@@ -836,6 +798,8 @@ extern "C" {
 
     destination->ons.used = 0;
     destination->items.used = 0;
+
+    f_status_t status = F_none;
 
     if (source.alias.used) {
       status = f_string_dynamic_append(source.alias, &destination->alias);
@@ -961,9 +925,6 @@ extern "C" {
         item_destination->pid_file.used = 0;
 
         status = f_string_dynamic_append(item_source->pid_file, &item_destination->pid_file);
-        if (F_status_is_error(status)) return status;
-
-        status = f_string_dynamic_terminate_after(&item_destination->pid_file);
         if (F_status_is_error(status)) return status;
 
         for (j = 0; j < controller_rule_action_type_execute__enum_size_e; ++j) {
@@ -1867,12 +1828,6 @@ extern "C" {
       return status;
     }
 
-    status = f_string_dynamic_terminate_after(alias);
-
-    if (F_status_is_error(status)) {
-      controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-    }
-
     return status;
   }
 #endif // _di_controller_rule_id_construct_
@@ -2259,14 +2214,6 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       controller_rule_print_error(global.thread, global.main->error, process->cache.action, F_status_set_fine(status), "f_string_dynamic_append", F_true, F_true);
-
-      return status;
-    }
-
-    status = f_string_dynamic_terminate_after(&process->cache.action.name_file);
-
-    if (F_status_is_error(status)) {
-      controller_rule_print_error(global.thread, global.main->error, process->cache.action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_true);
 
       return status;
     }
@@ -3362,14 +3309,7 @@ extern "C" {
       controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
     }
     else {
-      status = f_string_dynamic_terminate_after(&rule->alias);
-
-      if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-      }
-      else {
-        status = controller_file_load(global, F_true, controller_rules_s, rule->alias, controller_rule_s, cache);
-      }
+      status = controller_file_load(global, F_true, controller_rules_s, rule->alias, controller_rule_s, cache);
     }
 
     if (F_status_is_error_not(status)) {
@@ -3490,14 +3430,6 @@ extern "C" {
             break;
           }
 
-          status = f_string_dynamic_terminate_after(&cache->buffer_item);
-
-          if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-            break;
-          }
-
           if (rule->items.array[rule->items.used].type) {
 
             // Initialize the item with settings.
@@ -3596,16 +3528,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false);
-      }
-      else {
-        status = f_string_dynamic_terminate_after(&cache->action.name_item);
 
-        if (F_status_is_error(status)) {
-          controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false);
-        }
-      }
-
-      if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
 
@@ -3709,16 +3632,6 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false);
-        }
-        else {
-          status = f_string_dynamic_terminate_after(&cache->action.name_action);
-
-          if (F_status_is_error(status)) {
-            controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false);
-          }
-        }
-
-        if (F_status_is_error(status)) {
 
           // Get the current line number within the settings item.
           cache->action.line_item = line_item;
@@ -3935,16 +3848,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false);
-        }
-        else {
-          status = f_string_dynamic_terminate_after(&setting_maps->array[setting_maps->used].value);
 
-          if (F_status_is_error(status)) {
-            controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false);
-          }
-        }
-
-        if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
 
@@ -4372,16 +4276,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false);
-          }
-          else {
-            status = f_string_dynamic_terminate_after(setting_value);
 
-            if (F_status_is_error(status)) {
-              controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false);
-            }
-          }
-
-          if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
 
@@ -4700,35 +4595,6 @@ extern "C" {
             }
           }
 
-          status = f_string_dynamic_terminate_after(&cache->action.generic);
-
-          if (F_status_is_error(status)) {
-
-            // Get the current line number within the settings item.
-            cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
-
-            cache->action.line_action = ++cache->action.line_item;
-
-            controller_lock_print(global.main->error.to, global.thread);
-
-            controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false);
-
-            controller_rule_print_error_cache(global.main->error, cache->action, F_false);
-
-            controller_unlock_print_flush(global.main->error.to, global.thread);
-
-            if (F_status_set_fine(status) == F_memory_not) {
-              status_return = status;
-
-              break;
-            }
-
-            if (F_status_is_error_not(status_return)) {
-              status_return = F_status_set_error(F_valid_not);
-            }
-          }
-
           status = f_capability_from_text(cache->action.generic, &rule->capability);
 
           if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
@@ -4827,10 +4693,6 @@ extern "C" {
 
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
 
-              if (F_status_is_error_not(status)) {
-                status = f_string_dynamic_terminate_after(&cache->action.generic);
-              }
-
               if (F_status_is_error(status)) {
 
                 // Get the current line number within the settings item.
@@ -4841,7 +4703,7 @@ extern "C" {
 
                 controller_lock_print(global.main->error.to, global.thread);
 
-                controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), cache->action.generic.used ? "f_string_dynamic_partial_append_nulless" : "f_string_dynamic_terminate_after", F_true, F_false);
+                controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false);
 
                 controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
@@ -4906,10 +4768,6 @@ extern "C" {
               cache->action.generic.used = 0;
 
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
-
-              if (F_status_is_error_not(status)) {
-                status = f_string_dynamic_terminate_after(&cache->action.generic);
-              }
 
               controller_rule_setting_read_print_value(global, controller_user_s, f_string_empty_s, cache->action.generic, 0);
             }
@@ -4978,7 +4836,7 @@ extern "C" {
             }
             else {
 
-              // get the current line number within the settings item.
+              // Get the current line number within the settings item.
               cache->action.line_item = line_item;
               f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
@@ -5046,16 +4904,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false);
-          }
-          else {
-            status = f_string_dynamic_terminate_after(&setting_values->array[setting_values->used]);
 
-            if (F_status_is_error(status)) {
-              controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false);
-            }
-          }
-
-          if (F_status_is_error(status)) {
             setting_values->array[setting_values->used].used = 0;
 
             if (F_status_set_fine(status) == F_memory_not) {
@@ -5364,7 +5213,7 @@ extern "C" {
       if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
         controller_lock_print(global.main->output.to, global.thread);
 
-        fl_print_format("%rProcessing rule item action '%[%S%]', adding ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, controller_on_s, global.main->context.set.title);
+        fl_print_format("%rProcessing rule item action '%[%r%]', adding ", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, controller_on_s, global.main->context.set.title);
         fl_print_format("'%[%/Q%]' of ", global.main->output.to.stream, global.main->context.set.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->context.set.notable);
         fl_print_format("'%[%/Q%]/", global.main->output.to.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[2], global.main->context.set.important);
         fl_print_format("%[%/Q%]'.%r", global.main->output.to.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[3], global.main->context.set.important, f_string_eol_s);

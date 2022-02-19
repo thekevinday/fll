@@ -85,12 +85,10 @@ extern "C" {
  *   Errors (with error bit) from: f_conversion_number_signed_to_string().
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see f_conversion_number_signed_to_string()
  * @see f_string_append()
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_fake_make_operate_process_return_
   extern f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) F_attribute_visibility_internal_d;

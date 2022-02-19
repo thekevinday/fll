@@ -133,7 +133,7 @@ extern "C" {
 
     controller_lock_print(print.to, thread);
 
-    fl_print_format("%r%[%Q%s setting%S '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, is_entry ? "Entry" : "Exit", before, print.context);
+    fl_print_format("%r%[%Q%r setting%S '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, is_entry ? controller_Entry_s : controller_Exit_s, before, print.context);
     fl_print_format("%[%/Q%]", print.to.stream, print.notable, cache->buffer_file, range, print.notable);
     fl_print_format("%['%S.%]%r", print.to.stream, print.context, after, print.context, f_string_eol_s);
 
@@ -154,7 +154,7 @@ extern "C" {
     fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache.action.name_action, global.main->error.notable);
     fl_print_format("%[' requires exactly %]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
     fl_print_format("%[%un%]", global.main->error.to.stream, global.main->error.notable, total, global.main->error.notable);
-    fl_print_format("%[' %s.%]%r", global.main->error.to.stream, global.main->error.context, total > 1 ? controller_parameters_s : controller_parameter_s, global.main->error.context, f_string_eol_s);
+    fl_print_format("%[' %r.%]%r", global.main->error.to.stream, global.main->error.context, total > 1 ? controller_parameters_s : controller_parameter_s, global.main->error.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->error, cache.action);
 

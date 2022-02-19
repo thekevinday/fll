@@ -637,14 +637,6 @@ extern "C" {
       return status;
     }
 
-    status = f_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[0].value.array[0]);
-
-    if (F_status_is_error(status)) {
-      fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-      return status;
-    }
-
     if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
       flockfile(data_make->error.to.stream);
 

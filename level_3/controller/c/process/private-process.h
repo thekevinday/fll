@@ -42,13 +42,11 @@ extern "C" {
  *   F_lock (with error bit) if failed to re-establish read lock on global.thread->lock.process while returning.
  *
  *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  *   Errors (with error bit) from: controller_lock_read().
  *   Errors (with error bit) from: controller_lock_write().
  *
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_terminate_after()
  * @see controller_lock_read()
  * @see controller_lock_write()
  */

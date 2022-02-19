@@ -101,13 +101,11 @@ extern "C" {
  *   Errors (with error bit) from: f_string_dynamic_append_nulless().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamic_increase_by()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_operate_expand_environment_

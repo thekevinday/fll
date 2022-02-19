@@ -290,9 +290,6 @@ extern "C" {
           status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
           if (F_status_is_error(status)) return status;
 
-          status = f_string_dynamic_terminate_after(&values[j]->array[values[j]->used]);
-          if (F_status_is_error(status)) return status;
-
           ++values[j]->used;
 
           if (indexs) {

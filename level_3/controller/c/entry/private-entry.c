@@ -404,13 +404,6 @@ extern "C" {
             if (F_status_is_error(status)) {
               controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, global.thread);
             }
-            else {
-              status = f_string_dynamic_terminate_after(&action->parameters.array[j]);
-
-              if (F_status_is_error(status)) {
-                controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, global.thread);
-              }
-            }
           }
 
           ++action->parameters.used;
@@ -473,22 +466,7 @@ extern "C" {
               }
               else {
                 if (fl_string_dynamic_compare(action->parameters.array[1], cache->buffer_path) == F_equal_to_not) {
-
                   if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
-                    status = f_string_dynamic_terminate_after(&cache->buffer_path);
-
-                    if (F_status_is_error(status)) {
-                      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, global.thread);
-
-                      action->status = status;
-
-                      if (F_status_set_fine(status) == F_memory_not) {
-                        status_action = status;
-                      }
-
-                      break;
-                    }
-
                     flockfile(global.main->error.to.stream);
 
                     fl_print_format("%r%[%QThe %r item action second parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -2061,16 +2039,6 @@ extern "C" {
 
             break;
           }
-        }
-
-        status = f_string_dynamic_terminate_after(&cache->action.generic);
-
-        if (F_status_is_error(status)) {
-          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, global.thread);
-
-          global.setting->path_control.used = 0;
-
-          break;
         }
 
         status = fll_path_canonical(cache->action.generic, &global.setting->path_control);

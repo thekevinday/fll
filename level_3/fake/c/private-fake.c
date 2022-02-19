@@ -313,14 +313,6 @@ extern "C" {
             return status;
           }
         }
-
-        status = f_string_dynamic_terminate_after(parameters_value[i]);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-          return status;
-        }
       } // for
     }
 
@@ -423,14 +415,6 @@ extern "C" {
 
             return status;
           }
-        }
-
-        status = f_string_dynamic_terminate_after(parameters_value[i]);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-          return status;
         }
       } // for
     }

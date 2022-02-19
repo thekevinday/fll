@@ -1046,14 +1046,6 @@ extern "C" {
 
             break;
           }
-
-          *status = f_string_dynamic_terminate_after(settings_single_destination[i]);
-
-          if (F_status_is_error(*status)) {
-            fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-            break;
-          }
         }
 
         if (!settings_single_source[i]->used) continue;
@@ -1206,13 +1198,6 @@ extern "C" {
 
               break;
             }
-
-            *status = f_string_dynamic_terminate_after(settings_single_destination[i]);
-            if (F_status_is_error(*status)) {
-              fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-              break;
-            }
           }
         }
       } // for
@@ -1309,14 +1294,6 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
-
-        return;
-      }
-
-      *status = f_string_dynamic_terminate_after(&main->path_sources);
-
-      if (F_status_is_error(*status)) {
-        fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
 
         return;
       }
@@ -1508,14 +1485,6 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
-
-        break;
-      }
-
-      *status = f_string_dynamic_terminate_after(values[i]);
-
-      if (F_status_is_error(*status)) {
-        fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
 
         break;
       }

@@ -540,14 +540,6 @@ extern "C" {
               break;
             }
 
-            *status = f_string_dynamic_terminate_after(&source_path);
-
-            if (F_status_is_error(*status)) {
-              fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-              break;
-            }
-
             source.used = source_path.used + file_name.used + fake_build_parameter_object_name_suffix_s.used;
           }
           else {

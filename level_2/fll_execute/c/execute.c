@@ -149,10 +149,6 @@ extern "C" {
           status = f_string_dynamic_append(program_name, &paths.array[i]);
 
           if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&paths.array[i]);
-          }
-
-          if (F_status_is_error_not(status)) {
             status = f_file_exists(paths.array[i]);
 
             if (status == F_true) {
@@ -343,10 +339,6 @@ extern "C" {
         for (f_array_length_t i = 0; i < paths.used; ++i) {
 
           status = f_string_dynamic_append(program_name, &paths.array[i]);
-
-          if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&paths.array[i]);
-          }
 
           if (F_status_is_error_not(status)) {
             status = f_file_exists(paths.array[i]);

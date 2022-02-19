@@ -46,10 +46,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
       status = f_string_dynamic_append(main->devices.array[local.device], &device);
 
-      if (F_status_is_error_not(status)) {
-        status = f_string_dynamic_terminate_after(&device);
-      }
-
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_memory_not) {
           firewall_print_error_on_allocation_failure(main->error);
@@ -194,10 +190,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         if (length) {
           status = f_string_dynamic_partial_append(local.buffer, local.rule_contents.array[i].array[0], &device);
 
-          if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&device);
-          }
-
           if (F_status_is_error(status)) break;
         }
 
@@ -262,10 +254,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
           protocol.used = 0;
 
           status = f_string_dynamic_partial_append(local.buffer, local.rule_contents.array[i].array[0], &protocol);
-
-          if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&protocol);
-          }
 
           if (F_status_is_error(status)) break;
 
@@ -383,10 +371,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
           status = f_string_dynamic_append(firewall_action_policy_command_s, &arguments.array[arguments.used]);
         }
 
-        if (F_status_is_error_not(status)) {
-          status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-        }
-
         if (F_status_is_error(status)) break;
 
         if (action == firewall_action_append_id_e || action == firewall_action_insert_id_e || action == firewall_action_policy_id_e) {
@@ -418,10 +402,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
             status = f_string_dynamic_append(firewall_chain_output_s, &arguments.array[arguments.used]);
           }
 
-          if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-          }
-
           if (F_status_is_error(status)) break;
 
           if (status == F_data_not) {
@@ -445,20 +425,12 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
           if (direction == firewall_direction_input_id_e) {
             status = f_string_dynamic_append(firewall_device_input_command_s, &arguments.array[arguments.used]);
 
-            if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-            }
-
             if (F_status_is_error(status)) break;
 
             ++arguments.used;
           }
           else if (direction == firewall_direction_output_id_e) {
             status = f_string_dynamic_append(firewall_device_output_command_s, &arguments.array[arguments.used]);
-
-            if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-            }
 
             if (F_status_is_error(status)) break;
 
@@ -475,10 +447,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
           status = f_string_dynamic_append(device, &arguments.array[arguments.used]);
 
-          if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-          }
-
           if (F_status_is_error(status)) break;
 
           ++arguments.used;
@@ -493,10 +461,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
         status = f_string_dynamic_append(firewall_protocol_command_s, &arguments.array[arguments.used]);
 
-        if (F_status_is_error_not(status)) {
-          status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-        }
-
         if (F_status_is_error(status)) break;
 
         ++arguments.used;
@@ -508,10 +472,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
           arguments.array[arguments.used].used = 0;
 
           status = f_string_dynamic_append(protocol, &arguments.array[arguments.used]);
-
-          if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-          }
 
           if (F_status_is_error(status)) break;
 
@@ -535,10 +495,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
 
             status = f_string_dynamic_partial_append(local.buffer, local.rule_contents.array[i].array[subcounter], &ip_list);
 
-            if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_terminate_after(&ip_list);
-            }
-
             if (F_status_is_error(status)) {
 
               // Prevent the loop below from being processed.
@@ -558,11 +514,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
             arguments.array[arguments.used].used = 0;
 
             status = f_string_dynamic_partial_append(local.buffer, local.rule_contents.array[i].array[subcounter], &arguments.array[arguments.used]);
-
-            if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-            }
-
             if (F_status_is_error(status)) break;
 
             ++arguments.used;
@@ -726,11 +677,6 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
                   arguments.array[arguments.used].used = 0;
 
                   status = f_string_dynamic_partial_append(local_buffer, basic_objects.array[at], &arguments.array[arguments.used]);
-
-                  if (F_status_is_error_not(status)) {
-                    status = f_string_dynamic_terminate_after(&arguments.array[arguments.used]);
-                  }
-
                   if (F_status_is_error(status)) break;
 
                   ++arguments.used;
@@ -857,14 +803,9 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
   status = f_string_dynamic_append(firewall_chain_create_command_s, &arguments.array[0]);
 
   if (F_status_is_error_not(status)) {
-    status = f_string_dynamic_terminate_after(&arguments.array[0]);
-  }
-
-  if (F_status_is_error_not(status)) {
     status = f_string_dynamic_increase(F_memory_default_allocation_small_d, &arguments.array[1]);
   }
-
-  if (F_status_is_error(status)) {
+  else {
     f_string_dynamics_resize(0, &arguments);
 
     return status;

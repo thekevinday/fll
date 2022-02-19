@@ -409,14 +409,6 @@ extern "C" {
         break;
       }
 
-      *status = f_string_dynamic_terminate_after(&path_source);
-
-      if (F_status_is_error(*status)) {
-        fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-        break;
-      }
-
       *status = f_directory_is(path_source);
 
       if (*status == F_true) {
@@ -434,14 +426,6 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main->error, F_status_set_fine(*status), "f_file_name_base", F_true);
-
-          break;
-        }
-
-        *status = f_string_dynamic_terminate_after(&destination_directory);
-
-        if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
 
           break;
         }
@@ -499,14 +483,6 @@ extern "C" {
             break;
           }
 
-          *status = f_string_dynamic_terminate_after(&destination_directory);
-
-          if (F_status_is_error(*status)) {
-            fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-            break;
-          }
-
           *status = fl_directory_create(destination_directory, F_file_mode_all_rwx_d);
 
           if (F_status_is_error(*status)) {
@@ -531,14 +507,6 @@ extern "C" {
 
             break;
           }
-        }
-
-        *status = f_string_dynamic_terminate_after(&destination_file);
-
-        if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-          break;
         }
 
         *status = f_file_copy(path_source, destination_file, mode, F_file_default_read_size_d, F_false);
@@ -658,17 +626,6 @@ extern "C" {
 
           return 0;
         }
-
-        *status = f_string_dynamic_terminate_after(&defines);
-
-        if (F_status_is_error(*status)) {
-          fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-          f_string_dynamic_resize(0, &defines);
-          f_string_dynamics_resize(0, &arguments);
-
-          return 0;
-        }
       }
 
       const f_string_static_t parameters_prefix[] = {
@@ -715,32 +672,22 @@ extern "C" {
     }
 
     f_string_dynamic_t path = f_string_dynamic_t_initialize;
-    f_string_t function = 0;
 
-    {
-      function = "f_string_dynamic_append_nulless";
+    if (process_script.string[0] != '/') {
+      *status = f_string_dynamic_append_nulless(main->path_data_build, &path);
+    }
 
-      if (process_script.string[0] != '/') {
-        *status = f_string_dynamic_append_nulless(main->path_data_build, &path);
-      }
+    if (F_status_is_error_not(*status)) {
+      *status = f_string_dynamic_append_nulless(process_script, &path);
+    }
 
-      if (F_status_is_error_not(*status)) {
-        *status = f_string_dynamic_append_nulless(process_script, &path);
-      }
+    if (F_status_is_error(*status)) {
+      fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
-      if (F_status_is_error_not(*status)) {
-        function = "f_string_dynamic_terminate_after";
-        *status = f_string_dynamic_terminate_after(&path);
-      }
+      f_string_dynamic_resize(0, &path);
+      f_string_dynamics_resize(0, &arguments);
 
-      if (F_status_is_error(*status)) {
-        fll_error_print(main->error, F_status_set_fine(*status), function, F_true);
-
-        f_string_dynamic_resize(0, &path);
-        f_string_dynamics_resize(0, &arguments);
-
-        return 0;
-      }
+      return 0;
     }
 
     int return_code = 0;
@@ -812,14 +759,6 @@ extern "C" {
         break;
       }
     } // for
-
-    status = f_string_dynamic_terminate_after(name);
-
-    if (F_status_is_error(status)) {
-      fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-      return status;
-    }
 
     return F_none;
   }

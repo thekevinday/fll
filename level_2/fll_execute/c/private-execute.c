@@ -16,9 +16,6 @@ extern "C" {
     status = f_string_dynamic_append(source, &arguments->array[arguments->used]);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
-
     ++arguments->used;
 
     return F_none;
@@ -36,9 +33,6 @@ extern "C" {
     status = f_string_dynamic_append(prefix, &arguments->array[arguments->used]);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
-
     ++arguments->used;
 
     status = f_string_dynamics_increase(F_memory_default_allocation_small_d, arguments);
@@ -50,9 +44,6 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamic_append(value, &arguments->array[arguments->used]);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
     if (F_status_is_error(status)) return status;
 
     ++arguments->used;

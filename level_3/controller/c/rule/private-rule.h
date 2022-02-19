@@ -370,11 +370,9 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see f_string_append()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_id_construct_
   extern f_status_t controller_rule_id_construct(const controller_global_t global, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t * const alias) F_attribute_visibility_internal_d;
@@ -437,12 +435,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_fss_count_lines().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see controller_rule_action_read()
  * @see f_fss_count_lines()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_item_read_
   extern f_status_t controller_rule_item_read(const controller_global_t global, const bool is_normal, controller_cache_t * const cache, controller_rule_item_t * const item) F_attribute_visibility_internal_d;
@@ -642,7 +638,6 @@ extern "C" {
  * @see fl_fss_apply_delimit().
  * @see f_string_dynamic_partial_append().
  * @see f_string_dynamic_partial_append_nulless().
- * @see f_string_dynamic_terminate_after().
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_

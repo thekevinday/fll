@@ -67,7 +67,6 @@ extern "C" {
  *   Errors (with error bit) from: f_string_append_assure().
  *   Errors (with error bit) from: f_string_dynamic_append_nulless().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_resize().
  *   Errors (with error bit) from: fl_fss_apply_delimit().
  *   Errors (with error bit) from: fll_fss_extended_read().
@@ -81,7 +80,6 @@ extern "C" {
  * @see f_string_append_assure()
  * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_resize()
  * @see fl_fss_apply_delimit()
  * @see fll_fss_extended_read()

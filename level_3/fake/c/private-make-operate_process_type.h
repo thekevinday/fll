@@ -377,12 +377,10 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_resize().
  *   Errors (with error bit) from: f_string_map_multis_resize().
  *
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_resize()
  * @see f_string_map_multis_resize()
  */

@@ -225,18 +225,8 @@ extern "C" {
         }
 
         if (F_status_is_error_not(*status)) {
-          function_name = "f_string_dynamic_terminate_after";
-          *status = f_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[0].name);
-        }
-
-        if (F_status_is_error_not(*status)) {
           function_name = "f_string_dynamics_resize";
           *status = f_string_dynamics_resize(1, &data_make->setting_make.parameter.array[0].value);
-        }
-
-        if (F_status_is_error_not(*status)) {
-          function_name = "f_string_dynamic_terminate_after";
-          *status = f_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[0].value.array[0]);
         }
 
         if (F_status_is_error(*status)) {
@@ -447,14 +437,6 @@ extern "C" {
 
           if (F_status_is_error(status)) break;
 
-          status = f_string_dynamic_terminate_after(&combined);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-            break;
-          }
-
           status = f_environment_set(define.array[i].name, combined, F_true);
 
           if (F_status_is_error(status)) {
@@ -511,14 +493,6 @@ extern "C" {
         break;
       }
 
-      status = f_string_dynamic_terminate_after(&name_define);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-        break;
-      }
-
       // The environment settings are stored in the build settings rather than the make settings.
       if (fake_make_operate_validate_define_name(name_define) == F_true) {
         for (j = 0; j < data_make->setting_build.environment.used; ++j) {
@@ -548,14 +522,6 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
-
-            break;
-          }
-
-          status = f_string_dynamic_terminate_after(&data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
 
             break;
           }
@@ -668,14 +634,6 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
-
-              break;
-            }
-
-            status = f_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[0].value.array[0]);
-
-            if (F_status_is_error(status)) {
-              fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
 
               break;
             }

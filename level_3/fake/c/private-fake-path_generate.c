@@ -352,61 +352,6 @@ extern "C" {
       }
     }
 
-    {
-      f_string_dynamic_t * const parameters_value[] = {
-        &main->path_build_documents,
-        &main->path_build_includes,
-        &main->path_build_libraries,
-        &main->path_build_libraries_script,
-        &main->path_build_libraries_shared,
-        &main->path_build_libraries_static,
-        &main->path_build_objects,
-        &main->path_build_objects_script,
-        &main->path_build_objects_shared,
-        &main->path_build_objects_static,
-        &main->path_build_programs,
-        &main->path_build_programs_script,
-        &main->path_build_programs_shared,
-        &main->path_build_programs_static,
-        &main->path_build_settings,
-        &main->path_build_stage,
-        &main->path_data_build,
-        &main->path_data_settings,
-        &main->path_documents,
-        &main->path_licenses,
-        &main->path_sources,
-        &main->path_work_includes,
-        &main->path_work_libraries,
-        &main->path_work_libraries_script,
-        &main->path_work_libraries_shared,
-        &main->path_work_libraries_static,
-        &main->path_work_programs,
-        &main->path_work_programs_script,
-        &main->path_work_programs_shared,
-        &main->path_work_programs_static,
-        &main->file_data_build_defines,
-        &main->file_data_build_dependencies,
-        &main->file_data_build_process_post_s,
-        &main->file_data_build_process_pre_s,
-        &main->file_data_build_fakefile,
-        &main->file_data_build_settings,
-        &main->file_documents_readme,
-      };
-
-      for (i = 0; i < 37; ++i) {
-
-        if (!parameters_value[i]->used) continue;
-
-        status = f_string_dynamic_terminate_after(parameters_value[i]);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-          return status;
-        }
-      } // for
-    }
-
     return F_none;
   }
 #endif // _di_fake_path_generate_

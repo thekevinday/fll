@@ -609,10 +609,6 @@ extern "C" {
               status = f_string_dynamic_append(firewall_file_suffix_s, &path_file);
             }
 
-            if (F_status_is_error_not(status)) {
-              status = f_string_dynamic_terminate_after(&path_file);
-            }
-
             if (F_status_is_error(status)) {
               firewall_print_error_on_allocation_failure(main->error);
 

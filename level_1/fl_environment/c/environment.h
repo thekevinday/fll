@@ -47,14 +47,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_string_dynamic_append_nulless().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_maps_increase_by().
  *
  * @see f_environment_get()
  * @see f_string_dynamic_append_nulless()
- * @see f_string_dynamic_increase_by()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_maps_increase_by()
  */
 #ifndef _di_fl_environment_load_name_
@@ -73,6 +69,7 @@ extern "C" {
  *
  * @param names
  *   An array of valid environment variable names.
+ *   The strings in the array must be NULL terminated.
  * @param environment
  *   An array of maps generated from the loaded environment variable names.
  *   All environment names loaded are appended to this.

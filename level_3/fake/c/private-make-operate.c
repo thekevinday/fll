@@ -522,14 +522,6 @@ extern "C" {
           }
         }
 
-        *status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
-
-        if (F_status_is_error(*status)) {
-          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-          break;
-        }
-
         // Unquoted empty Content after IKI variable substitution are not used as an argument.
         if (used_content < arguments->array[arguments->used].used || quotes.array[i]) {
           ++arguments->used;
@@ -540,14 +532,6 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_partial_append_nulless", F_true);
-
-          break;
-        }
-
-        *status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
-
-        if (F_status_is_error(*status)) {
-          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
 
           break;
         }
@@ -815,11 +799,7 @@ extern "C" {
         status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
 
         if (F_status_is_error_not(status)) {
-          status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
-
-          if (F_status_is_error_not(status)) {
-            ++arguments->used;
-          }
+          ++arguments->used;
         }
       }
     }
@@ -882,11 +862,7 @@ extern "C" {
           status = f_string_dynamic_append_nulless(*context, &arguments->array[arguments->used]);
 
           if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
-
-            if (F_status_is_error_not(status)) {
-              ++arguments->used;
-            }
+            ++arguments->used;
           }
         }
       }
@@ -913,10 +889,6 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_terminate_after(&data_make->cache_1);
-    }
-
-    if (F_status_is_error_not(status)) {
       status = f_environment_get(data_make->cache_1, &data_make->cache_2);
     }
 
@@ -931,10 +903,6 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       status = f_string_dynamic_append_nulless(data_make->cache_2, &arguments->array[arguments->used]);
-    }
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
     }
 
     if (F_status_is_error(status)) return status;

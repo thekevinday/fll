@@ -64,15 +64,11 @@ extern "C" {
           status = f_string_dynamic_append(alias, &process->rule.alias);
 
           if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_terminate_after(&process->rule.alias);
+            process->id = global.thread->processs.used++;
+            status = F_none;
 
-            if (F_status_is_error_not(status)) {
-              process->id = global.thread->processs.used++;
-              status = F_none;
-
-              if (id) {
-                *id = process->id;
-              }
+            if (id) {
+              *id = process->id;
             }
           }
 

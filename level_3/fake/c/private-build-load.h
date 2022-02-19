@@ -87,13 +87,11 @@ extern "C" {
  *   Errors (with error bit) from: f_path_directory_cleanup().
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: fll_fss_snatch_apart().
  *
  * @see f_path_directory_cleanup()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_increase_by()
- * @see f_string_dynamic_terminate_after()
  * @see fll_fss_snatch_apart()
  */
 #ifndef _di_fake_build_load_setting_process_

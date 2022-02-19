@@ -49,13 +49,11 @@ extern "C" {
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_append_assure().
  *   Errors (with error bit) from: f_string_dynamic_append_assure().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see f_path_current()
  * @see f_string_append()
  * @see f_string_append_assure()
  * @see f_string_dynamic_append_assure()
- * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_fll_path_canonical_
   extern f_status_t fll_path_canonical(const f_string_static_t path, f_string_dynamic_t *canonical);

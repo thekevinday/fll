@@ -124,6 +124,9 @@ extern "C" {
   const f_string_static_t controller_wish_s = macro_f_string_static_t_initialize(CONTROLLER_wish_s, 0, CONTROLLER_wish_s_length);
   const f_string_static_t controller_with_s = macro_f_string_static_t_initialize(CONTROLLER_with_s, 0, CONTROLLER_with_s_length);
   const f_string_static_t controller_yes_s = macro_f_string_static_t_initialize(CONTROLLER_yes_s, 0, CONTROLLER_yes_s_length);
+
+  const f_string_static_t controller_Entry_s = macro_f_string_static_t_initialize(CONTROLLER_Entry_s, 0, CONTROLLER_Entry_s_length);
+  const f_string_static_t controller_Exit_s = macro_f_string_static_t_initialize(CONTROLLER_Exit_s, 0, CONTROLLER_Exit_s_length);
 #endif // _di_controller_string_s_
 
 #ifdef __cplusplus

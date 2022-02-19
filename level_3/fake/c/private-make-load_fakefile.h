@@ -81,12 +81,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_environment_set().
  *   Errors (with error bit) from: f_string_dynamic_mash_nulless().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: fll_fss_snatch_map_apart().
  *
  * @see f_environment_set()
  * @see f_string_dynamic_mash_nulless()
- * @see f_string_dynamic_terminate_after()
  * @see fll_fss_snatch_map_apart()
  */
 #ifndef _di_fake_make_load_fakefile_setting_define_and_parameter_
@@ -106,12 +104,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_load_fakefile_setting_environment_
@@ -168,11 +164,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append_assure().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see f_string_append_assure()
  * @see f_string_dynamic_partial_append_nulless()
- * @see f_string_dynamic_terminate_after()
  *
  * @see fake_make_load_fakefile_setting_define_and_parameter()
  */

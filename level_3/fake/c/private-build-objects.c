@@ -101,14 +101,6 @@ extern "C" {
             break;
           }
 
-          *status = f_string_dynamic_terminate_after(&destination_path);
-
-          if (F_status_is_error(*status)) {
-            fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
-
-            break;
-          }
-
           *status = f_directory_exists(destination_path);
 
           if (*status == F_false) {

@@ -71,12 +71,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_
@@ -109,12 +107,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
@@ -149,12 +145,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
@@ -179,12 +173,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_append()
  * @see f_string_dynamic_resize()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_set_
@@ -228,7 +220,6 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: fl_environment_path_explode().
  *
  * @see execv()
@@ -239,7 +230,6 @@ extern "C" {
  *
  * @see f_environment_get()
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_terminate_after()
  * @see fl_environment_path_explode()
  */
 #ifndef _di_fll_execute_into_
@@ -320,7 +310,6 @@ extern "C" {
  *   Errors (with error bit) from: f_signal_mask().
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: f_string_dynamics_resize().
  *   Errors (with error bit) from: f_thread_signal_mask().
  *   Errors (with error bit) from: fl_environment_path_explode().
@@ -351,7 +340,6 @@ extern "C" {
  * @see f_limit_process()
  * @see f_signal_mask()
  * @see f_string_dynamic_append()
- * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_resize()
  * @see f_thread_signal_mask()
  * @see fl_control_group_apply()

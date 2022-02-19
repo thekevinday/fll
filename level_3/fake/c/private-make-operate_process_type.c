@@ -1184,14 +1184,6 @@ extern "C" {
         return status;
       }
 
-      status = f_string_dynamic_terminate_after(&data_make->setting_make.parameter.array[data_make->setting_make.parameter.used].name);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-        return status;
-      }
-
       i = data_make->setting_make.parameter.used++;
     }
 
