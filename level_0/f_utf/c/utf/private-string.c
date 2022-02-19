@@ -432,13 +432,13 @@ extern "C" {
 
     for (f_array_length_t i = length; i < triples->size; ++i) {
 
-      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].one);
+      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].a);
       if (F_status_is_error(status)) return status;
 
-      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].two);
+      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].b);
       if (F_status_is_error(status)) return status;
 
-      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].three);
+      status = private_f_utf_string_dynamic_adjust(0, &triples->array[i].c);
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -467,13 +467,13 @@ extern "C" {
 
     for (f_array_length_t i = length; i < triples->size; ++i) {
 
-      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].one);
+      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].a);
       if (F_status_is_error(status)) return status;
 
-      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].two);
+      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].b);
       if (F_status_is_error(status)) return status;
 
-      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].three);
+      status = private_f_utf_string_dynamic_resize(0, &triples->array[i].c);
       if (F_status_is_error(status)) return status;
     } // for
 

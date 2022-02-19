@@ -35,22 +35,22 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
 
-      destination->array[destination->used].one.used = 0;
-      destination->array[destination->used].two.used = 0;
-      destination->array[destination->used].three.used = 0;
+      destination->array[destination->used].a.used = 0;
+      destination->array[destination->used].b.used = 0;
+      destination->array[destination->used].c.used = 0;
 
-      if (source.array[i].one.used) {
-        status = private_f_utf_string_append(source.array[i].one.string, source.array[i].one.used, &destination->array[destination->used].one);
+      if (source.array[i].a.used) {
+        status = private_f_utf_string_append(source.array[i].a.string, source.array[i].a.used, &destination->array[destination->used].a);
         if (F_status_is_error(status)) return status;
       }
 
-      if (source.array[i].two.used) {
-        status = private_f_utf_string_append(source.array[i].two.string, source.array[i].two.used, &destination->array[destination->used].two);
+      if (source.array[i].b.used) {
+        status = private_f_utf_string_append(source.array[i].b.string, source.array[i].b.used, &destination->array[destination->used].b);
         if (F_status_is_error(status)) return status;
       }
 
-      if (source.array[i].three.used) {
-        status = private_f_utf_string_append(source.array[i].three.string, source.array[i].three.used, &destination->array[destination->used].three);
+      if (source.array[i].c.used) {
+        status = private_f_utf_string_append(source.array[i].c.string, source.array[i].c.used, &destination->array[destination->used].c);
         if (F_status_is_error(status)) return status;
       }
     } // for

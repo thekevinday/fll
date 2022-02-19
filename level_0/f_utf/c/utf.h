@@ -7,8 +7,6 @@
  *
  * Provides UTF-8 capabilities.
  *
- * @todo consider is_graph() functions being their own data set (review unicode to see which of checking only for graph() vs checking for all not-graph will be the smaller set).
- *
  * Identifiers:
  *   - UTF_8-1: 1000 0000
  *   - UTF_8-2: 1100 0000

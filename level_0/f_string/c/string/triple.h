@@ -19,39 +19,39 @@ extern "C" {
 /**
  * A string triple consisting of a set of three strings.
  *
- * one:   A string representing the first string in the triple.
- * two:   A string representing the second string in the triple.
- * three: A string representing the third string in the triple.
+ * a: A string representing the first string in the triple.
+ * b: A string representing the second string in the triple.
+ * c: A string representing the third string in the triple.
  */
 #ifndef _di_f_string_triple_t_
   typedef struct {
-    f_string_dynamic_t one;
-    f_string_dynamic_t two;
-    f_string_dynamic_t three;
+    f_string_dynamic_t a;
+    f_string_dynamic_t b;
+    f_string_dynamic_t c;
   } f_string_triple_t;
 
   #define f_string_triple_t_initialize { f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
   #define macro_f_string_triple_t_clear(triple) \
-    triple.one.array = 0; \
-    triple.one.size = 0; \
-    triple.one.used = 0; \
-    triple.two.array = 0; \
-    triple.two.size = 0; \
-    triple.two.used = 0; \
-    triple.three.array = 0; \
-    triple.three.size = 0; \
-    triple.three.used = 0;
+    triple.a.array = 0; \
+    triple.a.size = 0; \
+    triple.a.used = 0; \
+    triple.b.array = 0; \
+    triple.b.size = 0; \
+    triple.b.used = 0; \
+    triple.c.array = 0; \
+    triple.c.size = 0; \
+    triple.c.used = 0;
 
   #define macro_f_string_triple_t_delete_simple(triple) \
-    macro_f_string_dynamic_t_delete_simple(triple.one) \
-    macro_f_string_dynamic_t_delete_simple(triple.two) \
-    macro_f_string_dynamic_t_delete_simple(triple.three)
+    macro_f_string_dynamic_t_delete_simple(triple.a) \
+    macro_f_string_dynamic_t_delete_simple(triple.b) \
+    macro_f_string_dynamic_t_delete_simple(triple.c)
 
   #define macro_f_string_triple_t_destroy_simple(triple) \
-    macro_f_string_dynamic_t_destroy_simple(triple.one) \
-    macro_f_string_dynamic_t_destroy_simple(triple.two) \
-    macro_f_string_dynamic_t_destroy_simple(triple.three)
+    macro_f_string_dynamic_t_destroy_simple(triple.a) \
+    macro_f_string_dynamic_t_destroy_simple(triple.b) \
+    macro_f_string_dynamic_t_destroy_simple(triple.c)
 #endif // _di_f_string_triple_t_
 
 /**
