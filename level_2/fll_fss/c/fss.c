@@ -41,7 +41,7 @@ extern "C" {
       return F_found_not;
     }
 
-    // skip past all NULLs after the '#'.
+    // Skip past all NULLs after the '#'.
     for (++range->start; range->start <= range->stop; ++range->start) {
       if (buffer.string[range->start]) break;
     }
