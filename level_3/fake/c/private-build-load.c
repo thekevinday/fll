@@ -1059,7 +1059,7 @@ extern "C" {
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' may only have a single property, only using the first: '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, settings_single_source[i]->array[0], main->warning.notable);
+            fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, settings_single_source[i]->array[settings_single_source[i]->used - 1], main->warning.notable);
             fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
 
             funlockfile(main->warning.to.stream);
@@ -1067,10 +1067,10 @@ extern "C" {
         }
 
         if (settings_single_type[i] == 1) {
-          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_common_setting_bool_yes_s) == F_equal_to) {
+          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_common_setting_bool_yes_s) == F_equal_to) {
             *settings_single_bool[i] = F_true;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_common_setting_bool_no_s) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_common_setting_bool_no_s) == F_equal_to) {
             *settings_single_bool[i] = F_false;
           }
           else {
@@ -1096,13 +1096,13 @@ extern "C" {
           }
         }
         else if (settings_single_type[i] == 4) {
-          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_language_bash_s) == F_equal_to) {
+          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_bash_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_bash_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_language_c_s) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_c_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_c_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_language_cpp_s) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_cpp_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_type_cpp_e;
           }
           else {
@@ -1130,16 +1130,16 @@ extern "C" {
           }
         }
         else if (settings_single_type[i] == 5) {
-          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_version_major_s) == F_equal_to) {
+          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_major_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_major_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_version_minor_s) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_minor_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_minor_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_version_micro_s) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_micro_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_micro_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[0], fake_build_version_nano_s) == F_equal_to) {
+          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_nano_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_nano_e;
           }
           else {
@@ -1174,7 +1174,7 @@ extern "C" {
           settings_single_destination[i]->used = 0;
 
           if (settings_single_type[i] == 2) {
-            *status = f_path_directory_cleanup(settings_single_source[i]->array[0], settings_single_destination[i]);
+            *status = f_path_directory_cleanup(settings_single_source[i]->array[settings_single_source[i]->used - 1], settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
               fll_error_print(main->error, F_status_set_fine(*status), "f_path_directory_cleanup", F_true);
@@ -1183,7 +1183,7 @@ extern "C" {
             }
           }
           else {
-            *status = f_string_dynamic_increase_by(settings_single_source[i]->array[0].used + 1, settings_single_destination[i]);
+            *status = f_string_dynamic_increase_by(settings_single_source[i]->array[settings_single_source[i]->used - 1].used + 1, settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
               fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
@@ -1191,7 +1191,7 @@ extern "C" {
               break;
             }
 
-            *status = f_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
+            *status = f_string_dynamic_append_nulless(settings_single_source[i]->array[settings_single_source[i]->used - 1], settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
               fll_error_print(main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);

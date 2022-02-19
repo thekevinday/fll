@@ -6,6 +6,7 @@ extern void print_k(void);
 extern void print_e(void);
 
 int main(int argc, char *argv[], char *envp[]) {
+
   print_f();
   print_a();
   print_k();

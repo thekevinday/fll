@@ -18,7 +18,6 @@ modes_default monolithic
 
 build_compiler gcc
 build_compiler-clang clang
-build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
