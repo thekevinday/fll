@@ -1050,22 +1050,6 @@ extern "C" {
 
         if (!settings_single_source[i]->used) continue;
 
-        if (settings_single_source[i]->used > 1) {
-          if (main->warning.verbosity == f_console_verbosity_verbose_e) {
-            flockfile(main->warning.to.stream);
-
-            fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
-            fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
-            fl_print_format("%[' may only have a single property, only using the first: '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, settings_single_source[i]->array[settings_single_source[i]->used - 1], main->warning.notable);
-            fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
-
-            funlockfile(main->warning.to.stream);
-          }
-        }
-
         if (settings_single_type[i] == 1) {
           if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_common_setting_bool_yes_s) == F_equal_to) {
             *settings_single_bool[i] = F_true;
