@@ -1124,7 +1124,7 @@ extern "C" {
         }
 
         if (state_process.block && F_status_is_error(*status)) {
-          state_process.block_result == fake_condition_result_error_e;
+          state_process.block_result = fake_condition_result_error_e;
           success_block = F_false;
         }
       }
@@ -1192,7 +1192,7 @@ extern "C" {
             }
             else {
               state_process.block = fake_state_process_block_if_skip_e;
-              state_process.block_result == fake_condition_result_false_e;
+              state_process.block_result = fake_condition_result_false_e;
             }
           }
           else {
