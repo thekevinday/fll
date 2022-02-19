@@ -31,7 +31,7 @@ extern "C" {
     f_print_dynamic_raw(f_string_eol_s, file.stream);
 
     fll_program_print_help_option(file, context, fss_identify_short_line_s, fss_identify_long_line_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the Identifier at the given line.");
-    fll_program_print_help_option(file, context, fss_identify_short_name_s, fss_identify_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select Object with this name.");
+    fll_program_print_help_option(file, context, fss_identify_short_name_s, fss_identify_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select FSS using this full or partial type name or code.");
     fll_program_print_help_option(file, context, fss_identify_short_total_s, fss_identify_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the total Identifiers found.");
 
     fll_program_print_help_usage(file, context, fss_identify_program_name_s, fll_program_parameter_filenames_s);
@@ -255,10 +255,10 @@ extern "C" {
 
           for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
-            status = f_utf_is_word(data.argv[index].string + i, length, F_true);
+            status = f_utf_is_word_dash(data.argv[index].string + i, length, F_true);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash", F_true);
 
               break;
             }
@@ -269,7 +269,7 @@ extern "C" {
               fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, data.argv[index], main->error.notable);
               fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
               fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
-              fl_print_format("%[' may only contain word characters.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+              fl_print_format("%[' may only contain word characters or the dash (minus)y character.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
               funlockfile(main->error.to.stream);
 
@@ -308,6 +308,7 @@ extern "C" {
         if (!((++signal_check) % fss_identify_signal_check_d)) {
           if (fss_identify_signal_received(main)) {
             status = F_status_set_error(F_interrupt);
+
             break;
           }
 
