@@ -246,13 +246,10 @@ extern "C" {
       data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
 
       if (settings.objects.used) {
-        bool unmatched_fail = F_true;
-        bool unmatched_build = F_true;
-
         for (f_array_length_t i = 0; i < settings.objects.used; ++i) {
 
           if (fl_string_dynamic_partial_compare_string(fake_make_setting_load_build_s.string, data_make->buffer, fake_make_setting_load_build_s.used, settings.objects.array[i]) == F_equal_to) {
-            fake_make_load_fakefile_setting_build(data_make, &settings.objects.array[i], &settings.contents.array[i], &unmatched_build);
+            fake_make_load_fakefile_setting_build(data_make, &settings.objects.array[i], &settings.contents.array[i]);
           }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_compiler_s.string, data_make->buffer, fake_make_setting_compiler_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_compiler(data_make, &settings.objects.array[i], &settings.contents.array[i], &range_compiler);
@@ -262,7 +259,7 @@ extern "C" {
             if (F_status_is_error(*status)) break;
           }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_fail_s.string, data_make->buffer, fake_make_setting_fail_s.used, settings.objects.array[i]) == F_equal_to) {
-            fake_make_load_fakefile_setting_fail(data_make, &settings.objects.array[i], &settings.contents.array[i], &unmatched_fail);
+            fake_make_load_fakefile_setting_fail(data_make, &settings.objects.array[i], &settings.contents.array[i]);
           }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_indexer_s.string, data_make->buffer, fake_make_setting_indexer_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_indexer(data_make, &settings.objects.array[i], &settings.contents.array[i], &range_indexer);
@@ -325,33 +322,25 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_
 
 #ifndef _di_fake_make_load_fakefile_setting_build_
-  void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, bool *unmatched_build) {
+  void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) {
 
-    if (*unmatched_build) {
-      if (content->used) {
-        if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_yes_s.string, data_make->buffer, fake_common_setting_bool_yes_s.used, content->array[0]) == F_equal_to) {
-          data_make->setting_make.load_build = F_true;
-        }
-        else if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_no_s.string, data_make->buffer, fake_common_setting_bool_no_s.used, content->array[0]) == F_equal_to) {
-          data_make->setting_make.load_build = F_false;
-        }
-        else {
-          fake_print_warning_settings_content_invalid(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, content->array[0], fake_make_section_settings_s);
-        }
-
-        *unmatched_build = F_false;
-
-        if (content->used > 1) {
-          fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_load_build_s);
-        }
-
-        return;
+    if (content->used) {
+      if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_yes_s.string, data_make->buffer, fake_common_setting_bool_yes_s.used, content->array[0]) == F_equal_to) {
+        data_make->setting_make.load_build = F_true;
+      }
+      else if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_no_s.string, data_make->buffer, fake_common_setting_bool_no_s.used, content->array[0]) == F_equal_to) {
+        data_make->setting_make.load_build = F_false;
+      }
+      else {
+        fake_print_warning_settings_content_invalid(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, content->array[0], fake_make_section_settings_s);
       }
 
-      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_section_settings_s);
+      if (content->used > 1) {
+        fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_load_build_s);
+      }
     }
     else {
-      fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_load_build_s);
+      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_load_build_s);
     }
   }
 #endif // _di_fake_make_load_fakefile_setting_build_
@@ -359,21 +348,15 @@ extern "C" {
 #ifndef _di_fake_make_load_fakefile_setting_compiler_
   void fake_make_load_fakefile_setting_compiler(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_compiler) {
 
-    if (*range_compiler) {
-      fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_compiler_s);
-
-      return;
-    }
-
     if (content->used) {
-      *range_compiler = &content->array[0];
+      *range_compiler = &content->array[content->used - 1];
 
       if (content->used > 1) {
         fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_compiler_s);
       }
     }
     else {
-      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_section_settings_s);
+      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_compiler_s);
     }
   }
 #endif // _di_fake_make_load_fakefile_setting_compiler_
@@ -560,36 +543,28 @@ extern "C" {
 #endif // _di_fake_make_load_fakefile_setting_environment_
 
 #ifndef _di_fake_make_load_fakefile_setting_fail_
-  void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, bool *unmatched_fail) {
+  void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) {
 
-    if (*unmatched_fail) {
-      if (content->used) {
-        if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_exit_s.string, data_make->buffer, fake_make_operation_argument_exit_s.used, content->array[0]) == F_equal_to) {
-          data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
-        }
-        else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_warn_s.string, data_make->buffer, fake_make_operation_argument_warn_s.used, content->array[0]) == F_equal_to) {
-          data_make->setting_make.fail = fake_make_operation_fail_type_warn_e;
-        }
-        else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_ignore_s.string, data_make->buffer, fake_make_operation_argument_ignore_s.used, content->array[0]) == F_equal_to) {
-          data_make->setting_make.fail = fake_make_operation_fail_type_ignore_e;
-        }
-        else {
-          fake_print_warning_settings_content_invalid(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, content->array[0], fake_make_section_settings_s);
-        }
-
-        if (content->used > 1) {
-          fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_fail_s);
-        }
-
-        *unmatched_fail = F_false;
-
-        return;
+    if (content->used) {
+      if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_exit_s.string, data_make->buffer, fake_make_operation_argument_exit_s.used, content->array[content->used - 1]) == F_equal_to) {
+        data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
+      }
+      else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_warn_s.string, data_make->buffer, fake_make_operation_argument_warn_s.used, content->array[content->used - 1]) == F_equal_to) {
+        data_make->setting_make.fail = fake_make_operation_fail_type_warn_e;
+      }
+      else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_ignore_s.string, data_make->buffer, fake_make_operation_argument_ignore_s.used, content->array[content->used - 1]) == F_equal_to) {
+        data_make->setting_make.fail = fake_make_operation_fail_type_ignore_e;
+      }
+      else {
+        fake_print_warning_settings_content_invalid(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, content->array[content->used - 1], fake_make_section_settings_s);
       }
 
-      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_section_settings_s);
+      if (content->used > 1) {
+        fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_fail_s);
+      }
     }
     else {
-      fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_fail_s);
+      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_fail_s);
     }
   }
 #endif // _di_fake_make_load_fakefile_setting_fail_
@@ -597,21 +572,15 @@ extern "C" {
 #ifndef _di_fake_make_load_fakefile_setting_indexer_
   void fake_make_load_fakefile_setting_indexer(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_indexer) {
 
-    if (*range_indexer) {
-      fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_indexer_s);
-
-      return;
-    }
-
     if (content->used) {
-      *range_indexer = &content->array[0];
+      *range_indexer = &content->array[content->used - 1];
 
       if (content->used > 1) {
         fake_print_warning_settings_content_multiple(data_make->main, data_make->main->file_data_build_fakefile, fake_make_setting_indexer_s);
       }
     }
     else {
-      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_section_settings_s);
+      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_indexer_s);
     }
   }
 #endif // _di_fake_make_load_fakefile_setting_indexer_
@@ -652,7 +621,7 @@ extern "C" {
       }
     }
     else {
-      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_section_settings_s);
+      fake_print_warning_settings_content_empty(data_make->main, data_make->main->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_return_s);
     }
 
     return F_none;

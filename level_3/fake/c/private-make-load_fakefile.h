@@ -43,11 +43,9 @@ extern "C" {
  *   The setting object.
  * @param content
  *   The setting content.
- * @param unmatched_build
- *   Boolean designating whether or not build is matched and processed.
  */
 #ifndef _di_fake_make_load_fakefile_setting_build_
-  extern void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, bool *unmatched_build) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_build_
 
 /**
@@ -123,11 +121,9 @@ extern "C" {
  *   The setting object.
  * @param content
  *   The setting content.
- * @param unmatched_fail
- *   Boolean designating whether or not fail is matched and processed.
  */
 #ifndef _di_fake_make_load_fakefile_setting_fail_
-  extern void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, bool *unmatched_fail) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_fail_
 
 /**
