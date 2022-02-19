@@ -1065,7 +1065,7 @@ extern "C" {
             fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
             fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+            fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' may only have a single property, only using the first: '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, settings_single_source[i]->array[0], main->warning.notable);
             fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
@@ -1090,7 +1090,7 @@ extern "C" {
               fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
               fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+              fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may be either '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_common_setting_bool_yes_s, main->warning.notable);
               fl_print_format("%[' or '%]", main->warning.to.stream, main->warning.context, main->warning.context);
@@ -1122,7 +1122,7 @@ extern "C" {
               fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
               fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+              fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may only be one of '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_language_bash_s, main->warning.notable);
               fl_print_format("%[', '%]", main->warning.to.stream, main->warning.context, main->warning.context);
@@ -1159,7 +1159,7 @@ extern "C" {
               fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
               fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, settings_single_name[i], main->warning.notable);
               fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-              fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+              fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
               fl_print_format("%[' may only be one of '%]", main->warning.to.stream, main->warning.context, main->warning.context);
               fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
               fl_print_format("%[', '%]", main->warning.to.stream, main->warning.context, main->warning.context);
@@ -1227,7 +1227,7 @@ extern "C" {
             fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
             fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_file_s, main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+            fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' is required, defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_micro_s, main->warning.notable);
             fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
@@ -1245,7 +1245,7 @@ extern "C" {
             fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
             fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_setting_name_version_target_s, main->warning.notable);
             fl_print_format("%[' in the file '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-            fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
+            fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, path_file, main->warning.notable);
             fl_print_format("%[' is required, defaulting to '%]", main->warning.to.stream, main->warning.context, main->warning.context);
             fl_print_format("%[%r%]", main->warning.to.stream, main->warning.notable, fake_build_version_major_s, main->warning.notable);
             fl_print_format("%['.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
