@@ -187,14 +187,13 @@ extern "C" {
       }
       else if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[iki_read_parameter_at_e].values.array[main->parameters.array[iki_read_parameter_at_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
+        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, iki_read_long_at_s, argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, iki_read_long_at_s, argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -233,14 +232,13 @@ extern "C" {
       }
       else if (main->parameters.array[iki_read_parameter_line_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[iki_read_parameter_line_e].values.array[main->parameters.array[iki_read_parameter_line_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
+        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, iki_read_long_line_s, argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, iki_read_long_line_s, argv[index]);
 
           status = F_status_set_error(F_parameter);
         }

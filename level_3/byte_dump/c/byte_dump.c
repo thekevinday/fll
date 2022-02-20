@@ -279,11 +279,9 @@ extern "C" {
 
       if (main->parameters.array[byte_dump_parameter_width_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
-
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
+        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           flockfile(main->error.to.stream);
@@ -324,11 +322,9 @@ extern "C" {
 
       if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
-
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
+        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
 
         if (F_status_is_error(status) || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);
@@ -369,11 +365,9 @@ extern "C" {
 
       if (main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
-
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(argv[index].string, range, &number);
+        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
 
         if (F_status_is_error(status) || number < 0 || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);

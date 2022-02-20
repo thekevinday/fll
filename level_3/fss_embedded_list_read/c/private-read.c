@@ -134,12 +134,10 @@ extern "C" {
         }
 
         if (values_type[i] == fss_embedded_list_read_parameter_depth_e || values_type[i] == fss_embedded_list_read_parameter_at_e) {
-          const f_string_range_t range = macro_f_string_range_t_initialize(argv[values_order[i]].used);
-
-          status = fl_conversion_string_to_number_unsigned(argv[values_order[i]].string, range, &number);
+          status = fl_conversion_dynamic_to_number_unsigned(argv[values_order[i]], &number);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_depth_s, argv[values_order[i]]);
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_embedded_list_read_long_depth_s, argv[values_order[i]]);
 
             return status;
           }
@@ -302,12 +300,11 @@ extern "C" {
 
       if (main->parameters.array[fss_embedded_list_read_parameter_select_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[main->parameters.array[fss_embedded_list_read_parameter_select_e].values.used - 1];
-        const f_string_range_t range = macro_f_string_range_t_initialize(main->parameters.arguments.array[index].used);
 
-        status = fl_conversion_string_to_number_unsigned(main->parameters.arguments.array[index].string, range, &select);
+        status = fl_conversion_dynamic_to_number_unsigned(main->parameters.arguments.array[index], &select);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_select_s, main->parameters.arguments.array[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_embedded_list_read_long_select_s, main->parameters.arguments.array[index]);
 
           return status;
         }
@@ -323,12 +320,11 @@ extern "C" {
 
     if (main->parameters.array[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[main->parameters.array[fss_embedded_list_read_parameter_line_e].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(main->parameters.arguments.array[index].used);
 
-      status = fl_conversion_string_to_number_unsigned(main->parameters.arguments.array[index].string, range, &line);
+      status = fl_conversion_dynamic_to_number_unsigned(main->parameters.arguments.array[index], &line);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_line_s, main->parameters.arguments.array[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_embedded_list_read_long_line_s, main->parameters.arguments.array[index]);
 
         return status;
       }

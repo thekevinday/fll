@@ -591,9 +591,7 @@ extern "C" {
             }
 
             if (action->status == F_none) {
-              const f_string_range_t range = macro_f_string_range_t_initialize(action->parameters.array[1].used);
-
-              status = fl_conversion_string_to_number_unsigned(action->parameters.array[1].string, range, &action->number);
+              status = fl_conversion_dynamic_to_number_unsigned(action->parameters.array[1], &action->number);
 
               if (F_status_is_error(status) || status == F_data_not) {
                 action->number = 0;
@@ -606,9 +604,10 @@ extern "C" {
                 }
 
                 if (F_status_set_fine(status) == F_memory_not) {
-                  controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, global.thread);
+                  controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, global.thread);
 
                   status_action = status;
+
                   break;
                 }
 

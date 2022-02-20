@@ -653,7 +653,7 @@ extern "C" {
       status = F_status_set_error(F_failure);
     }
     else {
-      status = fl_conversion_string_to_number_unsigned(arguments.array[i].string, range, &number_left);
+      status = fl_conversion_dynamic_partial_to_number_unsigned(arguments.array[i], range, &number_left);
     }
 
     if (F_status_is_error_not(status)) {
@@ -677,7 +677,7 @@ extern "C" {
             status = F_status_set_error(F_failure);
           }
           else {
-            status = fl_conversion_string_to_number_unsigned(arguments.array[i].string, range, &number_right);
+            status = fl_conversion_dynamic_partial_to_number_unsigned(arguments.array[i], range, &number_right);
           }
         }
         else {

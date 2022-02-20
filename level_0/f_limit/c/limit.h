@@ -10,7 +10,7 @@
 #ifndef _F_limit_h
 #define _F_limit_h
 
-// include pre-requirements
+// Include pre-requirements.
 #define _GNU_SOURCE
 
 // Libc includes.

@@ -55,11 +55,9 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_string_range_t range = macro_f_string_range_t_initialize(value.used);
-
       f_number_unsigned_t number = 0;
 
-      status = fl_conversion_string_to_number_unsigned(value.string, range, &number);
+      status = fl_conversion_dynamic_to_number_unsigned(value, &number);
 
       if (status == F_none) {
         fl_print_format("%[invalid name%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
@@ -133,9 +131,7 @@ extern "C" {
 #ifndef _di_status_code_convert_number_
   f_status_t status_code_convert_number(fll_program_data_t * const main, const f_string_static_t value, f_number_unsigned_t *number) {
 
-    const f_string_range_t range = macro_f_string_range_t_initialize(value.used);
-
-    f_status_t status = fl_conversion_string_to_number_unsigned(value.string, range, number);
+    f_status_t status = fl_conversion_dynamic_to_number_unsigned(value, number);
 
     if (*number > F_status_size_max_with_signal) {
       fl_print_format("%[out of range%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);

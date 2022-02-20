@@ -50,11 +50,9 @@ extern "C" {
 #ifndef _di_fake_make_get_id_group_
   f_status_t fake_make_get_id_group(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, gid_t *id) {
 
-    const f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
-
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
+    f_status_t status = fl_conversion_dynamic_to_number_unsigned(buffer, &number);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -84,7 +82,7 @@ extern "C" {
         return F_none;
       }
 
-      fll_error_print(print, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true);
+      fll_error_print(print, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true);
       return F_status_set_error(status);
     }
     else if (number > F_type_size_32_unsigned_d) {
@@ -141,11 +139,9 @@ extern "C" {
 #ifndef _di_fake_make_get_id_owner_
   f_status_t fake_make_get_id_owner(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, uid_t *id) {
 
-    const f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
-
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
+    f_status_t status = fl_conversion_dynamic_to_number_unsigned(buffer, &number);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -175,7 +171,7 @@ extern "C" {
         return F_none;
       }
 
-      fll_error_print(print, status, "fl_conversion_string_to_number_unsigned", F_true);
+      fll_error_print(print, status, "fl_conversion_dynamic_to_number_unsigned", F_true);
       return F_status_set_error(status);
     }
     else if (number > F_type_size_32_unsigned_d) {

@@ -16,7 +16,7 @@
 #ifndef _FL_control_group_h
 #define _FL_control_group_h
 
-// include pre-requirements
+// Include pre-requirements.
 #define _GNU_SOURCE
 
 // Libc includes.

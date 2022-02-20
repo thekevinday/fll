@@ -83,10 +83,10 @@ extern "C" {
  *   F_true on match.
  *   F_false on no match.
  *
- *   Errors (with error bit) from fl_conversion_string_to_hexidecimal_unsigned().
+ *   Errors (with error bit) from fl_conversion_dynamic_partial_to_hexidecimal_unsigned().
  *   Errors (with error bit) from fl_string_dynamic_compare_string().
  *
- * @see fl_conversion_string_to_hexidecimal_unsigned()
+ * @see fl_conversion_dynamic_partial_to_hexidecimal_unsigned()
  * @see fl_string_dynamic_compare_string()
  */
 #ifndef _di_fss_identify_process_name_compare_

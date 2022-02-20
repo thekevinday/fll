@@ -61,13 +61,13 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: fl_string_rip().
- *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
  *
  *   Errors (with error bit) from: fss_basic_list_read_depths_resize().
  *
  * @see f_string_append()
  * @see fl_string_rip()
- * @see fl_conversion_string_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_number_unsigned()
  *
  * @see fss_basic_list_read_depths_resize()
  */
@@ -139,9 +139,9 @@ extern "C" {
  *   F_true on success and the parameter was found (and is valid).
  *   F_false on success and the parameter was not found.
  *
- *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
  *
- * @see fl_conversion_string_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_number_unsigned()
  *
  * @see fss_basic_list_read_depths_resize()
  */

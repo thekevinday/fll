@@ -13,7 +13,7 @@
 #ifndef _FLL_execute_h
 #define _FLL_execute_h
 
-// include pre-requirements
+// Include pre-requirements.
 #define _GNU_SOURCE
 
 // Libc includes.
