@@ -75,7 +75,7 @@ extern "C" {
  * @see f_iki_read()
  */
 #ifndef _di_fl_iki_read_
-  extern f_status_t fl_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_iki_delimits_t *delimits);
+  extern f_status_t fl_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_variable_t * const variable, f_iki_vocabulary_t * const vocabulary, f_iki_content_t * const content, f_iki_delimits_t * const delimits);
 #endif // _di_fl_iki_read_
 
 #ifdef __cplusplus

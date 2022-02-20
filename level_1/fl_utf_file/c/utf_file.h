@@ -28,14 +28,14 @@ extern "C" {
 /**
  * Read until EOF is reached.
  *
- * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ * To check how much was read into the destination, record destination->used before execution and compare to destination->used after execution.
  *
  * @param file
  *   The file to read.
  *   The file must already be open.
- * @param buffer
- *   The buffer the file is being read into.
- *   The contents of the file is appended into this buffer.
+ * @param destination
+ *   The destination the file is being read into.
+ *   The contents of the file is appended into this destination.
  *
  * @return
  *   F_none on success.
@@ -56,20 +56,20 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_fl_utf_file_read_
-  extern f_status_t fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t *buffer);
+  extern f_status_t fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t * const destination);
 #endif // _di_fl_utf_file_read_
 
 /**
  * Read until a single block is filled or EOF is reached.
  *
- * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ * To check how much was read into the destination, record destination->used before execution and compare to destination->used after execution.
  *
  * @param file
  *   The file to read.
  *   The file must already be open.
- * @param buffer
- *   The buffer the file is being read into.
- *   The contents of the file is appended into this buffer.
+ * @param destination
+ *   The destination the file is being read into.
+ *   The contents of the file is appended into this destination.
  *
  * @return
  *   F_none on success.
@@ -90,21 +90,21 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_fl_utf_file_read_block_
-  extern f_status_t fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t *buffer);
+  extern f_status_t fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t * const destination);
 #endif // _di_fl_utf_file_read_block_
 
 /**
- * Read until a given number or EOF is reached, storing it in the buffer.
+ * Read until a given number or EOF is reached, storing it in the destination.
  *
- * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ * To check how much was read into the destination, record destination->used before execution and compare to destination->used after execution.
  *
  * @param file
  *   The file to read.
  *   The file must already be open.
  * @param total
  *   The total bytes to read, unless EOF is reached first.
- * @param buffer
- *   The buffer the file is being read into.
+ * @param destination
+ *   The destination the file is being read into.
  *
  * @return
  *   F_none on success.
@@ -125,23 +125,23 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_fl_utf_file_read_until_
-  extern f_status_t fl_utf_file_read_until(const f_file_t file, const f_array_length_t total, f_utf_string_dynamic_t *buffer);
+  extern f_status_t fl_utf_file_read_until(const f_file_t file, const f_array_length_t total, f_utf_string_dynamic_t * const destination);
 #endif // _di_fl_utf_file_read_until_
 
 /**
- * Write until entire buffer is written.
+ * Write until entire destination is written.
  *
  * @param file
  *   The file to write to.
  *   The file must already be open.
- * @param buffer
- *   The buffer to write to the file.
+ * @param destination
+ *   The destination to write to the file.
  * @param written
  *   The total bytes written.
  *
  * @return
  *   F_none on success.
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_none_eos on success but range.stop exceeded destination.used (only wrote up to destination.used).
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_complete_not_utf_stop if max write was reached but was unable to completely write a given UTF-8 block (incomplete UTF-8 is not written, not even partially).
  *
@@ -158,25 +158,25 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_
-  extern f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_array_length_t *written);
+  extern f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t destination, f_array_length_t * const written);
 #endif // _di_fl_utf_file_write_
 
 /**
- * Write until a single block is filled or entire buffer is written.
+ * Write until a single block is filled or entire destination is written.
  *
- * To check how much was write into the buffer, record buffer->used before execution and compare to buffer->used after execution.
+ * To check how much was write into the destination, record destination->used before execution and compare to destination->used after execution.
  *
  * @param file
  *   The file to write to.
  *   The file must already be open.
- * @param buffer
- *   The buffer to write to the file.
+ * @param destination
+ *   The destination to write to the file.
  * @param written
  *   The total bytes written.
  *
  * @return
  *   F_none on success.
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_none_eos on success but range.stop exceeded destination.used (only wrote up to destination.used).
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_complete_not_utf_stop if max write was reached but was unable to completely write a given UTF-8 block (incomplete UTF-8 is not written, not even partially).
  *
@@ -193,25 +193,25 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_block_
-  extern f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_array_length_t *written);
+  extern f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t destination, f_array_length_t * const written);
 #endif // _di_fl_utf_file_write_block_
 
 /**
- * Write until a given number or entire buffer is written.
+ * Write until a given number or entire destination is written.
  *
  * @param file
  *   The file to write to.
  *   The file must already be open.
- * @param buffer
- *   The buffer to write to the file.
+ * @param destination
+ *   The destination to write to the file.
  * @param total
- *   The total bytes to write, unless end of buffer is reached first.
+ *   The total bytes to write, unless end of destination is reached first.
  * @param written
  *   The total bytes written.
  *
  * @return
  *   F_none on success.
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_none_eos on success but range.stop exceeded destination.used (only wrote up to destination.used).
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_complete_not_utf_stop if max write was reached but was unable to completely write a given UTF-8 block (incomplete UTF-8 is not written, not even partially).
  *
@@ -228,25 +228,25 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_until_
-  extern f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_array_length_t total, f_array_length_t *written);
+  extern f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t destination, const f_array_length_t total, f_array_length_t * const written);
 #endif // _di_fl_utf_file_write_until_
 
 /**
- * Write a given range within the buffer.
+ * Write a given range within the destination.
  *
  * @param file
  *   The file to write to.
  *   The file must already be open.
- * @param buffer
- *   The buffer to write to the file.
+ * @param destination
+ *   The destination to write to the file.
  * @param range
- *   An inclusive start an stop range within the buffer to read.
+ *   An inclusive start an stop range within the destination to read.
  * @param written
  *   The total bytes written.
  *
  * @return
  *   F_none on success.
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_none_eos on success but range.stop exceeded destination.used (only wrote up to destination.used).
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_complete_not_utf_stop if max write was reached but was unable to completely write a given UTF-8 block (incomplete UTF-8 is not written, not even partially).
  *
@@ -263,7 +263,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_range_
-  extern f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_string_range_t range, f_array_length_t *written);
+  extern f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written);
 #endif // _di_fl_utf_file_write_range_
 
 #ifdef __cplusplus

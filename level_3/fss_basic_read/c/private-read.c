@@ -126,7 +126,7 @@ extern "C" {
           data->depths.array[i].index_name = main->parameters.array[fss_basic_read_parameter_name_e].values.array[position_name];
 
           if (main->parameters.array[fss_basic_read_parameter_trim_e].result == f_console_result_found_e) {
-            status = fl_string_rip(data->argv[data->depths.array[i].index_name].string, data->argv[data->depths.array[i].index_name].used, &data->depths.array[i].value_name);
+            status = fl_string_dynamic_rip(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
           else {
             status = f_string_dynamic_append(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);

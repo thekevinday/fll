@@ -32,7 +32,7 @@ extern "C" {
 #endif // _di_FLL_fss_status_string_
 
 #ifndef _di_fll_fss_status_string_from_
-  f_status_t fll_fss_status_string_from(const f_string_static_t name, f_status_t *code) {
+  f_status_t fll_fss_status_string_from(const f_string_static_t name, f_status_t * const code) {
     #ifndef _di_level_2_parameter_checking_
       if (!code) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -139,7 +139,7 @@ extern "C" {
 #endif // _di_fll_fss_status_string_from_
 
 #ifndef _di_fll_fss_status_string_to_
-  f_status_t fll_fss_status_string_to(const f_status_t code, f_string_static_t *name) {
+  f_status_t fll_fss_status_string_to(const f_status_t code, f_string_static_t * const name) {
     #ifndef _di_level_2_parameter_checking_
       if (!name) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_

@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_object_read_
-  f_status_t fl_fss_basic_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_basic_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quote, f_fss_delimits_t * const delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -20,8 +20,6 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       delimits->used = delimits_used;
-
-      return status;
     }
 
     return status;
@@ -29,7 +27,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_read_
 
 #ifndef _di_fl_fss_basic_content_read_
-  f_status_t fl_fss_basic_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_basic_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_content_t * const found, f_fss_delimits_t * const delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -65,6 +63,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_interrupt) {
           status = F_status_set_error(F_interrupt);
+
           break;
         }
       }
@@ -93,7 +92,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_content_read_
 
 #ifndef _di_fl_fss_basic_object_write_
-  f_status_t fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -136,6 +135,7 @@ extern "C" {
 
         if (F_status_is_error(status2)) {
           destination->used = destination_used;
+
           return status2;
         }
 
@@ -152,7 +152,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_write_
 
 #ifndef _di_fl_fss_basic_content_write_
-  f_status_t fl_fss_basic_content_write(const f_string_static_t content, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_basic_content_write(const f_string_static_t content, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -165,7 +165,7 @@ extern "C" {
 
     if (range->start > range->stop || range->start >= content.used) {
 
-      // content should be terminated, even if empty.
+      // Content should be terminated, even if empty.
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
         status = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status)) return status;
@@ -180,7 +180,7 @@ extern "C" {
       return F_data_not_eos;
     }
 
-    // ensure that there is room for the potential terminating newline.
+    // Ensure that there is room for the potential terminating newline.
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 1, destination);
     if (F_status_is_error(status)) return status;
 
@@ -202,9 +202,7 @@ extern "C" {
         return F_status_set_error(F_none_eol);
       }
 
-      if (content.string[range->start] == f_fss_delimit_placeholder_s.string[0]) {
-        continue;
-      }
+      if (content.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
 
       destination->string[destination->used++] = content.string[range->start];
     } // for

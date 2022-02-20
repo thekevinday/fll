@@ -10,6 +10,7 @@
 #ifndef _FL_environment_h
 #define _FL_environment_h
 
+// Libc includes.
 #include <stdio.h>
 #include <sys/stat.h>
 
@@ -54,7 +55,7 @@ extern "C" {
  * @see f_string_maps_increase_by()
  */
 #ifndef _di_fl_environment_load_name_
-  extern f_status_t fl_environment_load_name(const f_string_static_t name, f_string_maps_t *environment);
+  extern f_status_t fl_environment_load_name(const f_string_static_t name, f_string_maps_t * const environment);
 #endif // _di_fl_environment_load_name_
 
 /**
@@ -87,7 +88,7 @@ extern "C" {
  * @see f_string_maps_increase_by()
  */
 #ifndef _di_fl_environment_load_names_
-  extern f_status_t fl_environment_load_names(const f_string_statics_t names, f_string_maps_t *environment);
+  extern f_status_t fl_environment_load_names(const f_string_statics_t names, f_string_maps_t * const environment);
 #endif // _di_fl_environment_load_names_
 
 /**
@@ -117,7 +118,7 @@ extern "C" {
  * @see f_string_dynamics_increase_by()
  */
 #ifndef _di_fl_environment_path_explode_
-  extern f_status_t fl_environment_path_explode(const f_string_static_t path, f_string_dynamics_t *paths);
+  extern f_status_t fl_environment_path_explode(const f_string_static_t path, f_string_dynamics_t * const paths);
 #endif // _di_fl_environment_path_explode_
 
 /**
@@ -149,7 +150,7 @@ extern "C" {
  * @see f_string_dynamics_increase_by()
  */
 #ifndef _di_fl_environment_path_explode_reverse_
-  extern f_status_t fl_environment_path_explode_reverse(const f_string_static_t path, f_string_dynamics_t *paths);
+  extern f_status_t fl_environment_path_explode_reverse(const f_string_static_t path, f_string_dynamics_t * const paths);
 #endif // _di_fl_environment_path_explode_reverse_
 
 #ifdef __cplusplus

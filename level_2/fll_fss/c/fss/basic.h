@@ -80,7 +80,7 @@ extern "C" {
  * @see fl_fss_basic_object_read()
  */
 #ifndef _di_fll_fss_basic_read_
-  extern f_status_t fll_fss_basic_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits);
+  extern f_status_t fll_fss_basic_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_fss_quotes_t * const objects_quoted, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits);
 #endif // _di_fll_fss_basic_read_
 
 /**
@@ -127,7 +127,7 @@ extern "C" {
  * @see fl_fss_basic_object_write()
  */
 #ifndef _di_fll_fss_basic_write_string_
-  extern f_status_t fll_fss_basic_write_string(const f_string_static_t object, const f_string_static_t content, const f_fss_quote_t quote, f_state_t state, f_string_dynamic_t *destination);
+  extern f_status_t fll_fss_basic_write_string(const f_string_static_t object, const f_string_static_t content, const f_fss_quote_t quote, f_state_t state, f_string_dynamic_t * const destination);
 #endif // _di_fll_fss_basic_write_string_
 
 #ifdef __cplusplus

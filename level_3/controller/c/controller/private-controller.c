@@ -33,7 +33,7 @@ extern "C" {
 #ifndef _di_controller_string_dynamic_rip_nulless_terminated_
   f_status_t controller_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
 
-    return fl_string_dynamic_rip_nulless(source, range, destination);
+    return fl_string_dynamic_partial_rip_nulless(source, range, destination);
   }
 #endif // _di_controller_string_dynamic_rip_nulless_terminated_
 

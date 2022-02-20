@@ -491,8 +491,8 @@ extern "C" {
   }
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
 
-#if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
-  f_status_t private_fl_string_rip_find_range(const f_string_t source, f_array_length_t *start, f_array_length_t *stop) {
+#if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_)
+  f_status_t private_fl_string_rip_find_range(const f_string_t source, f_array_length_t * const start, f_array_length_t * const stop) {
 
     const f_array_length_t stop_original = *stop;
 
@@ -503,7 +503,7 @@ extern "C" {
     // Skip past leading whitespace.
     for (; *start <= *stop; *start += width) {
 
-      // skip past NULL.
+      // Skip past NULL.
       while (*start < *stop && !source[*start]) ++(*start);
       if (*start > *stop) break;
 
@@ -524,14 +524,14 @@ extern "C" {
 
     for (; *stop > *start; --(*stop)) {
 
-      // skip past NULL.
+      // Skip past NULL.
       while (*stop > *start && !source[*stop]) --(*stop);
 
       if (!source[*stop]) continue;
       if (*stop == *start) break;
 
-      // each UTF-8 character of width 1 is an incomplete part.
-      // go left until either width is 0 (ascii, or > 1) to determine the character.
+      // Each UTF-8 character of width 1 is an incomplete part.
+      // Go left until either width is 0 (ascii, or > 1) to determine the character.
       for (;;) {
 
         width = macro_f_utf_byte_width_is(source[*stop]);
@@ -579,7 +579,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
+#endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_)
 
 #ifdef __cplusplus
 } // extern "C"

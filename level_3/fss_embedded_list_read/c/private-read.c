@@ -171,10 +171,10 @@ extern "C" {
           depths->array[depths->used].value_name.used = 0;
 
           if (main->parameters.array[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
-            status = fl_string_rip(argv[values_order[i]].string, argv[values_order[i]].used, &depths->array[depths->used].value_name);
+            status = fl_string_dynamic_rip(argv[values_order[i]], &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "fl_string_rip", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "fl_string_dynamic_rip", F_true);
 
               return status;
             }

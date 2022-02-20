@@ -88,7 +88,7 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  */
 #ifndef _di_fake_signal_state_interrupt_fss_
-  extern f_status_t fake_signal_state_interrupt_fss(void *state, void *internal) F_attribute_visibility_internal_d;
+  extern f_status_t fake_signal_state_interrupt_fss(void * const state, void * const internal) F_attribute_visibility_internal_d;
 #endif // _di_fake_signal_state_interrupt_fss_
 
 /**
@@ -105,7 +105,7 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  */
 #ifndef _di_fake_signal_state_interrupt_iki_
-  extern f_status_t fake_signal_state_interrupt_iki(void *state, void *internal) F_attribute_visibility_internal_d;
+  extern f_status_t fake_signal_state_interrupt_iki(void * const state, void * const internal) F_attribute_visibility_internal_d;
 #endif // _di_fake_signal_state_interrupt_iki_
 
 /**

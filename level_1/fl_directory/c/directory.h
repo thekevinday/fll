@@ -294,7 +294,7 @@ extern "C" {
  * @see f_string_dynamics_increase_by()
  */
 #ifndef _di_fl_directory_list_
-  extern f_status_t fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing);
+  extern f_status_t fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing);
 #endif // _di_fl_directory_list_
 
 /**
@@ -318,7 +318,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_control().
  */
 #ifndef _di_fl_directory_path_pop_
-  extern f_status_t fl_directory_path_pop(f_string_static_t *path);
+  extern f_status_t fl_directory_path_pop(f_string_static_t * const path);
 #endif // _di_fl_directory_path_pop_
 
 /**
@@ -345,7 +345,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_control().
  */
 #ifndef _di_fl_directory_path_push_
-  extern f_status_t fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_fl_directory_path_push_
 
 #ifdef __cplusplus

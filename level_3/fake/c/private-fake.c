@@ -509,7 +509,7 @@ extern "C" {
 #endif // _di_fake_process_console_parameters_
 
 #ifndef _di_fake_signal_state_interrupt_fss_
-  f_status_t fake_signal_state_interrupt_fss(void *state, void *internal) {
+  f_status_t fake_signal_state_interrupt_fss(void * const state, void * const internal) {
 
     if (!state) {
       return F_interrupt_not;
@@ -536,7 +536,7 @@ extern "C" {
 #endif // _di_fake_signal_state_interrupt_fss_
 
 #ifndef _di_fake_signal_state_interrupt_iki_
-  f_status_t fake_signal_state_interrupt_iki(void *state, void *internal) {
+  f_status_t fake_signal_state_interrupt_iki(void * const state, void * const internal) {
 
     if (!state) {
       return F_interrupt_not;

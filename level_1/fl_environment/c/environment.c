@@ -5,10 +5,10 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_environment_load_name_
-  f_status_t fl_environment_load_name(const f_string_static_t name, f_string_maps_t *environment) {
-    #ifndef _di_level_2_parameter_checking_
+  f_status_t fl_environment_load_name(const f_string_static_t name, f_string_maps_t * const environment) {
+    #ifndef _di_level_1_parameter_checking_
       if (!environment) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameter_checking_
+    #endif // _di_level_1_parameter_checking_
 
     if (!name.used) {
       return F_data_not;
@@ -40,10 +40,10 @@ extern "C" {
 #endif // _di_fl_environment_load_name_
 
 #ifndef _di_fl_environment_load_names_
-  f_status_t fl_environment_load_names(const f_string_statics_t names, f_string_maps_t *environment) {
-    #ifndef _di_level_2_parameter_checking_
+  f_status_t fl_environment_load_names(const f_string_statics_t names, f_string_maps_t * const environment) {
+    #ifndef _di_level_1_parameter_checking_
       if (!environment) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameter_checking_
+    #endif // _di_level_1_parameter_checking_
 
     if (!names.used) {
       return F_data_not;
@@ -79,10 +79,10 @@ extern "C" {
 #endif // _di_fl_environment_load_names_
 
 #ifndef _di_fl_environment_path_explode_
-  f_status_t fl_environment_path_explode(const f_string_static_t path, f_string_dynamics_t *paths) {
-    #ifndef _di_level_0_parameter_checking_
+  f_status_t fl_environment_path_explode(const f_string_static_t path, f_string_dynamics_t * const paths) {
+    #ifndef _di_level_1_parameter_checking_
       if (!paths) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+    #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 
@@ -156,10 +156,10 @@ extern "C" {
 #endif // _di_fl_environment_path_explode_
 
 #ifndef _di_fl_environment_path_explode_reverse_
-  f_status_t fl_environment_path_explode_reverse(const f_string_static_t path, f_string_dynamics_t *paths) {
-    #ifndef _di_level_0_parameter_checking_
+  f_status_t fl_environment_path_explode_reverse(const f_string_static_t path, f_string_dynamics_t * const paths) {
+    #ifndef _di_level_1_parameter_checking_
       if (!paths) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+    #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 

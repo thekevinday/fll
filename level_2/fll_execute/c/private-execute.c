@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
-  f_status_t private_fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t *arguments) {
+  f_status_t private_fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t * const arguments) {
 
     arguments->array[arguments->used].used = 0;
 
@@ -23,7 +23,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
 
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
-  f_status_t private_fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments) {
+  f_status_t private_fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t * const arguments) {
 
     arguments->array[arguments->used].used = 0;
 
@@ -53,7 +53,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) {
+  f_status_t private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int * const result) {
 
     if (as.nice) {
       errno = 0;
@@ -125,13 +125,13 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, char *result) {
+  f_status_t private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, const f_string_static_t *result) {
 
     if (as.affinity && as.affinity->used) {
       cpu_set_t *set = CPU_ALLOC(as.affinity->used);
 
       if (set == 0) {
-        result[0] = '1';
+        result = &f_string_ascii_1_s;
 
         return F_status_set_error(F_processor);
       }
@@ -149,7 +149,7 @@ extern "C" {
       CPU_FREE(set);
 
       if (response == -1) {
-        result[0] = '1';
+        result = &f_string_ascii_1_s;
 
         return F_status_set_error(F_processor);
       }
@@ -157,7 +157,7 @@ extern "C" {
 
     if (as.control_group) {
       if (F_status_is_error(fl_control_group_apply(*as.control_group, id_child))) {
-        result[0] = '1';
+        result = &f_string_ascii_1_s;
 
         return F_status_set_error(F_control_group);
       }
@@ -170,7 +170,7 @@ extern "C" {
       errno = 0;
 
       if (sched_setscheduler(id_child, as.scheduler->policy, &parameter_schedule) == -1) {
-        result[0] = '1';
+        result = &f_string_ascii_1_s;
 
         return F_status_set_error(F_schedule);
       }
@@ -180,7 +180,7 @@ extern "C" {
       for (f_array_length_t i = 0; i < as.limits->used; ++i) {
 
         if (F_status_is_error(f_limit_process(id_child, as.limits->array[i].type, &as.limits->array[i].value, 0))) {
-          result[0] = '1';
+          result = &f_string_ascii_1_s;
 
           return F_status_set_error(F_limit);
         }
@@ -192,7 +192,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_fork(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
+  f_status_t private_fll_execute_fork(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void * const result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -221,20 +221,13 @@ extern "C" {
 
         // Have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
         {
-          char string_result[2] = { '0', 0 };
-
+          const f_string_static_t *string_result = &f_string_ascii_0_s;
           const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], F_file_flag_write_only_d);
-
-          f_string_static_t buffer = f_string_static_t_initialize;
-
-          buffer.string = string_result;
-          buffer.used = 1;
-          buffer.size = 2;
 
           const f_status_t status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
 
           // Inform the child that it can now safely begin (or exit).
-          f_file_write(file, buffer, 0);
+          f_file_write(file, *string_result, 0);
 
           // Close the write pipe for the parent when finished writing.
           close(descriptors[1]);
@@ -285,7 +278,7 @@ extern "C" {
 
       f_file_read_block(file, &response);
 
-      if (!response.used || response.string[0] == '1') {
+      if (!response.used || response.string[0] == f_string_ascii_1_s.string[0]) {
         f_string_dynamic_resize(0, &response);
 
         close(descriptors[0]);
@@ -381,7 +374,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_fork_data(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
+  f_status_t private_fll_execute_fork_data(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void * const result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -404,7 +397,7 @@ extern "C" {
       close(descriptors[0]);
 
       {
-        char string_result[2] = { '0', 0 };
+        const f_string_static_t *string_result = &f_string_ascii_0_s;
 
         const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], F_file_flag_write_only_d);
 
@@ -412,22 +405,16 @@ extern "C" {
 
         // Have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
         if (as) {
-          f_string_static_t buffer = f_string_static_t_initialize;
-
-          buffer.string = string_result;
-          buffer.used = 1;
-          buffer.size = 2;
-
           status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
 
           // Inform the child that it can now safely begin (or exit).
-          if (F_status_is_error(f_file_write(file, buffer, 0))) {
-            string_result[0] = '1';
+          if (F_status_is_error(f_file_write(file, *string_result, 0))) {
+            string_result = &f_string_ascii_1_s;
           }
         }
 
         // Write all data, if child doesn't read this could block until child closes the pipe.
-        if (string_result[0] == '0') {
+        if (string_result->string[0] == f_string_ascii_0_s.string[0]) {
           f_file_write(file, *parameter->data, 0);
         }
 
@@ -479,7 +466,7 @@ extern "C" {
 
       f_file_read_block(file, &response);
 
-      if (!response.used || response.string[0] == '1') {
+      if (!response.used || response.string[0] == f_string_ascii_1_s.string[0]) {
         f_string_dynamic_resize(0, &response);
 
         close(descriptors[0]);

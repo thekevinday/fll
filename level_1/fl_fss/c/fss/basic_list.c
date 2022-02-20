@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_list_object_read_
-  f_status_t fl_fss_basic_list_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_object_t *found, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_basic_list_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_delimits_t * const delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -274,7 +274,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_list_object_read_
 
 #ifndef _di_fl_fss_basic_list_content_read_
-  f_status_t fl_fss_basic_list_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments) {
+  f_status_t fl_fss_basic_list_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_content_t * const found, f_fss_delimits_t * const delimits, f_fss_comments_t * const comments) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -347,11 +347,8 @@ extern "C" {
             }
           }
 
-          if (buffer.string[range->start] == f_fss_delimit_placeholder_s.string[0]) {
-            continue;
-          } else if (buffer.string[range->start] != f_fss_delimit_slash_s.string[0]) {
-            break;
-          }
+          if (buffer.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
+          if (buffer.string[range->start] != f_fss_delimit_slash_s.string[0]) break;
 
           ++slash_count;
         } // for
@@ -473,6 +470,7 @@ extern "C" {
 
           if (newline_last == found->array[found->used].start && buffer.string[found->array[found->used].start] != f_fss_eol_s.string[0]) {
             range->start = newline_last;
+
             return F_fss_found_content_not;
           }
           else {
@@ -549,7 +547,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_list_content_read_
 
 #ifndef _di_fl_fss_basic_list_object_write_
-  f_status_t fl_fss_basic_list_object_write(const f_string_static_t object, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_basic_list_object_write(const f_string_static_t object, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -676,11 +674,8 @@ extern "C" {
             }
           }
 
-          if (object.string[range->start] == f_fss_delimit_placeholder_s.string[0]) {
-            continue;
-          } else if (object.string[range->start] != f_fss_delimit_slash_s.string[0]) {
-            break;
-          }
+          if (object.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
+          if (object.string[range->start] != f_fss_delimit_slash_s.string[0]) break;
 
           ++slash_count;
         } // for
@@ -700,9 +695,7 @@ extern "C" {
           destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
         } // while
 
-        if (range->start > range->stop || range->start >= object.used) {
-          break;
-        }
+        if (range->start > range->stop || range->start >= object.used) break;
       }
 
       if (object.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {

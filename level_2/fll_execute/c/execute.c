@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_execute_arguments_add_
-  f_status_t fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t * const arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -22,7 +22,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_
 
 #ifndef _di_fll_execute_arguments_add_parameter_
-  f_status_t fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t * const arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -38,7 +38,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_parameter_
 
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t * const arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -55,7 +55,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 #ifndef _di_fll_execute_arguments_add_set_
-  f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t * const arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -72,7 +72,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_set_
 
 #ifndef _di_fll_execute_into_
-  f_status_t fll_execute_into(const f_string_static_t program, const f_string_statics_t arguments, const uint8_t option, const f_string_maps_t *environment, int *result) {
+  f_status_t fll_execute_into(const f_string_static_t program, const f_string_statics_t arguments, const uint8_t option, const f_string_maps_t *environment, int * const result) {
     #ifndef _di_level_2_parameter_checking_
       if (!program.used && !arguments.used) return F_status_set_error(F_parameter);
       if (!result) return F_status_set_error(F_parameter);
@@ -268,7 +268,7 @@ extern "C" {
 #endif // _di_fll_execute_into_
 
 #ifndef _di_fll_execute_program_
-  f_status_t fll_execute_program(const f_string_static_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
+  f_status_t fll_execute_program(const f_string_static_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void * const result) {
     #ifndef _di_level_2_parameter_checking_
       if (!program.used && !arguments.used) return F_status_set_error(F_parameter);
       if (!result) return F_status_set_error(F_parameter);

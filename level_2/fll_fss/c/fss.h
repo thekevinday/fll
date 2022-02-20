@@ -39,7 +39,7 @@ extern "C" {
  * This expects there to be at least a single "fss-XXXX" FSS Identifier.
  * If one is not found but the line contains valid FLL Identifiers, then this returns F_maybe.
  *
- * See the fl_string_fll_identify() function for details on individual FLL/FSS Identifier processing.
+ * See the fl_string_dynamic_partial_fll_identify() function for details on individual FLL/FSS Identifier processing.
  *
  * @param buffer
  *   The string to process.
@@ -67,14 +67,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_fll_ids_increase().
  *   Errors (with error bit) from: f_utf_is_whitespace().
- *   Errors (with error bit) from: fl_string_fll_identify().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_fll_identify().
  *
  * @see f_fll_ids_increase()
  * @see f_utf_is_whitespace()
- * @see fl_string_fll_identify()
+ * @see fl_string_dynamic_partial_fll_identify()
  */
 #ifndef _di_fll_fss_identify_
-  extern f_status_t fll_fss_identify(const f_string_static_t buffer, f_string_range_t *range, f_fll_ids_t *ids);
+  extern f_status_t fll_fss_identify(const f_string_static_t buffer, f_string_range_t * const range, f_fll_ids_t * const ids);
 #endif // _di_fll_fss_identify_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_
-  extern f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_dynamic_t * const values[], bool matches[], f_array_length_t * const indexs[]);
 #endif // _di_fll_fss_snatch_
 
 /**
@@ -168,7 +168,7 @@ extern "C" {
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_apart_
-  extern f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_dynamics_t * const values[], bool matches[], f_array_lengths_t * const indexs[]);
 #endif // _di_fll_fss_snatch_apart_
 
 /**
@@ -218,7 +218,7 @@ extern "C" {
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_map_
-  extern f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_maps_t * const values[], bool matches[], f_array_lengths_t * const indexs[]);
 #endif // _di_fll_fss_snatch_map_
 
 /**
@@ -270,7 +270,7 @@ extern "C" {
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_map_apart_
-  extern f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, f_string_map_multis_t * const values[], bool matches[], f_array_lengths_t * const indexs[]);
 #endif // _di_fll_fss_snatch_map_apart_
 
 /**
@@ -320,7 +320,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  */
 #ifndef _di_fll_fss_snatch_map_mash_
-  extern f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t * const values[], bool matches[], f_array_lengths_t * const indexs[]);
 #endif // _di_fll_fss_snatch_map_mash_
 
 /**
@@ -374,7 +374,7 @@ extern "C" {
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_map_mash_apart_
-  extern f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_map_multis_t * const values[], bool matches[], f_array_lengths_t * const indexs[]);
 #endif // _di_fll_fss_snatch_map_mash_apart_
 
 /**
@@ -427,7 +427,7 @@ extern "C" {
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_map_together_
-  extern f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_maps_t * const values[], bool matches[], f_array_lengths_t * const indexs[]);
 #endif // _di_fll_fss_snatch_map_together_
 
 /**
@@ -474,7 +474,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_partial_compare_trim_string().
  */
 #ifndef _di_fll_fss_snatch_mash_
-  extern f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t * const values[], bool matches[], f_array_length_t * const indexs[]);
 #endif // _di_fll_fss_snatch_mash_
 
 /**
@@ -525,7 +525,7 @@ extern "C" {
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_mash_apart_
-  extern f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamics_t * const values[], bool matches[], f_array_lengths_t * const indexs[]);
 #endif // _di_fll_fss_snatch_mash_apart_
 
 /**
@@ -573,7 +573,7 @@ extern "C" {
  * @see fl_string_compare_trim()
  */
 #ifndef _di_fll_fss_snatch_together_
-  extern f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_static_t names[], const f_array_length_t size, const f_string_static_t glue, f_string_dynamic_t * const values[], bool matches[], f_array_length_t * const indexs[]);
 #endif // _di_fll_fss_snatch_together_
 
 #ifdef __cplusplus

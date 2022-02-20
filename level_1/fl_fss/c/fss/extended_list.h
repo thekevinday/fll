@@ -82,7 +82,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_list_object_read_
-  extern f_status_t fl_fss_extended_list_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_object_t *found, f_fss_delimits_t *delimits);
+  extern f_status_t fl_fss_extended_list_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_delimits_t * const delimits);
 #endif // _di_fl_fss_extended_list_object_read_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_list_content_read_
-  extern f_status_t fl_fss_extended_list_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments);
+  extern f_status_t fl_fss_extended_list_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_content_t * const found, f_fss_delimits_t * const delimits, f_fss_comments_t * const comments);
 #endif // _di_fl_fss_extended_list_content_read_
 
 /**
@@ -193,7 +193,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_extended_list_object_write_
-  extern f_status_t fl_fss_extended_list_object_write(const f_string_static_t object, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_status_t fl_fss_extended_list_object_write(const f_string_static_t object, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
 #endif // _di_fl_fss_extended_list_object_write_
 
 /**
@@ -251,7 +251,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_extended_list_content_write_
-  extern f_status_t fl_fss_extended_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t *prepend, const f_string_ranges_t *ignore, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_status_t fl_fss_extended_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t * const prepend, const f_string_ranges_t * const ignore, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
 #endif // _di_fl_fss_extended_list_content_write_
 
 #ifdef __cplusplus

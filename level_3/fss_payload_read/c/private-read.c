@@ -154,14 +154,14 @@ extern "C" {
           data->depths.array[i].index_name = main->parameters.array[fss_payload_read_parameter_name_e].values.array[position_name];
 
           if (main->parameters.array[fss_payload_read_parameter_trim_e].result == f_console_result_found_e) {
-            status = fl_string_rip(data->argv[data->depths.array[i].index_name].string, data->argv[data->depths.array[i].index_name].used, &data->depths.array[i].value_name);
+            status = fl_string_dynamic_rip(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
           else {
             status = f_string_dynamic_append(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), main->parameters.array[fss_payload_read_parameter_trim_e].result == f_console_result_found_e ? "fl_string_rip" : "f_string_dynamic_append", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), main->parameters.array[fss_payload_read_parameter_trim_e].result == f_console_result_found_e ? "fl_string_dynamic_rip" : "f_string_dynamic_append", F_true);
 
             return status;
           }

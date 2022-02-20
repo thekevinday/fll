@@ -44,14 +44,14 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: fl_string_rip().
  *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
+ *   Errors (with error bit) from: fl_string_dynamic_rip().
  *
  *   Errors (with error bit) from: fss_basic_read_depths_resize().
  *
  * @see f_string_append()
- * @see fl_string_rip()
  * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_string_dynamic_rip()
  *
  * @see fss_basic_read_depths_resize()
  */

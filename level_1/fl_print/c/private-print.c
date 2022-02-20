@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
-  f_string_t private_fl_print_format_convert(f_string_t string, FILE *stream, va_list *ap, f_status_t *status) {
+  f_string_t private_fl_print_format_convert(f_string_t string, FILE * const stream, va_list * const ap, f_status_t * const status) {
 
     const f_string_t start = string;
 
@@ -1132,7 +1132,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
 #if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
-  f_string_t private_fl_print_convert_number(f_string_t string, va_list *ap, unsigned int *number, f_status_t *status) {
+  f_string_t private_fl_print_convert_number(f_string_t string, va_list *ap, unsigned int * const number, f_status_t * const status) {
 
     for (*number = 0; *string; string += 1) {
 
@@ -1155,7 +1155,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
 #if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
-  f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
+  f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -1373,7 +1373,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
 
 #if !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
-  f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
+  f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -1534,7 +1534,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
 
 #if !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
-  f_status_t private_fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
+  f_status_t private_fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -1750,7 +1750,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
 
 #if !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
-  f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream) {
+  f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -1962,7 +1962,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
 
 #if !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
-  f_status_t private_fl_print_trim(const f_string_t string, const f_array_length_t length, FILE *stream) {
+  f_status_t private_fl_print_trim(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
@@ -2094,7 +2094,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
 
 #if !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
-  f_status_t private_fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE *stream) {
+  f_status_t private_fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
@@ -2169,7 +2169,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
 
 #if !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
-  f_status_t private_fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, FILE *stream) {
+  f_status_t private_fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
@@ -2299,7 +2299,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
 
 #if !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
-  f_status_t private_fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE *stream) {
+  f_status_t private_fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;

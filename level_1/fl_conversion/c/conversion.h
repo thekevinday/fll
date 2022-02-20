@@ -33,7 +33,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -54,7 +54,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_binary_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_binary_signed(const f_string_static_t dynamic, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_binary_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_binary_signed_
 
 /**
@@ -64,7 +64,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -82,7 +82,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_binary_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_binary_unsigned(const f_string_static_t dynamic, const f_string_range_t range, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_binary_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_binary_unsigned_
 
 /**
@@ -92,7 +92,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -113,7 +113,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_decimal_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_decimal_signed(const f_string_static_t dynamic, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_decimal_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_decimal_signed_
 
 /**
@@ -123,7 +123,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -141,7 +141,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_decimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_decimal_unsigned(const f_string_static_t dynamic, const f_string_range_t range, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_decimal_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_decimal_unsigned_
 
 /**
@@ -151,7 +151,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -172,7 +172,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_duodecimal_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_duodecimal_signed(const f_string_static_t dynamic, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_duodecimal_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_duodecimal_signed_
 
 /**
@@ -182,7 +182,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -200,7 +200,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_duodecimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_duodecimal_unsigned(const f_string_static_t dynamic, const f_string_range_t range, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_duodecimal_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_duodecimal_unsigned_
 
 /**
@@ -210,7 +210,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -231,7 +231,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_hexidecimal_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_hexidecimal_signed(const f_string_static_t dynamic, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_hexidecimal_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_hexidecimal_signed_
 
 /**
@@ -241,7 +241,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -259,7 +259,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_hexidecimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_hexidecimal_unsigned(const f_string_static_t dynamic, const f_string_range_t range, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_hexidecimal_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_hexidecimal_unsigned_
 
 /**
@@ -269,7 +269,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -289,7 +289,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_octal_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_octal_signed(const f_string_static_t dynamic, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_octal_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_octal_signed_
 
 /**
@@ -299,7 +299,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -317,7 +317,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_octal_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_octal_unsigned(const f_string_static_t dynamic, const f_string_range_t range, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_octal_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_octal_unsigned_
 
 /**
@@ -339,7 +339,7 @@ extern "C" {
  * This function is similar to strtoll(), but the behavior of error handling and special bases are different.
  * In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -361,7 +361,7 @@ extern "C" {
  * @see strtoll()
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_number_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_number_signed(const f_string_static_t dynamic, const f_string_range_t range, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_number_signed(const f_string_static_t buffer, const f_string_range_t range, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_number_signed_
 
 /**
@@ -384,7 +384,7 @@ extern "C" {
  * In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
  * Negative values are reported as such instead of being converted into the unsigned equivalent.
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
@@ -407,7 +407,7 @@ extern "C" {
  * @see strtoull()
  */
 #ifndef _di_fl_conversion_dynamic_partial_to_number_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_number_unsigned(const f_string_static_t dynamic, const f_string_range_t range, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_partial_to_number_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_partial_to_number_unsigned_
 /**
  * Convert a series of positive or negative binary number characters into a f_number_signed_t.
@@ -416,7 +416,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -435,7 +435,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_binary_signed_
-  extern f_status_t fl_conversion_dynamic_to_binary_signed(const f_string_static_t dynamic, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_binary_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_to_binary_signed_
 
 /**
@@ -445,7 +445,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param number
  *   This will store the value of the converted string.
@@ -461,7 +461,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_binary_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_binary_unsigned(const f_string_static_t dynamic, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_binary_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_to_binary_unsigned_
 
 /**
@@ -471,7 +471,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -490,7 +490,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_decimal_signed_
-  extern f_status_t fl_conversion_dynamic_to_decimal_signed(const f_string_static_t dynamic, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_decimal_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_to_decimal_signed_
 
 /**
@@ -500,7 +500,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param number
  *   This will store the value of the converted string.
@@ -516,7 +516,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_decimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_decimal_unsigned(const f_string_static_t dynamic, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_decimal_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_to_decimal_unsigned_
 
 /**
@@ -526,7 +526,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -545,7 +545,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_duodecimal_signed_
-  extern f_status_t fl_conversion_dynamic_to_duodecimal_signed(const f_string_static_t dynamic, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_duodecimal_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_to_duodecimal_signed_
 
 /**
@@ -555,7 +555,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param number
  *   This will store the value of the converted string.
@@ -571,7 +571,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_duodecimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_duodecimal_unsigned(const f_string_static_t dynamic, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_duodecimal_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_to_duodecimal_unsigned_
 
 /**
@@ -581,7 +581,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -600,7 +600,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_hexidecimal_signed_
-  extern f_status_t fl_conversion_dynamic_to_hexidecimal_signed(const f_string_static_t dynamic, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_hexidecimal_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_to_hexidecimal_signed_
 
 /**
@@ -610,7 +610,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param number
  *   This will store the value of the converted string.
@@ -626,7 +626,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_hexidecimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_hexidecimal_unsigned(const f_string_static_t dynamic, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_hexidecimal_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_to_hexidecimal_unsigned_
 
 /**
@@ -636,7 +636,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param negative
  *   Set to 0 to treat string as a positive number, 1 for as a negative number.
@@ -654,7 +654,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_octal_signed_
-  extern f_status_t fl_conversion_dynamic_to_octal_signed(const f_string_static_t dynamic, const bool negative, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_octal_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_to_octal_signed_
 
 /**
@@ -664,7 +664,7 @@ extern "C" {
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param number
  *   This will store the value of the converted string.
@@ -680,7 +680,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_dynamic_to_octal_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_octal_unsigned(const f_string_static_t dynamic, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_octal_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_to_octal_unsigned_
 
 /**
@@ -702,7 +702,7 @@ extern "C" {
  * This function is similar to strtoll(), but the behavior of error handling and special bases are different.
  * In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param number
  *   This will store the value of the converted string.
@@ -722,7 +722,7 @@ extern "C" {
  * @see strtoll()
  */
 #ifndef _di_fl_conversion_dynamic_to_number_signed_
-  extern f_status_t fl_conversion_dynamic_to_number_signed(const f_string_static_t dynamic, f_number_signed_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_number_signed(const f_string_static_t buffer, f_number_signed_t * const number);
 #endif // _di_fl_conversion_dynamic_to_number_signed_
 
 /**
@@ -745,7 +745,7 @@ extern "C" {
  * In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
  * Negative values are reported as such instead of being converted into the unsigned equivalent.
  *
- * @param dynamic
+ * @param buffer
  *   The string to convert.
  * @param number
  *   This will store the value of the converted string.
@@ -766,7 +766,7 @@ extern "C" {
  * @see strtoull()
  */
 #ifndef _di_fl_conversion_dynamic_to_number_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_number_unsigned(const f_string_static_t dynamic, f_number_unsigned_t * const number);
+  extern f_status_t fl_conversion_dynamic_to_number_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
 #endif // _di_fl_conversion_dynamic_to_number_unsigned_
 
 #ifdef __cplusplus

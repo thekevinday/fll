@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_embedded_list_read_
-  f_status_t fll_fss_embedded_list_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
+  f_status_t fll_fss_embedded_list_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_nest_t * const nest, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits, f_fss_comments_t * const comments) {
     #ifndef _di_level_2_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
@@ -126,7 +126,7 @@ extern "C" {
 #endif // _di_fll_fss_embedded_list_read_
 
 #ifndef _di_fll_fss_embedded_list_write_string_
-  f_status_t fll_fss_embedded_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_state_t state, f_string_dynamic_t *destination) {
+  f_status_t fll_fss_embedded_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_state_t state, f_string_dynamic_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_

@@ -103,8 +103,8 @@ extern "C" {
     uint16_t step_large;
     uint16_t step_small;
 
-    f_status_t (*handle)(const f_status_t error, void *state, void *internal);
-    f_status_t (*interrupt)(void *state, void *internal);
+    f_status_t (*handle)(const f_status_t error, void * const state, void * const internal);
+    f_status_t (*interrupt)(void * const state, void * const internal);
 
     void *callbacks;
     void *custom;

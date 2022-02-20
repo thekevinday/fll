@@ -73,7 +73,7 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_parameter_process_
-  f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_color_context_t *context) {
+  f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_color_context_t * const context) {
 
     f_status_t status = F_none;
 
@@ -109,7 +109,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_
 
 #ifndef _di_fll_program_parameter_process_empty_
-  void fll_program_parameter_process_empty(f_color_context_t *context, f_color_set_t *sets[]) {
+  void fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]) {
 
     context->set.reset = f_color_set_empty_s;
     context->set.warning = f_color_set_empty_s;
@@ -131,7 +131,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_empty_
 
 #ifndef _di_fll_program_parameter_additional_append_
-  f_status_t fll_program_parameter_additional_append(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t *destination) {
+  f_status_t fll_program_parameter_additional_append(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -170,7 +170,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_append_
 
 #ifndef _di_fll_program_parameter_additional_mash_
-  f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t *destination) {
+  f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_static_t * const arguments, const f_array_lengths_t values, f_string_dynamic_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -197,7 +197,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_mash_
 
 #ifndef _di_fll_program_parameter_additional_rip_
-  f_status_t fll_program_parameter_additional_rip(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t *destination) {
+  f_status_t fll_program_parameter_additional_rip(const f_string_static_t * const arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -214,7 +214,7 @@ extern "C" {
 
         destination->array[destination->used].used = 0;
 
-        status = fl_string_rip(arguments[values.array[i]].string, arguments[values.array[i]].used, &destination->array[destination->used]);
+        status = fl_string_dynamic_rip(arguments[values.array[i]], &destination->array[destination->used]);
         if (F_status_is_error(status)) break;
 
         if (status == F_data_not) {
@@ -235,7 +235,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_rip_
 
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t *destination) {
+  f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_static_t * const arguments, const f_array_lengths_t values, f_string_dynamic_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -251,7 +251,7 @@ extern "C" {
       if (arguments[values.array[i]].used) {
         ripped.used = 0;
 
-        status = fl_string_rip(arguments[values.array[i]].string, arguments[values.array[i]].used, &ripped);
+        status = fl_string_dynamic_rip(arguments[values.array[i]], &ripped);
         if (F_status_is_error(status)) break;
 
         if (ripped.used) {

@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_signal_state_interrupt_
-  f_status_t fl_signal_state_interrupt(void *state, void *internal) {
+  f_status_t fl_signal_state_interrupt(void * const state, void * const internal) {
     #ifndef _di_level_1_parameter_checking_
       if (!state) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

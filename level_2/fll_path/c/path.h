@@ -56,7 +56,7 @@ extern "C" {
  * @see f_string_dynamic_append_assure()
  */
 #ifndef _di_fll_path_canonical_
-  extern f_status_t fll_path_canonical(const f_string_static_t path, f_string_dynamic_t *canonical);
+  extern f_status_t fll_path_canonical(const f_string_static_t path, f_string_dynamic_t * const canonical);
 #endif // _di_fll_path_canonical_
 
 #ifdef __cplusplus

@@ -435,10 +435,10 @@ extern "C" {
         else if (type == controller_rule_action_type_pid_file_e) {
           item->pid_file.used = 0;
 
-          status = fl_string_dynamic_rip(cache->buffer_item, cache->content_action.array[0], &item->pid_file);
+          status = fl_string_dynamic_partial_rip(cache->buffer_item, cache->content_action.array[0], &item->pid_file);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_rip", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_partial_rip", F_true);
           }
         }
         else if (type == controller_rule_action_type_rerun_e) {

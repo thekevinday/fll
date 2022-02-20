@@ -43,9 +43,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_dynamic_rip_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_rip_nulless().
  *
- * @see fl_string_dynamic_rip_nulless()
+ * @see fl_string_dynamic_partial_rip_nulless()
  */
 #ifndef _di_controller_string_dynamic_rip_nulless_terminated_
   extern f_status_t controller_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;

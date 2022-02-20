@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_status_string_from_
-  f_status_t fll_status_string_from(const f_string_static_t name, f_status_t *code) {
+  f_status_t fll_status_string_from(const f_string_static_t name, f_status_t * const code) {
     #ifndef _di_level_2_parameter_checking_
       if (!code) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_

@@ -58,7 +58,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_fl_signal_state_interrupt_
-  extern f_status_t fl_signal_state_interrupt(void *state, void *internal);
+  extern f_status_t fl_signal_state_interrupt(void * const state, void * const internal);
 #endif // _di_fl_signal_state_interrupt_
 
 #ifdef __cplusplus

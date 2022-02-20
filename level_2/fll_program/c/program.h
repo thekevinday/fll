@@ -218,7 +218,7 @@ extern "C" {
  * @see f_color_load_context()
  */
 #ifndef _di_fll_program_parameter_process_
-  extern f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_color_context_t *context);
+  extern f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_color_context_t * const context);
 #endif // _di_fll_program_parameter_process_
 
 /**
@@ -233,7 +233,7 @@ extern "C" {
  *   Set to NULL to not use.
  */
 #ifndef _di_fll_program_parameter_process_empty_
-  extern void fll_program_parameter_process_empty(f_color_context_t *context, f_color_set_t *sets[]);
+  extern void fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]);
 #endif // _di_fll_program_parameter_process_empty_
 
 /**
@@ -264,7 +264,7 @@ extern "C" {
  * @see f_string_dynamic_append()
  */
 #ifndef _di_fll_program_parameter_additional_append_
-  extern f_status_t fll_program_parameter_additional_append(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t *destination);
+  extern f_status_t fll_program_parameter_additional_append(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination);
 #endif // _di_fll_program_parameter_additional_append_
 
 /**
@@ -293,7 +293,7 @@ extern "C" {
  * @see f_string_dynamic_mash()
  */
 #ifndef _di_fll_program_parameter_additional_mash_
-  extern f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t *destination);
+  extern f_status_t fll_program_parameter_additional_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t * const destination);
 #endif // _di_fll_program_parameter_additional_mash_
 
 /**
@@ -316,12 +316,12 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_rip().
+ *   Errors (with error bit) from: fl_string_dynamic_rip().
  *
- * @see fl_string_rip()
+ * @see fl_string_dynamic_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_
-  extern f_status_t fll_program_parameter_additional_rip(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t *destination);
+  extern f_status_t fll_program_parameter_additional_rip(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination);
 #endif // _di_fll_program_parameter_additional_rip_
 
 /**
@@ -348,13 +348,13 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_string_dynamic_mash().
- *   Errors (with error bit) from: fl_string_rip().
+ *   Errors (with error bit) from: fl_string_dynamic_rip().
  *
  * @see f_string_dynamic_mash()
- * @see fl_string_rip()
+ * @see fl_string_dynamic_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  extern f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t *destination);
+  extern f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t * const destination);
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
 /**

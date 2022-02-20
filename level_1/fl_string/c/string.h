@@ -765,9 +765,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
-#ifndef _di_fl_string_dynamic_rip_
-  extern f_status_t fl_string_dynamic_rip(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
-#endif // _di_fl_string_dynamic_rip_
+#ifndef _di_fl_string_dynamic_partial_rip_
+  extern f_status_t fl_string_dynamic_partial_rip(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+#endif // _di_fl_string_dynamic_partial_rip_
 
 /**
  * Allocate a new string from the provided range in the buffer.
@@ -793,14 +793,63 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
+#ifndef _di_fl_string_dynamic_partial_rip_nulless_
+  extern f_status_t fl_string_dynamic_partial_rip_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination);
+#endif // _di_fl_string_dynamic_partial_rip_nulless_
+
+/**
+ * Allocate a new string from the provided range in the buffer.
+ *
+ * Ignores leading and trailing whitespace.
+ * Ignores leading and trailing NULL characters.
+ * As a result, resulting size may be smaller than requested range.
+ *
+ * @param source
+ *   The buffer to rip from.
+ * @param destination
+ *   The new string, which will be allocated or reallocated as necessary.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not_eos if source length is 0.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_fl_string_dynamic_rip_
+  extern f_status_t fl_string_dynamic_rip(const f_string_static_t source, f_string_dynamic_t * const destination);
+#endif // _di_fl_string_dynamic_rip_
+
+/**
+ * Allocate a new string from the provided range in the buffer.
+ *
+ * Ignores leading and trailing whitespace.
+ * Ignores leading and trailing NULL characters.
+ * As a result, resulting size may be smaller than requested range.
+ *
+ * Skips over NULL characters from source when appending.
+ *
+ * @param source
+ *   The string to rip from.
+ * @param destination
+ *   The new string, which will be allocated or reallocated as necessary.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not_eos if source length is 0.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
 #ifndef _di_fl_string_dynamic_rip_nulless_
-  extern f_status_t fl_string_dynamic_rip_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_rip_nulless(const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_fl_string_dynamic_rip_nulless_
 
 /**
  * Seek the buffer location forward until the character (up to 4-byte wide) or EOL is reached.
  *
- * @param string
+ * @param buffer
  *   The string to traverse.
  * @param seek_to_this
  *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
@@ -825,13 +874,13 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_utf_character_
-  extern f_status_t fl_string_dynamic_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to_this, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_character_t seek_to_this, f_string_range_t * const range);
 #endif // _di_fl_string_dynamic_seek_line_to_utf_character_
 
 /**
  * Increment buffer location until a graph character (including UTF-8) or an EOL is matched.
  *
- * @param string
+ * @param buffer
  *   The string to traverse.
  * @param placeholder
  *   A single-width character representing a placeholder to ignore (may be NULL).
@@ -855,13 +904,13 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_
-  extern f_status_t fl_string_dynamic_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_until_graph(const f_string_static_t buffer, const uint8_t placeholder, f_string_range_t * const range);
 #endif // _di_fl_string_dynamic_seek_line_until_graph_
 
 /**
  * Increment buffer location until a non-graph character (including UTF-8) or an EOL is matched.
  *
- * @param string
+ * @param buffer
  *   The string to traverse.
  * @param placeholder
  *   A single-width character representing a placeholder to ignore (may be NULL).
@@ -885,13 +934,13 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_non_
-  extern f_status_t fl_string_dynamic_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_until_graph_non(const f_string_static_t buffer, const uint8_t placeholder, f_string_range_t * const range);
 #endif // _di_fl_string_dynamic_seek_line_until_graph_non_
 
 /**
  * Seek the buffer location forward until the UTF-8 character (up to 4-byte wide) is reached.
  *
- * @param string
+ * @param buffer
  *   The string to traverse.
  * @param seek_to_this
  *   A 1-width, 2-width, 3-width, or 4-width character representing a character to seek to.
@@ -915,7 +964,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
-  extern f_status_t fl_string_dynamic_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to_this, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_character_t seek_to_this, f_string_range_t * const range);
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 /**
@@ -966,9 +1015,9 @@ extern "C" {
  * @see f_utf_is_whitespace()
  * @see f_utf_is_word()
  */
-#ifndef _di_fl_string_fll_identify_
-  extern f_status_t fl_string_fll_identify(const f_string_static_t buffer, f_string_range_t *range, f_fll_id_t *id);
-#endif // _di_fl_string_fll_identify_
+#ifndef _di_fl_string_dynamic_partial_fll_identify_
+  extern f_status_t fl_string_dynamic_partial_fll_identify(const f_string_static_t buffer, f_string_range_t * const range, f_fll_id_t * const id);
+#endif // _di_fl_string_dynamic_partial_fll_identify_
 
 /**
  * Allocate a new string from the provided range in the string.
@@ -996,7 +1045,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_
-  extern f_status_t fl_string_rip(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_rip(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
 #endif // _di_fl_string_rip_
 
 /**
@@ -1027,7 +1076,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_nulless_
-  extern f_status_t fl_string_rip_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_rip_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
 #endif // _di_fl_string_rip_nulless_
 
 /**
@@ -1056,7 +1105,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_seek_line_to_utf_character_
-  extern f_status_t fl_string_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t * const range);
 #endif // _di_fl_string_seek_line_to_utf_character_
 
 /**
@@ -1085,7 +1134,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_seek_line_until_graph_
-  extern f_status_t fl_string_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t * const range);
 #endif // _di_fl_string_seek_line_until_graph_
 
 /**
@@ -1115,7 +1164,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_seek_line_until_graph_non_
-  extern f_status_t fl_string_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t * const range);
 #endif // _di_fl_string_seek_line_until_graph_non_
 
 /**
@@ -1144,7 +1193,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_seek_to_utf_character_
-  extern f_status_t fl_string_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t *range);
+  extern f_status_t fl_string_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t * const range);
 #endif // _di_fl_string_seek_to_utf_character_
 
 #ifdef __cplusplus

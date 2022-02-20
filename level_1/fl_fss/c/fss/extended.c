@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_extended_object_read_
-  f_status_t fl_fss_extended_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_extended_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quoted, f_fss_delimits_t * const delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -35,7 +35,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_object_read_
 
 #ifndef _di_fl_fss_extended_content_read_
-  f_status_t fl_fss_extended_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_content_t *found, f_fss_quotes_t *quotes, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_extended_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_content_t * const found, f_fss_quotes_t * const quotes, f_fss_delimits_t * const delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -91,8 +91,7 @@ extern "C" {
           }
         }
 
-        found->array[found->used] = content_partial;
-        ++found->used;
+        found->array[found->used++] = content_partial;
 
         if (quotes) {
           quotes->array[quotes->used] = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
@@ -151,7 +150,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_content_read_
 
 #ifndef _di_fl_fss_extended_object_write_
-f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -192,7 +191,7 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_
 #endif // _di_fl_fss_extended_object_write_
 
 #ifndef _di_fl_fss_extended_content_write_
-  f_status_t fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);

@@ -6,9 +6,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_utf_file_read_
-  f_status_t fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t *buffer) {
+  f_status_t fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) {
@@ -32,16 +32,16 @@ extern "C" {
 
     while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
 
-      if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > F_string_t_size_d) {
+      if (destination->used + size_read > destination->size) {
+        if (destination->size + size_read > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
-        macro_f_utf_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
+        macro_f_utf_string_dynamic_t_resize(status, (*destination), destination->size + size_read);
         if (F_status_is_error(status)) return status;
       }
 
-      private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
+      private_fl_utf_file_process_read_buffer(buffer_read, size_read, destination, buffer_char, &width, &width_last);
     } // while
 
     if (!size_read) {
@@ -71,9 +71,9 @@ extern "C" {
 #endif // _di_fl_utf_file_read_
 
 #ifndef _di_fl_utf_file_read_block_
-  f_status_t fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t *buffer) {
+  f_status_t fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) return F_status_set_error(F_file);
@@ -91,16 +91,16 @@ extern "C" {
     memset(&buffer_read, 0, sizeof(file.size_read));
 
     if ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
-      if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > F_string_t_size_d) {
+      if (destination->used + size_read > destination->size) {
+        if (destination->size + size_read > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
-        macro_f_utf_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
+        macro_f_utf_string_dynamic_t_resize(status, (*destination), destination->size + size_read);
         if (F_status_is_error(status)) return status;
       }
 
-      private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
+      private_fl_utf_file_process_read_buffer(buffer_read, size_read, destination, buffer_char, &width, &width_last);
     }
 
     if (!size_read) {
@@ -130,9 +130,9 @@ extern "C" {
 #endif // _di_fl_utf_file_read_block_
 
 #ifndef _di_fl_utf_file_read_until_
-  f_status_t fl_utf_file_read_until(const f_file_t file, const f_array_length_t total, f_utf_string_dynamic_t *buffer) {
+  f_status_t fl_utf_file_read_until(const f_file_t file, const f_array_length_t total, f_utf_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (file.id < 0) {
@@ -163,16 +163,16 @@ extern "C" {
 
     while (buffer_count < total && (size_read = read(file.id, buffer_read, buffer_size)) > 0) {
 
-      if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > F_string_t_size_d) {
+      if (destination->used + size_read > destination->size) {
+        if (destination->size + size_read > F_string_t_size_d) {
           return F_status_set_error(F_string_too_large);
         }
 
-        macro_f_utf_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
+        macro_f_utf_string_dynamic_t_resize(status, (*destination), destination->size + size_read);
         if (F_status_is_error(status)) return status;
       }
 
-      private_fl_utf_file_process_read_buffer(buffer_read, size_read, buffer, buffer_char, &width, &width_last);
+      private_fl_utf_file_process_read_buffer(buffer_read, size_read, destination, buffer_char, &width, &width_last);
     } // while
 
     if (!size_read) {
@@ -202,7 +202,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_until_
 
 #ifndef _di_fl_utf_file_write_
-  f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_array_length_t *written) {
+  f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t destination, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -215,16 +215,16 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    if (!buffer.used) {
+    if (!destination.used) {
       *written = 0;
 
       return F_data_not;
     }
 
-    const f_status_t status = private_fl_utf_file_write_until(file, buffer.string, buffer.used, written);
+    const f_status_t status = private_fl_utf_file_write_until(file, destination.string, destination.used, written);
     if (F_status_is_error(status)) return F_status_set_error(status);
 
-    if (status == F_none && *written == buffer.used) {
+    if (status == F_none && *written == destination.used) {
       return F_none_eos;
     }
 
@@ -233,7 +233,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_
 
 #ifndef _di_fl_utf_file_write_block_
-  f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_array_length_t *written) {
+  f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t destination, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -246,7 +246,7 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    if (!buffer.used) {
+    if (!destination.used) {
       *written = 0;
 
       return F_data_not;
@@ -254,14 +254,14 @@ extern "C" {
 
     f_array_length_t write_max = file.size_write;
 
-    if (write_max > buffer.used) {
-      write_max = buffer.used;
+    if (write_max > destination.used) {
+      write_max = destination.used;
     }
 
-    const f_status_t status = private_fl_utf_file_write_until(file, buffer.string, write_max, written);
+    const f_status_t status = private_fl_utf_file_write_until(file, destination.string, write_max, written);
     if (F_status_is_error(status)) return F_status_set_error(status);
 
-    if (status == F_none && *written == buffer.used) {
+    if (status == F_none && *written == destination.used) {
       return F_none_eos;
     }
 
@@ -270,7 +270,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_block_
 
 #ifndef _di_fl_utf_file_write_until_
-  f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t destination, const f_array_length_t total, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -283,7 +283,7 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    if (!buffer.used || !total) {
+    if (!destination.used || !total) {
       *written = 0;
 
       return F_data_not;
@@ -291,14 +291,14 @@ extern "C" {
 
     f_array_length_t write_max = file.size_write;
 
-    if (write_max > buffer.used) {
-      write_max = buffer.used;
+    if (write_max > destination.used) {
+      write_max = destination.used;
     }
 
-    const f_status_t status = private_fl_utf_file_write_until(file, buffer.string, write_max, written);
+    const f_status_t status = private_fl_utf_file_write_until(file, destination.string, write_max, written);
     if (F_status_is_error(status)) return F_status_set_error(status);
 
-    if (status == F_none && *written == buffer.used) {
+    if (status == F_none && *written == destination.used) {
       return F_none_eos;
     }
 
@@ -307,11 +307,10 @@ extern "C" {
 #endif // _di_fl_utf_file_write_until_
 
 #ifndef _di_fl_utf_file_write_range_
-  f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_string_range_t range, f_array_length_t *written) {
+  f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t destination, const f_string_range_t range, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (range.stop < range.start) return F_status_set_error(F_parameter);
-      if (range.start >= buffer.used) return F_status_set_error(F_parameter);
+      if (range.start >= destination.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id < 0) {
@@ -322,7 +321,7 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    if (!buffer.used) {
+    if (!destination.used) {
       *written = 0;
 
       return F_data_not;
@@ -331,11 +330,11 @@ extern "C" {
     const f_array_length_t total = (range.stop - range.start) + 1;
     f_array_length_t write_max = total;
 
-    if (write_max > buffer.used) {
-      write_max = buffer.used;
+    if (write_max > destination.used) {
+      write_max = destination.used;
     }
 
-    const f_status_t status = private_fl_utf_file_write_until(file, buffer.string + range.start, write_max, written);
+    const f_status_t status = private_fl_utf_file_write_until(file, destination.string + range.start, write_max, written);
     if (F_status_is_error(status)) return F_status_set_error(status);
 
     if (status == F_none) {
@@ -343,7 +342,7 @@ extern "C" {
         return F_none_stop;
       }
 
-      if (range.start + *written == buffer.used) {
+      if (range.start + *written == destination.used) {
         return F_none_eos;
       }
     }

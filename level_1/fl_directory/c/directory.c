@@ -325,7 +325,7 @@ extern "C" {
 #endif // _di_fl_directory_copy_content_
 
 #ifndef _di_fl_directory_list_
-  f_status_t fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) {
+  f_status_t fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) {
     #ifndef _di_level_1_parameter_checking_
       if (!path.string) return F_status_set_error(F_parameter);
       if (!listing) return F_status_set_error(F_parameter);
@@ -340,7 +340,7 @@ extern "C" {
 #endif // _di_fl_directory_list_
 
 #ifndef _di_fl_directory_path_pop_
-  f_status_t fl_directory_path_pop(f_string_static_t *path) {
+  f_status_t fl_directory_path_pop(f_string_static_t * const path) {
     #ifndef _di_level_1_parameter_checking_
       if (!path->string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -414,7 +414,7 @@ extern "C" {
 #endif // _di_fl_directory_path_pop_
 
 #ifndef _di_fl_directory_path_push_
-  f_status_t fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t *destination) {
+  f_status_t fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!source.string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

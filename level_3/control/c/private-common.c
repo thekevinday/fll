@@ -76,7 +76,7 @@ extern "C" {
 #endif // _di_control_signal_received_
 
 #ifndef _di_control_signal_state_interrupt_fss_
-  f_status_t control_signal_state_interrupt_fss(void *state, void *internal) {
+  f_status_t control_signal_state_interrupt_fss(void * const state, void * const internal) {
 
     if (!state) {
       return F_interrupt_not;

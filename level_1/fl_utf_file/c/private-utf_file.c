@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
-  void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) {
+  void private_fl_utf_file_process_read_buffer(const f_string_t buffer_read, const ssize_t size_read, f_utf_string_dynamic_t * const buffer, char buffer_char[], uint8_t * const width, int8_t * const width_last) {
 
     uint8_t increment_by = 0;
 
@@ -70,7 +70,7 @@ extern "C" {
 #endif // !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
 
 #if !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(fl_utf_file_write_range)
-  f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_array_length_t total, f_array_length_t * const written) {
 
     *written = 0;
 

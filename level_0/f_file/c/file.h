@@ -2535,6 +2535,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_data_not if buffer.used is 0.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2568,6 +2569,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_data_not if buffer.used is 0.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2602,6 +2604,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_data_not if buffer.used is 0 or total is 0.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2636,6 +2639,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_data_not if buffer.used is 0 or range.start > range.stop.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.

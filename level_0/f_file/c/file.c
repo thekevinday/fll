@@ -2423,7 +2423,6 @@ extern "C" {
   f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -2431,7 +2430,7 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    if (!buffer.used) {
+    if (!buffer.used || range.start >= buffer.used) {
       if (written) {
         *written = 0;
       }
@@ -2817,7 +2816,6 @@ extern "C" {
   f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -2825,7 +2823,7 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    if (!buffer.used) {
+    if (!buffer.used || range.start >= buffer.used) {
       if (written) {
         *written = 0;
       }

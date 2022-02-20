@@ -110,7 +110,7 @@ extern "C" {
  *   Errors (with error bit) from: f_conversion_character_is_decimal().
  */
 #ifndef _di_fll_fss_status_string_from_
-  extern f_status_t fll_fss_status_string_from(const f_string_static_t name, f_status_t *code);
+  extern f_status_t fll_fss_status_string_from(const f_string_static_t name, f_status_t * const code);
 #endif // _di_fll_fss_status_string_to_
 
 /**
@@ -131,7 +131,7 @@ extern "C" {
  * @see f_status_string_to()
  */
 #ifndef _di_fll_fss_status_string_to_
-  extern f_status_t fll_fss_status_string_to(const f_status_t code, f_string_static_t *name);
+  extern f_status_t fll_fss_status_string_to(const f_status_t code, f_string_static_t * const name);
 #endif // _di_fll_fss_status_string_to_
 
 #ifdef __cplusplus

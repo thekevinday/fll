@@ -221,7 +221,7 @@ extern "C" {
  * @see f_print_terminated()
  */
 #ifndef _di_fl_print_format_
-  extern f_status_t fl_print_format(const f_string_t string, FILE *stream, ...);
+  extern f_status_t fl_print_format(const f_string_t string, FILE * const stream, ...);
 #endif // _di_fl_print_format_
 
 /**
@@ -280,7 +280,7 @@ extern "C" {
  * @see f_print_terminated()
  */
 #ifndef _di_fl_print_format_convert_
-  extern f_string_t fl_print_format_convert(const f_string_t string, FILE *stream, va_list *ap, f_status_t *status);
+  extern f_string_t fl_print_format_convert(const f_string_t string, FILE * const stream, va_list * const ap, f_status_t * const status);
 #endif // _di_fl_print_format_convert_
 
 /**
@@ -328,7 +328,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fl_print_string_va_
-  extern f_status_t fl_print_string_va(const f_string_t string, FILE *stream, va_list *ap);
+  extern f_status_t fl_print_string_va(const f_string_t string, FILE * const stream, va_list * const ap);
 #endif // _di_fl_print_string_va_
 
 /**
@@ -363,7 +363,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_
-  extern f_status_t fl_print_trim(const f_string_t string, const f_array_length_t length, FILE *stream);
+  extern f_status_t fl_print_trim(const f_string_t string, const f_array_length_t length, FILE * const stream);
 #endif // _di_fl_print_trim_
 
 /**
@@ -399,7 +399,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_raw_
-  extern f_status_t fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE *stream);
+  extern f_status_t fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE * const stream);
 #endif // _di_fl_print_trim_raw_
 
 /**
@@ -436,7 +436,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_raw_safely_
-  extern f_status_t fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, FILE *stream);
+  extern f_status_t fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, FILE * const stream);
 #endif // _di_fl_print_trim_raw_safely_
 
 /**
@@ -471,7 +471,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_safely_
-  extern f_status_t fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE *stream);
+  extern f_status_t fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE * const stream);
 #endif // _di_fl_print_trim_safely_
 
 /**
@@ -507,7 +507,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_
-  extern f_status_t fl_print_trim_dynamic(const f_string_static_t buffer, FILE *stream);
+  extern f_status_t fl_print_trim_dynamic(const f_string_static_t buffer, FILE * const stream);
 #endif // _di_fl_print_trim_dynamic_
 
 /**
@@ -544,7 +544,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_raw_
-  extern f_status_t fl_print_trim_dynamic_raw(const f_string_static_t buffer, FILE *stream);
+  extern f_status_t fl_print_trim_dynamic_raw(const f_string_static_t buffer, FILE * const stream);
 #endif // _di_fl_print_trim_dynamic_raw_
 
 /**
@@ -582,7 +582,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_raw_safely_
-  extern f_status_t fl_print_trim_dynamic_raw_safely(const f_string_static_t buffer, FILE *stream);
+  extern f_status_t fl_print_trim_dynamic_raw_safely(const f_string_static_t buffer, FILE * const stream);
 #endif // _di_fl_print_trim_dynamic_raw_safely_
 
 /**
@@ -618,7 +618,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_safely_
-  extern f_status_t fl_print_trim_dynamic_safely(const f_string_static_t buffer, FILE *stream);
+  extern f_status_t fl_print_trim_dynamic_safely(const f_string_static_t buffer, FILE * const stream);
 #endif // _di_fl_print_trim_dynamic_safely_
 
 /**
@@ -656,7 +656,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_
-  extern f_status_t fl_print_trim_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
+  extern f_status_t fl_print_trim_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE * const stream);
 #endif // _di_fl_print_trim_dynamic_partial_
 
 /**
@@ -695,7 +695,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
+  extern f_status_t fl_print_trim_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE * const stream);
 #endif // _di_fl_print_trim_dynamic_partial_raw_
 
 /**
@@ -735,7 +735,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_raw_safely_
-  extern f_status_t fl_print_trim_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
+  extern f_status_t fl_print_trim_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, FILE * const stream);
 #endif // _di_fl_print_trim_dynamic_partial_raw_safely_
 
 /**
@@ -773,7 +773,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *stream);
+  extern f_status_t fl_print_trim_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, FILE * const stream);
 #endif // _di_fl_print_trim_dynamic_partial_safely_
 
 /**
@@ -816,7 +816,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_
-  extern f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream);
+  extern f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE * const stream);
 #endif // _di_fl_print_trim_except_
 
 /**
@@ -860,7 +860,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_raw_
-  extern f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream);
+  extern f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE * const stream);
 #endif // _di_fl_print_trim_except_raw_
 
 /**
@@ -905,7 +905,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_raw_safely_
-  extern f_status_t fl_print_trim_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream);
+  extern f_status_t fl_print_trim_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE * const stream);
 #endif // _di_fl_print_trim_except_raw_safely_
 
 /**
@@ -948,7 +948,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_safely_
-  extern f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *stream);
+  extern f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE * const stream);
 #endif // _di_fl_print_trim_except_safely_
 
 /**
@@ -988,7 +988,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_
-  extern f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
+  extern f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE * const stream);
 #endif // _di_fl_print_trim_except_dynamic_
 
 /**
@@ -1029,7 +1029,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_raw_
-  extern f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
+  extern f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE * const stream);
 #endif // _di_fl_print_trim_except_dynamic_raw_
 
 /**
@@ -1071,7 +1071,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_raw_safely_
-  extern f_status_t fl_print_trim_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
+  extern f_status_t fl_print_trim_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE * const stream);
 #endif // _di_fl_print_trim_except_dynamic_raw_safely_
 
 /**
@@ -1111,7 +1111,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_safely_
-  extern f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *stream);
+  extern f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE * const stream);
 #endif // _di_fl_print_trim_except_dynamic_safely_
 
 /**
@@ -1158,7 +1158,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_
-  extern f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_
 
 /**
@@ -1206,7 +1206,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_raw_
-  extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_raw_
 
 /**
@@ -1255,7 +1255,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_raw_safely_
-  extern f_status_t fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_raw_safely_
 
 /**
@@ -1302,7 +1302,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_safely_
-  extern f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_safely_
 
 /**
@@ -1348,7 +1348,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_
-  extern f_status_t fl_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_dynamic_
 
 /**
@@ -1393,7 +1393,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_raw_
-  extern f_status_t fl_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_dynamic_raw_
 
 /**
@@ -1439,7 +1439,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_raw_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_dynamic_raw_safely_
 
 /**
@@ -1483,7 +1483,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_dynamic_safely_
 
 /**
@@ -1529,7 +1529,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_
 
 /**
@@ -1576,7 +1576,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_
 
 /**
@@ -1624,7 +1624,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_safely_
 
 /**
@@ -1670,7 +1670,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *stream);
+  extern f_status_t fl_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream);
 #endif // _di_fl_print_trim_except_in_dynamic_partial_safely_
 
 /**
@@ -1712,7 +1712,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_
-  extern f_status_t fl_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
+  extern f_status_t fl_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE * const stream);
 #endif // _di_fl_print_trim_except_dynamic_partial_
 
 /**
@@ -1755,7 +1755,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_raw_
-  extern f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
+  extern f_status_t fl_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE * const stream);
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_
 
 /**
@@ -1799,7 +1799,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_raw_safely_
-  extern f_status_t fl_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
+  extern f_status_t fl_print_trim_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE * const stream);
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_safely_
 
 /**
@@ -1841,7 +1841,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_safely_
-  extern f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *stream);
+  extern f_status_t fl_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE * const stream);
 #endif // _di_fl_print_trim_except_dynamic_partial_safely_
 
 #ifdef __cplusplus

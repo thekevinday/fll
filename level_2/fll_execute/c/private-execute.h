@@ -37,7 +37,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
-  extern f_status_t private_fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_execute_arguments_add(const f_string_static_t source, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_)
 
 /**
@@ -70,7 +70,7 @@ extern "C" {
  * @see fll_execute_arguments_dynamic_add_parameter_set()
  */
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
-  extern f_status_t private_fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_execute_arguments_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_)
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int * const result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -127,7 +127,7 @@ extern "C" {
  *   option:
  *     A bitwise set of options, such as: FL_execute_parameter_option_exit_d, and FL_execute_parameter_option_path_d.
  * @param result
- *   A NULL termianted 2-byte string array where the first character represents the return code ('0' for success, '1' for failure).
+ *   A string representing the return code ('0' for success, '1' for failure).
  *
  * @return
  *   F_none on success.
@@ -151,7 +151,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, char *result) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, const f_string_static_t *result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -227,7 +227,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_execute_fork(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void * const result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -302,7 +302,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork_data(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_execute_fork_data(const bool direct, const f_string_static_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void * const result) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
