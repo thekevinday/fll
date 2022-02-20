@@ -41,6 +41,11 @@ Valgrind:
   The "valkyrie" program does not support massif at the time of this writing but it eventually may.
   The "valkyrie" program does support the default valgrind tool and the helgrind tools.
 
+  When working with valgrind's massif tool, several libc functions (or other functions external to this project) may get in the way of the analysis.
+  These functions should be disabled.
+  Example valgrind massif execution disabling some common GLibc functions:
+    valgrind --tool=massif --ignore-fn=_IO_file_doallocate --ignore-fn=ftw_startup --ignore-fn=__alloc_dir fake clean build
+
 GCC's -fanalyzer (and CLang's equivalent):
   The code analyzer provided by GCC (and also CLang, through similar means) attempts to determine insecure or otherwise bad coding practices.
 
