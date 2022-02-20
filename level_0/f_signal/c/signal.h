@@ -339,7 +339,7 @@ extern "C" {
  * @see sigtimedwait()
  */
 #ifndef _di_f_signal_wait_until_
-  extern f_status_t f_signal_wait_until(const sigset_t *set, const struct timespec *timeout, siginfo_t * const information);
+  extern f_status_t f_signal_wait_until(const sigset_t * const set, const struct timespec *timeout, siginfo_t * const information);
 #endif // _di_f_signal_wait_until_
 
 #ifdef __cplusplus

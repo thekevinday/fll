@@ -152,7 +152,7 @@ extern "C" {
  * @see controller_dynamic_append_terminated()
  */
 #ifndef _di_controller_entry_process_
-  extern f_status_t controller_entry_process(const controller_global_t *global, controller_cache_t * const cache, const bool failsafe, const bool is_entry) F_attribute_visibility_internal_d;
+  extern f_status_t controller_entry_process(const controller_global_t * const global, controller_cache_t * const cache, const bool failsafe, const bool is_entry) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_process_
 
 /**

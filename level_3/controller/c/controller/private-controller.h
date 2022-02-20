@@ -275,7 +275,7 @@ extern "C" {
  * @see controller_file_pid_create()
  */
 #ifndef _di_controller_perform_ready_
-  extern f_status_t controller_perform_ready(const controller_global_t *global, controller_cache_t * const cache, const bool is_entry) F_attribute_visibility_internal_d;
+  extern f_status_t controller_perform_ready(const controller_global_t * const global, controller_cache_t * const cache, const bool is_entry) F_attribute_visibility_internal_d;
 #endif // _di_controller_perform_ready_
 
 /**

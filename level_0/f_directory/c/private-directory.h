@@ -111,7 +111,7 @@ extern "C" {
  * @see f_directory_remove()
  */
 #if !defined(_di_f_directory_remove_)
-  extern int private_f_directory_remove_recursively(const char *path, const struct stat *file_stat, int type, struct FTW *entity) F_attribute_visibility_internal_d;
+  extern int private_f_directory_remove_recursively(const char * const path, const struct stat *file_stat, int type, struct FTW *entity) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_directory_remove_)
 
 #ifdef __cplusplus

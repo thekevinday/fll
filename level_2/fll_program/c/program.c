@@ -131,7 +131,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_empty_
 
 #ifndef _di_fll_program_parameter_additional_append_
-  f_status_t fll_program_parameter_additional_append(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination) {
+  f_status_t fll_program_parameter_additional_append(const f_string_static_t * const arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);

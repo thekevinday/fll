@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_control_accept_
-  f_status_t controller_control_accept(const controller_global_t *global, controller_control_t * const control) {
+  f_status_t controller_control_accept(const controller_global_t * const global, controller_control_t * const control) {
 
     f_socket_t client = f_socket_t_initialize;
 
@@ -160,7 +160,7 @@ extern "C" {
 #endif // _di_controller_control_accept_
 
 #ifndef _di_controller_control_configure_client_
-  f_status_t controller_control_configure_client(const controller_global_t *global, f_socket_t * const client) {
+  f_status_t controller_control_configure_client(const controller_global_t * const global, f_socket_t * const client) {
 
     struct timeval time_out;
     time_out.tv_sec = 0;
@@ -181,7 +181,7 @@ extern "C" {
 #endif // _di_controller_control_configure_client_
 
 #ifndef _di_controller_control_configure_server_
-  f_status_t controller_control_configure_server(const controller_global_t *global, f_socket_t * const server) {
+  f_status_t controller_control_configure_server(const controller_global_t * const global, f_socket_t * const server) {
 
     const struct linger value = { 1, controller_control_default_socket_linger_d };
 
@@ -226,7 +226,7 @@ extern "C" {
 #endif // _di_controller_control_packet_header_length_
 
 #ifndef _di_controller_control_respond_build_header_
-  f_status_t controller_control_respond_build_header(const controller_global_t *global, controller_control_t * const control, const f_string_static_t type, const f_string_static_t status, const f_array_length_t length) {
+  f_status_t controller_control_respond_build_header(const controller_global_t * const global, controller_control_t * const control, const f_string_static_t type, const f_string_static_t status, const f_array_length_t length) {
 
     f_status_t status2 = F_none;
 
@@ -282,7 +282,7 @@ extern "C" {
 #endif // _di_controller_control_respond_build_header_
 
 #ifndef _di_controller_control_respond_error_
-  f_status_t controller_control_respond_error(const controller_global_t *global, controller_control_t * const control, const f_status_t status, const f_string_static_t message) {
+  f_status_t controller_control_respond_error(const controller_global_t * const global, controller_control_t * const control, const f_status_t status, const f_string_static_t message) {
 
     f_status_t status2 = F_none;
 
@@ -311,7 +311,7 @@ extern "C" {
 #endif // _di_controller_control_respond_error_
 
 #ifndef _di_controller_control_respond_error_string_
-  f_status_t controller_control_respond_error_string(const controller_global_t *global, controller_control_t * const control, const f_status_t status, const f_string_t message) {
+  f_status_t controller_control_respond_error_string(const controller_global_t * const global, controller_control_t * const control, const f_status_t status, const f_string_t message) {
 
     const f_string_static_t string = macro_f_string_static_t_initialize2(message, strlen(message));
 

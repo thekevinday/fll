@@ -896,7 +896,7 @@ extern "C" {
 #endif // _di_controller_entry_preprocess_
 
 #ifndef _di_controller_entry_process_
-  f_status_t controller_entry_process(const controller_global_t *global, controller_cache_t * const cache, const bool failsafe, const bool is_entry) {
+  f_status_t controller_entry_process(const controller_global_t * const global, controller_cache_t * const cache, const bool failsafe, const bool is_entry) {
 
     f_status_t status = F_none;
     f_status_t status_lock = F_none;

@@ -233,7 +233,7 @@ extern "C" {
 #endif // _di_f_signal_set_has_
 
 #ifndef _di_f_signal_wait_
-  f_status_t f_signal_wait(const sigset_t *set, siginfo_t * const information) {
+  f_status_t f_signal_wait(const sigset_t * const set, siginfo_t * const information) {
 
     if (sigwaitinfo(set, information) < 0) {
       if (errno == EINTR) return F_status_set_error(F_interrupt);
@@ -247,7 +247,7 @@ extern "C" {
 #endif // _di_f_signal_wait_
 
 #ifndef _di_f_signal_wait_until_
-  f_status_t f_signal_wait_until(const sigset_t *set, const struct timespec * timeout, siginfo_t * const information) {
+  f_status_t f_signal_wait_until(const sigset_t * const set, const struct timespec * timeout, siginfo_t * const information) {
 
     if (sigtimedwait(set, information, timeout) < 0) {
       if (errno == EAGAIN) return F_time_out;

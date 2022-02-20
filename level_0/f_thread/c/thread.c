@@ -79,7 +79,7 @@ extern "C" {
 #endif // defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_set_)
 
 #ifndef _di_f_thread_attribute_clock_get_
-  f_status_t f_thread_attribute_clock_get(const f_thread_condition_attribute_t *attribute, clockid_t * const id) {
+  f_status_t f_thread_attribute_clock_get(const f_thread_condition_attribute_t * const attribute, clockid_t * const id) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!id) return F_status_set_error(F_parameter);
@@ -112,7 +112,7 @@ extern "C" {
 #endif // _di_f_thread_attribute_clock_set_
 
 #ifndef _di_f_thread_attribute_condition_shared_get_
-  f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t *attribute, int * const shared) {
+  f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t * const attribute, int * const shared) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!shared) return F_status_set_error(F_parameter);
@@ -1126,7 +1126,7 @@ extern "C" {
 #endif // _di_f_thread_condition_attributes_resize_
 
 #ifndef _di_f_thread_condition_create_
-  f_status_t f_thread_condition_create(const f_thread_condition_attribute_t *attribute, f_thread_condition_t * const condition) {
+  f_status_t f_thread_condition_create(const f_thread_condition_attribute_t * const attribute, f_thread_condition_t * const condition) {
     #ifndef _di_level_0_parameter_checking_
       if (!condition) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1332,7 +1332,7 @@ extern "C" {
 #endif // _di_f_thread_conditions_resize_
 
 #ifndef _di_f_thread_create_
-  f_status_t f_thread_create(const f_thread_attribute_t *attribute, f_thread_id_t * const id, void *(*routine) (void *), void *argument) {
+  f_status_t f_thread_create(const f_thread_attribute_t * const attribute, f_thread_id_t * const id, void *(*routine) (void *), void *argument) {
     #ifndef _di_level_0_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
       if (!routine) return F_status_set_error(F_parameter);
@@ -1625,7 +1625,7 @@ extern "C" {
 #endif // _di_f_thread_lock_attribute_delete_
 
 #ifndef _di_f_thread_lock_attribute_shared_get_
-  f_status_t f_thread_lock_attribute_shared_get(const f_thread_lock_attribute_t *attribute, int * const shared) {
+  f_status_t f_thread_lock_attribute_shared_get(const f_thread_lock_attribute_t * const attribute, int * const shared) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!shared) return F_status_set_error(F_parameter);
@@ -1752,7 +1752,7 @@ extern "C" {
 #endif // _di_f_thread_lock_attributes_resize_
 
 #ifndef _di_f_thread_lock_create_
-  f_status_t f_thread_lock_create(const f_thread_lock_attribute_t *attribute, f_thread_lock_t * const lock) {
+  f_status_t f_thread_lock_create(const f_thread_lock_attribute_t * const attribute, f_thread_lock_t * const lock) {
     #ifndef _di_level_0_parameter_checking_
       if (!lock) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2032,7 +2032,7 @@ extern "C" {
 #endif // _di_f_thread_mutex_attribute_delete_
 
 #ifndef _di_f_thread_mutex_attribute_priority_ceiling_get_
-  f_status_t f_thread_mutex_attribute_priority_ceiling_get(const f_thread_mutex_attribute_t *attribute, int * const ceiling) {
+  f_status_t f_thread_mutex_attribute_priority_ceiling_get(const f_thread_mutex_attribute_t * const attribute, int * const ceiling) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!ceiling) return F_status_set_error(F_parameter);
@@ -2071,7 +2071,7 @@ extern "C" {
 #endif // _di_f_thread_mutex_attribute_priority_ceiling_set_
 
 #ifndef _di_f_thread_mutex_attribute_shared_get_
-  f_status_t f_thread_mutex_attribute_shared_get(const f_thread_mutex_attribute_t *attribute, int * const shared) {
+  f_status_t f_thread_mutex_attribute_shared_get(const f_thread_mutex_attribute_t * const attribute, int * const shared) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!shared) return F_status_set_error(F_parameter);
@@ -2104,7 +2104,7 @@ extern "C" {
 #endif // _di_f_thread_mutex_attribute_shared_set_
 
 #ifndef _di_f_thread_mutex_attribute_type_get_
-  f_status_t f_thread_mutex_attribute_type_get(const f_thread_mutex_attribute_t *attribute, int * const type) {
+  f_status_t f_thread_mutex_attribute_type_get(const f_thread_mutex_attribute_t * const attribute, int * const type) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!type) return F_status_set_error(F_parameter);
@@ -2137,7 +2137,7 @@ extern "C" {
 #endif // _di_f_thread_mutex_attribute_type_set_
 
 #ifndef _di_f_thread_mutex_attribute_protocol_get_
-  f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t *attribute, int * const protocol) {
+  f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t * const attribute, int * const protocol) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!protocol) return F_status_set_error(F_parameter);

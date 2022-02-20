@@ -31,7 +31,7 @@ extern "C" {
  * @see f_socket_accept()
  */
 #ifndef _di_controller_control_accept_
-  extern f_status_t controller_control_accept(const controller_global_t *global, controller_control_t * const control) F_attribute_visibility_internal_d;
+  extern f_status_t controller_control_accept(const controller_global_t * const global, controller_control_t * const control) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_accept_
 
 /**
@@ -50,7 +50,7 @@ extern "C" {
  * @see f_socket_option_set()
  */
 #ifndef _di_controller_control_configure_client_
-  extern f_status_t controller_control_configure_client(const controller_global_t *global, f_socket_t * const client) F_attribute_visibility_internal_d;
+  extern f_status_t controller_control_configure_client(const controller_global_t * const global, f_socket_t * const client) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_configure_client_
 
 /**
@@ -69,7 +69,7 @@ extern "C" {
  * @see f_socket_option_set()
  */
 #ifndef _di_controller_control_configure_server_
-  extern f_status_t controller_control_configure_server(const controller_global_t *global, f_socket_t * const server) F_attribute_visibility_internal_d;
+  extern f_status_t controller_control_configure_server(const controller_global_t * const global, f_socket_t * const server) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_configure_server_
 
 /**
@@ -136,7 +136,7 @@ extern "C" {
  * @see f_socket_read()
  */
 #ifndef _di_controller_control_respond_
-  extern f_status_t controller_control_respond(const controller_global_t *global, controller_control_t * const control) F_attribute_visibility_internal_d;
+  extern f_status_t controller_control_respond(const controller_global_t * const global, controller_control_t * const control) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_respond_
 
 /**
@@ -177,7 +177,7 @@ extern "C" {
  * @see fll_fss_payload_write_string()
  */
 #ifndef _di_controller_control_respond_build_header_
-  extern f_status_t controller_control_respond_build_header(const controller_global_t *global, controller_control_t * const control, const f_string_static_t type, const f_string_static_t status, const f_array_length_t length) F_attribute_visibility_internal_d;
+  extern f_status_t controller_control_respond_build_header(const controller_global_t * const global, controller_control_t * const control, const f_string_static_t type, const f_string_static_t status, const f_array_length_t length) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_respond_build_header_
 
 /**
@@ -212,7 +212,7 @@ extern "C" {
  * @see f_socket_write()
  */
 #ifndef _di_controller_control_respond_error_
-  extern f_status_t controller_control_respond_error(const controller_global_t *global, controller_control_t * const control, const f_status_t status, const f_string_static_t message) F_attribute_visibility_internal_d;
+  extern f_status_t controller_control_respond_error(const controller_global_t * const global, controller_control_t * const control, const f_status_t status, const f_string_static_t message) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_respond_error_
 
 /**
@@ -238,7 +238,7 @@ extern "C" {
  * @see controller_control_respond_error()
  */
 #ifndef _di_controller_control_respond_error_string_
-  extern f_status_t controller_control_respond_error_string(const controller_global_t *global, controller_control_t * const control, const f_status_t status, const f_string_t message) F_attribute_visibility_internal_d;
+  extern f_status_t controller_control_respond_error_string(const controller_global_t * const global, controller_control_t * const control, const f_status_t status, const f_string_t message) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_respond_error_string_
 
 #ifdef __cplusplus

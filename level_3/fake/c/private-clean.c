@@ -57,7 +57,7 @@ extern "C" {
 #endif // _di_fake_clean_operate_
 
 #if !defined(_di_fake_clean_operate_)
-  int fake_clean_remove_recursively_verbosely(const char *path, const struct stat *file_stat, int type, struct FTW *entity) {
+  int fake_clean_remove_recursively_verbosely(const char * const path, const struct stat *file_stat, int type, struct FTW *entity) {
 
     if (!entity->level || !path) return 0;
 

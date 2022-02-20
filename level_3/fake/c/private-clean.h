@@ -55,7 +55,7 @@ extern "C" {
  * @see remove()
  */
 #if !defined(_di_fake_clean_operate_)
-  extern int fake_clean_remove_recursively_verbosely(const char *path, const struct stat *file_stat, int type, struct FTW *entity) F_attribute_visibility_internal_d;
+  extern int fake_clean_remove_recursively_verbosely(const char * const path, const struct stat *file_stat, int type, struct FTW *entity) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fake_clean_operate_)
 
 #ifdef __cplusplus

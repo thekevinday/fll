@@ -119,7 +119,7 @@ int __wrap_cap_free(void *pointer) {
   return 1;
 }
 
-int __wrap_cap_from_name(const char *name, cap_value_t *value) {
+int __wrap_cap_from_name(const char * const name, cap_value_t *value) {
 
   const bool failure = mock_type(bool);
 
@@ -132,7 +132,7 @@ int __wrap_cap_from_name(const char *name, cap_value_t *value) {
   return 1;
 }
 
-cap_t __wrap_cap_from_text(const char *text) {
+cap_t __wrap_cap_from_text(const char * const text) {
 
   const bool failure = mock_type(bool);
 
@@ -171,7 +171,7 @@ cap_t __wrap_cap_get_fd(int descriptor) {
   return (cap_t) 1;
 }
 
-cap_t __wrap_cap_get_file(const char *path) {
+cap_t __wrap_cap_get_file(const char * const path) {
 
   const bool failure = mock_type(bool);
 
@@ -327,7 +327,7 @@ int __wrap_cap_set_fd(int descriptor, cap_t capability) {
   return 1;
 }
 
-int __wrap_cap_set_file(const char *path, cap_t capability) {
+int __wrap_cap_set_file(const char * const path, cap_t capability) {
 
   const bool failure = mock_type(bool);
 

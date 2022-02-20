@@ -124,7 +124,7 @@ extern "C" {
  * @see pthread_condattr_getclock()
  */
 #ifndef _di_f_thread_attribute_clock_get_
-  extern f_status_t f_thread_attribute_clock_get(const f_thread_condition_attribute_t *attribute, clockid_t * const id);
+  extern f_status_t f_thread_attribute_clock_get(const f_thread_condition_attribute_t * const attribute, clockid_t * const id);
 #endif // _di_f_thread_attribute_clock_get_
 
 /**
@@ -166,7 +166,7 @@ extern "C" {
  * @see pthread_condattr_getpshared()
  */
 #ifndef _di_f_thread_attribute_condition_shared_get_
-  extern f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t *attribute, int * const shared);
+  extern f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t * const attribute, int * const shared);
 #endif // _di_f_thread_attribute_condition_shared_get_
 
 /**
@@ -808,7 +808,7 @@ extern "C" {
  * @see pthread_barrierattr_getpshared()
  */
 #ifndef _di_f_thread_barrier_attribute_shared_get_
-  extern f_status_t f_thread_barrier_attribute_shared_get(const f_thread_barrier_attribute_t *attribute, int * const shared);
+  extern f_status_t f_thread_barrier_attribute_shared_get(const f_thread_barrier_attribute_t * const attribute, int * const shared);
 #endif // _di_f_thread_barrier_attribute_shared_get_
 
 /**
@@ -1517,7 +1517,7 @@ extern "C" {
  * @see pthread_cond_init()
  */
 #ifndef _di_f_thread_condition_create_
-  extern f_status_t f_thread_condition_create(const f_thread_condition_attribute_t *attribute, f_thread_condition_t * const condition);
+  extern f_status_t f_thread_condition_create(const f_thread_condition_attribute_t * const attribute, f_thread_condition_t * const condition);
 #endif // _di_f_thread_condition_create_
 
 /**
@@ -2208,7 +2208,7 @@ extern "C" {
  * @see pthread_rwlockattr_getpshared()
  */
 #ifndef _di_f_thread_lock_attribute_shared_get_
-  extern f_status_t f_thread_lock_attribute_shared_get(const f_thread_lock_attribute_t *attribute, int * const shared);
+  extern f_status_t f_thread_lock_attribute_shared_get(const f_thread_lock_attribute_t * const attribute, int * const shared);
 #endif // _di_f_thread_lock_attribute_shared_get_
 
 /**
@@ -2380,7 +2380,7 @@ extern "C" {
  * @see pthread_rwlock_init()
  */
 #ifndef _di_f_thread_lock_create_
-  extern f_status_t f_thread_lock_create(const f_thread_lock_attribute_t *attribute, f_thread_lock_t * const lock);
+  extern f_status_t f_thread_lock_create(const f_thread_lock_attribute_t * const attribute, f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_create_
 
 /**
@@ -2746,7 +2746,7 @@ extern "C" {
  * @see pthread_mutexattr_getprioceiling()
  */
 #ifndef _di_f_thread_mutex_attribute_priority_ceiling_get_
-  extern f_status_t f_thread_mutex_attribute_priority_ceiling_get(const f_thread_mutex_attribute_t *attribute, int * const ceiling);
+  extern f_status_t f_thread_mutex_attribute_priority_ceiling_get(const f_thread_mutex_attribute_t * const attribute, int * const ceiling);
 #endif // _di_f_thread_mutex_attribute_priority_ceiling_get_
 
 /**
@@ -2787,7 +2787,7 @@ extern "C" {
  * @see pthread_mutexattr_getpshared()
  */
 #ifndef _di_f_thread_mutex_attribute_shared_get_
-  extern f_status_t f_thread_mutex_attribute_shared_get(const f_thread_mutex_attribute_t *attribute, int * const shared);
+  extern f_status_t f_thread_mutex_attribute_shared_get(const f_thread_mutex_attribute_t * const attribute, int * const shared);
 #endif // _di_f_thread_mutex_attribute_shared_get_
 
 /**
@@ -2829,7 +2829,7 @@ extern "C" {
  * @see pthread_mutexattr_gettype()
  */
 #ifndef _di_f_thread_mutex_attribute_type_get_
-  extern f_status_t f_thread_mutex_attribute_type_get(const f_thread_mutex_attribute_t *attribute, int * const type);
+  extern f_status_t f_thread_mutex_attribute_type_get(const f_thread_mutex_attribute_t * const attribute, int * const type);
 #endif // _di_f_thread_mutex_attribute_type_get_
 
 /**
@@ -2872,7 +2872,7 @@ extern "C" {
  * @see pthread_mutexattr_getprotocol()
  */
 #ifndef _di_f_thread_mutex_attribute_protocol_get_
-  extern f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t *attribute, int * const protocol);
+  extern f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t * const attribute, int * const protocol);
 #endif // _di_f_thread_mutex_attribute_protocol_get_
 
 /**

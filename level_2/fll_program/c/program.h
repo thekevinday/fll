@@ -264,7 +264,7 @@ extern "C" {
  * @see f_string_dynamic_append()
  */
 #ifndef _di_fll_program_parameter_additional_append_
-  extern f_status_t fll_program_parameter_additional_append(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination);
+  extern f_status_t fll_program_parameter_additional_append(const f_string_static_t * const arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination);
 #endif // _di_fll_program_parameter_additional_append_
 
 /**
@@ -321,7 +321,7 @@ extern "C" {
  * @see fl_string_dynamic_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_
-  extern f_status_t fll_program_parameter_additional_rip(const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination);
+  extern f_status_t fll_program_parameter_additional_rip(const f_string_static_t * const arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination);
 #endif // _di_fll_program_parameter_additional_rip_
 
 /**

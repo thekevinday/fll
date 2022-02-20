@@ -375,7 +375,7 @@ extern "C" {
 #endif // _di_controller_get_id_group_
 
 #ifndef _di_controller_perform_ready_
-  f_status_t controller_perform_ready(const controller_global_t *global, controller_cache_t * const cache, const bool is_entry) {
+  f_status_t controller_perform_ready(const controller_global_t * const global, controller_cache_t * const cache, const bool is_entry) {
 
     if (!is_entry) {
       return F_none;

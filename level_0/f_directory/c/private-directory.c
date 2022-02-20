@@ -59,7 +59,7 @@ extern "C" {
 #endif // !defined(_di_f_directory_create_at_) || !defined(_di_f_directory_touch_at_)
 
 #if !defined(_di_f_directory_remove_)
-  int private_f_directory_remove_recursively(const char *path, const struct stat *file_stat, int type, struct FTW *entity) {
+  int private_f_directory_remove_recursively(const char * const path, const struct stat *file_stat, int type, struct FTW *entity) {
 
     if (!entity->level) {
       return 0;

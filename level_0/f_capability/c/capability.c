@@ -79,7 +79,7 @@ extern "C" {
   #endif // _di_f_capability_copy_external_
 
   #ifndef _di_f_capability_copy_internal_
-    f_status_t f_capability_copy_internal(const void *external, f_capability_t * const capability) {
+    f_status_t f_capability_copy_internal(const void * const external, f_capability_t * const capability) {
       #ifndef _di_level_0_parameter_checking_
         if (!external) return F_status_set_error(F_parameter);
         if (!capability) return F_status_set_error(F_parameter);
