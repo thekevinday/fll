@@ -24,6 +24,7 @@ Entry Specification:
     - "setting": optional, Actions may be one of\:
       - "mode": Exactly one Content that is one of "program" or "service".
       - "pid": Exactly one Content that is one of "disable", "require", or "ready".
+      - "pid_file": Exactly one Content that is a relative or absolute path to a pid file.
       - "session": Exactly one Content that is one of "new" or "same".
       - "show": Exactly one Content that is one of "normal" or "init".
       - "control": One to two Content.

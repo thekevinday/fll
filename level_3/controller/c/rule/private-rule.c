@@ -1539,10 +1539,10 @@ extern "C" {
       return F_status_set_error(F_file_found);
     }
 
-    status = controller_dynamic_append_terminated(pid_file, child_pid_file);
+    status = f_string_dynamic_append_nulless(pid_file, child_pid_file);
 
     if (F_status_is_error(status)) {
-      controller_print_error(thread, main->error, F_status_set_fine(status), "controller_dynamic_append_terminated", F_true);
+      controller_print_error(thread, main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
       return status;
     }
@@ -1912,10 +1912,10 @@ extern "C" {
       cache->action.line_action += ++item->line;
       cache->action.name_action.used = 0;
 
-      status = controller_dynamic_rip_nulless_terminated(cache->buffer_item, cache->range_action, &cache->action.name_action);
+      status = fl_string_dynamic_partial_rip_nulless(cache->buffer_item, cache->range_action, &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_dynamic_rip_nulless_terminated", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true);
 
         break;
       }
@@ -3383,10 +3383,10 @@ extern "C" {
 
           rule->items.array[rule->items.used].line = ++cache->action.line_item;
 
-          status = controller_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
+          status = fl_string_dynamic_partial_rip_nulless(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_dynamic_rip_nulless_terminated", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true);
 
             break;
           }
@@ -4197,7 +4197,7 @@ extern "C" {
         }
 
         if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_script_e) {
-          status = controller_dynamic_rip_nulless_terminated(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
+          status = fl_string_dynamic_partial_rip_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
           if (F_status_is_error(status)) {
             setting_value->used = 0;
@@ -4537,10 +4537,10 @@ extern "C" {
 
             cache->action.generic.used = 0;
 
-            status = controller_dynamic_rip_nulless_terminated(cache->buffer_item, cache->content_actions.array[i].array[1], &cache->action.generic);
+            status = fl_string_dynamic_partial_rip_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &cache->action.generic);
 
             if (F_status_is_error(status)) {
-              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_dynamic_rip_nulless_terminated", F_true);
+              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true);
 
               break;
             }

@@ -19,7 +19,7 @@ Rule Documentation:
     - "name": A name used to represent this rule, which is printed to the user, screen, logs, etc...
     - "nice": A single niceness value to run all processes executed within this rule as (-20 gets to be greediest in CPU usage and 19 being the nicest in CPU usage).
     - "on": Define a Rule Action in which a specified dependency is needed, wanted, or wished for.
-    - "parameter": A statically defined IKI name and its associated value for use in this rule file. @todo make sure this is implemented and make sure to perform iki substitutions (with "define" being a reserved iki parameter name for environment variable usage, such as define:"PATH").
+    - "parameter": A statically defined IKI name and its associated value for use in this rule file.
     - "path": A single Content used to set a custom PATH environment variable value.
     - "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
     - "scheduler": A valid name of a scheduler to use followed by an optional priority number.
@@ -66,7 +66,6 @@ Rule Documentation:
     These parameters are only exposed in the specific rule file in which they are defined and cannot be shared between rules.
     A "parameter" variable and an "environment" variable are mutually exclusive but an environment variable, in theory, can have an IKI variable assigned to it inside of a "script".
     These IKI variables are only substituted within a Rule Item's Content (and not within a Rule Setting nor within a Rule Item's Object).
-    Note: IKI variables are not yet implemented.
 
   - In the case of "scheduler"\:
     The valid range of the priority number is dependent on the scheduler.

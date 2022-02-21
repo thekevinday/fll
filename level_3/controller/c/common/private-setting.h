@@ -77,6 +77,7 @@ extern "C" {
 
     f_string_dynamic_t path_cgroup;
     f_string_dynamic_t path_control;
+    f_string_dynamic_t path_current;
     f_string_dynamic_t path_pid;
     f_string_dynamic_t path_setting;
 
@@ -99,6 +100,7 @@ extern "C" {
     0, \
     F_false, \
     0, \
+    f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \

@@ -179,6 +179,23 @@ extern "C" {
 #endif // _di_controller_entry_setting_read_print_error_with_range_
 
 /**
+ * Print a message for when an entry setting is being ignored.
+ *
+ * @param global
+ *   The global data.
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param total
+ *   The expected number of arguments.
+ */
+#ifndef _di_controller_entry_settings_read_print_setting_ignored_
+  extern void controller_entry_settings_read_print_setting_ignored(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_array_length_t index) F_attribute_visibility_internal_d;
+#endif // _di_controller_entry_settings_read_print_setting_ignored_
+
+/**
  * Print a message for when an entry setting action has the incorrect number of parameters.
  *
  * @param global

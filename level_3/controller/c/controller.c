@@ -35,10 +35,10 @@ extern "C" {
     fll_program_print_help_option(main->output.to, main->context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(main->output.to, main->context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_interruptible_s, controller_long_interruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" CONTROLLER_path_pid_s CONTROLLER_default_s CONTROLLER_path_pid_suffix_s "'.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" CONTROLLER_path_settings_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" CONTROLLER_path_pid_s F_path_separator_s CONTROLLER_default_s CONTROLLER_path_pid_suffix_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" CONTROLLER_path_settings_s F_path_separator_s "'.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_socket_s, controller_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Specify a custom socket file path, such as '" CONTROLLER_path_socket_s CONTROLLER_default_s CONTROLLER_path_socket_suffix_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_socket_s, controller_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Specify a custom socket file path, such as '" CONTROLLER_path_socket_s F_path_separator_s CONTROLLER_default_s CONTROLLER_path_socket_suffix_s "'.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
@@ -203,41 +203,48 @@ extern "C" {
       setting.mode = controller_setting_mode_service_e;
     }
 
-    if (main->parameters.array[controller_parameter_settings_e].result == f_console_result_found_e) {
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        controller_lock_print(main->error.to, 0);
+    status = f_path_current(F_false, &setting.path_current);
 
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings_s, main->context.set.notable);
-        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-        controller_unlock_print_flush(main->error.to, 0);
-      }
-
-      status = F_status_set_error(F_parameter);
-    }
-    else if (main->parameters.array[controller_parameter_settings_e].locations.used) {
-      const f_array_length_t index = main->parameters.array[controller_parameter_settings_e].values.array[main->parameters.array[controller_parameter_settings_e].values.used - 1];
-
-      status = fll_path_canonical(argv[index], &setting.path_setting);
-
-      if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
-      }
+    if (F_status_is_error(status)) {
+      fll_error_print(main->error, F_status_set_fine(status), "f_path_current", F_true);
     }
     else {
-      if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e && !main->as_init) {
-        status = f_string_dynamic_append(controller_path_settings_init_s, &setting.path_setting);
+      if (main->parameters.array[controller_parameter_settings_e].result == f_console_result_found_e) {
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          controller_lock_print(main->error.to, 0);
+
+          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings_s, main->context.set.notable);
+          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+
+          controller_unlock_print_flush(main->error.to, 0);
+        }
+
+        status = F_status_set_error(F_parameter);
       }
-      else if (main->default_path_setting->used) {
-        status = f_string_dynamic_append(*main->default_path_setting, &setting.path_setting);
+      else if (main->parameters.array[controller_parameter_settings_e].locations.used) {
+        const f_array_length_t index = main->parameters.array[controller_parameter_settings_e].values.array[main->parameters.array[controller_parameter_settings_e].values.used - 1];
+
+        status = controller_path_canonical_relative(&setting, argv[index], &setting.path_setting);
+
+        if (F_status_is_error(status)) {
+          fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
+        }
       }
       else {
-        status = f_string_dynamic_append(controller_path_settings_s, &setting.path_setting);
-      }
+        if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e && !main->as_init) {
+          status = f_string_dynamic_append(controller_path_settings_init_s, &setting.path_setting);
+        }
+        else if (main->default_path_setting->used) {
+          status = f_string_dynamic_append(*main->default_path_setting, &setting.path_setting);
+        }
+        else {
+          status = f_string_dynamic_append(controller_path_settings_s, &setting.path_setting);
+        }
 
-      if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+        }
       }
     }
 
@@ -259,10 +266,10 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[controller_parameter_pid_e].values.array[main->parameters.array[controller_parameter_pid_e].values.used - 1];
 
         if (argv[index].used) {
-          status = fll_path_canonical(argv[index], &setting.path_pid);
+          status = controller_path_canonical_relative(&setting, argv[index], &setting.path_pid);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
           }
         }
         else {
@@ -318,10 +325,10 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[controller_parameter_cgroup_e].values.array[main->parameters.array[controller_parameter_cgroup_e].values.used - 1];
 
         if (argv[index].used) {
-          status = fll_path_canonical(argv[index], &setting.path_cgroup);
+          status = controller_path_canonical_relative(&setting, argv[index], &setting.path_cgroup);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
           }
           else {
             status = f_string_append_assure(F_path_separator_s, 1, &setting.path_cgroup);

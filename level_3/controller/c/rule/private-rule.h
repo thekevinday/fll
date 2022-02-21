@@ -706,14 +706,16 @@ extern "C" {
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *   Errors (with error bit) from: f_string_maps_increase().
  *   Errors (with error bit) from: fll_fss_extended_read().
- *   Errors (with error bit) from: fll_path_canonical().
+ *
+ *   Errors (with error bit) from: controller_path_canonical_relative().
  *
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamics_increase()
  * @see f_string_maps_increase()
  * @see fl_string_dynamic_partial_rip_nulless()
  * @see fll_fss_extended_read()
- * @see fll_path_canonical()
+ *
+ * @see controller_path_canonical_relative()
  */
 #ifndef _di_controller_rule_setting_read_
   extern f_status_t controller_rule_setting_read(const controller_global_t global, const bool is_normal, const controller_setting_t setting, controller_cache_t * const cache, controller_rule_t * const rule) F_attribute_visibility_internal_d;

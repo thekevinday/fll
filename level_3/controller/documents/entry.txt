@@ -17,7 +17,7 @@ Entry Documentation:
   - The "setting" item Object\:
     Represents settings and is not an "item" that can be executed.
     A number of settings are supported, but if this Item Object is not specified, then defaults are used.
-    The following settings are available: "mode", "pid", "session", and "show".
+    The following settings are available: "mode", "pid", "pid_file", "session", and "show".
 
     - The "mode" setting\:
       Represents the mode in which the Entry is operating in.
@@ -40,6 +40,10 @@ Entry Documentation:
       For "disable", not pid file representing the entry is created.
       For "require", check to see if the PID file exists for an entry at startup and then when "ready" create a pid file, display error on pid file already exists or on failure and then fail.
       For "ready", when "ready" create a pid file, display error on failure and then fail (does not check if PID file exists).
+
+    - The "pid_file" setting\:
+      When "pid" is not disabed this represents the path to the pid file.
+      If -p or --pid is passed to the controller program, then this value is ignored in favor of the value passed along the command line.
 
     - The "session" setting\:
       Represents the default way in which child processes are executed.
@@ -65,6 +69,8 @@ Entry Documentation:
       The socket file itself must therefore already exist.
       This should be possible in the cases of file systems that have pre-created a socket file at the designated path.
       When "readonly", the group, mode, and user are also not processed effectively resulting in the "control_group", "control_mode", and "control_user" settings being ignored.
+
+      Future versions might expand this into supporting network addresses in addition to socket files.
 
     - The "control_group" setting\:
       Represents the group name or group ID to assign to the socket file as the group.

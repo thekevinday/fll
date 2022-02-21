@@ -33,65 +33,6 @@ extern "C" {
 #endif // _di_controller_range_after_number_sign_
 
 /**
- * Rip a string from the source and then add a NULL after the end of the string.
- *
- * @param source
- *   The string to copy from.
- * @param destination
- *   The string to copy to.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: fl_string_dynamic_partial_rip_nulless().
- *
- * @see fl_string_dynamic_partial_rip_nulless()
- */
-#ifndef _di_controller_string_dynamic_rip_nulless_terminated_
-  extern f_status_t controller_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
-#endif // _di_controller_string_dynamic_rip_nulless_terminated_
-
-/**
- * Append a string and then add a NULL after the end of the string.
- *
- * @param source
- *   The string to copy from.
- * @param destination
- *   The string to copy to.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_string_dynamic_append_nulless().
- *
- * @see f_string_dynamic_append_nulless()
- */
-#ifndef _di_controller_string_dynamic_append_terminated_
-  extern f_status_t controller_dynamic_append_terminated(const f_string_static_t from, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
-#endif // _di_controller_string_dynamic_append_terminated_
-
-/**
- * Append given range from within a string and then add a NULL after the end of the string.
- *
- * @param from
- *   The string to copy from.
- * @param range
- *   The range within the from string to copy.
- * @param destination
- *   The string to copy to.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_string_dynamic_append().
- *
- * @see f_string_dynamic_append()
- */
-#ifndef _di_controller_string_dynamic_partial_append_terminated_
-  extern f_status_t controller_dynamic_partial_append_terminated(const f_string_static_t from, const f_string_range_t range, f_string_dynamic_t *destination) F_attribute_visibility_internal_d;
-#endif // _di_controller_string_dynamic_partial_append_terminated_
-
-/**
  * Load a file from the controller settings directory.
  *
  * @param global
@@ -253,6 +194,36 @@ extern "C" {
 #endif // _di_controller_get_id_group_
 
 /**
+ * Determine a canonical path and then if it is relative to the current working directory, make it relative.
+ *
+ * For example, given the paths "../hello/world/" and "../controller/files/" with a current working directory of "/tmp/controller", then a canonical path for these might look like:
+ * - "/tmp/hello/world/"
+ * - "/tmp/controller/files/"
+ *
+ * This function would instead result in the following:
+ * - "/tmp/hello/world/"
+ * - "files/"
+ *
+ * @param setting
+ *   The controller settings data.
+ * @param source
+ *   The source path to determine the relative canonical from.
+ * @param destination
+ *   The resulting relative canonical path.
+ *   The destination will be completely replaced on success.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: fll_path_canonical().
+ *
+ * @see fll_path_canonical()
+ */
+#ifndef _di_controller_path_canonical_relative_
+  extern f_status_t controller_path_canonical_relative(const controller_setting_t * const global, const f_string_static_t source, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+#endif // _di_controller_path_canonical_relative_
+
+/**
  * Perform all activities requiring the state to be "ready".
  *
  * This prints messages on errors.
@@ -344,7 +315,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param setting
- *   The settings.
+ *   The controller settings data.
  * @param time
  *   The number of nanoseconds to sleep.
  *

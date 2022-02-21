@@ -30,27 +30,6 @@ extern "C" {
   }
 #endif // _di_controller_range_after_number_sign_
 
-#ifndef _di_controller_string_dynamic_rip_nulless_terminated_
-  f_status_t controller_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
-
-    return fl_string_dynamic_partial_rip_nulless(source, range, destination);
-  }
-#endif // _di_controller_string_dynamic_rip_nulless_terminated_
-
-#ifndef _di_controller_string_dynamic_append_terminated_
-  f_status_t controller_dynamic_append_terminated(const f_string_static_t source, f_string_dynamic_t *destination) {
-
-    return f_string_dynamic_append_nulless(source, destination);
-  }
-#endif // _di_controller_string_dynamic_append_terminated_
-
-#ifndef _di_controller_string_dynamic_partial_append_terminated_
-  f_status_t controller_dynamic_partial_append_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
-
-    return f_string_dynamic_partial_append(source, range, destination);
-  }
-#endif // _di_controller_string_dynamic_partial_append_terminated_
-
 #ifndef _di_controller_file_load_
   f_status_t controller_file_load(const controller_global_t global, const bool required, const f_string_static_t path_prefix, const f_string_static_t path_name, const f_string_static_t path_suffix, controller_cache_t * const cache) {
 
@@ -315,7 +294,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_number) {
         cache->action.generic.used = 0;
 
-        status = controller_dynamic_rip_nulless_terminated(buffer, range, &cache->action.generic);
+        status = fl_string_dynamic_partial_rip_nulless(buffer, range, &cache->action.generic);
         if (F_status_is_error(status)) return status;
 
         status = f_account_id_by_name(cache->action.generic, id);
@@ -350,7 +329,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_number) {
         cache->action.generic.used = 0;
 
-        status = controller_dynamic_rip_nulless_terminated(buffer, range, &cache->action.generic);
+        status = fl_string_dynamic_partial_rip_nulless(buffer, range, &cache->action.generic);
         if (F_status_is_error(status)) return status;
 
         status = f_account_group_id_by_name(cache->action.generic, id);
@@ -374,6 +353,40 @@ extern "C" {
   }
 #endif // _di_controller_get_id_group_
 
+#ifndef _di_controller_path_canonical_relative_
+  f_status_t controller_path_canonical_relative(const controller_setting_t * const setting, const f_string_static_t source, f_string_dynamic_t * const destination) {
+
+    {
+      const f_status_t status = fll_path_canonical(source, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (destination->used >= setting->path_current.used) {
+      const f_string_range_t range = macro_f_string_range_t_initialize(setting->path_current.used);
+
+      if (fl_string_dynamic_partial_compare(*destination, setting->path_current, range, range) == F_equal_to) {
+        f_array_length_t length = destination->used - setting->path_current.used;
+
+        if (length) {
+          char temporary[--length];
+          temporary[length] = 0;
+
+          memcpy(temporary, destination->string + setting->path_current.used + 1, length);
+          memcpy(destination->string, temporary, length);
+
+          destination->string[length] = 0;
+          destination->used = length;
+        }
+        else {
+          destination->used = 0;
+        }
+      }
+    }
+
+    return F_none;
+  }
+#endif // _di_controller_path_canonical_relative_
+
 #ifndef _di_controller_perform_ready_
   f_status_t controller_perform_ready(const controller_global_t * const global, controller_cache_t * const cache, const bool is_entry) {
 
@@ -381,12 +394,29 @@ extern "C" {
       return F_none;
     }
 
+    if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_found_e) {
+      if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e && global->main->output.verbosity == f_console_verbosity_debug_e) {
+        controller_lock_print(global->main->output.to, global->thread);
+
+        fl_print_format("%rPID file '", global->main->output.to.stream, f_string_eol_s);
+        fl_print_format("%[%Q%]'.%r", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_pid, global->main->context.set.notable, f_string_eol_s);
+
+        if (global->setting->path_control.used) {
+          fl_print_format("%rControl socket '", global->main->output.to.stream, f_string_eol_s);
+          fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
+          fl_print_format("'.%r", global->main->output.to.stream, f_string_eol_s);
+        }
+
+        controller_unlock_print_flush(global->main->output.to, global->thread);
+      }
+
+      return F_none;
+    }
+
     f_status_t status = F_none;
 
     if (global->setting->entry.pid != controller_entry_pid_disable_e && !global->setting->path_pid.used) {
-      if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_additional_e) {
-        status = controller_file_pid_create(global->main->pid, global->setting->path_pid);
-      }
+      status = controller_file_pid_create(global->main->pid, global->setting->path_pid);
 
       // Report pid file error but because this could be an "init" program, consider the pid file as optional and continue on.
       if (F_status_is_error(status)) {
@@ -434,14 +464,7 @@ extern "C" {
           controller_lock_print(global->main->output.to, global->thread);
 
           fl_print_format("%rPID file '", global->main->output.to.stream, f_string_eol_s);
-          fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_pid, global->main->context.set.notable);
-
-          if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
-            fl_print_format("' created.%r", global->main->output.to.stream, f_string_eol_s);
-          }
-          else {
-            fl_print_format("'.%r", global->main->output.to.stream, f_string_eol_s);
-          }
+          fl_print_format("%[%Q%]' created.%r", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_pid, global->main->context.set.notable, f_string_eol_s);
 
           controller_unlock_print_flush(global->main->output.to, global->thread);
         }
@@ -575,13 +598,7 @@ extern "C" {
 
                   fl_print_format("%rControl socket '", global->main->output.to.stream, f_string_eol_s);
                   fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
-
-                  if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
-                    fl_print_format("' created.%r", global->main->output.to.stream, f_string_eol_s);
-                  }
-                  else {
-                    fl_print_format("'.%r", global->main->output.to.stream, f_string_eol_s);
-                  }
+                  fl_print_format("' created.%r", global->main->output.to.stream, f_string_eol_s);
 
                   controller_unlock_print_flush(global->main->output.to, global->thread);
                 }

@@ -143,6 +143,23 @@ extern "C" {
   }
 #endif // _di_controller_entry_setting_read_print_error_with_range_
 
+#ifndef _di_controller_entry_settings_read_print_setting_ignored_
+  void controller_entry_settings_read_print_setting_ignored(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_array_length_t index) {
+
+    if (global.main->warning.verbosity != f_console_verbosity_debug_e) return;
+
+    controller_lock_print(global.main->warning.to, global.thread);
+
+    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
+    fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
+    fl_print_format("%[' is being ignored.%]%r", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
+
+    controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);
+
+    controller_unlock_print_flush(global.main->warning.to, global.thread);
+  }
+#endif // _di_controller_entry_settings_read_print_setting_ignored_
+
 #ifndef _di_controller_entry_settings_read_print_setting_requires_exactly_
   void controller_entry_settings_read_print_setting_requires_exactly(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t total) {
 
@@ -188,8 +205,8 @@ extern "C" {
 
     fl_print_format("%r%[%QThe %Q item setting '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->warning.context);
     fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
-    fl_print_format("%[' has an unknown value '%]", global.main->warning.to.stream, f_string_eol_s, global.main->warning.context, global.main->warning.context);
-    fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.content_actions.array[index].array[0], global.main->warning.notable);
+    fl_print_format("%[' has an unknown value '%]", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context);
+    fl_print_format("%[%/Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.buffer_file, cache.content_actions.array[index].array[0], global.main->warning.notable);
     fl_print_format("%['.%]%r", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->warning, cache.action);

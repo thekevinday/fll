@@ -143,13 +143,15 @@ extern "C" {
  *   F_critical (with error bit) on any critical error.
  *   F_execute (with error bit) if the "execute" Item Action failed.
  *
+ *   Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *
  *   Errors (with error bit) from: macro_f_array_lengths_t_increase_by().
  *   Errors (with error bit) from: controller_perform_ready().
- *   Errors (with error bit) from: controller_dynamic_append_terminated().
+ *
+ * @see f_string_dynamic_append_nulless()
  *
  * @see macro_f_array_lengths_t_increase_by()
  * @see controller_perform_ready()
- * @see controller_dynamic_append_terminated()
  */
 #ifndef _di_controller_entry_process_
   extern f_status_t controller_entry_process(const controller_global_t * const global, controller_cache_t * const cache, const bool failsafe, const bool is_entry) F_attribute_visibility_internal_d;
@@ -175,26 +177,28 @@ extern "C" {
  *   Errors (with error bit) from: controller_entry_items_increase_by().
  *   Errors (with error bit) from: controller_file_load().
  *   Errors (with error bit) from: controller_status_simplify_error().
- *   Errors (with error bit) from: controller_dynamic_append_terminated().
- *   Errors (with error bit) from: controller_dynamic_partial_append_terminated().
+ *
  *   Errors (with error bit) from: f_fss_count_lines().
- *   Errors (with error bit) from: fl_fss_apply_delimit().
  *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_fss_apply_delimit().
  *   Errors (with error bit) from: fll_fss_basic_list_read().
  *
  * @see controller_entry_actions_read()
  * @see controller_entry_items_increase_by()
  * @see controller_file_load()
  * @see controller_status_simplify_error()
- * @see controller_dynamic_append_terminated()
- * @see controller_dynamic_partial_append_terminated()
+ *
  * @see f_fss_count_lines()
- * @see fl_fss_apply_delimit()
  * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamic_partial_append()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamic_terminate()
+ * @see fl_fss_apply_delimit()
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
@@ -213,6 +217,10 @@ extern "C" {
  *   The range in the list buffer representing the content.
  * @param cache
  *   A structure for containing and caching relevant data.
+ *
+ *   Errors (with error bit) from: controller_entry_print_error_file().
+ *
+ * @see controller_entry_print_error_file()
  */
 #ifndef _di_controller_entry_settings_read_
   extern f_status_t controller_entry_settings_read(const controller_global_t global, const bool is_entry, const f_string_range_t content_range, controller_cache_t * const cache) F_attribute_visibility_internal_d;

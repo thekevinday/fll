@@ -152,7 +152,7 @@ extern "C" {
 
     data->cache.buffer_small.used = 0;
 
-    if (main->parameters.array[control_parameter_socket_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[control_parameter_settings_e].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[control_parameter_settings_e].values.array[main->parameters.array[control_parameter_settings_e].values.used - 1];
 
       status = f_string_dynamic_append(data->argv[index], &data->cache.buffer_small);

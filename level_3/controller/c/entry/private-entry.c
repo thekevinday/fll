@@ -229,10 +229,11 @@ extern "C" {
 
       action->line = ++cache->action.line_action;
 
-      status = controller_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
+      status = fl_string_dynamic_partial_rip_nulless(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_dynamic_rip_nulless_terminated", F_true, global.thread);
+        controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true, global.thread);
+
         break;
       }
 
@@ -414,17 +415,16 @@ extern "C" {
             if (action->parameters.array[0].used) {
 
               // Force the path to be canonical (removing all '../' parts).
-              status = fll_path_canonical(action->parameters.array[0], &cache->buffer_path);
+              status = controller_path_canonical_relative(global.setting, action->parameters.array[0], &cache->buffer_path);
 
               if (F_status_is_error(status)) {
-                // @todo instead call: fll_error_file_print().
-                // fll_error_file_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
-                controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, global.thread);
+                controller_entry_print_error_file(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_path_canonical_relative", F_true, cache->action.generic, f_file_operation_analyze_s, fll_error_file_type_path_e, global.thread);
 
                 action->status = status;
 
                 if (F_status_set_fine(status) == F_memory_not) {
                   status_action = status;
+
                   break;
                 }
 
@@ -455,6 +455,7 @@ extern "C" {
 
                 if (F_status_set_fine(status) == F_memory_not) {
                   status_action = status;
+
                   break;
                 }
 
@@ -677,9 +678,6 @@ extern "C" {
     uint8_t error_has = F_false;
 
     // This effectively sets the read for an entry and resets the ready for an exit.
-    // @todo should there be a ready_exit instead?
-    // @todo the global.setting->ready in this function may need mutex lock protection.
-    // @todo disconnect the socket file if applicable.
     global.setting->ready = controller_setting_ready_no_e;
 
     cache->ats.used = 0;
@@ -705,10 +703,10 @@ extern "C" {
     cache->action.line_item = entry->items.array[0].line;
     cache->action.name_item.used = 0;
 
-    status = controller_dynamic_append_terminated(entry->items.array[0].name, &cache->action.name_item);
+    status = f_string_dynamic_append_nulless(entry->items.array[0].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
-      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_dynamic_append_terminated", F_true, global.thread);
+      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true, global.thread);
 
       return status;
     }
@@ -722,10 +720,10 @@ extern "C" {
         cache->action.line_action = actions->array[cache->ats.array[at_j]].line;
         cache->action.name_action.used = 0;
 
-        status2 = controller_dynamic_append_terminated(controller_entry_action_type_name(actions->array[cache->ats.array[at_j]].type), &cache->action.name_action);
+        status2 = f_string_dynamic_append_nulless(controller_entry_action_type_name(actions->array[cache->ats.array[at_j]].type), &cache->action.name_action);
 
         if (F_status_is_error(status2)) {
-          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "controller_dynamic_append_terminated", F_true, global.thread);
+          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "f_string_dynamic_append_nulless", F_true, global.thread);
 
           return status2;
         }
@@ -817,10 +815,10 @@ extern "C" {
               cache->action.name_item.used = 0;
               cache->action.line_item = entry->items.array[i].line;
 
-              status2 = controller_dynamic_append_terminated(entry->items.array[i].name, &cache->action.name_item);
+              status2 = f_string_dynamic_append_nulless(entry->items.array[i].name, &cache->action.name_item);
 
               if (F_status_is_error(status2)) {
-                controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "controller_dynamic_append_terminated", F_true, global.thread);
+                controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "f_string_dynamic_append_nulless", F_true, global.thread);
 
                 return status2;
               }
@@ -872,10 +870,10 @@ extern "C" {
         cache->action.line_item = entry->items.array[cache->ats.array[at_i]].line;
         cache->action.name_item.used = 0;
 
-        status2 = controller_dynamic_append_terminated(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
+        status2 = f_string_dynamic_append_nulless(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status2)) {
-          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "controller_dynamic_append_terminated", F_true, global.thread);
+          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "f_string_dynamic_append_nulless", F_true, global.thread);
 
           return status2;
         }
@@ -915,7 +913,7 @@ extern "C" {
     controller_entry_actions_t *entry_actions = 0;
     controller_process_t *process = 0;
 
-    // an empty stack is used here because each rule here is the first rule run in the rule's scope.
+    // An empty stack is used here because each rule here is the first rule run in the rule's scope.
     const f_array_lengths_t stack = f_array_lengths_t_initialize;
 
     cache->ats.used = 0;
@@ -942,10 +940,10 @@ extern "C" {
     cache->action.line_item = entry->items.array[cache->ats.array[0]].line;
     cache->action.name_item.used = 0;
 
-    status = controller_dynamic_append_terminated(entry->items.array[cache->ats.array[0]].name, &cache->action.name_item);
+    status = f_string_dynamic_append_nulless(entry->items.array[cache->ats.array[0]].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
-      controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "controller_dynamic_append_terminated", F_true, global->thread);
+      controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true, global->thread);
 
       return status;
     }
@@ -978,10 +976,10 @@ extern "C" {
         cache->action.line_action = entry_action->line;
         cache->action.name_action.used = 0;
 
-        status = controller_dynamic_append_terminated(controller_entry_action_type_name(entry_action->type), &cache->action.name_action);
+        status = f_string_dynamic_append_nulless(controller_entry_action_type_name(entry_action->type), &cache->action.name_action);
 
         if (F_status_is_error(status)) {
-          controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "controller_dynamic_append_terminated", F_true, global->thread);
+          controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true, global->thread);
 
           return status;
         }
@@ -1147,10 +1145,10 @@ extern "C" {
           cache->action.name_item.used = 0;
           cache->action.line_item = entry->items.array[cache->ats.array[at_i]].line;
 
-          status = controller_dynamic_append_terminated(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
+          status = f_string_dynamic_append_nulless(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "controller_dynamic_append_terminated", F_true, global->thread);
+            controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true, global->thread);
 
             return status;
           }
@@ -1519,10 +1517,10 @@ extern "C" {
         cache->action.line_item = entry->items.array[cache->ats.array[at_i]].line;
         cache->action.name_item.used = 0;
 
-        status = controller_dynamic_append_terminated(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
+        status = f_string_dynamic_append_nulless(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status)) {
-          controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "controller_dynamic_append_terminated", F_true, global->thread);
+          controller_entry_print_error(is_entry, global->main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true, global->thread);
 
           break;
         }
@@ -1717,10 +1715,11 @@ extern "C" {
             break;
           }
 
-          status = controller_dynamic_partial_append_terminated(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
+          status = f_string_dynamic_partial_append(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_dynamic_partial_append_terminated", F_true, global.thread);
+            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append", F_true, global.thread);
+
             break;
           }
 
@@ -1728,6 +1727,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
+
             break;
           }
 
@@ -1785,10 +1785,10 @@ extern "C" {
 
           entry->items.array[at].line = cache->action.line_item;
 
-          status = controller_dynamic_append_terminated(cache->action.name_item, &entry->items.array[at].name);
+          status = f_string_dynamic_append_nulless(cache->action.name_item, &entry->items.array[at].name);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_dynamic_append_terminated", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
             break;
           }
@@ -1873,10 +1873,10 @@ extern "C" {
                     cache->action.line_action = action->line;
                     cache->action.line_item = entry->items.array[i].line;
 
-                    status = controller_dynamic_append_terminated(entry->items.array[i].name, &cache->action.name_item);
+                    status = f_string_dynamic_append_nulless(entry->items.array[i].name, &cache->action.name_item);
 
                     if (F_status_is_error(status)) {
-                      controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_dynamic_append_terminated", F_true);
+                      controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
                       break;
                     }
@@ -1973,10 +1973,10 @@ extern "C" {
       line = ++cache->action.line_action;
       cache->action.name_action.used = 0;
 
-      status = controller_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
+      status = fl_string_dynamic_partial_rip_nulless(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_dynamic_rip_nulless_terminated", F_true, global.thread);
+        controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true, global.thread);
 
         break;
       }
@@ -1991,59 +1991,20 @@ extern "C" {
         cache->action.generic.used = 0;
         global.setting->path_control.used = 0;
 
-        status = controller_dynamic_rip_nulless_terminated(cache->buffer_file, cache->content_actions.array[i].array[0], &global.setting->path_control);
+        status = fl_string_dynamic_partial_rip_nulless(cache->buffer_file, cache->content_actions.array[i].array[0], &cache->action.generic);
 
         if (F_status_is_error(status)) {
-          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_dynamic_rip_nulless_terminated", F_true, global.thread);
+          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true, global.thread);
 
           global.setting->path_control.used = 0;
 
           break;
         }
 
-        if (f_path_is_relative(global.setting->path_control) == F_true) {
-
-          // Use the PID file path for creating a relative path to the control socket.
-          status = f_file_name_directory(global.setting->path_pid, &cache->action.generic);
-
-          if (F_status_is_error(status)) {
-            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_file_name_directory", F_true, global.thread);
-
-            global.setting->path_control.used = 0;
-
-            break;
-          }
-
-          status = f_string_dynamic_append(f_path_separator_s, &cache->action.generic);
-
-          if (F_status_is_error_not(status)) {
-            status = f_string_dynamic_append(global.setting->path_control, &cache->action.generic);
-          }
-
-          if (F_status_is_error(status)) {
-            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append", F_true, global.thread);
-
-            global.setting->path_control.used = 0;
-
-            break;
-          }
-        }
-        else {
-          status = f_string_dynamic_append(global.setting->path_control, &cache->action.generic);
-
-          if (F_status_is_error(status)) {
-            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append", F_true, global.thread);
-
-            global.setting->path_control.used = 0;
-
-            break;
-          }
-        }
-
-        status = fll_path_canonical(cache->action.generic, &global.setting->path_control);
+        status = controller_path_canonical_relative(global.setting, cache->action.generic, &global.setting->path_control);
 
         if (F_status_is_error(status)) {
-          controller_entry_print_error_file(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, cache->action.generic, f_file_operation_analyze_s, fll_error_file_type_path_e, global.thread);
+          controller_entry_print_error_file(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_path_canonical_relative", F_true, cache->action.generic, f_file_operation_analyze_s, fll_error_file_type_path_e, global.thread);
 
           global.setting->path_control.used = 0;
 
@@ -2083,10 +2044,10 @@ extern "C" {
 
         cache->action.generic.used = 0;
 
-        status = controller_dynamic_rip_nulless_terminated(cache->buffer_file, cache->content_actions.array[i].array[0], &cache->action.generic);
+        status = fl_string_dynamic_partial_rip_nulless(cache->buffer_file, cache->content_actions.array[i].array[0], &cache->action.generic);
 
         if (F_status_is_error(status)) {
-          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_dynamic_rip_nulless_terminated", F_true, global.thread);
+          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true, global.thread);
 
           break;
         }
@@ -2174,6 +2135,38 @@ extern "C" {
           controller_entry_settings_read_print_setting_unknown_action_value(global, is_entry, *cache, i);
 
           continue;
+        }
+      }
+      else if (is_entry && fl_string_dynamic_compare(controller_pid_file_s, cache->action.name_action) == F_equal_to) {
+        if (cache->content_actions.array[i].used != 1) {
+          controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 1);
+
+          continue;
+        }
+
+        if (global.main->parameters.array[controller_parameter_pid_e].result == f_console_result_additional_e) {
+          controller_entry_settings_read_print_setting_ignored(global, is_entry, *cache, i);
+        }
+        else {
+          cache->action.generic.used = 0;
+
+          status = fl_string_dynamic_partial_rip_nulless(cache->buffer_file, cache->content_actions.array[i].array[0], &cache->action.generic);
+
+          if (F_status_is_error(status)) {
+            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true, global.thread);
+
+            continue;
+          }
+
+          global.setting->path_pid.used = 0;
+
+          status = controller_path_canonical_relative(global.setting, cache->action.generic, &global.setting->path_pid);
+
+          if (F_status_is_error(status)) {
+            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_path_canonical_relative", F_true, global.thread);
+
+            continue;
+          }
         }
       }
       else if (fl_string_dynamic_compare(controller_session_s, cache->action.name_action) == F_equal_to) {

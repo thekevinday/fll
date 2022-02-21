@@ -10,6 +10,7 @@ extern "C" {
 
     f_string_dynamic_resize(0, &setting->path_control);
     f_string_dynamic_resize(0, &setting->path_cgroup);
+    f_string_dynamic_resize(0, &setting->path_current);
     f_string_dynamic_resize(0, &setting->path_pid);
     f_string_dynamic_resize(0, &setting->path_setting);
 
