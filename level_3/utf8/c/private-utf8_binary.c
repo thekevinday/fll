@@ -88,6 +88,7 @@ extern "C" {
             utf8_print_signal_received(data, status);
 
             status = F_signal;
+
             break;
           }
         }

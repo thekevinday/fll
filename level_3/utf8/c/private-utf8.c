@@ -124,7 +124,7 @@ extern "C" {
     if (text->size == 1) {
       text->used = text->string[0] ? 1 : 0;
     }
-    else if (text->used == 2) {
+    else if (text->size == 2) {
       if (!text->string[0]) {
         text->used = 1;
       }
@@ -132,7 +132,7 @@ extern "C" {
         text->used = text->string[1] ? 2 : 1;
       }
     }
-    else if (text->used == 3) {
+    else if (text->size == 3) {
       if (!text->string[0]) {
         text->used = 1;
       }

@@ -411,6 +411,7 @@ extern "C" {
           if (!((++signal_check) % utf8_signal_check_d)) {
             if (utf8_signal_received(&data)) {
               status = F_status_set_error(F_signal);
+
               break;
             }
 
