@@ -79,7 +79,7 @@ extern "C" {
 #endif // _di_f_string_map_multis_decrease_by_
 
 #ifndef _di_f_string_map_multis_increase_
-  f_status_t f_string_map_multis_increase(const uint16_t step, f_string_map_multis_t * const map_multis) {
+  f_status_t f_string_map_multis_increase(const f_array_length_t step, f_string_map_multis_t * const map_multis) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!map_multis) return F_status_set_error(F_parameter);
@@ -200,7 +200,7 @@ extern "C" {
 #endif // _di_f_string_map_multiss_decrease_by_
 
 #ifndef _di_f_string_map_multiss_increase_
-  f_status_t f_string_map_multiss_increase(const uint16_t step, f_string_map_multiss_t * const map_multiss) {
+  f_status_t f_string_map_multiss_increase(const f_array_length_t step, f_string_map_multiss_t * const map_multiss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!map_multiss) return F_status_set_error(F_parameter);
@@ -306,7 +306,7 @@ extern "C" {
 #endif // _di_f_string_maps_decrease_by_
 
 #ifndef _di_f_string_maps_increase_
-  f_status_t f_string_maps_increase(const uint16_t step, f_string_maps_t * const maps) {
+  f_status_t f_string_maps_increase(const f_array_length_t step, f_string_maps_t * const maps) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!maps) return F_status_set_error(F_parameter);
@@ -429,7 +429,7 @@ extern "C" {
 #endif // _di_f_string_mapss_decrease_by_
 
 #ifndef _di_f_string_mapss_increase_
-  f_status_t f_string_mapss_increase(const uint16_t step, f_string_mapss_t * const mapss) {
+  f_status_t f_string_mapss_increase(const f_array_length_t step, f_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!mapss) return F_status_set_error(F_parameter);

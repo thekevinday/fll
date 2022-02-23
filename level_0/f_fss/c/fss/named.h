@@ -63,7 +63,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_fss_nameds_t_
+#ifndef _di_f_fss_nameds_t_
   typedef struct {
     f_fss_named_t *array;
 
@@ -85,7 +85,7 @@ extern "C" {
   #define macro_f_fss_nameds_t_increase_by(status, nameds, amount) status = f_fss_nameds_increase_by(amount, &nameds);
   #define macro_f_fss_nameds_t_decrease_by(status, nameds, amount) status = f_fss_nameds_decrease_by(amount, &nameds);
   #define macro_f_fss_nameds_t_decimate_by(status, nameds, amount) status = f_fss_nameds_decimate_by(amount, &nameds);
-#endif // _di_fss_nameds_t_
+#endif // _di_f_fss_nameds_t_
 
 /**
  * Resize all parts of the named structure using the same length.
@@ -170,7 +170,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_named_increase_
-  extern f_status_t f_fss_named_increase(const uint16_t step, f_fss_named_t * const named);
+  extern f_status_t f_fss_named_increase(const f_array_length_t step, f_fss_named_t * const named);
 #endif // _di_f_fss_named_increase_
 
 /**
@@ -298,7 +298,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nameds_increase_
-  extern f_status_t f_fss_nameds_increase(const uint16_t step, f_fss_nameds_t * const nameds);
+  extern f_status_t f_fss_nameds_increase(const f_array_length_t step, f_fss_nameds_t * const nameds);
 #endif // _di_f_fss_nameds_increase_
 
 /**

@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_f_fll_ids_decrease_by_
 
 #ifndef _di_f_fll_ids_increase_
-  f_status_t f_fll_ids_increase(const uint16_t step, f_fll_ids_t *ids) {
+  f_status_t f_fll_ids_increase(const f_array_length_t step, f_fll_ids_t *ids) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!ids) return F_status_set_error(F_parameter);
@@ -177,7 +177,7 @@ extern "C" {
 #endif // _di_f_fll_idss_decrease_by_
 
 #ifndef _di_f_fll_idss_increase_
-  f_status_t f_fll_idss_increase(const uint16_t step, f_fll_idss_t *idss) {
+  f_status_t f_fll_idss_increase(const f_array_length_t step, f_fll_idss_t *idss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!idss) return F_status_set_error(F_parameter);

@@ -240,7 +240,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_map_multis_increase_
-  extern f_status_t f_utf_string_map_multis_increase(const uint16_t step, f_utf_string_map_multis_t *map_multis);
+  extern f_status_t f_utf_string_map_multis_increase(const f_array_length_t step, f_utf_string_map_multis_t *map_multis);
 #endif // _di_f_utf_string_map_multis_increase_
 
 /**
@@ -395,7 +395,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_maps_increase_
-  extern f_status_t f_utf_string_maps_increase(const uint16_t step, f_utf_string_maps_t *maps);
+  extern f_status_t f_utf_string_maps_increase(const f_array_length_t step, f_utf_string_maps_t *maps);
 #endif // _di_f_utf_string_maps_increase_
 
 /**

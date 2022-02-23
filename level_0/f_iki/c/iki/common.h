@@ -39,7 +39,7 @@ extern "C" {
   extern const f_string_static_t f_iki_syntax_slash_s;
 #endif //_di_f_iki_syntax_
 
-#ifndef _di_iki_vocabulary_0001_
+#ifndef _di_f_iki_vocabulary_0001_
   #define F_iki_vocabulary_0001_address_s  "address"
   #define F_iki_vocabulary_0001_code_s     "code"
   #define F_iki_vocabulary_0001_email_s    "email"
@@ -72,9 +72,9 @@ extern "C" {
   extern const f_string_static_t f_iki_vocabulary_0001_url_s;
   extern const f_string_static_t f_iki_vocabulary_0001_urn_s;
   extern const f_string_static_t f_iki_vocabulary_0001_variable_s;
-#endif // _di_iki_vocabulary_0001_
+#endif // _di_f_iki_vocabulary_0001_
 
-#ifndef _di_iki_vocabulary_0002_
+#ifndef _di_f_iki_vocabulary_0002_
   #define F_iki_vocabulary_0002_context_s   "context"
   #define F_iki_vocabulary_0002_define_s    "define"
   #define F_iki_vocabulary_0002_parameter_s "parameter"
@@ -86,9 +86,7 @@ extern "C" {
   extern const f_string_static_t f_iki_vocabulary_0002_context_s;
   extern const f_string_static_t f_iki_vocabulary_0002_define_s;
   extern const f_string_static_t f_iki_vocabulary_0002_parameter_s;
-#endif // _di_iki_vocabulary_0002_
-
-// @todo consider IKI-0003 = vocabulary based on context from HTML5 and accessibility-related?
+#endif // _di_f_iki_vocabulary_0002_
 
 /**
  * Designate an iki delimit location.
@@ -157,7 +155,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_variable_t_
+#ifndef _di_f_iki_variable_t_
   typedef f_string_ranges_t f_iki_variable_t;
 
   #define f_iki_variable_t_initialize f_string_ranges_t_initialize
@@ -170,7 +168,7 @@ extern "C" {
   #define macro_f_iki_variable_t_delete_simple(variable)  macro_f_string_ranges_t_delete_simple(variable)
   #define macro_f_iki_variable_t_destroy_simple(variable) macro_f_string_ranges_t_destroy_simple(variable)
 
-#endif // _di_iki_variable_t_
+#endif // _di_f_iki_variable_t_
 
 /**
  * This holds an array of string ranges that represent the vocabulary names.
@@ -179,7 +177,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_vocabulary_t_
+#ifndef _di_f_iki_vocabulary_t_
   typedef f_string_ranges_t f_iki_vocabulary_t;
 
   #define f_iki_vocabulary_t_initialize f_string_ranges_t_initialize
@@ -191,7 +189,7 @@ extern "C" {
 
   #define macro_f_iki_vocabulary_t_delete_simple(vocabulary)  macro_f_string_ranges_t_delete_simple(vocabulary)
   #define macro_f_iki_vocabulary_t_destroy_simple(vocabulary) macro_f_string_ranges_t_destroy_simple(vocabulary)
-#endif // _di_iki_vocabulary_t_
+#endif // _di_f_iki_vocabulary_t_
 
 /**
  * This holds an array of f_iki_vocabulary_t.
@@ -200,7 +198,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_vocabularys_t_
+#ifndef _di_f_iki_vocabularys_t_
   typedef f_string_rangess_t f_iki_vocabularys_t;
 
   #define f_iki_vocabularys_t_initialize f_string_rangess_t_initialize
@@ -212,7 +210,7 @@ extern "C" {
 
   #define macro_f_iki_vocabularys_t_delete_simple(content)  macro_f_string_rangess_t_delete_simple(content)
   #define macro_f_iki_vocabularys_t_destroy_simple(content) macro_f_string_rangess_t_destroy_simple(content)
-#endif // _di_iki_vocabularys_t_
+#endif // _di_f_iki_vocabularys_t_
 
 /**
  * This holds an array of string ranges that represent the content.
@@ -223,7 +221,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_content_t_
+#ifndef _di_f_iki_content_t_
   typedef f_string_ranges_t f_iki_content_t;
 
   #define f_iki_content_t_initialize f_string_ranges_t_initialize
@@ -235,7 +233,7 @@ extern "C" {
 
   #define macro_f_iki_content_t_delete_simple(content)  macro_f_string_ranges_t_delete_simple(content)
   #define macro_f_iki_content_t_destroy_simple(content) macro_f_string_ranges_t_destroy_simple(content)
-#endif // _di_iki_content_t_
+#endif // _di_f_iki_content_t_
 
 /**
  * This holds an array of f_iki_content_t.
@@ -244,7 +242,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_iki_contents_t_
+#ifndef _di_f_iki_contents_t_
   typedef f_string_rangess_t f_iki_contents_t;
 
   #define f_iki_contents_t_initialize f_string_rangess_t_initialize
@@ -256,7 +254,71 @@ extern "C" {
 
   #define macro_f_iki_contents_t_delete_simple(content)  macro_f_string_rangess_t_delete_simple(content)
   #define macro_f_iki_contents_t_destroy_simple(content) macro_f_string_rangess_t_destroy_simple(content)
-#endif // _di_iki_contents_t_
+#endif // _di_f_iki_contents_t_
+
+/**
+ * This containg all of the IKI data.
+ *
+ * content:    A set of ranges representing the content list to store the content associated with the found vocabulary name.
+ * delimits:   A delimits array representing where delimits exist within the buffer.
+ * variable:   A set of ranges representing the entire vocabulary name, content, and syntax.
+ * vocabulary: A set of ranges representing the vocabulary name list to store the found vocabulary name.
+ */
+#ifndef _di_f_iki_data_t_
+  typedef struct {
+    f_iki_content_t content;
+    f_iki_delimits_t delimits;
+    f_iki_variable_t variable;
+    f_iki_vocabulary_t vocabulary;
+  } f_iki_data_t;
+
+  #define f_iki_data_t_initialize { \
+    f_iki_content_t_initialize, \
+    f_iki_delimits_t_initialize, \
+    f_iki_variable_t_initialize, \
+    f_iki_vocabulary_t_initialize, \
+  }
+
+  #define macro_f_iki_data_t_clear(data) \
+    f_iki_content_t_clear(data.content) \
+    f_iki_delimits_t_clear(data.delimits) \
+    f_iki_variable_t_clear(data.variable) \
+    f_iki_vocabulary_t_clear(data.vocabulary)
+
+  #define macro_f_iki_data_t_delete_simple(data)  status = f_iki_data_delete(data);
+  #define macro_f_iki_data_t_destroy_simple(data) status = f_iki_data_destroy(data);
+#endif // _di_f_iki_data_t_
+
+/**
+ * An array of f_iki_data_t.
+ *
+ * array: The array of fss quotes.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_iki_datas_t_
+  typedef struct {
+    f_iki_data_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_iki_datas_t;
+
+  #define f_fss_iki_datas_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_iki_datas_t_clear(datas) macro_f_memory_structure_clear(datas)
+
+  #define macro_f_fss_iki_datas_t_resize(status, datas, length) status = f_iki_datas_resize(length, &datas);
+  #define macro_f_fss_iki_datas_t_adjust(status, datas, length) status = f_iki_datas_adjust(length, &datas);
+
+  #define macro_f_fss_iki_datas_t_delete_simple(datas)  status = f_iki_datas_resize(0, &datas);
+  #define macro_f_fss_iki_datas_t_destroy_simple(datas) status = f_iki_datas_adjust(0, &datas);
+
+  #define macro_f_fss_iki_datas_t_increase(status, step, datas)      status = f_iki_datas_increase(step, &datas);
+  #define macro_f_fss_iki_datas_t_increase_by(status, datas, amount) status = f_iki_datas_increase_by(amount, &datas);
+  #define macro_f_fss_iki_datas_t_decrease_by(status, datas, amount) status = f_iki_datas_decrease_by(amount, &datas);
+  #define macro_f_fss_iki_datas_t_decimate_by(status, datas, amount) status = f_iki_datas_decimate_by(amount, &datas);
+#endif // _di_f_iki_datas_t_
 
 /**
  * Provide a default allocation step.
@@ -266,6 +328,202 @@ extern "C" {
 #ifndef _di_f_iki_default_allocation_step_
   #define F_iki_default_allocation_step_d 4
 #endif // _di_f_iki_default_allocation_step_
+
+/**
+ * Delete the IKI data.
+ *
+ * @param data
+ *   The IKI data to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_array_lengths_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_array_lengths_resize()
+ * @see f_string_ranges_resize()
+ */
+#ifndef _di_f_iki_data_delete_
+  extern f_status_t f_iki_data_delete(f_iki_data_t *data);
+#endif // _di_f_iki_data_delete_
+
+/**
+ * Destroy the IKI data.
+ *
+ * @param data
+ *   The IKI data to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_array_lengths_adjust().
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *
+ * @see f_array_lengths_adjust()
+ * @see f_string_ranges_adjust()
+ */
+#ifndef _di_f_iki_data_destroy_
+  extern f_status_t f_iki_data_destroy(f_iki_data_t *data);
+#endif // _di_f_iki_data_destroy_
+
+/**
+ * Resize the string lengths array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param lengths
+ *   The string lengths array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ */
+#ifndef _di_f_iki_datas_adjust_
+  extern f_status_t f_iki_datas_adjust(const f_array_length_t length, f_iki_datas_t *datas);
+#endif // _di_f_iki_datas_adjust_
+
+/**
+ * Append the source lengths onto the destination.
+ *
+ * @param source
+ *   The source lengths to append.
+ * @param destination
+ *   The destination lengths the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_iki_datas_append_
+  extern f_status_t f_iki_datas_append(const f_iki_datas_t source, f_iki_datas_t *destination);
+#endif // _di_f_iki_datas_append_
+
+/**
+ * Resize the string lengths array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to les than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param lengths
+ *   The string lengths array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ */
+#ifndef _di_f_iki_datas_decimate_by_
+  extern f_status_t f_iki_datas_decimate_by(const f_array_length_t amount, f_iki_datas_t *datas);
+#endif // _di_f_iki_datas_decimate_by_
+
+/**
+ * Resize the string lengths array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to les than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param lengths
+ *   The string lengths array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_iki_datas_decrease_by_
+  extern f_status_t f_iki_datas_decrease_by(const f_array_length_t amount, f_iki_datas_t *datas);
+#endif // _di_f_iki_datas_decrease_by_
+
+/**
+ * Increase the size of the string lengths array, but only if necesary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
+ * @param lengths
+ *   The string lengths array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_iki_datas_increase_
+  extern f_status_t f_iki_datas_increase(const f_array_length_t step, f_iki_datas_t *datas);
+#endif // _di_f_iki_datas_increase_
+
+/**
+ * Resize the string lengths array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param lengths
+ *   The string lengths array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_iki_datas_increase_by_
+  extern f_status_t f_iki_datas_increase_by(const f_array_length_t amount, f_iki_datas_t *datas);
+#endif // _di_f_iki_datas_increase_by_
+
+/**
+ * Resize the string lengths array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param lengths
+ *   The string lengths array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_iki_datas_resize_
+  extern f_status_t f_iki_datas_resize(const f_array_length_t length, f_iki_datas_t *datas);
+#endif // _di_f_iki_datas_resize_
 
 #ifdef __cplusplus
 } // extern "C"

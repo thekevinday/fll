@@ -51,14 +51,8 @@ extern "C" {
  *   The start location will be updated as the buffer is being processed.
  *   The start location will represent where the read stopped on return.
  *   A start location past the stop location or buffer used means that the entire range was processed.
- * @param variable
- *   The entire vocabulary name, content, and syntax.
- * @param vocabulary
- *   The vocabulary name list to store the found vocabulary names.
- * @param content
- *   The content list to store the content associated with the found vocabulary names.
- * @param delimits
- *   A delimits array representing where delimits exist within the buffer.
+ * @param data
+ *   The IKI data.
  *
  * @return
  *   F_none on success and an IKI vocabulary name was found.
@@ -75,7 +69,7 @@ extern "C" {
  * @see f_iki_read()
  */
 #ifndef _di_fl_iki_read_
-  extern f_status_t fl_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_variable_t * const variable, f_iki_vocabulary_t * const vocabulary, f_iki_content_t * const content, f_iki_delimits_t * const delimits);
+  extern f_status_t fl_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data);
 #endif // _di_fl_iki_read_
 
 #ifdef __cplusplus

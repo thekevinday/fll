@@ -123,7 +123,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int8s_increase_
-  extern f_status_t f_int8s_increase(const uint16_t step, f_int8s_t *int8s);
+  extern f_status_t f_int8s_increase(const f_array_length_t step, f_int8s_t *int8s);
 #endif // _di_f_int8s_increase_
 
 /**
@@ -300,7 +300,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_int8ss_increase_
-  extern f_status_t f_int8ss_increase(const uint16_t step, f_int8ss_t *int8ss);
+  extern f_status_t f_int8ss_increase(const f_array_length_t step, f_int8ss_t *int8ss);
 #endif // _di_f_int8ss_increase_
 
 /**
@@ -455,7 +455,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8s_increase_
-  extern f_status_t f_uint8s_increase(const uint16_t step, f_uint8s_t *uint8s);
+  extern f_status_t f_uint8s_increase(const f_array_length_t step, f_uint8s_t *uint8s);
 #endif // _di_f_uint8s_increase_
 
 /**
@@ -632,7 +632,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_uint8ss_increase_
-  extern f_status_t f_uint8ss_increase(const uint16_t step, f_uint8ss_t *uint8ss);
+  extern f_status_t f_uint8ss_increase(const f_array_length_t step, f_uint8ss_t *uint8ss);
 #endif // _di_f_uint8ss_increase_
 
 /**

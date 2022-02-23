@@ -70,7 +70,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_
-  extern f_status_t iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range, iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_ranges_
 
 /**
@@ -95,7 +95,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  extern f_status_t iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range, iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 /**
@@ -112,7 +112,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_total_
-  extern f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, iki_data_t *iki_data) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, f_iki_data_t *iki_data) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_total_
 
 /**

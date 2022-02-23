@@ -210,7 +210,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_ranges_increase_
-  extern f_status_t f_string_ranges_increase(const uint16_t step, f_string_ranges_t * const ranges);
+  extern f_status_t f_string_ranges_increase(const f_array_length_t step, f_string_ranges_t * const ranges);
 #endif // _di_f_string_ranges_increase_
 
 /**
@@ -344,7 +344,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_rangess_increase_
-  extern f_status_t f_string_rangess_increase(const uint16_t step, f_string_rangess_t * const rangess);
+  extern f_status_t f_string_rangess_increase(const f_array_length_t step, f_string_rangess_t * const rangess);
 #endif // _di_f_string_rangess_increase_
 
 /**

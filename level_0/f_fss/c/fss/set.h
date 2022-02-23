@@ -127,7 +127,7 @@ extern "C" {
  * size:  total amount of allocated space.
  * used:  total number of allocated spaces used.
  */
-#ifndef _di_fss_set_quotes_t_
+#ifndef _di_f_fss_set_quotes_t_
   typedef struct {
     f_fss_set_quote_t *array;
 
@@ -149,7 +149,7 @@ extern "C" {
   #define macro_f_fss_set_quotes_t_increase_by(status, set_quotes, amount) status = f_fss_set_quotes_increase_by(amount, &set_quotes);
   #define macro_f_fss_set_quotes_t_decrease_by(status, set_quotes, amount) status = f_fss_set_quotes_decrease_by(amount, &set_quotes);
   #define macro_f_fss_set_quotes_t_decimate_by(status, set_quotes, amount) status = f_fss_set_quotes_decimate_by(amount, &set_quotes);
-#endif // _di_fss_set_quotes_t_
+#endif // _di_f_fss_set_quotes_t_
 
 /**
  * Resize the set array.
@@ -234,7 +234,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_increase_
-  extern f_status_t f_fss_set_increase(const uint16_t step, f_fss_set_t * const set);
+  extern f_status_t f_fss_set_increase(const f_array_length_t step, f_fss_set_t * const set);
 #endif // _di_f_fss_set_increase_
 
 /**
@@ -362,7 +362,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_increase_
-  extern f_status_t f_fss_set_quote_increase(const uint16_t step, f_fss_set_quote_t * const set_quote);
+  extern f_status_t f_fss_set_quote_increase(const f_array_length_t step, f_fss_set_quote_t * const set_quote);
 #endif // _di_f_fss_set_quote_increase_
 
 /**
@@ -490,7 +490,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_increase_
-  extern f_status_t f_fss_set_quotes_increase(const uint16_t step, f_fss_set_quotes_t * const set_quotes);
+  extern f_status_t f_fss_set_quotes_increase(const f_array_length_t step, f_fss_set_quotes_t * const set_quotes);
 #endif // _di_f_fss_set_quotes_increase_
 
 /**
@@ -618,7 +618,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_increase_
-  extern f_status_t f_fss_sets_increase(const uint16_t step, f_fss_sets_t * const sets);
+  extern f_status_t f_fss_sets_increase(const f_array_length_t step, f_fss_sets_t * const sets);
 #endif // _di_f_fss_sets_increase_
 
 /**

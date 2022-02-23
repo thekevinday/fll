@@ -192,7 +192,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_increase_
-  extern f_status_t f_string_triples_increase(const uint16_t step, f_string_triples_t * const triples);
+  extern f_status_t f_string_triples_increase(const f_array_length_t step, f_string_triples_t * const triples);
 #endif // _di_f_string_triples_increase_
 
 /**

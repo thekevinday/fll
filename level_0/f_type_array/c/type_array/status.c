@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_f_statuss_decrease_by_
 
 #ifndef _di_f_statuss_increase_
-  f_status_t f_statuss_increase(const uint16_t step, f_statuss_t *statuss) {
+  f_status_t f_statuss_increase(const f_array_length_t step, f_statuss_t *statuss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!statuss) return F_status_set_error(F_parameter);
@@ -177,7 +177,7 @@ extern "C" {
 #endif // _di_f_statusss_decrease_by_
 
 #ifndef _di_f_statusss_increase_
-  f_status_t f_statusss_increase(const uint16_t step, f_statusss_t *statusss) {
+  f_status_t f_statusss_increase(const f_array_length_t step, f_statusss_t *statusss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!statusss) return F_status_set_error(F_parameter);

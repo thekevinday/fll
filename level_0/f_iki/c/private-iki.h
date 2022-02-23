@@ -16,6 +16,58 @@ extern "C" {
 #endif
 
 /**
+ * Private implementation for resizing the iki_datas array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param datas
+ *   The IKI datas array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   Errors (with error bit) from: f_array_lengths_adjust().
+ *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_string_ranges_adjust().
+ *
+ * @see f_array_lengths_adjust()
+ * @see f_memory_adjust()
+ * @see f_string_ranges_adjust()
+ */
+#if !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
+  extern f_status_t private_f_iki_datas_adjust(const f_array_length_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_iki_datas_adjust_) || !defined(_di_f_iki_datas_decimate_by_)
+
+/**
+ * Private implementation for resizing the iki_datas array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param datas
+ *   The IKI datas array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   Errors (with error bit) from: f_array_lengths_resize().
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_ranges_resize().
+ *
+ * @see f_array_lengths_resize()
+ * @see f_memory_resize()
+ * @see f_string_ranges_resize()
+ */
+#if !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
+  extern f_status_t private_f_iki_datas_resize(const f_array_length_t length, f_iki_datas_t *datas) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
+
+/**
  * Private implementation of f_iki_content_partial_is().
  *
  * Intended to be shared to each of the different implementation variations.

@@ -160,10 +160,7 @@ extern "C" {
     const f_string_range_t range_define = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_define_s_length);
     const f_string_range_t range_parameter = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_parameter_s_length);
 
-    f_iki_variable_t iki_variable = f_iki_variable_t_initialize;
-    f_iki_vocabulary_t iki_vocabulary = f_iki_vocabulary_t_initialize;
-    f_iki_content_t iki_content = f_iki_content_t_initialize;
-    f_iki_delimits_t iki_delimits = f_iki_delimits_t_initialize;
+    f_iki_data_t iki_data = f_iki_data_t_initialize;
 
     f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_iki, 0, (void *) data_make->main, 0);
 
@@ -260,7 +257,7 @@ extern "C" {
 
       range = content.array[i];
 
-      *status = fl_iki_read(state, &data_make->buffer, &range, &iki_variable, &iki_vocabulary, &iki_content, &iki_delimits);
+      *status = fl_iki_read(state, &data_make->buffer, &range, &iki_data);
 
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) != F_interrupt) {
@@ -271,17 +268,17 @@ extern "C" {
       }
 
       // Apply the IKI delimits to the buffer.
-      for (j = 0; j < iki_delimits.used; ++j) {
-        data_make->buffer.string[iki_delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
+      for (j = 0; j < iki_data.delimits.used; ++j) {
+        data_make->buffer.string[iki_data.delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
       } // for
 
-      if (iki_variable.used) {
+      if (iki_data.variable.used) {
         used_content = arguments->array[arguments->used].used;
 
         // Copy everything up to the start of the first IKI variable.
-        if (iki_variable.array[0].start && content.array[i].start < iki_variable.array[0].start) {
+        if (iki_data.variable.array[0].start && content.array[i].start < iki_data.variable.array[0].start) {
           range.start = content.array[i].start;
-          range.stop = iki_variable.array[0].start - 1;
+          range.stop = iki_data.variable.array[0].start - 1;
 
           *status = f_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
 
@@ -292,23 +289,23 @@ extern "C" {
           }
         }
 
-        for (j = 0; j < iki_variable.used; ++j) {
+        for (j = 0; j < iki_data.variable.used; ++j) {
 
           is = 0;
 
-          *status = fl_string_dynamic_partial_compare(vocabulary_define, data_make->buffer, range_define, iki_vocabulary.array[j]);
+          *status = fl_string_dynamic_partial_compare(vocabulary_define, data_make->buffer, range_define, iki_data.vocabulary.array[j]);
 
           if (*status == F_equal_to) {
             is = 2;
           }
           else if (*status == F_equal_to_not) {
-            *status = fl_string_dynamic_partial_compare(vocabulary_parameter, data_make->buffer, range_parameter, iki_vocabulary.array[j]);
+            *status = fl_string_dynamic_partial_compare(vocabulary_parameter, data_make->buffer, range_parameter, iki_data.vocabulary.array[j]);
 
             if (*status == F_equal_to) {
               is = 1;
             }
             else if (*status == F_equal_to_not) {
-              *status = fl_string_dynamic_partial_compare(vocabulary_context, data_make->buffer, range_context, iki_vocabulary.array[j]);
+              *status = fl_string_dynamic_partial_compare(vocabulary_context, data_make->buffer, range_context, iki_data.vocabulary.array[j]);
 
               if (*status == F_equal_to) {
                 is = 3;
@@ -326,7 +323,7 @@ extern "C" {
             unmatched = F_true;
 
             // Check against reserved parameter names and if matches use them instead.
-            if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_return_s.string, data_make->buffer, fake_make_parameter_variable_return_s.used, iki_content.array[j]) == F_equal_to) {
+            if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_return_s.string, data_make->buffer, fake_make_parameter_variable_return_s.used, iki_data.content.array[j]) == F_equal_to) {
               if (data_make->setting_make.parameter.array[0].value.array[0].used) {
                 *status = f_string_dynamic_append_nulless(data_make->setting_make.parameter.array[0].value.array[0], &arguments->array[arguments->used]);
 
@@ -351,7 +348,7 @@ extern "C" {
             else {
               for (k = 0; k < 33; ++k) {
 
-                if (fl_string_dynamic_partial_compare_string(reserved_name[k].string, data_make->buffer, reserved_name[k].used, iki_content.array[j]) != F_equal_to) {
+                if (fl_string_dynamic_partial_compare_string(reserved_name[k].string, data_make->buffer, reserved_name[k].used, iki_data.content.array[j]) != F_equal_to) {
                   continue;
                 }
 
@@ -398,7 +395,7 @@ extern "C" {
               for (k = 0; k < parameter->used; ++k) {
 
                 // Check against IKI variable list.
-                *status = fl_string_dynamic_partial_compare_dynamic(parameter->array[k].name, data_make->buffer, iki_content.array[j]);
+                *status = fl_string_dynamic_partial_compare_dynamic(parameter->array[k].name, data_make->buffer, iki_data.content.array[j]);
 
                 if (*status == F_equal_to) {
                   unmatched = F_false;
@@ -461,7 +458,7 @@ extern "C" {
             if (F_status_is_error(*status)) break;
 
             if (unmatched) {
-              *status = fake_make_operate_expand_build(data_make, quotes.array[i], iki_content.array[j], arguments);
+              *status = fake_make_operate_expand_build(data_make, quotes.array[i], iki_data.content.array[j], arguments);
 
               if (F_status_is_error(*status)) {
                 fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_build", F_true);
@@ -472,7 +469,7 @@ extern "C" {
           }
           else if (is == 2) {
             if (data_make->setting_make.load_build) {
-              *status = fake_make_operate_expand_environment(data_make, quotes.array[i], iki_content.array[j], arguments);
+              *status = fake_make_operate_expand_environment(data_make, quotes.array[i], iki_data.content.array[j], arguments);
 
               if (F_status_is_error(*status)) {
                 fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_environment", F_true);
@@ -482,7 +479,7 @@ extern "C" {
             }
           }
           else if (is == 3) {
-            *status = fake_make_operate_expand_context(data_make, quotes.array[i], iki_content.array[j], arguments);
+            *status = fake_make_operate_expand_context(data_make, quotes.array[i], iki_data.content.array[j], arguments);
 
             if (F_status_is_error(*status)) {
               fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_context", F_true);
@@ -492,10 +489,10 @@ extern "C" {
           }
 
           // Make sure to copy and content between multiple IKI variables within the same content.
-          if (j + 1 < iki_variable.used) {
-            if (iki_variable.array[j].stop + 1 < iki_variable.array[j + 1].start && iki_variable.array[j + 1].stop <= content.array[i].stop) {
-              range.start = iki_variable.array[j].stop + 1;
-              range.stop = iki_variable.array[j + 1].start - 1;
+          if (j + 1 < iki_data.variable.used) {
+            if (iki_data.variable.array[j].stop + 1 < iki_data.variable.array[j + 1].start && iki_data.variable.array[j + 1].stop <= content.array[i].stop) {
+              range.start = iki_data.variable.array[j].stop + 1;
+              range.stop = iki_data.variable.array[j + 1].start - 1;
 
               *status = f_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
 
@@ -509,8 +506,8 @@ extern "C" {
         } // for
 
         // Copy everything after the last IKI variable to the end of the content.
-        if (iki_variable.used && content.array[i].stop > iki_variable.array[iki_variable.used - 1].stop) {
-          range.start = iki_variable.array[iki_variable.used - 1].stop + 1;
+        if (iki_data.variable.used && content.array[i].stop > iki_data.variable.array[iki_data.variable.used - 1].stop) {
+          range.start = iki_data.variable.array[iki_data.variable.used - 1].stop + 1;
           range.stop = content.array[i].stop;
 
           *status = f_string_dynamic_partial_append_nulless(data_make->buffer, range, &arguments->array[arguments->used]);
@@ -539,16 +536,10 @@ extern "C" {
         ++arguments->used;
       }
 
-      macro_f_iki_variable_t_delete_simple(iki_variable);
-      macro_f_iki_vocabulary_t_delete_simple(iki_vocabulary);
-      macro_f_iki_content_t_delete_simple(iki_content);
-      macro_f_iki_delimits_t_delete_simple(iki_delimits);
+      f_iki_data_delete(&iki_data);
     } // for
 
-    macro_f_iki_variable_t_delete_simple(iki_variable);
-    macro_f_iki_vocabulary_t_delete_simple(iki_vocabulary);
-    macro_f_iki_content_t_delete_simple(iki_content);
-    macro_f_iki_delimits_t_delete_simple(iki_delimits);
+    f_iki_data_delete(&iki_data);
   }
 #endif // _di_fake_make_operate_expand_
 

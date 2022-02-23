@@ -46,7 +46,7 @@ extern "C" {
 #endif // _di_f_fss_set_decrease_by_
 
 #ifndef _di_f_fss_set_increase_
-  f_status_t f_fss_set_increase(const uint16_t step, f_fss_set_t * const set) {
+  f_status_t f_fss_set_increase(const f_array_length_t step, f_fss_set_t * const set) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!set) return F_status_set_error(F_parameter);
@@ -140,7 +140,7 @@ extern "C" {
 #endif // _di_f_fss_set_quote_decrease_by_
 
 #ifndef _di_f_fss_set_quote_increase_
-  f_status_t f_fss_set_quote_increase(const uint16_t step, f_fss_set_quote_t * const set_quote) {
+  f_status_t f_fss_set_quote_increase(const f_array_length_t step, f_fss_set_quote_t * const set_quote) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!set_quote) return F_status_set_error(F_parameter);
@@ -234,7 +234,7 @@ extern "C" {
 #endif // _di_f_fss_set_quotes_decrease_by_
 
 #ifndef _di_f_fss_set_quotes_increase_
-  f_status_t f_fss_set_quotes_increase(const uint16_t step, f_fss_set_quotes_t * const set_quotes) {
+  f_status_t f_fss_set_quotes_increase(const f_array_length_t step, f_fss_set_quotes_t * const set_quotes) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!set_quotes) return F_status_set_error(F_parameter);
@@ -328,7 +328,7 @@ extern "C" {
 #endif // _di_f_fss_sets_decrease_by_
 
 #ifndef _di_f_fss_sets_increase_
-  f_status_t f_fss_sets_increase(const uint16_t step, f_fss_sets_t * const sets) {
+  f_status_t f_fss_sets_increase(const f_array_length_t step, f_fss_sets_t * const sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!sets) return F_status_set_error(F_parameter);

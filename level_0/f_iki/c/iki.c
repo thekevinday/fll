@@ -52,14 +52,11 @@ extern "C" {
 #endif // _di_f_iki_object_partial_is_
 
 #ifndef _di_f_iki_read_
-  f_status_t f_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_variable_t * const variable, f_iki_vocabulary_t * const vocabulary, f_iki_content_t * const content, f_iki_delimits_t * const delimits) {
+  f_status_t f_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
-      if (!variable) return F_status_set_error(F_parameter);
-      if (!vocabulary) return F_status_set_error(F_parameter);
-      if (!content) return F_status_set_error(F_parameter);
-      if (!delimits) return F_status_set_error(F_parameter);
+      if (!data) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!buffer->used) {
@@ -98,7 +95,7 @@ extern "C" {
     f_string_range_t found_vocabulary = f_string_range_t_initialize;
     f_array_length_t found_content = 0;
     f_array_length_t vocabulary_slash_first = range->start;
-    const f_array_length_t delimits_used = delimits->used;
+    const f_array_length_t delimits_used = data->delimits.used;
 
     uint8_t quote = 0;
 
@@ -212,13 +209,13 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           if (range->start > range->stop) {
-            delimits->used = delimits_used;
+            data->delimits.used = delimits_used;
 
             return F_data_not_stop;
           }
 
           if (range->start >= buffer->used) {
-            delimits->used = delimits_used;
+            data->delimits.used = delimits_used;
 
             return F_data_not_eos;
           }
@@ -231,7 +228,7 @@ extern "C" {
       } // while
 
       if (F_status_is_error(status)) {
-        delimits->used = delimits_used;
+        data->delimits.used = delimits_used;
 
         return status;
       }
@@ -262,36 +259,37 @@ extern "C" {
 
             // This is a valid vocabulary name and content, but if it is delimited, save the delimit and ignore.
             if (vocabulary_delimited) {
-              status = f_array_lengths_increase(state.step_small, delimits);
+              status = f_array_lengths_increase(state.step_small, &data->delimits);
               if (F_status_is_error(status)) break;
 
-              delimits->array[delimits->used++] = vocabulary_slash_first;
+              data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
 
               find_next = F_true;
               vocabulary_delimited = F_false;
               quote = 0;
 
               ++range->start;
+
               break;
             }
 
-            status = f_string_ranges_increase(state.step_small, variable);
+            status = f_string_ranges_increase(state.step_small, &data->variable);
             if (F_status_is_error(status)) break;
 
-            status = f_string_ranges_increase(state.step_small, vocabulary);
+            status = f_string_ranges_increase(state.step_small, &data->vocabulary);
             if (F_status_is_error(status)) break;
 
-            status = f_string_ranges_increase(state.step_small, content);
+            status = f_string_ranges_increase(state.step_small, &data->content);
             if (F_status_is_error(status)) break;
 
-            variable->array[variable->used].start = found_vocabulary.start;
-            variable->array[variable->used++].stop = range->start;
+            data->variable.array[data->variable.used].start = found_vocabulary.start;
+            data->variable.array[data->variable.used++].stop = range->start;
 
-            vocabulary->array[vocabulary->used].start = found_vocabulary.start;
-            vocabulary->array[vocabulary->used++].stop = found_vocabulary.stop;
+            data->vocabulary.array[data->vocabulary.used].start = found_vocabulary.start;
+            data->vocabulary.array[data->vocabulary.used++].stop = found_vocabulary.stop;
 
-            content->array[content->used].start = found_content;
-            content->array[content->used++].stop = range->start - 1;
+            data->content.array[data->content.used].start = found_content;
+            data->content.array[data->content.used++].stop = range->start - 1;
 
             if (++range->start > range->stop) {
               return F_none_stop;
@@ -324,7 +322,7 @@ extern "C" {
                   ++content_slash_delimits;
                 }
 
-                status = f_array_lengths_increase_by(content_slash_delimits, delimits);
+                status = f_array_lengths_increase_by(content_slash_delimits, &data->delimits);
                 if (F_status_is_error(status)) break;
 
                 content_range.start = content_slash_first;
@@ -333,7 +331,7 @@ extern "C" {
                 while (i < content_slash_delimits) {
 
                   if (buffer->string[content_range.start] == f_iki_syntax_slash_s.string[0]) {
-                    delimits->array[delimits->used++] = content_range.start;
+                    data->delimits.array[data->delimits.used++] = content_range.start;
                     ++i;
                   }
 
@@ -348,10 +346,10 @@ extern "C" {
 
                   // This is a valid vocabulary name and content, but if it is delimited, save the delimit and ignore.
                   if (vocabulary_delimited) {
-                    status = f_array_lengths_increase(state.step_small, delimits);
+                    status = f_array_lengths_increase(state.step_small, &data->delimits);
                     if (F_status_is_error(status)) break;
 
-                    delimits->array[delimits->used++] = vocabulary_slash_first;
+                    data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
 
                     vocabulary_delimited = F_false;
                     quote = 0;
@@ -364,23 +362,23 @@ extern "C" {
                     found_vocabulary.start = range->start;
                   }
                   else {
-                    status = f_string_ranges_increase(state.step_small, variable);
+                    status = f_string_ranges_increase(state.step_small, &data->variable);
                     if (F_status_is_error(status)) break;
 
-                    status = f_string_ranges_increase(state.step_small, vocabulary);
+                    status = f_string_ranges_increase(state.step_small, &data->vocabulary);
                     if (F_status_is_error(status)) break;
 
-                    status = f_string_ranges_increase(state.step_small, content);
+                    status = f_string_ranges_increase(state.step_small, &data->content);
                     if (F_status_is_error(status)) break;
 
-                    variable->array[variable->used].start = found_vocabulary.start;
-                    variable->array[variable->used++].stop = range->start;
+                    data->variable.array[data->variable.used].start = found_vocabulary.start;
+                    data->variable.array[data->variable.used++].stop = range->start;
 
-                    vocabulary->array[vocabulary->used].start = found_vocabulary.start;
-                    vocabulary->array[vocabulary->used++].stop = found_vocabulary.stop;
+                    data->vocabulary.array[data->vocabulary.used].start = found_vocabulary.start;
+                    data->vocabulary.array[data->vocabulary.used++].stop = found_vocabulary.stop;
 
-                    content->array[content->used].start = found_content;
-                    content->array[content->used++].stop = range->start - 1;
+                    data->content.array[data->content.used].start = found_content;
+                    data->content.array[data->content.used++].stop = range->start - 1;
 
                     if (++range->start > range->stop) {
                       return F_none_stop;
@@ -397,9 +395,7 @@ extern "C" {
                 break;
               }
 
-              if (buffer->string[range->start] != f_iki_syntax_slash_s.string[0]) {
-                break;
-              }
+              if (buffer->string[range->start] != f_iki_syntax_slash_s.string[0]) break;
 
               ++content_slash_total;
 
@@ -420,7 +416,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        delimits->used = delimits_used;
+        data->delimits.used = delimits_used;
 
         return status;
       }

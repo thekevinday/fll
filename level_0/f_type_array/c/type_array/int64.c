@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_f_int64s_decrease_by_
 
 #ifndef _di_f_int64s_increase_
-  f_status_t f_int64s_increase(const uint16_t step, f_int64s_t *int64s) {
+  f_status_t f_int64s_increase(const f_array_length_t step, f_int64s_t *int64s) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!int64s) return F_status_set_error(F_parameter);
@@ -177,7 +177,7 @@ extern "C" {
 #endif // _di_f_int64ss_decrease_by_
 
 #ifndef _di_f_int64ss_increase_
-  f_status_t f_int64ss_increase(const uint16_t step, f_int64ss_t *int64ss) {
+  f_status_t f_int64ss_increase(const f_array_length_t step, f_int64ss_t *int64ss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!int64ss) return F_status_set_error(F_parameter);
@@ -283,7 +283,7 @@ extern "C" {
 #endif // _di_f_uint64s_decrease_by_
 
 #ifndef _di_f_uint64s_increase_
-  f_status_t f_uint64s_increase(const uint16_t step, f_uint64s_t *uint64s) {
+  f_status_t f_uint64s_increase(const f_array_length_t step, f_uint64s_t *uint64s) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!uint64s) return F_status_set_error(F_parameter);
@@ -401,7 +401,7 @@ extern "C" {
 #endif // _di_f_uint64ss_decrease_by_
 
 #ifndef _di_f_uint64ss_increase_
-  f_status_t f_uint64ss_increase(const uint16_t step, f_uint64ss_t *uint64ss) {
+  f_status_t f_uint64ss_increase(const f_array_length_t step, f_uint64ss_t *uint64ss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!uint64ss) return F_status_set_error(F_parameter);

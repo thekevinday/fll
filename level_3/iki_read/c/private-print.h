@@ -30,7 +30,7 @@ extern "C" {
  *   Set to FALSE to print the entire variable when printing substituted text.
  */
 #ifndef _di_iki_read_substitutions_print_
-  extern void iki_read_substitutions_print(iki_read_main_t * const main, const iki_data_t iki_data, const f_string_ranges_t ranges, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
+  extern void iki_read_substitutions_print(iki_read_main_t * const main, const f_iki_data_t iki_data, const f_string_ranges_t ranges, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_substitutions_print_
 
 #ifdef __cplusplus

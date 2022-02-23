@@ -31,7 +31,7 @@ extern "C" {
  * content: The content associated with the object.
  * parent:  A location referencing a parrent object or content that this object content is nested under.
  */
-#ifndef _di_fss_item_t_
+#ifndef _di_f_fss_item_t_
   typedef struct {
     f_fss_object_t object;
     f_fss_content_t content;
@@ -56,7 +56,7 @@ extern "C" {
   #define macro_f_fss_item_t_increase_by(status, item, amount) macro_f_fss_content_t_increase_by(status, item.content, amount)
   #define macro_f_fss_item_t_decrease_by(status, item, amount) macro_f_fss_content_t_decrease_by(status, item.content, amount)
   #define macro_f_fss_item_t_decimate_by(status, item, amount) macro_f_fss_content_t_decimate_by(status, item.content, amount)
-#endif // _di_fss_item_t_
+#endif // _di_f_fss_item_t_
 
 /**
  * This holds an array of fss_item.
@@ -86,7 +86,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_fss_items_t_
+#ifndef _di_f_fss_items_t_
   typedef struct {
     f_fss_item_t *array;
 
@@ -108,7 +108,7 @@ extern "C" {
   #define macro_f_fss_items_t_increase_by(status, items, amount) status = f_fss_items_increase_by(amount, &items);
   #define macro_f_fss_items_t_decrease_by(status, items, amount) status = f_fss_items_decrease_by(amount, &items);
   #define macro_f_fss_items_t_decimate_by(status, items, amount) status = f_fss_items_decimate_by(amount, &items);
-#endif // _di_fss_items_t_
+#endif // _di_f_fss_items_t_
 
 /**
  * This holds an array of f_fss_items_t.
@@ -122,7 +122,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_fss_nest_t_
+#ifndef _di_f_fss_nest_t_
   typedef struct {
     f_fss_items_t *depth;
 
@@ -144,7 +144,7 @@ extern "C" {
   #define macro_f_fss_nest_t_increase_by(status, nest, amount) status = f_fss_nest_increase_by(amount, &nest);
   #define macro_f_fss_nest_t_decrease_by(status, nest, amount) status = f_fss_nest_decrease_by(amount, &nest);
   #define macro_f_fss_nest_t_decimate_by(status, nest, amount) status = f_fss_nest_decimate_by(amount, &nest);
-#endif // _di_fss_nest_t_
+#endif // _di_f_fss_nest_t_
 
 /**
  * This holds an array of f_fss_nest_t.
@@ -153,7 +153,7 @@ extern "C" {
  * size: Total amount of allocated space.
  * used: Total number of allocated spaces used.
  */
-#ifndef _di_fss_nests_t_
+#ifndef _di_f_fss_nests_t_
   typedef struct {
     f_fss_nest_t *array;
 
@@ -175,7 +175,7 @@ extern "C" {
   #define macro_f_fss_nests_t_increase_by(status, nests, amount) status = f_fss_nests_increase_by(amount, &nests);
   #define macro_f_fss_nests_t_decrease_by(status, nests, amount) status = f_fss_nests_decrease_by(amount, &nests);
   #define macro_f_fss_nests_t_decimate_by(status, nests, amount) status = f_fss_nests_decimate_by(amount, &nests);
-#endif // _di_fss_nests_t_
+#endif // _di_f_fss_nests_t_
 
 /**
  * Resize the nest array.
@@ -260,7 +260,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_items_increase_
-  extern f_status_t f_fss_items_increase(const uint16_t step, f_fss_items_t * const items);
+  extern f_status_t f_fss_items_increase(const f_array_length_t step, f_fss_items_t * const items);
 #endif // _di_f_fss_items_increase_
 
 /**
@@ -388,7 +388,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nest_increase_
-  extern f_status_t f_fss_nest_increase(const uint16_t step, f_fss_nest_t * const nest);
+  extern f_status_t f_fss_nest_increase(const f_array_length_t step, f_fss_nest_t * const nest);
 #endif // _di_f_fss_nest_increase_
 
 /**
@@ -516,7 +516,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nests_increase_
-  extern f_status_t f_fss_nests_increase(const uint16_t step, f_fss_nests_t * const nests);
+  extern f_status_t f_fss_nests_increase(const f_array_length_t step, f_fss_nests_t * const nests);
 #endif // _di_f_fss_nests_increase_
 
 /**

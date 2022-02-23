@@ -160,7 +160,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_decrease_by_
 
 #ifndef _di_f_string_dynamic_increase_
-  f_status_t f_string_dynamic_increase(const uint16_t step, f_string_dynamic_t * const dynamic) {
+  f_status_t f_string_dynamic_increase(const f_array_length_t step, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
@@ -936,7 +936,7 @@ extern "C" {
 #endif // _di_f_string_dynamics_decrease_by_
 
 #ifndef _di_f_string_dynamics_increase_
-  f_status_t f_string_dynamics_increase(const uint16_t step, f_string_dynamics_t * const dynamics) {
+  f_status_t f_string_dynamics_increase(const f_array_length_t step, f_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!dynamics) return F_status_set_error(F_parameter);
@@ -1043,7 +1043,7 @@ extern "C" {
 #endif // _di_f_string_dynamicss_decrease_by_
 
 #ifndef _di_f_string_dynamicss_increase_
-  f_status_t f_string_dynamicss_increase(const uint16_t step, f_string_dynamicss_t * const dynamicss) {
+  f_status_t f_string_dynamicss_increase(const f_array_length_t step, f_string_dynamicss_t * const dynamicss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!dynamicss) return F_status_set_error(F_parameter);

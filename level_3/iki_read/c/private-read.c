@@ -39,7 +39,7 @@ extern "C" {
   f_status_t iki_read_process_buffer(iki_read_main_t * const main) {
 
     f_status_t status = F_none;
-    iki_data_t iki_data = iki_data_t_initialize;
+    f_iki_data_t iki_data = f_iki_data_t_initialize;
 
     if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
       f_string_range_t buffer_range = macro_f_string_range_t_initialize(main->buffer.used);
@@ -74,7 +74,7 @@ extern "C" {
       status = iki_read_process_at(main, &buffer_range);
 
       if (status == F_true && buffer_range.start > main->buffer.used || status == F_data_not) {
-        macro_iki_data_t_delete_simple(iki_data);
+        f_iki_data_delete(&iki_data);
 
         return F_data_not;
       }
@@ -90,14 +90,14 @@ extern "C" {
       }
     }
 
-    macro_iki_data_t_delete_simple(iki_data);
+    f_iki_data_delete(&iki_data);
 
     return status;
   }
 #endif // _di_iki_read_process_buffer_
 
 #ifndef _di_iki_read_process_buffer_ranges_
-  f_status_t iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range, iki_data_t *iki_data, f_string_ranges_t *ranges) {
+  f_status_t iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) {
 
     f_status_t status = F_none;
 
@@ -106,7 +106,7 @@ extern "C" {
     {
       f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
 
-      status = fl_iki_read(state, &main->buffer, buffer_range, &iki_data->variable, &iki_data->vocabulary, &iki_data->content, &iki_data->delimits);
+      status = fl_iki_read(state, &main->buffer, buffer_range, iki_data);
     }
 
     if (F_status_is_error(status)) {
@@ -259,7 +259,7 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_ranges_
 
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  f_status_t iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range, iki_data_t *iki_data, f_string_ranges_t *ranges) {
+  f_status_t iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) {
 
     f_status_t status = F_none;
     f_string_range_t range = buffer_range;
@@ -267,7 +267,7 @@ extern "C" {
     {
       f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
 
-      status = fl_iki_read(state, &main->buffer, &range, &iki_data->variable, &iki_data->vocabulary, &iki_data->content, &iki_data->delimits);
+      status = fl_iki_read(state, &main->buffer, &range, iki_data);
     }
 
     if (F_status_is_error(status)) {
@@ -451,7 +451,7 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 #ifndef _di_iki_read_process_buffer_total_
-  f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, iki_data_t *iki_data) {
+  f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, f_iki_data_t *iki_data) {
 
     f_status_t status = F_none;
     f_string_range_t range = macro_f_string_range_t_initialize(main->buffer.used);
@@ -474,7 +474,7 @@ extern "C" {
     {
       f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
 
-      status = fl_iki_read(state, &main->buffer, &range, &iki_data->variable, &iki_data->vocabulary, &iki_data->content, &iki_data->delimits);
+      status = fl_iki_read(state, &main->buffer, &range, iki_data);
     }
 
     if (F_status_is_error(status)) {

@@ -158,7 +158,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_decrease_by_
 
 #ifndef _di_f_utf_string_dynamic_increase_
-  f_status_t f_utf_string_dynamic_increase(const uint16_t step, f_utf_string_dynamic_t *dynamic) {
+  f_status_t f_utf_string_dynamic_increase(const f_array_length_t step, f_utf_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
@@ -938,7 +938,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamics_decrease_by_
 
 #ifndef _di_f_utf_string_dynamics_increase_
-  f_status_t f_utf_string_dynamics_increase(const uint16_t step, f_utf_string_dynamics_t *dynamics) {
+  f_status_t f_utf_string_dynamics_increase(const f_array_length_t step, f_utf_string_dynamics_t *dynamics) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!dynamics) return F_status_set_error(F_parameter);

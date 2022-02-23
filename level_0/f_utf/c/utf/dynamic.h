@@ -303,7 +303,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_increase_
-  extern f_status_t f_utf_string_dynamic_increase(const uint16_t step, f_utf_string_dynamic_t *dynamic);
+  extern f_status_t f_utf_string_dynamic_increase(const f_array_length_t step, f_utf_string_dynamic_t *dynamic);
 #endif // _di_f_utf_string_dynamic_increase_
 
 /**
@@ -1135,7 +1135,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamics_increase_
-  extern f_status_t f_utf_string_dynamics_increase(const uint16_t step, f_utf_string_dynamics_t *dynamics);
+  extern f_status_t f_utf_string_dynamics_increase(const f_array_length_t step, f_utf_string_dynamics_t *dynamics);
 #endif // _di_f_utf_string_dynamics_increase_
 
 /**

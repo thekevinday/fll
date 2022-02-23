@@ -73,7 +73,7 @@ extern "C" {
 #endif // _di_f_string_ranges_decrease_by_
 
 #ifndef _di_f_string_ranges_increase_
-  f_status_t f_string_ranges_increase(const uint16_t step, f_string_ranges_t * const ranges) {
+  f_status_t f_string_ranges_increase(const f_array_length_t step, f_string_ranges_t * const ranges) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!ranges) return F_status_set_error(F_parameter);
@@ -167,7 +167,7 @@ extern "C" {
 #endif // _di_f_string_rangess_decrease_by_
 
 #ifndef _di_f_string_rangess_increase_
-  f_status_t f_string_rangess_increase(const uint16_t step, f_string_rangess_t * const rangess) {
+  f_status_t f_string_rangess_increase(const f_array_length_t step, f_string_rangess_t * const rangess) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!rangess) return F_status_set_error(F_parameter);

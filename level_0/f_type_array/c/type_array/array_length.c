@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_f_array_lengths_decrease_by_
 
 #ifndef _di_f_array_lengths_increase_
-  f_status_t f_array_lengths_increase(const uint16_t step, f_array_lengths_t *lengths) {
+  f_status_t f_array_lengths_increase(const f_array_length_t step, f_array_lengths_t *lengths) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!lengths) return F_status_set_error(F_parameter);
@@ -177,7 +177,7 @@ extern "C" {
 #endif // _di_f_array_lengthss_decrease_by_
 
 #ifndef _di_f_array_lengthss_increase_
-  f_status_t f_array_lengthss_increase(const uint16_t step, f_array_lengthss_t *lengthss) {
+  f_status_t f_array_lengthss_increase(const f_array_length_t step, f_array_lengthss_t *lengthss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!lengthss) return F_status_set_error(F_parameter);

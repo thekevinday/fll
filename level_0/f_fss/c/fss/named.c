@@ -46,7 +46,7 @@ extern "C" {
 #endif // _di_f_fss_named_decrease_by_
 
 #ifndef _di_f_fss_named_increase_
-  f_status_t f_fss_named_increase(const uint16_t step, f_fss_named_t * const named) {
+  f_status_t f_fss_named_increase(const f_array_length_t step, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!named) return F_status_set_error(F_parameter);
@@ -140,7 +140,7 @@ extern "C" {
 #endif // _di_f_fss_nameds_decrease_by_
 
 #ifndef _di_f_fss_nameds_increase_
-  f_status_t f_fss_nameds_increase(const uint16_t step, f_fss_nameds_t * const nameds) {
+  f_status_t f_fss_nameds_increase(const f_array_length_t step, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!nameds) return F_status_set_error(F_parameter);

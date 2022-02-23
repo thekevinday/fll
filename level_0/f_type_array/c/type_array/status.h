@@ -123,7 +123,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_statuss_increase_
-  extern f_status_t f_statuss_increase(const uint16_t step, f_statuss_t *statuss);
+  extern f_status_t f_statuss_increase(const f_array_length_t step, f_statuss_t *statuss);
 #endif // _di_f_statuss_increase_
 
 /**
@@ -300,7 +300,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_statusss_increase_
-  extern f_status_t f_statusss_increase(const uint16_t step, f_statusss_t *statusss);
+  extern f_status_t f_statusss_increase(const f_array_length_t step, f_statusss_t *statusss);
 #endif // _di_f_statusss_increase_
 
 /**

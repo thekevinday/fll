@@ -59,7 +59,7 @@ extern "C" {
 #endif // _di_f_cells_decrease_by_
 
 #ifndef _di_f_cells_increase_
-  f_status_t f_cells_increase(const uint16_t step, f_cells_t *cells) {
+  f_status_t f_cells_increase(const f_array_length_t step, f_cells_t *cells) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!cells) return F_status_set_error(F_parameter);
@@ -177,7 +177,7 @@ extern "C" {
 #endif // _di_f_cellss_decrease_by_
 
 #ifndef _di_f_cellss_increase_
-  f_status_t f_cellss_increase(const uint16_t step, f_cellss_t *cellss) {
+  f_status_t f_cellss_increase(const f_array_length_t step, f_cellss_t *cellss) {
     #ifndef _di_level_0_parameter_checking_
       if (!step) return F_status_set_error(F_parameter);
       if (!cellss) return F_status_set_error(F_parameter);

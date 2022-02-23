@@ -142,7 +142,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_structure_increase_
-  extern f_status_t f_memory_structure_increase(const uint16_t step, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size);
+  extern f_status_t f_memory_structure_increase(const f_array_length_t step, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size);
 #endif // _di_f_memory_structure_increase_
 
 /**
