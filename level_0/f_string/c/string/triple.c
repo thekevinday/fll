@@ -76,9 +76,12 @@ extern "C" {
 #ifndef _di_f_string_triples_decrease_by_
   f_status_t f_string_triples_decrease_by(const f_array_length_t amount, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (triples->size - amount > 0) {
       return private_f_string_triples_resize(triples->size - amount, triples);
@@ -91,11 +94,10 @@ extern "C" {
 #ifndef _di_f_string_triples_increase_
   f_status_t f_string_triples_increase(const f_array_length_t step, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (triples->used + 1 > triples->size) {
+    if (step && triples->used + 1 > triples->size) {
       f_array_length_t size = triples->used + F_memory_default_allocation_small_d;
 
       if (size > F_array_length_t_size_d) {
@@ -116,9 +118,12 @@ extern "C" {
 #ifndef _di_f_string_triples_increase_by_
   f_status_t f_string_triples_increase_by(const f_array_length_t amount, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (triples->used + amount > triples->size) {
       if (triples->used + amount > F_array_length_t_size_d) {
@@ -141,6 +146,108 @@ extern "C" {
     return private_f_string_triples_resize(length, triples);
   }
 #endif // _di_f_string_triples_resize_
+
+#ifndef _di_f_string_tripless_adjust_
+  f_status_t f_string_tripless_adjust(const f_array_length_t length, f_string_tripless_t * const tripless) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!tripless) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_string_tripless_adjust(length, tripless);
+  }
+#endif // _di_f_string_tripless_adjust_
+
+#ifndef _di_f_string_tripless_decimate_by_
+  f_status_t f_string_tripless_decimate_by(const f_array_length_t amount, f_string_tripless_t * const tripless) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!tripless) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
+
+    if (tripless->size - amount > 0) {
+      return private_f_string_tripless_adjust(tripless->size - amount, tripless);
+    }
+
+    return private_f_string_tripless_adjust(0, tripless);
+  }
+#endif // _di_f_string_tripless_decimate_by_
+
+#ifndef _di_f_string_tripless_decrease_by_
+  f_status_t f_string_tripless_decrease_by(const f_array_length_t amount, f_string_tripless_t * const tripless) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!tripless) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
+
+    if (tripless->size - amount > 0) {
+      return private_f_string_tripless_resize(tripless->size - amount, tripless);
+    }
+
+    return private_f_string_tripless_resize(0, tripless);
+  }
+#endif // _di_f_string_tripless_decrease_by_
+
+#ifndef _di_f_string_tripless_increase_
+  f_status_t f_string_tripless_increase(const f_array_length_t step, f_string_tripless_t * const tripless) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!tripless) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (step && tripless->used + 1 > tripless->size) {
+      f_array_length_t size = tripless->used + step;
+
+      if (size > F_array_length_t_size_d) {
+        if (tripless->used + 1 > F_array_length_t_size_d) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = F_array_length_t_size_d;
+      }
+
+      return private_f_string_tripless_resize(size, tripless);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_string_tripless_increase_
+
+#ifndef _di_f_string_tripless_increase_by_
+  f_status_t f_string_tripless_increase_by(const f_array_length_t amount, f_string_tripless_t * const tripless) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!tripless) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
+
+    if (tripless->used + amount > tripless->size) {
+      if (tripless->used + amount > F_array_length_t_size_d) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_string_tripless_resize(tripless->used + amount, tripless);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_string_tripless_increase_by_
+
+#ifndef _di_f_string_tripless_resize_
+  f_status_t f_string_tripless_resize(const f_array_length_t length, f_string_tripless_t * const tripless) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!tripless) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_string_tripless_resize(length, tripless);
+  }
+#endif // _di_f_string_tripless_resize_
 
 #ifdef __cplusplus
 } // extern "C"

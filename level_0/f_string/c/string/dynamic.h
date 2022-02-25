@@ -219,6 +219,32 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if amount is 0.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_dynamic_decimate_by_
+  extern f_status_t f_string_dynamic_decimate_by(const f_array_length_t amount, f_string_dynamic_t * const dynamic);
+#endif // _di_f_string_dynamic_decimate_by_
+
+/**
+ * Resize the dynamic string to a smaller size.
+ *
+ * This will resize making the string smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param dynamic
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -244,7 +270,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size) (or step is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1009,7 +1035,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (size == 0).
+ *   F_data_not on success, but there is no reason to increase size (size == 0) (or amount is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1033,7 +1059,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (size == 0).
+ *   F_data_not on success, but there is no reason to increase size (size == 0) (or amount is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1166,7 +1192,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (size == 0).
+ *   F_data_not on success, but there is no reason to increase size (size == 0) (or amount is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1190,7 +1216,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (size == 0).
+ *   F_data_not on success, but there is no reason to increase size (size == 0) (or amount is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *

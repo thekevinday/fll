@@ -32,11 +32,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from macro_f_string_dynamic_t_resize().
+ *   Errors (with error bit) from f_string_dynamic_resize().
  *
- * @see f_account_by_name()
- * @see f_account_by_id()
- * @see macro_f_string_dynamic_t_resize()
+ * @see f_string_dynamic_resize()
  */
 #if !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
   extern f_status_t private_f_account_from_passwd(const struct passwd password, const f_array_length_t password_length, f_account_t * const account) F_attribute_visibility_internal_d;

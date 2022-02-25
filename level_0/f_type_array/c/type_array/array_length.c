@@ -31,9 +31,12 @@ extern "C" {
 #ifndef _di_f_array_lengths_decimate_by_
   f_status_t f_array_lengths_decimate_by(const f_array_length_t amount, f_array_lengths_t *lengths) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (lengths->size - amount > 0) {
       return private_f_array_lengths_adjust(lengths->size - amount, lengths);
@@ -46,9 +49,12 @@ extern "C" {
 #ifndef _di_f_array_lengths_decrease_by_
   f_status_t f_array_lengths_decrease_by(const f_array_length_t amount, f_array_lengths_t *lengths) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (lengths->size - amount > 0) {
       return private_f_array_lengths_resize(lengths->size - amount, lengths);
@@ -61,11 +67,10 @@ extern "C" {
 #ifndef _di_f_array_lengths_increase_
   f_status_t f_array_lengths_increase(const f_array_length_t step, f_array_lengths_t *lengths) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (lengths->used + 1 > lengths->size) {
+    if (step && lengths->used + 1 > lengths->size) {
       f_array_length_t size = lengths->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -86,9 +91,12 @@ extern "C" {
 #ifndef _di_f_array_lengths_increase_by_
   f_status_t f_array_lengths_increase_by(const f_array_length_t amount, f_array_lengths_t *lengths) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (lengths->used + amount > lengths->size) {
       if (lengths->used + amount > F_array_length_t_size_d) {
@@ -149,9 +157,12 @@ extern "C" {
 #ifndef _di_f_array_lengthss_decimate_by_
   f_status_t f_array_lengthss_decimate_by(const f_array_length_t amount, f_array_lengthss_t *lengthss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (lengthss->size - amount > 0) {
       return private_f_array_lengthss_adjust(lengthss->size - amount, lengthss);
@@ -164,9 +175,12 @@ extern "C" {
 #ifndef _di_f_array_lengthss_decrease_by_
   f_status_t f_array_lengthss_decrease_by(const f_array_length_t amount, f_array_lengthss_t *lengthss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (lengthss->size - amount > 0) {
       return private_f_array_lengthss_resize(lengthss->size - amount, lengthss);
@@ -179,11 +193,10 @@ extern "C" {
 #ifndef _di_f_array_lengthss_increase_
   f_status_t f_array_lengthss_increase(const f_array_length_t step, f_array_lengthss_t *lengthss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (lengthss->used + 1 > lengthss->size) {
+    if (step && lengthss->used + 1 > lengthss->size) {
       f_array_length_t size = lengthss->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -204,9 +217,12 @@ extern "C" {
 #ifndef _di_f_array_lengthss_increase_by_
   f_status_t f_array_lengthss_increase_by(const f_array_length_t amount, f_array_lengthss_t *lengthss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (lengthss->used + amount > lengthss->size) {
       if (lengthss->used + amount > F_array_length_t_size_d) {

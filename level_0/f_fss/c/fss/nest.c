@@ -18,9 +18,12 @@ extern "C" {
 #ifndef _di_f_fss_items_decimate_by_
   f_status_t f_fss_items_decimate_by(const f_array_length_t amount, f_fss_items_t * const items) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (items->size - amount > 0) {
       return private_f_fss_items_adjust(items->size - amount, items);
@@ -33,9 +36,12 @@ extern "C" {
 #ifndef _di_f_fss_items_decrease_by_
   f_status_t f_fss_items_decrease_by(const f_array_length_t amount, f_fss_items_t * const items) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (items->size - amount > 0) {
       return private_f_fss_items_resize(items->size - amount, items);
@@ -48,11 +54,10 @@ extern "C" {
 #ifndef _di_f_fss_items_increase_
   f_status_t f_fss_items_increase(const f_array_length_t step, f_fss_items_t * const items) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (items->used + 1 > items->size) {
+    if (step && items->used + 1 > items->size) {
       f_array_length_t size = items->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -73,9 +78,12 @@ extern "C" {
 #ifndef _di_f_fss_items_increase_by_
   f_status_t f_fss_items_increase_by(const f_array_length_t amount, f_fss_items_t * const items) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (items->used + amount > items->size) {
       if (items->used + amount > F_array_length_t_size_d) {
@@ -112,9 +120,12 @@ extern "C" {
 #ifndef _di_f_fss_nest_decimate_by_
   f_status_t f_fss_nest_decimate_by(const f_array_length_t amount, f_fss_nest_t * const nest) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (nest->size - amount > 0) {
       return private_f_fss_nest_adjust(nest->size - amount, nest);
@@ -127,9 +138,12 @@ extern "C" {
 #ifndef _di_f_fss_nest_decrease_by_
   f_status_t f_fss_nest_decrease_by(const f_array_length_t amount, f_fss_nest_t * const nest) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (nest->size - amount > 0) {
       return private_f_fss_nest_resize(nest->size - amount, nest);
@@ -142,11 +156,10 @@ extern "C" {
 #ifndef _di_f_fss_nest_increase_
   f_status_t f_fss_nest_increase(const f_array_length_t step, f_fss_nest_t * const nest) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (nest->used + 1 > nest->size) {
+    if (step && nest->used + 1 > nest->size) {
       f_array_length_t size = nest->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -167,9 +180,12 @@ extern "C" {
 #ifndef _di_f_fss_nest_increase_by_
   f_status_t f_fss_nest_increase_by(const f_array_length_t amount, f_fss_nest_t * const nest) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (nest->used + amount > nest->size) {
       if (nest->used + amount > F_array_length_t_size_d) {
@@ -206,9 +222,12 @@ extern "C" {
 #ifndef _di_f_fss_nests_decimate_by_
   f_status_t f_fss_nests_decimate_by(const f_array_length_t amount, f_fss_nests_t * const nests) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (nests->size - amount > 0) {
       return private_f_fss_nests_adjust(nests->size - amount, nests);
@@ -221,7 +240,6 @@ extern "C" {
 #ifndef _di_f_fss_nests_decrease_by_
   f_status_t f_fss_nests_decrease_by(const f_array_length_t amount, f_fss_nests_t * const nests) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -236,11 +254,10 @@ extern "C" {
 #ifndef _di_f_fss_nests_increase_
   f_status_t f_fss_nests_increase(const f_array_length_t step, f_fss_nests_t * const nests) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (nests->used + 1 > nests->size) {
+    if (step && nests->used + 1 > nests->size) {
       f_array_length_t size = nests->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -261,9 +278,12 @@ extern "C" {
 #ifndef _di_f_fss_nests_increase_by_
   f_status_t f_fss_nests_increase_by(const f_array_length_t amount, f_fss_nests_t * const nests) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (nests->used + amount > nests->size) {
       if (nests->used + amount > F_array_length_t_size_d) {

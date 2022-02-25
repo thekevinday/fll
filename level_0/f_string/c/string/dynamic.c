@@ -132,9 +132,12 @@ extern "C" {
 #ifndef _di_f_string_dynamic_decimate_by_
   f_status_t f_string_dynamic_decimate_by(const f_array_length_t amount, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (dynamic->size - amount > 0) {
       return private_f_string_dynamic_adjust(dynamic->size - amount, dynamic);
@@ -147,9 +150,12 @@ extern "C" {
 #ifndef _di_f_string_dynamic_decrease_by_
   f_status_t f_string_dynamic_decrease_by(const f_array_length_t amount, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (dynamic->size - amount > 0) {
       return private_f_string_dynamic_resize(dynamic->size - amount, dynamic);
@@ -162,11 +168,10 @@ extern "C" {
 #ifndef _di_f_string_dynamic_increase_
   f_status_t f_string_dynamic_increase(const f_array_length_t step, f_string_dynamic_t * const dynamic) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (dynamic->used + 1 > dynamic->size) {
+    if (step && dynamic->used + 1 > dynamic->size) {
       f_array_length_t size = dynamic->used + step;
 
       if (size > F_string_t_size_d) {
@@ -189,6 +194,10 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     return private_f_string_dynamic_increase_by(amount, dynamic);
   }
@@ -908,9 +917,12 @@ extern "C" {
 #ifndef _di_f_string_dynamics_decimate_by_
   f_status_t f_string_dynamics_decimate_by(const f_array_length_t amount, f_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (dynamics->size - amount > 0) {
       return private_f_string_dynamics_adjust(dynamics->size - amount, dynamics);
@@ -923,9 +935,12 @@ extern "C" {
 #ifndef _di_f_string_dynamics_decrease_by_
   f_status_t f_string_dynamics_decrease_by(const f_array_length_t amount, f_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (dynamics->size - amount > 0) {
       return private_f_string_dynamics_resize(dynamics->size - amount, dynamics);
@@ -938,9 +953,12 @@ extern "C" {
 #ifndef _di_f_string_dynamics_increase_
   f_status_t f_string_dynamics_increase(const f_array_length_t step, f_string_dynamics_t * const dynamics) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!step) {
+      return F_data_not;
+    }
 
     if (dynamics->used + 1 > dynamics->size) {
       f_array_length_t size = dynamics->used + step;
@@ -1015,9 +1033,12 @@ extern "C" {
 #ifndef _di_f_string_dynamicss_decimate_by_
   f_status_t f_string_dynamicss_decimate_by(const f_array_length_t amount, f_string_dynamicss_t * const dynamicss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!dynamicss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (dynamicss->size - amount > 0) {
       return private_f_string_dynamicss_adjust(dynamicss->size - amount, dynamicss);
@@ -1030,9 +1051,12 @@ extern "C" {
 #ifndef _di_f_string_dynamicss_decrease_by_
   f_status_t f_string_dynamicss_decrease_by(const f_array_length_t amount, f_string_dynamicss_t * const dynamicss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!dynamicss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (dynamicss->size - amount > 0) {
       return private_f_string_dynamicss_resize(dynamicss->size - amount, dynamicss);
@@ -1045,9 +1069,12 @@ extern "C" {
 #ifndef _di_f_string_dynamicss_increase_
   f_status_t f_string_dynamicss_increase(const f_array_length_t step, f_string_dynamicss_t * const dynamicss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!dynamicss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!step) {
+      return F_data_not;
+    }
 
     if (dynamicss->used + 1 > dynamicss->size) {
       f_array_length_t size = dynamicss->used + step;
@@ -1072,6 +1099,10 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamicss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (dynamicss->used + amount > dynamicss->size) {
       if (dynamicss->used + amount > F_array_length_t_size_d) {

@@ -248,6 +248,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -403,6 +404,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -558,6 +560,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -581,6 +584,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -604,7 +608,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size) (or step is 0).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.

@@ -62,9 +62,12 @@ extern "C" {
 #ifndef _di_f_utf_string_triples_decimate_by_
   f_status_t f_utf_string_triples_decimate_by(const f_array_length_t amount, f_utf_string_triples_t *triples) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (triples->size - amount > 0) {
       return private_f_utf_string_triples_adjust(triples->size - amount, triples);
@@ -77,9 +80,12 @@ extern "C" {
 #ifndef _di_f_utf_string_triples_decrease_by_
   f_status_t f_utf_string_triples_decrease_by(const f_array_length_t amount, f_utf_string_triples_t *triples) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (triples->size - amount > 0) {
       return private_f_utf_string_triples_resize(triples->size - amount, triples);
@@ -92,11 +98,10 @@ extern "C" {
 #ifndef _di_f_utf_string_triples_increase_
   f_status_t f_utf_string_triples_increase(const f_array_length_t step, f_utf_string_triples_t *triples) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (triples->used + 1 > triples->size) {
+    if (step && triples->used + 1 > triples->size) {
       f_array_length_t size = triples->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -117,9 +122,12 @@ extern "C" {
 #ifndef _di_f_utf_string_triples_increase_by_
   f_status_t f_utf_string_triples_increase_by(const f_array_length_t amount, f_utf_string_triples_t *triples) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (triples->used + amount > triples->size) {
       if (triples->used + amount > F_array_length_t_size_d) {

@@ -103,6 +103,11 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
 
+      destination->array[destination->used].content.used = 0;
+      destination->array[destination->used].delimits.used = 0;
+      destination->array[destination->used].variable.used = 0;
+      destination->array[destination->used].vocabulary.used = 0;
+
       status = f_string_ranges_append(source.array[i].content, &destination->array[destination->used].content);
       if (F_status_is_error(status)) return status;
 
@@ -123,9 +128,12 @@ extern "C" {
 #ifndef _di_f_iki_datas_decimate_by_
   f_status_t f_iki_datas_decimate_by(const f_array_length_t amount, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (datas->size - amount > 0) {
       return private_f_iki_datas_adjust(datas->size - amount, datas);
@@ -138,9 +146,12 @@ extern "C" {
 #ifndef _di_f_iki_datas_decrease_by_
   f_status_t f_iki_datas_decrease_by(const f_array_length_t amount, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (datas->size - amount > 0) {
       return private_f_iki_datas_resize(datas->size - amount, datas);
@@ -153,11 +164,10 @@ extern "C" {
 #ifndef _di_f_iki_datas_increase_
   f_status_t f_iki_datas_increase(const f_array_length_t step, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (datas->used + 1 > datas->size) {
+    if (step && datas->used + 1 > datas->size) {
       f_array_length_t size = datas->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -178,9 +188,12 @@ extern "C" {
 #ifndef _di_f_iki_datas_increase_by_
   f_status_t f_iki_datas_increase_by(const f_array_length_t amount, f_iki_datas_t *datas) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (datas->used + amount > datas->size) {
       if (datas->used + amount > F_array_length_t_size_d) {

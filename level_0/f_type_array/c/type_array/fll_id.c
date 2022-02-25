@@ -31,9 +31,12 @@ extern "C" {
 #ifndef _di_f_fll_ids_decimate_by_
   f_status_t f_fll_ids_decimate_by(const f_array_length_t amount, f_fll_ids_t *ids) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (ids->size - amount > 0) {
       return private_f_fll_ids_adjust(ids->size - amount, ids);
@@ -46,9 +49,12 @@ extern "C" {
 #ifndef _di_f_fll_ids_decrease_by_
   f_status_t f_fll_ids_decrease_by(const f_array_length_t amount, f_fll_ids_t *ids) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (ids->size - amount > 0) {
       return private_f_fll_ids_resize(ids->size - amount, ids);
@@ -61,11 +67,10 @@ extern "C" {
 #ifndef _di_f_fll_ids_increase_
   f_status_t f_fll_ids_increase(const f_array_length_t step, f_fll_ids_t *ids) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (ids->used + 1 > ids->size) {
+    if (step && ids->used + 1 > ids->size) {
       f_array_length_t size = ids->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -86,9 +91,12 @@ extern "C" {
 #ifndef _di_f_fll_ids_increase_by_
   f_status_t f_fll_ids_increase_by(const f_array_length_t amount, f_fll_ids_t *ids) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (ids->used + amount > ids->size) {
       if (ids->used + amount > F_array_length_t_size_d) {
@@ -149,9 +157,12 @@ extern "C" {
 #ifndef _di_f_fll_idss_decimate_by_
   f_status_t f_fll_idss_decimate_by(const f_array_length_t amount, f_fll_idss_t *idss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!idss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (idss->size - amount > 0) {
       return private_f_fll_idss_adjust(idss->size - amount, idss);
@@ -164,9 +175,12 @@ extern "C" {
 #ifndef _di_f_fll_idss_decrease_by_
   f_status_t f_fll_idss_decrease_by(const f_array_length_t amount, f_fll_idss_t *idss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!idss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (idss->size - amount > 0) {
       return private_f_fll_idss_resize(idss->size - amount, idss);
@@ -179,11 +193,10 @@ extern "C" {
 #ifndef _di_f_fll_idss_increase_
   f_status_t f_fll_idss_increase(const f_array_length_t step, f_fll_idss_t *idss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!idss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (idss->used + 1 > idss->size) {
+    if (step && idss->used + 1 > idss->size) {
       f_array_length_t size = idss->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -204,9 +217,12 @@ extern "C" {
 #ifndef _di_f_fll_idss_increase_by_
   f_status_t f_fll_idss_increase_by(const f_array_length_t amount, f_fll_idss_t *idss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!idss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (idss->used + amount > idss->size) {
       if (idss->used + amount > F_array_length_t_size_d) {

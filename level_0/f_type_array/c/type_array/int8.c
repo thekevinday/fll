@@ -31,9 +31,12 @@ extern "C" {
 #ifndef _di_f_int8s_decimate_by_
   f_status_t f_int8s_decimate_by(const f_array_length_t amount, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int8s->size - amount > 0) {
       return private_f_int8s_adjust(int8s->size - amount, int8s);
@@ -46,9 +49,12 @@ extern "C" {
 #ifndef _di_f_int8s_decrease_by_
   f_status_t f_int8s_decrease_by(const f_array_length_t amount, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int8s->size - amount > 0) {
       return private_f_int8s_resize(int8s->size - amount, int8s);
@@ -61,11 +67,10 @@ extern "C" {
 #ifndef _di_f_int8s_increase_
   f_status_t f_int8s_increase(const f_array_length_t step, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (int8s->used + 1 > int8s->size) {
+    if (step && int8s->used + 1 > int8s->size) {
       f_array_length_t size = int8s->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -86,9 +91,12 @@ extern "C" {
 #ifndef _di_f_int8s_increase_by_
   f_status_t f_int8s_increase_by(const f_array_length_t amount, f_int8s_t *int8s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int8s->used + amount > int8s->size) {
       if (int8s->used + amount > F_array_length_t_size_d) {
@@ -149,9 +157,12 @@ extern "C" {
 #ifndef _di_f_int8ss_decimate_by_
   f_status_t f_int8ss_decimate_by(const f_array_length_t amount, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int8ss->size - amount > 0) {
       return private_f_int8ss_adjust(int8ss->size - amount, int8ss);
@@ -164,9 +175,12 @@ extern "C" {
 #ifndef _di_f_int8ss_decrease_by_
   f_status_t f_int8ss_decrease_by(const f_array_length_t amount, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int8ss->size - amount > 0) {
       return private_f_int8ss_resize(int8ss->size - amount, int8ss);
@@ -179,11 +193,10 @@ extern "C" {
 #ifndef _di_f_int8ss_increase_
   f_status_t f_int8ss_increase(const f_array_length_t step, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (int8ss->used + 1 > int8ss->size) {
+    if (step && int8ss->used + 1 > int8ss->size) {
       f_array_length_t size = int8ss->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -204,9 +217,12 @@ extern "C" {
 #ifndef _di_f_int8ss_increase_by_
   f_status_t f_int8ss_increase_by(const f_array_length_t amount, f_int8ss_t *int8ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int8ss->used + amount > int8ss->size) {
       if (int8ss->used + amount > F_array_length_t_size_d) {
@@ -255,9 +271,12 @@ extern "C" {
 #ifndef _di_f_uint8s_decimate_by_
   f_status_t f_uint8s_decimate_by(const f_array_length_t amount, f_uint8s_t *uint8s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint8s->size - amount > 0) {
       return private_f_uint8s_adjust(uint8s->size - amount, uint8s);
@@ -270,9 +289,12 @@ extern "C" {
 #ifndef _di_f_uint8s_decrease_by_
   f_status_t f_uint8s_decrease_by(const f_array_length_t amount, f_uint8s_t *uint8s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint8s->size - amount > 0) {
       return private_f_uint8s_resize(uint8s->size - amount, uint8s);
@@ -285,11 +307,10 @@ extern "C" {
 #ifndef _di_f_uint8s_increase_
   f_status_t f_uint8s_increase(const f_array_length_t step, f_uint8s_t *uint8s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!uint8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (uint8s->used + 1 > uint8s->size) {
+    if (step && uint8s->used + 1 > uint8s->size) {
       f_array_length_t size = uint8s->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -310,9 +331,12 @@ extern "C" {
 #ifndef _di_f_uint8s_increase_by_
   f_status_t f_uint8s_increase_by(const f_array_length_t amount, f_uint8s_t *uint8s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint8s->used + amount > uint8s->size) {
       if (uint8s->used + amount > F_array_length_t_size_d) {
@@ -373,9 +397,12 @@ extern "C" {
 #ifndef _di_f_uint8ss_decimate_by_
   f_status_t f_uint8ss_decimate_by(const f_array_length_t amount, f_uint8ss_t *uint8ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint8ss->size - amount > 0) {
       return private_f_uint8ss_adjust(uint8ss->size - amount, uint8ss);
@@ -388,9 +415,12 @@ extern "C" {
 #ifndef _di_f_uint8ss_decrease_by_
   f_status_t f_uint8ss_decrease_by(const f_array_length_t amount, f_uint8ss_t *uint8ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint8ss->size - amount > 0) {
       return private_f_uint8ss_resize(uint8ss->size - amount, uint8ss);
@@ -403,11 +433,10 @@ extern "C" {
 #ifndef _di_f_uint8ss_increase_
   f_status_t f_uint8ss_increase(const f_array_length_t step, f_uint8ss_t *uint8ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!uint8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (uint8ss->used + 1 > uint8ss->size) {
+    if (step && uint8ss->used + 1 > uint8ss->size) {
       f_array_length_t size = uint8ss->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -428,9 +457,12 @@ extern "C" {
 #ifndef _di_f_uint8ss_increase_by_
   f_status_t f_uint8ss_increase_by(const f_array_length_t amount, f_uint8ss_t *uint8ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint8ss->used + amount > uint8ss->size) {
       if (uint8ss->used + amount > F_array_length_t_size_d) {

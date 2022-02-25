@@ -18,9 +18,12 @@ extern "C" {
 #ifndef _di_f_fss_named_decimate_by_
   f_status_t f_fss_named_decimate_by(const f_array_length_t amount, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (named->objects.size - amount > 0) {
       return private_f_fss_named_adjust(named->objects.size - amount, named);
@@ -33,9 +36,12 @@ extern "C" {
 #ifndef _di_f_fss_named_decrease_by_
   f_status_t f_fss_named_decrease_by(const f_array_length_t amount, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (named->objects.size - amount > 0) {
       return private_f_fss_named_resize(named->objects.size - amount, named);
@@ -48,11 +54,10 @@ extern "C" {
 #ifndef _di_f_fss_named_increase_
   f_status_t f_fss_named_increase(const f_array_length_t step, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (named->objects.used + 1 > named->objects.size) {
+    if (step && named->objects.used + 1 > named->objects.size) {
       f_array_length_t size = named->objects.used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -73,9 +78,12 @@ extern "C" {
 #ifndef _di_f_fss_named_increase_by_
   f_status_t f_fss_named_increase_by(const f_array_length_t amount, f_fss_named_t * const named) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (named->objects.used + amount > named->objects.size) {
       if (named->objects.used + amount > F_array_length_t_size_d) {
@@ -112,9 +120,12 @@ extern "C" {
 #ifndef _di_f_fss_nameds_decimate_by_
   f_status_t f_fss_nameds_decimate_by(const f_array_length_t amount, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (nameds->size - amount > 0) {
       return private_f_fss_nameds_adjust(nameds->size - amount, nameds);
@@ -127,9 +138,12 @@ extern "C" {
 #ifndef _di_f_fss_nameds_decrease_by_
   f_status_t f_fss_nameds_decrease_by(const f_array_length_t amount, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (nameds->size - amount > 0) {
       return private_f_fss_nameds_resize(nameds->size - amount, nameds);
@@ -142,11 +156,10 @@ extern "C" {
 #ifndef _di_f_fss_nameds_increase_
   f_status_t f_fss_nameds_increase(const f_array_length_t step, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (nameds->used + 1 > nameds->size) {
+    if (step && nameds->used + 1 > nameds->size) {
       f_array_length_t size = nameds->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -167,9 +180,12 @@ extern "C" {
 #ifndef _di_f_fss_nameds_increase_by_
   f_status_t f_fss_nameds_increase_by(const f_array_length_t amount, f_fss_nameds_t * const nameds) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (nameds->used + amount > nameds->size) {
       if (nameds->used + amount > F_array_length_t_size_d) {

@@ -31,9 +31,12 @@ extern "C" {
 #ifndef _di_f_int16s_decimate_by_
   f_status_t f_int16s_decimate_by(const f_array_length_t amount, f_int16s_t *int16s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int16s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int16s->size - amount > 0) {
       return private_f_int16s_adjust(int16s->size - amount, int16s);
@@ -46,9 +49,12 @@ extern "C" {
 #ifndef _di_f_int16s_decrease_by_
   f_status_t f_int16s_decrease_by(const f_array_length_t amount, f_int16s_t *int16s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int16s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int16s->size - amount > 0) {
       return private_f_int16s_resize(int16s->size - amount, int16s);
@@ -61,11 +67,10 @@ extern "C" {
 #ifndef _di_f_int16s_increase_
   f_status_t f_int16s_increase(const f_array_length_t step, f_int16s_t *int16s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!int16s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (int16s->used + 1 > int16s->size) {
+    if (step && int16s->used + 1 > int16s->size) {
       f_array_length_t size = int16s->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -86,9 +91,12 @@ extern "C" {
 #ifndef _di_f_int16s_increase_by_
   f_status_t f_int16s_increase_by(const f_array_length_t amount, f_int16s_t *int16s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int16s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int16s->used + amount > int16s->size) {
       if (int16s->used + amount > F_array_length_t_size_d) {
@@ -149,9 +157,12 @@ extern "C" {
 #ifndef _di_f_int16ss_decimate_by_
   f_status_t f_int16ss_decimate_by(const f_array_length_t amount, f_int16ss_t *int16ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int16ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int16ss->size - amount > 0) {
       return private_f_int16ss_adjust(int16ss->size - amount, int16ss);
@@ -164,9 +175,12 @@ extern "C" {
 #ifndef _di_f_int16ss_decrease_by_
   f_status_t f_int16ss_decrease_by(const f_array_length_t amount, f_int16ss_t *int16ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int16ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int16ss->size - amount > 0) {
       return private_f_int16ss_resize(int16ss->size - amount, int16ss);
@@ -179,11 +193,10 @@ extern "C" {
 #ifndef _di_f_int16ss_increase_
   f_status_t f_int16ss_increase(const f_array_length_t step, f_int16ss_t *int16ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!int16ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (int16ss->used + 1 > int16ss->size) {
+    if (step && int16ss->used + 1 > int16ss->size) {
       f_array_length_t size = int16ss->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -204,9 +217,12 @@ extern "C" {
 #ifndef _di_f_int16ss_increase_by_
   f_status_t f_int16ss_increase_by(const f_array_length_t amount, f_int16ss_t *int16ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!int16ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (int16ss->used + amount > int16ss->size) {
       if (int16ss->used + amount > F_array_length_t_size_d) {
@@ -255,9 +271,12 @@ extern "C" {
 #ifndef _di_f_uint16s_decimate_by_
   f_status_t f_uint16s_decimate_by(const f_array_length_t amount, f_uint16s_t *uint16s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint16s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint16s->size - amount > 0) {
       return private_f_uint16s_adjust(uint16s->size - amount, uint16s);
@@ -270,9 +289,12 @@ extern "C" {
 #ifndef _di_f_uint16s_decrease_by_
   f_status_t f_uint16s_decrease_by(const f_array_length_t amount, f_uint16s_t *uint16s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint16s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint16s->size - amount > 0) {
       return private_f_uint16s_resize(uint16s->size - amount, uint16s);
@@ -285,11 +307,10 @@ extern "C" {
 #ifndef _di_f_uint16s_increase_
   f_status_t f_uint16s_increase(const f_array_length_t step, f_uint16s_t *uint16s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!uint16s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (uint16s->used + 1 > uint16s->size) {
+    if (step && uint16s->used + 1 > uint16s->size) {
       f_array_length_t size = uint16s->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -310,9 +331,12 @@ extern "C" {
 #ifndef _di_f_uint16s_increase_by_
   f_status_t f_uint16s_increase_by(const f_array_length_t amount, f_uint16s_t *uint16s) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint16s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint16s->used + amount > uint16s->size) {
       if (uint16s->used + amount > F_array_length_t_size_d) {
@@ -373,9 +397,12 @@ extern "C" {
 #ifndef _di_f_uint16ss_decimate_by_
   f_status_t f_uint16ss_decimate_by(const f_array_length_t amount, f_uint16ss_t *uint16ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint16ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint16ss->size - amount > 0) {
       return private_f_uint16ss_adjust(uint16ss->size - amount, uint16ss);
@@ -388,9 +415,12 @@ extern "C" {
 #ifndef _di_f_uint16ss_decrease_by_
   f_status_t f_uint16ss_decrease_by(const f_array_length_t amount, f_uint16ss_t *uint16ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint16ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint16ss->size - amount > 0) {
       return private_f_uint16ss_resize(uint16ss->size - amount, uint16ss);
@@ -403,11 +433,10 @@ extern "C" {
 #ifndef _di_f_uint16ss_increase_
   f_status_t f_uint16ss_increase(const f_array_length_t step, f_uint16ss_t *uint16ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!uint16ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (uint16ss->used + 1 > uint16ss->size) {
+    if (step && uint16ss->used + 1 > uint16ss->size) {
       f_array_length_t size = uint16ss->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -428,9 +457,12 @@ extern "C" {
 #ifndef _di_f_uint16ss_increase_by_
   f_status_t f_uint16ss_increase_by(const f_array_length_t amount, f_uint16ss_t *uint16ss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!uint16ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (uint16ss->used + amount > uint16ss->size) {
       if (uint16ss->used + amount > F_array_length_t_size_d) {

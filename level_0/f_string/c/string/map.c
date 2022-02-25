@@ -51,9 +51,12 @@ extern "C" {
 #ifndef _di_f_string_map_multis_decimate_by_
   f_status_t f_string_map_multis_decimate_by(const f_array_length_t amount, f_string_map_multis_t * const map_multis) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!map_multis) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (map_multis->size - amount > 0) {
       return private_f_string_map_multis_adjust(map_multis->size - amount, map_multis);
@@ -66,9 +69,12 @@ extern "C" {
 #ifndef _di_f_string_map_multis_decrease_by_
   f_status_t f_string_map_multis_decrease_by(const f_array_length_t amount, f_string_map_multis_t * const map_multis) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!map_multis) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (map_multis->size - amount > 0) {
       return private_f_string_map_multis_resize(map_multis->size - amount, map_multis);
@@ -81,11 +87,10 @@ extern "C" {
 #ifndef _di_f_string_map_multis_increase_
   f_status_t f_string_map_multis_increase(const f_array_length_t step, f_string_map_multis_t * const map_multis) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!map_multis) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (map_multis->used + 1 > map_multis->size) {
+    if (step && map_multis->used + 1 > map_multis->size) {
       f_array_length_t size = map_multis->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -106,9 +111,12 @@ extern "C" {
 #ifndef _di_f_string_map_multis_increase_by_
   f_status_t f_string_map_multis_increase_by(const f_array_length_t amount, f_string_map_multis_t * const map_multis) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!map_multis) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (map_multis->used + amount > map_multis->size) {
       if (map_multis->used + amount > F_array_length_t_size_d) {
@@ -172,9 +180,12 @@ extern "C" {
 #ifndef _di_f_string_map_multiss_decimate_by_
   f_status_t f_string_map_multiss_decimate_by(const f_array_length_t amount, f_string_map_multiss_t * const map_multiss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!map_multiss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (map_multiss->size - amount > 0) {
       return private_f_string_map_multiss_adjust(map_multiss->size - amount, map_multiss);
@@ -187,9 +198,12 @@ extern "C" {
 #ifndef _di_f_string_map_multiss_decrease_by_
   f_status_t f_string_map_multiss_decrease_by(const f_array_length_t amount, f_string_map_multiss_t * const map_multiss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!map_multiss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (map_multiss->size - amount > 0) {
       return private_f_string_map_multiss_resize(map_multiss->size - amount, map_multiss);
@@ -202,11 +216,10 @@ extern "C" {
 #ifndef _di_f_string_map_multiss_increase_
   f_status_t f_string_map_multiss_increase(const f_array_length_t step, f_string_map_multiss_t * const map_multiss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!map_multiss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (map_multiss->used + 1 > map_multiss->size) {
+    if (step && map_multiss->used + 1 > map_multiss->size) {
       f_array_length_t size = map_multiss->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -227,9 +240,12 @@ extern "C" {
 #ifndef _di_f_string_map_multiss_increase_by_
   f_status_t f_string_map_multiss_increase_by(const f_array_length_t amount, f_string_map_multiss_t * const map_multiss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!map_multiss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (map_multiss->used + amount > map_multiss->size) {
       if (map_multiss->used + amount > F_array_length_t_size_d) {
@@ -278,9 +294,12 @@ extern "C" {
 #ifndef _di_f_string_maps_decimate_by_
   f_status_t f_string_maps_decimate_by(const f_array_length_t amount, f_string_maps_t * const maps) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (maps->size - amount > 0) {
       return private_f_string_maps_adjust(maps->size - amount, maps);
@@ -293,9 +312,12 @@ extern "C" {
 #ifndef _di_f_string_maps_decrease_by_
   f_status_t f_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t * const maps) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (maps->size - amount > 0) {
       return private_f_string_maps_resize(maps->size - amount, maps);
@@ -308,11 +330,10 @@ extern "C" {
 #ifndef _di_f_string_maps_increase_
   f_status_t f_string_maps_increase(const f_array_length_t step, f_string_maps_t * const maps) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (maps->used + 1 > maps->size) {
+    if (step && maps->used + 1 > maps->size) {
       f_array_length_t size = maps->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -333,9 +354,12 @@ extern "C" {
 #ifndef _di_f_string_maps_increase_by_
   f_status_t f_string_maps_increase_by(const f_array_length_t amount, f_string_maps_t * const maps) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (maps->used + amount > maps->size) {
       if (maps->used + amount > F_array_length_t_size_d) {
@@ -401,9 +425,12 @@ extern "C" {
 #ifndef _di_f_string_mapss_decimate_by_
   f_status_t f_string_mapss_decimate_by(const f_array_length_t amount, f_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (mapss->size - amount > 0) {
       return private_f_string_mapss_adjust(mapss->size - amount, mapss);
@@ -416,9 +443,12 @@ extern "C" {
 #ifndef _di_f_string_mapss_decrease_by_
   f_status_t f_string_mapss_decrease_by(const f_array_length_t amount, f_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (mapss->size - amount > 0) {
       return private_f_string_mapss_resize(mapss->size - amount, mapss);
@@ -431,11 +461,10 @@ extern "C" {
 #ifndef _di_f_string_mapss_increase_
   f_status_t f_string_mapss_increase(const f_array_length_t step, f_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!step) return F_status_set_error(F_parameter);
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (mapss->used + 1 > mapss->size) {
+    if (step && mapss->used + 1 > mapss->size) {
       f_array_length_t size = mapss->used + step;
 
       if (size > F_array_length_t_size_d) {
@@ -456,9 +485,12 @@ extern "C" {
 #ifndef _di_f_string_mapss_increase_by_
   f_status_t f_string_mapss_increase_by(const f_array_length_t amount, f_string_mapss_t * const mapss) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!mapss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) {
+      return F_data_not;
+    }
 
     if (mapss->used + amount > mapss->size) {
       if (mapss->used + amount > F_array_length_t_size_d) {
