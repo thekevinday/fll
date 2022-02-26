@@ -370,9 +370,6 @@ extern "C" {
                   }
                 }
                 else {
-                  const f_array_lengths_t except_at = f_array_lengths_t_initialize;
-                  const f_string_ranges_t except_in = f_string_ranges_t_initialize;
-
                   if (partial.start > partial.stop) {
                     *status = F_data_not;
 
@@ -768,9 +765,6 @@ extern "C" {
                   }
                 }
                 else {
-                  const f_array_lengths_t except_at = f_array_lengths_t_initialize;
-                  const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
-
                   if (partial.start > partial.stop) {
                     *status = F_data_not;
 
