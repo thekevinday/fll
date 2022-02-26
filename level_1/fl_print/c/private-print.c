@@ -26,7 +26,7 @@ extern "C" {
     unsigned int width = 1;
     unsigned int precision = 1;
 
-    for (; *string; string += 1) {
+    for (; *string; ++string) {
 
       if (*string < 0x2c) {
         if (*string == f_string_ascii_space_s.string[0]) {
@@ -111,8 +111,6 @@ extern "C" {
             string = private_fl_print_convert_number(string, ap, &precision, status);
             if (F_status_is_error(*status)) return string;
 
-            --string;
-
             flag |= F_print_format_flag_precision_d;
           }
 
@@ -135,8 +133,6 @@ extern "C" {
 
             string = private_fl_print_convert_number(string, ap, &width, status);
             if (F_status_is_error(*status)) return string;
-
-            --string;
 
             continue;
           }
@@ -982,8 +978,18 @@ extern "C" {
         conversion_data.width = precision;
       }
 
-      if (type == f_print_format_type_signed_number_e) {
-        *status = f_conversion_number_signed_print(va_arg(*ap, f_number_signed_t), conversion_data, stream);
+      if (type == f_print_format_type_signed_8_e) {
+        const int8_t value = (int8_t) va_arg(*ap, int);
+
+        *status = f_conversion_number_signed_print((f_number_signed_t) value, conversion_data, stream);
+      }
+      else if (type == f_print_format_type_signed_16_e) {
+        const int16_t value = (int16_t) va_arg(*ap, int);
+
+        *status = f_conversion_number_signed_print((f_number_signed_t) value, conversion_data, stream);
+      }
+      else if (type == f_print_format_type_signed_32_e) {
+        *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(*ap, int32_t), conversion_data, stream);
       }
       else if (type == f_print_format_type_signed_64_e) {
         *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(*ap, int64_t), conversion_data, stream);
@@ -991,34 +997,24 @@ extern "C" {
       else if (type == f_print_format_type_signed_128_e) {
         *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(*ap, f_int_128_t), conversion_data, stream);
       }
-      else if (type == f_print_format_type_signed_32_e) {
-        *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(*ap, int32_t), conversion_data, stream);
-      }
-      else if (type == f_print_format_type_signed_16_e) {
-        const int16_t value = (int16_t) va_arg(*ap, int);
-
-        *status = f_conversion_number_signed_print((f_number_signed_t) value, conversion_data, stream);
-      }
-      else if (type == f_print_format_type_signed_8_e) {
-        const int8_t value = (int8_t) va_arg(*ap, int);
-
-        *status = f_conversion_number_signed_print((f_number_signed_t) value, conversion_data, stream);
+      else if (type == f_print_format_type_signed_number_e) {
+        *status = f_conversion_number_signed_print(va_arg(*ap, f_number_signed_t), conversion_data, stream);
       }
       else if (type == f_print_format_type_size_e) {
         *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(*ap, size_t), conversion_data, stream);
       }
-      else if (type == f_print_format_type_unsigned_32_e) {
-        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(*ap, uint32_t), conversion_data, stream);
+      else if (type == f_print_format_type_unsigned_8_e) {
+        const uint8_t value = (uint8_t) va_arg(*ap, unsigned);
+
+        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) value, conversion_data, stream);
       }
       else if (type == f_print_format_type_unsigned_16_e) {
         const uint16_t value = (uint16_t) va_arg(*ap, unsigned);
 
         *status = f_conversion_number_unsigned_print((f_number_unsigned_t) value, conversion_data, stream);
       }
-      else if (type == f_print_format_type_unsigned_8_e) {
-        const uint8_t value = (uint8_t) va_arg(*ap, unsigned);
-
-        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) value, conversion_data, stream);
+      else if (type == f_print_format_type_unsigned_32_e) {
+        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(*ap, uint32_t), conversion_data, stream);
       }
       else if (type == f_print_format_type_unsigned_64_e) {
         *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(*ap, uint64_t), conversion_data, stream);
@@ -1137,7 +1133,7 @@ extern "C" {
 #if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
   f_string_t private_fl_print_convert_number(f_string_t string, va_list *ap, unsigned int * const number, f_status_t * const status) {
 
-    for (*number = 0; *string; string += 1) {
+    for (*number = 0; *string; ++string) {
 
       if (*string > 0x2f && *string < 0x3a) {
         *number *= 10;
@@ -1149,9 +1145,18 @@ extern "C" {
         break;
       }
       else {
+
+        // Do not leave string on the non-digit and non-asterisk character.
+        --string;
+
         break;
       }
     } // for
+
+    // Do not leave string on the terminating NULL.
+    if (!string) {
+      --string;
+    }
 
     return string;
   }

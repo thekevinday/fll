@@ -80,7 +80,7 @@ extern "C" {
  *
  * This should be called to convert numbers after a '%', such as the field with or precision.
  *
- * On return the current will point to either the last consecutive character representing a number, the asterisk, or NULL.
+ * On return the string will point to either the last consecutive character representing a number or the asterisk.
  *
  * @param string
  *   The current character position within the string.
