@@ -270,7 +270,7 @@ extern "C" {
                 except_in = va_arg(*ap, f_string_ranges_t);
               }
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -293,7 +293,7 @@ extern "C" {
               const f_array_lengths_t except_at = f_array_lengths_t_initialize;
               const f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -316,7 +316,7 @@ extern "C" {
               const f_array_lengths_t except_at = f_array_lengths_t_initialize;
               const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -387,7 +387,7 @@ extern "C" {
                 except_in = va_arg(*ap, f_string_ranges_t);
               }
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -410,7 +410,7 @@ extern "C" {
               const f_array_lengths_t except_at = f_array_lengths_t_initialize;
               const f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -433,7 +433,7 @@ extern "C" {
               const f_array_lengths_t except_at = f_array_lengths_t_initialize;
               const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -668,7 +668,7 @@ extern "C" {
                 except_in = va_arg(*ap, f_string_ranges_t);
               }
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -691,7 +691,7 @@ extern "C" {
               const f_array_lengths_t except_at = f_array_lengths_t_initialize;
               const f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -714,7 +714,7 @@ extern "C" {
               const f_array_lengths_t except_at = f_array_lengths_t_initialize;
               const f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -792,7 +792,7 @@ extern "C" {
                 except_in = va_arg(*ap, f_string_ranges_t);
               }
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -815,7 +815,7 @@ extern "C" {
               const f_array_lengths_t except_at = f_array_lengths_t_initialize;
               const f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
@@ -838,7 +838,7 @@ extern "C" {
               const f_array_lengths_t except_at = f_array_lengths_t_initialize;
               const f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
 
-              if (partial.start > partial.start) {
+              if (partial.start > partial.stop) {
                 *status = F_data_not;
 
                 return string;
