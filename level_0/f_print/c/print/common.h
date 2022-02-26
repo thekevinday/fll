@@ -17,6 +17,13 @@ extern "C" {
 #endif
 
 /**
+ * Guarantee va_copy() exists when __va_copy() is provided instead.
+ */
+#if !defined(va_copy) && defined(__va_copy)
+  #define va_copy __va_copy
+#endif // !defined(va_copy) && defined(__va_copy)
+
+/**
  * Defines the maximum length supported by write() for use in printing.
  *
  * This is documented in the man write(2) pages under Linux to being 0x7ffff000 regardless of 32-bit or 64-bit.
