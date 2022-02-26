@@ -78,20 +78,6 @@ extern "C" {
       width_max = buffer->used - range->start;
     }
 
-    status = private_f_iki_seek_special(*buffer, range);
-
-    if (F_status_is_error(status)) {
-      return status;
-    }
-
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
-
-    if (range->start >= buffer->used) {
-      return F_data_not_eos;
-    }
-
     f_string_range_t found_vocabulary = f_string_range_t_initialize;
     f_array_length_t found_content = 0;
     f_array_length_t vocabulary_slash_first = range->start;
@@ -100,14 +86,38 @@ extern "C" {
     uint8_t quote = 0;
 
     bool vocabulary_delimited = F_false;
-    bool find_next = F_false;
-
-    found_vocabulary.start = range->start;
 
     do {
 
-      // Find the start and end of the vocabulary name.
-      while (range->start <= range->stop && range->start < buffer->used) {
+      // Find the start of the vocabulary name.
+      while (F_status_is_error_not(status) && range->start <= range->stop && range->start < buffer->used) {
+
+        if (state.interrupt) {
+          status = state.interrupt((void *) &state, 0);
+
+          if (F_status_set_fine(status) == F_interrupt) {
+            status = F_status_set_error(F_interrupt);
+
+            break;
+          }
+        }
+
+        width_max = buffer->used - range->start;
+
+        status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
+        if (F_status_is_error(status)) break;
+
+        if (status == F_true) {
+          found_vocabulary.start = range->start++;
+
+          break;
+        }
+
+        status = f_utf_buffer_increment(*buffer, range, 1);
+      } // while
+
+      // Find the end of the vocabulary name.
+      while (F_status_is_error_not(status) && range->start <= range->stop && range->start < buffer->used) {
 
         if (state.interrupt) {
           status = state.interrupt((void *) &state, 0);
@@ -147,17 +157,24 @@ extern "C" {
 
             break;
           }
-
-          break;
         }
-
-        if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
+        else if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
           bool separator_found = F_false;
 
           vocabulary_slash_first = range->start;
 
           // The slash only needs to be delimited if it were to otherwise be a valid vocabulary name.
           while (range->start <= range->stop && range->start < buffer->used) {
+
+            if (state.interrupt) {
+              status = state.interrupt((void *) &state, 0);
+
+              if (F_status_set_fine(status) == F_interrupt) {
+                status = F_status_set_error(F_interrupt);
+
+                break;
+              }
+            }
 
             if (buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]) {
               ++range->start;
@@ -169,21 +186,14 @@ extern "C" {
               if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
                 vocabulary_delimited = F_true;
                 quote = buffer->string[range->start++];
-
-                break;
               }
-              else {
-                find_next = F_true;
 
-                break;
-              }
+              break;
             }
             else if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
               separator_found = F_true;
             }
             else if (buffer->string[range->start] != f_iki_syntax_slash_s.string[0]) {
-              find_next = F_true;
-
               break;
             }
 
@@ -191,47 +201,23 @@ extern "C" {
             if (F_status_is_error(status)) break;
           } // while
 
-          break;
+          if (F_status_is_error(status) || range->start > range->stop || range->start >= buffer->used) break;
         }
-
-        width_max = (range->stop - range->start) + 1;
-
-        if (width_max > buffer->used - range->start) {
+        else {
           width_max = buffer->used - range->start;
-        }
 
-        status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
-        if (F_status_is_error(status)) break;
-
-        // Current word-dash-plus block is not a valid variable name, try again.
-        if (status == F_false) {
-          status = private_f_iki_seek_special(*buffer, range);
+          status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
           if (F_status_is_error(status)) break;
 
-          if (range->start > range->stop) {
-            data->delimits.used = delimits_used;
-
-            return F_data_not_stop;
-          }
-
-          if (range->start >= buffer->used) {
-            data->delimits.used = delimits_used;
-
-            return F_data_not_eos;
-          }
-
-          found_vocabulary.start = range->start;
+          // Not a valid IKI vocabulary name.
+          if (status != F_true) break;
         }
 
         status = f_utf_buffer_increment(*buffer, range, 1);
         if (F_status_is_error(status)) break;
       } // while
 
-      if (F_status_is_error(status)) {
-        data->delimits.used = delimits_used;
-
-        return status;
-      }
+      if (F_status_is_error(status) || range->start > range->stop || range->start >= buffer->used) break;
 
       // Process potentially valid content.
       if (quote) {
@@ -264,7 +250,6 @@ extern "C" {
 
               data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
 
-              find_next = F_true;
               vocabulary_delimited = F_false;
               quote = 0;
 
@@ -301,7 +286,8 @@ extern "C" {
 
             return F_none;
           }
-          else if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
+
+          if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
             f_array_length_t content_slash_first = range->start;
             f_array_length_t content_slash_total = 0;
 
@@ -355,11 +341,6 @@ extern "C" {
                     quote = 0;
 
                     ++range->start;
-
-                    // Skip past all initial non-word, non-dash, and non-plus.
-                    status = private_f_iki_seek_special(*buffer, range);
-
-                    found_vocabulary.start = range->start;
                   }
                   else {
                     status = f_string_ranges_increase(state.step_small, &data->variable);
@@ -409,26 +390,27 @@ extern "C" {
           status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) break;
         } // while
+
+        if (F_status_is_error(status)) break;
+
+        quote = 0;
       }
       else {
         vocabulary_delimited = F_false;
-        find_next = F_true;
       }
 
-      if (F_status_is_error(status)) {
-        data->delimits.used = delimits_used;
+      if (F_status_is_error(status) || range->start > range->stop || range->start >= buffer->used) break;
 
-        return status;
-      }
-
-      if (find_next) {
-        status = private_f_iki_seek_special(*buffer, range);
-
-        found_vocabulary.start = range->start;
-        find_next = F_false;
-      }
+      status = f_utf_buffer_increment(*buffer, range, 1);
+      if (F_status_is_error(status)) break;
 
     } while (range->start <= range->stop && range->start < buffer->used);
+
+    if (F_status_is_error(status)) {
+      data->delimits.used = delimits_used;
+
+      return status;
+    }
 
     if (range->start > range->stop) {
       return F_data_not_stop;

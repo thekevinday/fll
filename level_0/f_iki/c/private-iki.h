@@ -116,31 +116,6 @@ extern "C" {
   extern f_status_t private_f_iki_object_partial_is(const f_string_static_t buffer, const f_string_range_t range) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
 
-/**
- * Seek until a word, a dash, or a plus is found or is not found.
- *
- * This will ignore the delimit placeholder.
- * This will stop at any special characters, such as a colon, a single quote, a double quote, or a backslash.
- *
- * @param buffer
- *   The string to process.
- * @param range
- *   The range within the buffer that represents the current position being processed.
- *
- * @return
- *   F_true if stopped on a word, a dash, or a plus.
- *   F_false if stopped on a plus scolon, single quote, double quote, and backslash or stopped on something other than a word, a dash, or a plus.
- *
- *   Errors (with error bit) from: f_utf_buffer_increment().
- *   Errors (with error bit) from: f_utf_is_word_dash_plus().
- *
- * @see f_utf_buffer_increment()
- * @see f_utf_is_word_dash_plus()
- */
-#if !defined(_di_f_iki_read_)
-  extern f_status_t private_f_iki_seek_special(const f_string_static_t buffer, f_string_range_t * const range) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_iki_read_)
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

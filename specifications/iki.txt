@@ -11,7 +11,7 @@ IKI Specifications:
   The IKI format will use iki-0000 to represent an IKI with no explicitly defined vocabulary.
   Whereas iki-0001 and beyond represent a specific IKI vocabulary.
 
-  Whitespace, non-word (and non "_", "-", "+") character punctuations, or the start of file must exist before any valid variable name.
+  A potential IKI variable name starts on word (or "_", "-", "+") characters.
   Whitespace and non-word (and non "_", "-", "+") character punctuations may not exist as part of the variable name.
   The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (U+2010 and U+2011).
 
