@@ -135,8 +135,10 @@ extern "C" {
 
     f_socket_disconnect(&client, f_socket_close_fast_e);
 
+    // Resize memory when the allocated size is greate than the maximum preferred size.
+    // Resizing could potentially copy memory to a new address, so it is assumed to be cheaper to just delete the memory entirely.
     if (control->input.size > controller_control_default_socket_buffer_d) {
-      status = f_string_dynamic_resize(controller_control_default_socket_buffer_d, &control->input);
+      status = f_string_dynamic_resize(0, &control->input);
 
       if (F_status_is_error(status)) {
         controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true);
@@ -146,7 +148,7 @@ extern "C" {
     }
 
     if (control->output.size > controller_control_default_socket_buffer_d) {
-      status = f_string_dynamic_resize(controller_control_default_socket_buffer_d, &control->output);
+      status = f_string_dynamic_resize(0, &control->output);
 
       if (F_status_is_error(status)) {
         controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true);
