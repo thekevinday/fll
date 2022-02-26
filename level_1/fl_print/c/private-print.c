@@ -1031,8 +1031,11 @@ extern "C" {
       }
       else if (type == f_print_format_type_double_32_e || type == f_print_format_type_double_64_e) {
         int f = 0;
-        char format[32];
-        char buffer[128];
+        char format[33];
+        char buffer[129];
+
+        memset(format, 0, 33);
+        memset(buffer, 0, 129);
 
         format[f++] = f_string_ascii_percent_s.string[0];
 
