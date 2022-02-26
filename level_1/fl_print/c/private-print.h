@@ -72,31 +72,7 @@ extern "C" {
  * @see private_fl_print_convert_number()
  */
 #if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
-  extern f_string_t private_fl_print_format_convert(f_string_t string, FILE * const stream, va_list * const ap, f_status_t * const status) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
-
-/**
- * Helper function for processing the number in a convert string.
- *
- * This should be called to convert numbers after a '%', such as the field with or precision.
- *
- * On return the string will point to either the last consecutive character representing a number or the asterisk.
- *
- * @param string
- *   The current character position within the string.
- * @param ap
- *   The variable arguments list.
- * @param number
- *   The converted number.
- *
- * @return
- *   F_true on success and end of string (NULL) is found.
- *   F_false on success without reaching the end of string (NULL).
- *
- * @see va_arg()
- */
-#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
-  extern f_string_t private_fl_print_convert_number(f_string_t string, va_list * const ap, unsigned int * const number, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern f_string_t private_fl_print_format_convert(f_string_t string, FILE * const stream, va_list ap, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
 /**

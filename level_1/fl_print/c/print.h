@@ -209,8 +209,9 @@ extern "C" {
  * @see fprintf()
  * @see fputc_unlocked()
  * @see snprintf()
- * @see va_start()
+ * @see va_copy()
  * @see va_end()
+ * @see va_start()
  *
  * @see f_conversion_number_signed_print()
  * @see f_conversion_number_unsigned_print()
@@ -280,7 +281,7 @@ extern "C" {
  * @see f_print_terminated()
  */
 #ifndef _di_fl_print_format_convert_
-  extern f_string_t fl_print_format_convert(const f_string_t string, FILE * const stream, va_list * const ap, f_status_t * const status);
+  extern f_string_t fl_print_format_convert(const f_string_t string, FILE * const stream, va_list ap, f_status_t * const status);
 #endif // _di_fl_print_format_convert_
 
 /**
@@ -315,8 +316,9 @@ extern "C" {
  *   Errors (with error bit) from: f_print_terminated().
  *
  * @see fputc_unlocked()
- * @see va_start()
+ * @see va_copy()
  * @see va_end()
+ * @see va_start()
  *
  * @see f_conversion_number_signed_print()
  * @see f_conversion_number_unsigned_print()
@@ -328,7 +330,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fl_print_string_va_
-  extern f_status_t fl_print_string_va(const f_string_t string, FILE * const stream, va_list * const ap);
+  extern f_status_t fl_print_string_va(const f_string_t string, FILE * const stream, va_list ap);
 #endif // _di_fl_print_string_va_
 
 /**

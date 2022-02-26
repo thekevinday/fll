@@ -18,20 +18,7 @@ extern "C" {
 
     va_start(ap, stream);
 
-    for (f_string_t current = string; *current; ++current) {
-
-      if (*current == f_string_ascii_percent_s.string[0]) {
-        ++current;
-
-        current = private_fl_print_format_convert(current, stream, &ap, &status);
-        if (F_status_is_error(status)) break;
-      }
-      else {
-        if (!fputc_unlocked(*current, stream)) {
-          break;
-        }
-      }
-    } // for
+    private_fl_print_format_convert(string, stream, ap, &status);
 
     va_end(ap);
 
@@ -42,10 +29,9 @@ extern "C" {
 #endif // _di_fl_print_format_
 
 #ifndef _di_fl_print_format_convert_
-  f_string_t fl_print_format_convert(const f_string_t string, FILE * const stream, va_list * const ap, f_status_t * const status) {
+  f_string_t fl_print_format_convert(const f_string_t string, FILE * const stream, va_list ap, f_status_t * const status) {
     #ifndef _di_level_1_parameter_checking_
       if (!stream) return 0;
-      if (!ap) return 0;
     #endif // _di_level_1_parameter_checking_
 
     return private_fl_print_format_convert(string, stream, ap, status);
@@ -53,30 +39,15 @@ extern "C" {
 #endif // _di_fl_print_format_convert_
 
 #ifndef _di_fl_print_string_va_
-  f_status_t fl_print_string_va(const f_string_t string, FILE * const stream, va_list * const ap) {
+  f_status_t fl_print_string_va(const f_string_t string, FILE * const stream, va_list ap) {
     #ifndef _di_level_1_parameter_checking_
       if (!string) return F_status_set_error(F_parameter);
       if (!stream) return F_status_set_error(F_parameter);
-      if (!ap) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 
-    for (f_string_t current = string; *current; ++current) {
-
-      if (*current == f_string_ascii_percent_s.string[0]) {
-        ++current;
-
-        current = private_fl_print_format_convert(current, stream, ap, &status);
-        if (F_status_is_error(status)) break;
-      }
-      else {
-        if (!fputc_unlocked(*current, stream)) {
-          break;
-        }
-      }
-    } // for
-
+    private_fl_print_format_convert(string, stream, ap, &status);
     if (F_status_is_error(status)) return status;
 
     return F_none;

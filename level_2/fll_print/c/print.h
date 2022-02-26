@@ -1013,7 +1013,7 @@ extern "C" {
  * @see fl_print_format_convert()
  */
 #ifndef _di_fll_print_format_convert_
-  extern f_string_t fll_print_format_convert(const f_string_t current, FILE * const output, va_list *ap, f_status_t *status);
+  extern f_string_t fll_print_format_convert(const f_string_t current, FILE * const output, va_list ap, f_status_t *status);
 #endif // _di_fll_print_format_convert_
 
 /**
@@ -1156,7 +1156,7 @@ extern "C" {
  * @see fl_print_string_va()
  */
 #ifndef _di_fll_print_string_va_
-  extern f_status_t fll_print_string_va(const f_string_t string, FILE * const output, va_list *ap);
+  extern f_status_t fll_print_string_va(const f_string_t string, FILE * const output, va_list ap);
 #endif // _di_fll_print_string_va_
 
 /**

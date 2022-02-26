@@ -468,7 +468,7 @@ extern "C" {
 
     va_start(ap, output);
 
-    const f_status_t status = fl_print_string_va(string, output, &ap);
+    const f_status_t status = fl_print_string_va(string, output, ap);
 
     va_end(ap);
 
@@ -479,7 +479,7 @@ extern "C" {
 #endif // _di_fll_print_format_
 
 #ifndef _di_fll_print_format_convert_
-  f_string_t fll_print_format_convert(const f_string_t string, FILE * const output, va_list * const ap, f_status_t * const status) {
+  f_string_t fll_print_format_convert(const f_string_t string, FILE * const output, va_list ap, f_status_t * const status) {
 
     flockfile(output);
 
@@ -557,7 +557,7 @@ extern "C" {
 #endif // _di_fll_print_safely_terminated_
 
 #ifndef _di_fll_print_string_va_
-  f_status_t fll_print_string_va(const f_string_t string, FILE * const output, va_list * const ap) {
+  f_status_t fll_print_string_va(const f_string_t string, FILE * const output, va_list ap) {
 
     flockfile(output);
 
