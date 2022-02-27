@@ -22,7 +22,7 @@ verbose=
 color=
 shared=
 static=
-version=0.5.8
+version=0.5.9
 
 let i=2
 

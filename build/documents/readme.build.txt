@@ -27,7 +27,7 @@ Build Readme Documentation:
   Build Example, using "make"\:
     fake make
 
-  Build Tree Structure Example (using the status_code-0.5.8 project)\:
+  Build Tree Structure Example (using the status_code-0.5.9 project)\:
     build/
     ├── documents
     ├── includes
@@ -37,8 +37,8 @@ Build Readme Documentation:
     │   ├── script
     │   ├── shared
     │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.5.8
-    │   │   └── libstatus_code.so.0.5.8
+    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.5.9
+    │   │   └── libstatus_code.so.0.5.9
     │   └── static
     │       └── libstatus_code.a
     ├── objects
@@ -62,7 +62,7 @@ Build Readme Documentation:
         ├── sources_script.built
         └── sources_settings.built
 
-  Work Tree Structure Example at '/tmp/work' (using the status_code-0.5.8 project)\:
+  Work Tree Structure Example at '/tmp/work' (using the status_code-0.5.9 project)\:
     /tmp/work/
     ├── includes
     │   └── level_3
@@ -70,8 +70,8 @@ Build Readme Documentation:
     ├── libraries
     │   ├── shared
     │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.5.8
-    │   │   └── libstatus_code.so.0.5.8
+    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.5.9
+    │   │   └── libstatus_code.so.0.5.9
     │   └── static
     │       └── libstatus_code.a
     └── programs
