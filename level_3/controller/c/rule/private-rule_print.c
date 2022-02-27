@@ -303,6 +303,23 @@ extern "C" {
   }
 #endif // _di_controller_rule_setting_read_print_error_with_range_
 
+#ifndef _di_controller_rule_setting_read_print_mapping_
+  void controller_rule_setting_read_print_mapping(const controller_global_t global, const f_string_static_t name, const f_string_map_t map) {
+
+    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+      return;
+    }
+
+    controller_lock_print(global.main->output.to, global.thread);
+
+    fl_print_format("%rProcessing rule item action '%[%Q%]'", global.main->output.to.stream, f_string_eol_s, global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format(" mapping '%[%Q%]'", global.main->output.to.stream, global.main->context.set.important, map.name, global.main->context.set.important);
+    fl_print_format(" to value '%[%Q%]'.%r", global.main->output.to.stream, global.main->context.set.important, map.value, global.main->context.set.important, f_string_eol_s);
+
+    controller_unlock_print_flush(global.main->output.to, global.thread);
+  }
+#endif // _di_controller_rule_setting_read_print_mapping_
+
 #ifndef _di_controller_rule_setting_read_print_value_
   void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_t suffix) {
 

@@ -69,6 +69,7 @@ extern "C" {
  * buffer_file:     A generic file related buffer.
  * buffer_item:     A generic item related buffer.
  * buffer_path:     A generic path related buffer.
+ * expanded:        An array of expanded strings, generally used by the execute functions.
  * action:          A cache for some Action, often used by error printing for reporting where an error happened.
  */
 #ifndef _di_controller_cache_t_
@@ -93,6 +94,8 @@ extern "C" {
     f_string_dynamic_t buffer_item;
     f_string_dynamic_t buffer_path;
 
+    f_string_dynamics_t expanded;
+
     controller_cache_action_t action;
   } controller_cache_t;
 
@@ -111,6 +114,7 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
+    f_string_dynamics_t_initialize, \
     controller_cache_action_t_initialize, \
   }
 #endif // _di_controller_cache_t_

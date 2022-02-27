@@ -74,6 +74,7 @@ extern "C" {
   #define CONTROLLER_groups_s        "groups"
   #define CONTROLLER_how_s           "how"
   #define CONTROLLER_idle_s          "idle"
+  #define CONTROLLER_iki_s           "iki"
   #define CONTROLLER_item_s          "item"
   #define CONTROLLER_init_s          "init"
   #define CONTROLLER_kill_s          "kill"
@@ -153,6 +154,9 @@ extern "C" {
   #define CONTROLLER_Entry_s "Entry"
   #define CONTROLLER_Exit_s  "Exit"
 
+  #define CONTROLLER_parameter_map_option_s ":option"
+  #define CONTROLLER_parameter_map_value_s  ":value"
+
   #define CONTROLLER_action_s_length        6
   #define CONTROLLER_actions_s_length       7
   #define CONTROLLER_affinity_s_length      8
@@ -196,6 +200,7 @@ extern "C" {
   #define CONTROLLER_groups_s_length        6
   #define CONTROLLER_how_s_length           3
   #define CONTROLLER_idle_s_length          4
+  #define CONTROLLER_iki_s_length           3
   #define CONTROLLER_init_s_length          4
   #define CONTROLLER_item_s_length          4
   #define CONTROLLER_kill_s_length          4
@@ -275,6 +280,9 @@ extern "C" {
   #define CONTROLLER_Entry_s_length 5
   #define CONTROLLER_Exit_s_length  4
 
+  #define CONTROLLER_parameter_map_option_s_length 7
+  #define CONTROLLER_parameter_map_value_s_length  6
+
   extern const f_string_static_t controller_action_s;
   extern const f_string_static_t controller_actions_s;
   extern const f_string_static_t controller_affinity_s;
@@ -318,6 +326,7 @@ extern "C" {
   extern const f_string_static_t controller_groups_s;
   extern const f_string_static_t controller_how_s;
   extern const f_string_static_t controller_idle_s;
+  extern const f_string_static_t controller_iki_s;
   extern const f_string_static_t controller_init_s;
   extern const f_string_static_t controller_item_s;
   extern const f_string_static_t controller_kill_s;
@@ -396,6 +405,9 @@ extern "C" {
 
   extern const f_string_static_t controller_Entry_s;
   extern const f_string_static_t controller_Exit_s;
+
+  extern const f_string_static_t controller_parameter_map_option_s;
+  extern const f_string_static_t controller_parameter_map_value_s;
 #endif // _di_controller_string_s_
 
 /**
@@ -430,12 +442,16 @@ extern "C" {
  * The controller_common_allocation_large_d or controller_common_allocation_small_d must be at least 2 for this project.
  *
  * controller_common_allocation_*:
+ *   - iki_large: An allocation step used for IKI buffers that are anticipated to have large buffers.
+ *   - iki_small: An allocation step used for IKI buffers that are anticipated to have small buffers.
  *   - large: An allocation step used for buffers that are anticipated to have large buffers.
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
  */
 #ifndef _di_controller_common_
-  #define controller_common_allocation_large_d 256
-  #define controller_common_allocation_small_d 16
+  #define controller_common_allocation_iki_large_d 128
+  #define controller_common_allocation_iki_small_d 8
+  #define controller_common_allocation_large_d     256
+  #define controller_common_allocation_small_d     16
 #endif // _di_controller_common_
 
 /**

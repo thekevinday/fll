@@ -21,6 +21,7 @@ extern "C" {
 #ifndef _di_controller_state_interrupt_t_
   typedef struct {
     bool is_normal;
+
     controller_thread_t *thread;
   } controller_state_interrupt_t;
 

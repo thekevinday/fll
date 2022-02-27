@@ -44,6 +44,7 @@
 #include <fll/level_0/execute.h>
 #include <fll/level_0/file.h>
 #include <fll/level_0/fss.h>
+#include <fll/level_0/iki.h>
 #include <fll/level_0/path.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
@@ -54,6 +55,7 @@
 #include <fll/level_1/control_group.h>
 #include <fll/level_1/environment.h>
 #include <fll/level_1/fss.h>
+#include <fll/level_1/iki.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
 

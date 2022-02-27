@@ -12,14 +12,14 @@ Rule Documentation:
     - "affinity": Define one or more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
     - "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
     - "cgroup": Define a cgroup (control group) in which everything within this rule executes under.
-    - "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule. @todo make sure this is implemented.
+    - "define": A single environment variable name and its associated value that is automatically exposed to processes executed within this rule.
     - "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
     - "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
     - "limit": Define a resource limit to use (multiple limits may be specified, but only once for each type).
     - "name": A name used to represent this rule, which is printed to the user, screen, logs, etc...
     - "nice": A single niceness value to run all processes executed within this rule as (-20 gets to be greediest in CPU usage and 19 being the nicest in CPU usage).
     - "on": Define a Rule Action in which a specified dependency is needed, wanted, or wished for.
-    - "parameter": A statically defined IKI name and its associated value for use in this rule file.
+    - "parameter": An IKI name and its associated value for use in this rule file.
     - "path": A single Content used to set a custom PATH environment variable value.
     - "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
     - "scheduler": A valid name of a scheduler to use followed by an optional priority number.
@@ -34,6 +34,14 @@ Rule Documentation:
 
   - In the case of "control"\:
     The first argument is either "existing" or "new", where for "existing" the process is run inside the existing control used by the parent and when "new" the process is executed within a new control group namespace entirely.
+
+  - In the case of "define"\:
+    Use this to define an environment variable (this overwrites any existing environment variable with this name).
+    A define is both exported as an environment variable as well as exposed as an IKI variable.
+    Example IKI variable substitution: for "define PATH /bin:/sbin", the associated IKI variable would look like: define:"PATH".
+
+    All environment variables, including those defined using this, must be in the "environment" list to be exported to the executed process.
+    Environment variables added here that are not added to the environment are still exposed as an IKI variable.
 
   - In the case of "group" and "user"\:
     Only users and groups that the user the controller program is being run as is allowed to use may be used.
@@ -61,11 +69,9 @@ Rule Documentation:
     When specified, the PATH environment variable is automatically added to the "environment" setting.
 
   - In the case of "parameter"\:
-    IKI variables are expanded in a pre-process manner and will be removed prior to any execution.
-    Any IKI variables referencing an undefined parameter will be fully removed.
-    These parameters are only exposed in the specific rule file in which they are defined and cannot be shared between rules.
-    A "parameter" variable and an "environment" variable are mutually exclusive but an environment variable, in theory, can have an IKI variable assigned to it inside of a "script".
-    These IKI variables are only substituted within a Rule Item's Content (and not within a Rule Setting nor within a Rule Item's Object).
+    Use this to define an IKI variable name and value.
+    These do not conflict with environment variables and are not exposed as environment variables.
+    Example IKI variable substitution: for "parameter hello world", the associated IKI variable would look like: parameter:"hello".
 
   - In the case of "scheduler"\:
     The valid range of the priority number is dependent on the scheduler.
@@ -124,6 +130,90 @@ Rule Documentation:
     - The "with" Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
       The following flags are supported:
         - "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
-                     When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").
+                       When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").
         - "session_new": Execute in a new session setting the process group to the executed process' id (making the executed process a "controlling terminal").
         - "session_same": Execute in the same session where the process group is set to the parent process id.
+
+  IKI Variables\:
+    All Rule Actions support IKI variable substitution.
+    The Rule Settings do not support IKI variable substitution.
+
+    The following IKI variable names are supported\:
+    - define
+    - parameter
+    - program
+
+    The "define" IKI variables, such as define:"PATH", expand environment variables.
+
+    The "parameter" IKI variables, such as parameter:"hello", expand IKI variables defined using the "parameter" Setting Rule Type.
+
+    The "program" IKI variables, such as program:"verbose:option", expand program arguments (where "verbose:option" might expand into "-v" ).
+
+    Only the following "program" IKI variables are supported\:
+      - dark\:
+        This variable holds the "dark" program parameters, such as "+d".
+        This supports ":option".
+
+      - light\:
+        This variable holds the "light" program parameters, such as "+l".
+        This supports ":option".
+
+      - no_color\:
+        This variable holds the "no_color" program parameters, such as "+n".
+        This supports ":option".
+
+      - quiet\:
+        This variable holds the "quiet" program parameters, such as "+q".
+        This supports ":option".
+
+      - normal\:
+        This variable holds the "normal" program parameters, such as "+N".
+        This supports ":option".
+
+      - verbose\:
+        This variable holds the "verbose" program parameters, such as "+V".
+        This supports ":option".
+
+      - debug\:
+        This variable holds the "debug" program parameters, such as "+D".
+        This supports ":option".
+
+      - cgroup\:
+        This variable holds the "cgroup" program parameters, such as "-c /sys/fs/cgroup/".
+        This supports both ":option" and ":value".
+
+      - daemon\:
+        This variable holds the "daemon" program parameters, such as "-d".
+        This supports ":option".
+
+      - init\:
+        This variable holds the "init" program parameters, such as "-I".
+        This supports ":option".
+
+      - interruptible\:
+        This variable holds the "interruptible" program parameters, such as "-i".
+        This supports ":option".
+
+      - pid\:
+        This variable holds the "pid" program parameters, such as "-p controller/run/default.pid".
+        This supports both ":option" and ":value".
+
+      - settings\:
+        This variable holds the "settings" program parameters, such as "-s controller/".
+        This supports both ":option" and ":value".
+
+      - simulate\:
+        This variable holds the "simulate" program parameters, such as "-S".
+        This supports ":option".
+
+      - socket\:
+        This variable holds the "socket" program parameters, such as "-k controller/run/default.socket".
+        This supports both ":option" and ":value".
+
+      - uninterruptible\:
+        This variable holds the "uninterruptible" program parameters, such as "-U".
+        This supports ":option".
+
+      - validate\:
+        This variable holds the "validate" program parameters, such as "-v".
+        This supports ":option".

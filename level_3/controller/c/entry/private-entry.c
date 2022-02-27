@@ -224,6 +224,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
+
         break;
       }
 
@@ -398,13 +399,16 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true, global.thread);
-          }
-          else {
-            status = f_string_dynamic_partial_append_nulless(cache->buffer_file, cache->content_actions.array[i].array[j], &action->parameters.array[j]);
 
-            if (F_status_is_error(status)) {
-              controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, global.thread);
-            }
+            break;
+          }
+
+          status = f_string_dynamic_partial_append_nulless(cache->buffer_file, cache->content_actions.array[i].array[j], &action->parameters.array[j]);
+
+          if (F_status_is_error(status)) {
+            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, global.thread);
+
+            break;
           }
 
           ++action->parameters.used;

@@ -158,6 +158,7 @@ extern "C" {
     f_status_t status;
 
     f_string_dynamics_t parameters;
+    f_iki_datas_t ikis;
   } controller_rule_action_t;
 
   #define controller_rule_action_t_initialize { \
@@ -165,6 +166,7 @@ extern "C" {
     0, \
     F_known_not, \
     f_string_dynamics_t_initialize, \
+    f_iki_datas_t_initialize, \
   }
 #endif // _di_controller_rule_action_t_
 

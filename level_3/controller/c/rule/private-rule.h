@@ -72,28 +72,36 @@ extern "C" {
  *   The global data.
  * @param buffer
  *   The buffer containing the content.
+ * @param state
+ *   The state data for passing to fl_iki_read().
  * @param object
  *   (optional) The range representing where the object is found within the buffer.
  *   Set pointer address to 0 to disable.
  * @param content
  *   (optional) The ranges representing where the content is found within the buffer.
  *   Set pointer address to 0 to disable.
- * @param parameters
- *   The processed parameters.
+ * @param action
+ *   The rule action.
  *
  * @return
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_fss_count_lines().
+ *   Errors (with error bit) from: f_iki_datas_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_dynamics_increase_by().
+ *   Errors (with error bit) from: fl_iki_read().
  *
  * @see f_fss_count_lines()
+ * @see f_iki_datas_increase_by()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamics_increase()
+ * @see f_string_dynamics_increase_by()
+ * @see fl_iki_read()
  */
 #ifndef _di_controller_rule_parameters_read_
-  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, const f_state_t state, f_fss_object_t * const object, f_fss_content_t * const content, controller_rule_action_t * const action) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_parameters_read_
 
 /**
@@ -351,6 +359,54 @@ extern "C" {
 #ifndef _di_controller_rule_execute_rerun_
   extern int8_t controller_rule_execute_rerun(const uint8_t action, controller_process_t * const process, controller_rule_item_t * const item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_execute_rerun_
+
+/**
+ * Expand a single IKI variable into the buffer.
+ *
+ * @param
+ *   The global data.
+ * @param action
+ *   The rule action data.
+ * @param process
+ *   The process information.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: controller_rule_expand_iki().
+ *
+ *   @see controller_rule_expand_iki()
+ */
+#ifndef _di_controller_rule_expand_
+  extern f_status_t controller_rule_expand(const controller_global_t global, const controller_rule_action_t action, controller_process_t * const process) F_attribute_visibility_internal_d;
+#endif // _di_controller_rule_expand_
+
+/**
+ * Expand a single IKI variable into the buffer.
+ *
+ * @param process
+ *   The process information.
+ * @param source
+ *   The source buffer holding the string referenced by the IKI data.
+ * @param vocabulary
+ *   The range representing the IKI variable vocabulary.
+ * @param content
+ *   The range representing the IKI variable content.
+ * @param destination
+ *   The buffer to expand into.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_environment_get().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *
+ *   @see f_environment_get()
+ *   @see f_string_dynamic_append()
+ */
+#ifndef _di_controller_rule_expand_iki_
+  extern f_status_t controller_rule_expand_iki(controller_process_t * const process, const f_string_static_t source, const f_string_range_t vocabulary, const f_string_range_t content, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+#endif // _di_controller_rule_expand_iki_
 
 /**
  * Construct an id from two distinct strings found within a single given source.

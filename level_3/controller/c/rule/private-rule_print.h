@@ -215,6 +215,20 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_print_error_with_range_
 
 /**
+ * Print message regarding the mapping of a setting when in simulation or verbose mode.
+ *
+ * @param global
+ *   The global data.
+ * @param name
+ *   The Object name of the setting being populated.
+ * @param map
+ *   The map being applied.
+ */
+#ifndef _di_controller_rule_setting_read_print_mapping_
+  extern void controller_rule_setting_read_print_mapping(const controller_global_t global, const f_string_static_t name, const f_string_map_t map) F_attribute_visibility_internal_d;
+#endif // _di_controller_rule_setting_read_print_mapping_
+
+/**
  * Print message regarding the population of a setting when in simulation or verbose mode.
  *
  * @param global

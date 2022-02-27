@@ -49,6 +49,7 @@ extern "C" {
   const f_string_static_t controller_groups_s = macro_f_string_static_t_initialize(CONTROLLER_groups_s, 0, CONTROLLER_groups_s_length);
   const f_string_static_t controller_how_s = macro_f_string_static_t_initialize(CONTROLLER_how_s, 0, CONTROLLER_how_s_length);
   const f_string_static_t controller_idle_s = macro_f_string_static_t_initialize(CONTROLLER_idle_s, 0, CONTROLLER_idle_s_length);
+  const f_string_static_t controller_iki_s = macro_f_string_static_t_initialize(CONTROLLER_iki_s, 0, CONTROLLER_iki_s_length);
   const f_string_static_t controller_item_s = macro_f_string_static_t_initialize(CONTROLLER_item_s, 0, CONTROLLER_item_s_length);
   const f_string_static_t controller_init_s = macro_f_string_static_t_initialize(CONTROLLER_init_s, 0, CONTROLLER_init_s_length);
   const f_string_static_t controller_kill_s = macro_f_string_static_t_initialize(CONTROLLER_kill_s, 0, CONTROLLER_kill_s_length);
@@ -127,6 +128,9 @@ extern "C" {
 
   const f_string_static_t controller_Entry_s = macro_f_string_static_t_initialize(CONTROLLER_Entry_s, 0, CONTROLLER_Entry_s_length);
   const f_string_static_t controller_Exit_s = macro_f_string_static_t_initialize(CONTROLLER_Exit_s, 0, CONTROLLER_Exit_s_length);
+
+  const f_string_static_t controller_parameter_map_option_s = macro_f_string_static_t_initialize(CONTROLLER_parameter_map_option_s, 0, CONTROLLER_parameter_map_option_s_length);
+  const f_string_static_t controller_parameter_map_value_s = macro_f_string_static_t_initialize(CONTROLLER_parameter_map_value_s, 0, CONTROLLER_parameter_map_value_s_length);
 #endif // _di_controller_string_s_
 
 #ifdef __cplusplus
