@@ -1648,8 +1648,6 @@ extern "C" {
 /**
  * Change owner and/or group of a given file at the specified path.
  *
- * At least one of uid or gid must not be -1.
- *
  * @param path
  *   The path file name.
  * @param uid
@@ -1664,6 +1662,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if either both uid and gid are -1 or path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
@@ -1689,8 +1688,6 @@ extern "C" {
 /**
  * Change owner and/or group of a given file at the specified path.
  *
- * At least one of uid or gid must not be -1.
- *
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
@@ -1706,6 +1703,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if either both uid and gid are -1 or path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
