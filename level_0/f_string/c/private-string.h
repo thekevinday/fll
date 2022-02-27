@@ -401,9 +401,9 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source strings to append.
+ *   The source multi-map to append.
  * @param destination
- *   The destination strings the source is appended onto.
+ *   The destination multi-maps the source is appended onto.
  *
  * @return
  *   F_none on success.
@@ -419,8 +419,35 @@ extern "C" {
  * @see f_string_map_multiss_append()
  */
 #if !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multis_append_)
-  extern f_status_t private_f_string_map_multis_append(const f_string_map_multis_t source, f_string_map_multis_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_map_multis_append(const f_string_map_multi_t source, f_string_map_multis_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_map_multiss_append_) || !defined(_di_f_string_map_multis_append_)
+
+/**
+ * Private implementation for appending.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source multi-maps to append.
+ * @param destination
+ *   The destination multi-maps the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_map_multis_append().
+ *   Errors (with error bit) from: f_string_map_multiss_append().
+ *
+ * @see f_memory_resize()
+ * @see f_string_map_multis_append()
+ * @see f_string_map_multiss_append()
+ */
+#if !defined(_di_f_string_map_multiss_append_all_) || !defined(_di_f_string_map_multis_append_all_)
+  extern f_status_t private_f_string_map_multis_append_all(const f_string_map_multis_t source, f_string_map_multis_t * const destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_map_multiss_append_all_) || !defined(_di_f_string_map_multis_append_all_)
 
 /**
  * Private implementation for resizing.
@@ -532,9 +559,9 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source strings to append.
+ *   The source map to append.
  * @param destination
- *   The destination strings the source is appended onto.
+ *   The destination maps the source is appended onto.
  *
  * @return
  *   F_none on success.
@@ -548,8 +575,33 @@ extern "C" {
  * @see f_string_mapss_append()
  */
 #if !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_maps_append_)
-  extern f_status_t private_f_string_maps_append(const f_string_maps_t source, f_string_maps_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_string_maps_append(const f_string_map_t source, f_string_maps_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_maps_append_)
+
+/**
+ * Private implementation for appending.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source maps to append.
+ * @param destination
+ *   The destination maps the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_string_maps_append()
+ * @see f_string_mapss_append()
+ */
+#if !defined(_di_f_string_mapss_append_all_) || !defined(_di_f_string_maps_append_all_)
+  extern f_status_t private_f_string_maps_append_all(const f_string_maps_t source, f_string_maps_t * const destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_string_mapss_append_all_) || !defined(_di_f_string_maps_append_all_)
 
 /**
  * Private implementation for resizing.

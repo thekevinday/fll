@@ -214,6 +214,26 @@ extern "C" {
 #endif // _di_f_string_map_multis_adjust_
 
 /**
+ * Append a single source map_multi onto the destination.
+ *
+ * @param source
+ *   The source maps to append.
+ * @param destination
+ *   The destination maps the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_map_multis_append_
+  f_status_t f_string_map_multis_append(const f_string_map_multi_t source, f_string_map_multis_t *destination);
+#endif // _di_f_string_map_multis_append_
+
+/**
  * Append the source map_multis onto the destination.
  *
  * @param source
@@ -230,9 +250,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_map_multis_append_
-  f_status_t f_string_map_multis_append(const f_string_map_multis_t source, f_string_map_multis_t *destination);
-#endif // _di_f_string_map_multis_append_
+#ifndef _di_f_string_map_multis_append_all_
+  f_status_t f_string_map_multis_append_all(const f_string_map_multis_t source, f_string_map_multis_t *destination);
+#endif // _di_f_string_map_multis_append_all_
 
 /**
  * Resize the map_multis array to a smaller size.
@@ -370,6 +390,26 @@ extern "C" {
 #endif // _di_f_string_maps_adjust_
 
 /**
+ * Append a single source map onto the destination.
+ *
+ * @param source
+ *   The source maps to append.
+ * @param destination
+ *   The destination maps the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_maps_append_
+  extern f_status_t f_string_maps_append(const f_string_map_t source, f_string_maps_t * const destination);
+#endif // _di_f_string_maps_append_
+
+/**
  * Append the source maps onto the destination.
  *
  * @param source
@@ -386,9 +426,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_maps_append_
-  extern f_status_t f_string_maps_append(const f_string_maps_t source, f_string_maps_t * const destination);
-#endif // _di_f_string_maps_append_
+#ifndef _di_f_string_maps_append_all_
+  extern f_status_t f_string_maps_append_all(const f_string_maps_t source, f_string_maps_t * const destination);
+#endif // _di_f_string_maps_append_all_
 
 /**
  * Resize the string maps array to a smaller size.
@@ -526,6 +566,26 @@ extern "C" {
 #endif // _di_f_string_mapss_adjust_
 
 /**
+ * Append a single source maps onto the destination.
+ *
+ * @param source
+ *   The source mapss to append.
+ * @param destination
+ *   The destination mapss the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_mapss_append_
+  extern f_status_t f_string_mapss_append(const f_string_maps_t source, f_string_mapss_t * const destination);
+#endif // _di_f_string_mapss_append_
+
+/**
  * Append the source mapss onto the destination.
  *
  * @param source
@@ -542,9 +602,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_mapss_append_
-  extern f_status_t f_string_mapss_append(const f_string_mapss_t source, f_string_mapss_t * const destination);
-#endif // _di_f_string_mapss_append_
+#ifndef _di_f_string_mapss_append_all_
+  extern f_status_t f_string_mapss_append_all(const f_string_mapss_t source, f_string_mapss_t * const destination);
+#endif // _di_f_string_mapss_append_all_
 
 /**
  * Resize the string mapss array to a smaller size.

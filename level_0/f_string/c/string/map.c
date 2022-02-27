@@ -16,7 +16,39 @@ extern "C" {
 #endif // _di_f_string_map_multis_adjust_
 
 #ifndef _di_f_string_map_multis_append_
-  f_status_t f_string_map_multis_append(const f_string_map_multis_t source, f_string_map_multis_t * const destination) {
+  f_status_t f_string_map_multis_append(const f_string_map_multi_t source, f_string_map_multis_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status_t status = F_none;
+
+    if (destination->used + 1 > destination->size) {
+      status = private_f_string_map_multis_resize(destination->used + F_memory_default_allocation_small_d, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    destination->array[destination->used].name.used = 0;
+    destination->array[destination->used].value.used = 0;
+
+    if (source.name.used) {
+      status = private_f_string_append(source.name.string, source.name.used, &destination->array[destination->used].name);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.value.used) {
+      status = private_f_string_dynamics_append(source.value, &destination->array[destination->used].value);
+      if (F_status_is_error(status)) return status;
+    }
+
+    ++destination->used;
+
+    return F_none;
+  }
+#endif // _di_f_string_map_multis_append_
+
+#ifndef _di_f_string_map_multis_append_all_
+  f_status_t f_string_map_multis_append_all(const f_string_map_multis_t source, f_string_map_multis_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -46,7 +78,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_string_map_multis_append_
+#endif // _di_f_string_map_multis_append_all_
 
 #ifndef _di_f_string_map_multis_decimate_by_
   f_status_t f_string_map_multis_decimate_by(const f_array_length_t amount, f_string_map_multis_t * const map_multis) {
@@ -151,7 +183,33 @@ extern "C" {
 #endif // _di_f_string_map_multiss_adjust_
 
 #ifndef _di_f_string_map_multiss_append_
-  f_status_t f_string_map_multiss_append(const f_string_map_multiss_t source, f_string_map_multiss_t * const destination) {
+  f_status_t f_string_map_multiss_append(const f_string_map_multis_t source, f_string_map_multiss_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status_t status = F_none;
+
+    if (destination->used + 1 > destination->size) {
+      status = private_f_string_map_multiss_resize(destination->used + F_memory_default_allocation_small_d, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    destination->array[destination->used].used = 0;
+
+    if (source.used) {
+      status = private_f_string_map_multis_append_all(source, &destination->array[destination->used]);
+      if (F_status_is_error(status)) return status;
+    }
+
+    ++destination->used;
+
+    return F_none;
+  }
+#endif // _di_f_string_map_multiss_append_
+
+#ifndef _di_f_string_map_multiss_append_all_
+  f_status_t f_string_map_multiss_append_all(const f_string_map_multiss_t source, f_string_map_multiss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -168,14 +226,14 @@ extern "C" {
       destination->array[destination->used].used = 0;
 
       if (source.array[i].used) {
-        status = private_f_string_map_multis_append(source.array[i], &destination->array[destination->used]);
+        status = private_f_string_map_multis_append_all(source.array[i], &destination->array[destination->used]);
         if (F_status_is_error(status)) return status;
       }
     } // for
 
     return F_none;
   }
-#endif // _di_f_string_map_multiss_append_
+#endif // _di_f_string_map_multiss_append_all_
 
 #ifndef _di_f_string_map_multiss_decimate_by_
   f_status_t f_string_map_multiss_decimate_by(const f_array_length_t amount, f_string_map_multiss_t * const map_multiss) {
@@ -280,16 +338,26 @@ extern "C" {
 #endif // _di_f_string_maps_adjust_
 
 #ifndef _di_f_string_maps_append_
-  f_status_t f_string_maps_append(const f_string_maps_t source, f_string_maps_t * const destination) {
+  f_status_t f_string_maps_append(const f_string_map_t source, f_string_maps_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_string_maps_append(source, destination);
+  }
+#endif // _di_f_string_maps_append_
+
+#ifndef _di_f_string_maps_append_all_
+  f_status_t f_string_maps_append_all(const f_string_maps_t source, f_string_maps_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!source.used) return F_data_not;
 
-    return private_f_string_maps_append(source, destination);
+    return private_f_string_maps_append_all(source, destination);
   }
-#endif // _di_f_string_maps_append_
+#endif // _di_f_string_maps_append_all_
 
 #ifndef _di_f_string_maps_decimate_by_
   f_status_t f_string_maps_decimate_by(const f_array_length_t amount, f_string_maps_t * const maps) {
@@ -394,7 +462,35 @@ extern "C" {
 #endif // _di_f_string_mapss_adjust_
 
 #ifndef _di_f_string_mapss_append_
-  f_status_t f_string_mapss_append(const f_string_mapss_t source, f_string_mapss_t * const destination) {
+  f_status_t f_string_mapss_append(const f_string_maps_t source, f_string_mapss_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used + 1 > destination->size) {
+      status = private_f_string_mapss_resize(destination->used + F_memory_default_allocation_small_d, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    destination->array[destination->used].used = 0;
+
+    if (source.used) {
+      status = private_f_string_maps_append_all(source, &destination->array[destination->used]);
+      if (F_status_is_error(status)) return status;
+    }
+
+    ++destination->used;
+
+    return F_none;
+  }
+#endif // _di_f_string_mapss_append_
+
+#ifndef _di_f_string_mapss_append_all_
+  f_status_t f_string_mapss_append_all(const f_string_mapss_t source, f_string_mapss_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -413,14 +509,14 @@ extern "C" {
       destination->array[destination->used].used = 0;
 
       if (source.array[i].used) {
-        status = private_f_string_maps_append(source.array[i], &destination->array[destination->used]);
+        status = private_f_string_maps_append_all(source.array[i], &destination->array[destination->used]);
         if (F_status_is_error(status)) return status;
       }
     } // for
 
     return F_none;
   }
-#endif // _di_f_string_mapss_append_
+#endif // _di_f_string_mapss_append_all_
 
 #ifndef _di_f_string_mapss_decimate_by_
   f_status_t f_string_mapss_decimate_by(const f_array_length_t amount, f_string_mapss_t * const mapss) {
