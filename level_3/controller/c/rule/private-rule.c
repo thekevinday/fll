@@ -922,10 +922,10 @@ extern "C" {
     status = f_string_dynamic_append(source.script, &destination->script);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_maps_append(source.define, &destination->define);
+    status = f_string_maps_append_all(source.define, &destination->define);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_maps_append(source.parameter, &destination->parameter);
+    status = f_string_maps_append_all(source.parameter, &destination->parameter);
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamics_append(source.environment, &destination->environment);
@@ -1130,6 +1130,47 @@ extern "C" {
 
       return status;
     }
+
+    // @todo Much of this loop really should be moved into the processing stage where define names that are not in the environment are not loaded (for better performance and resource utilization).
+    // When a "define" is in the "environment", add it to the exported environments (and overwrite any existing environment variable of the same name).
+    for (i = 0; i < process->rule.define.used; ++i) {
+
+      for (j = 0; j < process->rule.environment.used; ++j) {
+
+        if (fl_string_dynamic_compare(process->rule.define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
+
+          for (k = 0; k < environment.used; ++k) {
+
+            if (fl_string_dynamic_compare(process->rule.define.array[i].name, environment.array[k].name) == F_equal_to) {
+
+              environment.array[k].value.used = 0;
+
+              status = f_string_dynamic_append(process->rule.define.array[i].value, &environment.array[k].value);
+
+              if (F_status_is_error(status)) {
+                controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+
+                return status;
+              }
+
+              break;
+            }
+          } // for
+
+          if (k == environment.used) {
+            status = f_string_maps_append(process->rule.define.array[i], &environment);
+
+            if (F_status_is_error(status)) {
+              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_maps_append", F_true);
+
+              return status;
+            }
+          }
+
+          break;
+        }
+      } // for
+    } // for
 
     for (i = 0; i < process->rule.items.used && controller_thread_is_enabled_process(process, global.thread); ++i) {
 

@@ -205,7 +205,7 @@ extern "C" {
  *   Errors (with error bit) from: f_limit_sets_copy().
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamics_append().
- *   Errors (with error bit) from: f_string_maps_append().
+ *   Errors (with error bit) from: f_string_maps_append_all().
  *   Errors (with error bit) from: f_int32s_append().
  *
  *  @see f_capability_copy()
@@ -213,7 +213,7 @@ extern "C" {
  *  @see f_limit_sets_append()
  *  @see f_string_dynamic_append()
  *  @see f_string_dynamics_append()
- *  @see f_string_maps_append()
+ *  @see f_string_maps_append_all()
  *  @see f_int32s_append()
  */
 #ifndef _di_controller_rule_copy_
