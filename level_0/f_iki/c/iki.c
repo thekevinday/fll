@@ -136,11 +136,7 @@ extern "C" {
         }
 
         if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
-          if (range->start == found_vocabulary.start) {
-            ++range->start;
-
-            break;
-          }
+          if (range->start == found_vocabulary.start) break;
 
           vocabulary_delimited = F_false;
           found_vocabulary.stop = range->start - 1;
@@ -153,12 +149,18 @@ extern "C" {
 
           // Found a valid vocabulary name.
           if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
-            quote = buffer->string[range->start++];
-
-            break;
+            quote = buffer->string[range->start];
           }
+          else {
+
+            // This is not a valid IKI vocabulary, so reset the position to the separator where the outerloop will then increment past it.
+            range->start = found_vocabulary.stop + 1;
+          }
+
+          break;
         }
-        else if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
+
+        if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
           bool separator_found = F_false;
 
           vocabulary_slash_first = range->start;
@@ -185,12 +187,13 @@ extern "C" {
             if (separator_found) {
               if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
                 vocabulary_delimited = F_true;
-                quote = buffer->string[range->start++];
+                quote = buffer->string[range->start];
               }
 
               break;
             }
-            else if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
+
+            if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
               separator_found = F_true;
             }
             else if (buffer->string[range->start] != f_iki_syntax_slash_s.string[0]) {
@@ -221,7 +224,7 @@ extern "C" {
 
       // Process potentially valid content.
       if (quote) {
-        found_content = range->start;
+        found_content = ++range->start;
 
         while (range->start <= range->stop && range->start < buffer->used) {
 
