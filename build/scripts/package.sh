@@ -13,7 +13,7 @@ package_main() {
   local version=0.5.9
 
   local grab_next=
-  local do_color=normal
+  local do_color=dark
   local do_help=
   local i=0
   local p=
@@ -40,6 +40,8 @@ package_main() {
   local path_destination=package/
   local path_sources=./
   local verbosity=normal
+  local verbose=
+  local verbose_common=
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -51,19 +53,34 @@ package_main() {
       if [[ $grab_next == "" ]] ; then
         if [[ $p == "-h" || $p == "--help" ]] ; then
           do_help=yes
-        elif [[ $p == "+n" || $p == "++no_color" ]] ; then
-          do_color=none
+        elif [[ $p == "+d" || $p == "++dark" ]] ; then
+          do_color=dark
+          context="+d"
         elif [[ $p == "+l" || $p == "++light" ]] ; then
           do_color=light
+          context="+l"
+        elif [[ $p == "+n" || $p == "++no_color" ]] ; then
+          do_color=none
+          context="+n"
         elif [[ $p == "+q" || $p == "++quiet" ]] ; then
           verbosity="quiet"
           verbose=
+          verbose_common=
+        elif [[ $p == "+N" || $p == "++normal" ]] ; then
+          verbosity=
+          verbose=
+          verbose_common=
+        elif [[ $p == "+V" || $p == "++verbose" ]] ; then
+          verbosity="verbose"
+          verbose="+V"
+          verbose_common="-v"
+        elif [[ $p == "+D" || $p == "++debug" ]] ; then
+          verbosity="debug"
+          verbose="+D"
+          verbose_common="-v"
         elif [[ $p == "+v" || $p == "++version" ]] ; then
           echo $version
           return
-        elif [[ $p == "+V" || $p == "++verbose" ]] ; then
-          verbosity="verbose"
-          verbose="-v"
         elif [[ $p == "-b" || $p == "--build" ]] ; then
           grab_next=path_build
         elif [[ $p == "-d" || $p == "--destination" ]] ; then
@@ -289,10 +306,13 @@ package_help() {
   echo
   echo -e "${c_highlight}Options:$c_reset"
   echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen."
+  echo -e " +${c_important}d$c_reset, ++${c_important}dark$c_reset      Use color modes that show up better on dark backgrounds."
   echo -e " +${c_important}l$c_reset, ++${c_important}light$c_reset     Use color modes that show up better on light backgrounds."
   echo -e " +${c_important}n$c_reset, ++${c_important}no_color$c_reset  Do not use color."
-  echo -e " +${c_important}q$c_reset, ++${c_important}quiet$c_reset     Decrease verbosity beyond normal output."
+  echo -e " +${c_important}q$c_reset, ++${c_important}quiet$c_reset     Decrease verbosity, silencing most output."
+  echo -e " +${c_important}N$c_reset, ++${c_important}normal$c_reset    Set verbosity to normal."
   echo -e " +${c_important}V$c_reset, ++${c_important}verbose$c_reset   Increase verbosity beyond normal output."
+  echo -e " +${c_important}D$c_reset, ++${c_important}debug$c_reset     Enable debugging, significantly increasing verbosity beyond normal output."
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program."
   echo
   echo -e "${c_highlight}Package Options:$c_reset"
