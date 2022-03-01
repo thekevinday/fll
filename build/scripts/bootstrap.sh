@@ -44,7 +44,7 @@ bootstrap_main() {
   local path_build=build/
   local path_build_stage=build/stage/
   local path_data=data/
-  local path_settings="${path_data}settings/"
+  local path_settings=${path_data}settings/
   local path_sources=sources/
   local path_language=c/
   local path_work=
@@ -58,7 +58,7 @@ bootstrap_main() {
   local override_path_work=
   local defines_override=
   local process=
-  local verbosity="normal"
+  local verbosity=normal
 
   local enable_shared=
   local enable_static=
@@ -155,6 +155,7 @@ bootstrap_main() {
   if [[ $do_help == "yes" ]] ; then
     bootstrap_help
     bootstrap_cleanup
+
     return 0
   fi
 
@@ -169,6 +170,7 @@ bootstrap_main() {
         fi
 
         bootstrap_cleanup
+
         return 1
       fi
     done
@@ -176,6 +178,7 @@ bootstrap_main() {
 
   if [[ $? -ne 0 ]] ; then
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -183,6 +186,7 @@ bootstrap_main() {
 
   if [[ $? -ne 0 ]] ; then
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -190,6 +194,7 @@ bootstrap_main() {
 
   if [[ $? -ne 0 ]] ; then
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -208,14 +213,18 @@ bootstrap_main() {
       fi
 
       bootstrap_cleanup
+
       return 1
     fi
   else
     let i=0
     for m in $modes_available ; do
+
       for mode in $modes ; do
+
         if [[ "$mode" == "$m" ]] ; then
           let i=1
+
           break
         fi
       done
@@ -229,6 +238,7 @@ bootstrap_main() {
       fi
 
       bootstrap_cleanup
+
       return 1
     fi
   fi
@@ -239,6 +249,7 @@ bootstrap_main() {
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -248,6 +259,7 @@ bootstrap_main() {
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -257,6 +269,7 @@ bootstrap_main() {
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -266,6 +279,7 @@ bootstrap_main() {
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -275,6 +289,7 @@ bootstrap_main() {
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -284,6 +299,7 @@ bootstrap_main() {
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -293,6 +309,7 @@ bootstrap_main() {
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -302,6 +319,7 @@ bootstrap_main() {
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
@@ -321,10 +339,11 @@ bootstrap_main() {
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+      echo -e "${c_error}ERROR: Only one operation may be specified at a time.$c_reset"
     fi
 
     bootstrap_cleanup
+
     return 1
   elif [[ $operation == "build" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -337,6 +356,7 @@ bootstrap_main() {
 
       if [[ $? -ne 0 ]] ; then
         bootstrap_cleanup
+
         return 1
       fi
     fi
@@ -345,6 +365,7 @@ bootstrap_main() {
 
     if [[ $? -ne 0 ]] ; then
       bootstrap_cleanup
+
       return 1
     fi
   elif [[ $operation == "clean" ]] ; then
@@ -356,21 +377,24 @@ bootstrap_main() {
     bootstrap_operation_clean
   elif [[ $operation == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: no operation was given.$c_reset"
+      echo -e "${c_error}ERROR: No operation was given.$c_reset"
     fi
 
     bootstrap_cleanup
+
     return 1
   else
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
+      echo -e "${c_error}ERROR: The operation $c_notice$operation$c_error was not recognized.$c_reset"
     fi
 
     bootstrap_cleanup
+
     return 1
   fi
 
   bootstrap_cleanup
+
   return 0
 }
 
@@ -402,7 +426,7 @@ bootstrap_help() {
   echo -e "${c_title}$public_name$c_reset"
   echo -e " ${c_notice}Version $version$c_reset"
   echo
-  echo -e "$c_highlight$system_name$c_reset $c_notice<${c_reset}operation$c_notice>$c_reset"
+  echo -e "$c_highlight$system_name$c_reset $c_notice[${c_reset} options $c_notice]$c_reset $c_notice[${c_reset} operation $c_notice]$c_reset"
   echo -e " ${c_important}build${c_reset}  Build or compile the code based on build settings file."
   echo -e " ${c_important}clean${c_reset}  Delete all build files."
   echo
@@ -641,13 +665,13 @@ bootstrap_load_settings() {
 
   if [[ ! -d ${path_data}build/ ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: no build settings directory '$c_notice${path_data}build/$c_error' could not be found or is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: No build settings directory '$c_notice${path_data}build/$c_error' could not be found or is not a valid directory.$c_reset"
     fi
 
     let failure=1
   elif [[ ! -f $settings_file ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: no settings file $c_notice$settings_file$c_error could not be found or is not a valid file.$c_reset"
+      echo -e "${c_error}ERROR: No settings file $c_notice$settings_file$c_error could not be found or is not a valid file.$c_reset"
     fi
 
     let failure=1
@@ -1236,7 +1260,7 @@ bootstrap_operation_build() {
 
   if [[ $failure -eq 1 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: failed to build.$c_reset"
+      echo -e "${c_error}ERROR: Failed to build.$c_reset"
     fi
 
     return 1

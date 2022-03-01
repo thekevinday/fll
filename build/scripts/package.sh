@@ -39,7 +39,7 @@ package_main() {
   local path_build=build/
   local path_destination=package/
   local path_sources=./
-  local verbosity="normal"
+  local verbosity=normal
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -105,23 +105,26 @@ package_main() {
   if [[ $do_help == "yes" ]] ; then
     package_help
     package_cleanup
+
     return 0
   fi
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: only one operation may be specified at a time.$c_reset"
+      echo -e "${c_error}ERROR: Only one operation may be specified at a time.$c_reset"
     fi
 
     package_cleanup
+
     return 1
   elif [[ $operation == "build" ]] ; then
     if [[ ! -d $path_build ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: build directory '$path_build' is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Build directory '$path_build' is invalid or missing.$c_reset"
       fi
 
       package_cleanup
+
       return 1
     fi
 
@@ -129,56 +132,62 @@ package_main() {
       mkdir $verbose -p $path_destination
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: package directory '$path_destination' is invalid or could not be created.$c_reset"
+          echo -e "${c_error}ERROR: Package directory '$path_destination' is invalid or could not be created.$c_reset"
         fi
 
         package_cleanup
+
         return 1
       fi
     fi
 
     if [[ ! -d $path_sources ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: sources directory '$path_sources' is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Sources directory '$path_sources' is invalid or missing.$c_reset"
       fi
 
       package_cleanup
+
       return 1
     fi
 
     if [[ ! -d ${path_sources}level_0/ ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: build sources directory '${path_sources}level_0/' is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Build sources directory '${path_sources}level_0/' is invalid or missing.$c_reset"
       fi
 
       package_cleanup
+
       return 1
     fi
 
     if [[ ! -d ${path_sources}level_1/ ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: build sources directory '${path_sources}level_1/' is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Build sources directory '${path_sources}level_1/' is invalid or missing.$c_reset"
       fi
 
       package_cleanup
+
       return 1
     fi
 
     if [[ ! -d ${path_sources}level_2/ ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: build sources directory '${path_sources}level_2/' is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Build sources directory '${path_sources}level_2/' is invalid or missing.$c_reset"
       fi
 
       package_cleanup
+
       return 1
     fi
 
     if [[ ! -d ${path_sources}level_3/ ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: build sources directory '${path_sources}level_3/' is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Build sources directory '${path_sources}level_3/' is invalid or missing.$c_reset"
       fi
 
       package_cleanup
+
       return 1
     fi
 
@@ -204,7 +213,7 @@ package_main() {
   elif [[ $operation == "dependencies" ]] ; then
     if [[ ! -d $path_sources ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: sources directory '$path_sources' is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Sources directory '$path_sources' is invalid or missing.$c_reset"
       fi
 
       package_cleanup
@@ -215,31 +224,35 @@ package_main() {
   elif [[ $operation == "clean" ]] ; then
     if [[ ! -d $path_destination ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_warning}WARNING: package directory '$path_destination' does not exist, there is nothing to clean.$c_reset"
+        echo -e "${c_warning}WARNING: Package directory '$path_destination' does not exist, there is nothing to clean.$c_reset"
       fi
 
       package_cleanup
+
       return 0
     fi
 
     package_operation_clean
   elif [[ $operation == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: no operation was given.$c_reset"
+      echo -e "${c_error}ERROR: No operation was given.$c_reset"
     fi
 
     package_cleanup
+
     return 1
   else
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
+      echo -e "${c_error}ERROR: The operation $c_notice$operation$c_error was not recognized.$c_reset"
     fi
 
     package_cleanup
+
     return 1
   fi
 
   package_cleanup
+
   return 0
 }
 
@@ -269,7 +282,7 @@ package_help() {
   echo -e "${c_title}$public_name$c_reset"
   echo -e " ${c_notice}Version $version$c_reset"
   echo
-  echo -e "$c_highlight$system_name$c_reset $c_notice<${c_reset}operation$c_notice>$c_reset"
+  echo -e "$c_highlight$system_name$c_reset $c_notice[${c_reset} options $c_notice]$c_reset $c_notice[${c_reset} operation $c_notice]$c_reset"
   echo -e " ${c_important}build${c_reset}         Build the package."
   echo -e " ${c_important}dependencies${c_reset}  Rebuild all dependencies."
   echo -e " ${c_important}clean${c_reset}         Delete all built packages."
@@ -350,7 +363,7 @@ package_create_base_files() {
       fi
     else
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: neither directory $c_notice${path_build}licenses$c_error nor $c_notice${path_build}../licenses$c_error can be found or are invalid.$c_reset"
+        echo -e "${c_error}ERROR: Neither directory $c_notice${path_build}licenses$c_error nor $c_notice${path_build}../licenses$c_error can be found or are invalid.$c_reset"
       fi
 
       let failure=1
@@ -493,7 +506,7 @@ package_dependencies_individual() {
 
     if [[ ! -f ${directory}/data/build/dependencies ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: cannot build dependencies, failed to find $c_notice${directory}/data/build/dependencies$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Cannot build dependencies, failed to find $c_notice${directory}/data/build/dependencies$c_error.$c_reset"
       fi
 
       let failure=1
@@ -502,7 +515,7 @@ package_dependencies_individual() {
 
     if [[ ! -f ${directory}/data/build/settings ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: cannot build dependencies for $c_reset$c_notice${name}$c_reset${c_error}, failed to find $c_notice${directory}/data/build/settings$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Cannot build dependencies for $c_reset$c_notice${name}$c_reset${c_error}, failed to find $c_notice${directory}/data/build/settings$c_error.$c_reset"
       fi
 
       let failure=1
@@ -534,7 +547,7 @@ package_dependencies_individual() {
         level=level_2
       else
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_warning}WARNING: failed to detect level for dependency $c_notice$dependency$c_warning.$c_reset"
+          echo -e "${c_warning}WARNING: Failed to detect level for dependency $c_notice$dependency$c_warning.$c_reset"
         fi
 
         continue
@@ -561,7 +574,7 @@ package_dependencies_individual() {
           sub_level=level_1
         else
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_warning}WARNING: failed to detect level for sub-dependency $c_notice$sub_dependency$c_warning.$c_reset"
+            echo -e "${c_warning}WARNING: Failed to detect level for sub-dependency $c_notice$sub_dependency$c_warning.$c_reset"
           fi
 
           continue
@@ -586,7 +599,7 @@ package_dependencies_individual() {
             sub_sub_level=level_0
           else
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_warning}WARNING: failed to detect level for sub-sub-dependency $c_notice$sub_sub_dependency$c_warning.$c_reset"
+              echo -e "${c_warning}WARNING: Failed to detect level for sub-sub-dependency $c_notice$sub_sub_dependency$c_warning.$c_reset"
             fi
 
             continue
@@ -1439,7 +1452,7 @@ package_operation_level() {
 
     if [[ ! -d $path_build$level ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: build settings directory $c_notice$path_build$level$c_error is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Build settings directory $c_notice$path_build$level$c_error is invalid or missing.$c_reset"
       fi
 
       let failure=1
@@ -1545,7 +1558,7 @@ package_operation_monolithic() {
 
   if [[ ! -d ${path_build}monolithic ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: build settings directory $c_notice${path_build}monolithic$c_error is invalid or missing.$c_reset"
+      echo -e "${c_error}ERROR: Build settings directory $c_notice${path_build}monolithic$c_error is invalid or missing.$c_reset"
     fi
 
     package_cleanup

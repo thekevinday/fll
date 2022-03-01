@@ -35,7 +35,7 @@ install_main() {
   local settings_file=data/build/settings
   local operation=
   local operation_failure=
-  local verbosity="normal"
+  local verbosity=normal
   local verbose=
 
   local path_build=build/
@@ -63,7 +63,7 @@ install_main() {
   local enable_static=
   local enable_static_programs=
   local enable_static_libraries=
-  local enable_includes="yes"
+  local enable_includes=yes
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -171,33 +171,37 @@ install_main() {
   if [[ $do_help == "yes" ]] ; then
     install_help
     install_cleanup
+
     return 0
   fi
 
   if [[ $operation_failure == "fail-unsupported" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the operation $c_notice$operation$c_error was not recognized.$c_reset"
+      echo -e "${c_error}ERROR: The operation $c_notice$operation$c_error was not recognized.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
   if [[ ! -d $path_build ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the build path $c_notice$path_build$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The build path $c_notice$path_build$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
   if [[ $work == "" && $destination_prefix != "" && ! -d $destination_prefix ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the destination prefix $c_notice$destination_prefix$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination prefix $c_notice$destination_prefix$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
@@ -249,64 +253,71 @@ install_main() {
 
   if [[ $work != "" && ! -d $work ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the work directory $c_notice$work$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The work directory $c_notice$work$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
   if [[ $work == "" && ! -d $destination_programs ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the destination bindir $c_notice$destination_programs$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination bindir $c_notice$destination_programs$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
   if [[ $work == "" && ! -d $destination_programs_static ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the destination (static) bindir $c_notice$destination_programs_static$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination (static) bindir $c_notice$destination_programs_static$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
   if [[ $work == "" && ! -d $destination_programs_shared ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the destination (shared) bindir $c_notice$destination_programs_shared$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination (shared) bindir $c_notice$destination_programs_shared$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
   if [[ $work == "" && ! -d $destination_includes ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the destination incluedir $c_notice$destination_includes$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination incluedir $c_notice$destination_includes$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
   if [[ $work == "" && ! -d $destination_libraries_static ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the destination (static) libdir $c_notice$destination_libraries_static$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination (static) libdir $c_notice$destination_libraries_static$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
   if [[ $work == "" && ! -d $destination_libraries_shared ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: the destination (shared) libdir $c_notice$destination_libraries_shared$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination (shared) libdir $c_notice$destination_libraries_shared$c_error is not a valid directory.$c_reset"
     fi
 
     install_cleanup
+
     return 1
   fi
 
@@ -315,6 +326,7 @@ install_main() {
   install_perform_install
 
   install_cleanup
+
   return 0
 }
 
@@ -344,7 +356,7 @@ install_help() {
   echo -e "${c_title}$public_name$c_reset"
   echo -e " ${c_notice}Version $version$c_reset"
   echo
-  echo -e "$c_highlight$system_name$c_reset"
+  echo -e "$c_highlight$system_name$c_reset $c_notice[${c_reset} options $c_notice]$c_reset"
   echo
   echo -e "${c_highlight}Options:$c_reset"
   echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen."
@@ -400,13 +412,13 @@ install_load_settings() {
 
   if [[ $settings_file == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: no settings file has been defined.$c_reset"
+      echo -e "${c_error}ERROR: No settings file has been defined.$c_reset"
     fi
 
     failure=1
   elif [[ ! -f $settings_file ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: no settings file $c_notice$settings_file$c_error could not be found or is not a valid file.$c_reset"
+      echo -e "${c_error}ERROR: No settings file $c_notice$settings_file$c_error could not be found or is not a valid file.$c_reset"
     fi
 
     failure=1
@@ -534,7 +546,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}programs$c_error.$c_reset"
           fi
 
           failure=1
@@ -546,7 +558,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs/shared$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}programs/shared$c_error.$c_reset"
           fi
 
           failure=1
@@ -558,7 +570,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs/static$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}programs/static$c_error.$c_reset"
           fi
 
           failure=1
@@ -572,7 +584,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}libraries$c_error.$c_reset"
           fi
 
           failure=1
@@ -584,7 +596,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries/shared$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}libraries/shared$c_error.$c_reset"
           fi
 
           failure=1
@@ -596,7 +608,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries/static$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}libraries/static$c_error.$c_reset"
           fi
 
           failure=1
@@ -610,7 +622,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}includes$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}includes$c_error.$c_reset"
           fi
 
           failure=1
@@ -640,7 +652,7 @@ install_perform_install() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: failed to copy include files from $c_notice$path_build$path_includes$c_error to $c_notice$destination_includes$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to copy include files from $c_notice$path_build$path_includes$c_error to $c_notice$destination_includes$c_error.$c_reset"
       fi
 
       failure=1
@@ -658,7 +670,7 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy (static) library files from $c_notice$path_build$path_libraries$path_static$c_error to $c_notice$destination_libraries_static$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to copy (static) library files from $c_notice$path_build$path_libraries$path_static$c_error to $c_notice$destination_libraries_static$c_error.$c_reset"
         fi
 
         failure=1
@@ -675,7 +687,7 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy (shared) library files from $c_notice$path_build$path_libraries$path_shared$c_error to $c_notice$destination_libraries_shared$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to copy (shared) library files from $c_notice$path_build$path_libraries$path_shared$c_error to $c_notice$destination_libraries_shared$c_error.$c_reset"
         fi
 
         failure=1
