@@ -9,16 +9,17 @@
 # This only accepts one argument, followed by two optional arguments:
 # 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", or "fake-monolithic".
 # 2) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
-# 3) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
+# 3) Optional, may be one of: -w, --work.
 #
 # This will create a directory at he present working directory of the script caller called "fll" where everything will be installed.
 # This assumes the shell script is GNU bash.
 # This is not intended to provide any extensive or thorough error handling.
 
-original_path="$PWD/"
-install_path="${original_path}fll/"
+path_original="$PWD/"
+path_work="${path_original}fll/"
 
 verbose=
+verbose_common=
 color=
 shared=
 static=
@@ -27,16 +28,25 @@ version=0.5.9
 let i=2
 
 while [[ $i -le $# ]] ; do
-  if [[ ${!i} == "+V" ]] ; then
-    verbose="+V"
+
+  if [[ ${!i} == "+d" ]] ; then
+    color="+d"
+  elif [[ ${!i} == "+l" ]] ; then
+    color="+l"
+  elif [[ ${!i} == "+n" ]] ; then
+    color="+n"
   elif [[ ${!i} == "+q" ]] ; then
     verbose="+q"
-  elif [[ ${!i} == "+d" ]] ; then
-    verbose="+d"
-  elif [[ ${!i} == "+l" ]] ; then
-    verbose="+l"
-  elif [[ ${!i} == "+n" ]] ; then
-    verbose="+n"
+    verbose_common=
+  elif [[ ${!i} == "+N" ]] ; then
+    verbose="+N"
+    verbose_common=
+  elif [[ ${!i} == "+V" ]] ; then
+    verbose="+V"
+    verbose_common="-v"
+  elif [[ ${!i} == "+D" ]] ; then
+    verbose="+D"
+    verbose_common="-v"
   elif [[ ${!i} == "--enable-static" ]] ; then
     static="--enable-static"
   elif [[ ${!i} == "--disable-static" ]] ; then
@@ -45,12 +55,20 @@ while [[ $i -le $# ]] ; do
     shared="--enable-shared"
   elif [[ ${!i} == "--disable-shared" ]] ; then
     shared="--disable-shared"
+  elif [[ ${!i} == "-w" || ${!i} == "--work" ]] ; then
+    let i++
+
+    if [[ $i -le $# ]] ; then
+      path_work=${!i}
+    fi
   fi
 
   let i++
 done
 
-mkdir -vp $install_path
+if [[ ! -d $path_work ]] ; then
+  mkdir $verbose_common -p $path_work
+fi
 
 if [[ $1 == "individual" ]] ; then
   bash build/scripts/package.sh $verbose $color clean -i &&
@@ -64,11 +82,11 @@ if [[ $1 == "individual" ]] ; then
 
       ./bootstrap.sh clean $verbose $color &&
 
-      ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m individual &&
+      ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m individual &&
 
-      ./install.sh $verbose $color $shared $static -w $install_path &&
+      ./install.sh $verbose $color $shared $static -w $path_work &&
 
-      cd $original_path || break
+      cd $path_original || break
     done
   fi
 fi
@@ -81,29 +99,29 @@ if [[ $1 == "level" ]] ; then
 
   ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m level &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level &&
 
-  ./install.sh $verbose $color $shared $static -w $install_path &&
+  ./install.sh $verbose $color $shared $static -w $path_work &&
 
-  cd $original_path &&
+  cd $path_original &&
 
   cd package/level/fll-level_1-$version/ &&
 
   ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m level &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level &&
 
-  ./install.sh $verbose $color $shared $static -w $install_path &&
+  ./install.sh $verbose $color $shared $static -w $path_work &&
 
-  cd $original_path &&
+  cd $path_original &&
 
   cd package/level/fll-level_2-$version/ &&
 
   ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m level &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level &&
 
-  ./install.sh $verbose $color $shared $static -w $install_path
+  ./install.sh $verbose $color $shared $static -w $path_work
 fi
 
 if [[ $1 == "monolithic" ]] ; then
@@ -114,9 +132,9 @@ if [[ $1 == "monolithic" ]] ; then
 
   ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m monolithic &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m monolithic &&
 
-  ./install.sh $verbose $color $shared $static -w $install_path
+  ./install.sh $verbose $color $shared $static -w $path_work
 fi
 
 # The following in an example on building the Featureless Make project (fake) from the project bootstrapped from above.
@@ -136,9 +154,9 @@ if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]
 
   ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m $build_mode &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m $build_mode &&
 
-  ./install.sh $verbose $color $shared $static -w $install_path
+  ./install.sh $verbose $color $shared $static -w $path_work
 elif [[ $1 != "individual" && $1 != "level" && $1 != "monolithic" ]] ; then
   echo
   echo "ERROR: '$1' is not a supported build mode."
@@ -146,4 +164,4 @@ elif [[ $1 != "individual" && $1 != "level" && $1 != "monolithic" ]] ; then
 fi
 
 # Regardless of what happens always return to the starting directory.
-cd $original_path
+cd $path_original
