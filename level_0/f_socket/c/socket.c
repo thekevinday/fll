@@ -47,9 +47,12 @@ extern "C" {
 #endif // _di_f_socket_accept_
 
 #ifndef _di_f_socket_bind_
-  f_status_t f_socket_bind(const f_socket_t socket) {
+  f_status_t f_socket_bind(f_socket_t * const socket) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!socket) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
-    if (bind(socket.id, socket.address, socket.length) == -1) {
+    if (bind(socket->id, socket->address, socket->length) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -69,18 +72,27 @@ extern "C" {
   }
 #endif // _di_f_socket_bind_
 
-#ifndef _di_f_socket_bind_file_
-  f_status_t f_socket_bind_file(const f_socket_t socket) {
+#ifndef _di_f_socket_bind_local_
+  f_status_t f_socket_bind_local(f_socket_t * const socket) {
     #ifndef _di_level_0_parameter_checking_
-      if (socket.domain != f_socket_domain_file_d) return F_status_set_error(F_parameter);
+      if (!socket) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    memset(socket.address, 0, sizeof(struct sockaddr_un));
-    ((struct sockaddr_un *) socket.address)->sun_family = f_socket_domain_file_d;
+    if (socket->domain != f_socket_domain_file_d) {
+      return F_status_set_error(F_local_not);
+    }
 
-    strncpy(((struct sockaddr_un *) socket.address)->sun_path, socket.name, sizeof(((struct sockaddr_un *) socket.address)->sun_path) - 1);
+    memset(socket->address, 0, sizeof(struct sockaddr_un));
 
-    if (bind(socket.id, socket.address, sizeof(struct sockaddr_un)) == -1) {
+    {
+      struct sockaddr_un *address = (struct sockaddr_un *) socket->address;
+
+      address->sun_family = f_socket_domain_file_d;
+
+      strncpy(address->sun_path, socket->name, sizeof(address->sun_path) - 1);
+    }
+
+    if (bind(socket->id, socket->address, sizeof(struct sockaddr_un)) == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
@@ -98,7 +110,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_socket_bind_file_
+#endif // _di_f_socket_bind_local_
 
 #ifndef _di_f_socket_connect_
   f_status_t f_socket_connect(const f_socket_t socket) {

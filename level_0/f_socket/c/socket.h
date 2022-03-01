@@ -109,11 +109,11 @@ extern "C" {
  * @see bind()
  */
 #ifndef _di_f_socket_bind_
-  extern f_status_t f_socket_bind(const f_socket_t socket);
+  extern f_status_t f_socket_bind(f_socket_t * const socket);
 #endif // _di_f_socket_bind_
 
 /**
- * Bind a socket to a UNIX socket file.
+ * Bind a socket to a local (UNIX) socket file.
  *
  * This does initialize and memset() the address with the address set to a UNIX socket (struct sockaddr_un).
  *
@@ -132,6 +132,7 @@ extern "C" {
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
  *   F_directory_found_not (with error bit) if directory was not found.
  *   F_file_found_not (with error bit) if file not found.
+ *   F_local_not (with erro bit) if domain in not a UNIX socket.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -144,9 +145,9 @@ extern "C" {
  * @see memset()
  * @see strncpy()
  */
-#ifndef _di_f_socket_bind_file_
-  extern f_status_t f_socket_bind_file(const f_socket_t socket);
-#endif // _di_f_socket_bind_file_
+#ifndef _di_f_socket_bind_local_
+  extern f_status_t f_socket_bind_local(f_socket_t * const socket);
+#endif // _di_f_socket_bind_local_
 
 /**
  * Connect to a socket.
