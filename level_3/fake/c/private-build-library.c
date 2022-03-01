@@ -331,7 +331,7 @@ extern "C" {
 
       *status = f_file_link(parameter_file_name_major, parameter_file_path);
 
-      if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (F_status_is_error_not(*status) && main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("Linked file '%Q' to '%Q'.%r", main->output.to.stream, parameter_file_path, parameter_file_name_major, f_string_eol_s);
       }
       else if (F_status_is_error(*status)) {
@@ -362,7 +362,7 @@ extern "C" {
 
         *status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
-        if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
+        if (F_status_is_error_not(*status) && main->error.verbosity >= f_console_verbosity_verbose_e) {
           fll_print_format("Linked file '%Q' to '%Q'.%r", main->output.to.stream, parameter_file_path, parameter_file_name_minor, f_string_eol_s);
         }
         else if (F_status_is_error(*status)) {
@@ -391,7 +391,7 @@ extern "C" {
 
           *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
-          if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
+          if (F_status_is_error_not(*status) && main->error.verbosity >= f_console_verbosity_verbose_e) {
             fll_print_format("Linked file '%Q' to '%Q'.%r", main->output.to.stream, parameter_file_path, parameter_file_name_micro, f_string_eol_s);
           }
           else if (F_status_is_error(*status)) {
@@ -419,7 +419,7 @@ extern "C" {
 
           *status = f_file_link(parameter_file_name_nano, parameter_file_path);
 
-          if (F_status_is_error_not(*status) && main->error.verbosity == f_console_verbosity_verbose_e) {
+          if (F_status_is_error_not(*status) && main->error.verbosity >= f_console_verbosity_verbose_e) {
             fll_print_format("Linked file '%Q' to '%Q'.%r", main->output.to.stream, parameter_file_path, parameter_file_name_nano, f_string_eol_s);
           }
           else if (F_status_is_error(*status)) {

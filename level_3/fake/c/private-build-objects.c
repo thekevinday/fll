@@ -139,7 +139,7 @@ extern "C" {
               break;
             }
 
-            if (main->error.verbosity == f_console_verbosity_verbose_e) {
+            if (main->error.verbosity >= f_console_verbosity_verbose_e) {
               fll_print_format("Directory '%Q' created.%r", main->output.to.stream, destination_path, f_string_eol_s);
             }
           }

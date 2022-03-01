@@ -1060,7 +1060,7 @@ extern "C" {
           else {
             *settings_single_bool[i] = F_true;
 
-            if (main->warning.verbosity == f_console_verbosity_verbose_e) {
+            if (main->warning.verbosity >= f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
               fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
@@ -1092,7 +1092,7 @@ extern "C" {
           else {
             *settings_single_language[i] = fake_build_language_type_c_e;
 
-            if (main->warning.verbosity == f_console_verbosity_verbose_e) {
+            if (main->warning.verbosity >= f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
               fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
@@ -1129,7 +1129,7 @@ extern "C" {
           else {
             *settings_single_version[i] = settings_single_version_default[i];
 
-            if (main->warning.verbosity == f_console_verbosity_verbose_e) {
+            if (main->warning.verbosity >= f_console_verbosity_verbose_e) {
               flockfile(main->warning.to.stream);
 
               fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
@@ -1190,7 +1190,7 @@ extern "C" {
         if (checks && !setting->version_file) {
           setting->version_file = fake_build_version_type_micro_e;
 
-          if (main->warning.verbosity == f_console_verbosity_verbose_e) {
+          if (main->warning.verbosity >= f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
             fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
@@ -1208,7 +1208,7 @@ extern "C" {
         if (checks && !setting->version_target) {
           setting->version_target = fake_build_version_type_major_e;
 
-          if (main->warning.verbosity == f_console_verbosity_verbose_e) {
+          if (main->warning.verbosity >= f_console_verbosity_verbose_e) {
             flockfile(main->warning.to.stream);
 
             fl_print_format("%r%[%QThe setting '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
@@ -1329,7 +1329,7 @@ extern "C" {
           setting->search_static = F_false;
         }
 
-        if (main->error.verbosity == f_console_verbosity_verbose_e) {
+        if (main->error.verbosity >= f_console_verbosity_verbose_e) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%r%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);

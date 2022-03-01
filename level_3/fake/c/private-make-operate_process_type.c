@@ -26,7 +26,7 @@ extern "C" {
     f_mode_t mode = f_mode_t_initialize;
 
     if (clone) {
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         recurse.output = data_make->main->output.to;
         recurse.verbose = fake_verbose_print_clone;
       }
@@ -34,7 +34,7 @@ extern "C" {
     else {
       macro_f_mode_t_set_default_umask(mode, data_make->main->umask);
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         recurse.output = data_make->main->output.to;
         recurse.verbose = fake_verbose_print_copy;
       }
@@ -105,7 +105,7 @@ extern "C" {
 
           status = F_status_set_error(F_failure);
         }
-        else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+        else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
           flockfile(data_make->main->output.to.stream);
 
           fl_print_format("%r%s '%[%Q%]' to '", data_make->main->output.to.stream, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
@@ -143,7 +143,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
+          if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {
             flockfile(data_make->main->warning.to.stream);
 
             fl_print_format("%r%[%QThe file '%]", data_make->main->warning.to.stream, data_make->main->warning.prefix, f_string_eol_s);
@@ -162,7 +162,7 @@ extern "C" {
         }
       }
       else if (macro_f_file_type_is_directory(file_stat.st_mode)) {
-        if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+        if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
           status = f_directory_remove_custom(arguments.array[i], recursion_max, F_false, fake_clean_remove_recursively_verbosely);
         }
         else {
@@ -170,7 +170,7 @@ extern "C" {
         }
 
         if (F_status_set_fine(status) == F_file_found_not) {
-          if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+          if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
             fll_print_format("%rThe directory '%[%Q%]' does not exist.%r", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
           }
 
@@ -182,7 +182,7 @@ extern "C" {
 
           return status;
         }
-        else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+        else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
           fll_print_format("%rRemoved '%[%Q%]'.%r", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
         }
       }
@@ -190,7 +190,7 @@ extern "C" {
         status = f_file_remove(arguments.array[i]);
 
         if (F_status_set_fine(status) == F_file_found_not) {
-          if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+          if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
             fll_print_format("%rThe file '%[%Q%]' does not exist.%r", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
           }
 
@@ -203,7 +203,7 @@ extern "C" {
           return status;
         }
 
-        if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+        if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
           fll_print_format("%rRemoved '%[%Q%]'.%r", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
         }
       }
@@ -242,7 +242,7 @@ extern "C" {
       data_make->error.to.id = -1;
     }
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+    if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
       flockfile(data_make->main->output.to.stream);
 
       f_print_terminated("Set failure state to '", data_make->main->output.to.stream);
@@ -299,7 +299,7 @@ extern "C" {
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i], f_file_operation_change_group_s, fll_error_file_type_file_e);
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("%r group of '%[%r%]", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable);
@@ -1003,7 +1003,7 @@ extern "C" {
         break;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("Changed mode of '%Q' to %#@u.%r", data_make->main->output.to.stream, arguments.array[i], mode, f_string_eol_s);
       }
     } // for
@@ -1026,7 +1026,7 @@ extern "C" {
 
     f_string_static_t destination = f_string_static_t_initialize;
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+    if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
       recurse.output = data_make->main->output.to;
       recurse.verbose = fake_verbose_print_move;
     }
@@ -1117,7 +1117,7 @@ extern "C" {
 
         fll_error_file_print(data_make->error, F_status_set_fine(status), all ? "fll_file_role_change_all" : "f_file_role_change", F_true, arguments.array[i], f_file_operation_change_owner_s, fll_error_file_type_file_e);
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("%s owner of '%Q' to %u.%r", data_make->main->output.to.stream, all ? "Recursively changed" : "Changed", arguments.array[i], id, f_string_eol_s);
       }
     } // for
@@ -1235,7 +1235,7 @@ extern "C" {
       return 0;
     }
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+    if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
       status = fake_make_path_relative(data_make, *argument);
 
       // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
@@ -1300,7 +1300,7 @@ extern "C" {
         return status;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         status = fake_make_path_relative(data_make, data_make->path.stack.array[data_make->path.stack.used]);
 
         // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
@@ -1335,7 +1335,7 @@ extern "C" {
       }
     }
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+    if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
       fll_print_format("Changed to project path ''.%r", data_make->main->output.to.stream, f_string_eol_s);
     }
 
@@ -1389,7 +1389,7 @@ extern "C" {
         }
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("Touched '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
       }
     } // for

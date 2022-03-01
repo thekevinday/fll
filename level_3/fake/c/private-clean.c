@@ -25,7 +25,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (main->error.verbosity == f_console_verbosity_verbose_e) {
+    if (main->error.verbosity >= f_console_verbosity_verbose_e) {
       status = f_directory_remove_custom(main->path_build, F_directory_descriptors_max_d, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
@@ -33,7 +33,7 @@ extern "C" {
     }
 
     if (F_status_set_fine(status) == F_file_found_not || F_status_set_fine(status) == F_directory) {
-      if (main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (main->error.verbosity >= f_console_verbosity_verbose_e) {
         flockfile(main->warning.to.stream);
 
         f_print_terminated("The build directory '", main->warning.to.stream);

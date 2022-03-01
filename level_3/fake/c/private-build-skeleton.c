@@ -113,7 +113,7 @@ extern "C" {
         return;
       }
 
-      if (created && main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (created && main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("Created directory '%Q'.%r", main->output.to.stream, *directorys[i], f_string_eol_s);
       }
     } // for

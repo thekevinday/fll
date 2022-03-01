@@ -31,7 +31,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (!data_make->buffer.used) {
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         flockfile(data_make->main->warning.to.stream);
 
         fl_print_format("%r%[%QThe fakefile '%]", data_make->main->warning.to.stream, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
@@ -511,7 +511,7 @@ extern "C" {
 
           ++data_make->setting_build.environment.used;
         }
-        else if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
+        else if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {
           flockfile(data_make->main->warning.to.stream);
 
           fl_print_format("%r%[%QThe environment name '%]", data_make->main->warning.to.stream, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
@@ -521,7 +521,7 @@ extern "C" {
           funlockfile(data_make->main->warning.to.stream);
         }
       }
-      else if (data_make->main->warning.verbosity == f_console_verbosity_verbose_e) {
+      else if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {
         flockfile(data_make->main->warning.to.stream);
 
         fl_print_format("%r%[%QThe environment name '%]", data_make->main->warning.to.stream, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);

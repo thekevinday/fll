@@ -85,7 +85,7 @@ extern "C" {
         return 0;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("%rBreaking as '", data_make->main->output.to.stream, f_string_eol_s);
@@ -162,7 +162,7 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "f_environment_set", F_true);
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("%rDefined environment variable '%[%Q%]'.%r", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
       }
 
@@ -208,7 +208,7 @@ extern "C" {
         return 0;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("%rExiting as '%[%Q%]'.%r", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.notable, arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, data_make->main->context.set.notable, f_string_eol_s);
       }
 
@@ -357,7 +357,7 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_link", F_true, arguments.array[1], f_file_operation_link_s, fll_error_file_type_file_e);
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         flockfile(data_make->main->output.to.stream);
 
         fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, arguments.array[1], data_make->main->context.set.notable);
@@ -528,7 +528,7 @@ extern "C" {
       return status;
     }
 
-    if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+    if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
       flockfile(data_make->main->output.to.stream);
 
       f_print_dynamic_safely(program, data_make->main->output.to.stream);

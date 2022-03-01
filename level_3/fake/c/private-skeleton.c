@@ -18,7 +18,7 @@ extern "C" {
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
       fll_print_format("%rGenerating skeleton structure.%r", main->output.to.stream, f_string_eol_s, f_string_eol_s);
 
-      if (main->output.verbosity == f_console_verbosity_verbose_e) {
+      if (main->output.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_dynamic(f_string_eol_s, main->output.to.stream);
       }
     }
@@ -91,7 +91,7 @@ extern "C" {
         }
       } // for
 
-      if (main->output.verbosity == f_console_verbosity_verbose_e) {
+      if (main->output.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_dynamic(f_string_eol_s, main->output.to.stream);
       }
     }
@@ -138,7 +138,7 @@ extern "C" {
     f_status_t status = f_directory_exists(path);
 
     if (status == F_true) {
-      if (main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("Directory '%Q' already exists.%r", main->output.to.stream, path, f_string_eol_s);
       }
 
@@ -178,7 +178,7 @@ extern "C" {
         return status;
       }
 
-      if (main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("Directory '%Q' created.%r", main->output.to.stream, path, f_string_eol_s);
       }
     }
@@ -202,7 +202,7 @@ extern "C" {
     status = f_file_is(path, F_file_type_regular_d, F_false);
 
     if (status == F_true) {
-      if (main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("File '%Q' already exists.%r", main->output.to.stream, path, f_string_eol_s);
       }
 
@@ -214,7 +214,7 @@ extern "C" {
       status = f_file_is(path, F_file_type_link_d, F_false);
 
       if (status == F_true) {
-        if (main->error.verbosity == f_console_verbosity_verbose_e) {
+        if (main->error.verbosity >= f_console_verbosity_verbose_e) {
           fll_print_format("File '%Q' already exists (as a symbolic link).%r", main->output.to.stream, path, f_string_eol_s);
         }
 
@@ -223,7 +223,7 @@ extern "C" {
     }
 
     if (status == F_false) {
-      if (main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("File '%Q' already exists but is not a regular file (or symbolic link).%r", main->output.to.stream, path, f_string_eol_s);
       }
 
@@ -255,7 +255,7 @@ extern "C" {
         return status;
       }
 
-      if (main->error.verbosity == f_console_verbosity_verbose_e) {
+      if (main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("File '%Q' created.%r", main->output.to.stream, path, f_string_eol_s);
       }
 
@@ -283,7 +283,7 @@ extern "C" {
           return status;
         }
 
-        if (main->error.verbosity == f_console_verbosity_verbose_e) {
+        if (main->error.verbosity >= f_console_verbosity_verbose_e) {
           fll_print_format("File '%Q' pre-populated.%r", main->output.to.stream, path, f_string_eol_s);
         }
 

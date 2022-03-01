@@ -15,7 +15,7 @@ extern "C" {
 
     if (F_status_is_error(*status)) return 1;
 
-    if (main->error.verbosity == f_console_verbosity_verbose_e) {
+    if (main->error.verbosity >= f_console_verbosity_verbose_e) {
       flockfile(main->output.to.stream);
 
       f_print_dynamic(program, main->output.to.stream);

@@ -378,7 +378,7 @@ extern "C" {
 
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
-    if (main->error.verbosity == f_console_verbosity_verbose_e) {
+    if (main->error.verbosity >= f_console_verbosity_verbose_e) {
       recurse.output.stream = main->output.to.stream;
       recurse.output.id = main->output.to.id;
       recurse.output.flag = main->output.to.flag;
@@ -433,7 +433,7 @@ extern "C" {
         *status = fl_directory_copy(path_source, destination_directory, mode, recurse);
 
         if (F_status_is_error(*status)) {
-          if (main->error.verbosity == f_console_verbosity_verbose_e) {
+          if (main->error.verbosity >= f_console_verbosity_verbose_e) {
             for (f_array_length_t j = 0; j < failures.used; ++j) {
               fake_print_error_build_operation_file(main, F_status_set_fine(*status), "fl_directory_copy", fake_common_file_directory_copy_s, f_file_operation_to_s, path_source, destination_directory, F_true);
             } // for
@@ -517,7 +517,7 @@ extern "C" {
           break;
         }
 
-        if (main->error.verbosity == f_console_verbosity_verbose_e) {
+        if (main->error.verbosity >= f_console_verbosity_verbose_e) {
           fll_print_format("Copied file '%Q' to '%Q'.%r", main->output.to.stream, path_source, destination_file, f_string_eol_s);
         }
       }

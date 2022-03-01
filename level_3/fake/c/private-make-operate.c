@@ -115,7 +115,7 @@ extern "C" {
     if (status != F_child) {
       f_status_t status_path = f_path_change_at(data_make.path.top.id);
 
-      if (F_status_is_error(status_path) && main->warning.verbosity == f_console_verbosity_verbose_e) {
+      if (F_status_is_error(status_path) && main->warning.verbosity >= f_console_verbosity_verbose_e) {
         flockfile(main->warning.to.stream);
 
         fl_print_format("%r%[%QFailed change back to orignal path '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);

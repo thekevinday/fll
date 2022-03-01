@@ -106,7 +106,7 @@ extern "C" {
           *status = f_string_dynamic_append(f_console_standard_short_quiet_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_verbose_e) {
+      else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
