@@ -1146,6 +1146,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_local_s) == F_equal_to) {
+        *code = F_local;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_local_not_s) == F_equal_to) {
+        *code = F_local_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_lock_s) == F_equal_to) {
         *code = F_lock;
 
@@ -1532,6 +1544,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_relative_not_s) == F_equal_to) {
         *code = F_relative_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_remote_s) == F_equal_to) {
+        *code = F_remote;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_remote_not_s) == F_equal_to) {
+        *code = F_remote_not;
 
         return F_none;
       }

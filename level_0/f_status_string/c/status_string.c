@@ -198,6 +198,8 @@ extern "C" {
     const f_string_static_t f_status_link_not_s = macro_f_string_static_t_initialize(F_status_link_not_s, 0, F_status_link_not_s_length);
     const f_string_static_t f_status_live_s = macro_f_string_static_t_initialize(F_status_live_s, 0, F_status_live_s_length);
     const f_string_static_t f_status_live_not_s = macro_f_string_static_t_initialize(F_status_live_not_s, 0, F_status_live_not_s_length);
+    const f_string_static_t f_status_local_s = macro_f_string_static_t_initialize(F_status_local_s, 0, F_status_local_s_length);
+    const f_string_static_t f_status_local_not_s = macro_f_string_static_t_initialize(F_status_local_not_s, 0, F_status_local_not_s_length);
     const f_string_static_t f_status_lock_s = macro_f_string_static_t_initialize(F_status_lock_s, 0, F_status_lock_s_length);
     const f_string_static_t f_status_lock_not_s = macro_f_string_static_t_initialize(F_status_lock_not_s, 0, F_status_lock_not_s_length);
     const f_string_static_t f_status_loop_s = macro_f_string_static_t_initialize(F_status_loop_s, 0, F_status_loop_s_length);
@@ -263,6 +265,8 @@ extern "C" {
     const f_string_static_t f_status_recurse_not_s = macro_f_string_static_t_initialize(F_status_recurse_not_s, 0, F_status_recurse_not_s_length);
     const f_string_static_t f_status_relative_s = macro_f_string_static_t_initialize(F_status_relative_s, 0, F_status_relative_s_length);
     const f_string_static_t f_status_relative_not_s = macro_f_string_static_t_initialize(F_status_relative_not_s, 0, F_status_relative_not_s_length);
+    const f_string_static_t f_status_remote_s = macro_f_string_static_t_initialize(F_status_remote_s, 0, F_status_remote_s_length);
+    const f_string_static_t f_status_remote_not_s = macro_f_string_static_t_initialize(F_status_remote_not_s, 0, F_status_remote_not_s_length);
     const f_string_static_t f_status_require_s = macro_f_string_static_t_initialize(F_status_require_s, 0, F_status_require_s_length);
     const f_string_static_t f_status_require_not_s = macro_f_string_static_t_initialize(F_status_require_not_s, 0, F_status_require_not_s_length);
     const f_string_static_t f_status_resource_s = macro_f_string_static_t_initialize(F_status_resource_s, 0, F_status_resource_s_length);
@@ -1338,6 +1342,14 @@ extern "C" {
           *name = f_status_live_not_s;
           break;
 
+        case F_local:
+          *name = f_status_local_s;
+          break;
+
+        case F_local_not:
+          *name = f_status_local_not_s;
+          break;
+
         case F_lock:
           *name = f_status_lock_s;
           break;
@@ -1596,6 +1608,14 @@ extern "C" {
 
         case F_relative_not:
           *name = f_status_relative_not_s;
+          break;
+
+        case F_remote:
+          *name = f_status_remote_s;
+          break;
+
+        case F_remote_not:
+          *name = f_status_remote_not_s;
           break;
 
         case F_require:

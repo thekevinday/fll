@@ -351,6 +351,8 @@ extern "C" {
     #define F_status_link_not_s          "F_link_not"
     #define F_status_live_s              "F_live"
     #define F_status_live_not_s          "F_live_not"
+    #define F_status_local_s             "F_local"
+    #define F_status_local_not_s         "F_local_not"
     #define F_status_lock_s              "F_lock"
     #define F_status_lock_not_s          "F_lock_not"
     #define F_status_loop_s              "F_loop"
@@ -416,6 +418,8 @@ extern "C" {
     #define F_status_recurse_not_s       "F_recurse_not"
     #define F_status_relative_s          "F_relative"
     #define F_status_relative_not_s      "F_relative_not"
+    #define F_status_remote_s            "F_remote"
+    #define F_status_remote_not_s        "F_remote_not"
     #define F_status_require_s           "F_require"
     #define F_status_require_not_s       "F_require_not"
     #define F_status_resource_s          "F_resource"
@@ -595,6 +599,8 @@ extern "C" {
     #define F_status_link_not_s_length          10
     #define F_status_live_s_length              6
     #define F_status_live_not_s_length          10
+    #define F_status_local_s_length             7
+    #define F_status_local_not_s_length         11
     #define F_status_lock_s_length              6
     #define F_status_lock_not_s_length          10
     #define F_status_loop_s_length              6
@@ -660,6 +666,8 @@ extern "C" {
     #define F_status_recurse_not_s_length       13
     #define F_status_relative_s_length          10
     #define F_status_relative_not_s_length      14
+    #define F_status_remote_s_length            8
+    #define F_status_remote_not_s_length        12
     #define F_status_require_s_length           9
     #define F_status_require_not_s_length       13
     #define F_status_resource_s_length          10
@@ -839,6 +847,8 @@ extern "C" {
     extern const f_string_static_t f_status_link_not_s;
     extern const f_string_static_t f_status_live_s;
     extern const f_string_static_t f_status_live_not_s;
+    extern const f_string_static_t f_status_local_s;
+    extern const f_string_static_t f_status_local_not_s;
     extern const f_string_static_t f_status_lock_s;
     extern const f_string_static_t f_status_lock_not_s;
     extern const f_string_static_t f_status_loop_s;
@@ -904,6 +914,8 @@ extern "C" {
     extern const f_string_static_t f_status_recurse_not_s;
     extern const f_string_static_t f_status_relative_s;
     extern const f_string_static_t f_status_relative_not_s;
+    extern const f_string_static_t f_status_remote_s;
+    extern const f_string_static_t f_status_remote_not_s;
     extern const f_string_static_t f_status_require_s;
     extern const f_string_static_t f_status_require_not_s;
     extern const f_string_static_t f_status_resource_s;
