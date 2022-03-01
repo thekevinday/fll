@@ -10,6 +10,8 @@ Style Guide:
 General Style Guides:
   - Naming Structure.
   - Commas in Sets.
+  - Loops and Newlines.
+  - Returns, Breaks, Continues, Gotos, and Newlines.
 
 Specific Style Guides:
   - Return Code Names.
@@ -19,6 +21,7 @@ Specific Style Guides:
   - Type Definition names.
   - Function Names.
   - File Names.
+  - Returns, Breaks, Continues, and Gotos Function Accessories.
 
 Naming Structure:
   All files, programs, functions, and comments that have specific meaning follow this general naming structure.
@@ -77,6 +80,36 @@ Commas in Sets:
       'b',
       'c',
     };
+
+Loops and Newlines:
+  All loops, except loops with only 0 or 1 lines within it, add an extra new line after the loop condition part (or before the loop condition part for post-increment loops).
+
+  All pre-increment loops will have their loop type (such as "while", or "for") in a comment inline with the closing brace.
+
+  A for loop would like like\:
+    for (int x = 0; x < y; ++x) {
+
+      do_something();
+      do_something_else();
+    } // while
+
+  A do while loop would like like\:
+    do {
+      do_something();
+      do_something_else();
+
+    } while (true);
+
+Returns, Breaks, Continues, Gotos, and Newlines:
+  Operations that change the flow of a block or a function must have a newline before them, except in certain conditions.
+  This includes "return" statements, "break" statements, "continue" statements, and "goto" statements.
+
+  Exceptions to this includes one line flow change operations directly tied to a function called before it.
+  These are meant to be treated as an accessory to the function.
+
+  Any of these used in a switch statement to represent an action on a particular case is an exception to this rule.
+
+  As an exception, this newline requirement may also be disregarded when combined with a set of one-line if, then, and else conditions.
 
 Return Code Names:
   The return code names are C-language specific names used by this project as the status or return codes for functions and programs.
@@ -175,3 +208,10 @@ File Names:
   - private-(c-)(b)(-c): "private-" is prepended to all source and header files intended to be private (aka: not intended to be exposed via the API or ABI).
 
   - (c-)(b)(-c)-common: "-common" is appended to all files used as a common include for standard practice data such as global strings, define strings, type definitions, and memory allocation or deallocation functions.
+
+Returns, Breaks, Continues, and Gotos Function Accessories:
+  To avoid excessive newline spacing, certain one-line operations that are tightly coupled to a function are treated as an accessory to the function.
+  As an accessory to some function, these one-line operations must not have a line between them and the function that they are an accessory of unless there is an excessive amount.
+
+  These function accessories are operations that change the flow of a block or a function.
+  This includes "return" statements, "break" statements, "continue" statements, and "goto" statements.
