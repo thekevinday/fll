@@ -31,17 +31,17 @@ test_main() {
   local c_subtle="\\033[1;30m"
   local c_prefix="\\"
 
+  local build_compiler=
   local build_project=no
   local path_scripts=build/scripts/
-  local path_scripts_bootstrap=${path_scripts}bootstrap-example.sh
   local path_scripts_package=${path_scripts}package.sh
   local path_test=test/
+  local path_test_package=${path_test}package/
   local path_test_project=${path_test}project/
   local path_test_work=${path_test}work/
-  local path_package=package/
-  local path_package_individual=${path_package}individual/
-  local path_package_monolithic=${path_package}monolithic/
-  local path_package_program=${path_package}program/
+  local path_test_package_individual=${path_test_package}individual/
+  local path_test_package_monolithic=${path_test_package}monolithic/
+  local path_test_package_program=${path_test_package}program/
   local test_system=
 
   local context=
@@ -51,6 +51,11 @@ test_main() {
   local verbosity=normal
   local verbose=
   local verbose_common=
+
+  local projects="f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_path f_pipe f_print f_status_string f_serialize f_signal f_socket f_thread fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_print fl_signal fl_string fl_utf fl_utf_file fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_path fll_print fll_program fll_status_string"
+  local projects_no_tests="f_type f_status"
+
+  let failure=0
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -73,11 +78,11 @@ test_main() {
           context="+n"
         elif [[ $p == "+q" || $p == "++quiet" ]] ; then
           verbosity="quiet"
-          verbose=
+          verbose="+q"
           verbose_common=
         elif [[ $p == "+N" || $p == "++normal" ]] ; then
           verbosity=
-          verbose=
+          verbose="+N"
           verbose_common=
         elif [[ $p == "+V" || $p == "++verbose" ]] ; then
           verbosity="verbose"
@@ -90,10 +95,10 @@ test_main() {
         elif [[ $p == "+v" || $p == "++version" ]] ; then
           echo $version
           return
-        elif [[ $p == "-P" || $p == "--project" ]] ; then
+        elif [[ $p == "-c" || $p == "--compiler" ]] ; then
+          grab_next=build_compiler
+        elif [[ $p == "-p" || $p == "--project" ]] ; then
           build_project=yes
-        elif [[ $p == "-p" || $p == "--path_package" ]] ; then
-          grab_next=path_package
         elif [[ $p == "-s" || $p == "--path_scripts" ]] ; then
           grab_next=path_scripts
         elif [[ $p == "-t" || $p == "--path_test" ]] ; then
@@ -105,17 +110,17 @@ test_main() {
           operation_failure=fail-too_many
         fi
       else
-        if [[ $grab_next == "path_package" ]] ; then
-          path_package=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
-          path_package_individual=${path_package}individual/
-          path_package_monolithic=${path_package}monolithic/
-          path_package_program=${path_package}program/
+        if [[ $grab_next == "build_compiler" ]] ; then
+          build_compiler=$p
         elif [[ $grab_next == "path_scripts" ]] ; then
           path_scripts=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
-          path_scripts_bootstrap=${path_scripts}bootstrap-example.sh
           path_scripts_package=${path_scripts}package.sh
         elif [[ $grab_next == "path_test" ]] ; then
           path_test=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
+          path_test_package=${path_test}package/
+          path_test_package_individual=${path_test_package}individual/
+          path_test_package_monolithic=${path_test_package}monolithic/
+          path_test_package_program=${path_test_package}program/
           path_test_project=${path_test}project/
           path_test_work=${path_test}work/
         fi
@@ -141,80 +146,58 @@ test_main() {
       echo -e "${c_error}ERROR: Only a single build system is supported, received the following test systems $c_notice$test_system $operation$c_error was not recognized.$c_reset"
     fi
 
-    test_cleanup
-
-    return 1
+    let failure=1
   fi
 
   if [[ $test_system == "" ]] ; then
     test_system=normal
   fi
 
-  if [[ $test_system != "normal" && $test_system != "github" && $test_system != "gitlab" ]] ; then
+  if [[ $build_compiler == "" ]] ; then
+    build_compiler=gcc
+  fi
+
+  if [[ $failure -eq 0 && $test_system != "normal" && $test_system != "github" && $test_system != "gitlab" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: The test system must be one of ${c_notice}normal$c_error, ${c_notice}github$c_error, or  ${c_notice}gitlab$c_error.$c_reset"
     fi
 
-    test_cleanup
-
-    return 1
+    let failure=1
   fi
 
-  if [[ $test_system == "github" || $test_system == "gitlab" ]] ; then
+  if [[ $failure -eq 0 && ( $test_system == "github" || $test_system == "gitlab" ) ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: The build system $c_notice$test_system$c_error is not currently implemented.$c_reset"
     fi
 
-    test_cleanup
-
-    return 1
+    let failure=1
   fi
 
-  if [[ ! -d $path_scripts ]] ; then
+  if [[ $failure -eq 0 && $build_compiler != "gcc" && $build_compiler != "clang" ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo -e "${c_error}ERROR: The build compiler $c_notice$build_compiler$c_error is not currently directly supported.$c_reset"
+    fi
+
+    let failure=1
+  fi
+
+  if [[ $failure -eq 0 && ! -d $path_scripts ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: The build scripts path $c_notice$path_scripts$c_error is not a valid directory.$c_reset"
     fi
 
-    test_cleanup
-
-    return 1
+    let failure=1
   fi
 
-  if [[ ! -f $path_scripts_bootstrap ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: Unable to find the example bootstrap script file under the build scripts path at $c_notice$path_scripts$c_error.$c_reset"
-    fi
-
-    test_cleanup
-
-    return 1
-  fi
-
-  if [[ ! -f $path_scripts_package ]] ; then
+  if [[ $failure -eq 0 && ! -f $path_scripts_package ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: Unable to find the package build script file under the build scripts path at $c_notice$path_scripts_package$c_error.$c_reset"
     fi
 
-    test_cleanup
-
-    return 1
+    let failure=1
   fi
 
-  if [[ ! -d $path_package ]] ; then
-    mkdir $verbose_common $path_package
-
-    if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: The package path $c_notice$path_package$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
-      fi
-
-      test_cleanup
-
-      return 1
-    fi
-  fi
-
-  if [[ ! -d $path_test ]] ; then
+  if [[ $failure -eq 0 && ! -d $path_test ]] ; then
     mkdir $verbose_common $path_test
 
     if [[ $? -ne 0 ]] ; then
@@ -222,27 +205,23 @@ test_main() {
         echo -e "${c_error}ERROR: The test path $c_notice$path_test$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
       fi
 
-      test_cleanup
-
-      return 1
+      let failure=1
     fi
   fi
 
-  if [[ ! -d $path_test_work ]] ; then
-    mkdir $verbose_common $path_test_work
+  if [[ $failure -eq 0 && ! -d $path_test_package ]] ; then
+    mkdir $verbose_common $path_test_package
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: The test work path $c_notice$path_test_work$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
+        echo -e "${c_error}ERROR: The package path $c_notice$path_test_package$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
       fi
 
-      test_cleanup
-
-      return 1
+      let failure=1
     fi
   fi
 
-  if [[ ! -d $path_test_project ]] ; then
+  if [[ $failure -eq 0 && ! -d $path_test_project ]] ; then
     mkdir $verbose_common $path_test_project
 
     if [[ $? -ne 0 ]] ; then
@@ -250,14 +229,30 @@ test_main() {
         echo -e "${c_error}ERROR: The test project path $c_notice$path_test_project$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
       fi
 
-      test_cleanup
-
-      return 1
+      let failure=1
     fi
   fi
 
-  test_operate
-  let failure=$?
+  if [[ $failure -eq 0 && ! -d $path_test_work ]] ; then
+    mkdir $verbose_common $path_test_work
+
+    if [[ $? -ne 0 ]] ; then
+      if [[ $verbosity != "quiet" ]] ; then
+        echo -e "${c_error}ERROR: The test work path $c_notice$path_test_work$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
+      fi
+
+      let failure=1
+    fi
+  fi
+
+  if [[ $failure -eq 0 ]] ; then
+    test_operate
+    let failure=$?
+  fi
+
+  if [[ $verbosity != "quiet" ]] ; then
+    echo
+  fi
 
   test_cleanup
 
@@ -265,6 +260,7 @@ test_main() {
 }
 
 test_handle_colors() {
+
   if [[ $do_color == "light" ]] ; then
     c_error="\\033[1;31m"
     c_warning="\\033[0;31m"
@@ -286,6 +282,7 @@ test_handle_colors() {
 }
 
 test_help() {
+
   echo
   echo -e "${c_title}$public_name$c_reset"
   echo -e " ${c_notice}Version $version$c_reset"
@@ -307,34 +304,358 @@ test_help() {
   echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program."
   echo
   echo -e "${c_highlight}Install Options:$c_reset"
-  echo -e " -${c_important}P$c_reset, --${c_important}project${c_reset}       Designate that the project files must also be built."
+  echo -e " -${c_important}c$c_reset, --${c_important}compiler${c_reset}      Specify the compiler, either gcc (default) or clang."
+  echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}       Designate that the project files must also be built."
   echo -e " -${c_important}s$c_reset, --${c_important}path_scripts${c_reset}  Specify a custom directory where the build scripts are found."
-  echo -e " -${c_important}t$c_reset, --${c_important}path_test${c_reset}     Specify a custom directory where the test dependencies are found."
-  echo -e " -${c_important}p$c_reset, --${c_important}path_package${c_reset}  Specify a custom directory where the package is extracted."
+  echo -e " -${c_important}t$c_reset, --${c_important}path_test${c_reset}     Specify a custom directory where the test environment is found."
   echo
 }
 
 test_operate() {
-  # TODO: print messages as needed.
+  local env_path="$PWD/${path_test_project}programs/shared"
+  local env_libs="$PWD/${path_test_project}libraries/shared"
 
-  bash $path_scripts_bootstrap monolithic -w $path_test_work $verbose $context
+  if [[ $PATH != "" ]] ; then
+    env_path="$env_path:$PATH"
+  fi
+
+  if [[ $LD_LIBRARY_PATH != "" ]] ; then
+    env_libs="$env_libs:$LD_LIBRARY_PATH"
+  fi
+
+  if [[ $build_project == "yes" ]] ; then
+    test_operate_build_tools
+
+    if [[ $? -ne 0 ]] ; then
+      return 1
+    fi
+  fi
+
+  test_operate_build_individual
 
   if [[ $? -ne 0 ]] ; then
     return 1
   fi
 
-  # TODO: everything else.
+  test_operate_tests
+
+  return $?
+}
+
+test_operate_build_individual() {
+  local -i failure=0
+  local project=
+  local path_original="$PWD/"
+
+  if [[ $verbosity != "quiet" ]] ; then
+    echo
+    echo -e "${c_highlight}Cleaning and building package.$c_reset"
+    echo -e "${c_title}------------------------------$c_reset"
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -i clean &&"
+    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -i build"
+  fi
+
+  bash ${path_scripts_package} $verbose $context -d $path_test_package -i clean &&
+  bash ${path_scripts_package} $verbose $context -d $path_test_package -i build
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to clean and build the individual packages.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  for project in $projects ; do
+
+    test_operate_build_project "$path_test_package_individual" "$path_original$path_test_work" "$project" individual
+
+    if [[ $? -ne 0 ]] ; then
+      let failure=1
+
+      cd $path_original
+
+      break;
+    fi
+
+    cd $path_original
+  done
+
+  return $failure
+}
+
+test_operate_build_project() {
+  local path="$1"
+  local destination="$2"
+  local project="$3"
+  local mode="$4"
+  local bootstrap="$5"
+
+  if [[ ! -d ${path}$project-$version/ ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Package directory '${c_notice}${path}$project-$version$c_error' is invalid or missing.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo -e "Running '${c_notice}cd ${path}$project-$version/$c_reset'."
+  fi
+
+  cd ${path}$project-$version/
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to change into directory '${c_notice}${path}$project-$version$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $bootstrap == "" ]] ; then
+    if [[ $verbosity == "debug" ]] ; then
+      echo
+
+      if [[ $build_compiler == "gcc" ]] ; then
+        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m $mode clean build"
+      else
+        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m $build_compiler clean make -f testfile"
+      fi
+    fi
+
+    if [[ $build_compiler == "gcc" ]] ; then
+      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode clean build
+    else
+      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m $build_compiler clean build
+    fi
+  else
+    if [[ $verbosity == "debug" ]] ; then
+      echo
+
+      if [[ $build_compiler == "gcc" ]] ; then
+        echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode build"
+      else
+        echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m $build_compiler build"
+      fi
+    fi
+
+    if [[ $build_compiler == "gcc" ]] ; then
+      ./bootstrap.sh $verbose $context -w "$destination" -m $mode build
+    else
+      ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m $build_compiler build
+    fi
+  fi
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to build $mode project '$c_notice$project$c_reset$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity != "quiet" ]] ; then
+    echo
+    echo -e "Installing $mode project '$c_notice$project$c_reset'."
+  fi
+
+  ./install.sh $verbose $context -w "$destination"
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to install $mode project '$c_notice$project$c_reset$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
 
   return 0
 }
 
+test_operate_build_tools() {
+  local -i failure=0
+  local path_original="$PWD/"
+
+  if [[ $verbosity != "quiet" ]] ; then
+    echo
+    echo -e "${c_highlight}Building project build tools.$c_reset"
+    echo -e "${c_title}-----------------------------$c_reset"
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -m clean &&"
+    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -m build"
+  fi
+
+  bash ${path_scripts_package} $verbose $context -d $path_test_package -m clean &&
+  bash ${path_scripts_package} $verbose $context -d $path_test_package -m build
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to clean and build the monolithic packages.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  test_operate_build_project "$path_test_package_monolithic" "$path_original$path_test_project" fll monolithic bootstrap
+
+  if [[ $? -ne 0 ]] ; then
+    let failure=1
+  fi
+
+  cd $path_original
+
+  if [[ $failure -eq 0 ]] ; then
+    if [[ $verbosity == "debug" ]] ; then
+      echo
+      echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -p clean &&"
+      echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -p build"
+    fi
+
+    bash ${path_scripts_package} $verbose $context -d $path_test_package -p clean &&
+    bash ${path_scripts_package} $verbose $context -d $path_test_package -p build
+
+    if [[ $? -ne 0 ]] ; then
+      if [[ $verbosity != "quiet" ]] ; then
+        echo
+        echo -e "${c_error}ERROR: Failed to clean and build the program packages.$c_reset"
+      fi
+
+      return 1
+    fi
+
+    test_operate_build_project "$path_test_package_program" "$path_original$path_test_project" fake monolithic bootstrap
+
+    if [[ $failure -ne 0 ]] ; then
+      let failure=1
+    fi
+  fi
+
+  cd $path_original
+
+  return $failure
+}
+
+test_operate_tests() {
+  local -i failure=0
+  local project=
+  local path_original="$PWD/"
+  local destination="$path_original$path_test_work"
+
+  for project in $projects ; do
+
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_highlight}Testing Project $project.$c_reset"
+      echo -e "${c_title}--------------------------------------$c_reset"
+    fi
+
+    if [[ ! -d $path_test_package_individual$project-$version/ ]] ; then
+      if [[ $verbosity != "quiet" ]] ; then
+        echo
+        echo -e "${c_error}ERROR: Package directory '$c_notice$path_test_package_individual$project-$version$c_error' is invalid or missing.$c_reset"
+      fi
+
+      let failure=1
+    fi
+
+    if [[ $failure -eq 0 ]] ; then
+      if [[ ! -f $path_test_package_individual$project-$version/data/build/testfile ]] ; then
+        if [[ $(echo $projects_no_tests | grep -o "\<$project\>") == "" ]] ; then
+          if [[ $verbosity == "verbose" || $verbosity == "debug" ]] ; then
+            echo
+            echo -e "${c_warning}WARNING: Project '$c_notice$project$c_warning' does not have a testfile.$c_reset"
+          fi
+        else
+          echo
+          echo -e "Project '$c_notice$project$c_reset' has no tests and is not expected to.$c_reset"
+        fi
+
+        continue
+      fi
+    fi
+
+    if [[ $failure -eq 0 ]] ; then
+      if [[ $verbosity == "debug" ]] ; then
+        echo
+        echo -e "Running '${c_notice}cd $path_test_package_individual$project-$version/$c_reset'."
+      fi
+
+      cd $path_test_package_individual$project-$version/
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo
+          echo -e "${c_error}ERROR: Failed to change into directory '$c_notice$path_test_package_individual$project-$version$c_error'.$c_reset"
+        fi
+
+        let failure=1
+      fi
+    fi
+
+    if [[ $failure -eq 0 ]] ; then
+      if [[ $verbosity == "debug" ]] ; then
+        echo
+
+        if [[ $build_compiler == "gcc" ]] ; then
+          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual clean make -f testfile"
+        else
+          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m $build_compiler clean make -f testfile"
+        fi
+      fi
+
+      if [[ $build_compiler == "gcc" ]] ; then
+        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual clean make -f testfile
+      else
+        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m $build_compiler clean make -f testfile
+      fi
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo
+          echo -e "${c_error}ERROR: Failure while testing project '$c_notice$project$c_reset$c_error'.$c_reset"
+        fi
+
+        let failure=1
+      fi
+    fi
+
+    cd $path_original
+
+    if [[ $failure -ne 0 ]] ; then
+      break;
+    fi
+  done
+
+  return $failure
+}
+
 test_cleanup() {
+
   unset test_main
   unset test_handle_colors
   unset test_help
 
   unset test_cleanup
   unset test_operate
+  unset test_operate_build_individual
+  unset test_operate_build_project
+  unset test_operate_build_tools
+  unset test_operate_tests
 }
 
 test_main $*
