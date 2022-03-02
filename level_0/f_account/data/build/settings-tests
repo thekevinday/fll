@@ -8,7 +8,7 @@ version_micro 9
 version_file major
 version_target major
 
-modes individual level monolithic clang
+modes individual level monolithic clang test
 modes_default individual
 
 build_compiler gcc
@@ -42,6 +42,7 @@ defines_shared -Lbuild/libraries/shared
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector
 flags_program -fPIE
 flags_program_shared
 flags_program_static

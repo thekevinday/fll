@@ -433,25 +433,25 @@ test_operate_build_project() {
     fi
 
     if [[ $build_compiler == "gcc" ]] ; then
-      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode clean build
+      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test clean build
     else
-      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m $build_compiler clean build
+      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test -m $build_compiler clean build
     fi
   else
     if [[ $verbosity == "debug" ]] ; then
       echo
 
       if [[ $build_compiler == "gcc" ]] ; then
-        echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode build"
+        echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m test build"
       else
-        echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m $build_compiler build"
+        echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m test -m $build_compiler build"
       fi
     fi
 
     if [[ $build_compiler == "gcc" ]] ; then
-      ./bootstrap.sh $verbose $context -w "$destination" -m $mode build
+      ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m test build
     else
-      ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m $build_compiler build
+      ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m test -m $build_compiler build
     fi
   fi
 
@@ -612,16 +612,16 @@ test_operate_tests() {
         echo
 
         if [[ $build_compiler == "gcc" ]] ; then
-          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual clean make -f testfile"
+          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test clean make -f testfile"
         else
-          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m $build_compiler clean make -f testfile"
+          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test -m $build_compiler clean make -f testfile"
         fi
       fi
 
       if [[ $build_compiler == "gcc" ]] ; then
-        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual clean make -f testfile
+        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test clean make -f testfile
       else
-        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m $build_compiler clean make -f testfile
+        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test -m $build_compiler clean make -f testfile
       fi
 
       if [[ $? -ne 0 ]] ; then

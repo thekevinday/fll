@@ -13,7 +13,7 @@ environment
 process_pre
 process_post
 
-modes individual level monolithic clang as_init
+modes individual level monolithic clang test as_init
 modes_default monolithic
 
 build_compiler gcc
@@ -99,6 +99,7 @@ defines_shared
 
 flags -O2 -z now -g -pthread -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector
 flags_library -fPIC
 flags_library_shared
 flags_library_static
