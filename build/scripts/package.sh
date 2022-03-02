@@ -64,11 +64,11 @@ package_main() {
           context="+n"
         elif [[ $p == "+q" || $p == "++quiet" ]] ; then
           verbosity="quiet"
-          verbose=
+          verbose="+q"
           verbose_common=
         elif [[ $p == "+N" || $p == "++normal" ]] ; then
           verbosity=
-          verbose=
+          verbose="+N"
           verbose_common=
         elif [[ $p == "+V" || $p == "++verbose" ]] ; then
           verbosity="verbose"
@@ -146,7 +146,7 @@ package_main() {
     fi
 
     if [[ ! -d $path_destination ]] ; then
-      mkdir $verbose -p $path_destination
+      mkdir $verbose_common -p $path_destination
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
           echo -e "${c_error}ERROR: Package directory '$path_destination' is invalid or could not be created.$c_reset"
@@ -274,6 +274,7 @@ package_main() {
 }
 
 package_handle_colors() {
+
   if [[ $do_color == "light" ]] ; then
     c_error="\\033[1;31m"
     c_warning="\\033[0;31m"
@@ -295,6 +296,7 @@ package_handle_colors() {
 }
 
 package_help() {
+
   echo
   echo -e "${c_title}$public_name$c_reset"
   echo -e " ${c_notice}Version $version$c_reset"
@@ -329,7 +331,7 @@ package_help() {
 package_create_base_files() {
 
   if [[ ! -d $package ]] ; then
-    mkdir $verbose -p $package
+    mkdir $verbose_common -p $package
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -349,7 +351,7 @@ package_create_base_files() {
   fi
 
   if [[ $failure == "" ]] ; then
-    cp $verbose -R ${path_build}documents $package
+    cp $verbose_common -R ${path_build}documents $package
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -362,7 +364,7 @@ package_create_base_files() {
 
   if [[ $failure == "" ]] ; then
     if [[ -d ${path_build}licenses ]] ; then
-      cp $verbose -R ${path_build}licenses $package
+      cp $verbose_common -R ${path_build}licenses $package
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -372,7 +374,7 @@ package_create_base_files() {
         let failure=1
       fi
     elif [[ -d ${path_build}../licenses ]] ; then
-      cp $verbose -R ${path_build}../licenses $package
+      cp $verbose_common -R ${path_build}../licenses $package
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -391,7 +393,7 @@ package_create_base_files() {
   fi
 
   if [[ $failure == "" ]] ; then
-    cp $verbose -R ${path_build}scripts/bootstrap.sh $package
+    cp $verbose_common -R ${path_build}scripts/bootstrap.sh $package
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -414,7 +416,7 @@ package_create_base_files() {
     fi
 
     if [[ $failure == "" ]] ; then
-      cp $verbose -R ${path_build}scripts/install.sh $package
+      cp $verbose_common -R ${path_build}scripts/install.sh $package
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -439,7 +441,7 @@ package_create_base_files() {
   fi
 
   if [[ $failure != "" && ! -d ${package}build ]] ; then
-    mkdir $verbose -p ${package}build
+    mkdir $verbose_common -p ${package}build
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -451,7 +453,7 @@ package_create_base_files() {
   fi
 
   if [[ $failure != "" && ! -d ${package}sources ]] ; then
-    mkdir $verbose -p ${package}sources
+    mkdir $verbose_common -p ${package}sources
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -463,7 +465,7 @@ package_create_base_files() {
   fi
 
   if [[ $failure != "" && ! -d ${package}documents ]] ; then
-    mkdir $verbose -p ${package}documents
+    mkdir $verbose_common -p ${package}documents
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -475,7 +477,7 @@ package_create_base_files() {
   fi
 
   if [[ $failure != "" && ! -d ${package}licenses ]] ; then
-    mkdir $verbose -p ${package}licenses
+    mkdir $verbose_common -p ${package}licenses
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1113,32 +1115,33 @@ package_operation_clean() {
 
   if [[ $mode_individual == "yes" ]] ; then
     if [[ -d ${path_destination}individual ]] ; then
-      rm $verbose -Rf ${path_destination}individual
+      rm $verbose_common -Rf ${path_destination}individual
     fi
   fi
 
   if [[ $mode_level == "yes" ]] ; then
     if [[ -d ${path_destination}level ]] ; then
-      rm $verbose -Rf ${path_destination}level
+      rm $verbose_common -Rf ${path_destination}level
     fi
   fi
 
   if [[ $mode_monolithic == "yes" ]] ; then
     if [[ -d ${path_destination}monolithic ]] ; then
-      rm $verbose -Rf ${path_destination}monolithic
+      rm $verbose_common -Rf ${path_destination}monolithic
     fi
   fi
 
   if [[ $mode_program == "yes" ]] ; then
     if [[ -d ${path_destination}program ]] ; then
-      rm $verbose -Rf ${path_destination}program
+      rm $verbose_common -Rf ${path_destination}program
     fi
   fi
 }
 
 package_operation_copy_package() {
+
   if [[ -d ${package}sources/data/ ]] ; then
-    cp $verbose -R ${package}sources/data ${package}
+    cp $verbose_common -R ${package}sources/data ${package}
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1149,7 +1152,7 @@ package_operation_copy_package() {
       return $failure
     fi
 
-    rm $verbose -Rf ${package}sources/data
+    rm $verbose_common -Rf ${package}sources/data
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1164,7 +1167,7 @@ package_operation_copy_package() {
   fi
 
   if [[ -d ${package}sources/documents/ ]] ; then
-    cp $verbose -R ${package}sources/documents/ ${package}
+    cp $verbose_common -R ${package}sources/documents/ ${package}
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1175,7 +1178,7 @@ package_operation_copy_package() {
       return $failure
     fi
 
-    rm $verbose -Rf ${package}sources/documents/
+    rm $verbose_common -Rf ${package}sources/documents/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1188,7 +1191,7 @@ package_operation_copy_package() {
   fi
 
   if [[ -d ${package}sources/licenses/ ]] ; then
-    cp $verbose -R ${package}sources/licenses/ ${package}
+    cp $verbose_common -R ${package}sources/licenses/ ${package}
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1199,7 +1202,7 @@ package_operation_copy_package() {
       return $failure
     fi
 
-    rm $verbose -Rf ${package}sources/licenses/
+    rm $verbose_common -Rf ${package}sources/licenses/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1212,7 +1215,7 @@ package_operation_copy_package() {
   fi
 
   if [[ -d ${package}sources/specifications/ ]] ; then
-    cp $verbose -R ${package}sources/specifications/ ${package}
+    cp $verbose_common -R ${package}sources/specifications/ ${package}
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1223,7 +1226,7 @@ package_operation_copy_package() {
       return $failure
     fi
 
-    rm $verbose -Rf ${package}sources/specifications/
+    rm $verbose_common -Rf ${package}sources/specifications/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1236,7 +1239,7 @@ package_operation_copy_package() {
   fi
 
   if [[ -d ${package}sources/tests/ ]] ; then
-    cp $verbose -R ${package}sources/tests/ ${package}
+    cp $verbose_common -R ${package}sources/tests/ ${package}
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1247,7 +1250,7 @@ package_operation_copy_package() {
       return $failure
     fi
 
-    rm $verbose -Rf ${package}sources/tests/
+    rm $verbose_common -Rf ${package}sources/tests/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1261,6 +1264,7 @@ package_operation_copy_package() {
 }
 
 package_operation_create_config_stubs() {
+
   if [[ ! -f ${package}data/build/settings ]] ; then
     return 0
   fi
@@ -1411,7 +1415,7 @@ package_operation_individual() {
   local package=
 
   if [[ ! -d ${path_destination}individual ]] ; then
-    mkdir $verbose -p ${path_destination}individual
+    mkdir $verbose_common -p ${path_destination}individual
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1434,7 +1438,7 @@ package_operation_individual() {
 
     package_create_base_files
 
-    cp $verbose -R $directory ${package}sources/
+    cp $verbose_common -R $directory ${package}sources/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1482,7 +1486,7 @@ package_operation_level() {
     package_create_base_files
 
     if [[ ! -d ${package}data/ ]] ; then
-      mkdir $verbose ${package}data/
+      mkdir $verbose_common ${package}data/
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -1495,9 +1499,9 @@ package_operation_level() {
     fi
 
     if [[ -d $path_build${level}/build ]] ; then
-      cp $verbose -R $path_build${level}/build ${package}data/
+      cp $verbose_common -R $path_build${level}/build ${package}data/
     else
-      cp $verbose -R $path_build$level ${package}data/build
+      cp $verbose_common -R $path_build$level ${package}data/build
     fi
 
     if [[ $? -ne 0 ]] ; then
@@ -1510,7 +1514,7 @@ package_operation_level() {
     fi
 
     if [[ ! -d ${package}sources/ ]] ; then
-      mkdir $verbose ${package}sources/
+      mkdir $verbose_common ${package}sources/
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -1523,7 +1527,7 @@ package_operation_level() {
     fi
 
     for directory in $path_sources${level}/* ; do
-      cp $verbose -R $directory/* ${package}sources/
+      cp $verbose_common -R $directory/* ${package}sources/
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -1534,7 +1538,7 @@ package_operation_level() {
         break
       fi
 
-      rm $verbose -Rf ${package}sources/data/build/
+      rm $verbose_common -Rf ${package}sources/data/build/
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -1588,7 +1592,7 @@ package_operation_monolithic() {
   package_create_base_files
 
   if [[ ! -d ${package}data/ ]] ; then
-    mkdir $verbose ${package}data/
+    mkdir $verbose_common ${package}data/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1601,9 +1605,9 @@ package_operation_monolithic() {
   fi
 
   if [[ -d ${path_build}monolithic/build ]] ; then
-    cp $verbose -R ${path_build}monolithic/build ${package}data
+    cp $verbose_common -R ${path_build}monolithic/build ${package}data
   else
-    cp $verbose -R ${path_build}monolithic ${package}data/build
+    cp $verbose_common -R ${path_build}monolithic ${package}data/build
   fi
 
   if [[ $? -ne 0 ]] ; then
@@ -1616,7 +1620,7 @@ package_operation_monolithic() {
   fi
 
   if [[ ! -d ${package}sources/ ]] ; then
-    mkdir $verbose ${package}sources/
+    mkdir $verbose_common ${package}sources/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1629,7 +1633,7 @@ package_operation_monolithic() {
   fi
 
   if [[ ! -d ${package}tests/ ]] ; then
-    mkdir $verbose ${package}tests/
+    mkdir $verbose_common ${package}tests/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1648,7 +1652,7 @@ package_operation_monolithic() {
 
         if [[ $pathname == "data" ]] ; then
           if [[ ! -d ${package}data/$level ]] ; then
-            mkdir $verbose -p ${package}data/$level
+            mkdir $verbose_common -p ${package}data/$level
 
             if [[ $? -ne 0 ]] ; then
               if [[ $verbosity != "quiet" ]] ; then
@@ -1660,7 +1664,7 @@ package_operation_monolithic() {
             fi
           fi
 
-          cp $verbose -R $subdirectory ${package}sources/data
+          cp $verbose_common -R $subdirectory ${package}sources/data
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
@@ -1671,7 +1675,7 @@ package_operation_monolithic() {
             break
           fi
 
-          rm $verbose -Rf ${package}sources/data/build/
+          rm $verbose_common -Rf ${package}sources/data/build/
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
@@ -1683,7 +1687,7 @@ package_operation_monolithic() {
           fi
 
           if [[ "$(ls ${package}sources/data)" != "" ]] ; then
-            cp $verbose -R ${package}sources/data/* ${package}data/$level
+            cp $verbose_common -R ${package}sources/data/* ${package}data/$level
 
             if [[ $? -ne 0 ]] ; then
               if [[ $verbosity != "quiet" ]] ; then
@@ -1695,7 +1699,7 @@ package_operation_monolithic() {
             fi
           fi
 
-          rm $verbose -Rf ${package}sources/data
+          rm $verbose_common -Rf ${package}sources/data
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
@@ -1706,7 +1710,7 @@ package_operation_monolithic() {
             break
           fi
         elif [[ $pathname == "documents" ]] ; then
-          cp $verbose -R $subdirectory ${package}sources/
+          cp $verbose_common -R $subdirectory ${package}sources/
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
@@ -1717,7 +1721,7 @@ package_operation_monolithic() {
             break
           fi
         elif [[ $pathname == "licenses" ]] ; then
-          cp $verbose -R $subdirectory ${package}sources/
+          cp $verbose_common -R $subdirectory ${package}sources/
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
@@ -1728,7 +1732,7 @@ package_operation_monolithic() {
             break
           fi
         elif [[ $pathname == "specifications" ]] ; then
-          cp $verbose -R $subdirectory ${package}sources/
+          cp $verbose_common -R $subdirectory ${package}sources/
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
@@ -1739,7 +1743,7 @@ package_operation_monolithic() {
             break
           fi
         elif [[ $pathname == "tests" ]] ; then
-          cp $verbose -R $subdirectory ${package}
+          cp $verbose_common -R $subdirectory ${package}
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
@@ -1751,7 +1755,7 @@ package_operation_monolithic() {
           fi
         else
           if [[ ! -d ${package}sources/$pathname/$level ]] ; then
-            mkdir $verbose -p ${package}sources/$pathname/$level
+            mkdir $verbose_common -p ${package}sources/$pathname/$level
 
             if [[ $? -ne 0 ]] ; then
               if [[ $verbosity != "quiet" ]] ; then
@@ -1763,7 +1767,7 @@ package_operation_monolithic() {
             fi
           fi
 
-          cp $verbose -R $subdirectory/* ${package}sources/$pathname/$level
+          cp $verbose_common -R $subdirectory/* ${package}sources/$pathname/$level
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
@@ -1803,7 +1807,7 @@ package_operation_program() {
   local package=
 
   if [[ ! -d ${path_destination}program ]] ; then
-    mkdir $verbose -p ${path_destination}program
+    mkdir $verbose_common -p ${path_destination}program
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1826,7 +1830,7 @@ package_operation_program() {
 
     package_create_base_files
 
-    cp $verbose -R $directory ${package}sources/
+    cp $verbose_common -R $directory ${package}sources/
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -1847,6 +1851,7 @@ package_operation_program() {
 }
 
 package_cleanup() {
+
   unset package_main
   unset package_handle_colors
   unset package_help

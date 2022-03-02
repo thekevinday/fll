@@ -86,11 +86,11 @@ bootstrap_main() {
           context="+n"
         elif [[ $p == "+q" || $p == "++quiet" ]] ; then
           verbosity="quiet"
-          verbose=
+          verbose="+q"
           verbose_common=
         elif [[ $p == "+N" || $p == "++normal" ]] ; then
           verbosity=
-          verbose=
+          verbose="+N"
           verbose_common=
         elif [[ $p == "+V" || $p == "++verbose" ]] ; then
           verbosity="verbose"
@@ -824,7 +824,7 @@ bootstrap_prepare_build() {
   local alt=$1
   local i=
 
-  mkdir $verbose -p ${path_build}{documents,includes,libraries/{script,shared,static},objects/{script,shared,static},programs/{script,shared,static},settings,stage} || failure=1
+  mkdir $verbose_common -p ${path_build}{documents,includes,libraries/{script,shared,static},objects/{script,shared,static},programs/{script,shared,static},settings,stage} || failure=1
 
   if [[ $failure -eq 1 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -835,9 +835,9 @@ bootstrap_prepare_build() {
   fi
 
   if [[ ${variables[$(bootstrap_id path_headers-mode)]} != "" ]] ; then
-    mkdir $verbose -p ${path_build}includes/${variables[$(bootstrap_id path_headers-mode)]} || failure=1
+    mkdir $verbose_common -p ${path_build}includes/${variables[$(bootstrap_id path_headers-mode)]} || failure=1
   elif [[ ${variables[$(bootstrap_id path_headers)]} != "" ]] ; then
-    mkdir $verbose -p ${path_build}includes/${variables[$(bootstrap_id path_headers)]} || failure=1
+    mkdir $verbose_common -p ${path_build}includes/${variables[$(bootstrap_id path_headers)]} || failure=1
   fi
 
   if [[ $failure -eq 1 ]] ; then
@@ -1001,12 +1001,12 @@ bootstrap_operation_build() {
       directory=$(dirname $i)
 
       if [[ $directory == "." ]] ; then
-        cp $verbose -R $path_settings$i ${path_build}settings/ || failure=1
+        cp $verbose_common -R $path_settings$i ${path_build}settings/ || failure=1
       else
-        mkdir $verbose -p ${path_build}settings/$directory || failure=1
+        mkdir $verbose_common -p ${path_build}settings/$directory || failure=1
 
         if [[ $failure -eq 0 ]] ; then
-          cp $verbose -R $path_settings$i ${path_build}settings/${directory}/ || failure=1
+          cp $verbose_common -R $path_settings$i ${path_build}settings/${directory}/ || failure=1
         fi
       fi
     done
@@ -1018,20 +1018,20 @@ bootstrap_operation_build() {
         directory=$(dirname $i)
 
         if [[ $directory == "." ]] ; then
-          cp $verbose -f $path_sources$path_language$i ${path_build}includes/$path_headers || failure=1
+          cp $verbose_common -f $path_sources$path_language$i ${path_build}includes/$path_headers || failure=1
         else
           if [[ ! -d ${path_build}includes/$path_headers$directory ]] ; then
-            mkdir $verbose -p ${path_build}includes/$path_headers$directory || failure=1
+            mkdir $verbose_common -p ${path_build}includes/$path_headers$directory || failure=1
           fi
 
           if [[ $failure -eq 0 ]] ; then
-            cp $verbose -f $path_sources$path_language$i ${path_build}includes/$path_headers$i || failure=1
+            cp $verbose_common -f $path_sources$path_language$i ${path_build}includes/$path_headers$i || failure=1
           fi
         fi
       done
     else
       for i in $sources_headers ; do
-        cp $verbose -f $path_sources$path_language$i ${path_build}includes/$path_headers || failure=1
+        cp $verbose_common -f $path_sources$path_language$i ${path_build}includes/$path_headers || failure=1
       done
     fi
   fi
@@ -1103,18 +1103,18 @@ bootstrap_operation_build() {
       if [[ $failure -eq 0 ]] ; then
         if [[ $version_file_value != "major" ]] ; then
           if [[ $version_file_value == "minor" ]] ; then
-            ln $verbose -sf lib$build_name.so$version_file ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major || failure=1
+            ln $verbose_common -sf lib$build_name.so$version_file ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major || failure=1
           else
-            ln $verbose -sf lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major || failure=1
+            ln $verbose_common -sf lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major || failure=1
 
             if [[ $failure -eq 0 ]] ; then
               if [[ $version_file_value == "micro" ]] ; then
-                ln $verbose -sf lib$build_name.so$version_file ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor || failure=1
+                ln $verbose_common -sf lib$build_name.so$version_file ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor || failure=1
               else
-                ln $verbose -sf lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor$version_micro_prefix$version_micro ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor || failure=1
+                ln $verbose_common -sf lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor$version_micro_prefix$version_micro ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor || failure=1
 
                 if [[ $failure -eq 0 ]] ; then
-                  ln $verbose -sf lib$build_name.so$version_file ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor_prefix$version_minor$version_micro_prefix$version_micro || failure=1
+                  ln $verbose_common -sf lib$build_name.so$version_file ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor_prefix$version_minor$version_micro_prefix$version_micro || failure=1
                 fi
               fi
             fi
@@ -1122,7 +1122,7 @@ bootstrap_operation_build() {
         fi
 
         if [[ $failure -eq 0 ]] ; then
-          ln $verbose -sf lib$build_name.so$version_major_prefix$version_major ${path_build}libraries/${path_library_shared}lib$build_name.so || failure=1
+          ln $verbose_common -sf lib$build_name.so$version_major_prefix$version_major ${path_build}libraries/${path_library_shared}lib$build_name.so || failure=1
         fi
       fi
     fi
@@ -1215,7 +1215,7 @@ bootstrap_operation_build() {
         n=$(basename $i | sed -e 's|\.c$||')
 
         if [[ $directory != "." && ! -d ${path_build}objects/$directory ]] ; then
-          mkdir $verbose -p ${path_build}objects/$directory
+          mkdir $verbose_common -p ${path_build}objects/$directory
 
           if [[ $? -ne 0 ]] ; then
             let failure=1
@@ -2273,20 +2273,20 @@ bootstrap_operation_clean() {
 
   for i in ${path_build}{documents,includes,libraries,objects,programs,settings,stage} ; do
     if [[ -e $i ]] ; then
-      rm $verbose -Rf $i
+      rm $verbose_common -Rf $i
     fi
   done
 
   if [[ -f ${project_built}.prepared ]] ; then
-    rm $verbose -f ${project_built}.prepared
+    rm $verbose_common -f ${project_built}.prepared
   fi
 
   if [[ -f ${project_built_shared}.built ]] ; then
-    rm $verbose -f ${project_built_shared}.built
+    rm $verbose_common -f ${project_built_shared}.built
   fi
 
   if [[ -f ${project_built_static}.built ]] ; then
-    rm $verbose -f ${project_built_static}.built
+    rm $verbose_common -f ${project_built_static}.built
   fi
 }
 
