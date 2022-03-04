@@ -298,7 +298,7 @@ extern "C" {
 
           index = main->parameters.array[utf8_parameter_from_file_e].values.array[i];
 
-          if (!data.argv[index].used) {
+          if (data.argv[index].used) {
             if (!f_file_exists(data.argv[index])) {
               utf8_print_error_parameter_file_not_found(&data, F_true, data.argv[index]);
 
