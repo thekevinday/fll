@@ -611,7 +611,7 @@ extern "C" {
       }
 
       // Ethiopic: U+12B7, U+12BF, U+12C1, U+12C6.
-      if (character == 0xe18ab700 || character == 0xe18abf00 || character == 0x8e18b8100 || character == 0xe18b8600) {
+      if (character == 0xe18ab700 || character == 0xe18abf00 || character == 0xe18b8100 || character == 0xe18b8600) {
         return F_true;
       }
 
