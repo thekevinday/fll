@@ -44,6 +44,17 @@ extern "C" {
     f_string_dynamics_t_initialize, \
   }
 
+  #define macro_f_directory_listing_t_initialize(block, character, directory, regular, link, fifo, socket, unknown) { \
+    block, \
+    character, \
+    directory, \
+    regular, \
+    link, \
+    fifo, \
+    socket, \
+    unknown, \
+  }
+
   #define macro_f_directory_listing_t_delete_simple(listing) \
     macro_f_string_dynamics_t_delete_simple(listing.block) \
     macro_f_string_dynamics_t_delete_simple(listing.character) \
@@ -82,6 +93,8 @@ extern "C" {
 
   #define f_directory_status_t_initialize { 0, f_string_dynamic_t_initialize }
 
+  #define macro_f_directory_status_t_initialize(status, path) { status, path }
+
   #define macro_f_directory_status_t_clear(directory) \
     directory.status = 0; \
     macro_f_string_dynamic_t_clear(directory.path);
@@ -113,6 +126,9 @@ extern "C" {
   } f_directory_statuss_t;
 
   #define f_directory_statuss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_directory_statuss_t_initialize(content, size, used) { array, size, used }
+  #define macro_f_directory_statuss_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_directory_statuss_t_clear(structures) macro_f_memory_structures_clear(structures)
 
@@ -146,7 +162,7 @@ extern "C" {
 
   #define macro_f_directory_statuss_t_delete_simple(structures) \
     structures.used = structures.size; \
-    while (structures.used > 0) { \
+    while (structures.used) { \
       --structures.used; \
       macro_f_directory_status_t_delete_simple(structures.array[structures.used]); \
     } \
@@ -158,7 +174,7 @@ extern "C" {
 
   #define macro_f_directory_statuss_t_destroy_simple(structures) \
     structures.used = structures.size; \
-    while (structures.used > 0) { \
+    while (structures.used) { \
       --structures.used; \
       macro_f_directory_status_t_destroy_simple(structures.array[structures.used]); \
     } \

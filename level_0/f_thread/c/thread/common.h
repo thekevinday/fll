@@ -24,6 +24,8 @@ extern "C" {
 
   #define f_thread_attribute_t_initialize { 0 }
 
+  #define macro_f_thread_attribute_t_initialize(attribute) attribute
+
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
   #define macro_f_thread_attribute_t_clear(attribute) attribute.__align = 0;
 
@@ -47,6 +49,9 @@ extern "C" {
 
   #define f_thread_attributes_t_initialize { 0, 0, 0 }
 
+  #define macro_f_thread_attributes_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_attributes_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_thread_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 
   #define macro_f_thread_attributes_t_resize(status, attributes, length) status = f_thread_attributes_resize(length, &attributes);
@@ -68,6 +73,8 @@ extern "C" {
   typedef pthread_barrier_t f_thread_barrier_t;
 
   #define f_thread_barrier_t_initialize { 0 }
+
+  #define macro_f_thread_barrier_t_initialize(barrier) barrier
 
   #define macro_f_thread_barrier_t_clear(barrier) barrier = 0;
 
@@ -91,6 +98,9 @@ extern "C" {
 
   #define f_thread_barriers_t_initialize { 0, 0, 0 }
 
+  #define macro_f_thread_barriers_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_barriers_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_thread_barriers_t_clear(barriers) macro_f_memory_structure_clear(barriers)
 
   #define macro_f_thread_barriers_t_resize(status, barriers, length) status = f_thread_barriers_resize(length, &barriers);
@@ -112,6 +122,8 @@ extern "C" {
   typedef pthread_barrierattr_t f_thread_barrier_attribute_t;
 
   #define f_thread_barrier_attribute_t_initialize { 0 }
+
+  #define macro_f_thread_barrier_attribute_t_initialize(attribute) attribute
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
   #define macro_f_thread_barrier_attribute_t_clear(attribute) attribute.__align = 0;
@@ -135,6 +147,9 @@ extern "C" {
   } f_thread_barrier_attributes_t;
 
   #define f_thread_barrier_attributes_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_barrier_attributes_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_barrier_attributes_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_barrier_attributes_t_clear(barrier_attributes) macro_f_memory_structure_clear(barrier_attributes)
 
@@ -161,6 +176,8 @@ extern "C" {
 
   #define f_thread_condition_t_initialize PTHREAD_COND_INITIALIZER
 
+  #define macro_f_thread_condition_t_initialize(condition) { condition }
+
   #define macro_f_thread_condition_t_delete_simple(condition) f_thread_condition_delete(&condition);
 #endif // _di_f_thread_condition_t_
 
@@ -180,6 +197,9 @@ extern "C" {
   } f_thread_conditions_t;
 
   #define f_thread_conditions_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_conditions_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_conditions_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_conditions_t_clear(conditions) macro_f_memory_structure_clear(conditions)
 
@@ -203,6 +223,8 @@ extern "C" {
 
   #define f_thread_condition_attribute_t_initialize { 0 };
 
+  #define macro_f_thread_condition_attribute_t_initialize(array, size, used) attribute
+
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
   #define macro_f_thread_condition_attribute_t_clear(attribute) attribute.__align = 0;
 
@@ -225,6 +247,9 @@ extern "C" {
   } f_thread_condition_attributes_t;
 
   #define f_thread_condition_attributes_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_condition_attributes_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_condition_attributes_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_condition_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 
@@ -268,6 +293,9 @@ extern "C" {
 
   #define f_thread_ids_t_initialize { 0, 0, 0 }
 
+  #define macro_f_thread_ids_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_ids_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_thread_ids_t_resize(status, ids, length) macro_f_memory_structure_resize(status, ids, f_thread_id_t, length)
   #define macro_f_thread_ids_t_adjust(status, ids, length) macro_f_memory_structure_adjust(status, ids, f_thread_id_t, length)
 
@@ -287,6 +315,8 @@ extern "C" {
   typedef pthread_key_t f_thread_key_t;
 
   #define f_thread_key_t_initialize 0
+
+  #define macro_f_thread_key_t_initialize(key) key
 
   #define macro_f_thread_key_t_clear(key) key = 0;
 
@@ -309,6 +339,9 @@ extern "C" {
   } f_thread_keys_t;
 
   #define f_thread_keys_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_keys_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_keys_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_keys_t_clear(keys) macro_f_memory_structure_clear(keys)
 
@@ -335,6 +368,8 @@ extern "C" {
 
   #define f_thread_lock_t_initialize PTHREAD_RWLOCK_INITIALIZER
 
+  #define macro_f_thread_lock_t_initialize(lock) lock
+
   #define macro_f_thread_lock_t_delete_simple(lock) f_thread_lock_delete(&lock);
 #endif // _di_f_thread_lock_t_
 
@@ -355,6 +390,9 @@ extern "C" {
 
   #define f_thread_locks_t_initialize { 0, 0, 0 }
 
+  #define macro_f_thread_locks_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_locks_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_thread_locks_t_resize(status, locks, length) macro_f_memory_structure_resize(status, locks, f_thread_lock_t, length)
   #define macro_f_thread_locks_t_adjust(status, locks, length) macro_f_memory_structure_adjust(status, locks, f_thread_lock_t, length)
 
@@ -374,6 +412,8 @@ extern "C" {
   typedef pthread_rwlockattr_t f_thread_lock_attribute_t;
 
   #define f_thread_lock_attribute_t_initialize { 0 }
+
+  #define macro_f_thread_lock_attribute_t_initialize(attribute) attribute
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
   #define macro_f_thread_lock_attribute_t_clear(attribute) attribute.__align = 0;
@@ -397,6 +437,9 @@ extern "C" {
   } f_thread_lock_attributes_t;
 
   #define f_thread_lock_attributes_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_lock_attributes_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_lock_attributes_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_lock_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 
@@ -425,6 +468,8 @@ extern "C" {
 
   #define f_thread_mutex_t_initialize PTHREAD_MUTEX_INITIALIZER
 
+  #define macro_f_thread_mutex_t_initialize(mutex) mutex
+
   #define macro_f_thread_mutex_t_delete_simple(mutex) f_thread_mutex_delete(&mutex);
 #endif // _di_f_thread_mutex_t_
 
@@ -444,6 +489,9 @@ extern "C" {
   } f_thread_mutexs_t;
 
   #define f_thread_mutexs_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_mutexs_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_mutexs_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_mutexs_t_clear(mutexs) macro_f_memory_structure_clear(mutexs)
 
@@ -466,6 +514,8 @@ extern "C" {
   typedef pthread_mutexattr_t f_thread_mutex_attribute_t;
 
   #define f_thread_mutex_attribute_t_initialize { 0 }
+
+  #define macro_f_thread_mutex_attribute_t_initialize(attribute) attribute
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
   #define macro_f_thread_mutex_attribute_t_clear(attribute) attribute.__align = 0;
@@ -490,6 +540,9 @@ extern "C" {
 
   #define f_thread_mutex_attributes_t_initialize { 0, 0, 0 }
 
+  #define macro_f_thread_mutex_attributes_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_mutex_attributes_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_thread_mutex_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 
   #define macro_f_thread_mutex_attributes_t_resize(status, attributes, length) status = f_thread_mutex_attributes_resize(length, &attributes);
@@ -513,6 +566,8 @@ extern "C" {
   typedef pthread_once_t f_thread_once_t;
 
   #define f_thread_once_t_initialize PTHREAD_ONCE_INIT
+
+  #define macro_f_thread_once_t_initialize(once) once
 #endif // _di_f_thread_once_t_
 
 /**
@@ -531,6 +586,11 @@ extern "C" {
   } f_thread_onces_t;
 
   #define f_thread_onces_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_onces_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_onces_t_initialize2(array, length) { array, length, length }
+
+  #define macro_f_thread_onces_t_clear(onces) macro_f_memory_structure_clear(onces)
 
   #define macro_f_thread_onces_t_resize(status, onces, length) macro_f_memory_structure_resize(status, onces, f_thread_once_t, length)
   #define macro_f_thread_onces_t_adjust(status, onces, length) macro_f_memory_structure_adjust(status, onces, f_thread_once_t, length)
@@ -556,6 +616,8 @@ extern "C" {
 
   #define f_thread_semaphore_t_initialize 0
 
+  #define macro_f_thread_semaphore_t_initialize(semaphore) semaphore
+
   #define macro_f_thread_semaphore_t_delete_simple(semaphore) f_thread_semaphore_delete(&semaphore);
 #endif // _di_f_thread_semaphore_t_
 
@@ -575,6 +637,9 @@ extern "C" {
   } f_thread_semaphores_t;
 
   #define f_thread_semaphores_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_semaphores_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_semaphores_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_semaphores_t_clear(semaphores) macro_f_memory_structure_clear(semaphores)
 
@@ -606,9 +671,12 @@ extern "C" {
 
   #define f_thread_set_t_initialize { f_thread_attribute_t_initialize, f_thread_id_t_initialize, 0 }
 
+  #define macro_f_thread_set_t_initialize(attribute, id, result) { attribute, id, result }
+
   #define macro_f_thread_set_t_clear(thread) \
     macro_f_thread_attribute_t_clear(thread.attribute) \
-    macro_f_thread_id_t_clear(thread.id)
+    macro_f_thread_id_t_clear(thread.id) \
+    result = 0;
 
   #define macro_f_thread_set_t_delete_simple(set) macro_f_thread_attribute_t_delete_simple(set.attribute)
 #endif // _di_f_thread_set_t_
@@ -629,6 +697,9 @@ extern "C" {
   } f_thread_sets_t;
 
   #define f_thread_sets_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_sets_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_sets_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_sets_t_clear(sets) macro_f_memory_structure_clear(sets)
 
@@ -654,6 +725,8 @@ extern "C" {
 
   #define f_thread_spin_t_initialize ((pthread_spinlock_t) 0xFFFFFFFF)
 
+  #define macro_f_thread_spin_t_initialize(spin) spin
+
   #define macro_f_thread_spin_t_delete_simple(spin) f_thread_spin_delete(&spin);
 #endif // _di_f_thread_spin_t_
 
@@ -673,6 +746,9 @@ extern "C" {
   } f_thread_spins_t;
 
   #define f_thread_spins_t_initialize { 0, 0, 0 }
+
+  #define macro_f_thread_spins_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_thread_spins_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_thread_spins_t_clear(spins) macro_f_memory_structure_clear(spins)
 

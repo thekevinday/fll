@@ -40,6 +40,8 @@ extern "C" {
 
   #define f_string_t_initialize 0
 
+  #define macro_f_string_t_initialize(string) string
+
   #define macro_f_string_t_clear(string) string = 0;
 
   #define macro_f_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, 1, (void **) & string);
@@ -68,6 +70,8 @@ extern "C" {
   typedef const char *f_string_constant_t;
 
   #define f_string_constant_t_initialize 0
+
+  #define macro_f_string_constant_t_initialize(string) string
 
   #define macro_f_string_constant_t_clear(string) string = 0;
 #endif // _di_f_string_t_

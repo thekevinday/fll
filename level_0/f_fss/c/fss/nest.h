@@ -41,6 +41,8 @@ extern "C" {
 
   #define f_fss_item_t_initialize { f_fss_object_t_initialize, f_fss_content_t_initialize, 0 }
 
+  #define macro_f_fss_item_t_initialize(object, content, parent) macro_f_array_lengths_t_initialize(object, content, parent)
+
   #define macro_f_fss_item_t_clear(item) \
     macro_f_fss_object_t_clear(item.object); \
     macro_f_fss_content_t_clear(item.content); \
@@ -96,6 +98,9 @@ extern "C" {
 
   #define f_fss_items_t_initialize { 0, 0, 0 }
 
+  #define macro_f_fss_items_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fss_items_t_initialize2(array, length)    { array, length, length }
+
   #define macro_f_fss_items_t_clear(items) macro_f_memory_structure_clear(items)
 
   #define macro_f_fss_items_t_resize(status, items, length) status = f_fss_items_resize(length, &items);
@@ -116,7 +121,6 @@ extern "C" {
  * Each array row represents the nesting depth.
  * The top-level will not have any parent, so "parent" must be ignored on anything at index 0.
  * The parent identifier is expected to reference a position in the nesting depth immediately above it.
- * @todo consider instead of using a "parent", have setting set to 0 to represent no data.
  *
  * depth: An array of f_fss_items_t, with each index representing the depth.
  * size:  Total amount of allocated space.
@@ -131,6 +135,9 @@ extern "C" {
   } f_fss_nest_t;
 
   #define f_fss_nest_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_nest_t_initialize(depth, size, used) { depth, size, used }
+  #define macro_f_fss_nest_t_initialize2(depth, length)    { depth, length, length }
 
   #define macro_f_fss_nest_t_clear(nest) macro_f_memory_structures_clear(nest)
 
@@ -162,6 +169,9 @@ extern "C" {
   } f_fss_nests_t;
 
   #define f_fss_nests_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_nests_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fss_nests_t_initialize2(array, length)    { array, length, length }
 
   #define macro_f_fss_nests_t_clear(nests) macro_f_memory_structures_clear(nests)
 

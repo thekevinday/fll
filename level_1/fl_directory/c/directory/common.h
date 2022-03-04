@@ -59,6 +59,15 @@ extern "C" {
   } fl_directory_recurse_t;
 
   #define fl_directory_recurse_t_initialize { FL_directory_recurse_depth_max_d, F_file_default_read_size_d, F_false, macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d), 0, 0 }
+
+  #define macro_fl_directory_recurse_t_initialize(depth_max, size_block, exclusive, output, verbose, failures) { \
+    depth_max, \
+    size_block, \
+    exclusive, \
+    output, \
+    verbose, \
+    failures \
+  }
 #endif // _di_fl_directory_recurse_t_
 
 #ifdef __cplusplus

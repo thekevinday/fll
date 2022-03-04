@@ -43,6 +43,8 @@ extern "C" {
     triple.c.size = 0; \
     triple.c.used = 0;
 
+  #define macro_f_string_triple_t_initialize(a, b, c) { a, b, c }
+
   #define macro_f_string_triple_t_delete_simple(triple) \
     macro_f_string_dynamic_t_delete_simple(triple.a) \
     macro_f_string_dynamic_t_delete_simple(triple.b) \
@@ -70,6 +72,9 @@ extern "C" {
   } f_string_triples_t;
 
   #define f_string_triples_t_initialize f_string_statics_t_initialize
+
+  #define macro_f_string_triples_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_triples_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_triples_t_clear(triples) macro_f_memory_structure_clear(triples)
 
@@ -101,6 +106,9 @@ extern "C" {
   } f_string_tripless_t;
 
   #define f_string_tripless_t_initialize f_string_statics_t_initialize
+
+  #define macro_f_string_tripless_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_tripless_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_tripless_t_clear(tripless) macro_f_memory_structure_clear(tripless)
 

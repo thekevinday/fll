@@ -38,13 +38,13 @@ extern "C" {
 
   #define f_string_static_t_initialize { 0, 0, 0 }
 
+  #define macro_f_string_static_t_initialize(string, size, used) { string, size, used }
+  #define macro_f_string_static_t_initialize2(string, length) { string, length, length }
+
   #define macro_f_string_static_t_clear(string_static) \
     string_static.string = 0; \
     string_static.size = 0; \
     string_static.used = 0;
-
-  #define macro_f_string_static_t_initialize(string, size, used) { string, size, used }
-  #define macro_f_string_static_t_initialize2(string, length) { string, length, length }
 #endif // _di_f_string_static_t_
 
 /**
@@ -63,6 +63,9 @@ extern "C" {
   } f_string_statics_t;
 
   #define f_string_statics_t_initialize { 0, 0, 0 }
+
+  #define macro_f_string_statics_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_statics_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_statics_t_clear(statics) \
     statics.array = 0; \
@@ -86,6 +89,9 @@ extern "C" {
   } f_string_staticss_t;
 
   #define f_string_staticss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_string_staticss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_staticss_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_staticss_t_clear(staticss) \
     staticss.array = 0; \

@@ -357,6 +357,8 @@ extern "C" {
   typedef uint16_t f_console_parameter_id_t;
 
   #define f_console_parameter_id_t_initialize 0
+
+  #define macro_f_console_parameter_id_t_initialize(id) id
 #endif // _di_f_console_parameter_id_t_
 
 /**

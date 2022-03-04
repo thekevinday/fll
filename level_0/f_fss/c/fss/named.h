@@ -38,6 +38,8 @@ extern "C" {
 
   #define f_fss_named_t_initialize { f_fss_object_t_initialize, f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_fss_quotess_t_initialize }
 
+  #define macro_f_fss_named_t_initialize(name, objects, contents, quotess) macro_f_array_lengths_t_initialize(name, objects, contents, quotess)
+
   #define macro_f_fss_named_t_clear(named) \
     macro_f_fss_object_t_clear(named.name) \
     macro_f_fss_objects_t_clear(named.objects) \
@@ -72,6 +74,9 @@ extern "C" {
   } f_fss_nameds_t;
 
   #define f_fss_nameds_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_nameds_t_initialize(array, size, used) macro_f_fss_nameds_t_initialize(array, size, used)
+  #define macro_f_fss_nameds_t_initialize2(array, length)    macro_f_fss_nameds_t_initialize2(array, length)
 
   #define macro_f_fss_nameds_t_clear(nameds) macro_f_memory_structure_clear(nameds);
 

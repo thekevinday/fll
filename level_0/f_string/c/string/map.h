@@ -30,6 +30,8 @@ extern "C" {
 
   #define f_string_map_t_initialize { f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
+  #define macro_f_string_map_t_initialize(name, value) { name, value }
+
   #define macro_f_string_map_t_clear(map) \
     macro_f_string_dynamic_t_clear(map.name) \
     macro_f_string_dynamic_t_clear(map.value)
@@ -59,6 +61,9 @@ extern "C" {
   } f_string_maps_t;
 
   #define f_string_maps_t_initialize f_string_statics_t_initialize
+
+  #define macro_f_string_maps_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_maps_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_maps_t_clear(maps) macro_f_memory_structure_clear(maps)
 
@@ -91,6 +96,9 @@ extern "C" {
 
   #define f_string_mapss_t_initialize f_string_statics_t_initialize
 
+  #define macro_f_string_mapss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_mapss_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_string_mapss_t_clear(maps) macro_f_memory_structure_clear(maps)
 
   #define macro_f_string_mapss_t_resize(status, maps, length) status = f_string_mapss_resize(length, &maps);
@@ -118,6 +126,8 @@ extern "C" {
   } f_string_map_multi_t;
 
   #define f_string_map_multi_t_initialize { f_string_dynamic_t_initialize, f_string_dynamics_t_initialize }
+
+  #define macro_f_string_map_t_initialize(name, value) { name, value }
 
   #define macro_f_string_map_multi_t_clear(map) \
     macro_f_string_dynamic_t_clear(map.name) \
@@ -149,6 +159,9 @@ extern "C" {
 
   #define f_string_map_multis_t_initialize f_string_statics_t_initialize
 
+  #define macro_f_string_map_multis_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_map_multis_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_string_map_multis_t_clear(map_multis) macro_f_memory_structure_clear(map_multis)
 
   #define macro_f_string_map_multis_t_resize(status, map_multis, length) status = f_string_map_multis_resize(length, &map_multis);
@@ -179,6 +192,9 @@ extern "C" {
   } f_string_map_multiss_t;
 
   #define f_string_map_multiss_t_initialize f_string_statics_t_initialize
+
+  #define macro_f_string_map_multiss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_map_multiss_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_map_multiss_t_clear(map_multis) macro_f_memory_structure_clear(map_multis)
 

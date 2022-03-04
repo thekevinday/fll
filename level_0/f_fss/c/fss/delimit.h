@@ -21,6 +21,8 @@ extern "C" {
  */
 #ifndef _di_f_fss_delimit_t_
   typedef f_array_length_t f_fss_delimit_t;
+
+  #define macro_f_fss_object_t_initialize(length) macro_f_string_range_t_initialize(length)
 #endif // _di_f_fss_delimit_t_
 
 /**
@@ -34,6 +36,9 @@ extern "C" {
   typedef f_array_lengths_t f_fss_delimits_t;
 
   #define f_fss_delimits_t_initialize f_array_lengths_t_initialize
+
+  #define macro_f_fss_delimits_t_initialize(array, size, used) macro_f_array_lengths_t_initialize(array, size, used)
+  #define macro_f_fss_delimits_t_initialize2(array, length)    macro_f_array_lengths_t_initialize2(array, length)
 
   #define macro_f_fss_delimits_t_clear(delimits) macro_f_array_lengths_t_clear(delimits)
 
@@ -60,6 +65,9 @@ extern "C" {
   typedef f_array_lengthss_t f_fss_delimitss_t;
 
   #define f_fss_delimitss_t_initialize f_array_lengthss_t_initialize
+
+  #define macro_f_fss_delimitss_t_initialize(array, size, used) macro_f_array_lengthss_t_initialize(array, size, used)
+  #define macro_f_fss_delimitss_t_initialize2(array, length)    macro_f_array_lengthss_t_initialize2(array, length)
 
   #define macro_f_fss_delimitss_t_clear(delimitss) macro_f_array_lengthss_t_clear(delimitss)
 

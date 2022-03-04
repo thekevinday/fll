@@ -76,8 +76,6 @@ extern "C" {
 /**
  * A structure representing a scheduler and its parameters for execution.
  *
- * @todo move this into a f_scheduler project.
- *
  * policy:   The scheduler policy.
  * priority: The scheduler priority;
  */
@@ -112,6 +110,8 @@ extern "C" {
   } f_execute_result_t;
 
   #define f_execute_result_t_initialize { 0 }
+
+  #define macro_f_execute_result_t_initialize(status, pid) { status, pid }
 
   #define f_execute_result_t_clear(execute_result) \
     execute_result.status = 0; \

@@ -52,6 +52,8 @@ extern "C" {
 
   #define f_control_group_t_initialize { F_false, f_string_dynamic_t_initialize, f_string_dynamics_t_initialize }
 
+  #define macro_f_control_group_t_initialize(as_new, path, groups) { as_new, path, groups }
+
   #define macro_f_control_group_t_clear(control) \
     control.as_new = F_false; \
     macro_f_string_dynamic_t_clear(control.path); \

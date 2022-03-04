@@ -260,6 +260,8 @@ enum {
 
   #define f_fss_object_t_initialize f_string_range_t_initialize
 
+  #define macro_f_fss_object_t_initialize(length) macro_f_string_range_t_initialize(length)
+
   #define macro_f_fss_object_t_clear(object) macro_f_string_range_t_clear(object)
 #endif // _di_f_fss_object_t_
 
@@ -274,6 +276,9 @@ enum {
   typedef f_string_ranges_t f_fss_objects_t;
 
   #define f_fss_objects_t_initialize f_string_ranges_t_initialize
+
+  #define macro_f_fss_objects_t_initialize(array, size, used) macro_f_string_ranges_t_initialize(array, size, used)
+  #define macro_f_fss_objects_t_initialize2(array, length)    macro_f_string_ranges_t_initialize2(array, length)
 
   #define macro_f_fss_objects_t_clear(objects) macro_f_string_ranges_t_clear(objects)
 
@@ -303,6 +308,9 @@ enum {
 
   #define f_fss_content_t_initialize f_string_ranges_t_initialize
 
+  #define macro_f_fss_content_t_initialize(array, size, used) macro_f_string_ranges_t_initialize(array, size, used)
+  #define macro_f_fss_content_t_initialize2(array, length)    macro_f_string_ranges_t_initialize2(array, length)
+
   #define macro_f_fss_content_t_clear(content) macro_f_string_ranges_t_clear(content)
 
   #define macro_f_fss_content_t_resize(status, content, length) macro_f_string_ranges_t_resize(status, content, length)
@@ -328,6 +336,9 @@ enum {
   typedef f_string_rangess_t f_fss_contents_t;
 
   #define f_fss_contents_t_initialize f_string_rangess_t_initialize
+
+  #define macro_f_fss_contents_t_initialize(array, size, used) macro_f_string_rangess_t_initialize(array, size, used)
+  #define macro_f_fss_contents_t_initialize2(array, length)    macro_f_string_rangess_t_initialize2(array, length)
 
   #define macro_f_fss_contents_t_clear(contents) macro_f_string_rangess_t_clear(contents)
 

@@ -33,6 +33,8 @@ extern "C" {
 
   #define f_fss_set_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize }
 
+  #define macro_f_fss_set_t_initialize(objects, contents) { objects, contents }
+
   #define macro_f_fss_set_t_clear(set) \
     macro_f_fss_objects_t_clear(set.objects) \
     macro_f_fss_contents_t_clear(set.contents)
@@ -86,10 +88,10 @@ extern "C" {
  * The objects, contents, and quotes should each be of the same used and size.
  * Any deviation to this would require implementing custom equivelents to the standard management macros.
  *
- * objects:        the array of objects.
- * contents:       the array of contents.
- * objects_quote:  the array of objects quote types.
- * contents_quote: the array of contents quote types.
+ * objects:        The array of objects.
+ * contents:       The array of contents.
+ * objects_quote:  The array of objects quote types.
+ * contents_quote: The array of contents quote types.
  */
 #ifndef _di_f_fss_set_quote_t_
   typedef struct {
@@ -101,6 +103,8 @@ extern "C" {
   } f_fss_set_quote_t;
 
   #define f_fss_set_quote_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_fss_quotes_t_initialize, f_fss_quotess_t_initialize }
+
+  #define macro_f_fss_set_quote_t_initialize(objects, contents, objects_quote, contents_quote) { objects, contents, objects_quote, contents_quote }
 
   #define macro_f_fss_set_quote_t_clear(set) \
     macro_f_fss_objects_t_clear(set.objects) \
@@ -136,6 +140,9 @@ extern "C" {
   } f_fss_set_quotes_t;
 
   #define f_fss_set_quotes_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fss_set_quotes_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fss_set_quotes_t_initialize2(array, length)    { array, length, length }
 
   #define macro_f_fss_set_quotes_t_clear(nameds) macro_f_memory_structure_clear(nameds)
 

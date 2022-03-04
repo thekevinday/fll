@@ -33,6 +33,7 @@ extern "C" {
   #define fl_signal_interrupt_t_initialize { f_int32s_t_initialize, f_signal_t_initialize, 0 }
 
   #define macro_fl_signal_interrupt_t_initialize(interrupts, signal) { interrupts, signal, 0 }
+  #define macro_fl_signal_interrupt_t_initialize2(interrupts, signal, trigger) { interrupts, signal, trigger }
 
   #define macro_fl_signal_interrupt_t_clear(structure) \
     macro_f_int32s_t_clear(structure.interrupts) \

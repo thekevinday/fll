@@ -304,6 +304,8 @@ extern "C" {
 
   #define f_array_length_t_initialize 0
 
+  #define macro_f_array_length_t_initialize(length) length
+
   #define F_array_length_t_size_d     F_number_t_size_unsigned_d
   #define F_array_length_t_size_max_d F_number_t_size_max_unsigned_d
 #endif // _di_f_array_t_
@@ -311,8 +313,8 @@ extern "C" {
 /**
  * A structure designating a row and column, just like a cell in a table.
  *
- * row:    the row position.
- * column: the column position.
+ * row:    The row position.
+ * column: The column position.
  */
 #ifndef _di_f_cell_t_
   typedef struct {
@@ -321,6 +323,8 @@ extern "C" {
   } f_cell_t;
 
   #define f_cell_t_initialize { 0, 0 }
+
+  #define macro_f_cell_t_initialize(row, column) { row, column }
 
   #define macro_f_cell_t_clear(cell) \
     cell.row = 0; \
@@ -345,6 +349,9 @@ extern "C" {
   } f_cells_t;
 
   #define f_cells_t_initialize { 0, 0, 0 }
+
+  #define macro_f_cells_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_cells_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_cells_t_
 
 /**
@@ -365,6 +372,9 @@ extern "C" {
   } f_cellss_t;
 
   #define f_cellss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_cellss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_cellss_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_cellss_t_
 
 /**
@@ -527,6 +537,9 @@ extern "C" {
   } f_array_lengths_t;
 
   #define f_array_lengths_t_initialize { 0, 0, 0 }
+
+  #define macro_f_array_lengths_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_array_lengths_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_array_lengths_t_
 
 /**
@@ -547,6 +560,9 @@ extern "C" {
   } f_array_lengthss_t;
 
   #define f_array_lengthss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_array_lengthss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_array_lengthss_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_array_lengthss_t_
 
 /**
@@ -567,6 +583,9 @@ extern "C" {
   } f_int8s_t;
 
   #define f_int8s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int8s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int8s_t_initialize2(array, length) { array, length, length }
 #endif // _di_int8s_t_
 
 /**
@@ -587,6 +606,9 @@ extern "C" {
   } f_int8ss_t;
 
   #define f_int8ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int8ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int8ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_int8ss_t_
 
 /**
@@ -607,6 +629,9 @@ extern "C" {
   } f_uint8s_t;
 
   #define f_uint8s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint8s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint8s_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint8s_t_
 
 /**
@@ -627,6 +652,9 @@ extern "C" {
   } f_uint8ss_t;
 
   #define f_uint8ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint8ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint8ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint8ss_t_
 
 /**
@@ -647,6 +675,9 @@ extern "C" {
   } f_int16s_t;
 
   #define f_int16s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int16s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int16s_t_initialize2(array, length) { array, length, length }
 #endif // _di_int16s_t_
 
 /**
@@ -667,6 +698,9 @@ extern "C" {
   } f_int16ss_t;
 
   #define f_int16ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int16ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int16ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_int16ss_t_
 
 /**
@@ -687,6 +721,9 @@ extern "C" {
   } f_uint16s_t;
 
   #define f_uint16s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint16s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint16s_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint16s_t_
 
 /**
@@ -707,6 +744,9 @@ extern "C" {
   } f_uint16ss_t;
 
   #define f_uint16ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint16s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint16s_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint16ss_t_
 
 /**
@@ -727,6 +767,9 @@ extern "C" {
   } f_int32s_t;
 
   #define f_int32s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int32s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int32s_t_initialize2(array, length) { array, length, length }
 #endif // _di_int32s_t_
 
 /**
@@ -747,6 +790,9 @@ extern "C" {
   } f_int32ss_t;
 
   #define f_int32ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int32ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int32ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_int32ss_t_
 
 /**
@@ -767,6 +813,9 @@ extern "C" {
   } f_uint32s_t;
 
   #define f_uint32s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint32s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint32s_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint32s_t_
 
 /**
@@ -787,6 +836,9 @@ extern "C" {
   } f_uint32ss_t;
 
   #define f_uint32ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint32ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint32ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint32ss_t_
 
 /**
@@ -807,6 +859,9 @@ extern "C" {
   } f_int64s_t;
 
   #define f_int64s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int64s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int64s_t_initialize2(array, length) { array, length, length }
 #endif // _di_int64s_t_
 
 /**
@@ -827,6 +882,9 @@ extern "C" {
   } f_int64ss_t;
 
   #define f_int64ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int64ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int64ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_int64ss_t_
 
 /**
@@ -847,6 +905,9 @@ extern "C" {
   } f_uint64s_t;
 
   #define f_uint64s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint64s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint64s_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint64s_t_
 
 /**
@@ -867,6 +928,9 @@ extern "C" {
   } f_uint64ss_t;
 
   #define f_uint64ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint64ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint64ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint64ss_t_
 
 /**
@@ -914,6 +978,9 @@ extern "C" {
   } f_int128s_t;
 
   #define f_int128s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int128s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int128s_t_initialize2(array, length) { array, length, length }
 #endif // _di_int128s_t_
 
 /**
@@ -934,6 +1001,9 @@ extern "C" {
   } f_int128ss_t;
 
   #define f_int128ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int128ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_int128ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_int128ss_t_
 
 /**
@@ -954,6 +1024,9 @@ extern "C" {
   } f_uint128s_t;
 
   #define f_uint128s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint128s_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint128s_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint128s_t_
 
 /**
@@ -974,6 +1047,9 @@ extern "C" {
   } f_uint128ss_t;
 
   #define f_uint128ss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_uint128ss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_uint128ss_t_initialize2(array, length) { array, length, length }
 #endif // _di_uint128ss_t_
 
 /**
@@ -994,6 +1070,9 @@ extern "C" {
   } f_statuss_t;
 
   #define f_statuss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_statuss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_statuss_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_statuss_t_
 
 /**
@@ -1014,6 +1093,9 @@ extern "C" {
   } f_statusss_t;
 
   #define f_statusss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_statusss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_statusss_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_statusss_t_
 
 /**
@@ -1034,6 +1116,9 @@ extern "C" {
   } f_states_t;
 
   #define f_states_t_initialize { 0, 0, 0 }
+
+  #define macro_f_states_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_states_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_states_t_
 
 /**
@@ -1054,6 +1139,9 @@ extern "C" {
   } f_statess_t;
 
   #define f_statess_t_initialize { 0, 0, 0 }
+
+  #define macro_f_statess_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_statess_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_statess_t_
 
 /**
@@ -1098,6 +1186,8 @@ extern "C" {
     0, \
   }
 
+  #define macro_f_fll_id_t_initialize(name, type, used) { name, type, used }
+
   #define macro_f_fll_id_t_clear(id) \
     id.name[0] = 0; \
     id.type = 0; \
@@ -1122,6 +1212,9 @@ extern "C" {
   } f_fll_ids_t;
 
   #define f_fll_ids_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fll_ids_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fll_ids_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_fll_ids_t_
 
 /**
@@ -1142,6 +1235,9 @@ extern "C" {
   } f_fll_idss_t;
 
   #define f_fll_idss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_fll_idss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fll_idss_t_initialize2(array, length) { array, length, length }
 #endif // _di_f_fll_idss_t_
 
 #ifdef __cplusplus

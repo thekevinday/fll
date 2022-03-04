@@ -51,7 +51,15 @@ extern "C" {
     f_string_dynamic_t shell;
   } f_account_t;
 
-  #define f_account_t_initialize { 0, 0, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
+  #define f_account_t_initialize { \
+    0, \
+    0, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize \
+  }
 
   #define macro_f_account_t_clear(account) \
     account.id_user = 0; \
@@ -93,6 +101,9 @@ extern "C" {
   } f_accounts_t;
 
   #define f_accounts_t_initialize { 0, 0, 0 }
+
+  #define macro_f_accounts_t_initialize(content, size, used) { array, size, used }
+  #define macro_f_accounts_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_accounts_t_clear(accounts) macro_f_memory_structure_clear(accounts)
 

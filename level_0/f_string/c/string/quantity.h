@@ -35,6 +35,12 @@ extern "C" {
   } f_string_quantity_t;
 
   #define f_string_quantity_t_initialize { 0, 0 }
+
+  #define macro_f_string_quantity_t_initialize(start, total) { start, total }
+
+  #define macro_f_string_quantity_t_clear(quantity) \
+    quantity.start = 0; \
+    quantity.total = 0;
 #endif // _di_f_string_quantity_t_
 
 /**
@@ -53,6 +59,9 @@ extern "C" {
   } f_string_quantitys_t;
 
   #define f_string_quantitys_t_initialize { 0, 0, 0 }
+
+  #define macro_f_string_quantitys_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_quantitys_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_quantitys_t_clear(quantitys) macro_f_memory_structure_clear(quantitys)
 
@@ -84,6 +93,9 @@ extern "C" {
   } f_string_quantityss_t;
 
   #define f_string_quantityss_t_initialize { 0, 0, 0 }
+
+  #define macro_f_string_quantityss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_quantityss_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_quantityss_t_clear(quantityss) macro_f_memory_structures_clear(quantityss)
 

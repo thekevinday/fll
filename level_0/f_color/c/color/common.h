@@ -293,6 +293,8 @@ extern "C" {
     f_color_string_medium_s \
   }
 
+  #define macro_f_color_format_t_initialize(begin, end, medium) { begin, end, medium }
+
   #define macro_f_color_format_t_clear(format) \
     macro_f_string_static_t_clear(format.begin) \
     macro_f_string_static_t_clear(format.end) \

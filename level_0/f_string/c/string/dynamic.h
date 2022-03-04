@@ -33,6 +33,9 @@ extern "C" {
 
   #define f_string_dynamic_t_initialize f_string_static_t_initialize
 
+  #define macro_f_string_dynamic_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_dynamic_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_string_dynamic_t_clear(dynamic) macro_f_string_static_t_clear(dynamic)
 
   #define macro_f_string_dynamic_t_resize(status, dynamic, length) status = f_string_dynamic_resize(length, &dynamic);
@@ -59,6 +62,9 @@ extern "C" {
 
   #define f_string_dynamics_t_initialize f_string_statics_t_initialize
 
+  #define macro_f_string_dynamics_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_dynamics_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_string_dynamics_t_clear(dynamics) macro_f_string_statics_t_clear(dynamics)
 
   #define macro_f_string_dynamics_t_resize(status, dynamics, length) status = f_string_dynamics_resize(length, &dynamics);
@@ -84,6 +90,9 @@ extern "C" {
   typedef f_string_staticss_t f_string_dynamicss_t;
 
   #define f_string_dynamicss_t_initialize f_string_staticss_t_initialize
+
+  #define macro_f_string_dynamicss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_string_dynamicss_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_string_dynamicss_t_clear(dynamicss) macro_f_string_staticss_t_clear(dynamicss)
 

@@ -68,6 +68,17 @@ extern "C" {
       f_signal_t_initialize, \
       f_color_context_t_initialize, \
     }
+
+  #define macro_fll_program_data_t_initialize(parameters, signal_check, process_pipe, output, error, warning, signal, context) { \
+    parameters, \
+    signal_check, \
+    process_pipe, \
+    output, \
+    error, \
+    warning, \
+    signal, \
+    context, \
+  }
 #endif // _di_fll_program_data_t_
 
 /**
