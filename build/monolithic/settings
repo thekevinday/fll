@@ -170,6 +170,7 @@ search_static yes
 
 #defines -D_di_libcap_
 defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines-clang -D_clang_not_a_compile_time_constant_workaround_
 defines-monolithic
 defines-monolithic_threadless -D_di_pthread_support_
 defines_library
