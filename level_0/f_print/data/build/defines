@@ -1,2 +1,3 @@
 # fss-0000
 
+_clang_not_a_compile_time_constant_workaround_ Work around CLangs error "initializer element is not a compile-time constant".

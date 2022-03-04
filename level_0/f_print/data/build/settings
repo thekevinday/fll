@@ -70,6 +70,7 @@ search_shared yes
 search_static yes
 
 defines
+defines-clang -D_clang_not_a_compile_time_constant_workaround_
 defines_library
 defines_library_shared
 defines_library_static
