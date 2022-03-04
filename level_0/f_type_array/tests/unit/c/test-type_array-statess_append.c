@@ -12,8 +12,8 @@ void test__f_type_array_statess_append__works(void **state) {
   f_statess_t source = f_states_t_initialize;
   f_statess_t destination = f_states_t_initialize;
 
-  const f_state_t state_0 = { step_large: 10, step_small: 1, handle: 0, interrupt: 0, callbacks: 0, custom: 0, data: 0 };
-  const f_state_t state_1 = { step_large: 20, step_small: 2, handle: 0, interrupt: 0, callbacks: 0, custom: 0, data: 0 };
+  const f_state_t state_0 = { .step_large = 10, .step_small = 1, .handle = 0, .interrupt = 0, .callbacks = 0, .custom = 0, .data = 0 };
+  const f_state_t state_1 = { .step_large = 20, .step_small = 2, .handle = 0, .interrupt = 0, .callbacks = 0, .custom = 0, .data = 0 };
 
   {
     const f_status_t status = f_statess_resize(length, &source);

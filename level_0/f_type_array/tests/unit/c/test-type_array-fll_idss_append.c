@@ -12,8 +12,8 @@ void test__f_type_array_fll_idss_append__works(void **state) {
   f_fll_idss_t source = f_fll_ids_t_initialize;
   f_fll_idss_t destination = f_fll_ids_t_initialize;
 
-  const f_fll_id_t fll_id_0 = { name: "test", type: 1, used: 4 };
-  const f_fll_id_t fll_id_1 = { name: "other", type: 2, used: 5 };
+  const f_fll_id_t fll_id_0 = { .name = "test", .type = 1, .used = 4 };
+  const f_fll_id_t fll_id_1 = { .name = "other", .type = 2, .used = 5 };
 
   {
     const f_status_t status = f_fll_idss_resize(length, &source);

@@ -11,8 +11,8 @@ void test__f_type_array_cells_append__works(void **state) {
   f_cells_t source = f_cells_t_initialize;
   f_cells_t destination = f_cells_t_initialize;
 
-  const f_cell_t cell_0 = { row: 1, column: 2 };
-  const f_cell_t cell_1 = { row: 3, column: 4 };
+  const f_cell_t cell_0 = { .row = 1, .column = 2 };
+  const f_cell_t cell_1 = { .row = 3, .column = 4 };
 
   {
     const f_status_t status = f_cells_resize(length, &source);
