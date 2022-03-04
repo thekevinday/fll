@@ -122,6 +122,7 @@ void test__f_control_group_copy__works(void **state) {
     f_string_static_t groups[] = {
       f_string_static_t_initialize,
       f_string_static_t_initialize,
+      f_string_static_t_initialize,
     };
 
     groups[0].string = "group_1";
