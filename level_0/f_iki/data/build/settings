@@ -22,7 +22,7 @@ build_indexer ar
 build_indexer_arguments rcs
 build_language c
 build_libraries -lc
-build_libraries-individual -lf_memory -lf_string -lf_utf
+build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf
 build_libraries_shared
 build_libraries_static
 build_objects_library
