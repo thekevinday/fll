@@ -74,6 +74,8 @@ extern "C" {
  *
  * @param buffer
  *   The string to validate as an content name.
+ * @param length
+ *   The length of the string to validate.
  * @param range
  *   The range within the buffer that represents the content name.
  * @param quote
@@ -90,7 +92,7 @@ extern "C" {
  * @see f_iki_content_partial_is()
  */
 #if !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
-  extern f_status_t private_f_iki_content_partial_is(const f_string_static_t buffer, const f_string_range_t range, const char quote) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_content_partial_is(const f_string_t buffer, const f_array_length_t length, const char quote) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
 
 /**
@@ -100,8 +102,8 @@ extern "C" {
  *
  * @param buffer
  *   The string to validate as an object name.
- * @param range
- *   The range within the buffer that represents the object name.
+ * @param length
+ *   The length of the string to validate.
  *
  * @return
  *   F_true on success and string is a valid object name.
@@ -113,7 +115,7 @@ extern "C" {
  * @see f_iki_object_partial_is()
  */
 #if !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
-  extern f_status_t private_f_iki_object_partial_is(const f_string_static_t buffer, const f_string_range_t range) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_iki_object_partial_is(const f_string_t buffer, const f_array_length_t length) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
 
 #ifdef __cplusplus

@@ -35,6 +35,8 @@ extern "C" {
 /**
  * Determine if an content is a valid IKI content name.
  *
+ * The content does not include the wrapping quotes.
+ *
  * @param content
  *   The string to validate as an content name.
  * @param quote
@@ -44,6 +46,8 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid content name.
  *   F_false on success and string is not a valid content name.
+ *   F_data_not on success, but the content.used is 0.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_iki_content_is_
@@ -52,6 +56,8 @@ extern "C" {
 
 /**
  * Determine if an content, found within the given range, is a valid IKI content name.
+ *
+ * The content does not include the wrapping quotes.
  *
  * @param content
  *   The string to validate as an content name.
@@ -64,6 +70,9 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid content name.
  *   F_false on success and string is not a valid content name.
+ *   F_data_not on success, but the content.used is 0.
+ *   F_data_not_eos on success but the start range exceeds the buffer.used.
+ *   F_data_not_stop on success but the start range exceeds the stop range.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -80,6 +89,7 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid object name.
  *   F_false on success and string is not a valid object name.
+ *   F_data_not on success, but the object.used is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -90,7 +100,7 @@ extern "C" {
 #endif // _di_f_iki_object_is_
 
 /**
- * Determine if an object, found within the buffer, is a valid IKI object name.
+ * Determine if an object, found within the given range, is a valid IKI object name.
  *
  * @param object
  *   The string to validate as an object name.
@@ -100,10 +110,13 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid object name.
  *   F_false on success and string is not a valid object name.
+ *   F_data_not on success, but the object.used is 0.
+ *   F_data_not_eos on success but the start range exceeds the object.used.
+ *   F_data_not_stop on success but the start range exceeds the stop range.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_word().
+ *   Errors (with error bit) from: f_utf_is_word_dash_plus().
  */
 #ifndef _di_f_iki_object_partial_is_
   extern f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range);

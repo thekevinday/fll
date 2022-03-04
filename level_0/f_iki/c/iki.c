@@ -12,42 +12,64 @@ extern "C" {
       if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const f_string_range_t range = macro_f_string_range_t_initialize(content.used);
+    if (!content.used) {
+      return F_data_not;
+    }
 
-    return private_f_iki_content_partial_is(content, range, quote.string[0]);
+    return private_f_iki_content_partial_is(content.string, content.used, quote.string[0]);
   }
 #endif // _di_f_iki_content_is_
 
 #ifndef _di_f_iki_content_partial_is_
   f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote) {
     #ifndef _di_level_0_parameter_checking_
-      if (range.start > range.stop) return F_status_set_error(F_parameter);
-      if (range.start >= content.used) return F_status_set_error(F_parameter);
       if (!quote.used) return F_status_set_error(F_parameter);
       if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_iki_content_partial_is(content, range, quote.string[0]);
+    if (!content.used) {
+      return F_data_not;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
+
+    if (range.start >= content.used) {
+      return F_data_not_eos;
+    }
+
+    return private_f_iki_content_partial_is(content.string + range.start, (range.stop - range.start) + 1, quote.string[0]);
   }
 #endif // _di_f_iki_content_partial_is_
 
 #ifndef _di_f_iki_object_is_
   f_status_t f_iki_object_is(const f_string_static_t object) {
 
-    const f_string_range_t range = macro_f_string_range_t_initialize(object.used);
+    if (!object.used) {
+      return F_data_not;
+    }
 
-    return private_f_iki_object_partial_is(object, range);
+    return private_f_iki_object_partial_is(object.string, object.used);
   }
 #endif // _di_f_iki_object_is_
 
 #ifndef _di_f_iki_object_partial_is_
   f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range) {
-    #ifndef _di_level_0_parameter_checking_
-      if (range.start > range.stop) return F_status_set_error(F_parameter);
-      if (range.start >= object.used) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    return private_f_iki_object_partial_is(object, range);
+    if (!object.used) {
+      return F_data_not;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
+
+    if (range.start >= object.used) {
+      return F_data_not_eos;
+    }
+
+    return private_f_iki_object_partial_is(object.string + range.start, (range.stop - range.start) + 1);
   }
 #endif // _di_f_iki_object_partial_is_
 

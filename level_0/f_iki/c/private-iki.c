@@ -82,13 +82,13 @@ extern "C" {
 #endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
 
 #if !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
-  f_status_t private_f_iki_content_partial_is(const f_string_static_t buffer, const f_string_range_t range, const char quote) {
+  f_status_t private_f_iki_content_partial_is(const f_string_t buffer, const f_array_length_t length, const char quote) {
 
     f_array_length_t delimits = 0;
 
-    for (f_array_length_t i = 0; i < buffer.used; ++i) {
+    for (f_array_length_t i = 0; i < length; i += macro_f_utf_byte_width(buffer[i])) {
 
-      if (buffer.string[i] == quote) {
+      if (buffer[i] == quote) {
         if (delimits && delimits % 2) {
           delimits = 0;
 
@@ -97,7 +97,8 @@ extern "C" {
 
         return F_false;
       }
-      else if (buffer.string[i] == f_iki_syntax_slash_s.string[0]) {
+
+      if (buffer[i] == f_iki_syntax_slash_s.string[0]) {
         ++delimits;
       }
       else {
@@ -110,13 +111,13 @@ extern "C" {
 #endif // !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
 
 #if !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
-  f_status_t private_f_iki_object_partial_is(const f_string_static_t buffer, const f_string_range_t range) {
+  f_status_t private_f_iki_object_partial_is(const f_string_t buffer, const f_array_length_t length) {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < buffer.used; ++i) {
+    for (f_array_length_t i = 0; i < length; i += macro_f_utf_byte_width(buffer[i])) {
 
-      status = f_utf_is_word(buffer.string + i, buffer.used - i, F_false);
+      status = f_utf_is_word_dash_plus(buffer + i, length - i, F_false);
       if (F_status_is_error(status)) return status;
 
       if (status == F_false) return F_false;
