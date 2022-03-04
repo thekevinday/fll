@@ -134,7 +134,7 @@ extern "C" {
   extern const f_string_static_t f_print_sequence_end_of_transmission_s;
   extern const f_string_static_t f_print_sequence_end_of_transmission_block_s;
   extern const f_string_static_t f_print_sequence_escape_s;
-  extern const f_string_static_t f_print_sequence_equiry_s;
+  extern const f_string_static_t f_print_sequence_enquiry_s;
   extern const f_string_static_t f_print_sequence_form_feed_s;
   extern const f_string_static_t f_print_sequence_line_feed_s;
   extern const f_string_static_t f_print_sequence_line_new_s;
