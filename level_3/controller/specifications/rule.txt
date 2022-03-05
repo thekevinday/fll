@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Rule Specification:
   The Rule files follow the FSS-000D (Basic Rule) format with IKI-0000 (Unrestricted IKI).

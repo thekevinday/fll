@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 IKI Specifications:
   IKI is a minimally structured WIKI-like syntax meant to be simpler than WIKI syntax.

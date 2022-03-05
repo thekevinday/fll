@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 IKI Specification: 0000 - Unrestricted:
   This specification provides no restrictions on the vocabulary.

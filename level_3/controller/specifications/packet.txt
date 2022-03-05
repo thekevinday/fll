@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Entry Specification:
   The controller program communicates use the FSS-000E Packet format.

@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Featureless Settings Specification: 000D - Basic Rule:
   This is a special case that follows fss-0002 (Basic List), and different FSS formats inside this Basic List.

@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Dependencies Specification:
   The build settings "dependencies" file follows the FSS-0000 (Basic) format.

@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Settings Specification:
   The build settings "settings" file follows the FSS-0001 (Extended) format.

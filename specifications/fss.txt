@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Featureless Settings Specifications:
   A Keep It Simple Stupid specifications for configuration/settings files.

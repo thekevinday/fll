@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Featureless Settings Specification: 0006 - Somewhat Extended List:
   This is a fss-0003 Extended List whose Content is then processed as fss-0000 Basic.

@@ -1,5 +1,8 @@
 # fss-0002
 #
+# license: open-standard-license-1.0
+#
+#
 # Note: This file is in fss-0002 format and as a result the example below has to be escaped (can potentially be confusing when reading this raw).
 #       The "header\:" in the example below is actually "header:" when processed by fss-0002.
 

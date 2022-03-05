@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Defines Specification:
   The build settings "defines" file follows the FSS-0000 (Basic) format.

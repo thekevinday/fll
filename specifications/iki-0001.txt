@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 IKI Specification: 0001 - Basic:
   This specification provides a small set of vocabulary names meant to be associated with common uses, such as e-mail addresses and URLs.

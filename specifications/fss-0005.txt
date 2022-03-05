@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Featureless Settings Specification: 0005 - Somewhat Basic List:
   This is a fss-0002 Basic List whose Content is then processed as fss-0001 Extended.

@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Entry Specification:
   The Entry files follow the FSS-0005 (Somewhat Basic List) format.

@@ -1,3 +1,6 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Task Specification:

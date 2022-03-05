@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Fakefile Specification:
   The "fakefile" file follows the FSS-0005 (Somewhat Basic List) format with a sub-fomat of IKI-0002 (Simple Script).

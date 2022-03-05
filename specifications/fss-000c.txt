@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Featureless Settings Specification: 000C - IKI Text:
   The IKI specifications are separate specifications from the FSS specification.
