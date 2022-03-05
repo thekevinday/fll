@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Settings Documentation:
   This describes intent and purposes of the control settings file.

@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Entry Documentation:
   This describes the intent and purpose of an Entry file.

@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Fakefile Documentation:
   This describes intent and purposes of the fakefile file settings.

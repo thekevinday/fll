@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Time Documentation:
   The Controller program utilizes the unit of measurement called a "Time", represented with uppercase "T".

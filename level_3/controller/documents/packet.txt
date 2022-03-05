@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Packet Documentation:
   Describes how a packet is designed and intended to be used.

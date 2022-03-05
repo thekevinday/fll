@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Actions Documentation:
   This describes the intent and purpose of the actions provided for individual Rules (or things related to a Rule).
