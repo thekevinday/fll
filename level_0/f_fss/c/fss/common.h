@@ -78,6 +78,12 @@ extern "C" {
   #define f_fss_embedded_list_open_end_s  f_string_eol_s
   #define f_fss_embedded_list_close_s     f_fss_brace_close_s
   #define f_fss_embedded_list_close_end_s f_string_eol_s
+  #define f_fss_payload_header_open_s     f_fss_space_s
+  #define f_fss_payload_header_next_s     f_fss_space_s
+  #define f_fss_payload_header_close_s    f_string_eol_s
+  #define f_fss_payload_list_open_s       f_fss_colon_s
+  #define f_fss_payload_list_open_end_s   f_string_eol_s
+  #define f_fss_payload_list_close_s      f_string_eol_s
   #define f_fss_type_header_open_s        f_fss_pound_s
   #define f_fss_type_header_part1_s       f_fss_space_s
   #define f_fss_type_header_part2_s       f_fss_f_s

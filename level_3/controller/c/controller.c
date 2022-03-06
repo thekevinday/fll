@@ -172,13 +172,12 @@ extern "C" {
 
     controller_setting_t setting = controller_setting_t_initialize;
 
-    struct sockaddr_un address;
-    setting.control_socket.address = (struct sockaddr *) &address;
-    setting.control_socket.domain = f_socket_domain_file_d;
-    setting.control_socket.type = f_socket_type_datagram_d;
-    setting.control_socket.length = sizeof(struct sockaddr_un);
+    setting.control.server.address = (struct sockaddr *) &setting.control.address;
+    setting.control.server.domain = f_socket_domain_file_d;
+    setting.control.server.type = f_socket_type_stream_d;
+    setting.control.server.length = sizeof(struct sockaddr_un);
 
-    memset(&address, 0, setting.control_socket.length);
+    memset(setting.control.server.address, 0, setting.control.server.length);
 
     if (main->parameters.remaining.used) {
       status = f_string_dynamic_append(argv[main->parameters.remaining.array[0]], &setting.name_entry);
@@ -375,18 +374,20 @@ extern "C" {
       setting.entry.show = controller_entry_show_init_e;
 
       if (main->parameters.array[controller_parameter_interruptible_e].result == f_console_result_found_e) {
-        setting.interruptible = F_true;
+        setting.flag |= controller_setting_flag_interruptible_e;
       }
-      else {
-        setting.interruptible = F_false;
+      else if (setting.flag & controller_setting_flag_interruptible_e) {
+        setting.flag -= controller_setting_flag_interruptible_e;
       }
     }
     else {
       if (main->parameters.array[controller_parameter_uninterruptible_e].result == f_console_result_found_e) {
-        setting.interruptible = F_false;
+        if (setting.flag & controller_setting_flag_interruptible_e) {
+          setting.flag -= controller_setting_flag_interruptible_e;
+        }
       }
       else {
-        setting.interruptible = F_true;
+        setting.flag |= controller_setting_flag_interruptible_e;
       }
     }
 
@@ -439,7 +440,7 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
 
-    if (status != F_child && setting.pid_created) {
+    if (status != F_child && (setting.flag & controller_setting_flag_pid_created_e)) {
       const f_status_t status_delete = controller_file_pid_delete(main->pid, setting.path_pid);
 
       if (F_status_is_error(status_delete) && main->warning.verbosity == f_console_verbosity_debug_e) {
@@ -461,9 +462,9 @@ extern "C" {
     }
 
     if (status != F_child && setting.path_control.used) {
-      f_socket_disconnect(&setting.control_socket, f_socket_close_read_write_e);
+      f_socket_disconnect(&setting.control.server, f_socket_close_read_write_e);
 
-      if (!setting.control_readonly) {
+      if (!(setting.control.flag & controller_control_flag_readonly_e)) {
         f_file_remove(setting.path_control);
       }
     }

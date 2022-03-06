@@ -250,6 +250,43 @@ extern "C" {
 #endif // _di_controller_perform_ready_
 
 /**
+ * Perform the socket loading when "ready".
+ *
+ * This prints messages on errors.
+ *
+ * This does not do any locking or unlocking for the setting data, be sure to lock appropriately before and after calling this.
+ *
+ * @param global
+ *   The global data.
+ * @param cache
+ *   The cache.
+ * @param is_entry
+ *   If TRUE, then this operate as an entry.
+ *   If FALSE, then this operate as an exit.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but socket file not created.
+ *
+ *   Errors (with error bit) from: f_file_mode_set().
+ *   Errors (with error bit) from: f_file_remove().
+ *   Errors (with error bit) from: f_file_role_change().
+ *   Errors (with error bit) from: f_socket_bind_local().
+ *   Errors (with error bit) from: f_socket_create().
+ *   Errors (with error bit) from: f_thread_create().
+ *
+ * @see f_file_mode_set()
+ * @see f_file_remove()
+ * @see f_file_role_change()
+ * @see f_socket_bind_local()
+ * @see f_socket_create()
+ * @see f_thread_create()
+ */
+#ifndef _di_controller_perform_ready_socket_
+  extern f_status_t controller_perform_ready_socket(const controller_global_t * const global, controller_cache_t * const cache, const bool is_entry) F_attribute_visibility_internal_d;
+#endif // _di_controller_perform_ready_socket_
+
+/**
  * Given a wide range of status codes (that are errors), simplify them down to a small subset.
  *
  * @param status

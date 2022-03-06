@@ -27,25 +27,24 @@ extern "C" {
  *   - program: Run as a program, exiting when finished prrocess entry (and any respective exit).
  *   - service: Run as a service, listening for requests after processing entry.
  *
- * interruptible:      TRUE if the program responds to interrupt signals, FALSE to block/ignore interrupt signals.
- * pid_created:        TRUE if the PID file has been created.
- * ready:              State representing if the settings are all loaded and is ready to run program operations.
- * mode:               Controller setting mode based on the setting mode enumerator.
- * control_group:      Group role of the control socket.
- * control_moode:      Mode role of the control socket.
- * control_readonly:   TRUE if the control is set to readonly, FALSE otherwise.
- * control_socket:     The control socket data.
- * control_user:       User role of the control socket.
- * failsafe_enabled:   TRUE if failsafe execution is enabled, FALSE otherwise.
- * failsafe_item_id:   The Entry Item ID to execute when failsafe execution is enabled.
- * path_cgroup:        Directory path to the cgroup directory.
- * path_control:       File path to the control socket.
- * path_pid:           File path to the PID file.
- * path_setting:       File path to the setting directory.
- * entry:              The Entry settings.
- * rules:              All rules and their respective settings.
+ * controller_setting_flag_*:
+ *   - interruptible: When specified, program responds to interrupt signals, otherwise block/ignore interrupt signals.
+ *   - pid_created:   When specified, the program responds to interrupt signals, otherwise block/ignore interrupt signals.
+ *   - failsafe:      When specified, failsafe mode is enabled, otherwise failsafe mode is disabled.
+ *
+ * flag:             Flags from controller_setting_flag_*.
+ * ready:            State representing if the settings are all loaded and is ready to run program operations.
+ * mode:             Controller setting mode based on the setting mode enumerator.
+ * control:          The control socket data.
+ * failsafe_item_id: The Entry Item ID to execute when failsafe execution is enabled.
+ * path_cgroup:      Directory path to the cgroup directory.
+ * path_control:     File path to the control socket (used for printing the path).
+ * path_pid:         File path to the PID file.
+ * path_setting:     File path to the setting directory.
+ * entry:            The Entry settings.
+ * rules:            All rules and their respective settings.
  */
-#ifndef _di_controller_setting_t
+#ifndef _di_controller_setting_t_
   enum {
     controller_setting_ready_no_e = 0,
     controller_setting_ready_wait_e,
@@ -60,20 +59,20 @@ extern "C" {
     controller_setting_mode_program_e,
   };
 
+  enum {
+    controller_setting_flag_interruptible_e = 0x1,
+    controller_setting_flag_pid_created_e   = 0x2,
+    controller_setting_flag_failsafe_e      = 0x4,
+  };
+
   typedef struct {
-    bool interruptible;
-    bool pid_created;
+    uint8_t flag;
     uint8_t ready;
     uint8_t mode;
 
-    gid_t control_group;
-    mode_t control_mode;
-    bool control_readonly;
-    f_socket_t control_socket;
-    uid_t control_user;
-
-    bool failsafe_enabled;
     f_array_length_t failsafe_item_id;
+
+    controller_control_t control;
 
     f_string_dynamic_t path_cgroup;
     f_string_dynamic_t path_control;
@@ -89,17 +88,11 @@ extern "C" {
   } controller_setting_t;
 
   #define controller_setting_t_initialize { \
-    F_false, \
-    F_false, \
     0, \
     0, \
     0, \
     0, \
-    F_false, \
-    f_socket_t_initialize, \
-    0, \
-    F_false, \
-    0, \
+    controller_control_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
@@ -110,7 +103,7 @@ extern "C" {
     controller_entry_t_initialize, \
     controller_rules_t_initialize, \
   }
-#endif // _di_controller_setting_t
+#endif // _di_controller_setting_t_
 
 /**
  * Fully deallocate all memory for the given setting without caring about return status.

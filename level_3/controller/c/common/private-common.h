@@ -20,10 +20,10 @@ extern "C" {
 #include "private-task.h"
 #include "private-process.h"
 #include "private-entry.h"
+#include "private-control.h"
 #include "private-setting.h"
 #include "private-thread.h"
 #include "private-state.h"
-#include "private-control.h"
 
 /**
  * All special strings used within this program.

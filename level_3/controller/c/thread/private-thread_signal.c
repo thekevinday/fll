@@ -29,7 +29,7 @@ extern "C" {
         if (errno == EAGAIN) continue;
       }
 
-      if (global->setting->interruptible) {
+      if (global->setting->flag & controller_setting_flag_interruptible_e) {
         if (information.si_signo == F_signal_interrupt || information.si_signo == F_signal_abort || information.si_signo == F_signal_quit || information.si_signo == F_signal_termination) {
           global->thread->signal = information.si_signo;
 

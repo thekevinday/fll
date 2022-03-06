@@ -58,7 +58,7 @@ extern "C" {
           if (F_status_is_error(*status)) {
             entry->setting->ready = controller_setting_ready_fail_e;
 
-            if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->global->setting->failsafe_enabled) {
+            if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && (entry->global->setting->flag & controller_setting_flag_failsafe_e)) {
               const uint8_t original_enabled = entry->global->thread->enabled;
 
               // Restore operating mode so that the failsafe can execute.
@@ -82,7 +82,7 @@ extern "C" {
                   controller_lock_print(main->error.to, entry->global->thread);
 
                   fl_print_format("%r%[%QFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                  fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
+                  fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_item_id].name, main->error.notable);
                   fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                   controller_unlock_print_flush(main->error.to, entry->global->thread);
@@ -170,7 +170,7 @@ extern "C" {
         if (F_status_is_error(*status)) {
           entry->setting->ready = controller_setting_ready_fail_e;
 
-          if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->global->setting->failsafe_enabled) {
+          if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && (entry->global->setting->flag & controller_setting_flag_failsafe_e)) {
 
             const uint8_t original_enabled = entry->global->thread->enabled;
 
@@ -197,7 +197,7 @@ extern "C" {
                 controller_lock_print(main->error.to, entry->global->thread);
 
                 fl_print_format("%r%[%QFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
+                fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_item_id].name, main->error.notable);
                 fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                 controller_unlock_print_flush(main->error.to, entry->global->thread);
@@ -234,7 +234,6 @@ extern "C" {
       // A forked child process should deallocate memory on exit.
       // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
       // Deallocate as much as possible.
-
       controller_thread_delete_simple(entry->global->thread);
       controller_setting_delete_simple(entry->global->setting);
       controller_main_delete(entry->global->main);

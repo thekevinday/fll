@@ -26,23 +26,6 @@ extern "C" {
   extern void * controller_thread_control(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_control_
 
-/**
- * Thread for handling the control listener.
- *
- * This runs on a separate thread entirely to be interuptable and closable distinctly from the main control thread.
- * This is simple and has nothing that needs to be cleaned up and so immediately exits on cancel.
- *
- * @param arguments
- *   The thread arguments.
- *   Must be of type controller_global_t.
- *
- * @return
- *   0, always.
- */
-#ifndef _di_controller_thread_control_listen_
-  extern void * controller_thread_control_listen(void * const arguments) F_attribute_visibility_internal_d;
-#endif // _di_controller_thread_control_listen_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -51,7 +51,7 @@ extern "C" {
  *
  * @param mutex
  *   The mutex lock to delete.
- *   Will be set to NULLif delete succeeded.
+ *   Will be set to NULL if delete succeeded.
  */
 #ifndef _di_controller_lock_delete_mutex_
   extern void controller_lock_delete_mutex(f_thread_mutex_t *mutex) F_attribute_visibility_internal_d;

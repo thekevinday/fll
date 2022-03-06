@@ -90,6 +90,13 @@ extern "C" {
       global.thread->id_cleanup = 0;
     }
 
+    if (global.thread->id_control) {
+      f_thread_cancel(global.thread->id_control);
+      f_thread_join(global.thread->id_control, 0);
+
+      global.thread->id_control = 0;
+    }
+
     // The sigtimedwait() function that is run inside of signal must be interrupted via the f_thread_cancel().
     if (by != controller_thread_cancel_signal_e && global.thread->id_signal) {
       f_thread_cancel(global.thread->id_signal);

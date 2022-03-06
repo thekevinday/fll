@@ -133,8 +133,9 @@ extern "C" {
         return F_none;
     }
 
+    // @todo the reboot and shutdown need to support date and time commands: "now", "in (a time)", and "at (a time)".
     if (data->command == control_command_type_reboot_e) {
-      // @todo
+      // @todo (also needs to support kexec calls or kexec needs its own command, which will likely be in the controller program.)
     }
 
     if (data->command == control_command_type_shutdown_e) {
@@ -145,20 +146,123 @@ extern "C" {
   }
 #endif // _di_control_command_verify_
 
+#ifndef _di_control_payload_build_
+  f_status_t control_payload_build(fll_program_data_t * const main, control_data_t * const data) {
+
+    data->cache.large.used = 0;
+    data->cache.small.used = 0;
+
+    f_array_length_t i = 0;
+    f_array_length_t length = f_fss_string_header_s.used + f_fss_string_payload_s.used + control_action_s.used + control_type_s.used;
+    length += f_fss_payload_list_open_s.used * 2;
+    length += f_fss_payload_list_close_s.used * 4
+    length += f_string_ascii_0_s.used;
+
+    for (; i < main->parameters.remaining.used; ++i) {
+      length += f_fss_payload_header_open_s.used + data->argv[main->parameters.remaining.array[i]].used + f_fss_payload_header_close_s.used;
+    } // for
+
+    status = f_string_dynamic_resize(length + 11, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    // @todo append the string bit and the length bits.
+
+    // The "header:" line.
+    status = f_string_dynamic_append(f_fss_string_header_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_fss_payload_list_open_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_fss_payload_list_close_sa, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    // The "type ..." line.
+    status = f_string_dynamic_append(control_type_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_fss_payload_header_open_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(data->argv[main->parameters.remaining.array[0]], &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_fss_payload_header_close_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    // Each "action ..." line.
+    for (i = 1; i < main->parameters.remaining.used; ++i) {
+
+      status = f_string_dynamic_append(control_action_s, &data->cache.large);
+      if (F_status_is_error(status)) return status;
+
+      status = f_string_dynamic_append(f_fss_payload_header_open_s, &data->cache.large);
+      if (F_status_is_error(status)) return status;
+
+      status = f_string_dynamic_append(data->argv[main->parameters.remaining.array[i]], &data->cache.large);
+      if (F_status_is_error(status)) return status;
+
+      status = f_string_dynamic_append(f_fss_payload_header_close_s, &data->cache.large);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    // The "length 0" line.
+    status = f_string_dynamic_append(control_length_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_fss_payload_header_open_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_string_ascii_0_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_fss_payload_header_close_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    // The "payload:" line.
+    status = f_string_dynamic_append(f_fss_string_payload_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_fss_payload_list_open_s, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(f_fss_payload_list_close_sa, &data->cache.large);
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_control_payload_build_
+
+#ifndef _di_control_payload_receive_
+  f_status_t control_payload_receive(fll_program_data_t * const main, control_data_t * const data) {
+
+    // @todo
+    return F_none;
+  }
+#endif // _di_control_payload_receive_
+
+#ifndef _di_control_payload_send_
+  f_status_t control_payload_send(fll_program_data_t * const main, control_data_t * const data) {
+
+    // @todo
+    return F_none;
+  }
+#endif // _di_control_payload_send_
+
 #ifndef _di_control_settings_load_
   f_status_t control_settings_load(fll_program_data_t * const main, control_data_t * const data) {
 
     f_status_t status = F_none;
 
-    data->cache.buffer_small.used = 0;
+    data->cache.small.used = 0;
 
     if (main->parameters.array[control_parameter_settings_e].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[control_parameter_settings_e].values.array[main->parameters.array[control_parameter_settings_e].values.used - 1];
 
-      status = f_string_dynamic_append(data->argv[index], &data->cache.buffer_small);
+      status = f_string_dynamic_append(data->argv[index], &data->cache.small);
     }
     else {
-      status = f_string_dynamic_append(control_path_settings_s, &data->cache.buffer_small);
+      status = f_string_dynamic_append(control_path_settings_s, &data->cache.small);
     }
 
     if (F_status_is_error(status)) {
@@ -170,20 +274,20 @@ extern "C" {
     {
       f_file_t file = f_file_t_initialize;
 
-      status = f_file_stream_open(data->cache.buffer_small, f_file_open_mode_read_s, &file);
+      status = f_file_stream_open(data->cache.small, f_file_open_mode_read_s, &file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data->cache.buffer_small, f_file_operation_open_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data->cache.small, f_file_operation_open_s, fll_error_file_type_file_e);
 
         return status;
       }
 
-      status = f_file_stream_read(file, &data->cache.buffer_large);
+      status = f_file_stream_read(file, &data->cache.large);
 
       f_file_stream_close(F_true, &file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, data->cache.buffer_small, f_file_operation_read_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, data->cache.small, f_file_operation_read_s, fll_error_file_type_file_e);
 
         return status;
       }
@@ -195,16 +299,16 @@ extern "C" {
     f_fss_contents_t contents = f_fss_contents_t_initialize;
     f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-    status = fll_fss_extended_read(data->cache.buffer_large, state, &range, &objects, &contents, 0, 0, &delimits, 0);
+    status = fll_fss_extended_read(data->cache.large, state, &range, &objects, &contents, 0, 0, &delimits, 0);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, data->cache.buffer_small, f_file_operation_process_s, fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
     }
     else {
-      status = fl_fss_apply_delimit(delimits, &data->cache.buffer_large);
+      status = fl_fss_apply_delimit(delimits, &data->cache.large);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, data->cache.buffer_small, f_file_operation_process_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
       }
     }
 
@@ -231,7 +335,7 @@ extern "C" {
 
             range.stop = parameter_names[j].used - 1;
 
-            if (fl_string_dynamic_partial_compare(parameter_names[j], data->cache.buffer_large, range, objects.array[i]) == F_equal_to) {
+            if (fl_string_dynamic_partial_compare(parameter_names[j], data->cache.large, range, objects.array[i]) == F_equal_to) {
               parameter_hass[j] = F_true;
               parameter_ats[j] = i;
 
@@ -241,18 +345,18 @@ extern "C" {
         } // for
       }
 
-      data->cache.buffer_small.used = 0;
+      data->cache.small.used = 0;
 
       if (main->parameters.array[control_parameter_socket_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[control_parameter_socket_e].values.array[main->parameters.array[control_parameter_socket_e].values.used - 1];
 
-        status = f_string_dynamic_append(data->argv[index], &data->cache.buffer_small);
+        status = f_string_dynamic_append(data->argv[index], &data->cache.small);
       }
       else if (parameter_hass[1]) {
-        status = f_string_dynamic_partial_append_nulless(data->cache.buffer_large, objects.array[parameter_ats[1]], &data->cache.buffer_small);
+        status = f_string_dynamic_partial_append_nulless(data->cache.large, objects.array[parameter_ats[1]], &data->cache.small);
       }
       else {
-        status = f_string_dynamic_append(controller_path_socket_s, &data->cache.buffer_small);
+        status = f_string_dynamic_append(controller_path_socket_s, &data->cache.small);
       }
 
       if (F_status_is_error(status)) {
@@ -264,25 +368,25 @@ extern "C" {
         }
       }
 
-      status = f_file_exists(data->cache.buffer_small);
+      status = f_file_exists(data->cache.small);
 
       if (F_status_is_error(status) || status == F_false) {
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.buffer_small, f_file_operation_find_s, fll_error_file_type_directory_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
           }
         }
 
-        control_print_error_socket_file_missing(main, data->cache.buffer_small);
+        control_print_error_socket_file_missing(main, data->cache.small);
 
         status = F_status_set_error(F_socket_not);
       }
 
       // Construct the file name when the socket path is a directory.
-      else if (f_file_is(data->cache.buffer_small, F_file_type_directory_d, F_true) == F_true) {
-        status = f_string_dynamic_append_assure(f_path_separator_s, &data->cache.buffer_small);
+      else if (f_file_is(data->cache.small, F_file_type_directory_d, F_true) == F_true) {
+        status = f_string_dynamic_append_assure(f_path_separator_s, &data->cache.small);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_assure", F_true);
@@ -311,13 +415,13 @@ extern "C" {
             if (append_ids[i] && main->parameters.array[append_ids[i]].result == f_console_result_additional_e) {
               const f_array_length_t index = main->parameters.array[append_ids[i]].values.array[main->parameters.array[append_ids[i]].values.used - 1];
 
-              status = f_string_dynamic_append(data->argv[index], &data->cache.buffer_small);
+              status = f_string_dynamic_append(data->argv[index], &data->cache.small);
             }
             else if (append_hass[i]) {
-              status = f_string_dynamic_partial_append_nulless(data->cache.buffer_large, objects.array[append_hass[i]], &data->cache.buffer_small);
+              status = f_string_dynamic_partial_append_nulless(data->cache.large, objects.array[append_hass[i]], &data->cache.small);
             }
             else {
-              status = f_string_dynamic_append_nulless(append_defaults[i], &data->cache.buffer_small);
+              status = f_string_dynamic_append_nulless(append_defaults[i], &data->cache.small);
             }
 
             if (F_status_is_error(status)) {
@@ -333,26 +437,26 @@ extern "C" {
           } // for
 
           if (F_status_is_error_not(status)) {
-            status = f_file_exists(data->cache.buffer_small);
+            status = f_file_exists(data->cache.small);
 
             if (F_status_is_error(status) || status == F_false) {
               if (F_status_is_error(status)) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.buffer_small, f_file_operation_find_s, fll_error_file_type_directory_e);
+                fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
                 if (main->error.verbosity != f_console_verbosity_quiet_e) {
                   fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
                 }
               }
 
-              control_print_error_socket_file_missing(main, data->cache.buffer_small);
+              control_print_error_socket_file_missing(main, data->cache.small);
 
               status = F_status_set_error(F_socket_not);
             }
           }
 
           if (F_status_is_error_not(status)) {
-            if (f_file_is(data->cache.buffer_small, F_file_type_socket_d, F_true) == F_false) {
-              control_print_error_socket_file_not(main, data->cache.buffer_small);
+            if (f_file_is(data->cache.small, F_file_type_socket_d, F_true) == F_false) {
+              control_print_error_socket_file_not(main, data->cache.small);
 
               status = F_status_set_error(F_socket_not);
             }
@@ -368,7 +472,7 @@ extern "C" {
                 fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
               }
 
-              control_print_error_socket_file_failed(main, data->cache.buffer_small);
+              control_print_error_socket_file_failed(main, data->cache.small);
             }
           }
 
@@ -382,7 +486,7 @@ extern "C" {
                 fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
               }
 
-              control_print_error_socket_file_failed(main, data->cache.buffer_small);
+              control_print_error_socket_file_failed(main, data->cache.small);
             }
           }
         }
@@ -393,17 +497,17 @@ extern "C" {
     f_string_rangess_resize(0, &contents);
     f_array_lengths_resize(0, &delimits);
 
-    data->cache.buffer_large.used = 0;
-    data->cache.buffer_small.used = 0;
+    data->cache.large.used = 0;
+    data->cache.small.used = 0;
 
     if (F_status_is_error_not(status)) {
-      if (data->cache.buffer_large.size > control_default_buffer_limit_soft_large_d) {
-        status = f_string_dynamic_resize(control_default_buffer_limit_soft_large_d, &data->cache.buffer_large);
+      if (data->cache.large.size > control_default_buffer_limit_soft_large_d) {
+        status = f_string_dynamic_resize(control_default_buffer_limit_soft_large_d, &data->cache.large);
       }
 
       if (F_status_is_error_not(status)) {
-        if (data->cache.buffer_small.size > control_default_buffer_limit_soft_small_d) {
-          status = f_string_dynamic_resize(control_default_buffer_limit_soft_small_d, &data->cache.buffer_small);
+        if (data->cache.small.size > control_default_buffer_limit_soft_small_d) {
+          status = f_string_dynamic_resize(control_default_buffer_limit_soft_small_d, &data->cache.small);
         }
       }
     }

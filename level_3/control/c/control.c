@@ -208,13 +208,36 @@ extern "C" {
 
           data.socket.address = (struct sockaddr *) &socket_address;
           data.socket.domain = f_socket_domain_file_d;
-          data.socket.type = f_socket_type_datagram_d;
+          data.socket.type = f_socket_type_stream_d;
           data.socket.length = sizeof(struct sockaddr_un);
 
           status = control_settings_load(main, &data);
 
           if (F_status_is_error_not(status)) {
-            // @todo construct the packet, send the packet to the controller, and process the response.
+            status = control_payload_build(main, &data);
+
+            if (F_status_is_error(status)) {
+              fll_error_print(main->error, F_status_set_fine(status), "control_payload_build", F_true);
+              fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
+            }
+          }
+
+          if (F_status_is_error_not(status)) {
+            status = control_payload_send(main, &data);
+
+            if (F_status_is_error(status)) {
+              fll_error_print(main->error, F_status_set_fine(status), "control_payload_send", F_true);
+              fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
+            }
+          }
+
+          if (F_status_is_error_not(status)) {
+            status = control_payload_receive(main, &data);
+
+            if (F_status_is_error(status)) {
+              fll_error_print(main->error, F_status_set_fine(status), "control_payload_receive", F_true);
+              fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
+            }
           }
 
           if (data.socket.id != -1) {

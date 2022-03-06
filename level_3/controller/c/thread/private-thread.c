@@ -300,20 +300,14 @@ extern "C" {
 
     controller_thread_process_exit(&global);
 
-    if (thread.id_listen) {
-      f_thread_cancel(thread.id_listen);
-    }
-
     if (thread.id_signal) f_thread_join(thread.id_signal, 0);
     if (thread.id_cleanup) f_thread_join(thread.id_cleanup, 0);
     if (thread.id_control) f_thread_join(thread.id_control, 0);
-    if (thread.id_listen) f_thread_join(thread.id_listen, 0);
     if (thread.id_entry) f_thread_join(thread.id_entry, 0);
     if (thread.id_rule) f_thread_join(thread.id_rule, 0);
 
     thread.id_cleanup = 0;
     thread.id_control = 0;
-    thread.id_listen = 0;
     thread.id_entry = 0;
     thread.id_rule = 0;
     thread.id_signal = 0;

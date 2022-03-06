@@ -9,24 +9,67 @@ Packet Documentation:
   The "packet" is the general category in which multiple types of packets belong.
   This describes the different packets based on their "type".
 
-  Every packet contains a "header", a "type" within the header, a "length" within the header, and a "payload".
+  Each packet begins with a control block and a size block followed by a payload block.
 
-  The "controller" packet type\:
-    Commands being sent to the controller and their respective responses utilize a "controller" packet.
+    The control block\:
+      The leading bit (starting from the left) designates the the format of the payload, which is 0 for string and 1 for binary.
+      The second bit (starting from the left) designates the the byte order for the rest of the packet, which 0 is for little endian and 1 is for big endian.
+      The remaining 6-bits are reserved for future use.
+
+    The size block\:
+      The size block represents the size of the entire packet (the control block, the size blocks, and the payload block).
+      This number is an 32-bit unsigned integer.
+      The size block may contain up to 4 32-bit unsigned integers.
+      If the size is less than the max value of a 32-bit integer (4294967295), then the remaining 32-bit unsigned integers may be omitted.
+
+      Example size that is less than 2^32-1\:
+        [ control block ] [ size block                                  ] [ payload block         ]
+        [ 0b10000000    ] [ 0b00000000 0b00000000 0b00000100 0b11010010 ] [ size: 1229 (1234 - 5) ]
+
+      Example size that is less than 2^64-1\:
+        [ control block ] [ size block                                  ] [ size block                                  ] [ payload block                     ]
+        [ 0b10000000    ] [ 0b11111111 0b11111111 0b11111111 0b11111111 ] [ 0b00000000 0b00000000 0b00000000 0b11001000 ] [ size: 4294967486 (4294967495 - 9) ]
+
+    The payload block\:
+      This block is represented by the FSS-000e payload specification and its structure ad use is described in the next sections.
+
+      The following types of payload are received or sent\:
+      1) controller payload.
+      2) error payload.
+
+  The controller payload\:
+    Commands being sent to the controller and their respective responses utilize a "controller" payload.
     These are pre-defined commands to rules or the controller program itself.
     Commands such as starting or stopping some rule, for example.
+    A controller payload is also sent in response to a controller payload request to represent a success.
 
     When operating in "init" mode, additional commands are available: "reboot" and "shutdown".
-    The "reboot" is for rebooting the machine and will eventually support "kexec" mode.
-    The "shutdown" is for shutting down the machine.
-    These two commands are configurable to fire off based on conditions, namely "time".
-    Two conditions may be met "on or after a specific date and time" and/or after so many milliseconds (second, minutes, hours, days, etc..) have passed.
+    The "kexec" is for booting into another kernel, which may effectively be the same as a "reboot" (currently not supported nor implemented).
+    The "reboot" is for rebooting the machine (currently not implemented).
+    The "shutdown" is for shutting down the machine (currently not implemented).
+    These three commands are configurable to fire off based on conditions\:
 
-    The normal "controller" packet commands are any valid Rule Action that performs some action.
+      The "now" condition designates that the kexec, reboot, or shutdown is to begin immediately.
+      The "at" condition designates that the kexec, reboot, or shutdown is to begin once a specific date and time is reached by the system clock.
+      The "in" condition designates that the kexec, reboot, or shutdown is to begin once a specific amount of time is passed by the system clock since the execution of this command started.
+
+    For these "time" conditions, different units of time should be supported, such as "seconds", "days", "years" as standard time, Time or UNIX Time (Epoch Time).
+
+    The normal "controller" payload commands are any valid Rule Action that performs some action.
     This does not include Actions that provide some setting or configuration (such as "with_pid").
     Some of the supported commands are: "freeze", "kill", "pause", "reload", "rerun", "restart", "resume", "start", "stop", or "thaw".
+    Multiple commands may be sent multiple "action" headers.
+    The "action" headers are order sensitive, executing from top to bottom, and one does not start until the previous successfully completes.
 
-  The "error" packet type\:
-    The error packet is intended to communicate some sort of failure.
-    The "status" from the "header" designates the status code (based on the FSS status codes and FLL status codes).
-    The "payload" will contain a NULL terminated string representin the message used to describe the error.
+    Multiple "status" headers may exist in the response so long as they each match an "action" in the request.
+
+    The "payload" is expected to be empty and have a length of 0 for a request.
+    The "payload" may have an FSS-0000 (Basic) format containing a single Object "message" to represent a message associated with an action.
+    Multuple "message" may exist in the response so long as they each match an "action" in the request.
+
+  The error payload\:
+    The error payload is intended to communicate some sort of failure.
+    The error payload is only sent in response to some request (and not in response to another response).
+    The control (the client) is not expected to send error payloads and the controller (the service) should send an error in response to an error payload or ignore it entirely.
+    The "status" from the "header" designates the status code.
+    The "payload" will contain a NULL terminated string representing the message used to describe the error.

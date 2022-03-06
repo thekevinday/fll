@@ -115,12 +115,16 @@ extern "C" {
     #define CONTROL_path_settings_s_length 21
   #endif // defined(_override_control_path_settings_) && defined(_override_control_path_settings_length_)
 
+  #define CONTROL_action_s             "action"
   #define CONTROL_command_s            "command"
   #define CONTROL_default_s            "default"
+  #define CONTROL_length_s             "length"
   #define CONTROL_name_socket_s        "name_socket"
   #define CONTROL_path_socket_s        "path_socket"
   #define CONTROL_path_socket_prefix_s "path_socket_prefix"
   #define CONTROL_path_socket_suffix_s "path_socket_suffix"
+  #define CONTROL_status_s             "status"
+  #define CONTROL_type_s               "type"
 
   #define CONTROL_error_s    "error"
   #define CONTROL_freeze_s   "freeze"
@@ -142,6 +146,10 @@ extern "C" {
   #define CONTROL_path_socket_s_length        11
   #define CONTROL_path_socket_prefix_s_length 18
   #define CONTROL_path_socket_suffix_s_length 18
+  #define CONTROL_type_s_length               4
+  #define CONTROL_status_s_length             6
+  #define CONTROL_length_s_length             6
+  #define CONTROL_action_s_length             6
 
   #define CONTROL_error_s_length    5
   #define CONTROL_freeze_s_length   6
@@ -159,12 +167,16 @@ extern "C" {
 
   extern const f_string_static_t control_path_settings_s;
 
+  extern const f_string_static_t control_action_s;
   extern const f_string_static_t control_command_s;
   extern const f_string_static_t control_default_s;
+  extern const f_string_static_t control_length_s;
   extern const f_string_static_t control_name_socket_s;
   extern const f_string_static_t control_path_socket_s;
   extern const f_string_static_t control_path_socket_prefix_s;
   extern const f_string_static_t control_path_socket_suffix_s;
+  extern const f_string_static_t control_status_s;
+  extern const f_string_static_t control_type_s;
 
   extern const f_string_static_t control_error_s;
   extern const f_string_static_t control_freeze_s;
@@ -217,13 +229,13 @@ extern "C" {
 /**
  * The control cache.
  *
- * buffer_large: A buffer for storing large sets of data.
- * buffer_small: A buffer for storing small sets of data.
+ * large: A buffer for storing large sets of data.
+ * small: A buffer for storing small sets of data.
  */
 #ifndef _di_control_cache_t_
   typedef struct {
-    f_string_dynamic_t buffer_large;
-    f_string_dynamic_t buffer_small;
+    f_string_dynamic_t large;
+    f_string_dynamic_t small;
   } control_cache_t;
 
   #define control_cache_initialize \
@@ -257,6 +269,7 @@ extern "C" {
       0, \
       f_string_dynamic_t_initialize, \
       f_socket_t_initialize, \
+      /*f_string_dynamic_t_initialize,*/ \
       0, \
     }
 #endif // _di_control_data_t_

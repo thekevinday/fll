@@ -10,21 +10,23 @@ extern "C" {
 #ifndef _di_controller_control_accept_
   f_status_t controller_control_accept(const controller_global_t * const global, controller_control_t * const control) {
 
-    f_socket_t client = f_socket_t_initialize;
+    /*if (control->client.id != -1) {
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
-    control->client = &client;
+      control->client.id = -1;
+    }*/
 
-    f_status_t status = f_socket_accept(&client, control->server->id);
+    f_status_t status = f_socket_accept(&control->client, control->server.id);
 
     if (F_status_is_error(status)) {
-      f_socket_disconnect(&client, f_socket_close_fast_e);
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
       controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_socket_accept", F_true);
 
       return status;
     }
 
-    controller_control_configure_client(global, &client);
+    controller_control_configure_client(global, &control->client);
 
     control->input.used = 0;
     control->output.used = 0;
@@ -35,11 +37,11 @@ extern "C" {
     memset(buffer, 0, controller_control_default_socket_buffer_d + 1);
 
     // Pre-process the packet header.
-    client.size_read = controller_control_default_socket_header_d;
-    status = f_socket_read(&client, f_socket_flag_peek_d, buffer, &length);
+    control->client.size_read = controller_control_default_socket_header_d;
+    status = f_socket_read(&control->client, f_socket_flag_peek_d, buffer, &length);
 
     if (F_status_is_error(status)) {
-      f_socket_disconnect(&client, f_socket_close_fast_e);
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
       controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_socket_read", F_true);
 
@@ -49,7 +51,7 @@ extern "C" {
     if (!length) {
       status = controller_control_respond_error_string(global, control, F_empty, "Received packet is empty.");
 
-      f_socket_disconnect(&client, f_socket_close_fast_e);
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
       if (F_status_is_error(status)) return status;
 
@@ -59,7 +61,7 @@ extern "C" {
     if (length < controller_control_default_socket_header_d) {
       status = controller_control_respond_error_string(global, control, F_too_large, "Received packet is too small.");
 
-      f_socket_disconnect(&client, f_socket_close_fast_e);
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
       if (F_status_is_error(status)) return status;
 
@@ -69,7 +71,7 @@ extern "C" {
     if (length > controller_control_default_socket_buffer_max_d) {
       status = controller_control_respond_error_string(global, control, F_too_large, "Received packet is too large.");
 
-      f_socket_disconnect(&client, f_socket_close_fast_e);
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
       if (F_status_is_error(status)) return status;
 
@@ -82,14 +84,14 @@ extern "C" {
     if (packet_flag & controller_control_packet_flag_binary_d) {
       status = controller_control_respond_error_string(global, control, F_supported_not, "Binary is not a currently supported packet mode.");
 
-      f_socket_disconnect(&client, f_socket_close_fast_e);
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
       if (F_status_is_error(status)) return status;
 
       return F_supported_not;
     }
 
-    client.size_read = controller_control_default_socket_buffer_d;
+    control->client.size_read = controller_control_default_socket_buffer_d;
 
     // Pre-allocate the input buffer.
     status = f_string_dynamic_increase_by(packet_length, &control->input);
@@ -97,7 +99,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       controller_control_respond_error_string(global, control, F_memory_not, "Failure allocating memory.");
 
-      f_socket_disconnect(&client, f_socket_close_fast_e);
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
       controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
 
@@ -108,23 +110,23 @@ extern "C" {
       size_t total = 0;
 
       do {
-        status = f_socket_read(&client, 0, &control->input, &total);
+        status = f_socket_read(&control->client, 0, &control->input, &total);
 
         if (F_status_is_error(status)) {
-          controller_control_respond_error_string(global, control, F_status_set_fine(status), "Failure while reading from client socket.");
+          controller_control_respond_error_string(global, control, F_status_set_fine(status), "Failure while reading from control->client socket.");
 
-          f_socket_disconnect(&client, f_socket_close_fast_e);
+          f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
           return F_status_set_fine(status);
         }
 
-      } while (total == client.size_read);
+      } while (total == control->client.size_read);
     }
 
     if (control->input.used != length) {
       controller_control_respond_error_string(global, control, F_valid_not, "Received packet header length did not match actual received packet length.");
 
-      f_socket_disconnect(&client, f_socket_close_fast_e);
+      f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
       return F_valid_not;
     }
@@ -133,7 +135,7 @@ extern "C" {
 
     // @todo send any responses.
 
-    f_socket_disconnect(&client, f_socket_close_fast_e);
+    f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
     // Resize memory when the allocated size is greate than the maximum preferred size.
     // Resizing could potentially copy memory to a new address, so it is assumed to be cheaper to just delete the memory entirely.
@@ -308,7 +310,7 @@ extern "C" {
       if (F_status_is_error(status2)) return status2;
     }
 
-    return f_socket_write(control->client, 0, control->output.string, 0);
+    return f_socket_write(&control->client, 0, control->output.string, 0);
   }
 #endif // _di_controller_control_respond_error_
 

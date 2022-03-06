@@ -6,6 +6,11 @@
 Entry Specification:
   The controller program communicates use the FSS-000E Packet format.
 
+  Packet Structure\:
+    Packet is grouped into the following blocks\:
+      - control: A single 1-byte block representing contol codes.
+      - size: A set of 1 to 4 4-byte blocks representing the size of the entire packet.
+
   The "header" Object contains the following FSS-0001 Extended Objects (depending on "type")\:
     - action: A valid action type: "freeze", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", or "thaw".
     - length: A positive whole number inclusively between 0 and 4294965248 representing the length of the "payload".
@@ -27,11 +32,12 @@ Entry Specification:
 
     The "payload" is a NULL terminated string whose length is defined by the "length" "header" Content.
 
+  There are different headers and payload properties based on the "type".
+
   The "controller" type\:
     Supports the following headers: "action", "length", "status", and "type".
 
-    Currently only a single "action" is supported.
-    Currently only a single "status" is supported.
+    Multiple "action" may be provided, but at least one must exist.
+    Multiple "status" may be provided, but at least one must exist.
 
     The "payload" is dependent on the "action".
-    @todo describe the different actions.

@@ -20,7 +20,7 @@ extern "C" {
  * @param global
  *   The global data.
  * @param control
- *   The control data structure.
+ *   The control data.
  *
  * @return
  *   F_none on success.
@@ -121,10 +121,8 @@ extern "C" {
  *
  * @param global
  *   The global data.
- * @param server
- *   The server socket structure.
- * @param packet
- *   The control packet data structure.
+ * @param control
+ *   The control data.
  *
  * @return
  *   F_none on success.
@@ -152,7 +150,7 @@ extern "C" {
  * @param global
  *   The global data.
  * @param control
- *   The control structure.
+ *   The control data.
  * @param type
  *   The packet type.
  *   Set type.used to 0 to not add to the header.
@@ -198,7 +196,7 @@ extern "C" {
  * @param global
  *   The global data.
  * @param control
- *   The control structure.
+ *   The control data.
  * @param status
  *   The status code.
  * @param message
@@ -223,7 +221,7 @@ extern "C" {
  * @param global
  *   The global data.
  * @param control
- *   The control structure.
+ *   The control data.
  * @param status
  *   The status code.
  * @param message

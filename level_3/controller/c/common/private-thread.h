@@ -25,7 +25,6 @@ extern "C" {
  * id_cleanup: The thread ID representing the Cleanup Process.
  * id_control: The thread ID representing the Control Process.
  * id_entry:   The thread ID representing the Entry or Exit Process.
- * id_listen:  The thread ID representing the Control Process Listener.
  * id_rule:    The thread ID representing the Rule Process.
  * id_signal:  The thread ID representing the Signal Process.
  * lock:       A r/w lock for operating on this structure.
@@ -106,7 +105,6 @@ extern "C" {
     f_thread_id_t id_cleanup;
     f_thread_id_t id_control;
     f_thread_id_t id_entry;
-    f_thread_id_t id_listen;
     f_thread_id_t id_rule;
     f_thread_id_t id_signal;
 
@@ -119,7 +117,6 @@ extern "C" {
     controller_thread_enabled_e, \
     0, \
     F_none, \
-    f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \

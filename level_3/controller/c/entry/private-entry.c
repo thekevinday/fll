@@ -1486,7 +1486,7 @@ extern "C" {
               return F_status_is_error(F_critical);
             }
             else {
-              global->setting->failsafe_enabled = F_true;
+              global->setting->flag |= controller_setting_flag_failsafe_e;
               global->setting->failsafe_item_id = entry_action->number;
 
               controller_entry_preprocess_print_simulate_setting_value(*global, is_entry, controller_failsafe_s, f_string_empty_s, entry->items.array[global->setting->failsafe_item_id].name, f_string_empty_s);
@@ -2000,8 +2000,6 @@ extern "C" {
         if (F_status_is_error(status)) {
           controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true, global.thread);
 
-          global.setting->path_control.used = 0;
-
           break;
         }
 
@@ -2039,7 +2037,8 @@ extern "C" {
           continue;
         }
 
-        global.setting->control_group = number;
+        global.setting->control.group = number;
+        global.setting->control.flag |= controller_control_flag_has_group_e;
       }
       else if (is_entry && fl_string_dynamic_compare(controller_control_mode_s, cache->action.name_action) == F_equal_to) {
         mode_t mode = 0;
@@ -2072,7 +2071,8 @@ extern "C" {
           continue;
         }
 
-        global.setting->control_mode = mode;
+        global.setting->control.mode = mode;
+        global.setting->control.flag |= controller_control_flag_has_mode_e;
       }
       else if (is_entry && fl_string_dynamic_compare(controller_control_user_s, cache->action.name_action) == F_equal_to) {
         uid_t number = 0;
@@ -2098,7 +2098,8 @@ extern "C" {
           continue;
         }
 
-        global.setting->control_user = number;
+        global.setting->control.user = number;
+        global.setting->control.flag |= controller_control_flag_has_user_e;
       }
       else if (is_entry && fl_string_dynamic_compare(controller_mode_s, cache->action.name_action) == F_equal_to) {
         if (cache->content_actions.array[i].used != 1) {

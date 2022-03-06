@@ -21,7 +21,7 @@
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
 
-// fll-0 console includes
+// fll-0 console includes.
 #include <fll/level_0/console/common.h>
 
 #ifdef __cplusplus

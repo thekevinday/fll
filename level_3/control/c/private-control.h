@@ -42,6 +42,42 @@ extern "C" {
 #ifndef _di_control_command_verify_
   extern f_status_t control_command_verify(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_command_verify_
+
+/**
+ * Build the payload, storing it in the large cache.
+ *
+ * @param main
+ *   The main program data.
+ * @param data
+ *   The control data.
+ */
+#ifndef _di_control_payload_build_
+  extern f_status_t control_payload_build(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_control_payload_build_
+
+/**
+ * Receive the response from the remote socket, storing it in the large cache.
+ *
+ * @param main
+ *   The main program data.
+ * @param data
+ *   The control data.
+ */
+#ifndef _di_control_payload_receive_
+  extern f_status_t control_payload_receive(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_control_payload_receive_
+
+/**
+ * Send the payload to the remote socket, getting the payload from the large cache.
+ *
+ * @param main
+ *   The main program data.
+ * @param data
+ *   The control data.
+ */
+#ifndef _di_control_payload_send_
+  extern f_status_t control_payload_send(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_control_payload_send_
 /**
  * Load and process the control settings file.
  *

@@ -458,7 +458,7 @@ extern "C" {
         status = F_none;
       }
       else {
-        global->setting->pid_created = F_true;
+        global->setting->flag |= controller_setting_flag_pid_created_e;
 
         if (global->main->output.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global->main->output.to, global->thread);
@@ -472,171 +472,10 @@ extern "C" {
     }
 
     if (global->setting->path_control.used) {
-      if (global->setting->control_readonly) {
-        if (f_file_exists(global->setting->path_control) != F_true) {
-          if (global->main->output.verbosity == f_console_verbosity_debug_e) {
-            controller_lock_print(global->main->output.to, global->thread);
+      status = controller_perform_ready_socket(global, cache, is_entry);
 
-            fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
-            fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
-            fl_print_format("' .%r", global->main->output.to.stream, f_string_eol_s);
-            fl_print_format("%[' cannot be found while read only mode is enabled and so the Control socket is unavailable.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
-
-            controller_unlock_print_flush(global->main->output.to, global->thread);
-          }
-
-          return status;
-        }
-      }
-      else {
-        status = f_socket_create(&global->setting->control_socket);
-
-        if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_memory_not) {
-            controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_socket_create", F_true);
-
-            return status;
-          }
-
-          if (global->main->output.verbosity == f_console_verbosity_debug_e) {
-            controller_lock_print(global->main->output.to, global->thread);
-
-            fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
-            fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
-            fl_print_format("%[' could not be created, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
-            fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
-            fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
-
-            controller_unlock_print_flush(global->main->output.to, global->thread);
-          }
-        }
-        else {
-          status = f_file_remove(global->setting->path_control);
-
-          if (F_status_set_fine(status) == F_memory_not) {
-            controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_file_remove", F_true);
-
-            return status;
-          }
-
-          global->setting->control_socket.name = global->setting->path_control.string;
-
-          status = f_socket_bind_file(global->setting->control_socket);
-
-          if (F_status_is_error(status)) {
-            f_socket_disconnect(&global->setting->control_socket, f_socket_close_fast_e);
-
-            if (F_status_set_fine(status) == F_memory_not) {
-              controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_socket_bind_file", F_true);
-
-              return status;
-            }
-
-            if (global->main->output.verbosity == f_console_verbosity_debug_e) {
-              controller_lock_print(global->main->output.to, global->thread);
-
-              fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
-              fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
-              fl_print_format("%[' could not be bound, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
-              fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
-              fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
-
-              controller_unlock_print_flush(global->main->output.to, global->thread);
-            }
-          }
-          else {
-            status = f_file_role_change(global->setting->path_control, global->setting->control_user, global->setting->control_group, F_true);
-
-            if (F_status_is_error(status)) {
-              f_socket_disconnect(&global->setting->control_socket, f_socket_close_fast_e);
-
-              if (F_status_set_fine(status) == F_memory_not) {
-                controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_file_role_change", F_true);
-
-                return status;
-              }
-
-              if (global->main->output.verbosity == f_console_verbosity_debug_e) {
-                controller_lock_print(global->main->output.to, global->thread);
-
-                fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
-                fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
-                fl_print_format("%[' failed to set file roles, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
-                fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
-                fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
-
-                controller_unlock_print_flush(global->main->output.to, global->thread);
-              }
-            }
-            else {
-              status = f_file_mode_set(global->setting->path_control, global->setting->control_mode);
-
-              if (F_status_is_error(status)) {
-                f_socket_disconnect(&global->setting->control_socket, f_socket_close_fast_e);
-
-                if (F_status_set_fine(status) == F_memory_not) {
-                  controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_file_role_change", F_true);
-
-                  return status;
-                }
-
-                if (global->main->output.verbosity == f_console_verbosity_debug_e) {
-                  controller_lock_print(global->main->output.to, global->thread);
-
-                  fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
-                  fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
-                  fl_print_format("%[' failed to set file mode, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
-                  fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
-                  fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
-
-                  controller_unlock_print_flush(global->main->output.to, global->thread);
-                }
-              }
-              else {
-                if (global->main->output.verbosity == f_console_verbosity_debug_e) {
-                  controller_lock_print(global->main->output.to, global->thread);
-
-                  fl_print_format("%rControl socket '", global->main->output.to.stream, f_string_eol_s);
-                  fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
-                  fl_print_format("' created.%r", global->main->output.to.stream, f_string_eol_s);
-
-                  controller_unlock_print_flush(global->main->output.to, global->thread);
-                }
-
-                status = f_thread_create(0, &global->thread->id_listen, &controller_thread_control_listen, (void *) global);
-
-                if (status == F_child) {
-                  return status;
-                }
-
-                if (F_status_is_error_not(status)) {
-                  status = f_thread_create(0, &global->thread->id_control, &controller_thread_control, (void *) global);
-
-                  if (status == F_child) {
-                    return status;
-                  }
-                }
-
-                if (F_status_is_error(status)) {
-                  if (global->thread->id_listen) {
-                    f_thread_cancel(global->thread->id_listen);
-                    f_thread_join(global->thread->id_listen, 0);
-
-                    global->thread->id_listen = 0;
-                  }
-
-                  global->thread->id_control = 0;
-
-                  if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
-                    controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_thread_create", F_true);
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        // Don't fail if unable to create socket file.
+      // Do not fail on non-memory errors related to creating the control socket.
+      if (F_status_is_error(status) && F_status_set_fine(status) != F_memory) {
         status = F_none;
       }
     }
@@ -644,6 +483,185 @@ extern "C" {
     return status;
   }
 #endif // _di_controller_perform_ready_
+
+#ifndef _di_controller_perform_ready_socket_
+  f_status_t controller_perform_ready_socket(const controller_global_t * const global, controller_cache_t * const cache, const bool is_entry) {
+
+    f_status_t status = F_none;
+
+    if (global->setting->control.flag & controller_control_flag_readonly_e) {
+      if (f_file_exists(global->setting->path_control) != F_true) {
+        if (global->main->output.verbosity == f_console_verbosity_debug_e) {
+          controller_lock_print(global->main->output.to, global->thread);
+
+          fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+          fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
+          fl_print_format("' .%r", global->main->output.to.stream, f_string_eol_s);
+          fl_print_format("%[' cannot be found while read only mode is enabled and so the Control socket is unavailable.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+
+          controller_unlock_print_flush(global->main->output.to, global->thread);
+        }
+
+        return F_data_not;
+      }
+    }
+
+    status = f_socket_create(&global->setting->control.server);
+
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_memory_not) {
+        controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_socket_create", F_true);
+      }
+      else if (global->main->output.verbosity == f_console_verbosity_debug_e) {
+        controller_lock_print(global->main->output.to, global->thread);
+
+        fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+        fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
+        fl_print_format("%[' could not be created, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
+        fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
+        fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+
+        controller_unlock_print_flush(global->main->output.to, global->thread);
+      }
+
+      return status;
+    }
+
+    if (!(global->setting->control.flag & controller_control_flag_readonly_e)) {
+      status = f_file_remove(global->setting->path_control);
+
+      if (F_status_set_fine(status) == F_memory_not) {
+        controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_file_remove", F_true);
+
+        return status;
+      }
+    }
+
+    global->setting->control.server.name = global->setting->path_control.string;
+
+    status = f_socket_bind_local(&global->setting->control.server);
+
+    if (F_status_is_error(status)) {
+      f_socket_disconnect(&global->setting->control.server, f_socket_close_fast_e);
+
+      if (!(global->setting->control.flag & controller_control_flag_readonly_e)) {
+        f_file_remove(global->setting->path_control);
+      }
+
+      if (F_status_set_fine(status) == F_memory_not) {
+        controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_socket_bind_local", F_true);
+      }
+      else if (global->main->output.verbosity == f_console_verbosity_debug_e) {
+        controller_lock_print(global->main->output.to, global->thread);
+
+        fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+        fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
+        fl_print_format("%[' could not be bound, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
+        fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
+        fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+
+        controller_unlock_print_flush(global->main->output.to, global->thread);
+      }
+
+      return status;
+    }
+
+    if (global->setting->control.flag & (controller_control_flag_has_user_e | controller_control_flag_has_group_e)) {
+      status = f_file_role_change(global->setting->path_control, global->setting->control.user, global->setting->control.group, F_true);
+
+      if (F_status_is_error(status)) {
+        f_socket_disconnect(&global->setting->control.server, f_socket_close_fast_e);
+
+        if (!(global->setting->control.flag & controller_control_flag_readonly_e)) {
+          f_file_remove(global->setting->path_control);
+        }
+
+        if (F_status_set_fine(status) == F_memory_not) {
+          controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_file_role_change", F_true);
+        }
+        else if (global->main->output.verbosity == f_console_verbosity_debug_e) {
+          controller_lock_print(global->main->output.to, global->thread);
+
+          fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+          fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
+          fl_print_format("%[' failed to set file roles, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
+          fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
+          fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+
+          controller_unlock_print_flush(global->main->output.to, global->thread);
+        }
+
+        return status;
+      }
+    }
+
+    if (global->setting->control.flag & controller_control_flag_has_mode_e) {
+      status = f_file_mode_set(global->setting->path_control, global->setting->control.mode);
+
+      if (F_status_is_error(status)) {
+        f_socket_disconnect(&global->setting->control.server, f_socket_close_fast_e);
+
+        if (!(global->setting->control.flag & controller_control_flag_readonly_e)) {
+          f_file_remove(global->setting->path_control);
+        }
+
+        if (F_status_set_fine(status) == F_memory_not) {
+          controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_file_role_change", F_true);
+        }
+        else if (global->main->output.verbosity == f_console_verbosity_debug_e) {
+          controller_lock_print(global->main->output.to, global->thread);
+
+          fl_print_format("%r%[%QControl socket '%]", global->main->warning.to.stream, f_string_eol_s, global->main->warning.context, global->main->warning.prefix, global->main->warning.context);
+          fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
+          fl_print_format("%[' failed to set file mode, code %]", global->main->output.to.stream, global->main->warning.context, global->main->warning.context);
+          fl_print_format("%[%ui%]", global->main->output.to.stream, global->main->context.set.notable, F_status_set_fine(status), global->main->context.set.notable);
+          fl_print_format("%[.%]%r", global->main->output.to.stream, global->main->warning.context, global->main->warning.context, f_string_eol_s);
+
+          controller_unlock_print_flush(global->main->output.to, global->thread);
+        }
+
+        return status;
+      }
+    }
+
+    if (global->main->output.verbosity == f_console_verbosity_debug_e) {
+      controller_lock_print(global->main->output.to, global->thread);
+
+      fl_print_format("%rControl socket '", global->main->output.to.stream, f_string_eol_s);
+      fl_print_format("%[%Q%]", global->main->output.to.stream, global->main->context.set.notable, global->setting->path_control, global->main->context.set.notable);
+      fl_print_format("' created.%r", global->main->output.to.stream, f_string_eol_s);
+
+      controller_unlock_print_flush(global->main->output.to, global->thread);
+    }
+
+    status = f_thread_create(0, &global->thread->id_control, &controller_thread_control, (void *) global);
+
+    if (status == F_child) {
+      return status;
+    }
+
+    if (F_status_is_error(status)) {
+      f_socket_disconnect(&global->setting->control.server, f_socket_close_fast_e);
+
+      if (!(global->setting->control.flag & controller_control_flag_readonly_e)) {
+        f_file_remove(global->setting->path_control);
+      }
+
+      if (global->thread->id_control) {
+        f_thread_cancel(global->thread->id_control);
+        f_thread_join(global->thread->id_control, 0);
+
+        global->thread->id_control = 0;
+      }
+
+      if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+        controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_thread_create", F_true);
+      }
+    }
+
+    return F_none;
+  }
+#endif // _di_controller_perform_ready_socket_
 
 #ifndef _di_controller_status_simplify_error_
   f_status_t controller_status_simplify_error(const f_status_t status) {
@@ -725,7 +743,7 @@ extern "C" {
   int controller_time_sleep_nanoseconds(controller_main_t * const main, controller_setting_t * const setting, struct timespec time) {
 
     // When sleep is a second or more, instead wait for terminating signals if interruptible.
-    if (setting->interruptible && time.tv_sec) {
+    if ((setting->flag & controller_setting_flag_interruptible_e) && time.tv_sec) {
       siginfo_t information;
       f_signal_t signal = f_signal_t_initialize;
 
