@@ -1048,7 +1048,7 @@ extern "C" {
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      char *result = cap_to_name(code);
+      unsigned char *result = cap_to_name(code);
 
       if (result) {
         const f_array_length_t length = strlen(result);
@@ -1091,7 +1091,7 @@ extern "C" {
 
       ssize_t length = 0;
 
-      char *result = cap_to_text(capability, &length);
+      unsigned char *result = cap_to_text(capability, &length);
 
       if (result) {
         if (text->used + length + 1 > text->size) {

@@ -35,7 +35,7 @@ extern "C" {
       // Must be set to 0 to avoid problems due to the design of getpwuid()/getpwuid_r().
       errno = 0;
 
-      char buffer[length];
+      unsigned char buffer[length];
       const int result = getpwuid_r(id, &password, buffer, length, &pointer);
 
       if (result) {
@@ -63,7 +63,7 @@ extern "C" {
 
     length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[F_account_pwd_length_fallback_second_d];
+    unsigned char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getpwuid_r(id, &password, buffer, length, &pointer);
 
@@ -116,7 +116,7 @@ extern "C" {
       // Must be set to 0 to avoid problems due to the design of getpwnam()/getpwnam_r().
       errno = 0;
 
-      char buffer[length];
+      unsigned char buffer[length];
       const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
       if (result) {
@@ -144,7 +144,7 @@ extern "C" {
 
     length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[F_account_pwd_length_fallback_second_d];
+    unsigned char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
@@ -189,7 +189,7 @@ extern "C" {
       // Must be set to 0 to avoid problems due to the design of getgrnam()/getgrnam_r().
       errno = 0;
 
-      char buffer[length];
+      unsigned char buffer[length];
       int result = getgrnam_r(name.string, &group_data, buffer, length, &pointer);
 
       if (result) {
@@ -219,7 +219,7 @@ extern "C" {
 
     length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[F_account_pwd_length_fallback_second_d];
+    unsigned char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getgrnam_r(name.string, &group_data, buffer, length, &pointer);
 
@@ -270,7 +270,7 @@ extern "C" {
       // Must be set to 0 to avoid problems due to the design of getpwuid()/getpwuid_r().
       errno = 0;
 
-      char buffer[length];
+      unsigned char buffer[length];
       const int result = getgrgid_r(id, &group_data, buffer, length, &pointer);
 
       if (result) {
@@ -308,7 +308,7 @@ extern "C" {
 
     length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[F_account_pwd_length_fallback_second_d];
+    unsigned char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getgrgid_r(id, &group_data, buffer, length, &pointer);
 
@@ -363,7 +363,7 @@ extern "C" {
       // Must be set to 0 to avoid problems due to the design of getpwnam()/getpwnam_r().
       errno = 0;
 
-      char buffer[length];
+      unsigned char buffer[length];
       const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
       if (result) {
@@ -393,7 +393,7 @@ extern "C" {
 
     length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[F_account_pwd_length_fallback_second_d];
+    unsigned char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
@@ -444,7 +444,7 @@ extern "C" {
       // Must be set to 0 to avoid problems due to the design of getpwuid()/getpwuid_r().
       errno = 0;
 
-      char buffer[length];
+      unsigned char buffer[length];
       const int result = getpwuid_r(id, &password, buffer, length, &pointer);
 
       if (result) {
@@ -482,7 +482,7 @@ extern "C" {
 
     length = F_account_pwd_length_fallback_second_d;
 
-    char buffer[F_account_pwd_length_fallback_second_d];
+    unsigned char buffer[F_account_pwd_length_fallback_second_d];
 
     const int result = getpwuid_r(id, &password, buffer, length, &pointer);
 

@@ -55,7 +55,7 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    char buffer[F_path_length_max_d];
+    unsigned char buffer[F_path_length_max_d];
 
     if (!getcwd(buffer, F_path_length_max_d)) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);

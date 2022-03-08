@@ -12,7 +12,7 @@ extern "C" {
 
     // Switch to the appropriate terminal color mode.
     {
-      char *environment = getenv(f_color_terminal_name_s.string);
+      unsigned char *environment = getenv(f_color_terminal_name_s.string);
 
       if (!environment || strncmp(environment, f_color_terminal_value_linux_s.string, f_color_terminal_value_linux_s.used) == 0) {
         macro_f_color_t_set_linux(context->list);

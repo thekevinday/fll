@@ -72,7 +72,7 @@ extern "C" {
  * @see f_print_character()
  */
 #ifndef _di_fll_print_character_
-  extern f_status_t fll_print_character(const char character, FILE * const output);
+  extern f_status_t fll_print_character(const unsigned char character, FILE * const output);
 #endif // _di_fll_print_character_
 
 /**
@@ -94,7 +94,7 @@ extern "C" {
  * @see f_print_character_safely()
  */
 #ifndef _di_fll_print_character_safely_
-  extern f_status_t fll_print_character_safely(const char character, FILE * const output);
+  extern f_status_t fll_print_character_safely(const unsigned char character, FILE * const output);
 #endif // _di_fll_print_character_safely_
 
 /**

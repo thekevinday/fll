@@ -91,7 +91,7 @@ extern "C" {
       program_name.used = program.used ? program.used : arguments.array[0].used;
     }
 
-    char program_name_string[program_name.used + 1];
+    unsigned char program_name_string[program_name.used + 1];
     program_name.string = program_name_string;
 
     private_fll_execute_path_arguments_fixate(program.used ? program : arguments.array[0], arguments, last_slash, !program.used, program_name, fixed_arguments);
@@ -187,7 +187,7 @@ extern "C" {
         }
       }
 
-      char program_path[found->used + 1];
+      unsigned char program_path[found->used + 1];
       program_path[found->used] = 0;
 
       memcpy(&program_path, found->string, found->used);
@@ -204,7 +204,7 @@ extern "C" {
         } // for
       }
 
-      code = execv(program_path, fixed_arguments);
+      code = execv(program_path, (char **) fixed_arguments);
     }
     else {
       if (environment) {
@@ -216,10 +216,10 @@ extern "C" {
       }
 
       if (last_slash) {
-        code = execv(program.used ? program.string : arguments.array[0].string, fixed_arguments);
+        code = execv(program.used ? program.string : arguments.array[0].string, (char **) fixed_arguments);
       }
       else {
-        code = execvp(program.used ? program.string : arguments.array[0].string, fixed_arguments);
+        code = execvp(program.used ? program.string : arguments.array[0].string, (char **) fixed_arguments);
       }
     }
 
@@ -287,7 +287,7 @@ extern "C" {
       program_name.used = program.used ? program.used : arguments.array[0].used;
     }
 
-    char program_name_string[program_name.used + 1];
+    unsigned char program_name_string[program_name.used + 1];
     program_name.string = program_name_string;
 
     private_fll_execute_path_arguments_fixate(program.used ? program : arguments.array[0], arguments, last_slash, !program.used, program_name, fixed_arguments);
@@ -379,7 +379,7 @@ extern "C" {
         }
       }
 
-      char program_path[found->used + 1];
+      unsigned char program_path[found->used + 1];
       program_path[found->used] = 0;
 
       memcpy(&program_path, found->string, found->used);

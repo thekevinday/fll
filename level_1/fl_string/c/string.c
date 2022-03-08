@@ -874,7 +874,7 @@ extern "C" {
 
     {
       f_array_length_t j = 0;
-      char number[5] = { 0, 0, 0, 0, 0 };
+      unsigned char number[5] = { 0, 0, 0, 0, 0 };
 
       for (++range->start; range->start <= range->stop && j < 4; ++range->start, ++j) {
 

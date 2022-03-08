@@ -82,7 +82,7 @@ extern "C" {
  *   The 8-bit number representing the flags.
  */
 #ifndef _di_controller_control_packet_header_flag_
-  extern uint8_t controller_control_packet_header_flag(const char buffer[]) F_attribute_visibility_internal_d;
+  extern uint8_t controller_control_packet_header_flag(const unsigned char buffer[]) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_packet_header_flag_
 
 /**
@@ -100,7 +100,7 @@ extern "C" {
  *   The 32-bit number representing the length.
  */
 #ifndef _di_controller_control_packet_header_length_
-  extern uint32_t controller_control_packet_header_length(const bool is_big, const char buffer[]) F_attribute_visibility_internal_d;
+  extern uint32_t controller_control_packet_header_length(const bool is_big, const unsigned char buffer[]) F_attribute_visibility_internal_d;
 #endif // _di_controller_control_packet_header_length_
 
 /**

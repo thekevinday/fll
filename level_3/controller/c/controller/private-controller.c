@@ -74,7 +74,7 @@ extern "C" {
       path.used = cache->action.name_file.used;
     }
 
-    char path_string[path.used + 1];
+    unsigned char path_string[path.used + 1];
     path.string = path_string;
 
     if (global.setting->path_setting.used) {
@@ -368,7 +368,7 @@ extern "C" {
         f_array_length_t length = destination->used - setting->path_current.used;
 
         if (length) {
-          char temporary[--length];
+          unsigned char temporary[--length];
           temporary[length] = 0;
 
           memcpy(temporary, destination->string + setting->path_current.used + 1, length);

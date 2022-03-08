@@ -85,7 +85,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_character_
-  extern f_status_t f_print_character(const char character, FILE * const output);
+  extern f_status_t f_print_character(const unsigned char character, FILE * const output);
 #endif // _di_f_print_character_
 
 /**
@@ -116,7 +116,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_character_safely_
-  extern f_status_t f_print_character_safely(const char character, FILE * const output);
+  extern f_status_t f_print_character_safely(const unsigned char character, FILE * const output);
 #endif // _di_f_print_character_safely_
 
 /**
@@ -140,7 +140,7 @@ extern "C" {
  *   A string with a non-zero used length is returned are NULL terminated (after the used length).
  */
 #ifndef _di_f_print_character_safely_get_
-  extern const f_string_static_t f_print_character_safely_get(const char character);
+  extern const f_string_static_t f_print_character_safely_get(const unsigned char character);
 #endif // _di_f_print_character_safely_get_
 
 /**

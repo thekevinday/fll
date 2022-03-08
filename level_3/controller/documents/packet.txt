@@ -18,17 +18,11 @@ Packet Documentation:
 
     The size block\:
       The size block represents the size of the entire packet (the control block, the size blocks, and the payload block).
-      This number is an 32-bit unsigned integer.
-      The size block may contain up to 4 32-bit unsigned integers.
-      If the size is less than the max value of a 32-bit integer (4294967295), then the remaining 32-bit unsigned integers may be omitted.
+      This number is a single 32-bit unsigned integer.
 
-      Example size that is less than 2^32-1\:
+      Example packet structure\:
         [ control block ] [ size block                                  ] [ payload block         ]
         [ 0b10000000    ] [ 0b00000000 0b00000000 0b00000100 0b11010010 ] [ size: 1229 (1234 - 5) ]
-
-      Example size that is less than 2^64-1\:
-        [ control block ] [ size block                                  ] [ size block                                  ] [ payload block                     ]
-        [ 0b10000000    ] [ 0b11111111 0b11111111 0b11111111 0b11111111 ] [ 0b00000000 0b00000000 0b00000000 0b11001000 ] [ size: 4294967486 (4294967495 - 9) ]
 
     The payload block\:
       This block is represented by the FSS-000e payload specification and its structure ad use is described in the next sections.
@@ -71,5 +65,5 @@ Packet Documentation:
     The error payload is intended to communicate some sort of failure.
     The error payload is only sent in response to some request (and not in response to another response).
     The control (the client) is not expected to send error payloads and the controller (the service) should send an error in response to an error payload or ignore it entirely.
-    The "status" from the "header" designates the status code.
+    The "status" from the "header" designates the status code as either a status code name string or a status code number (where a number may have error and warning bits).
     The "payload" will contain a NULL terminated string representing the message used to describe the error.

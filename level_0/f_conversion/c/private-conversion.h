@@ -213,7 +213,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_to_string()
  */
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  extern void private_f_conversion_digit_to_string_pad(const f_conversion_data_t data, const char pad, int total, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern void private_f_conversion_digit_to_string_pad(const f_conversion_data_t data, const unsigned char pad, int total, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 /**

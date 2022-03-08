@@ -47,7 +47,7 @@ extern "C" {
       f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
       parameter_file_name_path.used = main->path_build_objects_shared.used + data_build->setting.build_name.used + fake_build_parameter_object_name_suffix_s.used;
 
-      char parameter_file_name_path_string[parameter_file_name_path.used + 1];
+      unsigned char parameter_file_name_path_string[parameter_file_name_path.used + 1];
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
@@ -118,7 +118,7 @@ extern "C" {
       f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
       parameter_file_name_path.used = main->path_build_objects_static.used + data_build->setting.build_name.used + fake_build_parameter_object_name_suffix_s.used;
 
-      char parameter_file_name_path_string[parameter_file_name_path.used + 1];
+      unsigned char parameter_file_name_path_string[parameter_file_name_path.used + 1];
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 

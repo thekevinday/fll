@@ -27,7 +27,7 @@ extern "C" {
       f_array_length_t at_path = 0;
       f_string_static_t tree = f_string_static_t_initialize;
 
-      char tree_string[path.used + 1];
+      unsigned char tree_string[path.used + 1];
       tree.string = tree_string;
       tree.used = path.used;
       tree_string[path.used] = 0;

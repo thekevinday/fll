@@ -36,11 +36,11 @@ extern "C" {
       fake_skeleton_path_source_length(main, &fake_path_part_cpp_s, &sources_cpp);
       fake_skeleton_path_source_length(main, &fake_path_part_script_s, &sources_script);
 
-      char sources_string[sources.used + 1];
-      char sources_bash_string[sources_bash.used + 1];
-      char sources_c_string[sources_c.used + 1];
-      char sources_cpp_string[sources_cpp.used + 1];
-      char sources_script_string[sources_script.used + 1];
+      unsigned char sources_string[sources.used + 1];
+      unsigned char sources_bash_string[sources_bash.used + 1];
+      unsigned char sources_c_string[sources_c.used + 1];
+      unsigned char sources_cpp_string[sources_cpp.used + 1];
+      unsigned char sources_script_string[sources_script.used + 1];
 
       sources.string = sources_string;
       sources_bash.string = sources_bash_string;

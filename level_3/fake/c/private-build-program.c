@@ -57,7 +57,7 @@ extern "C" {
       f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
       parameter_file_name_path.used = main->path_build_programs_shared.used + data_build->setting.build_name.used;
 
-      char parameter_file_name_path_string[parameter_file_name_path.used + 1];
+      unsigned char parameter_file_name_path_string[parameter_file_name_path.used + 1];
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
@@ -83,7 +83,7 @@ extern "C" {
       f_string_static_t link_project_library = f_string_static_t_initialize;
       link_project_library.used = fake_build_parameter_library_link_file_s.used + data_build->setting.build_name.used;
 
-      char link_project_library_string[link_project_library.used + 1];
+      unsigned char link_project_library_string[link_project_library.used + 1];
       link_project_library.string = link_project_library_string;
       link_project_library_string[link_project_library.used] = 0;
 
@@ -151,7 +151,7 @@ extern "C" {
       f_string_static_t source_library = f_string_static_t_initialize;
       source_library.used = main->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s.used + data_build->setting.build_name.used + fake_build_parameter_library_name_suffix_static_s.used;
 
-      char source_library_string[source_library.used + 1];
+      unsigned char source_library_string[source_library.used + 1];
       source_library.string = source_library_string;
       source_library_string[source_library.used] = 0;
       source_library.used = 0;
@@ -174,7 +174,7 @@ extern "C" {
       f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
       parameter_file_name_path.used = main->path_build_programs_static.used + data_build->setting.build_name.used;
 
-      char parameter_file_name_path_string[parameter_file_name_path.used + 1];
+      unsigned char parameter_file_name_path_string[parameter_file_name_path.used + 1];
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 

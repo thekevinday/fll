@@ -122,7 +122,7 @@ extern "C" {
         paths->array[paths->used].used = 0;
 
         if (total) {
-          char buffer[total + 1];
+          unsigned char buffer[total + 1];
 
           for (j = first, k = 0; j < i; ++j) {
 
@@ -200,7 +200,7 @@ extern "C" {
         paths->array[paths->used].used = 0;
 
         if (total) {
-          char buffer[total];
+          unsigned char buffer[total];
 
           for (j = 0, k = 0; j < total; ++j) {
 

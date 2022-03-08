@@ -188,7 +188,7 @@ extern "C" {
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(listing[i]->d_name, "..", 3) || !strncmp(listing[i]->d_name, ".", 2))  {
-        f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
+        f_memory_delete(size, sizeof(unsigned char *), (void **) & listing[i]);
 
         continue;
       }
@@ -206,11 +206,11 @@ extern "C" {
       memcpy(names->array[names->used].string, listing[i]->d_name, size);
       names->array[names->used++].used = size;
 
-      f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
+      f_memory_delete(size, sizeof(unsigned char *), (void **) & listing[i]);
     } // for
 
     for (; i < length; ++i) {
-      f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
+      f_memory_delete(size, sizeof(unsigned char *), (void **) & listing[i]);
     } // for
 
     f_memory_delete(1, sizeof(struct dirent *), (void **) & listing);
@@ -324,7 +324,7 @@ extern "C" {
     int result = 0;
 
     if (depth_max) {
-      result = nftw(path.string, private_f_directory_remove_recursively, depth_max, FTW_DEPTH | FTW_PHYS);
+      result = nftw((char *) path.string, private_f_directory_remove_recursively, depth_max, FTW_DEPTH | FTW_PHYS);
 
       if (result == 0 && !preserve) {
         result = remove(path.string);
@@ -378,7 +378,7 @@ extern "C" {
     int result = 0;
 
     if (depth_max) {
-      result = nftw(path.string, custom, depth_max, FTW_DEPTH | FTW_PHYS);
+      result = nftw((char *) path.string, custom, depth_max, FTW_DEPTH | FTW_PHYS);
 
       if (result == 0 && !preserve) {
         result = remove(path.string);

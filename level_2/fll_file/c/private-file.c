@@ -50,7 +50,7 @@ extern "C" {
 
           path_sub.used = path.used + list[i]->array[j].used + 1;
 
-          char path_sub_string[path_sub.used + 1];
+          unsigned char path_sub_string[path_sub.used + 1];
           path_sub.string = path_sub_string;
 
           memcpy(path_sub.string, path.string, path.used);
@@ -74,7 +74,7 @@ extern "C" {
 
       path_sub.used = path.used + listing.directory.array[i].used + 1;
 
-      char path_sub_string[path_sub.used + 1];
+      unsigned char path_sub_string[path_sub.used + 1];
       path_sub.string = path_sub_string;
 
       memcpy(path_sub.string, path.string, path.used);
@@ -152,7 +152,7 @@ extern "C" {
 
           path_sub.used = path.used + list[i]->array[j].used + 1;
 
-          char path_sub_string[path_sub.used + 1];
+          unsigned char path_sub_string[path_sub.used + 1];
           path_sub.string = path_sub_string;
 
           memcpy(path_sub.string, path.string, path.used);
@@ -175,7 +175,7 @@ extern "C" {
 
         path_sub.used = path.used + listing.directory.array[i].used + 1;
 
-        char path_sub_string[path_sub.used + 1];
+        unsigned char path_sub_string[path_sub.used + 1];
         path_sub.string = path_sub_string;
 
         memcpy(path_sub.string, path.string, path.used);

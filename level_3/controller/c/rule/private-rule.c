@@ -2059,7 +2059,7 @@ extern "C" {
         f_string_static_t buffer = f_string_static_t_initialize;
         buffer.used = (content.stop - content.start) + 1;
 
-        char buffer_string[buffer.used + 1];
+        unsigned char buffer_string[buffer.used + 1];
 
         memcpy(buffer_string, source.string + content.start, buffer.used);
         buffer_string[buffer.used] = 0;
@@ -2243,7 +2243,7 @@ extern "C" {
           f_string_static_t buffer = f_string_static_t_initialize;
           buffer.used = options[i].used + controller_parameter_map_option_s.used;
 
-          char buffer_string[buffer.used];
+          unsigned char buffer_string[buffer.used];
           buffer.string = buffer_string;
 
           memcpy(buffer_string, options[i].string, options[i].used);
@@ -2269,7 +2269,7 @@ extern "C" {
           f_string_static_t buffer = f_string_static_t_initialize;
           buffer.used = options[i].used + controller_parameter_map_value_s.used;
 
-          char buffer_string[buffer.used];
+          unsigned char buffer_string[buffer.used];
           buffer.string = buffer_string;
 
           memcpy(buffer_string, options[i].string, options[i].used);
@@ -2881,7 +2881,7 @@ extern "C" {
             f_string_static_t alias_other_buffer = f_string_static_t_initialize;
             alias_other_buffer.used = global.setting->rules.array[id_rule].alias.used;
 
-            char alias_other_buffer_string[alias_other_buffer.used + 1];
+            unsigned char alias_other_buffer_string[alias_other_buffer.used + 1];
             alias_other_buffer.string = alias_other_buffer_string;
 
             memcpy(alias_other_buffer_string, global.setting->rules.array[id_rule].alias.string, alias_other_buffer.used);
@@ -4004,7 +4004,7 @@ extern "C" {
     const f_array_length_t line_item = cache->action.line_item;
     const f_array_length_t length_name_item = cache->action.name_item.used;
 
-    char name_item[length_name_item];
+    unsigned char name_item[length_name_item];
     name_item[length_name_item] = 0;
 
     memcpy(name_item, cache->action.name_item.string, length_name_item);

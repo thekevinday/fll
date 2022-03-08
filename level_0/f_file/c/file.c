@@ -1392,7 +1392,7 @@ extern "C" {
     }
 
     // POSIX basename() modifies the path, so protect it (and add a terminating NULL).
-    char path_argument[path.used + 1];
+    unsigned char path_argument[path.used + 1];
     f_string_t path_to_name;
 
     memcpy(path_argument, path.string, path.used);
@@ -1424,7 +1424,7 @@ extern "C" {
     }
 
     // POSIX dirname() modifies the path, so protect it (and add a terminating NULL).
-    char path_argument[path.used + 1];
+    unsigned char path_argument[path.used + 1];
     f_string_t path_to_name;
 
     memcpy(path_argument, path.string, path.used);

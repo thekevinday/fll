@@ -1192,7 +1192,7 @@ extern "C" {
           }
 
           const f_array_length_t id_rule_length = entry_action->parameters.array[0].used + entry_action->parameters.array[1].used + 1;
-          char id_rule_name[id_rule_length + 1];
+          unsigned char id_rule_name[id_rule_length + 1];
           const f_string_static_t alias_rule = macro_f_string_static_t_initialize2(id_rule_name, id_rule_length);
 
           memcpy(id_rule_name, entry_action->parameters.array[0].string, entry_action->parameters.array[0].used);
@@ -1251,9 +1251,9 @@ extern "C" {
             const f_array_length_t cache_name_item_used = cache->action.name_item.used;
             const f_array_length_t cache_name_file_used = cache->action.name_file.used;
 
-            char cache_name_action[cache_name_action_used];
-            char cache_name_item[cache_name_item_used];
-            char cache_name_file[cache_name_file_used];
+            unsigned char cache_name_action[cache_name_action_used];
+            unsigned char cache_name_item[cache_name_item_used];
+            unsigned char cache_name_file[cache_name_file_used];
 
             memcpy(cache_name_action, cache->action.name_action.string, cache->action.name_action.used);
             memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);

@@ -9,18 +9,18 @@ Entry Specification:
   Packet Structure\:
     Packet is grouped into the following blocks\:
       - control: A single 1-byte block representing contol codes.
-      - size: A set of 1 to 4 4-byte blocks representing the size of the entire packet.
+      - size: A single 4-byte block representing the size of the entire packet, including the contol block.
 
   The "header" Object contains the following FSS-0001 Extended Objects (depending on "type")\:
     - action: A valid action type: "freeze", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", or "thaw".
     - length: A positive whole number inclusively between 0 and 4294965248 representing the length of the "payload".
-    - status: The string name representing an FSS status code, such as F_none or F_failure.
+    - status: The status code name or number representing an FSS status code, such as F_none, F_failure, or 200 (where a number may have error and warning bits).
     - type: The packet type that is one of "error" and "controller".
 
   When there are multiple Objects of the same name inside the "header"\:
     - action: The order represents the order in which the actions are performed.
     - length: There may only be one length Object, all others after the first are ignored.
-    - status: The first represents the status and all other represent additional statuses.
+    - status: A status for each action, in the same order as the order of the action.
     - type: The first represent the type and all others represents a sub-type.
 
   There are different headers and payload properties based on the "type".

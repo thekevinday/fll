@@ -262,9 +262,9 @@ extern "C" {
  */
 #ifndef _di_f_console_parameter_t_
   typedef struct {
-    const char *symbol_short;
-    const char *symbol_long;
-    const char *symbol_other;
+    const unsigned char *symbol_short;
+    const unsigned char *symbol_long;
+    const unsigned char *symbol_other;
 
     const uint8_t values_total;
     const uint8_t type;

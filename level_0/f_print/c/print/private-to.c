@@ -65,7 +65,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
 
 #if !defined(_di_f_print_to_character_safely_) || !defined(_di_f_print_to_safely_) || !defined(_di_f_print_to_safely_dynamic_) || !defined(_di_f_print_to_safely_dynamic_partial_) || !defined(_di_f_print_to_safely_terminated_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_)
-  f_status_t private_f_print_to_character_safely(const char character, const int id) {
+  f_status_t private_f_print_to_character_safely(const unsigned char character, const int id) {
 
     if (character == 0x7f) {
       if (write(id, f_print_sequence_delete_s.string, f_print_sequence_delete_s.used) != -1) {

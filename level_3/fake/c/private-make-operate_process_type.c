@@ -65,7 +65,7 @@ extern "C" {
         destination.used += arguments.array[i].used + 1;
       }
 
-      char destination_string[destination.used + 1];
+      unsigned char destination_string[destination.used + 1];
       destination.string = destination_string;
       destination_string[destination.used] = 0;
 
@@ -1056,7 +1056,7 @@ extern "C" {
         destination.used += arguments.array[i].used + 1;
       }
 
-      char destination_string[destination.used + 1];
+      unsigned char destination_string[destination.used + 1];
       destination.string = destination_string;
       destination_string[destination.used] = 0;
 

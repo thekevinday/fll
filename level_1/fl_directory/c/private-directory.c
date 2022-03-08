@@ -58,8 +58,8 @@ extern "C" {
       destination_sub.used = destination.used + listing.directory.array[i].used + 1;
       destination_sub.size = destination_sub.used;
 
-      char path_source_sub[source_sub.used + 1];
-      char path_destination_sub[destination_sub.used + 1];
+      unsigned char path_source_sub[source_sub.used + 1];
+      unsigned char path_destination_sub[destination_sub.used + 1];
 
       memcpy(path_source_sub, source.string, source.used);
       memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, listing.directory.array[i].used);
@@ -146,8 +146,8 @@ extern "C" {
     path_source.used = source.used + file.used + 2;
     path_destination.used = destination.used + file.used + 2;
 
-    char path_source_string[path_source.used];
-    char path_destination_string[path_destination.used];
+    unsigned char path_source_string[path_source.used];
+    unsigned char path_destination_string[path_destination.used];
 
     path_source.string = path_source_string;
     path_destination.string = path_destination_string;
@@ -283,8 +283,8 @@ extern "C" {
       destination_sub.used = destination.used + listing.directory.array[i].used + 1;
       destination_sub.size = destination_sub.used;
 
-      char path_source_sub[source_sub.used + 1];
-      char path_destination_sub[destination_sub.used + 1];
+      unsigned char path_source_sub[source_sub.used + 1];
+      unsigned char path_destination_sub[destination_sub.used + 1];
 
       memcpy(path_source_sub, source.string, source.used);
       memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, listing.directory.array[i].used);
@@ -358,8 +358,8 @@ extern "C" {
     path_source.used = source.used + file.used + 2;
     path_destination.used = destination.used + file.used + 2;
 
-    char path_source_string[path_source.used];
-    char path_destination_string[path_destination.used];
+    unsigned char path_source_string[path_source.used];
+    unsigned char path_destination_string[path_destination.used];
 
     path_source.string = path_source_string;
     path_destination.string = path_destination_string;
@@ -502,7 +502,7 @@ extern "C" {
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(name_directory.string, "..", 3) || !strncmp(name_directory.string, ".", 2)) {
-        f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
+        f_memory_resize(1, 0, sizeof(unsigned char *), (void **) & entity[i]);
 
         continue;
       }
@@ -552,13 +552,13 @@ extern "C" {
       memcpy(names->array[names->used].string, name_directory.string, name_directory.used);
       names->array[names->used++].used = name_directory.used;
 
-      f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
+      f_memory_resize(1, 0, sizeof(unsigned char *), (void **) & entity[i]);
     } // for
 
     closedir(parent);
 
     for (; i < length; ++i) {
-      f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
+      f_memory_resize(1, 0, sizeof(unsigned char *), (void **) & entity[i]);
     } // for
 
     f_memory_resize(1, 0, sizeof(struct dirent *), (void **) & entity);

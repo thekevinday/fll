@@ -332,7 +332,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    int code = direct ? execv(program.string, fixed_arguments) : execvp(program.string, fixed_arguments);
+    int code = direct ? execv(program.string, (char **) fixed_arguments) : execvp(program.string, (char **) fixed_arguments);
 
     if (code == -1) {
       if (errno == EACCES) code = F_execute_access;
@@ -518,7 +518,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    int code = direct ? execv(program.string, fixed_arguments) : execvp(program.string, fixed_arguments);
+    int code = direct ? execv(program.string, (char **) fixed_arguments) : execvp(program.string, (char **) fixed_arguments);
 
     // Close the write pipe for the child when done.
     close(descriptors[0]);

@@ -21,7 +21,7 @@ extern "C" {
  *      therefore this gets defined here.
  */
 #ifdef _en_BUG_strnlen_
-  extern size_t strnlen(const char * const string, size_t max_length);
+  extern size_t strnlen(const unsigned char * const string, size_t max_length);
 #endif // _en_BUG_strnlen_
 
 /**
@@ -36,7 +36,7 @@ extern "C" {
  * F_string_t_size_d is provided to help safely navigate this.
  */
 #ifndef _di_f_string_t_
-  typedef char *f_string_t;
+  typedef unsigned char *f_string_t;
 
   #define f_string_t_initialize 0
 
@@ -67,7 +67,7 @@ extern "C" {
  * When "f_string_constant_t * xxx" is passed to a function, then "xxx" can be changed.
  */
 #ifndef _di_f_string_constant_t_
-  typedef const char *f_string_constant_t;
+  typedef const unsigned char *f_string_constant_t;
 
   #define f_string_constant_t_initialize 0
 

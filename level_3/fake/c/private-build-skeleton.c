@@ -18,7 +18,7 @@ extern "C" {
     f_string_static_t path_headers = f_string_static_t_initialize;
     path_headers.used = main->path_build_includes.used + data_build->setting.path_headers.used;
 
-    char path_headers_string[path_headers.used + 1];
+    unsigned char path_headers_string[path_headers.used + 1];
     path_headers.string = path_headers_string;
 
     if (data_build->setting.path_headers.used) {

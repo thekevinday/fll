@@ -397,7 +397,7 @@ extern "C" {
         f_string_static_t path_file_other = f_string_static_t_initialize;
         path_file_other.used = firewall_network_path_s.used + firewall_file_other_s.used;
 
-        char path_file_other_string[path_file_other.used + 1];
+        unsigned char path_file_other_string[path_file_other.used + 1];
         path_file_other.string = path_file_other_string;
         path_file_other_string[path_file_other.used] = 0;
 
@@ -518,7 +518,7 @@ extern "C" {
         f_string_static_t path_file_first = f_string_static_t_initialize;
         path_file_first.used = firewall_network_path_s.used + firewall_file_first_s.used;
 
-        char path_file_first_string[path_file_first.used + 1];
+        unsigned char path_file_first_string[path_file_first.used + 1];
         path_file_first.string = path_file_first_string;
         path_file_first_string[path_file_first.used] = 0;
 

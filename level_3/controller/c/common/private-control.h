@@ -111,8 +111,8 @@ extern "C" {
  *   - endian_big: Designate that the packet is in big endian order (when not set then packet is in little endian order).
  */
 #ifndef _di_controller_control_packet_flag_
-  #define controller_control_packet_flag_binary_d     0x1
-  #define controller_control_packet_flag_endian_big_d 0x2
+  #define controller_control_packet_flag_binary_d     0x10000000
+  #define controller_control_packet_flag_endian_big_d 0x01000000
 #endif // _di_controller_control_packet_flag_
 
 /**

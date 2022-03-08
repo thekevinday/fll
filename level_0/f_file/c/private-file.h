@@ -903,7 +903,7 @@ extern "C" {
  * @see f_file_stream_reopen()
  */
 #if !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
-  extern const char *private_f_file_stream_open_mode_determine(const int flag) F_attribute_visibility_internal_d;
+  extern const unsigned char *private_f_file_stream_open_mode_determine(const int flag) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 
 /**

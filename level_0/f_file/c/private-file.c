@@ -60,7 +60,7 @@ extern "C" {
 
     ssize_t size_read = 0;
     ssize_t size_write = 0;
-    char *buffer[size_block];
+    unsigned char *buffer[size_block];
 
     memset(buffer, 0, size_block);
 
@@ -109,7 +109,7 @@ extern "C" {
 
     ssize_t size_read = 0;
     ssize_t size_write = 0;
-    char *buffer[size_block];
+    unsigned char *buffer[size_block];
 
     memset(buffer, 0, size_block);
 
@@ -761,7 +761,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
 #if !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
-  const char *private_f_file_stream_open_mode_determine(const int flag) {
+  const unsigned char *private_f_file_stream_open_mode_determine(const int flag) {
 
     if (flag & F_file_flag_read_write_d) {
       if (flag & F_file_flag_truncate_d) {

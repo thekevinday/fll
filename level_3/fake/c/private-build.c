@@ -31,7 +31,7 @@ extern "C" {
     {
       f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_s.used + main->path_build_libraries_shared.used;
 
-      char build_libraries[build_libraries_length + 1];
+      unsigned char build_libraries[build_libraries_length + 1];
 
       memcpy(build_libraries, fake_build_parameter_library_link_path_s.string, fake_build_parameter_library_link_path_s.used);
 
@@ -46,7 +46,7 @@ extern "C" {
 
       f_array_length_t build_includes_length = fake_build_parameter_library_include_s.used + main->path_build_includes.used;
 
-      char build_includes[build_includes_length + 1];
+      unsigned char build_includes[build_includes_length + 1];
 
       memcpy(build_includes, fake_build_parameter_library_include_s.string, fake_build_parameter_library_include_s.used);
       memcpy(build_includes + fake_build_parameter_library_include_s.used, main->path_build_includes.string, main->path_build_includes.used);
@@ -71,7 +71,7 @@ extern "C" {
       if (F_status_is_error_not(*status)) {
         buffer.used = fake_build_parameter_library_include_s.used + main->path_work_includes.used;
 
-        char buffer_string[buffer.used + 1];
+        unsigned char buffer_string[buffer.used + 1];
         buffer.string = buffer_string;
         buffer_string[buffer.used] = 0;
 
@@ -84,7 +84,7 @@ extern "C" {
       if (data_build->setting.search_shared && (is_shared || !data_build->setting.search_exclusive) && F_status_is_error_not(*status)) {
         buffer.used = fake_build_parameter_library_link_path_s.used + main->path_work_libraries_shared.used;
 
-        char buffer_string[buffer.used + 1];
+        unsigned char buffer_string[buffer.used + 1];
         buffer.string = buffer_string;
         buffer_string[buffer.used] = 0;
 
@@ -97,7 +97,7 @@ extern "C" {
       if (data_build->setting.search_static && (!is_shared || !data_build->setting.search_exclusive) && F_status_is_error_not(*status)) {
         buffer.used = fake_build_parameter_library_link_path_s.used + main->path_work_libraries_static.used;
 
-        char buffer_string[buffer.used + 1];
+        unsigned char buffer_string[buffer.used + 1];
         buffer.string = buffer_string;
         buffer_string[buffer.used] = 0;
 
@@ -557,7 +557,7 @@ extern "C" {
       f_string_static_t argument = f_string_static_t_initialize;
       argument.used = f_console_symbol_short_disable_s.used + f_console_standard_short_dark_s.used;
 
-      char argument_string[argument.used + 1];
+      unsigned char argument_string[argument.used + 1];
       argument.string = argument_string;
       argument_string[argument.used] = 0;
 
@@ -581,7 +581,7 @@ extern "C" {
       f_string_static_t argument = f_string_static_t_initialize;
       argument.used = f_console_symbol_short_disable_s.used + f_console_standard_short_quiet_s.used;
 
-      char argument_string[argument.used + 1];
+      unsigned char argument_string[argument.used + 1];
       argument.string = argument_string;
       argument_string[argument.used] = 0;
 
@@ -786,7 +786,7 @@ extern "C" {
 
         source.used = path->used + sources[i]->array[j].used;
 
-        char source_string[source.used + 1];
+        unsigned char source_string[source.used + 1];
         source.string = source_string;
         source_string[source.used] = 0;
 
@@ -853,7 +853,7 @@ extern "C" {
 
         fake_build_path_source_length(main, &data_build, &data_build.setting.path_sources, &source);
 
-        char source_string[source.used + fake_path_part_script_s.used + 1];
+        unsigned char source_string[source.used + fake_path_part_script_s.used + 1];
         source.string = source_string;
 
         fake_build_path_source_string(main, &data_build, &data_build.setting.path_sources, &source);
@@ -871,7 +871,7 @@ extern "C" {
 
         fake_build_path_source_length(main, &data_build, &data_build.setting.path_sources, &source);
 
-        char source_string[source.used + 1];
+        unsigned char source_string[source.used + 1];
         source.string = source_string;
 
         fake_build_path_source_string(main, &data_build, &data_build.setting.path_sources, &source);
@@ -879,7 +879,7 @@ extern "C" {
         f_string_static_t path_headers = f_string_static_t_initialize;
         path_headers.used = main->path_build_includes.used + data_build.setting.path_headers.used;
 
-        char path_headers_string[path_headers.used + 1];
+        unsigned char path_headers_string[path_headers.used + 1];
         path_headers.string = path_headers_string;
 
         memcpy(path_headers_string, main->path_build_includes.string, main->path_build_includes.used);
@@ -924,7 +924,7 @@ extern "C" {
 
         fake_build_path_source_length(main, &data_build, &data_build.setting.path_sources, &source);
 
-        char source_string[source.used + fake_path_part_script_s.used + 1];
+        unsigned char source_string[source.used + fake_path_part_script_s.used + 1];
         source.string = source_string;
 
         fake_build_path_source_string(main, &data_build, &data_build.setting.path_sources, &source);
@@ -1026,7 +1026,7 @@ extern "C" {
 
         fake_build_path_source_length(main, data_build, &data_build->setting.path_sources, &source);
 
-        char source_string[source.used + sources[i]->array[j].used + 1];
+        unsigned char source_string[source.used + sources[i]->array[j].used + 1];
         source.string = source_string;
 
         fake_build_path_source_string(main, data_build, &data_build->setting.path_sources, &source);
@@ -1060,7 +1060,7 @@ extern "C" {
       source.used += generic->used;
     }
 
-    char source_string[source.used + 1];
+    unsigned char source_string[source.used + 1];
     source.string = source_string;
 
     fake_build_path_source_string(main, data_build, &data_build->setting.path_sources_object, &source);

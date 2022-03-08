@@ -46,7 +46,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_
 
 #ifndef _di_f_print_to_character_
-  f_status_t f_print_to_character(const char character, const int id) {
+  f_status_t f_print_to_character(const unsigned char character, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -60,7 +60,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_character_
 
 #ifndef _di_f_print_to_character_safely_
-  f_status_t f_print_to_character_safely(const char character, const int id) {
+  f_status_t f_print_to_character_safely(const unsigned char character, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

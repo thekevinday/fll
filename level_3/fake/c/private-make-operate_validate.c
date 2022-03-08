@@ -82,7 +82,7 @@ extern "C" {
           f_string_static_t path_file = f_string_static_t_initialize;
           path_file.used = data_make->main->path_data_build.used + arguments.array[0].used;
 
-          char path_file_string[path_file.used + 1];
+          unsigned char path_file_string[path_file.used + 1];
           path_file.string = path_file_string;
           path_file_string[path_file.used] = 0;
 

@@ -26,7 +26,7 @@ extern "C" {
 
       path.used = control_group.path.used + control_group.groups.array[i].used;
 
-      char path_string[path.used + 1];
+      unsigned char path_string[path.used + 1];
       path.string = path_string;
 
       if (control_group.path.used) {

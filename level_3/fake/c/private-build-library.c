@@ -83,11 +83,11 @@ extern "C" {
       }
     }
 
-    char parameter_file_name_string[parameter_file_name.used + 1];
-    char parameter_file_name_major_string[parameter_file_name_major.used + 1];
-    char parameter_file_name_minor_string[parameter_file_name_minor.used + 1];
-    char parameter_file_name_micro_string[parameter_file_name_micro.used + 1];
-    char parameter_file_name_nano_string[parameter_file_name_nano.used + 1];
+    unsigned char parameter_file_name_string[parameter_file_name.used + 1];
+    unsigned char parameter_file_name_major_string[parameter_file_name_major.used + 1];
+    unsigned char parameter_file_name_minor_string[parameter_file_name_minor.used + 1];
+    unsigned char parameter_file_name_micro_string[parameter_file_name_micro.used + 1];
+    unsigned char parameter_file_name_nano_string[parameter_file_name_nano.used + 1];
 
     parameter_file_name.string = parameter_file_name_string;
     parameter_file_name_major.string = parameter_file_name_major_string;
@@ -245,8 +245,8 @@ extern "C" {
         parameter_linker.used += parameter_file_name_nano.used;
       }
 
-      char parameter_file_path_string[parameter_file_path.used + 1];
-      char parameter_linker_string[parameter_linker.used + 1];
+      unsigned char parameter_file_path_string[parameter_file_path.used + 1];
+      unsigned char parameter_linker_string[parameter_linker.used + 1];
 
       parameter_file_path.string = parameter_file_path_string;
       parameter_linker.string = parameter_linker_string;
@@ -322,7 +322,7 @@ extern "C" {
       f_string_static_t parameter_file_path = f_string_static_t_initialize;
       parameter_file_path.used = main->path_build_libraries_shared.used + parameter_file_name.used;
 
-      char parameter_file_path_string[parameter_file_path.used + 1];
+      unsigned char parameter_file_path_string[parameter_file_path.used + 1];
       parameter_file_path.string = parameter_file_path_string;
       parameter_file_path_string[parameter_file_path.used] = 0;
 
@@ -353,7 +353,7 @@ extern "C" {
       {
         parameter_file_path.used = main->path_build_libraries_shared.used + parameter_file_name_major.used;
 
-        char parameter_file_path_string[parameter_file_path.used + 1];
+        unsigned char parameter_file_path_string[parameter_file_path.used + 1];
         parameter_file_path.string = parameter_file_path_string;
         parameter_file_path_string[parameter_file_path.used] = 0;
 
@@ -382,7 +382,7 @@ extern "C" {
         {
           parameter_file_path.used = main->path_build_libraries_shared.used + parameter_file_name_minor.used;
 
-          char parameter_file_path_string[parameter_file_path.used + 1];
+          unsigned char parameter_file_path_string[parameter_file_path.used + 1];
           parameter_file_path.string = parameter_file_path_string;
           parameter_file_path_string[parameter_file_path.used] = 0;
 
@@ -410,7 +410,7 @@ extern "C" {
         if (data_build->setting.version_file != fake_build_version_type_micro_e && parameter_file_name_micro.used) {
           parameter_file_path.used = main->path_build_libraries_shared.used + parameter_file_name_micro.used;
 
-          char parameter_file_path_string[parameter_file_path.used + 1];
+          unsigned char parameter_file_path_string[parameter_file_path.used + 1];
           parameter_file_path.string = parameter_file_path_string;
           parameter_file_path_string[parameter_file_path.used] = 0;
 
@@ -472,7 +472,7 @@ extern "C" {
       destination.used = main->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s.used;
       destination.used += data_build->setting.build_name.used + fake_build_parameter_library_name_suffix_static_s.used;
 
-      char destination_string[destination.used + 1];
+      unsigned char destination_string[destination.used + 1];
       destination.string = destination_string;
       destination_string[destination.used] = 0;
       destination.used = 0;
@@ -546,7 +546,7 @@ extern "C" {
             source.used = main->path_build_objects.used + file_name.used + fake_build_parameter_object_name_suffix_s.used;
           }
 
-          char source_string[source.used + 1];
+          unsigned char source_string[source.used + 1];
           source.string = source_string;
           source_string[source.used] = 0;
 

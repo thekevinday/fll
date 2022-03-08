@@ -53,7 +53,7 @@ extern "C" {
       }
       else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
         if (data->mode & utf8_mode_to_binary_d) {
-          char byte[5] = { 0, 0, 0, 0, 0 };
+          unsigned char byte[5] = { 0, 0, 0, 0, 0 };
           f_string_static_t character = macro_f_string_static_t_initialize2(byte, 5);
 
           status = f_utf_unicode_from(codepoint, 4, &character.string);
@@ -209,7 +209,7 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    char block[4] = { 0, 0, 0, 0 };
+    unsigned char block[4] = { 0, 0, 0, 0 };
     f_string_static_t character = macro_f_string_static_t_initialize2(block, 4);
 
     do {

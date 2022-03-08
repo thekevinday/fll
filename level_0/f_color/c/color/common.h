@@ -37,7 +37,7 @@ extern "C" {
  *   - xterminal: X-Terminal color code set.
  */
 #ifndef _di_f_color_code_t_
-  typedef char f_color_code_t;
+  typedef unsigned char f_color_code_t;
 
   #define F_color_code_none_d      0
   #define F_color_code_linux_d     1
