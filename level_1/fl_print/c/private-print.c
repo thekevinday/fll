@@ -1085,8 +1085,8 @@ extern "C" {
             unsigned char format[33];
             unsigned char buffer[129];
 
-            memset(format, 0, 33);
-            memset(buffer, 0, 129);
+            memset(format, 0, sizeof(unsigned char) * 33);
+            memset(buffer, 0, sizeof(unsigned char) * 129);
 
             format[f++] = f_string_ascii_percent_s.string[0];
 

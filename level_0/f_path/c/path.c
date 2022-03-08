@@ -82,7 +82,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memcpy(path->string, buffer, length);
+    memcpy(path->string, buffer, sizeof(unsigned char) * length);
 
     path->string[length] = 0;
     path->used = length;
@@ -140,7 +140,7 @@ extern "C" {
         } // while
 
         // Use memcpy() to take advantage of its optimized copy behaviors whenever possible.
-        memcpy(directory->string + directory->used, argument.string + i, j - i);
+        memcpy(directory->string + directory->used, argument.string + i, sizeof(unsigned char) * (j - i));
 
         directory->used += j - i;
         i = j;

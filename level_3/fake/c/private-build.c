@@ -33,13 +33,13 @@ extern "C" {
 
       unsigned char build_libraries[build_libraries_length + 1];
 
-      memcpy(build_libraries, fake_build_parameter_library_link_path_s.string, fake_build_parameter_library_link_path_s.used);
+      memcpy(build_libraries, fake_build_parameter_library_link_path_s.string, sizeof(unsigned char) * fake_build_parameter_library_link_path_s.used);
 
       if (is_shared) {
-        memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, main->path_build_libraries_shared.string, main->path_build_libraries_shared.used);
+        memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, main->path_build_libraries_shared.string, sizeof(unsigned char) * main->path_build_libraries_shared.used);
       }
       else {
-        memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, main->path_build_libraries_static.string, main->path_build_libraries_static.used);
+        memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, main->path_build_libraries_static.string, sizeof(unsigned char) * main->path_build_libraries_static.used);
       }
 
       build_libraries[build_libraries_length] = 0;
@@ -48,8 +48,8 @@ extern "C" {
 
       unsigned char build_includes[build_includes_length + 1];
 
-      memcpy(build_includes, fake_build_parameter_library_include_s.string, fake_build_parameter_library_include_s.used);
-      memcpy(build_includes + fake_build_parameter_library_include_s.used, main->path_build_includes.string, main->path_build_includes.used);
+      memcpy(build_includes, fake_build_parameter_library_include_s.string, sizeof(unsigned char) * fake_build_parameter_library_include_s.used);
+      memcpy(build_includes + fake_build_parameter_library_include_s.used, main->path_build_includes.string, sizeof(unsigned char) * main->path_build_includes.used);
 
       const f_string_static_t values[] = {
         macro_f_string_static_t_initialize(build_libraries, 0, build_libraries_length),
@@ -75,8 +75,8 @@ extern "C" {
         buffer.string = buffer_string;
         buffer_string[buffer.used] = 0;
 
-        memcpy(buffer_string, fake_build_parameter_library_include_s.string, fake_build_parameter_library_include_s.used);
-        memcpy(buffer_string + fake_build_parameter_library_include_s.used, main->path_work_includes.string, main->path_work_includes.used);
+        memcpy(buffer_string, fake_build_parameter_library_include_s.string, sizeof(unsigned char) * fake_build_parameter_library_include_s.used);
+        memcpy(buffer_string + fake_build_parameter_library_include_s.used, main->path_work_includes.string, sizeof(unsigned char) * main->path_work_includes.used);
 
         *status = fll_execute_arguments_add(buffer, arguments);
       }
@@ -88,8 +88,8 @@ extern "C" {
         buffer.string = buffer_string;
         buffer_string[buffer.used] = 0;
 
-        memcpy(buffer_string, fake_build_parameter_library_link_path_s.string, fake_build_parameter_library_link_path_s.used);
-        memcpy(buffer_string + fake_build_parameter_library_link_path_s.used, main->path_work_libraries_shared.string, main->path_work_libraries_shared.used);
+        memcpy(buffer_string, fake_build_parameter_library_link_path_s.string, sizeof(unsigned char) * fake_build_parameter_library_link_path_s.used);
+        memcpy(buffer_string + fake_build_parameter_library_link_path_s.used, main->path_work_libraries_shared.string, sizeof(unsigned char) * main->path_work_libraries_shared.used);
 
         *status = fll_execute_arguments_add(buffer, arguments);
       }
@@ -101,8 +101,8 @@ extern "C" {
         buffer.string = buffer_string;
         buffer_string[buffer.used] = 0;
 
-        memcpy(buffer_string, fake_build_parameter_library_link_path_s.string, fake_build_parameter_library_link_path_s.used);
-        memcpy(buffer_string + fake_build_parameter_library_link_path_s.used, main->path_work_libraries_static.string, main->path_work_libraries_static.used);
+        memcpy(buffer_string, fake_build_parameter_library_link_path_s.string, sizeof(unsigned char) * fake_build_parameter_library_link_path_s.used);
+        memcpy(buffer_string + fake_build_parameter_library_link_path_s.used, main->path_work_libraries_static.string, sizeof(unsigned char) * main->path_work_libraries_static.used);
 
         *status = fll_execute_arguments_add(buffer, arguments);
       }
@@ -374,7 +374,7 @@ extern "C" {
       return;
     }
 
-    memcpy(path_source.string, source.string, source.used);
+    memcpy(path_source.string, source.string, sizeof(unsigned char) * source.used);
 
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
@@ -561,16 +561,16 @@ extern "C" {
       argument.string = argument_string;
       argument_string[argument.used] = 0;
 
-      memcpy(argument_string, f_console_symbol_short_disable_s.string, f_console_symbol_short_disable_s.used);
+      memcpy(argument_string, f_console_symbol_short_disable_s.string, sizeof(unsigned char) * f_console_symbol_short_disable_s.used);
 
       if (main->context.mode == F_color_mode_dark_d) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_dark_s.string, f_console_standard_short_dark_s.used);
+        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_dark_s.string, sizeof(unsigned char) * f_console_standard_short_dark_s.used);
       }
       else if (main->context.mode == F_color_mode_light_d) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_light_s.string, f_console_standard_short_light_s.used);
+        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_light_s.string, sizeof(unsigned char) * f_console_standard_short_light_s.used);
       }
       else if (main->context.mode == F_color_mode_no_color_d) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_no_color_s.string, f_console_standard_short_no_color_s.used);
+        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_no_color_s.string, sizeof(unsigned char) * f_console_standard_short_no_color_s.used);
       }
 
       *status = fll_execute_arguments_add(argument, &arguments);
@@ -585,16 +585,16 @@ extern "C" {
       argument.string = argument_string;
       argument_string[argument.used] = 0;
 
-      memcpy(argument_string, f_console_symbol_short_disable_s.string, f_console_symbol_short_disable_s.used);
+      memcpy(argument_string, f_console_symbol_short_disable_s.string, sizeof(unsigned char) * f_console_symbol_short_disable_s.used);
 
       if (main->context.mode == f_console_verbosity_quiet_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_quiet_s.string, f_console_standard_short_quiet_s.used);
+        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_quiet_s.string, sizeof(unsigned char) * f_console_standard_short_quiet_s.used);
       }
       else if (main->context.mode == f_console_verbosity_verbose_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_verbose_s.string, f_console_standard_short_verbose_s.used);
+        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_verbose_s.string, sizeof(unsigned char) * f_console_standard_short_verbose_s.used);
       }
       else if (main->context.mode == f_console_verbosity_debug_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_debug_s.string, f_console_standard_short_debug_s.used);
+        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_debug_s.string, sizeof(unsigned char) * f_console_standard_short_debug_s.used);
       }
 
       *status = fll_execute_arguments_add(argument, &arguments);
@@ -790,8 +790,8 @@ extern "C" {
         source.string = source_string;
         source_string[source.used] = 0;
 
-        memcpy(source_string, path->string, path->used);
-        memcpy(source_string + path->used, sources[i]->array[j].string, sources[i]->array[j].used);
+        memcpy(source_string, path->string, sizeof(unsigned char) * path->used);
+        memcpy(source_string + path->used, sources[i]->array[j].string, sizeof(unsigned char) * sources[i]->array[j].used);
 
         status = fll_execute_arguments_add(source, arguments);
         if (F_status_is_error(status)) return status;
@@ -858,7 +858,7 @@ extern "C" {
 
         fake_build_path_source_string(main, &data_build, &data_build.setting.path_sources, &source);
 
-        memcpy(source_string + source.used, fake_path_part_script_s.string, fake_path_part_script_s.used);
+        memcpy(source_string + source.used, fake_path_part_script_s.string, sizeof(unsigned char) * fake_path_part_script_s.used);
         source.used += fake_path_part_script_s.used;
         source.string[source.used] = 0;
 
@@ -882,10 +882,10 @@ extern "C" {
         unsigned char path_headers_string[path_headers.used + 1];
         path_headers.string = path_headers_string;
 
-        memcpy(path_headers_string, main->path_build_includes.string, main->path_build_includes.used);
+        memcpy(path_headers_string, main->path_build_includes.string, sizeof(unsigned char) * main->path_build_includes.used);
 
         if (data_build.setting.path_headers.used) {
-          memcpy(path_headers_string + main->path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
+          memcpy(path_headers_string + main->path_build_includes.used, data_build.setting.path_headers.string, sizeof(unsigned char) * data_build.setting.path_headers.used);
         }
 
         path_headers_string[path_headers.used] = 0;
@@ -929,7 +929,7 @@ extern "C" {
 
         fake_build_path_source_string(main, &data_build, &data_build.setting.path_sources, &source);
 
-        memcpy(source_string + source.used, fake_path_part_script_s.string, fake_path_part_script_s.used);
+        memcpy(source_string + source.used, fake_path_part_script_s.string, sizeof(unsigned char) * fake_path_part_script_s.used);
         source.used += fake_path_part_script_s.used;
         source.string[source.used] = 0;
 
@@ -976,27 +976,27 @@ extern "C" {
 
     source->used = 0;
 
-    memcpy(source->string, main->path_sources.string, main->path_sources.used);
+    memcpy(source->string, main->path_sources.string, sizeof(unsigned char) * main->path_sources.used);
     source->used += main->path_sources.used;
 
-    memcpy(source->string + source->used, setting_path_source->string, setting_path_source->used);
+    memcpy(source->string + source->used, setting_path_source->string, sizeof(unsigned char) * setting_path_source->used);
     source->used += setting_path_source->used;
 
     if (data_build->setting.has_path_standard) {
       if (data_build->setting.build_language == fake_build_language_type_c_e) {
-        memcpy(source->string + source->used, fake_build_language_c_s.string, fake_build_language_c_s.used);
+        memcpy(source->string + source->used, fake_build_language_c_s.string, sizeof(unsigned char) * fake_build_language_c_s.used);
         source->used += fake_build_language_c_s.used;
       }
       else if (data_build->setting.build_language == fake_build_language_type_cpp_e) {
-        memcpy(source->string + source->used, fake_build_language_cpp_s.string, fake_build_language_cpp_s.used);
+        memcpy(source->string + source->used, fake_build_language_cpp_s.string, sizeof(unsigned char) * fake_build_language_cpp_s.used);
         source->used += fake_build_language_cpp_s.used;
       }
       else if (data_build->setting.build_language == fake_build_language_type_bash_e) {
-        memcpy(source->string + source->used, fake_build_language_bash_s.string, fake_build_language_bash_s.used);
+        memcpy(source->string + source->used, fake_build_language_bash_s.string, sizeof(unsigned char) * fake_build_language_bash_s.used);
         source->used += fake_build_language_bash_s.used;
       }
 
-      memcpy(source->string + source->used, f_path_separator_s.string, f_path_separator_s.used);
+      memcpy(source->string + source->used, f_path_separator_s.string, sizeof(unsigned char) * f_path_separator_s.used);
       source->used += f_path_separator_s.used;
     }
 
@@ -1031,7 +1031,7 @@ extern "C" {
 
         fake_build_path_source_string(main, data_build, &data_build->setting.path_sources, &source);
 
-        memcpy(source_string + source.used, sources[i]->array[j].string, sources[i]->array[j].used);
+        memcpy(source_string + source.used, sources[i]->array[j].string, sizeof(unsigned char) * sources[i]->array[j].used);
         source.used += sources[i]->array[j].used;
         source.string[source.used] = 0;
 
@@ -1066,11 +1066,11 @@ extern "C" {
     fake_build_path_source_string(main, data_build, &data_build->setting.path_sources_object, &source);
 
     if (specific->used) {
-      memcpy(source_string + source.used, specific->string, specific->used);
+      memcpy(source_string + source.used, specific->string, sizeof(unsigned char) * specific->used);
       source.used += specific->used;
     }
     else {
-      memcpy(source_string + source.used, generic->string, generic->used);
+      memcpy(source_string + source.used, generic->string, sizeof(unsigned char) * generic->used);
       source.used += generic->used;
     }
 

@@ -35,7 +35,7 @@ extern "C" {
       for (; at_path < path.used; ++at_path) {
 
         if (at_path && path.string[at_path] == f_path_separator_s.string[0]) {
-          memcpy(tree.string, path.string + at_tree, at_path - at_tree);
+          memcpy(tree.string, path.string + at_tree, sizeof(unsigned char) * (at_path - at_tree));
           tree.string[at_path - at_tree] = 0;
 
           status = f_directory_exists(tree);

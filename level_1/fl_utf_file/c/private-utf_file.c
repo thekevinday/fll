@@ -93,7 +93,7 @@ extern "C" {
     // @todo this needs to identify an invalid UTF-8 string before writing and return an error if invalid.
 
     do {
-      memset(buffer_write, 0, write_size);
+      memset(buffer_write, 0, sizeof(unsigned char) * write_size);
 
       for (i = 0, used = 0; used < write_size && *written + i < write_max; ++i, used += width) {
 

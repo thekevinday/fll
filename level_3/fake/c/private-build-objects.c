@@ -64,7 +64,7 @@ extern "C" {
 
         fake_build_path_source_string(main, data_build, &data_build->setting.path_sources, &source);
 
-        memcpy(source_string + source.used, sources[i]->array[j].string, sources[i]->array[j].used);
+        memcpy(source_string + source.used, sources[i]->array[j].string, sizeof(unsigned char) * sources[i]->array[j].used);
         source.used += sources[i]->array[j].used;
         source.string[source.used] = 0;
 
@@ -161,14 +161,14 @@ extern "C" {
         destination_string[destination.used] = 0;
 
         if (destination_path.used) {
-          memcpy(destination_string, destination_path.string, destination_path.used);
-          memcpy(destination_string + destination_path.used, file_name.string, file_name.used);
-          memcpy(destination_string + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix_s.string, fake_build_parameter_object_name_suffix_s.used);
+          memcpy(destination_string, destination_path.string, sizeof(unsigned char) * destination_path.used);
+          memcpy(destination_string + destination_path.used, file_name.string, sizeof(unsigned char) * file_name.used);
+          memcpy(destination_string + destination_path.used + file_name.used, fake_build_parameter_object_name_suffix_s.string, sizeof(unsigned char) * fake_build_parameter_object_name_suffix_s.used);
         }
         else {
-          memcpy(destination_string, main->path_build_objects.string, main->path_build_objects.used);
-          memcpy(destination_string + main->path_build_objects.used, file_name.string, file_name.used);
-          memcpy(destination_string + main->path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s.string, fake_build_parameter_object_name_suffix_s.used);
+          memcpy(destination_string, main->path_build_objects.string, sizeof(unsigned char) * main->path_build_objects.used);
+          memcpy(destination_string + main->path_build_objects.used, file_name.string, sizeof(unsigned char) * file_name.used);
+          memcpy(destination_string + main->path_build_objects.used + file_name.used, fake_build_parameter_object_name_suffix_s.string, sizeof(unsigned char) * fake_build_parameter_object_name_suffix_s.used);
         }
 
         const f_string_static_t values[] = {

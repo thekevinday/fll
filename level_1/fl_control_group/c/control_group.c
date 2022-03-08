@@ -35,11 +35,11 @@ extern "C" {
       path.string = path_string;
 
       if (control_group.path.used) {
-        memcpy(path.string, control_group.path.string, control_group.path.used);
+        memcpy(path.string, control_group.path.string, sizeof(unsigned char) * control_group.path.used);
       }
 
-      memcpy(path.string + control_group.path.used, control_group.groups.array[i].string, control_group.groups.array[i].used);
-      memcpy(path.string + control_group.path.used + F_control_group_path_system_default_s_length, F_control_group_path_system_suffix_s, F_control_group_path_system_suffix_s_length);
+      memcpy(path.string + control_group.path.used, control_group.groups.array[i].string, sizeof(unsigned char) * control_group.groups.array[i].used);
+      memcpy(path.string + control_group.path.used + F_control_group_path_system_default_s_length, F_control_group_path_system_suffix_s, sizeof(unsigned char) * F_control_group_path_system_suffix_s_length);
 
       path.string[path.used] = 0;
 

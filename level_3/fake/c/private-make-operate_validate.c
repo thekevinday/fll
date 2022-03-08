@@ -86,8 +86,8 @@ extern "C" {
           path_file.string = path_file_string;
           path_file_string[path_file.used] = 0;
 
-          memcpy(path_file_string, data_make->main->path_data_build.string, data_make->main->path_data_build.used);
-          memcpy(path_file_string + data_make->main->path_data_build.used, arguments.array[0].string, arguments.array[0].used);
+          memcpy(path_file_string, data_make->main->path_data_build.string, sizeof(unsigned char) * data_make->main->path_data_build.used);
+          memcpy(path_file_string + data_make->main->path_data_build.used, arguments.array[0].string, sizeof(unsigned char) * arguments.array[0].used);
 
           f_status_t status_file = f_file_is(path_file, F_file_type_regular_d, F_false);
 

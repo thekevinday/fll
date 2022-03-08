@@ -2061,7 +2061,7 @@ extern "C" {
 
         unsigned char buffer_string[buffer.used + 1];
 
-        memcpy(buffer_string, source.string + content.start, buffer.used);
+        memcpy(buffer_string, source.string + content.start, sizeof(unsigned char) * buffer.used);
         buffer_string[buffer.used] = 0;
         buffer.string = buffer_string;
         process->cache.action.generic.used = 0;
@@ -2246,8 +2246,8 @@ extern "C" {
           unsigned char buffer_string[buffer.used];
           buffer.string = buffer_string;
 
-          memcpy(buffer_string, options[i].string, options[i].used);
-          memcpy(buffer_string + options[i].used, controller_parameter_map_option_s.string, controller_parameter_map_option_s.used);
+          memcpy(buffer_string, options[i].string, sizeof(unsigned char) * options[i].used);
+          memcpy(buffer_string + options[i].used, controller_parameter_map_option_s.string, sizeof(unsigned char) * controller_parameter_map_option_s.used);
 
           if (fl_string_dynamic_partial_compare_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (values[i] && parameters->array[codes[i]].result == f_console_result_additional_e || !values[i] && parameters->array[codes[i]].result == f_console_result_found_e) {
@@ -2272,8 +2272,8 @@ extern "C" {
           unsigned char buffer_string[buffer.used];
           buffer.string = buffer_string;
 
-          memcpy(buffer_string, options[i].string, options[i].used);
-          memcpy(buffer_string + options[i].used, controller_parameter_map_value_s.string, controller_parameter_map_value_s.used);
+          memcpy(buffer_string, options[i].string, sizeof(unsigned char) * options[i].used);
+          memcpy(buffer_string + options[i].used, controller_parameter_map_value_s.string, sizeof(unsigned char) * controller_parameter_map_value_s.used);
 
           if (fl_string_dynamic_partial_compare_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (parameters->array[codes[i]].result == f_console_result_additional_e) {
@@ -2884,7 +2884,7 @@ extern "C" {
             unsigned char alias_other_buffer_string[alias_other_buffer.used + 1];
             alias_other_buffer.string = alias_other_buffer_string;
 
-            memcpy(alias_other_buffer_string, global.setting->rules.array[id_rule].alias.string, alias_other_buffer.used);
+            memcpy(alias_other_buffer_string, global.setting->rules.array[id_rule].alias.string, sizeof(unsigned char) * alias_other_buffer.used);
             alias_other_buffer_string[alias_other_buffer.used] = 0;
 
             f_thread_unlock(&global.thread->lock.rule);
@@ -4007,7 +4007,7 @@ extern "C" {
     unsigned char name_item[length_name_item];
     name_item[length_name_item] = 0;
 
-    memcpy(name_item, cache->action.name_item.string, length_name_item);
+    memcpy(name_item, cache->action.name_item.string, sizeof(unsigned char) * length_name_item);
 
     for (; i < cache->content_actions.used; ++i, type = 0) {
 
@@ -5700,7 +5700,7 @@ extern "C" {
     } // for
 
     // Restore the current name item and line number, which there should already be enough allocated space for.
-    memcpy(cache->action.name_item.string, name_item, length_name_item);
+    memcpy(cache->action.name_item.string, name_item, sizeof(unsigned char) * length_name_item);
 
     cache->action.name_item.string[length_name_item] = 0;
     cache->action.name_item.used = length_name_item;

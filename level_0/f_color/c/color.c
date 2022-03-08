@@ -123,19 +123,19 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
+      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(unsigned char) * format.begin.used);
 
       buffer->used += format.begin.used;
     }
 
     if (color1.used) {
-      memcpy(buffer->string + buffer->used, color1.string, color1.used);
+      memcpy(buffer->string + buffer->used, color1.string, sizeof(unsigned char) * color1.used);
 
       buffer->used += color1.used;
     }
 
     if (format.end.used) {
-      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+      memcpy(buffer->string + buffer->used, format.end.string, sizeof(unsigned char) * format.end.used);
 
       buffer->used += format.end.used;
     }
@@ -158,31 +158,31 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
+      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(unsigned char) * format.begin.used);
 
       buffer->used += format.begin.used;
     }
 
     if (color1.used) {
-      memcpy(buffer->string + buffer->used, color1.string, color1.used);
+      memcpy(buffer->string + buffer->used, color1.string, sizeof(unsigned char) * color1.used);
 
       buffer->used += color1.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color2.used) {
-      memcpy(buffer->string + buffer->used, color2.string, color2.used);
+      memcpy(buffer->string + buffer->used, color2.string, sizeof(unsigned char) * color2.used);
 
       buffer->used += color2.used;
     }
 
     if (format.end.used) {
-      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+      memcpy(buffer->string + buffer->used, format.end.string, sizeof(unsigned char) * format.end.used);
 
       buffer->used += format.end.used;
     }
@@ -205,43 +205,43 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
+      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(unsigned char) * format.begin.used);
 
       buffer->used += format.begin.used;
     }
 
     if (color1.used) {
-      memcpy(buffer->string + buffer->used, color1.string, color1.used);
+      memcpy(buffer->string + buffer->used, color1.string, sizeof(unsigned char) * color1.used);
 
       buffer->used += color1.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color2.used) {
-      memcpy(buffer->string + buffer->used, color2.string, color2.used);
+      memcpy(buffer->string + buffer->used, color2.string, sizeof(unsigned char) * color2.used);
 
       buffer->used += color2.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color3.used) {
-      memcpy(buffer->string + buffer->used, color3.string, color3.used);
+      memcpy(buffer->string + buffer->used, color3.string, sizeof(unsigned char) * color3.used);
 
       buffer->used += color3.used;
     }
 
     if (format.end.used) {
-      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+      memcpy(buffer->string + buffer->used, format.end.string, sizeof(unsigned char) * format.end.used);
 
       buffer->used += format.end.used;
     }
@@ -264,55 +264,55 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
+      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(unsigned char) * format.begin.used);
 
       buffer->used += format.begin.used;
     }
 
     if (color1.used) {
-      memcpy(buffer->string + buffer->used, color1.string, color1.used);
+      memcpy(buffer->string + buffer->used, color1.string, sizeof(unsigned char) * color1.used);
 
       buffer->used += color1.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color2.used) {
-      memcpy(buffer->string + buffer->used, color2.string, color2.used);
+      memcpy(buffer->string + buffer->used, color2.string, sizeof(unsigned char) * color2.used);
 
       buffer->used += color2.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color3.used) {
-      memcpy(buffer->string + buffer->used, color3.string, color3.used);
+      memcpy(buffer->string + buffer->used, color3.string, sizeof(unsigned char) * color3.used);
 
       buffer->used += color3.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color4.used) {
-      memcpy(buffer->string + buffer->used, color4.string, color4.used);
+      memcpy(buffer->string + buffer->used, color4.string, sizeof(unsigned char) * color4.used);
 
       buffer->used += color4.used;
     }
 
     if (format.end.used) {
-      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+      memcpy(buffer->string + buffer->used, format.end.string, sizeof(unsigned char) * format.end.used);
 
       buffer->used += format.end.used;
     }
@@ -335,67 +335,67 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, format.begin.used);
+      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(unsigned char) * format.begin.used);
 
       buffer->used += format.begin.used;
     }
 
     if (color1.used) {
-      memcpy(buffer->string + buffer->used, color1.string, color1.used);
+      memcpy(buffer->string + buffer->used, color1.string, sizeof(unsigned char) * color1.used);
 
       buffer->used += color1.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color2.used) {
-      memcpy(buffer->string + buffer->used, color2.string, color2.used);
+      memcpy(buffer->string + buffer->used, color2.string, sizeof(unsigned char) * color2.used);
 
       buffer->used += color2.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color3.used) {
-      memcpy(buffer->string + buffer->used, color3.string, color3.used);
+      memcpy(buffer->string + buffer->used, color3.string, sizeof(unsigned char) * color3.used);
 
       buffer->used += color3.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color4.used) {
-      memcpy(buffer->string + buffer->used, color4.string, color4.used);
+      memcpy(buffer->string + buffer->used, color4.string, sizeof(unsigned char) * color4.used);
 
       buffer->used += color4.used;
     }
 
     if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, format.medium.used);
+      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(unsigned char) * format.medium.used);
 
       buffer->used += format.medium.used;
     }
 
     if (color5.used) {
-      memcpy(buffer->string + buffer->used, color5.string, color5.used);
+      memcpy(buffer->string + buffer->used, color5.string, sizeof(unsigned char) * color5.used);
 
       buffer->used += color5.used;
     }
 
     if (format.end.used) {
-      memcpy(buffer->string + buffer->used, format.end.string, format.end.used);
+      memcpy(buffer->string + buffer->used, format.end.string, sizeof(unsigned char) * format.end.used);
 
       buffer->used += format.end.used;
     }

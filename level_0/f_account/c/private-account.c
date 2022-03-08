@@ -20,7 +20,7 @@ extern "C" {
     status = f_string_dynamic_resize(string_length + 1, &account->home);
     if (F_status_is_error(status)) return status;
 
-    memcpy(account->home.string, password.pw_dir, string_length);
+    memcpy(account->home.string, password.pw_dir, sizeof(unsigned char) * string_length);
 
     account->home.string[string_length] = 0;
     account->home.used = string_length;
@@ -31,7 +31,7 @@ extern "C" {
     status = f_string_dynamic_resize(string_length + 1, &account->label);
     if (F_status_is_error(status)) return status;
 
-    memcpy(account->label.string, password.pw_gecos, string_length);
+    memcpy(account->label.string, password.pw_gecos, sizeof(unsigned char) * string_length);
 
     account->label.string[string_length] = 0;
     account->label.used = string_length;
@@ -42,7 +42,7 @@ extern "C" {
     status = f_string_dynamic_resize(string_length + 1, &account->name);
     if (F_status_is_error(status)) return status;
 
-    memcpy(account->name.string, password.pw_name, string_length);
+    memcpy(account->name.string, password.pw_name, sizeof(unsigned char) * string_length);
 
     account->name.string[string_length] = 0;
     account->name.used = string_length;
@@ -53,7 +53,7 @@ extern "C" {
     status = f_string_dynamic_resize(string_length + 1, &account->password);
     if (F_status_is_error(status)) return status;
 
-    memcpy(account->password.string, password.pw_passwd, string_length);
+    memcpy(account->password.string, password.pw_passwd, sizeof(unsigned char) * string_length);
 
     account->password.string[string_length] = 0;
     account->password.used = string_length;
@@ -64,7 +64,7 @@ extern "C" {
     status = f_string_dynamic_resize(string_length + 1, &account->shell);
     if (F_status_is_error(status)) return status;
 
-    memcpy(account->shell.string, password.pw_shell, string_length);
+    memcpy(account->shell.string, password.pw_shell, sizeof(unsigned char) * string_length);
 
     account->shell.string[string_length] = 0;
     account->shell.used = string_length;

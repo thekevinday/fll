@@ -1395,7 +1395,7 @@ extern "C" {
     unsigned char path_argument[path.used + 1];
     f_string_t path_to_name;
 
-    memcpy(path_argument, path.string, path.used);
+    memcpy(path_argument, path.string, sizeof(unsigned char) * path.used);
     path_argument[path.used] = 0;
 
     path_to_name = basename(path_argument);
@@ -1405,7 +1405,7 @@ extern "C" {
     const f_status_t status = f_string_dynamic_increase_by(size + 1, name_base);
     if (F_status_is_error(status)) return status;
 
-    memcpy(name_base->string + name_base->used, path_to_name, size);
+    memcpy(name_base->string + name_base->used, path_to_name, sizeof(unsigned char) * size);
     name_base->used += size;
     name_base->string[name_base->used] = 0;
 
@@ -1427,7 +1427,7 @@ extern "C" {
     unsigned char path_argument[path.used + 1];
     f_string_t path_to_name;
 
-    memcpy(path_argument, path.string, path.used);
+    memcpy(path_argument, path.string, sizeof(unsigned char) * path.used);
     path_argument[path.used] = 0;
 
     path_to_name = dirname(path_argument);
@@ -1444,7 +1444,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memcpy(name_directory->string + name_directory->used, path_to_name, size);
+    memcpy(name_directory->string + name_directory->used, path_to_name, sizeof(unsigned char) * size);
     name_directory->used += size;
     name_directory->string[name_directory->used] = 0;
 

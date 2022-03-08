@@ -19,12 +19,12 @@ extern "C" {
     }
 
     if (!serialize->used) {
-      memcpy(serialize->string + serialize->used, value.string, value.used);
+      memcpy(serialize->string + serialize->used, value.string, sizeof(unsigned char) * value.used);
       serialize->used += value.used;
     }
     else {
-      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_s.string, f_serialize_simple_splitter_s.used);
-      memcpy(serialize->string + serialize->used + f_serialize_simple_splitter_s.used, value.string, value.used);
+      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_s.string, sizeof(unsigned char) * f_serialize_simple_splitter_s.used);
+      memcpy(serialize->string + serialize->used + f_serialize_simple_splitter_s.used, value.string, sizeof(unsigned char) * value.used);
       serialize->used += value.used + 1;
     }
 
@@ -78,7 +78,7 @@ extern "C" {
             strings->array[strings->used].size = total;
           }
 
-          memcpy(strings->array[strings->used].string, serialize.string + start, total);
+          memcpy(strings->array[strings->used].string, serialize.string + start, sizeof(unsigned char) * total);
 
           strings->array[strings->used].used = total;
           ++strings->used;
@@ -195,7 +195,7 @@ extern "C" {
       if (F_status_is_error(status_allocation)) return status_allocation;
     }
 
-    memcpy(dynamic->string, serialize.string + range.start, total);
+    memcpy(dynamic->string, serialize.string + range.start, sizeof(unsigned char) * total);
     dynamic->used = total;
 
     return status;

@@ -1195,8 +1195,8 @@ extern "C" {
           unsigned char id_rule_name[id_rule_length + 1];
           const f_string_static_t alias_rule = macro_f_string_static_t_initialize2(id_rule_name, id_rule_length);
 
-          memcpy(id_rule_name, entry_action->parameters.array[0].string, entry_action->parameters.array[0].used);
-          memcpy(id_rule_name + entry_action->parameters.array[0].used + 1, entry_action->parameters.array[1].string, entry_action->parameters.array[1].used);
+          memcpy(id_rule_name, entry_action->parameters.array[0].string, sizeof(unsigned char) * entry_action->parameters.array[0].used);
+          memcpy(id_rule_name + entry_action->parameters.array[0].used + 1, entry_action->parameters.array[1].string, sizeof(unsigned char) * entry_action->parameters.array[1].used);
 
           id_rule_name[entry_action->parameters.array[0].used] = f_path_separator_s.string[0];
           id_rule_name[id_rule_length] = 0;
@@ -1255,9 +1255,9 @@ extern "C" {
             unsigned char cache_name_item[cache_name_item_used];
             unsigned char cache_name_file[cache_name_file_used];
 
-            memcpy(cache_name_action, cache->action.name_action.string, cache->action.name_action.used);
-            memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
-            memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
+            memcpy(cache_name_action, cache->action.name_action.string, sizeof(unsigned char) * cache->action.name_action.used);
+            memcpy(cache_name_item, cache->action.name_item.string, sizeof(unsigned char) * cache->action.name_item.used);
+            memcpy(cache_name_file, cache->action.name_file.string, sizeof(unsigned char) * cache->action.name_file.used);
 
             status_lock = controller_lock_write(is_entry, global->thread, &global->thread->lock.rule);
 
@@ -1266,9 +1266,9 @@ extern "C" {
             }
 
             // Restore cache.
-            memcpy(cache->action.name_action.string, cache_name_action, cache_name_action_used);
-            memcpy(cache->action.name_item.string, cache_name_item, cache_name_item_used);
-            memcpy(cache->action.name_file.string, cache_name_file, cache_name_file_used);
+            memcpy(cache->action.name_action.string, cache_name_action, sizeof(unsigned char) * cache_name_action_used);
+            memcpy(cache->action.name_item.string, cache_name_item, sizeof(unsigned char) * cache_name_item_used);
+            memcpy(cache->action.name_file.string, cache_name_file, sizeof(unsigned char) * cache_name_file_used);
 
             cache->action.name_action.string[cache_name_action_used] = 0;
             cache->action.name_item.string[cache_name_item_used] = 0;

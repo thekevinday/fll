@@ -78,13 +78,13 @@ extern "C" {
     path.string = path_string;
 
     if (global.setting->path_setting.used) {
-      memcpy(path_string, global.setting->path_setting.string, global.setting->path_setting.used);
-      memcpy(path_string + global.setting->path_setting.used + F_path_separator_s_length, cache->action.name_file.string, cache->action.name_file.used);
+      memcpy(path_string, global.setting->path_setting.string, sizeof(unsigned char) * global.setting->path_setting.used);
+      memcpy(path_string + global.setting->path_setting.used + F_path_separator_s_length, cache->action.name_file.string, sizeof(unsigned char) * cache->action.name_file.used);
 
       path_string[global.setting->path_setting.used] = f_path_separator_s.string[0];
     }
     else {
-      memcpy(path_string, cache->action.name_file.string, cache->action.name_file.used);
+      memcpy(path_string, cache->action.name_file.string, sizeof(unsigned char) * cache->action.name_file.used);
     }
 
     path_string[path.used] = 0;
@@ -371,8 +371,8 @@ extern "C" {
           unsigned char temporary[--length];
           temporary[length] = 0;
 
-          memcpy(temporary, destination->string + setting->path_current.used + 1, length);
-          memcpy(destination->string, temporary, length);
+          memcpy(temporary, destination->string + setting->path_current.used + 1, sizeof(unsigned char) * length);
+          memcpy(destination->string, temporary, sizeof(unsigned char) * length);
 
           destination->string[length] = 0;
           destination->used = length;

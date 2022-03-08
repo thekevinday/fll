@@ -312,13 +312,13 @@ extern "C" {
 
     source->used = 0;
 
-    memcpy(source->string, main->path_sources.string, main->path_sources.used);
+    memcpy(source->string, main->path_sources.string, sizeof(unsigned char) * main->path_sources.used);
     source->used += main->path_sources.used;
 
-    memcpy(source->string, fake_default_path_sources_s.string, fake_default_path_sources_s.used);
+    memcpy(source->string, fake_default_path_sources_s.string, sizeof(unsigned char) * fake_default_path_sources_s.used);
     source->used += fake_default_path_sources_s.used;
 
-    memcpy(source->string + source->used, partial->string, partial->used);
+    memcpy(source->string + source->used, partial->string, sizeof(unsigned char) * partial->used);
     source->used += partial->used;
 
     source->string[source->used] = 0;

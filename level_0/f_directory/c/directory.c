@@ -203,7 +203,7 @@ extern "C" {
       status = f_string_dynamic_increase_by(size, &names->array[names->used]);
       if (F_status_is_error(status)) break;
 
-      memcpy(names->array[names->used].string, listing[i]->d_name, size);
+      memcpy(names->array[names->used].string, listing[i]->d_name, sizeof(unsigned char) * size);
       names->array[names->used++].used = size;
 
       f_memory_delete(size, sizeof(unsigned char *), (void **) & listing[i]);

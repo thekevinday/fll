@@ -62,7 +62,7 @@ extern "C" {
     ssize_t size_write = 0;
     unsigned char *buffer[size_block];
 
-    memset(buffer, 0, size_block);
+    memset(buffer, 0, sizeof(unsigned char) * size_block);
 
     while ((size_read = read(file_source.id, buffer, size_block)) > 0) {
 
@@ -111,7 +111,7 @@ extern "C" {
     ssize_t size_write = 0;
     unsigned char *buffer[size_block];
 
-    memset(buffer, 0, size_block);
+    memset(buffer, 0, sizeof(unsigned char) * size_block);
 
     while ((size_read = read(file_source.id, buffer, size_block)) > 0) {
 
@@ -416,7 +416,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memset(target->string, 0, target->used + 1);
+    memset(target->string, 0, sizeof(unsigned char) * (target->used + 1));
 
     target->used = link_stat.st_size;
 
@@ -453,7 +453,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memset(target->string, 0, target->used + 1);
+    memset(target->string, 0, sizeof(unsigned char) * (target->used + 1));
 
     target->used = link_stat.st_size;
 

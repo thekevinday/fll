@@ -38,7 +38,7 @@ extern "C" {
     unsigned char buffer[controller_control_default_socket_buffer_d + 1];
     size_t length = 0;
 
-    memset(buffer, 0, controller_control_default_socket_buffer_d + 1);
+    memset(buffer, 0, sizeof(unsigned char) * (controller_control_default_socket_buffer_d + 1));
 
     // Pre-process the packet header.
     control->client.size_read = controller_control_default_socket_header_d;

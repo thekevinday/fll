@@ -694,9 +694,9 @@ extern "C" {
             return F_status_set_error(F_failure);
         }
 
-        memcpy(*character, &utf, macro_f_utf_character_t_width_is(utf_character));
+        memcpy(*character, &utf, sizeof(unsigned char) * macro_f_utf_character_t_width_is(utf_character));
       #else
-        memcpy(*character, &utf_character, macro_f_utf_character_t_width_is(utf_character));
+        memcpy(*character, &utf_character, sizeof(unsigned char) * macro_f_utf_character_t_width_is(utf_character));
       #endif // __BYTE_ORDER == __LITTLE_ENDIAN
 
       return F_none;
@@ -705,9 +705,9 @@ extern "C" {
     #if __BYTE_ORDER == __LITTLE_ENDIAN
       uint32_t utf = macro_f_utf_character_t_to_char_1(utf_character) << 24;
 
-      memcpy(*character, &utf, 1);
+      memcpy(*character, &utf, sizeof(unsigned char));
     #else
-      memcpy(*character, &utf_character, 1);
+      memcpy(*character, &utf_character, sizeof(unsigned char));
     #endif // __BYTE_ORDER == __LITTLE_ENDIAN
 
     return F_none;

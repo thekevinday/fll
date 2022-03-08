@@ -190,7 +190,7 @@ extern "C" {
       unsigned char program_path[found->used + 1];
       program_path[found->used] = 0;
 
-      memcpy(&program_path, found->string, found->used);
+      memcpy(&program_path, found->string, sizeof(unsigned char) * found->used);
 
       f_string_dynamics_resize(0, &paths);
 
@@ -382,7 +382,7 @@ extern "C" {
       unsigned char program_path[found->used + 1];
       program_path[found->used] = 0;
 
-      memcpy(&program_path, found->string, found->used);
+      memcpy(&program_path, found->string, sizeof(unsigned char) * found->used);
 
       program_name.string = program_path;
       program_name.used = found->used;

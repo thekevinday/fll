@@ -95,8 +95,8 @@ extern "C" {
       f_fss_contents_t contents = f_fss_contents_t_initialize;
 
       if (setting_file.used) {
-        memcpy(path_file_string, main->path_data_build.string, main->path_data_build.used);
-        memcpy(path_file_string + main->path_data_build.used, setting_file.string, setting_file.used);
+        memcpy(path_file_string, main->path_data_build.string, sizeof(unsigned char) * main->path_data_build.used);
+        memcpy(path_file_string + main->path_data_build.used, setting_file.string, sizeof(unsigned char) * setting_file.used);
 
         *status = fake_file_buffer(main, path_file, &buffer);
       }

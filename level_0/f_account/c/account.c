@@ -297,7 +297,7 @@ extern "C" {
         macro_f_string_dynamic_t_resize(status, (*name), name_length + 1);
         if (F_status_is_error(status)) return status;
 
-        memcpy(name->string, group_data.gr_name, name_length);
+        memcpy(name->string, group_data.gr_name, sizeof(unsigned char) * name_length);
 
         name->string[name_length] = 0;
         name->used = name_length;
@@ -332,7 +332,7 @@ extern "C" {
     macro_f_string_dynamic_t_resize(status, (*name), name_length + 1);
     if (F_status_is_error(status)) return status;
 
-    memcpy(name->string, group_data.gr_name, name_length);
+    memcpy(name->string, group_data.gr_name, sizeof(unsigned char) * name_length);
 
     name->string[name_length] = 0;
     name->used = name_length;
@@ -471,7 +471,7 @@ extern "C" {
         macro_f_string_dynamic_t_resize(status, (*name), name_length + 1);
         if (F_status_is_error(status)) return status;
 
-        memcpy(name->string, password.pw_name, name_length);
+        memcpy(name->string, password.pw_name, sizeof(unsigned char) * name_length);
 
         name->string[name_length] = 0;
         name->used = name_length;
@@ -506,7 +506,7 @@ extern "C" {
     macro_f_string_dynamic_t_resize(status, (*name), name_length + 1);
     if (F_status_is_error(status)) return status;
 
-    memcpy(name->string, password.pw_name, name_length);
+    memcpy(name->string, password.pw_name, sizeof(unsigned char) * name_length);
 
     name->string[name_length] = 0;
     name->used = name_length;

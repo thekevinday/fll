@@ -61,8 +61,8 @@ extern "C" {
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
-      memcpy(parameter_file_name_path_string, main->path_build_programs_shared.string, main->path_build_programs_shared.used);
-      memcpy(parameter_file_name_path_string + main->path_build_programs_shared.used, data_build->setting.build_name.string, data_build->setting.build_name.used);
+      memcpy(parameter_file_name_path_string, main->path_build_programs_shared.string, sizeof(unsigned char) * main->path_build_programs_shared.used);
+      memcpy(parameter_file_name_path_string + main->path_build_programs_shared.used, data_build->setting.build_name.string, sizeof(unsigned char) * data_build->setting.build_name.used);
 
       const f_string_static_t values[] = {
         fake_build_parameter_library_output_s,
@@ -87,8 +87,8 @@ extern "C" {
       link_project_library.string = link_project_library_string;
       link_project_library_string[link_project_library.used] = 0;
 
-      memcpy(link_project_library_string, fake_build_parameter_library_link_file_s.string, fake_build_parameter_library_link_file_s.used);
-      memcpy(link_project_library_string + fake_build_parameter_library_link_file_s.used, data_build->setting.build_name.string, data_build->setting.build_name.used);
+      memcpy(link_project_library_string, fake_build_parameter_library_link_file_s.string, sizeof(unsigned char) * fake_build_parameter_library_link_file_s.used);
+      memcpy(link_project_library_string + fake_build_parameter_library_link_file_s.used, data_build->setting.build_name.string, sizeof(unsigned char) * data_build->setting.build_name.used);
 
       *status = fll_execute_arguments_add(link_project_library, &arguments);
     }
@@ -158,16 +158,16 @@ extern "C" {
 
       // Only include the library if there are sources that would result in it being built.
       if (data_build->setting.build_sources_library.used) {
-        memcpy(source_library_string, main->path_build_libraries_static.string, main->path_build_libraries_static.used);
+        memcpy(source_library_string, main->path_build_libraries_static.string, sizeof(unsigned char) * main->path_build_libraries_static.used);
         source_library.used += main->path_build_libraries_static.used;
 
-        memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_prefix_s.string, fake_build_parameter_library_name_prefix_s.used);
+        memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_prefix_s.string, sizeof(unsigned char) * fake_build_parameter_library_name_prefix_s.used);
         source_library.used += fake_build_parameter_library_name_prefix_s.used;
 
-        memcpy(source_library_string + source_library.used, data_build->setting.build_name.string, data_build->setting.build_name.used);
+        memcpy(source_library_string + source_library.used, data_build->setting.build_name.string, sizeof(unsigned char) * data_build->setting.build_name.used);
         source_library.used += data_build->setting.build_name.used;
 
-        memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_suffix_static_s.string, fake_build_parameter_library_name_suffix_static_s.used);
+        memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_suffix_static_s.string, sizeof(unsigned char) * fake_build_parameter_library_name_suffix_static_s.used);
         source_library.used += fake_build_parameter_library_name_suffix_static_s.used;
       }
 
@@ -178,8 +178,8 @@ extern "C" {
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
-      memcpy(parameter_file_name_path_string, main->path_build_programs_static.string, main->path_build_programs_static.used);
-      memcpy(parameter_file_name_path_string + main->path_build_programs_static.used, data_build->setting.build_name.string, data_build->setting.build_name.used);
+      memcpy(parameter_file_name_path_string, main->path_build_programs_static.string, sizeof(unsigned char) * main->path_build_programs_static.used);
+      memcpy(parameter_file_name_path_string + main->path_build_programs_static.used, data_build->setting.build_name.string, sizeof(unsigned char) * data_build->setting.build_name.used);
 
       const f_string_static_t values[] = {
         source_library,

@@ -1067,7 +1067,7 @@ extern "C" {
           }
         }
 
-        memcpy(name->string + name->used, result, length);
+        memcpy(name->string + name->used, result, sizeof(unsigned char) * length);
         name->used += length;
         name->string[name->used] = 0;
 
@@ -1108,7 +1108,7 @@ extern "C" {
           }
         }
 
-        memcpy(text->string + text->used, result, length);
+        memcpy(text->string + text->used, result, sizeof(unsigned char) * length);
         text->used += length;
         text->string[text->used] = 0;
 

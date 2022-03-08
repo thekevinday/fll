@@ -22,8 +22,8 @@ extern "C" {
     path_headers.string = path_headers_string;
 
     if (data_build->setting.path_headers.used) {
-      memcpy(path_headers_string, main->path_build_includes.string, main->path_build_includes.used);
-      memcpy(path_headers_string + main->path_build_includes.used, data_build->setting.path_headers.string, data_build->setting.path_headers.used);
+      memcpy(path_headers_string, main->path_build_includes.string, sizeof(unsigned char) * main->path_build_includes.used);
+      memcpy(path_headers_string + main->path_build_includes.used, data_build->setting.path_headers.string, sizeof(unsigned char) * data_build->setting.path_headers.used);
     }
     else {
       path_headers.used = 0;

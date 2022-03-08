@@ -32,7 +32,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memcpy(real->string, buffer, length);
+    memcpy(real->string, buffer, sizeof(unsigned char) * length);
 
     real->string[length] = 0;
     real->used = length;

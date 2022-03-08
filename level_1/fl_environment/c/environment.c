@@ -139,7 +139,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
           if (F_status_is_error(status)) return status;
 
-          memcpy(paths->array[paths->used].string, buffer, k);
+          memcpy(paths->array[paths->used].string, buffer, sizeof(unsigned char) * k);
 
           paths->array[paths->used++].used = k;
         }
@@ -217,7 +217,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
           if (F_status_is_error(status)) return status;
 
-          memcpy(paths->array[paths->used].string, buffer, k);
+          memcpy(paths->array[paths->used].string, buffer, sizeof(unsigned char) * k);
 
           paths->array[paths->used++].used = k;
         }

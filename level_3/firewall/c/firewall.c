@@ -401,8 +401,8 @@ extern "C" {
         path_file_other.string = path_file_other_string;
         path_file_other_string[path_file_other.used] = 0;
 
-        memcpy(path_file_other_string, firewall_network_path_s.string, firewall_network_path_s.used);
-        memcpy(path_file_other_string + firewall_network_path_s.used, firewall_file_other_s.string, firewall_file_other_s.used);
+        memcpy(path_file_other_string, firewall_network_path_s.string, sizeof(unsigned char) * firewall_network_path_s.used);
+        memcpy(path_file_other_string + firewall_network_path_s.used, firewall_file_other_s.string, sizeof(unsigned char) * firewall_file_other_s.used);
 
         status = firewall_buffer_rules(main, path_file_other, F_false, &local);
 
@@ -522,8 +522,8 @@ extern "C" {
         path_file_first.string = path_file_first_string;
         path_file_first_string[path_file_first.used] = 0;
 
-        memcpy(path_file_first_string, firewall_network_path_s.string, firewall_network_path_s.used);
-        memcpy(path_file_first_string + firewall_network_path_s.used, firewall_file_first_s.string, firewall_file_first_s.used);
+        memcpy(path_file_first_string, firewall_network_path_s.string, sizeof(unsigned char) * firewall_network_path_s.used);
+        memcpy(path_file_first_string + firewall_network_path_s.used, firewall_file_first_s.string, sizeof(unsigned char) * firewall_file_first_s.used);
 
         status = firewall_buffer_rules(main, path_file_first, F_false, &local);
 

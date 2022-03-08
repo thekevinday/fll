@@ -311,7 +311,7 @@ extern "C" {
               break;
             }
 
-            memcpy(content.string, block.string + range.start, total);
+            memcpy(content.string, block.string + range.start, sizeof(unsigned char) * total);
 
             content.used += total;
           }
@@ -386,7 +386,7 @@ extern "C" {
             break;
           }
 
-          memcpy(content.string, block.string, block.used);
+          memcpy(content.string, block.string, sizeof(unsigned char) * block.used);
 
           content.used += block.used;
         }

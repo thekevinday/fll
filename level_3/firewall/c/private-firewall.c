@@ -171,7 +171,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
             if (F_status_is_error(status)) break;
           }
 
-          memcpy(device.string, main->devices.array[local.device].string, main->devices.array[local.device].used);
+          memcpy(device.string, main->devices.array[local.device].string, sizeof(unsigned char) * main->devices.array[local.device].used);
 
           device.used = main->devices.array[local.device].used;
         }

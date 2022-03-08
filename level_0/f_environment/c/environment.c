@@ -52,7 +52,7 @@ extern "C" {
       const f_status_t status = f_string_dynamic_increase_by(size + 1, value);
       if (F_status_is_error(status)) return status;
 
-      memcpy(value->string + value->used, result, size);
+      memcpy(value->string + value->used, result, sizeof(unsigned char) * size);
 
       value->used += size;
       value->string[value->used] = 0;
