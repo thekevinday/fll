@@ -16,6 +16,17 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_directory_string_
+  #define F_directory_back_s    ".."
+  #define F_directory_current_s "."
+
+  #define F_directory_back_s_length    2
+  #define F_directory_current_s_length 1
+
+  extern const f_string_static_t f_directory_back_s;
+  extern const f_string_static_t f_directory_current_s;
+#endif // _di_f_directory_string_
+
 /**
  * Directory AT_* define related functionality.
  */

@@ -58,14 +58,14 @@ extern "C" {
       destination_sub.used = destination.used + listing.directory.array[i].used + 1;
       destination_sub.size = destination_sub.used;
 
-      unsigned char path_source_sub[source_sub.used + 1];
-      unsigned char path_destination_sub[destination_sub.used + 1];
+      f_char_t path_source_sub[source_sub.used + 1];
+      f_char_t path_destination_sub[destination_sub.used + 1];
 
-      memcpy(path_source_sub, source.string, sizeof(unsigned char) * source.used);
-      memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, sizeof(unsigned char) * listing.directory.array[i].used);
+      memcpy(path_source_sub, source.string, sizeof(f_char_t) * source.used);
+      memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
 
-      memcpy(path_destination_sub, destination.string, sizeof(unsigned char) * destination.used);
-      memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, sizeof(unsigned char) * listing.directory.array[i].used);
+      memcpy(path_destination_sub, destination.string, sizeof(f_char_t) * destination.used);
+      memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
 
       path_source_sub[source.used] = f_path_separator_s.string[0];
       path_source_sub[source_sub.used] = 0;
@@ -146,19 +146,19 @@ extern "C" {
     path_source.used = source.used + file.used + 2;
     path_destination.used = destination.used + file.used + 2;
 
-    unsigned char path_source_string[path_source.used];
-    unsigned char path_destination_string[path_destination.used];
+    f_char_t path_source_string[path_source.used];
+    f_char_t path_destination_string[path_destination.used];
 
     path_source.string = path_source_string;
     path_destination.string = path_destination_string;
 
-    memcpy(path_source_string, source.string, sizeof(unsigned char) * source.used);
-    memcpy(path_source_string + source.used + 1, file.string, sizeof(unsigned char) * file.used);
+    memcpy(path_source_string, source.string, sizeof(f_char_t) * source.used);
+    memcpy(path_source_string + source.used + 1, file.string, sizeof(f_char_t) * file.used);
     path_source_string[source.used] = f_path_separator_s.string[0];
     path_source_string[source.used + file.used + 1] = 0;
 
-    memcpy(path_destination_string, destination.string, sizeof(unsigned char) * destination.used);
-    memcpy(path_destination_string + destination.used + 1, file.string, sizeof(unsigned char) * file.used);
+    memcpy(path_destination_string, destination.string, sizeof(f_char_t) * destination.used);
+    memcpy(path_destination_string + destination.used + 1, file.string, sizeof(f_char_t) * file.used);
     path_destination_string[destination.used] = f_path_separator_s.string[0];
     path_destination_string[destination.used + file.used + 1] = 0;
 
@@ -196,7 +196,7 @@ extern "C" {
         macro_f_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
-        memcpy(failure.path.string, path_source.string, sizeof(unsigned char) * size);
+        memcpy(failure.path.string, path_source.string, sizeof(f_char_t) * size);
         failure.path.string[size] = 0;
       }
       else {
@@ -210,7 +210,7 @@ extern "C" {
         macro_f_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
-        memcpy(failure.path.string, path_destination.string, sizeof(unsigned char) * size);
+        memcpy(failure.path.string, path_destination.string, sizeof(f_char_t) * size);
         failure.path.string[size] = 0;
       }
 
@@ -283,14 +283,14 @@ extern "C" {
       destination_sub.used = destination.used + listing.directory.array[i].used + 1;
       destination_sub.size = destination_sub.used;
 
-      unsigned char path_source_sub[source_sub.used + 1];
-      unsigned char path_destination_sub[destination_sub.used + 1];
+      f_char_t path_source_sub[source_sub.used + 1];
+      f_char_t path_destination_sub[destination_sub.used + 1];
 
-      memcpy(path_source_sub, source.string, sizeof(unsigned char) * source.used);
-      memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, sizeof(unsigned char) * listing.directory.array[i].used);
+      memcpy(path_source_sub, source.string, sizeof(f_char_t) * source.used);
+      memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
 
       memcpy(path_destination_sub, destination.string, destination.used);
-      memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, sizeof(unsigned char) * listing.directory.array[i].used);
+      memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
 
       path_source_sub[source.used] = f_path_separator_s.string[0];
       path_source_sub[source_sub.used] = 0;
@@ -358,19 +358,19 @@ extern "C" {
     path_source.used = source.used + file.used + 2;
     path_destination.used = destination.used + file.used + 2;
 
-    unsigned char path_source_string[path_source.used];
-    unsigned char path_destination_string[path_destination.used];
+    f_char_t path_source_string[path_source.used];
+    f_char_t path_destination_string[path_destination.used];
 
     path_source.string = path_source_string;
     path_destination.string = path_destination_string;
 
-    memcpy(path_source_string, source.string, sizeof(unsigned char) * source.used);
-    memcpy(path_source_string + source.used + 1, file.string, sizeof(unsigned char) * file.used);
+    memcpy(path_source_string, source.string, sizeof(f_char_t) * source.used);
+    memcpy(path_source_string + source.used + 1, file.string, sizeof(f_char_t) * file.used);
     path_source_string[source.used] = f_path_separator_s.string[0];
     path_source_string[source.used + file.used + 1] = 0;
 
-    memcpy(path_destination_string, destination.string, sizeof(unsigned char) * destination.used);
-    memcpy(path_destination_string + destination.used + 1, file.string, sizeof(unsigned char) * file.used);
+    memcpy(path_destination_string, destination.string, sizeof(f_char_t) * destination.used);
+    memcpy(path_destination_string + destination.used + 1, file.string, sizeof(f_char_t) * file.used);
     path_destination_string[destination.used] = f_path_separator_s.string[0];
     path_destination_string[destination.used + file.used + 1] = 0;
 
@@ -411,7 +411,7 @@ extern "C" {
         macro_f_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
-        memcpy(failure.path.string, path_source.string, sizeof(unsigned char) * size);
+        memcpy(failure.path.string, path_source.string, sizeof(f_char_t) * size);
         failure.path.string[size] = 0;
       }
       else {
@@ -425,7 +425,7 @@ extern "C" {
         macro_f_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
-        memcpy(failure.path.string, path_destination.string, sizeof(unsigned char) * size);
+        memcpy(failure.path.string, path_destination.string, sizeof(f_char_t) * size);
         failure.path.string[size] = 0;
       }
 
@@ -497,12 +497,12 @@ extern "C" {
 
     for (; i < length; ++i) {
 
-      name_directory.string = entity[i]->d_name;
+      name_directory.string = (f_string_t) entity[i]->d_name;
       name_directory.used = strnlen(name_directory.string, F_directory_name_max_d);
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(name_directory.string, "..", 3) || !strncmp(name_directory.string, ".", 2)) {
-        f_memory_resize(1, 0, sizeof(unsigned char *), (void **) & entity[i]);
+        f_memory_resize(1, 0, sizeof(f_string_t), (void **) & entity[i]);
 
         continue;
       }
@@ -549,16 +549,16 @@ extern "C" {
       status = f_string_dynamic_increase_by(name_directory.used, &names->array[names->used]);
       if (F_status_is_error(status)) break;
 
-      memcpy(names->array[names->used].string, name_directory.string, sizeof(unsigned char) * name_directory.used);
+      memcpy(names->array[names->used].string, name_directory.string, sizeof(f_char_t) * name_directory.used);
       names->array[names->used++].used = name_directory.used;
 
-      f_memory_resize(1, 0, sizeof(unsigned char *), (void **) & entity[i]);
+      f_memory_resize(1, 0, sizeof(f_char_t *), (void **) & entity[i]);
     } // for
 
     closedir(parent);
 
     for (; i < length; ++i) {
-      f_memory_resize(1, 0, sizeof(unsigned char *), (void **) & entity[i]);
+      f_memory_resize(1, 0, sizeof(f_char_t *), (void **) & entity[i]);
     } // for
 
     f_memory_resize(1, 0, sizeof(struct dirent *), (void **) & entity);
@@ -751,7 +751,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        macro_f_string_dynamic_t_resize(status, (*destination), destination->used + total);
+        status = f_string_dynamic_resize(destination->used + total, destination);
         if (F_status_is_error(status)) return status;
       }
     }
@@ -762,7 +762,7 @@ extern "C" {
     }
 
     if (length_truncated - start > 0) {
-      memcpy(destination->string + destination->used, source.string + start, sizeof(unsigned char) * (length_truncated - start));
+      memcpy(destination->string + destination->used, source.string + start, sizeof(f_char_t) * (length_truncated - start));
     }
 
     destination->used += total;

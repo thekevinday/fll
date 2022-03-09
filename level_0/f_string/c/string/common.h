@@ -21,8 +21,21 @@ extern "C" {
  *      therefore this gets defined here.
  */
 #ifdef _en_BUG_strnlen_
-  extern size_t strnlen(const unsigned char * const string, size_t max_length);
+  extern size_t strnlen(const char * const string, size_t max_length);
 #endif // _en_BUG_strnlen_
+
+/**
+ * Define the basic character type.
+ */
+#ifndef _di_f_char_t_
+  typedef char f_char_t;
+
+  #define f_char_t_initialize 0
+
+  #define macro_f_char_t_initialize(character) character
+
+  #define macro_f_char_t_clear(character) character = 0;
+#endif // _di_f_char_t_
 
 /**
  * Define the basic string type.
@@ -33,10 +46,12 @@ extern "C" {
  *
  * The ideal length for a string is F_array_length_t_size_d, which generally defaults to 2^64 (unsigned).
  * However, the libc/POSIX appears to limit this to 2^63 (signed).
+ *
  * F_string_t_size_d is provided to help safely navigate this.
+ * sizeof(f_char_t) is provided to get the size of an individual character within the string and not the string itself (aka, not the character pointer).
  */
 #ifndef _di_f_string_t_
-  typedef unsigned char *f_string_t;
+  typedef f_char_t *f_string_t;
 
   #define f_string_t_initialize 0
 
@@ -67,7 +82,7 @@ extern "C" {
  * When "f_string_constant_t * xxx" is passed to a function, then "xxx" can be changed.
  */
 #ifndef _di_f_string_constant_t_
-  typedef const unsigned char *f_string_constant_t;
+  typedef const f_char_t *f_string_constant_t;
 
   #define f_string_constant_t_initialize 0
 

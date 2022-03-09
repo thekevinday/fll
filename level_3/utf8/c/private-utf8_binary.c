@@ -73,7 +73,7 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    unsigned char block_character[4] = { 0, 0, 0, 0 };
+    f_char_t block_character[4] = { 0, 0, 0, 0 };
     f_string_static_t character = macro_f_string_static_t_initialize2(block_character, 4);
 
     do {

@@ -121,7 +121,7 @@ extern "C" {
     f_number_unsigned_t current = number;
     f_number_unsigned_t work = 0;
 
-    for (unsigned char c = 0; digits; --digits) {
+    for (f_char_t c = 0; digits; --digits) {
 
       work = current / power;
       current -= work * power;
@@ -188,7 +188,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
-      unsigned char c = 0;
+      f_char_t c = 0;
 
       switch (data.base) {
         case 2:
@@ -320,7 +320,7 @@ extern "C" {
     f_number_unsigned_t current = number;
     f_number_unsigned_t work = 0;
 
-    for (unsigned char c = 0; digits; --digits) {
+    for (f_char_t c = 0; digits; --digits) {
 
       work = current / power;
       current -= work * power;
@@ -344,7 +344,7 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  void private_f_conversion_digit_to_string_pad(const f_conversion_data_t data, const unsigned char pad, int total, f_string_dynamic_t * const destination) {
+  void private_f_conversion_digit_to_string_pad(const f_conversion_data_t data, const f_char_t pad, int total, f_string_dynamic_t * const destination) {
 
     for (; total; --total) {
       destination->string[destination->used++] = pad;
@@ -373,7 +373,7 @@ extern "C" {
     if (data.flag & F_conversion_data_flag_base_prepend_d) {
       destination->string[destination->used++] = f_string_ascii_0_s.string[0];
 
-      unsigned char c = 0;
+      f_char_t c = 0;
 
       switch (data.base) {
         case 2:

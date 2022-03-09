@@ -166,12 +166,11 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
       else if (fl_string_dynamic_compare_string(local.buffer.string + local.rule_contents.array[i].array[0].start, firewall_device_this_s, length) == F_equal_to) {
         if (main->devices.array[local.device].used > 0) {
           if (main->devices.array[local.device].used > device.size) {
-            macro_f_string_dynamic_t_resize(status, device, main->devices.array[local.device].used);
-
+            status = f_string_dynamic_resize(main->devices.array[local.device].used, &device);
             if (F_status_is_error(status)) break;
           }
 
-          memcpy(device.string, main->devices.array[local.device].string, sizeof(unsigned char) * main->devices.array[local.device].used);
+          memcpy(device.string, main->devices.array[local.device].string, sizeof(f_char_t) * main->devices.array[local.device].used);
 
           device.used = main->devices.array[local.device].used;
         }

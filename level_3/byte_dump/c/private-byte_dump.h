@@ -71,7 +71,7 @@ extern "C" {
  * @see byte_dump_print_text()
  */
 #ifndef _di_byte_dump_print_character_fragment_
-  extern bool byte_dump_print_character_fragment(byte_dump_main_t * const main, const f_utf_string_static_t characters, const unsigned char invalid[], const uint8_t width_utf, const unsigned char byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, unsigned char *offset) F_attribute_visibility_internal_d;
+  extern bool byte_dump_print_character_fragment(byte_dump_main_t * const main, const f_utf_string_static_t characters, const f_char_t invalid[], const uint8_t width_utf, const f_char_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, f_char_t *offset) F_attribute_visibility_internal_d;
 #endif // _di_byte_dump_print_character_fragment_
 
 /**
@@ -93,7 +93,7 @@ extern "C" {
  *   Will be reduced to 0 once used.
  */
 #ifndef _di_byte_dump_print_text_
-  extern void byte_dump_print_text(byte_dump_main_t * const main, const f_utf_string_static_t characters, const unsigned char invalid[], byte_dump_previous_t *previous, unsigned char *offset) F_attribute_visibility_internal_d;
+  extern void byte_dump_print_text(byte_dump_main_t * const main, const f_utf_string_static_t characters, const f_char_t invalid[], byte_dump_previous_t *previous, f_char_t *offset) F_attribute_visibility_internal_d;
 #endif // _di_byte_dump_print_text_
 
 #ifdef __cplusplus

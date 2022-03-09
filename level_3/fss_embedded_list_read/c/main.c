@@ -2,7 +2,7 @@
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  const f_console_arguments_t arguments = { argc, argv, envp };
+  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
   fss_embedded_list_read_main_t data = fss_embedded_list_read_main_t_initialize;
 
   if (f_pipe_input_exists()) {

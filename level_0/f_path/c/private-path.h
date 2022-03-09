@@ -42,7 +42,7 @@ extern "C" {
  * @see f_path_real()
  */
 #if !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
-  extern f_status_t private_f_path_real(const f_string_t path, f_string_dynamic_t * const real) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_path_real(const char *path, f_string_dynamic_t * const real) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
 
 #ifdef __cplusplus

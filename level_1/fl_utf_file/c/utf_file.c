@@ -25,8 +25,8 @@ extern "C" {
     uint8_t width = 0;
     int8_t width_last = -1;
 
-    unsigned char buffer_read[file.size_read];
-    unsigned char buffer_char[4] = { 0, 0, 0, 0 };
+    f_char_t buffer_read[file.size_read];
+    f_char_t buffer_char[4] = { 0, 0, 0, 0 };
 
     memset(&buffer_read, 0, sizeof(file.size_read));
 
@@ -85,8 +85,8 @@ extern "C" {
     uint8_t width = 0;
     int8_t width_last = -1;
 
-    unsigned char buffer_read[file.size_read];
-    unsigned char buffer_char[4] = { 0, 0, 0, 0 };
+    f_char_t buffer_read[file.size_read];
+    f_char_t buffer_char[4] = { 0, 0, 0, 0 };
 
     memset(&buffer_read, 0, sizeof(file.size_read));
 
@@ -156,8 +156,8 @@ extern "C" {
       buffer_size = total;
     }
 
-    unsigned char buffer_read[buffer_size];
-    unsigned char buffer_char[4] = { 0, 0, 0, 0 };
+    f_char_t buffer_read[buffer_size];
+    f_char_t buffer_char[4] = { 0, 0, 0, 0 };
 
     memset(&buffer_read, 0, sizeof(buffer_size));
 

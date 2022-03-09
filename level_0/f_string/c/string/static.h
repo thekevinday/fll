@@ -21,8 +21,8 @@ extern "C" {
  *
  * The f_string_static_t type should never be directly allocated or deallocated.
  *
- * A special macro_f_string_static_t_initialize2() is provided for the special purpose of easily initialize a static string with an identical used and size.
  * A special macro_f_string_static_t_initialize() is provided for the special purpose of easily initialize a static string.
+ * A special macro_f_string_static_t_initialize2() is provided for the special purpose of easily initialize a static string with an identical used and size.
  *
  * string: The string.
  * size:   Total amount of space available.

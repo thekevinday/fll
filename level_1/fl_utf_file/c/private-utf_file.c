@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
-  void private_fl_utf_file_process_read_buffer(const f_string_t buffer_read, const ssize_t size_read, f_utf_string_dynamic_t * const buffer, unsigned char buffer_char[], uint8_t * const width, int8_t * const width_last) {
+  void private_fl_utf_file_process_read_buffer(const f_string_t buffer_read, const ssize_t size_read, f_utf_string_dynamic_t * const buffer, f_char_t buffer_char[], uint8_t * const width, int8_t * const width_last) {
 
     uint8_t increment_by = 0;
 
@@ -93,7 +93,7 @@ extern "C" {
     // @todo this needs to identify an invalid UTF-8 string before writing and return an error if invalid.
 
     do {
-      memset(buffer_write, 0, sizeof(unsigned char) * write_size);
+      memset(buffer_write, 0, sizeof(f_char_t) * write_size);
 
       for (i = 0, used = 0; used < write_size && *written + i < write_max; ++i, used += width) {
 

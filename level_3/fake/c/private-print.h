@@ -45,7 +45,7 @@ extern "C" {
  * @see fake_print_error_build_operation_file_message();
  */
 #ifndef _di_fake_print_error_operation_file_
-  extern bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) F_attribute_visibility_internal_d;
+  extern bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const char *function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_operation_file_
 
 /**
@@ -99,7 +99,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_fss_
-  extern bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) F_attribute_visibility_internal_d;
+  extern bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const char *function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_fss_
 
 /**
@@ -204,7 +204,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  extern void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const char *function, const f_string_static_t path) F_attribute_visibility_internal_d;
 #endif // _fake_print_message_section_operation_path_outside_
 
 /**
@@ -229,7 +229,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t error, const f_status_t status, const f_string_t function, const f_string_static_t path) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t error, const f_status_t status, const char *function, const f_string_static_t path) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 /**

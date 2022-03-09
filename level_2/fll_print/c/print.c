@@ -18,7 +18,7 @@ extern "C" {
 #endif // _di_fll_print_
 
 #ifndef _di_fll_print_character_
-  f_status_t fll_print_character(const unsigned char character, FILE * const output) {
+  f_status_t fll_print_character(const f_char_t character, FILE * const output) {
 
     flockfile(output);
 
@@ -31,7 +31,7 @@ extern "C" {
 #endif // _di_fll_print_character_
 
 #ifndef _di_fll_print_character_safely_
-  f_status_t fll_print_character_safely(const unsigned char character, FILE * const output) {
+  f_status_t fll_print_character_safely(const f_char_t character, FILE * const output) {
 
     flockfile(output);
 

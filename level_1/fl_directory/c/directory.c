@@ -27,7 +27,7 @@ extern "C" {
       f_array_length_t at_path = 0;
       f_string_static_t tree = f_string_static_t_initialize;
 
-      unsigned char tree_string[path.used + 1];
+      f_char_t tree_string[path.used + 1];
       tree.string = tree_string;
       tree.used = path.used;
       tree_string[path.used] = 0;
@@ -35,7 +35,7 @@ extern "C" {
       for (; at_path < path.used; ++at_path) {
 
         if (at_path && path.string[at_path] == f_path_separator_s.string[0]) {
-          memcpy(tree.string, path.string + at_tree, sizeof(unsigned char) * (at_path - at_tree));
+          memcpy(tree.string, path.string + at_tree, sizeof(f_char_t) * (at_path - at_tree));
           tree.string[at_path - at_tree] = 0;
 
           status = f_directory_exists(tree);

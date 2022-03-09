@@ -47,7 +47,7 @@ extern "C" {
  *   F_false if character is not a binary.
  */
 #ifndef _di_f_conversion_character_is_binary_
-  extern f_status_t f_conversion_character_is_binary(const unsigned char character);
+  extern f_status_t f_conversion_character_is_binary(const f_char_t character);
 #endif // _di_f_conversion_character_is_binary_
 
 /**
@@ -65,7 +65,7 @@ extern "C" {
  *   F_false if character is not a decimal.
  */
 #ifndef _di_f_conversion_character_is_decimal_
-  extern f_status_t f_conversion_character_is_decimal(const unsigned char character);
+  extern f_status_t f_conversion_character_is_decimal(const f_char_t character);
 #endif // _di_f_conversion_character_is_decimal_
 
 /**
@@ -85,7 +85,7 @@ extern "C" {
  *   F_false if character is not a duodecimal.
  */
 #ifndef _di_f_conversion_character_is_duodecimal_
-  extern f_status_t f_conversion_character_is_duodecimal(const unsigned char character);
+  extern f_status_t f_conversion_character_is_duodecimal(const f_char_t character);
 #endif // _di_f_conversion_character_is_duodecimal_
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  *   F_false if character is not a hexidecimal.
  */
 #ifndef _di_f_conversion_character_is_hexidecimal_
-  extern f_status_t f_conversion_character_is_hexidecimal(const unsigned char character);
+  extern f_status_t f_conversion_character_is_hexidecimal(const f_char_t character);
 #endif // _di_f_conversion_character_is_hexidecimal_
 
 /**
@@ -127,7 +127,7 @@ extern "C" {
  *   F_false if character is not an octal.
  */
 #ifndef _di_f_conversion_character_is_octal_
-  extern f_status_t f_conversion_character_is_octal(const unsigned char character);
+  extern f_status_t f_conversion_character_is_octal(const f_char_t character);
 #endif // _di_f_conversion_character_is_octal_
 
 /**
@@ -146,7 +146,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_binary_
-  extern f_status_t f_conversion_character_to_binary(const unsigned char character, uint8_t * const number);
+  extern f_status_t f_conversion_character_to_binary(const f_char_t character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_binary_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_decimal_
-  extern f_status_t f_conversion_character_to_decimal(const unsigned char character, uint8_t * const number);
+  extern f_status_t f_conversion_character_to_decimal(const f_char_t character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_decimal_
 
 /**
@@ -184,7 +184,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_duodecimal_
-  extern f_status_t f_conversion_character_to_duodecimal(const unsigned char character, uint8_t * const number);
+  extern f_status_t f_conversion_character_to_duodecimal(const f_char_t character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_duodecimal_
 
 /**
@@ -203,7 +203,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  extern f_status_t f_conversion_character_to_hexidecimal(const unsigned char character, uint8_t * const number);
+  extern f_status_t f_conversion_character_to_hexidecimal(const f_char_t character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 /**
@@ -222,7 +222,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_octal_
-  extern f_status_t f_conversion_character_to_octal(const unsigned char character, uint8_t * const number);
+  extern f_status_t f_conversion_character_to_octal(const f_char_t character, uint8_t * const number);
 #endif // _di_f_conversion_character_to_octal_
 
 /**

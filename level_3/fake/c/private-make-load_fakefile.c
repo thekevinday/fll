@@ -213,7 +213,7 @@ extern "C" {
 
       // Always have the parameter variable "return" map at index 0 and be pre-initialized.
       {
-        f_string_t function_name = "macro_f_string_map_multis_t_resize";
+        char *function_name = "macro_f_string_map_multis_t_resize";
 
         macro_f_string_map_multis_t_resize(*status, data_make->setting_make.parameter, fake_default_allocation_small_d);
 

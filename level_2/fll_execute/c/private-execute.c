@@ -565,10 +565,10 @@ extern "C" {
 #if !defined(_di_fll_execute_program_)
   void private_fll_execute_path_arguments_fixate(const f_string_static_t program_path, const f_string_statics_t arguments, const f_string_t last_slash, const bool fixated_is, f_string_static_t program_name, f_string_t fixed_arguments[]) {
 
-    memset(program_name.string, 0, sizeof(unsigned char) * (program_name.used + 1));
+    memset(program_name.string, 0, sizeof(f_char_t) * (program_name.used + 1));
     memset(fixed_arguments, 0, sizeof(f_string_t) * (arguments.used + 2));
 
-    memcpy(program_name.string, last_slash ? last_slash + 1 : program_path.string, sizeof(unsigned char) * program_name.used);
+    memcpy(program_name.string, last_slash ? last_slash + 1 : program_path.string, sizeof(f_char_t) * program_name.used);
 
     if (program_name.used) {
       fixed_arguments[0] = program_name.string;

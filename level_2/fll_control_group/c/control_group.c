@@ -26,14 +26,14 @@ extern "C" {
 
       path.used = control_group.path.used + control_group.groups.array[i].used;
 
-      unsigned char path_string[path.used + 1];
+      f_char_t path_string[path.used + 1];
       path.string = path_string;
 
       if (control_group.path.used) {
-        memcpy(path.string, control_group.path.string, sizeof(unsigned char) * control_group.path.used);
+        memcpy(path.string, control_group.path.string, sizeof(f_char_t) * control_group.path.used);
       }
 
-      memcpy(path.string + control_group.path.used, control_group.groups.array[i].string, sizeof(unsigned char) * control_group.groups.array[i].used);
+      memcpy(path.string + control_group.path.used, control_group.groups.array[i].string, sizeof(f_char_t) * control_group.groups.array[i].used);
       path.string[path.used] = 0;
 
       status = fl_directory_create(path, F_file_mode_all_rwx_d);

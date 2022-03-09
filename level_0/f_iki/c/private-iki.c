@@ -82,7 +82,7 @@ extern "C" {
 #endif // !defined(_di_f_iki_datas_append_) || !defined(_di_f_iki_datas_decrease_by_) || !defined(_di_f_iki_datas_increase_) || !defined(_di_f_iki_datas_increase_by_) || !defined(_di_f_iki_datas_resize_)
 
 #if !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
-  f_status_t private_f_iki_content_partial_is(const f_string_t buffer, const f_array_length_t length, const unsigned char quote) {
+  f_status_t private_f_iki_content_partial_is(const f_string_t buffer, const f_array_length_t length, const f_char_t quote) {
 
     f_array_length_t delimits = 0;
 

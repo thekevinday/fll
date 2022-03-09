@@ -597,14 +597,14 @@ extern "C" {
 
     if (!return_code) {
       if (F_status_is_error(status)) {
-        status = f_string_append("1", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
+        status = f_string_dynamic_append(f_string_ascii_1_s, &data_make->setting_make.parameter.array[0].value.array[0]);
       }
       else {
-        status = f_string_append("0", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
+        status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_append", F_true);
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
       }
 
       return status;
@@ -628,11 +628,11 @@ extern "C" {
       f_string_dynamic_resize(0, &number);
     }
     else {
-      status = f_string_append("0", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
+      status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data_make->error, F_status_set_fine(status), "f_string_append", F_true);
+      fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
 
       return status;
     }

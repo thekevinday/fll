@@ -206,27 +206,27 @@ extern "C" {
 enum {
   F_fss_status_code_first = F_status_code_last + 1,
 
-  #ifndef _di_F_fss_status_error_
+  #ifndef _di_f_fss_status_error_
     F_fss_format,
     F_fss_format_eos,
-  #endif // _di_F_fss_status_error_
+  #endif // _di_f_fss_status_error_
 
-  #ifndef _di_F_fss_status_warning_
+  #ifndef _di_f_fss_status_warning_
     F_fss_accepted_invalid,
     F_fss_accepted_invalid_eos,
-  #endif // _di_F_fss_status_warning_
+  #endif // _di_f_fss_status_warning_
 
-  #ifndef _di_F_fss_status_success_
+  #ifndef _di_f_fss_status_success_
     F_fss_found_content,
     F_fss_found_object,
     F_fss_found_object_content_not,
     F_fss_found_content_not,
     F_fss_found_object_not,
-  #endif // _di_F_fss_status_success_
+  #endif // _di_f_fss_status_success_
 
-  #ifndef _di_F_fss_status_codes_
+  #ifndef _di_f_fss_status_codes_
     F_fss_found_comment,
-  #endif // _di_F_fss_status_codes_
+  #endif // _di_f_fss_status_codes_
 
   F_fss_status_code_last,
 }; // enum

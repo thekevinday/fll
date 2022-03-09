@@ -34,13 +34,7 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_file_found_not || F_status_set_fine(status) == F_directory) {
       if (main->error.verbosity >= f_console_verbosity_verbose_e) {
-        flockfile(main->warning.to.stream);
-
-        f_print_terminated("The build directory '", main->warning.to.stream);
-        fl_print_format("%[%Q%]", main->warning.to.stream, main->context.set.notable, main->path_build, main->context.set.notable);
-        fl_print_format("' does not exist.%r", main->warning.to.stream, f_string_eol_s);
-
-        funlockfile(main->warning.to.stream);
+        fll_print_format("The build directory '%[%Q%]' does not exist.%r", main->warning.to.stream, main->context.set.notable, main->path_build, main->context.set.notable, f_string_eol_s);
       }
 
       status = F_none;

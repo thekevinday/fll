@@ -87,7 +87,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_
-  extern f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const f_string_t description);
+  extern f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description);
 #endif // _di_fll_program_print_help_option_
 
 /**
@@ -113,7 +113,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_long_
-  extern f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_static_t option_long, const f_string_static_t symbol_long, const f_string_t description);
+  extern f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_static_t option_long, const f_string_static_t symbol_long, const char *description);
 #endif // _di_fll_program_print_help_option_long_
 
 /**
@@ -137,7 +137,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_other_
-  extern f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_static_t option_other, const f_string_t description);
+  extern f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_static_t option_other, const char *description);
 #endif // _di_fll_program_print_help_option_other_
 
 /**

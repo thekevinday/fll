@@ -231,7 +231,7 @@ extern "C" {
           }
           else if (*string < 0x56) {
             if (*string == f_string_ascii_C_s.string[0]) {
-              unsigned char value[1] = { (unsigned char) va_arg(apl, int) };
+              f_char_t value[1] = { (f_char_t) va_arg(apl, int) };
 
               *status = f_print_safely(value, 1, stream);
 
@@ -627,7 +627,7 @@ extern "C" {
           }
           else if (*string < 0x72) {
             if (*string == f_string_ascii_c_s.string[0]) {
-              const unsigned char value = (unsigned char) va_arg(apl, uint32_t);
+              const f_char_t value = (f_char_t) va_arg(apl, uint32_t);
 
               if (!fputc_unlocked(value, stream)) {
                 *status = F_status_set_error(F_output);
@@ -1082,56 +1082,56 @@ extern "C" {
           }
           else if (type == f_print_format_type_double_32_e || type == f_print_format_type_double_64_e) {
             unsigned int f = 0;
-            unsigned char format[33];
-            unsigned char buffer[129];
+            char format[33];
+            f_char_t buffer[129];
 
-            memset(format, 0, sizeof(unsigned char) * 33);
-            memset(buffer, 0, sizeof(unsigned char) * 129);
+            memset(format, 0, sizeof(char) * 33);
+            memset(buffer, 0, sizeof(f_char_t) * 129);
 
-            format[f++] = f_string_ascii_percent_s.string[0];
+            format[f++] = (char) f_string_ascii_percent_s.string[0];
 
             if (flag & F_print_format_flag_sign_always_d) {
-              format[f++] = f_string_ascii_plus_s.string[0];
+              format[f++] = (char) f_string_ascii_plus_s.string[0];
             }
             else if (flag & F_print_format_flag_sign_pad_d) {
-              format[f++] = f_string_ascii_space_s.string[0];
+              format[f++] = (char) f_string_ascii_space_s.string[0];
             }
 
             if (flag & F_print_format_flag_align_left_d) {
-              format[f++] = f_string_ascii_minus_s.string[0];
+              format[f++] = (char) f_string_ascii_minus_s.string[0];
             }
 
             if (flag & F_print_format_flag_zeros_leading_d) {
-              format[f++] = f_string_ascii_0_s.string[0];
+              format[f++] = (char) f_string_ascii_0_s.string[0];
             }
 
             if (flag & F_print_format_flag_width_d) {
-              format[f++] = f_string_ascii_asterisk_s.string[0];
+              format[f++] = (char) f_string_ascii_asterisk_s.string[0];
             }
 
             if (flag & F_print_format_flag_precision_d) {
-              format[f++] = f_string_ascii_period_s.string[0];
-              format[f++] = f_string_ascii_asterisk_s.string[0];
+              format[f++] = (char) f_string_ascii_period_s.string[0];
+              format[f++] = (char) f_string_ascii_asterisk_s.string[0];
             }
 
             if (flag & F_print_format_flag_exponent_d) {
               if (flag & F_print_format_flag_exponent_upper_d) {
-                format[f++] = f_string_ascii_E_s.string[0];
+                format[f++] = (char) f_string_ascii_E_s.string[0];
               }
               else {
-                format[f++] = f_string_ascii_e_s.string[0];
+                format[f++] = (char) f_string_ascii_e_s.string[0];
               }
             }
             else if (flag & F_print_format_flag_exponent_either_d) {
               if (flag & F_print_format_flag_exponent_upper_d) {
-                format[f++] = f_string_ascii_G_s.string[0];
+                format[f++] = (char) f_string_ascii_G_s.string[0];
               }
               else {
-                format[f++] = f_string_ascii_g_s.string[0];
+                format[f++] = (char) f_string_ascii_g_s.string[0];
               }
             }
             else {
-              format[f++] = f_string_ascii_f_s.string[0];
+              format[f++] = (char) f_string_ascii_f_s.string[0];
             }
 
             if (type == f_print_format_type_double_32_e) {

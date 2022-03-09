@@ -40,7 +40,7 @@ extern "C" {
  * @see fl_utf_file_read_until()
  */
 #if !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
-  extern void private_fl_utf_file_process_read_buffer(const f_string_t buffer_read, const ssize_t size_read, f_utf_string_dynamic_t * const buffer, unsigned char buffer_char[], uint8_t * const width, int8_t * const width_last) F_attribute_visibility_internal_d;
+  extern void private_fl_utf_file_process_read_buffer(const f_string_t buffer_read, const ssize_t size_read, f_utf_string_dynamic_t * const buffer, f_char_t buffer_char[], uint8_t * const width, int8_t * const width_last) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
 
 /**

@@ -102,7 +102,7 @@ extern "C" {
  * @see f_print_to_except_in_dynamic_partial_safely()
  */
 #if !defined(_di_f_print_to_character_safely_) || !defined(_di_f_print_to_safely_) || !defined(_di_f_print_to_safely_dynamic_) || !defined(_di_f_print_to_safely_dynamic_partial_) || !defined(_di_f_print_to_safely_terminated_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_)
-  extern f_status_t private_f_print_to_character_safely(const unsigned char character, const int id) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_print_to_character_safely(const f_char_t character, const int id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_to_character_safely_) || !defined(_di_f_print_to_safely_) || !defined(_di_f_print_to_safely_dynamic_) || !defined(_di_f_print_to_safely_dynamic_partial_) || !defined(_di_f_print_to_safely_terminated_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_)
 
 /**

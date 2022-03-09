@@ -22,7 +22,7 @@ extern "C" {
 
     // Determine the linear order in which all of the three parameter values are to be applied.
     if (values_total) {
-      memset(values_order, 0, sizeof(unsigned char) * values_total);
+      memset(values_order, 0, sizeof(f_char_t) * values_total);
 
       f_array_length_t k = 0;
       f_array_length_t l = 0;

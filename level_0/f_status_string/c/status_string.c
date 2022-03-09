@@ -4,13 +4,13 @@
 extern "C" {
 #endif
 
-#ifndef _di_F_status_string_
-  #ifndef _di_F_status_boolean_
+#ifndef _di_f_status_string_
+  #ifndef _di_f_status_boolean_
     const f_string_static_t f_status_false_s = macro_f_string_static_t_initialize(F_status_false_s, 0, F_status_false_s_length);
     const f_string_static_t f_status_true_s = macro_f_string_static_t_initialize(F_status_true_s, 0, F_status_true_s_length);
-  #endif // _di_F_status_boolean_
+  #endif // _di_f_status_boolean_
 
-  #ifndef _di_F_status_signal_
+  #ifndef _di_f_status_signal_
     const f_string_static_t f_status_signal_hangup_s = macro_f_string_static_t_initialize(F_status_signal_hangup_s, 0, F_status_signal_hangup_s_length);
     const f_string_static_t f_status_signal_interrupt_s = macro_f_string_static_t_initialize(F_status_signal_interrupt_s, 0, F_status_signal_interrupt_s_length);
     const f_string_static_t f_status_signal_quit_s = macro_f_string_static_t_initialize(F_status_signal_quit_s, 0, F_status_signal_quit_s_length);
@@ -75,9 +75,9 @@ extern "C" {
     const f_string_static_t f_status_signal_reserved_62_s = macro_f_string_static_t_initialize(F_status_signal_reserved_62_s, 0, F_status_signal_reserved_62_s_length);
     const f_string_static_t f_status_signal_reserved_63_s = macro_f_string_static_t_initialize(F_status_signal_reserved_63_s, 0, F_status_signal_reserved_63_s_length);
     const f_string_static_t f_status_signal_reserved_64_s = macro_f_string_static_t_initialize(F_status_signal_reserved_64_s, 0, F_status_signal_reserved_64_s_length);
-  #endif // _di_F_status_signal_
+  #endif // _di_f_status_signal_
 
-  #ifndef _di_F_status_basic_
+  #ifndef _di_f_status_basic_
     const f_string_static_t f_status_none_s = macro_f_string_static_t_initialize(F_status_none_s, 0, F_status_none_s_length);
     const f_string_static_t f_status_abort_s = macro_f_string_static_t_initialize(F_status_abort_s, 0, F_status_abort_s_length);
     const f_string_static_t f_status_abort_not_s = macro_f_string_static_t_initialize(F_status_abort_not_s, 0, F_status_abort_not_s_length);
@@ -325,16 +325,16 @@ extern "C" {
     const f_string_static_t f_status_write_s = macro_f_string_static_t_initialize(F_status_write_s, 0, F_status_write_s_length);
     const f_string_static_t f_status_write_not_s = macro_f_string_static_t_initialize(F_status_write_not_s, 0, F_status_write_not_s_length);
     const f_string_static_t f_status_write_only_s = macro_f_string_static_t_initialize(F_status_write_only_s, 0, F_status_write_only_s_length);
-  #endif // _di_F_status_basic_
+  #endif // _di_f_status_basic_
 
-  #ifndef _di_F_status_array_
+  #ifndef _di_f_status_array_
     const f_string_static_t f_status_array_s = macro_f_string_static_t_initialize(F_status_array_s, 0, F_status_array_s_length);
     const f_string_static_t f_status_array_not_s = macro_f_string_static_t_initialize(F_status_array_not_s, 0, F_status_array_not_s_length);
     const f_string_static_t f_status_array_too_large_s = macro_f_string_static_t_initialize(F_status_array_too_large_s, 0, F_status_array_too_large_s_length);
     const f_string_static_t f_status_array_too_small_s = macro_f_string_static_t_initialize(F_status_array_too_small_s, 0, F_status_array_too_small_s_length);
-  #endif // _di_F_status_array_
+  #endif // _di_f_status_array_
 
-  #ifndef _di_F_status_available_
+  #ifndef _di_f_status_available_
     const f_string_static_t f_status_available_s = macro_f_string_static_t_initialize(F_status_available_s, 0, F_status_available_s_length);
     const f_string_static_t f_status_available_not_s = macro_f_string_static_t_initialize(F_status_available_not_s, 0, F_status_available_not_s_length);
     const f_string_static_t f_status_available_not_address_s = macro_f_string_static_t_initialize(F_status_available_not_address_s, 0, F_status_available_not_address_s_length);
@@ -344,9 +344,9 @@ extern "C" {
     const f_string_static_t f_status_available_not_port_s = macro_f_string_static_t_initialize(F_status_available_not_port_s, 0, F_status_available_not_port_s_length);
     const f_string_static_t f_status_available_not_process_s = macro_f_string_static_t_initialize(F_status_available_not_process_s, 0, F_status_available_not_process_s_length);
     const f_string_static_t f_status_available_not_socket_s = macro_f_string_static_t_initialize(F_status_available_not_socket_s, 0, F_status_available_not_socket_s_length);
-  #endif // _di_F_status_available_
+  #endif // _di_f_status_available_
 
-  #ifndef _di_F_status_busy_
+  #ifndef _di_f_status_busy_
     const f_string_static_t f_status_busy_s = macro_f_string_static_t_initialize(F_status_busy_s, 0, F_status_busy_s_length);
     const f_string_static_t f_status_busy_address_s = macro_f_string_static_t_initialize(F_status_busy_address_s, 0, F_status_busy_address_s_length);
     const f_string_static_t f_status_busy_buffer_s = macro_f_string_static_t_initialize(F_status_busy_buffer_s, 0, F_status_busy_buffer_s_length);
@@ -356,9 +356,9 @@ extern "C" {
     const f_string_static_t f_status_busy_port_s = macro_f_string_static_t_initialize(F_status_busy_port_s, 0, F_status_busy_port_s_length);
     const f_string_static_t f_status_busy_process_s = macro_f_string_static_t_initialize(F_status_busy_process_s, 0, F_status_busy_process_s_length);
     const f_string_static_t f_status_busy_socket_s = macro_f_string_static_t_initialize(F_status_busy_socket_s, 0, F_status_busy_socket_s_length);
-  #endif // _di_F_status_busy_
+  #endif // _di_f_status_busy_
 
-  #ifndef _di_F_status_network_
+  #ifndef _di_f_status_network_
     const f_string_static_t f_status_network_s = macro_f_string_static_t_initialize(F_status_network_s, 0, F_status_network_s_length);
     const f_string_static_t f_status_network_busy_s = macro_f_string_static_t_initialize(F_status_network_busy_s, 0, F_status_network_busy_s_length);
     const f_string_static_t f_status_network_busy_not_s = macro_f_string_static_t_initialize(F_status_network_busy_not_s, 0, F_status_network_busy_not_s_length);
@@ -381,9 +381,9 @@ extern "C" {
     const f_string_static_t f_status_network_server_not_s = macro_f_string_static_t_initialize(F_status_network_server_not_s, 0, F_status_network_server_not_s_length);
     const f_string_static_t f_status_network_time_s = macro_f_string_static_t_initialize(F_status_network_time_s, 0, F_status_network_time_s_length);
     const f_string_static_t f_status_network_time_not_s = macro_f_string_static_t_initialize(F_status_network_time_not_s, 0, F_status_network_time_not_s_length);
-  #endif // _di_F_status_network_
+  #endif // _di_f_status_network_
 
-  #ifndef _di_F_status_number_
+  #ifndef _di_f_status_number_
     const f_string_static_t f_status_number_s = macro_f_string_static_t_initialize(F_status_number_s, 0, F_status_number_s_length);
     const f_string_static_t f_status_number_decimal_s = macro_f_string_static_t_initialize(F_status_number_decimal_s, 0, F_status_number_decimal_s_length);
     const f_string_static_t f_status_number_decimal_not_s = macro_f_string_static_t_initialize(F_status_number_decimal_not_s, 0, F_status_number_decimal_not_s_length);
@@ -401,9 +401,9 @@ extern "C" {
     const f_string_static_t f_status_number_whole_not_s = macro_f_string_static_t_initialize(F_status_number_whole_not_s, 0, F_status_number_whole_not_s_length);
     const f_string_static_t f_status_number_zero_s = macro_f_string_static_t_initialize(F_status_number_zero_s, 0, F_status_number_zero_s_length);
     const f_string_static_t f_status_number_zero_not_s = macro_f_string_static_t_initialize(F_status_number_zero_not_s, 0, F_status_number_zero_not_s_length);
-  #endif // _di_F_status_number_
+  #endif // _di_f_status_number_
 
-  #ifndef _di_F_status_buffer_
+  #ifndef _di_f_status_buffer_
     const f_string_static_t f_status_buffer_s = macro_f_string_static_t_initialize(F_status_buffer_s, 0, F_status_buffer_s_length);
     const f_string_static_t f_status_buffer_not_s = macro_f_string_static_t_initialize(F_status_buffer_not_s, 0, F_status_buffer_not_s_length);
     const f_string_static_t f_status_buffer_overflow_s = macro_f_string_static_t_initialize(F_status_buffer_overflow_s, 0, F_status_buffer_overflow_s_length);
@@ -454,15 +454,15 @@ extern "C" {
     const f_string_static_t f_status_terminated_not_nest_eol_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_eol_s, 0, F_status_terminated_not_nest_eol_s_length);
     const f_string_static_t f_status_terminated_not_nest_eos_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_eos_s, 0, F_status_terminated_not_nest_eos_s_length);
     const f_string_static_t f_status_terminated_not_nest_stop_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_stop_s, 0, F_status_terminated_not_nest_stop_s_length);
-  #endif // _di_F_status_buffer_
+  #endif // _di_f_status_buffer_
 
-  #ifndef _di_F_status_process_
+  #ifndef _di_f_status_process_
     const f_string_static_t f_status_process_s = macro_f_string_static_t_initialize(F_status_process_s, 0, F_status_process_s_length);
     const f_string_static_t f_status_process_not_s = macro_f_string_static_t_initialize(F_status_process_not_s, 0, F_status_process_not_s_length);
     const f_string_static_t f_status_process_too_many_s = macro_f_string_static_t_initialize(F_status_process_too_many_s, 0, F_status_process_too_many_s_length);
-  #endif // _di_F_status_process_
+  #endif // _di_f_status_process_
 
-  #ifndef _di_F_status_file_
+  #ifndef _di_f_status_file_
     const f_string_static_t f_status_file_s = macro_f_string_static_t_initialize(F_status_file_s, 0, F_status_file_s_length);
     const f_string_static_t f_status_file_close_s = macro_f_string_static_t_initialize(F_status_file_close_s, 0, F_status_file_close_s_length);
     const f_string_static_t f_status_file_closed_s = macro_f_string_static_t_initialize(F_status_file_closed_s, 0, F_status_file_closed_s_length);
@@ -506,16 +506,16 @@ extern "C" {
     const f_string_static_t f_status_file_utf_s = macro_f_string_static_t_initialize(F_status_file_utf_s, 0, F_status_file_utf_s_length);
     const f_string_static_t f_status_file_utf_not_s = macro_f_string_static_t_initialize(F_status_file_utf_not_s, 0, F_status_file_utf_not_s_length);
     const f_string_static_t f_status_file_write_s = macro_f_string_static_t_initialize(F_status_file_write_s, 0, F_status_file_write_s_length);
-  #endif // _di_F_status_file_
+  #endif // _di_f_status_file_
 
-  #ifndef _di_F_status_filesystem_
+  #ifndef _di_f_status_filesystem_
     const f_string_static_t f_status_filesystem_s = macro_f_string_static_t_initialize(F_status_filesystem_s, 0, F_status_filesystem_s_length);
     const f_string_static_t f_status_filesystem_not_s = macro_f_string_static_t_initialize(F_status_filesystem_not_s, 0, F_status_filesystem_not_s_length);
     const f_string_static_t f_status_filesystem_quota_block_s = macro_f_string_static_t_initialize(F_status_filesystem_quota_block_s, 0, F_status_filesystem_quota_block_s_length);
     const f_string_static_t f_status_filesystem_quota_reached_s = macro_f_string_static_t_initialize(F_status_filesystem_quota_reached_s, 0, F_status_filesystem_quota_reached_s_length);
-  #endif // _di_F_status_filesystem_
+  #endif // _di_f_status_filesystem_
 
-  #ifndef _di_F_status_directory_
+  #ifndef _di_f_status_directory_
     const f_string_static_t f_status_directory_s = macro_f_string_static_t_initialize(F_status_directory_s, 0, F_status_directory_s_length);
     const f_string_static_t f_status_directory_close_s = macro_f_string_static_t_initialize(F_status_directory_close_s, 0, F_status_directory_close_s_length);
     const f_string_static_t f_status_directory_closed_s = macro_f_string_static_t_initialize(F_status_directory_closed_s, 0, F_status_directory_closed_s_length);
@@ -536,25 +536,25 @@ extern "C" {
     const f_string_static_t f_status_directory_utf_s = macro_f_string_static_t_initialize(F_status_directory_utf_s, 0, F_status_directory_utf_s_length);
     const f_string_static_t f_status_directory_utf_not_s = macro_f_string_static_t_initialize(F_status_directory_utf_not_s, 0, F_status_directory_utf_not_s_length);
     const f_string_static_t f_status_directory_write_s = macro_f_string_static_t_initialize(F_status_directory_write_s, 0, F_status_directory_write_s_length);
-  #endif // _di_F_status_directory_
+  #endif // _di_f_status_directory_
 
-  #ifndef _di_F_status_socket_
+  #ifndef _di_f_status_socket_
     const f_string_static_t f_status_socket_s = macro_f_string_static_t_initialize(F_status_socket_s, 0, F_status_socket_s_length);
     const f_string_static_t f_status_socket_client_s = macro_f_string_static_t_initialize(F_status_socket_client_s, 0, F_status_socket_client_s_length);
     const f_string_static_t f_status_socket_not_s = macro_f_string_static_t_initialize(F_status_socket_not_s, 0, F_status_socket_not_s_length);
     const f_string_static_t f_status_socket_receive_s = macro_f_string_static_t_initialize(F_status_socket_receive_s, 0, F_status_socket_receive_s_length);
     const f_string_static_t f_status_socket_send_s = macro_f_string_static_t_initialize(F_status_socket_send_s, 0, F_status_socket_send_s_length);
     const f_string_static_t f_status_socket_target_s = macro_f_string_static_t_initialize(F_status_socket_target_s, 0, F_status_socket_target_s_length);
-  #endif // _di_F_status_socket_
+  #endif // _di_f_status_socket_
 
-  #ifndef _di_F_status_compare_
+  #ifndef _di_f_status_compare_
     const f_string_static_t f_status_equal_to_s = macro_f_string_static_t_initialize(F_status_equal_to_s, 0, F_status_equal_to_s_length);
     const f_string_static_t f_status_equal_to_not_s = macro_f_string_static_t_initialize(F_status_equal_to_not_s, 0, F_status_equal_to_not_s_length);
     const f_string_static_t f_status_than_greater_s = macro_f_string_static_t_initialize(F_status_than_greater_s, 0, F_status_than_greater_s_length);
     const f_string_static_t f_status_than_less_s = macro_f_string_static_t_initialize(F_status_than_less_s, 0, F_status_than_less_s_length);
-  #endif // _di_F_status_compare_
+  #endif // _di_f_status_compare_
 
-  #ifndef _di_F_status_access_
+  #ifndef _di_f_status_access_
     const f_string_static_t f_status_access_s = macro_f_string_static_t_initialize(F_status_access_s, 0, F_status_access_s_length);
     const f_string_static_t f_status_access_denied_s = macro_f_string_static_t_initialize(F_status_access_denied_s, 0, F_status_access_denied_s_length);
     const f_string_static_t f_status_access_denied_user_s = macro_f_string_static_t_initialize(F_status_access_denied_user_s, 0, F_status_access_denied_user_s_length);
@@ -576,9 +576,9 @@ extern "C" {
     const f_string_static_t f_status_access_mode_s = macro_f_string_static_t_initialize(F_status_access_mode_s, 0, F_status_access_mode_s_length);
     const f_string_static_t f_status_access_not_s = macro_f_string_static_t_initialize(F_status_access_not_s, 0, F_status_access_not_s_length);
     const f_string_static_t f_status_access_owner_s = macro_f_string_static_t_initialize(F_status_access_owner_s, 0, F_status_access_owner_s_length);
-  #endif // _di_F_status_access_
+  #endif // _di_f_status_access_
 
-  #ifndef _di_F_status_terminal_
+  #ifndef _di_f_status_terminal_
     const f_string_static_t f_status_terminal_s = macro_f_string_static_t_initialize(F_status_terminal_s, 0, F_status_terminal_s_length);
     const f_string_static_t f_status_terminal_access_s = macro_f_string_static_t_initialize(F_status_terminal_access_s, 0, F_status_terminal_access_s_length);
     const f_string_static_t f_status_terminal_known_s = macro_f_string_static_t_initialize(F_status_terminal_known_s, 0, F_status_terminal_known_s_length);
@@ -589,10 +589,10 @@ extern "C" {
     const f_string_static_t f_status_terminal_valid_s = macro_f_string_static_t_initialize(F_status_terminal_valid_s, 0, F_status_terminal_valid_s_length);
     const f_string_static_t f_status_terminal_valid_not_s = macro_f_string_static_t_initialize(F_status_terminal_valid_not_s, 0, F_status_terminal_valid_not_s_length);
     const f_string_static_t f_status_terminal_write_s = macro_f_string_static_t_initialize(F_status_terminal_write_s, 0, F_status_terminal_write_s_length);
-  #endif // _di_F_status_terminal_
+  #endif // _di_f_status_terminal_
 
   const f_string_static_t f_status_status_code_last_s = macro_f_string_static_t_initialize(F_status_status_code_last_s, 0, F_status_status_code_last_s_length);
-#endif // _di_F_status_string_
+#endif // _di_f_status_string_
 
 #ifndef _di_f_status_string_to_
   f_status_t f_status_string_to(const f_status_t code, f_string_static_t * const name) {
@@ -603,7 +603,7 @@ extern "C" {
     f_status_t unmasked_code = F_status_set_fine(code);
 
     switch (unmasked_code) {
-      #ifndef _di_F_status_boolean_
+      #ifndef _di_f_status_boolean_
         case F_false:
           *name = f_status_false_s;
           break;
@@ -611,9 +611,9 @@ extern "C" {
         case F_true:
           *name = f_status_true_s;
           break;
-      #endif // _di_F_status_boolean_
+      #endif // _di_f_status_boolean_
 
-      #ifndef _di_F_status_signal_
+      #ifndef _di_f_status_signal_
 
         // F_signal_hangup is not used because it has the same code as F_true.
         case F_signal_interrupt:
@@ -867,9 +867,9 @@ extern "C" {
         case F_signal_reserved_64:
           *name = f_status_signal_reserved_64_s;
           break;
-      #endif // _di_F_status_signal_
+      #endif // _di_f_status_signal_
 
-      #ifndef _di_F_status_basic_
+      #ifndef _di_f_status_basic_
         case F_none:
           *name = f_status_none_s;
           break;
@@ -1857,9 +1857,9 @@ extern "C" {
         case F_write_only:
           *name = f_status_write_only_s;
           break;
-      #endif // _di_F_status_basic_
+      #endif // _di_f_status_basic_
 
-      #ifndef _di_F_status_array_
+      #ifndef _di_f_status_array_
         case F_array:
           *name = f_status_array_s;
           break;
@@ -1875,9 +1875,9 @@ extern "C" {
         case F_array_too_small:
           *name = f_status_array_too_small_s;
           break;
-      #endif // _di_F_status_array_
+      #endif // _di_f_status_array_
 
-      #ifndef _di_F_status_available_
+      #ifndef _di_f_status_available_
         case F_available:
           *name = f_status_available_s;
           break;
@@ -1913,9 +1913,9 @@ extern "C" {
         case F_available_not_socket:
           *name = f_status_available_not_socket_s;
           break;
-      #endif // _di_F_status_available_
+      #endif // _di_f_status_available_
 
-      #ifndef _di_F_status_busy_
+      #ifndef _di_f_status_busy_
         case F_busy:
           *name = f_status_busy_s;
           break;
@@ -1951,9 +1951,9 @@ extern "C" {
         case F_busy_socket:
           *name = f_status_busy_socket_s;
           break;
-      #endif // _di_F_status_busy_
+      #endif // _di_f_status_busy_
 
-      #ifndef _di_F_status_network_
+      #ifndef _di_f_status_network_
         case F_network:
           *name = f_status_network_s;
           break;
@@ -2041,9 +2041,9 @@ extern "C" {
         case F_network_time_not:
           *name = f_status_network_time_not_s;
           break;
-      #endif // _di_F_status_network_
+      #endif // _di_f_status_network_
 
-      #ifndef _di_F_status_number_
+      #ifndef _di_f_status_number_
         case F_number:
           *name = f_status_number_s;
           break;
@@ -2111,9 +2111,9 @@ extern "C" {
         case F_number_zero_not:
           *name = f_status_number_zero_not_s;
           break;
-      #endif // _di_F_status_number_
+      #endif // _di_f_status_number_
 
-      #ifndef _di_F_status_buffers_
+      #ifndef _di_f_status_buffers_
         case F_buffer:
           *name = f_status_buffer_s;
           break;
@@ -2305,9 +2305,9 @@ extern "C" {
         case F_terminated_not_stop:
           *name = f_status_terminated_not_stop_s;
           break;
-      #endif // _di_F_status_buffers_
+      #endif // _di_f_status_buffers_
 
-      #ifndef _di_F_status_process_
+      #ifndef _di_f_status_process_
         case F_process:
           *name = f_status_process_s;
           break;
@@ -2319,9 +2319,9 @@ extern "C" {
         case F_process_too_many:
           *name = f_status_process_too_many_s;
           break;
-      #endif // _di_F_status_process_
+      #endif // _di_f_status_process_
 
-      #ifndef _di_F_status_file_
+      #ifndef _di_f_status_file_
         case F_file:
           *name = f_status_file_s;
           break;
@@ -2489,9 +2489,9 @@ extern "C" {
         case F_file_write:
           *name = f_status_file_write_s;
           break;
-      #endif // _di_F_status_file_
+      #endif // _di_f_status_file_
 
-      #ifndef _di_F_status_filesystem_
+      #ifndef _di_f_status_filesystem_
         case F_filesystem:
           *name = f_status_filesystem_s;
           break;
@@ -2507,9 +2507,9 @@ extern "C" {
         case F_filesystem_quota_reached:
           *name = f_status_filesystem_quota_reached_s;
           break;
-      #endif // _di_F_status_filesystem_
+      #endif // _di_f_status_filesystem_
 
-      #ifndef _di_F_status_directory_
+      #ifndef _di_f_status_directory_
         case F_directory:
           *name = f_status_directory_s;
           break;
@@ -2589,9 +2589,9 @@ extern "C" {
         case F_directory_write:
           *name = f_status_directory_utf_not_s;
           break;
-      #endif // _di_F_status_directory_
+      #endif // _di_f_status_directory_
 
-      #ifndef _di_F_status_socket_
+      #ifndef _di_f_status_socket_
         case F_socket:
           *name = f_status_socket_s;
           break;
@@ -2615,9 +2615,9 @@ extern "C" {
         case F_socket_target:
           *name = f_status_socket_target_s;
           break;
-      #endif // _di_F_status_socket_
+      #endif // _di_f_status_socket_
 
-      #ifndef _di_F_error_compare_
+      #ifndef _di_f_error_compare_
         case F_equal_to:
           *name = f_status_equal_to_s;
           break;
@@ -2633,9 +2633,9 @@ extern "C" {
         case F_than_less:
           *name = f_status_than_less_s;
           break;
-      #endif // _di_F_status_compare_
+      #endif // _di_f_status_compare_
 
-      #ifndef _di_F_status_access_
+      #ifndef _di_f_status_access_
         case F_access:
           *name = f_status_access_s;
           break;
@@ -2719,9 +2719,9 @@ extern "C" {
         case F_access_owner:
           *name = f_status_access_owner_s;
           break;
-      #endif // _di_F_status_access_
+      #endif // _di_f_status_access_
 
-      #ifndef _di_F_status_terminal_
+      #ifndef _di_f_status_terminal_
         case F_terminal:
           *name = f_status_terminal_s;
           break;
@@ -2761,7 +2761,7 @@ extern "C" {
         case F_terminal_write:
           *name = f_status_terminal_write_s;
           break;
-      #endif // _di_F_status_terminal_
+      #endif // _di_f_status_terminal_
 
       case F_status_code_last:
         *name = f_status_status_code_last_s;

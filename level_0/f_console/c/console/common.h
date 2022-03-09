@@ -262,9 +262,9 @@ extern "C" {
  */
 #ifndef _di_f_console_parameter_t_
   typedef struct {
-    const unsigned char *symbol_short;
-    const unsigned char *symbol_long;
-    const unsigned char *symbol_other;
+    const f_string_t symbol_short;
+    const f_string_t symbol_long;
+    const f_string_t symbol_other;
 
     const uint8_t values_total;
     const uint8_t type;
@@ -384,7 +384,7 @@ extern "C" {
  *
  * This is intended to only store the argc and argv and should not be treated as dynamic.
  *
- * No structure initializer is provided due to the use of constant properties.
+ * macro_f_console_arguments_t_initialize() initializes the structure.
  */
 #ifndef _di_f_console_arguments_t_
   typedef struct {

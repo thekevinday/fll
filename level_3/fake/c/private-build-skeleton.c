@@ -18,12 +18,12 @@ extern "C" {
     f_string_static_t path_headers = f_string_static_t_initialize;
     path_headers.used = main->path_build_includes.used + data_build->setting.path_headers.used;
 
-    unsigned char path_headers_string[path_headers.used + 1];
+    f_char_t path_headers_string[path_headers.used + 1];
     path_headers.string = path_headers_string;
 
     if (data_build->setting.path_headers.used) {
-      memcpy(path_headers_string, main->path_build_includes.string, sizeof(unsigned char) * main->path_build_includes.used);
-      memcpy(path_headers_string + main->path_build_includes.used, data_build->setting.path_headers.string, sizeof(unsigned char) * data_build->setting.path_headers.used);
+      memcpy(path_headers_string, main->path_build_includes.string, sizeof(f_char_t) * main->path_build_includes.used);
+      memcpy(path_headers_string + main->path_build_includes.used, data_build->setting.path_headers.string, sizeof(f_char_t) * data_build->setting.path_headers.used);
     }
     else {
       path_headers.used = 0;

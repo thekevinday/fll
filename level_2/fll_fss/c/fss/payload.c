@@ -209,11 +209,11 @@ extern "C" {
             }
           }
 
-          memcpy(destination->string + destination->used + i, content.string + i, sizeof(unsigned char) * F_fss_default_block_size_normal_d);
+          memcpy(destination->string + destination->used + i, content.string + i, sizeof(f_char_t) * F_fss_default_block_size_normal_d);
         } // for
 
         if (i < content.used) {
-          memcpy(destination->string + destination->used + i, content.string + i, sizeof(unsigned char) * (content.used - i));
+          memcpy(destination->string + destination->used + i, content.string + i, sizeof(f_char_t) * (content.used - i));
         }
 
         destination->used += content.used;

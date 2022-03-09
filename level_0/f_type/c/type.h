@@ -1174,7 +1174,7 @@ extern "C" {
  */
 #ifndef _di_f_fll_id_t_
   typedef struct {
-    unsigned char name[64];
+    char name[64];
 
     uint16_t type;
     uint8_t used;

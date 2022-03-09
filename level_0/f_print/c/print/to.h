@@ -91,7 +91,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_character_
-  extern f_status_t f_print_to_character(const unsigned char character, const int id);
+  extern f_status_t f_print_to_character(const f_char_t character, const int id);
 #endif // _di_f_print_to_character_
 
 /**
@@ -131,7 +131,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_character_safely_
-  extern f_status_t f_print_to_character_safely(const unsigned char character, const int id);
+  extern f_status_t f_print_to_character_safely(const f_char_t character, const int id);
 #endif // _di_f_print_to_character_safely_
 
 /**

@@ -16,7 +16,7 @@
  */
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  const f_console_arguments_t arguments = { argc, argv, envp };
+  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
   fake_main_t data = fake_main_t_initialize;
 
   fll_program_standard_setup(&data.signal);

@@ -12,8 +12,8 @@ extern "C" {
     f_status_t status = F_none;
 
     uint64_t position = 0;
-    unsigned char byte = 0;
-    unsigned char offset = 0;
+    f_char_t byte = 0;
+    f_char_t offset = 0;
     int byte_get = 0;
 
     int8_t width_utf = -1;
@@ -41,9 +41,9 @@ extern "C" {
         byte_get = fseek(file.stream, main->first, SEEK_SET);
       }
       else {
-        unsigned char skip[main->first];
+        f_char_t skip[main->first];
 
-        byte_get = fread(skip, sizeof(unsigned char), main->first, file.stream);
+        byte_get = fread(skip, sizeof(f_char_t), main->first, file.stream);
       }
     }
 
@@ -53,8 +53,8 @@ extern "C" {
     characters.size = main->width;
 
     // Record when a character is invalid.
-    unsigned char invalid[main->width];
-    memset(&invalid, 0, sizeof(unsigned char) * main->width);
+    f_char_t invalid[main->width];
+    memset(&invalid, 0, sizeof(f_char_t) * main->width);
 
     if (byte_get >= 0) {
       for (uint16_t signal_check = 0; ; ) {
@@ -71,7 +71,7 @@ extern "C" {
 
         if (byte_get < 0) break;
 
-        byte = (unsigned char) byte_get;
+        byte = (f_char_t) byte_get;
 
         // Storing the next character is designated by width_utf == -1.
         if (width_utf == -1) {
@@ -82,7 +82,7 @@ extern "C" {
           if (character_reset) {
             characters.used = 0;
             character_reset = F_false;
-            memset(&invalid, 0, sizeof(unsigned char) * main->width);
+            memset(&invalid, 0, sizeof(f_char_t) * main->width);
           }
 
           character_current = characters.used++;
@@ -304,9 +304,9 @@ extern "C" {
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_character_fragment_
-  bool byte_dump_print_character_fragment(byte_dump_main_t * const main, const f_utf_string_static_t characters, const unsigned char invalid[], const uint8_t width_utf, const unsigned char byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, unsigned char *offset) {
+  bool byte_dump_print_character_fragment(byte_dump_main_t * const main, const f_utf_string_static_t characters, const f_char_t invalid[], const uint8_t width_utf, const f_char_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, f_char_t *offset) {
 
-    unsigned char byte = 0;
+    f_char_t byte = 0;
 
     bool reset = F_false;
 
@@ -329,7 +329,7 @@ extern "C" {
       fl_print_format("%[%016_UL%] ", main->output.to.stream, main->context.set.notable, cell->row, main->context.set.notable);
 
       if (*offset) {
-        unsigned char offset_to_print = *offset;
+        f_char_t offset_to_print = *offset;
 
         // Pad the buffer with spaces to hide any skipped bytes (skipped via --first).
         while (offset_to_print && cell->column < main->width) {
@@ -565,14 +565,14 @@ extern "C" {
 #endif // _di_byte_dump_print_character_fragment_
 
 #ifndef _di_byte_dump_print_text_
-  void byte_dump_print_text(byte_dump_main_t * const main, const f_utf_string_static_t characters, const unsigned char invalid[], byte_dump_previous_t *previous, unsigned char *offset) {
+  void byte_dump_print_text(byte_dump_main_t * const main, const f_utf_string_static_t characters, const f_char_t invalid[], byte_dump_previous_t *previous, f_char_t *offset) {
 
-    unsigned char c = 0;
+    f_char_t c = 0;
     uint8_t at = 0;
     uint8_t width_utf = 0;
     bool print = F_true;
 
-    unsigned char byte[5] = { 0, 0, 0, 0, 0 };
+    f_char_t byte[5] = { 0, 0, 0, 0, 0 };
 
     fl_print_format("  %[%r%] ", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable);
 

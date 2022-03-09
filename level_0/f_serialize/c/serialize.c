@@ -14,17 +14,17 @@ extern "C" {
     f_status_t status = F_none;
 
     if (serialize->used + value.used + 1 >= serialize->size) {
-      macro_f_string_dynamic_t_resize(status, (*serialize), serialize->size + value.used + 1);
+      status = f_string_dynamic_resize(serialize->size + value.used + 1, serialize);
       if (F_status_is_error(status)) return status;
     }
 
     if (!serialize->used) {
-      memcpy(serialize->string + serialize->used, value.string, sizeof(unsigned char) * value.used);
+      memcpy(serialize->string + serialize->used, value.string, sizeof(f_char_t) * value.used);
       serialize->used += value.used;
     }
     else {
-      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_s.string, sizeof(unsigned char) * f_serialize_simple_splitter_s.used);
-      memcpy(serialize->string + serialize->used + f_serialize_simple_splitter_s.used, value.string, sizeof(unsigned char) * value.used);
+      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_s.string, sizeof(f_char_t) * f_serialize_simple_splitter_s.used);
+      memcpy(serialize->string + serialize->used + f_serialize_simple_splitter_s.used, value.string, sizeof(f_char_t) * value.used);
       serialize->used += value.used + 1;
     }
 
@@ -72,13 +72,14 @@ extern "C" {
 
           if (total > strings->array[strings->used].size) {
             macro_f_string_dynamic_t_clear(strings->array[strings->used])
-            macro_f_string_dynamic_t_resize(status, strings->array[strings->used], total)
+
+            status = f_string_dynamic_resize(total, &strings->array[strings->used]);
             if (F_status_is_error(status)) return status;
 
             strings->array[strings->used].size = total;
           }
 
-          memcpy(strings->array[strings->used].string, serialize.string + start, sizeof(unsigned char) * total);
+          memcpy(strings->array[strings->used].string, serialize.string + start, sizeof(f_char_t) * total);
 
           strings->array[strings->used].used = total;
           ++strings->used;
@@ -189,13 +190,11 @@ extern "C" {
     f_array_length_t total = (range.stop - range.start) + 1;
 
     if (total >= dynamic->size) {
-      f_status_t status_allocation = F_none;
-
-      macro_f_string_dynamic_t_resize(status_allocation, (*dynamic), total);
+      const f_status_t status_allocation = f_string_dynamic_resize(total, dynamic);
       if (F_status_is_error(status_allocation)) return status_allocation;
     }
 
-    memcpy(dynamic->string, serialize.string + range.start, sizeof(unsigned char) * total);
+    memcpy(dynamic->string, serialize.string + range.start, sizeof(f_char_t) * total);
     dynamic->used = total;
 
     return status;

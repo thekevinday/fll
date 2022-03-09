@@ -6,13 +6,13 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
-  f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const unsigned char quote, f_string_dynamic_t * const escaped) {
+  f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const f_char_t quote, f_string_dynamic_t * const escaped) {
 
     f_status_t status = F_none;
 
     // Ensure escaped is at least the same size as content.
     if (content.used > escaped->size) {
-      macro_f_string_dynamic_t_resize(status, (*escaped), content.used);
+      status = f_string_dynamic_resize(content.used, escaped);
       if (F_status_is_error(status)) return status;
     }
 
@@ -71,13 +71,13 @@ extern "C" {
 #endif // !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
 
 #if !defined(_di_fll_iki_content_unescape_) || !defined(_di_fll_iki_content_partial_unescape_)
-  f_status_t private_fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const unsigned char quote, f_string_dynamic_t * const unescaped) {
+  f_status_t private_fll_iki_content_partial_unescape(const f_string_static_t content, const f_string_range_t range, const f_char_t quote, f_string_dynamic_t * const unescaped) {
 
     f_status_t status = F_none;
 
     // Ensure escaped is at least the same size as content.
     if (content.used > unescaped->size) {
-      macro_f_string_dynamic_t_resize(status, (*unescaped), content.used);
+      status = f_string_dynamic_resize(content.used, unescaped);
       if (F_status_is_error(status)) return status;
     }
 

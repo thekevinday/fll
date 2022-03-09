@@ -65,14 +65,14 @@ extern "C" {
         destination.used += arguments.array[i].used + 1;
       }
 
-      unsigned char destination_string[destination.used + 1];
+      f_char_t destination_string[destination.used + 1];
       destination.string = destination_string;
       destination_string[destination.used] = 0;
 
-      memcpy(destination_string, arguments.array[total].string, sizeof(unsigned char) * arguments.array[total].used);
+      memcpy(destination_string, arguments.array[total].string, sizeof(f_char_t) * arguments.array[total].used);
 
       if (existing) {
-        memcpy(destination_string + arguments.array[total].used + 1, arguments.array[i].string, sizeof(unsigned char) * arguments.array[i].used);
+        memcpy(destination_string + arguments.array[total].used + 1, arguments.array[i].string, sizeof(f_char_t) * arguments.array[i].used);
         destination_string[arguments.array[total].used] = f_path_separator_s.string[0];
       }
 
@@ -1056,14 +1056,14 @@ extern "C" {
         destination.used += arguments.array[i].used + 1;
       }
 
-      unsigned char destination_string[destination.used + 1];
+      f_char_t destination_string[destination.used + 1];
       destination.string = destination_string;
       destination_string[destination.used] = 0;
 
-      memcpy(destination_string, arguments.array[total].string, sizeof(unsigned char) * arguments.array[total].used);
+      memcpy(destination_string, arguments.array[total].string, sizeof(f_char_t) * arguments.array[total].used);
 
       if (existing) {
-        memcpy(destination_string + arguments.array[total].used + 1, arguments.array[i].string, sizeof(unsigned char) * arguments.array[i].used);
+        memcpy(destination_string + arguments.array[total].used + 1, arguments.array[i].string, sizeof(f_char_t) * arguments.array[i].used);
         destination_string[arguments.array[total].used] = f_path_separator_s.string[0];
       }
 

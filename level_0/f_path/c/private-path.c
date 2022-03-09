@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
-  f_status_t private_f_path_real(const f_string_t path, f_string_dynamic_t * const real) {
+  f_status_t private_f_path_real(const char *path, f_string_dynamic_t * const real) {
 
     char buffer[F_path_length_max_d];
 
@@ -32,7 +32,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memcpy(real->string, buffer, sizeof(unsigned char) * length);
+    memcpy(real->string, buffer, sizeof(char) * length);
 
     real->string[length] = 0;
     real->used = length;

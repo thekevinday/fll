@@ -6,14 +6,14 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_error_print_
-  f_status_t fll_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback) {
+  f_status_t fll_error_print(const fl_print_t print, const f_status_t status, const char *function, const bool fallback) {
 
     return private_fll_error_print(print, status, function, fallback);
   }
 #endif // _di_fll_error_print_
 
 #ifndef _di_fll_error_file_print_
-  f_status_t fll_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
+  f_status_t fll_error_file_print(const fl_print_t print, const f_status_t status, const char *function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
     f_string_static_t type_name = fll_error_file_type_file_s;
 
@@ -618,7 +618,7 @@ extern "C" {
 #endif // _di_fll_error_file_print_
 
 #ifndef _di_fll_error_parameter_integer_print_
-  f_status_t fll_error_parameter_integer_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_static_t parameter, const f_string_static_t argument) {
+  f_status_t fll_error_parameter_integer_print(const fl_print_t print, const f_status_t status, const char *function, const bool fallback, const f_string_static_t parameter, const f_string_static_t argument) {
 
     if (status == F_data_not) {
       if (print.verbosity != f_console_verbosity_quiet_e) {

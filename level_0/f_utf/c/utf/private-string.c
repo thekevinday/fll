@@ -13,7 +13,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memcpy(destination->string + destination->used, source, sizeof(unsigned char) * length);
+    memcpy(destination->string + destination->used, source, sizeof(f_char_t) * length);
     destination->used = destination->used + length;
 
     return F_none;
@@ -45,7 +45,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         }
 
-        memcpy(destination->string + destination->used, source + first, sizeof(unsigned char) * size);
+        memcpy(destination->string + destination->used, source + first, sizeof(f_char_t) * size);
         destination->used = destination->used + size;
       }
 
@@ -64,7 +64,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      memcpy(destination->string + destination->used, source + first, sizeof(unsigned char) * size);
+      memcpy(destination->string + destination->used, source + first, sizeof(f_char_t) * size);
       destination->used = destination->used + size;
     }
 
@@ -344,10 +344,10 @@ extern "C" {
 
     if (destination->used) {
       memmove(destination->string + length, destination->string, destination->used);
-      memcpy(destination->string, source, sizeof(unsigned char) * length);
+      memcpy(destination->string, source, sizeof(f_char_t) * length);
     }
     else {
-      memcpy(destination->string, source, sizeof(unsigned char) * length);
+      memcpy(destination->string, source, sizeof(f_char_t) * length);
     }
 
     destination->used = destination->used + length;
@@ -381,7 +381,7 @@ extern "C" {
           }
 
           memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
-          memcpy(destination->string + offset, source + first, sizeof(unsigned char) * size);
+          memcpy(destination->string + offset, source + first, sizeof(f_char_t) * size);
 
           destination->used = destination->used + size;
           offset += size;
@@ -401,7 +401,7 @@ extern "C" {
             }
 
             memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
-            memcpy(destination->string + offset, source + first, sizeof(unsigned char) * size);
+            memcpy(destination->string + offset, source + first, sizeof(f_char_t) * size);
 
             destination->used = destination->used + size;
             offset += size;

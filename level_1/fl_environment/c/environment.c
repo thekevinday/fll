@@ -122,13 +122,13 @@ extern "C" {
         paths->array[paths->used].used = 0;
 
         if (total) {
-          unsigned char buffer[total + 1];
+          char buffer[total + 1];
 
           for (j = first, k = 0; j < i; ++j) {
 
             if (!path.string[j]) continue;
 
-            buffer[k++] = path.string[j];
+            buffer[k++] = (char) path.string[j];
           } // for
 
           // Guarantee a trailing directory separator.
@@ -139,7 +139,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
           if (F_status_is_error(status)) return status;
 
-          memcpy(paths->array[paths->used].string, buffer, sizeof(unsigned char) * k);
+          memcpy(paths->array[paths->used].string, buffer, sizeof(f_char_t) * k);
 
           paths->array[paths->used++].used = k;
         }
@@ -200,13 +200,13 @@ extern "C" {
         paths->array[paths->used].used = 0;
 
         if (total) {
-          unsigned char buffer[total];
+          char buffer[total];
 
           for (j = 0, k = 0; j < total; ++j) {
 
             if (!path.string[r + j + 1]) continue;
 
-            buffer[k++] = path.string[r + j + 1];
+            buffer[k++] = (char) path.string[r + j + 1];
           } // for
 
           // Guarantee a trailing directory separator.
@@ -217,7 +217,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
           if (F_status_is_error(status)) return status;
 
-          memcpy(paths->array[paths->used].string, buffer, sizeof(unsigned char) * k);
+          memcpy(paths->array[paths->used].string, buffer, sizeof(f_char_t) * k);
 
           paths->array[paths->used++].used = k;
         }

@@ -55,7 +55,7 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    unsigned char buffer[F_path_length_max_d];
+    char buffer[F_path_length_max_d];
 
     if (!getcwd(buffer, F_path_length_max_d)) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -82,7 +82,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memcpy(path->string, buffer, sizeof(unsigned char) * length);
+    memcpy(path->string, buffer, sizeof(char) * length);
 
     path->string[length] = 0;
     path->used = length;
@@ -140,7 +140,7 @@ extern "C" {
         } // while
 
         // Use memcpy() to take advantage of its optimized copy behaviors whenever possible.
-        memcpy(directory->string + directory->used, argument.string + i, sizeof(unsigned char) * (j - i));
+        memcpy(directory->string + directory->used, argument.string + i, sizeof(f_char_t) * (j - i));
 
         directory->used += j - i;
         i = j;

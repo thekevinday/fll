@@ -82,16 +82,16 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
     f_string_static_t program_name = f_string_static_t_initialize;
 
-    const f_string_t last_slash = strrchr(program.used ? program.string : arguments.array[0].string, f_path_separator_s.string[0]);
+    const f_string_t last_slash = (f_string_t) strrchr((program.used ? program.string : arguments.array[0].string), (char) f_path_separator_s.string[0]);
 
     if (last_slash) {
-      program_name.used = strnlen(last_slash + 1, F_path_length_max_d);
+      program_name.used = strnlen((last_slash + 1), F_path_length_max_d);
     }
     else {
       program_name.used = program.used ? program.used : arguments.array[0].used;
     }
 
-    unsigned char program_name_string[program_name.used + 1];
+    f_char_t program_name_string[program_name.used + 1];
     program_name.string = program_name_string;
 
     private_fll_execute_path_arguments_fixate(program.used ? program : arguments.array[0], arguments, last_slash, !program.used, program_name, fixed_arguments);
@@ -187,10 +187,10 @@ extern "C" {
         }
       }
 
-      unsigned char program_path[found->used + 1];
+      f_char_t program_path[found->used + 1];
       program_path[found->used] = 0;
 
-      memcpy(&program_path, found->string, sizeof(unsigned char) * found->used);
+      memcpy(&program_path, found->string, sizeof(f_char_t) * found->used);
 
       f_string_dynamics_resize(0, &paths);
 
@@ -216,10 +216,10 @@ extern "C" {
       }
 
       if (last_slash) {
-        code = execv(program.used ? program.string : arguments.array[0].string, (char **) fixed_arguments);
+        code = execv((program.used ? program.string : arguments.array[0].string), (char **) fixed_arguments);
       }
       else {
-        code = execvp(program.used ? program.string : arguments.array[0].string, (char **) fixed_arguments);
+        code = execvp((program.used ? program.string : arguments.array[0].string), (char **) fixed_arguments);
       }
     }
 
@@ -278,16 +278,16 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
     f_string_static_t program_name = f_string_static_t_initialize;
 
-    const f_string_t last_slash = strrchr(program.used ? program.string : arguments.array[0].string, f_path_separator_s.string[0]);
+    const f_string_t last_slash = (f_string_t) strrchr((program.used ? program.string : arguments.array[0].string), (char) f_path_separator_s.string[0]);
 
     if (last_slash) {
-      program_name.used = strnlen(last_slash + 1, F_path_length_max_d);
+      program_name.used = strnlen((last_slash + 1), F_path_length_max_d);
     }
     else {
       program_name.used = program.used ? program.used : arguments.array[0].used;
     }
 
-    unsigned char program_name_string[program_name.used + 1];
+    f_char_t program_name_string[program_name.used + 1];
     program_name.string = program_name_string;
 
     private_fll_execute_path_arguments_fixate(program.used ? program : arguments.array[0], arguments, last_slash, !program.used, program_name, fixed_arguments);
@@ -379,10 +379,10 @@ extern "C" {
         }
       }
 
-      unsigned char program_path[found->used + 1];
+      f_char_t program_path[found->used + 1];
       program_path[found->used] = 0;
 
-      memcpy(&program_path, found->string, sizeof(unsigned char) * found->used);
+      memcpy(&program_path, found->string, sizeof(f_char_t) * found->used);
 
       program_name.string = program_path;
       program_name.used = found->used;

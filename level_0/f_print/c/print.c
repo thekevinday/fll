@@ -20,7 +20,7 @@ extern "C" {
 #endif // _di_f_print_
 
 #ifndef _di_f_print_character_
-  f_status_t f_print_character(const unsigned char character, FILE * const output) {
+  f_status_t f_print_character(const f_char_t character, FILE * const output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -34,7 +34,7 @@ extern "C" {
 #endif // _di_f_print_character_
 
 #ifndef _di_f_print_character_safely_
-  f_status_t f_print_character_safely(const unsigned char character, FILE * const output) {
+  f_status_t f_print_character_safely(const f_char_t character, FILE * const output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -65,7 +65,7 @@ extern "C" {
 #endif // _di_f_print_character_safely_
 
 #ifndef _di_f_print_character_safely_get_
-  const f_string_static_t f_print_character_safely_get(const unsigned char character) {
+  const f_string_static_t f_print_character_safely_get(const f_char_t character) {
 
     return private_f_print_character_safely_get(character);
   }

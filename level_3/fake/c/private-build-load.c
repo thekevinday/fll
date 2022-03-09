@@ -84,7 +84,7 @@ extern "C" {
     f_string_static_t path_file = f_string_static_t_initialize;
     path_file.used = main->path_data_build.used + setting_file.used;
 
-    char path_file_string[path_file.used + 1];
+    f_char_t path_file_string[path_file.used + 1];
     path_file.string = path_file_string;
     path_file_string[path_file.used] = 0;
 
@@ -95,8 +95,8 @@ extern "C" {
       f_fss_contents_t contents = f_fss_contents_t_initialize;
 
       if (setting_file.used) {
-        memcpy(path_file_string, main->path_data_build.string, sizeof(unsigned char) * main->path_data_build.used);
-        memcpy(path_file_string + main->path_data_build.used, setting_file.string, sizeof(unsigned char) * setting_file.used);
+        memcpy(path_file_string, main->path_data_build.string, sizeof(f_char_t) * main->path_data_build.used);
+        memcpy(path_file_string + main->path_data_build.used, setting_file.string, sizeof(f_char_t) * setting_file.used);
 
         *status = fake_file_buffer(main, path_file, &buffer);
       }
@@ -504,7 +504,7 @@ extern "C" {
       F_false,
     };
 
-    f_string_t function = "fll_fss_snatch_apart";
+    char *function = "fll_fss_snatch_apart";
 
     *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, fake_build_setting_total_d, settings_value, settings_matches, 0);
 

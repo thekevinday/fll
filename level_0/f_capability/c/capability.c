@@ -1048,7 +1048,7 @@ extern "C" {
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      unsigned char *result = cap_to_name(code);
+      char *result = cap_to_name(code);
 
       if (result) {
         const f_array_length_t length = strlen(result);
@@ -1067,7 +1067,7 @@ extern "C" {
           }
         }
 
-        memcpy(name->string + name->used, result, sizeof(unsigned char) * length);
+        memcpy(name->string + name->used, result, sizeof(char) * length);
         name->used += length;
         name->string[name->used] = 0;
 
@@ -1091,7 +1091,7 @@ extern "C" {
 
       ssize_t length = 0;
 
-      unsigned char *result = cap_to_text(capability, &length);
+      char *result = cap_to_text(capability, &length);
 
       if (result) {
         if (text->used + length + 1 > text->size) {
@@ -1108,7 +1108,7 @@ extern "C" {
           }
         }
 
-        memcpy(text->string + text->used, result, sizeof(unsigned char) * length);
+        memcpy(text->string + text->used, result, sizeof(char) * length);
         text->used += length;
         text->string[text->used] = 0;
 

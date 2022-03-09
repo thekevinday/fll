@@ -50,11 +50,11 @@ extern "C" {
 
           path_sub.used = path.used + list[i]->array[j].used + 1;
 
-          unsigned char path_sub_string[path_sub.used + 1];
+          f_char_t path_sub_string[path_sub.used + 1];
           path_sub.string = path_sub_string;
 
-          memcpy(path_sub.string, path.string, sizeof(unsigned char) * path.used);
-          memcpy(path_sub.string + path.used + 1, list[i]->array[j].string, sizeof(unsigned char) * list[i]->array[j].used);
+          memcpy(path_sub.string, path.string, sizeof(f_char_t) * path.used);
+          memcpy(path_sub.string + path.used + 1, list[i]->array[j].string, sizeof(f_char_t) * list[i]->array[j].used);
 
           path_sub.string[path.used] = f_path_separator_s.string[0];
           path_sub.string[path_sub.used] = 0;
@@ -74,11 +74,11 @@ extern "C" {
 
       path_sub.used = path.used + listing.directory.array[i].used + 1;
 
-      unsigned char path_sub_string[path_sub.used + 1];
+      f_char_t path_sub_string[path_sub.used + 1];
       path_sub.string = path_sub_string;
 
-      memcpy(path_sub.string, path.string, sizeof(unsigned char) * path.used);
-      memcpy(path_sub.string + path.used + 1, listing.directory.array[i].string, sizeof(unsigned char) * listing.directory.array[i].used);
+      memcpy(path_sub.string, path.string, sizeof(f_char_t) * path.used);
+      memcpy(path_sub.string + path.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
 
       path_sub.string[path.used] = f_path_separator_s.string[0];
       path_sub.string[path_sub.used] = 0;
@@ -152,11 +152,11 @@ extern "C" {
 
           path_sub.used = path.used + list[i]->array[j].used + 1;
 
-          unsigned char path_sub_string[path_sub.used + 1];
+          f_char_t path_sub_string[path_sub.used + 1];
           path_sub.string = path_sub_string;
 
-          memcpy(path_sub.string, path.string, sizeof(unsigned char) * path.used);
-          memcpy(path_sub.string + path.used + 1, list[i]->array[j].string, sizeof(unsigned char) * list[i]->array[j].used);
+          memcpy(path_sub.string, path.string, sizeof(f_char_t) * path.used);
+          memcpy(path_sub.string + path.used + 1, list[i]->array[j].string, sizeof(f_char_t) * list[i]->array[j].used);
 
           path_sub.string[path.used] = f_path_separator_s.string[0];
           path_sub.string[path_sub.used] = 0;
@@ -175,11 +175,11 @@ extern "C" {
 
         path_sub.used = path.used + listing.directory.array[i].used + 1;
 
-        unsigned char path_sub_string[path_sub.used + 1];
+        f_char_t path_sub_string[path_sub.used + 1];
         path_sub.string = path_sub_string;
 
-        memcpy(path_sub.string, path.string, sizeof(unsigned char) * path.used);
-        memcpy(path_sub.string + path.used + 1, listing.directory.array[i].string, sizeof(unsigned char) * listing.directory.array[i].used);
+        memcpy(path_sub.string, path.string, sizeof(f_char_t) * path.used);
+        memcpy(path_sub.string + path.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
 
         path_sub.string[path.used] = f_path_separator_s.string[0];
         path_sub.string[path_sub.used] = 0;

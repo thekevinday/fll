@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_conversion_character_is_binary_
-  f_status_t f_conversion_character_is_binary(const unsigned char character) {
+  f_status_t f_conversion_character_is_binary(const f_char_t character) {
 
     if (character == 0x30 || character == 0x31) {
       return F_true;
@@ -17,7 +17,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_binary_
 
 #ifndef _di_f_conversion_character_is_decimal_
-  f_status_t f_conversion_character_is_decimal(const unsigned char character) {
+  f_status_t f_conversion_character_is_decimal(const f_char_t character) {
 
     if (character > 0x2f && character < 0x3a) {
       return F_true;
@@ -28,7 +28,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_decimal_
 
 #ifndef _di_f_conversion_character_is_duodecimal_
-  f_status_t f_conversion_character_is_duodecimal(const unsigned char character) {
+  f_status_t f_conversion_character_is_duodecimal(const f_char_t character) {
 
     if (character > 0x2f && character < 0x3a) {
       return F_true;
@@ -47,7 +47,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_duodecimal_
 
 #ifndef _di_f_conversion_character_is_hexidecimal_
-  f_status_t f_conversion_character_is_hexidecimal(const unsigned char character) {
+  f_status_t f_conversion_character_is_hexidecimal(const f_char_t character) {
 
     if (character > 0x2f && character < 0x3a) {
       return F_true;
@@ -66,7 +66,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_hexidecimal_
 
 #ifndef _di_f_conversion_character_is_octal_
-  f_status_t f_conversion_character_is_octal(const unsigned char character) {
+  f_status_t f_conversion_character_is_octal(const f_char_t character) {
 
     if (character > 0x2f && character < 0x38) {
       return F_true;
@@ -77,7 +77,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_octal_
 
 #ifndef _di_f_conversion_character_to_binary_
-  f_status_t f_conversion_character_to_binary(const unsigned char character, uint8_t * const number) {
+  f_status_t f_conversion_character_to_binary(const f_char_t character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -95,7 +95,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_binary_
 
 #ifndef _di_f_conversion_character_to_decimal_
-  f_status_t f_conversion_character_to_decimal(const unsigned char character, uint8_t * const number) {
+  f_status_t f_conversion_character_to_decimal(const f_char_t character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -111,7 +111,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_decimal_
 
 #ifndef _di_f_conversion_character_to_duodecimal_
-  f_status_t f_conversion_character_to_duodecimal(const unsigned char character, uint8_t * const number) {
+  f_status_t f_conversion_character_to_duodecimal(const f_char_t character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -133,7 +133,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_duodecimal_
 
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  f_status_t f_conversion_character_to_hexidecimal(const unsigned char character, uint8_t * const number) {
+  f_status_t f_conversion_character_to_hexidecimal(const f_char_t character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -155,7 +155,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 #ifndef _di_f_conversion_character_to_octal_
-  f_status_t f_conversion_character_to_octal(const unsigned char character, uint8_t * const number) {
+  f_status_t f_conversion_character_to_octal(const f_char_t character, uint8_t * const number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

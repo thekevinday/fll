@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_error_build_operation_file_
-  bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
+  bool fake_print_error_build_operation_file(fake_main_t * const main, const f_status_t status, const char *function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
 
     if (status == F_file_found_not) {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -236,7 +236,7 @@ extern "C" {
 #endif // #ifndef _di_fake_print_error_build_operation_file_message_
 
 #ifndef _di_fake_print_error_fss
-  bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) {
+  bool fake_print_error_fss(fake_main_t * const main, const f_status_t status, const char *function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) {
 
     if (status == F_file_found_not) {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -376,7 +376,7 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_failed_
 
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) {
+  void fake_print_message_section_operation_path_outside(fake_main_t * const main, const fl_print_t print, const f_status_t status, const char *function, const f_string_static_t path) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
@@ -396,7 +396,7 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_path_outside_
 
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) {
+  void fake_print_message_section_operation_path_stack_max(fake_main_t * const main, fl_print_t print, const f_status_t status, const char *function, const f_string_static_t path) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 

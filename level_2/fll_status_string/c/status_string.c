@@ -25,7 +25,7 @@ extern "C" {
       return status;
     }
 
-    #ifndef _di_F_status_boolean_
+    #ifndef _di_f_status_boolean_
       if (fl_string_dynamic_compare(name, f_status_false_s) == F_equal_to) {
         *code = F_false;
 
@@ -37,9 +37,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_boolean_
+    #endif // _di_f_status_boolean_
 
-    #ifndef _di_F_status_signal_
+    #ifndef _di_f_status_signal_
       if (fl_string_dynamic_compare(name, f_status_signal_hangup_s) == F_equal_to) {
         *code = F_signal_hangup;
 
@@ -423,9 +423,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_signal_
+    #endif // _di_f_status_signal_
 
-    #ifndef _di_F_status_basic_
+    #ifndef _di_f_status_basic_
       if (fl_string_dynamic_compare(name, f_status_none_s) == F_equal_to) {
         *code = F_none;
 
@@ -1907,9 +1907,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_basic_
+    #endif // _di_f_status_basic_
 
-    #ifndef _di_F_status_array_
+    #ifndef _di_f_status_array_
       if (fl_string_dynamic_compare(name, f_status_array_s) == F_equal_to) {
         *code = F_array;
 
@@ -1933,9 +1933,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_array_
+    #endif // _di_f_status_array_
 
-    #ifndef _di_F_status_available_
+    #ifndef _di_f_status_available_
       if (fl_string_dynamic_compare(name, f_status_available_s) == F_equal_to) {
         *code = F_available;
 
@@ -1989,9 +1989,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_available_
+    #endif // _di_f_status_available_
 
-    #ifndef _di_F_status_busy_
+    #ifndef _di_f_status_busy_
       if (fl_string_dynamic_compare(name, f_status_busy_s) == F_equal_to) {
         *code = F_busy;
 
@@ -2045,9 +2045,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_busy_
+    #endif // _di_f_status_busy_
 
-    #ifndef _di_F_status_network_
+    #ifndef _di_f_status_network_
       if (fl_string_dynamic_compare(name, f_status_network_s) == F_equal_to) {
         *code = F_network;
 
@@ -2179,9 +2179,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_network_
+    #endif // _di_f_status_network_
 
-    #ifndef _di_F_status_number_
+    #ifndef _di_f_status_number_
       if (fl_string_dynamic_compare(name, f_status_number_s) == F_equal_to) {
         *code = F_number;
 
@@ -2283,9 +2283,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_number_
+    #endif // _di_f_status_number_
 
-    #ifndef _di_F_status_buffer_
+    #ifndef _di_f_status_buffer_
       if (fl_string_dynamic_compare(name, f_status_buffer_s) == F_equal_to) {
         *code = F_buffer;
 
@@ -2579,9 +2579,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_buffer_
+    #endif // _di_f_status_buffer_
 
-    #ifndef _di_F_status_process_
+    #ifndef _di_f_status_process_
       if (fl_string_dynamic_compare(name, f_status_process_s) == F_equal_to) {
         *code = F_process;
 
@@ -2599,9 +2599,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_process_
+    #endif // _di_f_status_process_
 
-    #ifndef _di_F_status_file_
+    #ifndef _di_f_status_file_
       if (fl_string_dynamic_compare(name, f_status_file_s) == F_equal_to) {
         *code = F_file;
 
@@ -2853,9 +2853,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_file_
+    #endif // _di_f_status_file_
 
-    #ifndef _di_F_status_filesystem_
+    #ifndef _di_f_status_filesystem_
       if (fl_string_dynamic_compare(name, f_status_filesystem_s) == F_equal_to) {
         *code = F_filesystem;
 
@@ -2879,9 +2879,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_filesystem_
+    #endif // _di_f_status_filesystem_
 
-    #ifndef _di_F_status_directory_
+    #ifndef _di_f_status_directory_
       if (fl_string_dynamic_compare(name, f_status_directory_s) == F_equal_to) {
         *code = F_directory;
 
@@ -3001,9 +3001,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_directory_
+    #endif // _di_f_status_directory_
 
-    #ifndef _di_F_status_socket_
+    #ifndef _di_f_status_socket_
       if (fl_string_dynamic_compare(name, f_status_socket_s) == F_equal_to) {
         *code = F_socket;
 
@@ -3039,9 +3039,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_socket_
+    #endif // _di_f_status_socket_
 
-    #ifndef _di_F_status_compare_
+    #ifndef _di_f_status_compare_
       if (fl_string_dynamic_compare(name, f_status_equal_to_s) == F_equal_to) {
         *code = F_equal_to;
 
@@ -3065,9 +3065,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_compare_
+    #endif // _di_f_status_compare_
 
-    #ifndef _di_F_status_access_
+    #ifndef _di_f_status_access_
       if (fl_string_dynamic_compare(name, f_status_access_s) == F_equal_to) {
         *code = F_access;
 
@@ -3193,9 +3193,9 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_access_
+    #endif // _di_f_status_access_
 
-    #ifndef _di_F_status_terminal_
+    #ifndef _di_f_status_terminal_
       if (fl_string_dynamic_compare(name, f_status_terminal_s) == F_equal_to) {
         *code = F_terminal;
 
@@ -3255,7 +3255,7 @@ extern "C" {
 
         return F_none;
       }
-    #endif // _di_F_status_terminal_
+    #endif // _di_f_status_terminal_
 
     if (fl_string_dynamic_compare(name, f_status_status_code_last_s) == F_equal_to) {
       *code = F_status_code_last;

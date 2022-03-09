@@ -14,7 +14,7 @@ extern "C" {
     f_array_length_t i = 0;
 
     uint8_t width = 0;
-    const unsigned char quote_char = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
+    const f_char_t quote_char = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
 
     // If there are any spaces, then this will be quoted so find the first non-placeholder character.
     for (; destination_range.start < destination->used; ++destination_range.start) {
@@ -328,7 +328,7 @@ extern "C" {
     }
 
     // Handle quoted support.
-    unsigned char quote_found = 0;
+    f_char_t quote_found = 0;
 
     if (quoted) {
       *quoted = 0;
@@ -869,7 +869,7 @@ extern "C" {
     f_array_length_t item_total = 0;
     f_array_length_t i = 0;
 
-    const unsigned char quote_char = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
+    const f_char_t quote_char = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
 
     // Use placeholders for potential quote and potential delimited quote to avoid doing things such as memmove().
     destination->string[destination->used++] = f_fss_delimit_placeholder_s.string[0];

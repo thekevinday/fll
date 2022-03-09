@@ -36,11 +36,11 @@ extern "C" {
       fake_skeleton_path_source_length(main, &fake_path_part_cpp_s, &sources_cpp);
       fake_skeleton_path_source_length(main, &fake_path_part_script_s, &sources_script);
 
-      unsigned char sources_string[sources.used + 1];
-      unsigned char sources_bash_string[sources_bash.used + 1];
-      unsigned char sources_c_string[sources_c.used + 1];
-      unsigned char sources_cpp_string[sources_cpp.used + 1];
-      unsigned char sources_script_string[sources_script.used + 1];
+      f_char_t sources_string[sources.used + 1];
+      f_char_t sources_bash_string[sources_bash.used + 1];
+      f_char_t sources_c_string[sources_c.used + 1];
+      f_char_t sources_cpp_string[sources_cpp.used + 1];
+      f_char_t sources_script_string[sources_script.used + 1];
 
       sources.string = sources_string;
       sources_bash.string = sources_bash_string;
@@ -312,13 +312,13 @@ extern "C" {
 
     source->used = 0;
 
-    memcpy(source->string, main->path_sources.string, sizeof(unsigned char) * main->path_sources.used);
+    memcpy(source->string, main->path_sources.string, sizeof(f_char_t) * main->path_sources.used);
     source->used += main->path_sources.used;
 
-    memcpy(source->string, fake_default_path_sources_s.string, sizeof(unsigned char) * fake_default_path_sources_s.used);
+    memcpy(source->string, fake_default_path_sources_s.string, sizeof(f_char_t) * fake_default_path_sources_s.used);
     source->used += fake_default_path_sources_s.used;
 
-    memcpy(source->string + source->used, partial->string, sizeof(unsigned char) * partial->used);
+    memcpy(source->string + source->used, partial->string, sizeof(f_char_t) * partial->used);
     source->used += partial->used;
 
     source->string[source->used] = 0;

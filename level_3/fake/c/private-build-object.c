@@ -47,13 +47,13 @@ extern "C" {
       f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
       parameter_file_name_path.used = main->path_build_objects_shared.used + data_build->setting.build_name.used + fake_build_parameter_object_name_suffix_s.used;
 
-      unsigned char parameter_file_name_path_string[parameter_file_name_path.used + 1];
+      f_char_t parameter_file_name_path_string[parameter_file_name_path.used + 1];
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
-      memcpy(parameter_file_name_path_string, main->path_build_objects_shared.string, sizeof(unsigned char) * main->path_build_objects_shared.used);
-      memcpy(parameter_file_name_path_string + main->path_build_objects_shared.used, data_build->setting.build_name.string, sizeof(unsigned char) * data_build->setting.build_name.used);
-      memcpy(parameter_file_name_path_string + main->path_build_objects_static.used + data_build->setting.build_name.used, fake_build_parameter_object_name_suffix_s.string, sizeof(unsigned char) * fake_build_parameter_object_name_suffix_s.used);
+      memcpy(parameter_file_name_path_string, main->path_build_objects_shared.string, sizeof(f_char_t) * main->path_build_objects_shared.used);
+      memcpy(parameter_file_name_path_string + main->path_build_objects_shared.used, data_build->setting.build_name.string, sizeof(f_char_t) * data_build->setting.build_name.used);
+      memcpy(parameter_file_name_path_string + main->path_build_objects_static.used + data_build->setting.build_name.used, fake_build_parameter_object_name_suffix_s.string, sizeof(f_char_t) * fake_build_parameter_object_name_suffix_s.used);
 
       const f_string_static_t values[] = {
         fake_build_parameter_object_compile_s,
@@ -118,13 +118,13 @@ extern "C" {
       f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
       parameter_file_name_path.used = main->path_build_objects_static.used + data_build->setting.build_name.used + fake_build_parameter_object_name_suffix_s.used;
 
-      unsigned char parameter_file_name_path_string[parameter_file_name_path.used + 1];
+      f_char_t parameter_file_name_path_string[parameter_file_name_path.used + 1];
       parameter_file_name_path.string = parameter_file_name_path_string;
       parameter_file_name_path_string[parameter_file_name_path.used] = 0;
 
-      memcpy(parameter_file_name_path_string, main->path_build_objects_static.string, sizeof(unsigned char) * main->path_build_objects_static.used);
-      memcpy(parameter_file_name_path_string + main->path_build_objects_static.used, data_build->setting.build_name.string, sizeof(unsigned char) * data_build->setting.build_name.used);
-      memcpy(parameter_file_name_path_string + main->path_build_objects_static.used + data_build->setting.build_name.used, fake_build_parameter_object_name_suffix_s.string, sizeof(unsigned char) * fake_build_parameter_object_name_suffix_s.used);
+      memcpy(parameter_file_name_path_string, main->path_build_objects_static.string, sizeof(f_char_t) * main->path_build_objects_static.used);
+      memcpy(parameter_file_name_path_string + main->path_build_objects_static.used, data_build->setting.build_name.string, sizeof(f_char_t) * data_build->setting.build_name.used);
+      memcpy(parameter_file_name_path_string + main->path_build_objects_static.used + data_build->setting.build_name.used, fake_build_parameter_object_name_suffix_s.string, sizeof(f_char_t) * fake_build_parameter_object_name_suffix_s.used);
 
       const f_string_static_t values[] = {
         fake_build_parameter_object_compile_s,

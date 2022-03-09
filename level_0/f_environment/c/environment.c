@@ -40,7 +40,7 @@ extern "C" {
       return F_data_not;
     }
 
-    const f_string_t result = getenv(name.string);
+    const char *result = getenv(name.string);
 
     if (!result) {
       return F_exist_not;
@@ -52,7 +52,7 @@ extern "C" {
       const f_status_t status = f_string_dynamic_increase_by(size + 1, value);
       if (F_status_is_error(status)) return status;
 
-      memcpy(value->string + value->used, result, sizeof(unsigned char) * size);
+      memcpy(value->string + value->used, result, sizeof(char) * size);
 
       value->used += size;
       value->string[value->used] = 0;

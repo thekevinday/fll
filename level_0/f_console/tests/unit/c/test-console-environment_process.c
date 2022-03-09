@@ -97,7 +97,7 @@ void test__f_console_environment_process__works(void **state) {
       {
         char buffer[maps.array[i].name.used + 1];
 
-        memcpy(buffer, maps.array[i].name.string, maps.array[i].name.used);
+        memcpy(buffer, maps.array[i].name.string, sizeof(f_char_t) * maps.array[i].name.used);
         buffer[maps.array[i].name.used] = 0;
 
         assert_string_equal(buffer, names[i]);
@@ -106,7 +106,7 @@ void test__f_console_environment_process__works(void **state) {
       {
         char buffer[maps.array[i].value.used + 1];
 
-        memcpy(buffer, maps.array[i].value.string, maps.array[i].value.used);
+        memcpy(buffer, maps.array[i].value.string, sizeof(f_char_t) * maps.array[i].value.used);
         buffer[maps.array[i].value.used] = 0;
 
         assert_string_equal(buffer, values[i]);

@@ -60,9 +60,9 @@ extern "C" {
 
     ssize_t size_read = 0;
     ssize_t size_write = 0;
-    unsigned char *buffer[size_block];
+    f_char_t buffer[size_block];
 
-    memset(buffer, 0, sizeof(unsigned char) * size_block);
+    memset(buffer, 0, sizeof(f_char_t) * size_block);
 
     while ((size_read = read(file_source.id, buffer, size_block)) > 0) {
 
@@ -109,9 +109,9 @@ extern "C" {
 
     ssize_t size_read = 0;
     ssize_t size_write = 0;
-    unsigned char *buffer[size_block];
+    f_char_t buffer[size_block];
 
-    memset(buffer, 0, sizeof(unsigned char) * size_block);
+    memset(buffer, 0, sizeof(f_char_t) * size_block);
 
     while ((size_read = read(file_source.id, buffer, size_block)) > 0) {
 
@@ -410,13 +410,11 @@ extern "C" {
         return F_status_set_error(F_string_too_large);
       }
 
-      f_status_t status = F_none;
-
-      macro_f_string_dynamic_t_resize(status, (*target), link_stat.st_size + 1);
+      const f_status_t status = f_string_dynamic_resize(link_stat.st_size + 1, target);
       if (F_status_is_error(status)) return status;
     }
 
-    memset(target->string, 0, sizeof(unsigned char) * (target->used + 1));
+    memset(target->string, 0, sizeof(f_char_t) * (target->used + 1));
 
     target->used = link_stat.st_size;
 
@@ -447,13 +445,11 @@ extern "C" {
         return F_status_set_error(F_string_too_large);
       }
 
-      f_status_t status = F_none;
-
-      macro_f_string_dynamic_t_resize(status, (*target), link_stat.st_size + 1);
+      const f_status_t status = f_string_dynamic_resize(link_stat.st_size + 1, target);
       if (F_status_is_error(status)) return status;
     }
 
-    memset(target->string, 0, sizeof(unsigned char) * (target->used + 1));
+    memset(target->string, 0, sizeof(f_char_t) * (target->used + 1));
 
     target->used = link_stat.st_size;
 
@@ -761,7 +757,7 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
 #if !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
-  const unsigned char *private_f_file_stream_open_mode_determine(const int flag) {
+  const f_string_t private_f_file_stream_open_mode_determine(const int flag) {
 
     if (flag & F_file_flag_read_write_d) {
       if (flag & F_file_flag_truncate_d) {

@@ -92,7 +92,7 @@ extern "C" {
   f_status_t fake_file_buffer(fake_main_t * const main, const f_string_static_t path_file, f_string_dynamic_t * const buffer) {
 
     f_file_t file = f_file_t_initialize;
-    f_string_t name_function = "f_file_exists";
+    char *name_function = "f_file_exists";
     f_status_t status = F_none;
 
     if (fake_signal_received(main)) {
@@ -113,7 +113,7 @@ extern "C" {
             size_file = fake_common_initial_buffer_max_d;
           }
 
-           macro_f_string_dynamic_t_resize((status), (*buffer), size_file);
+          status = f_string_dynamic_resize(size_file, buffer);
 
           if (F_status_is_error(status)) {
             const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
