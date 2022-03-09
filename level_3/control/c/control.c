@@ -217,7 +217,13 @@ extern "C" {
             status = control_payload_build(main, &data);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "control_payload_build", F_true);
+              if (F_status_set_fine(status) == F_too_large) {
+                control_print_error_request_packet_too_large(main);
+              }
+              else {
+                fll_error_print(main->error, F_status_set_fine(status), "control_payload_build", F_true);
+              }
+
               fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
             }
           }
@@ -235,7 +241,13 @@ extern "C" {
             status = control_payload_receive(main, &data);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "control_payload_receive", F_true);
+              if (F_status_set_fine(status) == F_too_large) {
+                control_print_error_response_packet_valid_not(main);
+              }
+              else {
+                fll_error_print(main->error, F_status_set_fine(status), "control_payload_receive", F_true);
+              }
+
               fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
             }
           }
@@ -248,7 +260,7 @@ extern "C" {
         control_data_delete(&data);
       }
       else {
-        control_print_error_commands_none(main);
+        control_print_error_parameter_commands_none(main);
 
         status = F_status_set_error(F_data_not);
       }

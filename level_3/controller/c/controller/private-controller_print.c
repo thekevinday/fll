@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_print_error_
-  void controller_print_error(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback) {
+  void controller_print_error(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const char *function, const bool fallback) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_controller_print_error_
 
 #ifndef _di_controller_print_error_file_
-  void controller_print_error_file(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
+  void controller_print_error_file(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const char *function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;

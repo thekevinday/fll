@@ -153,31 +153,51 @@ extern "C" {
     data->cache.small.used = 0;
 
     f_array_length_t i = 0;
-    f_array_length_t length = f_fss_string_header_s.used + f_fss_string_payload_s.used + control_action_s.used + control_type_s.used;
+    f_array_length_t length = 5 + f_fss_string_header_s.used + f_fss_string_payload_s.used + control_action_s.used + control_type_s.used;
     length += f_fss_payload_list_open_s.used * 2;
-    length += f_fss_payload_list_close_s.used * 4
+    length += f_fss_payload_list_close_s.used * 4;
     length += f_string_ascii_0_s.used;
 
     for (; i < main->parameters.remaining.used; ++i) {
       length += f_fss_payload_header_open_s.used + data->argv[main->parameters.remaining.array[i]].used + f_fss_payload_header_close_s.used;
     } // for
 
-    status = f_string_dynamic_resize(length + 11, &data->cache.large);
+    if (length > 0xffffffff) {
+      return F_status_set_error(F_too_large);
+    }
+
+    f_status_t status = f_string_dynamic_resize(length, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    // @todo append the string bit and the length bits.
+    // The Packet Control Block.
+    {
+      f_char_t block_control = (f_char_t) control_packet_flag_binary_d;
 
-    // The "header:" line.
+      #ifdef _is_F_endian_big
+        block_control |= (f_char_t) control_packet_flag_endian_big_d;
+      #endif // _is_F_endian_big
+
+      status = f_string_append(&block_control, 1, &data->cache.large);
+      if (F_status_is_error(status)) return status;
+    }
+
+    // The Packet Size Block.
+    {
+      status = f_string_append((f_char_t *) &length, 1, &data->cache.large);
+      if (F_status_is_error(status)) return status;
+    }
+
+    // The Payload "header:" line.
     status = f_string_dynamic_append(f_fss_string_header_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamic_append(f_fss_payload_list_open_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(f_fss_payload_list_close_sa, &data->cache.large);
+    status = f_string_dynamic_append(f_fss_payload_list_close_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    // The "type ..." line.
+    // The Payload "type ..." line.
     status = f_string_dynamic_append(control_type_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
@@ -190,7 +210,7 @@ extern "C" {
     status = f_string_dynamic_append(f_fss_payload_header_close_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    // Each "action ..." line.
+    // Each Payload "action ..." line.
     for (i = 1; i < main->parameters.remaining.used; ++i) {
 
       status = f_string_dynamic_append(control_action_s, &data->cache.large);
@@ -206,7 +226,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    // The "length 0" line.
+    // The Payload "length 0" line.
     status = f_string_dynamic_append(control_length_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
@@ -219,15 +239,17 @@ extern "C" {
     status = f_string_dynamic_append(f_fss_payload_header_close_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    // The "payload:" line.
+    // The Payload "payload:" line.
     status = f_string_dynamic_append(f_fss_string_payload_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamic_append(f_fss_payload_list_open_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(f_fss_payload_list_close_sa, &data->cache.large);
+    status = f_string_dynamic_append(f_fss_payload_list_open_end_s, &data->cache.large);
     if (F_status_is_error(status)) return status;
+
+    // The Payload "payload:" Content is empty.
 
     return F_none;
   }
@@ -235,6 +257,23 @@ extern "C" {
 
 #ifndef _di_control_payload_receive_
   f_status_t control_payload_receive(fll_program_data_t * const main, control_data_t * const data) {
+
+    data->cache.large.used = 0;
+    data->cache.small.used = 0;
+
+    uint8_t control = 0;
+
+    {
+      f_array_length_t length = 5;
+
+      f_char_t head[length];
+
+      memset(head, 0, sizeof(f_char_t) * length);
+
+      f_status_t status = f_socket_read(&data->socket, 0, (void *) head, &length);
+      if (F_status_is_error(status)) return status;
+      if (length < 5) return F_status_set_error(F_packet_not);
+    }
 
     // @todo
     return F_none;
@@ -245,6 +284,10 @@ extern "C" {
   f_status_t control_payload_send(fll_program_data_t * const main, control_data_t * const data) {
 
     // @todo
+    f_array_length_t length = 0;
+
+    //F_status_t status = f_socket_write(&data->socket, 0, data->cache.large, &length);
+
     return F_none;
   }
 #endif // _di_control_payload_send_

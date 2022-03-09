@@ -37,6 +37,18 @@ extern "C" {
 #endif // _di_control_defines_s_
 
 /**
+ * A codes repesent different flags associated with a packet.
+ *
+ * control_packet_flag_*:
+ *   - binary:     Designate that the packet is in binary mode (when not set then packet is in string mode).
+ *   - endian_big: Designate that the packet is in big endian order (when not set then packet is in little endian order).
+ */
+#ifndef _di_control_packet_flag_
+  #define control_packet_flag_binary_d     0x10000000
+  #define control_packet_flag_endian_big_d 0x01000000
+#endif // _di_control_packet_flag_
+
+/**
  * Controller defines that the control program utilizes.
  *
  * These are intended to exactly match the relevant controller string defines.

@@ -1895,19 +1895,14 @@ extern "C" {
           controller_lock_print(main->output.to, thread);
 
           fl_print_format("%rRe-running '", main->output.to.stream, f_string_eol_s);
-          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.title, process->rule.alias, main->context.set.title);
-          f_print_terminated("' '", main->output.to.stream);
-          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.notable, controller_rule_action_type_execute_name(action), main->context.set.notable);
-          f_print_terminated("' with a ", main->output.to.stream);
-          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.notable, controller_delay_s, main->context.set.notable);
-          f_print_terminated(" of ", main->output.to.stream);
+          fl_print_format("%[%r%]' '", main->output.to.stream, main->context.set.title, process->rule.alias, main->context.set.title);
+          fl_print_format("%[%r%]' with a ", main->output.to.stream, main->context.set.notable, controller_rule_action_type_execute_name(action), main->context.set.notable);
+          fl_print_format("%[%r%] of ", main->output.to.stream, main->context.set.notable, controller_delay_s, main->context.set.notable);
           fl_print_format("%[%ul%] MegaTime", main->output.to.stream, main->context.set.notable, rerun_item->delay, main->context.set.notable);
 
           if (rerun_item->max) {
-            f_print_terminated(" for ", main->output.to.stream);
-            fl_print_format("%[%ul%]", main->output.to.stream, main->context.set.notable, rerun_item->count, main->context.set.notable);
-            f_print_terminated(" of ", main->output.to.stream);
-            fl_print_format("%[%r%] ", main->output.to.stream, main->context.set.notable, controller_max_s, main->context.set.notable);
+            fl_print_format(" for %[%ul%]", main->output.to.stream, main->context.set.notable, rerun_item->count, main->context.set.notable);
+            fl_print_format(" of %[%r%] ", main->output.to.stream, main->context.set.notable, controller_max_s, main->context.set.notable);
             fl_print_format("%[%ul%]", main->output.to.stream, main->context.set.notable, rerun_item->max, main->context.set.notable);
             fl_print_format(".%r", main->output.to.stream, f_string_eol_s);
           }
@@ -2059,9 +2054,9 @@ extern "C" {
         f_string_static_t buffer = f_string_static_t_initialize;
         buffer.used = (content.stop - content.start) + 1;
 
-        unsigned char buffer_string[buffer.used + 1];
+        f_char_t buffer_string[buffer.used + 1];
 
-        memcpy(buffer_string, source.string + content.start, sizeof(unsigned char) * buffer.used);
+        memcpy(buffer_string, source.string + content.start, sizeof(f_char_t) * buffer.used);
         buffer_string[buffer.used] = 0;
         buffer.string = buffer_string;
         process->cache.action.generic.used = 0;
@@ -2243,11 +2238,11 @@ extern "C" {
           f_string_static_t buffer = f_string_static_t_initialize;
           buffer.used = options[i].used + controller_parameter_map_option_s.used;
 
-          unsigned char buffer_string[buffer.used];
+          f_char_t buffer_string[buffer.used];
           buffer.string = buffer_string;
 
-          memcpy(buffer_string, options[i].string, sizeof(unsigned char) * options[i].used);
-          memcpy(buffer_string + options[i].used, controller_parameter_map_option_s.string, sizeof(unsigned char) * controller_parameter_map_option_s.used);
+          memcpy(buffer_string, options[i].string, sizeof(f_char_t) * options[i].used);
+          memcpy(buffer_string + options[i].used, controller_parameter_map_option_s.string, sizeof(f_char_t) * controller_parameter_map_option_s.used);
 
           if (fl_string_dynamic_partial_compare_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (values[i] && parameters->array[codes[i]].result == f_console_result_additional_e || !values[i] && parameters->array[codes[i]].result == f_console_result_found_e) {
@@ -2269,11 +2264,11 @@ extern "C" {
           f_string_static_t buffer = f_string_static_t_initialize;
           buffer.used = options[i].used + controller_parameter_map_value_s.used;
 
-          unsigned char buffer_string[buffer.used];
+          f_char_t buffer_string[buffer.used];
           buffer.string = buffer_string;
 
-          memcpy(buffer_string, options[i].string, sizeof(unsigned char) * options[i].used);
-          memcpy(buffer_string + options[i].used, controller_parameter_map_value_s.string, sizeof(unsigned char) * controller_parameter_map_value_s.used);
+          memcpy(buffer_string, options[i].string, sizeof(f_char_t) * options[i].used);
+          memcpy(buffer_string + options[i].used, controller_parameter_map_value_s.string, sizeof(f_char_t) * controller_parameter_map_value_s.used);
 
           if (fl_string_dynamic_partial_compare_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (parameters->array[codes[i]].result == f_console_result_additional_e) {
@@ -2881,10 +2876,10 @@ extern "C" {
             f_string_static_t alias_other_buffer = f_string_static_t_initialize;
             alias_other_buffer.used = global.setting->rules.array[id_rule].alias.used;
 
-            unsigned char alias_other_buffer_string[alias_other_buffer.used + 1];
+            f_char_t alias_other_buffer_string[alias_other_buffer.used + 1];
             alias_other_buffer.string = alias_other_buffer_string;
 
-            memcpy(alias_other_buffer_string, global.setting->rules.array[id_rule].alias.string, sizeof(unsigned char) * alias_other_buffer.used);
+            memcpy(alias_other_buffer_string, global.setting->rules.array[id_rule].alias.string, sizeof(f_char_t) * alias_other_buffer.used);
             alias_other_buffer_string[alias_other_buffer.used] = 0;
 
             f_thread_unlock(&global.thread->lock.rule);
@@ -4004,10 +3999,10 @@ extern "C" {
     const f_array_length_t line_item = cache->action.line_item;
     const f_array_length_t length_name_item = cache->action.name_item.used;
 
-    unsigned char name_item[length_name_item];
+    f_char_t name_item[length_name_item];
     name_item[length_name_item] = 0;
 
-    memcpy(name_item, cache->action.name_item.string, sizeof(unsigned char) * length_name_item);
+    memcpy(name_item, cache->action.name_item.string, sizeof(f_char_t) * length_name_item);
 
     for (; i < cache->content_actions.used; ++i, type = 0) {
 
@@ -5700,7 +5695,7 @@ extern "C" {
     } // for
 
     // Restore the current name item and line number, which there should already be enough allocated space for.
-    memcpy(cache->action.name_item.string, name_item, sizeof(unsigned char) * length_name_item);
+    memcpy(cache->action.name_item.string, name_item, sizeof(f_char_t) * length_name_item);
 
     cache->action.name_item.string[length_name_item] = 0;
     cache->action.name_item.used = length_name_item;
@@ -6073,8 +6068,7 @@ extern "C" {
 
                   if (action->parameters.array[0].string[k] == f_fss_eol_s.string[0]) {
                     if (k + 1 < action->parameters.array[0].used) {
-                      f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-                      f_print_terminated("        ", main->output.to.stream);
+                      fl_print_format("%r        ", main->output.to.stream, f_string_eol_s);
                     }
                   }
                   else {

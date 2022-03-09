@@ -16,11 +16,7 @@ extern "C" {
       control->client.id = -1;
     }*/
 
-    printf("\nDEBUG: begin client accept, addr=%ul, server id = %i, client id = %i\n", control->client, control->server.id, control->client.id);
-    fll_print_format("\nDEBUG: begin client accept, addr=%ul, server id = %i, client id = %i\n", stdout, control->client, control->server.id, control->client.id);
-
     f_status_t status = f_socket_accept(&control->client, control->server.id);
-    printf("\nDEBUG: client accept, at 1, status = %d\n", F_status_set_fine(status));
 
     if (F_status_is_error(status)) {
       f_socket_disconnect(&control->client, f_socket_close_fast_e);
@@ -35,15 +31,14 @@ extern "C" {
     control->input.used = 0;
     control->output.used = 0;
 
-    unsigned char buffer[controller_control_default_socket_buffer_d + 1];
+    f_char_t buffer[controller_control_default_socket_buffer_d + 1];
     size_t length = 0;
 
-    memset(buffer, 0, sizeof(unsigned char) * (controller_control_default_socket_buffer_d + 1));
+    memset(buffer, 0, sizeof(f_char_t) * (controller_control_default_socket_buffer_d + 1));
 
     // Pre-process the packet header.
     control->client.size_read = controller_control_default_socket_header_d;
     status = f_socket_read(&control->client, f_socket_flag_peek_d, buffer, &length);
-    printf("\nDEBUG: client accept, at 2, status = %d\n", F_status_set_fine(status));
 
     if (F_status_is_error(status)) {
       f_socket_disconnect(&control->client, f_socket_close_fast_e);
@@ -55,7 +50,6 @@ extern "C" {
 
     if (!length) {
       status = controller_control_respond_error_string(global, control, F_empty, "Received packet is empty.");
-      printf("\nDEBUG: client accept, at 3, status = %d\n", F_status_set_fine(status));
 
       f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
@@ -66,7 +60,6 @@ extern "C" {
 
     if (length < controller_control_default_socket_header_d) {
       status = controller_control_respond_error_string(global, control, F_too_large, "Received packet is too small.");
-      printf("\nDEBUG: client accept, at 4, status = %d\n", F_status_set_fine(status));
 
       f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
@@ -77,7 +70,6 @@ extern "C" {
 
     if (length > controller_control_default_socket_buffer_max_d) {
       status = controller_control_respond_error_string(global, control, F_too_large, "Received packet is too large.");
-      printf("\nDEBUG: client accept, at 5, status = %d\n", F_status_set_fine(status));
 
       f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
@@ -92,7 +84,6 @@ extern "C" {
 
     if (packet_flag & controller_control_packet_flag_binary_d) {
       status = controller_control_respond_error_string(global, control, F_supported_not, "Binary is not a currently supported packet mode.");
-      printf("\nDEBUG: client accept, at 6, status = %d\n", F_status_set_fine(status));
 
       f_socket_disconnect(&control->client, f_socket_close_fast_e);
 
@@ -121,7 +112,6 @@ extern "C" {
 
       do {
         status = f_socket_read(&control->client, 0, &control->input, &total);
-      printf("\nDEBUG: client accept, at 7, status = %d\n", F_status_set_fine(status));
 
         if (F_status_is_error(status)) {
           controller_control_respond_error_string(global, control, F_status_set_fine(status), "Failure while reading from control->client socket.");
@@ -143,7 +133,6 @@ extern "C" {
     }
 
     // @todo process the data.
-    fll_print_format("\nDEBUG: received packet: '%q'\n", stdout, control->input);
 
     // @todo send any responses.
 
@@ -212,13 +201,13 @@ extern "C" {
 #endif // _di_controller_control_configure_server_
 
 #ifndef _di_controller_control_packet_header_flag_
-  uint8_t controller_control_packet_header_flag(const unsigned char buffer[]) {
+  uint8_t controller_control_packet_header_flag(const f_char_t buffer[]) {
     return (uint8_t) (((buffer[0] & 0x8) ? controller_control_packet_flag_binary_d : 0) | ((buffer[0] & 0x4) ? controller_control_packet_flag_endian_big_d : 0));
   }
 #endif // _di_controller_control_packet_header_flag_
 
 #ifndef _di_controller_control_packet_header_length_
-  uint32_t controller_control_packet_header_length(const bool is_big, const unsigned char buffer[]) {
+  uint32_t controller_control_packet_header_length(const bool is_big, const f_char_t buffer[]) {
 
     register uint32_t length = (((buffer[0] & 0x3f) << 26) | (buffer[1] << 18) | (buffer[2] << 10) | (buffer[3] << 2) | ((buffer[4] & 0xc0) >> 6));
 
@@ -304,7 +293,6 @@ extern "C" {
 
     control->output.used = 0;
     control->cache_3.used = 0;
-    printf("\nDEBUG: controller_control_respond_error(), at start\n");
 
     {
       const f_conversion_data_t data_conversion = macro_f_conversion_data_t_initialize(10, 0, 1);
@@ -323,8 +311,6 @@ extern "C" {
       if (F_status_is_error(status2)) return status2;
     }
 
-    printf("\nDEBUG: controller_control_respond_error(), before write\n");
-
     return f_socket_write(&control->client, 0, control->output.string, 0);
   }
 #endif // _di_controller_control_respond_error_
@@ -332,7 +318,7 @@ extern "C" {
 #ifndef _di_controller_control_respond_error_string_
   f_status_t controller_control_respond_error_string(const controller_global_t * const global, controller_control_t * const control, const f_status_t status, const f_string_t message) {
 
-    const f_string_static_t string = macro_f_string_static_t_initialize2(message, strlen(message));
+    const f_string_static_t string = macro_f_string_static_t_initialize2(message, strlen((const char *) message));
 
     return controller_control_respond_error(global, control, status, string);
   }

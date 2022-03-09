@@ -6,6 +6,15 @@
 extern "C" {
 #endif
 
+#ifndef _di_control_print_error_parameter_commands_none_
+  void control_print_error_parameter_commands_none(fll_program_data_t * const main) {
+
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+    fll_print_format("%r%[%QNo commands provided.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
+  }
+#endif // _di_control_print_error_parameter_commands_none_
+
 #ifndef _di_control_print_error_parameter_command_not_
   void control_print_error_parameter_command_not(fll_program_data_t * const main, const f_string_static_t command) {
 
@@ -96,15 +105,6 @@ extern "C" {
   }
 #endif // _di_control_print_error_parameter_command_rule_too_many_
 
-#ifndef _di_control_print_error_commands_none_
-  void control_print_error_commands_none(fll_program_data_t * const main) {
-
-    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
-
-    fll_print_format("%r%[%QNo commands provided.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
-  }
-#endif // _di_control_print_error_commands_none_
-
 #ifndef _di_control_print_error_parameter_value_empty_
   void control_print_error_parameter_value_empty(fll_program_data_t * const main, const f_string_static_t parameter) {
 
@@ -143,6 +143,24 @@ extern "C" {
     fll_print_format("%r%[%QPipe input is not supported by this program.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
   }
 #endif // _di_control_print_error_pipe_supported_not_
+
+#ifndef _di_control_print_error_response_packet_valid_not_
+  void control_print_error_response_packet_valid_not(fll_program_data_t * const main) {
+
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+    fll_print_format("%r%[%QThe received response is not a valid or supported packet.'%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+  }
+#endif // _di_control_print_error_response_packet_valid_not_
+
+#ifndef _di_control_print_error_request_packet_too_large_
+  void control_print_error_request_packet_too_large(fll_program_data_t * const main) {
+
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+    fll_print_format("%r%[%QThe generated packet is too large, cannot send packet.'%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+  }
+#endif // _di_control_print_error_request_packet_too_large_
 
 #ifndef _di_control_print_error_socket_file_failed_
   void control_print_error_socket_file_failed(fll_program_data_t * const main, const f_string_static_t path_socket) {

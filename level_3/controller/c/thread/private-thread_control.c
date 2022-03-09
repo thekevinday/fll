@@ -24,7 +24,6 @@ extern "C" {
     controller_control_t *control = &global->setting->control;
 
     do {
-      fll_print_format("\nDEBUG: Control Thread Main Loop, server id = %il.\n", stdout, control->server.id);
 
       // Remove any overly large buffers.
       if (control->cache_1.size > controller_control_default_socket_cache_d) {
@@ -55,8 +54,6 @@ extern "C" {
 
       status = f_socket_listen(&control->server, controller_control_default_socket_backlog_d);
 
-      fll_print_format("\nDEBUG: Listen returned, status = %ui.\n", stdout, status);
-
       if (F_status_is_error(status)) {
         controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_socket_listen", F_true);
 
@@ -73,19 +70,13 @@ extern "C" {
       status = controller_control_accept(global, control);
       if (status == F_child) break;
 
-      fll_print_format("\nDEBUG: Accept returned, status = %ui.\n", stdout, F_status_set_fine(status));
-
       if (F_status_is_error(status)) {
         controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "controller_control_accept", F_true);
       }
 
       status = F_none;
 
-      fll_print_format("\nDEBUG: End of loop.\n", stdout);
-
     } while (global->thread->enabled == controller_thread_enabled_e);
-
-    fll_print_format("\nDEBUG: Out of loop.\n", stdout);
 
     if (status == F_child) {
 
@@ -95,11 +86,7 @@ extern "C" {
       controller_thread_delete_simple(global->thread);
       controller_setting_delete_simple(global->setting);
       controller_main_delete(global->main);
-
-      fll_print_format("\nDEBUG: child exit, all data should be deleted.\n", stdout);
     }
-
-    fll_print_format("\nDEBUG: cache should be deleted, final exit.\n", stdout);
 
     return 0;
   }

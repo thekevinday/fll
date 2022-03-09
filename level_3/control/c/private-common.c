@@ -16,16 +16,16 @@ extern "C" {
 #ifndef _di_control_strings_s_
   const f_string_static_t control_path_settings_s = macro_f_string_static_t_initialize(CONTROL_path_settings_s, 0, CONTROL_path_settings_s_length);
 
-  const f_string_static_t control_action_s = macro_f_string_static_t_initialize(CONTROLLER_action_s, 0, CONTROLLER_action_s_length);
+  const f_string_static_t control_action_s = macro_f_string_static_t_initialize(CONTROL_action_s, 0, CONTROL_action_s_length);
   const f_string_static_t control_command_s = macro_f_string_static_t_initialize(CONTROL_command_s, 0, CONTROL_command_s_length);
   const f_string_static_t control_default_s = macro_f_string_static_t_initialize(CONTROL_default_s, 0, CONTROL_default_s_length);
-  const f_string_static_t control_length_s = macro_f_string_static_t_initialize(CONTROLLER_length_s, 0, CONTROLLER_length_s_length);
+  const f_string_static_t control_length_s = macro_f_string_static_t_initialize(CONTROL_length_s, 0, CONTROL_length_s_length);
   const f_string_static_t control_name_socket_s = macro_f_string_static_t_initialize(CONTROL_name_socket_s, 0, CONTROL_name_socket_s_length);
   const f_string_static_t control_path_socket_s = macro_f_string_static_t_initialize(CONTROL_path_socket_s, 0, CONTROL_path_socket_s_length);
   const f_string_static_t control_path_socket_prefix_s = macro_f_string_static_t_initialize(CONTROL_path_socket_prefix_s, 0, CONTROL_path_socket_prefix_s_length);
   const f_string_static_t control_path_socket_suffix_s = macro_f_string_static_t_initialize(CONTROL_path_socket_suffix_s, 0, CONTROL_path_socket_suffix_s_length);
-  const f_string_static_t control_status_s = macro_f_string_static_t_initialize(CONTROLLER_status_s, 0, CONTROLLER_status_s_length);
-  const f_string_static_t control_type_s = macro_f_string_static_t_initialize(CONTROLLER_type_s, 0, CONTROLLER_type_s_length);
+  const f_string_static_t control_status_s = macro_f_string_static_t_initialize(CONTROL_status_s, 0, CONTROL_status_s_length);
+  const f_string_static_t control_type_s = macro_f_string_static_t_initialize(CONTROL_type_s, 0, CONTROL_type_s_length);
 
   const f_string_static_t control_error_s = macro_f_string_static_t_initialize(CONTROL_error_s, 0, CONTROL_error_s_length);
   const f_string_static_t control_freeze_s = macro_f_string_static_t_initialize(CONTROL_freeze_s, 0, CONTROL_freeze_s_length);

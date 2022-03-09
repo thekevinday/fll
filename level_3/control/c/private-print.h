@@ -13,6 +13,16 @@ extern "C" {
 #endif
 
 /**
+ * Print an error message about no commands being provided.
+ *
+ * @param main
+ *   The main program data.
+ */
+#ifndef _di_control_print_error_parameter_commands_none_
+  extern void control_print_error_parameter_commands_none(fll_program_data_t * const main) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_commands_none_
+
+/**
  * Print an error message about the given parameter not matching the known set of controller commands.
  *
  * @param main
@@ -85,16 +95,6 @@ extern "C" {
 #endif // _di_control_print_error_parameter_command_rule_too_many_
 
 /**
- * Print an error message about no commands being provided.
- *
- * @param main
- *   The main program data.
- */
-#ifndef _di_control_print_error_commands_none_
-  extern void control_print_error_commands_none(fll_program_data_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_control_print_error_commands_none_
-
-/**
  * Print an error message about the parameter's associated value being an empty string.
  *
  * @param main
@@ -127,6 +127,26 @@ extern "C" {
 #ifndef _di_control_print_error_pipe_supported_not_
   extern void control_print_error_pipe_supported_not(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_pipe_supported_not_
+
+/**
+ * Print an error message about the response packet format either being invalid or not supported.
+ *
+ * @param main
+ *   The main program data.
+ */
+#ifndef _di_control_print_error_response_packet_valid_not_
+  extern void control_print_error_response_packet_valid_not(fll_program_data_t * const main) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_response_packet_valid_not_
+
+/**
+ * Print an error message about the request packet being too large.
+ *
+ * @param main
+ *   The main program data.
+ */
+#ifndef _di_control_print_error_request_packet_too_large_
+  void extern control_print_error_request_packet_too_large(fll_program_data_t * const main) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_request_packet_too_large_
 
 /**
  * Print an error message about failure to connect to the socket file.

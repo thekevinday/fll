@@ -50,6 +50,19 @@ extern "C" {
  *   The main program data.
  * @param data
  *   The control data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_too_large (with error bit) If the message is too large for the packet format to transmit.
+ *
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ * @see f_string_append()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_control_payload_build_
   extern f_status_t control_payload_build(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
@@ -62,6 +75,17 @@ extern "C" {
  *   The main program data.
  * @param data
  *   The control data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_packet_not (with error bit) If the received packet is not a valid packet.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_control_payload_receive_
   extern f_status_t control_payload_receive(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
