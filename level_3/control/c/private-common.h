@@ -44,8 +44,8 @@ extern "C" {
  *   - endian_big: Designate that the packet is in big endian order (when not set then packet is in little endian order).
  */
 #ifndef _di_control_packet_flag_
-  #define control_packet_flag_binary_d     0x10000000
-  #define control_packet_flag_endian_big_d 0x01000000
+  #define control_packet_flag_binary_d     0x80
+  #define control_packet_flag_endian_big_d 0x40
 #endif // _di_control_packet_flag_
 
 /**
@@ -241,19 +241,51 @@ extern "C" {
 /**
  * The control cache.
  *
- * large: A buffer for storing large sets of data.
- * small: A buffer for storing small sets of data.
+ * large:   A buffer for storing large sets of data.
+ * small:   A buffer for storing small sets of data.
+ * payload: A buffer dedicated for the payload.
+ *
+ * packet_objects:  The FSS Objects for a packet.
+ * packet_contents: The FSS Contents for a packet.
+ *
+ * payload_objects:  The FSS Objects for a payload.
+ * payload_contents: The FSS Contents for a payload.
+ *
+ * delimits: The delimits cache.
  */
 #ifndef _di_control_cache_t_
   typedef struct {
     f_string_dynamic_t large;
     f_string_dynamic_t small;
+    f_string_dynamic_t payload;
+
+    f_fss_objects_t packet_objects;
+    f_fss_contents_t packet_contents;
+
+    f_fss_objects_t payload_objects;
+    f_fss_contents_t payload_contents;
+
+    f_fss_delimits_t delimits;
+
+    f_string_ranges_t range_actions;
+    f_string_ranges_t range_statuss;
+
+    f_uint8s_t types;
   } control_cache_t;
 
   #define control_cache_initialize \
     { \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_fss_objects_t_initialize, \
+      f_fss_contents_t_initialize, \
+      f_fss_objects_t_initialize, \
+      f_fss_contents_t_initialize, \
+      f_fss_delimits_t_initialize, \
+      f_string_ranges_t_initialize, \
+      f_string_ranges_t_initialize, \
+      f_uint8s_t_initialize, \
     }
 #endif // _di_control_cache_t_
 

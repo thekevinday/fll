@@ -47,6 +47,20 @@ extern "C" {
 
     f_string_dynamic_resize(0, &data->cache.large);
     f_string_dynamic_resize(0, &data->cache.small);
+    f_string_dynamic_resize(0, &data->cache.payload);
+
+    f_string_ranges_resize(0, &data->cache.packet_objects);
+    f_string_rangess_resize(0, &data->cache.packet_contents);
+
+    f_string_ranges_resize(0, &data->cache.payload_objects);
+    f_string_rangess_resize(0, &data->cache.payload_contents);
+
+    f_array_lengths_resize(0, &data->cache.delimits);
+
+    f_string_ranges_resize(0, &data->cache.range_actions);
+    f_string_ranges_resize(0, &data->cache.range_statuss);
+
+    f_uint8s_resize(0, &data->cache.types);
   }
 #endif // _di_control_data_delete_
 

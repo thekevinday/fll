@@ -3,8 +3,12 @@
 # license: open-standard-license-1.0
 #
 
-Entry Specification:
-  The controller program communicates use the FSS-000E Packet format.
+Packet Specification:
+  The controller program communicates use the FSS-000F (Packet).
+  This specification declares how the Payload Block, which is in FSS-000E (Payload) format, is required to be used.
+
+  Only a single "header" is allowed.
+  Only a single "payload" is allowed.
 
   Packet Structure\:
     Packet is grouped into the following blocks\:

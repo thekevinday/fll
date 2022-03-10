@@ -214,14 +214,14 @@ extern "C" {
           status = control_settings_load(main, &data);
 
           if (F_status_is_error_not(status)) {
-            status = control_payload_build(main, &data);
+            status = control_packet_build(main, &data);
 
             if (F_status_is_error(status)) {
               if (F_status_set_fine(status) == F_too_large) {
                 control_print_error_request_packet_too_large(main);
               }
               else {
-                fll_error_print(main->error, F_status_set_fine(status), "control_payload_build", F_true);
+                fll_error_print(main->error, F_status_set_fine(status), "control_packet_build", F_true);
               }
 
               fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
@@ -229,23 +229,23 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            status = control_payload_send(main, &data);
+            status = control_packet_send(main, &data);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "control_payload_send", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "control_packet_send", F_true);
               fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
             }
           }
 
           if (F_status_is_error_not(status)) {
-            status = control_payload_receive(main, &data);
+            status = control_packet_receive(main, &data);
 
             if (F_status_is_error(status)) {
               if (F_status_set_fine(status) == F_too_large) {
                 control_print_error_response_packet_valid_not(main);
               }
               else {
-                fll_error_print(main->error, F_status_set_fine(status), "control_payload_receive", F_true);
+                fll_error_print(main->error, F_status_set_fine(status), "control_packet_receive", F_true);
               }
 
               fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);

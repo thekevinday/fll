@@ -145,3 +145,4 @@ Featureless Settings Specifications:
   - fss-000c: Iki Text
   - fss-000d: Basic Rule
   - fss-000e: Payload
+  - fss-000f: Simple Packet

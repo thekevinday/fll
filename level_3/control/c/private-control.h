@@ -64,9 +64,9 @@ extern "C" {
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_resize()
  */
-#ifndef _di_control_payload_build_
-  extern f_status_t control_payload_build(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_control_payload_build_
+#ifndef _di_control_packet_build_
+  extern f_status_t control_packet_build(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_control_packet_build_
 
 /**
  * Receive the response from the remote socket, storing it in the large cache.
@@ -79,17 +79,29 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_packet_not (with error bit) If the received packet is not a valid packet.
+ *   F_packet_not (with error bit) If the received packet is not a valid packet or not a supported packet structure.
+ *   F_too_large (with error bit) If the received packet specifies a size that is too large or the actual size is larger than the specified size.
+ *   F_too_small (with error bit) If the received packet actual size is smaller than the specified size.
  *
+ *   Errors (with error bit) from: f_socket_read().
  *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: fl_fss_apply_delimit().
+ *   Errors (with error bit) from: fll_fss_basic_list_read().
+ *   Errors (with error bit) from: fll_fss_extended_read().
  *
+ * @see f_socket_read()
  * @see f_string_dynamic_append()
+ * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_resize()
+ * @see fl_fss_apply_delimit()
+ * @see fll_fss_basic_list_read()
+ * @see fll_fss_extended_read()
  */
-#ifndef _di_control_payload_receive_
-  extern f_status_t control_payload_receive(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_control_payload_receive_
+#ifndef _di_control_packet_receive_
+  extern f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_control_packet_receive_
 
 /**
  * Send the payload to the remote socket, getting the payload from the large cache.
@@ -99,9 +111,9 @@ extern "C" {
  * @param data
  *   The control data.
  */
-#ifndef _di_control_payload_send_
-  extern f_status_t control_payload_send(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_control_payload_send_
+#ifndef _di_control_packet_send_
+  extern f_status_t control_packet_send(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_control_packet_send_
 /**
  * Load and process the control settings file.
  *

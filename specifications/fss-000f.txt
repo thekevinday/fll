@@ -1,0 +1,47 @@
+# fss-0002
+#
+# license: open-standard-license-1.0
+#
+#
+
+Featureless Settings Specification: 000f - Simple Packet:
+  This is a network packet format that contains FSS-000E (Payload) within it.
+
+  The Simple Packet structure is described in blocks, of which are structured in bytes.
+
+  There are only three blocks in this format\:
+  1) Control Block.
+  2) Size Block.
+  3) Payload Block.
+
+  The Control Block is the first block in the packet and is considered endianless.
+  There exists only a single byte within the Control Block.
+  Regardless of the endianness of the packet, the leftmost bit is always the "string" or "binary" bit.
+  The second bit following that bit represents the endianness bit.
+
+  The "string" or "binary" bit, a value of 0 designates that the packet is in string format and a value of 1 designates that the packet is in binary format.
+  While the packet might be considered to be in string format, it is technically always in binary format due to the Control Block and Size Block.
+  This means that the bit designating the packet as a "string" packet or a "binary" packet is referring to whether or not the Payload Block is in "string" format or is in "binary" format.
+
+  The endianness bit designates whether or not the packet is in big endian or little endian format.
+  A bit value of 0 designates that this packet is in little endian and a value of 1 designates that this packet is in big endian format.
+  All binary data within this packet, following the Control Block, must respect this endianness bit (including the Size Block).
+
+  The remaining bits are not defined by this standard and are expected to be 0.
+  Non-formal or local uses may utilize these remaining 6 bits as desired.
+  However, there may be additional standards that expand upon this and utilize these remaining Control bits.
+  Anything that utilizes these unused Control bits may add or remove additional Blocks after the Control Block as they see fit.
+
+  The Size Block is an unsigned 32-bit integer representing the size of the entire packet, including the Control Block and Size Block.
+  This size must exactly match the packet to be a valid packet.
+  The size represents number of bytes in the file.
+  The Control Block is 1 byte long and the Size Block is 4 bytes long and so the maximum available size is (2^32)-6.
+
+  The Payload Block is not defined by this standard of that that it exists and should be in FSS-000E (Payload) format.
+  The FSS-000E (Payload) may be represented in either string format or binary format.
+  The FSS-000E (Payload) may contain multiple "header"s but may only contain a single "payload".
+  With this in mind, it is recommended that only a single "header" be supported in the Payload Block.
+
+  Example Packet Structure\:
+    [ Control Block ] [ Size Block                                  ] [ Payload Block         ]
+    [ 0b10000000    ] [ 0b00000000 0b00000000 0b00000100 0b11010010 ] [ size: 1229 (1234 - 5) ]

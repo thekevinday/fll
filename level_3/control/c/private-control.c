@@ -146,8 +146,8 @@ extern "C" {
   }
 #endif // _di_control_command_verify_
 
-#ifndef _di_control_payload_build_
-  f_status_t control_payload_build(fll_program_data_t * const main, control_data_t * const data) {
+#ifndef _di_control_packet_build_
+  f_status_t control_packet_build(fll_program_data_t * const main, control_data_t * const data) {
 
     data->cache.large.used = 0;
     data->cache.small.used = 0;
@@ -253,35 +253,140 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_control_payload_build_
+#endif // _di_control_packet_build_
 
-#ifndef _di_control_payload_receive_
-  f_status_t control_payload_receive(fll_program_data_t * const main, control_data_t * const data) {
+#ifndef _di_control_packet_receive_
+  f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data) {
 
     data->cache.large.used = 0;
     data->cache.small.used = 0;
+    data->cache.packet_objects.used = 0;
+    data->cache.packet_contents.used = 0;
+    data->cache.payload_objects.used = 0;
+    data->cache.payload_contents.used = 0;
+    data->cache.delimits.used = 0;
+    data->cache.range_actions.used = 0;
+    data->cache.range_statuss.used = 0;
+    data->cache.types.used = 0;
 
-    uint8_t control = 0;
+    f_status_t status = F_none;
+    f_array_length_t length = 5;
 
     {
-      f_array_length_t length = 5;
+      uint8_t head[length];
 
-      f_char_t head[length];
+      memset(head, 0, sizeof(uint8_t) * length);
 
-      memset(head, 0, sizeof(f_char_t) * length);
-
-      f_status_t status = f_socket_read(&data->socket, 0, (void *) head, &length);
+      status = f_socket_read(&data->socket, f_socket_flag_peek_d, (void *) head, &length);
       if (F_status_is_error(status)) return status;
       if (length < 5) return F_status_set_error(F_packet_not);
+
+      uint8_t control = head[0] & (control_packet_flag_binary_d | control_packet_flag_endian_big_d);
+
+      // Only the first two bits of the 8 Control bits are allowed to be set to 1 for this Packet.
+      if (head[0] & (~(control_packet_flag_binary_d | control_packet_flag_endian_big_d))) {
+        return F_status_set_error(F_packet_not);
+      }
+
+      #ifdef _is_F_endian_big
+        if (control & control_packet_flag_endian_big_d) {
+          length = ((uint8_t) head[1]) << 24;
+          length |= ((uint8_t) head[2]) << 16;
+          length |= ((uint8_t) head[3]) << 8;
+          length |= (uint8_t) head[4];
+        }
+        else {
+          length = ((uint8_t) head[1]);
+          length |= ((uint8_t) head[2]) >> 8;
+          length |= ((uint8_t) head[3]) >> 16;
+          length |= (uint8_t) head[4] >> 24;
+        }
+      #else
+        if (control & control_packet_flag_endian_big_d) {
+          length = ((uint8_t) head[1]);
+          length |= ((uint8_t) head[2]) >> 8;
+          length |= ((uint8_t) head[3]) >> 16;
+          length |= (uint8_t) head[4] >> 24;
+        }
+        else {
+          length = ((uint8_t) head[1]) << 24;
+          length |= ((uint8_t) head[2]) << 16;
+          length |= ((uint8_t) head[3]) << 8;
+          length |= (uint8_t) head[4];
+        }
+      #endif // #ifdef _is_F_endian_big
+
+      if (length > 0xffffffff) {
+        return F_status_set_error(F_too_large);
+      }
+
+      status = f_string_dynamic_increase_by(length, &data->cache.large);
+      if (F_status_is_error(status)) return status;
+
+      status = f_socket_read(&data->socket, f_socket_flag_wait_all_d, (void *) head, &length);
+      if (F_status_is_error(status)) return status;
+      if (length < data->cache.large.used) return F_status_set_error(F_too_small);
+      if (length > data->cache.large.used) return F_status_set_error(F_too_large);
+    }
+
+    {
+      f_state_t state = macro_f_state_t_initialize(control_allocation_large_d, control_allocation_small_d, 0, &control_signal_state_interrupt_fss, 0, (void *) main, 0);
+      f_string_range_t range_packet = macro_f_string_range_t_initialize(data->cache.large.used);
+
+      status = fll_fss_basic_list_read(data->cache.large, state, &range_packet, &data->cache.packet_objects, &data->cache.packet_contents, &data->cache.delimits, 0, 0);
+      if (F_status_is_error(status)) return status;
+
+      status = fl_fss_apply_delimit(data->cache.delimits, &data->cache.large);
+      if (F_status_is_error(status)) return status;
+
+      data->cache.delimits.used = 0;
+
+      f_string_range_t *range_header_object = 0;
+      f_string_ranges_t *range_header_content = 0;
+      f_string_range_t *range_payload_object = 0;
+      f_string_ranges_t *range_payload_content = 0;
+
+      for (f_array_length_t i = 0; i < data->cache.packet_objects.used; ++i) {
+
+        if (fl_string_dynamic_partial_compare_string(f_fss_string_header_s.string, data->cache.large, f_fss_string_header_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
+
+          // The FSS-000E (Payload) standard does not prohibit multiple "header", but such cases are not supported by the controller and the control programs.
+          if (range_header_object) {
+            return F_status_set_error(F_packet_not);
+          }
+
+          range_header_object = &data->cache.packet_objects.array[i];
+          range_header_content = &data->cache.packet_contents.array[i];
+        }
+        else if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, data->cache.large, f_fss_string_payload_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
+
+          // Only a single "payload" is supported by the FSS-000E (Payload) standard.
+          if (range_payload_object) {
+            return F_status_set_error(F_packet_not);
+          }
+
+          range_payload_object = &data->cache.packet_objects.array[i];
+          range_payload_content = &data->cache.packet_contents.array[i];
+        }
+      } // for
+
+      if (!range_header_object || !range_payload_object) {
+        return F_status_set_error(F_packet_not);
+      }
+
+      // @todo load the "action"s, "length", "status"s, "type"s, and finally the "payload" (if lenth is > 0).
+
+      //status = fll_fss_extended_read(data->cache.payload, state, range_payload_content, &data->cache.payload_objects, &data->cache.payload_contents, &data->cache.delimits, 0, 0);
+      //if (F_status_is_error(status)) return status;
     }
 
     // @todo
     return F_none;
   }
-#endif // _di_control_payload_receive_
+#endif // _di_control_packet_receive_
 
-#ifndef _di_control_payload_send_
-  f_status_t control_payload_send(fll_program_data_t * const main, control_data_t * const data) {
+#ifndef _di_control_packet_send_
+  f_status_t control_packet_send(fll_program_data_t * const main, control_data_t * const data) {
 
     // @todo
     f_array_length_t length = 0;
@@ -290,7 +395,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_control_payload_send_
+#endif // _di_control_packet_send_
 
 #ifndef _di_control_settings_load_
   f_status_t control_settings_load(fll_program_data_t * const main, control_data_t * const data) {

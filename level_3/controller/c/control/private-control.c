@@ -78,7 +78,7 @@ extern "C" {
       return F_valid_not;
     }
 
-    // @todo rewrite based on control_payload_build(), but need to pre-process what is needed for the payload.
+    // @todo rewrite based on control_packet_build(), but need to pre-process what is needed for the payload.
     const uint8_t packet_flag = controller_control_packet_header_flag(buffer);
     const uint32_t packet_length = controller_control_packet_header_length(packet_flag & controller_control_packet_flag_endian_big_d, buffer);
 

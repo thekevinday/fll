@@ -21,11 +21,11 @@ Packet Documentation:
       This number is a single 32-bit unsigned integer.
 
       Example packet structure\:
-        [ control block ] [ size block                                  ] [ payload block         ]
+        [ Control Block ] [ Size Block                                  ] [ Payload Block         ]
         [ 0b10000000    ] [ 0b00000000 0b00000000 0b00000100 0b11010010 ] [ size: 1229 (1234 - 5) ]
 
     The payload block\:
-      This block is represented by the FSS-000e payload specification and its structure ad use is described in the next sections.
+      This block is represented by the FSS-000E payload specification and its structure ad use is described in the next sections.
 
       The following types of payload are received or sent\:
       1) controller payload.

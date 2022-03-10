@@ -150,6 +150,7 @@ extern "C" {
  *   - iki_text:                 FSS-000C: IKI Text.
  *   - basic_rule:               FSS-000D: Basic Rule.
  *   - payload:                  FSS-000E: Payload.
+ *   - simple_packet:            FSS-000F: Simple Packet.
  */
 #ifndef _di_f_fss_codes_
   enum {
@@ -168,6 +169,7 @@ extern "C" {
     f_fss_iki_text_e,
     f_fss_basic_rule_e,
     f_fss_payload_e,
+    f_fss_simple_packet_e,
   };
 #endif // _di_f_fss_codes_
 
