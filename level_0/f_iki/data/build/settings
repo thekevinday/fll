@@ -31,7 +31,7 @@ build_objects_library_static
 build_objects_program
 build_objects_program_shared
 build_objects_program_static
-build_sources_library iki.c private-iki.c iki/common.c
+build_sources_library iki.c private-iki.c iki/common.c iki/private-data.c iki/data.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_object
@@ -40,7 +40,7 @@ build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers iki.h iki/common.h
+build_sources_headers iki.h iki/common.h iki/data.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script

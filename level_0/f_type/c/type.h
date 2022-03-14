@@ -51,6 +51,8 @@ extern "C" {
  */
 #ifndef _di_f_status_t_
   typedef uint16_t f_status_t;
+
+  #define f_status_t_initialize F_none
 #endif // _di_f_status_t_
 
 /**
@@ -937,41 +939,43 @@ extern "C" {
  * Provide a 128-bit type wrapper, which could be either 64-bit or 128-bit depending on support.
  *
  * This is __int128_t when 128-bit is supported and int64_t when not supported.
+ *
+ * This provides the types without the normal "f_" leading prefixes to be more in line with the core types like int64_t.
  */
 #ifndef __SIZEOF_INT128__
 
   #ifndef _di_int128_t_
-    typedef __int128_t f_int128_t;
+    typedef __int128_t int128_t;
   #endif // _di_int128_t_
 
   #ifndef _di_uint128_t_
-    typedef __uint128_t f_uint128_t;
+    typedef __uint128_t uint128_t;
   #endif // _di_uint128_t_
 
 #else // __SIZEOF_INT128__
 
   #ifndef _di_int128_t_
-    typedef int64_t f_int128_t;
+    typedef int64_t int128_t;
   #endif // _di_int128_t_
 
   #ifndef _di_uint128_t_
-    typedef uint64_t f_uint128_t;
+    typedef uint64_t uint128_t;
   #endif // _di_uint128_t_
 
 #endif // __SIZEOF_INT128__
 
 /**
- * An array of f_int128_t.
+ * An array of int128_t.
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_int128_t.
+ * array: The array of int128_t.
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
 #ifndef _di_int128s_t_
   typedef struct {
-    f_int128_t *array;
+    int128_t *array;
 
     f_array_length_t size;
     f_array_length_t used;
@@ -984,11 +988,11 @@ extern "C" {
 #endif // _di_int128s_t_
 
 /**
- * An array of and array of f_int128_t.
+ * An array of and array of int128_t.
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of and array of f_int128_t.
+ * array: The array of and array of int128_t.
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
@@ -1007,17 +1011,17 @@ extern "C" {
 #endif // _di_int128ss_t_
 
 /**
- * An array of f_uint128_t.
+ * An array of uint128_t.
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of f_uint128_t.
+ * array: The array of uint128_t.
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
 #ifndef _di_uint128s_t_
   typedef struct {
-    f_uint128_t *array;
+    uint128_t *array;
 
     f_array_length_t size;
     f_array_length_t used;
@@ -1030,11 +1034,11 @@ extern "C" {
 #endif // _di_uint128s_t_
 
 /**
- * An array of and array of f_uint128_t.
+ * An array of and array of uint128_t.
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: The array of and array of f_uint128_t.
+ * array: The array of and array of uint128_t.
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
@@ -1173,8 +1177,10 @@ extern "C" {
  * used: A representation of how many bytes in name are in used (if 0, then there is no name, thus this can be seen as not a valid identifier).
  */
 #ifndef _di_f_fll_id_t_
+  #define f_fll_id_name_length_d 64
+
   typedef struct {
-    char name[64];
+    char name[f_fll_id_name_length_d];
 
     uint16_t type;
     uint8_t used;

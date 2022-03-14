@@ -24,7 +24,7 @@ extern "C" {
 
   #define f_fss_comment_t_initialize f_string_range_t_initialize
 
-  #define macro_f_fss_comment_t_initialize(length) macro_f_string_range_t_initialize(length)
+  #define macro_f_fss_comment_t_initialize(length) macro_f_string_range_t_initialize2(length)
 
   #define macro_f_fss_comment_t_clear(comment) macro_f_string_range_t_clear(comment)
 #endif // _di_f_fss_comment_t_

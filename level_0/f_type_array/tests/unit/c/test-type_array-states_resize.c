@@ -21,7 +21,7 @@ void test__f_type_array_states_resize__works(void **state) {
   free((void *) data.array);
 }
 
-void test__f_type_array_states_resize__fails_on_invalid_parameter(void **state) {
+void test__f_type_array_states_resize__parameter_checking(void **state) {
 
   const int length = 5;
   f_states_t data = f_states_t_initialize;

@@ -240,7 +240,7 @@ extern "C" {
 
     {
       f_state_t state = macro_f_state_t_initialize(fss_embedded_list_read_common_allocation_large_d, fss_embedded_list_read_common_allocation_small_d, 0, 0, 0, 0, 0);
-      f_string_range_t input = macro_f_string_range_t_initialize(main->buffer.used);
+      f_string_range_t input = macro_f_string_range_t_initialize2(main->buffer.used);
 
       objects_delimits->used = 0;
       contents_delimits->used = 0;

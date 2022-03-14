@@ -75,17 +75,16 @@ extern "C" {
 #if !defined(_di_f_utf_string_dynamic_adjust_) || !defined(_di_f_utf_string_dynamic_decimate_by_) || !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
   f_status_t private_f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t *dynamic) {
 
-    f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_utf_string_t), (void **) & dynamic->string);
+    const f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_utf_string_t), (void **) & dynamic->string);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      dynamic->size = length;
+    dynamic->size = length;
 
-      if (dynamic->used > dynamic->size) {
-        dynamic->used = length;
-      }
+    if (dynamic->used > dynamic->size) {
+      dynamic->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_dynamic_adjust_) || !defined(_di_f_utf_string_dynamic_decimate_by_) || !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
 
@@ -108,16 +107,15 @@ extern "C" {
   f_status_t private_f_utf_string_dynamic_resize(const f_array_length_t length, f_utf_string_dynamic_t *dynamic) {
 
     const f_status_t status = f_memory_resize(dynamic->size, length, sizeof(f_utf_string_t), (void **) & dynamic->string);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      dynamic->size = length;
+    dynamic->size = length;
 
-      if (dynamic->used > dynamic->size) {
-        dynamic->used = length;
-      }
+    if (dynamic->used > dynamic->size) {
+      dynamic->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_decrease_by_) || !defined(_di_f_utf_string_dynamic_increase_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_terminate_) || !defined(_di_f_utf_string_dynamic_terminate_after_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
 
@@ -137,16 +135,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(dynamics->size, length, sizeof(f_utf_string_dynamic_t), (void **) & dynamics->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      dynamics->size = length;
+    dynamics->size = length;
 
-      if (dynamics->used > dynamics->size) {
-        dynamics->used = length;
-      }
+    if (dynamics->used > dynamics->size) {
+      dynamics->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
 
@@ -189,16 +186,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(dynamics->size, length, sizeof(f_utf_string_dynamic_t), (void **) & dynamics->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      dynamics->size = length;
+    dynamics->size = length;
 
-      if (dynamics->used > dynamics->size) {
-        dynamics->used = length;
-      }
+    if (dynamics->used > dynamics->size) {
+      dynamics->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_)
 
@@ -221,16 +217,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(map_multis->size, length, sizeof(f_utf_string_map_multi_t), (void **) & map_multis->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      map_multis->size = length;
+    map_multis->size = length;
 
-      if (map_multis->used > map_multis->size) {
-        map_multis->used = length;
-      }
+    if (map_multis->used > map_multis->size) {
+      map_multis->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_decimate_by_)
 
@@ -253,16 +248,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(map_multis->size, length, sizeof(f_utf_string_map_multi_t), (void **) & map_multis->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      map_multis->size = length;
+    map_multis->size = length;
 
-      if (map_multis->used > map_multis->size) {
-        map_multis->used = length;
-      }
+    if (map_multis->used > map_multis->size) {
+      map_multis->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_terminate_) || !defined(_di_f_utf_string_map_multis_terminate_after_)
 
@@ -285,16 +279,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(maps->size, length, sizeof(f_utf_string_map_t), (void **) & maps->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      maps->size = length;
+    maps->size = length;
 
-      if (maps->used > maps->size) {
-        maps->used = length;
-      }
+    if (maps->used > maps->size) {
+      maps->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_maps_adjust_) || !defined(_di_f_utf_string_maps_decimate_by_)
 
@@ -317,16 +310,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(maps->size, length, sizeof(f_utf_string_map_t), (void **) & maps->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      maps->size = length;
+    maps->size = length;
 
-      if (maps->used > maps->size) {
-        maps->used = length;
-      }
+    if (maps->used > maps->size) {
+      maps->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_maps_decrease_by_) || !defined(_di_f_utf_string_maps_increase_) || !defined(_di_f_utf_string_maps_increase_by_) || !defined(_di_f_utf_string_maps_terminate_) || !defined(_di_f_utf_string_maps_terminate_after_)
 
@@ -351,6 +343,7 @@ extern "C" {
     }
 
     destination->used = destination->used + length;
+
     return F_none;
   }
 #endif // !defined(_di_f_utf_string_dynamic_mish_) || !defined(_di_f_utf_string_dynamic_partial_mish_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_) || !defined(_di_f_utf_string_dynamic_partial_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_assure_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_mish_) || !defined(_di_f_utf_string_prepend_assure_) || !defined(_di_f_utf_string_prepend_)
@@ -443,16 +436,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(triples->size, length, sizeof(f_utf_string_triple_t), (void **) & triples->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      triples->size = length;
+    triples->size = length;
 
-      if (triples->used > triples->size) {
-        triples->used = length;
-      }
+    if (triples->used > triples->size) {
+      triples->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
 
@@ -478,16 +470,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(triples->size, length, sizeof(f_utf_string_triple_t), (void **) & triples->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      triples->size = length;
+    triples->size = length;
 
-      if (triples->used > triples->size) {
-        triples->used = length;
-      }
+    if (triples->used > triples->size) {
+      triples->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_utf_string_triples_decrease_) || !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
 

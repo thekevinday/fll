@@ -131,6 +131,26 @@ extern "C" {
 #endif // _di_f_string_quantitys_adjust_
 
 /**
+ * Append the single source quantity onto the destination.
+ *
+ * @param source
+ *   The source quantity to append.
+ * @param destination
+ *   The destination quantitys the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantitys_append_
+  extern f_status_t f_string_quantitys_append(const f_string_quantity_t source, f_string_quantitys_t * const destination);
+#endif // _di_f_string_quantitys_append_
+
+/**
  * Append the source quantitys onto the destination.
  *
  * @param source
@@ -146,9 +166,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_quantitys_append_
-  extern f_status_t f_string_quantitys_append(const f_string_quantitys_t source, f_string_quantitys_t * const destination);
-#endif // _di_f_string_quantitys_append_
+#ifndef _di_f_string_quantitys_append_all_
+  extern f_status_t f_string_quantitys_append_all(const f_string_quantitys_t source, f_string_quantitys_t * const destination);
+#endif // _di_f_string_quantitys_append_all_
 
 /**
  * Resize the string quantitys array to a smaller size.
@@ -282,6 +302,46 @@ extern "C" {
 #ifndef _di_f_string_quantityss_adjust_
   extern f_status_t f_string_quantityss_adjust(const f_array_length_t length, f_string_quantityss_t * const quantityss);
 #endif // _di_f_string_quantityss_adjust_
+
+/**
+ * Append the single source quantitys onto the destination.
+ *
+ * @param source
+ *   The source quantitys to append.
+ * @param destination
+ *   The destination quantityss the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantityss_append_
+  extern f_status_t f_string_quantityss_append(const f_string_quantitys_t source, f_string_quantityss_t * const destination);
+#endif // _di_f_string_quantityss_append_
+
+/**
+ * Append the source quantityss onto the destination.
+ *
+ * @param source
+ *   The source quantityss to append.
+ * @param destination
+ *   The destination quantityss the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantityss_append_all_
+  extern f_status_t f_string_quantityss_append_all(const f_string_quantityss_t source, f_string_quantityss_t * const destination);
+#endif // _di_f_string_quantityss_append_all_
 
 /**
  * Resize the string quantityss array to a smaller size.

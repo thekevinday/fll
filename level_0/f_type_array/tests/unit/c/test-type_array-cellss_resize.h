@@ -22,6 +22,6 @@ extern void test__f_type_array_cellss_resize__works(void **state);
  *
  * @see f_type_array_cellss_resize()
  */
-extern void test__f_type_array_cellss_resize__fails_on_invalid_parameter(void **state);
+extern void test__f_type_array_cellss_resize__parameter_checking(void **state);
 
 #endif // _TEST__F_type_array__cellss_resize

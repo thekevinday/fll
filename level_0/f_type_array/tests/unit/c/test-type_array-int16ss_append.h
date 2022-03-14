@@ -29,6 +29,6 @@ extern void test__f_type_array_int16ss_append__returns_data_not(void **state);
  *
  * @see f_type_array_int16ss_append()
  */
-extern void test__f_type_array_int16ss_append__fails_on_invalid_parameter(void **state);
+extern void test__f_type_array_int16ss_append__parameter_checking(void **state);
 
 #endif // _TEST__F_type_array__int16ss_append

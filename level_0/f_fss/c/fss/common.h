@@ -268,7 +268,7 @@ enum {
 
   #define f_fss_object_t_initialize f_string_range_t_initialize
 
-  #define macro_f_fss_object_t_initialize(length) macro_f_string_range_t_initialize(length)
+  #define macro_f_fss_object_t_initialize(length) macro_f_string_range_t_initialize2(length)
 
   #define macro_f_fss_object_t_clear(object) macro_f_string_range_t_clear(object)
 #endif // _di_f_fss_object_t_

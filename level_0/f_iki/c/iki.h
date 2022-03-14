@@ -27,6 +27,7 @@
 
 // FLL-0 iki includes.
 #include <fll/level_0/iki/common.h>
+#include <fll/level_0/iki/data.h>
 
 #ifdef __cplusplus
 extern "C" {

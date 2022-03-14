@@ -45,10 +45,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamics_append().
+ *   Errors (with error bit) from: f_string_dynamics_append_all().
  *
  * @see f_string_dynamic_append()
- * @see f_string_dynamics_append()
+ * @see f_string_dynamics_append_all()
  */
 #ifndef _di_f_control_group_copy_
   extern f_status_t f_control_group_copy(const f_control_group_t source, f_control_group_t * const destination);

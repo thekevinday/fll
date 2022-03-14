@@ -42,7 +42,7 @@ extern "C" {
     f_iki_data_t iki_data = f_iki_data_t_initialize;
 
     if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
-      f_string_range_t buffer_range = macro_f_string_range_t_initialize(main->buffer.used);
+      f_string_range_t buffer_range = macro_f_string_range_t_initialize2(main->buffer.used);
 
       status = iki_read_process_at(main, &buffer_range);
 
@@ -69,7 +69,7 @@ extern "C" {
       status = iki_read_process_buffer_total(main, &iki_data);
     }
     else {
-      f_string_range_t buffer_range = macro_f_string_range_t_initialize(main->buffer.used);
+      f_string_range_t buffer_range = macro_f_string_range_t_initialize2(main->buffer.used);
 
       status = iki_read_process_at(main, &buffer_range);
 
@@ -332,7 +332,7 @@ extern "C" {
         } // for
 
         if (name_missed) {
-          macro_f_memory_structure_increment(status, names, 1, F_iki_default_allocation_step_d, macro_f_string_dynamics_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, names, 1, F_iki_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "macro_f_memory_structure_increment", F_true);
@@ -454,7 +454,7 @@ extern "C" {
   f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, f_iki_data_t *iki_data) {
 
     f_status_t status = F_none;
-    f_string_range_t range = macro_f_string_range_t_initialize(main->buffer.used);
+    f_string_range_t range = macro_f_string_range_t_initialize2(main->buffer.used);
 
     status = iki_read_process_at(main, &range);
 
@@ -579,7 +579,7 @@ extern "C" {
       for (j = 0; j < vocabulary->used; ++j) {
 
         if (fl_string_dynamic_partial_compare_string(main->parameters.arguments.array[index].string, main->buffer, main->parameters.arguments.array[index].used, vocabulary->array[j]) == F_equal_to) {
-          macro_f_memory_structure_increment(status, substitutionss[j], 1, F_iki_default_allocation_step_d, macro_iki_read_substitutions_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, substitutionss[j], 1, F_iki_default_allocation_small_d, macro_iki_read_substitutions_t_resize, F_array_too_large);
           if (F_status_is_error(status)) return status;
 
           index = parameter->values.array[i + 1];

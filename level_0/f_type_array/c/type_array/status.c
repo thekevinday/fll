@@ -17,16 +17,26 @@ extern "C" {
 #endif // _di_f_statuss_adjust_
 
 #ifndef _di_f_statuss_append_
-  f_status_t f_statuss_append(const f_statuss_t source, f_statuss_t *destination) {
+  f_status_t f_statuss_append(const f_status_t source, f_statuss_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_statuss_append(source, destination);
+  }
+#endif // _di_f_statuss_append_
+
+#ifndef _di_f_statuss_append_all_
+  f_status_t f_statuss_append_all(const f_statuss_t source, f_statuss_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!source.used) return F_data_not;
 
-    return private_f_statuss_append(source, destination);
+    return private_f_statuss_append_all(source, destination);
   }
-#endif // _di_f_statuss_append_
+#endif // _di_f_statuss_append_all_
 
 #ifndef _di_f_statuss_decimate_by_
   f_status_t f_statuss_decimate_by(const f_array_length_t amount, f_statuss_t *statuss) {
@@ -131,7 +141,31 @@ extern "C" {
 #endif // _di_f_statusss_adjust_
 
 #ifndef _di_f_statusss_append_
-  f_status_t f_statusss_append(const f_statusss_t source, f_statusss_t *destination) {
+  f_status_t f_statusss_append(const f_statuss_t source, f_statusss_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used + 1 > destination->size) {
+      status = private_f_statusss_resize(destination->used + F_memory_default_allocation_small_d, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    status = private_f_statuss_append_all(source, &destination->array[destination->used]);
+    if (F_status_is_error(status)) return status;
+
+    ++destination->used;
+
+    return F_none;
+  }
+#endif // _di_f_statusss_append_
+
+#ifndef _di_f_statusss_append_all_
+  f_status_t f_statusss_append_all(const f_statusss_t source, f_statusss_t *destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -146,13 +180,18 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
-      status = private_f_statuss_append(source.array[i], &destination->array[destination->used]);
-      if (F_status_is_error(status)) return status;
+
+      destination->array[destination->used].used = 0;
+
+      if (source.array[i].used) {
+        status = private_f_statuss_append_all(source.array[i], &destination->array[destination->used]);
+        if (F_status_is_error(status)) return status;
+      }
     } // for
 
     return F_none;
   }
-#endif // _di_f_statusss_append_
+#endif // _di_f_statusss_append_all_
 
 #ifndef _di_f_statusss_decimate_by_
   f_status_t f_statusss_decimate_by(const f_array_length_t amount, f_statusss_t *statusss) {

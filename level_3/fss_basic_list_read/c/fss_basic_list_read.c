@@ -456,7 +456,7 @@ extern "C" {
               --length;
             }
 
-            f_string_range_t range = macro_f_string_range_t_initialize(length);
+            f_string_range_t range = macro_f_string_range_t_initialize2(length);
 
             // Ignore leading plus sign.
             if (data.argv[index].string[0] == f_string_ascii_plus_s.string[0]) {

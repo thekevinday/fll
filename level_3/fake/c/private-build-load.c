@@ -105,7 +105,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(*status)) {
-        f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
+        f_string_range_t range = macro_f_string_range_t_initialize2(buffer.used);
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
         {

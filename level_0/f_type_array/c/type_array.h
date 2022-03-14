@@ -29,6 +29,11 @@
 #include <fll/level_0/type_array/int128.h>
 #include <fll/level_0/type_array/state.h>
 #include <fll/level_0/type_array/status.h>
+#include <fll/level_0/type_array/uint8.h>
+#include <fll/level_0/type_array/uint16.h>
+#include <fll/level_0/type_array/uint32.h>
+#include <fll/level_0/type_array/uint64.h>
+#include <fll/level_0/type_array/uint128.h>
 
 #ifdef __cplusplus
 extern "C" {

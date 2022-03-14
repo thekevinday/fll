@@ -34,8 +34,8 @@ extern "C" {
 
   #define f_string_range_t_initialize { 1, 0 }
 
-  #define macro_f_string_range_t_initialize(length) { length ? 0 : 1, length ? length - 1 : 0 }
-  #define macro_f_string_range_t_initialize2(start, stop) { start, stop }
+  #define macro_f_string_range_t_initialize(start, stop) { start, stop }
+  #define macro_f_string_range_t_initialize2(length) { length ? 0 : 1, length ? length - 1 : 0 }
 
   #define macro_f_string_range_t_clear(range) \
     range.start = 1; \
@@ -129,6 +129,26 @@ extern "C" {
 #endif // _di_f_string_ranges_adjust_
 
 /**
+ * Append the single source range onto the destination.
+ *
+ * @param source
+ *   The source range to append.
+ * @param destination
+ *   The destination ranges the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_ranges_append_
+  extern f_status_t f_string_ranges_append(const f_string_range_t source, f_string_ranges_t * const destination);
+#endif // _di_f_string_ranges_append_
+
+/**
  * Append the source ranges onto the destination.
  *
  * @param source
@@ -144,9 +164,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_ranges_append_
-  extern f_status_t f_string_ranges_append(const f_string_ranges_t source, f_string_ranges_t * const destination);
-#endif // _di_f_string_ranges_append_
+#ifndef _di_f_string_ranges_append_all_
+  extern f_status_t f_string_ranges_append_all(const f_string_ranges_t source, f_string_ranges_t * const destination);
+#endif // _di_f_string_ranges_append_all_
 
 /**
  * Resize the string ranges array to a smaller size.
@@ -283,6 +303,46 @@ extern "C" {
 #ifndef _di_f_string_rangess_adjust_
   extern f_status_t f_string_rangess_adjust(const f_array_length_t length, f_string_rangess_t * const rangess);
 #endif // _di_f_string_rangess_adjust_
+
+/**
+ * Append the single source ranges onto the destination.
+ *
+ * @param source
+ *   The source ranges to append.
+ * @param destination
+ *   The destination rangess the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_rangess_append_
+  extern f_status_t f_string_rangess_append(const f_string_ranges_t source, f_string_rangess_t * const destination);
+#endif // _di_f_string_rangess_append_
+
+/**
+ * Append the source rangess onto the destination.
+ *
+ * @param source
+ *   The source rangess to append.
+ * @param destination
+ *   The destination rangess the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_rangess_append_all_
+  extern f_status_t f_string_rangess_append_all(const f_string_rangess_t source, f_string_rangess_t * const destination);
+#endif // _di_f_string_rangess_append_all_
 
 /**
  * Resize the string rangess array to a smaller size.

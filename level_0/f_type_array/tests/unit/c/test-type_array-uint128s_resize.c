@@ -21,7 +21,7 @@ void test__f_type_array_uint128s_resize__works(void **state) {
   free((void *) data.array);
 }
 
-void test__f_type_array_uint128s_resize__fails_on_invalid_parameter(void **state) {
+void test__f_type_array_uint128s_resize__parameter_checking(void **state) {
 
   const int length = 5;
   f_uint128s_t data = f_uint128s_t_initialize;

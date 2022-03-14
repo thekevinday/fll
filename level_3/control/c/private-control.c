@@ -331,7 +331,7 @@ extern "C" {
 
     {
       f_state_t state = macro_f_state_t_initialize(control_allocation_large_d, control_allocation_small_d, 0, &control_signal_state_interrupt_fss, 0, (void *) main, 0);
-      f_string_range_t range_packet = macro_f_string_range_t_initialize(data->cache.large.used);
+      f_string_range_t range_packet = macro_f_string_range_t_initialize2(data->cache.large.used);
 
       status = fll_fss_basic_list_read(data->cache.large, state, &range_packet, &data->cache.packet_objects, &data->cache.packet_contents, &data->cache.delimits, 0, 0);
       if (F_status_is_error(status)) return status;

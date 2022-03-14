@@ -9,51 +9,78 @@ extern "C" {
   f_status_t private_f_states_adjust(const f_array_length_t length, f_states_t *states) {
 
     const f_status_t status = f_memory_adjust(states->size, length, sizeof(f_state_t), (void **) & states->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      states->size = length;
+    states->size = length;
 
-      if (states->used > states->size) {
-        states->used = length;
-      }
+    if (states->used > states->size) {
+      states->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_states_adjust_) || !defined(_di_f_states_decimate_by_)
 
 #if !defined(_di_f_states_append_) || !defined(_di_f_statess_append_)
-  extern f_status_t private_f_states_append(const f_states_t source, f_states_t *destination) {
+  extern f_status_t private_f_states_append(const f_state_t source, f_states_t *destination) {
 
-    f_status_t status = F_none;
-
-    if (destination->used + source.used > destination->size) {
-      status = private_f_states_adjust(destination->used + source.used, destination);
+    if (destination->used + 1 > destination->size) {
+      const f_status_t status = private_f_states_adjust(destination->used + F_memory_default_allocation_small_d, destination);
       if (F_status_is_error(status)) return status;
     }
 
-    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
-      destination->array[destination->used] = source.array[i];
-    } // for
+    destination->array[destination->used].step_large = source.step_large;
+    destination->array[destination->used].step_small = source.step_small;
+
+    destination->array[destination->used].handle = source.handle;
+    destination->array[destination->used].interrupt = source.interrupt;
+
+    destination->array[destination->used].callbacks = source.callbacks;
+    destination->array[destination->used].custom = source.custom;
+    destination->array[destination->used++].data = source.data;
 
     return F_none;
   }
 #endif // !defined(_di_f_states_append_) || !defined(_di_f_statess_append_)
 
+#if !defined(_di_f_states_append_) || !defined(_di_f_states_append_all_) || !defined(_di_f_statess_append_all_)
+  extern f_status_t private_f_states_append_all(const f_states_t source, f_states_t *destination) {
+
+    if (destination->used + source.used > destination->size) {
+      const f_status_t status = private_f_states_adjust(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i) {
+
+      destination->array[destination->used].step_large = source.array[i].step_large;
+      destination->array[destination->used].step_small = source.array[i].step_small;
+
+      destination->array[destination->used].handle = source.array[i].handle;
+      destination->array[destination->used].interrupt = source.array[i].interrupt;
+
+      destination->array[destination->used].callbacks = source.array[i].callbacks;
+      destination->array[destination->used].custom = source.array[i].custom;
+      destination->array[destination->used++].data = source.array[i].data;
+    } // for
+
+    return F_none;
+  }
+#endif // !defined(_di_f_states_append_) || !defined(_di_f_states_append_all_) || !defined(_di_f_statess_append_all_)
+
 #if !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decimate_by_) || !defined(_di_f_statess_append_)
   f_status_t private_f_states_resize(const f_array_length_t length, f_states_t *states) {
 
     const f_status_t status = f_memory_resize(states->size, length, sizeof(f_state_t), (void **) & states->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      states->size = length;
+    states->size = length;
 
-      if (states->used > states->size) {
-        states->used = length;
-      }
+    if (states->used > states->size) {
+      states->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_states_resize_) || !defined(_di_f_states_append_) || !defined(_di_f_states_decimate_by_) || !defined(_di_f_statess_append_)
 
@@ -72,16 +99,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(statess->size, length, sizeof(f_states_t), (void **) & statess->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      statess->size = length;
+    statess->size = length;
 
-      if (statess->used > statess->size) {
-        statess->used = length;
-      }
+    if (statess->used > statess->size) {
+      statess->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_statess_adjust_) || !defined(_di_f_statess_decimate_by_)
 
@@ -100,16 +126,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(statess->size, length, sizeof(f_states_t), (void **) & statess->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      statess->size = length;
+    statess->size = length;
 
-      if (statess->used > statess->size) {
-        statess->used = length;
-      }
+    if (statess->used > statess->size) {
+      statess->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_statess_decrease_by_) || !defined(_di_f_statess_increase_) || !defined(_di_f_statess_increase_by_) || !defined(_di_f_statess_resize_)
 

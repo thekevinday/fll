@@ -29,16 +29,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(attributes->size, length, sizeof(f_thread_attribute_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_attributes_adjust_) || !defined(_di_f_thread_attributes_decimate_by_)
 
@@ -53,16 +52,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(attributes->size, length, sizeof(f_thread_attribute_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_attributes_decrease_) || !defined(_di_f_thread_attributes_decrease_by_) || !defined(_di_f_thread_attributes_increase_) || !defined(_di_f_thread_attributes_increase_by_)
 
@@ -90,16 +88,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(barriers->size, length, sizeof(f_thread_barrier_t), (void **) & barriers->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      barriers->size = length;
+    barriers->size = length;
 
-      if (barriers->used > barriers->size) {
-        barriers->used = length;
-      }
+    if (barriers->used > barriers->size) {
+      barriers->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_barriers_adjust_) || !defined(_di_f_thread_barriers_decimate_by_)
 
@@ -114,16 +111,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(barriers->size, length, sizeof(f_thread_barrier_t), (void **) & barriers->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      barriers->size = length;
+    barriers->size = length;
 
-      if (barriers->used > barriers->size) {
-        barriers->used = length;
-      }
+    if (barriers->used > barriers->size) {
+      barriers->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_barriers_decrease_) || !defined(_di_f_thread_barriers_decrease_by_) || !defined(_di_f_thread_barriers_increase_) || !defined(_di_f_thread_barriers_increase_by_)
 
@@ -151,16 +147,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(attributes->size, length, sizeof(f_thread_barrier_attribute_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_barrier_attributes_adjust_) || !defined(_di_f_thread_barrier_attributes_decimate_by_)
 
@@ -175,16 +170,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(attributes->size, length, sizeof(f_thread_barrier_attribute_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_barrier_attributes_decrease_) || !defined(_di_f_thread_barrier_attributes_decrease_by_) || !defined(_di_f_thread_barrier_attributes_increase_) || !defined(_di_f_thread_barrier_attributes_increase_by_)
 
@@ -215,16 +209,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(attributes->size, length, sizeof(f_thread_condition_attribute_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_condition_attributes_adjust_) || !defined(_di_f_thread_condition_attributes_decimate_by_)
 
@@ -239,16 +232,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(attributes->size, length, sizeof(f_thread_condition_attribute_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_condition_attributes_decrease_) || !defined(_di_f_thread_condition_attributes_decrease_by_) || !defined(_di_f_thread_condition_attributes_increase_) || !defined(_di_f_thread_condition_attributes_increase_by_)
 
@@ -279,16 +271,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(conditions->size, length, sizeof(f_thread_condition_t), (void **) & conditions->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      conditions->size = length;
+    conditions->size = length;
 
-      if (conditions->used > conditions->size) {
-        conditions->used = length;
-      }
+    if (conditions->used > conditions->size) {
+      conditions->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
 
@@ -303,16 +294,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(conditions->size, length, sizeof(f_thread_condition_t), (void **) & conditions->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      conditions->size = length;
+    conditions->size = length;
 
-      if (conditions->used > conditions->size) {
-        conditions->used = length;
-      }
+    if (conditions->used > conditions->size) {
+      conditions->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
 
@@ -340,16 +330,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(keys->size, length, sizeof(f_thread_key_t), (void **) & keys->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      keys->size = length;
+    keys->size = length;
 
-      if (keys->used > keys->size) {
-        keys->used = length;
-      }
+    if (keys->used > keys->size) {
+      keys->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_)
 
@@ -364,16 +353,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(keys->size, length, sizeof(f_thread_key_t), (void **) & keys->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      keys->size = length;
+    keys->size = length;
 
-      if (keys->used > keys->size) {
-        keys->used = length;
-      }
+    if (keys->used > keys->size) {
+      keys->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_keys_decrease_) || !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_)
 
@@ -404,16 +392,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(locks->size, length, sizeof(f_thread_lock_t), (void **) & locks->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      locks->size = length;
+    locks->size = length;
 
-      if (locks->used > locks->size) {
-        locks->used = length;
-      }
+    if (locks->used > locks->size) {
+      locks->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
 
@@ -428,16 +415,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(locks->size, length, sizeof(f_thread_lock_t), (void **) & locks->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      locks->size = length;
+    locks->size = length;
 
-      if (locks->used > locks->size) {
-        locks->used = length;
-      }
+    if (locks->used > locks->size) {
+      locks->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
 
@@ -468,16 +454,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(attributes->size, length, sizeof(f_thread_lock_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_lock_attributes_adjust_) || !defined(_di_f_thread_lock_attributes_decimate_by_)
 
@@ -492,16 +477,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(attributes->size, length, sizeof(f_thread_lock_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_lock_attributes_decrease_) || !defined(_di_f_thread_lock_attributes_decrease_by_) || !defined(_di_f_thread_lock_attributes_increase_) || !defined(_di_f_thread_lock_attributes_increase_by_)
 
@@ -532,16 +516,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(attributes->size, length, sizeof(f_thread_mutex_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_)
 
@@ -556,16 +539,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(attributes->size, length, sizeof(f_thread_mutex_t), (void **) & attributes->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      attributes->size = length;
+    attributes->size = length;
 
-      if (attributes->used > attributes->size) {
-        attributes->used = length;
-      }
+    if (attributes->used > attributes->size) {
+      attributes->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_mutex_attributes_decrease_) || !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_)
 
@@ -596,16 +578,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(mutexs->size, length, sizeof(f_thread_mutex_t), (void **) & mutexs->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      mutexs->size = length;
+    mutexs->size = length;
 
-      if (mutexs->used > mutexs->size) {
-        mutexs->used = length;
-      }
+    if (mutexs->used > mutexs->size) {
+      mutexs->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_mutexs_adjust_) || !defined(_di_f_thread_mutexs_decimate_by_)
 
@@ -620,16 +601,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(mutexs->size, length, sizeof(f_thread_mutex_t), (void **) & mutexs->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      mutexs->size = length;
+    mutexs->size = length;
 
-      if (mutexs->used > mutexs->size) {
-        mutexs->used = length;
-      }
+    if (mutexs->used > mutexs->size) {
+      mutexs->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_mutexs_decrease_) || !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_)
 
@@ -683,16 +663,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(semaphores->size, length, sizeof(f_thread_semaphore_t), (void **) & semaphores->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      semaphores->size = length;
+    semaphores->size = length;
 
-      if (semaphores->used > semaphores->size) {
-        semaphores->used = length;
-      }
+    if (semaphores->used > semaphores->size) {
+      semaphores->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_semaphores_decrease_) || !defined(_di_f_thread_semaphores_decrease_by_) || !defined(_di_f_thread_semaphores_increase_) || !defined(_di_f_thread_semaphores_increase_by_)
 
@@ -707,16 +686,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(sets->size, length, sizeof(f_thread_set_t), (void **) & sets->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      sets->size = length;
+    sets->size = length;
 
-      if (sets->used > sets->size) {
-        sets->used = length;
-      }
+    if (sets->used > sets->size) {
+      sets->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_sets_adjust_) || !defined(_di_f_thread_sets_decimate_by_)
 
@@ -731,16 +709,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(sets->size, length, sizeof(f_thread_set_t), (void **) & sets->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      sets->size = length;
+    sets->size = length;
 
-      if (sets->used > sets->size) {
-        sets->used = length;
-      }
+    if (sets->used > sets->size) {
+      sets->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_sets_decrease_) || !defined(_di_f_thread_sets_decrease_by_) || !defined(_di_f_thread_sets_increase_) || !defined(_di_f_thread_sets_increase_by_)
 
@@ -771,16 +748,15 @@ extern "C" {
     } // for
 
     status = f_memory_adjust(spins->size, length, sizeof(f_thread_spin_t), (void **) & spins->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      spins->size = length;
+    spins->size = length;
 
-      if (spins->used > spins->size) {
-        spins->used = length;
-      }
+    if (spins->used > spins->size) {
+      spins->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_spins_adjust_) || !defined(_di_f_thread_spins_decimate_by_)
 
@@ -796,16 +772,15 @@ extern "C" {
     } // for
 
     status = f_memory_resize(spins->size, length, sizeof(f_thread_spin_t), (void **) & spins->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      spins->size = length;
+    spins->size = length;
 
-      if (spins->used > spins->size) {
-        spins->used = length;
-      }
+    if (spins->used > spins->size) {
+      spins->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_f_thread_spins_decrease_) || !defined(_di_f_thread_spins_decrease_by_) || !defined(_di_f_thread_spins_increase_) || !defined(_di_f_thread_spins_increase_by_)
 

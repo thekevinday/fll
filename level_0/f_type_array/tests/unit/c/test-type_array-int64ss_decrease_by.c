@@ -29,7 +29,7 @@ void test__f_type_array_int64ss_decrease_by__works(void **state) {
   assert_null(data.array);
 }
 
-void test__f_type_array_int64ss_decrease_by__fails_on_invalid_parameter(void **state) {
+void test__f_type_array_int64ss_decrease_by__parameter_checking(void **state) {
 
   const int length = 5;
   f_int64ss_t data = f_int64s_t_initialize;

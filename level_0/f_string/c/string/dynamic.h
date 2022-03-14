@@ -422,6 +422,8 @@ extern "C" {
 /**
  * Append the source string onto the destination, but restricted to the given range.
  *
+ * If range.stop is on or after source.used, then source.used - 1 is used as the stopping point.
+ *
  * @param source
  *   The source string to append.
  * @param range
@@ -432,6 +434,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -458,6 +461,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -486,6 +490,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -512,6 +517,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -540,6 +546,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -570,6 +577,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -598,6 +606,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -628,6 +637,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -654,6 +664,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -682,6 +693,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -710,6 +722,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -736,6 +749,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -760,7 +774,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -786,7 +799,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -812,7 +824,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -836,7 +847,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1010,6 +1020,27 @@ extern "C" {
 #endif // _di_f_string_dynamics_adjust_
 
 /**
+ * Append the single source string onto the destination.
+ *
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_dynamics_append_
+  extern f_status_t f_string_dynamics_append(const f_string_dynamic_t source, f_string_dynamics_t * const destination);
+#endif // _di_f_string_dynamics_append_
+
+/**
  * Append the source strings onto the destination.
  *
  * @param source
@@ -1026,9 +1057,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_dynamics_append_
-  extern f_status_t f_string_dynamics_append(const f_string_dynamics_t source, f_string_dynamics_t * const destination);
-#endif // _di_f_string_dynamics_append_
+#ifndef _di_f_string_dynamics_append_all_
+  extern f_status_t f_string_dynamics_append_all(const f_string_dynamics_t source, f_string_dynamics_t * const destination);
+#endif // _di_f_string_dynamics_append_all_
 
 /**
  * Resize the dynamic string array to a smaller size.
@@ -1167,6 +1198,27 @@ extern "C" {
 #endif // _di_f_string_dynamicss_adjust_
 
 /**
+ * Append the single source string onto the destination.
+ *
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_dynamicss_append_
+  extern f_status_t f_string_dynamicss_append(const f_string_dynamics_t source, f_string_dynamicss_t * const destination);
+#endif // _di_f_string_dynamicss_append_
+
+/**
  * Append the source strings onto the destination.
  *
  * @param source
@@ -1183,9 +1235,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_string_dynamicss_append_
-  extern f_status_t f_string_dynamicss_append(const f_string_dynamicss_t source, f_string_dynamicss_t * const destination);
-#endif // _di_f_string_dynamicss_append_
+#ifndef _di_f_string_dynamicss_append_all_
+  extern f_status_t f_string_dynamicss_append_all(const f_string_dynamicss_t source, f_string_dynamicss_t * const destination);
+#endif // _di_f_string_dynamicss_append_all_
 
 /**
  * Resize the dynamics string array to a smaller size.

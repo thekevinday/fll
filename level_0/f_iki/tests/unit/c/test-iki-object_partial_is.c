@@ -27,20 +27,20 @@ void test__f_iki_object_partial_is__returns_false(void **state) {
   };
 
   const f_string_range_t ranges[] = {
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 10),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 10),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 10),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 10),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 10),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 10),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 10),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 10),
   };
 
   for (uint8_t i = 0; i < 14; ++i) {
@@ -65,7 +65,7 @@ void test__f_iki_object_partial_is__returns_data_not(void **state) {
 void test__f_iki_object_partial_is__returns_data_not_eos(void **state) {
 
   {
-    const f_string_range_t range = macro_f_string_range_t_initialize2(f_string_ascii_a_s.used, f_string_ascii_a_s.used);
+    const f_string_range_t range = macro_f_string_range_t_initialize(f_string_ascii_a_s.used, f_string_ascii_a_s.used);
 
     const f_status_t status = f_iki_object_partial_is(f_string_ascii_a_s, range);
 
@@ -97,11 +97,11 @@ void test__f_iki_object_partial_is__returns_true(void **state) {
   };
 
   const f_string_range_t ranges[] = {
-    macro_f_string_range_t_initialize2(4, 8),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 10),
-    macro_f_string_range_t_initialize2(4, 8),
+    macro_f_string_range_t_initialize(4, 8),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 10),
+    macro_f_string_range_t_initialize(4, 8),
   };
 
   for (uint8_t i = 0; i < 5; ++i) {

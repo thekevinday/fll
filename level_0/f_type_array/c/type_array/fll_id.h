@@ -36,12 +36,12 @@ extern "C" {
 #endif // _di_f_fll_ids_adjust_
 
 /**
- * Append the source ids onto the destination.
+ * Append the single source fll_id onto the destination.
  *
  * @param source
- *   The source ids to append.
+ *   The source fll_id to append.
  * @param destination
- *   The destination ids the source is appended onto.
+ *   The destination fll_ids the source is appended onto.
  *
  * @return
  *   F_none on success.
@@ -52,8 +52,28 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_fll_ids_append_
-  extern f_status_t f_fll_ids_append(const f_fll_ids_t source, f_fll_ids_t *destination);
+  extern f_status_t f_fll_ids_append(const f_fll_id_t source, f_fll_ids_t *destination);
 #endif // _di_f_fll_ids_append_
+
+/**
+ * Append the source fll_ids onto the destination.
+ *
+ * @param source
+ *   The source fll_ids to append.
+ * @param destination
+ *   The destination fll_ids the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_fll_ids_append_all_
+  extern f_status_t f_fll_ids_append_all(const f_fll_ids_t source, f_fll_ids_t *destination);
+#endif // _di_f_fll_ids_append_all_
 
 /**
  * Resize the string ids array to a smaller size.
@@ -193,10 +213,10 @@ extern "C" {
 #endif // _di_f_fll_idss_adjust_
 
 /**
- * Append the source idss onto the destination.
+ * Append the single source fll_ids onto the destination.
  *
  * @param source
- *   The source idss to append.
+ *   The source fll_ids to append.
  * @param destination
  *   The destination ranges the source is appended onto.
  *
@@ -209,28 +229,28 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_fll_idss_append_
-  extern f_status_t f_fll_idss_append(const f_fll_idss_t source, f_fll_idss_t *destination);
+  extern f_status_t f_fll_idss_append(const f_fll_ids_t source, f_fll_idss_t *destination);
 #endif // _di_f_fll_idss_append_
 
 /**
- * Resize the string idss array.
+ * Append the source fll_idss onto the destination.
  *
- * @param length
- *   The new size to use.
- * @param idss
- *   The string idss array to resize.
+ * @param source
+ *   The source fll_idss to append.
+ * @param destination
+ *   The destination ranges the source is appended onto.
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
+ *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_fll_idss_adjust_
-  extern f_status_t f_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss);
-#endif // _di_f_fll_idss_adjust_
+#ifndef _di_f_fll_idss_append_all_
+  extern f_status_t f_fll_idss_append_all(const f_fll_idss_t source, f_fll_idss_t *destination);
+#endif // _di_f_fll_idss_append_all_
 
 /**
  * Resize the string idss array to a smaller size.

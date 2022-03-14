@@ -27,6 +27,7 @@
 #include <fll/level_0/string/static.h>
 #include <fll/level_0/string/dynamic.h>
 #include <fll/level_0/string/map.h>
+#include <fll/level_0/string/map_multi.h>
 #include <fll/level_0/string/quantity.h>
 #include <fll/level_0/string/triple.h>
 

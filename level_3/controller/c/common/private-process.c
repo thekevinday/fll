@@ -29,19 +29,16 @@ extern "C" {
 #ifndef _di_controller_pids_resize_
   f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t * const pids) {
 
-    f_status_t status = F_none;
+    const f_status_t status = f_memory_resize(pids->size, length, sizeof(controller_rule_t), (void **) & pids->array);
+    if (F_status_is_error(status)) return status;
 
-    status = f_memory_resize(pids->size, length, sizeof(controller_rule_t), (void **) & pids->array);
+    pids->size = length;
 
-    if (F_status_is_error_not(status)) {
-      pids->size = length;
-
-      if (pids->used > pids->size) {
-        pids->used = length;
-      }
+    if (pids->used > pids->size) {
+      pids->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // _di_controller_pids_resize_
 
@@ -114,9 +111,9 @@ extern "C" {
     } // for
 
     status = f_memory_resize(processs->size, length, sizeof(controller_process_t), (void **) & processs->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status) && length) {
-
+    if (length) {
       controller_process_t *process = 0;
 
       // The lock must be initialized, but only once, so initialize immediately upon allocation.
@@ -147,11 +144,10 @@ extern "C" {
 
           return status;
         }
-        else {
-          for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
-            process->rule.status[i] = F_known_not;
-          } // for
-        }
+
+        for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
+          process->rule.status[i] = F_known_not;
+        } // for
       } // for
 
       processs->size = length;
@@ -161,7 +157,7 @@ extern "C" {
       }
     }
 
-    return status;
+    return F_none;
   }
 #endif // _di_controller_processs_resize_
 

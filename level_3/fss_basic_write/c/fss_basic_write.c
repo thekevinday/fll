@@ -325,7 +325,7 @@ extern "C" {
 
         // Even though this standard does not utilize this parameter, provide the validation for consistency.
         if (argv[index].used) {
-          f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
+          f_string_range_t range = macro_f_string_range_t_initialize2(argv[index].used);
 
           for (; range.start < argv[index].used; ++range.start) {
 

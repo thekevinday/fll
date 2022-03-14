@@ -112,16 +112,15 @@ extern "C" {
     } // for
 
     const f_status_t status = f_memory_resize(tasks->size, length, sizeof(controller_task_t), (void **) & tasks->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      tasks->size = length;
+    tasks->size = length;
 
-      if (tasks->used > tasks->size) {
-        tasks->used = length;
-      }
+    if (tasks->used > tasks->size) {
+      tasks->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // _di_controller_tasks_resize_
 

@@ -330,7 +330,7 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
 
         if (argv[index].used) {
-          f_string_range_t range = macro_f_string_range_t_initialize(argv[index].used);
+          f_string_range_t range = macro_f_string_range_t_initialize2(argv[index].used);
 
           for (; range.start < argv[index].used; range.start++) {
 

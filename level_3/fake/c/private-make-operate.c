@@ -156,9 +156,9 @@ extern "C" {
     const f_string_static_t vocabulary_define = macro_f_string_static_t_initialize2(F_iki_vocabulary_0002_define_s, F_iki_vocabulary_0002_define_s_length);
     const f_string_static_t vocabulary_parameter = macro_f_string_static_t_initialize2(F_iki_vocabulary_0002_parameter_s, F_iki_vocabulary_0002_parameter_s_length);
 
-    const f_string_range_t range_context = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_context_s_length);
-    const f_string_range_t range_define = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_define_s_length);
-    const f_string_range_t range_parameter = macro_f_string_range_t_initialize(F_iki_vocabulary_0002_parameter_s_length);
+    const f_string_range_t range_context = macro_f_string_range_t_initialize2(F_iki_vocabulary_0002_context_s_length);
+    const f_string_range_t range_define = macro_f_string_range_t_initialize2(F_iki_vocabulary_0002_define_s_length);
+    const f_string_range_t range_parameter = macro_f_string_range_t_initialize2(F_iki_vocabulary_0002_parameter_s_length);
 
     f_iki_data_t iki_data = f_iki_data_t_initialize;
 

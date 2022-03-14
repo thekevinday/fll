@@ -156,7 +156,7 @@ extern "C" {
 
     if (mode) {
       f_array_length_t number = 0;
-      f_string_range_t range = macro_f_string_range_t_initialize(data->name.used);
+      f_string_range_t range = macro_f_string_range_t_initialize2(data->name.used);
 
       for (f_array_length_t i = 0; i < data->name.used; ++i) {
 

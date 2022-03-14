@@ -40,16 +40,13 @@ extern "C" {
     } // for
 
     status = f_memory_resize(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
-
-    if (F_status_is_error_not(status)) {
-      items->size = length;
-
-      if (items->used > items->size) {
-        items->used = length;
-      }
-    }
-
     if (F_status_is_error(status)) return status;
+
+    items->size = length;
+
+    if (items->used > items->size) {
+      items->used = length;
+    }
 
     return F_none;
   }
@@ -128,16 +125,13 @@ extern "C" {
     } // for
 
     status = f_memory_resize(nameds->size, length, sizeof(f_fss_named_t), (void **) & nameds->array);
-
-    if (F_status_is_error_not(status)) {
-      nameds->size = length;
-
-      if (nameds->used > nameds->size) {
-        nameds->used = length;
-      }
-    }
-
     if (F_status_is_error(status)) return status;
+
+    nameds->size = length;
+
+    if (nameds->used > nameds->size) {
+      nameds->used = length;
+    }
 
     return F_none;
   }
@@ -180,16 +174,13 @@ extern "C" {
     } // for
 
     status = f_memory_resize(nest->size, length, sizeof(f_fss_items_t), (void **) & nest->depth);
-
-    if (F_status_is_error_not(status)) {
-      nest->size = length;
-
-      if (nest->used > nest->size) {
-        nest->used = length;
-      }
-    }
-
     if (F_status_is_error(status)) return status;
+
+    nest->size = length;
+
+    if (nest->used > nest->size) {
+      nest->used = length;
+    }
 
     return F_none;
   }
@@ -232,16 +223,13 @@ extern "C" {
     } // for
 
     status = f_memory_resize(nests->size, length, sizeof(f_fss_nest_t), (void **) & nests->array);
-
-    if (F_status_is_error_not(status)) {
-      nests->size = length;
-
-      if (nests->used > nests->size) {
-        nests->used = length;
-      }
-    }
-
     if (F_status_is_error(status)) return status;
+
+    nests->size = length;
+
+    if (nests->used > nests->size) {
+      nests->used = length;
+    }
 
     return F_none;
   }
@@ -375,16 +363,13 @@ extern "C" {
     } // for
 
     status = f_memory_resize(set_quotes->size, length, sizeof(f_fss_set_quote_t), (void **) & set_quotes->array);
-
-    if (F_status_is_error_not(status)) {
-      set_quotes->size = length;
-
-      if (set_quotes->used > set_quotes->size) {
-        set_quotes->used = length;
-      }
-    }
-
     if (F_status_is_error(status)) return status;
+
+    set_quotes->size = length;
+
+    if (set_quotes->used > set_quotes->size) {
+      set_quotes->used = length;
+    }
 
     return F_none;
   }
@@ -435,16 +420,13 @@ extern "C" {
     } // for
 
     status = f_memory_resize(sets->size, length, sizeof(f_fss_set_t), (void **) & sets->array);
-
-    if (F_status_is_error_not(status)) {
-      sets->size = length;
-
-      if (sets->used > sets->size) {
-        sets->used = length;
-      }
-    }
-
     if (F_status_is_error(status)) return status;
+
+    sets->size = length;
+
+    if (sets->used > sets->size) {
+      sets->used = length;
+    }
 
     return F_none;
   }

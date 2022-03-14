@@ -36,6 +36,26 @@ extern "C" {
 #endif // _di_f_cells_adjust_
 
 /**
+ * Append the single source cell onto the destination.
+ *
+ * @param source
+ *   The source cell to append.
+ * @param destination
+ *   The destination cells the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_cells_append_
+  extern f_status_t f_cells_append(const f_cell_t source, f_cells_t *destination);
+#endif // _di_f_cells_append_
+
+/**
  * Append the source cells onto the destination.
  *
  * @param source
@@ -51,9 +71,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_cells_append_
-  extern f_status_t f_cells_append(const f_cells_t source, f_cells_t *destination);
-#endif // _di_f_cells_append_
+#ifndef _di_f_cells_append_all_
+  extern f_status_t f_cells_append_all(const f_cells_t source, f_cells_t *destination);
+#endif // _di_f_cells_append_all_
 
 /**
  * Resize the string cells array to a smaller size.
@@ -193,6 +213,26 @@ extern "C" {
 #endif // _di_f_cellss_adjust_
 
 /**
+ * Append the single source cells onto the destination.
+ *
+ * @param source
+ *   The source cells to append.
+ * @param destination
+ *   The destination ranges the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_cellss_append_
+  extern f_status_t f_cellss_append(const f_cells_t source, f_cellss_t *destination);
+#endif // _di_f_cellss_append_
+
+/**
  * Append the source cellss onto the destination.
  *
  * @param source
@@ -208,29 +248,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_cellss_append_
-  extern f_status_t f_cellss_append(const f_cellss_t source, f_cellss_t *destination);
-#endif // _di_f_cellss_append_
-
-/**
- * Resize the string cellss array.
- *
- * @param length
- *   The new size to use.
- * @param cellss
- *   The string cellss array to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
- */
-#ifndef _di_f_cellss_adjust_
-  extern f_status_t f_cellss_adjust(const f_array_length_t length, f_cellss_t *cellss);
-#endif // _di_f_cellss_adjust_
+#ifndef _di_f_cellss_append_all_
+  extern f_status_t f_cellss_append_all(const f_cellss_t source, f_cellss_t *destination);
+#endif // _di_f_cellss_append_all_
 
 /**
  * Resize the string cellss array to a smaller size.

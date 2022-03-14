@@ -183,7 +183,7 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = 0;
-    f_string_range_t range = macro_f_string_range_t_initialize(object.used);
+    f_string_range_t range = macro_f_string_range_t_initialize2(object.used);
 
     status = fl_fss_basic_list_object_write(object, trim ? f_fss_complete_full_trim_e : f_fss_complete_full_e, state, &range, destination);
 

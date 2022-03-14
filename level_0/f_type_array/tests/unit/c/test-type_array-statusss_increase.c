@@ -25,7 +25,7 @@ void test__f_type_array_statusss_increase__works(void **state) {
 
     assert_int_equal(status, F_none);
     assert_int_equal(data.used, length);
-    assert_int_equal(data.size, length * 2);
+    assert_in_range(data.size, length + 1, length + 1 + F_memory_default_allocation_small_d);
   }
 
   free((void *) data.array);
@@ -55,7 +55,7 @@ void test__f_type_array_statusss_increase__returns_data_not(void **state) {
   free((void *) data.array);
 }
 
-void test__f_type_array_statusss_increase__fails_on_invalid_parameter(void **state) {
+void test__f_type_array_statusss_increase__parameter_checking(void **state) {
 
   const int length = 5;
   f_statusss_t data = f_statuss_t_initialize;

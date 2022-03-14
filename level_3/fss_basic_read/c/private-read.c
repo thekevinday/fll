@@ -212,7 +212,7 @@ extern "C" {
   f_status_t fss_basic_read_load(fll_program_data_t * const main, fss_basic_read_data_t * const data) {
 
     f_state_t state = macro_f_state_t_initialize(fss_basic_read_common_allocation_large_d, fss_basic_read_common_allocation_small_d, 0, 0, 0, 0, 0);
-    f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
+    f_string_range_t input = macro_f_string_range_t_initialize2(data->buffer.used);
 
     data->delimits.used = 0;
     data->quotes.used = 0;

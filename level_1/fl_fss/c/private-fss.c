@@ -10,7 +10,7 @@ extern "C" {
   f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quoted, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t * const destination) {
 
     f_status_t status = F_none;
-    f_string_range_t destination_range = macro_f_string_range_t_initialize(destination->used);
+    f_string_range_t destination_range = macro_f_string_range_t_initialize2(destination->used);
     f_array_length_t i = 0;
 
     uint8_t width = 0;
@@ -188,7 +188,7 @@ extern "C" {
   f_status_t private_fl_fss_basic_list_write_object_trim(const f_array_length_t used_start, f_state_t state, f_string_dynamic_t * const destination) {
 
     f_status_t status = F_none;
-    f_string_range_t destination_range = macro_f_string_range_t_initialize(destination->used);
+    f_string_range_t destination_range = macro_f_string_range_t_initialize2(destination->used);
     f_array_length_t i = 0;
 
     uint8_t width = 0;

@@ -22,6 +22,6 @@ extern void test__f_type_array_statess_increase_by__works(void **state);
  *
  * @see f_type_array_statess_increase_by()
  */
-extern void test__f_type_array_statess_increase_by__fails_on_invalid_parameter(void **state);
+extern void test__f_type_array_statess_increase_by__parameter_checking(void **state);
 
 #endif // _TEST__F_type_array__statess_increase_by

@@ -29,7 +29,7 @@ void test__f_type_array_fll_idss_decimate_by__works(void **state) {
   assert_null(data.array);
 }
 
-void test__f_type_array_fll_idss_decimate_by__fails_on_invalid_parameter(void **state) {
+void test__f_type_array_fll_idss_decimate_by__parameter_checking(void **state) {
 
   const int length = 5;
   f_fll_idss_t data = f_fll_ids_t_initialize;

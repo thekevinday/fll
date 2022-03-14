@@ -418,7 +418,7 @@ extern "C" {
             state.step_small = controller_common_allocation_iki_small_d;
             state.interrupt = &controller_thread_signal_state_iki;
 
-            f_string_range_t range_iki = macro_f_string_range_t_initialize(actions->array[actions->used].parameters.array[0].used);
+            f_string_range_t range_iki = macro_f_string_range_t_initialize2(actions->array[actions->used].parameters.array[0].used);
 
             status = fl_iki_read(state, &actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0]);
 
@@ -729,7 +729,7 @@ extern "C" {
             state.step_small = controller_common_allocation_iki_small_d;
             state.interrupt = &controller_thread_signal_state_iki;
 
-            f_string_range_t range_iki = macro_f_string_range_t_initialize(actions->array[actions->used].parameters.array[0].used);
+            f_string_range_t range_iki = macro_f_string_range_t_initialize2(actions->array[actions->used].parameters.array[0].used);
 
             status = fl_iki_read(state, &actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0]);
 
@@ -928,7 +928,7 @@ extern "C" {
     status = f_string_maps_append_all(source.parameter, &destination->parameter);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamics_append(source.environment, &destination->environment);
+    status = f_string_dynamics_append_all(source.environment, &destination->environment);
     if (F_status_is_error(status)) return status;
 
     if (source.ons.used) {
@@ -944,21 +944,21 @@ extern "C" {
         if (source.ons.array[i].need.used) {
           destination->ons.array[i].need.used = 0;
 
-          status = f_string_dynamics_append(source.ons.array[i].need, &destination->ons.array[i].need);
+          status = f_string_dynamics_append_all(source.ons.array[i].need, &destination->ons.array[i].need);
           if (F_status_is_error(status)) return status;
         }
 
         if (source.ons.array[i].want.used) {
           destination->ons.array[i].want.used = 0;
 
-          status = f_string_dynamics_append(source.ons.array[i].want, &destination->ons.array[i].want);
+          status = f_string_dynamics_append_all(source.ons.array[i].want, &destination->ons.array[i].want);
           if (F_status_is_error(status)) return status;
         }
 
         if (source.ons.array[i].wish.used) {
           destination->ons.array[i].wish.used = 0;
 
-          status = f_string_dynamics_append(source.ons.array[i].wish, &destination->ons.array[i].wish);
+          status = f_string_dynamics_append_all(source.ons.array[i].wish, &destination->ons.array[i].wish);
           if (F_status_is_error(status)) return status;
         }
       } // for
@@ -966,7 +966,7 @@ extern "C" {
       destination->ons.used = source.ons.used;
     }
 
-    status = f_int32s_append(source.affinity, &destination->affinity);
+    status = f_int32s_append_all(source.affinity, &destination->affinity);
     if (F_status_is_error(status)) return status;
 
     if (source.capability) {
@@ -977,7 +977,7 @@ extern "C" {
     status = f_control_group_copy(source.cgroup, &destination->cgroup);
     if (F_status_is_error(status)) return status;
 
-    status = f_int32s_append(source.groups, &destination->groups);
+    status = f_int32s_append_all(source.groups, &destination->groups);
     if (F_status_is_error(status)) return status;
 
     status = f_limit_sets_copy(source.limits, &destination->limits);
@@ -1017,6 +1017,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         for (j = 0; j < controller_rule_action_type_execute__enum_size_e; ++j) {
+
           item_destination->reruns[j].is = item_source->reruns[j].is;
           item_destination->reruns[j].failure.count = item_source->reruns[j].failure.count;
           item_destination->reruns[j].failure.delay = item_source->reruns[j].failure.delay;
@@ -1038,10 +1039,10 @@ extern "C" {
           action_destination->parameters.used = 0;
           action_destination->ikis.used = 0;
 
-          status = f_string_dynamics_append(action_source->parameters, &action_destination->parameters);
+          status = f_string_dynamics_append_all(action_source->parameters, &action_destination->parameters);
           if (F_status_is_error(status)) return status;
 
-          status = f_iki_datas_append(action_source->ikis, &action_destination->ikis);
+          status = f_iki_datas_append_all(action_source->ikis, &action_destination->ikis);
           if (F_status_is_error(status)) return status;
         } // for
 
@@ -2343,7 +2344,7 @@ extern "C" {
     f_status_t status = F_none;
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large_d, controller_common_allocation_small_d, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
-    f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_item.used);
+    f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_item.used);
     f_array_length_t last = 0;
 
     uint8_t type = 0;
@@ -3808,7 +3809,7 @@ extern "C" {
       if (cache->buffer_file.used) {
         controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
         f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large_d, controller_common_allocation_small_d, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
-        f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_file.used);
+        f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
@@ -3968,7 +3969,7 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t status_return = F_none;
 
-    f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_item.used);
+    f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_item.used);
     f_string_range_t range2 = f_string_range_t_initialize;
 
     {

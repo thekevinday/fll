@@ -22,6 +22,6 @@ extern void test__f_type_array_array_lengthss_resize__works(void **state);
  *
  * @see f_type_array_array_lengthss_resize()
  */
-extern void test__f_type_array_array_lengthss_resize__fails_on_invalid_parameter(void **state);
+extern void test__f_type_array_array_lengthss_resize__parameter_checking(void **state);
 
 #endif // _TEST__F_type_array__array_lengthss_resize

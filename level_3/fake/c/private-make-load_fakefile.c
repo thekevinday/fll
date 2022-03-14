@@ -48,7 +48,7 @@ extern "C" {
     f_fss_contents_t list_contents = f_fss_contents_t_initialize;
 
     {
-      f_string_range_t range = macro_f_string_range_t_initialize(data_make->buffer.used);
+      f_string_range_t range = macro_f_string_range_t_initialize2(data_make->buffer.used);
       f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
       f_fss_comments_t comments = f_fss_comments_t_initialize;
 

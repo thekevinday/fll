@@ -155,16 +155,15 @@ extern "C" {
     } // for
 
     const f_status_t status = f_memory_resize(ons->size, length, sizeof(controller_rule_on_t), (void **) & ons->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      ons->size = length;
+    ons->size = length;
 
-      if (ons->used > ons->size) {
-        ons->used = length;
-      }
+    if (ons->used > ons->size) {
+      ons->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // _di_controller_rule_ons_resize_
 
@@ -204,16 +203,15 @@ extern "C" {
     } // for
 
     const f_status_t status = f_memory_resize(rules->size, length, sizeof(controller_rule_t), (void **) & rules->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      rules->size = length;
+    rules->size = length;
 
-      if (rules->used > rules->size) {
-        rules->used = length;
-      }
+    if (rules->used > rules->size) {
+      rules->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // _di_controller_rules_resize_
 

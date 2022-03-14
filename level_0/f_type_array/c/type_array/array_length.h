@@ -36,6 +36,26 @@ extern "C" {
 #endif // _di_f_array_lengths_adjust_
 
 /**
+ * Append the single source length onto the destination.
+ *
+ * @param source
+ *   The source length to append.
+ * @param destination
+ *   The destination lengths the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_array_lengths_append_
+  extern f_status_t f_array_lengths_append(const f_array_length_t source, f_array_lengths_t *destination);
+#endif // _di_f_array_lengths_append_
+
+/**
  * Append the source lengths onto the destination.
  *
  * @param source
@@ -51,9 +71,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_array_lengths_append_
-  extern f_status_t f_array_lengths_append(const f_array_lengths_t source, f_array_lengths_t *destination);
-#endif // _di_f_array_lengths_append_
+#ifndef _di_f_array_lengths_append_all_
+  extern f_status_t f_array_lengths_append_all(const f_array_lengths_t source, f_array_lengths_t *destination);
+#endif // _di_f_array_lengths_append_all_
 
 /**
  * Resize the string lengths array to a smaller size.
@@ -191,6 +211,26 @@ extern "C" {
 #endif // _di_f_array_lengthss_adjust_
 
 /**
+ * Append the single source lengths onto the destination.
+ *
+ * @param source
+ *   The source lengths to append.
+ * @param destination
+ *   The destination ranges the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_array_lengthss_append_
+  extern f_status_t f_array_lengthss_append(const f_array_lengths_t source, f_array_lengthss_t *destination);
+#endif // _di_f_array_lengthss_append_
+
+/**
  * Append the source lengthss onto the destination.
  *
  * @param source
@@ -206,29 +246,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_array_lengthss_append_
-  extern f_status_t f_array_lengthss_append(const f_array_lengthss_t source, f_array_lengthss_t *destination);
-#endif // _di_f_array_lengthss_append_
-
-/**
- * Resize the string lengthss array.
- *
- * @param length
- *   The new size to use.
- * @param lengthss
- *   The string lengthss array to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
- */
-#ifndef _di_f_array_lengthss_adjust_
-  extern f_status_t f_array_lengthss_adjust(const f_array_length_t length, f_array_lengthss_t *lengthss);
-#endif // _di_f_array_lengthss_adjust_
+#ifndef _di_f_array_lengthss_append_all_
+  extern f_status_t f_array_lengthss_append_all(const f_array_lengthss_t source, f_array_lengthss_t *destination);
+#endif // _di_f_array_lengthss_append_all_
 
 /**
  * Resize the string lengthss array to a smaller size.

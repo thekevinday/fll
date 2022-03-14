@@ -22,7 +22,7 @@ extern "C" {
     }
 
     if (source.groups.used) {
-      status = f_string_dynamics_append(source.groups, &destination->groups);
+      status = f_string_dynamics_append_all(source.groups, &destination->groups);
       if (F_status_is_error(status)) return status;
     }
 

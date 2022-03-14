@@ -45,16 +45,15 @@ extern "C" {
     } // for
 
     const f_status_t status = f_memory_resize(depths->size, length, sizeof(fss_extended_read_depth_t), (void **) & depths->array);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      depths->size = length;
+    depths->size = length;
 
-      if (depths->used > depths->size) {
-        depths->used = length;
-      }
+    if (depths->used > depths->size) {
+      depths->used = length;
     }
 
-    return status;
+    return F_none;
   }
 #endif // _di_fss_extended_read_depths_resize_
 

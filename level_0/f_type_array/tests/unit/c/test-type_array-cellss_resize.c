@@ -21,7 +21,7 @@ void test__f_type_array_cellss_resize__works(void **state) {
   free((void *) data.array);
 }
 
-void test__f_type_array_cellss_resize__fails_on_invalid_parameter(void **state) {
+void test__f_type_array_cellss_resize__parameter_checking(void **state) {
 
   const int length = 5;
   f_cellss_t data = f_cellss_t_initialize;

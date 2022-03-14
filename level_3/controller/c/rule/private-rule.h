@@ -202,19 +202,21 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_capability_copy().
  *   Errors (with error bit) from: f_control_group_copy().
+ *   Errors (with error bit) from: f_iki_datas_append_all().
+ *   Errors (with error bit) from: f_int32s_append_all().
  *   Errors (with error bit) from: f_limit_sets_copy().
  *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamics_append().
+ *   Errors (with error bit) from: f_string_dynamics_append_all().
  *   Errors (with error bit) from: f_string_maps_append_all().
- *   Errors (with error bit) from: f_int32s_append().
  *
  *  @see f_capability_copy()
  *  @see f_control_group_copy()
+ *  @see f_iki_datas_append_all()
+ *  @see f_int32s_append_all()
  *  @see f_limit_sets_append()
  *  @see f_string_dynamic_append()
- *  @see f_string_dynamics_append()
+ *  @see f_string_dynamics_append_all()
  *  @see f_string_maps_append_all()
- *  @see f_int32s_append()
  */
 #ifndef _di_controller_rule_copy_
   extern f_status_t controller_rule_copy(const controller_rule_t source, controller_rule_t *destination) F_attribute_visibility_internal_d;

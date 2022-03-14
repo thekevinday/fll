@@ -44,6 +44,29 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
+ *   The source array_length to append.
+ * @param destination
+ *   The destination lengths the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_array_lengths_append()
+ * @see f_array_lengthss_append()
+ */
+#if !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengthss_append_)
+  extern f_status_t private_f_array_lengths_append(const f_array_length_t source, f_array_lengths_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengthss_append_)
+
+/**
+ * Private implementation for appending the array_length array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
  *   The source array_lengths to append.
  * @param destination
  *   The destination lengths the source is appended onto.
@@ -53,12 +76,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_array_lengths_append()
+ * @see f_memory_resize()
+ * @see f_array_lengths_append_all()
  * @see f_array_lengthss_append()
+ * @see f_array_lengthss_append_all()
  */
-#if !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengthss_append_)
-  extern f_status_t private_f_array_lengths_append(const f_array_lengths_t source, f_array_lengths_t *destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengthss_append_)
+#if !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengths_append_all_) || !defined(_di_f_array_lengthss_append_all_)
+  extern f_status_t private_f_array_lengths_append_all(const f_array_lengths_t source, f_array_lengths_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_array_lengths_append_) || !defined(_di_f_array_lengths_append_all_) || !defined(_di_f_array_lengthss_append_all_)
 
 /**
  * Private implementation for resizing the array_lengths array.

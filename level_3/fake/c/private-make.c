@@ -26,7 +26,7 @@ extern "C" {
       return F_status_set_error(F_false);
     }
 
-    const f_string_range_t range = macro_f_string_range_t_initialize(data_make->path.stack.array[0].used);
+    const f_string_range_t range = macro_f_string_range_t_initialize2(data_make->path.stack.array[0].used);
 
     if (range.start <= range.stop) {
       status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], data_make->path_cache, range, range);

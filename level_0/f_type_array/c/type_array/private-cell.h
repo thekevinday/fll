@@ -44,21 +44,46 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source cells to append.
+ *   The source cell to append.
  * @param destination
- *   The destination cells the source is appended onto.
+ *   The destination lengths the source is appended onto.
  *
  * @return
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
+ * @see f_memory_resize()
  * @see f_cells_append()
  * @see f_cellss_append()
  */
 #if !defined(_di_f_cells_append_) || !defined(_di_f_cellss_append_)
-  extern f_status_t private_f_cells_append(const f_cells_t source, f_cells_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_cells_append(const f_cell_t source, f_cells_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_cells_append_) || !defined(_di_f_cellss_append_)
+
+/**
+ * Private implementation for appending the cell array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source cells to append.
+ * @param destination
+ *   The destination lengths the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_cells_append_all()
+ * @see f_cellss_append()
+ * @see f_cellss_append_all()
+ */
+#if !defined(_di_f_cells_append_) || !defined(_di_f_cells_append_all_) || !defined(_di_f_cellss_append_all_)
+  extern f_status_t private_f_cells_append_all(const f_cells_t source, f_cells_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_cells_append_) || !defined(_di_f_cells_append_all_) || !defined(_di_f_cellss_append_all_)
 
 /**
  * Private implementation for resizing the cells array.

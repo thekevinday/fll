@@ -1642,7 +1642,7 @@ extern "C" {
       if (cache->buffer_file.used) {
         controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_entry, global.thread);
         f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large_d, controller_common_allocation_small_d, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
-        f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_file.used);
+        f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 

@@ -23,7 +23,7 @@ extern "C" {
         f_print_dynamic(substitutions.array[i].with, main->output.to.stream);
       }
       else {
-        f_string_range_t range = macro_f_string_range_t_initialize2(iki_data.variable.array[index].start, iki_data.content.array[index].start - 1);
+        f_string_range_t range = macro_f_string_range_t_initialize(iki_data.variable.array[index].start, iki_data.content.array[index].start - 1);
 
         f_print_dynamic_partial(main->buffer, range, main->output.to.stream);
 

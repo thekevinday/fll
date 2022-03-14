@@ -44,21 +44,46 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param source
- *   The source states to append.
+ *   The source state to append.
  * @param destination
- *   The destination states the source is appended onto.
+ *   The destination lengths the source is appended onto.
  *
  * @return
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
+ * @see f_memory_resize()
  * @see f_states_append()
  * @see f_statess_append()
  */
 #if !defined(_di_f_states_append_) || !defined(_di_f_statess_append_)
-  extern f_status_t private_f_states_append(const f_states_t source, f_states_t *destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_states_append(const f_state_t source, f_states_t *destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_states_append_) || !defined(_di_f_statess_append_)
+
+/**
+ * Private implementation for appending the state array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source states to append.
+ * @param destination
+ *   The destination lengths the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_states_append_all()
+ * @see f_statess_append()
+ * @see f_statess_append_all()
+ */
+#if !defined(_di_f_states_append_) || !defined(_di_f_states_append_all_) || !defined(_di_f_statess_append_all_)
+  extern f_status_t private_f_states_append_all(const f_states_t source, f_states_t *destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_states_append_) || !defined(_di_f_states_append_all_) || !defined(_di_f_statess_append_all_)
 
 /**
  * Private implementation for resizing the states array.

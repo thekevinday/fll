@@ -21,7 +21,7 @@ void test__f_type_array_array_lengthss_resize__works(void **state) {
   free((void *) data.array);
 }
 
-void test__f_type_array_array_lengthss_resize__fails_on_invalid_parameter(void **state) {
+void test__f_type_array_array_lengthss_resize__parameter_checking(void **state) {
 
   const int length = 5;
   f_array_lengthss_t data = f_array_lengthss_t_initialize;

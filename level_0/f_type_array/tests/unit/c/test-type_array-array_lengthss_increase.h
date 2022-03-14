@@ -29,6 +29,6 @@ extern void test__f_type_array_array_lengthss_increase__returns_data_not(void **
  *
  * @see f_type_array_array_lengthss_increase()
  */
-extern void test__f_type_array_array_lengthss_increase__fails_on_invalid_parameter(void **state);
+extern void test__f_type_array_array_lengthss_increase__parameter_checking(void **state);
 
 #endif // _TEST__F_type_array__array_lengthss_increase

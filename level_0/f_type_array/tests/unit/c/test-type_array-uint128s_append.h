@@ -18,17 +18,10 @@
 extern void test__f_type_array_uint128s_append__works(void **state);
 
 /**
- * Test that the function returns F_data_not when asked to copy an empty structure.
- *
- * @see f_type_array_uint128s_append()
- */
-extern void test__f_type_array_uint128s_append__returns_data_not(void **state);
-
-/**
  * Test that the function correctly fails on invalid parameter.
  *
  * @see f_type_array_uint128s_append()
  */
-extern void test__f_type_array_uint128s_append__fails_on_invalid_parameter(void **state);
+extern void test__f_type_array_uint128s_append__parameter_checking(void **state);
 
 #endif // _TEST__F_type_array__uint128s_append

@@ -36,6 +36,26 @@ extern "C" {
 #endif // _di_f_states_adjust_
 
 /**
+ * Append the single source state onto the destination.
+ *
+ * @param source
+ *   The source state to append.
+ * @param destination
+ *   The destination states the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_states_append_
+  extern f_status_t f_states_append(const f_state_t source, f_states_t *destination);
+#endif // _di_f_states_append_
+
+/**
  * Append the source states onto the destination.
  *
  * @param source
@@ -51,9 +71,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_states_append_
-  extern f_status_t f_states_append(const f_states_t source, f_states_t *destination);
-#endif // _di_f_states_append_
+#ifndef _di_f_states_append_all_
+  extern f_status_t f_states_append_all(const f_states_t source, f_states_t *destination);
+#endif // _di_f_states_append_all_
 
 /**
  * Resize the string states array to a smaller size.
@@ -193,6 +213,26 @@ extern "C" {
 #endif // _di_f_statess_adjust_
 
 /**
+ * Append the single source states onto the destination.
+ *
+ * @param source
+ *   The source states to append.
+ * @param destination
+ *   The destination ranges the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_statess_append_
+  extern f_status_t f_statess_append(const f_states_t source, f_statess_t *destination);
+#endif // _di_f_statess_append_
+
+/**
  * Append the source statess onto the destination.
  *
  * @param source
@@ -208,29 +248,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_statess_append_
-  extern f_status_t f_statess_append(const f_statess_t source, f_statess_t *destination);
-#endif // _di_f_statess_append_
-
-/**
- * Resize the string statess array.
- *
- * @param length
- *   The new size to use.
- * @param statess
- *   The string statess array to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: f_memory_destroy().
- */
-#ifndef _di_f_statess_adjust_
-  extern f_status_t f_statess_adjust(const f_array_length_t length, f_statess_t *statess);
-#endif // _di_f_statess_adjust_
+#ifndef _di_f_statess_append_all_
+  extern f_status_t f_statess_append_all(const f_statess_t source, f_statess_t *destination);
+#endif // _di_f_statess_append_all_
 
 /**
  * Resize the string statess array to a smaller size.

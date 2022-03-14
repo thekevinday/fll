@@ -131,16 +131,15 @@ extern "C" {
   f_status_t private_f_memory_structure_resize(const size_t length_new, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {
 
     const f_status_t status = private_f_memory_resize(*size, length_new, type_size, structure);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      *size = length_new;
+    *size = length_new;
 
-      if (*used > *size) {
-        *used = *size;
-      }
+    if (*used > *size) {
+      *used = *size;
     }
 
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
 

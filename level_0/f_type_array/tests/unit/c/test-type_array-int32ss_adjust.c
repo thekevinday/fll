@@ -21,7 +21,7 @@ void test__f_type_array_int32ss_adjust__works(void **state) {
   free((void *) data.array);
 }
 
-void test__f_type_array_int32ss_adjust__fails_on_invalid_parameter(void **state) {
+void test__f_type_array_int32ss_adjust__parameter_checking(void **state) {
 
   const int length = 5;
   f_int32ss_t data = f_int32ss_t_initialize;

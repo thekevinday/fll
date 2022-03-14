@@ -24,17 +24,17 @@ void test__f_iki_content_partial_is__returns_false(void **state) {
   };
 
   const f_string_range_t ranges[] = {
-    macro_f_string_range_t_initialize2(4, 10),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 10),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 5),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 10),
-    macro_f_string_range_t_initialize2(4, 9),
-    macro_f_string_range_t_initialize2(4, 5),
+    macro_f_string_range_t_initialize(4, 10),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 10),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 5),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 10),
+    macro_f_string_range_t_initialize(4, 9),
+    macro_f_string_range_t_initialize(4, 5),
   };
 
   const f_string_static_t quotes[] = {
@@ -86,7 +86,7 @@ void test__f_iki_content_partial_is__returns_data_not(void **state) {
 void test__f_iki_content_partial_is__returns_data_not_eos(void **state) {
 
   {
-    const f_string_range_t range = macro_f_string_range_t_initialize2(f_string_ascii_a_s.used, f_string_ascii_a_s.used);
+    const f_string_range_t range = macro_f_string_range_t_initialize(f_string_ascii_a_s.used, f_string_ascii_a_s.used);
 
     const f_status_t status = f_iki_content_partial_is(f_string_ascii_a_s, range, f_string_ascii_quote_single_s);
 
@@ -121,14 +121,14 @@ void test__f_iki_content_partial_is__returns_true(void **state) {
   };
 
   const f_string_range_t ranges[] = {
-    macro_f_string_range_t_initialize2(4, 8),
-    macro_f_string_range_t_initialize2(4, 13),
-    macro_f_string_range_t_initialize2(4, 12),
-    macro_f_string_range_t_initialize2(4, 13),
-    macro_f_string_range_t_initialize2(4, 14),
-    macro_f_string_range_t_initialize2(4, 12),
-    macro_f_string_range_t_initialize2(4, 13),
-    macro_f_string_range_t_initialize2(4, 14),
+    macro_f_string_range_t_initialize(4, 8),
+    macro_f_string_range_t_initialize(4, 13),
+    macro_f_string_range_t_initialize(4, 12),
+    macro_f_string_range_t_initialize(4, 13),
+    macro_f_string_range_t_initialize(4, 14),
+    macro_f_string_range_t_initialize(4, 12),
+    macro_f_string_range_t_initialize(4, 13),
+    macro_f_string_range_t_initialize(4, 14),
   };
 
   const f_string_static_t quotes[] = {

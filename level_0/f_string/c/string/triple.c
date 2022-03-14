@@ -1,5 +1,6 @@
 #include "../string.h"
 #include "../private-string.h"
+#include "private-triple.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,14 +17,50 @@ extern "C" {
 #endif // _di_f_string_triples_adjust_
 
 #ifndef _di_f_string_triples_append_
-  f_status_t f_string_triples_append(const f_string_triples_t source, f_string_triples_t * const destination) {
+  f_status_t f_string_triples_append(const f_string_triple_t source, f_string_triples_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) {
-      return F_data_not;
+    f_status_t status = F_none;
+
+    if (destination->used + 1 > destination->size) {
+      status = private_f_string_triples_adjust(destination->used + F_memory_default_allocation_small_d, destination);
+      if (F_status_is_error(status)) return status;
     }
+
+    destination->array[destination->used].a.used = 0;
+    destination->array[destination->used].b.used = 0;
+    destination->array[destination->used].c.used = 0;
+
+    if (source.a.used) {
+      status = private_f_string_append(source.a.string, source.a.used, &destination->array[destination->used].a);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.b.used) {
+      status = private_f_string_append(source.b.string, source.b.used, &destination->array[destination->used].b);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.c.used) {
+      status = private_f_string_append(source.c.string, source.c.used, &destination->array[destination->used].c);
+      if (F_status_is_error(status)) return status;
+    }
+
+    ++destination->used;
+
+    return F_none;
+  }
+#endif // _di_f_string_triples_append_
+
+#ifndef _di_f_string_triples_append_all_
+  f_status_t f_string_triples_append_all(const f_string_triples_t source, f_string_triples_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -56,12 +93,11 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_string_triples_append_
+#endif // _di_f_string_triples_append_all_
 
 #ifndef _di_f_string_triples_decimate_by_
   f_status_t f_string_triples_decimate_by(const f_array_length_t amount, f_string_triples_t * const triples) {
     #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -79,9 +115,7 @@ extern "C" {
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (triples->size - amount > 0) {
       return private_f_string_triples_resize(triples->size - amount, triples);
@@ -121,9 +155,7 @@ extern "C" {
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (triples->used + amount > triples->size) {
       if (triples->used + amount > F_array_length_t_size_d) {
@@ -147,6 +179,63 @@ extern "C" {
   }
 #endif // _di_f_string_triples_resize_
 
+#ifndef _di_f_string_tripless_append_
+  f_status_t f_string_tripless_append(const f_string_triples_t source, f_string_tripless_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used + 1 > destination->size) {
+      status = private_f_string_tripless_resize(destination->used + F_memory_default_allocation_small_d, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    destination->array[destination->used].used = 0;
+
+    if (source.used) {
+      status = private_f_string_triples_append_all(source, &destination->array[destination->used]);
+      if (F_status_is_error(status)) return status;
+    }
+
+    ++destination->used;
+
+    return F_none;
+  }
+#endif // _di_f_string_tripless_append_
+
+#ifndef _di_f_string_tripless_append_all_
+  f_status_t f_string_tripless_append_all(const f_string_tripless_t source, f_string_tripless_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_string_tripless_resize(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+
+      destination->array[destination->used].used = 0;
+
+      if (source.array[i].used) {
+        status = private_f_string_triples_append_all(source.array[i], &destination->array[destination->used]);
+        if (F_status_is_error(status)) return status;
+      }
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_string_tripless_append_all_
+
 #ifndef _di_f_string_tripless_adjust_
   f_status_t f_string_tripless_adjust(const f_array_length_t length, f_string_tripless_t * const tripless) {
     #ifndef _di_level_0_parameter_checking_
@@ -163,9 +252,7 @@ extern "C" {
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (tripless->size - amount > 0) {
       return private_f_string_tripless_adjust(tripless->size - amount, tripless);
@@ -181,9 +268,7 @@ extern "C" {
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (tripless->size - amount > 0) {
       return private_f_string_tripless_resize(tripless->size - amount, tripless);
@@ -223,9 +308,7 @@ extern "C" {
       if (!tripless) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (tripless->used + amount > tripless->size) {
       if (tripless->used + amount > F_array_length_t_size_d) {

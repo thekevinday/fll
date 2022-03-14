@@ -22,6 +22,6 @@ extern void test__f_type_array_uint32ss_adjust__works(void **state);
  *
  * @see f_type_array_uint32ss_adjust()
  */
-extern void test__f_type_array_uint32ss_adjust__fails_on_invalid_parameter(void **state);
+extern void test__f_type_array_uint32ss_adjust__parameter_checking(void **state);
 
 #endif // _TEST__F_type_array__uint32ss_adjust
