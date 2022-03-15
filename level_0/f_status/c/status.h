@@ -36,16 +36,22 @@ extern "C" {
 
 /**
  * Status masks.
+ *
+ * The f_status_t is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
+ *
+ * The F_status_set_fine() is provided to remove the error, warning, and signal bits.
+ *
+ * F_status_size_*:
+ *   - max:           Maximum valid number representing a status code (without the error, signal, or warning bits).
+ *   - max_with_bits: Maximum valid number representing a status code including the error, signal, or warning bits.
  */
 #ifndef _di_f_status_masks_
-
-  // f_status_t is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
   #define F_status_bit_error   0x8000 // 1000 0000 0000 0000
   #define F_status_bit_signal  0xc000 // 1100 0000 0000 0000
   #define F_status_bit_warning 0x4000 // 0100 0000 0000 0000
 
-  #define F_status_mask_fine 0x3fff // 0011 1111 1111 1111
-  #define F_status_mask_code 0xc000 // 1100 0000 0000 0000
+  #define F_status_mask_fine 0x3fff   // 0011 1111 1111 1111
+  #define F_status_mask_code 0xc000   // 1100 0000 0000 0000
 
   #define F_status_is_error(status)   (status & F_status_bit_error)
   #define F_status_is_fine(status)    ((status & F_status_mask_code) == 0)
@@ -61,13 +67,10 @@ extern "C" {
   #define F_status_set_error(status)   (status | F_status_bit_error)
   #define F_status_set_signal(status)  (status | F_status_bit_signal)
   #define F_status_set_warning(status) (status | F_status_bit_warning)
+  #define F_status_set_fine(status)    (status & F_status_mask_fine)
 
-  // Use F_status_set_fine to remove the error, warning, and signal bits.
-  #define F_status_set_fine(status) (status & F_status_mask_fine)
-
-  // Maximum size of the status code.
-  #define F_status_size_max             0x3fff
-  #define F_status_size_max_with_signal 0x10000
+  #define F_status_size_max_d           0x3fff
+  #define F_status_size_max_with_bits_d 0xffff
 #endif // _di_f_status_masks_
 
 /**
@@ -365,6 +368,8 @@ extern "C" {
       F_space_not,
       F_start,
       F_start_not,
+      F_status,
+      F_status_not,
       F_stop,
       F_stop_not,
       F_stream,

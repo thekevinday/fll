@@ -283,6 +283,8 @@ extern "C" {
     const f_string_static_t f_status_space_not_s = macro_f_string_static_t_initialize(F_status_space_not_s, 0, F_status_space_not_s_length);
     const f_string_static_t f_status_start_s = macro_f_string_static_t_initialize(F_status_start_s, 0, F_status_start_s_length);
     const f_string_static_t f_status_start_not_s = macro_f_string_static_t_initialize(F_status_start_not_s, 0, F_status_start_not_s_length);
+    const f_string_static_t f_status_status_s = macro_f_string_static_t_initialize(F_status_status_s, 0, F_status_status_s_length);
+    const f_string_static_t f_status_status_not_s = macro_f_string_static_t_initialize(F_status_status_not_s, 0, F_status_status_not_s_length);
     const f_string_static_t f_status_stop_s = macro_f_string_static_t_initialize(F_status_stop_s, 0, F_status_stop_s_length);
     const f_string_static_t f_status_stop_not_s = macro_f_string_static_t_initialize(F_status_stop_not_s, 0, F_status_stop_not_s_length);
     const f_string_static_t f_status_stream_s = macro_f_string_static_t_initialize(F_status_stream_s, 0, F_status_stream_s_length);
@@ -1680,6 +1682,14 @@ extern "C" {
 
         case F_start_not:
           *name = f_status_start_not_s;
+          break;
+
+        case F_status:
+          *name = f_status_status_s;
+          break;
+
+        case F_status_not:
+          *name = f_status_status_not_s;
           break;
 
         case F_stop:

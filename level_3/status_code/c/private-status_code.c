@@ -133,7 +133,7 @@ extern "C" {
 
     f_status_t status = fl_conversion_dynamic_to_number_unsigned(value, number);
 
-    if (*number > F_status_size_max_with_signal) {
+    if (*number > F_status_size_max_with_bits_d) {
       fl_print_format("%[out of range%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
       return status;

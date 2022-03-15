@@ -436,6 +436,8 @@ extern "C" {
     #define F_status_space_not_s         "F_space_not"
     #define F_status_start_s             "F_start"
     #define F_status_start_not_s         "F_start_not"
+    #define F_status_status_s            "F_status"
+    #define F_status_status_not_s        "F_status_not"
     #define F_status_stop_s              "F_stop"
     #define F_status_stop_not_s          "F_stop_not"
     #define F_status_stream_s            "F_stream"
@@ -684,6 +686,8 @@ extern "C" {
     #define F_status_space_not_s_length         11
     #define F_status_start_s_length             7
     #define F_status_start_not_s_length         11
+    #define F_status_status_s_length            8
+    #define F_status_status_not_s_length        12
     #define F_status_stop_s_length              6
     #define F_status_stop_not_s_length          10
     #define F_status_stream_s_length            8
@@ -932,6 +936,8 @@ extern "C" {
     extern const f_string_static_t f_status_space_not_s;
     extern const f_string_static_t f_status_start_s;
     extern const f_string_static_t f_status_start_not_s;
+    extern const f_string_static_t f_status_status_s;
+    extern const f_string_static_t f_status_status_not_s;
     extern const f_string_static_t f_status_stop_s;
     extern const f_string_static_t f_status_stop_not_s;
     extern const f_string_static_t f_status_stream_s;
