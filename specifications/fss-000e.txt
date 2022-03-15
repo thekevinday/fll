@@ -22,11 +22,18 @@ Featureless Settings Specification: 000e - Payload:
   The fss-0001 Object "part" with the Content being a whole positive number is suggested to be used to represent the number identifying which part of the whole it is.
   The payload may contain anything, including NULL characters.
   The payload is terminated by the EOF (end of file) character or when a some designated length is reached.
-  The length used to designate the payload size does not necesserily have to be defined in the 'header".
+  The length used to designate the payload size does not necessarily have to be defined in the 'header".
   That is to say, if the payload is expected to be of some pre-defined or static length then a length does even if that length is not provided in the "header".
   Nothing in the payload may be considered a valid list Object and therefore there will be no escaping allowed (No further fss-0002 Basic List Objects are allowed at this point).
   Comments are not considered comments inside the payload and are instead considered part of the payload, as-is.
   The payload may be empty (length may be zero), but the list Object "payload" must still exist.
+
+  The length and status may be in binary, octal, decimal, duodecimal, or hexidecimal numerical format.
+  The status may alternatively be represented as the status name string.
+  What the status code represents is application specific (or specific to a sub-standard) but may often be used to represent FLL status codes.
+  The status, when representing an FLL status code as a number, may contain error and warning bit.
+  The status, when representing an FLL status code as a number, the status number is binary sensitive and may not be portable across binaries or systems.
+  For FLL status codes, consider using status as a name string to ensure cross-system or cross-binary compatibility.
 
   Other than the reserved list Objects "header" and "payload" any other valid Object may be specified.
 
