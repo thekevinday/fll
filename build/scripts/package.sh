@@ -699,7 +699,7 @@ package_dependencies_individual() {
       fi
     fi
 
-    # all level 3 are expected to support all modes: individual, level, and monolithic.
+    # All level 3 are expected to support all modes: individual, level, and monolithic.
     if [[ $level_current == "3" ]] ; then
       sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings &&
       sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings
@@ -764,7 +764,8 @@ package_dependencies_individual_append() {
           dependencies_2=$(echo $dependencies_2)
         fi
       else
-        # sort is not available, so do not bother trying to sort.
+
+        # Sort is not available, so do not bother trying to sort.
         if [[ $level == "level_0" ]] ; then
           dependencies_0="-l$dependency $dependencies_0"
         elif [[ $level == "level_1" ]] ; then
