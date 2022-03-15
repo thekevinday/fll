@@ -6,10 +6,14 @@
 # Unlike the other scripts, this is not inteded to be run as if it were a program.
 # Instead this provides a functional example on what commands to perform to perform the bootstrap.
 #
-# This only accepts one argument, followed by two optional arguments:
+# This only accepts one argument, followed by these optional arguments:
 # 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", or "fake-monolithic".
 # 2) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
 # 3) Optional, may be one of: -w, --work.
+# 4) Optional, may be: clang.
+#
+# The -w/--work requires the path to the work directory following it.
+# The clang parameter does not need the "-m".
 #
 # This will create a directory at he present working directory of the script caller called "fll" where everything will be installed.
 # This assumes the shell script is GNU bash.
@@ -24,6 +28,7 @@ color=
 shared=
 static=
 version=0.5.9
+clang=
 
 let i=2
 
@@ -55,6 +60,8 @@ while [[ $i -le $# ]] ; do
     shared="--enable-shared"
   elif [[ ${!i} == "--disable-shared" ]] ; then
     shared="--disable-shared"
+  elif [[ ${!i} == "clang" ]] ; then
+    clang="-m clang"
   elif [[ ${!i} == "-w" || ${!i} == "--work" ]] ; then
     let i++
 
@@ -82,7 +89,7 @@ if [[ $1 == "individual" ]] ; then
 
       ./bootstrap.sh clean $verbose $color &&
 
-      ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m individual &&
+      ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m individual $clang &&
 
       ./install.sh $verbose $color $shared $static -w $path_work &&
 
@@ -99,7 +106,7 @@ if [[ $1 == "level" ]] ; then
 
   ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level $clang &&
 
   ./install.sh $verbose $color $shared $static -w $path_work &&
 
@@ -132,7 +139,7 @@ if [[ $1 == "monolithic" ]] ; then
 
   ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m monolithic &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m monolithic $clang &&
 
   ./install.sh $verbose $color $shared $static -w $path_work
 fi
