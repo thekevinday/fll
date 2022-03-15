@@ -8,7 +8,7 @@
  * Test the array types in the type project.
  */
 #ifndef _TEST__F_iki_datas_resize_h
-#define _TEST__F_iki_datas_resize_H
+#define _TEST__F_iki_datas_resize_h
 
 /**
  * Test that the function works.
@@ -24,4 +24,4 @@ extern void test__f_iki_datas_resize__works(void **state);
  */
 extern void test__f_iki_datas_resize__parameter_checking(void **state);
 
-#endif // _TEST__F_iki_datas_resize_H
+#endif // _TEST__F_iki_datas_resize_h
