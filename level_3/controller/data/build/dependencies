@@ -23,6 +23,7 @@ f_pipe
 f_print
 f_signal
 f_socket
+f_status_string
 f_thread
 fl_control_group
 fl_conversion
@@ -38,3 +39,4 @@ fll_fss
 fll_path
 fll_print
 fll_program
+fll_status_string

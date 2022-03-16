@@ -30,7 +30,7 @@ extern "C" {
     fll_program_print_help_option(main->output.to, main->context, control_short_settings_s, control_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Specify a directory path or a full path to the control settings file.");
     fll_program_print_help_option(main->output.to, main->context, control_short_socket_s, control_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Specify a directory path or a full path to the controller socket file.");
 
-    fll_program_print_help_usage(main->output.to, main->context, control_program_name_s, control_command_s);
+    fll_program_print_help_usage(main->output.to, main->context, control_program_name_s, control_action_s);
 
     fl_print_format("  When the %[%r%r%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s, main->context.set.notable);
     fl_print_format(" %[%r%r%] parameter or from the control settings file.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
@@ -191,12 +191,13 @@ extern "C" {
         control_data_t data = control_data_t_initialize;
         data.argv = main->parameters.arguments.array;
 
-        // Verify commands before attempting to connect to the socket.
-        if (control_command_identify(main, &data, data.argv[main->parameters.remaining.array[0]]) == F_found) {
-          status = control_command_verify(main, &data);
+        data.action = control_action_identify(main, &data, data.argv[main->parameters.remaining.array[0]]);
+
+        if (data.action) {
+          status = control_action_verify(main, &data);
         }
         else {
-          control_print_error_parameter_command_not(main, data.argv[main->parameters.remaining.array[0]]);
+          control_print_error_parameter_action_not(main, data.argv[main->parameters.remaining.array[0]]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -238,7 +239,9 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            status = control_packet_receive(main, &data);
+            control_payload_header_t header = control_payload_header_t_initialize;
+
+            status = control_packet_receive(main, &data, &header);
 
             if (F_status_is_error(status)) {
               if (F_status_set_fine(status) == F_too_large) {
@@ -260,7 +263,7 @@ extern "C" {
         control_data_delete(&data);
       }
       else {
-        control_print_error_parameter_commands_none(main);
+        control_print_error_parameter_actions_none(main);
 
         status = F_status_set_error(F_data_not);
       }

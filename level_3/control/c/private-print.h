@@ -13,86 +13,102 @@ extern "C" {
 #endif
 
 /**
- * Print an error message about no commands being provided.
+ * Print a message displaying the object and content for some packet header.
  *
  * @param main
  *   The main program data.
+ * @param object
+ *   The object string.
+ * @param content
+ *   The content string.
+ * @param range_content
+ *   The range representing the content where the content is found within the content string.
  */
-#ifndef _di_control_print_error_parameter_commands_none_
-  extern void control_print_error_parameter_commands_none(fll_program_data_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_control_print_error_parameter_commands_none_
+#ifndef _di_control_print_debug_packet_header_object_and_content_
+  extern void control_print_debug_packet_header_object_and_content(fll_program_data_t * const main, const f_string_static_t object, const f_string_static_t content, const f_string_range_t range_content) F_attribute_visibility_internal_d;
+#endif // _di_control_print_debug_packet_header_object_and_content_
 
 /**
- * Print an error message about the given parameter not matching the known set of controller commands.
+ * Print an error message about no actions being provided.
  *
  * @param main
  *   The main program data.
- * @param command
- *   The parameter representing a command.
  */
-#ifndef _di_control_print_error_parameter_command_not_
-  extern void control_print_error_parameter_command_not(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
-#endif // _di_control_print_error_parameter_command_not_
+#ifndef _di_control_print_error_parameter_actions_none_
+  extern void control_print_error_parameter_actions_none(fll_program_data_t * const main) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_actions_none_
 
 /**
- * Print an error message about the given parameter being a rule command having an empty rule basename.
+ * Print an error message about the given parameter not matching the known set of controller actions.
  *
  * @param main
  *   The main program data.
- * @param command
- *   The parameter representing a command.
+ * @param action
+ *   The parameter representing a action.
  */
-#ifndef _di_control_print_error_parameter_command_rule_basename_empty_
-  extern void control_print_error_parameter_command_rule_basename_empty(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
-#endif // _di_control_print_error_parameter_command_rule_basename_empty_
+#ifndef _di_control_print_error_parameter_action_not_
+  extern void control_print_error_parameter_action_not(fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_not_
 
 /**
- * Print an error message about the given parameter being a rule command having an empty rule directory path.
+ * Print an error message about the given parameter being a rule action having an empty rule basename.
  *
  * @param main
  *   The main program data.
- * @param command
- *   The parameter representing a command.
+ * @param action
+ *   The parameter representing a action.
  */
-#ifndef _di_control_print_error_parameter_command_rule_directory_empty_
-  extern void control_print_error_parameter_command_rule_directory_empty(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
-#endif // _di_control_print_error_parameter_command_rule_directory_empty_
+#ifndef _di_control_print_error_parameter_action_rule_basename_empty_
+  extern void control_print_error_parameter_action_rule_basename_empty(fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_basename_empty_
 
 /**
- * Print an error message about the given parameter being a rule command having an empty rule name.
+ * Print an error message about the given parameter being a rule action having an empty rule directory path.
  *
  * @param main
  *   The main program data.
- * @param command
- *   The parameter representing a command.
+ * @param action
+ *   The parameter representing a action.
  */
-#ifndef _di_control_print_error_parameter_command_rule_empty_
-  extern void control_print_error_parameter_command_rule_empty(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
-#endif // _di_control_print_error_parameter_command_rule_empty_
+#ifndef _di_control_print_error_parameter_action_rule_directory_empty_
+  extern void control_print_error_parameter_action_rule_directory_empty(fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_directory_empty_
 
 /**
- * Print an error message about the given parameter being a rule command but no rule name is specified.
+ * Print an error message about the given parameter being a rule action having an empty rule name.
  *
  * @param main
  *   The main program data.
- * @param command
- *   The parameter representing a command.
+ * @param action
+ *   The parameter representing a action.
  */
-#ifndef _di_control_print_error_parameter_command_rule_not_
-  extern void control_print_error_parameter_command_rule_not(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
-#endif // _di_control_print_error_parameter_command_rule_not_
+#ifndef _di_control_print_error_parameter_action_rule_empty_
+  extern void control_print_error_parameter_action_rule_empty(fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_empty_
 
 /**
- * Print an error message about the given parameter being a rule command having too many arguments passed.
+ * Print an error message about the given parameter being a rule action but no rule name is specified.
  *
  * @param main
  *   The main program data.
- * @param command
- *   The parameter representing a command.
+ * @param action
+ *   The parameter representing a action.
  */
-#ifndef _di_control_print_error_parameter_command_rule_too_many_
-  extern void control_print_error_parameter_command_rule_too_many(fll_program_data_t * const main, const f_string_static_t command) F_attribute_visibility_internal_d;
-#endif // _di_control_print_error_parameter_command_rule_too_many_
+#ifndef _di_control_print_error_parameter_action_rule_not_
+  extern void control_print_error_parameter_action_rule_not(fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_not_
+
+/**
+ * Print an error message about the given parameter being a rule action having too many arguments passed.
+ *
+ * @param main
+ *   The main program data.
+ * @param action
+ *   The parameter representing a action.
+ */
+#ifndef _di_control_print_error_parameter_action_rule_too_many_
+  extern void control_print_error_parameter_action_rule_too_many(fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_too_many_
 
 /**
  * Print an error message about the parameter's associated value being an empty string.
@@ -195,6 +211,20 @@ extern "C" {
 #ifndef _di_control_print_signal_received_
   extern void control_print_signal_received(fll_program_data_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
 #endif // _di_control_print_signal_received_
+
+/**
+ * Print a warning message about a response header being repeated (when debugging).
+ *
+ * This program currently does not support multiple headers for any given valid header Object.
+ *
+ * @param main
+ *   The main program data.
+ * @param response_header
+ *   The repeated response header.
+ */
+#ifndef _di_control_print_warning_packet_header_duplicate_object_
+  extern void control_print_warning_packet_header_duplicate_object(fll_program_data_t * const main, const f_string_static_t response_header) F_attribute_visibility_internal_d;
+#endif // _di_control_print_warning_packet_header_duplicate_object_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -128,8 +128,9 @@ extern "C" {
   #endif // defined(_override_control_path_settings_) && defined(_override_control_path_settings_length_)
 
   #define CONTROL_action_s             "action"
-  #define CONTROL_command_s            "command"
+  #define CONTROL_controller_s         "controller"
   #define CONTROL_default_s            "default"
+  #define CONTROL_error_s              "error"
   #define CONTROL_length_s             "length"
   #define CONTROL_name_socket_s        "name_socket"
   #define CONTROL_path_socket_s        "path_socket"
@@ -138,7 +139,6 @@ extern "C" {
   #define CONTROL_status_s             "status"
   #define CONTROL_type_s               "type"
 
-  #define CONTROL_error_s    "error"
   #define CONTROL_freeze_s   "freeze"
   #define CONTROL_kill_s     "kill"
   #define CONTROL_pause_s    "pause"
@@ -152,18 +152,18 @@ extern "C" {
   #define CONTROL_stop_s     "stop"
   #define CONTROL_thaw_s     "thaw"
 
-  #define CONTROL_command_s_length            7
+  #define CONTROL_action_s_length             6
+  #define CONTROL_controller_s_length         10
   #define CONTROL_default_s_length            7
+  #define CONTROL_error_s_length              5
+  #define CONTROL_length_s_length             6
   #define CONTROL_name_socket_s_length        11
   #define CONTROL_path_socket_s_length        11
   #define CONTROL_path_socket_prefix_s_length 18
   #define CONTROL_path_socket_suffix_s_length 18
-  #define CONTROL_type_s_length               4
   #define CONTROL_status_s_length             6
-  #define CONTROL_length_s_length             6
-  #define CONTROL_action_s_length             6
+  #define CONTROL_type_s_length               4
 
-  #define CONTROL_error_s_length    5
   #define CONTROL_freeze_s_length   6
   #define CONTROL_kill_s_length     4
   #define CONTROL_pause_s_length    5
@@ -180,8 +180,9 @@ extern "C" {
   extern const f_string_static_t control_path_settings_s;
 
   extern const f_string_static_t control_action_s;
-  extern const f_string_static_t control_command_s;
+  extern const f_string_static_t control_controller_s;
   extern const f_string_static_t control_default_s;
+  extern const f_string_static_t control_error_s;
   extern const f_string_static_t control_length_s;
   extern const f_string_static_t control_name_socket_s;
   extern const f_string_static_t control_path_socket_s;
@@ -190,7 +191,6 @@ extern "C" {
   extern const f_string_static_t control_status_s;
   extern const f_string_static_t control_type_s;
 
-  extern const f_string_static_t control_error_s;
   extern const f_string_static_t control_freeze_s;
   extern const f_string_static_t control_kill_s;
   extern const f_string_static_t control_pause_s;
@@ -206,7 +206,7 @@ extern "C" {
 #endif // _di_control_strings_s_
 
 /**
- * Codes representing supported commands.
+ * Codes representing supported actions.
  *
  * freeze:   Perform the freeze controller operation.
  * kill:     Perform the kill controller operation.
@@ -221,22 +221,22 @@ extern "C" {
  * stop:     Perform the stop controller operation.
  * thaw:     Perform the thaw controller operation.
  */
-#ifndef _di_control_command_types_
+#ifndef _di_control_action_types_
   enum {
-    control_command_type_freeze_e = 1,
-    control_command_type_kill_e,
-    control_command_type_pause_e,
-    control_command_type_reboot_e,
-    control_command_type_reload_e,
-    control_command_type_rerun_e,
-    control_command_type_restart_e,
-    control_command_type_resume_e,
-    control_command_type_shutdown_e,
-    control_command_type_start_e,
-    control_command_type_stop_e,
-    control_command_type_thaw_e,
+    control_action_type_freeze_e = 1,
+    control_action_type_kill_e,
+    control_action_type_pause_e,
+    control_action_type_reboot_e,
+    control_action_type_reload_e,
+    control_action_type_rerun_e,
+    control_action_type_restart_e,
+    control_action_type_resume_e,
+    control_action_type_shutdown_e,
+    control_action_type_start_e,
+    control_action_type_stop_e,
+    control_action_type_thaw_e,
   };
-#endif // _di_control_command_types_
+#endif // _di_control_action_types_
 
 /**
  * The control cache.
@@ -248,8 +248,8 @@ extern "C" {
  * packet_objects:  The FSS Objects for a packet.
  * packet_contents: The FSS Contents for a packet.
  *
- * payload_objects:  The FSS Objects for a payload.
- * payload_contents: The FSS Contents for a payload.
+ * header_objects:  The FSS Objects for a packet payload header.
+ * header_contents: The FSS Contents for a packet payload header.
  *
  * delimits: The delimits cache.
  */
@@ -262,15 +262,10 @@ extern "C" {
     f_fss_objects_t packet_objects;
     f_fss_contents_t packet_contents;
 
-    f_fss_objects_t payload_objects;
-    f_fss_contents_t payload_contents;
+    f_fss_objects_t header_objects;
+    f_fss_contents_t header_contents;
 
     f_fss_delimits_t delimits;
-
-    f_string_ranges_t range_actions;
-    f_string_ranges_t range_statuss;
-
-    f_uint8s_t types;
   } control_cache_t;
 
   #define control_cache_initialize \
@@ -283,23 +278,20 @@ extern "C" {
       f_fss_objects_t_initialize, \
       f_fss_contents_t_initialize, \
       f_fss_delimits_t_initialize, \
-      f_string_ranges_t_initialize, \
-      f_string_ranges_t_initialize, \
-      f_uint8s_t_initialize, \
     }
 #endif // _di_control_cache_t_
 
 /**
  * The control data.
  *
- * argv:    The argument structure in the progam data parameters for simplifying syntax.
- * command: The command type code.
- * cache:   A cache.
- * socket:  A socket used to connect to the controller.
+ * argv:   The argument structure in the progam data parameters for simplifying syntax.
+ * action: The action type code.
+ * cache:  A cache.
+ * socket: A socket used to connect to the controller.
  */
 #ifndef _di_control_data_t_
   typedef struct {
-    uint8_t command;
+    uint8_t action;
 
     control_cache_t cache;
 
@@ -317,6 +309,46 @@ extern "C" {
       0, \
     }
 #endif // _di_control_data_t_
+
+/**
+ * Supported payload types.
+ *
+ * error:      The payload is an error payload.
+ * controller: The payload is a controller payload.
+ */
+#ifndef _di_control_payload_types_
+  enum {
+    control_payload_type_error_e = 1,
+    control_payload_type_controller_e,
+  };
+#endif // _di_control_payload_types_
+
+/**
+ * The packet payload header data.
+ *
+ * The FSS-000E (Payload) supports multiple objects, but the Control packet does not support this, yet.
+ *
+ * action: The action type code, for any valid action (see: control_action_types enumeration).
+ * type:   The packet type represented by the payload packet.
+ * status: The status code represented by the payload packet.
+ * length: The length of the payload content within the payload packet.
+ */
+#ifndef _di_control_payload_header_t_
+  typedef struct {
+    uint8_t action;
+    uint8_t type;
+    f_status_t status;
+    uint16_t length;
+  } control_payload_header_t;
+
+  #define control_payload_header_t_initialize \
+    { \
+      0, \
+      0, \
+      f_status_t_initialize, \
+      f_array_length_t_initialize, \
+    }
+#endif // _di_control_payload_header_t_
 
 /**
  * Deallocate the control data.

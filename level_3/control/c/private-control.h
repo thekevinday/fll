@@ -14,34 +14,34 @@ extern "C" {
 
 
 /**
- * Identify the command code the given name represents.
+ * Identify the action code the given name represents.
  *
  * @param main
  *   The main program data.
  * @param data
  *   The control data.
- * @param command
- *   The parameter representing a command.
+ * @param action
+ *   The parameter representing a action.
  *
  * @return
- *   F_found on success.
- *   F_found_not if name is unknown.
+ *   action type code on success.
+ *   0 if name is unknown.
  */
-#ifndef _di_control_command_identify_
-  extern f_status_t control_command_identify(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t command) F_attribute_visibility_internal_d;
-#endif // _di_control_command_identify_
+#ifndef _di_control_action_identify_
+  extern uint8_t control_action_identify(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t action) F_attribute_visibility_internal_d;
+#endif // _di_control_action_identify_
 
 /**
- * Verify that the additional parameters are reasonably correct for the identified command.
+ * Verify that the additional parameters are reasonably correct for the identified action.
  *
  * @param main
  *   The main program data.
  * @param data
  *   The control data.
  */
-#ifndef _di_control_command_verify_
-  extern f_status_t control_command_verify(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_control_command_verify_
+#ifndef _di_control_action_verify_
+  extern f_status_t control_action_verify(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_control_action_verify_
 
 /**
  * Build the payload, storing it in the large cache.
@@ -71,14 +71,19 @@ extern "C" {
 /**
  * Receive the response from the remote socket, storing it in the large cache.
  *
+ * @todo consider returning F_header (with error bit) fo most header processing errors rather than individual status codes.
+ *
  * @param main
  *   The main program data.
  * @param data
  *   The control data.
+ * @param header
+ *   The control payload packet header data.
  *
  * @return
  *   F_none on success.
  *
+ *   F_header (with error bit) If there is a problem processing the packet header.
  *   F_packet_not (with error bit) If the received packet is not a valid packet or not a supported packet structure.
  *   F_too_large (with error bit) If the received packet specifies a size that is too large or the actual size is larger than the specified size.
  *   F_too_small (with error bit) If the received packet actual size is smaller than the specified size.
@@ -100,7 +105,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_control_packet_receive_
-  extern f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_receive_
 
 /**

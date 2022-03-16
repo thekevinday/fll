@@ -17,8 +17,9 @@ extern "C" {
   const f_string_static_t control_path_settings_s = macro_f_string_static_t_initialize(CONTROL_path_settings_s, 0, CONTROL_path_settings_s_length);
 
   const f_string_static_t control_action_s = macro_f_string_static_t_initialize(CONTROL_action_s, 0, CONTROL_action_s_length);
-  const f_string_static_t control_command_s = macro_f_string_static_t_initialize(CONTROL_command_s, 0, CONTROL_command_s_length);
+  const f_string_static_t control_controller_s = macro_f_string_static_t_initialize(CONTROL_controller_s, 0, CONTROL_controller_s_length);
   const f_string_static_t control_default_s = macro_f_string_static_t_initialize(CONTROL_default_s, 0, CONTROL_default_s_length);
+  const f_string_static_t control_error_s = macro_f_string_static_t_initialize(CONTROL_error_s, 0, CONTROL_error_s_length);
   const f_string_static_t control_length_s = macro_f_string_static_t_initialize(CONTROL_length_s, 0, CONTROL_length_s_length);
   const f_string_static_t control_name_socket_s = macro_f_string_static_t_initialize(CONTROL_name_socket_s, 0, CONTROL_name_socket_s_length);
   const f_string_static_t control_path_socket_s = macro_f_string_static_t_initialize(CONTROL_path_socket_s, 0, CONTROL_path_socket_s_length);
@@ -27,7 +28,6 @@ extern "C" {
   const f_string_static_t control_status_s = macro_f_string_static_t_initialize(CONTROL_status_s, 0, CONTROL_status_s_length);
   const f_string_static_t control_type_s = macro_f_string_static_t_initialize(CONTROL_type_s, 0, CONTROL_type_s_length);
 
-  const f_string_static_t control_error_s = macro_f_string_static_t_initialize(CONTROL_error_s, 0, CONTROL_error_s_length);
   const f_string_static_t control_freeze_s = macro_f_string_static_t_initialize(CONTROL_freeze_s, 0, CONTROL_freeze_s_length);
   const f_string_static_t control_kill_s = macro_f_string_static_t_initialize(CONTROL_kill_s, 0, CONTROL_kill_s_length);
   const f_string_static_t control_pause_s = macro_f_string_static_t_initialize(CONTROL_pause_s, 0, CONTROL_pause_s_length);
@@ -52,15 +52,10 @@ extern "C" {
     f_string_ranges_resize(0, &data->cache.packet_objects);
     f_string_rangess_resize(0, &data->cache.packet_contents);
 
-    f_string_ranges_resize(0, &data->cache.payload_objects);
-    f_string_rangess_resize(0, &data->cache.payload_contents);
+    f_string_ranges_resize(0, &data->cache.header_objects);
+    f_string_rangess_resize(0, &data->cache.header_contents);
 
     f_array_lengths_resize(0, &data->cache.delimits);
-
-    f_string_ranges_resize(0, &data->cache.range_actions);
-    f_string_ranges_resize(0, &data->cache.range_statuss);
-
-    f_uint8s_resize(0, &data->cache.types);
   }
 #endif // _di_control_data_delete_
 

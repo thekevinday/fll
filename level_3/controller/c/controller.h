@@ -50,6 +50,7 @@
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
 #include <fll/level_0/socket.h>
+#include <fll/level_0/status_string.h>
 
 // FLL-1 includes.
 #include <fll/level_1/control_group.h>
@@ -71,6 +72,7 @@
 #include <fll/level_2/path.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
+#include <fll/level_2/status_string.h>
 
 // Controller includes.
 #include <program/controller/common.h>

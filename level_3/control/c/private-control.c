@@ -7,116 +7,92 @@
 extern "C" {
 #endif
 
-#ifndef _di_control_command_identify_
-  f_status_t control_command_identify(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t command) {
+#ifndef _di_control_action_identify_
+  uint8_t control_action_identify(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t action) {
 
-    if (fl_string_dynamic_compare(command, control_freeze_s) == F_equal_to) {
-      data->command = control_command_type_freeze_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_freeze_s) == F_equal_to) {
+      return control_action_type_freeze_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_kill_s) == F_equal_to) {
-      data->command = control_command_type_kill_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_kill_s) == F_equal_to) {
+      return control_action_type_kill_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_pause_s) == F_equal_to) {
-      data->command = control_command_type_pause_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_pause_s) == F_equal_to) {
+      return control_action_type_pause_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_reboot_s) == F_equal_to) {
-      data->command = control_command_type_reboot_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_reboot_s) == F_equal_to) {
+      return control_action_type_reboot_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_reload_s) == F_equal_to) {
-      data->command = control_command_type_reload_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_reload_s) == F_equal_to) {
+      return control_action_type_reload_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_rerun_s) == F_equal_to) {
-      data->command = control_command_type_rerun_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_rerun_s) == F_equal_to) {
+      return control_action_type_rerun_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_restart_s) == F_equal_to) {
-      data->command = control_command_type_restart_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_restart_s) == F_equal_to) {
+      return control_action_type_restart_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_resume_s) == F_equal_to) {
-      data->command = control_command_type_resume_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_resume_s) == F_equal_to) {
+      return control_action_type_resume_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_shutdown_s) == F_equal_to) {
-      data->command = control_command_type_shutdown_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_shutdown_s) == F_equal_to) {
+      return control_action_type_shutdown_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_start_s) == F_equal_to) {
-      data->command = control_command_type_start_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_start_s) == F_equal_to) {
+      return control_action_type_start_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_stop_s) == F_equal_to) {
-      data->command = control_command_type_stop_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_stop_s) == F_equal_to) {
+      return control_action_type_stop_e;
     }
 
-    if (fl_string_dynamic_compare(command, control_thaw_s) == F_equal_to) {
-      data->command = control_command_type_thaw_e;
-
-      return F_found;
+    if (fl_string_dynamic_compare(action, control_thaw_s) == F_equal_to) {
+      return control_action_type_thaw_e;
     }
 
-    return F_found_not;
+    return 0;
   }
-#endif // _di_control_command_identify_
+#endif // _di_control_action_identify_
 
-#ifndef _di_control_command_verify_
-  f_status_t control_command_verify(fll_program_data_t * const main, control_data_t * const data) {
+#ifndef _di_control_action_verify_
+  f_status_t control_action_verify(fll_program_data_t * const main, control_data_t * const data) {
 
-    switch (data->command) {
-      case control_command_type_freeze_e:
-      case control_command_type_kill_e:
-      case control_command_type_pause_e:
-      case control_command_type_reload_e:
-      case control_command_type_rerun_e:
-      case control_command_type_restart_e:
-      case control_command_type_resume_e:
-      case control_command_type_start_e:
-      case control_command_type_stop_e:
-      case control_command_type_thaw_e:
+    switch (data->action) {
+      case control_action_type_freeze_e:
+      case control_action_type_kill_e:
+      case control_action_type_pause_e:
+      case control_action_type_reload_e:
+      case control_action_type_rerun_e:
+      case control_action_type_restart_e:
+      case control_action_type_resume_e:
+      case control_action_type_start_e:
+      case control_action_type_stop_e:
+      case control_action_type_thaw_e:
         if (main->parameters.remaining.used < 2) {
-          control_print_error_parameter_command_rule_not(main, data->argv[main->parameters.remaining.array[0]]);
+          control_print_error_parameter_action_rule_not(main, data->argv[main->parameters.remaining.array[0]]);
 
           return F_status_set_error(F_parameter);
         }
         else if (main->parameters.remaining.used > 3) {
-          control_print_error_parameter_command_rule_too_many(main, data->argv[main->parameters.remaining.array[0]]);
+          control_print_error_parameter_action_rule_too_many(main, data->argv[main->parameters.remaining.array[0]]);
 
           return F_status_set_error(F_parameter);
         }
 
         if (!data->argv[main->parameters.remaining.array[1]].used) {
           if (main->parameters.remaining.used == 2) {
-            control_print_error_parameter_command_rule_empty(main, data->argv[main->parameters.remaining.array[0]]);
+            control_print_error_parameter_action_rule_empty(main, data->argv[main->parameters.remaining.array[0]]);
           }
           else {
-            control_print_error_parameter_command_rule_directory_empty(main, data->argv[main->parameters.remaining.array[0]]);
+            control_print_error_parameter_action_rule_directory_empty(main, data->argv[main->parameters.remaining.array[0]]);
           }
 
           return F_status_set_error(F_parameter);
@@ -124,7 +100,7 @@ extern "C" {
 
         if (main->parameters.remaining.used == 3) {
           if (!data->argv[main->parameters.remaining.array[2]].used) {
-            control_print_error_parameter_command_rule_basename_empty(main, data->argv[main->parameters.remaining.array[0]]);
+            control_print_error_parameter_action_rule_basename_empty(main, data->argv[main->parameters.remaining.array[0]]);
 
             return F_status_set_error(F_parameter);
           }
@@ -133,18 +109,18 @@ extern "C" {
         return F_none;
     }
 
-    // @todo the reboot and shutdown need to support date and time commands: "now", "in (a time)", and "at (a time)".
-    if (data->command == control_command_type_reboot_e) {
-      // @todo (also needs to support kexec calls or kexec needs its own command, which will likely be in the controller program.)
+    // @todo the reboot and shutdown need to support date and time actions: "now", "in (a time)", and "at (a time)".
+    if (data->action == control_action_type_reboot_e) {
+      // @todo (also needs to support kexec calls or kexec needs its own action, which will likely be in the controller program.)
     }
 
-    if (data->command == control_command_type_shutdown_e) {
+    if (data->action == control_action_type_shutdown_e) {
       // @todo
     }
 
     return F_none;
   }
-#endif // _di_control_command_verify_
+#endif // _di_control_action_verify_
 
 #ifndef _di_control_packet_build_
   f_status_t control_packet_build(fll_program_data_t * const main, control_data_t * const data) {
@@ -256,23 +232,28 @@ extern "C" {
 #endif // _di_control_packet_build_
 
 #ifndef _di_control_packet_receive_
-  f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data) {
+  f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) {
 
     data->cache.large.used = 0;
     data->cache.small.used = 0;
     data->cache.packet_objects.used = 0;
     data->cache.packet_contents.used = 0;
-    data->cache.payload_objects.used = 0;
-    data->cache.payload_contents.used = 0;
+    data->cache.header_objects.used = 0;
+    data->cache.header_contents.used = 0;
     data->cache.delimits.used = 0;
-    data->cache.range_actions.used = 0;
-    data->cache.range_statuss.used = 0;
-    data->cache.types.used = 0;
+
+    header->action = 0;
+    header->type = 0;
+    header->status = F_none;
+    header->length = 0;
 
     f_status_t status = F_none;
-    f_array_length_t length = 5;
+    f_array_length_t i = 0;
+    f_string_range_t range_header = f_string_range_t_initialize;
+    f_string_range_t range_payload = f_string_range_t_initialize;
 
     {
+      f_array_length_t length = 5;
       uint8_t head[length];
 
       memset(head, 0, sizeof(uint8_t) * length);
@@ -341,43 +322,174 @@ extern "C" {
 
       data->cache.delimits.used = 0;
 
-      f_string_range_t *range_header_object = 0;
-      f_string_ranges_t *range_header_content = 0;
-      f_string_range_t *range_payload_object = 0;
-      f_string_ranges_t *range_payload_content = 0;
+      {
+        f_string_ranges_t *content_header = 0;
+        f_string_ranges_t *content_payload = 0;
 
-      for (f_array_length_t i = 0; i < data->cache.packet_objects.used; ++i) {
+        for (; i < data->cache.packet_objects.used; ++i) {
 
-        if (fl_string_dynamic_partial_compare_string(f_fss_string_header_s.string, data->cache.large, f_fss_string_header_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
+          if (fl_string_dynamic_partial_compare_string(f_fss_string_header_s.string, data->cache.large, f_fss_string_header_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
 
-          // The FSS-000E (Payload) standard does not prohibit multiple "header", but such cases are not supported by the controller and the control programs.
-          if (range_header_object) {
-            return F_status_set_error(F_packet_not);
+            // The FSS-000E (Payload) standard does not prohibit multiple "header", but such cases are not supported by the controller and the control programs.
+            if (content_header) {
+              return F_status_set_error(F_packet_not);
+            }
+
+            content_header = &data->cache.packet_contents.array[i];
           }
+          else if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, data->cache.large, f_fss_string_payload_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
 
-          range_header_object = &data->cache.packet_objects.array[i];
-          range_header_content = &data->cache.packet_contents.array[i];
-        }
-        else if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, data->cache.large, f_fss_string_payload_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
+            // Only a single "payload" is supported by the FSS-000E (Payload) standard.
+            if (content_payload) {
+              return F_status_set_error(F_packet_not);
+            }
 
-          // Only a single "payload" is supported by the FSS-000E (Payload) standard.
-          if (range_payload_object) {
-            return F_status_set_error(F_packet_not);
+            content_payload = &data->cache.packet_contents.array[i];
           }
+        } // for
 
-          range_payload_object = &data->cache.packet_objects.array[i];
-          range_payload_content = &data->cache.packet_contents.array[i];
+        if (!content_header || !content_payload) {
+          return F_status_set_error(F_packet_not);
         }
-      } // for
 
-      if (!range_header_object || !range_payload_object) {
-        return F_status_set_error(F_packet_not);
+        range_header = content_header->array[0];
+        range_payload = content_payload->array[0];
       }
 
-      // @todo load the "action"s, "length", "status"s, "type"s, and finally the "payload" (if lenth is > 0).
+      {
+        // 0x1 = found action, 0x2 = found length, 0x4 = found status, 0x8 = found_type.
+        uint8_t found = 0;
+        f_number_unsigned_t number = 0;
+        f_string_range_t range = range_header;
 
-      //status = fll_fss_extended_read(data->cache.payload, state, range_payload_content, &data->cache.payload_objects, &data->cache.payload_contents, &data->cache.delimits, 0, 0);
-      //if (F_status_is_error(status)) return status;
+        status = fll_fss_basic_list_read(data->cache.large, state, &range, &data->cache.header_objects, &data->cache.header_contents, &data->cache.delimits, 0, 0);
+        if (F_status_is_error(status)) return F_status_set_error(status);
+
+        status = fl_fss_apply_delimit(data->cache.delimits, &data->cache.large);
+        if (F_status_is_error(status)) return status;
+
+        if (!data->cache.header_contents.used) {
+          // @todo if debug print the reason for the failure.
+          return F_status_set_error(F_header);
+        }
+
+        // @todo walk through each range in header_objects, match the first "header" object, get the range from header_contents.array[0], reset the header_objects and header_contents and then pass the retrieved range to the fll_fss_extended_read() function below.
+
+        //status = fll_fss_extended_read(data->cache.large, state, &range, &data->cache.header_objects, &data->cache.header_contents, &data->cache.delimits, 0, 0);
+        if (F_status_is_error(status)) return F_status_set_error(status);
+
+        for (i = 0; i < data->cache.header_objects.used; ++i) {
+
+          if (fl_string_dynamic_partial_compare_string(control_action_s.string, data->cache.large, control_action_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
+            if (!(found & 0x1)) {
+              const f_array_length_t action_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
+              char action_string[action_length + 1];
+              const f_string_static_t action = macro_f_string_static_t_initialize(action_string, 0, action_length);
+
+              memcpy(action_string, data->cache.large.string + data->cache.header_contents.array[i].array[0].start, action_length);
+              action_string[action_length] = 0;
+
+              found |= 0x1;
+
+              control_print_debug_packet_header_object_and_content(main, control_action_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
+
+              header->action = control_action_identify(main, data, action);
+
+              if (!header->action) {
+                // @todo if debug print the reason for the failure.
+                return F_status_set_error(F_header);
+              }
+            }
+            else {
+              control_print_warning_packet_header_duplicate_object(main, control_action_s);
+            }
+          }
+          else if (fl_string_dynamic_partial_compare_string(control_length_s.string, data->cache.large, control_length_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
+            if (!(found & 0x2)) {
+              found |= 0x2;
+              number = 0;
+
+              control_print_debug_packet_header_object_and_content(main, control_length_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
+
+              // First attempt to get status as a number.
+              status = fl_conversion_dynamic_partial_to_number_unsigned(data->cache.large, data->cache.header_contents.array[i].array[0], &number);
+
+              if (F_status_is_error(status)) {
+                // @todo if debug print the reason for the failure.
+                return F_status_set_error(F_status);
+              }
+
+              if (number > F_status_size_max_with_bits_d) {
+                // @todo if debug print the reason for the failure.
+                return F_status_set_error(F_status);
+              }
+
+              header->length = (uint16_t) number;
+            }
+            else {
+              control_print_warning_packet_header_duplicate_object(main, control_length_s);
+            }
+          }
+          else if (fl_string_dynamic_partial_compare_string(control_status_s.string, data->cache.large, control_status_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
+            if (!(found & 0x4)) {
+              found |= 0x4;
+              number = 0;
+
+              control_print_debug_packet_header_object_and_content(main, control_status_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
+
+              // First attempt to get status as a number.
+              status = fl_conversion_dynamic_partial_to_number_unsigned(data->cache.large, data->cache.header_contents.array[i].array[0], &number);
+
+              if (F_status_set_fine(status) == F_number) {
+                const f_array_length_t name_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
+                char name_string[name_length + 1];
+                const f_string_static_t name = macro_f_string_static_t_initialize(name_string, 0, name_length);
+
+                memcpy(name_string, data->cache.large.string + data->cache.header_contents.array[i].array[0].start, name_length);
+                name_string[name_length] = 0;
+
+                status = fll_status_string_from(name, &header->status);
+
+                if (F_status_is_error(status)) {
+                  // @todo if debug print the reason for the failure.
+                  return status;
+                }
+              }
+              else if (F_status_is_error(status)) {
+                // @todo if debug print the reason for the failure.
+                return F_status_set_error(F_status);
+              }
+            }
+            else {
+              control_print_warning_packet_header_duplicate_object(main, control_length_s);
+            }
+          }
+          else if (fl_string_dynamic_partial_compare_string(control_type_s.string, data->cache.large, control_type_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
+            if (!(found & 0x8)) {
+              found |= 0x8;
+
+              control_print_debug_packet_header_object_and_content(main, control_type_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
+
+              if (fl_string_dynamic_partial_compare_string(control_controller_s.string, data->cache.large, control_controller_s.used, data->cache.header_contents.array[i].array[0]) == F_equal_to) {
+                header->type = control_payload_type_controller_e;
+              }
+              else if (fl_string_dynamic_partial_compare_string(control_error_s.string, data->cache.large, control_error_s.used, data->cache.header_contents.array[i].array[0]) == F_equal_to) {
+                header->type = control_payload_type_error_e;
+              }
+              else {
+                // @todo if debug print the reason for the failure.
+                return F_status_set_error(F_header);
+              }
+            }
+            else {
+              control_print_warning_packet_header_duplicate_object(main, control_type_s);
+            }
+          }
+        }
+      }
+
+      // @todo based on header->type, handle the data. if type is control_payload_type_error_e, then check the header->length and conditionally get the message from the payload content.
+      // @todo this handling may likely be moved outside of this function.
     }
 
     // @todo
