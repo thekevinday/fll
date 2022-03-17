@@ -38,73 +38,54 @@ extern "C" {
 #ifndef _di_controller_entry_action_type_name_
   f_string_static_t controller_entry_action_type_name(const uint8_t type) {
 
-    f_string_static_t buffer = f_string_static_t_initialize;
-
     switch (type) {
       case controller_entry_action_type_consider_e:
-        buffer = controller_consider_s;
-        break;
+        return controller_consider_s;
 
       case controller_entry_action_type_execute_e:
-        buffer = controller_execute_s;
-        break;
+        return controller_execute_s;
 
       case controller_entry_action_type_failsafe_e:
-        buffer = controller_failsafe_s;
-        break;
+        return controller_failsafe_s;
 
       case controller_entry_action_type_freeze_e:
-        buffer = controller_freeze_s;
-        break;
+        return controller_freeze_s;
 
       case controller_entry_action_type_item_e:
-        buffer = controller_item_s;
-        break;
+        return controller_item_s;
 
       case controller_entry_action_type_kill_e:
-        buffer = controller_kill_s;
-        break;
+        return controller_kill_s;
 
       case controller_entry_action_type_pause_e:
-        buffer = controller_pause_s;
-        break;
+        return controller_pause_s;
 
       case controller_entry_action_type_ready_e:
-        buffer = controller_ready_s;
-        break;
+        return controller_ready_s;
 
       case controller_entry_action_type_reload_e:
-        buffer = controller_reload_s;
-        break;
+        return controller_reload_s;
 
       case controller_entry_action_type_restart_e:
-        buffer = controller_restart_s;
-        break;
+        return controller_restart_s;
 
       case controller_entry_action_type_resume_e:
-        buffer = controller_resume_s;
-        break;
+        return controller_resume_s;
 
       case controller_entry_action_type_start_e:
-        buffer = controller_start_s;
-        break;
+        return controller_start_s;
 
       case controller_entry_action_type_stop_e:
-        buffer = controller_stop_s;
-        break;
+        return controller_stop_s;
 
       case controller_entry_action_type_thaw_e:
-        buffer = controller_thaw_s;
-        break;
+        return controller_thaw_s;
 
       case controller_entry_action_type_timeout_e:
-        buffer = controller_timeout_s;
-        break;
+        return controller_timeout_s;
     }
 
-    buffer.size = buffer.used;
-
-    return buffer;
+    return f_string_empty_s;
   }
 #endif // _di_controller_entry_action_type_name_
 

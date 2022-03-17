@@ -219,118 +219,87 @@ extern "C" {
 #ifndef _di_controller_rule_action_type_name_
   f_string_static_t controller_rule_action_type_name(const uint8_t type) {
 
-    f_string_static_t buffer = f_string_static_t_initialize;
-
     switch (type) {
       case controller_rule_action_type_freeze_e:
-        buffer = controller_freeze_s;
-        break;
+        return controller_freeze_s;
 
       case controller_rule_action_type_group_e:
-        buffer = controller_group_s;
-        break;
+        return controller_group_s;
 
       case controller_rule_action_type_kill_e:
-        buffer = controller_kill_s;
-        break;
+        return controller_kill_s;
 
       case controller_rule_action_type_pause_e:
-        buffer = controller_pause_s;
-        break;
+        return controller_pause_s;
 
       case controller_rule_action_type_pid_file_e:
-        buffer = controller_pid_file_s;
-        break;
+        return controller_pid_file_s;
 
       case controller_rule_action_type_rerun_e:
-        buffer = controller_rerun_s;
-        break;
+        return controller_rerun_s;
 
       case controller_rule_action_type_reload_e:
-        buffer = controller_reload_s;
-        break;
+        return controller_reload_s;
 
       case controller_rule_action_type_restart_e:
-        buffer = controller_restart_s;
-        break;
+        return controller_restart_s;
 
       case controller_rule_action_type_resume_e:
-        buffer = controller_resume_s;
-        break;
+        return controller_resume_s;
 
       case controller_rule_action_type_start_e:
-        buffer = controller_start_s;
-        break;
+        return controller_start_s;
 
       case controller_rule_action_type_stop_e:
-        buffer = controller_stop_s;
-        break;
+        return controller_stop_s;
 
       case controller_rule_action_type_thaw_e:
-        buffer = controller_thaw_s;
-        break;
+        return controller_thaw_s;
 
       case controller_rule_action_type_user_e:
-        buffer = controller_user_s;
-        break;
+        return controller_user_s;
 
       case controller_rule_action_type_with_e:
-        buffer = controller_with_s;
-        break;
+        return controller_with_s;
     }
 
-    buffer.size = buffer.used;
-
-    return buffer;
+    return f_string_empty_s;
   }
 #endif // _di_controller_rule_action_type_name_
 
 #ifndef _di_controller_rule_action_type_execute_name_
   f_string_static_t controller_rule_action_type_execute_name(const uint8_t type) {
 
-    f_string_static_t buffer = f_string_static_t_initialize;
-
     switch (type) {
       case controller_rule_action_type_execute_freeze_e:
-        buffer = controller_freeze_s;
-        break;
+        return controller_freeze_s;
 
       case controller_rule_action_type_execute_kill_e:
-        buffer = controller_kill_s;
-        break;
+        return controller_kill_s;
 
       case controller_rule_action_type_execute_pause_e:
-        buffer = controller_pause_s;
-        break;
+        return controller_pause_s;
 
       case controller_rule_action_type_execute_reload_e:
-        buffer = controller_reload_s;
-        break;
+        return controller_reload_s;
 
       case controller_rule_action_type_execute_restart_e:
-        buffer = controller_restart_s;
-        break;
+        return controller_restart_s;
 
       case controller_rule_action_type_execute_resume_e:
-        buffer = controller_resume_s;
-        break;
+        return controller_resume_s;
 
       case controller_rule_action_type_execute_start_e:
-        buffer = controller_start_s;
-        break;
+        return controller_start_s;
 
       case controller_rule_action_type_execute_stop_e:
-        buffer = controller_stop_s;
-        break;
+        return controller_stop_s;
 
       case controller_rule_action_type_execute_thaw_e:
-        buffer = controller_thaw_s;
-        break;
+        return controller_thaw_s;
     }
 
-    buffer.size = buffer.used;
-
-    return buffer;
+    return f_string_empty_s;
   }
 #endif // _di_controller_rule_action_type_execute_name_
 
@@ -2565,77 +2534,57 @@ extern "C" {
 #ifndef _di_controller_rule_setting_limit_type_name_
   f_string_static_t controller_rule_setting_limit_type_name(const uint8_t type) {
 
-    f_string_static_t buffer = f_string_static_t_initialize;
-
     switch (type) {
       case controller_resource_limit_type_as_e:
-        buffer = controller_as_s;
-        break;
+        return controller_as_s;
 
       case controller_resource_limit_type_core_e:
-        buffer = controller_core_s;
-        break;
+        return controller_core_s;
 
       case controller_resource_limit_type_cpu_e:
-        buffer = controller_cpu_s;
-        break;
+        return controller_cpu_s;
 
       case controller_resource_limit_type_data_e:
-        buffer = controller_data_s;
-        break;
+        return controller_data_s;
 
       case controller_resource_limit_type_fsize_e:
-        buffer = controller_fsize_s;
-        break;
+        return controller_fsize_s;
 
       case controller_resource_limit_type_locks_e:
-        buffer = controller_locks_s;
-        break;
+        return controller_locks_s;
 
       case controller_resource_limit_type_memlock_e:
-        buffer = controller_memlock_s;
-        break;
+        return controller_memlock_s;
 
       case controller_resource_limit_type_msgqueue_e:
-        buffer = controller_msgqueue_s;
-        break;
+        return controller_msgqueue_s;
 
       case controller_resource_limit_type_nice_e:
-        buffer = controller_nice_s;
-        break;
+        return controller_nice_s;
 
       case controller_resource_limit_type_nofile_e:
-        buffer = controller_nofile_s;
-        break;
+        return controller_nofile_s;
 
       case controller_resource_limit_type_nproc_e:
-        buffer = controller_nproc_s;
-        break;
+        return controller_nproc_s;
 
       case controller_resource_limit_type_rss_e:
-        buffer = controller_rss_s;
-        break;
+        return controller_rss_s;
 
       case controller_resource_limit_type_rtprio_e:
-        buffer = controller_rtprio_s;
-        break;
+        return controller_rtprio_s;
 
       case controller_resource_limit_type_rttime_e:
-        buffer = controller_rttime_s;
-        break;
+        return controller_rttime_s;
 
       case controller_resource_limit_type_sigpending_e:
-        buffer = controller_sigpending_s;
-        break;
+        return controller_sigpending_s;
 
       case controller_resource_limit_type_stack_e:
-        buffer = controller_stack_s;
-        break;
+        return controller_stack_s;
     }
 
-    buffer.size = buffer.used;
-
-    return buffer;
+    return f_string_empty_s;
   }
 #endif // _di_controller_rule_setting_limit_type_name_
 
