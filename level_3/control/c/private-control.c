@@ -62,6 +62,51 @@ extern "C" {
   }
 #endif // _di_control_action_identify_
 
+#ifndef _di_control_action_type_name_
+  f_string_static_t control_action_type_name(const uint8_t type) {
+
+    switch (type) {
+      case control_action_type_freeze_e:
+        return control_freeze_s;
+
+      case control_action_type_kill_e:
+        return control_kill_s;
+
+      case control_action_type_pause_e:
+        return control_pause_s;
+
+      case control_action_type_reboot_e:
+        return control_reboot_s;
+
+      case control_action_type_reload_e:
+        return control_reload_s;
+
+      case control_action_type_rerun_e:
+        return control_rerun_s;
+
+      case control_action_type_restart_e:
+        return control_restart_s;
+
+      case control_action_type_resume_e:
+        return control_resume_s;
+
+      case control_action_type_shutdown_e:
+        return control_shutdown_s;
+
+      case control_action_type_start_e:
+        return control_start_s;
+
+      case control_action_type_stop_e:
+        return control_stop_s;
+
+      case control_action_type_thaw_e:
+        return control_thaw_s;
+    }
+
+    return f_string_empty_s;
+  }
+#endif // _di_control_action_type_name_
+
 #ifndef _di_control_action_verify_
   f_status_t control_action_verify(fll_program_data_t * const main, control_data_t * const data) {
 
@@ -315,10 +360,24 @@ extern "C" {
       f_string_range_t range_packet = macro_f_string_range_t_initialize2(data->cache.large.used);
 
       status = fll_fss_basic_list_read(data->cache.large, state, &range_packet, &data->cache.packet_objects, &data->cache.packet_contents, &data->cache.delimits, 0, 0);
-      if (F_status_is_error(status)) return status;
+
+      if (F_status_is_error(status)) {
+        control_print_debug_packet_message(main, "Failure while reading FSS Basic List in the response packet", 0, 0, &status);
+
+        if (F_status_set_fine(status) == F_memory_not) {
+          return status;
+        }
+
+        return F_status_set_error(F_header);
+      }
 
       status = fl_fss_apply_delimit(data->cache.delimits, &data->cache.large);
-      if (F_status_is_error(status)) return status;
+
+      if (F_status_is_error(status)) {
+        control_print_debug_packet_message(main, "Failure while processing delimits for the FSS Basic List in the response packet", 0, 0, &status);
+
+        return F_status_set_error(F_header);
+      }
 
       data->cache.delimits.used = 0;
 
@@ -332,7 +391,9 @@ extern "C" {
 
             // The FSS-000E (Payload) standard does not prohibit multiple "header", but such cases are not supported by the controller and the control programs.
             if (content_header) {
-              return F_status_set_error(F_packet_not);
+              control_print_debug_packet_message(main, "Multiple %[" F_fss_string_header_s "%] found in response packet", 0, 0, 0);
+
+              return F_status_set_error(F_payload_not);
             }
 
             content_header = &data->cache.packet_contents.array[i];
@@ -341,15 +402,31 @@ extern "C" {
 
             // Only a single "payload" is supported by the FSS-000E (Payload) standard.
             if (content_payload) {
-              return F_status_set_error(F_packet_not);
+              control_print_debug_packet_message(main, "Multiple %[" F_fss_string_payload_s "%] found in response packet", 0, 0, 0);
+
+              return F_status_set_error(F_payload_not);
+            }
+
+            if (i + 1 < data->cache.packet_contents.used) {
+              control_print_debug_packet_message(main, "Invalid FSS Payload format, the %[" F_fss_string_payload_s "%] is required to be the last FSS Basic List Object", 0, 0, 0);
+
+              return F_status_set_error(F_payload_not);
             }
 
             content_payload = &data->cache.packet_contents.array[i];
           }
         } // for
 
-        if (!content_header || !content_payload) {
-          return F_status_set_error(F_packet_not);
+        if (!content_header) {
+          control_print_debug_packet_message(main, "Did not find a %[" F_fss_string_header_s "%] in the response packet", 0, 0, 0);
+
+          return F_status_set_error(F_payload_not);
+        }
+
+        if (!content_payload) {
+          control_print_debug_packet_message(main, "Did not find a %[" F_fss_string_payload_s "%] in the response packet", 0, 0, 0);
+
+          return F_status_set_error(F_payload_not);
         }
 
         range_header = content_header->array[0];
@@ -362,21 +439,31 @@ extern "C" {
         f_number_unsigned_t number = 0;
         f_string_range_t range = range_header;
 
-        status = fll_fss_basic_list_read(data->cache.large, state, &range, &data->cache.header_objects, &data->cache.header_contents, &data->cache.delimits, 0, 0);
-        if (F_status_is_error(status)) return F_status_set_error(status);
+        status = fll_fss_extended_read(data->cache.large, state, &range, &data->cache.header_objects, &data->cache.header_contents, 0, 0, &data->cache.delimits, 0);
 
-        status = fl_fss_apply_delimit(data->cache.delimits, &data->cache.large);
-        if (F_status_is_error(status)) return status;
+        if (F_status_is_error(status)) {
+          control_print_debug_packet_message(main, "Failure while reading FSS Extended in the response packet", 0, 0, &status);
 
-        if (!data->cache.header_contents.used) {
-          // @todo if debug print the reason for the failure.
-          return F_status_set_error(F_header);
+          if (F_status_set_fine(status) == F_memory_not) {
+            return status;
+          }
+
+          return F_status_set_error(F_header_not);
         }
 
-        // @todo walk through each range in header_objects, match the first "header" object, get the range from header_contents.array[0], reset the header_objects and header_contents and then pass the retrieved range to the fll_fss_extended_read() function below.
+        status = fl_fss_apply_delimit(data->cache.delimits, &data->cache.large);
 
-        //status = fll_fss_extended_read(data->cache.large, state, &range, &data->cache.header_objects, &data->cache.header_contents, &data->cache.delimits, 0, 0);
-        if (F_status_is_error(status)) return F_status_set_error(status);
+        if (F_status_is_error(status)) {
+          control_print_debug_packet_message(main, "Failure while processing delimits for the FSS Basic List in the response packet", 0, 0, &status);
+
+          return F_status_set_error(F_header_not);
+        }
+
+        if (!data->cache.header_contents.used) {
+          control_print_debug_packet_message(main, "Did not find any Content within the %[" F_fss_string_header_s "%]", 0, 0, 0);
+
+          return F_status_set_error(F_header_not);
+        }
 
         for (i = 0; i < data->cache.header_objects.used; ++i) {
 
@@ -396,8 +483,9 @@ extern "C" {
               header->action = control_action_identify(main, data, action);
 
               if (!header->action) {
-                // @todo if debug print the reason for the failure.
-                return F_status_set_error(F_header);
+                control_print_debug_packet_message(main, "Failed to identify %[" CONTROL_action_s "%] from: ", &data->cache.large, &data->cache.header_contents.array[i].array[0], 0);
+
+                return F_status_set_error(F_header_not);
               }
             }
             else {
@@ -411,17 +499,18 @@ extern "C" {
 
               control_print_debug_packet_header_object_and_content(main, control_length_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
 
-              // First attempt to get status as a number.
               status = fl_conversion_dynamic_partial_to_number_unsigned(data->cache.large, data->cache.header_contents.array[i].array[0], &number);
 
               if (F_status_is_error(status)) {
-                // @todo if debug print the reason for the failure.
-                return F_status_set_error(F_status);
+                control_print_debug_packet_message(main, "Failed to process number for %[" CONTROL_length_s "%] in the response packet, number is:", &data->cache.large, &data->cache.header_contents.array[i].array[0], &status);
+
+                return F_status_set_error(F_header_not);
               }
 
-              if (number > F_status_size_max_with_bits_d) {
-                // @todo if debug print the reason for the failure.
-                return F_status_set_error(F_status);
+              if (number > F_type_size_max_32_unsigned_d) {
+                control_print_debug_packet_message(main, "Processed number for %[" CONTROL_length_s "%] exceeds allowed size in the response packet, number is:", &data->cache.large, &data->cache.header_contents.array[i].array[0], &status);
+
+                return F_status_set_error(F_header_not);
               }
 
               header->length = (uint16_t) number;
@@ -437,10 +526,12 @@ extern "C" {
 
               control_print_debug_packet_header_object_and_content(main, control_status_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
 
-              // First attempt to get status as a number.
+              // Attempt to get status as a number.
               status = fl_conversion_dynamic_partial_to_number_unsigned(data->cache.large, data->cache.header_contents.array[i].array[0], &number);
 
               if (F_status_set_fine(status) == F_number) {
+
+                // Not a number, so attempt get by status string name.
                 const f_array_length_t name_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
                 char name_string[name_length + 1];
                 const f_string_static_t name = macro_f_string_static_t_initialize(name_string, 0, name_length);
@@ -451,13 +542,26 @@ extern "C" {
                 status = fll_status_string_from(name, &header->status);
 
                 if (F_status_is_error(status)) {
-                  // @todo if debug print the reason for the failure.
-                  return status;
+                  control_print_debug_packet_message(main, "Failed to process %[" CONTROL_status_s "%] in the response packet, Content is:", &data->cache.large, &data->cache.header_contents.array[i].array[0], &status);
+
+                  return F_status_set_error(F_header_not);
                 }
               }
               else if (F_status_is_error(status)) {
-                // @todo if debug print the reason for the failure.
-                return F_status_set_error(F_status);
+                control_print_debug_packet_message(main, "Failed to process number for %[" CONTROL_status_s "%] in the response packet, number is:", &data->cache.large, &data->cache.header_contents.array[i].array[0], &status);
+
+                if (F_status_set_fine(status) == F_memory_not) {
+                  return status;
+                }
+
+                return F_status_set_error(F_header_not);
+              }
+              else {
+                if (number > F_status_size_max_with_bits_d) {
+                  control_print_debug_packet_message(main, "Processed number for %[" CONTROL_status_s "%] exceeds allowed size in the response packet, number is:", &data->cache.large, &data->cache.header_contents.array[i].array[0], 0);
+
+                  return F_status_set_error(F_header_not);
+                }
               }
             }
             else {
@@ -477,8 +581,9 @@ extern "C" {
                 header->type = control_payload_type_error_e;
               }
               else {
-                // @todo if debug print the reason for the failure.
-                return F_status_set_error(F_header);
+                control_print_debug_packet_message(main, "Unknown %[" CONTROL_type_s "%] in response packet, Content is:", &data->cache.large, &data->cache.header_contents.array[i].array[0], 0);
+
+                return F_status_set_error(F_header_not);
               }
             }
             else {
@@ -487,15 +592,26 @@ extern "C" {
           }
         }
       }
-
-      // @todo based on header->type, handle the data. if type is control_payload_type_error_e, then check the header->length and conditionally get the message from the payload content.
-      // @todo this handling may likely be moved outside of this function.
     }
 
-    // @todo
     return F_none;
   }
 #endif // _di_control_packet_receive_
+
+#ifndef _di_control_packet_process_
+  f_status_t control_packet_process(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header) {
+
+    if (header.type == control_payload_type_error_e) {
+      control_print_error_packet_response(main, data, header);
+
+      return F_none;
+    }
+
+    // @todo based on header->type, handle the data.
+
+    return F_none;
+  }
+#endif // _di_control_packet_process_
 
 #ifndef _di_control_packet_send_
   f_status_t control_packet_send(fll_program_data_t * const main, control_data_t * const data) {

@@ -224,8 +224,6 @@ extern "C" {
               else {
                 fll_error_print(main->error, F_status_set_fine(status), "control_packet_build", F_true);
               }
-
-              fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
             }
           }
 
@@ -234,7 +232,6 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               fll_error_print(main->error, F_status_set_fine(status), "control_packet_send", F_true);
-              fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
             }
           }
 
@@ -250,8 +247,13 @@ extern "C" {
               else {
                 fll_error_print(main->error, F_status_set_fine(status), "control_packet_receive", F_true);
               }
+            }
+            else {
+              status = control_packet_process(main, &data, header);
 
-              fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
+              if (F_status_is_error(status)) {
+                fll_error_print(main->error, F_status_set_fine(status), "control_packet_process", F_true);
+              }
             }
           }
 

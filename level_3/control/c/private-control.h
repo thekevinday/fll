@@ -32,6 +32,19 @@ extern "C" {
 #endif // _di_control_action_identify_
 
 /**
+ * Get the name of the action type.
+ *
+ * @param type
+ *   The action type id.
+ *
+ * @return
+ *   The string associated with the action type.
+ */
+#ifndef _di_control_action_type_name_
+  extern f_string_static_t control_action_type_name(const uint8_t type) F_attribute_visibility_internal_d;
+#endif // _di_control_action_type_name_
+
+/**
  * Verify that the additional parameters are reasonably correct for the identified action.
  *
  * @param main
@@ -83,30 +96,44 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_header (with error bit) If there is a problem processing the packet header.
+ *   F_header_not (with error bit) If there is a problem processing the packet header.
+ *   F_memory_not (with error bit) On out of memory issues (this is passed through from called functions).
  *   F_packet_not (with error bit) If the received packet is not a valid packet or not a supported packet structure.
+ *   F_payload_not (with error bit) If there is a problem processing the packet payload.
  *   F_too_large (with error bit) If the received packet specifies a size that is too large or the actual size is larger than the specified size.
  *   F_too_small (with error bit) If the received packet actual size is smaller than the specified size.
  *
  *   Errors (with error bit) from: f_socket_read().
- *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: fl_fss_apply_delimit().
- *   Errors (with error bit) from: fll_fss_basic_list_read().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
  *   Errors (with error bit) from: fll_fss_extended_read().
+ *   Errors (with error bit) from: fll_fss_basic_list_read().
  *
  * @see f_socket_read()
- * @see f_string_dynamic_append()
  * @see f_string_dynamic_increase_by()
- * @see f_string_dynamic_resize()
+ * @see fl_conversion_dynamic_partial_to_number_unsigned()
  * @see fl_fss_apply_delimit()
- * @see fll_fss_basic_list_read()
  * @see fll_fss_extended_read()
+ * @see fll_fss_basic_list_read()
+ * @see fll_status_string_from()
  */
 #ifndef _di_control_packet_receive_
   extern f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_receive_
+
+/**
+ * Process the received and loaded packet.
+ *
+ * @param main
+ *   The main program data.
+ * @param data
+ *   The control data.
+ * @param header
+ *   The control payload packet header data.
+ */
+#ifndef _di_control_packet_process_
+  extern f_status_t control_packet_process(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header) F_attribute_visibility_internal_d;
+#endif // _di_control_packet_process_
 
 /**
  * Send the payload to the remote socket, getting the payload from the large cache.

@@ -21,13 +21,50 @@ extern "C" {
  *   The object string.
  * @param content
  *   The content string.
- * @param range_content
+ * @param content_range
  *   The range representing the content where the content is found within the content string.
  */
 #ifndef _di_control_print_debug_packet_header_object_and_content_
-  extern void control_print_debug_packet_header_object_and_content(fll_program_data_t * const main, const f_string_static_t object, const f_string_static_t content, const f_string_range_t range_content) F_attribute_visibility_internal_d;
+  extern void control_print_debug_packet_header_object_and_content(fll_program_data_t * const main, const f_string_static_t object, const f_string_static_t content, const f_string_range_t content_range) F_attribute_visibility_internal_d;
 #endif // _di_control_print_debug_packet_header_object_and_content_
 
+/**
+ * Print a debug message regarding some packet.
+ *
+ * @param main
+ *   The main program data.
+ * @param message
+ *   The message to print.
+ *
+ *   A single "%[" followed by a single "%]" is supported in the message and is replaced with "notable" context.
+ * @param buffer
+ *   (optional) An additonal message to print (this is syntax highlighted).
+ *   Set to NULL to not use.
+ * @param range
+ *   (optional) The range within the buffer to print rather than printing the entire buffer.
+ *   Set to NULL to not use.
+ *   This is ignored when buffer is NULL.
+ * @param status
+ *   (optional) A status code that triggered the failure (this is syntax highlighted).
+ *   Set to NULL to not use.
+ */
+#ifndef _di_control_print_debug_packet_message_
+  extern void control_print_debug_packet_message(fll_program_data_t * const main, const f_string_t message, const f_string_static_t *buffer, const f_string_range_t *range, const f_status_t *status) F_attribute_visibility_internal_d;
+#endif // _di_control_print_debug_packet_message_
+
+/**
+ * Print an error from the packet response.
+ *
+ * @param main
+ *   The main program data.
+ * @param data
+ *   The control data.
+ * @param header
+ *   The control payload packet header data.
+ */
+#ifndef _di_control_print_error_packet_response_
+  extern void control_print_error_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_packet_response_
 /**
  * Print an error message about no actions being provided.
  *

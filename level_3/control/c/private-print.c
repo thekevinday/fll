@@ -1,5 +1,6 @@
 #include "control.h"
 #include "private-common.h"
+#include "private-control.h"
 #include "private-print.h"
 
 #ifdef __cplusplus
@@ -7,18 +8,69 @@ extern "C" {
 #endif
 
 #ifndef _di_control_print_debug_packet_header_object_and_content_
-  void control_print_debug_packet_header_object_and_content(fll_program_data_t * const main, const f_string_static_t object, const f_string_static_t content, const f_string_range_t range_content) {
+  void control_print_debug_packet_header_object_and_content(fll_program_data_t * const main, const f_string_static_t object, const f_string_static_t content, const f_string_range_t content_range) {
 
     if (main->output.verbosity == f_console_verbosity_debug_e) return;
 
-    flockfile(main->error.to.stream);
+    flockfile(main->output.to.stream);
 
     fl_print_format("%rPacket header Object '%[%Q%]", main->output.to.stream, f_string_eol_s, main->context.set.notable, object, main->context.set.notable);
-    fl_print_format("' has value '%[%/Q%]'.%r", main->output.to.stream, main->context.set.notable, content, range_content, main->context.set.notable, f_string_eol_s);
+    fl_print_format("' has value '%[%/Q%]'.%r", main->output.to.stream, main->context.set.notable, content, content_range, main->context.set.notable, f_string_eol_s);
+
+    funlockfile(main->output.to.stream);
+  }
+#endif // _di_control_print_debug_packet_header_object_and_content_
+
+#ifndef _di_control_print_debug_packet_message_
+  void control_print_debug_packet_message(fll_program_data_t * const main, const f_string_t message, const f_string_static_t *buffer, const f_string_range_t *range, const f_status_t *status) {
+
+    if (main->output.verbosity == f_console_verbosity_debug_e) return;
+
+    flockfile(main->output.to.stream);
+
+    fl_print_format("%r%s", main->output.to.stream, f_string_eol_s, message, main->context.set.notable, main->context.set.notable);
+
+    if (buffer) {
+      if (range) {
+        fl_print_format("'%[%/Q%]'", main->output.to.stream, main->context.set.notable, *buffer, *range, main->context.set.notable);
+      }
+      else {
+        fl_print_format("'%[%/Q%]'", main->output.to.stream, main->context.set.notable, *buffer, main->context.set.notable);
+      }
+    }
+
+    if (status) {
+      fl_print_format(", with status code %[%ui%]'", main->output.to.stream, main->context.set.notable, *status, main->context.set.notable);
+    }
+
+    fl_print_format(".%r", main->output.to.stream, f_string_eol_s);
+
+    funlockfile(main->output.to.stream);
+  }
+#endif // _di_control_print_debug_packet_message_
+
+#ifndef _di_control_print_error_packet_response_
+  void control_print_error_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header) {
+
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+    flockfile(main->error.to.stream);
+
+    fl_print_format("%r%[%QReceived error response for " CONTROL_action_s " '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+    fl_print_format("%[' (with status %[", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%[%ui%]", main->error.to.stream, main->context.set.notable, header.status, main->context.set.notable);
+
+    if (header.length) {
+      fl_print_format("%[): %/Q%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, data->cache.large, data->cache.header_contents.array[0].array[0], f_string_eol_s);
+    }
+    else {
+      fl_print_format("%[).%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    }
 
     funlockfile(main->error.to.stream);
   }
-#endif // _di_control_print_debug_packet_header_object_and_content_
+#endif // _di_control_print_error_packet_response_
 
 #ifndef _di_control_print_error_parameter_actions_none_
   void control_print_error_parameter_actions_none(fll_program_data_t * const main) {
@@ -163,7 +215,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fll_print_format("%r%[%QThe received response is not a valid or supported packet.'%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fll_print_format("%r%[%QThe received response is not a valid or supported packet.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
   }
 #endif // _di_control_print_error_response_packet_valid_not_
 
@@ -172,7 +224,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fll_print_format("%r%[%QThe generated packet is too large, cannot send packet.'%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fll_print_format("%r%[%QThe generated packet is too large, cannot send packet.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
   }
 #endif // _di_control_print_error_request_packet_too_large_
 
