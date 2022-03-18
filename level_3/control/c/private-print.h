@@ -13,6 +13,22 @@ extern "C" {
 #endif
 
 /**
+ * Print a message about a packet response.
+ *
+ * @param main
+ *   The main program data.
+ * @param data
+ *   The control data.
+ * @param header
+ *   The control payload packet header data.
+ * @param status
+ *   A string representing the name of the status code from header.status.
+ */
+#ifndef _di_control_print_controller_packet_response_
+  extern void control_print_controller_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header, const f_string_static_t string_status) F_attribute_visibility_internal_d;
+#endif // _di_control_print_controller_packet_response_
+
+/**
  * Print a message displaying the object and content for some packet header.
  *
  * @param main
@@ -61,9 +77,11 @@ extern "C" {
  *   The control data.
  * @param header
  *   The control payload packet header data.
+ * @param status
+ *   A string representing the name of the status code from header.status.
  */
 #ifndef _di_control_print_error_packet_response_
-  extern void control_print_error_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header) F_attribute_visibility_internal_d;
+  extern void control_print_error_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header, const f_string_static_t status) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_packet_response_
 /**
  * Print an error message about no actions being provided.
@@ -262,6 +280,22 @@ extern "C" {
 #ifndef _di_control_print_warning_packet_header_duplicate_object_
   extern void control_print_warning_packet_header_duplicate_object(fll_program_data_t * const main, const f_string_static_t response_header) F_attribute_visibility_internal_d;
 #endif // _di_control_print_warning_packet_header_duplicate_object_
+
+/**
+ * Print a warning message about a failure when calling f_status_string_to().
+ *
+ * @param main
+ *   The main program data.
+ * @param status_of
+ *   The status code to be translating to a string.
+ * @param status_error
+ *   The status code representing the failure status returned by f_status_string_to().
+ *
+ * @see f_status_string_to()
+ */
+#ifndef _di_control_print_warning_packet_process_string_to_failed_
+  extern void control_print_warning_packet_process_string_to_failed(fll_program_data_t * const main, const f_status_t status_of, const f_status_t status_error) F_attribute_visibility_internal_d;
+#endif // _di_control_print_warning_packet_process_string_to_failed_
 
 #ifdef __cplusplus
 } // extern "C"

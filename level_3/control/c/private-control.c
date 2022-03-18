@@ -62,51 +62,6 @@ extern "C" {
   }
 #endif // _di_control_action_identify_
 
-#ifndef _di_control_action_type_name_
-  f_string_static_t control_action_type_name(const uint8_t type) {
-
-    switch (type) {
-      case control_action_type_freeze_e:
-        return control_freeze_s;
-
-      case control_action_type_kill_e:
-        return control_kill_s;
-
-      case control_action_type_pause_e:
-        return control_pause_s;
-
-      case control_action_type_reboot_e:
-        return control_reboot_s;
-
-      case control_action_type_reload_e:
-        return control_reload_s;
-
-      case control_action_type_rerun_e:
-        return control_rerun_s;
-
-      case control_action_type_restart_e:
-        return control_restart_s;
-
-      case control_action_type_resume_e:
-        return control_resume_s;
-
-      case control_action_type_shutdown_e:
-        return control_shutdown_s;
-
-      case control_action_type_start_e:
-        return control_start_s;
-
-      case control_action_type_stop_e:
-        return control_stop_s;
-
-      case control_action_type_thaw_e:
-        return control_thaw_s;
-    }
-
-    return f_string_empty_s;
-  }
-#endif // _di_control_action_type_name_
-
 #ifndef _di_control_action_verify_
   f_status_t control_action_verify(fll_program_data_t * const main, control_data_t * const data) {
 
@@ -599,17 +554,40 @@ extern "C" {
 #endif // _di_control_packet_receive_
 
 #ifndef _di_control_packet_process_
-  f_status_t control_packet_process(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header) {
+  f_status_t control_packet_process(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) {
 
-    if (header.type == control_payload_type_error_e) {
-      control_print_error_packet_response(main, data, header);
+    f_string_static_t string_status = f_string_static_t_initialize;
 
-      return F_none;
+    {
+      const f_status_t status = f_status_string_to(header->status, &string_status);
+
+      if (F_status_is_error(status)) {
+        control_print_warning_packet_process_string_to_failed(main, header->status, status);
+      }
     }
 
-    // @todo based on header->type, handle the data.
+    if (main->parameters.array[control_parameter_return_e].result == f_console_result_found_e) {
+      fll_print_format("%rresponse %q %q %q%r", main->output.to.stream, f_string_eol_s, control_payload_type_name(header->type), control_action_type_name(header->action), string_status, f_string_eol_s);
+    }
+    else if (header->type == control_payload_type_error_e) {
+      control_print_error_packet_response(main, data, *header, string_status);
+    }
+    else if (header->status == F_failure || header->status == F_busy || header->status == F_done || header->status == F_success) {
+      control_print_controller_packet_response(main, data, *header, string_status);
+    }
+    else {
 
-    return F_none;
+      // Set type to 0 to inform the caller to handle this error.
+      header->type = 0;
+
+      return F_status_set_error(F_known_not);
+    }
+
+    if (header->type == control_payload_type_error_e || header->status == F_failure || header->status == F_busy) {
+      return F_status_set_error(header->status);
+    }
+
+    return header->status;
   }
 #endif // _di_control_packet_process_
 

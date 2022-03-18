@@ -7,6 +7,72 @@
 extern "C" {
 #endif
 
+#ifndef _di_control_print_controller_packet_response_
+  void control_print_controller_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header, const f_string_static_t string_status) {
+
+    if (header.status == F_failure) {
+      if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+      flockfile(main->error.to.stream);
+
+      fl_print_format("%r%[%QThe action '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+      fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+      fl_print_format("%[' failed with status '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
+      fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, string_status, main->context.set.notable);
+      fl_print_format("%[' (%]", main->error.to.stream, main->context.set.error, main->context.set.error);
+      fl_print_format("%[%ui%]", main->error.to.stream, main->context.set.notable, header.status, main->context.set.notable);
+
+      if (header.length) {
+        fl_print_format("%[): %/Q%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
+      }
+      else {
+        fl_print_format("%[).%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+      }
+
+      funlockfile(main->error.to.stream);
+
+      return;
+    }
+
+    if (header.status == F_busy) {
+      if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
+
+      flockfile(main->warning.to.stream);
+
+      fl_print_format("%r%[%QThe action '%]", main->warning.to.stream, f_string_eol_s, main->context.set.warning, main->warning.prefix, main->context.set.warning);
+      fl_print_format("%[%q%]", main->warning.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+      fl_print_format("%[' could not be performed because the service is busy.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
+
+      funlockfile(main->warning.to.stream);
+
+      return;
+    }
+
+    if (main->output.verbosity == f_console_verbosity_quiet_e) return;
+
+    flockfile(main->output.to.stream);
+
+    fl_print_format("%rThe action '", main->output.to.stream, f_string_eol_s);
+    fl_print_format("%[%q%]", main->output.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+
+    if (header.status == F_done) {
+      fl_print_format("' is performed", main->output.to.stream);
+    }
+    else {
+      fl_print_format("' is successfully performed", main->output.to.stream);
+    }
+
+    if (header.length) {
+      fl_print_format(": %/Q%r", main->output.to.stream, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
+    }
+    else {
+      fl_print_format(".%r", main->output.to.stream, f_string_eol_s);
+    }
+
+    funlockfile(main->output.to.stream);
+  }
+#endif // _di_control_print_controller_packet_response_
+
 #ifndef _di_control_print_debug_packet_header_object_and_content_
   void control_print_debug_packet_header_object_and_content(fll_program_data_t * const main, const f_string_static_t object, const f_string_static_t content, const f_string_range_t content_range) {
 
@@ -50,19 +116,21 @@ extern "C" {
 #endif // _di_control_print_debug_packet_message_
 
 #ifndef _di_control_print_error_packet_response_
-  void control_print_error_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header) {
+  void control_print_error_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header, const f_string_static_t string_status) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->error.to.stream);
 
     fl_print_format("%r%[%QReceived error response for " CONTROL_action_s " '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
-    fl_print_format("%[' (with status %[", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%[%q%]", main->error.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+    fl_print_format("%[' with status '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, string_status, main->context.set.notable);
+    fl_print_format("%[' (%]", main->error.to.stream, main->context.set.error, main->context.set.error);
     fl_print_format("%[%ui%]", main->error.to.stream, main->context.set.notable, header.status, main->context.set.notable);
 
     if (header.length) {
-      fl_print_format("%[): %/Q%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, data->cache.large, data->cache.header_contents.array[0].array[0], f_string_eol_s);
+      fl_print_format("%[): %/Q%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
     }
     else {
       fl_print_format("%[).%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
@@ -283,7 +351,7 @@ extern "C" {
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%]%r%r%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
+    fl_print_format("%]%r%r%[Received signal code%] ", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
     fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, signal, main->context.set.notable);
     fl_print_format("%[.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
@@ -305,6 +373,23 @@ extern "C" {
     funlockfile(main->warning.to.stream);
   }
 #endif // _di_control_print_warning_packet_header_duplicate_object_
+
+#ifndef _di_control_print_warning_packet_process_string_to_failed_
+  void control_print_warning_packet_process_string_to_failed(fll_program_data_t * const main, const f_status_t status_of, const f_status_t status_error) {
+
+    if (main->warning.verbosity == f_console_verbosity_debug_e) return;
+
+    flockfile(main->warning.to.stream);
+
+    fl_print_format("%r%[%QFailed while calling f_status_string_to() for status%] ", main->output.to.stream, f_string_eol_s, main->context.set.warning, main->context.set.warning, main->context.set.warning);
+    fl_print_format("%[%ui%]", main->output.to.stream, main->context.set.notable, status_of, main->context.set.notable);
+    fl_print_format("%[, failing with status code%] ", main->output.to.stream, main->context.set.warning, status_error, main->context.set.warning);
+    fl_print_format("%[%ui%]", main->output.to.stream, main->context.set.notable, status_error, main->context.set.notable);
+    fl_print_format("%[.%]%r", main->output.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
+
+    funlockfile(main->warning.to.stream);
+  }
+#endif // _di_control_print_warning_packet_process_string_to_failed_
 
 #ifdef __cplusplus
 } // extern "C"

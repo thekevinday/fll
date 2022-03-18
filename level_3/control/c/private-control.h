@@ -32,19 +32,6 @@ extern "C" {
 #endif // _di_control_action_identify_
 
 /**
- * Get the name of the action type.
- *
- * @param type
- *   The action type id.
- *
- * @return
- *   The string associated with the action type.
- */
-#ifndef _di_control_action_type_name_
-  extern f_string_static_t control_action_type_name(const uint8_t type) F_attribute_visibility_internal_d;
-#endif // _di_control_action_type_name_
-
-/**
  * Verify that the additional parameters are reasonably correct for the identified action.
  *
  * @param main
@@ -130,9 +117,17 @@ extern "C" {
  *   The control data.
  * @param header
  *   The control payload packet header data.
+ *
+ * @return
+ *   F_done on success but action has no success or failure states.
+ *   F_success on success.
+ *
+ *   F_busy (with error bit)
+ *   F_failure (with error bit) on success but controller returned failure for action.
+ *   Any error (with error bit) on failure where the error is defined by the controller service.
  */
 #ifndef _di_control_packet_process_
-  extern f_status_t control_packet_process(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header) F_attribute_visibility_internal_d;
+  extern f_status_t control_packet_process(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_process_
 
 /**

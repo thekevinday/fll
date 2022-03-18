@@ -27,6 +27,7 @@ extern "C" {
     f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
     fll_program_print_help_option(main->output.to, main->context, control_short_name_s, control_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Specify the name of the controller socket file.");
+    fll_program_print_help_option(main->output.to, main->context, control_short_return_s, control_long_return_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print a message about the response packet.");
     fll_program_print_help_option(main->output.to, main->context, control_short_settings_s, control_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Specify a directory path or a full path to the control settings file.");
     fll_program_print_help_option(main->output.to, main->context, control_short_socket_s, control_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Specify a directory path or a full path to the controller socket file.");
 
@@ -38,6 +39,10 @@ extern "C" {
     fl_print_format("  A rule action allows for either the full rule path, such as '%[boot/root%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
     fl_print_format(" as a single parameter or two parameters with the first representing the rule directory path '%[boot%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
     fl_print_format(" and the second representing the rule base name '%[root%]'.%r%r", main->output.to.stream, main->context.set.notable, main->context.set.notable, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  The %[%r%r%] parameter is intended to be used for scripting and is of the form \"response [type] [action] [status]\".%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_return_s, main->context.set.notable, f_string_eol_s);
+    fl_print_format("  Be sure to use the %[%r%r%] parameter to suppress output when using this in scripting.%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_disable_s, f_console_standard_long_quiet_s, main->context.set.notable, f_string_eol_s);
+    fl_print_format("  No response is returned on program errors, especially those errors that prevent communicating to the controller.%r%r", main->output.to.stream, f_string_eol_s, f_string_eol_s);
 
     fflush(main->output.to.stream);
     funlockfile(main->output.to.stream);
@@ -249,10 +254,13 @@ extern "C" {
               }
             }
             else {
-              status = control_packet_process(main, &data, header);
+              status = control_packet_process(main, &data, &header);
 
+              // Print the error message only if the error message is not already printed.
               if (F_status_is_error(status)) {
-                fll_error_print(main->error, F_status_set_fine(status), "control_packet_process", F_true);
+                if (header.type != control_payload_type_error_e && (header.type != control_payload_type_controller_e || F_status_set_fine(status) != header.status || (header.status != F_failure && header.status != F_busy))) {
+                  fll_error_print(main->error, F_status_set_fine(status), "control_packet_process", F_true);
+                }
               }
             }
           }

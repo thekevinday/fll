@@ -64,26 +64,32 @@ extern "C" {
  */
 #ifndef _di_control_parameters_
   #define CONTROL_short_name_s     "n"
+  #define CONTROL_short_return_s   "R"
   #define CONTROL_short_settings_s "s"
   #define CONTROL_short_socket_s   "k"
 
   #define CONTROL_long_name_s     "name"
+  #define CONTROL_long_return_s   "return"
   #define CONTROL_long_settings_s "settings"
   #define CONTROL_long_socket_s   "socket"
 
   #define CONTROL_short_name_s_length     1
+  #define CONTROL_short_return_s_length   1
   #define CONTROL_short_settings_s_length 1
   #define CONTROL_short_socket_s_length   1
 
   #define CONTROL_long_name_s_length     4
+  #define CONTROL_long_return_s_length   6
   #define CONTROL_long_settings_s_length 8
   #define CONTROL_long_socket_s_length   6
 
   extern const f_string_static_t control_short_name_s;
+  extern const f_string_static_t control_short_return_s;
   extern const f_string_static_t control_short_settings_s;
   extern const f_string_static_t control_short_socket_s;
 
   extern const f_string_static_t control_long_name_s;
+  extern const f_string_static_t control_long_return_s;
   extern const f_string_static_t control_long_settings_s;
   extern const f_string_static_t control_long_socket_s;
 
@@ -99,6 +105,7 @@ extern "C" {
     control_parameter_version_e,
 
     control_parameter_name_e,
+    control_parameter_return_e,
     control_parameter_settings_e,
     control_parameter_socket_e,
   };
@@ -115,12 +122,39 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(control_short_name_s.string, control_long_name_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(control_short_return_s.string, control_long_return_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(control_short_settings_s.string, control_long_settings_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(control_short_socket_s.string, control_long_socket_s.string, 0, 1, f_console_type_normal_e), \
     }
 
-  #define control_total_parameters_d 12
+  #define control_total_parameters_d 13
 #endif // _di_control_parameters_
+
+/**
+ * Get the name of the action type.
+ *
+ * @param type
+ *   The action type id.
+ *
+ * @return
+ *   The string associated with the action type.
+ */
+#ifndef _di_control_action_type_name_
+  extern f_string_static_t control_action_type_name(const uint8_t type);
+#endif // _di_control_action_type_name_
+
+/**
+ * Get the name of the payload type.
+ *
+ * @param type
+ *   The payload type id.
+ *
+ * @return
+ *   The string associated with the payload type.
+ */
+#ifndef _di_control_payload_type_name_
+  extern f_string_static_t control_payload_type_name(const uint8_t type);
+#endif // _di_control_payload_type_name_
 
 /**
  * Deallocate main.

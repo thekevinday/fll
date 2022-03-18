@@ -1,0 +1,47 @@
+# fss-0002
+
+Packet Response:
+  The control program sends packets and receives packet responses from the controller program over the controller program's control socket.
+  This documentation describes the expected response packets and how these response packets are handled.
+
+  The communications to/from the controller program utilize the FSS-000F (Simple Packet). 
+  This Simple Packet is expected to contain within it the FSS-000E (Payload) format.
+
+  The Payload contains within it a Header and a Payload.
+  Note the potential confusion here between the Payload when referring to the Packet data format and the Payload referring to the Content within the Payload Packet.
+  To avoid this, henceforth "Payload Packet" refers to the FSS-000E (Payload) format used within the Simple Packet and "Payload Content" refers to the Content within the Payload Packet.
+
+  The Payload Packet (FSS-000E) is very flexible in what it allows within the Header of the Payload Packet.
+  The Control program is more restrictive and supports only a subset of the possibilities (which this is explicitly allowed by the Specification).
+
+  The Control program only supports the following Payload Packet header Objects\:
+    - status: Allowing only a single status header Object.
+    - type: Allowing only a single type header Object and may only be one of: "error" and "controller".
+    - action: Allowing only a single action header Object and may only be one of: "freeze", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", and "thaw".
+    - length: Allowing only a single length header Object and must properly describe the length of the entire Payload Packet as per the referenced Specifications.
+
+  The "error" type response Payload Packet is treated as an error response.
+  For any error responses that are associated with an action, then the action header is provided (otherwise it is not expected and is ignored).
+  For any error responses the Payload Content may be empty but when it is not, then the Payload Content is a single string representing a message further describing the error or the reason for the error.
+  These error responses represents errors in attempting to perform some action.
+  These responses are not used for actions that return an error as the result of a proper execution or performing of that action.
+
+  The "controller" type response Payload Packet represents a response regarding the result of performing a requested action.
+  There must always be an "action" designating the action this response is in regards to.
+  Only the following are (currently) supported as a status\:
+    - F_busy: When unable to perform the action as because the service is too busy or the 
+    - F_done: When successfully performed the action but the action does not return success or failure.
+    - F_failure: When successfully performed the action and the action returned some sort of failure or error.
+    - F_success: When successfully performed the action and the action returned some sort of success.
+
+  When using the -R/--return parameter, the program prints specially formatted messages to help make the output more scriptable.
+
+  The form is "response [type] [action] [status]".
+  Examples\:
+    - A response that designates the action failed might look like: "response controller my_action F_failure".
+    - A response that designates the controller ran out of memory, preventing the action from being run: "response error my_action F_memory_not".
+    - A response that designates the controller ran successfully: "response controller my_action F_success".
+
+  When the control program fails to function due to some error, there will be no specially formatted message printed.
+  When the controller program fails before it can perform the requested action, then a "response error [action] [status]" formatted message is printed.
+  When the controller program successfully performs the action but the result of that action is an error, then a "response controller [action] F_failure" formatted message is printed.

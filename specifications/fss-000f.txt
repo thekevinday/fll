@@ -2,7 +2,6 @@
 #
 # license: open-standard-license-1.0
 #
-#
 
 Featureless Settings Specification: 000f - Simple Packet:
   This is a network packet format that contains FSS-000E (Payload) within it.
