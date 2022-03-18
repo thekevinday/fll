@@ -332,8 +332,6 @@ extern "C" {
  * warning:      The output file for warning printing.
  * signal:       The process signal management structure.
  * context:      The color context.
- *
- * @todo
  */
 #ifndef _di_controller_main_t_
   typedef struct {
@@ -383,6 +381,101 @@ extern "C" {
 #endif // _di_controller_main_t_
 
 /**
+ * Codes representing supported actions.
+ *
+ * freeze:   Perform the freeze controller operation.
+ * kill:     Perform the kill controller operation.
+ * pause:    Perform the pause controller operation.
+ * reboot:   Perform the reboot controller operation (only for init mode).
+ * reload:   Perform the reload controller operation.
+ * rerun:    Perform the rerun controller operation.
+ * restart:  Perform the restart controller operation.
+ * resume:   Perform the resume controller operation.
+ * shutdown: Perform the shutdown controller operation (only for init mode).
+ * start:    Perform the start controller operation.
+ * stop:     Perform the stop controller operation.
+ * thaw:     Perform the thaw controller operation.
+ */
+#ifndef _di_controller_entry_action_types_t_
+  enum {
+    controller_entry_action_type_consider_e = 1,
+    controller_entry_action_type_execute_e,
+    controller_entry_action_type_failsafe_e,
+    controller_entry_action_type_freeze_e,
+    controller_entry_action_type_item_e,
+    controller_entry_action_type_kill_e,
+    controller_entry_action_type_pause_e,
+    controller_entry_action_type_ready_e,
+    controller_entry_action_type_reload_e,
+    controller_entry_action_type_restart_e,
+    controller_entry_action_type_resume_e,
+    controller_entry_action_type_start_e,
+    controller_entry_action_type_stop_e,
+    controller_entry_action_type_timeout_e,
+    controller_entry_action_type_thaw_e,
+  };
+#endif // _di_controller_entry_action_types_t_
+
+/**
+ * Codes representing items.
+ *
+ * command: The item type represents a command operation.
+ * script:  The item type represents a script operation.
+ * service: The item type represents a service operation.
+ * setting: The item type represents a setting operation.
+ * utility: The item type represents a utility operation.
+ */
+#ifndef _di_controller_rule_item_types_t_
+  enum {
+    controller_rule_item_type_command_e = 1,
+    controller_rule_item_type_script_e,
+    controller_rule_item_type_service_e,
+    controller_rule_item_type_setting_e,
+    controller_rule_item_type_utility_e,
+  };
+#endif // _di_controller_rule_item_types_t_
+
+/**
+ * A set of codes for resource limitations.
+ *
+ * This essentally converts the POSIX standard names into a more verbose format.
+ */
+#ifndef _di_controller_resource_limit_t_
+  enum {
+    controller_resource_limit_type_as_e = RLIMIT_AS,
+    controller_resource_limit_type_core_e = RLIMIT_CORE,
+    controller_resource_limit_type_cpu_e = RLIMIT_CPU,
+    controller_resource_limit_type_data_e = RLIMIT_DATA,
+    controller_resource_limit_type_fsize_e = RLIMIT_FSIZE,
+    controller_resource_limit_type_locks_e = RLIMIT_LOCKS,
+    controller_resource_limit_type_memlock_e = RLIMIT_MEMLOCK,
+    controller_resource_limit_type_msgqueue_e = RLIMIT_MSGQUEUE,
+    controller_resource_limit_type_nice_e = RLIMIT_NICE,
+    controller_resource_limit_type_nofile_e = RLIMIT_NOFILE,
+    controller_resource_limit_type_nproc_e = RLIMIT_NPROC,
+    controller_resource_limit_type_rss_e = RLIMIT_RSS,
+    controller_resource_limit_type_rtprio_e = RLIMIT_RTPRIO,
+    controller_resource_limit_type_rttime_e = RLIMIT_RTTIME,
+    controller_resource_limit_type_sigpending_e = RLIMIT_SIGPENDING,
+    controller_resource_limit_type_stack_e = RLIMIT_STACK,
+  };
+#endif // _di_controller_resource_limit_t_
+
+/**
+ * Get a string representing the entry action type.
+ *
+ * @param type
+ *   The entry action type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_entry_action_type_name_
+  extern f_string_static_t controller_entry_action_type_name(const uint8_t type);
+#endif // _di_controller_entry_action_type_name_
+
+/**
  * Deallocate main.
  *
  * Be sure to call this after executing controller_main().
@@ -408,6 +501,62 @@ extern "C" {
 #ifndef _di_controller_main_delete_
   extern f_status_t controller_main_delete(controller_main_t * const main);
 #endif // _di_controller_main_delete_
+
+/**
+ * Get a string representing the rule action type.
+ *
+ * @param type
+ *   The rule action type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_action_type_name_
+  extern f_string_static_t controller_rule_action_type_name(const uint8_t type);
+#endif // _di_controller_rule_action_type_name_
+
+/**
+ * Get a string representing the rule action execute type.
+ *
+ * @param type
+ *   The rule action type execute code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_action_type_execute_name_
+  extern f_string_static_t controller_rule_action_type_execute_name(const uint8_t type);
+#endif // _di_controller_rule_action_type_execute_name_
+
+/**
+ * Get a string representing the rule item type.
+ *
+ * @param type
+ *   The rule item type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_item_type_name_
+  extern f_string_static_t controller_rule_item_type_name(const uint8_t type);
+#endif // _di_controller_rule_item_type_name_
+
+/**
+ * Get a string representing the rule setting limit type.
+ *
+ * @param type
+ *   The rule setting limit type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_setting_limit_type_name_
+  extern f_string_static_t controller_rule_setting_limit_type_name(const uint8_t type);
+#endif // di_controller_rule_setting_limit_type_name_
 
 #ifdef __cplusplus
 } // extern "C"

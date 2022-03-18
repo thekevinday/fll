@@ -45,24 +45,6 @@ extern "C" {
  * parameters: The values associated with the Action.
  */
 #ifndef _di_controller_entry_action_t_
-  enum {
-    controller_entry_action_type_consider_e = 1,
-    controller_entry_action_type_execute_e,
-    controller_entry_action_type_failsafe_e,
-    controller_entry_action_type_freeze_e,
-    controller_entry_action_type_item_e,
-    controller_entry_action_type_kill_e,
-    controller_entry_action_type_pause_e,
-    controller_entry_action_type_ready_e,
-    controller_entry_action_type_reload_e,
-    controller_entry_action_type_restart_e,
-    controller_entry_action_type_resume_e,
-    controller_entry_action_type_start_e,
-    controller_entry_action_type_stop_e,
-    controller_entry_action_type_timeout_e,
-    controller_entry_action_type_thaw_e,
-  };
-
   #define controller_entry_rule_code_asynchronous_d 0x1
   #define controller_entry_rule_code_require_d      0x2
   #define controller_entry_rule_code_wait_d         0x4

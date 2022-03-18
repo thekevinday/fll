@@ -206,39 +206,6 @@ extern "C" {
 #endif // _di_control_strings_s_
 
 /**
- * Codes representing supported actions.
- *
- * freeze:   Perform the freeze controller operation.
- * kill:     Perform the kill controller operation.
- * pause:    Perform the pause controller operation.
- * reboot:   Perform the reboot controller operation (only for init mode).
- * reload:   Perform the reload controller operation.
- * rerun:    Perform the rerun controller operation.
- * restart:  Perform the restart controller operation.
- * resume:   Perform the resume controller operation.
- * shutdown: Perform the shutdown controller operation (only for init mode).
- * start:    Perform the start controller operation.
- * stop:     Perform the stop controller operation.
- * thaw:     Perform the thaw controller operation.
- */
-#ifndef _di_control_action_types_
-  enum {
-    control_action_type_freeze_e = 1,
-    control_action_type_kill_e,
-    control_action_type_pause_e,
-    control_action_type_reboot_e,
-    control_action_type_reload_e,
-    control_action_type_rerun_e,
-    control_action_type_restart_e,
-    control_action_type_resume_e,
-    control_action_type_shutdown_e,
-    control_action_type_start_e,
-    control_action_type_stop_e,
-    control_action_type_thaw_e,
-  };
-#endif // _di_control_action_types_
-
-/**
  * The control cache.
  *
  * large:   A buffer for storing large sets of data.
@@ -309,19 +276,6 @@ extern "C" {
       0, \
     }
 #endif // _di_control_data_t_
-
-/**
- * Supported payload types.
- *
- * error:      The payload is an error payload.
- * controller: The payload is a controller payload.
- */
-#ifndef _di_control_payload_types_
-  enum {
-    control_payload_type_error_e = 1,
-    control_payload_type_controller_e,
-  };
-#endif // _di_control_payload_types_
 
 /**
  * The packet payload header data.

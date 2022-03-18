@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "common/private-common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,6 +55,60 @@ extern "C" {
   const f_string_static_t controller_long_validate_s = macro_f_string_static_t_initialize(CONTROLLER_long_validate_s, 0, CONTROLLER_long_validate_s_length);
 #endif // _di_controller_parameters_
 
+#ifndef _di_controller_entry_action_type_name_
+  f_string_static_t controller_entry_action_type_name(const uint8_t type) {
+
+    switch (type) {
+      case controller_entry_action_type_consider_e:
+        return controller_consider_s;
+
+      case controller_entry_action_type_execute_e:
+        return controller_execute_s;
+
+      case controller_entry_action_type_failsafe_e:
+        return controller_failsafe_s;
+
+      case controller_entry_action_type_freeze_e:
+        return controller_freeze_s;
+
+      case controller_entry_action_type_item_e:
+        return controller_item_s;
+
+      case controller_entry_action_type_kill_e:
+        return controller_kill_s;
+
+      case controller_entry_action_type_pause_e:
+        return controller_pause_s;
+
+      case controller_entry_action_type_ready_e:
+        return controller_ready_s;
+
+      case controller_entry_action_type_reload_e:
+        return controller_reload_s;
+
+      case controller_entry_action_type_restart_e:
+        return controller_restart_s;
+
+      case controller_entry_action_type_resume_e:
+        return controller_resume_s;
+
+      case controller_entry_action_type_start_e:
+        return controller_start_s;
+
+      case controller_entry_action_type_stop_e:
+        return controller_stop_s;
+
+      case controller_entry_action_type_thaw_e:
+        return controller_thaw_s;
+
+      case controller_entry_action_type_timeout_e:
+        return controller_timeout_s;
+    }
+
+    return f_string_empty_s;
+  }
+#endif // _di_controller_entry_action_type_name_
+
 #ifndef _di_controller_main_delete_
   f_status_t controller_main_delete(controller_main_t * const main) {
 
@@ -64,6 +119,174 @@ extern "C" {
     return F_none;
   }
 #endif // _di_controller_main_delete_
+
+#ifndef _di_controller_rule_action_type_name_
+  f_string_static_t controller_rule_action_type_name(const uint8_t type) {
+
+    switch (type) {
+      case controller_rule_action_type_freeze_e:
+        return controller_freeze_s;
+
+      case controller_rule_action_type_group_e:
+        return controller_group_s;
+
+      case controller_rule_action_type_kill_e:
+        return controller_kill_s;
+
+      case controller_rule_action_type_pause_e:
+        return controller_pause_s;
+
+      case controller_rule_action_type_pid_file_e:
+        return controller_pid_file_s;
+
+      case controller_rule_action_type_rerun_e:
+        return controller_rerun_s;
+
+      case controller_rule_action_type_reload_e:
+        return controller_reload_s;
+
+      case controller_rule_action_type_restart_e:
+        return controller_restart_s;
+
+      case controller_rule_action_type_resume_e:
+        return controller_resume_s;
+
+      case controller_rule_action_type_start_e:
+        return controller_start_s;
+
+      case controller_rule_action_type_stop_e:
+        return controller_stop_s;
+
+      case controller_rule_action_type_thaw_e:
+        return controller_thaw_s;
+
+      case controller_rule_action_type_user_e:
+        return controller_user_s;
+
+      case controller_rule_action_type_with_e:
+        return controller_with_s;
+    }
+
+    return f_string_empty_s;
+  }
+#endif // _di_controller_rule_action_type_name_
+
+#ifndef _di_controller_rule_action_type_execute_name_
+  f_string_static_t controller_rule_action_type_execute_name(const uint8_t type) {
+
+    switch (type) {
+      case controller_rule_action_type_execute_freeze_e:
+        return controller_freeze_s;
+
+      case controller_rule_action_type_execute_kill_e:
+        return controller_kill_s;
+
+      case controller_rule_action_type_execute_pause_e:
+        return controller_pause_s;
+
+      case controller_rule_action_type_execute_reload_e:
+        return controller_reload_s;
+
+      case controller_rule_action_type_execute_restart_e:
+        return controller_restart_s;
+
+      case controller_rule_action_type_execute_resume_e:
+        return controller_resume_s;
+
+      case controller_rule_action_type_execute_start_e:
+        return controller_start_s;
+
+      case controller_rule_action_type_execute_stop_e:
+        return controller_stop_s;
+
+      case controller_rule_action_type_execute_thaw_e:
+        return controller_thaw_s;
+    }
+
+    return f_string_empty_s;
+  }
+#endif // _di_controller_rule_action_type_execute_name_
+
+#ifndef _di_controller_rule_item_type_name_
+  f_string_static_t controller_rule_item_type_name(const uint8_t type) {
+
+    switch (type) {
+      case controller_rule_item_type_command_e:
+        return controller_command_s;
+
+      case controller_rule_item_type_script_e:
+        return controller_script_s;
+
+      case controller_rule_item_type_service_e:
+        return controller_service_s;
+
+      case controller_rule_item_type_setting_e:
+        return controller_setting_s;
+
+      case controller_rule_item_type_utility_e:
+        return controller_utility_s;
+    }
+
+    return f_string_empty_s;
+  }
+#endif // _di_controller_rule_item_type_name_
+
+#ifndef _di_controller_rule_setting_limit_type_name_
+  f_string_static_t controller_rule_setting_limit_type_name(const uint8_t type) {
+
+    switch (type) {
+      case controller_resource_limit_type_as_e:
+        return controller_as_s;
+
+      case controller_resource_limit_type_core_e:
+        return controller_core_s;
+
+      case controller_resource_limit_type_cpu_e:
+        return controller_cpu_s;
+
+      case controller_resource_limit_type_data_e:
+        return controller_data_s;
+
+      case controller_resource_limit_type_fsize_e:
+        return controller_fsize_s;
+
+      case controller_resource_limit_type_locks_e:
+        return controller_locks_s;
+
+      case controller_resource_limit_type_memlock_e:
+        return controller_memlock_s;
+
+      case controller_resource_limit_type_msgqueue_e:
+        return controller_msgqueue_s;
+
+      case controller_resource_limit_type_nice_e:
+        return controller_nice_s;
+
+      case controller_resource_limit_type_nofile_e:
+        return controller_nofile_s;
+
+      case controller_resource_limit_type_nproc_e:
+        return controller_nproc_s;
+
+      case controller_resource_limit_type_rss_e:
+        return controller_rss_s;
+
+      case controller_resource_limit_type_rtprio_e:
+        return controller_rtprio_s;
+
+      case controller_resource_limit_type_rttime_e:
+        return controller_rttime_s;
+
+      case controller_resource_limit_type_sigpending_e:
+        return controller_sigpending_s;
+
+      case controller_resource_limit_type_stack_e:
+        return controller_stack_s;
+    }
+
+    return f_string_empty_s;
+  }
+#endif // _di_controller_rule_setting_limit_type_name_
 
 #ifdef __cplusplus
 } // extern "C"

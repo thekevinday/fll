@@ -216,93 +216,6 @@ extern "C" {
   }
 #endif // _di_controller_rule_action_type_to_action_execute_type_
 
-#ifndef _di_controller_rule_action_type_name_
-  f_string_static_t controller_rule_action_type_name(const uint8_t type) {
-
-    switch (type) {
-      case controller_rule_action_type_freeze_e:
-        return controller_freeze_s;
-
-      case controller_rule_action_type_group_e:
-        return controller_group_s;
-
-      case controller_rule_action_type_kill_e:
-        return controller_kill_s;
-
-      case controller_rule_action_type_pause_e:
-        return controller_pause_s;
-
-      case controller_rule_action_type_pid_file_e:
-        return controller_pid_file_s;
-
-      case controller_rule_action_type_rerun_e:
-        return controller_rerun_s;
-
-      case controller_rule_action_type_reload_e:
-        return controller_reload_s;
-
-      case controller_rule_action_type_restart_e:
-        return controller_restart_s;
-
-      case controller_rule_action_type_resume_e:
-        return controller_resume_s;
-
-      case controller_rule_action_type_start_e:
-        return controller_start_s;
-
-      case controller_rule_action_type_stop_e:
-        return controller_stop_s;
-
-      case controller_rule_action_type_thaw_e:
-        return controller_thaw_s;
-
-      case controller_rule_action_type_user_e:
-        return controller_user_s;
-
-      case controller_rule_action_type_with_e:
-        return controller_with_s;
-    }
-
-    return f_string_empty_s;
-  }
-#endif // _di_controller_rule_action_type_name_
-
-#ifndef _di_controller_rule_action_type_execute_name_
-  f_string_static_t controller_rule_action_type_execute_name(const uint8_t type) {
-
-    switch (type) {
-      case controller_rule_action_type_execute_freeze_e:
-        return controller_freeze_s;
-
-      case controller_rule_action_type_execute_kill_e:
-        return controller_kill_s;
-
-      case controller_rule_action_type_execute_pause_e:
-        return controller_pause_s;
-
-      case controller_rule_action_type_execute_reload_e:
-        return controller_reload_s;
-
-      case controller_rule_action_type_execute_restart_e:
-        return controller_restart_s;
-
-      case controller_rule_action_type_execute_resume_e:
-        return controller_resume_s;
-
-      case controller_rule_action_type_execute_start_e:
-        return controller_start_s;
-
-      case controller_rule_action_type_execute_stop_e:
-        return controller_stop_s;
-
-      case controller_rule_action_type_execute_thaw_e:
-        return controller_thaw_s;
-    }
-
-    return f_string_empty_s;
-  }
-#endif // _di_controller_rule_action_type_execute_name_
-
 #ifndef _di_controller_rule_action_read_
   f_status_t controller_rule_action_read(const controller_global_t global, const bool is_normal, const uint8_t type, const uint8_t method, controller_cache_t * const cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
 
@@ -2477,39 +2390,6 @@ extern "C" {
   }
 #endif // _di_controller_rule_item_read_
 
-#ifndef _di_controller_rule_item_type_name_
-  f_string_static_t controller_rule_item_type_name(const uint8_t type) {
-
-    f_string_static_t buffer = f_string_static_t_initialize;
-
-    switch (type) {
-      case controller_rule_item_type_command_e:
-        buffer = controller_command_s;
-        break;
-
-      case controller_rule_item_type_script_e:
-        buffer = controller_script_s;
-        break;
-
-      case controller_rule_item_type_service_e:
-        buffer = controller_service_s;
-        break;
-
-      case controller_rule_item_type_setting_e:
-        buffer = controller_setting_s;
-        break;
-
-      case controller_rule_item_type_utility_e:
-        buffer = controller_utility_s;
-        break;
-    }
-
-    buffer.size = buffer.used;
-
-    return buffer;
-  }
-#endif // _di_controller_rule_item_type_name_
-
 #ifndef _di_controller_rule_items_increase_by_
   f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t * const items) {
 
@@ -2530,63 +2410,6 @@ extern "C" {
     return F_data_not;
   }
 #endif // _di_controller_rule_items_increase_by_
-
-#ifndef _di_controller_rule_setting_limit_type_name_
-  f_string_static_t controller_rule_setting_limit_type_name(const uint8_t type) {
-
-    switch (type) {
-      case controller_resource_limit_type_as_e:
-        return controller_as_s;
-
-      case controller_resource_limit_type_core_e:
-        return controller_core_s;
-
-      case controller_resource_limit_type_cpu_e:
-        return controller_cpu_s;
-
-      case controller_resource_limit_type_data_e:
-        return controller_data_s;
-
-      case controller_resource_limit_type_fsize_e:
-        return controller_fsize_s;
-
-      case controller_resource_limit_type_locks_e:
-        return controller_locks_s;
-
-      case controller_resource_limit_type_memlock_e:
-        return controller_memlock_s;
-
-      case controller_resource_limit_type_msgqueue_e:
-        return controller_msgqueue_s;
-
-      case controller_resource_limit_type_nice_e:
-        return controller_nice_s;
-
-      case controller_resource_limit_type_nofile_e:
-        return controller_nofile_s;
-
-      case controller_resource_limit_type_nproc_e:
-        return controller_nproc_s;
-
-      case controller_resource_limit_type_rss_e:
-        return controller_rss_s;
-
-      case controller_resource_limit_type_rtprio_e:
-        return controller_rtprio_s;
-
-      case controller_resource_limit_type_rttime_e:
-        return controller_rttime_s;
-
-      case controller_resource_limit_type_sigpending_e:
-        return controller_sigpending_s;
-
-      case controller_resource_limit_type_stack_e:
-        return controller_stack_s;
-    }
-
-    return f_string_empty_s;
-  }
-#endif // _di_controller_rule_setting_limit_type_name_
 
 #ifndef _di_controller_rule_process_
   f_status_t controller_rule_process(const controller_global_t global, controller_process_t * const process) {

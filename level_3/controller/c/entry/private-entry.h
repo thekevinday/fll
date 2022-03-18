@@ -27,20 +27,6 @@ extern "C" {
 #endif // _di_controller_entry_action_type_is_rule_
 
 /**
- * Get a string representing the entry action type.
- *
- * @param type
- *   The entry action type code.
- *
- * @return
- *   The string with used > 0 on success.
- *   The string with used == 0 if no match was found.
- */
-#ifndef _di_controller_entry_action_type_name_
-  extern f_string_static_t controller_entry_action_type_name(const uint8_t type) F_attribute_visibility_internal_d;
-#endif // _di_controller_entry_action_type_name_
-
-/**
  * Convert the Entry Action type to Rule Action type.
  *
  * @param type

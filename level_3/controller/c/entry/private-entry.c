@@ -35,60 +35,6 @@ extern "C" {
   }
 #endif // _di_controller_entry_action_type_is_rule_
 
-#ifndef _di_controller_entry_action_type_name_
-  f_string_static_t controller_entry_action_type_name(const uint8_t type) {
-
-    switch (type) {
-      case controller_entry_action_type_consider_e:
-        return controller_consider_s;
-
-      case controller_entry_action_type_execute_e:
-        return controller_execute_s;
-
-      case controller_entry_action_type_failsafe_e:
-        return controller_failsafe_s;
-
-      case controller_entry_action_type_freeze_e:
-        return controller_freeze_s;
-
-      case controller_entry_action_type_item_e:
-        return controller_item_s;
-
-      case controller_entry_action_type_kill_e:
-        return controller_kill_s;
-
-      case controller_entry_action_type_pause_e:
-        return controller_pause_s;
-
-      case controller_entry_action_type_ready_e:
-        return controller_ready_s;
-
-      case controller_entry_action_type_reload_e:
-        return controller_reload_s;
-
-      case controller_entry_action_type_restart_e:
-        return controller_restart_s;
-
-      case controller_entry_action_type_resume_e:
-        return controller_resume_s;
-
-      case controller_entry_action_type_start_e:
-        return controller_start_s;
-
-      case controller_entry_action_type_stop_e:
-        return controller_stop_s;
-
-      case controller_entry_action_type_thaw_e:
-        return controller_thaw_s;
-
-      case controller_entry_action_type_timeout_e:
-        return controller_timeout_s;
-    }
-
-    return f_string_empty_s;
-  }
-#endif // _di_controller_entry_action_type_name_
-
 #ifndef _di_controller_entry_action_type_to_rule_action_type_
   uint8_t controller_entry_action_type_to_rule_action_type(uint8_t type) {
 

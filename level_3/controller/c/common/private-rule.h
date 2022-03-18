@@ -209,14 +209,6 @@ extern "C" {
  * actions: The actions associated with the Rule Item.
  */
 #ifndef _di_controller_rule_item_t_
-  enum {
-    controller_rule_item_type_command_e = 1,
-    controller_rule_item_type_script_e,
-    controller_rule_item_type_service_e,
-    controller_rule_item_type_setting_e,
-    controller_rule_item_type_utility_e,
-  };
-
   typedef struct {
     uint8_t type;
     uint8_t with;

@@ -114,39 +114,10 @@ extern "C" {
  *   The converted action type, converted into an action execute type.
  *
  *   The code controller_rule_action_type_execute__enum_size_e is returned for unknown types.
- *
  */
 #ifndef _di_controller_rule_action_type_to_action_execute_type_
   extern uint8_t controller_rule_action_type_to_action_execute_type(const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_action_type_to_action_execute_type_
-
-/**
- * Get a string representing the rule action type.
- *
- * @param type
- *   The rule action type code.
- *
- * @return
- *   The string with used > 0 on success.
- *   The string with used == 0 if no match was found.
- */
-#ifndef _di_controller_rule_action_type_name_
-  extern f_string_static_t controller_rule_action_type_name(const uint8_t type) F_attribute_visibility_internal_d;
-#endif // _di_controller_rule_action_type_name_
-
-/**
- * Get a string representing the rule action execute type.
- *
- * @param type
- *   The rule action type execute code.
- *
- * @return
- *   The string with used > 0 on success.
- *   The string with used == 0 if no match was found.
- */
-#ifndef _di_controller_rule_action_type_execute_name_
-  extern f_string_static_t controller_rule_action_type_execute_name(const uint8_t type) F_attribute_visibility_internal_d;
-#endif // _di_controller_rule_action_type_execute_name_
 
 /**
  * Read the content within the buffer, processing the action (or a set of within a list) for the given item.
@@ -503,20 +474,6 @@ extern "C" {
 #endif // _di_controller_rule_item_read_
 
 /**
- * Get a string representing the rule item type.
- *
- * @param type
- *   The rule item type code.
- *
- * @return
- *   The string with used > 0 on success.
- *   The string with used == 0 if no match was found.
- */
-#ifndef _di_controller_rule_item_type_name_
-  extern f_string_static_t controller_rule_item_type_name(const uint8_t type) F_attribute_visibility_internal_d;
-#endif // _di_controller_rule_item_type_name_
-
-/**
  * Increase the size of the rule items array by the specified amount, but only if necessary.
  *
  * This only increases size if the current used plus amount is greater than the currently allocated size.
@@ -537,20 +494,6 @@ extern "C" {
 #ifndef _di_controller_rule_items_increase_by_
   extern f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t * const items) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_items_increase_by_
-
-/**
- * Get a string representing the rule setting limit type.
- *
- * @param type
- *   The rule setting limit type code.
- *
- * @return
- *   The string with used > 0 on success.
- *   The string with used == 0 if no match was found.
- */
-#ifndef _di_controller_rule_setting_limit_type_name_
-  extern f_string_static_t controller_rule_setting_limit_type_name(const uint8_t type) F_attribute_visibility_internal_d;
-#endif // di_controller_rule_setting_limit_type_name_
 
 /**
  * Process and execute the given rule.
