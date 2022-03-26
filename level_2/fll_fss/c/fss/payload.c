@@ -70,6 +70,8 @@ extern "C" {
         if (status == F_fss_found_object) {
           found_data = F_true;
 
+          contents->array[contents->used].used = 0;
+
           if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
             status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status)) return status;

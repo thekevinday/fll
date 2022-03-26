@@ -65,7 +65,8 @@ extern "C" {
 
           break;
         }
-        else if (status == F_fss_found_object_content_not) {
+
+        if (status == F_fss_found_object_content_not) {
           found_data = F_true;
 
           break;

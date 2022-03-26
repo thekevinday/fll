@@ -56,18 +56,6 @@ extern "C" {
     }
 #endif // _di_macro_fl_fss_content_with_comments_return_on_overflow_
 
-#ifndef _di_macro_fl_fss_content_return_on_overflow_delimited_
-  #define private_macro_fl_fss_content_return_on_overflow_delimited(buffer, range, found, eos_status, stop_status) \
-    if (range.start >= buffer.used) { \
-      found.array[found.used].stop = buffer.used - 1; \
-      return eos_status; \
-    } \
-    else if (range.start > range.stop) { \
-      found.array[found.used].stop = range.stop; \
-      return stop_status; \
-    }
-#endif // _di_macro_fl_fss_content_return_on_overflow_delimited_
-
 #ifndef _di_macro_fl_fss_nest_return_on_overflow_
   #define private_macro_fl_fss_nest_return_on_overflow(buffer, range, found, delimits, delimits_used, comments, comments_used, positions, objects, slashes, eos_status, stop_status) \
     if (range.start >= buffer.used) { \

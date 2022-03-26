@@ -88,6 +88,8 @@ extern "C" {
         if (status == F_fss_found_object) {
           found_data = F_true;
 
+          contents->array[contents->used].used = 0;
+
           if (contents_quoted) {
             status2 = f_uint8s_increase(state.step_small, &contents_quoted->array[contents_quoted->used]);
             if (F_status_is_error(status2)) return status2;
@@ -102,6 +104,7 @@ extern "C" {
         }
         else if (status == F_fss_found_object_content_not) {
           found_data = F_true;
+
           break;
         }
 
@@ -109,7 +112,6 @@ extern "C" {
 
       if (status == F_none_eos || status == F_none_stop) {
         contents->array[contents->used].used++;
-
         ++objects->used;
         ++contents->used;
 

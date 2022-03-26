@@ -65,7 +65,7 @@ extern "C" {
 
     bool graph_first = F_true;
 
-    // identify where the object ends.
+    // Identify where the object ends.
     while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol_s.string[0]) {
 
       if (state.interrupt) {
@@ -538,9 +538,19 @@ extern "C" {
       return status;
     }
 
-    found->array[found->used++].stop = range->start - 1;
+    if (range->start >= buffer.used) {
+      found->array[found->used].stop = buffer.used - 1;
 
-    private_macro_fl_fss_content_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
+      return F_none_eos;
+    }
+
+    if (range->start > range->stop) {
+      found->array[found->used].stop = range->stop;
+
+      return F_none_stop;
+    }
+
+    found->array[found->used++].stop = range->start - 1;
 
     return F_fss_found_content;
   }

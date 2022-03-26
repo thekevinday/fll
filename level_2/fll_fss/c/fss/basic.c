@@ -76,6 +76,8 @@ extern "C" {
         if (status == F_fss_found_object) {
           found_data = F_true;
 
+          contents->array[contents->used].used = 0;
+
           status = fl_fss_basic_content_read(buffer, state, range, &contents->array[contents->used], contents_delimits ? contents_delimits : objects_delimits);
           if (F_status_is_error(status)) return status;
 
