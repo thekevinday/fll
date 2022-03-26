@@ -257,7 +257,7 @@ extern "C" {
         f_string_dynamic_resize(0, &main->buffer);
 
         if (main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
-          fll_print_format("0%r", main->output.to.stream, f_string_eol_s);
+          fll_print_format("%r%r", main->output.to.stream, f_string_ascii_0_s, f_string_eol_s);
 
           return F_none;
         }
@@ -505,7 +505,7 @@ extern "C" {
           ++total;
         } // for
 
-        fll_print_format("%lu%r", main->output.to.stream, total, f_string_eol_s);
+        fll_print_format("%ul%r", main->output.to.stream, total, f_string_eol_s);
 
         return F_none;
       }
@@ -576,7 +576,7 @@ extern "C" {
         } // for
       } // for
 
-      fll_print_format("%lu%r", main->output.to.stream, total, f_string_eol_s);
+      fll_print_format("%ul%r", main->output.to.stream, total, f_string_eol_s);
 
       return F_none;
     }
@@ -770,7 +770,7 @@ extern "C" {
 
           if (original_delimits[j] >= items->array[i].content.array[k].start && original_delimits[j] <= items->array[i].content.array[k].stop) {
 
-            // preserve linear order when adding back delimits.
+            // Preserve linear order when adding back delimits.
             if (delimits->used) {
               for (l = 0; l < delimits->used; ++l) {
 
