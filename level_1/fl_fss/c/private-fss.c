@@ -856,7 +856,7 @@ extern "C" {
     }
 
     // Ensure that there is room for the potential start and stop quotes, a potential delimit at start, and the potential object open character.
-    status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 4, destination);
+    status = f_string_dynamic_increase_by((range->stop - range->start) + 4, destination);
     if (F_status_is_error(status)) return status;
 
     const f_array_length_t input_start = range->start;
