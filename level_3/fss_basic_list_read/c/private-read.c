@@ -419,16 +419,27 @@ extern "C" {
           fll_print_format("%ul%r", main->output.to.stream, data->contents.array[i].used, f_string_eol_s);
         }
         else if (data->option & fss_basic_list_read_data_option_total_d) {
-          flockfile(main->output.to.stream);
+          f_array_length_t total = 0;
+          f_array_length_t j = 0;
+          f_array_length_t k = 0;
 
-          if (data->contents.array[i].used) {
-            fss_basic_list_read_print_one(main);
-          }
-          else {
-            fss_basic_list_read_print_zero(main);
+          // Count each new line.
+          for (; j < data->contents.array[i].used; ++j) {
+
+            if (data->contents.array[i].array[j].start > data->contents.array[i].array[j].stop) continue;
+            if (data->contents.array[i].array[j].start > data->buffer.used) continue;
+
+            for (k = data->contents.array[i].array[j].start; k <= data->contents.array[i].array[j].stop && k < data->buffer.used; ++k) {
+              if (data->buffer.string[k] == f_string_eol_s.string[0]) ++total;
+            } // for
+          } // for
+
+          // If there are no newline characters but there is data, then this represents a single line.
+          if (data->contents.array[i].used && !total) {
+            total = 1;
           }
 
-          funlockfile(main->output.to.stream);
+          fll_print_format("%ul%r", main->output.to.stream, total, f_string_eol_s);
         }
         else {
           fss_basic_list_read_print_at(main, i, *delimits_object, *delimits_content, data);
