@@ -22,6 +22,7 @@ extern "C" {
   const f_string_static_t controller_control_group_s = macro_f_string_static_t_initialize(CONTROLLER_control_group_s, 0, CONTROLLER_control_group_s_length);
   const f_string_static_t controller_control_mode_s = macro_f_string_static_t_initialize(CONTROLLER_control_mode_s, 0, CONTROLLER_control_mode_s_length);
   const f_string_static_t controller_control_user_s = macro_f_string_static_t_initialize(CONTROLLER_control_user_s, 0, CONTROLLER_control_user_s_length);
+  const f_string_static_t controller_controller_s = macro_f_string_static_t_initialize(CONTROLLER_controller_s, 0, CONTROLLER_controller_s_length);
   const f_string_static_t controller_cpu_s = macro_f_string_static_t_initialize(CONTROLLER_cpu_s, 0, CONTROLLER_cpu_s_length);
   const f_string_static_t controller_core_s = macro_f_string_static_t_initialize(CONTROLLER_core_s, 0, CONTROLLER_core_s_length);
   const f_string_static_t controller_data_s = macro_f_string_static_t_initialize(CONTROLLER_data_s, 0, CONTROLLER_data_s_length);
@@ -52,6 +53,7 @@ extern "C" {
   const f_string_static_t controller_iki_s = macro_f_string_static_t_initialize(CONTROLLER_iki_s, 0, CONTROLLER_iki_s_length);
   const f_string_static_t controller_item_s = macro_f_string_static_t_initialize(CONTROLLER_item_s, 0, CONTROLLER_item_s_length);
   const f_string_static_t controller_init_s = macro_f_string_static_t_initialize(CONTROLLER_init_s, 0, CONTROLLER_init_s_length);
+  const f_string_static_t controller_kexec_s = macro_f_string_static_t_initialize(CONTROLLER_kexec_s, 0, CONTROLLER_kexec_s_length);
   const f_string_static_t controller_kill_s = macro_f_string_static_t_initialize(CONTROLLER_kill_s, 0, CONTROLLER_kill_s_length);
   const f_string_static_t controller_length_s = macro_f_string_static_t_initialize(CONTROLLER_length_s, 0, CONTROLLER_length_s_length);
   const f_string_static_t controller_limit_s = macro_f_string_static_t_initialize(CONTROLLER_limit_s, 0, CONTROLLER_limit_s_length);
@@ -83,6 +85,7 @@ extern "C" {
   const f_string_static_t controller_processor_s = macro_f_string_static_t_initialize(CONTROLLER_processor_s, 0, CONTROLLER_processor_s_length);
   const f_string_static_t controller_program_s = macro_f_string_static_t_initialize(CONTROLLER_program_s, 0, CONTROLLER_program_s_length);
   const f_string_static_t controller_ready_s = macro_f_string_static_t_initialize(CONTROLLER_ready_s, 0, CONTROLLER_ready_s_length);
+  const f_string_static_t controller_reboot_s = macro_f_string_static_t_initialize(CONTROLLER_reboot_s, 0, CONTROLLER_reboot_s_length);
   const f_string_static_t controller_reload_s = macro_f_string_static_t_initialize(CONTROLLER_reload_s, 0, CONTROLLER_reload_s_length);
   const f_string_static_t controller_require_s = macro_f_string_static_t_initialize(CONTROLLER_require_s, 0, CONTROLLER_require_s_length);
   const f_string_static_t controller_required_s = macro_f_string_static_t_initialize(CONTROLLER_required_s, 0, CONTROLLER_required_s_length);
@@ -105,6 +108,7 @@ extern "C" {
   const f_string_static_t controller_session_new_s = macro_f_string_static_t_initialize(CONTROLLER_session_new_s, 0, CONTROLLER_session_new_s_length);
   const f_string_static_t controller_session_same_s = macro_f_string_static_t_initialize(CONTROLLER_session_same_s, 0, CONTROLLER_session_same_s_length);
   const f_string_static_t controller_show_s = macro_f_string_static_t_initialize(CONTROLLER_show_s, 0, CONTROLLER_show_s_length);
+  const f_string_static_t controller_shutdown_s = macro_f_string_static_t_initialize(CONTROLLER_shutdown_s, 0, CONTROLLER_shutdown_s_length);
   const f_string_static_t controller_sigpending_s = macro_f_string_static_t_initialize(CONTROLLER_sigpending_s, 0, CONTROLLER_sigpending_s_length);
   const f_string_static_t controller_stack_s = macro_f_string_static_t_initialize(CONTROLLER_stack_s, 0, CONTROLLER_stack_s_length);
   const f_string_static_t controller_start_s = macro_f_string_static_t_initialize(CONTROLLER_start_s, 0, CONTROLLER_start_s_length);

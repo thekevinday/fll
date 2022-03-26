@@ -381,20 +381,42 @@ extern "C" {
 #endif // _di_controller_main_t_
 
 /**
+ * Codes representing control payload types.
+ *
+ * controller_control_payload_type_*:
+ *   - controller: The item type represents a command operation.
+ *   - error:      The item type represents a script operation.
+ *   - init:       The item type represents an init operation (Only fo init mode).
+ */
+#ifndef _di_controller_control_payload_types_t_
+  enum {
+    controller_control_payload_type_controller_e = 1,
+    controller_control_payload_type_error_e,
+    controller_control_payload_type_init_e,
+  };
+#endif // _di_controller_control_payload_types_t_
+
+/**
  * Codes representing supported actions.
  *
- * freeze:   Perform the freeze controller operation.
- * kill:     Perform the kill controller operation.
- * pause:    Perform the pause controller operation.
- * reboot:   Perform the reboot controller operation (only for init mode).
- * reload:   Perform the reload controller operation.
- * rerun:    Perform the rerun controller operation.
- * restart:  Perform the restart controller operation.
- * resume:   Perform the resume controller operation.
- * shutdown: Perform the shutdown controller operation (only for init mode).
- * start:    Perform the start controller operation.
- * stop:     Perform the stop controller operation.
- * thaw:     Perform the thaw controller operation.
+ * controller_entry_action_type_*:
+ *   - consider: Perform the consider controller operation.
+ *   - execute:  Perform the execute controller operation.
+ *   - freeze:   Perform the freeze controller operation..
+ *   - item:     Perform the item controller operation.
+ *   - kexec:    Perform the kexec controller operation (only for init mode).
+ *   - kill:     Perform the kill controller operation.
+ *   - pause:    Perform the pause controller operation.
+ *   - ready:    Perform the ready controller operation.
+ *   - reboot:   Perform the reboot controller operation (only for init mode).
+ *   - reload:   Perform the reload controller operation.
+ *   - restart:  Perform the restart controller operation.
+ *   - resume:   Perform the resume controller operation.
+ *   - shutdown: Perform the shutdown controller operation (only for init mode).
+ *   - start:    Perform the start controller operation.
+ *   - stop:     Perform the stop controller operation.
+ *   - timeout:  Perform the timeout controller operation.
+ *   - thaw:     Perform the thaw controller operation.
  */
 #ifndef _di_controller_entry_action_types_t_
   enum {
@@ -403,12 +425,15 @@ extern "C" {
     controller_entry_action_type_failsafe_e,
     controller_entry_action_type_freeze_e,
     controller_entry_action_type_item_e,
+    controller_entry_action_type_kexec_e,
     controller_entry_action_type_kill_e,
     controller_entry_action_type_pause_e,
     controller_entry_action_type_ready_e,
+    controller_entry_action_type_reboot_e,
     controller_entry_action_type_reload_e,
     controller_entry_action_type_restart_e,
     controller_entry_action_type_resume_e,
+    controller_entry_action_type_shutdown_e,
     controller_entry_action_type_start_e,
     controller_entry_action_type_stop_e,
     controller_entry_action_type_timeout_e,
@@ -417,13 +442,88 @@ extern "C" {
 #endif // _di_controller_entry_action_types_t_
 
 /**
- * Codes representing items.
+ * Codes representing rule actions.
  *
- * command: The item type represents a command operation.
- * script:  The item type represents a script operation.
- * service: The item type represents a service operation.
- * setting: The item type represents a setting operation.
- * utility: The item type represents a utility operation.
+ * controller_rule_action_type_*:
+ *   - freeze:   The Freeze execution instructions.
+ *   - group:    The Group setting.
+ *   - kill:     The Kill execution instructions.
+ *   - pause:    The Pause execution instructions.
+ *   - pid_file: The PID file setting.
+ *   - rerun:    The Re-run execution after success or failure.
+ *   - reload:   The Reload execution instructions.
+ *   - restart:  The Restart execution instructions.
+ *   - resume:   The Resume execution instructions.
+ *   - start:    The Start execution instructions.
+ *   - stop:     The Stop execution instructions.
+ *   - thaw:     The Thaw execution instructions.
+ *   - user:     The User setting.
+ *   - with:     The With flags.
+ */
+#ifndef _di_controller_rule_action_types_t_
+  enum {
+    controller_rule_action_type_freeze_e = 1,
+    controller_rule_action_type_group_e,
+    controller_rule_action_type_kill_e,
+    controller_rule_action_type_pause_e,
+    controller_rule_action_type_pid_file_e,
+    controller_rule_action_type_reload_e,
+    controller_rule_action_type_rerun_e,
+    controller_rule_action_type_restart_e,
+    controller_rule_action_type_resume_e,
+    controller_rule_action_type_start_e,
+    controller_rule_action_type_stop_e,
+    controller_rule_action_type_thaw_e,
+    controller_rule_action_type_user_e,
+    controller_rule_action_type_with_e,
+
+    // Designate the largest value in the enum, the '__' is intended.
+    controller_rule_action_type__enum_size_e,
+  };
+#endif // _di_controller_rule_action_types_t_
+
+/**
+ * Codes representing rule action executes.
+ *
+ * Execute type starts at 0 because it is intended to be used as an index within a static array.
+ *
+ * controller_rule_action_execute_type_*:
+ *   - freeze:   The Freeze execution instructions.
+ *   - kill:     The Kill execution instructions.
+ *   - pause:    The Pause execution instructions.
+ *   - reload:   The Reload execution instructions.
+ *   - restart:  The Restart execution instructions.
+ *   - resume:   The Resume execution instructions.
+ *   - start:    The Start execution instructions.
+ *   - stop:     The Stop execution instructions.
+ *   - thaw:     The Thaw execution instructions.
+ */
+#ifndef _di_controller_rule_action_execute_types_t_
+  enum {
+    controller_rule_action_execute_type_freeze_e = 0,
+    controller_rule_action_execute_type_kill_e,
+    controller_rule_action_execute_type_pause_e,
+    controller_rule_action_execute_type_reload_e,
+    controller_rule_action_execute_type_restart_e,
+    controller_rule_action_execute_type_resume_e,
+    controller_rule_action_execute_type_start_e,
+    controller_rule_action_execute_type_stop_e,
+    controller_rule_action_execute_type_thaw_e,
+
+    // Designate the largest value in the enum, the '__' is intended.
+    controller_rule_action_execute_type__enum_size_e,
+  };
+#endif // _di_controller_rule_action_execute_types_t_
+
+/**
+ * Codes representing rule items.
+ *
+ * controller_rule_item_type_*:
+ *   - command: The item type represents a command operation.
+ *   - script:  The item type represents a script operation.
+ *   - service: The item type represents a service operation.
+ *   - setting: The item type represents a setting operation.
+ *   - utility: The item type represents a utility operation.
  */
 #ifndef _di_controller_rule_item_types_t_
   enum {
@@ -460,6 +560,48 @@ extern "C" {
     controller_resource_limit_type_stack_e = RLIMIT_STACK,
   };
 #endif // _di_controller_resource_limit_t_
+
+/**
+ * Identify the payload code the given name represents.
+ *
+ * @param payload
+ *   The string representing a payload.
+ *
+ * @return
+ *   The payload type code on success.
+ *   0 if name is unknown.
+ */
+#ifndef _di_controller_control_payload_type_identify_
+  extern uint8_t controller_control_payload_type_identify(const f_string_static_t payload);
+#endif // _di_controller_control_payload_type_identify_
+
+/**
+ * Get a string representing the payload type.
+ *
+ * @param type
+ *   The payload type id.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_control_payload_type_name_
+  extern f_string_static_t controller_control_payload_type_name(const uint8_t type);
+#endif // _di_controller_control_payload_type_name_
+
+/**
+ * Identify the entry action code the given name represents.
+ *
+ * @param action
+ *   The string representing an entry action.
+ *
+ * @return
+ *   The entry action type code on success.
+ *   0 if name is unknown.
+ */
+#ifndef _di_controller_entry_action_type_identify_
+  extern uint8_t controller_entry_action_type_identify(const f_string_static_t action);
+#endif // _di_controller_entry_action_type_identify_
 
 /**
  * Get a string representing the entry action type.
@@ -503,6 +645,20 @@ extern "C" {
 #endif // _di_controller_main_delete_
 
 /**
+ * Identify the rule action code the given name represents.
+ *
+ * @param action
+ *   The string representing an rule action.
+ *
+ * @return
+ *   The rule action type code on success.
+ *   0 if name is unknown.
+ */
+#ifndef _di_controller_rule_action_type_identify_
+  extern uint8_t controller_rule_action_type_identify(const f_string_static_t action);
+#endif // _di_controller_rule_action_type_identify_
+
+/**
  * Get a string representing the rule action type.
  *
  * @param type
@@ -517,6 +673,20 @@ extern "C" {
 #endif // _di_controller_rule_action_type_name_
 
 /**
+ * Identify the rule action execute code the given name represents.
+ *
+ * @param action
+ *   The string representing an rule action execute.
+ *
+ * @return
+ *   The rule action execute type code on success.
+ *   controller_rule_action_execute_type__enum_size_e if name is unknown.
+ */
+#ifndef _di_controller_rule_action_execute_type_identify_
+  extern uint8_t controller_rule_action_execute_type_identify(const f_string_static_t action);
+#endif // _di_controller_rule_action_execute_type_identify_
+
+/**
  * Get a string representing the rule action execute type.
  *
  * @param type
@@ -526,9 +696,23 @@ extern "C" {
  *   The string with used > 0 on success.
  *   The string with used == 0 if no match was found.
  */
-#ifndef _di_controller_rule_action_type_execute_name_
-  extern f_string_static_t controller_rule_action_type_execute_name(const uint8_t type);
-#endif // _di_controller_rule_action_type_execute_name_
+#ifndef _di_controller_rule_action_execute_type_name_
+  extern f_string_static_t controller_rule_action_execute_type_name(const uint8_t type);
+#endif // _di_controller_rule_action_execute_type_name_
+
+/**
+ * Identify the rule item code the given name represents.
+ *
+ * @param item
+ *   The string representing an rule action.
+ *
+ * @return
+ *   The rule item type code on success.
+ *   0 if name is unknown.
+ */
+#ifndef _di_controller_rule_item_type_identify_
+  extern uint8_t controller_rule_item_type_identify(const f_string_static_t item);
+#endif // _di_controller_rule_item_type_identify_
 
 /**
  * Get a string representing the rule item type.
@@ -543,6 +727,20 @@ extern "C" {
 #ifndef _di_controller_rule_item_type_name_
   extern f_string_static_t controller_rule_item_type_name(const uint8_t type);
 #endif // _di_controller_rule_item_type_name_
+
+/**
+ * Identify the rule item code the given name represents.
+ *
+ * @param item
+ *   The string representing an rule action.
+ *
+ * @return
+ *   The rule item type code on success.
+ *   0 if name is unknown.
+ */
+#ifndef _di_controller_rule_setting_limit_type_identify_
+  extern uint8_t controller_rule_setting_limit_type_identify(const f_string_static_t item);
+#endif // _di_controller_rule_setting_limit_type_identify_
 
 /**
  * Get a string representing the rule setting limit type.

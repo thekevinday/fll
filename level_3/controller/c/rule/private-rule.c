@@ -177,42 +177,42 @@ extern "C" {
   uint8_t controller_rule_action_type_to_action_execute_type(const uint8_t type) {
 
     if (type == controller_rule_action_type_freeze_e) {
-      return controller_rule_action_type_execute_freeze_e;
+      return controller_rule_action_execute_type_freeze_e;
     }
 
     if (type == controller_rule_action_type_kill_e) {
-      return controller_rule_action_type_execute_kill_e;
+      return controller_rule_action_execute_type_kill_e;
     }
 
     if (type == controller_rule_action_type_pause_e) {
-      return controller_rule_action_type_execute_pause_e;
+      return controller_rule_action_execute_type_pause_e;
     }
 
     if (type == controller_rule_action_type_reload_e) {
-      return controller_rule_action_type_execute_reload_e;
+      return controller_rule_action_execute_type_reload_e;
     }
 
     if (type == controller_rule_action_type_restart_e) {
-      return controller_rule_action_type_execute_restart_e;
+      return controller_rule_action_execute_type_restart_e;
     }
 
     if (type == controller_rule_action_type_resume_e) {
-      return controller_rule_action_type_execute_resume_e;
+      return controller_rule_action_execute_type_resume_e;
     }
 
     if (type == controller_rule_action_type_start_e) {
-      return controller_rule_action_type_execute_start_e;
+      return controller_rule_action_execute_type_start_e;
     }
 
     if (type == controller_rule_action_type_stop_e) {
-      return controller_rule_action_type_execute_stop_e;
+      return controller_rule_action_execute_type_stop_e;
     }
 
     if (type == controller_rule_action_type_thaw_e) {
-      return controller_rule_action_type_execute_thaw_e;
+      return controller_rule_action_execute_type_thaw_e;
     }
 
-    return controller_rule_action_type_execute__enum_size_e;
+    return controller_rule_action_execute_type__enum_size_e;
   }
 #endif // _di_controller_rule_action_type_to_action_execute_type_
 
@@ -409,31 +409,31 @@ extern "C" {
 
           if (cache->content_action.used) {
             if (fl_string_dynamic_partial_compare_string(controller_freeze_s.string, cache->buffer_item, controller_freeze_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_freeze_e;
+              type_rerun = controller_rule_action_execute_type_freeze_e;
             }
             if (fl_string_dynamic_partial_compare_string(controller_kill_s.string, cache->buffer_item, controller_kill_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_kill_e;
+              type_rerun = controller_rule_action_execute_type_kill_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_pause_s.string, cache->buffer_item, controller_pause_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_pause_e;
+              type_rerun = controller_rule_action_execute_type_pause_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_reload_s.string, cache->buffer_item, controller_reload_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_reload_e;
+              type_rerun = controller_rule_action_execute_type_reload_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_restart_s.string, cache->buffer_item, controller_restart_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_restart_e;
+              type_rerun = controller_rule_action_execute_type_restart_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_resume_s.string, cache->buffer_item, controller_resume_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_resume_e;
+              type_rerun = controller_rule_action_execute_type_resume_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_start_s.string, cache->buffer_item, controller_start_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_start_e;
+              type_rerun = controller_rule_action_execute_type_start_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_stop_s.string, cache->buffer_item, controller_stop_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_stop_e;
+              type_rerun = controller_rule_action_execute_type_stop_e;
             }
             else if (fl_string_dynamic_partial_compare_string(controller_thaw_s.string, cache->buffer_item, controller_thaw_s.used, cache->content_action.array[0]) == F_equal_to) {
-              type_rerun = controller_rule_action_type_execute_thaw_e;
+              type_rerun = controller_rule_action_execute_type_thaw_e;
             }
           }
 
@@ -898,7 +898,7 @@ extern "C" {
         status = f_string_dynamic_append(item_source->pid_file, &item_destination->pid_file);
         if (F_status_is_error(status)) return status;
 
-        for (j = 0; j < controller_rule_action_type_execute__enum_size_e; ++j) {
+        for (j = 0; j < controller_rule_action_execute_type__enum_size_e; ++j) {
 
           item_destination->reruns[j].is = item_source->reruns[j].is;
           item_destination->reruns[j].failure.count = item_source->reruns[j].failure.count;
@@ -1779,7 +1779,7 @@ extern "C" {
 
           fl_print_format("%rRe-running '", main->output.to.stream, f_string_eol_s);
           fl_print_format("%[%r%]' '", main->output.to.stream, main->context.set.title, process->rule.alias, main->context.set.title);
-          fl_print_format("%[%r%]' with a ", main->output.to.stream, main->context.set.notable, controller_rule_action_type_execute_name(action), main->context.set.notable);
+          fl_print_format("%[%r%]' with a ", main->output.to.stream, main->context.set.notable, controller_rule_action_execute_type_name(action), main->context.set.notable);
           fl_print_format("%[%r%] of ", main->output.to.stream, main->context.set.notable, controller_delay_s, main->context.set.notable);
           fl_print_format("%[%ul%] MegaTime", main->output.to.stream, main->context.set.notable, rerun_item->delay, main->context.set.notable);
 
@@ -5640,10 +5640,10 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
-    // script.
+    // Script.
     fl_print_format("  %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_script_s, main->context.set.important, rule.script, f_string_eol_s);
 
-    // user.
+    // User.
     fl_print_format("  %[%r%]", main->output.to.stream, main->context.set.important, controller_user_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_user_d) {
@@ -5652,17 +5652,17 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
-    // wait.
+    // Wait.
     fl_print_format("  %[%r%] %r%r", main->output.to.stream, main->context.set.important, controller_wait_s, main->context.set.important, options & controller_process_option_wait_d ? controller_yes_s : controller_no_s, f_string_eol_s);
 
-    // affinity.
+    // Affinity.
     fl_print_format("  %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_affinity_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.affinity.used; ++i) {
       fl_print_format("    %i%r", main->output.to.stream, rule.affinity.array[i], f_string_eol_s);
     } // for
 
-    // define.
+    // Define.
     fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_define_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.define.used; ++i) {
@@ -5672,7 +5672,7 @@ extern "C" {
       }
     } // for
 
-    // environment.
+    // Environment.
     fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_environment_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.environment.used; ++i) {
@@ -5684,7 +5684,7 @@ extern "C" {
 
     fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_parameter_s, main->context.set.important, f_string_eol_s);
 
-    // parameter.
+    // Parameter.
     for (i = 0; i < rule.parameter.used; ++i) {
 
       if (rule.parameter.array[i].name.used && rule.parameter.array[i].value.used) {
@@ -5692,7 +5692,7 @@ extern "C" {
       }
     } // for
 
-    // group.
+    // Group.
     fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_group_s, main->context.set.important, f_string_eol_s);
 
     if (rule.has & controller_rule_has_group_d) {
@@ -5703,14 +5703,14 @@ extern "C" {
       } // for
     }
 
-    // limit.
+    // Limit.
     fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_limit_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.limits.used; ++i) {
       fl_print_format("    %Q %[=%] %un %un%r", main->output.to.stream, controller_rule_setting_limit_type_name(rule.limits.array[i].type), main->context.set.important, main->context.set.important, rule.limits.array[i].value.rlim_cur, rule.limits.array[i].value.rlim_max, f_string_eol_s);
     } // for
 
-    // on.
+    // On.
     fl_print_format("  }%r  %[%r%] {%r", main->output.to.stream, f_string_eol_s, main->context.set.important, controller_on_s, main->context.set.important, f_string_eol_s);
 
     for (i = 0; i < rule.ons.used; ++i) {
@@ -5783,7 +5783,7 @@ extern "C" {
 
     fl_print_format("  }%r", main->output.to.stream, f_string_eol_s);
 
-    // items.
+    // Items.
     if (rule.items.used) {
       controller_rule_action_t *action = 0;
       controller_rule_item_t *item = 0;
@@ -5799,17 +5799,17 @@ extern "C" {
 
         fl_print_format("  %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_item_s, main->context.set.important, f_string_eol_s);
 
-        // type.
+        // Type.
         fl_print_format("    %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_type_s, main->context.set.important, controller_rule_item_type_name(item->type), f_string_eol_s);
 
-        // pid_file.
+        // Pid file.
         fl_print_format("    %[%r%]", main->output.to.stream, main->context.set.important, controller_pid_file_s, main->context.set.important);
         if (item->pid_file.used) {
           fl_print_format(" %Q", main->output.to.stream, item->pid_file);
         }
         f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
-        // with.
+        // With.
         fl_print_format("    %[%r%]", main->output.to.stream, main->context.set.important, controller_with_s, main->context.set.important);
         if (item->with & controller_with_full_path_d) {
           fl_print_format(" %r", main->output.to.stream, controller_full_path_s);
@@ -5822,7 +5822,7 @@ extern "C" {
         }
         f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
-        // actions.
+        // Actions.
         for (j = 0; j < item->actions.used; ++j) {
 
           action = &item->actions.array[j];
@@ -5881,7 +5881,7 @@ extern "C" {
 
         // Rerun.
         fl_print_format("    %[%r%] {%r", main->output.to.stream, main->context.set.important, controller_rerun_s, main->context.set.important, f_string_eol_s);
-        for (j = 0; j < controller_rule_action_type_execute__enum_size_e; ++j) {
+        for (j = 0; j < controller_rule_action_execute_type__enum_size_e; ++j) {
 
           for (k = 0; k < 2; ++k) {
             if (!k && (item->reruns[j].is & controller_rule_rerun_is_failure_d)) {
@@ -5897,39 +5897,39 @@ extern "C" {
 
             fl_print_format("      %[", main->output.to.stream, main->context.set.important);
             switch (j) {
-              case controller_rule_action_type_execute_freeze_e:
+              case controller_rule_action_execute_type_freeze_e:
                 f_print_dynamic_raw(controller_freeze_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_kill_e:
+              case controller_rule_action_execute_type_kill_e:
                 f_print_dynamic_raw(controller_kill_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_pause_e:
+              case controller_rule_action_execute_type_pause_e:
                 f_print_dynamic_raw(controller_pause_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_reload_e:
+              case controller_rule_action_execute_type_reload_e:
                 f_print_dynamic_raw(controller_reload_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_restart_e:
+              case controller_rule_action_execute_type_restart_e:
                 f_print_dynamic_raw(controller_restart_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_resume_e:
+              case controller_rule_action_execute_type_resume_e:
                 f_print_dynamic_raw(controller_resume_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_start_e:
+              case controller_rule_action_execute_type_start_e:
                 f_print_dynamic_raw(controller_start_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_stop_e:
+              case controller_rule_action_execute_type_stop_e:
                 f_print_dynamic_raw(controller_stop_s, main->output.to.stream);
                 break;
 
-              case controller_rule_action_type_execute_thaw_e:
+              case controller_rule_action_execute_type_thaw_e:
                 f_print_dynamic_raw(controller_thaw_s, main->output.to.stream);
                 break;
 

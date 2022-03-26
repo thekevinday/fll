@@ -134,6 +134,7 @@ extern "C" {
  * Codes representing supported actions.
  *
  * freeze:   Perform the freeze controller operation.
+ * kexec:    Perform the kexec controller operation (only for init mode).
  * kill:     Perform the kill controller operation.
  * pause:    Perform the pause controller operation.
  * reboot:   Perform the reboot controller operation (only for init mode).
@@ -149,6 +150,7 @@ extern "C" {
 #ifndef _di_control_action_types_
   enum {
     control_action_type_freeze_e = 1,
+    control_action_type_kexec_e,
     control_action_type_kill_e,
     control_action_type_pause_e,
     control_action_type_reboot_e,
@@ -166,15 +168,31 @@ extern "C" {
 /**
  * Supported payload types.
  *
- * error:      The payload is an error payload.
  * controller: The payload is a controller payload.
+ * error:      The payload is an error payload.
+ * init:       The payload is an init payload (only available when operating in "init" mode).
  */
 #ifndef _di_control_payload_types_
   enum {
-    control_payload_type_error_e = 1,
-    control_payload_type_controller_e,
+    control_payload_type_controller_e = 1,
+    control_payload_type_error_e,
+    control_payload_type_init_e,
   };
 #endif // _di_control_payload_types_
+
+/**
+ * Identify the action code the given name represents.
+ *
+ * @param action
+ *   The string representing a action.
+ *
+ * @return
+ *   The action type code on success.
+ *   0 if name is unknown.
+ */
+#ifndef _di_control_action_type_identify_
+  extern uint8_t control_action_type_identify(const f_string_static_t action);
+#endif // _di_control_action_type_identify_
 
 /**
  * Get a string representing the action type.
@@ -189,6 +207,20 @@ extern "C" {
 #ifndef _di_control_action_type_name_
   extern f_string_static_t control_action_type_name(const uint8_t type);
 #endif // _di_control_action_type_name_
+
+/**
+ * Identify the payload code the given name represents.
+ *
+ * @param payload
+ *   The string representing a payload.
+ *
+ * @return
+ *   The payload type code on success.
+ *   0 if name is unknown.
+ */
+#ifndef _di_control_payload_type_identify_
+  extern uint8_t control_payload_type_identify(const f_string_static_t payload);
+#endif // _di_control_payload_type_identify_
 
 /**
  * Get a string representing the payload type.

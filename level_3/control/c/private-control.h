@@ -12,25 +12,6 @@
 extern "C" {
 #endif
 
-
-/**
- * Identify the action code the given name represents.
- *
- * @param main
- *   The main program data.
- * @param data
- *   The control data.
- * @param action
- *   The parameter representing a action.
- *
- * @return
- *   action type code on success.
- *   0 if name is unknown.
- */
-#ifndef _di_control_action_identify_
-  extern uint8_t control_action_identify(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t action) F_attribute_visibility_internal_d;
-#endif // _di_control_action_identify_
-
 /**
  * Verify that the additional parameters are reasonably correct for the identified action.
  *
@@ -141,6 +122,47 @@ extern "C" {
 #ifndef _di_control_packet_send_
   extern f_status_t control_packet_send(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_send_
+
+/**
+ * Construct the header portion of the payload.
+ *
+ * This also prepends the FSS identifier comment.
+ *
+ * This resets and uses data->cache.small, data->cache.large, and data->cache.packet.
+ * Do not use any of these for passing strings to this function.
+ *
+ * The results of this function replaces data->cache.packet.
+ *
+ * @param global
+ *   The global data.
+ * @param data
+ *   The control data.
+ * @param type
+ *   The packet type.
+ *   Set type.used to 0 to not add to the header.
+ * @param status
+ *   The status code.
+ *   Set status.used to 0 to not add to the header.
+ * @param length
+ *   The length of the payload Content.
+ *   This is always added to the header.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_conversion_number_unsigned_to_string().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: fll_fss_extended_write_string().
+ *   Errors (with error bit) from: fll_fss_payload_write_string().
+ *
+ * @see f_conversion_number_unsigned_to_string()
+ * @see f_string_append()
+ * @see fll_fss_extended_write_string()
+ * @see fll_fss_payload_write_string()
+ */
+#ifndef _di_control_packet_send_build_header_
+  extern f_status_t control_packet_send_build_header(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t type, const f_string_static_t status, const f_array_length_t length) F_attribute_visibility_internal_d;
+#endif // _di_control_packet_send_build_header_
 /**
  * Load and process the control settings file.
  *

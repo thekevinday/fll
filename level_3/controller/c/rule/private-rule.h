@@ -113,7 +113,7 @@ extern "C" {
  * @return
  *   The converted action type, converted into an action execute type.
  *
- *   The code controller_rule_action_type_execute__enum_size_e is returned for unknown types.
+ *   The code controller_rule_action_execute_type__enum_size_e is returned for unknown types.
  */
 #ifndef _di_controller_rule_action_type_to_action_execute_type_
   extern uint8_t controller_rule_action_type_to_action_execute_type(const uint8_t type) F_attribute_visibility_internal_d;

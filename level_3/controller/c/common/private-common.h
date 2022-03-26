@@ -47,6 +47,7 @@ extern "C" {
   #define CONTROLLER_control_group_s "control_group"
   #define CONTROLLER_control_mode_s  "control_mode"
   #define CONTROLLER_control_user_s  "control_user"
+  #define CONTROLLER_controller_s    "controller"
   #define CONTROLLER_cpu_s           "cpu"
   #define CONTROLLER_core_s          "core"
   #define CONTROLLER_data_s          "data"
@@ -77,6 +78,7 @@ extern "C" {
   #define CONTROLLER_iki_s           "iki"
   #define CONTROLLER_item_s          "item"
   #define CONTROLLER_init_s          "init"
+  #define CONTROLLER_kexec_s         "kexec"
   #define CONTROLLER_kill_s          "kill"
   #define CONTROLLER_length_s        "length"
   #define CONTROLLER_limit_s         "limit"
@@ -108,6 +110,7 @@ extern "C" {
   #define CONTROLLER_processor_s     "processor"
   #define CONTROLLER_program_s       "program"
   #define CONTROLLER_ready_s         "ready"
+  #define CONTROLLER_reboot_s        "reboot"
   #define CONTROLLER_reload_s        "reload"
   #define CONTROLLER_require_s       "require"
   #define CONTROLLER_required_s      "required"
@@ -131,6 +134,7 @@ extern "C" {
   #define CONTROLLER_setting_s       "setting"
   #define CONTROLLER_sigpending_s    "sigpending"
   #define CONTROLLER_show_s          "show"
+  #define CONTROLLER_shutdown_s      "shutdown"
   #define CONTROLLER_stack_s         "stack"
   #define CONTROLLER_start_s         "start"
   #define CONTROLLER_status_s        "status"
@@ -173,6 +177,7 @@ extern "C" {
   #define CONTROLLER_control_group_s_length 13
   #define CONTROLLER_control_mode_s_length  12
   #define CONTROLLER_control_user_s_length  12
+  #define CONTROLLER_controller_s_length    10
   #define CONTROLLER_core_s_length          4
   #define CONTROLLER_cpu_s_length           3
   #define CONTROLLER_data_s_length          4
@@ -203,6 +208,7 @@ extern "C" {
   #define CONTROLLER_iki_s_length           3
   #define CONTROLLER_init_s_length          4
   #define CONTROLLER_item_s_length          4
+  #define CONTROLLER_kexec_s_length         5
   #define CONTROLLER_kill_s_length          4
   #define CONTROLLER_length_s_length        6
   #define CONTROLLER_limit_s_length         5
@@ -234,6 +240,7 @@ extern "C" {
   #define CONTROLLER_processor_s_length     9
   #define CONTROLLER_program_s_length       7
   #define CONTROLLER_ready_s_length         5
+  #define CONTROLLER_reboot_s_length        6
   #define CONTROLLER_reload_s_length        6
   #define CONTROLLER_require_s_length       7
   #define CONTROLLER_required_s_length      8
@@ -256,6 +263,7 @@ extern "C" {
   #define CONTROLLER_session_same_s_length  12
   #define CONTROLLER_setting_s_length       7
   #define CONTROLLER_show_s_length          4
+  #define CONTROLLER_shutdown_s_length      8
   #define CONTROLLER_sigpending_s_length    10
   #define CONTROLLER_stack_s_length         5
   #define CONTROLLER_start_s_length         5
@@ -299,6 +307,7 @@ extern "C" {
   extern const f_string_static_t controller_control_group_s;
   extern const f_string_static_t controller_control_mode_s;
   extern const f_string_static_t controller_control_user_s;
+  extern const f_string_static_t controller_controller_s;
   extern const f_string_static_t controller_core_s;
   extern const f_string_static_t controller_cpu_s;
   extern const f_string_static_t controller_data_s;
@@ -329,6 +338,7 @@ extern "C" {
   extern const f_string_static_t controller_iki_s;
   extern const f_string_static_t controller_init_s;
   extern const f_string_static_t controller_item_s;
+  extern const f_string_static_t controller_kexec_s;
   extern const f_string_static_t controller_kill_s;
   extern const f_string_static_t controller_length_s;
   extern const f_string_static_t controller_limit_s;
@@ -360,6 +370,7 @@ extern "C" {
   extern const f_string_static_t controller_processor_s;
   extern const f_string_static_t controller_program_s;
   extern const f_string_static_t controller_ready_s;
+  extern const f_string_static_t controller_reboot_s;
   extern const f_string_static_t controller_reload_s;
   extern const f_string_static_t controller_require_s;
   extern const f_string_static_t controller_required_s;
@@ -382,6 +393,7 @@ extern "C" {
   extern const f_string_static_t controller_session_same_s;
   extern const f_string_static_t controller_setting_s;
   extern const f_string_static_t controller_show_s;
+  extern const f_string_static_t controller_shutdown_s;
   extern const f_string_static_t controller_sigpending_s;
   extern const f_string_static_t controller_stack_s;
   extern const f_string_static_t controller_start_s;

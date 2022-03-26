@@ -299,7 +299,7 @@ extern "C" {
 
       status2 = f_conversion_number_unsigned_to_string(F_status_set_fine(status), data_conversion, &control->cache_3);
       if (F_status_is_error(status2)) return status2;
-    }
+    };
 
     status2 = controller_control_respond_build_header(global, control, controller_error_s, control->cache_3, message.used);
     if (F_status_is_error(status2)) return status2;
@@ -310,6 +310,8 @@ extern "C" {
       status2 = fll_fss_payload_write_string(f_fss_string_payload_s, message, F_false, 0, state, &control->output);
       if (F_status_is_error(status2)) return status2;
     }
+
+    control->client.size_write = control->output.used;
 
     return f_socket_write(&control->client, 0, control->output.string, 0);
   }

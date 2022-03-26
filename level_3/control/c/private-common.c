@@ -20,6 +20,8 @@ extern "C" {
   const f_string_static_t control_controller_s = macro_f_string_static_t_initialize(CONTROL_controller_s, 0, CONTROL_controller_s_length);
   const f_string_static_t control_default_s = macro_f_string_static_t_initialize(CONTROL_default_s, 0, CONTROL_default_s_length);
   const f_string_static_t control_error_s = macro_f_string_static_t_initialize(CONTROL_error_s, 0, CONTROL_error_s_length);
+  const f_string_static_t control_init_s = macro_f_string_static_t_initialize(CONTROL_init_s, 0, CONTROL_init_s_length);
+  const f_string_static_t control_kexec_s = macro_f_string_static_t_initialize(CONTROL_kexec_s, 0, CONTROL_kexec_s_length);
   const f_string_static_t control_length_s = macro_f_string_static_t_initialize(CONTROL_length_s, 0, CONTROL_length_s_length);
   const f_string_static_t control_name_socket_s = macro_f_string_static_t_initialize(CONTROL_name_socket_s, 0, CONTROL_name_socket_s_length);
   const f_string_static_t control_path_socket_s = macro_f_string_static_t_initialize(CONTROL_path_socket_s, 0, CONTROL_path_socket_s_length);
@@ -47,7 +49,7 @@ extern "C" {
 
     f_string_dynamic_resize(0, &data->cache.large);
     f_string_dynamic_resize(0, &data->cache.small);
-    f_string_dynamic_resize(0, &data->cache.payload);
+    f_string_dynamic_resize(0, &data->cache.packet);
 
     f_string_ranges_resize(0, &data->cache.packet_objects);
     f_string_rangess_resize(0, &data->cache.packet_contents);

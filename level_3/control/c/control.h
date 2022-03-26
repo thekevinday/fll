@@ -45,6 +45,7 @@
 #include <fll/level_2/error.h>
 #include <fll/level_2/fss/basic_list.h>
 #include <fll/level_2/fss/extended.h>
+#include <fll/level_2/fss/payload.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 #include <fll/level_2/status_string.h>

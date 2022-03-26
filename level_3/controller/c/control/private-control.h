@@ -104,40 +104,6 @@ extern "C" {
 #endif // _di_controller_control_packet_header_length_
 
 /**
- * Accept connections from a control socket server.
- *
- * Connectons are processed and actions are performed.
- *
- * The response packet (string based) packet format is FSS-000E (Payload).
- * This format is stored within packet and has it's own header and payload parts.
- * Example pseudo-structure:
- *   [0][0][4294967296][# fss-000e
- *     header:
- *       type message
- *       length 4294965248
- *     payload:
- *      ...
- *   ]
- *
- * @param global
- *   The global data.
- * @param control
- *   The control data.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_socket_accept().
- *   Errors (with error bit) from: f_socket_read().
- *
- * @see f_socket_accept()
- * @see f_socket_read()
- */
-#ifndef _di_controller_control_respond_
-  extern f_status_t controller_control_respond(const controller_global_t * const global, controller_control_t * const control) F_attribute_visibility_internal_d;
-#endif // _di_controller_control_respond_
-
-/**
  * Construct the header portion of the payload.
  *
  * This also prepends the FSS identifier comment.

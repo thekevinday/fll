@@ -2,6 +2,8 @@
 #
 # license: open-standard-license-1.0
 #
+# A "Task" is not fully implemented but is provided as a proposal for consideration and is subject to completion or removal.
+# Ideally, a task will be used to replace hardcoded "init" mode operations like "kexec", "reboot", and "shutdown".
 
 Task Documentation:
   This describes the intent and purpose of a Task file.

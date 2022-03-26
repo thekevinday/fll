@@ -131,6 +131,8 @@ extern "C" {
   #define CONTROL_controller_s         "controller"
   #define CONTROL_default_s            "default"
   #define CONTROL_error_s              "error"
+  #define CONTROL_kexec_s              "kexec"
+  #define CONTROL_init_s               "init"
   #define CONTROL_length_s             "length"
   #define CONTROL_name_socket_s        "name_socket"
   #define CONTROL_path_socket_s        "path_socket"
@@ -156,6 +158,8 @@ extern "C" {
   #define CONTROL_controller_s_length         10
   #define CONTROL_default_s_length            7
   #define CONTROL_error_s_length              5
+  #define CONTROL_init_s_length               4
+  #define CONTROL_kexec_s_length              5
   #define CONTROL_length_s_length             6
   #define CONTROL_name_socket_s_length        11
   #define CONTROL_path_socket_s_length        11
@@ -183,6 +187,8 @@ extern "C" {
   extern const f_string_static_t control_controller_s;
   extern const f_string_static_t control_default_s;
   extern const f_string_static_t control_error_s;
+  extern const f_string_static_t control_init_s;
+  extern const f_string_static_t control_kexec_s;
   extern const f_string_static_t control_length_s;
   extern const f_string_static_t control_name_socket_s;
   extern const f_string_static_t control_path_socket_s;
@@ -208,9 +214,9 @@ extern "C" {
 /**
  * The control cache.
  *
- * large:   A buffer for storing large sets of data.
- * small:   A buffer for storing small sets of data.
- * payload: A buffer dedicated for the payload.
+ * large:  A buffer for storing large sets of data.
+ * small:  A buffer for storing small sets of data.
+ * packet: A buffer for storing the send packet or the response payload.
  *
  * packet_objects:  The FSS Objects for a packet.
  * packet_contents: The FSS Contents for a packet.
@@ -224,7 +230,7 @@ extern "C" {
   typedef struct {
     f_string_dynamic_t large;
     f_string_dynamic_t small;
-    f_string_dynamic_t payload;
+    f_string_dynamic_t packet;
 
     f_fss_objects_t packet_objects;
     f_fss_contents_t packet_contents;
@@ -251,8 +257,8 @@ extern "C" {
 /**
  * The control data.
  *
- * argv:   The argument structure in the progam data parameters for simplifying syntax.
  * action: The action type code.
+ * argv:   The argument structure in the progam data parameters for simplifying syntax.
  * cache:  A cache.
  * socket: A socket used to connect to the controller.
  */
@@ -272,7 +278,6 @@ extern "C" {
       0, \
       f_string_dynamic_t_initialize, \
       f_socket_t_initialize, \
-      /*f_string_dynamic_t_initialize,*/ \
       0, \
     }
 #endif // _di_control_data_t_

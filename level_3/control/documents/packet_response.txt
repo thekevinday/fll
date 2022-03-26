@@ -16,7 +16,7 @@ Packet Response:
 
   The Control program only supports the following Payload Packet header Objects\:
     - status: Allowing only a single status header Object.
-    - type: Allowing only a single type header Object and may only be one of: "error" and "controller".
+    - type: Allowing only a single type header Object and may only be one of: "controller", "error", or "kexec".
     - action: Allowing only a single action header Object and may only be one of: "freeze", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", and "thaw".
     - length: Allowing only a single length header Object and must properly describe the length of the entire Payload Packet as per the referenced Specifications.
 

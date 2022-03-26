@@ -196,7 +196,7 @@ extern "C" {
         control_data_t data = control_data_t_initialize;
         data.argv = main->parameters.arguments.array;
 
-        data.action = control_action_identify(main, &data, data.argv[main->parameters.remaining.array[0]]);
+        data.action = control_action_type_identify(data.argv[main->parameters.remaining.array[0]]);
 
         if (data.action) {
           status = control_action_verify(main, &data);

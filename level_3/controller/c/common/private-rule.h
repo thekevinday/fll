@@ -80,22 +80,6 @@ extern "C" {
  *   - extended:      Designate that this Action is represented using FSS Extended.
  *   - extended_list: Designate that this Action is represented using FSS Extended List.
  *
- * controller_rule_action_type_*:
- *   - freeze:   The Freeze execution instructions.
- *   - group:    The Group setting.
- *   - kill:     The Kill execution instructions.
- *   - pause:    The Pause execution instructions.
- *   - pid_file: The PID file setting.
- *   - rerun:    The Re-run execution after success or failure.
- *   - reload:   The Reload execution instructions.
- *   - restart:  The Restart execution instructions.
- *   - resume:   The Resume execution instructions.
- *   - start:    The Start execution instructions.
- *   - stop:     The Stop execution instructions.
- *   - thaw:     The Thaw execution instructions.
- *   - user:     The User setting.
- *   - with:     The With flags.
- *
  * type:       The Rule Action type.
  * line:       The line number where the Rule Action begins.
  * status:     The last execution status of the Rule Action.
@@ -114,42 +98,6 @@ extern "C" {
   enum {
     controller_rule_action_method_extended_e = 1,
     controller_rule_action_method_extended_list_e,
-  };
-
-  enum {
-    controller_rule_action_type_freeze_e = 1,
-    controller_rule_action_type_group_e,
-    controller_rule_action_type_kill_e,
-    controller_rule_action_type_pause_e,
-    controller_rule_action_type_pid_file_e,
-    controller_rule_action_type_reload_e,
-    controller_rule_action_type_rerun_e,
-    controller_rule_action_type_restart_e,
-    controller_rule_action_type_resume_e,
-    controller_rule_action_type_start_e,
-    controller_rule_action_type_stop_e,
-    controller_rule_action_type_thaw_e,
-    controller_rule_action_type_user_e,
-    controller_rule_action_type_with_e,
-
-    // designate the largest value in the enum, the '__' is intended.
-    controller_rule_action_type__enum_size_e,
-  };
-
-  // Execute type starts at 0 because it is intended to be used as an index within a static array.
-  enum {
-    controller_rule_action_type_execute_freeze_e = 0,
-    controller_rule_action_type_execute_kill_e,
-    controller_rule_action_type_execute_pause_e,
-    controller_rule_action_type_execute_reload_e,
-    controller_rule_action_type_execute_restart_e,
-    controller_rule_action_type_execute_resume_e,
-    controller_rule_action_type_execute_start_e,
-    controller_rule_action_type_execute_stop_e,
-    controller_rule_action_type_execute_thaw_e,
-
-    // designate the largest value in the enum, the '__' is intended.
-    controller_rule_action_type_execute__enum_size_e,
   };
 
   typedef struct {
@@ -215,7 +163,7 @@ extern "C" {
     f_array_length_t line;
 
     f_string_dynamic_t pid_file;
-    controller_rule_rerun_t reruns[controller_rule_action_type_execute__enum_size_e];
+    controller_rule_rerun_t reruns[controller_rule_action_execute_type__enum_size_e];
     controller_rule_actions_t actions;
   } controller_rule_item_t;
 

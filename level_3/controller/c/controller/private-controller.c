@@ -24,7 +24,7 @@ extern "C" {
       }
 
       break;
-    } // while
+    } // for
 
     return result;
   }
@@ -142,7 +142,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    // the file exists, do not attempt to overwrite.
+    // The file exists, do not attempt to overwrite.
     if (f_file_exists(path) == F_true) {
       return F_status_set_error(F_file_found);
     }
@@ -160,7 +160,7 @@ extern "C" {
 
       if (F_status_is_error(status)) return status;
 
-      // the directory does not exist so do not bother attempting to create a pid file.
+      // The directory does not exist so do not bother attempting to create a pid file.
       if (status == F_false) {
         return F_status_set_error(F_directory_not);
       }
@@ -186,7 +186,7 @@ extern "C" {
 #ifndef _di_controller_file_pid_delete_
   f_status_t controller_file_pid_delete(const pid_t pid, const f_string_static_t path) {
 
-    // only delete if the file exists and there is no error while checking.
+    // Only delete if the file exists and there is no error while checking.
     if (f_file_exists(path) != F_true) {
       return F_none;
     }

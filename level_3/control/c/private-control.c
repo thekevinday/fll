@@ -7,61 +7,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_control_action_identify_
-  uint8_t control_action_identify(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t action) {
-
-    if (fl_string_dynamic_compare(action, control_freeze_s) == F_equal_to) {
-      return control_action_type_freeze_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_kill_s) == F_equal_to) {
-      return control_action_type_kill_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_pause_s) == F_equal_to) {
-      return control_action_type_pause_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_reboot_s) == F_equal_to) {
-      return control_action_type_reboot_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_reload_s) == F_equal_to) {
-      return control_action_type_reload_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_rerun_s) == F_equal_to) {
-      return control_action_type_rerun_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_restart_s) == F_equal_to) {
-      return control_action_type_restart_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_resume_s) == F_equal_to) {
-      return control_action_type_resume_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_shutdown_s) == F_equal_to) {
-      return control_action_type_shutdown_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_start_s) == F_equal_to) {
-      return control_action_type_start_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_stop_s) == F_equal_to) {
-      return control_action_type_stop_e;
-    }
-
-    if (fl_string_dynamic_compare(action, control_thaw_s) == F_equal_to) {
-      return control_action_type_thaw_e;
-    }
-
-    return 0;
-  }
-#endif // _di_control_action_identify_
-
 #ifndef _di_control_action_verify_
   f_status_t control_action_verify(fll_program_data_t * const main, control_data_t * const data) {
 
@@ -236,6 +181,7 @@ extern "C" {
 
     data->cache.large.used = 0;
     data->cache.small.used = 0;
+    data->cache.packet.used = 0;
     data->cache.packet_objects.used = 0;
     data->cache.packet_contents.used = 0;
     data->cache.header_objects.used = 0;
@@ -435,7 +381,7 @@ extern "C" {
 
               control_print_debug_packet_header_object_and_content(main, control_action_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
 
-              header->action = control_action_identify(main, data, action);
+              header->action = control_action_type_identify(action);
 
               if (!header->action) {
                 control_print_debug_packet_message(main, "Failed to identify %[" CONTROL_action_s "%] from: ", &data->cache.large, &data->cache.header_contents.array[i].array[0], 0);
@@ -594,14 +540,78 @@ extern "C" {
 #ifndef _di_control_packet_send_
   f_status_t control_packet_send(fll_program_data_t * const main, control_data_t * const data) {
 
-    // @todo
     f_array_length_t length = 0;
 
-    //F_status_t status = f_socket_write(&data->socket, 0, data->cache.large, &length);
+    f_status_t status = control_packet_send_build_header(main, data, control_action_type_name(data->action), f_string_empty_s, length);
+    if (F_status_is_error(status)) return status;
+
+    const f_state_t state = f_state_t_initialize;
+
+    status = fll_fss_payload_write_string(f_fss_string_payload_s, f_string_empty_s, F_false, 0, state, &data->cache.packet);
+    if (F_status_is_error(status)) return status;
+
+    data->socket.size_write = data->cache.packet.used;
+
+    return f_socket_write(&data->socket, 0, (void *) &data->cache.packet, 0);
+  }
+#endif // _di_control_packet_send_
+
+#ifndef _di_control_packet_send_build_header_
+  f_status_t control_packet_send_build_header(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t type, const f_string_static_t status, const f_array_length_t length) {
+
+    f_status_t status2 = F_none;
+
+    const f_state_t state = f_state_t_initialize;
+    const f_conversion_data_t data_conversion = macro_f_conversion_data_t_initialize(10, 0, 1);
+
+    f_string_statics_t content = f_string_statics_t_initialize;
+    f_string_static_t contents[1];
+    content.array = contents;
+    content.used = 1;
+    content.size = 1;
+
+    data->cache.large.used = 0;
+    data->cache.small.used = 0;
+    data->cache.packet.used = 0;
+
+    // Header: type.
+    if (type.used) {
+      contents[0] = type;
+
+      status2 = fll_fss_extended_write_string(control_type_s, content, 0, state, &data->cache.large);
+      if (F_status_is_error(status2)) return status2;
+    }
+
+    // Header: status.
+    if (status.used) {
+      contents[0] = status;
+
+      status2 = fll_fss_extended_write_string(control_status_s, content, 0, state, &data->cache.large);
+      if (F_status_is_error(status2)) return status2;
+
+      data->cache.small.used = 0;
+    }
+
+    // Header: length.
+    status2 = f_conversion_number_unsigned_to_string(length, data_conversion, &data->cache.small);
+    if (F_status_is_error(status2)) return status2;
+
+    contents[0] = data->cache.small;
+
+    status2 = fll_fss_extended_write_string(control_length_s, content, 0, state, &data->cache.large);
+    if (F_status_is_error(status2)) return status2;
+
+    // Prepend the identifier comment to the output.
+    status2 = f_string_dynamic_append(control_type_s, &data->cache.packet);
+    if (F_status_is_error(status2)) return status2;
+
+    // Append entire header block to the output.
+    status2 = fll_fss_payload_write_string(f_fss_string_header_s, data->cache.large, F_false, 0, state, &data->cache.packet);
+    if (F_status_is_error(status2)) return status2;
 
     return F_none;
   }
-#endif // _di_control_packet_send_
+#endif // _di_control_packet_send_build_header_
 
 #ifndef _di_control_settings_load_
   f_status_t control_settings_load(fll_program_data_t * const main, control_data_t * const data) {
