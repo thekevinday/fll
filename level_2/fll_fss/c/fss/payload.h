@@ -122,7 +122,7 @@ extern "C" {
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param destination
- *   The buffer to write to.
+ *   The buffer to append to.
  *
  * @return
  *   F_none on success.
