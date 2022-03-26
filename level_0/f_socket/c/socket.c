@@ -315,7 +315,6 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!buffer) return F_status_set_error(F_parameter);
-      if (!length) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     const ssize_t result = recvfrom(socket->id, buffer, socket->size_read, flags, socket->address, &socket->length);
@@ -393,7 +392,6 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!socket) return F_status_set_error(F_parameter);
       if (!buffer) return F_status_set_error(F_parameter);
-      if (!length) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     const ssize_t result = sendto(socket->id, buffer, socket->size_write, flags, socket->address, socket->length);
