@@ -126,6 +126,7 @@ extern "C" {
       if (errno == ECONNREFUSED) return F_status_set_error(F_connect_refuse);
       if (errno == EINPROGRESS) return F_status_set_error(F_progress);
       if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == EISCONN) return F_status_set_error(F_connect);
       if (errno == ENETUNREACH) return F_status_set_error(F_network_reach_not);
       if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
