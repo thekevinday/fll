@@ -24,10 +24,18 @@ int main(void) {
     cmocka_unit_test(test__f_string_append_assure_nulless__works),
     cmocka_unit_test(test__f_string_append_nulless__works),
 
+    cmocka_unit_test(test__f_string_dynamic_adjust__works),
+
     cmocka_unit_test(test__f_string_dynamic_append__works),
     cmocka_unit_test(test__f_string_dynamic_append_assure__works),
     cmocka_unit_test(test__f_string_dynamic_append_assure_nulless__works),
     cmocka_unit_test(test__f_string_dynamic_append_nulless__works),
+
+    cmocka_unit_test(test__f_string_dynamic_decimate_by__works),
+    cmocka_unit_test(test__f_string_dynamic_decrease_by__works),
+    cmocka_unit_test(test__f_string_dynamic_increase__works),
+    cmocka_unit_test(test__f_string_dynamic_increase__returns_data_not),
+    cmocka_unit_test(test__f_string_dynamic_increase_by__works),
 
     cmocka_unit_test(test__f_string_dynamic_mash__works),
     cmocka_unit_test(test__f_string_dynamic_mash_nulless__works),
@@ -35,10 +43,28 @@ int main(void) {
     cmocka_unit_test(test__f_string_dynamic_mish__works),
     cmocka_unit_test(test__f_string_dynamic_mish_nulless__works),
 
+    cmocka_unit_test(test__f_string_dynamic_partial_append__works),
+    cmocka_unit_test(test__f_string_dynamic_partial_append_assure__works),
+    cmocka_unit_test(test__f_string_dynamic_partial_append_assure_nulless__works),
+    cmocka_unit_test(test__f_string_dynamic_partial_append_nulless__works),
+
+    cmocka_unit_test(test__f_string_dynamic_partial_mash__works),
+    cmocka_unit_test(test__f_string_dynamic_partial_mash_nulless__works),
+
+    cmocka_unit_test(test__f_string_dynamic_partial_mish__works),
+    cmocka_unit_test(test__f_string_dynamic_partial_mish_nulless__works),
+
+    cmocka_unit_test(test__f_string_dynamic_partial_prepend__works),
+    cmocka_unit_test(test__f_string_dynamic_partial_prepend_assure__works),
+    cmocka_unit_test(test__f_string_dynamic_partial_prepend_assure_nulless__works),
+    cmocka_unit_test(test__f_string_dynamic_partial_prepend_nulless__works),
+
     cmocka_unit_test(test__f_string_dynamic_prepend__works),
     cmocka_unit_test(test__f_string_dynamic_prepend_assure__works),
     cmocka_unit_test(test__f_string_dynamic_prepend_assure_nulless__works),
     cmocka_unit_test(test__f_string_dynamic_prepend_nulless__works),
+
+    cmocka_unit_test(test__f_string_dynamic_resize__works),
 
     cmocka_unit_test(test__f_string_dynamic_seek_line__returns_data_not_stop),
     cmocka_unit_test(test__f_string_dynamic_seek_line__returns_none_eos),
@@ -55,6 +81,12 @@ int main(void) {
     cmocka_unit_test(test__f_string_dynamic_seek_to__returns_none_eos),
     cmocka_unit_test(test__f_string_dynamic_seek_to__returns_none_stop),
     cmocka_unit_test(test__f_string_dynamic_seek_to__works),
+
+    cmocka_unit_test(test__f_string_dynamic_terminate__appends_null),
+    cmocka_unit_test(test__f_string_dynamic_terminate__doesnt_append_null),
+
+    cmocka_unit_test(test__f_string_dynamic_terminate_after__appends_null),
+    cmocka_unit_test(test__f_string_dynamic_terminate_after__doesnt_append_null),
 
     cmocka_unit_test(test__f_string_dynamics_adjust__works),
     cmocka_unit_test(test__f_string_dynamics_append__works),
@@ -223,6 +255,55 @@ int main(void) {
       cmocka_unit_test(test__f_string_append_assure__parameter_checking),
       cmocka_unit_test(test__f_string_append_assure_nulless__parameter_checking),
       cmocka_unit_test(test__f_string_append_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_adjust__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_append__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_append_assure__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_append_assure_nulless__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_append_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_decimate_by__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_decrease_by__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_increase__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_increase__returns_data_not),
+      cmocka_unit_test(test__f_string_dynamic_increase_by__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_mash__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_mash_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_mish__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_mish_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_partial_append__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_partial_append_assure__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_partial_append_assure_nulless__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_partial_append_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_partial_mash__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_partial_mash_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_partial_mish__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_partial_mish_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_partial_prepend__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_partial_prepend_assure__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_partial_prepend_assure_nulless__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_partial_prepend_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_prepend__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_prepend_assure__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_prepend_assure_nulless__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_prepend_nulless__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_resize__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_seek_line__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_seek_line_to__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_seek_to__parameter_checking),
+
+      cmocka_unit_test(test__f_string_dynamic_terminate__parameter_checking),
+      cmocka_unit_test(test__f_string_dynamic_terminate_after__parameter_checking),
 
       cmocka_unit_test(test__f_string_dynamics_adjust__parameter_checking),
       cmocka_unit_test(test__f_string_dynamics_append__parameter_checking),

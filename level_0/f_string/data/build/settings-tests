@@ -21,11 +21,18 @@ build_libraries-individual -lf_memory -lf_string
 build_libraries-level -lfll_0
 build_libraries-monolithic -lfll
 build_sources_program test-string-append.c test-string-append_assure.c test-string-append_assure_nulless.c test-string-append_nulless.c
-build_sources_program test-string-dynamic_append.c test-string-dynamic_append_assure.c test-string-dynamic_append_assure_nulless.c test-string-dynamic_append_nulless.c
+build_sources_program test-string-dynamic_adjust.c test-string-dynamic_append.c test-string-dynamic_append_assure.c test-string-dynamic_append_assure_nulless.c test-string-dynamic_append_nulless.c
+build_sources_program test-string-dynamic_decimate_by.c test-string-dynamic_decrease_by.c test-string-dynamic_increase.c test-string-dynamic_increase_by.c
 build_sources_program test-string-dynamic_mash.c test-string-dynamic_mash_nulless.c
 build_sources_program test-string-dynamic_mish.c test-string-dynamic_mish_nulless.c
+build_sources_program test-string-dynamic_partial_append.c test-string-dynamic_partial_append_assure.c test-string-dynamic_partial_append_assure_nulless.c test-string-dynamic_partial_append_nulless.c
+build_sources_program test-string-dynamic_partial_mash.c test-string-dynamic_partial_mash_nulless.c
+build_sources_program test-string-dynamic_partial_mish.c test-string-dynamic_partial_mish_nulless.c
+build_sources_program test-string-dynamic_partial_prepend.c test-string-dynamic_partial_prepend_assure.c test-string-dynamic_partial_prepend_assure_nulless.c test-string-dynamic_partial_prepend_nulless.c
 build_sources_program test-string-dynamic_prepend.c test-string-dynamic_prepend_assure.c test-string-dynamic_prepend_assure_nulless.c test-string-dynamic_prepend_nulless.c
+build_sources_program test-string-dynamic_resize.c
 build_sources_program test-string-dynamic_seek_line.c test-string-dynamic_seek_line_to.c test-string-dynamic_seek_to.c
+build_sources_program test-string-dynamic_terminate.c test-string-dynamic_terminate_after.c
 build_sources_program test-string-dynamics_adjust.c test-string-dynamics_append.c test-string-dynamics_append_all.c test-string-dynamics_decimate_by.c test-string-dynamics_decrease_by.c test-string-dynamics_increase.c test-string-dynamics_increase_by.c test-string-dynamics_resize.c test-string-dynamicss_adjust.c test-string-dynamicss_append.c test-string-dynamicss_append_all.c test-string-dynamicss_decimate_by.c test-string-dynamicss_decrease_by.c test-string-dynamicss_increase.c test-string-dynamicss_increase_by.c test-string-dynamicss_resize.c
 build_sources_program test-string-map_multis_adjust.c test-string-map_multis_append.c test-string-map_multis_append_all.c test-string-map_multis_decimate_by.c test-string-map_multis_decrease_by.c test-string-map_multis_increase.c test-string-map_multis_increase_by.c test-string-map_multis_resize.c test-string-map_multiss_adjust.c test-string-map_multiss_append.c test-string-map_multiss_append_all.c test-string-map_multiss_decimate_by.c test-string-map_multiss_decrease_by.c test-string-map_multiss_increase.c test-string-map_multiss_increase_by.c test-string-map_multiss_resize.c
 build_sources_program test-string-maps_adjust.c test-string-maps_append.c test-string-maps_append_all.c test-string-maps_decimate_by.c test-string-maps_decrease_by.c test-string-maps_increase.c test-string-maps_increase_by.c test-string-maps_resize.c test-string-mapss_adjust.c test-string-mapss_append.c test-string-mapss_append_all.c test-string-mapss_decimate_by.c test-string-mapss_decrease_by.c test-string-mapss_increase.c test-string-mapss_increase_by.c test-string-mapss_resize.c
