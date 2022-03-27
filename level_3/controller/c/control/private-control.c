@@ -209,24 +209,17 @@ extern "C" {
 #ifndef _di_controller_control_packet_header_length_
   uint32_t controller_control_packet_header_length(const bool is_big, const f_char_t buffer[]) {
 
-    register uint32_t length = (((buffer[0] & 0x3f) << 26) | (buffer[1] << 18) | (buffer[2] << 10) | (buffer[3] << 2) | ((buffer[4] & 0xc0) >> 6));
-
     #ifdef _is_F_endian_big
       if (is_big) {
-        return length;
+        return (buffer[1] << 24u) | (buffer[2] << 16u) | (buffer[3] << 8u) | buffer[4];
       }
     #else
       if (!is_big) {
-        return length;
+        return (buffer[1] << 24u) | (buffer[2] << 16u) | (buffer[3] << 8u) | buffer[4];
       }
     #endif // _is_F_endian_big
 
-    length = (length & 0x55555555 << 1) | (length & 0x55555555 >> 1);
-    length = (length & 0x33333333 << 2) | (length & 0xcccccccc >> 2);
-    length = (length & 0x0f0f0f0f << 4) | (length & 0xf0f0f0f0 >> 4);
-    length = (length & 0x00ff00ff << 8) | (length & 0xff00ff00 >> 8);
-
-    return (length & 0x0000ffff << 16) | (length & 0xffff0000 >> 16);
+    return (buffer[4] << 24u) | (buffer[3] << 16u) | (buffer[2] << 8u) | buffer[1];
   }
 #endif // _di_controller_control_packet_header_length_
 
@@ -242,7 +235,6 @@ extern "C" {
     f_string_static_t contents[1];
     content.array = contents;
     content.used = 1;
-    content.size = 1;
 
     control->cache_1.used = 0;
     control->cache_2.used = 0;
@@ -274,10 +266,6 @@ extern "C" {
     status2 = fll_fss_extended_write_string(controller_length_s, content, 0, state, &control->cache_1);
     if (F_status_is_error(status2)) return status2;
 
-    // Prepend the identifier comment to the output.
-    status2 = f_string_dynamic_append(controller_payload_type_s, &control->output);
-    if (F_status_is_error(status2)) return status2;
-
     // Append entire header block to the output.
     status2 = fll_fss_payload_write_string(f_fss_string_header_s, control->cache_1, F_false, 0, state, &control->output);
     if (F_status_is_error(status2)) return status2;
@@ -299,7 +287,7 @@ extern "C" {
 
       status2 = f_conversion_number_unsigned_to_string(F_status_set_fine(status), data_conversion, &control->cache_3);
       if (F_status_is_error(status2)) return status2;
-    };
+    }
 
     status2 = controller_control_respond_build_header(global, control, controller_error_s, control->cache_3, message.used);
     if (F_status_is_error(status2)) return status2;

@@ -62,7 +62,7 @@ extern "C" {
 #endif // _di_control_data_delete_
 
 #ifndef _di_control_signal_received_
-  f_status_t control_signal_received(fll_program_data_t * const main) {
+  f_status_t control_signal_received(const fll_program_data_t * const main) {
 
     if (main->signal.id == -1) {
       return F_false;

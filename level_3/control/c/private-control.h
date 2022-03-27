@@ -21,7 +21,7 @@ extern "C" {
  *   The control data.
  */
 #ifndef _di_control_action_verify_
-  extern f_status_t control_action_verify(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t control_action_verify(const fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_action_verify_
 
 /**
@@ -46,8 +46,39 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_control_packet_build_
-  extern f_status_t control_packet_build(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t control_packet_build(const fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_build_
+
+/**
+ * Given the header buffer, get the flag bits.
+ *
+ * @param buffer
+ *   The buffer to read the length of and get the
+ *
+ * @return
+ *   The 8-bit number representing the flags.
+ */
+#ifndef _di_control_packet_header_flag_
+  extern uint8_t control_packet_header_flag(const uint8_t buffer[]) F_attribute_visibility_internal_d;
+#endif // _di_control_packet_header_flag_
+
+/**
+ * Given the header buffer, get the length bits.
+ *
+ * The endianness is automatically detected and swapped by this function to guarantee host order bytes.
+ *
+ * @param is_big
+ *   If TRUE, then the length in the buffer is in big endian format.
+ *   If FALSE, then the length in the buffer is in little endian format.
+ * @param buffer
+ *   The buffer to read the length of and get the
+ *
+ * @return
+ *   The 32-bit number representing the length.
+ */
+#ifndef _di_control_packet_header_length_
+  extern uint32_t control_packet_header_length(const bool is_big, const f_char_t buffer[]) F_attribute_visibility_internal_d;
+#endif // _di_control_packet_header_length_
 
 /**
  * Receive the response from the remote socket, storing it in the large cache.
@@ -86,7 +117,7 @@ extern "C" {
  * @see fll_status_string_from()
  */
 #ifndef _di_control_packet_receive_
-  extern f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) F_attribute_visibility_internal_d;
+  extern f_status_t control_packet_receive(const fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_receive_
 
 /**
@@ -108,7 +139,7 @@ extern "C" {
  *   Any error (with error bit) on failure where the error is defined by the controller service.
  */
 #ifndef _di_control_packet_process_
-  extern f_status_t control_packet_process(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) F_attribute_visibility_internal_d;
+  extern f_status_t control_packet_process(const fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_process_
 
 /**
@@ -120,13 +151,11 @@ extern "C" {
  *   The control data.
  */
 #ifndef _di_control_packet_send_
-  extern f_status_t control_packet_send(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t control_packet_send(const fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_send_
 
 /**
- * Construct the header portion of the payload.
- *
- * This also prepends the FSS identifier comment.
+ * Construct the entire payload.
  *
  * This resets and uses data->cache.small, data->cache.large, and data->cache.packet.
  * Do not use any of these for passing strings to this function.
@@ -140,12 +169,14 @@ extern "C" {
  * @param type
  *   The packet type.
  *   Set type.used to 0 to not add to the header.
+ * @param action
+ *   The action code.
+ *   Set action.used to 0 to not add to the header.
  * @param status
  *   The status code.
  *   Set status.used to 0 to not add to the header.
- * @param length
- *   The length of the payload Content.
- *   This is always added to the header.
+ * @param payload
+ *   The payload Content.
  *
  * @return
  *   F_none on success.
@@ -160,9 +191,9 @@ extern "C" {
  * @see fll_fss_extended_write_string()
  * @see fll_fss_payload_write_string()
  */
-#ifndef _di_control_packet_send_build_header_
-  extern f_status_t control_packet_send_build_header(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t type, const f_string_static_t status, const f_array_length_t length) F_attribute_visibility_internal_d;
-#endif // _di_control_packet_send_build_header_
+#ifndef _di_control_packet_send_build_
+  extern f_status_t control_packet_send_build(const fll_program_data_t * const main, control_data_t * const data, const f_string_static_t type, const f_string_static_t action, const f_string_static_t status, const f_string_static_t payload) F_attribute_visibility_internal_d;
+#endif // _di_control_packet_send_build_
 /**
  * Load and process the control settings file.
  *
@@ -206,7 +237,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_control_settings_load_
-  extern f_status_t control_settings_load(fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t control_settings_load(const fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_settings_load_
 
 #ifdef __cplusplus

@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_control_print_help_
-  f_status_t control_print_help(fll_program_data_t * const main) {
+  f_status_t control_print_help(const fll_program_data_t * const main) {
 
     flockfile(main->output.to.stream);
 

@@ -106,8 +106,6 @@ extern "C" {
 /**
  * Construct the header portion of the payload.
  *
- * This also prepends the FSS identifier comment.
- *
  * This resets and uses control.cache_1 and control.cache_2.
  * Do not use either of these for passing strings to this function.
  *

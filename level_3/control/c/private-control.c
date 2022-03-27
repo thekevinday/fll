@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_control_action_verify_
-  f_status_t control_action_verify(fll_program_data_t * const main, control_data_t * const data) {
+  f_status_t control_action_verify(const fll_program_data_t * const main, control_data_t * const data) {
 
     switch (data->action) {
       case control_action_type_freeze_e:
@@ -54,21 +54,14 @@ extern "C" {
         return F_none;
     }
 
+    // Handle "kexec", "reboot", and "shutdown".
     // @todo the reboot and shutdown need to support date and time actions: "now", "in (a time)", and "at (a time)".
-    if (data->action == control_action_type_reboot_e) {
-      // @todo (also needs to support kexec calls or kexec needs its own action, which will likely be in the controller program.)
-    }
-
-    if (data->action == control_action_type_shutdown_e) {
-      // @todo
-    }
-
-    return F_none;
+    return F_status_set_error(F_supported_not);
   }
 #endif // _di_control_action_verify_
 
 #ifndef _di_control_packet_build_
-  f_status_t control_packet_build(fll_program_data_t * const main, control_data_t * const data) {
+  f_status_t control_packet_build(const fll_program_data_t * const main, control_data_t * const data) {
 
     data->cache.large.used = 0;
     data->cache.small.used = 0;
@@ -83,7 +76,7 @@ extern "C" {
       length += f_fss_payload_header_open_s.used + data->argv[main->parameters.remaining.array[i]].used + f_fss_payload_header_close_s.used;
     } // for
 
-    if (length > 0xffffffff) {
+    if (length > 0xffffffffu) {
       return F_status_set_error(F_too_large);
     }
 
@@ -176,8 +169,31 @@ extern "C" {
   }
 #endif // _di_control_packet_build_
 
+#ifndef _di_control_packet_header_flag_
+  uint8_t control_packet_header_flag(const uint8_t buffer[]) {
+    return (uint8_t) (((buffer[0] & 0x8u) ? control_packet_flag_binary_d : 0) | ((buffer[0] & 0x4u) ? control_packet_flag_endian_big_d : 0));
+  }
+#endif // _di_control_packet_header_flag_
+
+#ifndef _di_control_packet_header_length_
+  uint32_t control_packet_header_length(const bool is_big, const f_char_t buffer[]) {
+
+    #ifdef _is_F_endian_big
+      if (is_big) {
+        return (buffer[1] << 24u) | (buffer[2] << 16u) | (buffer[3] << 8u) | buffer[4];
+      }
+    #else
+      if (!is_big) {
+        return (buffer[1] << 24u) | (buffer[2] << 16u) | (buffer[3] << 8u) | buffer[4];
+      }
+    #endif // _is_F_endian_big
+
+    return (buffer[4] << 24u) | (buffer[3] << 16u) | (buffer[2] << 8u) | buffer[1];
+  }
+#endif // _di_control_packet_header_length_
+
 #ifndef _di_control_packet_receive_
-  f_status_t control_packet_receive(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) {
+  f_status_t control_packet_receive(const fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) {
 
     data->cache.large.used = 0;
     data->cache.small.used = 0;
@@ -208,42 +224,16 @@ extern "C" {
       if (F_status_is_error(status)) return status;
       if (length < 5) return F_status_set_error(F_packet_not);
 
-      uint8_t control = head[0] & (control_packet_flag_binary_d | control_packet_flag_endian_big_d);
+      uint8_t contol = control_packet_header_flag(head);
 
       // Only the first two bits of the 8 Control bits are allowed to be set to 1 for this Packet.
       if (head[0] & (~(control_packet_flag_binary_d | control_packet_flag_endian_big_d))) {
         return F_status_set_error(F_packet_not);
       }
 
-      #ifdef _is_F_endian_big
-        if (control & control_packet_flag_endian_big_d) {
-          length = ((uint8_t) head[1]) << 24;
-          length |= ((uint8_t) head[2]) << 16;
-          length |= ((uint8_t) head[3]) << 8;
-          length |= (uint8_t) head[4];
-        }
-        else {
-          length = ((uint8_t) head[1]);
-          length |= ((uint8_t) head[2]) >> 8;
-          length |= ((uint8_t) head[3]) >> 16;
-          length |= (uint8_t) head[4] >> 24;
-        }
-      #else
-        if (control & control_packet_flag_endian_big_d) {
-          length = ((uint8_t) head[1]);
-          length |= ((uint8_t) head[2]) >> 8;
-          length |= ((uint8_t) head[3]) >> 16;
-          length |= (uint8_t) head[4] >> 24;
-        }
-        else {
-          length = ((uint8_t) head[1]) << 24;
-          length |= ((uint8_t) head[2]) << 16;
-          length |= ((uint8_t) head[3]) << 8;
-          length |= (uint8_t) head[4];
-        }
-      #endif // #ifdef _is_F_endian_big
+      length = control_packet_header_length(head[0] & control_packet_flag_endian_big_d, head);
 
-      if (length > 0xffffffff) {
+      if (length > 0xffffffffu) {
         return F_status_set_error(F_too_large);
       }
 
@@ -500,7 +490,7 @@ extern "C" {
 #endif // _di_control_packet_receive_
 
 #ifndef _di_control_packet_process_
-  f_status_t control_packet_process(fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) {
+  f_status_t control_packet_process(const fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) {
 
     f_string_static_t string_status = f_string_static_t_initialize;
 
@@ -538,17 +528,37 @@ extern "C" {
 #endif // _di_control_packet_process_
 
 #ifndef _di_control_packet_send_
-  f_status_t control_packet_send(fll_program_data_t * const main, control_data_t * const data) {
+  f_status_t control_packet_send(const fll_program_data_t * const main, control_data_t * const data) {
 
-    f_array_length_t length = 0;
+    {
+      f_status_t status = F_none;
+      f_string_dynamic_t payload = f_string_dynamic_t_initialize;
 
-    f_status_t status = control_packet_send_build_header(main, data, control_action_type_name(data->action), f_string_empty_s, length);
-    if (F_status_is_error(status)) return status;
+      switch (data->action) {
+        case control_action_type_freeze_e:
+        case control_action_type_kill_e:
+        case control_action_type_pause_e:
+        case control_action_type_reload_e:
+        case control_action_type_rerun_e:
+        case control_action_type_restart_e:
+        case control_action_type_resume_e:
+        case control_action_type_start_e:
+        case control_action_type_stop_e:
+        case control_action_type_thaw_e:
+          payload = data->argv[main->parameters.remaining.array[1]];
+          break;
 
-    const f_state_t state = f_state_t_initialize;
+        default:
+          // @todo construct message for kexec, reboot, and shutdown.
+          break;
+      }
 
-    status = fll_fss_payload_write_string(f_fss_string_payload_s, f_string_empty_s, F_false, 0, state, &data->cache.packet);
-    if (F_status_is_error(status)) return status;
+      status = control_packet_send_build(main, data, control_controller_s, control_action_type_name(data->action), f_string_empty_s, payload);
+
+      f_string_dynamic_resize(0, &payload);
+
+      if (F_status_is_error(status)) return status;
+    }
 
     data->socket.size_write = data->cache.packet.used;
 
@@ -556,8 +566,8 @@ extern "C" {
   }
 #endif // _di_control_packet_send_
 
-#ifndef _di_control_packet_send_build_header_
-  f_status_t control_packet_send_build_header(fll_program_data_t * const main, control_data_t * const data, const f_string_static_t type, const f_string_static_t status, const f_array_length_t length) {
+#ifndef _di_control_packet_send_build_
+  f_status_t control_packet_send_build(const fll_program_data_t * const main, control_data_t * const data, const f_string_static_t type, const f_string_static_t action, const f_string_static_t status, const f_string_static_t payload) {
 
     f_status_t status2 = F_none;
 
@@ -568,13 +578,40 @@ extern "C" {
     f_string_static_t contents[1];
     content.array = contents;
     content.used = 1;
-    content.size = 1;
 
     data->cache.large.used = 0;
     data->cache.small.used = 0;
     data->cache.packet.used = 0;
 
-    // Header: type.
+    // Reserve space in data->cache.packet.size for the packet header as well as other parts.
+    {
+      // 5 for packet header and 2 for ':\n" for both 'header' and 'payload'.
+      f_array_length_t total = 9 + f_fss_string_header_s.used + f_fss_string_payload_s.used + control_length_s.used + payload.used;
+
+      if (type.used) {
+        total += control_type_s.used + type.used + 2;
+      }
+
+      if (action.used) {
+        total += control_action_s.used + action.used + 2;
+      }
+
+      if (status.used) {
+        total += control_status_s.used + status.used + 2;
+      }
+
+      status2 = f_string_dynamic_increase_by(total, &data->cache.packet);
+    }
+
+    #ifdef _is_F_endian_big
+      data->cache.packet.string[0] = control_packet_flag_endian_big_d;
+    #else
+      data->cache.packet.string[0] = 0;
+    #endif // _is_F_endian_big
+
+    data->cache.packet.used = 5;
+
+    // Payload Header: type.
     if (type.used) {
       contents[0] = type;
 
@@ -582,18 +619,24 @@ extern "C" {
       if (F_status_is_error(status2)) return status2;
     }
 
-    // Header: status.
+    // Payload Header: action.
+    if (action.used) {
+      contents[0] = action;
+
+      status2 = fll_fss_extended_write_string(control_action_s, content, 0, state, &data->cache.large);
+      if (F_status_is_error(status2)) return status2;
+    }
+
+    // Payload Header: status.
     if (status.used) {
       contents[0] = status;
 
       status2 = fll_fss_extended_write_string(control_status_s, content, 0, state, &data->cache.large);
       if (F_status_is_error(status2)) return status2;
-
-      data->cache.small.used = 0;
     }
 
-    // Header: length.
-    status2 = f_conversion_number_unsigned_to_string(length, data_conversion, &data->cache.small);
+    // Payload Header: length.
+    status2 = f_conversion_number_unsigned_to_string(payload.used, data_conversion, &data->cache.small);
     if (F_status_is_error(status2)) return status2;
 
     contents[0] = data->cache.small;
@@ -601,20 +644,33 @@ extern "C" {
     status2 = fll_fss_extended_write_string(control_length_s, content, 0, state, &data->cache.large);
     if (F_status_is_error(status2)) return status2;
 
-    // Prepend the identifier comment to the output.
-    status2 = f_string_dynamic_append(control_type_s, &data->cache.packet);
-    if (F_status_is_error(status2)) return status2;
-
-    // Append entire header block to the output.
+    // Payload Packet: Header.
     status2 = fll_fss_payload_write_string(f_fss_string_header_s, data->cache.large, F_false, 0, state, &data->cache.packet);
     if (F_status_is_error(status2)) return status2;
 
+    // Payload Packet: Payload.
+    status2 = fll_fss_payload_write_string(f_fss_string_payload_s, payload, F_false, 0, state, &data->cache.packet);
+    if (F_status_is_error(status2)) return status2;
+
+    // Construct packet size.
+    #ifdef _is_F_endian_big
+      data->cache.packet.string[1] = data->cache.packet.used & 0xffu;
+      data->cache.packet.string[2] = data->cache.packet.used & 0xff00u;
+      data->cache.packet.string[3] = data->cache.packet.used & 0xff0000u;
+      data->cache.packet.string[4] = data->cache.packet.used & 0xff000000u;
+    #else
+      data->cache.packet.string[1] = data->cache.packet.used & 0xff000000u;
+      data->cache.packet.string[2] = data->cache.packet.used & 0xff0000u;
+      data->cache.packet.string[3] = data->cache.packet.used & 0xff00u;
+      data->cache.packet.string[4] = data->cache.packet.used & 0xffu;
+    #endif // _is_F_endian_big
+
     return F_none;
   }
-#endif // _di_control_packet_send_build_header_
+#endif // _di_control_packet_send_build_
 
 #ifndef _di_control_settings_load_
-  f_status_t control_settings_load(fll_program_data_t * const main, control_data_t * const data) {
+  f_status_t control_settings_load(const fll_program_data_t * const main, control_data_t * const data) {
 
     f_status_t status = F_none;
 
@@ -817,42 +873,34 @@ extern "C" {
               status = F_status_set_error(F_socket_not);
             }
           }
+        }
+      }
 
-          if (F_status_is_error_not(status)) {
-            if (f_file_is(data->cache.small, F_file_type_socket_d, F_true) == F_false) {
-              control_print_error_socket_file_not(main, data->cache.small);
+      if (F_status_is_error_not(status)) {
+        if (f_file_is(data->cache.small, F_file_type_socket_d, F_true) == F_false) {
+          control_print_error_socket_file_not(main, data->cache.small);
 
-              status = F_status_set_error(F_socket_not);
-            }
-          }
+          status = F_status_set_error(F_socket_not);
+        }
+      }
 
-          if (F_status_is_error_not(status)) {
-            status = f_socket_create(&data->socket);
+      if (F_status_is_error_not(status)) {
+        status = f_socket_create(&data->socket);
 
-            if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_socket_create", F_true);
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_socket_create", F_true);
 
-              if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
-              }
+          control_print_error_socket_file_failed(main, data->cache.small);
+        }
+      }
 
-              control_print_error_socket_file_failed(main, data->cache.small);
-            }
-          }
+      if (F_status_is_error_not(status)) {
+        status = f_socket_connect(data->socket);
 
-          if (F_status_is_error_not(status)) {
-            status = f_socket_connect(data->socket);
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_socket_connect", F_true);
 
-            if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_socket_connect", F_true);
-
-              if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
-              }
-
-              control_print_error_socket_file_failed(main, data->cache.small);
-            }
-          }
+          control_print_error_socket_file_failed(main, data->cache.small);
         }
       }
     }

@@ -69,7 +69,7 @@ extern "C" {
  * @see control_main()
  */
 #ifndef _di_control_print_help_
-  extern f_status_t control_print_help(fll_program_data_t * const main);
+  extern f_status_t control_print_help(const fll_program_data_t * const main);
 #endif // _di_control_print_help_
 
 /**

@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_control_print_controller_packet_response_
-  void control_print_controller_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header, const f_string_static_t string_status) {
+  void control_print_controller_packet_response(const fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header, const f_string_static_t string_status) {
 
     if (header.status == F_failure) {
       if (main->error.verbosity == f_console_verbosity_quiet_e) return;
@@ -74,7 +74,7 @@ extern "C" {
 #endif // _di_control_print_controller_packet_response_
 
 #ifndef _di_control_print_debug_packet_header_object_and_content_
-  void control_print_debug_packet_header_object_and_content(fll_program_data_t * const main, const f_string_static_t object, const f_string_static_t content, const f_string_range_t content_range) {
+  void control_print_debug_packet_header_object_and_content(const fll_program_data_t * const main, const f_string_static_t object, const f_string_static_t content, const f_string_range_t content_range) {
 
     if (main->output.verbosity == f_console_verbosity_debug_e) return;
 
@@ -88,7 +88,7 @@ extern "C" {
 #endif // _di_control_print_debug_packet_header_object_and_content_
 
 #ifndef _di_control_print_debug_packet_message_
-  void control_print_debug_packet_message(fll_program_data_t * const main, const f_string_t message, const f_string_static_t *buffer, const f_string_range_t *range, const f_status_t *status) {
+  void control_print_debug_packet_message(const fll_program_data_t * const main, const f_string_t message, const f_string_static_t *buffer, const f_string_range_t *range, const f_status_t *status) {
 
     if (main->output.verbosity == f_console_verbosity_debug_e) return;
 
@@ -116,7 +116,7 @@ extern "C" {
 #endif // _di_control_print_debug_packet_message_
 
 #ifndef _di_control_print_error_packet_response_
-  void control_print_error_packet_response(fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header, const f_string_static_t string_status) {
+  void control_print_error_packet_response(const fll_program_data_t * const main, control_data_t * const data, const control_payload_header_t header, const f_string_static_t string_status) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -141,7 +141,7 @@ extern "C" {
 #endif // _di_control_print_error_packet_response_
 
 #ifndef _di_control_print_error_parameter_actions_none_
-  void control_print_error_parameter_actions_none(fll_program_data_t * const main) {
+  void control_print_error_parameter_actions_none(const fll_program_data_t * const main) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -150,7 +150,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_actions_none_
 
 #ifndef _di_control_print_error_parameter_action_not_
-  void control_print_error_parameter_action_not(fll_program_data_t * const main, const f_string_static_t action) {
+  void control_print_error_parameter_action_not(const fll_program_data_t * const main, const f_string_static_t action) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -165,7 +165,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_action_not_
 
 #ifndef _di_control_print_error_parameter_action_rule_basename_empty_
-  void control_print_error_parameter_action_rule_basename_empty(fll_program_data_t * const main, const f_string_static_t action) {
+  void control_print_error_parameter_action_rule_basename_empty(const fll_program_data_t * const main, const f_string_static_t action) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -180,7 +180,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_action_rule_basename_empty_
 
 #ifndef _di_control_print_error_parameter_action_rule_directory_empty_
-  void control_print_error_parameter_action_rule_directory_empty(fll_program_data_t * const main, const f_string_static_t action) {
+  void control_print_error_parameter_action_rule_directory_empty(const fll_program_data_t * const main, const f_string_static_t action) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -195,7 +195,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_action_rule_directory_empty_
 
 #ifndef _di_control_print_error_parameter_action_rule_empty_
-  void control_print_error_parameter_action_rule_empty(fll_program_data_t * const main, const f_string_static_t action) {
+  void control_print_error_parameter_action_rule_empty(const fll_program_data_t * const main, const f_string_static_t action) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -210,7 +210,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_action_rule_empty_
 
 #ifndef _di_control_print_error_parameter_action_rule_not_
-  void control_print_error_parameter_action_rule_not(fll_program_data_t * const main, const f_string_static_t action) {
+  void control_print_error_parameter_action_rule_not(const fll_program_data_t * const main, const f_string_static_t action) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -225,7 +225,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_action_rule_not_
 
 #ifndef _di_control_print_error_parameter_action_rule_too_many_
-  void control_print_error_parameter_action_rule_too_many(fll_program_data_t * const main, const f_string_static_t action) {
+  void control_print_error_parameter_action_rule_too_many(const fll_program_data_t * const main, const f_string_static_t action) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -240,7 +240,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_action_rule_too_many_
 
 #ifndef _di_control_print_error_parameter_value_empty_
-  void control_print_error_parameter_value_empty(fll_program_data_t * const main, const f_string_static_t parameter) {
+  void control_print_error_parameter_value_empty(const fll_program_data_t * const main, const f_string_static_t parameter) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -255,7 +255,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_value_empty_
 
 #ifndef _di_control_print_error_parameter_value_not_
-  void control_print_error_parameter_value_not(fll_program_data_t * const main, const f_string_static_t parameter) {
+  void control_print_error_parameter_value_not(const fll_program_data_t * const main, const f_string_static_t parameter) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -270,7 +270,7 @@ extern "C" {
 #endif // _di_control_print_error_parameter_value_not_
 
 #ifndef _di_control_print_error_pipe_supported_not_
-  void control_print_error_pipe_supported_not(fll_program_data_t * const main) {
+  void control_print_error_pipe_supported_not(const fll_program_data_t * const main) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -279,7 +279,7 @@ extern "C" {
 #endif // _di_control_print_error_pipe_supported_not_
 
 #ifndef _di_control_print_error_response_packet_valid_not_
-  void control_print_error_response_packet_valid_not(fll_program_data_t * const main) {
+  void control_print_error_response_packet_valid_not(const fll_program_data_t * const main) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -288,7 +288,7 @@ extern "C" {
 #endif // _di_control_print_error_response_packet_valid_not_
 
 #ifndef _di_control_print_error_request_packet_too_large_
-  void control_print_error_request_packet_too_large(fll_program_data_t * const main) {
+  void control_print_error_request_packet_too_large(const fll_program_data_t * const main) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -297,7 +297,7 @@ extern "C" {
 #endif // _di_control_print_error_request_packet_too_large_
 
 #ifndef _di_control_print_error_socket_file_failed_
-  void control_print_error_socket_file_failed(fll_program_data_t * const main, const f_string_static_t path_socket) {
+  void control_print_error_socket_file_failed(const fll_program_data_t * const main, const f_string_static_t path_socket) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -312,7 +312,7 @@ extern "C" {
 #endif // _di_control_print_error_socket_file_failed_
 
 #ifndef _di_control_print_error_socket_file_missing_
-  void control_print_error_socket_file_missing(fll_program_data_t * const main, const f_string_static_t path_socket) {
+  void control_print_error_socket_file_missing(const fll_program_data_t * const main, const f_string_static_t path_socket) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -327,7 +327,7 @@ extern "C" {
 #endif // _di_control_print_error_socket_file_missing_
 
 #ifndef _di_control_print_error_socket_file_not_
-  void control_print_error_socket_file_not(fll_program_data_t * const main, const f_string_static_t path_socket) {
+  void control_print_error_socket_file_not(const fll_program_data_t * const main, const f_string_static_t path_socket) {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -342,7 +342,7 @@ extern "C" {
 #endif // _di_control_print_error_socket_file_not_
 
 #ifndef _di_control_print_signal_received_
-  void control_print_signal_received(fll_program_data_t * const main, const f_status_t signal) {
+  void control_print_signal_received(const fll_program_data_t * const main, const f_status_t signal) {
 
     if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
@@ -360,7 +360,7 @@ extern "C" {
 #endif // _di_control_print_signal_received_
 
 #ifndef _di_control_print_warning_packet_header_duplicate_object_
-  void control_print_warning_packet_header_duplicate_object(fll_program_data_t * const main, const f_string_static_t response_header) {
+  void control_print_warning_packet_header_duplicate_object(const fll_program_data_t * const main, const f_string_static_t response_header) {
 
     if (main->warning.verbosity == f_console_verbosity_debug_e) return;
 
@@ -375,7 +375,7 @@ extern "C" {
 #endif // _di_control_print_warning_packet_header_duplicate_object_
 
 #ifndef _di_control_print_warning_packet_process_string_to_failed_
-  void control_print_warning_packet_process_string_to_failed(fll_program_data_t * const main, const f_status_t status_of, const f_status_t status_error) {
+  void control_print_warning_packet_process_string_to_failed(const fll_program_data_t * const main, const f_status_t status_of, const f_status_t status_error) {
 
     if (main->warning.verbosity == f_console_verbosity_debug_e) return;
 
