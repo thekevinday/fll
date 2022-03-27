@@ -449,8 +449,6 @@ extern "C" {
 /**
  * Append the source string onto the destination only if the string is not already at the end and restricted to the given range.
  *
- * This ignores NULL characters when comparing both the source and the destination.
- *
  * @param source
  *   The source string to append.
  * @param range
@@ -681,8 +679,6 @@ extern "C" {
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
  *
- * This ignores NULL characters when comparing both the source and the destination.
- *
  * @param source
  *   The source string to prepend.
  * @param range
@@ -788,8 +784,6 @@ extern "C" {
  * Prepend the source string onto the destination only if the string is not already at the beginning.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
- *
- * This ignores NULL characters when comparing both the source and the destination.
  *
  * @param source
  *   The source string to prepend.

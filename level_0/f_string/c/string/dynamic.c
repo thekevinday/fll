@@ -45,18 +45,6 @@ extern "C" {
 
     while (i <= source.used && j <= destination->used) {
 
-      if (!source.string[source.used - i]) {
-        ++i;
-
-        continue;
-      }
-
-      if (!destination->string[destination->used - j]) {
-        ++j;
-
-        continue;
-      }
-
       if (source.string[source.used - i] != destination->string[destination->used - j]) {
         return private_f_string_append(source.string, source.used, destination);
       }
@@ -292,24 +280,13 @@ extern "C" {
       return private_f_string_append(source.string + range.start, length, destination);
     }
 
+    const f_array_length_t stop = range.stop >= source.used ? source.used : range.stop + 1;
     f_array_length_t i = 1;
     f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
 
-      if (!source.string[range.stop - i]) {
-        ++i;
-
-        continue;
-      }
-
-      if (!destination->string[destination->used - j]) {
-        ++j;
-
-        continue;
-      }
-
-      if (source.string[range.stop - i] != destination->string[destination->used - j]) {
+      if (source.string[stop - i] != destination->string[destination->used - j]) {
         return private_f_string_append(source.string + range.start, length, destination);
       }
 
@@ -337,12 +314,13 @@ extern "C" {
       return private_f_string_append_nulless(source.string + range.start, length, destination);
     }
 
+    const f_array_length_t stop = range.stop >= source.used ? source.used : range.stop + 1;
     f_array_length_t i = 1;
     f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
 
-      if (!source.string[range.stop - i]) {
+      if (!source.string[stop - i]) {
         ++i;
 
         continue;
@@ -354,7 +332,7 @@ extern "C" {
         continue;
       }
 
-      if (source.string[range.stop - i] != destination->string[destination->used - j]) {
+      if (source.string[stop - i] != destination->string[destination->used - j]) {
         return private_f_string_append_nulless(source.string + range.start, length, destination);
       }
 
@@ -431,7 +409,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_mash_nulless_
 
 #ifndef _di_f_string_dynamic_partial_mish_
-  f_status_t f_string_partial_dynamic_mish(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination) {
+  f_status_t f_string_dynamic_partial_mish(const f_string_static_t glue, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -514,18 +492,6 @@ extern "C" {
     f_array_length_t j = 0;
 
     while (i < length && j < destination->used) {
-
-      if (!source.string[i + range.start]) {
-        ++i;
-
-        continue;
-      }
-
-      if (!destination->string[j]) {
-        ++j;
-
-        continue;
-      }
 
       if (source.string[i + range.start] != destination->string[j]) {
         return private_f_string_prepend(source.string + range.start, length, destination);
@@ -626,18 +592,6 @@ extern "C" {
     f_array_length_t j = 0;
 
     while (i < source.used && j < destination->used) {
-
-      if (!source.string[i]) {
-        ++i;
-
-        continue;
-      }
-
-      if (!destination->string[j]) {
-        ++j;
-
-        continue;
-      }
 
       if (source.string[i] != destination->string[j]) {
         return private_f_string_prepend(source.string, source.used, destination);
