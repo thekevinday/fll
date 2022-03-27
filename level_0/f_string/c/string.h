@@ -398,13 +398,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
- *   F_none_stop on success, but stopped stop location.
+ *   F_none_stop on success, but stopped at the stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_seek_line_to_
-  extern f_status_t f_string_seek_line_to(const f_string_t string, const uint8_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_string_seek_line_to(const f_string_t string, const f_char_t seek_to, f_string_range_t * const range);
 #endif // _di_f_string_seek_line_to_
 
 /**
@@ -420,7 +420,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_none_stop on success, but stopped stop location.
+ *   F_none_stop on success, but stopped at the stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
@@ -428,7 +428,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_seek_to_
-  extern f_status_t f_string_seek_to(const f_string_t string, const uint8_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_string_seek_to(const f_string_t string, const f_char_t seek_to, f_string_range_t * const range);
 #endif // _di_f_string_seek_to_
 
 #ifdef __cplusplus

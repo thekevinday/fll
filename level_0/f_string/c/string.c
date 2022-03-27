@@ -72,7 +72,7 @@ extern "C" {
       return F_data_not;
     }
 
-    if (destination->used < length) {
+    if (!destination->used) {
       return private_f_string_append_nulless(source, length, destination);
     }
 
@@ -240,7 +240,7 @@ extern "C" {
         continue;
       }
 
-      if (source[i] != destination->string[i]) {
+      if (source[i] != destination->string[j]) {
         return private_f_string_prepend(source, length, destination);
       }
 
@@ -262,7 +262,7 @@ extern "C" {
       return F_data_not;
     }
 
-    if (destination->used < length) {
+    if (!destination->used) {
       return private_f_string_prepend_nulless(source, length, destination);
     }
 
@@ -283,7 +283,7 @@ extern "C" {
         continue;
       }
 
-      if (source[i] != destination->string[i]) {
+      if (source[i] != destination->string[j]) {
         return private_f_string_prepend_nulless(source, length, destination);
       }
 
@@ -333,7 +333,7 @@ extern "C" {
 #endif // _di_f_string_seek_line_
 
 #ifndef _di_f_string_seek_line_to_
-  f_status_t f_string_seek_line_to(const f_string_t string, const uint8_t seek_to, f_string_range_t * const range) {
+  f_status_t f_string_seek_line_to(const f_string_t string, const f_char_t seek_to, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -360,7 +360,7 @@ extern "C" {
 #endif // _di_f_string_seek_line_to_
 
 #ifndef _di_f_string_seek_to_
-  f_status_t f_string_seek_to(const f_string_t string, const uint8_t seek_to, f_string_range_t * const range) {
+  f_status_t f_string_seek_to(const f_string_t string, const f_char_t seek_to, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

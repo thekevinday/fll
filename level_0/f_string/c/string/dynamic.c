@@ -77,7 +77,7 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    if (destination->used < source.used) {
+    if (!destination->used) {
       return private_f_string_append_nulless(source.string, source.used, destination);
     }
 
@@ -333,7 +333,7 @@ extern "C" {
 
     const f_array_length_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (destination->used < length) {
+    if (!destination->used) {
       return private_f_string_append_nulless(source.string + range.start, length, destination);
     }
 
@@ -527,7 +527,7 @@ extern "C" {
         continue;
       }
 
-      if (source.string[i + range.start] != destination->string[i]) {
+      if (source.string[i + range.start] != destination->string[j]) {
         return private_f_string_prepend(source.string + range.start, length, destination);
       }
 
@@ -551,7 +551,7 @@ extern "C" {
 
     const f_array_length_t length = range.stop >= source.used ? source.used - range.start : (range.stop - range.start) + 1;
 
-    if (destination->used < length) {
+    if (!destination->used) {
       return private_f_string_prepend_nulless(source.string + range.start, length, destination);
     }
 
@@ -572,7 +572,7 @@ extern "C" {
         continue;
       }
 
-      if (source.string[i + range.start] != destination->string[i]) {
+      if (source.string[i + range.start] != destination->string[j]) {
         return private_f_string_prepend_nulless(source.string + range.start, length, destination);
       }
 
@@ -639,7 +639,7 @@ extern "C" {
         continue;
       }
 
-      if (source.string[i] != destination->string[i]) {
+      if (source.string[i] != destination->string[j]) {
         return private_f_string_prepend(source.string, source.used, destination);
       }
 
@@ -659,7 +659,7 @@ extern "C" {
 
     if (!source.used) return F_data_not;
 
-    if (destination->used < source.used) {
+    if (!destination->used) {
       return private_f_string_prepend_nulless(source.string, source.used, destination);
     }
 
@@ -680,7 +680,7 @@ extern "C" {
         continue;
       }
 
-      if (source.string[i] != destination->string[i]) {
+      if (source.string[i] != destination->string[j]) {
         return private_f_string_prepend_nulless(source.string, source.used, destination);
       }
 
