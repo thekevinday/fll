@@ -12,7 +12,7 @@ void test__f_string_dynamics_append_all__works(void **state) {
   f_string_dynamics_t destination = f_string_dynamics_t_initialize;
 
   const f_string_static_t test_sources[] = {
-    macro_f_string_static_t_initialize("test1", 0, 5),
+    macro_f_string_static_t_initialize("te\0st1", 0, 6),
     macro_f_string_static_t_initialize("test2", 0, 5),
   };
 
@@ -27,8 +27,10 @@ void test__f_string_dynamics_append_all__works(void **state) {
       status = f_string_dynamic_append(test_sources[source.used], &source.array[source.used]);
 
       assert_int_equal(status, F_none);
-      assert_string_equal(source.array[source.used].string, test_sources[source.used].string);
       assert_int_equal(source.array[source.used].used, test_sources[source.used].used);
+
+      assert_string_equal(source.array[source.used].string, test_sources[source.used].string);
+      assert_string_equal(source.array[source.used].string + 3, test_sources[source.used].string + 3);
     } // for
   }
 
