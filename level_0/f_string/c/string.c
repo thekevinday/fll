@@ -11,9 +11,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     return private_f_string_append(source, length, destination);
   }
@@ -25,9 +23,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (destination->used < length) {
       return private_f_string_append(source, length, destination);
@@ -68,9 +64,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (!destination->used) {
       return private_f_string_append_nulless(source, length, destination);
@@ -111,9 +105,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     return private_f_string_append_nulless(source, length, destination);
   }
@@ -125,9 +117,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_append(glue, glue_length, destination);
@@ -144,9 +134,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_append_nulless(glue, glue_length, destination);
@@ -163,9 +151,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_prepend(glue, glue_length, destination);
@@ -182,9 +168,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_prepend_nulless(glue, glue_length, destination);
@@ -201,9 +185,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     return private_f_string_prepend(source, length, destination);
   }
@@ -215,9 +197,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (destination->used < length) {
       return private_f_string_prepend(source, length, destination);
@@ -258,9 +238,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     if (!destination->used) {
       return private_f_string_prepend_nulless(source, length, destination);
@@ -301,9 +279,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) {
-      return F_data_not;
-    }
+    if (!length) return F_data_not;
 
     return private_f_string_prepend_nulless(source, length, destination);
   }

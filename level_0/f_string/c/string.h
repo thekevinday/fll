@@ -53,6 +53,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_append_
   extern f_status_t f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -78,6 +80,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_append_assure_
   extern f_status_t f_string_append_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -104,6 +108,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_append_assure_nulless_
   extern f_status_t f_string_append_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -129,6 +135,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_append_nulless_
   extern f_status_t f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -158,6 +166,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_mash_
   extern f_status_t f_string_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -189,6 +199,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_mash_nulless_
   extern f_status_t f_string_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -218,6 +230,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_mish_
   extern f_status_t f_string_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -249,6 +263,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_mish_nulless_
   extern f_status_t f_string_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -274,6 +290,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_prepend_
   extern f_status_t f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -301,6 +319,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_prepend_assure_
   extern f_status_t f_string_prepend_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -329,6 +349,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_prepend_assure_nulless_
   extern f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -357,6 +379,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_prepend_nulless_
   extern f_status_t f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t * const destination);
@@ -379,6 +403,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_f_string_seek_line_
   extern f_status_t f_string_seek_line(const f_string_t string, f_string_range_t * const range);
