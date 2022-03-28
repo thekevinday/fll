@@ -31,7 +31,7 @@ build_objects_library_static
 build_objects_program
 build_objects_program_shared
 build_objects_program_static
-build_sources_library utf.c private-utf.c utf/common.c utf/convert.c utf/dynamic.c utf/is.c utf/is_character.c utf/map.c utf/private-is_unassigned.c utf/private-string.c utf/string.c utf/triple.c
+build_sources_library utf.c private-utf.c utf/common.c utf/convert.c utf/dynamic.c utf/is.c utf/is_character.c utf/map.c utf/map_multi.c utf/private-is_unassigned.c utf/private-dynamic.c utf/private-map.c utf/private-map_multi.c utf/private-string.c utf/private-triple.c utf/static.c utf/string.c utf/triple.c
 build_sources_library_shared
 build_sources_library_static
 build_sources_object
@@ -40,7 +40,7 @@ build_sources_object_static
 build_sources_program
 build_sources_program_shared
 build_sources_program_static
-build_sources_headers utf.h utf/common.h utf/convert.h utf/dynamic.h utf/is.h utf/is_character.h utf/map.h utf/string.h utf/triple.h
+build_sources_headers utf.h utf/common.h utf/convert.h utf/dynamic.h utf/is.h utf/is_character.h utf/map.h utf/map_multi.h utf/static.h utf/string.h utf/triple.h
 build_sources_headers_shared
 build_sources_headers_static
 build_sources_script

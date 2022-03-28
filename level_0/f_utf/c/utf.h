@@ -47,11 +47,13 @@
 
 // FLL-0 utf includes.
 #include <fll/level_0/utf/common.h>
-#include <fll/level_0/utf/convert.h>
+#include <fll/level_0/utf/static.h>
 #include <fll/level_0/utf/dynamic.h>
+#include <fll/level_0/utf/convert.h>
 #include <fll/level_0/utf/is.h>
 #include <fll/level_0/utf/is_character.h>
 #include <fll/level_0/utf/map.h>
+#include <fll/level_0/utf/map_multi.h>
 #include <fll/level_0/utf/string.h>
 #include <fll/level_0/utf/triple.h>
 

@@ -9,48 +9,12 @@
  *
  * This is auto-included by utf.h and should not need to be explicitly included.
  */
-#ifndef _F_utf_string_dynamic_h
-#define _F_utf_string_dynamic_h
+#ifndef _F_utf_dynamic_h
+#define _F_utf_dynamic_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * A string that is analogous to f_utf_string_dynamic_t but intended for static-only uses.
- *
- * The f_utf_string_static_t type should never be directly allocated or deallocated.
- *
- * A special macro_f_utf_string_static_t_initialize() is provided for the special purpose of easily initialize a static string.
- *
- * string: the string.
- * size:   total amount of space available.
- * used:   total number of space used.
- */
-#ifndef _di_f_utf_string_static_t_
-  typedef struct {
-    f_utf_string_t string;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_utf_string_static_t;
-
-  #define f_utf_string_static_t_initialize { 0, 0, 0 }
-
-  #define macro_f_utf_string_static_t_clear(string_static) \
-    string_static.string = 0; \
-    string_static.size = 0; \
-    string_static.used = 0;
-
-  #define macro_f_utf_string_static_t_initialize(string, length) { string, length, length }
-#endif // _di_f_utf_string_static_t_
-
-/**
- * Define a a global empty UTF-8 string.
- */
-#ifndef _di_f_utf_string_static_empty_s_
-  const extern f_utf_string_static_t f_utf_string_static_empty_s;
-#endif // _di_f_utf_string_static_empty_s_
 
 /**
  * A string that supports contains a size attribute to handle dynamic allocations and deallocations.
@@ -60,14 +24,17 @@ extern "C" {
  * This is a sub-type of f_utf_string_static_t, allowing it to be passed into any f_utf_string_static_t type.
  * It is recommended that f_utf_string_static_t are not otherwise casted into f_utf_string_dynamic_t to avoid potential memory allocation issues.
  *
- * string: the string.
- * size:   total amount of allocated space.
- * used:   total number of allocated spaces used.
+ * string: The string.
+ * size:   Total amount of allocated space.
+ * used:   Total number of allocated spaces used.
  */
 #ifndef _di_f_utf_string_dynamic_t_
   typedef f_utf_string_static_t f_utf_string_dynamic_t;
 
   #define f_utf_string_dynamic_t_initialize f_utf_string_static_t_initialize
+
+  #define macro_f_utf_string_dynamic_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_utf_string_dynamic_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_utf_string_dynamic_t_clear(dynamic) macro_f_utf_string_static_t_clear(dynamic)
 
@@ -84,39 +51,19 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_t_
 
 /**
- * An array of static dynamics.
- *
- * array: the array of static dynamics.
- * size:  total amount of space available.
- * used:  total number of space used.
- */
-#ifndef _di_f_utf_string_statics_t_
-  typedef struct {
-    f_utf_string_static_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_utf_string_statics_t;
-
-  #define f_utf_string_statics_t_initialize { 0, 0, 0 }
-
-  #define macro_f_utf_string_statics_t_clear(statics) \
-    statics.array = 0; \
-    statics.size = 0; \
-    statics.used = 0;
-#endif // _di_f_utf_string_statics_t_
-
-/**
  * An array of dynamic dynamics.
  *
- * array: the array of dynamic dynamics.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of dynamic dynamics.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_utf_string_dynamics_t_
   typedef f_utf_string_statics_t f_utf_string_dynamics_t;
 
   #define f_utf_string_dynamics_t_initialize f_utf_string_statics_t_initialize
+
+  #define macro_f_utf_string_dynamics_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_utf_string_dynamics_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_utf_string_dynamics_t_clear(dynamics) macro_f_utf_string_statics_t_clear(dynamics)
 
@@ -126,11 +73,40 @@ extern "C" {
   #define macro_f_utf_string_dynamics_t_delete_simple(dynamics)  f_utf_string_dynamics_resize(0, &dynamics);
   #define macro_f_utf_string_dynamics_t_destroy_simple(dynamics) f_utf_string_dynamics_adjust(0, &dynamics);
 
-  #define macro_f_utf_string_dynamics_t_increase(status, dynamics)            status = f_utf_string_dynamics_increase(&dynamics);
+  #define macro_f_utf_string_dynamics_t_increase(status, step, dynamics)      status = f_utf_string_dynamics_increase(step, &dynamics);
   #define macro_f_utf_string_dynamics_t_increase_by(status, dynamics, amount) status = f_utf_string_dynamics_increase_by(amount, &dynamics);
   #define macro_f_utf_string_dynamics_t_decrease_by(status, dynamics, amount) status = f_utf_string_dynamics_decrease_by(amount, &dynamics);
   #define macro_f_utf_string_dynamics_t_decimate_by(status, dynamics, amount) status = f_utf_string_dynamics_decimate_by(amount, &dynamics);
 #endif // _di_f_utf_string_dynamics_t_
+
+/**
+ * An array of dynamic dynamicss.
+ *
+ * array: The array of dynamic dynamicss.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_utf_string_dynamicss_t_
+  typedef f_utf_string_staticss_t f_utf_string_dynamicss_t;
+
+  #define f_utf_string_dynamicss_t_initialize f_utf_string_staticss_t_initialize
+
+  #define macro_f_utf_string_dynamicss_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_utf_string_dynamicss_t_initialize2(array, length) { array, length, length }
+
+  #define macro_f_utf_string_dynamicss_t_clear(dynamicss) macro_f_utf_string_staticss_t_clear(dynamicss)
+
+  #define macro_f_utf_string_dynamicss_t_resize(status, dynamicss, length) status = f_utf_string_dynamicss_resize(length, &dynamicss);
+  #define macro_f_utf_string_dynamicss_t_adjust(status, dynamicss, length) status = f_utf_string_dynamicss_adjust(length, &dynamicss);
+
+  #define macro_f_utf_string_dynamicss_t_delete_simple(dynamicss)  f_utf_string_dynamicss_resize(0, &dynamicss);
+  #define macro_f_utf_string_dynamicss_t_destroy_simple(dynamicss) f_utf_string_dynamicss_adjust(0, &dynamicss);
+
+  #define macro_f_utf_string_dynamicss_t_increase(status, step, dynamicss)      status = f_utf_string_dynamicss_increase(step, &dynamicss);
+  #define macro_f_utf_string_dynamicss_t_increase_by(status, dynamicss, amount) status = f_utf_string_dynamicss_increase_by(amount, &dynamicss);
+  #define macro_f_utf_string_dynamicss_t_decrease_by(status, dynamicss, amount) status = f_utf_string_dynamicss_decrease_by(amount, &dynamicss);
+  #define macro_f_utf_string_dynamicss_t_decimate_by(status, dynamicss, amount) status = f_utf_string_dynamicss_decimate_by(amount, &dynamicss);
+#endif // _di_f_utf_string_dynamicss_t_
 
 /**
  * Resize the dynamic string.
@@ -147,7 +123,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_string_dynamic_adjust_
-  extern f_status_t f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t *dynamic);
+  extern f_status_t f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_adjust_
 
 /**
@@ -160,7 +136,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -168,11 +144,11 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_append_
-  extern f_status_t f_utf_string_dynamic_append(const f_utf_string_dynamic_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_append(const f_utf_string_dynamic_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_append_
 
 /**
- * Append the source string onto the destination.
+ * Append the source string onto the destination only if the string is not already at the end.
  *
  * @param source
  *   The source string to append.
@@ -181,7 +157,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -189,11 +165,11 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_append_assure_
-  extern f_status_t f_utf_string_dynamic_append_assure(const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_append_assure(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_append_assure_
 
 /**
- * Append the source string onto the destination.
+ * Append the source string onto the destination only if the string is not already at the end.
  *
  * Skips over NULL characters from source when appending.
  *
@@ -204,7 +180,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -212,7 +188,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_append_assure_nulless_
-  extern f_status_t f_utf_string_dynamic_append_assure_nulless(const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_append_assure_nulless(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_append_assure_nulless_
 
 /**
@@ -227,7 +203,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -235,7 +211,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_append_nulless_
-  extern f_status_t f_utf_string_dynamic_append_nulless(const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_append_nulless(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_append_nulless_
 
 /**
@@ -252,6 +228,32 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if amount is 0.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamic_decimate_by_
+  extern f_status_t f_utf_string_dynamic_decimate_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic);
+#endif // _di_f_utf_string_dynamic_decimate_by_
+
+/**
+ * Resize the dynamic string to a smaller size.
+ *
+ * This will resize making the string smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param dynamic
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if amount is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -259,7 +261,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_decrease_by_
-  extern f_status_t f_utf_string_dynamic_decrease_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic);
+  extern f_status_t f_utf_string_dynamic_decrease_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_decrease_by_
 
 /**
@@ -277,7 +279,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size) (or step is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -285,7 +287,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_increase_
-  extern f_status_t f_utf_string_dynamic_increase(const f_array_length_t step, f_utf_string_dynamic_t *dynamic);
+  extern f_status_t f_utf_string_dynamic_increase(const f_array_length_t step, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_increase_
 
 /**
@@ -310,7 +312,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_increase_by_
-  extern f_status_t f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic);
+  extern f_status_t f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t * const dynamic);
 #endif // _di_f_utf_string_dynamic_increase_by_
 
 /**
@@ -320,8 +322,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
  * @param destination
@@ -329,7 +329,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -337,7 +337,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_mash_
-  extern f_status_t f_utf_string_dynamic_mash(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_mash(const f_utf_string_static_t glue, const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_mash_
 
 /**
@@ -349,8 +349,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
  * @param destination
@@ -358,7 +356,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -366,7 +364,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_mash_nulless_
-  extern f_status_t f_utf_string_dynamic_mash_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_mash_nulless(const f_utf_string_static_t glue, const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_mash_nulless_
 
 /**
@@ -376,8 +374,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
  * @param destination
@@ -385,7 +381,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -393,7 +389,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_mish_
-  extern f_status_t f_utf_string_dynamic_mish(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_mish(const f_utf_string_static_t glue, const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_mish_
 
 /**
@@ -405,8 +401,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
  * @param destination
@@ -414,7 +408,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -422,11 +416,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_mish_nulless_
-  extern f_status_t f_utf_string_dynamic_mish_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_mish_nulless(const f_utf_string_static_t glue, const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_mish_nulless_
 
 /**
  * Append the source string onto the destination, but restricted to the given range.
+ *
+ * If range.stop is on or after source.used, then source.used - 1 is used as the stopping point.
  *
  * @param source
  *   The source string to append.
@@ -437,7 +433,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -446,13 +443,11 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_append_
-  extern f_status_t f_utf_string_dynamic_partial_append(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_append(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_append_
 
 /**
- * Append the source string onto the destination, but only if the string is not already at the end and restricted to the given range
- *
- * This ignores NULL characters when comparing both the source and the destination.
+ * Append the source string onto the destination only if the string is not already at the end and restricted to the given range.
  *
  * @param source
  *   The source string to append.
@@ -463,7 +458,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -472,11 +468,11 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_append_assure_
-  extern f_status_t f_utf_string_dynamic_partial_append_assure(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_append_assure(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_append_assure_
 
 /**
- * Append the source string onto the destination, but only if the string is not already at the end and restricted to the given range
+ * Append the source string onto the destination only if the string is not already at the end and restricted to the given range.
  *
  * This ignores NULL characters when comparing both the source and the destination.
  *
@@ -491,7 +487,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -500,7 +497,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_append_assure_nulless_
-  extern f_status_t f_utf_string_dynamic_partial_append_assure_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_append_assure_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_append_assure_nulless_
 
 /**
@@ -517,7 +514,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -526,7 +524,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_append_nulless_
-  extern f_status_t f_utf_string_dynamic_partial_append_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_append_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_append_nulless_
 
 /**
@@ -536,8 +534,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
  * @param range
@@ -547,7 +543,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -556,7 +553,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_mash_
-  extern f_status_t f_utf_string_dynamic_partial_mash(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_mash(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_mash_
 
 /**
@@ -568,8 +565,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
  * @param range
@@ -579,7 +574,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -588,7 +584,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_mash_nulless_
-  extern f_status_t f_utf_string_dynamic_partial_mash_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_mash_nulless(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_mash_nulless_
 
 /**
@@ -598,8 +594,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
  * @param range
@@ -609,7 +603,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -618,7 +613,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_mish_
-  extern f_status_t f_utf_string_dynamic_partial_mish(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_mish(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_mish_
 
 /**
@@ -630,8 +625,6 @@ extern "C" {
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
- * @param glue_length
- *   The number of bytes the glue takes up.
  * @param source
  *   The source string to append.
  * @param range
@@ -641,7 +634,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -650,7 +644,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_mish_nulless_
-  extern f_status_t f_utf_string_dynamic_partial_mish_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_mish_nulless(const f_utf_string_static_t glue, const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_mish_nulless_
 
 /**
@@ -667,7 +661,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -676,15 +671,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_prepend_
-  extern f_status_t f_utf_string_dynamic_partial_prepend(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_prepend(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_prepend_
 
 /**
- * Prepend the source string onto the destination, but only if the string is not already at the end and restricted to the given range
+ * Prepend the source string onto the destination only if the string is not already at the beginning and restricted to the given range.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
- *
- * This ignores NULL characters when comparing both the source and the destination.
  *
  * @param source
  *   The source string to prepend.
@@ -695,7 +688,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -704,11 +698,11 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_prepend_assure_
-  extern f_status_t f_utf_string_dynamic_partial_prepend_assure(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_prepend_assure(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_prepend_assure_
 
 /**
- * Prepend the source string onto the destination, but only if the string is not already at the end and restricted to the given range
+ * Prepend the source string onto the destination only if the string is not already at the beginning and restricted to the given range.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
  *
@@ -723,7 +717,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -732,7 +727,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_prepend_assure_nulless_
-  extern f_status_t f_utf_string_dynamic_partial_prepend_assure_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_prepend_assure_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_prepend_assure_nulless_
 
 /**
@@ -749,7 +744,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
+ *   F_data_not_eos if range.start >= source.used.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -758,7 +754,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_partial_prepend_nulless_
-  extern f_status_t f_utf_string_dynamic_partial_prepend_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_prepend_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_partial_prepend_nulless_
 
 /**
@@ -773,8 +769,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -782,15 +777,13 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_prepend_
-  extern f_status_t f_utf_string_dynamic_prepend(const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_prepend(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_prepend_
 
 /**
- * Prepend the source string onto the destination, but only if the string is not already at the beginning.
+ * Prepend the source string onto the destination only if the string is not already at the beginning.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
- *
- * This ignores NULL characters when comparing both the source and the destination.
  *
  * @param source
  *   The source string to prepend.
@@ -799,8 +792,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -808,11 +800,11 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_prepend_assure_
-  extern f_status_t f_utf_string_dynamic_prepend_assure(const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_prepend_assure(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_prepend_assure_
 
 /**
- * Prepend the source string onto the destination, but only if the string is not already at the beginning.
+ * Prepend the source string onto the destination only if the string is not already at the beginning.
  *
  * Prepend operations require memory move operations and are therefore likely more expensive than append operations.
  *
@@ -825,8 +817,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -834,7 +825,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_prepend_assure_nulless_
-  extern f_status_t f_utf_string_dynamic_prepend_assure_nulless(const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_prepend_assure_nulless(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_prepend_assure_nulless_
 
 /**
@@ -849,8 +840,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_data_not if source length is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -858,7 +848,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_prepend_nulless_
-  extern f_status_t f_utf_string_dynamic_prepend_nulless(const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_prepend_nulless(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_prepend_nulless_
 
 /**
@@ -877,7 +867,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_resize_
-  extern f_status_t f_utf_string_dynamic_resize(const f_array_length_t length, f_utf_string_dynamic_t *buffer);
+  extern f_status_t f_utf_string_dynamic_resize(const f_array_length_t length, f_utf_string_dynamic_t * const buffer);
 #endif // _di_f_utf_string_dynamic_resize_
 
 /**
@@ -893,16 +883,15 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not_eos on success, but there was no string data to seek.
+ *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is invalid UTF-8.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_seek_line_
-  extern f_status_t f_utf_string_dynamic_seek_line(const f_utf_string_static_t buffer, f_string_range_t *range);
+  extern f_status_t f_utf_string_dynamic_seek_line(const f_utf_string_static_t buffer, f_string_range_t * const range);
 #endif // _di_f_utf_string_dynamic_seek_line_
 
 /**
@@ -920,16 +909,15 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not_eos on success, but there was no string data to seek.
+ *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is invalid UTF-8.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_seek_line_to_
-  extern f_status_t f_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t *range);
+  extern f_status_t f_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t * const range);
 #endif // _di_f_utf_string_dynamic_seek_line_to_
 
 /**
@@ -947,16 +935,15 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not_eos on success, but there was no string data to seek.
+ *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is invalid UTF-8.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_seek_to_
-  extern f_status_t f_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t *range);
+  extern f_status_t f_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t * const range);
 #endif // _di_f_utf_string_dynamic_seek_to_
 
 /**
@@ -979,7 +966,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_terminate_
-  extern f_status_t f_utf_string_dynamic_terminate(f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_terminate(f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_terminate_
 
 /**
@@ -1004,7 +991,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_terminate_after_
-  extern f_status_t f_utf_string_dynamic_terminate_after(f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_terminate_after(f_utf_string_dynamic_t * const destination);
 #endif // _di_f_utf_string_dynamic_terminate_after_
 
 /**
@@ -1023,8 +1010,29 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  */
 #ifndef _di_f_utf_string_dynamics_adjust_
-  extern f_status_t f_utf_string_dynamics_adjust(const f_array_length_t length, f_utf_string_dynamics_t *dynamics);
+  extern f_status_t f_utf_string_dynamics_adjust(const f_array_length_t length, f_utf_string_dynamics_t * const dynamics);
 #endif // _di_f_utf_string_dynamics_adjust_
+
+/**
+ * Append the single source string onto the destination.
+ *
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamics_append_
+  extern f_status_t f_utf_string_dynamics_append(const f_utf_string_dynamic_t source, f_utf_string_dynamics_t * const destination);
+#endif // _di_f_utf_string_dynamics_append_
 
 /**
  * Append the source strings onto the destination.
@@ -1043,9 +1051,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
-#ifndef _di_f_utf_string_dynamics_append_
-  extern f_status_t f_utf_string_dynamics_append(const f_utf_string_dynamics_t source, f_utf_string_dynamics_t *destination);
-#endif // _di_f_utf_string_dynamics_append_
+#ifndef _di_f_utf_string_dynamics_append_all_
+  extern f_status_t f_utf_string_dynamics_append_all(const f_utf_string_dynamics_t source, f_utf_string_dynamics_t * const destination);
+#endif // _di_f_utf_string_dynamics_append_all_
 
 /**
  * Resize the dynamic string array to a smaller size.
@@ -1061,14 +1069,14 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if amount is 0.
+ *   F_data_not on success, but there is no reason to increase size (size == 0) (or amount is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamics_decimate_by_
-  extern f_status_t f_utf_string_dynamics_decimate_by(const f_array_length_t amount, f_utf_string_dynamics_t *dynamics);
+  extern f_status_t f_utf_string_dynamics_decimate_by(const f_array_length_t amount, f_utf_string_dynamics_t * const dynamics);
 #endif // _di_f_utf_string_dynamics_decimate_by_
 
 /**
@@ -1085,14 +1093,14 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if amount is 0.
+ *   F_data_not on success, but there is no reason to increase size (size == 0) (or amount is 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamics_decrease_by_
-  extern f_status_t f_utf_string_dynamics_decrease_by(const f_array_length_t amount, f_utf_string_dynamics_t *dynamics);
+  extern f_status_t f_utf_string_dynamics_decrease_by(const f_array_length_t amount, f_utf_string_dynamics_t * const dynamics);
 #endif // _di_f_utf_string_dynamics_decrease_by_
 
 /**
@@ -1117,7 +1125,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamics_increase_
-  extern f_status_t f_utf_string_dynamics_increase(const f_array_length_t step, f_utf_string_dynamics_t *dynamics);
+  extern f_status_t f_utf_string_dynamics_increase(const f_array_length_t step, f_utf_string_dynamics_t * const dynamics);
 #endif // _di_f_utf_string_dynamics_increase_
 
 /**
@@ -1142,7 +1150,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamics_increase_by_
-  extern f_status_t f_utf_string_dynamics_increase_by(const f_array_length_t amount, f_utf_string_dynamics_t *dynamics);
+  extern f_status_t f_utf_string_dynamics_increase_by(const f_array_length_t amount, f_utf_string_dynamics_t * const dynamics);
 #endif // _di_f_utf_string_dynamics_increase_by_
 
 /**
@@ -1161,11 +1169,189 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamics_resize_
-  extern f_status_t f_utf_string_dynamics_resize(const f_array_length_t length, f_utf_string_dynamics_t *dynamics);
+  extern f_status_t f_utf_string_dynamics_resize(const f_array_length_t length, f_utf_string_dynamics_t * const dynamics);
 #endif // _di_f_utf_string_dynamics_resize_
+
+/**
+ * Resize the dynamics string array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param dynamicss
+ *   The array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ */
+#ifndef _di_f_utf_string_dynamicss_adjust_
+  extern f_status_t f_utf_string_dynamicss_adjust(const f_array_length_t length, f_utf_string_dynamicss_t * const dynamicss);
+#endif // _di_f_utf_string_dynamicss_adjust_
+
+/**
+ * Append the single source string onto the destination.
+ *
+ * @param source
+ *   The source string to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamicss_append_
+  extern f_status_t f_utf_string_dynamicss_append(const f_utf_string_dynamics_t source, f_utf_string_dynamicss_t * const destination);
+#endif // _di_f_utf_string_dynamicss_append_
+
+/**
+ * Append the source strings onto the destination.
+ *
+ * @param source
+ *   The source strings to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamicss_append_all_
+  extern f_status_t f_utf_string_dynamicss_append_all(const f_utf_string_dynamicss_t source, f_utf_string_dynamicss_t * const destination);
+#endif // _di_f_utf_string_dynamicss_append_all_
+
+/**
+ * Resize the dynamics string array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param dynamicss
+ *   The array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (size == 0) (or amount is 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamicss_decimate_by_
+  extern f_status_t f_utf_string_dynamicss_decimate_by(const f_array_length_t amount, f_utf_string_dynamicss_t * const dynamicss);
+#endif // _di_f_utf_string_dynamicss_decimate_by_
+
+/**
+ * Resize the dynamics string array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param dynamicss
+ *   The array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (size == 0) (or amount is 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamicss_decrease_by_
+  extern f_status_t f_utf_string_dynamicss_decrease_by(const f_array_length_t amount, f_utf_string_dynamicss_t * const dynamicss);
+#endif // _di_f_utf_string_dynamicss_decrease_by_
+
+/**
+ * Increase the size of the dynamics string array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
+ * @param dynamicss
+ *   The array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamicss_increase_
+  extern f_status_t f_utf_string_dynamicss_increase(const f_array_length_t step, f_utf_string_dynamicss_t * const dynamicss);
+#endif // _di_f_utf_string_dynamicss_increase_
+
+/**
+ * Resize the dynamics string array to a larger size.
+ *
+ * This will resize making the array larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param dynamicss
+ *   The array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamicss_increase_by_
+  extern f_status_t f_utf_string_dynamicss_increase_by(const f_array_length_t amount, f_utf_string_dynamicss_t * const dynamicss);
+#endif // _di_f_utf_string_dynamicss_increase_by_
+
+/**
+ * Resize the dynamics string array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param dynamicss
+ *   The array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_dynamicss_resize_
+  extern f_status_t f_utf_string_dynamicss_resize(const f_array_length_t length, f_utf_string_dynamicss_t * const dynamicss);
+#endif // _di_f_utf_string_dynamicss_resize_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _F_utf_string_dynamic_h
+#endif // _F_utf_dynamic_h
