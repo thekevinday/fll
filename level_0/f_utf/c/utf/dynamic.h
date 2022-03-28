@@ -151,24 +151,6 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_adjust_
 
 /**
- * Resize the dynamic string.
- *
- * @param length
- *   The new size to use.
- * @param dynamic
- *   The string to resize.
- *
- * @return
- *   F_none on success.
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_utf_string_dynamic_adjust_
-  extern f_status_t f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t *dynamic);
-#endif // _di_f_utf_string_dynamic_adjust_
-
-/**
  * Append the source string onto the destination.
  *
  * @param source
