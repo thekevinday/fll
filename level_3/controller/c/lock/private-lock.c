@@ -14,9 +14,6 @@ extern "C" {
     f_status_t status = f_thread_mutex_create(0, &lock->alert);
     if (F_status_is_error(status)) return status;
 
-    //status = f_thread_mutex_create(0, &lock->listen);
-    //if (F_status_is_error(status)) return status;
-
     status = f_thread_mutex_create(0, &lock->print);
     if (F_status_is_error(status)) return status;
 
@@ -26,11 +23,11 @@ extern "C" {
     status = f_thread_lock_create(0, &lock->rule);
     if (F_status_is_error(status)) return status;
 
-    status = f_thread_condition_create(0, &lock->alert_condition);
+    status = f_thread_lock_create(0, &lock->alert);
     if (F_status_is_error(status)) return status;
 
-    //status = f_thread_condition_create(0, &lock->listen_condition);
-    //if (F_status_is_error(status)) return status;
+    status = f_thread_condition_create(0, &lock->alert_condition);
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }

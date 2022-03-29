@@ -50,7 +50,7 @@ extern "C" {
       return;
     }
 
-    // Use the alert lock to toggle enabled (being used as if it were a write like and signal lock).
+    // Use the alert lock to toggle enabled (using it as if it is a write like and a signal lock).
     f_status_t status = f_thread_mutex_lock(&global.thread->lock.alert);
 
     if (F_status_is_error(status)) {
