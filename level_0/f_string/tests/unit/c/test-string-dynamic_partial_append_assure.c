@@ -26,8 +26,6 @@ void test__f_string_dynamic_partial_append_assure__works(void **state) {
   {
     const f_status_t status = f_string_dynamic_partial_append_assure(source, partial, &destination);
 
-    printf("\nDEBUG: [%d]='%s %s'\n", destination.used, destination.string, destination.string + 3);
-
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, expected.used);
 

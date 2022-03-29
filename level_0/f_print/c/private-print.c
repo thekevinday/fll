@@ -55,11 +55,11 @@ extern "C" {
       return f_print_sequence_delete_s;
     }
 
-    if (macro_f_utf_character_t_width_is(character) == 1) {
+    if (macro_f_utf_char_t_width_is(character) == 1) {
       return f_print_sequence_unknown_s;
     }
 
-    if (macro_f_utf_character_t_width_is(character) > 1 || character > 0x1f) {
+    if (macro_f_utf_char_t_width_is(character) > 1 || character > 0x1f) {
       return f_string_empty_s;
     }
 
@@ -403,7 +403,7 @@ extern "C" {
       }
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -555,7 +555,7 @@ extern "C" {
       }
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -761,7 +761,7 @@ extern "C" {
       }
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -871,7 +871,7 @@ extern "C" {
       }
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -1027,7 +1027,7 @@ extern "C" {
     while (i < length) {
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -1125,7 +1125,7 @@ extern "C" {
     while (i < length) {
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -1227,7 +1227,7 @@ extern "C" {
       return f_print_sequence_delete_s;
     }
 
-    if (macro_f_utf_character_t_width_is(character[0])) {
+    if (macro_f_utf_char_t_width_is(character[0])) {
       if (f_utf_is_valid(character, width_max) != F_true || f_utf_is_control(character, width_max)) {
         return f_print_sequence_unknown_s;
       }

@@ -72,12 +72,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
         return F_none;
       }
     }
-    else if (macro_f_utf_character_t_width_is(character) == 1) {
+    else if (macro_f_utf_char_t_width_is(character) == 1) {
       if (write(id, f_print_sequence_unknown_s.string, f_print_sequence_unknown_s.used) != -1) {
         return F_none;
       }
     }
-    else if (macro_f_utf_character_t_width_is(character) > 1 || character > 0x1f) {
+    else if (macro_f_utf_char_t_width_is(character) > 1 || character > 0x1f) {
       if (write(id, &character, 1) != -1) {
         return F_none;
       }
@@ -216,7 +216,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       }
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -292,7 +292,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       }
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -553,7 +553,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       }
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -659,7 +659,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       }
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -777,7 +777,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     while (i < length) {
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }
@@ -844,7 +844,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     while (i < length) {
 
       if (string[i]) {
-        width = macro_f_utf_character_t_width(string[i]);
+        width = macro_f_utf_char_t_width(string[i]);
 
         safe = private_f_print_safely_get(string + i, width);
       }

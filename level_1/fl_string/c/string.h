@@ -874,7 +874,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_utf_character_
-  extern f_status_t fl_string_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_character_t seek_to_this, f_string_range_t * const range);
+  extern f_status_t fl_string_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range);
 #endif // _di_fl_string_dynamic_seek_line_to_utf_character_
 
 /**
@@ -964,7 +964,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
-  extern f_status_t fl_string_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_character_t seek_to_this, f_string_range_t * const range);
+  extern f_status_t fl_string_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range);
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 /**
@@ -1105,7 +1105,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_seek_line_to_utf_character_
-  extern f_status_t fl_string_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t * const range);
+  extern f_status_t fl_string_seek_line_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);
 #endif // _di_fl_string_seek_line_to_utf_character_
 
 /**
@@ -1193,7 +1193,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_seek_to_utf_character_
-  extern f_status_t fl_string_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t * const range);
+  extern f_status_t fl_string_seek_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);
 #endif // _di_fl_string_seek_to_utf_character_
 
 #ifdef __cplusplus

@@ -28,7 +28,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -61,7 +61,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -94,7 +94,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -149,7 +149,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -179,7 +179,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -208,7 +208,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -241,7 +241,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -275,7 +275,7 @@ extern "C" {
         return F_false;
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -305,7 +305,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -338,7 +338,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -382,7 +382,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -428,7 +428,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -461,7 +461,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -491,7 +491,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -521,7 +521,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -580,7 +580,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -624,7 +624,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -654,7 +654,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -684,7 +684,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -714,7 +714,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -747,7 +747,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -777,7 +777,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -804,7 +804,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -834,7 +834,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -867,7 +867,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -900,7 +900,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -933,7 +933,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      f_utf_character_t character_utf = 0;
+      f_utf_char_t character_utf = 0;
 
       {
         const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);

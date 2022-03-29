@@ -48,16 +48,16 @@ extern "C" {
       }
 
       if (*width_last == *width) {
-        buffer->string[buffer->used] = macro_f_utf_character_t_from_char_1((buffer_char[0]));
+        buffer->string[buffer->used] = macro_f_utf_char_t_from_char_1((buffer_char[0]));
 
         if (*width > 1) {
-          buffer->string[buffer->used] |= macro_f_utf_character_t_from_char_2((buffer_char[1]));
+          buffer->string[buffer->used] |= macro_f_utf_char_t_from_char_2((buffer_char[1]));
 
           if (*width > 2) {
-            buffer->string[buffer->used] |= macro_f_utf_character_t_from_char_3((buffer_char[2]));
+            buffer->string[buffer->used] |= macro_f_utf_char_t_from_char_3((buffer_char[2]));
 
             if (*width > 3) {
-              buffer->string[buffer->used] |= macro_f_utf_character_t_from_char_4((buffer_char[3]));
+              buffer->string[buffer->used] |= macro_f_utf_char_t_from_char_4((buffer_char[3]));
             }
           }
         }
@@ -99,19 +99,19 @@ extern "C" {
 
         if (width_written < width) {
           if (width_written < 2) {
-            buffer_write[used] = macro_f_utf_character_t_to_char_2(string[*written + i]);
+            buffer_write[used] = macro_f_utf_char_t_to_char_2(string[*written + i]);
             ++width_written;
             ++used;
           }
 
           if (width > 2 && width_written < 3) {
-            buffer_write[used + 1] = macro_f_utf_character_t_to_char_3(string[*written + i]);
+            buffer_write[used + 1] = macro_f_utf_char_t_to_char_3(string[*written + i]);
             ++width_written;
             ++used;
           }
 
           if (width == 4 && width_written < 4) {
-            buffer_write[used + 2] = macro_f_utf_character_t_to_char_4(string[*written + i]);
+            buffer_write[used + 2] = macro_f_utf_char_t_to_char_4(string[*written + i]);
             ++width_written;
             ++used;
           }
@@ -119,14 +119,14 @@ extern "C" {
           width = 0;
         }
         else {
-          width = macro_f_utf_character_t_width(string[*written + i]);
+          width = macro_f_utf_char_t_width(string[*written + i]);
           width_written = width;
 
           if (*written + width > write_max) {
             return F_complete_not_utf_stop;
           }
 
-          buffer_write[used] = macro_f_utf_character_t_to_char_1(string[*written + i]);
+          buffer_write[used] = macro_f_utf_char_t_to_char_1(string[*written + i]);
 
           if (width > 1) {
             if (used == write_size) {
@@ -135,7 +135,7 @@ extern "C" {
               break;
             }
 
-            buffer_write[used + 1] = macro_f_utf_character_t_to_char_2(string[*written + i]);
+            buffer_write[used + 1] = macro_f_utf_char_t_to_char_2(string[*written + i]);
 
             if (width > 2) {
               if (used + 2 > write_size) {
@@ -144,7 +144,7 @@ extern "C" {
                 break;
               }
 
-              buffer_write[used + 2] = macro_f_utf_character_t_to_char_3(string[*written + i]);
+              buffer_write[used + 2] = macro_f_utf_char_t_to_char_3(string[*written + i]);
 
               if (width == 4) {
                 if (used + 3 > write_size) {
@@ -153,7 +153,7 @@ extern "C" {
                   break;
                 }
 
-                buffer_write[used + 3] = macro_f_utf_character_t_to_char_4(string[*written + i]);
+                buffer_write[used + 3] = macro_f_utf_char_t_to_char_4(string[*written + i]);
               }
             }
           }

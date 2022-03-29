@@ -25,13 +25,21 @@ extern "C" {
  * This is placed here because status is first and endianness must be set before everything else.
  *
  * Define either _is_F_endian_big or _is_F_endian_little (but not both) to override compiler detected endianness or to manually set endianness if not detected.
+ *
+ * Fallback to little endian if unable to detect.
+ *
+ * Manually define _is_F_endian_big or _is_F_endian_little to control this rather than relying on autodetection.
  */
 #if !defined(_is_F_endian_big) && !defined(_is_F_endian_little)
-  #ifdef BIG_ENDIAN
-    #define _is_F_endian_big
+  #ifdef __BYTE_ORDER__
+    #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+      #define _is_F_endian_big
+    #else
+      #define _is_F_endian_little
+    #endif // __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
   #else
     #define _is_F_endian_little
-  #endif // BIG_ENDIAN
+  #endif // __BYTE_ORDER__
 #endif // !defined(_is_F_endian_big) && !defined(_is_F_endian_little)
 
 /**

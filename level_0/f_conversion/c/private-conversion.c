@@ -109,7 +109,7 @@ extern "C" {
         }
 
         #ifdef _is_F_endian_big
-          work <<= 1; // @todo review this and see if there is more that needs to be done.
+          work <<= 1;
         #else
           work >>= 1;
         #endif // _is_F_endian_big

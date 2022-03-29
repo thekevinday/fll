@@ -16,7 +16,7 @@ void test__f_utf_dynamic_terminate__appends_null(void **state) {
 
     assert_int_equal(status, F_none);
 
-    data.string[0] = 'X';
+    data.string[0] = (f_utf_char_t) 'X';
   }
 
   {

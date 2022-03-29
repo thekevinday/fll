@@ -489,7 +489,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_rip_nulless_
 
 #ifndef _di_fl_string_dynamic_seek_line_to_utf_character_
-  f_status_t fl_string_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_character_t seek_to_this, f_string_range_t * const range) {
+  f_status_t fl_string_dynamic_seek_line_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -502,7 +502,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    const unsigned short seek_width = macro_f_utf_character_t_width(seek_to_this);
+    const unsigned short seek_width = macro_f_utf_char_t_width(seek_to_this);
 
     f_status_t status = F_none;
 
@@ -537,7 +537,7 @@ extern "C" {
         }
 
         if (width == seek_width) {
-          f_utf_character_t character = 0;
+          f_utf_char_t character = 0;
 
           status = f_utf_char_to_character(buffer.string + range->start, width_max, &character);
           if (F_status_is_error(status)) return status;
@@ -676,7 +676,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_line_until_graph_non_
 
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
-  f_status_t fl_string_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_character_t seek_to_this, f_string_range_t * const range) {
+  f_status_t fl_string_dynamic_seek_to_utf_character(const f_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -689,7 +689,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    const unsigned short seek_width = macro_f_utf_character_t_width(seek_to_this);
+    const unsigned short seek_width = macro_f_utf_char_t_width(seek_to_this);
 
     f_status_t status = F_none;
 
@@ -721,7 +721,7 @@ extern "C" {
         }
 
         if (width == seek_width) {
-          f_utf_character_t character = 0;
+          f_utf_char_t character = 0;
 
           status = f_utf_char_to_character(buffer.string + range->start, width_max, &character);
           if (F_status_is_error(status)) return status;
@@ -1049,7 +1049,7 @@ extern "C" {
 #endif // _di_fl_string_rip_nulless_
 
 #ifndef _di_fl_string_seek_line_to_utf_character_
-  f_status_t fl_string_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t * const range) {
+  f_status_t fl_string_seek_line_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -1058,7 +1058,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    const unsigned short seek_width = macro_f_utf_character_t_width(seek_to);
+    const unsigned short seek_width = macro_f_utf_char_t_width(seek_to);
 
     f_status_t status = F_none;
 
@@ -1094,7 +1094,7 @@ extern "C" {
         }
 
         if (width == seek_width) {
-          f_utf_character_t character = 0;
+          f_utf_char_t character = 0;
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
           if (F_status_is_error(status)) return status;
@@ -1219,7 +1219,7 @@ extern "C" {
 #endif // _di_fl_string_seek_line_until_graph_non_
 
 #ifndef _di_fl_string_seek_to_utf_character_
-  f_status_t fl_string_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t * const range) {
+  f_status_t fl_string_seek_to_utf_character(const f_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -1228,7 +1228,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    const unsigned short seek_width = macro_f_utf_character_t_width(seek_to);
+    const unsigned short seek_width = macro_f_utf_char_t_width(seek_to);
 
     f_status_t status = F_none;
 
@@ -1260,7 +1260,7 @@ extern "C" {
         }
 
         if (width == seek_width) {
-          f_utf_character_t character = 0;
+          f_utf_char_t character = 0;
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
           if (F_status_is_error(status)) return status;

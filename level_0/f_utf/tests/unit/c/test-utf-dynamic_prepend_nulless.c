@@ -7,8 +7,8 @@ extern "C" {
 
 void test__f_utf_dynamic_prepend_nulless__works(void **state) {
 
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize("te\0st", 0, 5);
-  const f_utf_string_static_t expected = macro_f_utf_string_static_t_initialize("test", 0, 4);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0", 0, 5);
+  const f_utf_string_static_t expected = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0", 0, 4);
   f_utf_string_dynamic_t destination = f_utf_string_dynamic_t_initialize;
 
   {
@@ -17,7 +17,9 @@ void test__f_utf_dynamic_prepend_nulless__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, expected.used);
 
-    assert_string_equal(destination.string, expected.string);
+    for (f_array_length_t i = 0; i < expected.used; ++i) {
+      assert_int_equal(destination.string[i], expected.string[i]);
+    } // for
   }
 
   free((void *) destination.string);

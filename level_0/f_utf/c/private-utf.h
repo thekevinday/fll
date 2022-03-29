@@ -23,13 +23,13 @@ extern "C" {
  * Intended to be shared to each of the different implementation variations.
  *
  * @param character
- *   The character string to be converted to the f_utf_character_t type.
+ *   The character string to be converted to the f_utf_char_t type.
  *   There must be enough space allocated to convert against, as limited by width_max.
  * @param width_max
  *   The maximum width available for converting.
  *   Can be anything greater than 0.
  * @param character_utf
- *   The generated character of type f_utf_character_t.
+ *   The generated character of type f_utf_char_t.
  *   This value may be cleared, even on error.
  *
  * @return
@@ -72,7 +72,7 @@ extern "C" {
  * @see f_utf_unicode_to()
  */
 #if !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_surrogate_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_wide_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
-  extern f_status_t private_f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_character_t *character_utf) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_char_t *character_utf) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_surrogate_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_wide_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
 
 /**
@@ -94,7 +94,7 @@ extern "C" {
  * @see f_utf_is_alpha()
  */
 #if !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
-  extern f_status_t private_f_utf_character_is_alpha(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_alpha(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
 
 /**
@@ -116,7 +116,7 @@ extern "C" {
  * @see f_utf_is_alpha_digit()
  */
 #if !defined(_di_f_utf_character_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_digit_)
-  extern f_status_t private_f_utf_character_is_alpha_digit(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_alpha_digit(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_digit_)
 
 /**
@@ -138,7 +138,7 @@ extern "C" {
  * @see f_utf_is_alpha_numeric()
  */
 #if !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
-  extern f_status_t private_f_utf_character_is_alpha_numeric(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_alpha_numeric(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
 
 /**
@@ -160,7 +160,7 @@ extern "C" {
  * @see f_utf_is_ascii()
  */
 #if !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
-  extern f_status_t private_f_utf_character_is_ascii(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_ascii(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
 
 /**
@@ -182,7 +182,7 @@ extern "C" {
  * @see f_utf_is_combining()
  */
 #if !defined(_di_f_utf_character_is_combining_) || !defined(_di_f_utf_is_combining_)
-  extern f_status_t private_f_utf_character_is_combining(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_combining(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_combining_) || !defined(_di_f_utf_is_combining_)
 
 /**
@@ -204,7 +204,7 @@ extern "C" {
  * @see f_utf_is_control()
  */
 #if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
-  extern f_status_t private_f_utf_character_is_control(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_control(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
 
 /**
@@ -226,7 +226,7 @@ extern "C" {
  * @see f_utf_is_control_code()
  */
 #if !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
-  extern f_status_t private_f_utf_character_is_control_code(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_control_code(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
 
 /**
@@ -248,7 +248,7 @@ extern "C" {
  * @see f_utf_is_control_format()
  */
 #if !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
-  extern f_status_t private_f_utf_character_is_control_format(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_control_format(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
 
 /**
@@ -270,7 +270,7 @@ extern "C" {
  * @see f_utf_is_control_picture()
  */
 #if !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
-  extern f_status_t private_f_utf_character_is_control_picture(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_control_picture(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
 
 /**
@@ -292,7 +292,7 @@ extern "C" {
  * @see f_utf_is_digit()
  */
 #if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
-  extern f_status_t private_f_utf_character_is_digit(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_digit(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
 
 /**
@@ -314,7 +314,7 @@ extern "C" {
  * @see f_utf_is_emoji()
  */
 #if !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
-  extern f_status_t private_f_utf_character_is_emoji(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_emoji(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
 
 /**
@@ -336,7 +336,7 @@ extern "C" {
  * @see f_utf_is_numeric()
  */
 #if !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
-  extern f_status_t private_f_utf_character_is_numeric(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_numeric(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
 
 /**
@@ -358,7 +358,7 @@ extern "C" {
  * @see f_utf_is_phonetic()
  */
 #if !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
-  extern f_status_t private_f_utf_character_is_phonetic(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_phonetic(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
 
 /**
@@ -380,7 +380,7 @@ extern "C" {
  * @see f_utf_is_private()
  */
 #if !defined(_di_f_utf_character_is_private_) || !defined(_di_f_utf_is_private_)
-  extern f_status_t private_f_utf_character_is_private(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_private(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_private_) || !defined(_di_f_utf_is_private_)
 
 /**
@@ -402,7 +402,7 @@ extern "C" {
  * @see f_utf_is_punctuation()
  */
 #if !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
-  extern f_status_t private_f_utf_character_is_punctuation(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_punctuation(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
 
 /**
@@ -424,7 +424,7 @@ extern "C" {
  * @see f_utf_is_surrogate()
  */
 #if !defined(_di_f_utf_character_is_surrogate_) || !defined(_di_f_utf_is_surrogate_)
-  extern f_status_t private_f_utf_character_is_surrogate(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_surrogate(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_surrogate_) || !defined(_di_f_utf_is_surrogate_)
 
 /**
@@ -446,7 +446,7 @@ extern "C" {
  * @see f_utf_is_symbol()
  */
 #if !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
-  extern f_status_t private_f_utf_character_is_symbol(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_symbol(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
 
 /**
@@ -468,7 +468,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
-  extern f_status_t private_f_utf_character_is_valid(const f_utf_character_t characterh) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_valid(const f_utf_char_t characterh) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
 
 /**
@@ -490,7 +490,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #if !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
-  extern f_status_t private_f_utf_character_is_whitespace(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_whitespace(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
 
 /**
@@ -512,7 +512,7 @@ extern "C" {
  * @see f_utf_is_whitespace_modifier()
  */
 #if !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
-  extern f_status_t private_f_utf_character_is_whitespace_modifier(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_whitespace_modifier(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
 
 /**
@@ -534,7 +534,7 @@ extern "C" {
  * @see f_utf_is_whitespace_other()
  */
 #if !defined(_di_f_utf_character_is_whitespace_other_) || !defined(_di_f_utf_is_whitespace_other_)
-  extern f_status_t private_f_utf_character_is_whitespace_other(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_whitespace_other(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_whitespace_other_) || !defined(_di_f_utf_is_whitespace_other_)
 
 /**
@@ -554,7 +554,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #if !defined(_di_f_utf_character_is_wide_) || !defined(_di_f_utf_is_wide_)
-  extern f_status_t private_f_utf_character_is_wide(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_wide(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_wide_) || !defined(_di_f_utf_is_wide_)
 
 /**
@@ -580,7 +580,7 @@ extern "C" {
  * @see f_utf_is_word()
  */
 #if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
-  extern f_status_t private_f_utf_character_is_word(const f_utf_character_t character, const bool strict) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_word(const f_utf_char_t character, const bool strict) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
 
 /**
@@ -606,7 +606,7 @@ extern "C" {
  * @see f_utf_is_word_dash()
  */
 #if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
-  extern f_status_t private_f_utf_character_is_word_dash(const f_utf_character_t character, const bool strict) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_word_dash(const f_utf_char_t character, const bool strict) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 /**
@@ -632,7 +632,7 @@ extern "C" {
  * @see f_utf_is_word_dash_plus()
  */
 #if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
-  extern f_status_t private_f_utf_character_is_word_dash_plus(const f_utf_character_t character, const bool strict) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_word_dash_plus(const f_utf_char_t character, const bool strict) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 /**
@@ -654,7 +654,7 @@ extern "C" {
  * @see f_utf_is_zero_width()
  */
 #if !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
-  extern f_status_t private_f_utf_character_is_zero_width(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_zero_width(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
 
 /**
@@ -664,7 +664,7 @@ extern "C" {
  *
  * @param character
  *   The (UTF-8) character to convert to the Unicode representation.
- *   The f_utf_character_t is a 32-bit integer containing UTF-8 sequences, unchanged.
+ *   The f_utf_char_t is a 32-bit integer containing UTF-8 sequences, unchanged.
  * @param unicode
  *   A 32-bit integer representing the Unicode (such as U+0001).
  *   Does not need to be interpretted like UTF-8, this is a number from 0 onto max supported Unicode integer value (U+10FFFF).
@@ -681,7 +681,7 @@ extern "C" {
  * @see f_utf_unicode_to()
  */
 #if !defined(_di_f_utf_character_unicode_to_) || !defined(_di_f_utf_unicode_to_)
-  extern f_status_t private_f_utf_character_unicode_to(const f_utf_character_t character, uint32_t *unicode) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_unicode_to(const f_utf_char_t character, uint32_t *unicode) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_unicode_to_) || !defined(_di_f_utf_unicode_to_)
 
 #ifdef __cplusplus

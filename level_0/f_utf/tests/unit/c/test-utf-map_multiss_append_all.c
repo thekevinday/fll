@@ -15,18 +15,18 @@ void test__f_utf_map_multiss_append_all__works(void **state) {
   f_utf_string_map_multiss_t destination = f_utf_string_map_multiss_t_initialize;
 
   f_utf_string_static_t test_value_array1[] = {
-    macro_f_utf_string_static_t_initialize("test_value1", 0, 11),
-    macro_f_utf_string_static_t_initialize("test_value2", 0, 11),
+    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0v\0\0\0a\0\0\0l\0\0\0u\0\0\0e\0\0\01\0\0\0", 0, 11),
+    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0v\0\0\0a\0\0\0l\0\0\0u\0\0\0e\0\0\02\0\0\0", 0, 11),
   };
 
   f_utf_string_static_t test_value_array2[] = {
-    macro_f_utf_string_static_t_initialize("test_value3", 0, 11),
-    macro_f_utf_string_static_t_initialize("test_value4", 0, 11),
+    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0v\0\0\0a\0\0\0l\0\0\0u\0\0\0e\0\0\03\0\0\0", 0, 11),
+    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0v\0\0\0a\0\0\0l\0\0\0u\0\0\0e\0\0\04\0\0\0", 0, 11),
   };
 
   const f_utf_string_static_t test_names[] = {
-    macro_f_utf_string_static_t_initialize("test_name1", 0, 10),
-    macro_f_utf_string_static_t_initialize("test_name2", 0, 10),
+    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0n\0\0\0a\0\0\0m\0\0\0e\0\0\01\0\0\0", 0, 10),
+    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0n\0\0\0a\0\0\0m\0\0\0e\0\0\02\0\0\0", 0, 10),
   };
 
   const f_utf_string_statics_t test_values[] = {

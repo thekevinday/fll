@@ -10,8 +10,8 @@ void test__f_utf_maps_append__works(void **state) {
   f_utf_string_map_t source = f_utf_string_map_t_initialize;
   f_utf_string_maps_t destination = f_utf_string_maps_t_initialize;
 
-  const f_utf_string_static_t test_name = macro_f_utf_string_static_t_initialize("test_name", 0, 9);
-  const f_utf_string_static_t test_value = macro_f_utf_string_static_t_initialize("test_value", 0, 10);
+  const f_utf_string_static_t test_name = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0n\0\0\0a\0\0\0m\0\0\0e\0\0\0", 0, 9);
+  const f_utf_string_static_t test_value = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0_\0\0\0v\0\0\0a\0\0\0l\0\0\0u\0\0\0e\0\0\0", 0, 10);
 
   {
     f_status_t status = f_utf_string_dynamic_append(test_name, &source.name);

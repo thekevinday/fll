@@ -14,7 +14,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    memcpy(destination->string + destination->used, source, sizeof(f_utf_character_t) * length);
+    memcpy(destination->string + destination->used, source, sizeof(f_utf_char_t) * length);
     destination->used += length;
     destination->string[destination->used] = 0;
 
@@ -49,7 +49,7 @@ extern "C" {
       if (i && i > first) {
         size = i - first;
 
-        memcpy(destination->string + destination->used, source + first, sizeof(f_utf_character_t) * size);
+        memcpy(destination->string + destination->used, source + first, sizeof(f_utf_char_t) * size);
         destination->used += size;
       }
 
@@ -63,7 +63,7 @@ extern "C" {
     if (i > first) {
       size = i - first;
 
-      memcpy(destination->string + destination->used, source + first, sizeof(f_utf_character_t) * size);
+      memcpy(destination->string + destination->used, source + first, sizeof(f_utf_char_t) * size);
       destination->used += size;
     }
 
@@ -86,14 +86,15 @@ extern "C" {
     }
 
     if (destination->used) {
-      memmove(destination->string + length, destination->string, destination->used);
-      memcpy(destination->string, source, sizeof(f_utf_character_t) * length);
+      memmove(destination->string + length, destination->string, sizeof(f_utf_char_t) * destination->used);
+      memcpy(destination->string, source, sizeof(f_utf_char_t) * length);
     }
     else {
-      memcpy(destination->string, source, sizeof(f_utf_character_t) * length);
+      memcpy(destination->string, source, sizeof(f_utf_char_t) * length);
     }
 
     destination->used += length;
+
     return F_none;
   }
 #endif // !defined(_di_f_utf_string_dynamic_mish_) || !defined(_di_f_utf_string_dynamic_partial_mish_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_) || !defined(_di_f_utf_string_dynamic_partial_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_assure_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_mish_) || !defined(_di_f_utf_string_prepend_assure_) || !defined(_di_f_utf_string_prepend_)
@@ -123,8 +124,8 @@ extern "C" {
             if (F_status_is_error(status)) return status;
           }
 
-          memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
-          memcpy(destination->string + offset, source + first, size);
+          memmove(destination->string + offset + size, destination->string + offset, sizeof(f_utf_char_t) * (destination->used - offset));
+          memcpy(destination->string + offset, source + first, sizeof(f_utf_char_t) * size);
 
           destination->used += size;
           offset += size;
@@ -143,8 +144,8 @@ extern "C" {
               if (F_status_is_error(status)) return status;
             }
 
-            memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
-            memcpy(destination->string + offset, source + first, sizeof(f_utf_character_t) * size);
+            memmove(destination->string + offset + size, destination->string + offset, sizeof(f_utf_char_t) * (destination->used - offset));
+            memcpy(destination->string + offset, source + first, sizeof(f_utf_char_t) * size);
 
             destination->used += size;
             offset += size;
@@ -156,6 +157,7 @@ extern "C" {
         } // while
 
         first = i + 1;
+
         continue;
       }
     } // for

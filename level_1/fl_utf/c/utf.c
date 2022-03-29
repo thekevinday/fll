@@ -106,19 +106,19 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    f_utf_character_t seek_to_character = seek_to_this << 24;
+    f_utf_char_t seek_to_character = seek_to_this << 24;
 
-    if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+    if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
     while (buffer.string[range->start] != seek_to_character) {
 
-      if (buffer.string[range->start++] == F_utf_character_t_eol_d) {
+      if (buffer.string[range->start++] == F_utf_char_t_eol_d) {
         return F_none_eol;
       }
 
-      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -136,7 +136,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_seek_line_to_char_
 
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_
-  f_status_t fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_character_t placeholder) {
+  f_status_t fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_char_t placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (buffer.used <= range->start) return F_status_set_error(F_parameter);
@@ -152,7 +152,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+    if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -162,11 +162,11 @@ extern "C" {
         return status;
       }
 
-      if (buffer.string[range->start++] == F_utf_character_t_eol_d) {
+      if (buffer.string[range->start++] == F_utf_char_t_eol_d) {
         return F_none_eol;
       }
 
-      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_seek_line_until_graph_
 
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_non_
-  f_status_t fl_utf_string_dynamic_seek_line_until_graph_non(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_character_t placeholder) {
+  f_status_t fl_utf_string_dynamic_seek_line_until_graph_non(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_char_t placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (buffer.used <= range->start) return F_status_set_error(F_parameter);
@@ -199,18 +199,18 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+    if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
     while (buffer.string[range->start] == placeholder || (status = f_utf_character_is_whitespace(buffer.string[range->start])) == F_false) {
 
       if (F_status_is_error(status)) return status;
-      if (buffer.string[range->start] == F_utf_character_t_eol_d) return F_none_eol;
+      if (buffer.string[range->start] == F_utf_char_t_eol_d) return F_none_eol;
 
       ++range->start;
 
-      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -239,9 +239,9 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    f_utf_character_t seek_to_character = seek_to_this << 24;
+    f_utf_char_t seek_to_character = seek_to_this << 24;
 
-    if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+    if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -249,7 +249,7 @@ extern "C" {
 
       ++range->start;
 
-      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -330,15 +330,15 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    f_utf_character_t seek_to_character = seek_to_this << 24;
+    f_utf_char_t seek_to_character = seek_to_this << 24;
 
     for (; range->start <= range->stop; ++range->start) {
 
-      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
-      if (string[range->start] == F_utf_character_t_eol_d) {
+      if (string[range->start] == F_utf_char_t_eol_d) {
         return F_none_eol;
       }
 
@@ -352,7 +352,7 @@ extern "C" {
 #endif // _di_fl_utf_string_seek_line_to_char_
 
 #ifndef _di_fl_utf_string_seek_line_until_graph_
-  f_status_t fl_utf_string_seek_line_until_graph(const f_utf_string_t string, f_string_range_t * const range, const f_utf_character_t placeholder) {
+  f_status_t fl_utf_string_seek_line_until_graph(const f_utf_string_t string, f_string_range_t * const range, const f_utf_char_t placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -363,7 +363,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+    if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -373,11 +373,11 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start++] == F_utf_character_t_eol_d) {
+      if (string[range->start++] == F_utf_char_t_eol_d) {
         return F_none_eol;
       }
 
-      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -395,7 +395,7 @@ extern "C" {
 #endif // _di_fl_utf_string_seek_line_until_graph_
 
 #ifndef _di_fl_utf_string_seek_line_until_graph_non_
-  f_status_t fl_utf_string_seek_line_until_graph_non(const f_utf_string_t string, f_string_range_t * const range, const f_utf_character_t placeholder) {
+  f_status_t fl_utf_string_seek_line_until_graph_non(const f_utf_string_t string, f_string_range_t * const range, const f_utf_char_t placeholder) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -406,7 +406,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+    if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -416,11 +416,11 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start++] == F_utf_character_t_eol_d) {
+      if (string[range->start++] == F_utf_char_t_eol_d) {
         return F_none_eol;
       }
 
-      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -447,9 +447,9 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    const f_utf_character_t seek_to_character = seek_to_this << 24;
+    const f_utf_char_t seek_to_character = seek_to_this << 24;
 
-    if (macro_f_utf_character_t_width_is(string[0]) == 1) {
+    if (macro_f_utf_char_t_width_is(string[0]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -459,7 +459,7 @@ extern "C" {
         return F_none;
       }
 
-      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
     } // while

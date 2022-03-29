@@ -7,9 +7,9 @@ extern "C" {
 
 void test__f_utf_triples_append__works(void **state) {
 
-  const f_utf_string_static_t test_a = macro_f_utf_string_static_t_initialize("a", 0, 1);
-  const f_utf_string_static_t test_b = macro_f_utf_string_static_t_initialize("b", 0, 1);
-  const f_utf_string_static_t test_c = macro_f_utf_string_static_t_initialize("c", 0, 1);
+  const f_utf_string_static_t test_a = macro_f_utf_string_static_t_initialize((f_utf_string_t) "a\0\0\0", 0, 1);
+  const f_utf_string_static_t test_b = macro_f_utf_string_static_t_initialize((f_utf_string_t) "b\0\0\0", 0, 1);
+  const f_utf_string_static_t test_c = macro_f_utf_string_static_t_initialize((f_utf_string_t) "c\0\0\0", 0, 1);
 
   const f_utf_string_triple_t source = macro_f_utf_string_triple_t_initialize(test_a, test_b, test_c);
   f_utf_string_triples_t destination = f_utf_string_triples_t_initialize;

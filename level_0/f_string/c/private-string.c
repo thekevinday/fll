@@ -86,7 +86,7 @@ extern "C" {
     }
 
     if (destination->used) {
-      memmove(destination->string + length, destination->string, destination->used);
+      memmove(destination->string + length, destination->string, sizeof(f_char_t) * destination->used);
       memcpy(destination->string, source, sizeof(f_char_t) * length);
     }
     else {
@@ -94,6 +94,7 @@ extern "C" {
     }
 
     destination->used += length;
+
     return F_none;
   }
 #endif // !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
@@ -123,8 +124,8 @@ extern "C" {
             if (F_status_is_error(status)) return status;
           }
 
-          memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
-          memcpy(destination->string + offset, source + first, size);
+          memmove(destination->string + offset + size, destination->string + offset, sizeof(f_char_t) * (destination->used - offset));
+          memcpy(destination->string + offset, source + first, sizeof(f_char_t) * size);
 
           destination->used += size;
           offset += size;
@@ -143,7 +144,7 @@ extern "C" {
               if (F_status_is_error(status)) return status;
             }
 
-            memmove(destination->string + offset + size, destination->string + offset, destination->used - offset);
+            memmove(destination->string + offset + size, destination->string + offset, sizeof(f_char_t) * (destination->used - offset));
             memcpy(destination->string + offset, source + first, sizeof(f_char_t) * size);
 
             destination->used += size;
@@ -156,6 +157,7 @@ extern "C" {
         } // while
 
         first = i + 1;
+
         continue;
       }
     } // for

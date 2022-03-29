@@ -7,9 +7,9 @@ extern "C" {
 
 void test__f_utf_dynamic_mish__works(void **state) {
 
-  const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize(":", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize("te\0st", 0, 5);
-  const f_utf_string_static_t expected = macro_f_utf_string_static_t_initialize("te\0st:te\0st", 0, 11);
+  const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize((f_utf_string_t) ":\0\0\0", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0", 0, 5);
+  const f_utf_string_static_t expected = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0:\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0", 0, 11);
   f_utf_string_dynamic_t destination = f_utf_string_dynamic_t_initialize;
 
   {
@@ -18,8 +18,9 @@ void test__f_utf_dynamic_mish__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, source.used);
 
-    assert_string_equal(destination.string, source.string);
-    assert_string_equal(destination.string + 3, source.string + 3);
+    for (f_array_length_t i = 0; i < source.used; ++i) {
+      assert_int_equal(destination.string[i], source.string[i]);
+    } // for
   }
 
   // Check that the glue is added.
@@ -29,9 +30,9 @@ void test__f_utf_dynamic_mish__works(void **state) {
     assert_int_equal(status, F_none);
     assert_int_equal(destination.used, expected.used);
 
-    assert_string_equal(destination.string, expected.string);
-    assert_string_equal(destination.string + 3, expected.string + 3);
-    assert_string_equal(destination.string + 9, expected.string + 9);
+    for (f_array_length_t i = 0; i < expected.used; ++i) {
+      assert_int_equal(destination.string[i], expected.string[i]);
+    } // for
   }
 
   free((void *) destination.string);
@@ -39,8 +40,8 @@ void test__f_utf_dynamic_mish__works(void **state) {
 
 void test__f_utf_dynamic_mish__parameter_checking(void **state) {
 
-  const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize(":", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize("te\0st", 0, 5);
+  const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize((f_utf_string_t) ":\0\0\0", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0", 0, 5);
 
   {
     const f_status_t status = f_utf_string_dynamic_mish(glue, source, 0);

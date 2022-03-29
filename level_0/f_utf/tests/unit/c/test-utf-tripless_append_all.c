@@ -10,21 +10,21 @@ void test__f_utf_tripless_append_all__works(void **state) {
   const int length_sources = 2;
   const int length_sources_set = 2;
 
-  const f_utf_string_static_t test_a = macro_f_utf_string_static_t_initialize("a", 0, 1);
-  const f_utf_string_static_t test_b = macro_f_utf_string_static_t_initialize("b", 0, 1);
-  const f_utf_string_static_t test_c = macro_f_utf_string_static_t_initialize("c", 0, 1);
+  const f_utf_string_static_t test_a = macro_f_utf_string_static_t_initialize((f_utf_string_t) "a\0\0\0", 0, 1);
+  const f_utf_string_static_t test_b = macro_f_utf_string_static_t_initialize((f_utf_string_t) "b\0\0\0", 0, 1);
+  const f_utf_string_static_t test_c = macro_f_utf_string_static_t_initialize((f_utf_string_t) "c\0\0\0", 0, 1);
 
-  const f_utf_string_static_t test_d = macro_f_utf_string_static_t_initialize("d", 0, 1);
-  const f_utf_string_static_t test_e = macro_f_utf_string_static_t_initialize("e", 0, 1);
-  const f_utf_string_static_t test_f = macro_f_utf_string_static_t_initialize("f", 0, 1);
+  const f_utf_string_static_t test_d = macro_f_utf_string_static_t_initialize((f_utf_string_t) "d\0\0\0", 0, 1);
+  const f_utf_string_static_t test_e = macro_f_utf_string_static_t_initialize((f_utf_string_t) "e\0\0\0", 0, 1);
+  const f_utf_string_static_t test_f = macro_f_utf_string_static_t_initialize((f_utf_string_t) "f\0\0\0", 0, 1);
 
-  const f_utf_string_static_t test_g = macro_f_utf_string_static_t_initialize("g", 0, 1);
-  const f_utf_string_static_t test_h = macro_f_utf_string_static_t_initialize("h", 0, 1);
-  const f_utf_string_static_t test_i = macro_f_utf_string_static_t_initialize("i", 0, 1);
+  const f_utf_string_static_t test_g = macro_f_utf_string_static_t_initialize((f_utf_string_t) "g\0\0\0", 0, 1);
+  const f_utf_string_static_t test_h = macro_f_utf_string_static_t_initialize((f_utf_string_t) "h\0\0\0", 0, 1);
+  const f_utf_string_static_t test_i = macro_f_utf_string_static_t_initialize((f_utf_string_t) "i\0\0\0", 0, 1);
 
-  const f_utf_string_static_t test_j = macro_f_utf_string_static_t_initialize("j", 0, 1);
-  const f_utf_string_static_t test_k = macro_f_utf_string_static_t_initialize("k", 0, 1);
-  const f_utf_string_static_t test_l = macro_f_utf_string_static_t_initialize("l", 0, 1);
+  const f_utf_string_static_t test_j = macro_f_utf_string_static_t_initialize((f_utf_string_t) "j\0\0\0", 0, 1);
+  const f_utf_string_static_t test_k = macro_f_utf_string_static_t_initialize((f_utf_string_t) "k\0\0\0", 0, 1);
+  const f_utf_string_static_t test_l = macro_f_utf_string_static_t_initialize((f_utf_string_t) "l\0\0\0", 0, 1);
 
   f_utf_string_triple_t sources_array1[] = {
     macro_f_utf_string_triple_t_initialize(test_a, test_b, test_c),

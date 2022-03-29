@@ -7,13 +7,13 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
-  f_status_t private_f_utf_character_is_unassigned(const f_utf_character_t character) {
+  f_status_t private_f_utf_character_is_unassigned(const f_utf_char_t character) {
 
-    if (macro_f_utf_character_t_width_is(character) < 2) {
+    if (macro_f_utf_char_t_width_is(character) < 2) {
       return F_false;
     }
 
-    if (macro_f_utf_character_t_width_is(character) == 2) {
+    if (macro_f_utf_char_t_width_is(character) == 2) {
 
       // Greek and Coptic: U+0378 to U+0379.
       if (character >= 0xcdb80000 && character <= 0xcdb90000) {
@@ -83,7 +83,7 @@ extern "C" {
       return F_false;
     }
 
-    if (macro_f_utf_character_t_width_is(character) == 3) {
+    if (macro_f_utf_char_t_width_is(character) == 3) {
 
       // Samaritan: U+082E, U+082F, U+083F.
       if (character == 0xe0a0ae00 || character == 0xe0a0af00 || character == 0xe0a0bf00) {

@@ -679,9 +679,9 @@ extern "C" {
     if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (buffer.string[range->start] != F_utf_character_t_eol_d) {
+    while (buffer.string[range->start] != F_utf_char_t_eol_d) {
 
-      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -706,11 +706,11 @@ extern "C" {
 
     while (buffer.string[range->start] != seek_to_this) {
 
-      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
-      if (buffer.string[range->start] == F_utf_character_t_eol_d) return F_none_eol;
+      if (buffer.string[range->start] == F_utf_char_t_eol_d) return F_none_eol;
 
       ++range->start;
 
@@ -733,7 +733,7 @@ extern "C" {
 
     while (buffer.string[range->start] != seek_to_this) {
 
-      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 

@@ -36,7 +36,7 @@ extern "C" {
  * @see f_utf_is_unassigned()
  */
 #if !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
-  extern f_status_t private_f_utf_character_is_unassigned(const f_utf_character_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_unassigned(const f_utf_char_t character) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
 
 #ifdef __cplusplus

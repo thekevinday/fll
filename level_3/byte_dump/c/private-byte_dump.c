@@ -28,7 +28,7 @@ extern "C" {
 
     // Store the current character main until it can be printed.
     f_utf_string_dynamic_t characters = f_utf_string_dynamic_t_initialize;
-    f_utf_character_t character_array[main->width];
+    f_utf_char_t character_array[main->width];
     f_array_length_t character_current = 0;
 
     // The row starts based on the first byte starting point and how many columns of bytes are displayed per row.
@@ -47,7 +47,7 @@ extern "C" {
       }
     }
 
-    memset(&character_array, 0, sizeof(f_utf_character_t) * main->width);
+    memset(&character_array, 0, sizeof(f_utf_char_t) * main->width);
     characters.string = character_array;
     characters.used = 0;
     characters.size = main->width;
@@ -91,7 +91,7 @@ extern "C" {
 
         // When width_count == 0, then this is that start of a new character sequence.
         if (!width_count) {
-          characters.string[character_current] = macro_f_utf_character_t_from_char_1(byte);
+          characters.string[character_current] = macro_f_utf_char_t_from_char_1(byte);
           width_count = 1;
 
           // The first character in a UTF-8 sequence cannot have a width of 1.
@@ -109,13 +109,13 @@ extern "C" {
           width_current = macro_f_utf_byte_width_is(byte);
 
           if (width_count == 1) {
-            characters.string[character_current] |= macro_f_utf_character_t_from_char_2(byte);
+            characters.string[character_current] |= macro_f_utf_char_t_from_char_2(byte);
           }
           else if (width_count == 2) {
-            characters.string[character_current] |= macro_f_utf_character_t_from_char_3(byte);
+            characters.string[character_current] |= macro_f_utf_char_t_from_char_3(byte);
           }
           else if (width_count == 3) {
-            characters.string[character_current] |= macro_f_utf_character_t_from_char_4(byte);
+            characters.string[character_current] |= macro_f_utf_char_t_from_char_4(byte);
           }
 
           ++width_count;
@@ -313,16 +313,16 @@ extern "C" {
     f_array_length_t character_current = characters.used - 1;
 
     if (byte_current == 1) {
-      byte = macro_f_utf_character_t_to_char_1(characters.string[character_current]);
+      byte = macro_f_utf_char_t_to_char_1(characters.string[character_current]);
     }
     else if (byte_current == 2) {
-      byte = macro_f_utf_character_t_to_char_2(characters.string[character_current]);
+      byte = macro_f_utf_char_t_to_char_2(characters.string[character_current]);
     }
     else if (byte_current == 3) {
-      byte = macro_f_utf_character_t_to_char_3(characters.string[character_current]);
+      byte = macro_f_utf_char_t_to_char_3(characters.string[character_current]);
     }
     else if (byte_current == 4) {
-      byte = macro_f_utf_character_t_to_char_4(characters.string[character_current]);
+      byte = macro_f_utf_char_t_to_char_4(characters.string[character_current]);
     }
 
     if (!cell->column) {
@@ -400,28 +400,28 @@ extern "C" {
           if (width_utf < 2) {
 
             // 1 == U+0000 -> U+007F.
-            unicode = macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x7f;
+            unicode = macro_f_utf_char_t_to_char_1(characters.string[character_current]) & 0x7f;
           }
           else if (width_utf == 2) {
 
             // 2 == U+0080 -> U+07FF.
-            unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x1f) << 6;
-            unicode |= macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f;
+            unicode = (macro_f_utf_char_t_to_char_1(characters.string[character_current]) & 0x1f) << 6;
+            unicode |= macro_f_utf_char_t_to_char_2(characters.string[character_current]) & 0x3f;
           }
           else if (width_utf == 3) {
 
             // 3 == U+0800 -> U+FFFF.
-            unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0xf) << 12;
-            unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
-            unicode |= macro_f_utf_character_t_to_char_3(characters.string[character_current]) & 0x3f;
+            unicode = (macro_f_utf_char_t_to_char_1(characters.string[character_current]) & 0xf) << 12;
+            unicode |= (macro_f_utf_char_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
+            unicode |= macro_f_utf_char_t_to_char_3(characters.string[character_current]) & 0x3f;
           }
           else if (width_utf == 4) {
 
             // 4 == U+10000 -> U+10FFFF.
-            unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x7) << 18;
-            unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 12;
-            unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
-            unicode |= macro_f_utf_character_t_to_char_4(characters.string[character_current]) & 0x3f;
+            unicode = (macro_f_utf_char_t_to_char_1(characters.string[character_current]) & 0x7) << 18;
+            unicode |= (macro_f_utf_char_t_to_char_2(characters.string[character_current]) & 0x3f) << 12;
+            unicode |= (macro_f_utf_char_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
+            unicode |= macro_f_utf_char_t_to_char_4(characters.string[character_current]) & 0x3f;
           }
 
           if (width_utf < 4) {
@@ -664,7 +664,7 @@ extern "C" {
 
     for (uint8_t i = 0; i < characters.used && at < main->width; ++i, ++at) {
 
-      c = macro_f_utf_character_t_to_char_1(characters.string[i]);
+      c = macro_f_utf_char_t_to_char_1(characters.string[i]);
       width_utf = macro_f_utf_byte_width_is(c);
 
       if (invalid[i]) {
@@ -682,13 +682,13 @@ extern "C" {
             byte[0] = c;
 
             if (width_utf > 1) {
-              byte[1] = macro_f_utf_character_t_to_char_2(characters.string[i]);
+              byte[1] = macro_f_utf_char_t_to_char_2(characters.string[i]);
 
               if (width_utf > 2) {
-                byte[2] = macro_f_utf_character_t_to_char_3(characters.string[i]);
+                byte[2] = macro_f_utf_char_t_to_char_3(characters.string[i]);
 
                 if (width_utf > 3) {
-                  byte[3] = macro_f_utf_character_t_to_char_4(characters.string[i]);
+                  byte[3] = macro_f_utf_char_t_to_char_4(characters.string[i]);
                 }
                 else {
                   byte[3] = 0;
@@ -840,13 +840,13 @@ extern "C" {
           f_print_character(c, main->output.to.stream);
 
           if (width_utf > 1) {
-            f_print_character(macro_f_utf_character_t_to_char_2(characters.string[i]), main->output.to.stream);
+            f_print_character(macro_f_utf_char_t_to_char_2(characters.string[i]), main->output.to.stream);
 
             if (width_utf > 2) {
-              f_print_character(macro_f_utf_character_t_to_char_3(characters.string[i]), main->output.to.stream);
+              f_print_character(macro_f_utf_char_t_to_char_3(characters.string[i]), main->output.to.stream);
 
               if (width_utf > 3) {
-                f_print_character(macro_f_utf_character_t_to_char_4(characters.string[i]), main->output.to.stream);
+                f_print_character(macro_f_utf_char_t_to_char_4(characters.string[i]), main->output.to.stream);
               }
             }
           }

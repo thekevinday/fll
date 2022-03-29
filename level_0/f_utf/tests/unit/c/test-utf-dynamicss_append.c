@@ -12,8 +12,8 @@ void test__f_utf_dynamicss_append__works(void **state) {
   f_utf_string_dynamicss_t destination = f_utf_string_dynamicss_t_initialize;
 
   const f_utf_string_static_t test_names[] = {
-    macro_f_utf_string_static_t_initialize("test1", 0, 5),
-    macro_f_utf_string_static_t_initialize("test2", 0, 5),
+    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\01\0\0\0", 0, 5),
+    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\02\0\0\0", 0, 5),
   };
 
   {
@@ -27,8 +27,11 @@ void test__f_utf_dynamicss_append__works(void **state) {
       status = f_utf_string_dynamic_append(test_names[source.used], &source.array[source.used]);
 
       assert_int_equal(status, F_none);
-      assert_string_equal(source.array[source.used].string, test_names[source.used].string);
       assert_int_equal(source.array[source.used].used, test_names[source.used].used);
+
+      for (f_array_length_t i = 0; i < source.array[source.used].used; ++i) {
+        assert_int_equal(source.array[source.used].string[i], test_names[source.used].string[i]);
+      } // for
     } // for
   }
 
@@ -41,14 +44,16 @@ void test__f_utf_dynamicss_append__works(void **state) {
     for (f_array_length_t i = 0; i < length_inner; ++i) {
 
       assert_int_equal(destination.array[0].array[i].used, test_names[i].used);
-      assert_string_equal(destination.array[0].array[i].string, test_names[i].string);
+
+      for (f_array_length_t j = 0; j < destination.array[0].array[i].used; ++j) {
+        assert_int_equal(destination.array[0].array[i].string[j], test_names[i].string[j]);
+      } // for
     } // for
   }
 
   for (f_array_length_t i = 0; i < source.used; ++i) {
     free((void *) source.array[i].string);
   } // for
-
 
   for (f_array_length_t i = 0; i < destination.array[0].used; ++i) {
     free((void *) destination.array[0].array[i].string);

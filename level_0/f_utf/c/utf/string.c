@@ -298,9 +298,9 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    while (string[range->start] != F_utf_character_t_eol_d) {
+    while (string[range->start] != F_utf_char_t_eol_d) {
 
-      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf_fragment);
       }
 
@@ -327,11 +327,11 @@ extern "C" {
 
     while (string[range->start] != seek_to) {
 
-      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf_fragment);
       }
 
-      if (string[range->start] == F_utf_character_t_eol_d) {
+      if (string[range->start] == F_utf_char_t_eol_d) {
         return F_none_eol;
       }
 
@@ -358,7 +358,7 @@ extern "C" {
 
     while (string[range->start] != seek_to) {
 
-      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf_fragment);
       }
 

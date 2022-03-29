@@ -333,8 +333,8 @@ extern "C" {
               if (arguments.argv[location][sub_location] != *parameters->array[i].symbol_short) continue;
 
               if (width > 0) {
-                f_utf_character_t character_argument_utf = 0;
-                f_utf_character_t character_console_utf = 0;
+                f_utf_char_t character_argument_utf = 0;
+                f_utf_char_t character_console_utf = 0;
 
                 f_number_unsigned_t width_max = parameters->arguments.array[location].used - sub_location;
 

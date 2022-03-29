@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_char_to_character_
-  f_status_t f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_character_t *character_utf) {
+  f_status_t f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_char_t *character_utf) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
       if (!character_utf) return F_status_set_error(F_parameter);
@@ -24,8 +24,8 @@ extern "C" {
   }
 #endif // _di_f_utf_char_to_character_
 
-#ifndef _di_f_utf_character_to_char_
-  f_status_t f_utf_character_to_char(const f_utf_character_t utf_character, f_string_t *character, f_array_length_t *width_max) {
+#ifndef _di_f_utf_char_to_char_
+  f_status_t f_utf_char_to_char(const f_utf_char_t utf_character, f_string_t *character, f_array_length_t *width_max) {
     #ifndef _di_level_0_parameter_checking_
       if (!utf_character) return F_status_set_error(F_parameter);
       if (!character) return F_status_set_error(F_parameter);
@@ -33,45 +33,45 @@ extern "C" {
       if (!*width_max) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (macro_f_utf_character_t_width_is(utf_character)) {
-      if (macro_f_utf_character_t_width_is(utf_character) == 1) {
+    if (macro_f_utf_char_t_width_is(utf_character)) {
+      if (macro_f_utf_char_t_width_is(utf_character) == 1) {
         return F_status_set_error(F_utf_fragment);
       }
 
       #if __BYTE_ORDER == __LITTLE_ENDIAN
-        f_utf_t utf = 0;
+        f_utf_char_t utf = 0;
 
-        switch (macro_f_utf_character_t_width_is(utf_character)) {
+        switch (macro_f_utf_char_t_width_is(utf_character)) {
           case 1:
-            utf = macro_f_utf_character_t_to_char_1(utf_character) << 24;
+            utf = macro_f_utf_char_t_to_char_1(utf_character) << 24;
             break;
 
           case 2:
-            utf = (macro_f_utf_character_t_to_char_2(utf_character) << 24) | (macro_f_utf_character_t_to_char_1(utf_character) << 16);
+            utf = (macro_f_utf_char_t_to_char_2(utf_character) << 24) | (macro_f_utf_char_t_to_char_1(utf_character) << 16);
             break;
 
           case 3:
-            utf = (macro_f_utf_character_t_to_char_3(utf_character) << 24) | (macro_f_utf_character_t_to_char_2(utf_character) << 16) | (macro_f_utf_character_t_to_char_1(utf_character) << 8);
+            utf = (macro_f_utf_char_t_to_char_3(utf_character) << 24) | (macro_f_utf_char_t_to_char_2(utf_character) << 16) | (macro_f_utf_char_t_to_char_1(utf_character) << 8);
             break;
 
           case 4:
-            utf = (macro_f_utf_character_t_to_char_4(utf_character) << 24) | (macro_f_utf_character_t_to_char_3(utf_character) << 16) | (macro_f_utf_character_t_to_char_2(utf_character) << 8) | macro_f_utf_character_t_to_char_1(utf_character);
+            utf = (macro_f_utf_char_t_to_char_4(utf_character) << 24) | (macro_f_utf_char_t_to_char_3(utf_character) << 16) | (macro_f_utf_char_t_to_char_2(utf_character) << 8) | macro_f_utf_char_t_to_char_1(utf_character);
             break;
 
           default:
             return F_status_set_error(F_failure);
         }
 
-        memcpy(*character, &utf, sizeof(f_char_t) * macro_f_utf_character_t_width_is(utf_character));
+        memcpy(*character, &utf, sizeof(f_char_t) * macro_f_utf_char_t_width_is(utf_character));
       #else
-        memcpy(*character, &utf_character, sizeof(f_char_t) * macro_f_utf_character_t_width_is(utf_character));
+        memcpy(*character, &utf_character, sizeof(f_char_t) * macro_f_utf_char_t_width_is(utf_character));
       #endif // __BYTE_ORDER == __LITTLE_ENDIAN
 
       return F_none;
     }
 
     #if __BYTE_ORDER == __LITTLE_ENDIAN
-      f_utf_t utf = macro_f_utf_character_t_to_char_1(utf_character) << 24;
+      f_utf_char_t utf = macro_f_utf_char_t_to_char_1(utf_character) << 24;
 
       memcpy(*character, &utf, sizeof(f_char_t));
     #else
@@ -80,10 +80,10 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_utf_character_to_char_
+#endif // _di_f_utf_char_to_char_
 
 #ifndef _di_f_utf_character_unicode_to_
-  f_status_t f_utf_character_unicode_to(const f_utf_character_t character, f_utf_t *unicode) {
+  f_status_t f_utf_character_unicode_to(const f_utf_char_t character, f_utf_char_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
       if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -93,7 +93,7 @@ extern "C" {
 #endif // _di_f_utf_character_unicode_to_
 
 #ifndef _di_f_utf_character_unicode_from_
-  f_status_t f_utf_character_unicode_from(const f_utf_t unicode, f_utf_character_t *character) {
+  f_status_t f_utf_character_unicode_from(const f_utf_char_t unicode, f_utf_char_t *character) {
     #ifndef _di_level_0_parameter_checking_
       if (!character) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -136,7 +136,7 @@ extern "C" {
 #endif // _di_f_utf_character_unicode_from_
 
 #ifndef _di_f_utf_character_unicode_string_to_
-  f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_array_length_t length, f_utf_t *unicode) {
+  f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_array_length_t length, f_utf_char_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
       if (!string) return F_status_set_error(F_parameter);
       if (!unicode) return F_status_set_error(F_parameter);
@@ -149,16 +149,16 @@ extern "C" {
     } // while
 
     if (i < length) {
-      if (macro_f_utf_character_t_width_is(string[i])) {
+      if (macro_f_utf_char_t_width_is(string[i])) {
         i = length;
       }
       else {
-        if (macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_u_s.string[0] || macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_U_s.string[0]) {
+        if (macro_f_utf_char_t_to_char_1(string[i]) == f_string_ascii_u_s.string[0] || macro_f_utf_char_t_to_char_1(string[i]) == f_string_ascii_U_s.string[0]) {
           do {
             ++i;
           } while (i < length && !string[i]);
 
-          if (i < length && !macro_f_utf_character_t_width_is(string[i]) && macro_f_utf_character_t_to_char_1(string[i]) == f_string_ascii_plus_s.string[0]) {
+          if (i < length && !macro_f_utf_char_t_width_is(string[i]) && macro_f_utf_char_t_to_char_1(string[i]) == f_string_ascii_plus_s.string[0]) {
             ++i;
           }
           else {
@@ -175,7 +175,7 @@ extern "C" {
       return F_status_set_error(F_valid_not);
     }
 
-    f_utf_t value = 0;
+    f_utf_char_t value = 0;
     uint8_t character = 0;
 
     for (; i < length; ++i) {
@@ -183,12 +183,12 @@ extern "C" {
       if (!string[i]) continue;
 
       // Only ASCII character numbers are allowed to represent
-      if (macro_f_utf_character_t_width_is(string[i])) {
+      if (macro_f_utf_char_t_width_is(string[i])) {
         return F_status_set_error(F_valid_not);
       }
 
       value *= 16;
-      character = macro_f_utf_character_t_to_char_1(string[i]);
+      character = macro_f_utf_char_t_to_char_1(string[i]);
 
       if (character > 0x2f && character < 0x3a) {
         value += character - 0x30;
@@ -211,7 +211,7 @@ extern "C" {
 #endif // _di_f_utf_character_unicode_string_to_
 
 #ifndef _di_f_utf_unicode_from_
-  f_status_t f_utf_unicode_from(const f_utf_t unicode, const f_array_length_t width_max, f_string_t *character) {
+  f_status_t f_utf_unicode_from(const f_utf_char_t unicode, const f_array_length_t width_max, f_string_t *character) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
       if (!unicode) return F_status_set_error(F_parameter);
@@ -287,13 +287,13 @@ extern "C" {
 #endif // _di_f_utf_unicode_from_
 
 #ifndef _di_f_utf_unicode_to_
-  f_status_t f_utf_unicode_to(const f_string_t character, const f_array_length_t width_max, f_utf_t *unicode) {
+  f_status_t f_utf_unicode_to(const f_string_t character, const f_array_length_t width_max, f_utf_char_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
       if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_utf_character_t character_utf = 0;
+    f_utf_char_t character_utf = 0;
 
     {
       const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
@@ -305,7 +305,7 @@ extern "C" {
 #endif // _di_f_utf_unicode_to_
 
 #ifndef _di_f_utf_unicode_string_to_f_
-  f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, f_utf_t *unicode) {
+  f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, f_utf_char_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
       if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -338,7 +338,7 @@ extern "C" {
       return F_status_set_error(F_valid_not);
     }
 
-    f_utf_t value = 0;
+    f_utf_char_t value = 0;
 
     for (; i < length; ++i) {
 

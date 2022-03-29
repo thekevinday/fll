@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_utf_dynamics_append__works(void **state) {
 
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize("te\0st", 0, 5);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0", 0, 5);
   f_utf_string_dynamics_t destination = f_utf_string_dynamics_t_initialize;
 
   {
@@ -17,8 +17,9 @@ void test__f_utf_dynamics_append__works(void **state) {
     assert_int_equal(destination.used, 1);
     assert_int_equal(destination.array[0].used, source.used);
 
-    assert_string_equal(destination.array[0].string, source.string);
-    assert_string_equal(destination.array[0].string + 3, source.string + 3);
+    for (f_array_length_t i = 0; i < source.used; ++i) {
+      assert_int_equal(destination.array[0].string[i], source.string[i]);
+    } // for
   }
 
   free((void *) destination.array[0].string);

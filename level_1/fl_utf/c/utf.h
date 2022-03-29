@@ -296,7 +296,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_
-  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_character_t placeholder);
+  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_char_t placeholder);
 #endif // _di_fl_utf_string_dynamic_seek_line_until_graph_
 
 /**
@@ -325,7 +325,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_non_
-  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph_non(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_character_t placeholder);
+  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph_non(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_utf_char_t placeholder);
 #endif // _di_fl_utf_string_dynamic_seek_line_until_graph_non_
 
 /**
@@ -462,7 +462,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_fl_utf_string_seek_line_until_graph_
-  extern f_status_t fl_utf_string_seek_line_until_graph(const f_utf_string_t string, f_string_range_t * const range, const f_utf_character_t placeholder);
+  extern f_status_t fl_utf_string_seek_line_until_graph(const f_utf_string_t string, f_string_range_t * const range, const f_utf_char_t placeholder);
 #endif // _di_fl_utf_string_seek_line_until_graph_
 
 /**
@@ -493,7 +493,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_fl_utf_string_seek_line_until_graph_non_
-  extern f_status_t fl_utf_string_seek_line_until_graph_non(const f_utf_string_t string, f_string_range_t * const range, const f_utf_character_t placeholder);
+  extern f_status_t fl_utf_string_seek_line_until_graph_non(const f_utf_string_t string, f_string_range_t * const range, const f_utf_char_t placeholder);
 #endif // _di_fl_utf_string_seek_line_until_graph_non_
 
 /**

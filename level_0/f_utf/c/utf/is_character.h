@@ -32,7 +32,7 @@ extern "C" {
  * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_character_is_
-  extern f_status_t f_utf_character_is(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_
 
 /**
@@ -51,7 +51,7 @@ extern "C" {
  * @see isalpha()
  */
 #ifndef _di_f_utf_character_is_alpha_
-  extern f_status_t f_utf_character_is_alpha(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_alpha(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_alpha_
 
 /**
@@ -74,7 +74,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_alpha_digit_
-  extern f_status_t f_utf_character_is_alpha_digit(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_alpha_digit(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_alpha_digit_
 
 /**
@@ -95,7 +95,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_alpha_numeric_
-  extern f_status_t f_utf_character_is_alpha_numeric(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_alpha_numeric(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_alpha_numeric_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  *   F_false if not an ASCII character.
  */
 #ifndef _di_f_utf_character_is_ascii_
-  extern f_status_t f_utf_character_is_ascii(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_ascii(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_ascii_
 
 /**
@@ -128,7 +128,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_combining_
-  extern f_status_t f_utf_character_is_combining(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_combining(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_combining_
 
 /**
@@ -149,7 +149,7 @@ extern "C" {
  * @see iscntrl()
  */
 #ifndef _di_f_utf_character_is_control_
-  extern f_status_t f_utf_character_is_control(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_control(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_control_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  * @see iscntrl()
  */
 #ifndef _di_f_utf_character_is_control_code_
-  extern f_status_t f_utf_character_is_control_code(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_control_code(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_control_code_
 
 /**
@@ -190,7 +190,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_control_format_
-  extern f_status_t f_utf_character_is_control_format(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_control_format(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_control_format_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_control_picture_
-  extern f_status_t f_utf_character_is_control_picture(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_control_picture(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_control_picture_
 
 /**
@@ -232,7 +232,7 @@ extern "C" {
  * @see isdigit()
  */
 #ifndef _di_f_utf_character_is_digit_
-  extern f_status_t f_utf_character_is_digit(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_digit(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_digit_
 
 /**
@@ -251,7 +251,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_emoji_
-  extern f_status_t f_utf_character_is_emoji(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_emoji(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_emoji_
 
 /**
@@ -287,7 +287,7 @@ extern "C" {
  * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_character_is_fragment_
-  extern f_status_t f_utf_character_is_fragment(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_fragment(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_fragment_
 
 /**
@@ -306,7 +306,7 @@ extern "C" {
  * @see isgraph()
  */
 #ifndef _di_f_utf_character_is_graph_
-  extern f_status_t f_utf_character_is_graph(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_graph(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_graph_
 
 /**
@@ -327,7 +327,7 @@ extern "C" {
  * @see isdigit()
  */
 #ifndef _di_f_utf_character_is_numeric_
-  extern f_status_t f_utf_character_is_numeric(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_numeric(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_numeric_
 
 /**
@@ -344,7 +344,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_phonetic_
-  extern f_status_t f_utf_character_is_phonetic(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_phonetic(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_phonetic_
 
 /**
@@ -361,7 +361,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_private_
-  extern f_status_t f_utf_character_is_private(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_private(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_private_
 
 /**
@@ -380,7 +380,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_punctuation_
-  extern f_status_t f_utf_character_is_punctuation(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_punctuation(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_punctuation_
 
 /**
@@ -399,7 +399,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_symbol_
-  extern f_status_t f_utf_character_is_symbol(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_symbol(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_symbol_
 
 /**
@@ -424,7 +424,7 @@ extern "C" {
  * @see f_utf_character_is_fragment()
  */
 #ifndef _di_f_utf_character_is_unassigned_
-  extern f_status_t f_utf_character_is_unassigned(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_unassigned(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_value_
 
 /**
@@ -451,7 +451,7 @@ extern "C" {
  * @see f_utf_character_is_fragment()
  */
 #ifndef _di_f_utf_character_is_valid_
-  extern f_status_t f_utf_character_is_valid(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_valid(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_value_
 
 /**
@@ -478,7 +478,7 @@ extern "C" {
  * @see isspace()
  */
 #ifndef _di_f_utf_character_is_whitespace_
-  extern f_status_t f_utf_character_is_whitespace(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_whitespace(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_whitespace_
 
 /**
@@ -500,7 +500,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_whitespace_modifier_
-  extern f_status_t f_utf_character_is_whitespace_modifier(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_whitespace_modifier(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_whitespace_modifier_
 
 /**
@@ -521,7 +521,7 @@ extern "C" {
  * @see isspace()
  */
 #ifndef _di_f_utf_character_is_whitespace_other_
-  extern f_status_t f_utf_character_is_whitespace_other(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_whitespace_other(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_whitespace_other_
 
 /**
@@ -544,7 +544,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_wide_
-  extern f_status_t f_utf_character_is_wide(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_wide(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_wide_
 
 /**
@@ -569,7 +569,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_
-  extern f_status_t f_utf_character_is_word(const f_utf_character_t character, const bool strict);
+  extern f_status_t f_utf_character_is_word(const f_utf_char_t character, const bool strict);
 #endif // _di_f_utf_character_is_word_
 
 /**
@@ -599,7 +599,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_dash_
-  extern f_status_t f_utf_character_is_word_dash(const f_utf_character_t character, const bool strict);
+  extern f_status_t f_utf_character_is_word_dash(const f_utf_char_t character, const bool strict);
 #endif // _di_f_utf_character_is_word_dash_
 
 /**
@@ -631,7 +631,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_dash_plus_
-  extern f_status_t f_utf_character_is_word_dash_plus(const f_utf_character_t character, const bool strict);
+  extern f_status_t f_utf_character_is_word_dash_plus(const f_utf_char_t character, const bool strict);
 #endif // _di_f_utf_character_is_word_dash_plus_
 
 /**
@@ -650,7 +650,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_character_is_zero_width_
-  extern f_status_t f_utf_character_is_zero_width(const f_utf_character_t character);
+  extern f_status_t f_utf_character_is_zero_width(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_zero_width_
 
 #ifdef __cplusplus
