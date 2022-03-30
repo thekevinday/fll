@@ -141,10 +141,6 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_console_parameter_t parameters[] = fss_payload_read_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = fss_payload_read_total_parameters_d;
-
     {
       f_console_parameter_id_t ids[3] = { fss_payload_read_parameter_no_color_e, fss_payload_read_parameter_light_e, fss_payload_read_parameter_dark_e };
       const f_console_parameter_ids_t choices = { ids, 3 };
@@ -171,11 +167,7 @@ extern "C" {
         fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      if (F_status_is_error(status)) {
-        fss_payload_read_main_delete(main);
-
-        return F_status_set_error(status);
-      }
+      if (F_status_is_error(status)) return F_status_set_error(status);
     }
 
     // Identify priority of verbosity related parameters.
@@ -186,11 +178,7 @@ extern "C" {
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
-      if (F_status_is_error(status)) {
-        fss_payload_read_main_delete(main);
-
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (choice == fss_payload_read_parameter_verbosity_quiet_e) {
         main->output.verbosity = f_console_verbosity_quiet_e;
@@ -219,15 +207,11 @@ extern "C" {
     if (main->parameters.array[fss_payload_read_parameter_help_e].result == f_console_result_found_e) {
       fss_payload_read_print_help(main->output.to, main->context);
 
-      fss_payload_read_main_delete(main);
-
       return status;
     }
 
     if (main->parameters.array[fss_payload_read_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, fss_payload_read_program_version_s);
-
-      fss_payload_read_main_delete(main);
 
       return status;
     }
@@ -531,7 +515,6 @@ extern "C" {
           }
 
           fss_payload_read_data_delete_simple(&data);
-          fss_payload_read_main_delete(main);
 
           return F_none;
         }
@@ -680,7 +663,6 @@ extern "C" {
     }
 
     fss_payload_read_data_delete_simple(&data);
-    fss_payload_read_main_delete(main);
 
     return status;
   }
