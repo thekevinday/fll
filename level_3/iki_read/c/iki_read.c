@@ -66,13 +66,9 @@ extern "C" {
 #endif // _di_iki_read_print_help_
 
 #ifndef _di_iki_read_main_
-  f_status_t iki_read_main(iki_read_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t iki_read_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
-
-    f_console_parameter_t parameters[] = iki_read_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = iki_read_total_parameters_d;
 
     {
       f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color_e, iki_read_parameter_light_e, iki_read_parameter_dark_e };
@@ -107,8 +103,6 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
         }
 
-        iki_read_main_delete(main);
-
         return F_status_set_error(status);
       }
     }
@@ -123,8 +117,6 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-        iki_read_main_delete(main);
 
         return status;
       }
@@ -151,14 +143,16 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
+    iki_read_data_t data = iki_read_data_t_initialize;
+    data.main = main;
+    data.argv = main->parameters.arguments.array;
 
     status = F_none;
 
     if (main->parameters.array[iki_read_parameter_help_e].result == f_console_result_found_e) {
       iki_read_print_help(main->output.to, main->context);
 
-      iki_read_main_delete(main);
+      iki_read_data_delete(&data);
 
       return F_none;
     }
@@ -166,7 +160,7 @@ extern "C" {
     if (main->parameters.array[iki_read_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, iki_read_program_version_s);
 
-      iki_read_main_delete(main);
+      iki_read_data_delete(&data);
 
       return F_none;
     }
@@ -190,15 +184,15 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
+        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, iki_read_long_at_s, argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, iki_read_long_at_s, data.argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
 
-        main->at = number;
+        data.at = number;
 
         if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -235,15 +229,15 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
+        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, iki_read_long_line_s, argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, iki_read_long_line_s, data.argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
 
-        main->line = number;
+        data.line = number;
       }
 
       if (main->parameters.array[iki_read_parameter_name_e].result == f_console_result_found_e) {
@@ -341,7 +335,7 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        main->mode = iki_read_mode_literal_e;
+        data.mode = iki_read_mode_literal_e;
       }
       else if (main->parameters.array[iki_read_parameter_object_e].result == f_console_result_found_e) {
         if (main->parameters.array[iki_read_parameter_content_e].result == f_console_result_found_e) {
@@ -376,15 +370,15 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        main->mode = iki_read_mode_object_e;
+        data.mode = iki_read_mode_object_e;
       }
       else if (main->parameters.array[iki_read_parameter_total_e].result == f_console_result_found_e) {
-        main->mode = iki_read_mode_total_e;
+        data.mode = iki_read_mode_total_e;
       }
       else {
 
         // This is the default behavior, so there is no reason to check for the -c/--content parameter.
-        main->mode = iki_read_mode_content_e;
+        data.mode = iki_read_mode_content_e;
       }
 
       if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
@@ -410,7 +404,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
         }
 
-        iki_read_main_delete(main);
+        iki_read_data_delete(&data);
 
         return F_status_set_error(F_parameter);
       }
@@ -420,17 +414,17 @@ extern "C" {
 
         file.id = F_type_descriptor_input_d;
 
-        status = f_file_read(file, &main->buffer);
+        status = f_file_read(file, &data.buffer);
 
         if (F_status_is_error(status)) {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, f_string_ascii_minus_s, f_file_operation_process_s, fll_error_file_type_file_e);
         }
         else {
-          status = iki_read_process_buffer(main);
+          status = iki_read_process_buffer(&data);
         }
 
         // Clear buffers before continuing.
-        f_string_dynamic_resize(0, &main->buffer);
+        f_string_dynamic_resize(0, &data.buffer);
       }
 
       if (F_status_is_fine(status) && main->parameters.remaining.used > 0) {
@@ -439,7 +433,7 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % iki_read_signal_check_d)) {
-            if (iki_read_signal_received(main)) {
+            if (iki_read_signal_received(&data)) {
               status = F_status_set_error(F_interrupt);
 
               break;
@@ -451,10 +445,10 @@ extern "C" {
           macro_f_file_t_reset(file);
           file.size_read = 0;
 
-          status = f_file_open(argv[main->parameters.remaining.array[i]], 0, &file);
+          status = f_file_open(data.argv[main->parameters.remaining.array[i]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -462,7 +456,7 @@ extern "C" {
           status = f_file_size_by_id(file.id, &file.size_read);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
 
             f_file_stream_close(F_true, &file);
 
@@ -478,21 +472,21 @@ extern "C" {
 
           ++file.size_read;
 
-          status = f_file_read(file, &main->buffer);
+          status = f_file_read(file, &data.buffer);
 
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
 
             break;
           }
 
-          status = iki_read_process_buffer(main);
+          status = iki_read_process_buffer(&data);
           if (F_status_is_error(status)) break;
 
           // Clear buffers before repeating the loop.
-          f_string_dynamic_resize(0, &main->buffer);
+          f_string_dynamic_resize(0, &data.buffer);
         } // for
       }
     }
@@ -506,7 +500,7 @@ extern "C" {
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet_e) {
-      if (F_status_is_error(status) || !main->mode) {
+      if (F_status_is_error(status) || !data.mode) {
         if (F_status_set_fine(status) == F_interrupt) {
           fflush(main->output.to.stream);
         }
@@ -515,7 +509,7 @@ extern "C" {
       }
     }
 
-    iki_read_main_delete(main);
+    iki_read_data_delete(&data);
 
     return status;
   }

@@ -98,7 +98,7 @@ extern "C" {
  * @see iki_read_main_delete()
  */
 #ifndef _di_iki_read_main_
-  extern f_status_t iki_read_main(iki_read_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t iki_read_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_iki_read_main_
 
 #ifdef __cplusplus

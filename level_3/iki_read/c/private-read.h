@@ -18,8 +18,8 @@ extern "C" {
  * If the --at parameter is not specified in the console arguments, then range is untouched.
  * The range.start will be greater than main->buffer.used if the --at range is not found before buffer end is reached.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param range
  *   The range value to represent the --at values.
  *
@@ -31,14 +31,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_at_
-  extern f_status_t iki_read_process_at(iki_read_main_t * const main, f_string_range_t *range) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_at(iki_read_data_t * const data, f_string_range_t *range) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_at_
 
 /**
  * Process a given buffer.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -47,14 +47,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_
-  extern f_status_t iki_read_process_buffer(iki_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer(iki_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_
 
 /**
  * Process a given buffer, printing the given range.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param buffer_range
  *   The range within the buffer to process.
  * @param iki_data
@@ -70,7 +70,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_
-  extern f_status_t iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_ranges(iki_read_data_t * const data, f_string_range_t *buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_ranges_
 
 /**
@@ -78,8 +78,8 @@ extern "C" {
  *
  * The entire variable is replaced with the range from the associated ranges.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param buffer_range
  *   The range within the buffer to process.
  * @param iki_data
@@ -95,14 +95,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  extern f_status_t iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_ranges_whole(iki_read_data_t * const data, const f_string_range_t buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 /**
  * Process a given buffer, printing the total.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param iki_data
  *   The IKI data.
  *
@@ -112,14 +112,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_total_
-  extern f_status_t iki_read_process_buffer_total(iki_read_main_t * const main, f_iki_data_t *iki_data) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_buffer_total(iki_read_data_t * const data, f_iki_data_t *iki_data) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_total_
 
 /**
  * Process the arguments, associating substitions with a given vocabulary.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param vocabulary
  *   The ranges representing a vocabulary.
  * @param substitutionss
@@ -131,7 +131,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_substitutions_identify_
-  extern f_status_t iki_read_substitutions_identify(iki_read_main_t * const main, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_substitutions_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_substitutions_identify_
 
 #ifdef __cplusplus

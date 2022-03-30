@@ -49,19 +49,6 @@ extern "C" {
   const f_string_static_t iki_read_substitution_with_s = macro_f_string_static_t_initialize(IKI_READ_substitution_with_s, 0, IKI_READ_substitution_with_s_length);
 #endif // _di_iki_read_substitution_t_
 
-#ifndef _di_iki_read_main_delete_
-  f_status_t iki_read_main_delete(iki_read_main_t * const main) {
-
-    f_console_parameters_delete(&main->parameters);
-
-    f_string_dynamic_resize(0, &main->buffer);
-
-    macro_f_color_context_t_delete_simple(main->context);
-
-    return F_none;
-  }
-#endif // _di_iki_read_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif
