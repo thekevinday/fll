@@ -96,7 +96,7 @@ extern "C" {
         fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      if (F_status_is_error(status)) return F_status_set_error(status);
+      if (F_status_is_error(status)) return status;
     }
 
     // Identify priority of verbosity related parameters.
@@ -106,7 +106,6 @@ extern "C" {
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
       if (F_status_is_error(status)) return status;
 
       if (choice == fss_payload_write_parameter_verbosity_quiet_e) {
