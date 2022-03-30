@@ -82,6 +82,19 @@ extern "C" {
 #endif // _di_utf8_data_t_
 
 /**
+ * Deallocate program data.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_utf8_data_delete_
+  extern void utf8_data_delete(utf8_data_t *data) F_attribute_visibility_internal_d;
+#endif // _di_utf8_data_delete_
+
+/**
  * Check to see if a process signal is received.
  *
  * Only signals that are blocked via main.signal will be received.

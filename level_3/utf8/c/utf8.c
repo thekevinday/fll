@@ -74,10 +74,6 @@ extern "C" {
     utf8_data_t data = utf8_data_t_initialize;
     data.main = main;
 
-    f_console_parameter_t parameters[] = utf8_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = utf8_total_parameters_d;
-
     // Identify priority of color parameters.
     {
       f_console_parameter_id_t ids[3] = { utf8_parameter_no_color_e, utf8_parameter_light_e, utf8_parameter_dark_e };
@@ -109,7 +105,6 @@ extern "C" {
         fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
         utf8_data_delete(&data);
-        utf8_main_delete(main);
 
         return F_status_set_error(status);
       }
@@ -126,7 +121,6 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-        utf8_main_delete(main);
         utf8_data_delete(&data);
 
         return status;
@@ -166,7 +160,6 @@ extern "C" {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
         utf8_data_delete(&data);
-        utf8_main_delete(main);
 
         return status;
       }
@@ -199,7 +192,6 @@ extern "C" {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
         utf8_data_delete(&data);
-        utf8_main_delete(main);
 
         return status;
       }
@@ -275,7 +267,6 @@ extern "C" {
       utf8_print_help(main->output.to, main->context);
 
       utf8_data_delete(&data);
-      utf8_main_delete(main);
 
       return F_none;
     }
@@ -284,7 +275,6 @@ extern "C" {
       fll_program_print_version(main->output.to, utf8_program_version_s);
 
       utf8_data_delete(&data);
-      utf8_main_delete(main);
 
       return F_none;
     }
@@ -492,7 +482,6 @@ extern "C" {
     }
 
     utf8_data_delete(&data);
-    utf8_main_delete(main);
 
     if (F_status_is_error(status) || status == F_signal) {
       return status;

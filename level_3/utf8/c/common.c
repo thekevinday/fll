@@ -69,13 +69,6 @@ extern "C" {
   const f_string_static_t utf8_long_to_width_s = macro_f_string_static_t_initialize(UTF8_long_to_width_s, 0, UTF8_long_to_width_s_length);
 #endif // _di_utf8_parameters_
 
-#ifndef _di_utf8_main_delete_
-  f_status_t utf8_main_delete(fll_program_data_t *main) {
-
-    return fll_program_data_delete(main);
-  }
-#endif // _di_utf8_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

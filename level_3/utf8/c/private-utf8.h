@@ -13,19 +13,6 @@ extern "C" {
 #endif
 
 /**
- * Deallocate program data.
- *
- * @param data
- *   The program data.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_utf8_data_delete_
-  extern void utf8_data_delete(utf8_data_t *data);
-#endif // _di_utf8_data_delete_
-
-/**
  * Convert the text from one format to other another format or verify text.
  *
  * @param data

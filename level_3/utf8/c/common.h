@@ -309,25 +309,6 @@ extern "C" {
   #define utf8_mode_to_width_d       0x20
 #endif // _di_utf8_modes_
 
-/**
- * Deallocate main.
- *
- * Be sure to call this after executing utf8_main().
- *
- * @param main
- *   The main program data.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- *
- * @see utf8_main()
- */
-#ifndef _di_utf8_main_delete_
-  extern f_status_t utf8_main_delete(fll_program_data_t *main);
-#endif // _di_utf8_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif
