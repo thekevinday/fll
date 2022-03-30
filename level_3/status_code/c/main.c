@@ -17,9 +17,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   const f_status_t status = status_code_main(&data, &arguments);
 
-  fll_program_standard_setdown(&data.signal);
-
   fll_program_data_delete(&data);
+
+  fll_program_standard_setdown(&data.signal);
 
   if (F_status_is_error(status)) return 1;
 
