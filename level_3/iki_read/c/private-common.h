@@ -68,7 +68,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_iki_read_data_delete_
-  extern f_status_t iki_read_data_delete(iki_read_data_t * const data);
+  extern f_status_t iki_read_data_delete(iki_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_data_delete_
 
 /**
