@@ -52,7 +52,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_fss_embedded_list_write_signal_received_
-  extern f_status_t fss_embedded_list_write_signal_received(fll_program_data_t * const main);
+  extern f_status_t fss_embedded_list_write_signal_received(fll_program_data_t * const main) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_write_signal_received_
 
 #ifdef __cplusplus

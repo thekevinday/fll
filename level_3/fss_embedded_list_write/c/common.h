@@ -201,25 +201,6 @@ extern "C" {
   #define fss_embedded_list_write_total_parameters_d 18
 #endif // _di_fss_embedded_list_write_parameters_
 
-/**
- * Deallocate main.
- *
- * Be sure to call this after executing fss_embedded_list_write_main().
- *
- * @param main
- *   The main program data.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- *
- * @see fss_embedded_list_write_main()
- */
-#ifndef _di_fss_embedded_list_write_main_delete_
-  extern f_status_t fss_embedded_list_write_main_delete(fll_program_data_t * const main);
-#endif // _di_fss_embedded_list_write_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -84,8 +84,6 @@ extern "C" {
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
- *
- * @see fss_embedded_list_write_main_delete()
  */
 #ifndef _di_fss_embedded_list_write_main_
   extern f_status_t fss_embedded_list_write_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
