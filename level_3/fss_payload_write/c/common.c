@@ -32,13 +32,6 @@ extern "C" {
   const f_string_static_t fss_payload_write_long_trim_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_long_trim_s, 0, FSS_PAYLOAD_WRITE_long_trim_s_length);
 #endif // _di_fss_payload_write_parameters_
 
-#ifndef _di_fss_payload_write_main_delete_
-  f_status_t fss_payload_write_main_delete(fll_program_data_t * const main) {
-
-    return fll_program_data_delete(main);
-  }
-#endif // _di_fss_payload_write_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif
