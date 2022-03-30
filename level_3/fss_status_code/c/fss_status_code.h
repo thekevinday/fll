@@ -67,8 +67,6 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call fss_status_code_main_delete() after executing this.
- *
  * If main.signal is non-zero, then this blocks and handles the following signals:
  *   - F_signal_abort
  *   - F_signal_broken_pipe
@@ -86,8 +84,6 @@ extern "C" {
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
- *
- * @see fss_status_code_main_delete()
  */
 #ifndef _di_fss_status_code_main_
   extern f_status_t fss_status_code_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
