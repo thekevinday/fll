@@ -48,13 +48,9 @@ extern "C" {
 #endif // _di_iki_write_print_help_
 
 #ifndef _di_iki_write_main_
-  f_status_t iki_write_main(iki_write_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t iki_write_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
-
-    f_console_parameter_t parameters[] = iki_write_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = iki_write_total_parameters_d;
 
     {
       f_console_parameter_id_t ids[3] = { iki_write_parameter_no_color_e, iki_write_parameter_light_e, iki_write_parameter_dark_e };
@@ -88,8 +84,6 @@ extern "C" {
           f_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
         }
 
-        iki_write_main_delete(main);
-
         return F_status_set_error(status);
       }
     }
@@ -102,11 +96,7 @@ extern "C" {
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
-      if (F_status_is_error(status)) {
-        iki_write_main_delete(main);
-
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (choice == iki_write_parameter_verbosity_quiet_e) {
         main->output.verbosity = f_console_verbosity_quiet_e;
@@ -130,14 +120,16 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
+    iki_write_data_t data = iki_write_data_t_initialize;
+    data.main = main;
+    data.argv = main->parameters.arguments.array;
 
     status = F_none;
 
     if (main->parameters.array[iki_write_parameter_help_e].result == f_console_result_found_e) {
       iki_write_print_help(main->output.to, main->context);
 
-      iki_write_main_delete(main);
+      iki_write_data_delete(&data);
 
       return F_none;
     }
@@ -145,7 +137,7 @@ extern "C" {
     if (main->parameters.array[iki_write_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, iki_write_program_version_s);
 
-      iki_write_main_delete(main);
+      iki_write_data_delete(&data);
 
       return F_none;
     }
@@ -177,10 +169,10 @@ extern "C" {
           file.id = -1;
           file.stream = 0;
 
-          status = f_file_stream_open(argv[index], f_string_empty_s, &file);
+          status = f_file_stream_open(data.argv[index], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[index], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[index], f_file_operation_open_s, fll_error_file_type_file_e);
           }
         }
       }
@@ -263,18 +255,18 @@ extern "C" {
       }
     }
 
-    main->quote = f_iki_syntax_quote_double_s;
+    data.quote = f_iki_syntax_quote_double_s;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[iki_write_parameter_double_e].result == f_console_result_found_e) {
         if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
           if (main->parameters.array[iki_write_parameter_double_e].location < main->parameters.array[iki_write_parameter_single_e].location) {
-            main->quote = f_iki_syntax_quote_single_s;
+            data.quote = f_iki_syntax_quote_single_s;
           }
         }
       }
       else if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
-        main->quote = f_iki_syntax_quote_single_s;
+        data.quote = f_iki_syntax_quote_single_s;
       }
     }
 
@@ -301,7 +293,7 @@ extern "C" {
         for (f_status_t status_pipe = F_none; ; ) {
 
           if (!((++main->signal_check) % iki_write_signal_check_d)) {
-            if (iki_write_signal_received(main)) {
+            if (iki_write_signal_received(&data)) {
               status = F_status_set_error(F_interrupt);
 
               break;
@@ -377,7 +369,7 @@ extern "C" {
               }
             }
 
-            status = iki_write_process(main, file, object, content, &escaped);
+            status = iki_write_process(&data, file, object, content, &escaped);
             if (F_status_is_error(status)) break;
 
             fll_print_dynamic_raw(f_string_eol_s, file.stream);
@@ -428,15 +420,16 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.array[iki_write_parameter_object_e].values.used; ++i) {
 
           if (!((++main->signal_check) % iki_write_signal_check_d)) {
-            if (iki_write_signal_received(main)) {
+            if (iki_write_signal_received(&data)) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
 
             main->signal_check = 0;
           }
 
-          status = iki_write_process(main, file, argv[main->parameters.array[iki_write_parameter_object_e].values.array[i]], argv[main->parameters.array[iki_write_parameter_content_e].values.array[i]], &escaped);
+          status = iki_write_process(&data, file, data.argv[main->parameters.array[iki_write_parameter_object_e].values.array[i]], data.argv[main->parameters.array[iki_write_parameter_content_e].values.array[i]], &escaped);
           if (F_status_is_error(status)) break;
 
           fll_print_dynamic_raw(f_string_eol_s, file.stream);
@@ -468,7 +461,7 @@ extern "C" {
       }
     }
 
-    iki_write_main_delete(main);
+    iki_write_data_delete(&data);
 
     return status;
   }

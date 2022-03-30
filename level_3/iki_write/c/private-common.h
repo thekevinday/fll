@@ -13,6 +13,29 @@ extern "C" {
 #endif
 
 /**
+ * The program data.
+ *
+ * argv:  The argument structure in the progam data parameters for simplifying syntax.
+ * main:  The main program data.
+ * quote: The quote to use when writing.
+ */
+#ifndef _di_iki_write_data_t_
+  typedef struct {
+    fll_program_data_t *main;
+    f_string_static_t *argv;
+
+    f_string_static_t quote;
+  } iki_write_data_t;
+
+  #define iki_write_data_t_initialize \
+    { \
+      0, \
+      0, \
+      f_string_static_t_initialize, \
+    }
+#endif // _di_iki_write_data_t_
+
+/**
  * Provide common/generic definitions.
  *
  * iki_write_common_allocation_*:
@@ -25,15 +48,28 @@ extern "C" {
 #endif // _di_iki_write_common_
 
 /**
+ * Deallocate program data.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_iki_write_data_delete_
+  extern void iki_write_data_delete(iki_write_data_t *data) F_attribute_visibility_internal_d;
+#endif // _di_iki_write_data_delete_
+
+/**
  * Print a message about a process signal being recieved, such as an interrupt signal.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param signal
  *   The signal received.
  */
 #ifndef _di_iki_write_print_signal_received_
-  extern void iki_write_print_signal_received(iki_write_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
+  extern void iki_write_print_signal_received(iki_write_data_t * const data, const f_status_t signal) F_attribute_visibility_internal_d;
 #endif // _di_iki_write_print_signal_received_
 
 /**
@@ -41,8 +77,8 @@ extern "C" {
  *
  * Only signals that are blocked via main.signal will be received.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   A positive number representing a valid signal on signal received.
@@ -51,7 +87,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_iki_write_signal_received_
-  extern f_status_t iki_write_signal_received(iki_write_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t iki_write_signal_received(iki_write_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_iki_write_signal_received_
 
 #ifdef __cplusplus

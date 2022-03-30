@@ -8,7 +8,7 @@
  * This is the IKI Write program.
  *
  * This program utilizes the Featureless Linux Library.
- * This program processes files or other input in fss format and stores the results in the iki_write_main_t.
+ * This program processes files or other input in fss format.
  *
  * This processes in accordance to the IKI specification.
  */
@@ -98,7 +98,7 @@ extern "C" {
  * @see iki_write_main_delete()
  */
 #ifndef _di_iki_write_main_
-  extern f_status_t iki_write_main(iki_write_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t iki_write_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_iki_write_main_
 
 #ifdef __cplusplus

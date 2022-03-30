@@ -27,19 +27,6 @@ extern "C" {
   const f_string_static_t iki_write_long_single_s = macro_f_string_static_t_initialize(IKI_WRITE_long_single_s, 0, IKI_WRITE_long_single_s_length);
 #endif // _di_iki_write_parameters_
 
-#ifndef _di_iki_write_main_delete_
-  f_status_t iki_write_main_delete(iki_write_main_t * const main) {
-
-    f_console_parameters_delete(&main->parameters);
-
-    f_string_dynamic_resize(0, &main->buffer);
-
-    macro_f_color_context_t_delete_simple(main->context);
-
-    return F_none;
-  }
-#endif // _di_iki_write_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif
