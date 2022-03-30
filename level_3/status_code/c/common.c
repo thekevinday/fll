@@ -29,13 +29,6 @@ extern "C" {
   const f_string_static_t status_code_long_number_s = macro_f_string_static_t_initialize(STATUS_CODE_long_number_s, 0, STATUS_CODE_long_number_s_length);
 #endif // _di_status_code_parameters_
 
-#ifndef _di_status_code_main_delete_
-  f_status_t status_code_main_delete(fll_program_data_t * const main) {
-
-    return fll_program_data_delete(main);
-  }
-#endif // _di_status_code_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

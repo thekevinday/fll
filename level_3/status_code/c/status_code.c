@@ -43,10 +43,6 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_console_parameter_t parameters[] = status_code_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = status_code_total_parameters_d;
-
     {
       f_console_parameter_id_t ids[3] = { status_code_parameter_no_color_e, status_code_parameter_light_e, status_code_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
@@ -73,11 +69,7 @@ extern "C" {
         fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      if (F_status_is_error(status)) {
-        status_code_main_delete(main);
-
-        return F_status_set_error(status);
-      }
+      if (F_status_is_error(status)) return F_status_set_error(status);
     }
 
     // Identify priority of verbosity related parameters.
@@ -88,11 +80,7 @@ extern "C" {
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
-      if (F_status_is_error(status)) {
-        status_code_main_delete(main);
-
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (choice == status_code_parameter_verbosity_quiet_e) {
         main->output.verbosity = f_console_verbosity_quiet_e;
@@ -123,15 +111,11 @@ extern "C" {
     if (main->parameters.array[status_code_parameter_help_e].result == f_console_result_found_e) {
       status_code_print_help(main->output.to, main->context);
 
-      status_code_main_delete(main);
-
       return F_none;
     }
 
     if (main->parameters.array[status_code_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, status_code_program_version_s);
-
-      status_code_main_delete(main);
 
       return F_none;
     }
@@ -148,8 +132,6 @@ extern "C" {
 
         funlockfile(main->error.to.stream);
 
-        status_code_main_delete(main);
-
         return F_status_set_error(status);
       }
 
@@ -163,8 +145,6 @@ extern "C" {
         fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
         funlockfile(main->error.to.stream);
-
-        status_code_main_delete(main);
 
         return F_status_set_error(status);
       }
@@ -180,15 +160,11 @@ extern "C" {
 
       funlockfile(main->error.to.stream);
 
-      status_code_main_delete(main);
-
       return F_status_set_error(status);
     }
 
     if (main->parameters.remaining.used == 0 && !main->process_pipe) {
       fll_print_format("%[You failed to specify a status code.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-      status_code_main_delete(main);
 
       return F_status_set_error(F_parameter);
     }
@@ -293,8 +269,6 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }
     }
-
-    status_code_main_delete(main);
 
     return status;
   }
