@@ -204,8 +204,6 @@ extern "C" {
 /**
  * Deallocate main.
  *
- * Be sure to call this after executing fss_extended_list_write_main().
- *
  * @param main
  *   The main program data.
  *
