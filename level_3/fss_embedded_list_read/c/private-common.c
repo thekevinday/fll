@@ -5,28 +5,39 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_embedded_list_read_print_signal_received_
-  void fss_embedded_list_read_print_signal_received(fss_embedded_list_read_main_t * const main, const f_status_t signal) {
+#ifndef _di_fss_embedded_list_read_data_delete_
+  f_status_t fss_embedded_list_read_data_delete(fss_embedded_list_read_data_t * const data) {
 
-    if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
+    macro_f_fss_nest_t_delete_simple(data->nest);
+
+    f_string_dynamic_resize(0, &data->buffer);
+
+    return F_none;
+  }
+#endif // _di_fss_embedded_list_read_data_delete_
+
+#ifndef _di_fss_embedded_list_read_print_signal_received_
+  void fss_embedded_list_read_print_signal_received(fss_embedded_list_read_data_t * const data, const f_status_t signal) {
+
+    if (data->main->warning.verbosity != f_console_verbosity_verbose_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
-    fflush(main->warning.to.stream);
+    fflush(data->main->warning.to.stream);
 
-    flockfile(main->warning.to.stream);
+    flockfile(data->main->warning.to.stream);
 
-    fl_print_format("%]%r%r%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
-    fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, signal, main->context.set.notable);
-    fl_print_format("%[.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
+    fl_print_format("%]%r%r%[Received signal code %]", data->main->warning.to.stream, data->main->context.set.reset, f_string_eol_s, f_string_eol_s, data->main->context.set.warning, data->main->context.set.warning);
+    fl_print_format("%[%i%]", data->main->warning.to.stream, data->main->context.set.notable, signal, data->main->context.set.notable);
+    fl_print_format("%[.%]%r", data->main->warning.to.stream, data->main->context.set.warning, data->main->context.set.warning, f_string_eol_s);
 
-    funlockfile(main->warning.to.stream);
+    funlockfile(data->main->warning.to.stream);
   }
 #endif // _di_fss_embedded_list_read_print_signal_received_
 
 #ifndef _di_fss_embedded_list_read_signal_received_
-  f_status_t fss_embedded_list_read_signal_received(fss_embedded_list_read_main_t * const main) {
+  f_status_t fss_embedded_list_read_signal_received(fss_embedded_list_read_data_t * const data) {
 
-    if (main->signal.id == -1) {
+    if (data->main->signal.id == -1) {
       return F_false;
     }
 
@@ -34,7 +45,7 @@ extern "C" {
 
     memset(&information, 0, sizeof(struct signalfd_siginfo));
 
-    if (f_signal_read(main->signal, 0, &information) == F_signal) {
+    if (f_signal_read(data->main->signal, 0, &information) == F_signal) {
       switch (information.ssi_signo) {
         case F_signal_abort:
         case F_signal_broken_pipe:
@@ -42,7 +53,7 @@ extern "C" {
         case F_signal_interrupt:
         case F_signal_quit:
         case F_signal_termination:
-          fss_embedded_list_read_print_signal_received(main, information.ssi_signo);
+          fss_embedded_list_read_print_signal_received(data, information.ssi_signo);
 
           return information.ssi_signo;
       }

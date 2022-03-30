@@ -3,7 +3,11 @@
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
-  fss_embedded_list_read_main_t data = fss_embedded_list_read_main_t_initialize;
+  fll_program_data_t data = fll_program_data_t_initialize;
+
+  f_console_parameter_t parameters[] = fss_embedded_list_read_console_parameter_t_initialize;
+  data.parameters.array = parameters;
+  data.parameters.used = fss_embedded_list_read_total_parameters_d;
 
   if (f_pipe_input_exists()) {
     data.process_pipe = F_true;
@@ -12,6 +16,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   fll_program_standard_setup(&data.signal);
 
   const f_status_t status = fss_embedded_list_read_main(&data, &arguments);
+
+  fll_program_data_delete(&data);
 
   fll_program_standard_setdown(&data.signal);
 

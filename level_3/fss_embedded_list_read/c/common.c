@@ -59,21 +59,6 @@ extern "C" {
   const f_string_static_t fss_embedded_list_read_delimit_mode_name_lesser_s = macro_f_string_static_t_initialize(FSS_EMBEDDED_LIST_READ_delimit_mode_name_lesser_s, 0, FSS_EMBEDDED_LIST_READ_delimit_mode_name_lesser_s_length);
 #endif // _di_fss_embedded_list_read_delimit_mode_
 
-#ifndef _di_fss_embedded_list_read_main_delete_
-  f_status_t fss_embedded_list_read_main_delete(fss_embedded_list_read_main_t * const main) {
-
-    f_console_parameters_delete(&main->parameters);
-
-    macro_f_fss_nest_t_delete_simple(main->nest);
-
-    f_string_dynamic_resize(0, &main->buffer);
-
-    macro_f_color_context_t_delete_simple(main->context);
-
-    return F_none;
-  }
-#endif // _di_fss_embedded_list_read_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

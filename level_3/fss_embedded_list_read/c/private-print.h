@@ -17,31 +17,31 @@ extern "C" {
  *
  * This is only used in pipe output mode.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  */
 #ifndef _di_fss_embedded_list_read_print_content_ignore_
-  extern void fss_embedded_list_read_print_content_ignore(fss_embedded_list_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_embedded_list_read_print_content_ignore(fss_embedded_list_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_print_content_ignore_
 
 /**
  * Print the end of an object (which is essentially the start of a content).
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  */
 #ifndef _di_fss_embedded_list_read_print_object_end_
-  extern void fss_embedded_list_read_print_object_end(fss_embedded_list_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_embedded_list_read_print_object_end(fss_embedded_list_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_print_object_end_
 
 /**
  * Print the end of an object/content set.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  */
 #ifndef _di_fss_embedded_list_read_print_set_end_
-  extern void fss_embedded_list_read_print_set_end(fss_embedded_list_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern void fss_embedded_list_read_print_set_end(fss_embedded_list_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_print_set_end_
 
 #ifdef __cplusplus

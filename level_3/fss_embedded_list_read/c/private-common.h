@@ -147,15 +147,61 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_depths_t_
 
 /**
+ * The program data.
+ *
+ * process_pipe: Designate whether or not to process the input pipe.
+ * context:      The color context.
+ */
+#ifndef _di_fss_embedded_list_read_data_t_
+  typedef struct {
+    fll_program_data_t *main;
+    f_string_static_t *argv;
+
+    f_string_dynamic_t buffer;
+    f_fss_nest_t nest;
+
+    uint8_t delimit_mode;
+    f_array_length_t delimit_depth;
+  } fss_embedded_list_read_data_t;
+
+  #define fss_embedded_list_read_data_t_initialize \
+    { \
+      0, \
+      0, \
+      f_string_dynamic_t_initialize, \
+      f_fss_nest_t_initialize, \
+      fss_embedded_list_read_delimit_mode_all_e, \
+      0, \
+    }
+#endif // _di_fss_embedded_list_read_data_t_
+
+/**
+ * Deallocate program data.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see fss_embedded_list_read_main()
+ */
+#ifndef _di_fss_embedded_list_read_data_delete_
+  extern f_status_t fss_embedded_list_read_data_delete(fss_embedded_list_read_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_fss_embedded_list_read_data_delete_
+
+/**
  * Print a message about a process signal being recieved, such as an interrupt signal.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param signal
  *   The signal received.
  */
 #ifndef _di_fss_embedded_list_read_print_signal_received_
-  extern void fss_embedded_list_read_print_signal_received(fss_embedded_list_read_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
+  extern void fss_embedded_list_read_print_signal_received(fss_embedded_list_read_data_t * const data, const f_status_t signal) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_print_signal_received_
 
 /**
@@ -163,8 +209,8 @@ extern "C" {
  *
  * Only signals that are blocked via main.signal will be received.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   A positive number representing a valid signal on signal received.
@@ -173,7 +219,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_fss_embedded_list_read_signal_received_
-  extern f_status_t fss_embedded_list_read_signal_received(fss_embedded_list_read_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t fss_embedded_list_read_signal_received(fss_embedded_list_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_signal_received_
 
 #ifdef __cplusplus
