@@ -136,7 +136,7 @@ extern "C" {
     if (*number > F_status_size_max_with_bits_d) {
       fl_print_format("%[out of range%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-      return status;
+      return F_status_set_error(F_number_overflow);
     }
 
     if (F_status_is_error(status)) {
