@@ -87,7 +87,7 @@ extern "C" {
         fll_program_parameter_process_empty(&main->context, sets);
       }
 
-      if (F_status_is_error(status)) return F_status_set_error(status);
+      if (F_status_is_error(status)) return status;
     }
 
     // Identify priority of verbosity related parameters.
