@@ -61,9 +61,9 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
     chain = firewall_chain_custom_id_e;
   }
 
-  for (uint16_t signal_check = 0; F_status_is_error_not(status) && i < local.rule_objects.used; ++i) {
+  for (; F_status_is_error_not(status) && i < local.rule_objects.used; ++i) {
 
-    if (!((++signal_check) % firewall_signal_check_d)) {
+    if (!((++main->signal_check) % firewall_signal_check_d)) {
       if (firewall_signal_received(main)) {
         f_string_dynamic_resize(0, &ip_list);
         f_string_dynamics_resize(0, &arguments);
@@ -73,7 +73,7 @@ f_status_t firewall_perform_commands(firewall_main_t * const main, const firewal
         return F_status_set_error(F_interrupt);
       }
 
-      signal_check = 0;
+      main->signal_check = 0;
     }
 
     length = macro_firewall_structure_size(local.rule_objects, i);
@@ -816,12 +816,12 @@ f_status_t firewall_create_custom_chains(firewall_main_t * const main, firewall_
   reserved->has_stop = F_false;
   reserved->has_main = F_false;
 
-  for (uint16_t signal_check = 0; i < local->chain_objects.used; ++i) {
+  for (; i < local->chain_objects.used; ++i) {
 
     new_chain = F_true;
     j = 0;
 
-    if (!((++signal_check) % firewall_signal_check_d)) {
+    if (!((++main->signal_check) % firewall_signal_check_d)) {
       if (firewall_signal_received(main)) break;
     }
 

@@ -346,13 +346,12 @@ extern "C" {
  * warning:      The output file for warning printing.
  * signal:       The process signal management structure.
  * context:      The color context.
- *
- * @todo
  */
 #ifndef _di_byte_dump_main_t_
   typedef struct {
     f_console_parameters_t parameters;
 
+    uint16_t signal_check;
     bool process_pipe;
 
     fl_print_t output;
@@ -374,6 +373,7 @@ extern "C" {
   #define byte_dump_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
+      0, \
       F_false, \
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \

@@ -57,14 +57,14 @@ extern "C" {
     memset(&invalid, 0, sizeof(f_char_t) * main->width);
 
     if (byte_get >= 0) {
-      for (uint16_t signal_check = 0; ; ) {
+      for (;;) {
 
-        if (!((++signal_check) % byte_dump_signal_check_d)) {
+        if (!((++main->signal_check) % byte_dump_signal_check_d)) {
           if (byte_dump_signal_received(main)) {
             return F_status_set_error(F_interrupt);
           }
 
-          signal_check = 0;
+          main->signal_check = 0;
         }
 
         byte_get = getc(file.stream);

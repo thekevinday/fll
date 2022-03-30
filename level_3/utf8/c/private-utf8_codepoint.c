@@ -204,7 +204,6 @@ extern "C" {
     bool valid = F_true;
     bool next = F_true;
     uint8_t mode_codepoint = utf8_codepoint_mode_ready_e;
-    uint16_t signal_check = 0;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
@@ -219,13 +218,16 @@ extern "C" {
 
       for (i = 0; F_status_is_fine(status) && i < data->buffer.used; ) {
 
-        if (!((++signal_check) % utf8_signal_check_d)) {
+        if (!((++data->main->signal_check) % utf8_signal_check_d)) {
           if (utf8_signal_received(data)) {
             utf8_print_signal_received(data, status);
 
             status = F_signal;
+
             break;
           }
+
+          data->main->signal_check = 0;
         }
 
         status = F_none;

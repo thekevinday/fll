@@ -285,6 +285,7 @@ extern "C" {
   typedef struct {
     f_console_parameters_t parameters;
 
+    uint16_t signal_check;
     f_array_lengths_t remaining;
     bool process_pipe;
 
@@ -307,6 +308,7 @@ extern "C" {
   #define fss_embedded_list_read_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
+      0, \
       f_array_lengths_t_initialize, \
       F_false, \
       fl_print_t_initialize, \

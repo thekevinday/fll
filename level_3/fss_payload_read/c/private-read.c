@@ -83,16 +83,15 @@ extern "C" {
     f_array_length_t position_depth = 0;
     f_array_length_t position_at = 0;
     f_array_length_t position_name = 0;
-    uint16_t signal_check = 0;
 
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
-      if (!((++signal_check) % fss_payload_read_signal_check_d)) {
+      if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
         if (fss_payload_read_signal_received(main)) {
           return F_status_set_error(F_interrupt);
         }
 
-        signal_check = 0;
+        main->signal_check = 0;
       }
 
       data->depths.array[i].depth = 0;
@@ -173,12 +172,12 @@ extern "C" {
 
       for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
 
-        if (!((++signal_check) % fss_payload_read_signal_check_d)) {
+        if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
           if (fss_payload_read_signal_received(main)) {
             return F_status_set_error(F_interrupt);
           }
 
-          signal_check = 0;
+          main->signal_check = 0;
         }
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {
@@ -438,7 +437,6 @@ extern "C" {
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
     f_array_lengths_t *delimits_object = fss_payload_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_payload_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
-    uint16_t signal_check = 0;
     bool is_payload = F_false;
 
     if (data->option & fss_payload_read_data_option_raw_d) {
@@ -450,12 +448,12 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      if (!((++signal_check) % fss_payload_read_signal_check_d)) {
+      if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
         if (fss_payload_read_signal_received(main)) {
           return F_status_set_error(F_interrupt);
         }
 
-        signal_check = 0;
+        main->signal_check = 0;
       }
 
       is_payload = fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, data->buffer, f_fss_string_payload_s.used, data->objects.array[i]) == F_equal_to;
@@ -493,19 +491,18 @@ extern "C" {
 
     f_array_length_t at = 0;
     f_status_t status = F_none;
-    uint16_t signal_check = 0;
     bool is_payload = F_false;
 
     for (f_array_length_t i = 0; i < data->objects.used; ++i) {
 
       if (!names[i]) continue;
 
-      if (!((++signal_check) % fss_payload_read_signal_check_d)) {
+      if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
         if (fss_payload_read_signal_received(main)) {
           return F_status_set_error(F_interrupt);
         }
 
-        signal_check = 0;
+        main->signal_check = 0;
       }
 
       if (at == data->depths.array[0].value_at) {
@@ -690,7 +687,6 @@ extern "C" {
 
       f_string_range_t range = f_string_range_t_initialize;
       f_array_length_t i = 0;
-      uint16_t signal_check = 0;
 
       range.start = data->contents.array[at].array[0].start;
       range.stop = data->contents.array[at].array[0].stop;
@@ -702,12 +698,12 @@ extern "C" {
 
       for (i = range.start; i <= range.stop; ++i) {
 
-        if (!((++signal_check) % fss_payload_read_signal_check_d)) {
+        if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
           if (fss_payload_read_signal_received(main)) {
             return F_status_set_error(F_interrupt);
           }
 
-          signal_check = 0;
+          main->signal_check = 0;
         }
 
         if (data->buffer.string[i] == f_string_eol_s.string[0]) {
@@ -778,18 +774,17 @@ extern "C" {
     }
 
     f_array_length_t max = 0;
-    uint16_t signal_check = 0;
 
     for (f_array_length_t at = 0; at < data->contents.used; ++at) {
 
       if (!names[at]) continue;
 
-      if (!((++signal_check) % fss_payload_read_signal_check_d)) {
+      if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
         if (fss_payload_read_signal_received(main)) {
           return F_status_set_error(F_interrupt);
         }
 
-        signal_check = 0;
+        main->signal_check = 0;
       }
 
       if (data->contents.array[at].used > max) {
@@ -847,18 +842,17 @@ extern "C" {
 
     f_array_length_t line = 0;
     f_status_t status = F_none;
-    uint16_t signal_check = 0;
 
     for (f_array_length_t i = 0; i < data->contents.used; ++i) {
 
       if (!names[i]) continue;
 
-      if (!((++signal_check) % fss_payload_read_signal_check_d)) {
+      if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
         if (fss_payload_read_signal_received(main)) {
           return F_status_set_error(F_interrupt);
         }
 
-        signal_check = 0;
+        main->signal_check = 0;
       }
 
       status = fss_payload_read_process_at_line(main, data, i, *delimits_object, *delimits_content, &line);
@@ -1051,18 +1045,17 @@ extern "C" {
     f_array_length_t total = 0;
     f_string_range_t range = f_string_range_t_initialize;
     f_array_length_t i = 0;
-    uint16_t signal_check = 0;
 
     for (f_array_length_t at = 0; at < data->contents.used; ++at) {
 
       if (!names[at]) continue;
 
-      if (!((++signal_check) % fss_payload_read_signal_check_d)) {
+      if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
         if (fss_payload_read_signal_received(main)) {
           return F_status_set_error(F_interrupt);
         }
 
-        signal_check = 0;
+        main->signal_check = 0;
       }
 
       if (data->option & fss_payload_read_data_option_object_d) {

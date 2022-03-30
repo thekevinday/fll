@@ -419,6 +419,7 @@ extern "C" {
   typedef struct {
     f_console_parameters_t parameters;
 
+    uint16_t signal_check;
     bool process_pipe;
     int child;
 
@@ -437,6 +438,7 @@ extern "C" {
   #define firewall_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
+      0, \
       F_false, \
       0, \
       fl_print_t_initialize, \

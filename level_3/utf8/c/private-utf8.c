@@ -36,9 +36,9 @@ extern "C" {
 
     flockfile(data->file.stream);
 
-    for (uint16_t signal_check = 0; text.string[0] && F_status_is_error_not(status); ) {
+    for (; text.string[0] && F_status_is_error_not(status); ) {
 
-      if (!((++signal_check) % utf8_signal_check_d)) {
+      if (!((++data->main->signal_check) % utf8_signal_check_d)) {
         if (utf8_signal_received(data)) {
           utf8_print_signal_received(data, status);
 
@@ -46,6 +46,8 @@ extern "C" {
 
           break;
         }
+
+        data->main->signal_check = 0;
       }
 
       status = F_none;

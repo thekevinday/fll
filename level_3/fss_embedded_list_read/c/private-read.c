@@ -129,8 +129,12 @@ extern "C" {
 
       for (i = 0; i < values_total; ++i) {
 
-        if (fss_embedded_list_read_signal_received(main)) {
-          return F_status_set_error(F_interrupt);
+        if (!((++main->signal_check) % fss_embedded_list_read_signal_check_d)) {
+          if (fss_embedded_list_read_signal_received(main)) {
+            return F_status_set_error(F_interrupt);
+          }
+
+          main->signal_check = 0;
         }
 
         if (values_type[i] == fss_embedded_list_read_parameter_depth_e || values_type[i] == fss_embedded_list_read_parameter_at_e) {
@@ -554,8 +558,12 @@ extern "C" {
 
         if (skip[i]) continue;
 
-        if (fss_embedded_list_read_signal_received(main)) {
-          return F_status_set_error(F_interrupt);
+        if (!((++main->signal_check) % fss_embedded_list_read_signal_check_d)) {
+          if (fss_embedded_list_read_signal_received(main)) {
+            return F_status_set_error(F_interrupt);
+          }
+
+          main->signal_check = 0;
         }
 
         if (!items->array[i].content.used) {

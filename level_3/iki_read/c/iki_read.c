@@ -434,19 +434,18 @@ extern "C" {
       }
 
       if (F_status_is_fine(status) && main->parameters.remaining.used > 0) {
-        uint16_t signal_check = 0;
         f_file_t file = f_file_t_initialize;
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
-          if (!((++signal_check) % iki_read_signal_check_d)) {
+          if (!((++main->signal_check) % iki_read_signal_check_d)) {
             if (iki_read_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
 
               break;
             }
 
-            signal_check = 0;
+            main->signal_check = 0;
           }
 
           macro_f_file_t_reset(file);

@@ -444,10 +444,14 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.remaining.used > 0) {
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
-          if (fss_embedded_list_read_signal_received(main)) {
-            status = F_status_set_error(F_interrupt);
+          if (!((++main->signal_check) % fss_embedded_list_read_signal_check_d)) {
+            if (fss_embedded_list_read_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
 
-            break;
+              break;
+            }
+
+            main->signal_check = 0;
           }
 
           f_file_t file = f_file_t_initialize;

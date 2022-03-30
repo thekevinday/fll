@@ -359,10 +359,14 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->parameters.array[fss_extended_list_read_parameter_delimit_e].values.used; ++i) {
 
-          if (fss_extended_list_read_signal_received(main)) {
-            status = F_status_set_error(F_interrupt);
+          if (!((++main->signal_check) % fss_extended_list_read_signal_check_d)) {
+            if (fss_extended_list_read_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
 
-            break;
+              break;
+            }
+
+            main->signal_check = 0;
           }
 
           index = main->parameters.array[fss_extended_list_read_parameter_delimit_e].values.array[i];
@@ -557,10 +561,14 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
-          if (fss_extended_list_read_signal_received(main)) {
-            status = F_status_set_error(F_interrupt);
+          if (!((++main->signal_check) % fss_extended_list_read_signal_check_d)) {
+            if (fss_extended_list_read_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
 
-            break;
+              break;
+            }
+
+            main->signal_check = 0;
           }
 
           data.files.array[data.files.used].range.start = data.buffer.used;

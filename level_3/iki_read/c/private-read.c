@@ -498,16 +498,16 @@ extern "C" {
 
       range.start = 0;
 
-      for (uint16_t signal_check = 0; i < main->parameters.array[iki_read_parameter_name_e].values.used; ++i) {
+      for (; i < main->parameters.array[iki_read_parameter_name_e].values.used; ++i) {
 
-        if (!((++signal_check) % iki_read_signal_check_d)) {
+        if (!((++main->signal_check) % iki_read_signal_check_d)) {
           if (iki_read_signal_received(main)) {
             f_string_dynamic_resize(0, &name);
 
             return F_status_set_error(F_interrupt);
           }
 
-          signal_check = 0;
+          main->signal_check = 0;
         }
 
         index = main->parameters.array[iki_read_parameter_name_e].values.array[i];

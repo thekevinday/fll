@@ -450,18 +450,16 @@ extern "C" {
           if (main->parameters.array[fss_extended_write_parameter_object_e].result == f_console_result_additional_e) {
             contents.used = 0;
 
-            uint16_t signal_check = 0;
-
             for (f_array_length_t i = 0; i < main->parameters.array[fss_extended_write_parameter_object_e].values.used; ++i) {
 
-              if (!((++signal_check) % fss_extended_write_signal_check_d)) {
+              if (!((++main->signal_check) % fss_extended_write_signal_check_d)) {
                 if (fss_extended_write_signal_received(main)) {
                   status = F_status_set_error(F_interrupt);
 
                   break;
                 }
 
-                signal_check = 0;
+                main->signal_check = 0;
               }
 
               status = fss_extended_write_process(main, output, quote, &argv[main->parameters.array[fss_extended_write_parameter_object_e].values.array[i]], 0, &buffer);
@@ -497,16 +495,16 @@ extern "C" {
           f_array_length_t object_next = 0;
           f_array_length_t content_current = 0;
 
-          for (uint16_t signal_check = 0; i < main->parameters.array[fss_extended_write_parameter_object_e].values.used; ++i) {
+          for (; i < main->parameters.array[fss_extended_write_parameter_object_e].values.used; ++i) {
 
-            if (!((++signal_check) % fss_extended_write_signal_check_d)) {
+            if (!((++main->signal_check) % fss_extended_write_signal_check_d)) {
               if (fss_extended_write_signal_received(main)) {
                 status = F_status_set_error(F_interrupt);
 
                 break;
               }
 
-              signal_check = 0;
+              main->signal_check = 0;
             }
 
             object_current = main->parameters.array[fss_extended_write_parameter_object_e].locations.array[i];

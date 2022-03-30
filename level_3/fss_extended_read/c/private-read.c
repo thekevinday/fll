@@ -87,16 +87,15 @@ extern "C" {
     f_array_length_t position_depth = 0;
     f_array_length_t position_at = 0;
     f_array_length_t position_name = 0;
-    uint16_t signal_check = 0;
 
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
-      if (!((++signal_check) % fss_extended_read_signal_check_d)) {
+      if (!((++main->signal_check) % fss_extended_read_signal_check_d)) {
         if (fss_extended_read_signal_received(main)) {
           return F_status_set_error(F_interrupt);
         }
 
-        signal_check = 0;
+        main->signal_check = 0;
       }
 
       data->depths.array[i].depth = 0;
@@ -177,12 +176,12 @@ extern "C" {
 
       for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
 
-        if (!((++signal_check) % fss_extended_read_signal_check_d)) {
+        if (!((++main->signal_check) % fss_extended_read_signal_check_d)) {
           if (fss_extended_read_signal_received(main)) {
             return F_status_set_error(F_interrupt);
           }
 
-          signal_check = 0;
+          main->signal_check = 0;
         }
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {

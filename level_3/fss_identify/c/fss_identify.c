@@ -300,18 +300,16 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      uint16_t signal_check = 0;
-
       for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
-        if (!((++signal_check) % fss_identify_signal_check_d)) {
+        if (!((++main->signal_check) % fss_identify_signal_check_d)) {
           if (fss_identify_signal_received(main)) {
             status = F_status_set_error(F_interrupt);
 
             break;
           }
 
-          signal_check = 0;
+          main->signal_check = 0;
         }
 
         if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_additional_e) {

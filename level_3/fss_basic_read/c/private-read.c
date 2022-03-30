@@ -63,8 +63,12 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
-      if (fss_basic_read_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
+      if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
+        if (fss_basic_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
+
+        main->signal_check = 0;
       }
 
       data->depths.array[i].depth = 0;
@@ -145,8 +149,12 @@ extern "C" {
 
       for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
 
-        if (fss_basic_read_signal_received(main)) {
-          return F_status_set_error(F_interrupt);
+        if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
+          if (fss_basic_read_signal_received(main)) {
+            return F_status_set_error(F_interrupt);
+          }
+
+          main->signal_check = 0;
         }
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {
@@ -358,8 +366,12 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      if (fss_basic_read_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
+      if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
+        if (fss_basic_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
+
+        main->signal_check = 0;
       }
 
       if (at == data->depths.array[0].value_at) {
@@ -435,8 +447,12 @@ extern "C" {
 
       if (!names[at]) continue;
 
-      if (fss_basic_read_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
+      if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
+        if (fss_basic_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
+
+        main->signal_check = 0;
       }
 
       if (data->contents.array[at].used > max) {
@@ -462,8 +478,12 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      if (fss_basic_read_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
+      if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
+        if (fss_basic_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
+
+        main->signal_check = 0;
       }
 
       if (!(data->option & fss_basic_read_data_option_object_d) && (data->option & fss_basic_read_data_option_content_d)) {
@@ -607,8 +627,12 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      if (fss_basic_read_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
+      if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
+        if (fss_basic_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
+
+        main->signal_check = 0;
       }
 
       if (!(data->option & fss_basic_read_data_option_object_d) && data->option & fss_basic_read_data_option_content_d) {

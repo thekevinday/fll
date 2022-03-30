@@ -86,8 +86,12 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
-      if (fss_extended_list_read_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
+      if (!((++main->signal_check) % fss_extended_list_read_signal_check_d)) {
+        if (fss_extended_list_read_signal_received(main)) {
+          return F_status_set_error(F_interrupt);
+        }
+
+        main->signal_check = 0;
       }
 
       data->depths.array[i].depth = 0;
@@ -168,8 +172,12 @@ extern "C" {
 
       for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
 
-        if (fss_extended_list_read_signal_received(main)) {
-          return F_status_set_error(F_interrupt);
+        if (!((++main->signal_check) % fss_extended_list_read_signal_check_d)) {
+          if (fss_extended_list_read_signal_received(main)) {
+            return F_status_set_error(F_interrupt);
+          }
+
+          main->signal_check = 0;
         }
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {

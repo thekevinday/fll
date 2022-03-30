@@ -295,20 +295,19 @@ extern "C" {
 
         f_array_length_t previous = 0;
         f_string_range_t range = f_string_range_t_initialize;
-        uint16_t signal_check = 0;
 
         range.start = 0;
 
         for (f_status_t status_pipe = F_none; ; ) {
 
-          if (!((++signal_check) % iki_write_signal_check_d)) {
+          if (!((++main->signal_check) % iki_write_signal_check_d)) {
             if (iki_write_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
 
               break;
             }
 
-            signal_check = 0;
+            main->signal_check = 0;
           }
 
           if (status_pipe != F_none_eof) {
@@ -426,17 +425,15 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        uint16_t signal_check = 0;
-
         for (f_array_length_t i = 0; i < main->parameters.array[iki_write_parameter_object_e].values.used; ++i) {
 
-          if (!((++signal_check) % iki_write_signal_check_d)) {
+          if (!((++main->signal_check) % iki_write_signal_check_d)) {
             if (iki_write_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
               break;
             }
 
-            signal_check = 0;
+            main->signal_check = 0;
           }
 
           status = iki_write_process(main, file, argv[main->parameters.array[iki_write_parameter_object_e].values.array[i]], argv[main->parameters.array[iki_write_parameter_content_e].values.array[i]], &escaped);

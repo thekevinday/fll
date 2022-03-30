@@ -406,16 +406,16 @@ extern "C" {
 
         f_file_t file = macro_f_file_t_initialize(0, -1, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
-        for (uint16_t signal_check = 0; i < main->parameters.array[utf8_parameter_from_file_e].values.used && status != F_signal; ++i) {
+        for (; i < main->parameters.array[utf8_parameter_from_file_e].values.used && status != F_signal; ++i) {
 
-          if (!((++signal_check) % utf8_signal_check_d)) {
+          if (!((++main->signal_check) % utf8_signal_check_d)) {
             if (utf8_signal_received(&data)) {
               status = F_status_set_error(F_signal);
 
               break;
             }
 
-            signal_check = 0;
+            main->signal_check = 0;
           }
 
           index = main->parameters.array[utf8_parameter_from_file_e].values.array[i];
@@ -454,18 +454,16 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && status != F_signal && main->parameters.remaining.used) {
-        uint16_t signal_check = 0;
-
         for (f_array_length_t i = 0; F_status_is_error_not(status) && i < main->parameters.remaining.used; ++i) {
 
-          if (!((++signal_check) % utf8_signal_check_d)) {
+          if (!((++main->signal_check) % utf8_signal_check_d)) {
             if (utf8_signal_received(&data)) {
               status = F_status_set_error(F_signal);
 
               break;
             }
 
-            signal_check = 0;
+            main->signal_check = 0;
           }
 
           utf8_print_section_header_parameter(&data, main->parameters.remaining.array[i]);

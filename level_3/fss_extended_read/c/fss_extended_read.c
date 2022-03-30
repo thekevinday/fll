@@ -351,21 +351,20 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.array[fss_extended_read_parameter_delimit_e].result == f_console_result_additional_e) {
         f_array_length_t index = 0;
         f_array_length_t length = 0;
-        uint16_t signal_check = 0;
 
         // Set the value to 0 to allow for detecting mode based on what is provided.
         data.delimit_mode = 0;
 
         for (f_array_length_t i = 0; i < main->parameters.array[fss_extended_read_parameter_delimit_e].values.used; ++i) {
 
-          if (!((++signal_check) % fss_extended_read_signal_check_d)) {
+          if (!((++main->signal_check) % fss_extended_read_signal_check_d)) {
             if (fss_extended_read_signal_received(main)) {
               status = F_status_set_error(F_signal);
 
               break;
             }
 
-            signal_check = 0;
+            main->signal_check = 0;
           }
 
           index = main->parameters.array[fss_extended_read_parameter_delimit_e].values.array[i];
@@ -557,17 +556,17 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.remaining.used > 0) {
         f_file_t file = f_file_t_initialize;
         f_array_length_t size_file = 0;
-        uint16_t signal_check = 0;
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
-          if (!((++signal_check) % fss_extended_read_signal_check_d)) {
+          if (!((++main->signal_check) % fss_extended_read_signal_check_d)) {
             if (fss_extended_read_signal_received(main)) {
               status = F_status_set_error(F_signal);
+
               break;
             }
 
-            signal_check = 0;
+            main->signal_check = 0;
           }
 
           data.files.array[data.files.used].range.start = data.buffer.used;
