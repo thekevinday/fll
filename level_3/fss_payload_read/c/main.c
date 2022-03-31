@@ -2,7 +2,7 @@
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  f_console_arguments_t arguments = { argc, argv };
+  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
   fll_program_data_t data = fll_program_data_t_initialize;
 
   f_console_parameter_t parameters[] = fss_payload_read_console_parameter_t_initialize;
