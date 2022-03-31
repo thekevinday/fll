@@ -13,6 +13,44 @@ extern "C" {
 #endif
 
 /**
+ * The program data.
+ *
+ * argv:         The argument structure in the progam data parameters for simplifying syntax.
+ * first:        The first position.
+ * last:         The last position.
+ * main:         The main program data.
+ * mode:         The digit representation mode.
+ * options:      Additional options.
+ * presentation: The presentation mode.
+ * width:        The number of columns.
+ */
+#ifndef _di_byte_dump_data_t_
+  typedef struct {
+    fll_program_data_t *main;
+    f_string_static_t *argv;
+
+    uint64_t first;
+    uint64_t last;
+    uint8_t width;
+    uint8_t mode;
+    uint8_t presentation;
+    uint8_t options;
+  } byte_dump_data_t;
+
+  #define byte_dump_data_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+      0, \
+      8, \
+      byte_dump_mode_hexidecimal_e, \
+      byte_dump_presentation_normal_e, \
+      byte_dump_option_wide_d, \
+    }
+#endif // _di_byte_dump_data_t_
+
+/**
  * A main structure for character row and column position (cell).
  *
  * column: The column position associated with the character cell.
@@ -64,7 +102,7 @@ extern "C" {
  *   The signal received.
  */
 #ifndef _di_byte_dump_print_signal_received_
-  extern void byte_dump_print_signal_received(byte_dump_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
+  extern void byte_dump_print_signal_received(byte_dump_data_t * const data, const f_status_t signal) F_attribute_visibility_internal_d;
 #endif // _di_byte_dump_print_signal_received_
 
 /**
@@ -82,7 +120,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_byte_dump_signal_received_
-  extern f_status_t byte_dump_signal_received(byte_dump_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t byte_dump_signal_received(byte_dump_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_byte_dump_signal_received_
 
 #ifdef __cplusplus

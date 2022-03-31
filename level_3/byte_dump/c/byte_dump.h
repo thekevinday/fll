@@ -73,8 +73,6 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call byte_dump_main_delete() after executing this.
- *
  * @param main
  *   The main program data.
  * @param arguments
@@ -95,11 +93,9 @@ extern "C" {
  *   F_parameter (with error bit) on an argument error.
  *
  *   Status codes (with error bit) are returned on any problem.
- *
- * @see byte_dump_main_delete()
  */
 #ifndef _di_byte_dump_main_
-  extern f_status_t byte_dump_main(byte_dump_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t byte_dump_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_byte_dump_main_
 
 #ifdef __cplusplus

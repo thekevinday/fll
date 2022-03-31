@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_byte_dump_file_
-  f_status_t byte_dump_file(byte_dump_main_t * const main, const f_string_static_t file_name, const f_file_t file) {
+  f_status_t byte_dump_file(byte_dump_data_t * const data, const f_string_static_t file_name, const f_file_t file) {
 
     f_status_t status = F_none;
 
@@ -28,43 +28,43 @@ extern "C" {
 
     // Store the current character main until it can be printed.
     f_utf_string_dynamic_t characters = f_utf_string_dynamic_t_initialize;
-    f_utf_char_t character_array[main->width];
+    f_utf_char_t character_array[data->width];
     f_array_length_t character_current = 0;
 
     // The row starts based on the first byte starting point and how many columns of bytes are displayed per row.
-    if (main->first) {
-      cell.row = main->first / main->width;
-      offset = main->first % main->width;
+    if (data->first) {
+      cell.row = data->first / data->width;
+      offset = data->first % data->width;
 
       // fseek() cannot be used on a PIPE, so read instead of seek.
       if (file_name.used) {
-        byte_get = fseek(file.stream, main->first, SEEK_SET);
+        byte_get = fseek(file.stream, data->first, SEEK_SET);
       }
       else {
-        f_char_t skip[main->first];
+        f_char_t skip[data->first];
 
-        byte_get = fread(skip, sizeof(f_char_t), main->first, file.stream);
+        byte_get = fread(skip, sizeof(f_char_t), data->first, file.stream);
       }
     }
 
-    memset(&character_array, 0, sizeof(f_utf_char_t) * main->width);
+    memset(&character_array, 0, sizeof(f_utf_char_t) * data->width);
     characters.string = character_array;
     characters.used = 0;
-    characters.size = main->width;
+    characters.size = data->width;
 
     // Record when a character is invalid.
-    f_char_t invalid[main->width];
-    memset(&invalid, 0, sizeof(f_char_t) * main->width);
+    f_char_t invalid[data->width];
+    memset(&invalid, 0, sizeof(f_char_t) * data->width);
 
     if (byte_get >= 0) {
       for (;;) {
 
-        if (!((++main->signal_check) % byte_dump_signal_check_d)) {
-          if (byte_dump_signal_received(main)) {
+        if (!((++data->main->signal_check) % byte_dump_signal_check_d)) {
+          if (byte_dump_signal_received(data)) {
             return F_status_set_error(F_interrupt);
           }
 
-          main->signal_check = 0;
+          data->main->signal_check = 0;
         }
 
         byte_get = getc(file.stream);
@@ -82,7 +82,7 @@ extern "C" {
           if (character_reset) {
             characters.used = 0;
             character_reset = F_false;
-            memset(&invalid, 0, sizeof(f_char_t) * main->width);
+            memset(&invalid, 0, sizeof(f_char_t) * data->width);
           }
 
           character_current = characters.used++;
@@ -146,165 +146,165 @@ extern "C" {
           }
         }
 
-        flockfile(main->output.to.stream);
+        flockfile(data->main->output.to.stream);
 
-        if (byte_dump_print_character_fragment(main, characters, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
+        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
           character_reset = F_true;
         }
 
         if (width_utf > 1) {
-          if (byte_dump_print_character_fragment(main, characters, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
+          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
             character_reset = F_true;
           }
 
           if (width_utf > 2) {
-            if (byte_dump_print_character_fragment(main, characters, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
+            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
               character_reset = F_true;
             }
 
             if (width_utf > 3) {
-              if (byte_dump_print_character_fragment(main, characters, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
+              if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
                 character_reset = F_true;
               }
             }
           }
 
-          if (main->last) {
+          if (data->last) {
             position += width_utf;
 
-            if (position >= main->last) {
-              funlockfile(main->output.to.stream);
+            if (position >= data->last) {
+              funlockfile(data->main->output.to.stream);
 
               break;
             }
           }
         }
-        else if (main->last) {
+        else if (data->last) {
           ++position;
 
-          if (position >= main->last) {
-            funlockfile(main->output.to.stream);
+          if (position >= data->last) {
+            funlockfile(data->main->output.to.stream);
 
             break;
           }
         }
 
-        funlockfile(main->output.to.stream);
+        funlockfile(data->main->output.to.stream);
 
         width_utf = -1;
       } // for
     }
 
-    flockfile(main->output.to.stream);
+    flockfile(data->main->output.to.stream);
 
     // Print placeholders to fill out the remaining line and then optionally print the text block.
-    if (cell.column && cell.column < main->width) {
+    if (cell.column && cell.column < data->width) {
       previous.bytes = 0;
       previous.invalid = 0;
 
-      while (cell.column < main->width) {
+      while (cell.column < data->width) {
 
-        if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
-          f_print_terminated("         ", main->output.to.stream);
+        if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+          f_print_terminated("         ", data->main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_hexidecimal_e) {
-          f_print_terminated("   ", main->output.to.stream);
+        else if (data->mode == byte_dump_mode_hexidecimal_e) {
+          f_print_terminated("   ", data->main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_duodecimal_e) {
-          f_print_terminated("    ", main->output.to.stream);
+        else if (data->mode == byte_dump_mode_duodecimal_e) {
+          f_print_terminated("    ", data->main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_octal_e) {
-          f_print_terminated("    ", main->output.to.stream);
+        else if (data->mode == byte_dump_mode_octal_e) {
+          f_print_terminated("    ", data->main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_binary_e) {
-          f_print_terminated("         ", main->output.to.stream);
+        else if (data->mode == byte_dump_mode_binary_e) {
+          f_print_terminated("         ", data->main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_decimal_e) {
-          f_print_terminated("    ", main->output.to.stream);
+        else if (data->mode == byte_dump_mode_decimal_e) {
+          f_print_terminated("    ", data->main->output.to.stream);
         }
 
         ++cell.column;
 
-        if (cell.column < main->width) {
-          if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+        if (cell.column < data->width) {
+          if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
             if (!(cell.column % 4)) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_hexidecimal_e) {
+          else if (data->mode == byte_dump_mode_hexidecimal_e) {
             if (!(cell.column % 8)) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_duodecimal_e) {
+          else if (data->mode == byte_dump_mode_duodecimal_e) {
             if (!(cell.column % 6)) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_octal_e) {
+          else if (data->mode == byte_dump_mode_octal_e) {
             if (!(cell.column % 6)) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_binary_e) {
+          else if (data->mode == byte_dump_mode_binary_e) {
             if (!(cell.column % 6)) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           }
-          else if (main->mode == byte_dump_mode_decimal_e) {
+          else if (data->mode == byte_dump_mode_decimal_e) {
             if (!(cell.column % 6)) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           }
         }
       } // while
 
-      if (main->parameters.array[byte_dump_parameter_text_e].result == f_console_result_found_e) {
-        byte_dump_print_text(main, characters, invalid, &previous, &offset);
+      if (data->main->parameters.array[byte_dump_parameter_text_e].result == f_console_result_found_e) {
+        byte_dump_print_text(data, characters, invalid, &previous, &offset);
       }
       else {
-        f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+        f_print_dynamic_raw(f_string_eol_s, data->main->output.to.stream);
       }
     }
 
-    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, data->main->output.to.stream);
 
-    funlockfile(main->output.to.stream);
+    funlockfile(data->main->output.to.stream);
 
     // Make sure to flush standard out to help prevent standard error from causing problems.
-    fflush(main->output.to.stream);
+    fflush(data->main->output.to.stream);
 
     if (found_invalid_utf) {
-      flockfile(main->error.to.stream);
+      flockfile(data->main->error.to.stream);
 
-      fl_print_format("%[Invalid UTF-8 codes were detected for file '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
-      fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, main->context.set.notable);
-      fl_print_format("%['.%]%r%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s, f_string_eol_s);
+      fl_print_format("%[Invalid UTF-8 codes were detected for file '%]", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error);
+      fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, data->main->context.set.notable);
+      fl_print_format("%['.%]%r%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s, f_string_eol_s);
 
-      funlockfile(main->error.to.stream);
+      funlockfile(data->main->error.to.stream);
     }
 
     if (ferror(file.stream)) {
       // @todo determine what the error is and display it.
-      flockfile(main->error.to.stream);
+      flockfile(data->main->error.to.stream);
 
-      fl_print_format("%[%Qread() failed for '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
-      fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, main->context.set.notable);
-      fl_print_format("%['.%]%r%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s, f_string_eol_s);
+      fl_print_format("%[%Qread() failed for '%]", data->main->error.to.stream, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
+      fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, data->main->context.set.notable);
+      fl_print_format("%['.%]%r%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s, f_string_eol_s);
 
-      funlockfile(main->error.to.stream);
+      funlockfile(data->main->error.to.stream);
 
       status = F_status_set_error(F_failure);
     }
 
-    fflush(main->error.to.stream);
+    fflush(data->main->error.to.stream);
 
     return status;
   }
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_character_fragment_
-  bool byte_dump_print_character_fragment(byte_dump_main_t * const main, const f_utf_string_static_t characters, const f_char_t invalid[], const uint8_t width_utf, const f_char_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, f_char_t *offset) {
+  bool byte_dump_print_character_fragment(byte_dump_data_t * const data, const f_utf_string_static_t characters, const f_char_t invalid[], const uint8_t width_utf, const f_char_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, f_char_t *offset) {
 
     f_char_t byte = 0;
 
@@ -326,65 +326,65 @@ extern "C" {
     }
 
     if (!cell->column) {
-      fl_print_format("%[%016_UL%] ", main->output.to.stream, main->context.set.notable, cell->row, main->context.set.notable);
+      fl_print_format("%[%016_UL%] ", data->main->output.to.stream, data->main->context.set.notable, cell->row, data->main->context.set.notable);
 
       if (*offset) {
         f_char_t offset_to_print = *offset;
 
         // Pad the buffer with spaces to hide any skipped bytes (skipped via --first).
-        while (offset_to_print && cell->column < main->width) {
+        while (offset_to_print && cell->column < data->width) {
 
-          if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
-            f_print_terminated("         ", main->output.to.stream);
+          if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+            f_print_terminated("         ", data->main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_hexidecimal_e) {
-            f_print_terminated("   ", main->output.to.stream);
+          else if (data->mode == byte_dump_mode_hexidecimal_e) {
+            f_print_terminated("   ", data->main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_duodecimal_e) {
-            f_print_terminated("    ", main->output.to.stream);
+          else if (data->mode == byte_dump_mode_duodecimal_e) {
+            f_print_terminated("    ", data->main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_octal_e) {
-            f_print_terminated("    ", main->output.to.stream);
+          else if (data->mode == byte_dump_mode_octal_e) {
+            f_print_terminated("    ", data->main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_binary_e) {
-            f_print_terminated("         ", main->output.to.stream);
+          else if (data->mode == byte_dump_mode_binary_e) {
+            f_print_terminated("         ", data->main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_decimal_e) {
-            f_print_terminated("    ", main->output.to.stream);
+          else if (data->mode == byte_dump_mode_decimal_e) {
+            f_print_terminated("    ", data->main->output.to.stream);
           }
 
           --offset_to_print;
           ++cell->column;
 
-          if (cell->column < main->width) {
-            if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+          if (cell->column < data->width) {
+            if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
               if (!(cell->column % 4)) {
-                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_hexidecimal_e) {
+            else if (data->mode == byte_dump_mode_hexidecimal_e) {
               if (!(cell->column % 8)) {
-                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_duodecimal_e) {
+            else if (data->mode == byte_dump_mode_duodecimal_e) {
               if (!(cell->column % 6)) {
-                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_octal_e) {
+            else if (data->mode == byte_dump_mode_octal_e) {
               if (!(cell->column % 6)) {
-                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_binary_e) {
+            else if (data->mode == byte_dump_mode_binary_e) {
               if (!(cell->column % 4)) {
-                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
               }
             }
-            else if (main->mode == byte_dump_mode_decimal_e) {
+            else if (data->mode == byte_dump_mode_decimal_e) {
               if (!(cell->column % 6)) {
-                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
               }
             }
           }
@@ -392,8 +392,8 @@ extern "C" {
       }
     }
 
-    if (cell->column < main->width) {
-      if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e && !invalid[character_current]) {
+    if (cell->column < data->width) {
+      if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e && !invalid[character_current]) {
         if (byte_current == 1) {
           uint32_t unicode = 0;
 
@@ -425,73 +425,73 @@ extern "C" {
           }
 
           if (width_utf < 4) {
-            fl_print_format(" U+%04_U  ", main->output.to.stream, unicode);
+            fl_print_format(" U+%04_U  ", data->main->output.to.stream, unicode);
           }
           else {
-            fl_print_format(" U+%06_U  ", main->output.to.stream, unicode);
+            fl_print_format(" U+%06_U  ", data->main->output.to.stream, unicode);
           }
         }
         else {
 
           // Pad the characters that are incomplete fragments of an already printed valid Unicode.
-          f_print_terminated("         ", main->output.to.stream);
+          f_print_terminated("         ", data->main->output.to.stream);
         }
       }
       else {
-        if (main->mode == byte_dump_mode_hexidecimal_e) {
-          if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
-            f_print_terminated("      ", main->output.to.stream);
+        if (data->mode == byte_dump_mode_hexidecimal_e) {
+          if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+            f_print_terminated("      ", data->main->output.to.stream);
           }
 
           if (invalid[character_current]) {
-            fl_print_format(" %[%02_uii%]", main->output.to.stream, main->context.set.error, (uint8_t) byte, main->context.set.error);
+            fl_print_format(" %[%02_uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
-            fl_print_format(" %02_uii", main->output.to.stream, (uint8_t) byte);
+            fl_print_format(" %02_uii", data->main->output.to.stream, (uint8_t) byte);
           }
         }
-        else if (main->mode == byte_dump_mode_duodecimal_e) {
-          if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
-            f_print_terminated("   ", main->output.to.stream);
+        else if (data->mode == byte_dump_mode_duodecimal_e) {
+          if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+            f_print_terminated("   ", data->main->output.to.stream);
           }
 
           if (invalid[character_current]) {
-            fl_print_format(" %[%03&uii%]", main->output.to.stream, main->context.set.error, (uint8_t) byte, main->context.set.error);
+            fl_print_format(" %[%03&uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
-            fl_print_format(" %03&uii", main->output.to.stream, (uint8_t) byte);
+            fl_print_format(" %03&uii", data->main->output.to.stream, (uint8_t) byte);
           }
         }
-        else if (main->mode == byte_dump_mode_octal_e) {
-          if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
-            f_print_terminated("     ", main->output.to.stream);
+        else if (data->mode == byte_dump_mode_octal_e) {
+          if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+            f_print_terminated("     ", data->main->output.to.stream);
           }
 
           if (invalid[character_current]) {
-            fl_print_format(" %[%03@uii%]", main->output.to.stream, main->context.set.error, (uint8_t) byte, main->context.set.error);
+            fl_print_format(" %[%03@uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
-            fl_print_format(" %03@uii", main->output.to.stream, (uint8_t) byte);
+            fl_print_format(" %03@uii", data->main->output.to.stream, (uint8_t) byte);
           }
         }
-        else if (main->mode == byte_dump_mode_binary_e) {
+        else if (data->mode == byte_dump_mode_binary_e) {
           if (invalid[character_current]) {
-            fl_print_format(" %[%08!uii%]", main->output.to.stream, main->context.set.error, (uint8_t) byte, main->context.set.error);
+            fl_print_format(" %[%08!uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
-            fl_print_format(" %08!uii", main->output.to.stream, (uint8_t) byte);
+            fl_print_format(" %08!uii", data->main->output.to.stream, (uint8_t) byte);
           }
         }
-        else if (main->mode == byte_dump_mode_decimal_e) {
-          if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
-            f_print_terminated("     ", main->output.to.stream);
+        else if (data->mode == byte_dump_mode_decimal_e) {
+          if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+            f_print_terminated("     ", data->main->output.to.stream);
           }
 
           if (invalid[character_current]) {
-            fl_print_format(" %[%3uii%]", main->output.to.stream, main->context.set.error, (uint8_t) byte, main->context.set.error);
+            fl_print_format(" %[%3uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
-            fl_print_format(" %3uii", main->output.to.stream, (uint8_t) byte);
+            fl_print_format(" %3uii", data->main->output.to.stream, (uint8_t) byte);
           }
         }
       }
@@ -499,7 +499,7 @@ extern "C" {
       ++cell->column;
     }
 
-    if (cell->column == main->width) {
+    if (cell->column == data->width) {
       uint8_t bytes = 0;
 
       if (byte_current < width_utf) {
@@ -508,11 +508,11 @@ extern "C" {
 
       reset = F_true;
 
-      if (main->parameters.array[byte_dump_parameter_text_e].result == f_console_result_found_e) {
-        byte_dump_print_text(main, characters, invalid, previous, offset);
+      if (data->main->parameters.array[byte_dump_parameter_text_e].result == f_console_result_found_e) {
+        byte_dump_print_text(data, characters, invalid, previous, offset);
       }
       else {
-        f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+        f_print_dynamic_raw(f_string_eol_s, data->main->output.to.stream);
       }
 
       cell->column = 0;
@@ -528,34 +528,34 @@ extern "C" {
       }
     }
     else {
-      if (main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
+      if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
         if (!(cell->column % 4)) {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_hexidecimal_e) {
+      else if (data->mode == byte_dump_mode_hexidecimal_e) {
         if (!(cell->column % 8)) {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_duodecimal_e) {
+      else if (data->mode == byte_dump_mode_duodecimal_e) {
         if (!(cell->column % 6)) {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_octal_e) {
+      else if (data->mode == byte_dump_mode_octal_e) {
         if (!(cell->column % 6)) {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_binary_e) {
+      else if (data->mode == byte_dump_mode_binary_e) {
         if (!(cell->column % 4)) {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
       }
-      else if (main->mode == byte_dump_mode_decimal_e) {
+      else if (data->mode == byte_dump_mode_decimal_e) {
         if (!(cell->column % 6)) {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
       }
     }
@@ -565,7 +565,7 @@ extern "C" {
 #endif // _di_byte_dump_print_character_fragment_
 
 #ifndef _di_byte_dump_print_text_
-  void byte_dump_print_text(byte_dump_main_t * const main, const f_utf_string_static_t characters, const f_char_t invalid[], byte_dump_previous_t *previous, f_char_t *offset) {
+  void byte_dump_print_text(byte_dump_data_t * const data, const f_utf_string_static_t characters, const f_char_t invalid[], byte_dump_previous_t *previous, f_char_t *offset) {
 
     f_char_t c = 0;
     uint8_t at = 0;
@@ -574,16 +574,16 @@ extern "C" {
 
     f_char_t byte[5] = { 0, 0, 0, 0, 0 };
 
-    fl_print_format("  %[%r%] ", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable);
+    fl_print_format("  %[%r%] ", data->main->output.to.stream, data->main->context.set.notable, byte_dump_character_wall_s, data->main->context.set.notable);
 
     if (*offset) {
-      if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-        while (*offset && at < main->width) {
+      if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
+        while (*offset && at < data->width) {
 
-          f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
 
-          if (main->options & byte_dump_option_wide_d) {
-            f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+          if (data->options & byte_dump_option_wide_d) {
+            f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
           }
 
           --(*offset);
@@ -591,23 +591,23 @@ extern "C" {
         } // while
       }
       else {
-        if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
-          for (; *offset && at < main->width; --(*offset), ++at) {
+        if (data->main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
+          for (; *offset && at < data->width; --(*offset), ++at) {
 
-            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+            fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.warning, byte_dump_character_placeholder_s, data->main->context.set.warning);
 
-            if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            if (data->options & byte_dump_option_wide_d) {
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           } // for
         }
         else {
-          for (; *offset && at < main->width; --(*offset), ++at) {
+          for (; *offset && at < data->width; --(*offset), ++at) {
 
-            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
 
-            if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            if (data->options & byte_dump_option_wide_d) {
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           } // for
         }
@@ -615,39 +615,39 @@ extern "C" {
     }
 
     // Print placeholders for the remaining fragments of UTF-8 characters printed on previous lines.
-    if (at < main->width) {
+    if (at < data->width) {
       uint8_t bytes_overflow = 0;
 
-      if (previous->bytes - 1 > main->width) {
-        bytes_overflow = previous->bytes - 1 - main->width;
+      if (previous->bytes - 1 > data->width) {
+        bytes_overflow = previous->bytes - 1 - data->width;
       }
 
       if (previous->bytes) {
-        if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
-          for (; at < previous->bytes && at < main->width; ++at) {
+        if (data->main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
+          for (; at < previous->bytes && at < data->width; ++at) {
 
             if (previous->invalid) {
-              fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+              fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.error, byte_dump_character_placeholder_s, data->main->context.set.error);
             }
-            else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-              f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+            else if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
+              f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
             }
             else {
-              fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+              fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.warning, byte_dump_character_placeholder_s, data->main->context.set.warning);
             }
 
-            if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+            if (data->options & byte_dump_option_wide_d) {
+              f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
             }
           } // for
         }
         else {
-          for (; at < previous->bytes && at < main->width; ++at) {
+          for (; at < previous->bytes && at < data->width; ++at) {
 
-            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
 
-            if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            if (data->options & byte_dump_option_wide_d) {
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
           } // for
         }
@@ -662,21 +662,21 @@ extern "C" {
       }
     }
 
-    for (uint8_t i = 0; i < characters.used && at < main->width; ++i, ++at) {
+    for (uint8_t i = 0; i < characters.used && at < data->width; ++i, ++at) {
 
       c = macro_f_utf_char_t_to_char_1(characters.string[i]);
       width_utf = macro_f_utf_byte_width_is(c);
 
       if (invalid[i]) {
-        fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
+        fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.error, byte_dump_character_incomplete_s, data->main->context.set.error);
 
-        if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+        if (data->options & byte_dump_option_wide_d) {
+          f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
         }
       }
       else if (f_utf_character_is_control(characters.string[i]) == F_true) {
-        if (main->presentation == byte_dump_presentation_normal_e) {
-          fl_print_format("%[%[", main->output.to.stream, main->context.set.notable, main->context.set.warning);
+        if (data->presentation == byte_dump_presentation_normal_e) {
+          fl_print_format("%[%[", data->main->output.to.stream, data->main->context.set.notable, data->main->context.set.warning);
 
           if (width_utf) {
             byte[0] = c;
@@ -702,82 +702,82 @@ extern "C" {
               byte[1] = 0;
             }
 
-            f_print_safely(byte, width_utf, main->output.to.stream);
+            f_print_safely(byte, width_utf, data->main->output.to.stream);
           }
           else {
-            f_print_character_safely(c, main->output.to.stream);
+            f_print_character_safely(c, data->main->output.to.stream);
           }
 
-          fl_print_format("%]%]", main->output.to.stream, main->context.set.warning, main->context.set.notable);
+          fl_print_format("%]%]", data->main->output.to.stream, data->main->context.set.warning, data->main->context.set.notable);
 
-          if (main->options & byte_dump_option_wide_d) {
+          if (data->options & byte_dump_option_wide_d) {
             if (f_utf_character_is_wide(characters.string[i]) != F_true) {
-              f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
             }
           }
         }
         else {
-          if (main->presentation == byte_dump_presentation_simple_e) {
-            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          if (data->presentation == byte_dump_presentation_simple_e) {
+            f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
 
             if (width_utf > 1) {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
 
               if (width_utf > 2) {
-                f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
 
                 if (width_utf > 3) {
-                  f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+                  f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
                 }
               }
             }
           }
-          else if (main->presentation == byte_dump_presentation_classic_e) {
-            f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+          else if (data->presentation == byte_dump_presentation_classic_e) {
+            f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
 
             if (width_utf > 1) {
-              f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
 
               if (width_utf > 2) {
-                f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+                f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
 
                 if (width_utf > 3) {
-                  f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+                  f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
                 }
               }
             }
           }
 
-          if (main->options & byte_dump_option_wide_d) {
-            f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+          if (data->options & byte_dump_option_wide_d) {
+            f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
           }
         }
       }
       else if (f_utf_character_is_whitespace(characters.string[i]) == F_true) {
-        if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-          f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+        if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
+          f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
         }
         else {
-          fl_print_format("%[%[%r%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, f_print_sequence_space_s, main->context.set.warning, main->context.set.notable);
+          fl_print_format("%[%[%r%]%]", data->main->output.to.stream, data->main->context.set.notable, data->main->context.set.warning, f_print_sequence_space_s, data->main->context.set.warning, data->main->context.set.notable);
         }
 
-        if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+        if (data->options & byte_dump_option_wide_d) {
+          f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
         }
       }
       else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
-        if (main->presentation == byte_dump_presentation_classic_e) {
-          f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+        if (data->presentation == byte_dump_presentation_classic_e) {
+          f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
         }
-        else if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
-          fl_print_format("%[%[%r%]%]", main->output.to.stream, main->context.set.notable, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning, main->context.set.notable);
+        else if (data->main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
+          fl_print_format("%[%[%r%]%]", data->main->output.to.stream, data->main->context.set.notable, data->main->context.set.warning, byte_dump_character_placeholder_s, data->main->context.set.warning, data->main->context.set.notable);
         }
         else {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
 
-        if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+        if (data->options & byte_dump_option_wide_d) {
+          f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
         }
       }
       else if (width_utf) {
@@ -787,10 +787,10 @@ extern "C" {
 
           // Print invalid placeholder for invalid UTF-8 widths.
           if (invalid[i]) {
-            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_incomplete_s, main->context.set.error);
+            fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.error, byte_dump_character_incomplete_s, data->main->context.set.error);
           }
           else {
-            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_incomplete_s, main->context.set.warning);
+            fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.warning, byte_dump_character_incomplete_s, data->main->context.set.warning);
           }
         }
         else if (width_utf == 2) {
@@ -801,17 +801,17 @@ extern "C" {
 
             // Use space to represent Specials codes.
             // 0xefbfbd00 is excluded because it is printable (and is the "Replacement Character" code).
-            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
           }
           else if (characters.string[i] >= 0xe290a700 && characters.string[i] <= 0xe290bf00) {
 
             // Use space to represent Control Pictues codes that are not currently defined but are reserved.
-            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
           }
           else if (characters.string[i] >= 0xee808000 && characters.string[i] <= 0xefa3bf00) {
 
             // Use space to represent Private Use Area codes.
-            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
           }
           else {
             print = F_true;
@@ -820,124 +820,124 @@ extern "C" {
         else if (characters.string[i] >= 0xf09c80a0 && characters.string[i] <= 0xf09c80bd) {
 
           // Use space to represent Variation Selectors Supplement codes.
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
         else if (characters.string[i] >= 0xf3b08080 && characters.string[i] <= 0xf3bfbfbf) {
 
           // Use space to represent Supplemental Private Use Area-A codes.
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
         else if (characters.string[i] >= 0xf4808080 && characters.string[i] <= 0xf48fbfbf) {
 
           // Use space to represent Supplemental Private Use Area-B codes.
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
         else {
           print = F_true;
         }
 
         if (print) {
-          f_print_character(c, main->output.to.stream);
+          f_print_character(c, data->main->output.to.stream);
 
           if (width_utf > 1) {
-            f_print_character(macro_f_utf_char_t_to_char_2(characters.string[i]), main->output.to.stream);
+            f_print_character(macro_f_utf_char_t_to_char_2(characters.string[i]), data->main->output.to.stream);
 
             if (width_utf > 2) {
-              f_print_character(macro_f_utf_char_t_to_char_3(characters.string[i]), main->output.to.stream);
+              f_print_character(macro_f_utf_char_t_to_char_3(characters.string[i]), data->main->output.to.stream);
 
               if (width_utf > 3) {
-                f_print_character(macro_f_utf_char_t_to_char_4(characters.string[i]), main->output.to.stream);
+                f_print_character(macro_f_utf_char_t_to_char_4(characters.string[i]), data->main->output.to.stream);
               }
             }
           }
 
           if (f_utf_character_is_combining(characters.string[i]) == F_true) {
-            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
           }
 
-          if (main->options & byte_dump_option_wide_d) {
+          if (data->options & byte_dump_option_wide_d) {
             if (width_utf == 1 || f_utf_character_is_wide(characters.string[i]) != F_true) {
-              f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
             }
           }
         }
         else {
-          if (main->options & byte_dump_option_wide_d) {
-            f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+          if (data->options & byte_dump_option_wide_d) {
+            f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
           }
         }
       }
       else {
-        f_print_character(c, main->output.to.stream);
+        f_print_character(c, data->main->output.to.stream);
 
-        if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+        if (data->options & byte_dump_option_wide_d) {
+          f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
         }
       }
 
       // Print placeholders when using UTF-8 characters to simulate the spaces bytes used for the character.
-      if (width_utf > 1 && at + 1 < main->width) {
-        if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
+      if (width_utf > 1 && at + 1 < data->width) {
+        if (data->main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           if (invalid[i]) {
-            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+            fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.error, byte_dump_character_placeholder_s, data->main->context.set.error);
           }
-          else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-            f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+          else if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
+            f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
           }
           else {
-            fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+            fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.warning, byte_dump_character_placeholder_s, data->main->context.set.warning);
           }
         }
         else {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
 
-        if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+        if (data->options & byte_dump_option_wide_d) {
+          f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
         }
 
         ++at;
 
-        if (width_utf > 2 && at + 1 < main->width) {
-          if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
+        if (width_utf > 2 && at + 1 < data->width) {
+          if (data->main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
             if (invalid[i]) {
-              fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+              fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.error, byte_dump_character_placeholder_s, data->main->context.set.error);
             }
-            else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-              f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+            else if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
+              f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
             }
             else {
-              fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+              fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.warning, byte_dump_character_placeholder_s, data->main->context.set.warning);
             }
           }
           else {
-            f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
           }
 
-          if (main->options & byte_dump_option_wide_d) {
-            f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+          if (data->options & byte_dump_option_wide_d) {
+            f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
           }
 
           ++at;
 
-          if (width_utf > 3 && at + 1 < main->width) {
-            if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
+          if (width_utf > 3 && at + 1 < data->width) {
+            if (data->main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
               if (invalid[i]) {
-                fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+                fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.error, byte_dump_character_placeholder_s, data->main->context.set.error);
               }
-              else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-                f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+              else if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
+                f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
               }
               else {
-                fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+                fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.warning, byte_dump_character_placeholder_s, data->main->context.set.warning);
               }
             }
             else {
-              f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+              f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
             }
 
-            if (main->options & byte_dump_option_wide_d) {
-              f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+            if (data->options & byte_dump_option_wide_d) {
+              f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
             }
 
             ++at;
@@ -947,36 +947,36 @@ extern "C" {
     } // for
 
     // Print placeholder for the remaining parts of the line.
-    if (main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
-      for (; at < main->width; ++at) {
+    if (data->main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
+      for (; at < data->width; ++at) {
 
         if (invalid[at]) {
-          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.error, byte_dump_character_placeholder_s, main->context.set.error);
+          fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.error, byte_dump_character_placeholder_s, data->main->context.set.error);
         }
-        else if (main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
-          f_print_dynamic_raw(f_string_ascii_period_s, main->output.to.stream);
+        else if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
+          f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
         }
         else {
-          fl_print_format("%[%r%]", main->output.to.stream, main->context.set.warning, byte_dump_character_placeholder_s, main->context.set.warning);
+          fl_print_format("%[%r%]", data->main->output.to.stream, data->main->context.set.warning, byte_dump_character_placeholder_s, data->main->context.set.warning);
         }
 
-        if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic_raw(f_string_ascii_space_s, main->output.to.stream);
+        if (data->options & byte_dump_option_wide_d) {
+          f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
         }
       } // for
     }
     else {
-      for (; at < main->width; ++at) {
+      for (; at < data->width; ++at) {
 
-        f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+        f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
 
-        if (main->options & byte_dump_option_wide_d) {
-          f_print_dynamic_raw(f_string_space_s, main->output.to.stream);
+        if (data->options & byte_dump_option_wide_d) {
+          f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
       } // for
     }
 
-    fl_print_format(" %[%r%]%r", main->output.to.stream, main->context.set.notable, byte_dump_character_wall_s, main->context.set.notable, f_string_eol_s);
+    fl_print_format(" %[%r%]%r", data->main->output.to.stream, data->main->context.set.notable, byte_dump_character_wall_s, data->main->context.set.notable, f_string_eol_s);
   }
 #endif // _di_byte_dump_print_text_
 

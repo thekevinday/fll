@@ -67,18 +67,6 @@ extern "C" {
   const f_string_static_t byte_dump_long_classic_s = macro_f_string_static_t_initialize(BYTE_DUMP_long_classic_s, 0, BYTE_DUMP_long_classic_s_length);
 #endif // _di_byte_dump_parameters_
 
-#ifndef _di_byte_dump_main_delete_
-  f_status_t byte_dump_main_delete(byte_dump_main_t * const main) {
-
-    f_console_parameters_delete(&main->parameters);
-
-    macro_f_color_context_t_delete_simple(main->context);
-    macro_f_color_context_t_clear(main->context)
-
-    return F_none;
-  }
-#endif // _di_byte_dump_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

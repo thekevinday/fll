@@ -74,13 +74,9 @@ extern "C" {
 #endif // _di_byte_dump_print_help_
 
 #ifndef _di_byte_dump_main_
-  f_status_t byte_dump_main(byte_dump_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t byte_dump_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
-
-    f_console_parameter_t parameters[] = byte_dump_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = byte_dump_total_parameters_d;
 
     // Identify priority of color parameters.
     {
@@ -112,8 +108,6 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
-        byte_dump_main_delete(main);
-
         return F_status_set_error(status);
       }
     }
@@ -128,8 +122,6 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-        byte_dump_main_delete(main);
 
         return status;
       }
@@ -156,6 +148,10 @@ extern "C" {
       }
     }
 
+    byte_dump_data_t data = byte_dump_data_t_initialize;
+    data.main = main;
+    data.argv = main->parameters.arguments.array;
+
     // Identify priority of mode parameters.
     {
       f_console_parameter_id_t ids[5] = { byte_dump_parameter_hexidecimal_e, byte_dump_parameter_duodecimal_e, byte_dump_parameter_octal_e, byte_dump_parameter_binary_e, byte_dump_parameter_decimal_e };
@@ -167,25 +163,23 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-        byte_dump_main_delete(main);
-
         return F_status_set_error(status);
       }
 
       if (choice == byte_dump_parameter_hexidecimal_e) {
-        main->mode = byte_dump_mode_hexidecimal_e;
+        data.mode = byte_dump_mode_hexidecimal_e;
       }
       else if (choice == byte_dump_parameter_duodecimal_e) {
-        main->mode = byte_dump_mode_duodecimal_e;
+        data.mode = byte_dump_mode_duodecimal_e;
       }
       else if (choice == byte_dump_parameter_octal_e) {
-        main->mode = byte_dump_mode_octal_e;
+        data.mode = byte_dump_mode_octal_e;
       }
       else if (choice == byte_dump_parameter_binary_e) {
-        main->mode = byte_dump_mode_binary_e;
+        data.mode = byte_dump_mode_binary_e;
       }
       else if (choice == byte_dump_parameter_decimal_e) {
-        main->mode = byte_dump_mode_decimal_e;
+        data.mode = byte_dump_mode_decimal_e;
       }
     }
 
@@ -200,19 +194,17 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-        byte_dump_main_delete(main);
-
         return F_status_set_error(status);
       }
 
       if (choice == byte_dump_parameter_normal_e) {
-        main->presentation = byte_dump_presentation_normal_e;
+        data.presentation = byte_dump_presentation_normal_e;
       }
       else if (choice == byte_dump_parameter_simple_e) {
-        main->presentation = byte_dump_presentation_simple_e;
+        data.presentation = byte_dump_presentation_simple_e;
       }
       else if (choice == byte_dump_parameter_classic_e) {
-        main->presentation = byte_dump_presentation_classic_e;
+        data.presentation = byte_dump_presentation_classic_e;
       }
     }
 
@@ -227,37 +219,29 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-        byte_dump_main_delete(main);
-
         return F_status_set_error(status);
       }
 
       if (choice == byte_dump_parameter_narrow_e) {
-        if (main->options & byte_dump_option_wide_d) {
-          main->options -= byte_dump_option_wide_d;
+        if (data.options & byte_dump_option_wide_d) {
+          data.options -= byte_dump_option_wide_d;
         }
       }
       else if (choice == byte_dump_parameter_wide_e) {
-        main->options |= byte_dump_option_wide_d;
+        data.options |= byte_dump_option_wide_d;
       }
     }
-
-    f_string_static_t * const argv = main->parameters.arguments.array;
 
     status = F_none;
 
     if (main->parameters.array[byte_dump_parameter_help_e].result == f_console_result_found_e) {
       byte_dump_print_help(main->output.to, main->context);
 
-      byte_dump_main_delete(main);
-
       return F_none;
     }
 
     if (main->parameters.array[byte_dump_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, byte_dump_program_version_s);
-
-      byte_dump_main_delete(main);
 
       return F_none;
     }
@@ -272,8 +256,6 @@ extern "C" {
 
         funlockfile(main->error.to.stream);
 
-        byte_dump_main_delete(main);
-
         return F_status_set_error(F_parameter);
       }
 
@@ -281,7 +263,7 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
+        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           flockfile(main->error.to.stream);
@@ -296,14 +278,12 @@ extern "C" {
 
           funlockfile(main->error.to.stream);
 
-          byte_dump_main_delete(main);
-
           if (F_status_is_error(status)) return status;
 
           return F_status_set_error(F_parameter);
         }
 
-        main->width = (uint8_t) number;
+        data.width = (uint8_t) number;
       }
 
       if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_found_e) {
@@ -315,8 +295,6 @@ extern "C" {
 
         funlockfile(main->error.to.stream);
 
-        byte_dump_main_delete(main);
-
         return F_status_set_error(F_parameter);
       }
 
@@ -324,7 +302,7 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
+        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
 
         if (F_status_is_error(status) || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);
@@ -339,14 +317,12 @@ extern "C" {
 
           funlockfile(main->error.to.stream);
 
-          byte_dump_main_delete(main);
-
           if (F_status_is_error(status)) return status;
 
           return F_status_set_error(F_parameter);
         }
 
-        main->first = number;
+        data.first = number;
       }
 
       if (main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_found_e) {
@@ -358,8 +334,6 @@ extern "C" {
 
         funlockfile(main->error.to.stream);
 
-        byte_dump_main_delete(main);
-
         return F_status_set_error(F_parameter);
       }
 
@@ -367,7 +341,7 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(argv[index], &number);
+        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
 
         if (F_status_is_error(status) || number < 0 || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);
@@ -382,18 +356,16 @@ extern "C" {
 
           funlockfile(main->error.to.stream);
 
-          byte_dump_main_delete(main);
-
           if (F_status_is_error(status)) return status;
 
           return F_status_set_error(F_parameter);
         }
 
-        main->last = number;
+        data.last = number;
       }
 
       if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_additional_e && main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
-        if (main->first > main->last) {
+        if (data.first > data.last) {
           flockfile(main->error.to.stream);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
@@ -404,13 +376,11 @@ extern "C" {
 
           funlockfile(main->error.to.stream);
 
-          byte_dump_main_delete(main);
-
           return F_status_set_error(F_parameter);
         }
 
         // Store last position as a relative offset from first instead of an absolute position.
-        main->last = (main->last - main->first) + 1;
+        data.last = (data.last - data.first) + 1;
       }
 
       if (main->process_pipe) {
@@ -424,19 +394,19 @@ extern "C" {
         f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
         fl_print_format("%[Piped Byte Dump: (in ", main->output.to.stream, main->context.set.title);
 
-        if (main->mode == byte_dump_mode_hexidecimal_e) {
+        if (data.mode == byte_dump_mode_hexidecimal_e) {
           f_print_dynamic_raw(byte_dump_print_strings_hexidecimal_s, main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_duodecimal_e) {
+        else if (data.mode == byte_dump_mode_duodecimal_e) {
           f_print_dynamic_raw(byte_dump_print_strings_duodecimal_s, main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_octal_e) {
+        else if (data.mode == byte_dump_mode_octal_e) {
           f_print_dynamic_raw(byte_dump_print_strings_octal_s, main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_binary_e) {
+        else if (data.mode == byte_dump_mode_binary_e) {
           f_print_dynamic_raw(byte_dump_print_strings_binary_s, main->output.to.stream);
         }
-        else if (main->mode == byte_dump_mode_decimal_e) {
+        else if (data.mode == byte_dump_mode_decimal_e) {
           f_print_dynamic_raw(byte_dump_print_strings_decimal_s, main->output.to.stream);
         }
 
@@ -444,12 +414,10 @@ extern "C" {
 
         funlockfile(main->output.to.stream);
 
-        status = byte_dump_file(main, f_string_empty_s, file);
+        status = byte_dump_file(&data, f_string_empty_s, file);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true);
-
-          byte_dump_main_delete(main);
 
           return status;
         }
@@ -463,7 +431,7 @@ extern "C" {
 
           for (f_array_length_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
 
-            status = f_file_exists(argv[main->parameters.remaining.array[counter]]);
+            status = f_file_exists(data.argv[main->parameters.remaining.array[counter]]);
 
             if (status == F_false) {
               status = F_status_set_error(F_file_found_not);
@@ -474,14 +442,12 @@ extern "C" {
                 missing_files = status;
               }
 
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, argv[main->parameters.remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data.argv[main->parameters.remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
             }
           } // for
 
           if (missing_files != F_none) {
             status = F_status_set_error(missing_files);
-
-            byte_dump_main_delete(main);
 
             return status;
           }
@@ -491,12 +457,10 @@ extern "C" {
 
         for (f_array_length_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
 
-          status = f_file_stream_open(argv[main->parameters.remaining.array[counter]], f_string_empty_s, &file);
+          status = f_file_stream_open(data.argv[main->parameters.remaining.array[counter]], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, argv[main->parameters.remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
-
-            byte_dump_main_delete(main);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_open", F_true, data.argv[main->parameters.remaining.array[counter]], f_file_operation_open_s, fll_error_file_type_file_e);
 
             return status;
           }
@@ -504,21 +468,21 @@ extern "C" {
           flockfile(main->output.to.stream);
 
           fl_print_format("%r%[Byte Dump of: %]%[", main->output.to.stream, f_string_eol_s, main->context.set.title, main->context.set.title, main->context.set.notable);
-          fl_print_format("%Q%] %[(in ", main->output.to.stream, argv[main->parameters.remaining.array[counter]], main->context.set.notable, main->context.set.title);
+          fl_print_format("%Q%] %[(in ", main->output.to.stream, data.argv[main->parameters.remaining.array[counter]], main->context.set.notable, main->context.set.title);
 
-          if (main->mode == byte_dump_mode_hexidecimal_e) {
+          if (data.mode == byte_dump_mode_hexidecimal_e) {
             f_print_dynamic_raw(byte_dump_print_strings_hexidecimal_s, main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_duodecimal_e) {
+          else if (data.mode == byte_dump_mode_duodecimal_e) {
             f_print_dynamic_raw(byte_dump_print_strings_duodecimal_s, main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_octal_e) {
+          else if (data.mode == byte_dump_mode_octal_e) {
             f_print_dynamic_raw(byte_dump_print_strings_octal_s, main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_binary_e) {
+          else if (data.mode == byte_dump_mode_binary_e) {
             f_print_dynamic_raw(byte_dump_print_strings_binary_s, main->output.to.stream);
           }
-          else if (main->mode == byte_dump_mode_decimal_e) {
+          else if (data.mode == byte_dump_mode_decimal_e) {
             f_print_dynamic_raw(byte_dump_print_strings_decimal_s, main->output.to.stream);
           }
 
@@ -526,7 +490,7 @@ extern "C" {
 
           funlockfile(main->output.to.stream);
 
-          status = byte_dump_file(main, argv[main->parameters.remaining.array[counter]], file);
+          status = byte_dump_file(&data, data.argv[main->parameters.remaining.array[counter]], file);
 
           f_file_stream_close(F_true, &file);
 
@@ -542,11 +506,9 @@ extern "C" {
             }
             else {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, argv[main->parameters.remaining.array[counter]], f_file_operation_process_s, fll_error_file_type_file_e);
+                fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, data.argv[main->parameters.remaining.array[counter]], f_file_operation_process_s, fll_error_file_type_file_e);
               }
             }
-
-            byte_dump_main_delete(main);
 
             return status;
           }
@@ -561,8 +523,6 @@ extern "C" {
 
       status = F_status_set_error(F_parameter);
     }
-
-    byte_dump_main_delete(main);
 
     return status;
   }
