@@ -236,25 +236,6 @@ extern "C" {
   extern f_string_static_t control_payload_type_name(const uint8_t type);
 #endif // _di_control_payload_type_name_
 
-/**
- * Deallocate main.
- *
- * Be sure to call this after executing control_main().
- *
- * @param main
- *   The main program data.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- *
- * @see control_main()
- */
-#ifndef _di_control_main_delete_
-  extern f_status_t control_main_delete(fll_program_data_t * const main);
-#endif // _di_control_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

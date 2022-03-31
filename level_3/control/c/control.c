@@ -56,10 +56,6 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_console_parameter_t parameters[] = control_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = control_total_parameters_d;
-
     {
       f_console_parameter_id_t ids[3] = { control_parameter_no_color_e, control_parameter_light_e, control_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
@@ -92,8 +88,6 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
         }
 
-        control_main_delete(main);
-
         return F_status_set_error(status);
       }
     }
@@ -105,12 +99,7 @@ extern "C" {
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-      if (F_status_is_error(status)) {
-        control_main_delete(main);
-
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (choice == control_parameter_verbosity_quiet_e) {
         main->output.verbosity = f_console_verbosity_quiet_e;
@@ -139,15 +128,11 @@ extern "C" {
     if (main->parameters.array[control_parameter_help_e].result == f_console_result_found_e) {
       control_print_help(main);
 
-      control_main_delete(main);
-
       return F_none;
     }
 
     if (main->parameters.array[control_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, control_program_version_s);
-
-      control_main_delete(main);
 
       return F_none;
     }
@@ -288,8 +273,6 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }
     }
-
-    control_main_delete(main);
 
     return status;
   }

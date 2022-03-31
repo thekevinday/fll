@@ -170,13 +170,6 @@ extern "C" {
   }
 #endif // _di_control_payload_type_name_
 
-#ifndef _di_control_main_delete_
-  f_status_t control_main_delete(fll_program_data_t * const main) {
-
-    return fll_program_data_delete(main);
-  }
-#endif // _di_control_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif
