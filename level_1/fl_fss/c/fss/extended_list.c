@@ -548,7 +548,7 @@ extern "C" {
     }
 
     // Ensure that there is room for a slash delimit, the object open character, and the end of line character.
-    status = f_string_dynamic_increase_by((range->stop - range->start) + 3, destination);
+    status = f_string_dynamic_increase_by((range->stop - range->start) + 4, destination);
     if (F_status_is_error(status)) return status;
 
     const f_array_length_t used_start = destination->used;
@@ -784,7 +784,7 @@ extern "C" {
     }
 
     // Ensure that there is room for a slash delimit and possibly the end of content characters.
-    status = f_string_dynamic_increase_by((range->stop - range->start) + 3, destination);
+    status = f_string_dynamic_increase_by((range->stop - range->start) + 4, destination);
     if (F_status_is_error(status)) return status;
 
     const f_array_length_t used_start = destination->used;
