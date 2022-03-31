@@ -32,21 +32,26 @@ extern "C" {
  *
  * Complex programs or programs that need more data passed via the main should implement their own version of this.
  *
+ * The umask() has design flaws as per specification that requires the umask be changed to read the value!
+ * As a work-around, a umask variable is provided here so that umask() only ever need be called once.
+ *
+ * child:        Reserved for a child process, often representing the child return status or the child process ID.
+ * context:      The color context.
+ * error:        The output file for error printing.
+ * output:       The output file for general printing.
  * parameters:   The state of pre-defined parameters passed to the program.
  * process_pipe: Designate whether or not to process the input pipe.
- * child:        Reserved for a child process, often representing the child return status or the child process ID.
- * output:       The output file for general printing.
- * error:        The output file for error printing.
- * warning:      The output file for warning printing.
  * signal:       The process signal management structure.
  * signal_check: A counter used to map to for reducing the amount of actual signal check calls.
- * context:      The color context.
+ * umask:        The umask settings, needed for avoiding calls to umask() to read the current umask.
+ * warning:      The output file for warning printing.
  */
 #ifndef _di_fll_program_data_t_
   typedef struct {
     f_console_parameters_t parameters;
 
     uint16_t signal_check;
+    mode_t umask;
     bool process_pipe;
     int child;
 
@@ -62,6 +67,7 @@ extern "C" {
   #define fll_program_data_t_initialize \
     { \
       f_console_parameters_t_initialize, \
+      0, \
       0, \
       0, \
       F_false, \
