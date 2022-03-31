@@ -113,8 +113,6 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call fake_main_delete() after executing this.
- *
  * If main.signal is non-zero, then this blocks and handles the following signals:
  *   - F_signal_abort
  *   - F_signal_broken_pipe
@@ -135,17 +133,13 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
  *   Status codes (with error bit) are returned on any problem.
- *
- * @see fake_main_delete()
  */
 #ifndef _di_fake_main_
-  extern f_status_t fake_main(fake_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t fake_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_fake_main_
 
 /**
  * Deallocate main.
- *
- * Be sure to call this after executing fake_main().
  *
  * @param main
  *   The main program data.
@@ -158,7 +152,7 @@ extern "C" {
  * @see fake_main()
  */
 #ifndef _di_fake_main_delete_
-  extern f_status_t fake_main_delete(fake_main_t * const main);
+  extern f_status_t fake_main_delete(fll_program_data_t * const main);
 #endif // _di_fake_main_delete_
 
 #ifdef __cplusplus

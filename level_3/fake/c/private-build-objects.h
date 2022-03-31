@@ -18,8 +18,8 @@ extern "C" {
  * This is neither the "build_sources_object" nor the "build_sources_object_static" property.
  * Instead, this converts the "build_sources_library" and the "build_sources_library_static" into a static object file so that the indexer program (such as GNU ar) can combine these into a static file.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param mode
@@ -36,7 +36,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_objects_static_
-  extern int fake_build_objects_static(fake_main_t * const main, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern int fake_build_objects_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_objects_static_
 
 #ifdef __cplusplus

@@ -312,6 +312,69 @@ extern "C" {
   const f_string_static_t fake_file_data_build_process_pre_s = macro_f_string_static_t_initialize(FAKE_file_data_build_process_pre_s, 0, FAKE_file_data_build_process_pre_s_length);
 #endif // _di_fake_file_data_build_strings_
 
+#ifndef _di_fake_data_delete_
+  f_status_t fake_data_delete(fake_data_t * const data) {
+
+    f_string_dynamics_resize(0, &data->define);
+    f_string_dynamic_resize(0, &data->fakefile);
+    f_string_dynamics_resize(0, &data->mode);
+    f_string_dynamic_resize(0, &data->process);
+    f_string_dynamic_resize(0, &data->settings);
+
+    f_string_dynamic_resize(0, &data->path_build);
+    f_string_dynamic_resize(0, &data->path_build_documents);
+    f_string_dynamic_resize(0, &data->path_build_includes);
+    f_string_dynamic_resize(0, &data->path_build_libraries);
+    f_string_dynamic_resize(0, &data->path_build_libraries_script);
+    f_string_dynamic_resize(0, &data->path_build_libraries_shared);
+    f_string_dynamic_resize(0, &data->path_build_libraries_static);
+    f_string_dynamic_resize(0, &data->path_build_objects);
+    f_string_dynamic_resize(0, &data->path_build_objects_script);
+    f_string_dynamic_resize(0, &data->path_build_objects_shared);
+    f_string_dynamic_resize(0, &data->path_build_objects_static);
+    f_string_dynamic_resize(0, &data->path_build_programs);
+    f_string_dynamic_resize(0, &data->path_build_programs_script);
+    f_string_dynamic_resize(0, &data->path_build_programs_shared);
+    f_string_dynamic_resize(0, &data->path_build_programs_static);
+    f_string_dynamic_resize(0, &data->path_build_settings);
+    f_string_dynamic_resize(0, &data->path_build_stage);
+    f_string_dynamic_resize(0, &data->path_work);
+
+    f_string_dynamic_resize(0, &data->path_data);
+    f_string_dynamic_resize(0, &data->path_data_build);
+
+    f_string_dynamic_resize(0, &data->path_data_settings);
+
+    f_string_dynamic_resize(0, &data->path_documents);
+
+    f_string_dynamic_resize(0, &data->path_licenses);
+
+    f_string_dynamic_resize(0, &data->path_sources);
+
+    f_string_dynamic_resize(0, &data->path_work);
+    f_string_dynamic_resize(0, &data->path_work_includes);
+    f_string_dynamic_resize(0, &data->path_work_libraries);
+    f_string_dynamic_resize(0, &data->path_work_libraries_script);
+    f_string_dynamic_resize(0, &data->path_work_libraries_shared);
+    f_string_dynamic_resize(0, &data->path_work_libraries_static);
+    f_string_dynamic_resize(0, &data->path_work_programs);
+    f_string_dynamic_resize(0, &data->path_work_programs_script);
+    f_string_dynamic_resize(0, &data->path_work_programs_shared);
+    f_string_dynamic_resize(0, &data->path_work_programs_static);
+
+    f_string_dynamic_resize(0, &data->file_data_build_defines);
+    f_string_dynamic_resize(0, &data->file_data_build_dependencies);
+    f_string_dynamic_resize(0, &data->file_data_build_process_post_s);
+    f_string_dynamic_resize(0, &data->file_data_build_process_pre_s);
+    f_string_dynamic_resize(0, &data->file_data_build_fakefile);
+    f_string_dynamic_resize(0, &data->file_data_build_settings);
+
+    f_string_dynamic_resize(0, &data->file_documents_readme);
+
+    return F_none;
+  }
+#endif // _di_fake_data_delete_
+
 #ifndef _di_fake_make_data_delete_
   f_status_t fake_make_data_delete(fake_make_data_t * const data) {
 
@@ -337,9 +400,9 @@ extern "C" {
 #endif // _di_fake_make_data_delete_
 
 #ifndef _di_fake_signal_received_
-  f_status_t fake_signal_received(fake_main_t * const main) {
+  f_status_t fake_signal_received(fake_data_t * const data) {
 
-    if (main->signal.id == -1) {
+    if (data->main->signal.id == -1) {
       return F_false;
     }
 
@@ -347,7 +410,7 @@ extern "C" {
 
     memset(&information, 0, sizeof(struct signalfd_siginfo));
 
-    if (f_signal_read(main->signal, 0, &information) == F_signal) {
+    if (f_signal_read(data->main->signal, 0, &information) == F_signal) {
       switch (information.ssi_signo) {
         case F_signal_abort:
         case F_signal_broken_pipe:
@@ -355,7 +418,7 @@ extern "C" {
         case F_signal_interrupt:
         case F_signal_quit:
         case F_signal_termination:
-          fake_print_signal_received(main, information.ssi_signo);
+          fake_print_signal_received(data, information.ssi_signo);
 
           return information.ssi_signo;
       }

@@ -18,8 +18,8 @@ extern "C" {
  * The first section operated on is the 'main' section.
  * The 'settings' section is only loaded into settings and is never operated on.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -29,7 +29,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_
-  extern f_status_t fake_make_operate(fake_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate(fake_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_
 
 /**

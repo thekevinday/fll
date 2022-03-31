@@ -272,7 +272,7 @@ extern "C" {
 
     gid_t id = 0;
 
-    status = fake_make_get_id_group(data_make->main, data_make->error, arguments.array[0], &id);
+    status = fake_make_get_id_group(data_make->data, data_make->error, arguments.array[0], &id);
     if (F_status_is_error(status)) return 0;
 
     for (f_array_length_t i = 1; i < arguments.used; ++i) {
@@ -282,7 +282,7 @@ extern "C" {
       if (F_status_is_error(status_file)) {
         status = status_file;
 
-        fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
+        fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
         continue;
       }
@@ -355,17 +355,17 @@ extern "C" {
     };
 
     const bool reserved_defined[] = {
-      data_make->main->path_build.used,
+      data_make->data->path_build.used,
       F_true,
-      data_make->main->path_data.used,
-      data_make->main->define.used,
-      data_make->main->fakefile.used,
-      data_make->main->mode.used,
-      data_make->main->process.used,
-      data_make->main->settings.used,
-      data_make->main->path_sources.used,
+      data_make->data->path_data.used,
+      data_make->data->define.used,
+      data_make->data->fakefile.used,
+      data_make->data->mode.used,
+      data_make->data->process.used,
+      data_make->data->settings.used,
+      data_make->data->path_sources.used,
       F_true,
-      data_make->main->path_work.used,
+      data_make->data->path_work.used,
       data_make->main->parameters.array[fake_parameter_path_build_e].result == f_console_result_additional_e,
       data_make->main->parameters.array[fake_parameter_light_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_dark_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_no_color_e].result == f_console_result_found_e,
       data_make->main->parameters.array[fake_parameter_path_data_e].result == f_console_result_additional_e,
@@ -782,7 +782,7 @@ extern "C" {
     f_status_t status = F_none;
     uid_t id = 0;
 
-    status = fake_make_get_id_group(data_make->main, data_make->error, arguments.array[if_not ? 2 : 1], &id);
+    status = fake_make_get_id_group(data_make->data, data_make->error, arguments.array[if_not ? 2 : 1], &id);
     if (F_status_is_error(status)) return status;
 
     uid_t id_file = 0;
@@ -838,7 +838,7 @@ extern "C" {
     {
       uint8_t mode_replace = 0;
 
-      status = fake_make_get_id_mode(data_make->main, data_make->error, arguments.array[if_not ? 3 : 2], &mode_rule, &mode_replace);
+      status = fake_make_get_id_mode(data_make->data, data_make->error, arguments.array[if_not ? 3 : 2], &mode_rule, &mode_replace);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
@@ -917,7 +917,7 @@ extern "C" {
     f_status_t status = F_none;
     uid_t id = 0;
 
-    status = fake_make_get_id_owner(data_make->main, data_make->error, arguments.array[if_not ? 2 : 1], &id);
+    status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[if_not ? 2 : 1], &id);
     if (F_status_is_error(status)) return status;
 
     uid_t id_file = 0;
@@ -966,7 +966,7 @@ extern "C" {
     f_file_mode_t mode_rule = 0;
     uint8_t replace = 0;
 
-    status = fake_make_get_id_mode(data_make->main, data_make->error, arguments.array[0], &mode_rule, &replace);
+    status = fake_make_get_id_mode(data_make->data, data_make->error, arguments.array[0], &mode_rule, &replace);
     if (F_status_is_error(status)) return 0;
 
     mode_t mode = 0;
@@ -1088,7 +1088,7 @@ extern "C" {
     f_status_t status = F_none;
     uid_t id = 0;
 
-    status = fake_make_get_id_owner(data_make->main, data_make->error, arguments.array[0], &id);
+    status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[0], &id);
     if (F_status_is_error(status)) return status;
 
     f_status_t status_file = F_none;
@@ -1100,7 +1100,7 @@ extern "C" {
       if (F_status_is_error(status_file)) {
         status = status_file;
 
-        fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
+        fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
         continue;
       }
@@ -1230,7 +1230,7 @@ extern "C" {
     status = f_path_change(*argument);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", *argument);
+      fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_status_set_fine(status), "f_path_change", *argument);
 
       return 0;
     }
@@ -1260,7 +1260,7 @@ extern "C" {
     status = fake_make_assure_inside_project(data_make, arguments.array[0]);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[0]);
+      fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[0]);
 
       if (F_status_set_fine(status) == F_false) {
         status = F_status_set_error(F_failure);
@@ -1272,14 +1272,14 @@ extern "C" {
     status = f_path_change(arguments.array[0]);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0]);
+      fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0]);
     }
     else {
       status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->path.stack);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_array_too_large) {
-          fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", fake_common_file_path_stack_s);
+          fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", fake_common_file_path_stack_s);
 
           return status;
         }
@@ -1329,7 +1329,7 @@ extern "C" {
       status = f_path_change_at(data_make->path.top.id);
 
       if (F_status_is_error(status)) {
-        fake_print_message_section_operation_path_stack_max(data_make->main, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0]);
+        fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_status_set_fine(status), "f_path_change", arguments.array[0]);
 
         return status;
       }

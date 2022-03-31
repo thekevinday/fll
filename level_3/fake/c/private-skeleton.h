@@ -15,8 +15,8 @@ extern "C" {
 /**
  * Execute the skeleton operation.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -26,14 +26,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_
-  extern f_status_t fake_skeleton_operate(fake_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_skeleton_operate(fake_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fake_skeleton_operate_
 
 /**
  * Create a directory if it does not exist, ignore it if it does, and warn if path exists but is not a directory.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param path
  *   The file path for the directory to create.
  *
@@ -44,14 +44,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_directory_create_
-  extern f_status_t fake_skeleton_operate_directory_create(fake_main_t * const main, const f_string_static_t path) F_attribute_visibility_internal_d;
+  extern f_status_t fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path) F_attribute_visibility_internal_d;
 #endif // _di_fake_skeleton_operate_directory_create_
 
 /**
  * Create a file if it does not exist, ignore it if it does, and warn if path exists but is not a file.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param path
  *   The file path for the directory to create.
  * @param executable
@@ -67,14 +67,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_file_create_
-  extern f_status_t fake_skeleton_operate_file_create(fake_main_t * const main, const f_string_static_t path, const bool executable, const f_string_static_t content) F_attribute_visibility_internal_d;
+  extern f_status_t fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content) F_attribute_visibility_internal_d;
 #endif // _di_fake_skeleton_operate_file_create_
 
 /**
  * Calculate the length of the sources path so that it can be used to manually construct a static string.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param partial
  *   The partial path string, such as "bash".
  * @param source
@@ -84,14 +84,14 @@ extern "C" {
  *   The path_sources.size is ignored.
  */
 #ifndef _di_fake_skeleton_path_source_length_
-  extern void fake_skeleton_path_source_length(fake_main_t * const main, const f_string_static_t *partial, f_string_static_t * const source) F_attribute_visibility_internal_d;
+  extern void fake_skeleton_path_source_length(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source) F_attribute_visibility_internal_d;
 #endif // _di_fake_skeleton_path_source_length_
 
 /**
  * Construct a static string array of the sources path.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param partial
  *   The partial path string, such as "bash".
  * @param source
@@ -101,7 +101,7 @@ extern "C" {
  *   The path_sources.size is ignored.
  */
 #ifndef _di_fake_skeleton_path_source_string_
-  extern void fake_skeleton_path_source_string(fake_main_t * const main, const f_string_static_t *partial, f_string_static_t * const source) F_attribute_visibility_internal_d;
+  extern void fake_skeleton_path_source_string(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source) F_attribute_visibility_internal_d;
 #endif // _di_fake_skeleton_path_source_string_
 
 #ifdef __cplusplus

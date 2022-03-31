@@ -51,8 +51,8 @@ extern "C" {
 /**
  * Add the standard arguments for building a library/program.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param is_shared
@@ -68,14 +68,14 @@ extern "C" {
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_arguments_standard_add_
-  extern void fake_build_arguments_standard_add(fake_main_t * const main, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_arguments_standard_add(fake_data_t * const data, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_arguments_standard_add_
 
 /**
  * Copy over the main setting files.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param mode
  *   The modes for each file type.
  * @param label
@@ -106,14 +106,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(fake_main_t * const main, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_copy_
 
 /**
  * Execute the Pre-Process or Post-pocess build script.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param process_script
@@ -131,14 +131,14 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern int fake_build_execute_process_script(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_execute_process_script_
 
 /**
  * Get the file name without the extension and without the path parts.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param path
  *   The file path to get the file name from.
  * @param name
@@ -150,14 +150,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_get_file_name_without_extension_
-  extern f_status_t fake_build_get_file_name_without_extension(fake_main_t * const main, const f_string_static_t path, f_string_dynamic_t *name);
+  extern f_status_t fake_build_get_file_name_without_extension(fake_data_t * const data, const f_string_static_t path, f_string_dynamic_t *name);
 #endif // _di_fake_build_get_file_name_without_extension_
 
 /**
  * Add the pre-compiled objects to the execute arguments array (such as "build_objects_library").
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param path
@@ -175,14 +175,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_objects_add_
-  extern f_status_t fake_build_objects_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_objects_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_objects_add_
 
 /**
  * Execute the build operation.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param setting_file
  *   The name of the settings file to use.
  *   If setting_file.used is 0, then the default or program parameter supplied file is used.
@@ -193,14 +193,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_status_t fake_build_operate(fake_main_t * const main, const f_string_static_t setting_file) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_operate(fake_data_t * const data, const f_string_static_t setting_file) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_operate_
 
 /**
  * Calculate the length of the sources path so that it can be used to manually construct a static string.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param setting_path_source
@@ -212,14 +212,14 @@ extern "C" {
  *   The path_sources.size is ignored.
  */
 #ifndef _di_fake_build_path_source_length_
-  extern void fake_build_path_source_length(fake_main_t * const main, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) F_attribute_visibility_internal_d;
+  extern void fake_build_path_source_length(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_path_source_length_
 
 /**
  * Construct a static string array of the sources path.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param setting_path_source
@@ -231,14 +231,14 @@ extern "C" {
  *   The path_sources.size is ignored.
  */
 #ifndef _di_fake_build_path_source_string_
-  extern void fake_build_path_source_string(fake_main_t * const main, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) F_attribute_visibility_internal_d;
+  extern void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_path_source_string_
 
 /**
  * Add the sources to the execute arguments array.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param generic
@@ -254,14 +254,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_sources_add_
-  extern f_status_t fake_build_sources_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_sources_add_
 
 /**
  * Add the sources object to the execute arguments array.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param generic
@@ -277,14 +277,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_sources_object_add_
-  extern f_status_t fake_build_sources_object_add(fake_main_t * const main, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_sources_object_add_
 
 /**
  * Touch the given build stage file, but only if there are no current errors in status.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param file
  *   The file path to touch.
  * @param status
@@ -293,7 +293,7 @@ extern "C" {
  * @see f_file_touch()
  */
 #ifndef _di_fake_build_touch_
-  extern void fake_build_touch(fake_main_t * const main, const f_string_dynamic_t file, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_touch(fake_data_t * const data, const f_string_dynamic_t file, f_status_t *status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_touch_
 
 #ifdef __cplusplus

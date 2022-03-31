@@ -84,13 +84,9 @@ extern "C" {
 #endif // _di_fake_print_help_
 
 #ifndef _di_fake_main_
-  f_status_t fake_main(fake_main_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t fake_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
 
     f_status_t status = F_none;
-
-    f_console_parameter_t parameters[] = fake_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = fake_total_parameters_d;
 
     // Load all parameters and identify priority of color parameters.
     {
@@ -122,7 +118,6 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
-        fake_main_delete(main);
         return status;
       }
     }
@@ -138,7 +133,6 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-        fake_main_delete(main);
         return status;
       }
 
@@ -165,6 +159,10 @@ extern "C" {
     }
 
     status = F_none;
+
+    fake_data_t data = fake_data_t_initialize;
+    data.main = main;
+    data.argv = main->parameters.arguments.array;
 
     f_array_length_t operations_length = main->parameters.array[fake_parameter_operation_build_e].locations.used;
 
@@ -252,7 +250,7 @@ extern "C" {
     if (main->parameters.array[fake_parameter_help_e].result == f_console_result_found_e) {
       fake_print_help(main->output.to, main->context);
 
-      fake_main_delete(main);
+      fake_data_delete(&data);
 
       return F_none;
     }
@@ -260,7 +258,7 @@ extern "C" {
     if (main->parameters.array[fake_parameter_version_e].result == f_console_result_found_e) {
       fll_program_print_version(main->output.to, fake_program_version_s);
 
-      fake_main_delete(main);
+      fake_data_delete(&data);
 
       return F_none;
     }
@@ -268,77 +266,72 @@ extern "C" {
     if (operations_length) {
       bool validate_parameter_directories = F_true;
 
-      status = fake_process_console_parameters(main);
+      status = fake_process_console_parameters(&data);
 
       if (F_status_is_error_not(status)) {
-        status = fake_path_generate(main);
+        status = fake_path_generate(&data);
       }
 
       if (F_status_is_error(status)) {
-        fake_main_delete(main);
+        fake_data_delete(&data);
 
         return F_status_set_error(status);
       }
 
       for (uint8_t i = 0; i < operations_length; ++i) {
 
-        main->operation = operations[i];
+        data.operation = operations[i];
 
-        if (main->operation == fake_operation_build_e) {
+        if (data.operation == fake_operation_build_e) {
           operations_name = fake_other_operation_build_s;
         }
-        else if (main->operation == fake_operation_clean_e) {
+        else if (data.operation == fake_operation_clean_e) {
           operations_name = fake_other_operation_clean_s;
         }
-        else if (main->operation == fake_operation_make_e) {
+        else if (data.operation == fake_operation_make_e) {
           operations_name = fake_other_operation_make_s;
         }
-        else if (main->operation == fake_operation_skeleton_e) {
+        else if (data.operation == fake_operation_skeleton_e) {
           operations_name = fake_other_operation_skeleton_s;
         }
 
-        if (main->operation == fake_operation_build_e) {
+        if (data.operation == fake_operation_build_e) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(main);
+            status = fake_validate_parameter_directories(&data);
             validate_parameter_directories = F_false;
           }
 
           if (F_status_is_error_not(status)) {
-            status = fake_build_operate(main, f_string_empty_s);
+            status = fake_build_operate(&data, f_string_empty_s);
           }
         }
-        else if (main->operation == fake_operation_clean_e) {
+        else if (data.operation == fake_operation_clean_e) {
           if (validate_parameter_directories) {
             validate_parameter_directories = F_false;
           }
 
           if (F_status_is_error_not(status)) {
-            status = fake_clean_operate(main);
+            status = fake_clean_operate(&data);
           }
         }
-        else if (main->operation == fake_operation_make_e) {
+        else if (data.operation == fake_operation_make_e) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(main);
+            status = fake_validate_parameter_directories(&data);
             validate_parameter_directories = F_false;
           }
 
           if (F_status_is_error_not(status)) {
-            status = fake_make_operate(main);
-
-            if (status == F_child) {
-              break;
-            }
+            status = fake_make_operate(&data);
+            if (status == F_child) break;
           }
         }
-        else if (main->operation == fake_operation_skeleton_e) {
-          status = fake_skeleton_operate(main);
+        else if (data.operation == fake_operation_skeleton_e) {
+          status = fake_skeleton_operate(&data);
         }
 
-        if (status == F_child) {
-          break;
-        }
+        if (status == F_child) break;
 
-        if (F_status_set_fine(status) == F_interrupt || !(i % fake_signal_check_short_d) && fake_signal_received(main)) {
+        if (F_status_set_fine(status) == F_interrupt || !(i % fake_signal_check_short_d) && fake_signal_received(&data)) {
           status = F_status_set_error(F_interrupt);
 
           break;
@@ -380,7 +373,7 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    fake_main_delete(main);
+    fake_data_delete(&data);
 
     return status;
   }

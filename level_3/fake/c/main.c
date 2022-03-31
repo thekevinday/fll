@@ -17,13 +17,19 @@
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
-  fake_main_t data = fake_main_t_initialize;
+  fll_program_data_t data = fll_program_data_t_initialize;
+
+  f_console_parameter_t parameters[] = fake_console_parameter_t_initialize;
+  data.parameters.array = parameters;
+  data.parameters.used = fake_total_parameters_d;
 
   fll_program_standard_setup(&data.signal);
 
   f_file_umask_get(&data.umask);
 
   const f_status_t status = fake_main(&data, &arguments);
+
+  fll_program_data_delete(&data);
 
   fll_program_standard_setdown(&data.signal);
 

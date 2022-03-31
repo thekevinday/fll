@@ -34,8 +34,8 @@ extern "C" {
 /**
  * Get the group id from either a string representing the number or a string representing the name.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param print
  *   The error/warning print data.
  * @param buffer
@@ -50,14 +50,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_group_
-  f_status_t fake_make_get_id_group(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, gid_t *id) F_attribute_visibility_internal_d;
+  f_status_t fake_make_get_id_group(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, gid_t *id) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_get_id_group_
 
 /**
  * Get the mode id from either a string representing the number or a string representing the mode.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param print
  *   The error/warning print data.
  * @param buffer
@@ -76,14 +76,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_mode_
-  f_status_t fake_make_get_id_mode(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) F_attribute_visibility_internal_d;
+  f_status_t fake_make_get_id_mode(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_get_id_mode_
 
 /**
  * Get the user id from either a string representing the number or a string representing the name.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param print
  *   The error/warning print data.
  * @param buffer
@@ -98,7 +98,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_owner_
-  f_status_t fake_make_get_id_owner(fake_main_t * const main, const fl_print_t print, const f_string_static_t buffer, uid_t *id) F_attribute_visibility_internal_d;
+  f_status_t fake_make_get_id_owner(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, uid_t *id) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_get_id_owner_
 
 /**

@@ -80,14 +80,14 @@ extern "C" {
       else if (arguments.used) {
         if (arguments.array[0].used) {
           f_string_static_t path_file = f_string_static_t_initialize;
-          path_file.used = data_make->main->path_data_build.used + arguments.array[0].used;
+          path_file.used = data_make->data->path_data_build.used + arguments.array[0].used;
 
           f_char_t path_file_string[path_file.used + 1];
           path_file.string = path_file_string;
           path_file_string[path_file.used] = 0;
 
-          memcpy(path_file_string, data_make->main->path_data_build.string, sizeof(f_char_t) * data_make->main->path_data_build.used);
-          memcpy(path_file_string + data_make->main->path_data_build.used, arguments.array[0].string, sizeof(f_char_t) * arguments.array[0].used);
+          memcpy(path_file_string, data_make->data->path_data_build.string, sizeof(f_char_t) * data_make->data->path_data_build.used);
+          memcpy(path_file_string + data_make->data->path_data_build.used, arguments.array[0].string, sizeof(f_char_t) * arguments.array[0].used);
 
           f_status_t status_file = f_file_is(path_file, F_file_type_regular_d, F_false);
 
@@ -161,7 +161,7 @@ extern "C" {
           *status = fake_make_assure_inside_project(data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
+            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
             if (F_status_set_fine(*status) == F_false) {
               *status = F_status_set_error(F_failure);
@@ -272,7 +272,7 @@ extern "C" {
           *status = fake_make_assure_inside_project(data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
+            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
             if (F_status_set_fine(*status) == F_false) {
               *status = F_status_set_error(F_failure);
@@ -394,7 +394,7 @@ extern "C" {
           *status = fake_make_assure_inside_project(data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
+            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
             if (F_status_set_fine(*status) == F_false) {
               *status = F_status_set_error(F_failure);
@@ -866,7 +866,7 @@ extern "C" {
               f_file_mode_t mode_rule = 0;
               uint8_t replace = 0;
 
-              *status = fake_make_get_id_mode(data_make->main, data_make->error, j == 6 ? arguments.array[2] : arguments.array[3], &mode_rule, &replace);
+              *status = fake_make_get_id_mode(data_make->data, data_make->error, j == 6 ? arguments.array[2] : arguments.array[3], &mode_rule, &replace);
               if (F_status_is_error(*status)) return;
 
               i = j == 6 ? 3 : 4;
@@ -874,7 +874,7 @@ extern "C" {
             else if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_not_group_e) {
               gid_t id = 0;
 
-              *status = fake_make_get_id_group(data_make->main, data_make->error, j == 6 ? arguments.array[1] : arguments.array[2], &id);
+              *status = fake_make_get_id_group(data_make->data, data_make->error, j == 6 ? arguments.array[1] : arguments.array[2], &id);
               if (F_status_is_error(*status)) return;
 
               i = j == 6 ? 2 : 3;
@@ -940,7 +940,7 @@ extern "C" {
             else if (state_process->condition == fake_make_operation_if_type_if_owner_e || state_process->condition == fake_make_operation_if_type_if_not_owner_e) {
               uid_t id = 0;
 
-              *status = fake_make_get_id_owner(data_make->main, data_make->error, arguments.array[1], &id);
+              *status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[1], &id);
               if (F_status_is_error(*status)) return;
 
               i = j == 6 ? 2 : 3;
@@ -952,7 +952,7 @@ extern "C" {
                 status_file = fake_make_assure_inside_project(data_make, arguments.array[i]);
 
                 if (F_status_is_error(status_file)) {
-                  fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
+                  fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
                   if (F_status_is_error_not(*status)) {
                     if (F_status_set_fine(status_file) == F_false) {
@@ -1067,7 +1067,7 @@ extern "C" {
         *status = fake_make_assure_inside_project(data_make, arguments.array[0]);
 
         if (F_status_is_error(*status)) {
-          fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[0]);
+          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[0]);
 
           if (F_status_set_fine(*status) == F_false) {
             *status = F_status_set_error(F_failure);
@@ -1077,7 +1077,7 @@ extern "C" {
         *status = fake_make_assure_inside_project(data_make, arguments.array[1]);
 
         if (F_status_is_error(*status)) {
-          fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[1]);
+          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[1]);
 
           if (F_status_set_fine(*status) == F_false) {
             *status = F_status_set_error(F_failure);
@@ -1100,7 +1100,7 @@ extern "C" {
           *status = fake_make_assure_inside_project(data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
+            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
             if (F_status_set_fine(*status) == F_false) {
               *status = F_status_set_error(F_failure);
@@ -1318,7 +1318,7 @@ extern "C" {
           }
           else if (F_status_is_error(status_file)) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-              fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, data_make->main->file_data_build_fakefile, f_file_operation_find_s, fll_error_file_type_file_e);
+              fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, data_make->data->file_data_build_fakefile, f_file_operation_find_s, fll_error_file_type_file_e);
             }
 
             *status = status_file;
@@ -1376,7 +1376,7 @@ extern "C" {
           *status = fake_make_assure_inside_project(data_make, arguments.array[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_message_section_operation_path_outside(data_make->main, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
+            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[i]);
 
             if (F_status_set_fine(*status) == F_false) {
               *status = F_status_set_error(F_failure);

@@ -15,8 +15,8 @@ extern "C" {
 /**
  * Create all of the base directories inside the build directory.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_build
  *   The build data.
  * @param mode
@@ -32,7 +32,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_skeleton_
-  extern void fake_build_skeleton(fake_main_t * const main, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_skeleton_
 
 #ifdef __cplusplus

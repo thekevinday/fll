@@ -17,8 +17,8 @@ extern "C" {
  *
  * Will print the command if in verbose mode.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param environment
  *   The environment variable data.
  * @param program
@@ -35,14 +35,14 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  */
 #ifndef _di_fake_execute_
-  extern int fake_execute(fake_main_t * const main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_execute_
 
 /**
  * Load the contents of a file into the given buffer, handling all potential errors.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param path_file
  *   The path to the file to load.
  * @param buffer
@@ -56,14 +56,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_file_buffer_
-  extern f_status_t fake_file_buffer(fake_main_t * const main, const f_string_static_t path_file, f_string_dynamic_t * const buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, f_string_dynamic_t * const buffer) F_attribute_visibility_internal_d;
 #endif // _di_fake_file_buffer_
 
 /**
  * Validate console arguments and print any relating error messages.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -71,7 +71,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_process_console_parameters_
-  extern f_status_t fake_process_console_parameters(fake_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_process_console_parameters(fake_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_validate_console_parameters_
 
 /**
@@ -113,8 +113,8 @@ extern "C" {
  *
  * This should not be called for skeleton as in that case the directories probably do not exist.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -124,7 +124,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_
-  extern f_status_t fake_validate_parameter_directories(fake_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_validate_parameter_directories(fake_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fake_validate_parameter_directories_
 
 /**

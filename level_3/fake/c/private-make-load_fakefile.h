@@ -67,8 +67,8 @@ extern "C" {
 /**
  * Load the fakefile setting "parameter".
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param settings
@@ -86,7 +86,7 @@ extern "C" {
  * @see fll_fss_snatch_map_apart()
  */
 #ifndef _di_fake_make_load_fakefile_setting_define_and_parameter_
-  extern f_status_t fake_make_load_fakefile_setting_define_and_parameter(fake_main_t * const main, fake_make_data_t * const data_make, f_fss_set_t * const settings) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_load_fakefile_setting_define_and_parameter(fake_data_t * const data, fake_make_data_t * const data_make, f_fss_set_t * const settings) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_setting_define_and_parameter_
 
 /**

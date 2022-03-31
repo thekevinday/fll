@@ -157,8 +157,8 @@ extern "C" {
       };
 
       const f_string_dynamics_t *source[] = {
-        &data_make->main->define,
-        &data_make->main->mode,
+        &data_make->data->define,
+        &data_make->data->mode,
       };
 
       f_string_dynamics_t * const destination[] = {
@@ -281,13 +281,13 @@ extern "C" {
       };
 
       const f_string_dynamic_t *source[] = {
-        &data_make->main->fakefile,
-        &data_make->main->path_build,
-        &data_make->main->path_data,
-        &data_make->main->path_sources,
-        &data_make->main->path_work,
-        &data_make->main->process,
-        &data_make->main->settings,
+        &data_make->data->fakefile,
+        &data_make->data->path_build,
+        &data_make->data->path_data,
+        &data_make->data->path_sources,
+        &data_make->data->path_work,
+        &data_make->data->process,
+        &data_make->data->settings,
       };
 
       f_string_dynamics_t * const destination[] = {

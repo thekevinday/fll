@@ -11,15 +11,15 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_path_generate_
-  f_status_t fake_path_generate(fake_main_t *main) {
+  f_status_t fake_path_generate(fake_data_t * const data) {
 
     f_status_t status = F_none;
     uint8_t i = 0;
 
     {
       const f_string_dynamic_t *parameters_source[] = {
-        &main->path_build,
-        &main->path_data,
+        &data->path_build,
+        &data->path_data,
       };
 
       const uint8_t parameters_size[] = {
@@ -28,18 +28,18 @@ extern "C" {
       };
 
       f_string_dynamic_t *parameters_value_0[] = {
-        &main->path_build_documents,
-        &main->path_build_includes,
-        &main->path_build_libraries,
-        &main->path_build_objects,
-        &main->path_build_programs,
-        &main->path_build_settings,
-        &main->path_build_stage,
+        &data->path_build_documents,
+        &data->path_build_includes,
+        &data->path_build_libraries,
+        &data->path_build_objects,
+        &data->path_build_programs,
+        &data->path_build_settings,
+        &data->path_build_stage,
       };
 
       f_string_dynamic_t *parameters_value_1[] = {
-        &main->path_data_build,
-        &main->path_data_settings,
+        &data->path_data_build,
+        &data->path_data_settings,
       };
 
       f_string_dynamic_t **const parameters_value[] = {
@@ -54,10 +54,10 @@ extern "C" {
           parameters_value[i][j]->used = 0;
         } // for
 
-        status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_size[i]);
+        status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_size[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+          fll_error_print(data->main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
 
           return status;
         }
@@ -80,17 +80,17 @@ extern "C" {
       };
 
       f_string_dynamic_t * const parameters_value[] = {
-        &main->path_build_documents,
-        &main->path_build_includes,
-        &main->path_build_libraries,
-        &main->path_build_objects,
-        &main->path_build_programs,
-        &main->path_build_settings,
-        &main->path_build_stage,
-        &main->path_data_build,
-        &main->path_data_settings,
-        &main->path_documents,
-        &main->path_licenses,
+        &data->path_build_documents,
+        &data->path_build_includes,
+        &data->path_build_libraries,
+        &data->path_build_objects,
+        &data->path_build_programs,
+        &data->path_build_settings,
+        &data->path_build_stage,
+        &data->path_data_build,
+        &data->path_data_settings,
+        &data->path_documents,
+        &data->path_licenses,
       };
 
       for (i = 0; i < 11; ++i) {
@@ -98,7 +98,7 @@ extern "C" {
         status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+          fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
           return status;
         }
@@ -107,11 +107,11 @@ extern "C" {
 
     {
       const f_string_dynamic_t *parameters_source[] = {
-        &main->path_build_libraries,
-        &main->path_build_objects,
-        &main->path_build_programs,
-        &main->path_data_build,
-        &main->path_documents,
+        &data->path_build_libraries,
+        &data->path_build_objects,
+        &data->path_build_programs,
+        &data->path_data_build,
+        &data->path_documents,
       };
 
       const uint8_t parameters_size[] = {
@@ -123,34 +123,34 @@ extern "C" {
       };
 
       f_string_dynamic_t *parameters_value_0[] = {
-        &main->path_build_libraries_script,
-        &main->path_build_libraries_shared,
-        &main->path_build_libraries_static,
+        &data->path_build_libraries_script,
+        &data->path_build_libraries_shared,
+        &data->path_build_libraries_static,
       };
 
       f_string_dynamic_t *parameters_value_1[] = {
-        &main->path_build_objects_script,
-        &main->path_build_objects_shared,
-        &main->path_build_objects_static,
+        &data->path_build_objects_script,
+        &data->path_build_objects_shared,
+        &data->path_build_objects_static,
       };
 
       f_string_dynamic_t *parameters_value_2[] = {
-        &main->path_build_programs_script,
-        &main->path_build_programs_shared,
-        &main->path_build_programs_static,
+        &data->path_build_programs_script,
+        &data->path_build_programs_shared,
+        &data->path_build_programs_static,
       };
 
       f_string_dynamic_t *parameters_value_3[] = {
-        &main->file_data_build_defines,
-        &main->file_data_build_dependencies,
-        &main->file_data_build_fakefile,
-        &main->file_data_build_process_post_s,
-        &main->file_data_build_process_pre_s,
-        &main->file_data_build_settings,
+        &data->file_data_build_defines,
+        &data->file_data_build_dependencies,
+        &data->file_data_build_fakefile,
+        &data->file_data_build_process_post_s,
+        &data->file_data_build_process_pre_s,
+        &data->file_data_build_settings,
       };
 
       f_string_dynamic_t *parameters_value_4[] = {
-        &main->file_documents_readme,
+        &data->file_documents_readme,
       };
 
       f_string_dynamic_t **const parameters_value[] = {
@@ -163,10 +163,10 @@ extern "C" {
 
       for (i = 0; i < 5; ++i) {
 
-        status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_size[i]);
+        status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_size[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+          fll_error_print(data->main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
 
           return status;
         }
@@ -174,12 +174,12 @@ extern "C" {
     }
 
     // When custom fakefile or settings are used and they are paths to a file, remove the default path.
-    if (f_path_is(main->fakefile) == F_true) {
-      main->file_data_build_fakefile.used = 0;
+    if (f_path_is(data->fakefile) == F_true) {
+      data->file_data_build_fakefile.used = 0;
     }
 
-    if (f_path_is(main->settings) == F_true) {
-      main->file_data_build_settings.used = 0;
+    if (f_path_is(data->settings) == F_true) {
+      data->file_data_build_settings.used = 0;
     }
 
     {
@@ -197,28 +197,28 @@ extern "C" {
         fake_file_dependencies_s,
         fake_file_process_post_s,
         fake_file_process_pre_s,
-        main->fakefile,
-        main->settings,
+        data->fakefile,
+        data->settings,
         fake_file_readme_s,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
-        &main->path_build_libraries_script,
-        &main->path_build_libraries_shared,
-        &main->path_build_libraries_static,
-        &main->path_build_objects_script,
-        &main->path_build_objects_shared,
-        &main->path_build_objects_static,
-        &main->path_build_programs_script,
-        &main->path_build_programs_shared,
-        &main->path_build_programs_static,
-        &main->file_data_build_defines,
-        &main->file_data_build_dependencies,
-        &main->file_data_build_process_post_s,
-        &main->file_data_build_process_pre_s,
-        &main->file_data_build_fakefile,
-        &main->file_data_build_settings,
-        &main->file_documents_readme,
+        &data->path_build_libraries_script,
+        &data->path_build_libraries_shared,
+        &data->path_build_libraries_static,
+        &data->path_build_objects_script,
+        &data->path_build_objects_shared,
+        &data->path_build_objects_static,
+        &data->path_build_programs_script,
+        &data->path_build_programs_shared,
+        &data->path_build_programs_static,
+        &data->file_data_build_defines,
+        &data->file_data_build_dependencies,
+        &data->file_data_build_process_post_s,
+        &data->file_data_build_process_pre_s,
+        &data->file_data_build_fakefile,
+        &data->file_data_build_settings,
+        &data->file_documents_readme,
       };
 
       for (i = 0; i < 16; ++i) {
@@ -226,29 +226,29 @@ extern "C" {
         status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+          fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
           return status;
         }
       } // for
     }
 
-    if (main->path_work.used) {
+    if (data->path_work.used) {
       {
         f_string_dynamic_t * const parameters_value[] = {
-          &main->path_work_includes,
-          &main->path_work_libraries,
-          &main->path_work_programs,
+          &data->path_work_includes,
+          &data->path_work_libraries,
+          &data->path_work_programs,
         };
 
         for (i = 0; i < 3; ++i) {
 
           parameters_value[i]->used = 0;
 
-          status = f_string_dynamic_append_nulless(main->path_work, parameters_value[i]);
+          status = f_string_dynamic_append_nulless(data->path_work, parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+            fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
             return status;
           }
@@ -263,9 +263,9 @@ extern "C" {
         };
 
         f_string_dynamic_t * const parameters_value[] = {
-          &main->path_work_includes,
-          &main->path_work_libraries,
-          &main->path_work_programs,
+          &data->path_work_includes,
+          &data->path_work_libraries,
+          &data->path_work_programs,
         };
 
         for (i = 0; i < 3; ++i) {
@@ -273,7 +273,7 @@ extern "C" {
           status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+            fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
             return status;
           }
@@ -282,8 +282,8 @@ extern "C" {
 
       {
         const f_string_dynamic_t *parameters_source[] = {
-          &main->path_work_libraries,
-          &main->path_work_programs,
+          &data->path_work_libraries,
+          &data->path_work_programs,
         };
 
         const uint8_t parameters_size[] = {
@@ -292,15 +292,15 @@ extern "C" {
         };
 
         f_string_dynamic_t *parameters_value_0[] = {
-          &main->path_work_libraries_script,
-          &main->path_work_libraries_shared,
-          &main->path_work_libraries_static,
+          &data->path_work_libraries_script,
+          &data->path_work_libraries_shared,
+          &data->path_work_libraries_static,
         };
 
         f_string_dynamic_t *parameters_value_1[] = {
-          &main->path_work_programs_script,
-          &main->path_work_programs_shared,
-          &main->path_work_programs_static,
+          &data->path_work_programs_script,
+          &data->path_work_programs_shared,
+          &data->path_work_programs_static,
         };
 
         f_string_dynamic_t **const parameters_value[] = {
@@ -310,10 +310,10 @@ extern "C" {
 
         for (i = 0; i < 2; ++i) {
 
-          status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_size[i]);
+          status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_size[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+            fll_error_print(data->main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
 
             return status;
           }
@@ -331,12 +331,12 @@ extern "C" {
         };
 
         f_string_dynamic_t * const parameters_value[] = {
-          &main->path_work_libraries_script,
-          &main->path_work_libraries_shared,
-          &main->path_work_libraries_static,
-          &main->path_work_programs_script,
-          &main->path_work_programs_shared,
-          &main->path_work_programs_static,
+          &data->path_work_libraries_script,
+          &data->path_work_libraries_shared,
+          &data->path_work_libraries_static,
+          &data->path_work_programs_script,
+          &data->path_work_programs_shared,
+          &data->path_work_programs_static,
         };
 
         for (i = 0; i < 6; ++i) {
@@ -344,7 +344,7 @@ extern "C" {
           status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+            fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
             return status;
           }
@@ -357,7 +357,7 @@ extern "C" {
 #endif // _di_fake_path_generate_
 
 #ifndef _di_fake_path_generate_string_dynamic_
-  f_status_t fake_path_generate_string_dynamic(fake_main_t *main, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
+  f_status_t fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
 
     f_status_t status = F_none;
 

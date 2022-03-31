@@ -17,7 +17,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_
   int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, const bool success, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status) {
 
-    if (*status == F_child) return data_make->main->child;
+    if (*status == F_child) return data_make->data->main->child;
 
     if (state_process->block) {
       if (state_process->block == fake_state_process_block_if_e) {
@@ -59,7 +59,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_index_e) {
-      const f_status_t result = fake_execute(data_make->main, data_make->environment, data_make->setting_build.build_indexer, arguments, status);
+      const f_status_t result = fake_execute(data_make->data, data_make->environment, data_make->setting_build.build_indexer, arguments, status);
 
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "fake_execute", F_true);
@@ -99,7 +99,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_build_e) {
-      *status = fake_build_operate(data_make->main, arguments.used ? arguments.array[0] : f_string_empty_s);
+      *status = fake_build_operate(data_make->data, arguments.used ? arguments.array[0] : f_string_empty_s);
 
       if (F_status_set_fine(*status) == F_interrupt) {
         return 0;
@@ -111,7 +111,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_clean_e) {
-      *status = fake_clean_operate(data_make->main);
+      *status = fake_clean_operate(data_make->data);
 
       if (F_status_set_fine(*status) == F_interrupt) {
         return 0;
@@ -129,7 +129,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_compile_e) {
-      const int result = fake_execute(data_make->main, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
+      const int result = fake_execute(data_make->data, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
 
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "fake_execute", F_true);
@@ -471,7 +471,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_skeleton_e) {
-      *status = fake_skeleton_operate(data_make->main);
+      *status = fake_skeleton_operate(data_make->data);
 
       if (F_status_set_fine(*status) == F_interrupt) {
         return 0;
@@ -505,7 +505,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_execute_
   f_status_t fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) {
 
-    if (fake_signal_received(data_make->main)) {
+    if (fake_signal_received(data_make->data)) {
       return F_status_set_error(F_interrupt);
     }
 
@@ -559,7 +559,7 @@ extern "C" {
 
     status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
-    if (fake_signal_received(data_make->main)) {
+    if (fake_signal_received(data_make->data)) {
       return F_status_set_error(F_interrupt);
     }
 

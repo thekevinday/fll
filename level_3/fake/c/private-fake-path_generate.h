@@ -15,8 +15,8 @@ extern "C" {
 /**
  * Generate all appropriate paths based on runtime information.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -24,7 +24,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_
-  extern f_status_t fake_path_generate(fake_main_t *main) F_attribute_visibility_internal_d;
+  extern f_status_t fake_path_generate(fake_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fake_path_generate_
 
 /**
@@ -32,8 +32,8 @@ extern "C" {
  *
  * The given source is applied to each destination.
  *
- * @param main
- *   The main program data.
+ * @param daa
+ *   The program data.
  * @param source
  *   The string to copy from.
  * @param destination
@@ -47,7 +47,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_string_dynamic_
-  extern f_status_t fake_path_generate_string_dynamic(fake_main_t *main, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size) F_attribute_visibility_internal_d;
+  extern f_status_t fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size) F_attribute_visibility_internal_d;
 #endif // _di_fake_path_generate_string_dynamic_
 
 #ifdef __cplusplus
