@@ -222,7 +222,7 @@ extern "C" {
     }
 
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, destination.used, written);
-    if (F_status_is_error(status)) return F_status_set_error(status);
+    if (F_status_is_error(status)) return status;
 
     if (status == F_none && *written == destination.used) {
       return F_none_eos;
@@ -259,7 +259,7 @@ extern "C" {
     }
 
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, write_max, written);
-    if (F_status_is_error(status)) return F_status_set_error(status);
+    if (F_status_is_error(status)) return status;
 
     if (status == F_none && *written == destination.used) {
       return F_none_eos;
@@ -296,7 +296,7 @@ extern "C" {
     }
 
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string, write_max, written);
-    if (F_status_is_error(status)) return F_status_set_error(status);
+    if (F_status_is_error(status)) return status;
 
     if (status == F_none && *written == destination.used) {
       return F_none_eos;
@@ -335,7 +335,7 @@ extern "C" {
     }
 
     const f_status_t status = private_fl_utf_file_write_until(file, destination.string + range.start, write_max, written);
-    if (F_status_is_error(status)) return F_status_set_error(status);
+    if (F_status_is_error(status)) return status;
 
     if (status == F_none) {
       if (range.start + *written == total) {
