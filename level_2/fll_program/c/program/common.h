@@ -34,6 +34,7 @@ extern "C" {
  *
  * parameters:   The state of pre-defined parameters passed to the program.
  * process_pipe: Designate whether or not to process the input pipe.
+ * child:        Reserved for a child process, often representing the child return status or the child process ID.
  * output:       The output file for general printing.
  * error:        The output file for error printing.
  * warning:      The output file for warning printing.
@@ -47,6 +48,7 @@ extern "C" {
 
     uint16_t signal_check;
     bool process_pipe;
+    int child;
 
     fl_print_t output;
     fl_print_t error;
@@ -60,6 +62,7 @@ extern "C" {
   #define fll_program_data_t_initialize \
     { \
       f_console_parameters_t_initialize, \
+      0, \
       0, \
       F_false, \
       fl_print_t_initialize, \
