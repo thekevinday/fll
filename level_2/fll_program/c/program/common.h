@@ -40,6 +40,7 @@ extern "C" {
  * error:        The output file for error printing.
  * output:       The output file for general printing.
  * parameters:   The state of pre-defined parameters passed to the program.
+ * pid:          The PID of the program.
  * process_pipe: Designate whether or not to process the input pipe.
  * signal:       The process signal management structure.
  * signal_check: A counter used to map to for reducing the amount of actual signal check calls.
@@ -52,6 +53,7 @@ extern "C" {
 
     uint16_t signal_check;
     mode_t umask;
+    pid_t pid;
     bool process_pipe;
     int child;
 
@@ -67,6 +69,7 @@ extern "C" {
   #define fll_program_data_t_initialize \
     { \
       f_console_parameters_t_initialize, \
+      0, \
       0, \
       0, \
       0, \
