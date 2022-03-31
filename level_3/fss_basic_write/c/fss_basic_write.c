@@ -447,6 +447,7 @@ extern "C" {
 
             if (fss_basic_write_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
+
               break;
             }
 
