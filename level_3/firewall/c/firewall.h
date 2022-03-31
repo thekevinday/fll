@@ -72,8 +72,6 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call firewall_main_delete() after executing this.
- *
  * If main.signal is non-zero, then this blocks and handles the following signals:
  *   - F_signal_abort
  *   - F_signal_broken_pipe
@@ -82,7 +80,7 @@ extern "C" {
  *   - F_signal_quit
  *   - F_signal_termination
  *
- * @param data
+ * @param main
  *   The main program data.
  * @param arguments
  *   The parameters passed to the process.
@@ -93,11 +91,9 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
  *   Status codes (with error bit) are returned on any problem.
- *
- * @see firewall_main_delete()
  */
 #ifndef _di_firewall_main_
-  extern f_status_t firewall_main(firewall_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t firewall_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
 #endif // _di_firewall_main_
 
 #ifdef __cplusplus

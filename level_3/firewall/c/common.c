@@ -103,20 +103,6 @@ extern "C" {
   const f_string_static_t firewall_tool_ipset_s = macro_f_string_static_t_initialize(FIREWALL_tool_ipset_s, 0, FIREWALL_tool_ipset_s_length);
 #endif // _di_firewall_defines_
 
-#ifndef _di_firewall_main_delete_
-  f_status_t firewall_main_delete(firewall_main_t * const main) {
-
-    f_console_parameters_delete(&main->parameters);
-
-    f_string_dynamics_resize(0, &main->chains);
-    f_string_dynamics_resize(0, &main->devices);
-
-    macro_f_color_context_t_delete_simple(main->context);
-
-    return F_none;
-  }
-#endif // _di_firewall_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -65,16 +65,48 @@ typedef struct {
     0, \
   }
 
-#define macro_firewall_rule_contents_has_incorrect_items(index, total_items) \
-  local.rule_contents.array[index].used <= 0 || local.rule_contents.array[index].used > total_items
+/**
+ * The program data.
+ *
+ * argv:    The argument structure in the progam data parameters for simplifying syntax.
+ * main:    The main program data.
+ * chains:  a
+ * devices: A
+ */
+#ifndef _di_firewall_data_t_
+  typedef struct {
+    fll_program_data_t *main;
+    f_string_static_t *argv;
 
-// The buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
-#define macro_firewall_string_dynamic_size(structure, index) \
-  (structure.string[index].stop - structure.string[index].start) + 1
+    f_string_dynamics_t chains;
+    f_string_dynamics_t devices;
+  } firewall_data_t;
 
-// The buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
-#define macro_firewall_structure_size(structure, index) \
-  (structure.array[index].stop - structure.array[index].start) + 1
+  #define firewall_data_t_initialize \
+    { \
+      0, \
+      0, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
+    }
+#endif // _di_firewall_data_t_
+
+/**
+ * De-allocate data.
+ *
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see firewall_main()
+ */
+#ifndef _di_firewall_data_delete_
+  extern f_status_t firewall_data_delete(firewall_data_t * const data);
+#endif // _di_firewall_data_delete_
 
 /**
  * Print debug information about tool execution.
@@ -159,13 +191,13 @@ extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, 
 /**
  * Print a message about a process signal being recieved, such as an interrupt signal.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  * @param signal
  *   The signal received.
  */
 #ifndef _di_firewall_print_signal_received_
-  extern void firewall_print_signal_received(firewall_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
+  extern void firewall_print_signal_received(firewall_data_t * const data, const f_status_t signal) F_attribute_visibility_internal_d;
 #endif // _di_firewall_print_signal_received_
 
 /**
@@ -173,8 +205,8 @@ extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, 
  *
  * Only signals that are blocked via main.signal will be received.
  *
- * @param main
- *   The main program data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   A positive number representing a valid signal on signal received.
@@ -183,7 +215,7 @@ extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, 
  * @see f_signal_read()
  */
 #ifndef _di_firewall_signal_received_
-  extern f_status_t firewall_signal_received(firewall_main_t * const main) F_attribute_visibility_internal_d;
+  extern f_status_t firewall_signal_received(firewall_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_firewall_signal_received_
 
 #ifdef __cplusplus
