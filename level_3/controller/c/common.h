@@ -324,14 +324,22 @@ extern "C" {
 /**
  * The main program data.
  *
- * parameters:   The state of pre-defined parameters passed to the program.
- * remaining:    The remaining, non-pre-defined parameters, passed to the program.
- * process_pipe: Designate whether or not to process the input pipe.
- * output:       The output file for general printing.
- * error:        The output file for error printing.
- * warning:      The output file for warning printing.
- * signal:       The process signal management structure.
- * context:      The color context.
+ * child:                Reserved for a child process, often representing the child return status or the child process ID.
+ * context:              The color context.
+ * default_path_setting: The default setting path.
+ * default_path_pid:     The default PID file path.
+ * default_path_socket:  The default socket file path.
+ * error:                The output file for error printing.
+ * as_init:              Designate whether or not this is running as an init program.
+ * output:               The output file for general printing.
+ * parameters:           The state of pre-defined parameters passed to the program.
+ * pid:                  The PID of the program.
+ * process_pipe:         Designate whether or not to process the input pipe.
+ * program_name:         The name of the program.
+ * program_name_long:    The long name of the program.
+ * signal:               The process signal management structure.
+ * umask:                The umask settings, needed for avoiding calls to umask() to read the current umask.
+ * warning:              The output file for warning printing.
  */
 #ifndef _di_controller_main_t_
   typedef struct {
@@ -620,8 +628,6 @@ extern "C" {
 /**
  * Deallocate main.
  *
- * Be sure to call this after executing controller_main().
- *
  * If main.signal is non-zero, then this blocks and handles the following signals:
  *   - F_signal_abort
  *   - F_signal_broken_pipe
@@ -637,8 +643,6 @@ extern "C" {
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
- *
- * @see controller_main()
  */
 #ifndef _di_controller_main_delete_
   extern f_status_t controller_main_delete(controller_main_t * const main);

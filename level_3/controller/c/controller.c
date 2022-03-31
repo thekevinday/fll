@@ -68,10 +68,6 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_console_parameter_t parameters[] = controller_console_parameter_t_initialize;
-    main->parameters.array = parameters;
-    main->parameters.used = controller_total_parameters_d;
-
     {
       f_console_parameter_id_t ids[3] = { controller_parameter_no_color_e, controller_parameter_light_e, controller_parameter_dark_e };
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
@@ -104,8 +100,6 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
         }
 
-        controller_main_delete(main);
-
         return F_status_set_error(status);
       }
     }
@@ -117,12 +111,7 @@ extern "C" {
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-      if (F_status_is_error(status)) {
-        controller_main_delete(main);
-
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       if (choice == controller_parameter_verbosity_quiet_e) {
         main->output.verbosity = f_console_verbosity_quiet_e;
@@ -153,8 +142,6 @@ extern "C" {
     if (main->parameters.array[controller_parameter_help_e].result == f_console_result_found_e) {
       controller_print_help(main);
 
-      controller_main_delete(main);
-
       return F_none;
     }
 
@@ -164,8 +151,6 @@ extern "C" {
       fll_program_print_version(main->output.to, controller_program_version_s);
 
       controller_unlock_print_flush(main->output.to, 0);
-
-      controller_main_delete(main);
 
       return F_none;
     }
@@ -188,8 +173,6 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
-
-      controller_main_delete(main);
 
       return status;
     }
@@ -470,7 +453,6 @@ extern "C" {
     }
 
     controller_setting_delete_simple(&setting);
-    controller_main_delete(main);
 
     if (status == F_child) {
       return status;
