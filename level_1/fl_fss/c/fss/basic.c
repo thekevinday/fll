@@ -181,7 +181,7 @@ extern "C" {
     }
 
     // Ensure that there is room for the potential terminating newline.
-    status = f_string_dynamic_increase_by((range->stop - range->start) + 2, destination);
+    status = f_string_dynamic_increase_by(2, destination);
     if (F_status_is_error(status)) return status;
 
     const f_array_length_t destination_used = destination->used;
