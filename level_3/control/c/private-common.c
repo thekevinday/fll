@@ -61,62 +61,6 @@ extern "C" {
   }
 #endif // _di_control_data_delete_
 
-#ifndef _di_control_signal_received_
-  f_status_t control_signal_received(const fll_program_data_t * const main) {
-
-    if (main->signal.id == -1) {
-      return F_false;
-    }
-
-    struct signalfd_siginfo information;
-
-    memset(&information, 0, sizeof(struct signalfd_siginfo));
-
-    if (f_signal_read(main->signal, 0, &information) == F_signal) {
-      switch (information.ssi_signo) {
-        case F_signal_abort:
-        case F_signal_broken_pipe:
-        case F_signal_hangup:
-        case F_signal_interrupt:
-        case F_signal_quit:
-        case F_signal_termination:
-          control_print_signal_received(main, information.ssi_signo);
-
-          return information.ssi_signo;
-      }
-    }
-
-    return F_false;
-  }
-#endif // _di_control_signal_received_
-
-#ifndef _di_control_signal_state_interrupt_fss_
-  f_status_t control_signal_state_interrupt_fss(void * const state, void * const internal) {
-
-    if (!state) {
-      return F_interrupt_not;
-    }
-
-    f_state_t * const state_ptr = (f_state_t *) state;
-
-    if (!state_ptr->custom) {
-      return F_interrupt_not;
-    }
-
-    fll_program_data_t * const main = (fll_program_data_t *) state_ptr->custom;
-
-    if (!((++main->signal_check) % control_signal_check_d)) {
-      if (control_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
-      }
-
-      main->signal_check = 0;
-    }
-
-    return F_interrupt_not;
-  }
-#endif // _di_control_signal_state_interrupt_fss_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

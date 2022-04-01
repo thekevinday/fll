@@ -63,7 +63,7 @@ extern "C" {
  * The program defines.
  */
 #ifndef _di_iki_write_defines_
-  #define iki_write_signal_check_d 10000
+  #define iki_write_signal_check_d 20000
 #endif // _di_iki_write_defines_
 
 /**

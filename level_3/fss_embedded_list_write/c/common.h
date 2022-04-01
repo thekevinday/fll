@@ -69,7 +69,7 @@ extern "C" {
  *   - content_start:  A code used to represent the start of Content for use in binary formats.
  */
 #ifndef _di_fss_embedded_list_write_defines_
-  #define fss_embedded_list_write_signal_check_d 10000
+  #define fss_embedded_list_write_signal_check_d 20000
 
   #define FSS_EMBEDDED_LIST_WRITE_pipe_name_s "(pipe)"
 

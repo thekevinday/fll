@@ -437,7 +437,9 @@ extern "C" {
             for (f_array_length_t i = 0; i < main->parameters.array[fss_extended_write_parameter_object_e].values.used; ++i) {
 
               if (!((++main->signal_check) % fss_extended_write_signal_check_d)) {
-                if (fss_extended_write_signal_received(main)) {
+                if (fll_program_standard_signal_received(main)) {
+                  fss_extended_write_print_signal_received(main);
+
                   status = F_status_set_error(F_interrupt);
 
                   break;
@@ -482,7 +484,9 @@ extern "C" {
           for (; i < main->parameters.array[fss_extended_write_parameter_object_e].values.used; ++i) {
 
             if (!((++main->signal_check) % fss_extended_write_signal_check_d)) {
-              if (fss_extended_write_signal_received(main)) {
+              if (fll_program_standard_signal_received(main)) {
+                fss_extended_write_print_signal_received(main);
+
                 status = F_status_set_error(F_interrupt);
 
                 break;

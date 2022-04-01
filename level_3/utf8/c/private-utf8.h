@@ -24,7 +24,7 @@ extern "C" {
  * @return
  *   F_true on success and is valid.
  *   F_false on success and contains invalid sequences.
- *   F_signal on (exit) signal received.
+ *   F_interrupt on (exit) signal received.
  *
  *   Errors (with error bit) from: utf8_convert_binary()
  *   Errors (with error bit) from: utf8_convert_codepoint()

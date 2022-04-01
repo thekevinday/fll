@@ -285,8 +285,6 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param signal
- *   The signal received.
  *
  * @see flockfile()
  * @see funlockfile()
@@ -294,7 +292,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_signal_received_
-  extern void fake_print_signal_received(fake_data_t * const data, const f_status_t signal) F_attribute_visibility_internal_d;
+  extern void fake_print_signal_received(fake_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_signal_received_
 
 /**

@@ -121,7 +121,7 @@ extern "C" {
 
   #define byte_dump_option_wide_d 0x1
 
-  #define byte_dump_signal_check_d 10000
+  #define byte_dump_signal_check_d 20000
 
   #define BYTE_DUMP_character_wall_s        "|"
   #define BYTE_DUMP_character_placeholder_s "␣" // Other likely choices: (substitute form 1: '␚', substitute form 2: '␦').

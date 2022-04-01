@@ -109,7 +109,7 @@ extern "C" {
  * The program defines.
  */
 #ifndef _di_firewall_defines_
-  #define firewall_signal_check_d 10000
+  #define firewall_signal_check_d 20000
 #endif // _di_firewall_defines_
 
 /**

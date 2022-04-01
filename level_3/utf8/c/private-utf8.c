@@ -27,10 +27,10 @@ extern "C" {
     for (; text.string[0] && F_status_is_error_not(status); ) {
 
       if (!((++data->main->signal_check) % utf8_signal_check_d)) {
-        if (utf8_signal_received(data)) {
+        if (fll_program_standard_signal_received(data->main)) {
           utf8_print_signal_received(data, status);
 
-          status = F_status_set_error(F_signal);
+          status = F_status_set_error(F_interrupt);
 
           break;
         }

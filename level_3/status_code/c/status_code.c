@@ -181,7 +181,9 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
-            if (status_code_signal_received(main)) {
+            if (fll_program_standard_signal_received(main)) {
+              status_code_print_signal_received(main);
+
               status = F_status_set_error(F_signal);
 
               break;
@@ -211,7 +213,9 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
-            if (status_code_signal_received(main)) {
+            if (fll_program_standard_signal_received(main)) {
+              status_code_print_signal_received(main);
+
               status = F_status_set_error(F_signal);
 
               break;
@@ -241,7 +245,9 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
-            if (status_code_signal_received(main)) {
+            if (fll_program_standard_signal_received(main)) {
+              status_code_print_signal_received(main);
+
               status = F_status_set_error(F_signal);
 
               break;

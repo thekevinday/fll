@@ -65,7 +65,7 @@ extern "C" {
   f_status_t fss_embedded_list_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, const f_string_ranges_t *ignore, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
-    f_state_t state = macro_f_state_t_initialize(fss_embedded_list_write_common_allocation_large_d, fss_embedded_list_write_common_allocation_small_d, 0, 0, 0, 0, 0);
+    f_state_t state = macro_f_state_t_initialize(fss_embedded_list_write_common_allocation_large_d, fss_embedded_list_write_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
@@ -169,12 +169,18 @@ extern "C" {
 
     for (;;) {
 
-      if (fss_embedded_list_write_signal_received(main)) {
-        f_string_dynamic_resize(0, &block);
-        f_string_dynamic_resize(0, &object);
-        f_string_dynamic_resize(0, &content);
+      if (!((++main->signal_check) % fss_embedded_list_write_signal_check_d)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_embedded_list_write_print_signal_received(main);
 
-        return F_status_set_error(F_interrupt);
+          f_string_dynamic_resize(0, &block);
+          f_string_dynamic_resize(0, &object);
+          f_string_dynamic_resize(0, &content);
+
+          return F_status_set_error(F_interrupt);
+        }
+
+        main->signal_check = 0;
       }
 
       if (range.start > range.stop) {
@@ -379,8 +385,14 @@ extern "C" {
 
     for (; i < main->parameters.array[fss_embedded_list_write_parameter_ignore_e].locations.used; ++i) {
 
-      if (fss_embedded_list_write_signal_received(main)) {
-        return F_status_set_error(F_interrupt);
+      if (!((++main->signal_check) % fss_embedded_list_write_signal_check_d)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_embedded_list_write_print_signal_received(main);
+
+          return F_status_set_error(F_interrupt);
+        }
+
+        main->signal_check = 0;
       }
 
       l = main->parameters.array[fss_embedded_list_write_parameter_ignore_e].locations.array[i];

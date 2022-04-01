@@ -348,7 +348,9 @@ extern "C" {
 
     if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return;
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       *status = F_status_set_error(F_interrupt);
 
       return;
@@ -391,10 +393,16 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
-      if (!(i % fake_signal_check_short_d) && fake_signal_received(data)) {
-        *status = F_status_set_error(F_interrupt);
+      if (!(i % fake_signal_check_short_d)) {
+        if (fll_program_standard_signal_received(data->main)) {
+          fake_print_signal_received(data);
 
-        break;
+          *status = F_status_set_error(F_interrupt);
+
+          break;
+        }
+
+        data->main->signal_check = 0;
       }
 
       if (!files.array[i].used) continue;
@@ -703,7 +711,9 @@ extern "C" {
 
     f_string_dynamics_resize(0, &arguments);
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       *status = F_status_set_error(F_interrupt);
     }
     else if (*status != F_child) {
@@ -805,7 +815,9 @@ extern "C" {
 #ifndef _di_fake_build_operate_
   f_status_t fake_build_operate(fake_data_t * const data, const f_string_static_t setting_file) {
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       return F_status_set_error(F_interrupt);
     }
 
@@ -1088,7 +1100,9 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       *status = F_status_set_error(F_interrupt);
 
       return;

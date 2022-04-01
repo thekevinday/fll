@@ -264,7 +264,7 @@ extern "C" {
     fake_operation_skeleton_e,
   };
 
-  #define fake_signal_check_d       10000
+  #define fake_signal_check_d       500000
   #define fake_signal_check_tiny_d  4
   #define fake_signal_check_short_d 16
 

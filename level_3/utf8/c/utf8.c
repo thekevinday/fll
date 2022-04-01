@@ -390,17 +390,17 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error_not(status) && status != F_signal && main->parameters.array[utf8_parameter_from_file_e].result == f_console_result_additional_e) {
+      if (F_status_is_error_not(status) && status != F_interrupt && main->parameters.array[utf8_parameter_from_file_e].result == f_console_result_additional_e) {
         f_array_length_t i = 0;
         f_array_length_t index = 0;
 
         f_file_t file = macro_f_file_t_initialize(0, -1, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
-        for (; i < main->parameters.array[utf8_parameter_from_file_e].values.used && status != F_signal; ++i) {
+        for (; i < main->parameters.array[utf8_parameter_from_file_e].values.used && status != F_interrupt; ++i) {
 
           if (!((++main->signal_check) % utf8_signal_check_d)) {
-            if (utf8_signal_received(&data)) {
-              status = F_status_set_error(F_signal);
+            if (fll_program_standard_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
 
               break;
             }
@@ -443,12 +443,12 @@ extern "C" {
         } // for
       }
 
-      if (F_status_is_error_not(status) && status != F_signal && main->parameters.remaining.used) {
+      if (F_status_is_error_not(status) && status != F_interrupt && main->parameters.remaining.used) {
         for (f_array_length_t i = 0; F_status_is_error_not(status) && i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % utf8_signal_check_d)) {
-            if (utf8_signal_received(&data)) {
-              status = F_status_set_error(F_signal);
+            if (fll_program_standard_signal_received(main)) {
+              status = F_status_set_error(F_interrupt);
 
               break;
             }
@@ -470,7 +470,7 @@ extern "C" {
     }
 
     if (main->output.verbosity != f_console_verbosity_quiet_e && main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-      if (status == F_signal) {
+      if (status == F_interrupt) {
         fflush(data.file.stream);
 
         if (data.file.stream != main->output.to.stream) {
@@ -483,7 +483,7 @@ extern "C" {
 
     utf8_data_delete(&data);
 
-    if (F_status_is_error(status) || status == F_signal) {
+    if (F_status_is_error(status) || status == F_interrupt) {
       return status;
     }
 

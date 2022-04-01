@@ -19,7 +19,9 @@ extern "C" {
 
     do {
       if (!((++main->signal_check) % fss_identify_signal_check_d)) {
-        if (fss_identify_signal_received(main)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_identify_print_signal_received(main);
+
           status = F_status_set_error(F_interrupt);
 
           break;

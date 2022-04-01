@@ -48,7 +48,9 @@ extern "C" {
 
       *status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
-      if (fake_signal_received(data)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
+
         *status = F_status_set_error(F_interrupt);
 
         return 0;
@@ -95,7 +97,9 @@ extern "C" {
     char *name_function = "f_file_exists";
     f_status_t status = F_none;
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       return F_status_set_error(F_interrupt);
     }
 
@@ -506,64 +510,12 @@ extern "C" {
   }
 #endif // _di_fake_process_console_parameters_
 
-#ifndef _di_fake_signal_state_interrupt_fss_
-  f_status_t fake_signal_state_interrupt_fss(void * const state, void * const internal) {
-
-    if (!state) {
-      return F_interrupt_not;
-    }
-
-    f_state_t * const state_ptr = (f_state_t *) state;
-
-    if (!state_ptr->custom) {
-      return F_interrupt_not;
-    }
-
-    fake_data_t * const data = (fake_data_t *) state_ptr->custom;
-
-    if (!((++data->main->signal_check) % fake_signal_check_d)) {
-      if (fake_signal_received(data)) {
-        return F_status_set_error(F_interrupt);
-      }
-
-      data->main->signal_check = 0;
-    }
-
-    return F_interrupt_not;
-  }
-#endif // _di_fake_signal_state_interrupt_fss_
-
-#ifndef _di_fake_signal_state_interrupt_iki_
-  f_status_t fake_signal_state_interrupt_iki(void * const state, void * const internal) {
-
-    if (!state) {
-      return F_interrupt_not;
-    }
-
-    f_state_t * const state_ptr = (f_state_t *) state;
-
-    if (!state_ptr->custom) {
-      return F_interrupt_not;
-    }
-
-    fake_data_t * const data = (fake_data_t *) state_ptr->custom;
-
-    if (!((++data->main->signal_check) % fake_signal_check_d)) {
-      if (fake_signal_received(data)) {
-        return F_status_set_error(F_interrupt);
-      }
-
-      data->main->signal_check = 0;
-    }
-
-    return F_interrupt_not;
-  }
-#endif // _di_fake_signal_state_interrupt_iki_
-
 #ifndef _di_fake_validate_directories_
   f_status_t fake_validate_parameter_directories(fake_data_t * const data) {
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       return F_status_set_error(F_interrupt);
     }
 

@@ -401,6 +401,62 @@ extern "C" {
   extern f_status_t fll_program_standard_setup(f_signal_t * const signal);
 #endif // _di_fll_program_standard_setup_
 
+/**
+ * Check to see if a process signal is received.
+ *
+ * Only signals that are blocked via main.signal will be received.
+ *
+ * If no signals are blocked, then this always returns F_false.
+ *
+ * @param main
+ *   The main program data.
+ *   The main->signal must be used to designate blocked signals.
+ *
+ * @return
+ *   A positive number representing a valid signal on signal received.
+ *   F_false on no signal received.
+ *
+ * @see f_signal_read()
+ */
+#ifndef _di_fss_basic_read_signal_received_
+  extern f_status_t fll_program_standard_signal_received(fll_program_data_t * const main);
+#endif // _di_fss_basic_read_signal_received_
+
+/**
+ * Standardized callback for checking for interrupts via the f_state_t interrupt callback.
+ *
+ * This only checks for the signals:
+ *   - F_signal_abort
+ *   - F_signal_broken_pipe
+ *   - F_signal_hangup
+ *   - F_signal_interrupt
+ *   - F_signal_quit
+ *   - F_signal_termination
+ *
+ * These signals may not be checked if they are not also blocked via the fll_program_data_t.signals variable.
+ *
+ * When one of the above signals is both blocked and received, then this calls fll_program_standard_signal_received().
+ *
+ * @param state
+ *   The state data.
+ *   This must be of type (f_state_t *).
+ *
+ *   When constructing the f_state_t variable, a fll_program_data_t pointer must be passed into the f_state_t.custom variable.
+ *   This requires the state.custom variable to be of type (fll_program_data_t *).
+ * @param internal
+ *   Not used.
+ *
+ * @return
+ *   F_interrupt_not if not interrupted.
+ *
+ *   F_interrupt (with error bit) if interrupted.
+ *
+ * @see fll_program_standard_signal_received()
+ */
+#ifndef _di_fll_program_standard_signal_state_
+  extern f_status_t fll_program_standard_signal_state(void * const state, void * const internal);
+#endif // _di_fll_program_standard_signal_state_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

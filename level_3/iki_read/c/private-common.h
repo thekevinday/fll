@@ -76,30 +76,10 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param signal
- *   The signal received.
  */
 #ifndef _di_iki_read_print_signal_received_
-  extern void iki_read_print_signal_received(iki_read_data_t * const data, const f_status_t signal) F_attribute_visibility_internal_d;
+  extern void iki_read_print_signal_received(iki_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_print_signal_received_
-
-/**
- * Check to see if a process signal is received.
- *
- * Only signals that are blocked via main.signal will be received.
- *
- * @param data
- *   The program data.
- *
- * @return
- *   A positive number representing a valid signal on signal received.
- *   F_false on no signal received.
- *
- * @see f_signal_read()
- */
-#ifndef _di_iki_read_signal_received_
-  extern f_status_t iki_read_signal_received(iki_read_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_iki_read_signal_received_
 
 #ifdef __cplusplus
 } // extern "C"

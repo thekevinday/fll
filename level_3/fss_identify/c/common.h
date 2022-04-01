@@ -63,7 +63,7 @@ extern "C" {
  * The program defines.
  */
 #ifndef _di_fss_identify_defines_
-  #define fss_identify_signal_check_d 10000
+  #define fss_identify_signal_check_d 20000
 #endif // _di_fss_identify_defines_
 
 /**

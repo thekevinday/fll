@@ -344,7 +344,7 @@ extern "C" {
 #ifndef _di_control_print_signal_received_
   void control_print_signal_received(const fll_program_data_t * const main, const f_status_t signal) {
 
-    if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
+    if (main->warning.verbosity != f_console_verbosity_verbose_e && main->warning.verbosity != f_console_verbosity_debug_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(main->warning.to.stream);

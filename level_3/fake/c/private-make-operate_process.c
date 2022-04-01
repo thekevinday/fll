@@ -505,7 +505,9 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_execute_
   f_status_t fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) {
 
-    if (fake_signal_received(data_make->data)) {
+    if (fll_program_standard_signal_received(data_make->main)) {
+      fake_print_signal_received(data_make->data);
+
       return F_status_set_error(F_interrupt);
     }
 
@@ -559,7 +561,9 @@ extern "C" {
 
     status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
-    if (fake_signal_received(data_make->data)) {
+    if (fll_program_standard_signal_received(data_make->main)) {
+      fake_print_signal_received(data_make->data);
+
       return F_status_set_error(F_interrupt);
     }
 

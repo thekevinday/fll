@@ -130,7 +130,9 @@ extern "C" {
       for (i = 0; i < values_total; ++i) {
 
         if (!((++data->main->signal_check) % fss_embedded_list_read_signal_check_d)) {
-          if (fss_embedded_list_read_signal_received(data)) {
+          if (fll_program_standard_signal_received(data->main)) {
+            fss_embedded_list_read_print_signal_received(data);
+
             return F_status_set_error(F_interrupt);
           }
 
@@ -243,7 +245,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_state_t state = macro_f_state_t_initialize(fss_embedded_list_read_common_allocation_large_d, fss_embedded_list_read_common_allocation_small_d, 0, 0, 0, 0, 0);
+      f_state_t state = macro_f_state_t_initialize(fss_embedded_list_read_common_allocation_large_d, fss_embedded_list_read_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data->main, 0);
       f_string_range_t input = macro_f_string_range_t_initialize2(data->buffer.used);
 
       objects_delimits->used = 0;
@@ -559,7 +561,9 @@ extern "C" {
         if (skip[i]) continue;
 
         if (!((++data->main->signal_check) % fss_embedded_list_read_signal_check_d)) {
-          if (fss_embedded_list_read_signal_received(data)) {
+          if (fll_program_standard_signal_received(data->main)) {
+            fss_embedded_list_read_print_signal_received(data);
+
             return F_status_set_error(F_interrupt);
           }
 

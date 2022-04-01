@@ -293,7 +293,7 @@ extern "C" {
         for (f_status_t status_pipe = F_none; ; ) {
 
           if (!((++main->signal_check) % iki_write_signal_check_d)) {
-            if (iki_write_signal_received(&data)) {
+            if (fll_program_standard_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
 
               break;
@@ -420,7 +420,7 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.array[iki_write_parameter_object_e].values.used; ++i) {
 
           if (!((++main->signal_check) % iki_write_signal_check_d)) {
-            if (iki_write_signal_received(&data)) {
+            if (fll_program_standard_signal_received(main)) {
               status = F_status_set_error(F_interrupt);
 
               break;

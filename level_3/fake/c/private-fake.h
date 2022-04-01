@@ -75,40 +75,6 @@ extern "C" {
 #endif // _di_validate_console_parameters_
 
 /**
- * Callback passed to FSS functions for checking for interrupts.
- *
- * @param state
- *   The f_state_t data.
- * @param internal
- *   Not used.
- *
- * @return
- *   F_interrupt_not if not interrupted.
- *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- */
-#ifndef _di_fake_signal_state_interrupt_fss_
-  extern f_status_t fake_signal_state_interrupt_fss(void * const state, void * const internal) F_attribute_visibility_internal_d;
-#endif // _di_fake_signal_state_interrupt_fss_
-
-/**
- * Callback passed to IKI functions for checking for interrupts.
- *
- * @param state
- *   The f_state_t data.
- * @param internal
- *   Not used.
- *
- * @return
- *   F_interrupt_not if not interrupted.
- *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- */
-#ifndef _di_fake_signal_state_interrupt_iki_
-  extern f_status_t fake_signal_state_interrupt_iki(void * const state, void * const internal) F_attribute_visibility_internal_d;
-#endif // _di_fake_signal_state_interrupt_iki_
-
-/**
  * Validate directories and print any relating error messages.
  *
  * This should not be called for skeleton as in that case the directories probably do not exist.

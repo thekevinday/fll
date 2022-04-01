@@ -87,7 +87,9 @@ extern "C" {
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
       if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-        if (fss_basic_list_read_signal_received(main)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_basic_list_read_print_signal_received(main);
+
           return F_status_set_error(F_interrupt);
         }
 
@@ -173,7 +175,9 @@ extern "C" {
       for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
 
         if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-          if (fss_basic_list_read_signal_received(main)) {
+          if (fll_program_standard_signal_received(main)) {
+            fss_basic_list_read_print_signal_received(main);
+
             return F_status_set_error(F_interrupt);
           }
 
@@ -242,7 +246,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_load_
   f_status_t fss_basic_list_read_load(fll_program_data_t * const main, fss_basic_list_read_data_t * const data) {
 
-    f_state_t state = macro_f_state_t_initialize(fss_basic_list_read_common_allocation_large_d, fss_basic_list_read_common_allocation_small_d, 0, 0, 0, 0, 0);
+    f_state_t state = macro_f_state_t_initialize(fss_basic_list_read_common_allocation_large_d, fss_basic_list_read_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
     f_string_range_t input = macro_f_string_range_t_initialize2(data->buffer.used);
 
     data->delimits_object.used = 0;
@@ -352,7 +356,9 @@ extern "C" {
       if (!names[i]) continue;
 
       if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-        if (fss_basic_list_read_signal_received(main)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_basic_list_read_print_signal_received(main);
+
           return F_status_set_error(F_interrupt);
         }
 
@@ -398,7 +404,9 @@ extern "C" {
       if (!names[i]) continue;
 
       if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-        if (fss_basic_list_read_signal_received(main)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_basic_list_read_print_signal_received(main);
+
           return F_status_set_error(F_interrupt);
         }
 
@@ -499,7 +507,9 @@ extern "C" {
       for (i = range.start; i <= range.stop; ++i) {
 
         if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-          if (fss_basic_list_read_signal_received(main)) {
+          if (fll_program_standard_signal_received(main)) {
+            fss_basic_list_read_print_signal_received(main);
+
             return F_status_set_error(F_interrupt);
           }
 
@@ -580,7 +590,9 @@ extern "C" {
       if (!names[i]) continue;
 
       if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-        if (fss_basic_list_read_signal_received(main)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_basic_list_read_print_signal_received(main);
+
           return F_status_set_error(F_interrupt);
         }
 
@@ -618,7 +630,9 @@ extern "C" {
       if (!names[i]) continue;
 
       if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-        if (fss_basic_list_read_signal_received(main)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_basic_list_read_print_signal_received(main);
+
           return F_status_set_error(F_interrupt);
         }
 
@@ -733,7 +747,9 @@ extern "C" {
       if (!names[at]) continue;
 
       if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-        if (fss_basic_list_read_signal_received(main)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_basic_list_read_print_signal_received(main);
+
           return F_status_set_error(F_interrupt);
         }
 

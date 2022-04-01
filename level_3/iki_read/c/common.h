@@ -63,7 +63,7 @@ extern "C" {
  * The program defines.
  */
 #ifndef _di_iki_read_defines_
-  #define iki_read_signal_check_d 10000
+  #define iki_read_signal_check_d 20000
 
   enum {
     iki_read_mode_content_e = 1,

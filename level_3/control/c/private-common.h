@@ -30,7 +30,7 @@ extern "C" {
   #define control_default_buffer_limit_soft_large_d 2048
   #define control_default_buffer_limit_soft_small_d 64
 
-  #define control_signal_check_d 10000
+  #define control_signal_check_d 20000
 
   #define control_allocation_large_d 256
   #define control_allocation_small_d 16
@@ -318,41 +318,6 @@ extern "C" {
 #ifndef _di_control_data_delete_
   extern void control_data_delete(control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_data_delete_
-
-/**
- * Check to see if a process signal is received.
- *
- * Only signals that are blocked via main.signal will be received.
- *
- * @param main
- *   The main program data.
- *
- * @return
- *   A positive number representing a valid signal on signal received.
- *   F_false on no signal received.
- *
- * @see f_signal_read()
- */
-#ifndef _di_control_signal_received_
-  extern f_status_t control_signal_received(const fll_program_data_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_control_signal_received_
-
-/**
- * Callback passed to FSS functions for checking for interrupts.
- *
- * @param state
- *   The f_state_t data.
- * @param internal
- *   Not used.
- *
- * @return
- *   F_interrupt_not if not interrupted.
- *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- */
-#ifndef _di_control_signal_state_interrupt_fss_
-  extern f_status_t control_signal_state_interrupt_fss(void * const state, void * const internal) F_attribute_visibility_internal_d;
-#endif // _di_control_signal_state_interrupt_fss_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -104,7 +104,7 @@ extern "C" {
     bool unmatched = F_true;
 
     {
-      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data->main, 0);
 
       status = fl_iki_read(state, &data->buffer, buffer_range, iki_data);
     }
@@ -265,7 +265,7 @@ extern "C" {
     f_string_range_t range = buffer_range;
 
     {
-      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data->main, 0);
 
       status = fl_iki_read(state, &data->buffer, &range, iki_data);
     }
@@ -472,7 +472,7 @@ extern "C" {
     }
 
     {
-      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, 0, 0, 0);
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data->main, 0);
 
       status = fl_iki_read(state, &data->buffer, &range, iki_data);
     }
@@ -501,7 +501,9 @@ extern "C" {
       for (; i < data->main->parameters.array[iki_read_parameter_name_e].values.used; ++i) {
 
         if (!((++data->main->signal_check) % iki_read_signal_check_d)) {
-          if (iki_read_signal_received(data)) {
+          if (fll_program_standard_signal_received(data->main)) {
+            iki_read_print_signal_received(data);
+
             f_string_dynamic_resize(0, &name);
 
             return F_status_set_error(F_interrupt);

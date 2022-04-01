@@ -73,7 +73,7 @@ extern "C" {
  * The program defines.
  */
 #ifndef _di_status_code_defines_
-  #define status_code_signal_check_d 10000
+  #define status_code_signal_check_d 20000
 #endif // _di_status_code_defines_
 
 /**

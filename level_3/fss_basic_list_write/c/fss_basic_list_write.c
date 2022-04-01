@@ -421,10 +421,16 @@ extern "C" {
           if (main->parameters.array[fss_basic_list_write_parameter_object_e].result == f_console_result_additional_e) {
             for (f_array_length_t i = 0; i < main->parameters.array[fss_basic_list_write_parameter_object_e].values.used; ++i) {
 
-              if (fss_basic_list_write_signal_received(main)) {
-                status = F_status_set_error(F_interrupt);
+              if (!((++main->signal_check) % fss_basic_list_write_signal_check_d)) {
+                if (fll_program_standard_signal_received(main)) {
+                  fss_basic_list_write_print_signal_received(main);
 
-                break;
+                  status = F_status_set_error(F_interrupt);
+
+                  break;
+                }
+
+                main->signal_check = 0;
               }
 
               index = main->parameters.array[fss_basic_list_write_parameter_object_e].values.array[i];
@@ -436,10 +442,16 @@ extern "C" {
           else {
             for (f_array_length_t i = 0; i < main->parameters.array[fss_basic_list_write_parameter_content_e].values.used; ++i) {
 
-              if (fss_basic_list_write_signal_received(main)) {
-                status = F_status_set_error(F_interrupt);
+              if (!((++main->signal_check) % fss_basic_list_write_signal_check_d)) {
+                if (fll_program_standard_signal_received(main)) {
+                  fss_basic_list_write_print_signal_received(main);
 
-                break;
+                  status = F_status_set_error(F_interrupt);
+
+                  break;
+                }
+
+                main->signal_check = 0;
               }
 
               index = main->parameters.array[fss_basic_list_write_parameter_content_e].values.array[i];
@@ -452,10 +464,16 @@ extern "C" {
         else {
           for (f_array_length_t i = 0; i < main->parameters.array[fss_basic_list_write_parameter_object_e].values.used; ++i) {
 
-            if (fss_basic_list_write_signal_received(main)) {
-              status = F_status_set_error(F_interrupt);
+            if (!((++main->signal_check) % fss_basic_list_write_signal_check_d)) {
+              if (fll_program_standard_signal_received(main)) {
+                fss_basic_list_write_print_signal_received(main);
 
-              break;
+                status = F_status_set_error(F_interrupt);
+
+                break;
+              }
+
+              main->signal_check = 0;
             }
 
             index = main->parameters.array[fss_basic_list_write_parameter_object_e].values.array[i];

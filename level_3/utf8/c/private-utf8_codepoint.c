@@ -219,10 +219,10 @@ extern "C" {
       for (i = 0; F_status_is_fine(status) && i < data->buffer.used; ) {
 
         if (!((++data->main->signal_check) % utf8_signal_check_d)) {
-          if (utf8_signal_received(data)) {
+          if (fll_program_standard_signal_received(data->main)) {
             utf8_print_signal_received(data, status);
 
-            status = F_signal;
+            status = F_interrupt;
 
             break;
           }
@@ -266,10 +266,10 @@ extern "C" {
       i = 0;
       data->buffer.used = 0;
 
-    } while (F_status_is_fine(status) && status != F_signal);
+    } while (F_status_is_fine(status) && status != F_interrupt);
 
     // Handle last (incomplete) character when the buffer ended before the character is supposed to end.
-    if (F_status_is_error_not(status) && status != F_signal && next == F_false) {
+    if (F_status_is_error_not(status) && status != F_interrupt && next == F_false) {
       character.used = j;
 
       if (data->mode & utf8_mode_from_binary_d) {
@@ -290,7 +290,7 @@ extern "C" {
 
     data->buffer.used = 0;
 
-    if (F_status_is_error(status) || status == F_signal) {
+    if (F_status_is_error(status) || status == F_interrupt) {
       return status;
     }
 

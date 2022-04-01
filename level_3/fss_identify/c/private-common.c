@@ -15,9 +15,9 @@ extern "C" {
 #endif // _di_fss_identify_data_delete_
 
 #ifndef _di_fss_identify_print_signal_received_
-  void fss_identify_print_signal_received(fll_program_data_t * const main, const f_status_t signal) {
+  void fss_identify_print_signal_received(fll_program_data_t * const main) {
 
-    if (main->warning.verbosity != f_console_verbosity_verbose_e) return;
+    if (main->warning.verbosity != f_console_verbosity_verbose_e && main->warning.verbosity != f_console_verbosity_debug_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(main->warning.to.stream);
@@ -25,41 +25,12 @@ extern "C" {
     flockfile(main->warning.to.stream);
 
     fl_print_format("%]%r%r%[Received signal code %]", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
-    fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, signal, main->context.set.notable);
+    fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, main->signal_received, main->context.set.notable);
     fl_print_format("%[.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
     funlockfile(main->warning.to.stream);
   }
 #endif // _di_fss_identify_print_signal_received_
-
-#ifndef _di_fss_identify_signal_received_
-  f_status_t fss_identify_signal_received(fll_program_data_t * const main) {
-
-    if (main->signal.id == -1) {
-      return F_false;
-    }
-
-    struct signalfd_siginfo information;
-
-    memset(&information, 0, sizeof(struct signalfd_siginfo));
-
-    if (f_signal_read(main->signal, 0, &information) == F_signal) {
-      switch (information.ssi_signo) {
-        case F_signal_abort:
-        case F_signal_broken_pipe:
-        case F_signal_hangup:
-        case F_signal_interrupt:
-        case F_signal_quit:
-        case F_signal_termination:
-          fss_identify_print_signal_received(main, information.ssi_signo);
-
-          return information.ssi_signo;
-      }
-    }
-
-    return F_false;
-  }
-#endif // _di_fss_identify_signal_received_
 
 #ifdef __cplusplus
 } // extern "C"

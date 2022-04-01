@@ -255,7 +255,7 @@ extern "C" {
 #ifndef _di_utf8_print_signal_received_
   void utf8_print_signal_received(utf8_data_t * const data, const f_status_t signal) {
 
-    if (data->main->warning.verbosity != f_console_verbosity_verbose_e) return;
+    if (data->main->warning.verbosity != f_console_verbosity_verbose_e && data->main->warning.verbosity != f_console_verbosity_debug_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(data->main->warning.to.stream);

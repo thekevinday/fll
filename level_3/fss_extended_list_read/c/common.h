@@ -69,7 +69,7 @@ extern "C" {
  * The program defines.
  */
 #ifndef _di_fss_extended_list_read_defines_
-  #define fss_extended_list_read_signal_check_d 10000
+  #define fss_extended_list_read_signal_check_d 20000
 
   #define FSS_EXTENDED_LIST_READ_pipe_name_s "(pipe)"
 

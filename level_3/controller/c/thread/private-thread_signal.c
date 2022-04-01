@@ -55,7 +55,7 @@ extern "C" {
       return F_interrupt_not;
     }
 
-    controller_state_interrupt_t *custom = (controller_state_interrupt_t *) state_ptr->custom;
+    fll_program_data_t *main = (fll_program_data_t *) state_ptr->custom;
     controller_thread_t *thread = custom->thread;
 
     if (!controller_thread_is_enabled(custom->is_normal, thread)) {

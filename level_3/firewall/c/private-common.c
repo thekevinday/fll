@@ -88,7 +88,7 @@ void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const c
 #ifndef _di_firewall_print_signal_received_
   void firewall_print_signal_received(firewall_data_t * const data, const f_status_t signal) {
 
-    if (data->main->warning.verbosity != f_console_verbosity_verbose_e) return;
+    if (data->main->warning.verbosity != f_console_verbosity_verbose_e && data->main->warning.verbosity != f_console_verbosity_debug_e) return;
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     fflush(data->main->warning.to.stream);

@@ -65,7 +65,7 @@ extern "C" {
   f_status_t fss_payload_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
-    f_state_t state = macro_f_state_t_initialize(fss_payload_write_common_allocation_large_d, fss_payload_write_common_allocation_small_d, 0, 0, 0, 0, 0);
+    f_state_t state = macro_f_state_t_initialize(fss_payload_write_common_allocation_large_d, fss_payload_write_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
@@ -208,10 +208,16 @@ extern "C" {
 
     for (;;) {
 
-      if (fss_payload_write_signal_received(main)) {
-        status = F_status_set_error(F_interrupt);
+      if (!((++main->signal_check) % fss_payload_write_signal_check_d)) {
+        if (fll_program_standard_signal_received(main)) {
+          fss_payload_write_print_signal_received(main);
 
-        break;
+          status = F_status_set_error(F_interrupt);
+
+          break;
+        }
+
+        main->signal_check = 0;
       }
 
       if (range.start > range.stop) {

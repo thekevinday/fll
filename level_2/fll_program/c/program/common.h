@@ -35,33 +35,35 @@ extern "C" {
  * The umask() has design flaws as per specification that requires the umask be changed to read the value!
  * As a work-around, a umask variable is provided here so that umask() only ever need be called once.
  *
- * child:        Reserved for a child process, often representing the child return status or the child process ID.
- * context:      The color context.
- * error:        The output file for error printing.
- * output:       The output file for general printing.
- * parameters:   The state of pre-defined parameters passed to the program.
- * pid:          The PID of the program.
- * process_pipe: Designate whether or not to process the input pipe.
- * signal:       The process signal management structure.
- * signal_check: A counter used to map to for reducing the amount of actual signal check calls.
- * umask:        The umask settings, needed for avoiding calls to umask() to read the current umask.
- * warning:      The output file for warning printing.
+ * child:           Reserved for a child process, often representing the child return status or the child process ID.
+ * context:         The color context.
+ * error:           The output file for error printing.
+ * output:          The output file for general printing.
+ * parameters:      The state of pre-defined parameters passed to the program.
+ * pid:             The PID of the program.
+ * process_pipe:    Designate whether or not to process the input pipe.
+ * signal:          The process signal management structure.
+ * signal_check:    A counter used to map to for reducing the amount of actual signal check calls.
+ * signal_received: The signal received (if 0, then no signal is received).
+ * umask:           The umask settings, needed for avoiding calls to umask() to read the current umask.
+ * warning:         The output file for warning printing.
  */
 #ifndef _di_fll_program_data_t_
   typedef struct {
     f_console_parameters_t parameters;
 
-    uint16_t signal_check;
     mode_t umask;
     pid_t pid;
-    bool process_pipe;
     int child;
+    bool process_pipe;
+
+    int signal_received;
+    uint16_t signal_check;
+    f_signal_t signal;
 
     fl_print_t output;
     fl_print_t error;
     fl_print_t warning;
-
-    f_signal_t signal;
 
     f_color_context_t context;
   } fll_program_data_t;
@@ -72,23 +74,27 @@ extern "C" {
       0, \
       0, \
       0, \
-      0, \
       F_false, \
+      0, \
+      0, \
+      f_signal_t_initialize, \
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
-      f_signal_t_initialize, \
       f_color_context_t_initialize, \
     }
 
-  #define macro_fll_program_data_t_initialize(parameters, signal_check, process_pipe, output, error, warning, signal, context) { \
-    parameters, \
-    signal_check, \
+  #define macro_fll_program_data_t_initialize(umask, pid, child, process_pipe, signal_received, signal_check, signal, output, error, warning, context) { \
+    umask, \
+    pid, \
+    child, \
     process_pipe, \
+    signal_received, \
+    signal_check, \
+    signal, \
     output, \
     error, \
     warning, \
-    signal, \
     context, \
   }
 #endif // _di_fll_program_data_t_

@@ -1735,24 +1735,6 @@ extern "C" {
   extern f_status_t fake_make_data_delete(fake_make_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_data_delete_
 
-/**
- * Check to see if a process signal is received.
- *
- * Only signals that are blocked via main.signal will be received.
- *
- * @param data
- *   The program data.
- *
- * @return
- *   A positive number representing a valid signal on signal received.
- *   F_false on no signal received.
- *
- * @see f_signal_read()
- */
-#ifndef _di_fake_signal_received_
-  extern f_status_t fake_signal_received(fake_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_fake_signal_received_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

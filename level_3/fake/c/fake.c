@@ -331,10 +331,16 @@ extern "C" {
 
         if (status == F_child) break;
 
-        if (F_status_set_fine(status) == F_interrupt || !(i % fake_signal_check_short_d) && fake_signal_received(&data)) {
-          status = F_status_set_error(F_interrupt);
+        if (F_status_set_fine(status) == F_interrupt || !(i % fake_signal_check_short_d)) {
+          if (fll_program_standard_signal_received(main)) {
+            fake_print_signal_received(&data);
 
-          break;
+            status = F_status_set_error(F_interrupt);
+
+            break;
+          }
+
+          data->main->signal_check = 0;
         }
 
         if (F_status_is_error(status)) {

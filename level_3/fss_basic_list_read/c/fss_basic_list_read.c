@@ -344,7 +344,9 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.array[fss_basic_list_read_parameter_delimit_e].values.used; ++i) {
 
           if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-            if (fss_basic_list_read_signal_received(main)) {
+            if (fll_program_standard_signal_received(main)) {
+              fss_basic_list_read_print_signal_received(main);
+
               status = F_status_set_error(F_interrupt);
 
               break;
@@ -537,7 +539,9 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % fss_basic_list_read_signal_check_d)) {
-            if (fss_basic_list_read_signal_received(main)) {
+            if (fll_program_standard_signal_received(main)) {
+              fss_basic_list_read_print_signal_received(main);
+
               status = F_status_set_error(F_interrupt);
 
               break;

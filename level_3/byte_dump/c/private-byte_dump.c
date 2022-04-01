@@ -60,7 +60,9 @@ extern "C" {
       for (;;) {
 
         if (!((++data->main->signal_check) % byte_dump_signal_check_d)) {
-          if (byte_dump_signal_received(data)) {
+          if (fll_program_standard_signal_received(data->main)) {
+            byte_dump_print_signal_received(data);
+
             return F_status_set_error(F_interrupt);
           }
 

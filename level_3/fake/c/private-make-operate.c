@@ -20,7 +20,9 @@ extern "C" {
 #ifndef _di_fake_make_operate_
   f_status_t fake_make_operate(fake_data_t * const data) {
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       return F_status_set_error(F_interrupt);
     }
 
@@ -163,7 +165,7 @@ extern "C" {
 
     f_iki_data_t iki_data = f_iki_data_t_initialize;
 
-    f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_iki, 0, (void *) data_make->data, 0);
+    f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
 
     f_string_range_t range = f_string_range_t_initialize;
     f_string_map_multis_t *parameter = &data_make->setting_make.parameter;
@@ -1045,10 +1047,16 @@ extern "C" {
       state_process.operation_previous = state_process.operation;
       state_process.operation = 0;
 
-      if (!(i % fake_signal_check_short_d) && fake_signal_received(data_make->data)) {
-        *status = F_status_set_error(F_interrupt);
+      if (!(i % fake_signal_check_short_d)) {
+        if (fll_program_standard_signal_received(data_make->main)) {
+          fake_print_signal_received(data_make->data);
 
-        break;
+          *status = F_status_set_error(F_interrupt);
+
+          break;
+        }
+
+        data_make->main->signal_check = 0;
       }
 
       for (j = 0; j < fake_make_operation_total_d; ++j) {

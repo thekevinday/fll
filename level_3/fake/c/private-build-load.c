@@ -75,7 +75,9 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       *status = F_status_set_error(F_interrupt);
 
       return;
@@ -109,7 +111,7 @@ extern "C" {
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
         {
-          f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) data, 0);
+          f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data->main, 0);
 
           *status = fll_fss_extended_read(buffer, state, &range, &objects, &contents, 0, 0, &delimits, 0);
         }
@@ -182,7 +184,9 @@ extern "C" {
 
     if (F_status_is_error(*status) && buffer.used) return;
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       *status = F_status_set_error(F_interrupt);
 
       return;
@@ -1380,7 +1384,9 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (fake_signal_received(data)) {
+    if (fll_program_standard_signal_received(data->main)) {
+      fake_print_signal_received(data);
+
       *status = F_status_set_error(F_interrupt);
 
       return;

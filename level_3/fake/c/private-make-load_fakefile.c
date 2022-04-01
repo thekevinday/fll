@@ -19,7 +19,9 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (fake_signal_received(data_make->data)) {
+    if (fll_program_standard_signal_received(data_make->main)) {
+      fake_print_signal_received(data_make->data);
+
       *status = F_status_set_error(F_interrupt);
 
       return;
@@ -53,7 +55,7 @@ extern "C" {
       f_fss_comments_t comments = f_fss_comments_t_initialize;
 
       {
-        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) data_make->data, 0);
+        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
 
         *status = fll_fss_basic_list_read(data_make->buffer, state, &range, &list_objects, &list_contents, &delimits, 0, &comments);
       }
@@ -86,7 +88,7 @@ extern "C" {
 
       f_fss_set_t settings = f_fss_set_t_initialize;
 
-      f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fake_signal_state_interrupt_fss, 0, (void *) data_make->data, 0);
+      f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fll_program_standard_signal_state, (void *) data_make->data, 0);
 
       if (list_objects.used > data_make->fakefile.size) {
         macro_f_fss_nameds_t_resize((*status), data_make->fakefile, list_objects.used);
@@ -108,10 +110,16 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < list_objects.used; ++i) {
 
-          if (!(i % fake_signal_check_short_d) && fake_signal_received(data_make->data)) {
-            *status = F_status_set_error(F_interrupt);
+          if (!(i % fake_signal_check_short_d)) {
+            if (fll_program_standard_signal_received(data_make->main)) {
+              fake_print_signal_received(data_make->data);
 
-            break;
+              *status = F_status_set_error(F_interrupt);
+
+              break;
+            }
+
+            data_make->main->signal_check = 0;
           }
 
           if (fl_string_dynamic_partial_compare_string(fake_make_section_settings_s.string, data_make->buffer, fake_make_section_settings_s.used, list_objects.array[i]) == F_equal_to) {

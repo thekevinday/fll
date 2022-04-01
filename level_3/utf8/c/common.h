@@ -80,7 +80,7 @@ extern "C" {
  * The program defines.
  */
 #ifndef _di_utf8_defines_
-  #define utf8_signal_check_d 10000
+  #define utf8_signal_check_d 20000
 
   #define UTF8_string_combining_is_s  "C"
   #define UTF8_string_combining_not_s "N"

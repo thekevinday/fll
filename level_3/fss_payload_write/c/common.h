@@ -63,7 +63,7 @@ extern "C" {
  * The program defines.
  */
 #ifndef _di_fss_payload_write_defines_
-  #define fss_payload_write_signal_check_d 10000
+  #define fss_payload_write_signal_check_d 20000
 
   #define FSS_PAYLOAD_WRITE_pipe_content_end_s    "\f"
   #define FSS_PAYLOAD_WRITE_pipe_content_ignore_s "\v"
