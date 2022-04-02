@@ -271,6 +271,23 @@ extern "C" {
   }
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
+#ifndef _di_fll_program_parameter_long_print_cannot_use_with_
+  f_status_t fll_program_parameter_long_print_cannot_use_with(const fl_print_t print, const f_string_static_t first, const f_string_static_t second) {
+
+    flockfile(print.to.stream);
+
+    fl_print_format("%r%[%QCannot specify the '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, first, print.notable);
+    fl_print_format("%[' parameter with the '%]", print.to.stream, print.context, print.context);
+    fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, second, print.notable);
+    fl_print_format("%[' parameter.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+
+    funlockfile(print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_fll_program_parameter_long_print_cannot_use_with_
+
 #ifndef _di_fll_program_standard_setdown_
   f_status_t fll_program_standard_setdown(f_signal_t * const signal) {
 

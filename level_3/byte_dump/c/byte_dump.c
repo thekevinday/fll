@@ -423,7 +423,7 @@ extern "C" {
         }
       }
 
-      if (main->parameters.remaining.used > 0) {
+      if (main->parameters.remaining.used) {
 
         // Pre-process remaining arguments to ensure that they all files exist before processing.
         {

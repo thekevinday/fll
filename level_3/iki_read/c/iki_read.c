@@ -196,15 +196,7 @@ extern "C" {
 
         if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_at_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_whole_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_parameter_long_print_cannot_use_with(main->error, iki_read_long_at_s, iki_read_long_whole_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -271,15 +263,7 @@ extern "C" {
 
         if (main->parameters.array[iki_read_parameter_total_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_parameter_long_print_cannot_use_with(main->error, iki_read_long_substitute_s, iki_read_long_total_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -289,15 +273,7 @@ extern "C" {
       if (main->parameters.array[iki_read_parameter_literal_e].result == f_console_result_found_e) {
         if (main->parameters.array[iki_read_parameter_object_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_parameter_long_print_cannot_use_with(main->error, iki_read_long_literal_s, iki_read_long_object_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -305,15 +281,7 @@ extern "C" {
 
         if (main->parameters.array[iki_read_parameter_content_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_content_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_parameter_long_print_cannot_use_with(main->error, iki_read_long_literal_s, iki_read_long_content_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -321,15 +289,7 @@ extern "C" {
 
         if (main->parameters.array[iki_read_parameter_total_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_literal_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_parameter_long_print_cannot_use_with(main->error, iki_read_long_literal_s, iki_read_long_total_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -340,15 +300,7 @@ extern "C" {
       else if (main->parameters.array[iki_read_parameter_object_e].result == f_console_result_found_e) {
         if (main->parameters.array[iki_read_parameter_content_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_content_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_parameter_long_print_cannot_use_with(main->error, iki_read_long_object_s, iki_read_long_content_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -356,15 +308,7 @@ extern "C" {
 
         if (main->parameters.array[iki_read_parameter_total_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_object_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_parameter_long_print_cannot_use_with(main->error, iki_read_long_object_s, iki_read_long_total_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -384,15 +328,7 @@ extern "C" {
       if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
         if (main->parameters.array[iki_read_parameter_total_e].result == f_console_result_found_e) {
           if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_whole_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_parameter_long_print_cannot_use_with(main->error, iki_read_long_whole_s, iki_read_long_total_s);
           }
 
           status = F_status_set_error(F_parameter);

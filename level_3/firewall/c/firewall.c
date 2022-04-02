@@ -200,7 +200,7 @@ extern "C" {
 
         int return_code = 0;
 
-        if (main->parameters.remaining.used > 0) {
+        if (main->parameters.remaining.used) {
           show_nat = F_false;
           show_mangle = F_false;
           show_ports = F_false;

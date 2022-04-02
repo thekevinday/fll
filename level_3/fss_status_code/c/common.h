@@ -80,34 +80,34 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_fss_status_code_parameters_
-  #define FSS_STATUS_CODE_short_is_fine_s    "f"
-  #define FSS_STATUS_CODE_short_is_warning_s "w"
-  #define FSS_STATUS_CODE_short_is_error_s   "e"
-  #define FSS_STATUS_CODE_short_number_s     "n"
+  #define FSS_STATUS_CODE_short_fine_s    "f"
+  #define FSS_STATUS_CODE_short_warning_s "w"
+  #define FSS_STATUS_CODE_short_error_s   "e"
+  #define FSS_STATUS_CODE_short_number_s  "n"
 
-  #define FSS_STATUS_CODE_long_is_fine_s    "is_fine"
-  #define FSS_STATUS_CODE_long_is_warning_s "is_warning"
-  #define FSS_STATUS_CODE_long_is_error_s   "is_error"
-  #define FSS_STATUS_CODE_long_number_s     "number"
+  #define FSS_STATUS_CODE_long_fine_s    "fine"
+  #define FSS_STATUS_CODE_long_warning_s "warning"
+  #define FSS_STATUS_CODE_long_error_s   "error"
+  #define FSS_STATUS_CODE_long_number_s  "number"
 
-  #define FSS_STATUS_CODE_short_is_fine_s_length    1
-  #define FSS_STATUS_CODE_short_is_warning_s_length 1
-  #define FSS_STATUS_CODE_short_is_error_s_length   1
-  #define FSS_STATUS_CODE_short_number_s_length     1
+  #define FSS_STATUS_CODE_short_fine_s_length    1
+  #define FSS_STATUS_CODE_short_warning_s_length 1
+  #define FSS_STATUS_CODE_short_error_s_length   1
+  #define FSS_STATUS_CODE_short_number_s_length  1
 
-  #define FSS_STATUS_CODE_long_is_fine_s_length    7
-  #define FSS_STATUS_CODE_long_is_warning_s_length 10
-  #define FSS_STATUS_CODE_long_is_error_s_length   8
-  #define FSS_STATUS_CODE_long_number_s_length     6
+  #define FSS_STATUS_CODE_long_fine_s_length    4
+  #define FSS_STATUS_CODE_long_warning_s_length 7
+  #define FSS_STATUS_CODE_long_error_s_length   5
+  #define FSS_STATUS_CODE_long_number_s_length  6
 
-  extern const f_string_static_t fss_status_code_short_is_fine_s;
-  extern const f_string_static_t fss_status_code_short_is_warning_s;
-  extern const f_string_static_t fss_status_code_short_is_error_s;
+  extern const f_string_static_t fss_status_code_short_fine_s;
+  extern const f_string_static_t fss_status_code_short_warning_s;
+  extern const f_string_static_t fss_status_code_short_error_s;
   extern const f_string_static_t fss_status_code_short_number_s;
 
-  extern const f_string_static_t fss_status_code_long_is_fine_s;
-  extern const f_string_static_t fss_status_code_long_is_warning_s;
-  extern const f_string_static_t fss_status_code_long_is_error_s;
+  extern const f_string_static_t fss_status_code_long_fine_s;
+  extern const f_string_static_t fss_status_code_long_warning_s;
+  extern const f_string_static_t fss_status_code_long_error_s;
   extern const f_string_static_t fss_status_code_long_number_s;
 
   enum {
@@ -121,9 +121,9 @@ extern "C" {
     fss_status_code_parameter_verbosity_debug_e,
     fss_status_code_parameter_version_e,
 
-    fss_status_code_parameter_is_fine_e,
-    fss_status_code_parameter_is_warning_e,
-    fss_status_code_parameter_is_error_e,
+    fss_status_code_parameter_fine_e,
+    fss_status_code_parameter_warning_e,
+    fss_status_code_parameter_error_e,
     fss_status_code_parameter_number_e,
   };
 
@@ -138,9 +138,9 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(fss_status_code_short_is_fine_s.string, fss_status_code_long_is_fine_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_status_code_short_is_warning_s.string, fss_status_code_long_is_warning_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_status_code_short_is_error_s.string, fss_status_code_long_is_error_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_status_code_short_fine_s.string, fss_status_code_long_fine_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_status_code_short_warning_s.string, fss_status_code_long_warning_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_status_code_short_error_s.string, fss_status_code_long_error_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fss_status_code_short_number_s.string, fss_status_code_long_number_s.string, 0, 0, f_console_type_normal_e), \
     }
 

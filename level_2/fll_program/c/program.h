@@ -358,6 +358,25 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
 /**
+ * Print message about two long parameters not being allowed to be used together.
+ *
+ * This assumes both of the long parameters use f_console_symbol_long_enable_s.
+ *
+ * @param print
+ *   The output structure.
+ * @param first
+ *   The first string.
+ * @param second
+ *   The second string.
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_fll_program_parameter_long_print_cannot_use_with_
+  extern f_status_t fll_program_parameter_long_print_cannot_use_with(const fl_print_t print, const f_string_static_t first, const f_string_static_t second);
+#endif // _di_fll_program_parameter_long_print_cannot_use_with_
+
+/**
  * This provides a standard program setdown operations used by FLL programs.
  *
  * This does the following:

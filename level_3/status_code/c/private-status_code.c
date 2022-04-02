@@ -14,7 +14,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    if (main->parameters.array[status_code_parameter_is_error_e].result == f_console_result_found_e) {
+    if (main->parameters.array[status_code_parameter_error_e].result == f_console_result_found_e) {
       if (F_status_is_error(number)) {
         f_print_dynamic_raw(f_status_true_s, main->output.to.stream);
       }
@@ -24,7 +24,7 @@ extern "C" {
 
       f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
-    else if (main->parameters.array[status_code_parameter_is_warning_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[status_code_parameter_warning_e].result == f_console_result_found_e) {
       if (F_status_is_warning(number)) {
         f_print_dynamic_raw(f_status_true_s, main->output.to.stream);
       }
@@ -34,7 +34,7 @@ extern "C" {
 
       f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
-    else if (main->parameters.array[status_code_parameter_is_fine_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[status_code_parameter_fine_e].result == f_console_result_found_e) {
       if (F_status_is_fine(number)) {
         f_print_dynamic_raw(f_status_true_s, main->output.to.stream);
       }
@@ -91,6 +91,14 @@ extern "C" {
       fl_print_format("%[unknown code%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
       return F_none;
+    }
+
+    if (main->parameters.array[status_code_parameter_error_e].result == f_console_result_found_e) {
+      code = F_status_set_error(code);
+    }
+
+    if (main->parameters.array[status_code_parameter_warning_e].result == f_console_result_found_e) {
+      code = F_status_set_warning(code);
     }
 
     fl_print_format("%ui%r", main->output.to.stream, code, f_string_eol_s);

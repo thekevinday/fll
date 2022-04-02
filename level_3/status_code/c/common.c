@@ -18,14 +18,14 @@ extern "C" {
 #endif // _di_status_code_program_help_parameters_
 
 #ifndef _di_status_code_parameters_
-  const f_string_static_t status_code_short_is_fine_s = macro_f_string_static_t_initialize(STATUS_CODE_short_is_fine_s, 0, STATUS_CODE_short_is_fine_s_length);
-  const f_string_static_t status_code_short_is_warning_s = macro_f_string_static_t_initialize(STATUS_CODE_short_is_warning_s, 0, STATUS_CODE_short_is_warning_s_length);
-  const f_string_static_t status_code_short_is_error_s = macro_f_string_static_t_initialize(STATUS_CODE_short_is_error_s, 0, STATUS_CODE_short_is_error_s_length);
+  const f_string_static_t status_code_short_fine_s = macro_f_string_static_t_initialize(STATUS_CODE_short_fine_s, 0, STATUS_CODE_short_fine_s_length);
+  const f_string_static_t status_code_short_warning_s = macro_f_string_static_t_initialize(STATUS_CODE_short_warning_s, 0, STATUS_CODE_short_warning_s_length);
+  const f_string_static_t status_code_short_error_s = macro_f_string_static_t_initialize(STATUS_CODE_short_error_s, 0, STATUS_CODE_short_error_s_length);
   const f_string_static_t status_code_short_number_s = macro_f_string_static_t_initialize(STATUS_CODE_short_number_s, 0, STATUS_CODE_short_number_s_length);
 
-  const f_string_static_t status_code_long_is_fine_s = macro_f_string_static_t_initialize(STATUS_CODE_long_is_fine_s, 0, STATUS_CODE_long_is_fine_s_length);
-  const f_string_static_t status_code_long_is_warning_s = macro_f_string_static_t_initialize(STATUS_CODE_long_is_warning_s, 0, STATUS_CODE_long_is_warning_s_length);
-  const f_string_static_t status_code_long_is_error_s = macro_f_string_static_t_initialize(STATUS_CODE_long_is_error_s, 0, STATUS_CODE_long_is_error_s_length);
+  const f_string_static_t status_code_long_fine_s = macro_f_string_static_t_initialize(STATUS_CODE_long_fine_s, 0, STATUS_CODE_long_fine_s_length);
+  const f_string_static_t status_code_long_warning_s = macro_f_string_static_t_initialize(STATUS_CODE_long_warning_s, 0, STATUS_CODE_long_warning_s_length);
+  const f_string_static_t status_code_long_error_s = macro_f_string_static_t_initialize(STATUS_CODE_long_error_s, 0, STATUS_CODE_long_error_s_length);
   const f_string_static_t status_code_long_number_s = macro_f_string_static_t_initialize(STATUS_CODE_long_number_s, 0, STATUS_CODE_long_number_s_length);
 #endif // _di_status_code_parameters_
 
