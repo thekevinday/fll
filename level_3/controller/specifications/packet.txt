@@ -16,7 +16,7 @@ Packet Specification:
       - size: A single 4-byte block representing the size of the entire packet, including the control block.
 
   The "header" Object contains the following FSS-0001 Extended Objects (depending on "type")\:
-    - action: A valid action type: "freeze", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", or "thaw".
+    - action: A valid action type: "freeze", "kexec", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", or "thaw".
     - length: A positive whole number inclusively between 0 and 4294965248 representing the length of the "payload" (may be in binary, octal, decimal, duodecimal, or hexidecimal).
     - status: The status code name or number representing an FSS status code, such as F_none, F_failure, or 200 (where a number may have error and warning bits and may be in binary, octal, decimal, duodecimal, or hexidecimal).
     - type: The packet type that is one of "controller", "error", or "init".

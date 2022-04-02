@@ -128,13 +128,16 @@ extern "C" {
   #endif // defined(_override_control_path_settings_) && defined(_override_control_path_settings_length_)
 
   #define CONTROL_action_s             "action"
+  #define CONTROL_at_s                 "at"
   #define CONTROL_controller_s         "controller"
   #define CONTROL_default_s            "default"
   #define CONTROL_error_s              "error"
   #define CONTROL_kexec_s              "kexec"
+  #define CONTROL_in_s                 "in"
   #define CONTROL_init_s               "init"
   #define CONTROL_length_s             "length"
   #define CONTROL_name_socket_s        "name_socket"
+  #define CONTROL_now_s                "now"
   #define CONTROL_path_socket_s        "path_socket"
   #define CONTROL_path_socket_prefix_s "path_socket_prefix"
   #define CONTROL_path_socket_suffix_s "path_socket_suffix"
@@ -155,13 +158,16 @@ extern "C" {
   #define CONTROL_thaw_s     "thaw"
 
   #define CONTROL_action_s_length             6
+  #define CONTROL_at_s_length                 2
   #define CONTROL_controller_s_length         10
   #define CONTROL_default_s_length            7
   #define CONTROL_error_s_length              5
+  #define CONTROL_in_s_length                 2
   #define CONTROL_init_s_length               4
   #define CONTROL_kexec_s_length              5
   #define CONTROL_length_s_length             6
   #define CONTROL_name_socket_s_length        11
+  #define CONTROL_now_s_length                3
   #define CONTROL_path_socket_s_length        11
   #define CONTROL_path_socket_prefix_s_length 18
   #define CONTROL_path_socket_suffix_s_length 18
@@ -184,13 +190,16 @@ extern "C" {
   extern const f_string_static_t control_path_settings_s;
 
   extern const f_string_static_t control_action_s;
+  extern const f_string_static_t control_at_s;
   extern const f_string_static_t control_controller_s;
   extern const f_string_static_t control_default_s;
   extern const f_string_static_t control_error_s;
+  extern const f_string_static_t control_in_s;
   extern const f_string_static_t control_init_s;
   extern const f_string_static_t control_kexec_s;
   extern const f_string_static_t control_length_s;
   extern const f_string_static_t control_name_socket_s;
+  extern const f_string_static_t control_now_s;
   extern const f_string_static_t control_path_socket_s;
   extern const f_string_static_t control_path_socket_prefix_s;
   extern const f_string_static_t control_path_socket_suffix_s;

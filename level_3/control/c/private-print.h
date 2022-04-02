@@ -99,7 +99,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param action
- *   The parameter representing a action.
+ *   The parameter representing an action.
  */
 #ifndef _di_control_print_error_parameter_action_not_
   extern void control_print_error_parameter_action_not(const fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
@@ -111,7 +111,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param action
- *   The parameter representing a action.
+ *   The parameter representing an action.
  */
 #ifndef _di_control_print_error_parameter_action_rule_basename_empty_
   extern void control_print_error_parameter_action_rule_basename_empty(const fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
@@ -123,7 +123,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param action
- *   The parameter representing a action.
+ *   The parameter representing an action.
  */
 #ifndef _di_control_print_error_parameter_action_rule_directory_empty_
   extern void control_print_error_parameter_action_rule_directory_empty(const fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
@@ -135,7 +135,7 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param action
- *   The parameter representing a action.
+ *   The parameter representing an action.
  */
 #ifndef _di_control_print_error_parameter_action_rule_empty_
   extern void control_print_error_parameter_action_rule_empty(const fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
@@ -147,11 +147,37 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param action
- *   The parameter representing a action.
+ *   The parameter representing an action.
  */
 #ifndef _di_control_print_error_parameter_action_rule_not_
   extern void control_print_error_parameter_action_rule_not(const fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_action_rule_not_
+
+/**
+ * Print an error message about the given parameter being a rule action having too few arguments passed.
+ *
+ * @param main
+ *   The main program data.
+ * @param action
+ *   The parameter representing an action.
+ */
+#ifndef _di_control_print_error_parameter_action_rule_too_few_
+  extern void control_print_error_parameter_action_rule_too_few(const fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_too_few_
+
+/**
+ * Print an error message about the given parameter being a rule action having few many arguments passed for a given "with".
+ *
+ * @param main
+ *   The main program data.
+ * @param action
+ *   The parameter representing an action.
+ * @param with
+ *   The additional parameter in which is requiring additional arguments that are not met.
+ */
+#ifndef _di_control_print_error_parameter_action_rule_too_few_with_
+  extern void control_print_error_parameter_action_rule_too_few_with(const fll_program_data_t * const main, const f_string_static_t action, const f_string_static_t with) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_too_few_with_
 
 /**
  * Print an error message about the given parameter being a rule action having too many arguments passed.
@@ -159,11 +185,38 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param action
- *   The parameter representing a action.
+ *   The parameter representing an action.
  */
 #ifndef _di_control_print_error_parameter_action_rule_too_many_
   extern void control_print_error_parameter_action_rule_too_many(const fll_program_data_t * const main, const f_string_static_t action) F_attribute_visibility_internal_d;
 #endif // _di_control_print_error_parameter_action_rule_too_many_
+
+/**
+ * Print an error message about the given parameter being a rule action having too many arguments passed for a given "with".
+ *
+ * @param main
+ *   The main program data.
+ * @param action
+ *   The parameter representing an action.
+ * @param with
+ *   The additional parameter in which is requiring additional arguments that are not met.
+ */
+#ifndef _di_control_print_error_parameter_action_rule_too_many_with_
+  extern void control_print_error_parameter_action_rule_too_many_with(const fll_program_data_t * const main, const f_string_static_t action, const f_string_static_t with) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_too_many_with_
+/**
+ * Print an error message about the given parameter being unknown for the use with the given action.
+ *
+ * @param main
+ *   The main program data.
+ * @param action
+ *   The parameter representing an action.
+ * @param with
+ *   The additional parameter in which is requiring additional arguments that are not met.
+ */
+#ifndef _di_control_print_error_parameter_action_rule_with_unknown_
+  extern void control_print_error_parameter_action_rule_with_unknown(const fll_program_data_t * const main, const f_string_static_t action, const f_string_static_t with) F_attribute_visibility_internal_d;
+#endif // _di_control_print_error_parameter_action_rule_with_unknown_
 
 /**
  * Print an error message about the parameter's associated value being an empty string.

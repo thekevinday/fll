@@ -19,6 +19,11 @@ extern "C" {
  *   The main program data.
  * @param data
  *   The control data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) on parameter validation/verification failure.
  */
 #ifndef _di_control_action_verify_
   extern f_status_t control_action_verify(const fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
@@ -40,6 +45,8 @@ extern "C" {
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   Errors (with error bit) from: fll_fss_extended_write_string().
+ *   Errors (with error bit) from: fll_fss_payload_write_string().
  *
  * @see f_string_append()
  * @see f_string_dynamic_append()
@@ -136,6 +143,7 @@ extern "C" {
  *
  *   F_busy (with error bit)
  *   F_failure (with error bit) on success but controller returned failure for action.
+ *   F_known_not (with error bit) if the Payload type is unknown.
  *   Any error (with error bit) on failure where the error is defined by the controller service.
  */
 #ifndef _di_control_packet_process_
@@ -149,51 +157,18 @@ extern "C" {
  *   The main program data.
  * @param data
  *   The control data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_socket_write().
+ *
+ * @see f_socket_write()
  */
 #ifndef _di_control_packet_send_
   extern f_status_t control_packet_send(const fll_program_data_t * const main, control_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_send_
 
-/**
- * Construct the entire payload.
- *
- * This resets and uses data->cache.small, data->cache.large, and data->cache.packet.
- * Do not use any of these for passing strings to this function.
- *
- * The results of this function replaces data->cache.packet.
- *
- * @param global
- *   The global data.
- * @param data
- *   The control data.
- * @param type
- *   The packet type.
- *   Set type.used to 0 to not add to the header.
- * @param action
- *   The action code.
- *   Set action.used to 0 to not add to the header.
- * @param status
- *   The status code.
- *   Set status.used to 0 to not add to the header.
- * @param payload
- *   The payload Content.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_conversion_number_unsigned_to_string().
- *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: fll_fss_extended_write_string().
- *   Errors (with error bit) from: fll_fss_payload_write_string().
- *
- * @see f_conversion_number_unsigned_to_string()
- * @see f_string_append()
- * @see fll_fss_extended_write_string()
- * @see fll_fss_payload_write_string()
- */
-#ifndef _di_control_packet_send_build_
-  extern f_status_t control_packet_send_build(const fll_program_data_t * const main, control_data_t * const data, const f_string_static_t type, const f_string_static_t action, const f_string_static_t status, const f_string_static_t payload) F_attribute_visibility_internal_d;
-#endif // _di_control_packet_send_build_
 /**
  * Load and process the control settings file.
  *

@@ -224,6 +224,38 @@ extern "C" {
   }
 #endif // _di_control_print_error_parameter_action_rule_not_
 
+#ifndef _di_control_print_error_parameter_action_rule_too_few_
+  void control_print_error_parameter_action_rule_too_few(const fll_program_data_t * const main, const f_string_static_t action) {
+
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+    flockfile(main->error.to.stream);
+
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' has too few arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+
+    funlockfile(main->error.to.stream);
+  }
+#endif // _di_control_print_error_parameter_action_rule_too_few_
+
+#ifndef _di_control_print_error_parameter_action_rule_too_few_with_
+  void control_print_error_parameter_action_rule_too_few_with(const fll_program_data_t * const main, const f_string_static_t action, const f_string_static_t with) {
+
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+    flockfile(main->error.to.stream);
+
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' when used with '%]", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
+    fl_print_format("%[' has too few arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+
+    funlockfile(main->error.to.stream);
+  }
+#endif // _di_control_print_error_parameter_action_rule_too_few_with_
+
 #ifndef _di_control_print_error_parameter_action_rule_too_many_
   void control_print_error_parameter_action_rule_too_many(const fll_program_data_t * const main, const f_string_static_t action) {
 
@@ -238,6 +270,40 @@ extern "C" {
     funlockfile(main->error.to.stream);
   }
 #endif // _di_control_print_error_parameter_action_rule_too_many_
+
+#ifndef _di_control_print_error_parameter_action_rule_too_many_with_
+  void control_print_error_parameter_action_rule_too_many_with(const fll_program_data_t * const main, const f_string_static_t action, const f_string_static_t with) {
+
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+    flockfile(main->error.to.stream);
+
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' when used with '%]", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
+    fl_print_format("%[' has too many arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+
+    funlockfile(main->error.to.stream);
+  }
+#endif // _di_control_print_error_parameter_action_rule_too_many_with_
+
+#ifndef _di_control_print_error_parameter_action_rule_with_unknown_
+  void control_print_error_parameter_action_rule_with_unknown(const fll_program_data_t * const main, const f_string_static_t action, const f_string_static_t with) {
+
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
+
+    flockfile(main->error.to.stream);
+
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' does not know the argument '%]", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
+    fl_print_format("%['.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+
+    funlockfile(main->error.to.stream);
+  }
+#endif // _di_control_print_error_parameter_action_rule_with_unknown_
 
 #ifndef _di_control_print_error_parameter_value_empty_
   void control_print_error_parameter_value_empty(const fll_program_data_t * const main, const f_string_static_t parameter) {

@@ -184,7 +184,7 @@ extern "C" {
  * Identify the action code the given name represents.
  *
  * @param action
- *   The string representing a action.
+ *   The string representing an action.
  *
  * @return
  *   The action type code on success.

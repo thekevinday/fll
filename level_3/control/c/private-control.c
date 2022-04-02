@@ -21,19 +21,49 @@ extern "C" {
       case control_action_type_start_e:
       case control_action_type_stop_e:
       case control_action_type_thaw_e:
-        if (main->parameters.remaining.used < 2) {
+        if (main->parameters.remaining.used < 3) {
           control_print_error_parameter_action_rule_not(main, data->argv[main->parameters.remaining.array[0]]);
 
           return F_status_set_error(F_parameter);
         }
-        else if (main->parameters.remaining.used > 3) {
-          control_print_error_parameter_action_rule_too_many(main, data->argv[main->parameters.remaining.array[0]]);
 
-          return F_status_set_error(F_parameter);
+        if (main->parameters.remaining.used > 3) {
+          if (fl_string_dynamic_compare(control_at_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
+            if (main->parameters.remaining.used < 5) {
+              control_print_error_parameter_action_rule_too_few_with(main, data->argv[main->parameters.remaining.array[0]], control_at_s);
+
+              return F_status_set_error(F_parameter);
+            }
+
+            if (main->parameters.remaining.used > 5) {
+              control_print_error_parameter_action_rule_too_many_with(main, data->argv[main->parameters.remaining.array[0]], control_at_s);
+
+              return F_status_set_error(F_parameter);
+            }
+          }
+          else if (fl_string_dynamic_compare(control_in_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
+            if (main->parameters.remaining.used < 6) {
+              control_print_error_parameter_action_rule_too_few_with(main, data->argv[main->parameters.remaining.array[0]], control_in_s);
+
+              return F_status_set_error(F_parameter);
+            }
+          }
+          else if (fl_string_dynamic_compare(control_now_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
+            if (main->parameters.remaining.used > 4) {
+              control_print_error_parameter_action_rule_too_many_with(main, data->argv[main->parameters.remaining.array[0]], control_now_s);
+
+              return F_status_set_error(F_parameter);
+            }
+          }
+          else {
+            control_print_error_parameter_action_rule_with_unknown(main, data->argv[main->parameters.remaining.array[0]], data->argv[main->parameters.remaining.array[2]]);
+
+            return F_status_set_error(F_parameter);
+          }
         }
 
         if (!data->argv[main->parameters.remaining.array[1]].used) {
-          if (main->parameters.remaining.used == 2) {
+          if (main->parameters.remaining.used == 3) {
             control_print_error_parameter_action_rule_empty(main, data->argv[main->parameters.remaining.array[0]]);
           }
           else {
@@ -52,36 +82,95 @@ extern "C" {
         }
 
         return F_none;
+
+      case control_action_type_kexec_e:
+      case control_action_type_reboot_e:
+      case control_action_type_shutdown_e:
+        if (main->parameters.remaining.used < 2) {
+          control_print_error_parameter_action_rule_too_few(main, data->argv[main->parameters.remaining.array[0]]);
+
+          return F_status_set_error(F_parameter);
+        }
+
+        if (fl_string_dynamic_compare(control_at_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
+          if (main->parameters.remaining.used < 3) {
+            control_print_error_parameter_action_rule_too_few_with(main, data->argv[main->parameters.remaining.array[0]], control_at_s);
+
+            return F_status_set_error(F_parameter);
+          }
+
+          if (main->parameters.remaining.used > 3) {
+            control_print_error_parameter_action_rule_too_many_with(main, data->argv[main->parameters.remaining.array[0]], control_at_s);
+
+            return F_status_set_error(F_parameter);
+          }
+        }
+        else if (fl_string_dynamic_compare(control_in_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
+          if (main->parameters.remaining.used < 4) {
+            control_print_error_parameter_action_rule_too_few_with(main, data->argv[main->parameters.remaining.array[0]], control_in_s);
+
+            return F_status_set_error(F_parameter);
+          }
+        }
+        else if (fl_string_dynamic_compare(control_now_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
+          if (main->parameters.remaining.used > 2) {
+            control_print_error_parameter_action_rule_too_many_with(main, data->argv[main->parameters.remaining.array[0]], control_now_s);
+
+            return F_status_set_error(F_parameter);
+          }
+        }
+        else {
+          control_print_error_parameter_action_rule_with_unknown(main, data->argv[main->parameters.remaining.array[0]], data->argv[main->parameters.remaining.array[1]]);
+
+          return F_status_set_error(F_parameter);
+        }
     }
 
-    // Handle "kexec", "reboot", and "shutdown".
-    // @todo the reboot and shutdown need to support date and time actions: "now", "in (a time)", and "at (a time)".
-    return F_status_set_error(F_supported_not);
+    return F_none;
   }
 #endif // _di_control_action_verify_
 
 #ifndef _di_control_packet_build_
   f_status_t control_packet_build(const fll_program_data_t * const main, control_data_t * const data) {
 
+    data->cache.packet.used = 0;
     data->cache.large.used = 0;
     data->cache.small.used = 0;
 
     f_array_length_t i = 0;
-    f_array_length_t length = 5 + f_fss_string_header_s.used + f_fss_string_payload_s.used + control_action_s.used + control_type_s.used;
-    length += f_fss_payload_list_open_s.used * 2;
-    length += f_fss_payload_list_close_s.used * 4;
-    length += f_string_ascii_0_s.used;
+    f_status_t status = F_none;
 
-    for (; i < main->parameters.remaining.used; ++i) {
-      length += f_fss_payload_header_open_s.used + data->argv[main->parameters.remaining.array[i]].used + f_fss_payload_header_close_s.used;
-    } // for
+    {
+      f_array_length_t length = 5 + f_fss_string_header_s.used + f_fss_string_payload_s.used;
+      length += control_action_s.used + control_length_s.used + control_type_s.used;
+      length += (f_fss_payload_list_open_s.used + f_fss_payload_list_close_s.used) * 2;
+      length += (f_fss_payload_header_open_s.used + f_fss_payload_header_close_s.used) * 3;
+      length += data->argv[main->parameters.remaining.array[0]].used + f_string_ascii_0_s.used;
 
-    if (length > 0xffffffffu) {
-      return F_status_set_error(F_too_large);
+      // @todo This should properly handle escaping the FSS-0001 (Extended) Content and then count that length.
+      for (i = 1; i < main->parameters.remaining.used; ++i) {
+        length += f_fss_payload_header_next_s.used + data->argv[main->parameters.remaining.array[i]].used;
+      } // for
+
+      if (data->action == control_action_type_kexec_e || data->action == control_action_type_reboot_e || data->action == control_action_type_shutdown_e) {
+        length += control_init_s.used;
+      }
+      else {
+        length += control_controller_s.used;
+      }
+
+      if (length > 0xffffffffu) {
+        return F_status_set_error(F_too_large);
+      }
+
+      status = f_string_dynamic_resize(length, &data->cache.packet);
+      if (F_status_is_error(status)) return status;
     }
 
-    f_status_t status = f_string_dynamic_resize(length, &data->cache.large);
-    if (F_status_is_error(status)) return status;
+    const f_state_t state = macro_f_state_t_initialize(control_allocation_large_d, control_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
+
+    f_string_static_t contents_array[main->parameters.remaining.used];
+    f_string_statics_t contents = macro_f_string_statics_t_initialize(contents_array, 0, main->parameters.remaining.used);
 
     // The Packet Control Block.
     {
@@ -91,79 +180,63 @@ extern "C" {
         block_control |= (f_char_t) control_packet_flag_endian_big_d;
       #endif // _is_F_endian_big
 
-      status = f_string_append(&block_control, 1, &data->cache.large);
+      status = f_string_append(&block_control, 1, &data->cache.packet);
       if (F_status_is_error(status)) return status;
     }
 
-    // The Packet Size Block.
-    {
-      status = f_string_append((f_char_t *) &length, 1, &data->cache.large);
-      if (F_status_is_error(status)) return status;
+    // Reserve the Packet Size Block to be calculated later.
+    data->cache.packet.used = 5;
+
+    // Payload Header: type.
+    if (data->action == control_action_type_kexec_e || data->action == control_action_type_reboot_e || data->action == control_action_type_shutdown_e) {
+      contents_array[0] = control_init_s;
+    }
+    else {
+      contents_array[0] = control_controller_s;
     }
 
-    // The Payload "header:" line.
-    status = f_string_dynamic_append(f_fss_string_header_s, &data->cache.large);
+    contents.used = 1;
+
+    status = fll_fss_extended_write_string(control_type_s, contents, 0, state, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(f_fss_payload_list_open_s, &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_append(f_fss_payload_list_close_s, &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    // The Payload "type ..." line.
-    status = f_string_dynamic_append(control_type_s, &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_append(f_fss_payload_header_open_s, &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_append(data->argv[main->parameters.remaining.array[0]], &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_append(f_fss_payload_header_close_s, &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    // Each Payload "action ..." line.
-    for (i = 1; i < main->parameters.remaining.used; ++i) {
-
-      status = f_string_dynamic_append(control_action_s, &data->cache.large);
-      if (F_status_is_error(status)) return status;
-
-      status = f_string_dynamic_append(f_fss_payload_header_open_s, &data->cache.large);
-      if (F_status_is_error(status)) return status;
-
-      status = f_string_dynamic_append(data->argv[main->parameters.remaining.array[i]], &data->cache.large);
-      if (F_status_is_error(status)) return status;
-
-      status = f_string_dynamic_append(f_fss_payload_header_close_s, &data->cache.large);
-      if (F_status_is_error(status)) return status;
+    // Payload Header: action.
+    for (contents.used = 0; contents.used < main->parameters.remaining.used; ++contents.used) {
+      contents_array[contents.used] = data->argv[main->parameters.remaining.array[contents.used]];
     } // for
 
-    // The Payload "length 0" line.
-    status = f_string_dynamic_append(control_length_s, &data->cache.large);
+    status = fll_fss_extended_write_string(control_action_s, contents, 0, state, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(f_fss_payload_header_open_s, &data->cache.large);
+    // Payload Header: length.
+    contents_array[0] = f_string_ascii_0_s;
+    contents.used = 1;
+
+    status = fll_fss_extended_write_string(control_length_s, contents, 0, state, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(f_string_ascii_0_s, &data->cache.large);
+    // Payload Packet: Header.
+    status = fll_fss_payload_write_string(f_fss_string_header_s, data->cache.large, F_false, 0, state, &data->cache.packet);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_append(f_fss_payload_header_close_s, &data->cache.large);
+    // Payload Packet: Payload.
+    data->cache.large.used = 0;
+
+    status = fll_fss_payload_write_string(f_fss_string_payload_s, data->cache.large, F_false, 0, state, &data->cache.packet);
     if (F_status_is_error(status)) return status;
 
-    // The Payload "payload:" line.
-    status = f_string_dynamic_append(f_fss_string_payload_s, &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_append(f_fss_payload_list_open_s, &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_append(f_fss_payload_list_open_end_s, &data->cache.large);
-    if (F_status_is_error(status)) return status;
-
-    // The Payload "payload:" Content is empty.
+    // Construct Packet Size Block.
+    #ifdef _is_F_endian_big
+      data->cache.packet.string[1] = data->cache.packet.used & 0xffu;
+      data->cache.packet.string[2] = data->cache.packet.used & 0xff00u;
+      data->cache.packet.string[3] = data->cache.packet.used & 0xff0000u;
+      data->cache.packet.string[4] = data->cache.packet.used & 0xff000000u;
+    #else
+      data->cache.packet.string[1] = data->cache.packet.used & 0xff000000u;
+      data->cache.packet.string[2] = data->cache.packet.used & 0xff0000u;
+      data->cache.packet.string[3] = data->cache.packet.used & 0xff00u;
+      data->cache.packet.string[4] = data->cache.packet.used & 0xffu;
+    #endif // _is_F_endian_big
 
     return F_none;
   }
@@ -530,144 +603,11 @@ extern "C" {
 #ifndef _di_control_packet_send_
   f_status_t control_packet_send(const fll_program_data_t * const main, control_data_t * const data) {
 
-    {
-      f_status_t status = F_none;
-      f_string_dynamic_t payload = f_string_dynamic_t_initialize;
-
-      switch (data->action) {
-        case control_action_type_freeze_e:
-        case control_action_type_kill_e:
-        case control_action_type_pause_e:
-        case control_action_type_reload_e:
-        case control_action_type_rerun_e:
-        case control_action_type_restart_e:
-        case control_action_type_resume_e:
-        case control_action_type_start_e:
-        case control_action_type_stop_e:
-        case control_action_type_thaw_e:
-          payload = data->argv[main->parameters.remaining.array[1]];
-          break;
-
-        default:
-          // @todo construct message for kexec, reboot, and shutdown.
-          break;
-      }
-
-      status = control_packet_send_build(main, data, control_controller_s, control_action_type_name(data->action), f_string_empty_s, payload);
-
-      f_string_dynamic_resize(0, &payload);
-
-      if (F_status_is_error(status)) return status;
-    }
-
     data->socket.size_write = data->cache.packet.used;
 
     return f_socket_write(&data->socket, 0, (void *) &data->cache.packet, 0);
   }
 #endif // _di_control_packet_send_
-
-#ifndef _di_control_packet_send_build_
-  f_status_t control_packet_send_build(const fll_program_data_t * const main, control_data_t * const data, const f_string_static_t type, const f_string_static_t action, const f_string_static_t status, const f_string_static_t payload) {
-
-    f_status_t status2 = F_none;
-
-    const f_state_t state = f_state_t_initialize;
-    const f_conversion_data_t data_conversion = macro_f_conversion_data_t_initialize(10, 0, 1);
-
-    f_string_statics_t content = f_string_statics_t_initialize;
-    f_string_static_t contents[1];
-    content.array = contents;
-    content.used = 1;
-
-    data->cache.large.used = 0;
-    data->cache.small.used = 0;
-    data->cache.packet.used = 0;
-
-    // Reserve space in data->cache.packet.size for the packet header as well as other parts.
-    {
-      // 5 for packet header and 2 for ':\n" for both 'header' and 'payload'.
-      f_array_length_t total = 9 + f_fss_string_header_s.used + f_fss_string_payload_s.used + control_length_s.used + payload.used;
-
-      if (type.used) {
-        total += control_type_s.used + type.used + 2;
-      }
-
-      if (action.used) {
-        total += control_action_s.used + action.used + 2;
-      }
-
-      if (status.used) {
-        total += control_status_s.used + status.used + 2;
-      }
-
-      status2 = f_string_dynamic_increase_by(total, &data->cache.packet);
-    }
-
-    #ifdef _is_F_endian_big
-      data->cache.packet.string[0] = control_packet_flag_endian_big_d;
-    #else
-      data->cache.packet.string[0] = 0;
-    #endif // _is_F_endian_big
-
-    data->cache.packet.used = 5;
-
-    // Payload Header: type.
-    if (type.used) {
-      contents[0] = type;
-
-      status2 = fll_fss_extended_write_string(control_type_s, content, 0, state, &data->cache.large);
-      if (F_status_is_error(status2)) return status2;
-    }
-
-    // Payload Header: action.
-    if (action.used) {
-      contents[0] = action;
-
-      status2 = fll_fss_extended_write_string(control_action_s, content, 0, state, &data->cache.large);
-      if (F_status_is_error(status2)) return status2;
-    }
-
-    // Payload Header: status.
-    if (status.used) {
-      contents[0] = status;
-
-      status2 = fll_fss_extended_write_string(control_status_s, content, 0, state, &data->cache.large);
-      if (F_status_is_error(status2)) return status2;
-    }
-
-    // Payload Header: length.
-    status2 = f_conversion_number_unsigned_to_string(payload.used, data_conversion, &data->cache.small);
-    if (F_status_is_error(status2)) return status2;
-
-    contents[0] = data->cache.small;
-
-    status2 = fll_fss_extended_write_string(control_length_s, content, 0, state, &data->cache.large);
-    if (F_status_is_error(status2)) return status2;
-
-    // Payload Packet: Header.
-    status2 = fll_fss_payload_write_string(f_fss_string_header_s, data->cache.large, F_false, 0, state, &data->cache.packet);
-    if (F_status_is_error(status2)) return status2;
-
-    // Payload Packet: Payload.
-    status2 = fll_fss_payload_write_string(f_fss_string_payload_s, payload, F_false, 0, state, &data->cache.packet);
-    if (F_status_is_error(status2)) return status2;
-
-    // Construct packet size.
-    #ifdef _is_F_endian_big
-      data->cache.packet.string[1] = data->cache.packet.used & 0xffu;
-      data->cache.packet.string[2] = data->cache.packet.used & 0xff00u;
-      data->cache.packet.string[3] = data->cache.packet.used & 0xff0000u;
-      data->cache.packet.string[4] = data->cache.packet.used & 0xff000000u;
-    #else
-      data->cache.packet.string[1] = data->cache.packet.used & 0xff000000u;
-      data->cache.packet.string[2] = data->cache.packet.used & 0xff0000u;
-      data->cache.packet.string[3] = data->cache.packet.used & 0xff00u;
-      data->cache.packet.string[4] = data->cache.packet.used & 0xffu;
-    #endif // _is_F_endian_big
-
-    return F_none;
-  }
-#endif // _di_control_packet_send_build_
 
 #ifndef _di_control_settings_load_
   f_status_t control_settings_load(const fll_program_data_t * const main, control_data_t * const data) {

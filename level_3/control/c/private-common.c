@@ -17,13 +17,16 @@ extern "C" {
   const f_string_static_t control_path_settings_s = macro_f_string_static_t_initialize(CONTROL_path_settings_s, 0, CONTROL_path_settings_s_length);
 
   const f_string_static_t control_action_s = macro_f_string_static_t_initialize(CONTROL_action_s, 0, CONTROL_action_s_length);
+  const f_string_static_t control_at_s = macro_f_string_static_t_initialize(CONTROL_at_s, 0, CONTROL_at_s_length);
   const f_string_static_t control_controller_s = macro_f_string_static_t_initialize(CONTROL_controller_s, 0, CONTROL_controller_s_length);
   const f_string_static_t control_default_s = macro_f_string_static_t_initialize(CONTROL_default_s, 0, CONTROL_default_s_length);
   const f_string_static_t control_error_s = macro_f_string_static_t_initialize(CONTROL_error_s, 0, CONTROL_error_s_length);
+  const f_string_static_t control_in_s = macro_f_string_static_t_initialize(CONTROL_in_s, 0, CONTROL_in_s_length);
   const f_string_static_t control_init_s = macro_f_string_static_t_initialize(CONTROL_init_s, 0, CONTROL_init_s_length);
   const f_string_static_t control_kexec_s = macro_f_string_static_t_initialize(CONTROL_kexec_s, 0, CONTROL_kexec_s_length);
   const f_string_static_t control_length_s = macro_f_string_static_t_initialize(CONTROL_length_s, 0, CONTROL_length_s_length);
   const f_string_static_t control_name_socket_s = macro_f_string_static_t_initialize(CONTROL_name_socket_s, 0, CONTROL_name_socket_s_length);
+  const f_string_static_t control_now_s = macro_f_string_static_t_initialize(CONTROL_now_s, 0, CONTROL_now_s_length);
   const f_string_static_t control_path_socket_s = macro_f_string_static_t_initialize(CONTROL_path_socket_s, 0, CONTROL_path_socket_s_length);
   const f_string_static_t control_path_socket_prefix_s = macro_f_string_static_t_initialize(CONTROL_path_socket_prefix_s, 0, CONTROL_path_socket_prefix_s_length);
   const f_string_static_t control_path_socket_suffix_s = macro_f_string_static_t_initialize(CONTROL_path_socket_suffix_s, 0, CONTROL_path_socket_suffix_s_length);

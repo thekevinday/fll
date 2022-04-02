@@ -54,7 +54,7 @@ Packet Documentation:
 
     The "payload" is expected to be empty and have a length of 0 for a request.
     The "payload" may have an FSS-0000 (Basic) format containing a single Object "message" to represent a message associated with an action.
-    Multuple "message" may exist in the response so long as they each match an "action" in the request.
+    Multiple "message" may exist in the response so long as they each match an "action" in the request.
 
   The error payload\:
     The error payload is intended to communicate some sort of failure.

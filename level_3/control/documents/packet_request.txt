@@ -1,0 +1,34 @@
+# fss-0002
+
+Packet Request:
+  The control program sends packets and receives packet responses from the controller program over the controller program's control socket.
+  This documentation describes the request packets sent by this program.
+
+  The purpose of these request packets are to ask the controller program to perform a requested action.
+
+  The communications to/from the controller program utilize the FSS-000F (Simple Packet).
+  This Simple Packet is expected to contain within it the FSS-000E (Payload) format.
+
+  The Payload contains within it a Header and a Payload.
+  Note the potential confusion here between the Payload when referring to the Packet format and the Payload referring to the Content within the Payload Packet.
+  To avoid this, henceforth "Payload Packet" refers to the FSS-000E (Payload) used within the FSS-000F (Simple Packet).
+  The "Payload Header" refers to eithe the Object ("header:") or Content within the Payload Packet representing the header.
+  The "Payload Object" refers to the Object within the Payload Packet (ie: "payload:").
+  The "Payload Content" refers to the Content within the Payload Packet.
+
+  The Payload Packet (FSS-000E) is very flexible in what it allows within the Header of the Payload Packet.
+  The Control program is more restrictive and supports only a subset of the possibilities (which this is explicitly allowed by the Specification).
+
+  The Control program only supports the following Payload Packet header Objects for the request\:
+    - type: Allowing only a single type header Object and may only be one of: "controller", "error", or "init".
+    - length: Allowing only a single length header Object and must properly describe the length of the entire Payload Packet as per the referenced Specifications.
+    - action: Allowing only a single action header Object and whose first Content must only be one of: "freeze", "kexec", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", and "thaw".
+
+  The number of Content associated with a action are specific to the requirements of that action.
+
+  The Payload Content is not used and should always be of length 0.
+
+  The Payload Content represents the rule being started in FSS-0001 (Extended) format, such as "service sshd".
+
+  For example, given the command: "control start service sshd in 5 minutes".
+  The "action" Object would be "start service sshd in 5 minutes".

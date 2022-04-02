@@ -4,20 +4,22 @@ Packet Response:
   The control program sends packets and receives packet responses from the controller program over the controller program's control socket.
   This documentation describes the expected response packets and how these response packets are handled.
 
-  The communications to/from the controller program utilize the FSS-000F (Simple Packet). 
+  The communications to/from the controller program utilize the FSS-000F (Simple Packet).
   This Simple Packet is expected to contain within it the FSS-000E (Payload) format.
 
   The Payload contains within it a Header and a Payload.
-  Note the potential confusion here between the Payload when referring to the Packet data format and the Payload referring to the Content within the Payload Packet.
-  To avoid this, henceforth "Payload Packet" refers to the FSS-000E (Payload) format used within the Simple Packet and "Payload Content" refers to the Content within the Payload Packet.
+  Note the potential confusion here between the Payload when referring to the Packet format and the Payload referring to the Content within the Payload Packet.
+  The "Payload Header" refers to eithe the Object ("header:") or Content within the Payload Packet representing the header.
+  The "Payload Object" refers to the Object within the Payload Packet (ie: "payload:").
+  The "Payload Content" refers to the Content within the Payload Packet.
 
   The Payload Packet (FSS-000E) is very flexible in what it allows within the Header of the Payload Packet.
   The Control program is more restrictive and supports only a subset of the possibilities (which this is explicitly allowed by the Specification).
 
-  The Control program only supports the following Payload Packet header Objects\:
+  The Control program only supports the following Payload Packet header Objects for the response\:
     - status: Allowing only a single status header Object.
-    - type: Allowing only a single type header Object and may only be one of: "controller", "error", or "kexec".
-    - action: Allowing only a single action header Object and may only be one of: "freeze", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", and "thaw".
+    - type: Allowing only a single type header Object and may only be one of: "controller", "error", or "init".
+    - action: Allowing only a single action header Object and must only be one of: "freeze", "kexec", "kill", "pause", "reboot", "reload", "rerun", "restart", "resume", "shutdown", "start", "stop", and "thaw".
     - length: Allowing only a single length header Object and must properly describe the length of the entire Payload Packet as per the referenced Specifications.
 
   The "error" type response Payload Packet is treated as an error response.
@@ -29,7 +31,7 @@ Packet Response:
   The "controller" type response Payload Packet represents a response regarding the result of performing a requested action.
   There must always be an "action" designating the action this response is in regards to.
   Only the following are (currently) supported as a status\:
-    - F_busy: When unable to perform the action as because the service is too busy or the 
+    - F_busy: When unable to perform the action as because the service is too busy or the
     - F_done: When successfully performed the action but the action does not return success or failure.
     - F_failure: When successfully performed the action and the action returned some sort of failure or error.
     - F_success: When successfully performed the action and the action returned some sort of success.
