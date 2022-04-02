@@ -471,14 +471,15 @@ extern "C" {
       }
     }
 
-    if (global->setting->path_control.used) {
+    // Disabled, all parts are not yet implemented.
+    /*if (global->setting->path_control.used) {
       status = controller_perform_ready_socket(global, cache, is_entry);
 
       // Do not fail on non-memory errors related to creating the control socket.
       if (F_status_is_error(status) && F_status_set_fine(status) != F_memory) {
         status = F_none;
       }
-    }
+    }*/
 
     return status;
   }
@@ -634,7 +635,8 @@ extern "C" {
       controller_unlock_print_flush(global->main->output.to, global->thread);
     }
 
-    status = f_thread_create(0, &global->thread->id_control, &controller_thread_control, (void *) global);
+    // Disabled, not yet implemented.
+    //status = f_thread_create(0, &global->thread->id_control, &controller_thread_control, (void *) global);
 
     if (status == F_child) {
       return status;
