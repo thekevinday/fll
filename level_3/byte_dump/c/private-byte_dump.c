@@ -277,24 +277,27 @@ extern "C" {
     fflush(data->main->output.to.stream);
 
     if (found_invalid_utf) {
-      flockfile(data->main->error.to.stream);
+      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+        flockfile(data->main->error.to.stream);
 
-      fl_print_format("%[Invalid UTF-8 codes were detected for file '%]", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error);
-      fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, data->main->context.set.notable);
-      fl_print_format("%['.%]%r%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s, f_string_eol_s);
+        fl_print_format("%[Invalid UTF-8 codes were detected for file '%]", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error);
+        fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, data->main->context.set.notable);
+        fl_print_format("%['.%]%r%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s, f_string_eol_s);
 
-      funlockfile(data->main->error.to.stream);
+        funlockfile(data->main->error.to.stream);
+      }
     }
 
     if (ferror(file.stream)) {
-      // @todo determine what the error is and display it.
-      flockfile(data->main->error.to.stream);
+      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+        flockfile(data->main->error.to.stream);
 
-      fl_print_format("%[%Qread() failed for '%]", data->main->error.to.stream, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
-      fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, data->main->context.set.notable);
-      fl_print_format("%['.%]%r%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s, f_string_eol_s);
+        fl_print_format("%[%Qread() failed for '%]", data->main->error.to.stream, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
+        fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, data->main->context.set.notable);
+        fl_print_format("%['.%]%r%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s, f_string_eol_s);
 
-      funlockfile(data->main->error.to.stream);
+        funlockfile(data->main->error.to.stream);
+      }
 
       status = F_status_set_error(F_failure);
     }
