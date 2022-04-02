@@ -43,7 +43,7 @@ extern "C" {
       else {
         f_char_t skip[data->first];
 
-        byte_get = fread(skip, sizeof(f_char_t), data->first, file.stream);
+        byte_get = fread(skip, 1, data->first, file.stream);
       }
     }
 
