@@ -224,6 +224,8 @@ extern "C" {
     const f_string_static_t f_status_nice_not_s = macro_f_string_static_t_initialize(F_status_nice_not_s, 0, F_status_nice_not_s_length);
     const f_string_static_t f_status_object_s = macro_f_string_static_t_initialize(F_status_object_s, 0, F_status_object_s_length);
     const f_string_static_t f_status_object_not_s = macro_f_string_static_t_initialize(F_status_object_not_s, 0, F_status_object_not_s_length);
+    const f_string_static_t f_status_once_s = macro_f_string_static_t_initialize(F_status_once_s, 0, F_status_once_s_length);
+    const f_string_static_t f_status_once_not_s = macro_f_string_static_t_initialize(F_status_once_not_s, 0, F_status_once_not_s_length);
     const f_string_static_t f_status_option_s = macro_f_string_static_t_initialize(F_status_option_s, 0, F_status_option_s_length);
     const f_string_static_t f_status_option_not_s = macro_f_string_static_t_initialize(F_status_option_not_s, 0, F_status_option_not_s_length);
     const f_string_static_t f_status_output_s = macro_f_string_static_t_initialize(F_status_output_s, 0, F_status_output_s_length);
@@ -259,6 +261,8 @@ extern "C" {
     const f_string_static_t f_status_read_only_s = macro_f_string_static_t_initialize(F_status_read_only_s, 0, F_status_read_only_s_length);
     const f_string_static_t f_status_ready_s = macro_f_string_static_t_initialize(F_status_ready_s, 0, F_status_ready_s_length);
     const f_string_static_t f_status_ready_not_s = macro_f_string_static_t_initialize(F_status_ready_not_s, 0, F_status_ready_not_s_length);
+    const f_string_static_t f_status_receive_s = macro_f_string_static_t_initialize(F_status_receive_s, 0, F_status_receive_s_length);
+    const f_string_static_t f_status_receive_not_s = macro_f_string_static_t_initialize(F_status_receive_not_s, 0, F_status_receive_not_s_length);
     const f_string_static_t f_status_recover_s = macro_f_string_static_t_initialize(F_status_recover_s, 0, F_status_recover_s_length);
     const f_string_static_t f_status_recover_not_s = macro_f_string_static_t_initialize(F_status_recover_not_s, 0, F_status_recover_not_s_length);
     const f_string_static_t f_status_recurse_s = macro_f_string_static_t_initialize(F_status_recurse_s, 0, F_status_recurse_s_length);
@@ -267,14 +271,18 @@ extern "C" {
     const f_string_static_t f_status_relative_not_s = macro_f_string_static_t_initialize(F_status_relative_not_s, 0, F_status_relative_not_s_length);
     const f_string_static_t f_status_remote_s = macro_f_string_static_t_initialize(F_status_remote_s, 0, F_status_remote_s_length);
     const f_string_static_t f_status_remote_not_s = macro_f_string_static_t_initialize(F_status_remote_not_s, 0, F_status_remote_not_s_length);
+    const f_string_static_t f_status_repeat_s = macro_f_string_static_t_initialize(F_status_repeat_s, 0, F_status_repeat_s_length);
+    const f_string_static_t f_status_repeat_not_s = macro_f_string_static_t_initialize(F_status_repeat_not_s, 0, F_status_repeat_not_s_length);
     const f_string_static_t f_status_require_s = macro_f_string_static_t_initialize(F_status_require_s, 0, F_status_require_s_length);
     const f_string_static_t f_status_require_not_s = macro_f_string_static_t_initialize(F_status_require_not_s, 0, F_status_require_not_s_length);
     const f_string_static_t f_status_resource_s = macro_f_string_static_t_initialize(F_status_resource_s, 0, F_status_resource_s_length);
     const f_string_static_t f_status_resource_not_s = macro_f_string_static_t_initialize(F_status_resource_not_s, 0, F_status_resource_not_s_length);
-    const f_string_static_t f_status_search_s = macro_f_string_static_t_initialize(F_status_search_s, 0, F_status_search_s_length);
-    const f_string_static_t f_status_search_not_s = macro_f_string_static_t_initialize(F_status_search_not_s, 0, F_status_search_not_s_length);
     const f_string_static_t f_status_schedule_s = macro_f_string_static_t_initialize(F_status_schedule_s, 0, F_status_schedule_s_length);
     const f_string_static_t f_status_schedule_not_s = macro_f_string_static_t_initialize(F_status_schedule_not_s, 0, F_status_schedule_not_s_length);
+    const f_string_static_t f_status_search_s = macro_f_string_static_t_initialize(F_status_search_s, 0, F_status_search_s_length);
+    const f_string_static_t f_status_search_not_s = macro_f_string_static_t_initialize(F_status_search_not_s, 0, F_status_search_not_s_length);
+    const f_string_static_t f_status_send_s = macro_f_string_static_t_initialize(F_status_send_s, 0, F_status_send_s_length);
+    const f_string_static_t f_status_send_not_s = macro_f_string_static_t_initialize(F_status_send_not_s, 0, F_status_send_not_s_length);
     const f_string_static_t f_status_size_s = macro_f_string_static_t_initialize(F_status_size_s, 0, F_status_size_s_length);
     const f_string_static_t f_status_size_not_s = macro_f_string_static_t_initialize(F_status_size_not_s, 0, F_status_size_not_s_length);
     const f_string_static_t f_status_signal_s = macro_f_string_static_t_initialize(F_status_signal_s, 0, F_status_signal_s_length);
@@ -1448,6 +1456,10 @@ extern "C" {
           *name = f_status_object_not_s;
           break;
 
+        case F_once_not:
+          *name = f_status_once_not_s;
+          break;
+
         case F_option:
           *name = f_status_option_s;
           break;
@@ -1588,6 +1600,10 @@ extern "C" {
           *name = f_status_ready_not_s;
           break;
 
+        case F_receive_not:
+          *name = f_status_receive_not_s;
+          break;
+
         case F_recover:
           *name = f_status_recover_s;
           break;
@@ -1620,6 +1636,10 @@ extern "C" {
           *name = f_status_remote_not_s;
           break;
 
+        case F_repeat_not:
+          *name = f_status_repeat_not_s;
+          break;
+
         case F_require:
           *name = f_status_require_s;
           break;
@@ -1636,6 +1656,14 @@ extern "C" {
           *name = f_status_resource_not_s;
           break;
 
+        case F_schedule:
+          *name = f_status_schedule_s;
+          break;
+
+        case F_schedule_not:
+          *name = f_status_schedule_not_s;
+          break;
+
         case F_search:
           *name = f_status_search_s;
           break;
@@ -1644,12 +1672,8 @@ extern "C" {
           *name = f_status_search_not_s;
           break;
 
-        case F_schedule:
-          *name = f_status_schedule_s;
-          break;
-
-        case F_schedule_not:
-          *name = f_status_schedule_not_s;
+        case F_send_not:
+          *name = f_status_send_not_s;
           break;
 
         case F_size:

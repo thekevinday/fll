@@ -1302,6 +1302,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_once_s) == F_equal_to) {
+        *code = F_once;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_once_not_s) == F_equal_to) {
+        *code = F_once_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_option_s) == F_equal_to) {
         *code = F_option;
 
@@ -1512,6 +1524,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_receive_s) == F_equal_to) {
+        *code = F_receive;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_receive_not_s) == F_equal_to) {
+        *code = F_receive_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_recover_s) == F_equal_to) {
         *code = F_recover;
 
@@ -1560,6 +1584,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_repeat_s) == F_equal_to) {
+        *code = F_repeat;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_repeat_not_s) == F_equal_to) {
+        *code = F_repeat_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_require_s) == F_equal_to) {
         *code = F_require;
 
@@ -1584,6 +1620,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_schedule_s) == F_equal_to) {
+        *code = F_schedule;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_schedule_not_s) == F_equal_to) {
+        *code = F_schedule_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_search_s) == F_equal_to) {
         *code = F_search;
 
@@ -1596,14 +1644,14 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_schedule_s) == F_equal_to) {
-        *code = F_schedule;
+      if (fl_string_dynamic_compare(name, f_status_send_s) == F_equal_to) {
+        *code = F_send;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_schedule_not_s) == F_equal_to) {
-        *code = F_schedule_not;
+      if (fl_string_dynamic_compare(name, f_status_send_not_s) == F_equal_to) {
+        *code = F_send_not;
 
         return F_none;
       }

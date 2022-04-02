@@ -377,6 +377,8 @@ extern "C" {
     #define F_status_nice_not_s          "F_nice_not"
     #define F_status_object_s            "F_object"
     #define F_status_object_not_s        "F_object_not"
+    #define F_status_once_s              "F_once"
+    #define F_status_once_not_s          "F_once_not"
     #define F_status_option_s            "F_option"
     #define F_status_option_not_s        "F_option_not"
     #define F_status_output_s            "F_output"
@@ -412,6 +414,8 @@ extern "C" {
     #define F_status_read_only_s         "F_read_only"
     #define F_status_ready_s             "F_ready"
     #define F_status_ready_not_s         "F_ready_not"
+    #define F_status_receive_s           "F_receive"
+    #define F_status_receive_not_s       "F_receive_not"
     #define F_status_recover_s           "F_recover"
     #define F_status_recover_not_s       "F_recover_not"
     #define F_status_recurse_s           "F_recurse"
@@ -420,14 +424,18 @@ extern "C" {
     #define F_status_relative_not_s      "F_relative_not"
     #define F_status_remote_s            "F_remote"
     #define F_status_remote_not_s        "F_remote_not"
+    #define F_status_repeat_s            "F_repeat"
+    #define F_status_repeat_not_s        "F_repeat_not"
     #define F_status_require_s           "F_require"
     #define F_status_require_not_s       "F_require_not"
     #define F_status_resource_s          "F_resource"
     #define F_status_resource_not_s      "F_resource_not"
-    #define F_status_search_s            "F_search"
-    #define F_status_search_not_s        "F_search_not"
     #define F_status_schedule_s          "F_schedule"
     #define F_status_schedule_not_s      "F_schedule_not"
+    #define F_status_search_s            "F_search"
+    #define F_status_search_not_s        "F_search_not"
+    #define F_status_send_s              "F_send"
+    #define F_status_send_not_s          "F_send_not"
     #define F_status_size_s              "F_size"
     #define F_status_size_not_s          "F_size_not"
     #define F_status_signal_s            "F_signal"
@@ -627,6 +635,8 @@ extern "C" {
     #define F_status_nice_not_s_length          10
     #define F_status_object_s_length            8
     #define F_status_object_not_s_length        12
+    #define F_status_once_s_length              6
+    #define F_status_once_not_s_length          10
     #define F_status_option_s_length            8
     #define F_status_option_not_s_length        12
     #define F_status_output_s_length            8
@@ -662,6 +672,8 @@ extern "C" {
     #define F_status_read_only_s_length         11
     #define F_status_ready_s_length             7
     #define F_status_ready_not_s_length         11
+    #define F_status_receive_s_length           9
+    #define F_status_receive_not_s_length       13
     #define F_status_recover_s_length           9
     #define F_status_recover_not_s_length       13
     #define F_status_recurse_s_length           9
@@ -670,14 +682,18 @@ extern "C" {
     #define F_status_relative_not_s_length      14
     #define F_status_remote_s_length            8
     #define F_status_remote_not_s_length        12
+    #define F_status_repeat_s_length            8
+    #define F_status_repeat_not_s_length        12
     #define F_status_require_s_length           9
     #define F_status_require_not_s_length       13
     #define F_status_resource_s_length          10
     #define F_status_resource_not_s_length      14
-    #define F_status_search_s_length            8
-    #define F_status_search_not_s_length        12
     #define F_status_schedule_s_length          10
     #define F_status_schedule_not_s_length      14
+    #define F_status_search_s_length            8
+    #define F_status_search_not_s_length        12
+    #define F_status_send_s_length              6
+    #define F_status_send_not_s_length          10
     #define F_status_size_s_length              6
     #define F_status_size_not_s_length          10
     #define F_status_signal_s_length            8
@@ -877,6 +893,8 @@ extern "C" {
     extern const f_string_static_t f_status_nice_not_s;
     extern const f_string_static_t f_status_object_s;
     extern const f_string_static_t f_status_object_not_s;
+    extern const f_string_static_t f_status_once_s;
+    extern const f_string_static_t f_status_once_not_s;
     extern const f_string_static_t f_status_option_s;
     extern const f_string_static_t f_status_option_not_s;
     extern const f_string_static_t f_status_output_s;
@@ -912,6 +930,8 @@ extern "C" {
     extern const f_string_static_t f_status_read_only_s;
     extern const f_string_static_t f_status_ready_s;
     extern const f_string_static_t f_status_ready_not_s;
+    extern const f_string_static_t f_status_receive_s;
+    extern const f_string_static_t f_status_receive_not_s;
     extern const f_string_static_t f_status_recover_s;
     extern const f_string_static_t f_status_recover_not_s;
     extern const f_string_static_t f_status_recurse_s;
@@ -920,14 +940,18 @@ extern "C" {
     extern const f_string_static_t f_status_relative_not_s;
     extern const f_string_static_t f_status_remote_s;
     extern const f_string_static_t f_status_remote_not_s;
+    extern const f_string_static_t f_status_repeat_s;
+    extern const f_string_static_t f_status_repeat_not_s;
     extern const f_string_static_t f_status_require_s;
     extern const f_string_static_t f_status_require_not_s;
     extern const f_string_static_t f_status_resource_s;
     extern const f_string_static_t f_status_resource_not_s;
-    extern const f_string_static_t f_status_search_s;
-    extern const f_string_static_t f_status_search_not_s;
     extern const f_string_static_t f_status_schedule_s;
     extern const f_string_static_t f_status_schedule_not_s;
+    extern const f_string_static_t f_status_search_s;
+    extern const f_string_static_t f_status_search_not_s;
+    extern const f_string_static_t f_status_send_s;
+    extern const f_string_static_t f_status_send_not_s;
     extern const f_string_static_t f_status_size_s;
     extern const f_string_static_t f_status_size_not_s;
     extern const f_string_static_t f_status_signal_s;
