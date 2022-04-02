@@ -108,8 +108,6 @@ extern "C" {
         }
         // Process a UTF-8 character fragment.
         else if (width_count < width_utf) {
-          width_current = macro_f_utf_byte_width_is(byte);
-
           if (width_count == 1) {
             characters.string[character_current] |= macro_f_utf_char_t_from_char_2(byte);
           }
@@ -122,16 +120,8 @@ extern "C" {
 
           ++width_count;
 
-          // UTF-8 character fragments must have a width of 1 (and ASCII characters can only be the first character in a sequence).
-          if (width_current == 1) {
-
-            // Grab the next UTF-8 character fragment if the entire sequence is not collected yet.
-            if (width_count < width_utf) continue;
-          }
-          else {
-            found_invalid_utf = F_true;
-            invalid[character_current] = width_utf;
-          }
+          // Grab the next UTF-8 character fragment if the entire sequence is not collected yet.
+          if (width_count < width_utf) continue;
         }
 
         // At this point: an ASCII character is collected, the entire UTF-8 character sequence is collected, or an invalid UTF-8 was processed.
