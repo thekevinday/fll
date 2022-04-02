@@ -340,7 +340,7 @@ extern "C" {
             break;
           }
 
-          data->main->signal_check = 0;
+          main->signal_check = 0;
         }
 
         if (F_status_is_error(status)) {
