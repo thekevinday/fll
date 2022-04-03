@@ -20,6 +20,15 @@ extern "C" {
  * A structure representing a listing of paths found within a directory.
  *
  * Each property represents a set of paths grouped by directory entity file type.
+ *
+ * block:     For S_IFBLK.
+ * character: For S_IFCHR.
+ * directory: For S_IFDIR.
+ * regular:   For S_IFREG.
+ * link:      For S_IFLNK.
+ * fifo:      For S_IFIFO.
+ * socket:    For S_IFSOCK.
+ * unknown:   For anything else.
  */
 #ifndef _di_f_directory_listing_t_
   typedef struct {

@@ -1841,7 +1841,6 @@ extern "C" {
 #ifndef _di_f_file_size_at_
   f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t * const size) {
     #ifndef _di_level_0_parameter_checking_
-      if (at_id <= 0) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -1903,7 +1902,6 @@ extern "C" {
 #ifndef _di_f_file_stat_at_
   f_status_t f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat * const stat_file) {
     #ifndef _di_level_0_parameter_checking_
-      if (at_id <= 0) return F_status_set_error(F_parameter);
       if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 

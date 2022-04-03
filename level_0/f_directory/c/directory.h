@@ -57,7 +57,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_link_max (with error bit) max links limit reached or exceeded.
  *   F_file_found (with error bit) of a directory aleady exists at the path.
  *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
@@ -92,7 +92,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_directory_link_max (with error bit) max links limit reached or exceeded.
  *   F_file_found (with error bit) of a directory aleady exists at the path.
@@ -360,7 +360,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_empty_not (with error bit) if the directory is not empty.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_found_not (with error bit) if file not found.
@@ -404,7 +404,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_empty_not (with error bit) if the directory is not empty.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_found_not (with error bit) if file not found.
@@ -443,7 +443,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -487,7 +487,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path (when calling utimensat()).
  *   F_file_open_max (with error bit) when system-wide max open files is reached.

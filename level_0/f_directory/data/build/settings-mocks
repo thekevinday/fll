@@ -1,6 +1,6 @@
 # fss-0001
 
-build_name f_color
+build_name f_directory
 
 version_major 0
 version_minor 5
@@ -25,14 +25,12 @@ build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 build_libraries_shared
 build_libraries_static
-build_sources_library color.c color/common.c ../../tests/unit/c/mock-color.c
+build_sources_library directory.c directory/common.c private-directory.c ../../tests/unit/c/mock-directory.c
 build_sources_library_shared
 build_sources_library_static
-build_sources_headers color.h color/common.h
+build_sources_headers directory.h directory/common.h directory/type.h
 build_sources_headers_shared
 build_sources_headers_static
-build_sources_script
-build_sources_setting
 build_script yes
 build_shared yes
 build_static no
@@ -41,8 +39,6 @@ path_headers fll/level_0
 path_library_script script
 path_library_shared shared
 path_library_static static
-path_sources
-path_sources_object
 
 has_path_standard yes
 preserve_path_headers yes
@@ -68,4 +64,17 @@ flags_shared
 flags_static
 
 # Inject mocks.
-flags -Wl,--wrap=getenv
+flags -Wl,--wrap=alphasort
+flags -Wl,--wrap=fstatat
+flags -Wl,--wrap=mkdir
+flags -Wl,--wrap=mkdirat
+flags -Wl,--wrap=nftw
+flags -Wl,--wrap=open
+flags -Wl,--wrap=openat
+flags -Wl,--wrap=remove
+flags -Wl,--wrap=scandir
+flags -Wl,--wrap=stat
+flags -Wl,--wrap=strncmp
+flags -Wl,--wrap=strnlen
+flags -Wl,--wrap=utimensat
+flags -Wl,--wrap=versionsort

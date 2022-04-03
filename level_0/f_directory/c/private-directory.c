@@ -20,7 +20,7 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
 
@@ -47,7 +47,7 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
 

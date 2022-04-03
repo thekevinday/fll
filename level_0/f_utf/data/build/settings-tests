@@ -50,7 +50,7 @@ path_headers tests/unit/c
 path_sources tests/unit/c
 
 has_path_standard no
-preserve_path_headers no
+preserve_path_headers yes
 
 search_exclusive yes
 search_shared yes

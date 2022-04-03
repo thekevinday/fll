@@ -1,6 +1,6 @@
 # fss-0001
 
-build_name test-f_account
+build_name test-f_directory
 
 version_major 0
 version_minor 5
@@ -17,10 +17,11 @@ build_indexer ar
 build_indexer_arguments rcs
 build_language c
 build_libraries -lc -lcmocka
-build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_account
+build_libraries-individual -lf_memory -lf_string -lf_directory
 build_libraries-level -lfll_0
 build_libraries-monolithic -lfll
-build_sources_program test-account-by_id.c test-account-by_name.c test-account-group_name_by_id.c test-account-group_id_by_name.c test-account-id_by_name.c test-account-name_by_id.c test-account.c
+build_sources_program test-directory-create.c test-directory-create_at.c test-directory-exists.c test-directory-exists_at.c test-directory-is.c test-directory-is_at.c test-directory-list.c test-directory-open.c test-directory-open_at.c test-directory-remove.c test-directory-remove_custom.c test-directory-touch.c test-directory-touch_at.c test-directory.c
+
 build_script no
 build_shared yes
 build_static no
