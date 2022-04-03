@@ -679,7 +679,7 @@ extern "C" {
     if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (buffer.string[range->start] != F_utf_char_t_eol_d) {
+    while (buffer.string[range->start] != f_utf_char_t_eol_s) {
 
       if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -696,7 +696,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_seek_line_
 
 #ifndef _di_f_utf_string_dynamic_seek_line_to_
-  f_status_t f_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t * const range) {
+  f_status_t f_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -710,7 +710,7 @@ extern "C" {
         return F_status_set_error(F_utf);
       }
 
-      if (buffer.string[range->start] == F_utf_char_t_eol_d) return F_none_eol;
+      if (buffer.string[range->start] == f_utf_char_t_eol_s) return F_none_eol;
 
       ++range->start;
 
@@ -723,7 +723,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_seek_line_to_
 
 #ifndef _di_f_utf_string_dynamic_seek_to_
-  f_status_t f_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, const f_char_t seek_to_this, f_string_range_t * const range) {
+  f_status_t f_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, const f_utf_char_t seek_to_this, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

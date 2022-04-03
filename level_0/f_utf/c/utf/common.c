@@ -4,6 +4,12 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_utf_char_t_codes_
+  const f_utf_char_t f_utf_char_t_eol_s = (f_utf_char_t) F_utf_char_t_eol_s;
+  const f_utf_char_t f_utf_char_t_eos_s = (f_utf_char_t) F_utf_char_t_eol_s;
+  const f_utf_char_t f_utf_char_t_placeholder_s = (f_utf_char_t) F_utf_char_t_eol_s;
+#endif // _di_f_utf_char_t_codes_
+
 #ifndef _di_f_utf_space_
   const uint8_t f_utf_space_em_s[F_utf_space_em_s_length]                     = { 0xe2, 0x80, 0x83 };
   const uint8_t f_utf_space_em_quad_s[F_utf_space_em_quad_s_length]           = { 0xe2, 0x80, 0x81 };
@@ -39,8 +45,8 @@ extern "C" {
 
   const uint8_t f_utf_substitute_middle_dot_s[F_utf_substitute_middle_dot_s_length] = { 0xc2, 0xb7 };
 
-  const uint8_t f_utf_substitute_open_box_s[F_utf_substitute_open_box_d_length]                       = { 0xe2, 0x90, 0xa3 };
-  const uint8_t f_utf_substitute_open_box_shouldered_s[F_utf_substitute_open_box_shouldered_d_length] = { 0xe2, 0x8d, 0xbd };
+  const uint8_t f_utf_substitute_open_box_s[F_utf_substitute_open_box_s_length]                       = { 0xe2, 0x90, 0xa3 };
+  const uint8_t f_utf_substitute_open_box_shouldered_s[F_utf_substitute_open_box_shouldered_s_length] = { 0xe2, 0x8d, 0xbd };
 #endif // _di_f_utf_substitute_
 
 #ifdef __cplusplus

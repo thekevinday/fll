@@ -71,16 +71,17 @@ int main(void) {
     cmocka_unit_test(test__f_utf_dynamic_seek_line__returns_none_stop),
     cmocka_unit_test(test__f_utf_dynamic_seek_line__works),
 
-    cmocka_unit_test(test__f_utf_dynamic_seek_line_to__at_newline),
+    cmocka_unit_test(test__f_utf_dynamic_seek_line_to__after_newline),
+    cmocka_unit_test(test__f_utf_dynamic_seek_line_to__before_newline),
     cmocka_unit_test(test__f_utf_dynamic_seek_line_to__returns_data_not_stop),
     cmocka_unit_test(test__f_utf_dynamic_seek_line_to__returns_none_eos),
     cmocka_unit_test(test__f_utf_dynamic_seek_line_to__returns_none_stop),
-    cmocka_unit_test(test__f_utf_dynamic_seek_line_to__works),
 
+    cmocka_unit_test(test__f_utf_dynamic_seek_to__after_newline),
+    cmocka_unit_test(test__f_utf_dynamic_seek_to__before_newline),
     cmocka_unit_test(test__f_utf_dynamic_seek_to__returns_data_not_stop),
     cmocka_unit_test(test__f_utf_dynamic_seek_to__returns_none_eos),
     cmocka_unit_test(test__f_utf_dynamic_seek_to__returns_none_stop),
-    cmocka_unit_test(test__f_utf_dynamic_seek_to__works),
 
     cmocka_unit_test(test__f_utf_dynamic_terminate__appends_null),
     cmocka_unit_test(test__f_utf_dynamic_terminate__doesnt_append_null),
@@ -195,14 +196,15 @@ int main(void) {
     cmocka_unit_test(test__f_utf_seek_line__returns_none_stop),
     cmocka_unit_test(test__f_utf_seek_line__works),
 
-    cmocka_unit_test(test__f_utf_seek_line_to__at_newline),
+    cmocka_unit_test(test__f_utf_seek_line_to__after_newline),
+    cmocka_unit_test(test__f_utf_seek_line_to__before_newline),
     cmocka_unit_test(test__f_utf_seek_line_to__returns_data_not_stop),
     cmocka_unit_test(test__f_utf_seek_line_to__returns_none_stop),
-    cmocka_unit_test(test__f_utf_seek_line_to__works),
 
+    cmocka_unit_test(test__f_utf_seek_to__after_newline),
+    cmocka_unit_test(test__f_utf_seek_to__before_newline),
     cmocka_unit_test(test__f_utf_seek_to__returns_data_not_stop),
     cmocka_unit_test(test__f_utf_seek_to__returns_none_stop),
-    cmocka_unit_test(test__f_utf_seek_to__works),
 
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_utf_append__parameter_checking),

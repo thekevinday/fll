@@ -298,7 +298,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    while (string[range->start] != F_utf_char_t_eol_d) {
+    while (string[range->start] != f_utf_char_t_eol_s) {
 
       if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf_fragment);
@@ -316,7 +316,7 @@ extern "C" {
 #endif // _di_f_utf_string_seek_line_
 
 #ifndef _di_f_utf_string_seek_line_to_
-  f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const f_char_t seek_to, f_string_range_t * const range) {
+  f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -327,11 +327,7 @@ extern "C" {
 
     while (string[range->start] != seek_to) {
 
-      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
-
-      if (string[range->start] == F_utf_char_t_eol_d) {
+      if (string[range->start] == f_utf_char_t_eol_s) {
         return F_none_eol;
       }
 
@@ -347,7 +343,7 @@ extern "C" {
 #endif // _di_f_utf_string_seek_line_to_
 
 #ifndef _di_f_utf_string_seek_to_
-  f_status_t f_utf_string_seek_to(const f_utf_string_t string, const f_char_t seek_to, f_string_range_t * const range) {
+  f_status_t f_utf_string_seek_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -357,10 +353,6 @@ extern "C" {
     }
 
     while (string[range->start] != seek_to) {
-
-      if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
 
       ++range->start;
 

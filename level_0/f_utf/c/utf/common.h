@@ -135,8 +135,8 @@ extern "C" {
 
   #define F_utf_substitute_middle_dot_s_length 2
 
-  #define F_utf_substitute_open_box_d_length            3
-  #define F_utf_substitute_open_box_shouldered_d_length 3
+  #define F_utf_substitute_open_box_s_length            3
+  #define F_utf_substitute_open_box_shouldered_s_length 3
 
   extern const uint8_t f_utf_substitute_symbol_blank_s[];
   extern const uint8_t f_utf_substitute_symbol_space_s[];
@@ -228,20 +228,24 @@ extern "C" {
 #endif // _di_f_utf_char_t_
 
 /**
- * Provide an integer that represents special characters.
+ * Provide f_utf_char_t special "characters".
  *
- * Because this is an integer, the byte order matters.
+ * These strings are created via digits and then cast.
  */
 #ifndef _di_f_utf_char_t_codes_
   #ifdef _is_F_endian_big
-    #define F_utf_char_t_eol_d         0x0000000au // 0000 0000, 0000 0000, 0000 0000, 0000 1010
-    #define F_utf_char_t_eos_d         0x00000000u // 0000 0000, 0000 0000, 0000 0000, 0000 0000
-    #define F_utf_char_t_placeholder_d 0x00000000u // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+    #define F_utf_char_t_eol_s         0x0000000au // 0000 0000, 0000 0000, 0000 0000, 0000 1010
+    #define F_utf_char_t_eos_s         0x00000000u // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+    #define F_utf_char_t_placeholder_s 0x00000000u // 0000 0000, 0000 0000, 0000 0000, 0000 0000
   #else
-    #define F_utf_char_t_eol_d         0x0a000000u // 0000 1010, 0000 0000, 0000 0000, 0000 0000
-    #define F_utf_char_t_eos_d         0x00000000u // 0000 0000, 0000 0000, 0000 0000, 0000 0000
-    #define F_utf_char_t_placeholder_d 0x00000000u // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+    #define F_utf_char_t_eol_s         0x0a000000u // 0000 1010, 0000 0000, 0000 0000, 0000 0000
+    #define F_utf_char_t_eos_s         0x00000000u // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+    #define F_utf_char_t_placeholder_s 0x00000000u // 0000 0000, 0000 0000, 0000 0000, 0000 0000
   #endif // _is_F_endian_big
+
+  extern const f_utf_char_t f_utf_char_t_eol_s;
+  extern const f_utf_char_t f_utf_char_t_eos_s;
+  extern const f_utf_char_t f_utf_char_t_placeholder_s;
 #endif // _di_f_utf_char_t_codes_
 
 /**

@@ -7,10 +7,10 @@ extern "C" {
 
 void test__f_utf_dynamic_partial_mish_nulless__works(void **state) {
 
-  const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize((f_utf_string_t) ":\0\0\0", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "_\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0_\0\0\0", 0, 7);
-  const f_utf_string_static_t expected1 = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0", 0, 4);
-  const f_utf_string_static_t expected2 = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\0:\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0", 0, 9);
+  const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0:", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0_\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0_", 0, 7);
+  const f_utf_string_static_t expected1 = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t", 0, 4);
+  const f_utf_string_static_t expected2 = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0:\0\0\0t\0\0\0e\0\0\0s\0\0\0t", 0, 9);
   const f_string_range_t partial = macro_f_string_range_t_initialize(1, 5);
   f_utf_string_dynamic_t destination = f_utf_string_dynamic_t_initialize;
 
@@ -42,8 +42,8 @@ void test__f_utf_dynamic_partial_mish_nulless__works(void **state) {
 
 void test__f_utf_dynamic_partial_mish_nulless__parameter_checking(void **state) {
 
-  const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize((f_utf_string_t) ":\0\0\0", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\0", 0, 5);
+  const f_utf_string_static_t glue = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0:", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t", 0, 5);
   const f_string_range_t partial = f_string_range_t_initialize;
 
   {

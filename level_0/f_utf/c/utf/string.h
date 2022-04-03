@@ -377,7 +377,7 @@ extern "C" {
  * @param string
  *   The string to traverse.
  * @param seek_to
- *   A single-width character representing a character to seek to.
+ *   A character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
@@ -389,11 +389,9 @@ extern "C" {
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_string_seek_line_to_
-  extern f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const f_char_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);
 #endif // _di_f_utf_string_seek_line_to_
 
 /**
@@ -402,7 +400,7 @@ extern "C" {
  * @param string
  *   The string to traverse.
  * @param seek_to
- *   A single-width character representing a character to seek to.
+ *   A character representing a character to seek to.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
@@ -417,7 +415,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_string_seek_to_
-  extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const f_char_t seek_to, f_string_range_t * const range);
+  extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);
 #endif // _di_f_utf_string_seek_to_
 
 #ifdef __cplusplus
