@@ -588,7 +588,7 @@ extern "C" {
  *   The capability mode.
  * @param name
  *   The name of the mode.
- *   This is NULL terminated after the name.used.
+ *   This is a NULL terminated string.
  *
  * @return
  *   F_none on success.
@@ -600,7 +600,7 @@ extern "C" {
  * @see cap_get_mode()
  */
 #ifndef _di_f_capability_mode_get_name_
-  extern f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_static_t * const name);
+  extern f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_constant_t * const name);
 #endif // _di_f_capability_mode_get_name_
 
 /**

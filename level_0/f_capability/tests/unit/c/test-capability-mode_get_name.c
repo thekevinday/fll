@@ -21,7 +21,7 @@ extern "C" {
 void test__f_capability_mode_get_name__works(void **state) {
 
   const f_capability_mode_t mode = f_capability_mode_t_initialize;
-  f_string_static_t name = f_string_static_t_initialize;
+  f_string_constant_t name = f_string_constant_t_initialize;
 
   #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
     printf("[  WARN    ] f_capability_mode_get_name() is not implemented and cannot be fully tested.\n");

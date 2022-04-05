@@ -210,7 +210,7 @@ extern "C" {
   #endif // _di_f_capability_mode_get_
 
   #ifndef _di_f_capability_mode_get_name_
-    f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_static_t * const name) {
+    f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_constant_t * const name) {
       #ifndef _di_level_0_parameter_checking_
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -800,15 +800,13 @@ extern "C" {
   #endif // _di_f_capability_mode_get_
 
   #ifndef _di_f_capability_mode_get_name_
-    f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_static_t * const name) {
+    f_status_t f_capability_mode_get_name(const f_capability_mode_t mode, f_string_constant_t * const name) {
       #ifndef _di_level_0_parameter_checking_
         if (!mode) return F_status_set_error(F_parameter);
         if (!name) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      name.string = cap_mode_name(mode);
-      name.used = strnlen(name.string, F_string_t_size_d);
-      name.size = 0;
+      *name = cap_mode_name(mode);
 
       return F_none;
     }
