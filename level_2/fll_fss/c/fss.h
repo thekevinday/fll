@@ -6,8 +6,6 @@
  * Licenses: lgpl-2.1-or-later
  *
  * Provide common FSS functions.
- *
- * @todo add "snatch" functions to grab contents in separate sets instead of appending (such as for fss extended).
  */
 #ifndef _FLL_fss_h
 #define _FLL_fss_h
