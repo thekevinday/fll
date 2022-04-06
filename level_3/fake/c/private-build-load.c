@@ -418,94 +418,94 @@ extern "C" {
     };
 
     bool settings_matches[] = {
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
-      F_false,
+      F_false, // build_compiler
+      F_false, // build_indexer
+      F_false, // setting->build_indexer_arguments
+      F_false, // build_language
+      F_false, // setting->build_libraries
+      F_false, // setting->build_libraries_shared
+      F_false, // setting->build_libraries_static
+      F_false, // build_name
+      F_false, // setting->build_objects_library
+      F_false, // setting->build_objects_library_shar
+      F_false, // setting->build_objects_library_stat
+      F_false, // setting->build_objects_program
+      F_false, // setting->build_objects_program_shar
+      F_false, // setting->build_objects_program_stat
+      F_false, // build_script
+      F_false, // build_shared
+      F_false, // setting->build_sources_headers
+      F_false, // setting->build_sources_headers_shar
+      F_false, // setting->build_sources_headers_stat
+      F_false, // setting->build_sources_library
+      F_false, // setting->build_sources_library_shar
+      F_false, // setting->build_sources_library_stat
+      F_false, // build_sources_object
+      F_false, // build_sources_object_shared
+      F_false, // build_sources_object_static
+      F_false, // setting->build_sources_program
+      F_false, // setting->build_sources_program_shar
+      F_false, // setting->build_sources_program_stat
+      F_false, // setting->build_sources_script
+      F_false, // setting->build_sources_setting
+      F_false, // build_static
+      F_false, // setting->defines
+      F_false, // setting->defines_library
+      F_false, // setting->defines_library_shared
+      F_false, // setting->defines_library_static
+      F_false, // setting->defines_object
+      F_false, // setting->defines_object_shared
+      F_false, // setting->defines_object_static
+      F_false, // setting->defines_program
+      F_false, // setting->defines_program_shared
+      F_false, // setting->defines_program_static
+      F_false, // setting->defines_shared
+      F_false, // setting->defines_static
+      F_false, // setting->environment
+      F_false, // setting->flags
+      F_false, // setting->flags_library
+      F_false, // setting->flags_library_shared
+      F_false, // setting->flags_library_static
+      F_false, // setting->flags_object
+      F_false, // setting->flags_object_shared
+      F_false, // setting->flags_object_static
+      F_false, // setting->flags_program
+      F_false, // setting->flags_program_shared
+      F_false, // setting->flags_program_static
+      F_false, // setting->flags_shared
+      F_false, // setting->flags_static
+      F_false, // has_path_standard
+      F_false, // setting->modes
+      F_false, // setting->modes_default
+      F_false, // path_headers
+      F_false, // path_language
+      F_false, // path_library_script
+      F_false, // path_library_shared
+      F_false, // path_library_static
+      F_false, // path_object_script
+      F_false, // path_object_shared
+      F_false, // path_object_static
+      F_false, // path_program_script
+      F_false, // path_program_shared
+      F_false, // path_program_static
+      F_false, // path_sources
+      F_false, // path_sources_object
+      F_false, // preserve_path_headers
+      F_false, // process_post
+      F_false, // process_pre
+      F_false, // search_exclusive
+      F_false, // search_shared
+      F_false, // search_static
+      F_false, // version_file
+      F_false, // version_major
+      F_false, // version_major_prefix
+      F_false, // version_micro
+      F_false, // version_micro_prefix
+      F_false, // version_minor
+      F_false, // version_minor_prefix
+      F_false, // version_nano
+      F_false, // version_nano_prefix
+      F_false, // version_target
     };
 
     char *function = "fll_fss_snatch_apart";
@@ -815,6 +815,49 @@ extern "C" {
         0,                                           // version_target
       };
 
+      const bool settings_single_matches[] = {
+        settings_matches[0],  // build_compiler
+        settings_matches[1],  // build_indexer
+        settings_matches[3],  // build_language
+        settings_matches[7],  // build_name
+        settings_matches[14], // build_script
+        settings_matches[15], // build_shared
+        settings_matches[22], // build_sources_object
+        settings_matches[23], // build_sources_object_shared
+        settings_matches[24], // build_sources_object_static
+        settings_matches[30], // build_static
+        settings_matches[56], // has_path_standard
+        settings_matches[59], // path_headers
+        settings_matches[60], // path_language
+        settings_matches[61], // path_library_script
+        settings_matches[62], // path_library_shared
+        settings_matches[63], // path_library_static
+        settings_matches[64], // path_object_script
+        settings_matches[65], // path_object_shared
+        settings_matches[66], // path_object_static
+        settings_matches[67], // path_program_script
+        settings_matches[68], // path_program_shared
+        settings_matches[69], // path_program_static
+        settings_matches[70], // path_sources
+        settings_matches[71], // path_sources_object
+        settings_matches[72], // preserve_path_headers
+        settings_matches[73], // process_post
+        settings_matches[74], // process_pre
+        settings_matches[75], // search_exclusive
+        settings_matches[76], // search_shared
+        settings_matches[77], // search_static
+        settings_matches[78], // version_file
+        settings_matches[79], // version_major
+        settings_matches[80], // version_major_prefix
+        settings_matches[81], // version_micro
+        settings_matches[82], // version_micro_prefix
+        settings_matches[83], // version_minor
+        settings_matches[84], // version_minor_prefix
+        settings_matches[85], // version_nano
+        settings_matches[86], // version_nano_prefix
+        settings_matches[87], // version_target
+      };
+
       const f_string_static_t settings_single_string_default[] = {
         fake_build_setting_default_gcc_s,            // build_compiler
         fake_build_setting_default_ar_s,             // build_indexer
@@ -1040,7 +1083,7 @@ extern "C" {
       for (f_array_length_t i = 0; i < 40; ++i) {
 
         // Assign the default for literal and path types.
-        if (settings_single_string_default[i].used && settings_single_destination[i]) {
+        if (!settings_single_matches[i] && settings_single_destination[i]) {
           settings_single_destination[i]->used = 0;
 
           *status = f_string_dynamic_append(settings_single_string_default[i], settings_single_destination[i]);
