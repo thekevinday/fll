@@ -15,7 +15,7 @@ build_sources_object e.c
 build_script no
 
 path_sources_object sources_object
-path_standard no
+has_path_standard no
 
 flags -z now -g -fdiagnostics-color=always
 flags_object_shared -fPIC
