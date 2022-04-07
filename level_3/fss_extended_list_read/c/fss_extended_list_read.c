@@ -523,7 +523,9 @@ extern "C" {
 
       if (F_status_is_error_not(status) && main->parameters.remaining.used > 0) {
         f_file_t file = f_file_t_initialize;
+        f_array_length_t size_block = 0;
         f_array_length_t size_file = 0;
+        f_array_length_t size_read = 0;
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
@@ -552,25 +554,69 @@ extern "C" {
           }
 
           size_file = 0;
+
           status = f_file_size_by_id(file.id, &size_file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
+            f_file_stream_close(F_true, &file);
+
             break;
           }
 
           if (size_file) {
-            file.size_read = size_file + 1;
 
-            status = f_file_stream_read(file, &data.buffer);
+            // Enforce a max block read size to allow for interrupts to be processed beteween blocks.
+            if (size_file > fss_extended_list_read_block_max) {
+              file.size_read = fss_extended_list_read_block_read_large;
+              size_block = fss_extended_list_read_block_max;
+
+              // Pre-allocate entire file buffer plus space for the terminating NULL.
+              f_string_dynamic_increase_by(size_file + (size_block - (size_file % size_block)) + 1, &data.buffer);
+            }
+            else {
+              file.size_read = fss_extended_list_read_block_read_small;
+              size_block = size_file;
+
+              // Pre-allocate entire file buffer plus space for the terminating NULL.
+              f_string_dynamic_increase_by(size_file + 1, &data.buffer);
+            }
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+
+              f_file_stream_close(F_true, &file);
 
               break;
             }
-            else if (data.buffer.used > data.files.array[data.files.used].range.start) {
+
+            for (size_read = 0; size_read < size_file; size_read += size_block) {
+
+              // The signal check is always performed on each pass.
+              if (size_file > fss_extended_list_read_block_max && fll_program_standard_signal_received(main)) {
+                fss_extended_list_read_print_signal_received(main);
+
+                status = F_status_set_error(F_interrupt);
+
+                break;
+              }
+
+              status = f_file_stream_read_until(file, size_block, &data.buffer);
+              if (F_status_is_error(status)) break;
+            } // for
+
+            f_file_stream_close(F_true, &file);
+
+            if (F_status_is_error(status)) {
+              if (F_status_set_fine(status) != F_interrupt) {
+                fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_until", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+              }
+
+              break;
+            }
+
+            if (data.buffer.used > data.files.array[data.files.used].range.start) {
               data.files.array[data.files.used].name = data.argv[main->parameters.remaining.array[i]];
               data.files.array[data.files.used++].range.stop = data.buffer.used - 1;
 
@@ -585,12 +631,9 @@ extern "C" {
           }
           else {
             data.files.array[data.files.used].range.start = 1;
+            data.files.array[data.files.used].range.stop = 0;
           }
-
-          f_file_stream_close(F_true, &file);
         } // for
-
-        f_file_stream_close(F_true, &file);
       }
 
       if (F_status_is_error_not(status)) {

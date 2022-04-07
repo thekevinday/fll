@@ -18,10 +18,19 @@ extern "C" {
  * extended_read_common_allocation_*:
  *   - large: An allocation step used for buffers that are anticipated to have large buffers.
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
+ *
+ * fss_extended_read_block_*:
+ *   - max:        The max block read size before checking for interrupt.
+ *   - read_small: The block read size for small files.
+ *   - read_large: The block read size for large files.
  */
 #ifndef _di_fss_extended_read_common_
   #define fss_extended_read_common_allocation_large_d 2048
   #define fss_extended_read_common_allocation_small_d 128
+
+  #define fss_extended_read_block_max        16777216
+  #define fss_extended_read_block_read_small 8192
+  #define fss_extended_read_block_read_large 65536
 #endif // _di_fss_extended_read_common_
 
 /**
