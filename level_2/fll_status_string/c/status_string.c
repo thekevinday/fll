@@ -1969,6 +1969,56 @@ extern "C" {
       }
     #endif // _di_f_status_basic_
 
+    #ifndef _di_f_status_return_
+      if (fl_string_dynamic_compare(name, f_status_debug_s) == F_equal_to) {
+        *code = F_debug;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_debug_not_s) == F_equal_to) {
+        *code = F_debug_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_error_s) == F_equal_to) {
+        *code = F_error;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_error_not_s) == F_equal_to) {
+        *code = F_error_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_fine_s) == F_equal_to) {
+        *code = F_fine;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_fine_not_s) == F_equal_to) {
+        *code = F_fine_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_warning_s) == F_equal_to) {
+        *code = F_warning;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_warning_not_s) == F_equal_to) {
+        *code = F_warning_not;
+
+        return F_none;
+      }
+    #endif // _di_f_status_return_
+
     #ifndef _di_f_status_array_
       if (fl_string_dynamic_compare(name, f_status_array_s) == F_equal_to) {
         *code = F_array;

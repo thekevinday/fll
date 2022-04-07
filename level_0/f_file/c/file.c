@@ -2075,7 +2075,7 @@ extern "C" {
     if (ferror(file.stream)) {
       funlockfile(file.stream);
 
-      return F_status_set_error(F_failure); // @todo create F_error and return F_error.
+      return F_status_set_error(F_error);
     }
 
     f_status_t status = F_none;
@@ -2129,7 +2129,7 @@ extern "C" {
     }
 
     if (ferror(file.stream)) {
-      return F_status_set_error(F_failure); // @todo create F_error and return F_error.
+      return F_status_set_error(F_error);
     }
 
     {
@@ -2182,7 +2182,7 @@ extern "C" {
     if (ferror(file.stream)) {
       funlockfile(file.stream);
 
-      return F_status_set_error(F_failure); // @todo create F_error and return F_error.
+      return F_status_set_error(F_error);
     }
 
     {

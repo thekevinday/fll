@@ -2069,6 +2069,7 @@ extern "C" {
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_error (with error bit) if the file is already in the error state at the start of this function.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
@@ -2103,6 +2104,7 @@ extern "C" {
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_error (with error bit) if the file is already in the error state at the start of this function.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.
@@ -2141,6 +2143,7 @@ extern "C" {
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_error (with error bit) if the file is already in the error state at the start of this function.
  *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.

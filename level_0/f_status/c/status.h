@@ -430,6 +430,17 @@ extern "C" {
       F_write_only,
     #endif // _di_f_status_basic_
 
+    #ifndef _di_f_status_return_
+      F_debug,
+      F_debug_not,
+      F_error,
+      F_error_not,
+      F_fine,
+      F_fine_not,
+      F_warning,
+      F_warning_not,
+    #endif // _di_f_status_return_
+
     #ifndef _di_f_status_array_
       F_array,
       F_array_not,

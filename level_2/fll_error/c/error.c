@@ -100,6 +100,20 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_error) {
+      if (print.verbosity != f_console_verbosity_quiet_e) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%r%[%QFailed to %Q %Q '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%Q%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', already in an error state.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
     if (status == F_failure) {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
