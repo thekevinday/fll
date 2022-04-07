@@ -254,11 +254,7 @@ extern "C" {
 
       status = fll_fss_embedded_list_read(data->buffer, state, &input, &data->nest, objects_delimits, contents_delimits, comments);
 
-      if (F_status_is_error(status)) {
-        // @todo detect and replace fll_error_file_type_file_e with fll_error_file_type_pipe_e as appropriate.
-        fll_error_file_print(data->main->error, F_status_set_fine(status), "fll_fss_embedded_list_read", F_true, filename, f_file_operation_process_s, fll_error_file_type_file_e);
-      }
-      else if (status == F_data_not_stop || status == F_data_not_eos) {
+      if (F_status_is_error_not(status) && (status == F_data_not_stop || status == F_data_not_eos)) {
         macro_f_fss_nest_t_delete_simple(data->nest);
         f_string_dynamic_resize(0, &data->buffer);
 
