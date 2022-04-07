@@ -1752,7 +1752,7 @@ extern "C" {
  * @see lseek
  */
 #ifndef _di_f_file_seek_
-  extern f_status_t f_file_seek(const int id, const int whence, const f_array_length_t offset, f_array_length_t * const seeked);
+  extern f_status_t f_file_seek(const int id, const int whence, const off_t offset, off_t * const seeked);
 #endif // _di_f_file_seek_
 
 /**
@@ -1781,7 +1781,7 @@ extern "C" {
  * @see f_file_stat()
  */
 #ifndef _di_f_file_size_
-  extern f_status_t f_file_size(const f_string_static_t path, const bool dereference, f_array_length_t * const size);
+  extern f_status_t f_file_size(const f_string_static_t path, const bool dereference, off_t * const size);
 #endif // _di_f_file_size_
 
 /**
@@ -1812,7 +1812,7 @@ extern "C" {
  * @see f_file_stat_at()
  */
 #ifndef _di_f_file_size_at_
-  extern f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t * const size);
+  extern f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, off_t * const size);
 #endif // _di_f_file_size_at_
 
 /**
@@ -1838,7 +1838,7 @@ extern "C" {
  * @see f_file_stat_by_id()
  */
 #ifndef _di_f_file_size_by_id_
-  extern f_status_t f_file_size_by_id(const int id, f_array_length_t * const size);
+  extern f_status_t f_file_size_by_id(const int id, off_t * const size);
 #endif // _di_f_file_size_by_id_
 
 /**

@@ -1791,7 +1791,7 @@ extern "C" {
 #endif // _di_f_file_role_change_at_
 
 #ifndef _di_f_file_seek_
-  f_status_t f_file_seek(const int id, const int whence, const f_array_length_t offset, f_array_length_t * const seeked) {
+  f_status_t f_file_seek(const int id, const int whence, const off_t offset, off_t * const seeked) {
     #ifndef _di_level_0_parameter_checking_
       if (id <= 0) return F_status_set_error(F_parameter);
       if (whence < 0) return F_status_set_error(F_parameter);
@@ -1814,7 +1814,7 @@ extern "C" {
 #endif // _di_f_file_seek_
 
 #ifndef _di_f_file_size_
-  f_status_t f_file_size(const f_string_static_t path, const bool dereference, f_array_length_t * const size) {
+  f_status_t f_file_size(const f_string_static_t path, const bool dereference, off_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1839,7 +1839,7 @@ extern "C" {
 #endif // _di_f_file_size_
 
 #ifndef _di_f_file_size_at_
-  f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, f_array_length_t * const size) {
+  f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, off_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1864,7 +1864,7 @@ extern "C" {
 #endif // _di_f_file_size_at_
 
 #ifndef _di_f_file_size_by_id_
-  f_status_t f_file_size_by_id(const int id, f_array_length_t * const size) {
+  f_status_t f_file_size_by_id(const int id, off_t * const size) {
     #ifndef _di_level_0_parameter_checking_
       if (id <= 0) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
@@ -2064,10 +2064,22 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
-    f_status_t status = F_none;
-    ssize_t size_read = 0;
-
     flockfile(file.stream);
+
+    if (feof(file.stream)) {
+      funlockfile(file.stream);
+
+      return F_none_eof;
+    }
+
+    if (ferror(file.stream)) {
+      funlockfile(file.stream);
+
+      return F_status_set_error(F_failure); // @todo create F_error and return F_error.
+    }
+
+    f_status_t status = F_none;
+    size_t size_read = 0;
 
     do {
       status = f_string_dynamic_increase_by(file.size_read, buffer);
@@ -2078,7 +2090,7 @@ extern "C" {
         return status;
       }
 
-      size_read = fread_unlocked(buffer->string + buffer->used, 1, file.size_read, file.stream);
+      size_read = fread_unlocked(buffer->string + buffer->used, sizeof(f_char_t), file.size_read, file.stream);
 
       if (ferror(file.stream)) {
         funlockfile(file.stream);
@@ -2112,14 +2124,20 @@ extern "C" {
 
     if (!file.stream) return F_status_set_error(F_file_closed);
 
-    ssize_t size_read = 0;
+    if (feof(file.stream)) {
+      return F_none_eof;
+    }
+
+    if (ferror(file.stream)) {
+      return F_status_set_error(F_failure); // @todo create F_error and return F_error.
+    }
 
     {
       const f_status_t status = f_string_dynamic_increase_by(file.size_read, buffer);
       if (F_status_is_error(status)) return status;
     }
 
-    size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
+    const size_t size_read = fread(buffer->string + buffer->used, sizeof(f_char_t), file.size_read, file.stream);
 
     if (ferror(file.stream)) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -2153,17 +2171,34 @@ extern "C" {
 
     if (!file.stream) return F_status_set_error(F_file_closed);
 
+    flockfile(file.stream);
+
+    if (feof(file.stream)) {
+      funlockfile(file.stream);
+
+      return F_none_eof;
+    }
+
+    if (ferror(file.stream)) {
+      funlockfile(file.stream);
+
+      return F_status_set_error(F_failure); // @todo create F_error and return F_error.
+    }
+
     {
       const f_status_t status = f_string_dynamic_increase_by(total, buffer);
-      if (F_status_is_error(status)) return status;
+
+      if (F_status_is_error(status)) {
+        funlockfile(file.stream);
+
+        return F_none_eof;
+      }
     }
 
     f_array_length_t buffer_size = file.size_read;
     f_array_length_t buffer_count = 0;
 
-    ssize_t size_read = 0;
-
-    flockfile(file.stream);
+    size_t size_read = 0;
 
     for (;;) {
 
@@ -2171,7 +2206,7 @@ extern "C" {
         buffer_size = total - buffer_count;
       }
 
-      size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
+      size_read = fread(buffer->string + buffer->used, sizeof(f_char_t), file.size_read, file.stream);
 
       if (ferror(file.stream)) {
         funlockfile(file.stream);
@@ -2197,7 +2232,7 @@ extern "C" {
 
       buffer_count += size_read;
 
-      if (buffer_count == total) break;
+      if (buffer_count >= total) break;
     } // for
 
     funlockfile(file.stream);
