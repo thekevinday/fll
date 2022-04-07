@@ -337,6 +337,17 @@ extern "C" {
     const f_string_static_t f_status_write_only_s = macro_f_string_static_t_initialize(F_status_write_only_s, 0, F_status_write_only_s_length);
   #endif // _di_f_status_basic_
 
+  #ifndef _di_f_status_return_
+    const f_string_static_t f_status_debug_s = macro_f_string_static_t_initialize(F_status_debug_s, 0, F_status_debug_s_length);
+    const f_string_static_t f_status_debug_not_s = macro_f_string_static_t_initialize(F_status_debug_not_s, 0, F_status_debug_not_s_length);
+    const f_string_static_t f_status_error_s = macro_f_string_static_t_initialize(F_status_error_s, 0, F_status_error_s_length);
+    const f_string_static_t f_status_error_not_s = macro_f_string_static_t_initialize(F_status_error_not_s, 0, F_status_error_not_s_length);
+    const f_string_static_t f_status_fine_s = macro_f_string_static_t_initialize(F_status_fine_s, 0, F_status_fine_s_length);
+    const f_string_static_t f_status_fine_not_s = macro_f_string_static_t_initialize(F_status_fine_not_s, 0, F_status_fine_not_s_length);
+    const f_string_static_t f_status_warning_s = macro_f_string_static_t_initialize(F_status_warning_s, 0, F_status_warning_s_length);
+    const f_string_static_t f_status_warning_not_s = macro_f_string_static_t_initialize(F_status_warning_not_s, 0, F_status_warning_not_s_length);
+  #endif // _di_f_status_return_
+
   #ifndef _di_f_status_array_
     const f_string_static_t f_status_array_s = macro_f_string_static_t_initialize(F_status_array_s, 0, F_status_array_s_length);
     const f_string_static_t f_status_array_not_s = macro_f_string_static_t_initialize(F_status_array_not_s, 0, F_status_array_not_s_length);
@@ -1892,6 +1903,40 @@ extern "C" {
           *name = f_status_write_only_s;
           break;
       #endif // _di_f_status_basic_
+
+      #ifndef _di_f_status_return_
+        case F_debug:
+          *name = f_status_debug_s;
+          break;
+
+        case F_debug_not:
+          *name = f_status_debug_not_s;
+          break;
+
+        case F_error:
+          *name = f_status_error_s;
+          break;
+
+        case F_error_not:
+          *name = f_status_error_not_s;
+          break;
+
+        case F_fine:
+          *name = f_status_fine_s;
+          break;
+
+        case F_fine_not:
+          *name = f_status_fine_not_s;
+          break;
+
+        case F_warning:
+          *name = f_status_warning_s;
+          break;
+
+        case F_warning_not:
+          *name = f_status_warning_not_s;
+          break;
+      #endif // _di_f_status_return_
 
       #ifndef _di_f_status_array_
         case F_array:

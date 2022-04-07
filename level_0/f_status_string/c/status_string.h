@@ -1006,6 +1006,35 @@ extern "C" {
     extern const f_string_static_t f_status_write_only_s;
   #endif // _di_f_status_basic_
 
+  #ifndef _di_f_status_return_
+    #define F_status_debug_s       "F_debug"
+    #define F_status_debug_not_s   "F_debug_not"
+    #define F_status_error_s       "F_error"
+    #define F_status_error_not_s   "F_error_not"
+    #define F_status_fine_s        "F_fine"
+    #define F_status_fine_not_s    "F_fine_not"
+    #define F_status_warning_s     "F_warning"
+    #define F_status_warning_not_s "F_warning_not"
+
+    #define F_status_debug_s_length       7
+    #define F_status_debug_not_s_length   11
+    #define F_status_error_s_length       7
+    #define F_status_error_not_s_length   11
+    #define F_status_fine_s_length        6
+    #define F_status_fine_not_s_length    10
+    #define F_status_warning_s_length     9
+    #define F_status_warning_not_s_length 13
+
+    extern const f_string_static_t f_status_debug_s;
+    extern const f_string_static_t f_status_debug_not_s;
+    extern const f_string_static_t f_status_error_s;
+    extern const f_string_static_t f_status_error_not_s;
+    extern const f_string_static_t f_status_fine_s;
+    extern const f_string_static_t f_status_fine_not_s;
+    extern const f_string_static_t f_status_warning_s;
+    extern const f_string_static_t f_status_warning_not_s;
+  #endif // _di_f_status_return_
+
   #ifndef _di_f_status_array_
     #define F_status_array_s           "F_array"
     #define F_status_array_not_s       "F_array_not"
