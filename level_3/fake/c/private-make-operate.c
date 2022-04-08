@@ -27,7 +27,13 @@ extern "C" {
     }
 
     if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
-      fll_print_format("%r%[Now making.%]%r", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+      flockfile(data->main->output.to.stream);
+
+      fl_print_format("%r%[Now making using '%]", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
+      fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data->fakefile, data->main->context.set.notable);
+      fl_print_format("%['.%]%r", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+
+      funlockfile(data->main->output.to.stream);
     }
 
     f_status_t status = F_none;
