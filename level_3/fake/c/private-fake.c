@@ -199,7 +199,8 @@ extern "C" {
 
           return F_status_set_error(F_parameter);
         }
-        else if (data->main->parameters.array[parameters_id[i]].result == f_console_result_additional_e) {
+
+        if (data->main->parameters.array[parameters_id[i]].result == f_console_result_additional_e) {
           if (data->main->parameters.array[parameters_id[i]].locations.used > 1) {
             fake_print_error_parameter_too_many(data, parameters_name[i]);
 
@@ -279,9 +280,8 @@ extern "C" {
 
               return status;
             }
-            else {
-              status = F_none;
-            }
+
+            status = F_none;
           }
 
           if (!data->main->parameters.arguments.array[index].used || status == F_data_not) {
@@ -356,7 +356,8 @@ extern "C" {
 
           return F_status_set_error(F_parameter);
         }
-        else if (data->main->parameters.array[parameters_id[i]].result == f_console_result_additional_e) {
+
+        if (data->main->parameters.array[parameters_id[i]].result == f_console_result_additional_e) {
           if (data->main->parameters.array[parameters_id[i]].values.used > 1) {
             fake_print_error_parameter_too_many(data, parameters_name[i]);
 
@@ -444,7 +445,8 @@ extern "C" {
 
       return F_status_set_error(F_parameter);
     }
-    else if (data->main->parameters.array[fake_parameter_mode_e].result == f_console_result_additional_e) {
+
+    if (data->main->parameters.array[fake_parameter_mode_e].result == f_console_result_additional_e) {
       status = fll_program_parameter_additional_rip(data->main->parameters.arguments.array, data->main->parameters.array[fake_parameter_mode_e].values, &data->mode);
 
       if (F_status_is_error(status)) {

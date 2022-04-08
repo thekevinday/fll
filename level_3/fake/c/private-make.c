@@ -65,7 +65,8 @@ extern "C" {
 
           return F_status_set_error(status);
         }
-        else if (status == F_exist_not) {
+
+        if (status == F_exist_not) {
           if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(data->main->error.to.stream);
 
@@ -83,9 +84,11 @@ extern "C" {
       }
 
       fll_error_print(print, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true);
+
       return F_status_set_error(status);
     }
-    else if (number > F_type_size_32_unsigned_d) {
+
+    if (number > F_type_size_32_unsigned_d) {
       if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
@@ -98,6 +101,7 @@ extern "C" {
     }
 
     *id = (gid_t) number;
+
     return status;
   }
 #endif // _di_fake_make_get_id_group_
@@ -154,7 +158,8 @@ extern "C" {
 
           return F_status_set_error(status);
         }
-        else if (status == F_exist_not) {
+
+        if (status == F_exist_not) {
           if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(data->main->error.to.stream);
 
@@ -172,9 +177,11 @@ extern "C" {
       }
 
       fll_error_print(print, status, "fl_conversion_dynamic_to_number_unsigned", F_true);
+
       return F_status_set_error(status);
     }
-    else if (number > F_type_size_32_unsigned_d) {
+
+    if (number > F_type_size_32_unsigned_d) {
       if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
@@ -187,6 +194,7 @@ extern "C" {
     }
 
     *id = (uid_t) number;
+
     return status;
   }
 #endif // _di_fake_make_get_id_owner_
