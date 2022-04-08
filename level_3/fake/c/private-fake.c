@@ -107,7 +107,7 @@ extern "C" {
 
     if (status == F_true) {
       {
-        f_array_length_t size_file = 0;
+        off_t size_file = 0;
 
         name_function = "f_file_size";
         status = f_file_size(path_file, F_true, &size_file);

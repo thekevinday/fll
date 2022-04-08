@@ -365,9 +365,9 @@ extern "C" {
 
       if (F_status_is_fine(status) && main->parameters.remaining.used > 0) {
         f_file_t file = f_file_t_initialize;
-        f_array_length_t size_block = 0;
-        f_array_length_t size_file = 0;
-        f_array_length_t size_read = 0;
+        off_t size_block = 0;
+        off_t size_file = 0;
+        off_t size_read = 0;
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 

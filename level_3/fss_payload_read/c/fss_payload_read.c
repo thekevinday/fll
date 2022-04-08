@@ -554,9 +554,9 @@ extern "C" {
 
       if (F_status_is_error_not(status) && main->parameters.remaining.used > 0) {
         f_file_t file = f_file_t_initialize;
-        f_array_length_t size_block = 0;
-        f_array_length_t size_file = 0;
-        f_array_length_t size_read = 0;
+        off_t size_block = 0;
+        off_t size_file = 0;
+        off_t size_read = 0;
         const f_array_length_t buffer_used = data.buffer.used;
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
