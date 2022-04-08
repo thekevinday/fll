@@ -18,7 +18,7 @@ extern "C" {
 
       fl_print_format("%r%[Deleting all files within build directory '%]", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
       fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data->path_build, data->main->context.set.notable);
-      fl_print_format("%[.%]%r", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+      fl_print_format("%['.%]%r", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
       funlockfile(data->main->output.to.stream);
     }
