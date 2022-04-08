@@ -8,11 +8,6 @@ version_micro 9
 version_file micro
 version_target minor
 
-environment
-
-process_pre
-process_post
-
 modes individual clang test
 modes_default individual
 
@@ -21,31 +16,15 @@ build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
+
 build_libraries -lc
 build_libraries-individual -lf_memory
-build_libraries_shared
-build_libraries_static
-build_objects_library
-build_objects_library_shared
-build_objects_library_static
-build_objects_program
-build_objects_program_shared
-build_objects_program_static
+
 build_sources_library type_array/array_length.c type_array/cell.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/state.c type_array/status.c type_array/uint8.c type_array/uint16.c type_array/uint32.c type_array/uint64.c type_array/uint128.c
 build_sources_library type_array/private-array_length.c type_array/private-cell.c type_array/private-fll_id.c type_array/private-int8.c type_array/private-int16.c type_array/private-int32.c type_array/private-int64.c type_array/private-int128.c type_array/private-state.c type_array/private-status.c type_array/private-uint8.c type_array/private-uint16.c type_array/private-uint32.c type_array/private-uint64.c type_array/private-uint128.c
-build_sources_library_shared
-build_sources_library_static
-build_sources_object
-build_sources_object_shared
-build_sources_object_static
-build_sources_program
-build_sources_program_shared
-build_sources_program_static
+
 build_sources_headers type_array.h type_array/common.h type_array/array_length.h type_array/cell.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
-build_sources_headers_shared
-build_sources_headers_static
-build_sources_script
-build_sources_setting
+
 build_script yes
 build_shared yes
 build_static no
@@ -60,8 +39,6 @@ path_object_static static
 path_program_script script
 path_program_shared shared
 path_program_static static
-path_sources
-path_sources_object
 
 has_path_standard yes
 preserve_path_headers yes
@@ -70,30 +47,10 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-defines
-defines_library
-defines_library_shared
-defines_library_static
-defines_object
-defines_object_shared
-defines_object_static
-defines_program
-defines_program_shared
-defines_program_static
-defines_static
-defines_shared
-
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector
+
 flags_library -fPIC
-flags_library_shared
-flags_library_static
 flags_object -fPIC
-flags_object_shared
-flags_object_static
 flags_program -fPIE
-flags_program_shared
-flags_program_static
-flags_shared
-flags_static

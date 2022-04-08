@@ -8,11 +8,6 @@ version_micro 9
 version_file micro
 version_target minor
 
-environment
-
-process_pre
-process_post
-
 modes individual level monolithic clang test
 modes_default monolithic
 
@@ -21,32 +16,18 @@ build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
+
 build_libraries -lc
 build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_print -lfll_program -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lfl_string -lf_color -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
-build_libraries_shared
-build_libraries_static
-build_objects_library
-build_objects_library_shared
-build_objects_library_static
-build_objects_program
-build_objects_program_shared
-build_objects_program_static
+
 build_sources_library fss_extended_read.c common.c private-common.c private-print.c private-read.c
-build_sources_library_shared
-build_sources_library_static
-build_sources_object
-build_sources_object_shared
-build_sources_object_static
+
 build_sources_program main.c
-build_sources_program_shared
-build_sources_program_static
+
 build_sources_headers fss_extended_read.h common.h
-build_sources_headers_shared
-build_sources_headers_static
-build_sources_script
-build_sources_setting
+
 build_script yes
 build_shared yes
 build_static no
@@ -61,8 +42,6 @@ path_object_static static
 path_program_script script
 path_program_shared shared
 path_program_static static
-path_sources
-path_sources_object
 
 has_path_standard yes
 preserve_path_headers yes
@@ -73,29 +52,11 @@ search_static yes
 
 #defines -D_di_libcap_ -D_di_thread_support_
 defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
-defines_library
-defines_library_shared
-defines_library_static
-defines_object
-defines_object_shared
-defines_object_static
-defines_program
-defines_program_shared
-defines_program_static
-defines_static
-defines_shared
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector
+
 flags_library -fPIC
-flags_library_shared
-flags_library_static
 flags_object -fPIC
-flags_object_shared
-flags_object_static
 flags_program -fPIE
-flags_program_shared
-flags_program_static
-flags_shared
-flags_static

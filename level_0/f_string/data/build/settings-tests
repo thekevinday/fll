@@ -16,10 +16,12 @@ build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
+
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string
 build_libraries-level -lfll_0
 build_libraries-monolithic -lfll
+
 build_sources_program test-string-append.c test-string-append_assure.c test-string-append_assure_nulless.c test-string-append_nulless.c
 build_sources_program test-string-dynamic_adjust.c test-string-dynamic_append.c test-string-dynamic_append_assure.c test-string-dynamic_append_assure_nulless.c test-string-dynamic_append_nulless.c
 build_sources_program test-string-dynamic_decimate_by.c test-string-dynamic_decrease_by.c test-string-dynamic_increase.c test-string-dynamic_increase_by.c
@@ -44,6 +46,7 @@ build_sources_program test-string-ranges_adjust.c test-string-ranges_append.c te
 build_sources_program test-string-seek_line.c test-string-seek_line_to.c test-string-seek_to.c
 build_sources_program test-string-triples_adjust.c test-string-triples_append.c test-string-triples_append_all.c test-string-triples_decimate_by.c test-string-triples_decrease_by.c test-string-triples_increase.c test-string-triples_increase_by.c test-string-triples_resize.c test-string-tripless_adjust.c test-string-tripless_append.c test-string-tripless_append_all.c test-string-tripless_decimate_by.c test-string-tripless_decrease_by.c test-string-tripless_increase.c test-string-tripless_increase_by.c test-string-tripless_resize.c
 build_sources_program test-string.c
+
 build_script no
 build_shared yes
 build_static no
@@ -58,7 +61,6 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-defines
 defines -Ibuild/includes
 defines_static -Lbuild/libraries/static
 defines_shared -Lbuild/libraries/shared
@@ -66,8 +68,5 @@ defines_shared -Lbuild/libraries/shared
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector
+
 flags_program -fPIE
-flags_program_shared
-flags_program_static
-flags_shared
-flags_static

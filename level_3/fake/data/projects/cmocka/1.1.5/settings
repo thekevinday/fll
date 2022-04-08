@@ -27,9 +27,12 @@ build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
+
 build_libraries -pthread -lrt -lc
+
 build_sources_library src/cmocka.c
 build_sources_headers include/cmocka.h include/cmocka_pbc.h
+
 build_script no
 build_shared yes
 build_static no
@@ -44,4 +47,5 @@ flags -z now -g -fdiagnostics-color=always -Wall -Winline -O2 -Iinclude/ -std=gn
 flags -Wpedantic -Wall -Wshadow -Wmissing-prototypes -Wcast-align -Werror=address -Wstrict-prototypes -Werror=strict-prototypes -Wwrite-strings -Werror=write-strings -Werror-implicit-function-declaration -Wpointer-arith -Werror=pointer-arith -Wdeclaration-after-statement -Werror=declaration-after-statement -Wreturn-type -Werror=return-type -Wuninitialized -Werror=uninitialized -Wimplicit-fallthrough -Werror=strict-overflow -Wstrict-overflow=2 -Wno-format-zero-length -Wmissing-field-initializers -Wformat -Wformat-security -Werror=format-security
 flags -fno-common -fstack-protector-strong -fstack-clash-protection
 flags-clang -Wno-logical-op-parentheses
+
 flags_library -fPIC

@@ -13,11 +13,6 @@ version_micro 9
 version_file micro
 version_target minor
 
-environment
-
-process_pre
-process_post
-
 modes individual level monolithic clang test
 modes_default individual
 
@@ -26,18 +21,14 @@ build_compiler-clang clang
 build_indexer ar
 build_indexer_arguments rcs
 build_language c
+
 build_libraries -lc -lcap
 build_libraries-individual -lf_memory -lf_string -lf_type_array
-build_libraries_shared
-build_libraries_static
+
 build_sources_library capability.c ../../tests/unit/c/mock-capability.c
-build_sources_library_shared
-build_sources_library_static
+
 build_sources_headers capability.h capability/common.h
-build_sources_headers_shared
-build_sources_headers_static
-build_sources_script
-build_sources_setting
+
 build_script yes
 build_shared yes
 build_static no
@@ -46,8 +37,6 @@ path_headers fll/level_0
 path_library_script script
 path_library_shared shared
 path_library_static static
-path_sources
-path_sources_object
 
 has_path_standard yes
 preserve_path_headers yes
@@ -58,20 +47,12 @@ search_static yes
 
 #defines -D_di_libcap_
 defines -D_libcap_legacy_only_
-defines_library
-defines_library_shared
-defines_library_static
-defines_static
-defines_shared
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector
+
 flags_library -fPIC
-flags_library_shared
-flags_library_static
-flags_shared
-flags_static
 
 # Inject mocks.
 flags -Wl,--wrap=cap_get_ambient
