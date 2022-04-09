@@ -69,7 +69,13 @@ void test__f_directory_list__returns_directory_empty(void **state) {
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
+    // The scandir() allocates the entire struct dirent.
+    struct dirent **directories = (struct dirent **) malloc(sizeof(struct dirent *));
+
+    memset(directories, 0, sizeof(struct dirent *));
+
     will_return(__wrap_scandir, false);
+    will_return(__wrap_scandir, directories);
     will_return(__wrap_scandir, 0);
 
     const f_status_t status = f_directory_list(path, 0, 0, &names);
@@ -86,20 +92,18 @@ void test__f_directory_list__works(void **state) {
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
-    struct dirent directory;
-    memset(&directory, 0, sizeof(struct dirent));
+    // The scandir() allocates the entire struct dirent.
+    struct dirent **directories = (struct dirent **) malloc(sizeof(struct dirent *));
 
-    struct dirent directories[2];
+    directories[0] = (struct dirent *) malloc(sizeof(struct dirent));
 
-    memset(directories, 0, sizeof(struct dirent) * 2);
-
-    directories[0] = directory;
+    memset(directories[0], 0, sizeof(struct dirent));
+    memcpy(directories[0]->d_name, path.string, sizeof(f_char_t) * path.used);
+    directories[0]->d_name[path.used] = 0;
 
     will_return(__wrap_scandir, false);
-    will_return(__wrap_scandir, &directories);
-    will_return(__wrap_strnlen, 1);
-    will_return(__wrap_strncmp, 1);
-    will_return(__wrap_strncmp, 1);
+    will_return(__wrap_scandir, directories);
+    will_return(__wrap_scandir, 1);
 
     const f_status_t status = f_directory_list(path, 0, 0, &names);
 

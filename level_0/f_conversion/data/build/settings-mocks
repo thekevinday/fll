@@ -6,6 +6,9 @@
 # Therefore, this file is a work-around to inject the mocks into the library for testing purposes.
 # This should exactly match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
 #
+# The flags -o0 must be passed to prevent the compiler from optimizing away any functions being mocked (which results in the mock not happening and a real function being called).
+# Alternatively, figure out which optimization that is disabled by -o0 and have that specific optimization disabled.
+#
 
 build_name f_conversion
 
@@ -47,7 +50,7 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags -O0 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector
 

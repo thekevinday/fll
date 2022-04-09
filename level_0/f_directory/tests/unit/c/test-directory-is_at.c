@@ -37,8 +37,8 @@ void test__f_directory_is_at__fails(void **state) {
 
   for (int i = 0; i < 10; ++i) {
 
-    will_return(__wrap_stat, true);
-    will_return(__wrap_stat, errnos[i]);
+    will_return(__wrap_fstatat, true);
+    will_return(__wrap_fstatat, errnos[i]);
 
     const f_status_t status = f_directory_is_at(0, path, 0);
 
@@ -64,9 +64,9 @@ void test__f_directory_is_at__returns_false(void **state) {
   memset(&statistics, 0, sizeof (struct stat));
 
   {
-    will_return(__wrap_stat, false);
-    will_return(__wrap_stat, &statistics);
-    will_return(__wrap_stat, 0);
+    will_return(__wrap_fstatat, false);
+    will_return(__wrap_fstatat, &statistics);
+    will_return(__wrap_fstatat, 0);
 
     const f_status_t status = f_directory_is_at(0, path, 0);
 
@@ -85,9 +85,9 @@ void test__f_directory_is_at__returns_true(void **state) {
   statistics.st_mode = 1 | S_IFDIR;
 
   {
-    will_return(__wrap_stat, false);
-    will_return(__wrap_stat, &statistics);
-    will_return(__wrap_stat, 0);
+    will_return(__wrap_fstatat, false);
+    will_return(__wrap_fstatat, &statistics);
+    will_return(__wrap_fstatat, 0);
 
     const f_status_t status = f_directory_is_at(0, path, 0);
 

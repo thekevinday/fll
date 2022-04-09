@@ -29,7 +29,7 @@ void test__f_directory_touch__fails(void **state) {
       F_memory_not,
       F_directory_not,
       F_number_overflow,
-      F_failure,
+      F_file_stat,
     };
 
     for (int i = 0; i < 8; ++i) {
@@ -124,10 +124,17 @@ void test__f_directory_touch__fails(void **state) {
       F_failure,
     };
 
+    struct stat statistics;
+
+    memset(&statistics, 0, sizeof (struct stat));
+
+    statistics.st_mode = 1 | S_IFDIR;
+
     for (int i = 0; i < 12; ++i) {
 
-      will_return(__wrap_mkdir, false);
-      will_return(__wrap_mkdir, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
       will_return(__wrap_utimensat, true);
       will_return(__wrap_utimensat, errnos[i]);
 
@@ -152,10 +159,17 @@ void test__f_directory_touch__works(void **state) {
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
-      will_return(__wrap_mkdir, false);
-      will_return(__wrap_mkdir, 0);
-      will_return(__wrap_utimensat, false);
-      will_return(__wrap_utimensat, 0);
+    struct stat statistics;
+
+    memset(&statistics, 0, sizeof (struct stat));
+
+    statistics.st_mode = 1 | S_IFDIR;
+
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
+    will_return(__wrap_utimensat, false);
+    will_return(__wrap_utimensat, 0);
 
     const f_status_t status = f_directory_touch(path, 0);
 
@@ -163,10 +177,10 @@ void test__f_directory_touch__works(void **state) {
   }
 
   {
-      will_return(__wrap_mkdir, true);
-      will_return(__wrap_mkdir, ENOENT);
-      will_return(__wrap_mkdir, false);
-      will_return(__wrap_mkdir, 0);
+    will_return(__wrap_stat, true);
+    will_return(__wrap_stat, ENOENT);
+    will_return(__wrap_mkdir, false);
+    will_return(__wrap_mkdir, 0);
 
     const f_status_t status = f_directory_touch(path, 0);
 

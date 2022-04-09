@@ -12,6 +12,7 @@ void test__f_directory_is__fails(void **state) {
   int errnos[] = {
     EACCES,
     EFAULT,
+    ELOOP,
     ENAMETOOLONG,
     ENOENT,
     ENOMEM,
@@ -32,7 +33,7 @@ void test__f_directory_is__fails(void **state) {
     F_file_stat,
   };
 
-  for (int i = 0; i < 8; ++i) {
+  for (int i = 0; i < 9; ++i) {
 
     will_return(__wrap_stat, true);
     will_return(__wrap_stat, errnos[i]);

@@ -27,35 +27,30 @@ int main(void) {
     cmocka_unit_test(test__f_directory_create_at__returns_data_not),
     cmocka_unit_test(test__f_directory_create_at__works),
 
-    // Unable to perform tests because stat() appears to not properly get mocked.
-    //cmocka_unit_test(test__f_directory_exists__fails),
-    //cmocka_unit_test(test__f_directory_exists__returns_data_not),
-    //cmocka_unit_test(test__f_directory_exists__returns_false),
-    //cmocka_unit_test(test__f_directory_exists__returns_true),
+    cmocka_unit_test(test__f_directory_exists__fails),
+    cmocka_unit_test(test__f_directory_exists__returns_data_not),
+    cmocka_unit_test(test__f_directory_exists__returns_false),
+    cmocka_unit_test(test__f_directory_exists__returns_true),
 
-    // Unable to perform tests because stat() appears to not properly get mocked.
-    //cmocka_unit_test(test__f_directory_exists_at__fails),
-    //cmocka_unit_test(test__f_directory_exists_at__returns_data_not),
-    //cmocka_unit_test(test__f_directory_exists_at__returns_false),
-    //cmocka_unit_test(test__f_directory_exists_at__returns_true),
+    cmocka_unit_test(test__f_directory_exists_at__fails),
+    cmocka_unit_test(test__f_directory_exists_at__returns_data_not),
+    cmocka_unit_test(test__f_directory_exists_at__returns_false),
+    cmocka_unit_test(test__f_directory_exists_at__returns_true),
 
-    // Unable to perform tests because stat() appears to not properly get mocked.
-    //cmocka_unit_test(test__f_directory_is__fails),
-    //cmocka_unit_test(test__f_directory_is__returns_data_not),
-    //cmocka_unit_test(test__f_directory_is__returns_false),
-    //cmocka_unit_test(test__f_directory_is__returns_true),
+    cmocka_unit_test(test__f_directory_is__fails),
+    cmocka_unit_test(test__f_directory_is__returns_data_not),
+    cmocka_unit_test(test__f_directory_is__returns_false),
+    cmocka_unit_test(test__f_directory_is__returns_true),
 
-    // Unable to perform tests because stat() appears to not properly get mocked.
-    //cmocka_unit_test(test__f_directory_is_at__fails),
-    //cmocka_unit_test(test__f_directory_is_at__returns_data_not),
-    //cmocka_unit_test(test__f_directory_is_at__returns_false),
-    //cmocka_unit_test(test__f_directory_is_at__returns_true),
+    cmocka_unit_test(test__f_directory_is_at__fails),
+    cmocka_unit_test(test__f_directory_is_at__returns_data_not),
+    cmocka_unit_test(test__f_directory_is_at__returns_false),
+    cmocka_unit_test(test__f_directory_is_at__returns_true),
 
-    // Unable to perform tests because scandir() appears to not properly get mocked.
-    //cmocka_unit_test(test__f_directory_list__fails),
-    //cmocka_unit_test(test__f_directory_list__returns_data_not),
-    //cmocka_unit_test(test__f_directory_list__returns_directory_empty),
-    //cmocka_unit_test(test__f_directory_list__works),
+    cmocka_unit_test(test__f_directory_list__fails),
+    cmocka_unit_test(test__f_directory_list__returns_data_not),
+    cmocka_unit_test(test__f_directory_list__returns_directory_empty),
+    cmocka_unit_test(test__f_directory_list__works),
 
     cmocka_unit_test(test__f_directory_open__fails),
     cmocka_unit_test(test__f_directory_open__returns_data_not),
@@ -73,15 +68,13 @@ int main(void) {
     cmocka_unit_test(test__f_directory_remove_custom__returns_data_not),
     cmocka_unit_test(test__f_directory_remove_custom__works),
 
-    // Unable to perform tests because stat() appears to not properly get mocked.
-    //cmocka_unit_test(test__f_directory_touch__fails),
-    //cmocka_unit_test(test__f_directory_touch__returns_data_not),
-    //cmocka_unit_test(test__f_directory_touch__works),
+    cmocka_unit_test(test__f_directory_touch__fails),
+    cmocka_unit_test(test__f_directory_touch__returns_data_not),
+    cmocka_unit_test(test__f_directory_touch__works),
 
-    // Unable to perform tests because stat() appears to not properly get mocked.
-    //cmocka_unit_test(test__f_directory_touch_at__fails),
-    //cmocka_unit_test(test__f_directory_touch_at__returns_data_not),
-    //cmocka_unit_test(test__f_directory_touch_at__works),
+    cmocka_unit_test(test__f_directory_touch_at__fails),
+    cmocka_unit_test(test__f_directory_touch_at__returns_data_not),
+    cmocka_unit_test(test__f_directory_touch_at__works),
 
     #ifndef _di_level_0_parameter_checking_
       // f_directory_create() doesn't use parameter checking.
