@@ -1,8 +1,10 @@
 # fss-0001
 #
+# Build the project with appropriate mocks linked in via the dynamic linker's "--wrap" functionality.
+#
 # The -Wl,--wrap does not work across shared files.
 # Therefore, this file is a work-around to inject the mocks into the library for testing purposes.
-# This should exaclty match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
+# This should exactly match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
 #
 
 build_name f_capability
@@ -13,7 +15,7 @@ version_micro 9
 version_file micro
 version_target minor
 
-modes individual level monolithic clang test
+modes individual clang test
 modes_default individual
 
 build_compiler gcc

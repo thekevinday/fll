@@ -1,4 +1,9 @@
 # fss-0001
+#
+# Builds a program that is links to the generated library and is executed to perform tests.
+#
+# Memory leaks in the test program can be checked for by running valgrind with this executable.
+#
 
 build_name test-f_console
 
@@ -8,7 +13,7 @@ version_micro 9
 version_file major
 version_target major
 
-modes individual level monolithic clang test
+modes individual clang test
 modes_default individual
 
 build_compiler gcc
@@ -19,8 +24,6 @@ build_language c
 
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_console
-build_libraries-level -lfll_0
-build_libraries-monolithic -lfll
 
 build_sources_program test-console-environment_process.c test-console-identify.c test-console-parameter_prioritize_left.c test-console-parameter_prioritize_right.c test-console-parameter_process.c test-console-parameters_delete.c test-console-parameters_destroy.c test-console.c
 
