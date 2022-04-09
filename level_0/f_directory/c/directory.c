@@ -168,8 +168,6 @@ extern "C" {
     }
 
     struct dirent **listing = 0;
-    size_t i = 0;
-    f_array_length_t size = 0;
     f_status_t status = F_none;
 
     const size_t length = scandir(path.string, &listing, filter, sort);
@@ -180,38 +178,49 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
+    size_t i = 0;
+    f_array_length_t size = 0;
+
     for (; i < length; ++i) {
 
       size = strnlen(listing[i]->d_name, F_directory_name_max_d);
 
       // There is no reason to include "." and ".." in the directory listing.
-      if (!strncmp(listing[i]->d_name, f_directory_back_s.string, f_directory_back_s.used + 1) || !strncmp(listing[i]->d_name, f_directory_current_s.string, f_directory_current_s.used + 1))  {
-        f_memory_delete(size, sizeof(f_string_t), (void **) & listing[i]);
+      if (!strncmp(listing[i]->d_name, f_directory_back_s.string, f_directory_back_s.used + 1) || !strncmp(listing[i]->d_name, f_directory_current_s.string, f_directory_current_s.used + 1)) {
+        f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
 
         continue;
       }
 
-      if (names->used == names->size) {
-        macro_f_memory_structure_increment(status, (*names), 1, F_directory_default_allocation_step_d, macro_f_string_dynamics_t_resize, F_array_too_large);
-        if (F_status_is_error(status)) break;
+      status = f_string_dynamics_increase(F_directory_default_allocation_step_d, names);
+
+      if (F_status_is_error(status)) {
+        for (; i < length; ++i) {
+          f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
+        } // for
+
+        break;
       }
 
       names->array[names->used].used = 0;
 
-      status = f_string_dynamic_increase_by(size, &names->array[names->used]);
-      if (F_status_is_error(status)) break;
+      status = f_string_dynamic_increase_by(size + 1, &names->array[names->used]);
+
+      if (F_status_is_error(status)) {
+        for (; i < length; ++i) {
+          f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
+        } // for
+
+        break;
+      }
 
       memcpy(names->array[names->used].string, listing[i]->d_name, sizeof(f_char_t) * size);
       names->array[names->used++].used = size;
 
-      f_memory_delete(size, sizeof(f_string_t), (void **) & listing[i]);
+      f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
     } // for
 
-    for (; i < length; ++i) {
-      f_memory_delete(size, sizeof(f_string_t), (void **) & listing[i]);
-    } // for
-
-    f_memory_delete(1, sizeof(struct dirent *), (void **) & listing);
+    f_memory_delete(1, sizeof(struct dirent *), (void **) listing);
 
     if (F_status_is_error(status)) {
       return status;
