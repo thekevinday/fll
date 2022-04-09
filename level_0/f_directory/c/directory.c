@@ -173,6 +173,10 @@ extern "C" {
     const size_t length = scandir(path.string, &listing, filter, sort);
 
     if (length == -1) {
+      if (listing) {
+        f_memory_delete(1, sizeof(struct dirent *), (void *) listing);
+      }
+
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
       return F_status_set_error(F_failure);
@@ -220,7 +224,7 @@ extern "C" {
       f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
     } // for
 
-    f_memory_delete(1, sizeof(struct dirent *), (void **) listing);
+    f_memory_delete(1, sizeof(struct dirent *), (void *) listing);
 
     if (F_status_is_error(status)) {
       return status;
