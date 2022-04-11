@@ -1,0 +1,96 @@
+# fss-0001
+#
+# Build the project with appropriate mocks linked in via the dynamic linker's "--wrap" functionality.
+#
+# The -Wl,--wrap does not work across shared files.
+# Therefore, this file is a work-around to inject the mocks into the library for testing purposes.
+# This should exactly match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
+#
+# The flags -o0 must be passed to prevent the compiler from optimizing away any functions being mocked (which results in the mock not happening and a real function being called).
+# Alternatively, figure out which optimization that is disabled by -o0 and have that specific optimization disabled.
+#
+
+build_name f_file
+
+version_major 0
+version_minor 5
+version_micro 9
+version_file micro
+version_target minor
+
+modes individual clang test
+modes_default individual
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc
+build_libraries-individual -lf_memory -lf_string
+
+build_sources_library file.c file/common.c private-file.c ../../tests/unit/c/mock-file.c
+
+build_sources_headers file.h file/common.h file/type.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll/level_0
+path_library_script script
+path_library_shared shared
+path_library_static static
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+flags -O0 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector
+
+flags_library -fPIC
+close read write
+
+# Inject mocks.
+flags -Wl,--wrap=access
+flags -Wl,--wrap=chmod
+flags -Wl,--wrap=chown
+flags -Wl,--wrap=close
+flags -Wl,--wrap=faccessat
+flags -Wl,--wrap=fchmodat
+flags -Wl,--wrap=fchownat
+flags -Wl,--wrap=feof
+flags -Wl,--wrap=ferror
+flags -Wl,--wrap=flockfile
+flags -Wl,--wrap=fread_unlocked
+flags -Wl,--wrap=fstat
+flags -Wl,--wrap=fstatat
+flags -Wl,--wrap=fsync
+flags -Wl,--wrap=funlockfile
+flags -Wl,--wrap=fwrite
+flags -Wl,--wrap=lchown
+flags -Wl,--wrap=lstat
+flags -Wl,--wrap=makedev
+flags -Wl,--wrap=mkdir
+flags -Wl,--wrap=mkdirat
+flags -Wl,--wrap=mkfifo
+flags -Wl,--wrap=mkfifoat
+flags -Wl,--wrap=mknod
+flags -Wl,--wrap=mknodat
+flags -Wl,--wrap=open
+flags -Wl,--wrap=openat
+flags -Wl,--wrap=read
+flags -Wl,--wrap=readlink
+flags -Wl,--wrap=remove
+flags -Wl,--wrap=stat
+flags -Wl,--wrap=symlink
+flags -Wl,--wrap=symlinkat
+flags -Wl,--wrap=unlink
+flags -Wl,--wrap=unlinkat
+flags -Wl,--wrap=write

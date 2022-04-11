@@ -38,8 +38,6 @@ extern int __wrap_openat(int dirfd, const char *pathname, int flags);
 extern int __wrap_remove(const char *pathname);
 extern int __wrap_scandir(const char *dirp, struct dirent ***namelist, int (*filter)(const struct dirent *), int (*compar)(const struct dirent **, const struct dirent **));
 extern int __wrap_stat(const char *pathname, struct stat *statbuf);
-extern int __wrap_strncmp(const char *s1, const char *s2, size_t n);
-extern size_t __wrap_strnlen(const char *s, size_t maxlen);
 extern int __wrap_utimensat(int dirfd, const char *pathname, const struct timespec times[2], int flags);
 extern int __wrap_versionsort(const struct dirent **a, const struct dirent **b);
 

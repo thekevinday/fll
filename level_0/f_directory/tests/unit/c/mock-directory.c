@@ -168,16 +168,6 @@ int __wrap_stat(const char *pathname, struct stat *statbuf) {
   return mock_type(int);
 }
 
-int __wrap_strncmp(const char *s1, const char *s2, size_t n) {
-
-  return mock_type(size_t);
-}
-
-size_t __wrap_strnlen(const char *s, size_t maxlen) {
-
-  return mock_type(size_t);
-}
-
 int __wrap_utimensat(int dirfd, const char *pathname, const struct timespec times[2], int flags) {
 
   const bool failure = mock_type(bool);
