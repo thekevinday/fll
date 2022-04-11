@@ -47,28 +47,75 @@ extern "C" {
 /**
  * Check if a file can be accessed.
  *
+ * Do not use this to check file access before immediately attempting to open a file due to the possibility that the permissions change between this call and the open call.
+ * Instead, use the f_file_open() directly.
+ *
+ * The access() method always follows symbolic links, so if a symbolic link itself needs to be checked, instead use f_file_access_at() with the AT_SYMLINK_NOFOLLOW flag.
+ *
  * @param path
  *   The path file name.
+ * @param mode
+ *   The file mode to check access of.
  *
  * @return
- *   F_true if file exists.
- *   F_false if file does not exist.
+ *   F_true if requested access is allowed.
+ *   F_false if requested access is denied.
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) on invalid directory.
- *   F_false (with error bit) on unknown/unhandled errors.
+ *   F_directory_not (with error bit) on invalid directory.
+ *   F_file_not (with error bit) the file does not exist.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_failure (with error bit) for any other failure.
+ *
  * @see access()
  */
 #ifndef _di_f_file_access_
-  extern f_status_t f_file_access(const f_string_static_t path);
+  extern f_status_t f_file_access(const f_string_static_t path, const int mode);
 #endif // _di_f_file_access_
+
+/**
+ * Check if a file can be accessed.
+ *
+ * Do not use this to check file access before immediately attempting to open a file due to the possibility that the permissions change between this call and the open call.
+ * Instead, use the f_file_open() directly.
+ *
+ * @param at_id
+ *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param path
+ *   The path file name.
+ * @param mode
+ *   The file mode to check access of.
+ * @param flag
+ *   Options to control how this operates.
+ *
+ * @return
+ *   F_true if requested access is allowed.
+ *   F_false if requested access is denied.
+ *   F_data_not if path.used is 0.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_directory_not (with error bit) on invalid directory.
+ *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
+ *   F_file_not (with error bit) the file does not exist.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) for any other failure.
+ *
+ * @see faccessat()
+ */
+#ifndef _di_f_file_access_at_
+  extern f_status_t f_file_access_at(const int at_id, const f_string_static_t path, const int mode, const int flag);
+#endif // _di_f_file_access_at_
 
 /**
  * Copy a file, as well as its file mode and possibly the owner and group.
@@ -104,7 +151,7 @@ extern "C" {
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
  *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_file_read (with error bit) on file read error.
@@ -208,7 +255,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_file_read (with error bit) on file read error.
@@ -249,7 +296,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -291,7 +338,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -333,7 +380,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
@@ -375,7 +422,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -408,7 +455,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or ififos are exhausted.
  *   F_loop (with error bit) on loop error.
@@ -441,7 +488,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or ififos are exhausted.
@@ -476,7 +523,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
@@ -512,7 +559,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -564,7 +611,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
@@ -596,7 +643,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_false (with error bit) on unknown/unhandled errors.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -646,7 +693,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -681,7 +728,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
@@ -713,7 +760,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
@@ -747,7 +794,7 @@ extern "C" {
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -784,7 +831,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
@@ -822,7 +869,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -865,7 +912,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
@@ -906,7 +953,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found_not (with error bit) if the file at path was not found.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
@@ -944,7 +991,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found_not (with error bit) if the file at path was not found.
  *   F_input_output (with error bit) on I/O error.
@@ -1094,7 +1141,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1123,7 +1170,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1154,7 +1201,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
@@ -1190,7 +1237,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
  *   F_file_found_not (with error bit) if file at path was not found.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1306,6 +1353,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
+ *   F_directory (with error bit) if path is a directory and is unable to access a directory (read, write, already exists, etc.. depending on requested open action).
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
@@ -1372,7 +1420,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1499,7 +1547,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found_not (with error bit) if file not found.
  *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
  *   F_input_output (with error bit) if an I/O error occurred.
@@ -1532,7 +1580,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found_not (with error bit) if file not found.
  *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
  *   F_input_output (with error bit) if an I/O error occurred.
@@ -1573,7 +1621,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_file_type_directory (with error bit) if destination is a directory but source is not.
@@ -1622,7 +1670,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id or to_id.
  *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
  *   F_file_found_not (with error bit) if file at path was not found.
@@ -1668,7 +1716,7 @@ extern "C" {
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
@@ -1709,7 +1757,7 @@ extern "C" {
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_input_output (with error bit) on I/O error.
@@ -1770,7 +1818,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1801,7 +1849,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1827,7 +1875,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1856,7 +1904,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1886,7 +1934,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -1912,7 +1960,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -2226,6 +2274,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_data_not on success but buffer.used is 0.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2260,6 +2309,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_data_not on success but buffer.used is 0.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2295,6 +2345,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_data_not on success but either buffer.used or total is 0.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2339,7 +2390,7 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fwrite()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_file_stream_write_range_
   extern f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const written);
@@ -2365,7 +2416,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -2408,7 +2459,7 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *
  *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path (when calling utimensat()).
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -2447,7 +2498,7 @@ extern "C" {
  *   F_file_found_not if the path was not found.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
@@ -2477,7 +2528,7 @@ extern "C" {
  *   F_file_found_not if the path was not found.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
- *   F_directory (with error bit) on invalid directory.
+ *   F_directory_not (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.

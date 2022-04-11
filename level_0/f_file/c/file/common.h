@@ -52,15 +52,33 @@ extern "C" {
  * Provide file type macros.
  *
  * These type macros are of size 32-bit (int32_t).
+ *
+ * F_file_type_*:
+ *   - block:     The file type is a block device.
+ *   - character: The file type is a character device.
+ *   - directory: The file type is a directory.
+ *   - fifo:      The file type is a File-In-File-Out pipe.
+ *   - mask:      A mask used to get the bits of the file data representing the file type.
+ *   - link:      The file type is a file link.
+ *   - regular:   The file type is a regular file.
+ *   - socket:    The file type is a socket file.
+ *
+ * F_file_type_name_*:
+ *  - block:     A string representing the block file type.
+ *  - character: A string representing the character file type.
+ *  - directory: A string representing the directory file type.
+ *  - fifo:      A string representing the fifo file type.
+ *  - link:      A string representing the link file type.
+ *  - regular:   A string representing the regular file type.
+ *  - socket:    A string representing the socket file type.
  */
-#ifndef _di_f_file_type_
-  #define F_file_type_mask_d S_IFMT
-
+#ifndef _di_f_file_types_
   #define F_file_type_block_d     S_IFBLK
   #define F_file_type_character_d S_IFCHR
   #define F_file_type_directory_d S_IFDIR
   #define F_file_type_fifo_d      S_IFIFO
   #define F_file_type_link_d      S_IFLNK
+  #define F_file_type_mask_d      S_IFMT
   #define F_file_type_regular_d   S_IFREG
   #define F_file_type_socket_d    S_IFSOCK
 
@@ -90,6 +108,43 @@ extern "C" {
   #define macro_f_file_type_is_regular(mode)   (macro_f_file_type_get(mode) == F_file_type_regular_d)
   #define macro_f_file_type_is_socket(mode)    (macro_f_file_type_get(mode) == F_file_type_socket_d)
 
+  extern const f_string_static_t f_file_type_name_block_s;
+  extern const f_string_static_t f_file_type_name_character_s;
+  extern const f_string_static_t f_file_type_name_directory_s;
+  extern const f_string_static_t f_file_type_name_fifo_s;
+  extern const f_string_static_t f_file_type_name_link_s;
+  extern const f_string_static_t f_file_type_name_regular_s;
+  extern const f_string_static_t f_file_type_name_socket_s;
+#endif // _di_f_file_types_
+
+/**
+ * Provide macros for file access mode operations.
+ *
+ * F_file_access_mode_*:
+ *   - execute: Check if file can be executed.
+ *   - exist:   Check if file exists.
+ *   - read:    Check if file can be read.
+ *   - write:   Check if file can be written to.
+ */
+#ifndef _di_f_file_access_modes_
+  #define F_file_access_mode_execute_d X_OK
+  #define F_file_access_mode_exist_d   F_OK
+  #define F_file_access_mode_read_d    R_OK
+  #define F_file_access_mode_write_d   W_OK
+#endif // _di_f_file_access_modes_
+
+/**
+ * Provide file open mode macros.
+ *
+ * F_file_open_mode_*:
+ *   - append:        Open file in append mode.
+ *   - read:          Open file in read only mode.
+ *   - read_append:   Open file in read append mode.
+ *   - read_truncate: Open file in read truncate mode.
+ *   - read_write:    Open file in read write mode.
+ *   - truncate:      Open file in truncate mode.
+ */
+#ifndef _di_f_file_open_modes_
   #define F_file_open_mode_append_s        "a"
   #define F_file_open_mode_read_s          "r"
   #define F_file_open_mode_read_append_s   "a+"
@@ -104,21 +159,13 @@ extern "C" {
   #define F_file_open_mode_read_write_s_length    2
   #define F_file_open_mode_truncate_s_length      1
 
-  extern const f_string_static_t f_file_type_name_block_s;
-  extern const f_string_static_t f_file_type_name_character_s;
-  extern const f_string_static_t f_file_type_name_directory_s;
-  extern const f_string_static_t f_file_type_name_fifo_s;
-  extern const f_string_static_t f_file_type_name_link_s;
-  extern const f_string_static_t f_file_type_name_regular_s;
-  extern const f_string_static_t f_file_type_name_socket_s;
-
   extern const f_string_static_t f_file_open_mode_append_s;
   extern const f_string_static_t f_file_open_mode_read_s;
   extern const f_string_static_t f_file_open_mode_read_append_s;
   extern const f_string_static_t f_file_open_mode_read_truncate_s;
   extern const f_string_static_t f_file_open_mode_read_write_s;
   extern const f_string_static_t f_file_open_mode_truncate_s;
-#endif // _di_f_file_type_
+#endif // _di_f_file_open_modes_
 
 /**
  * Commonly used file related properties.
