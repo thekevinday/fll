@@ -174,7 +174,7 @@ extern "C" {
 
     if (length == -1) {
       if (listing) {
-        f_memory_delete(1, sizeof(struct dirent *), (void *) listing);
+        f_memory_delete(1, sizeof(struct dirent *), (void *) &listing);
       }
 
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
@@ -191,7 +191,7 @@ extern "C" {
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(listing[i]->d_name, f_directory_back_s.string, f_directory_back_s.used + 1) || !strncmp(listing[i]->d_name, f_directory_current_s.string, f_directory_current_s.used + 1)) {
-        f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
+        f_memory_delete(1, sizeof(struct dirent), (void *) &listing[i]);
 
         continue;
       }
@@ -200,7 +200,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         for (; i < length; ++i) {
-          f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
+          f_memory_delete(1, sizeof(struct dirent), (void *) &listing[i]);
         } // for
 
         break;
@@ -212,7 +212,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         for (; i < length; ++i) {
-          f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
+          f_memory_delete(1, sizeof(struct dirent), (void *) &listing[i]);
         } // for
 
         break;
@@ -221,10 +221,12 @@ extern "C" {
       memcpy(names->array[names->used].string, listing[i]->d_name, sizeof(f_char_t) * size);
       names->array[names->used++].used = size;
 
-      f_memory_delete(size, sizeof(struct dirent), (void *) listing[i]);
+      f_memory_delete(1, sizeof(struct dirent), (void *) &listing[i]);
     } // for
 
-    f_memory_delete(1, sizeof(struct dirent *), (void *) listing);
+    if (listing) {
+      f_memory_delete(1, sizeof(struct dirent *), (void *) &listing);
+    }
 
     if (F_status_is_error(status)) {
       return status;
