@@ -64,7 +64,7 @@ extern "C" {
 
     memset(buffer, 0, sizeof(f_char_t) * size_block);
 
-    while ((size_read = read(file_source.id, buffer, size_block)) > (ssize_t) 0) {
+    while ((size_read = read(file_source.id, buffer, size_block)) > 0) {
 
       size_write = write(file_destination.id, buffer, size_read);
 
@@ -589,38 +589,29 @@ extern "C" {
 
     int result = 0;
 
-    if (dereference) {
-      if (uid != -1) {
+    if (uid != -1) {
+      if (dereference) {
         result = chown(path.string, uid, -1);
-
-        if (result < 0 && errno == EPERM) {
-          return F_status_set_error(F_access_owner);
-        }
+      }
+      else {
+        result = lchown(path.string, uid, -1);
       }
 
-      if (result == 0 && gid != -1) {
-        result = chown(path.string, -1, gid);
-
-        if (result < 0 && errno == EPERM) {
-          return F_status_set_error(F_access_group);
-        }
+      if (result < 0 && errno == EPERM) {
+        return F_status_set_error(F_access_owner);
       }
     }
-    else {
-      if (uid != -1) {
-        result = lchown(path.string, uid, -1);
 
-        if (result < 0 && errno == EPERM) {
-          return F_status_set_error(F_access_owner);
-        }
+    if (result == 0 && gid != -1) {
+      if (dereference) {
+        result = chown(path.string, -1, gid);
+      }
+      else {
+        result = lchown(path.string, -1, gid);
       }
 
-      if (result == 0 && gid != -1) {
-        result = lchown(path.string, -1, gid);
-
-        if (result < 0 && errno == EPERM) {
-          return F_status_set_error(F_access_group);
-        }
+      if (result < 0 && errno == EPERM) {
+        return F_status_set_error(F_access_group);
       }
     }
 
@@ -726,9 +717,7 @@ extern "C" {
 #if !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
   f_status_t private_f_file_stat_by_id(const int id, struct stat * const file_stat) {
 
-    const int result = fstat(id, file_stat);
-
-    if (result < 0) {
+    if (fstat(id, file_stat) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ELOOP) return F_status_set_error(F_loop);

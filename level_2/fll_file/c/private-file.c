@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_file_mode_set_all_)
-  f_status_t private_fll_file_mode_set_all(const f_string_static_t path, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
+  f_status_t private_fll_file_mode_set_all(const f_string_static_t path, const bool dereference, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
 
     f_status_t status = F_none;
 
@@ -19,7 +19,7 @@ extern "C" {
 
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
-    status = fl_directory_list(path, 0, 0, F_false, &listing);
+    status = fl_directory_list(path, 0, 0, dereference, &listing);
 
     if (F_status_is_error(status)) {
       macro_f_directory_listing_t_delete_simple(listing);
@@ -93,16 +93,14 @@ extern "C" {
       }
 
       if (depth < depth_max) {
-        status = private_fll_file_mode_set_all(path_sub, mode, depth_max, depth + 1);
+        status = private_fll_file_mode_set_all(path_sub, dereference, mode, depth_max, depth + 1);
         if (F_status_is_error(status)) break;
       }
     } // for
 
     f_string_dynamics_resize(0, &listing.directory);
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     return f_file_mode_set(path, mode);
   }
@@ -110,6 +108,7 @@ extern "C" {
 
 #if !defined(_di_fll_file_role_change_all_)
   f_status_t private_fll_file_role_change_all(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
+
     f_status_t status = F_none;
 
     status = f_directory_is(path);
@@ -121,7 +120,7 @@ extern "C" {
 
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
-    status = fl_directory_list(path, 0, 0, F_false, &listing);
+    status = fl_directory_list(path, 0, 0, dereference, &listing);
 
     if (F_status_is_error(status)) {
       macro_f_directory_listing_t_delete_simple(listing);

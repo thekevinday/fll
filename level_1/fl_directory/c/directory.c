@@ -7,9 +7,6 @@ extern "C" {
 
 #ifndef _di_fl_directory_create_
   f_status_t fl_directory_create(const f_string_static_t path, const mode_t mode) {
-    #ifndef _di_level_1_parameter_checking_
-      if (!path.string) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
 
     if (!path.used) {
       return F_data_not;
@@ -56,11 +53,7 @@ extern "C" {
 #endif // _di_fl_directory_create_
 
 #ifndef _di_fl_directory_clone_
-  f_status_t fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) {
-    #ifndef _di_level_1_parameter_checking_
-      if (!source.string) return F_status_set_error(F_parameter);
-      if (!destination.string) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
+  f_status_t fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse) {
 
     if (!source.used || !destination.used) {
       return F_data_not;
@@ -75,14 +68,14 @@ extern "C" {
 
     memset(&source_stat, 0, sizeof(struct stat));
 
-    status = f_file_stat(source, F_false, &source_stat);
+    status = f_file_stat(source, !(recurse.flag & f_file_stat_flag_reference_e), &source_stat);
     if (F_status_is_error(status)) return status;
 
     status = f_directory_exists(destination);
     if (F_status_is_error(status)) return status;
 
     if (status == F_true) {
-      if (recurse.exclusive) {
+      if (recurse.flag & f_file_stat_flag_exclusive_e) {
         return F_status_set_error(F_directory_found);
       }
 
@@ -94,7 +87,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    if (role) {
+    if (recurse.flag & (f_file_stat_flag_group_e | f_file_stat_flag_owner_e)) {
       status = f_file_role_change(destination, source_stat.st_uid, source_stat.st_gid, F_true);
       if (F_status_is_error(status)) return status;
     }
@@ -124,7 +117,7 @@ extern "C" {
       } // for
 
       if (recurse.depth_max) {
-        status = private_fl_directory_clone(static_source, static_destination, role, recurse, 1);
+        status = private_fl_directory_clone(static_source, static_destination, recurse, 1);
       }
     }
 
@@ -137,11 +130,7 @@ extern "C" {
 #endif // _di_fl_directory_clone_
 
 #ifndef _di_fl_directory_clone_content_
-  f_status_t fl_directory_clone_content(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) {
-    #ifndef _di_level_1_parameter_checking_
-      if (!source.string) return F_status_set_error(F_parameter);
-      if (!destination.string) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
+  f_status_t fl_directory_clone_content(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse) {
 
     if (!source.used || !destination.used) {
       return F_data_not;
@@ -186,7 +175,7 @@ extern "C" {
       return status;
     }
 
-    status = private_fl_directory_clone(static_source, static_destination, role, recurse, 1);
+    status = private_fl_directory_clone(static_source, static_destination, recurse, 1);
 
     if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
       recurse.verbose(recurse.output, source, destination);
@@ -198,10 +187,6 @@ extern "C" {
 
 #ifndef _di_fl_directory_copy_
   f_status_t fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) {
-    #ifndef _di_level_1_parameter_checking_
-      if (!source.string) return F_status_set_error(F_parameter);
-      if (!destination.string) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
 
     if (!source.used || !destination.used) {
       return F_data_not;
@@ -216,7 +201,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (status == F_true) {
-      if (recurse.exclusive) {
+      if (recurse.flag & f_file_stat_flag_exclusive_e) {
         return F_status_set_error(F_directory_found);
       }
 
@@ -268,10 +253,6 @@ extern "C" {
 
 #ifndef _di_fl_directory_copy_content_
   f_status_t fl_directory_copy_content(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) {
-    #ifndef _di_level_1_parameter_checking_
-      if (!source.string) return F_status_set_error(F_parameter);
-      if (!destination.string) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
 
     if (!source.used || !destination.used) {
       return F_data_not;
@@ -327,7 +308,6 @@ extern "C" {
 #ifndef _di_fl_directory_list_
   f_status_t fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) {
     #ifndef _di_level_1_parameter_checking_
-      if (!path.string) return F_status_set_error(F_parameter);
       if (!listing) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
@@ -342,7 +322,7 @@ extern "C" {
 #ifndef _di_fl_directory_path_pop_
   f_status_t fl_directory_path_pop(f_string_static_t * const path) {
     #ifndef _di_level_1_parameter_checking_
-      if (!path->string) return F_status_set_error(F_parameter);
+      if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!path->used) {
@@ -416,7 +396,7 @@ extern "C" {
 #ifndef _di_fl_directory_path_push_
   f_status_t fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
-      if (!source.string) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!source.used) {

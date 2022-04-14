@@ -95,34 +95,26 @@ int main(void) {
     cmocka_unit_test(test__f_file_create_node_at__returns_data_not),
     cmocka_unit_test(test__f_file_create_node_at__returns_supported_not),
     cmocka_unit_test(test__f_file_create_node_at__works),
-/*
-    cmocka_unit_test(test__f_file_create__fails),
-    cmocka_unit_test(test__f_file_create__returns_data_not),
-    cmocka_unit_test(test__f_file_create__works),
 
-    cmocka_unit_test(test__f_file_create_at__fails),
-    cmocka_unit_test(test__f_file_create_at__returns_data_not),
-    cmocka_unit_test(test__f_file_create_at__works),
-
-    // f_file_create_device
-
-    // f_file_create_device_at
-
-    // f_file_descriptor
+    cmocka_unit_test(test__f_file_descriptor__fails),
+    cmocka_unit_test(test__f_file_descriptor__works),
 
     cmocka_unit_test(test__f_file_exists__fails),
     cmocka_unit_test(test__f_file_exists__returns_data_not),
-    cmocka_unit_test(test__f_file_exists__returns_false),
-    cmocka_unit_test(test__f_file_exists__returns_true),
+    cmocka_unit_test(test__f_file_exists__works),
 
     cmocka_unit_test(test__f_file_exists_at__fails),
     cmocka_unit_test(test__f_file_exists_at__returns_data_not),
-    cmocka_unit_test(test__f_file_exists_at__returns_false),
-    cmocka_unit_test(test__f_file_exists_at__returns_true),
+    cmocka_unit_test(test__f_file_exists_at__works),
 
-    // f_file_flush
+    cmocka_unit_test(test__f_file_flush__fails),
+    cmocka_unit_test(test__f_file_flush__works),
 
-    // f_file_group_read
+    cmocka_unit_test(test__f_file_group_read__fails),
+    cmocka_unit_test(test__f_file_group_read__returns_data_not),
+    cmocka_unit_test(test__f_file_group_read__works),
+
+/*
 
     cmocka_unit_test(test__f_file_is__fails),
     cmocka_unit_test(test__f_file_is__returns_data_not),

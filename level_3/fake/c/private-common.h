@@ -1199,37 +1199,39 @@ extern "C" {
 
   #define fake_make_operation_total_d 34
 
-  #define FAKE_make_operation_argument_environment_s "environment"
-  #define FAKE_make_operation_argument_failure_s     "failure"
-  #define FAKE_make_operation_argument_file_s        "file"
-  #define FAKE_make_operation_argument_directory_s   "directory"
-  #define FAKE_make_operation_argument_error_s       "error"
-  #define FAKE_make_operation_argument_exit_s        "exit"
-  #define FAKE_make_operation_argument_has_s         "has"
-  #define FAKE_make_operation_argument_ignore_s      "ignore"
-  #define FAKE_make_operation_argument_is_s          "is"
-  #define FAKE_make_operation_argument_parameter_s   "parameter"
-  #define FAKE_make_operation_argument_point_s       "point"
-  #define FAKE_make_operation_argument_recursive_s   "recursive"
-  #define FAKE_make_operation_argument_success_s     "success"
-  #define FAKE_make_operation_argument_target_s      "target"
-  #define FAKE_make_operation_argument_warn_s        "warn"
+  #define FAKE_make_operation_argument_environment_s    "environment"
+  #define FAKE_make_operation_argument_failure_s        "failure"
+  #define FAKE_make_operation_argument_file_s           "file"
+  #define FAKE_make_operation_argument_directory_s      "directory"
+  #define FAKE_make_operation_argument_error_s          "error"
+  #define FAKE_make_operation_argument_exit_s           "exit"
+  #define FAKE_make_operation_argument_has_s            "has"
+  #define FAKE_make_operation_argument_ignore_s         "ignore"
+  #define FAKE_make_operation_argument_is_s             "is"
+  #define FAKE_make_operation_argument_no_dereference_s "no_dereference"
+  #define FAKE_make_operation_argument_parameter_s      "parameter"
+  #define FAKE_make_operation_argument_point_s          "point"
+  #define FAKE_make_operation_argument_recursive_s      "recursive"
+  #define FAKE_make_operation_argument_success_s        "success"
+  #define FAKE_make_operation_argument_target_s         "target"
+  #define FAKE_make_operation_argument_warn_s           "warn"
 
-  #define FAKE_make_operation_argument_environment_s_length 11
-  #define FAKE_make_operation_argument_failure_s_length     7
-  #define FAKE_make_operation_argument_file_s_length        4
-  #define FAKE_make_operation_argument_directory_s_length   9
-  #define FAKE_make_operation_argument_error_s_length       5
-  #define FAKE_make_operation_argument_exit_s_length        4
-  #define FAKE_make_operation_argument_has_s_length         3
-  #define FAKE_make_operation_argument_ignore_s_length      6
-  #define FAKE_make_operation_argument_is_s_length          2
-  #define FAKE_make_operation_argument_parameter_s_length   9
-  #define FAKE_make_operation_argument_point_s_length       5
-  #define FAKE_make_operation_argument_recursive_s_length   9
-  #define FAKE_make_operation_argument_success_s_length     7
-  #define FAKE_make_operation_argument_target_s_length      6
-  #define FAKE_make_operation_argument_warn_s_length        4
+  #define FAKE_make_operation_argument_environment_s_length    11
+  #define FAKE_make_operation_argument_failure_s_length        7
+  #define FAKE_make_operation_argument_file_s_length           4
+  #define FAKE_make_operation_argument_directory_s_length      9
+  #define FAKE_make_operation_argument_error_s_length          5
+  #define FAKE_make_operation_argument_exit_s_length           4
+  #define FAKE_make_operation_argument_has_s_length            3
+  #define FAKE_make_operation_argument_ignore_s_length         6
+  #define FAKE_make_operation_argument_is_s_length             2
+  #define FAKE_make_operation_argument_no_dereference_s_length 14
+  #define FAKE_make_operation_argument_parameter_s_length      9
+  #define FAKE_make_operation_argument_point_s_length          5
+  #define FAKE_make_operation_argument_recursive_s_length      9
+  #define FAKE_make_operation_argument_success_s_length        7
+  #define FAKE_make_operation_argument_target_s_length         6
+  #define FAKE_make_operation_argument_warn_s_length           4
 
   extern const f_string_static_t fake_make_operation_argument_environment_s;
   extern const f_string_static_t fake_make_operation_argument_failure_s;
@@ -1240,6 +1242,7 @@ extern "C" {
   extern const f_string_static_t fake_make_operation_argument_has_s;
   extern const f_string_static_t fake_make_operation_argument_ignore_s;
   extern const f_string_static_t fake_make_operation_argument_is_s;
+  extern const f_string_static_t fake_make_operation_argument_no_dereference_s;
   extern const f_string_static_t fake_make_operation_argument_parameter_s;
   extern const f_string_static_t fake_make_operation_argument_point_s;
   extern const f_string_static_t fake_make_operation_argument_recursive_s;

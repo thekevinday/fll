@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_directory_clone_)
-  f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
+  f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
 
     f_status_t status = F_none;
     f_directory_listing_t listing = f_directory_listing_t_initialize;
@@ -40,7 +40,7 @@ extern "C" {
       for (; i < 7; ++i) {
 
         for (j = 0; F_status_is_fine(status) && j < list[i]->used; ++j) {
-          status = private_fl_directory_clone_file(list[i]->array[j], source, destination, role, recurse);
+          status = private_fl_directory_clone_file(list[i]->array[j], source, destination, recurse);
         } // for
 
         f_string_dynamics_resize(0, list[i]);
@@ -97,7 +97,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (status == F_true) {
-          if (recurse.exclusive) {
+          if (recurse.flag & f_file_stat_flag_exclusive_e) {
             status = F_status_set_error(F_directory_found);
 
             break;
@@ -111,14 +111,14 @@ extern "C" {
           if (F_status_is_error(status)) break;
         }
 
-        if (role) {
+        if (recurse.flag & (f_file_stat_flag_group_e | f_file_stat_flag_owner_e)) {
           status = f_file_role_change(destination_sub, source_stat.st_uid, source_stat.st_gid, F_true);
           if (F_status_is_error(status)) break;
         }
       }
 
       if (depth < recurse.depth_max) {
-        status = private_fl_directory_clone(source_sub, destination_sub, role, recurse, depth + 1);
+        status = private_fl_directory_clone(source_sub, destination_sub, recurse, depth + 1);
 
         if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
           recurse.verbose(recurse.output, source_sub, destination_sub);
@@ -138,7 +138,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_clone_)
 
 #if !defined(_di_fl_directory_clone_file_)
-  f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) {
+  f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse) {
 
     f_string_static_t path_source = f_string_static_t_initialize;
     f_string_static_t path_destination = f_string_static_t_initialize;
@@ -162,7 +162,7 @@ extern "C" {
     path_destination_string[destination.used] = f_path_separator_s.string[0];
     path_destination_string[destination.used + file.used + 1] = 0;
 
-    f_status_t status = f_file_clone(path_source, path_destination, role, recurse.size_block, recurse.exclusive);
+    f_status_t status = f_file_clone(path_source, path_destination, recurse.size_block, recurse.flag);
 
     if (F_status_is_error(status) || status == F_supported_not) {
       if (status == F_status_set_error(F_memory_not)) {
@@ -314,7 +314,7 @@ extern "C" {
       if (F_status_is_error(status)) break;
 
       if (status == F_true) {
-        if (recurse.exclusive) {
+        if (recurse.flag & f_file_stat_flag_exclusive_e) {
           status = F_status_set_error(F_directory_found);
 
           break;
@@ -374,7 +374,7 @@ extern "C" {
     path_destination_string[destination.used] = f_path_separator_s.string[0];
     path_destination_string[destination.used + file.used + 1] = 0;
 
-    f_status_t status = f_file_copy(path_source, path_destination, mode, recurse.size_block, recurse.exclusive);
+    f_status_t status = f_file_copy(path_source, path_destination, mode, recurse.size_block, recurse.flag);
 
     if (F_status_is_error(status) || status == F_supported_not) {
       if (status == F_status_set_error(F_memory_not)) {

@@ -147,6 +147,10 @@ int __wrap_ferror_unlocked(FILE *stream) {
   return mock_type(int);
 }
 
+int __wrap_fileno(FILE *stream) {
+  return mock_type(int);
+}
+
 void __wrap_flockfile(FILE *filehandle) {
 
 }

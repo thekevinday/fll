@@ -171,7 +171,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
-          if (f_file_exists(arguments.array[i]) != F_true) {
+          if (f_file_exists(arguments.array[i], F_true) != F_true) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -282,7 +282,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
-          if (f_file_exists(arguments.array[i]) != F_true) {
+          if (f_file_exists(arguments.array[i], F_true) != F_true) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -530,36 +530,46 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_group_e || state_process->operation == fake_make_operation_type_groups_e || state_process->operation == fake_make_operation_type_mode_e || state_process->operation == fake_make_operation_type_modes_e || state_process->operation == fake_make_operation_type_owner_e || state_process->operation == fake_make_operation_type_owners_e) {
-      if (arguments.used > 1) {
-        f_status_t status_file = F_none;
+      if (arguments.used) {
+        f_array_length_t i = 1;
 
-        for (f_array_length_t i = 1; i < arguments.used; ++i) {
-
-          status_file = f_file_is(arguments.array[i], F_file_type_regular_d, F_false);
-
-          if (status_file == F_file_found_not) {
-            if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-              flockfile(data_make->error.to.stream);
-
-              fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-              fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[i], data_make->error.notable);
-              fl_print_format("%['.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-              funlockfile(data_make->error.to.stream);
-            }
-
-            *status = F_status_set_error(status_file);
-          }
-          else if (F_status_is_error(status_file)) {
-            if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-              fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, arguments.array[i], f_file_operation_find_s, fll_error_file_type_directory_e);
-            }
-
-            *status = status_file;
+        if (state_process->operation == fake_make_operation_type_group_e || state_process->operation == fake_make_operation_type_groups_e || state_process->operation == fake_make_operation_type_owner_e || state_process->operation == fake_make_operation_type_owners_e) {
+          if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
+            i = 2;
           }
         }
 
-        return;
+        if (arguments.used > i) {
+          f_status_t status_file = F_none;
+
+          for (; i < arguments.used; ++i) {
+
+            status_file = f_file_is(arguments.array[i], F_file_type_regular_d, F_false);
+
+            if (status_file == F_file_found_not) {
+              if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
+                flockfile(data_make->error.to.stream);
+
+                fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+                fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[i], data_make->error.notable);
+                fl_print_format("%['.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
+
+                funlockfile(data_make->error.to.stream);
+              }
+
+              *status = F_status_set_error(status_file);
+            }
+            else if (F_status_is_error(status_file)) {
+              if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
+                fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_is", F_true, arguments.array[i], f_file_operation_find_s, fll_error_file_type_directory_e);
+              }
+
+              *status = status_file;
+            }
+          }
+
+          return;
+        }
       }
 
       fake_print_error_requires_more_arguments(data_make);
@@ -662,30 +672,6 @@ extern "C" {
           fake_make_operation_if_type_if_success_e,
         };
 
-        const uint8_t if_type_minimum[] = {
-          3, // If defined.
-          2, // If equal (==).
-          2, // If equal not (<>).
-          2, // If exists.
-          1, // If failure.
-          2, // If greater (>).
-          2, // If greater equal (>=).
-          3, // If group.
-          3, // If is.
-          2, // If less (<).
-          2, // If less equal (<=).
-          4, // If mode.
-          3, // If not.
-          5, // If not defined.
-          3, // If not exists.
-          4, // If not group.
-          4, // If not is.
-          5, // If not mode.
-          4, // If not owner.
-          3, // If owner.
-          1, // If success.
-        };
-
         const f_string_static_t if_not_type_strings[] = {
           fake_make_operation_argument_if_defined_s,
           fake_make_operation_argument_if_exists_s,
@@ -704,18 +690,11 @@ extern "C" {
           fake_make_operation_if_type_if_not_owner_e,
         };
 
-        const uint8_t if_not_type_minimum[] = {
-          4, // If not defined.
-          3, // If not exists.
-          4, // If not group.
-          4, // If not is.
-          5, // If not mode.
-          4, // If not owner.
-        };
-
         f_array_length_t i = 0;
         f_array_length_t j = 0;
+        f_array_length_t k = 0;
         f_string_static_t if_and_or;
+        bool dereference = F_true;
 
         if (state_process->operation == fake_make_operation_type_and_e) {
           if_and_or = fake_make_operation_and_s;
@@ -727,12 +706,50 @@ extern "C" {
           if_and_or = fake_make_operation_if_s;
         }
 
+        if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[k]) == F_equal_to) {
+          ++k;
+          dereference = F_false;
+        }
+
+        const uint8_t if_type_minimum[] = {
+          dereference ? 3 : 4, // If defined.
+          dereference ? 2 : 3, // If equal (==).
+          dereference ? 2 : 3, // If equal not (<>).
+          dereference ? 2 : 3, // If exists.
+          dereference ? 1 : 2, // If failure.
+          dereference ? 2 : 3, // If greater (>).
+          dereference ? 2 : 3, // If greater equal (>=).
+          dereference ? 3 : 4, // If group.
+          dereference ? 3 : 4, // If is.
+          dereference ? 2 : 3, // If less (<).
+          dereference ? 2 : 3, // If less equal (<=).
+          dereference ? 4 : 5, // If mode.
+          dereference ? 3 : 4, // If not.
+          dereference ? 5 : 6, // If not defined.
+          dereference ? 3 : 4, // If not exists.
+          dereference ? 4 : 5, // If not group.
+          dereference ? 4 : 5, // If not is.
+          dereference ? 5 : 6, // If not mode.
+          dereference ? 4 : 5, // If not owner.
+          dereference ? 3 : 4, // If owner.
+          dereference ? 1 : 2, // If success.
+        };
+
+        const uint8_t if_not_type_minimum[] = {
+          dereference ? 4 : 5, // If not defined.
+          dereference ? 3 : 4, // If not exists.
+          dereference ? 4 : 5, // If not group.
+          dereference ? 4 : 5, // If not is.
+          dereference ? 5 : 6, // If not mode.
+          dereference ? 4 : 5, // If not owner.
+        };
+
         for (; i < 21; ++i) {
 
           // Skip the "if not XXX" types as they are determined later on.
           if (i > 12 && i < 19) continue;
 
-          if (fl_string_dynamic_compare(if_type_strings[i], arguments.array[0]) == F_equal_to) {
+          if (fl_string_dynamic_compare(if_type_strings[i], arguments.array[k]) == F_equal_to) {
             state_process->condition = if_type_codes[i];
 
             break;
@@ -746,7 +763,7 @@ extern "C" {
             fl_print_format("%r%[%QUnsupported '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%r%]", data_make->error.to.stream, data_make->error.notable, if_and_or, data_make->error.notable);
             fl_print_format("%[' type '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
-            fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[0], data_make->error.notable);
+            fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[k], data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
             funlockfile(data_make->error.to.stream);
@@ -757,9 +774,11 @@ extern "C" {
           return;
         }
 
+        ++k;
+
         // Identify and convert to the appropriate if not condition.
         if (state_process->condition == fake_make_operation_if_type_if_not_e) {
-          if (arguments.used < 2) {
+          if (arguments.used < 1 + k) {
             fake_print_error_requires_more_arguments(data_make);
 
             *status = F_status_set_error(F_failure);
@@ -769,7 +788,7 @@ extern "C" {
 
           for (; j < 6; ++j) {
 
-            if (fl_string_dynamic_compare(if_not_type_strings[j], arguments.array[1]) == F_equal_to) {
+            if (fl_string_dynamic_compare(if_not_type_strings[j], arguments.array[k]) == F_equal_to) {
               state_process->condition = if_not_type_codes[j];
 
               break;
@@ -783,7 +802,7 @@ extern "C" {
               fl_print_format("%r%[%QUnsupported '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
               fl_print_format("%[%r%]", data_make->error.to.stream, data_make->error.notable, if_and_or, data_make->error.notable);
               fl_print_format("%[' not type '%]", data_make->error.to.stream, data_make->error.context, data_make->error.context);
-              fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
+              fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[k], data_make->error.notable);
               fl_print_format("%['.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
               funlockfile(data_make->error.to.stream);
@@ -812,13 +831,13 @@ extern "C" {
           }
 
           if (state_process->condition == fake_make_operation_if_type_if_defined_e || state_process->condition == fake_make_operation_if_type_if_not_defined_e) {
-            if (fl_string_dynamic_compare(fake_make_operation_argument_environment_s, j == 6 ? arguments.array[1] : arguments.array[2]) == F_equal_to_not) {
-              if (fl_string_dynamic_compare(fake_make_operation_argument_parameter_s, j == 6 ? arguments.array[1] : arguments.array[2]) == F_equal_to_not) {
+            if (fl_string_dynamic_compare(fake_make_operation_argument_environment_s, arguments.array[k]) == F_equal_to_not) {
+              if (fl_string_dynamic_compare(fake_make_operation_argument_parameter_s, arguments.array[k]) == F_equal_to_not) {
                 if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
                   flockfile(data_make->error.to.stream);
 
                   fl_print_format("%r%[%QUnsupported define type '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-                  fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, j == 6 ? arguments.array[1] : arguments.array[2], data_make->error.notable);
+                  fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[k], data_make->error.notable);
                   fl_print_format("%['.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
                   funlockfile(data_make->error.to.stream);
@@ -831,7 +850,7 @@ extern "C" {
             return;
           }
           else if (state_process->condition == fake_make_operation_if_type_if_equal_e || state_process->condition == fake_make_operation_if_type_if_equal_not_e) {
-            if (arguments.used < 3) {
+            if (arguments.used < 2 + k) {
               fake_print_error_requires_more_arguments(data_make);
 
               *status = F_status_set_error(F_failure);
@@ -845,13 +864,13 @@ extern "C" {
           else if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_is_e || state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition > fake_make_operation_if_type_if_not_exists_e && state_process->condition < fake_make_operation_if_type_if_success_e) {
 
             if (state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition == fake_make_operation_if_type_if_not_mode_e) {
-              if (fl_string_dynamic_compare(fake_make_operation_argument_is_s, arguments.array[1]) == F_equal_to_not) {
-                if (fl_string_dynamic_compare(fake_make_operation_argument_has_s, arguments.array[1]) == F_equal_to_not) {
+              if (fl_string_dynamic_compare(fake_make_operation_argument_is_s, arguments.array[k]) == F_equal_to_not) {
+                if (fl_string_dynamic_compare(fake_make_operation_argument_has_s, arguments.array[k]) == F_equal_to_not) {
                   if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
                     flockfile(data_make->error.to.stream);
 
                     fl_print_format("%r%[%QUnsupported %smode type '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, j == 6 ? "" : "not ", data_make->error.context);
-                    fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[1], data_make->error.notable);
+                    fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[k], data_make->error.notable);
                     fl_print_format("%['.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
                     funlockfile(data_make->error.to.stream);
@@ -866,18 +885,18 @@ extern "C" {
               f_file_mode_t mode_rule = 0;
               uint8_t replace = 0;
 
-              *status = fake_make_get_id_mode(data_make->data, data_make->error, j == 6 ? arguments.array[2] : arguments.array[3], &mode_rule, &replace);
+              *status = fake_make_get_id_mode(data_make->data, data_make->error, arguments.array[++k], &mode_rule, &replace);
               if (F_status_is_error(*status)) return;
 
-              i = j == 6 ? 3 : 4;
+              i = ++k;
             }
             else if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_not_group_e) {
               gid_t id = 0;
 
-              *status = fake_make_get_id_group(data_make->data, data_make->error, j == 6 ? arguments.array[1] : arguments.array[2], &id);
+              *status = fake_make_get_id_group(data_make->data, data_make->error, arguments.array[k++], &id);
               if (F_status_is_error(*status)) return;
 
-              i = j == 6 ? 2 : 3;
+              i = k;
             }
             else if (state_process->condition == fake_make_operation_if_type_if_is_e || state_process->condition == fake_make_operation_if_type_if_not_is_e) {
 
@@ -887,7 +906,7 @@ extern "C" {
               // fifo      = 0x8 (0000 1000) invalid = 0x80 (1000 0000)
               uint8_t type_file = 0;
 
-              for (i = j == 6 ? 1 : 2; i < arguments.used; ++i) {
+              for (i = k; i < arguments.used; ++i) {
 
                 if (fl_string_dynamic_compare(fake_make_operation_argument_if_is_for_s, arguments.array[i]) == F_equal_to) {
                   ++i;
@@ -940,10 +959,10 @@ extern "C" {
             else if (state_process->condition == fake_make_operation_if_type_if_owner_e || state_process->condition == fake_make_operation_if_type_if_not_owner_e) {
               uid_t id = 0;
 
-              *status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[1], &id);
+              *status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[k++], &id);
               if (F_status_is_error(*status)) return;
 
-              i = j == 6 ? 2 : 3;
+              i = k;
             }
 
             if (i < arguments.used) {
@@ -966,7 +985,7 @@ extern "C" {
                 else if (state_process->condition != fake_make_operation_if_type_if_exists_e && state_process->condition != fake_make_operation_if_type_if_is_e) {
 
                   // The existence tests do not need to happen here for *_if_exists and *_if_is as those two types will handle performing them during the process stage.
-                  status_file = f_file_exists(arguments.array[i]);
+                  status_file = f_file_exists(arguments.array[i], dereference);
 
                   if (status_file == F_false) {
                     status_file = F_status_set_error(F_file_found_not);
@@ -984,7 +1003,7 @@ extern "C" {
             }
           }
           else if (state_process->condition == fake_make_operation_if_type_if_greater_e || state_process->condition == fake_make_operation_if_type_if_greater_equal_e || state_process->condition == fake_make_operation_if_type_if_less_e || state_process->condition == fake_make_operation_if_type_if_less_equal_e) {
-            if (arguments.used < 3) {
+            if (arguments.used < 2 + k) {
               fake_print_error_requires_more_arguments(data_make);
 
               *status = F_status_set_error(F_failure);
@@ -998,7 +1017,7 @@ extern "C" {
             bool is_negative = F_false;
 
             // @fixme there needs to handle converting numbers with decimals (like 1.01), perhaps operate on them as strings or provide a special processor.
-            for (i = 1; i < arguments.used; ++i, status_number = F_none) {
+            for (i = k; i < arguments.used; ++i, status_number = F_none) {
 
               if (arguments.array[i].used) {
                 range.start = 0;
@@ -1110,7 +1129,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
-          if (f_file_exists(arguments.array[i]) != F_true) {
+          if (f_file_exists(arguments.array[i], F_true) != F_true) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -1221,6 +1240,7 @@ extern "C" {
               }
 
               *status = F_status_set_error(F_failure);
+
               break;
             }
           } // for

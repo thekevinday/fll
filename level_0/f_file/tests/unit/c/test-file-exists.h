@@ -25,17 +25,10 @@ extern void test__f_file_exists__fails(void **state);
 extern void test__f_file_exists__returns_data_not(void **state);
 
 /**
- * Test that function works and returns F_false.
+ * Test that function works.
  *
  * @see f_file_exists()
  */
-extern void test__f_file_exists__returns_false(void **state);
-
-/**
- * Test that function works and returns F_true.
- *
- * @see f_file_exists()
- */
-extern void test__f_file_exists__returns_true(void **state);
+extern void test__f_file_exists__works(void **state);
 
 #endif // _TEST__F_file_exists_h

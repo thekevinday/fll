@@ -1560,7 +1560,7 @@ extern "C" {
       }
     }
 
-    status = f_file_exists(pid_file);
+    status = f_file_exists(pid_file, F_true);
 
     if (F_status_is_error(status)) {
       controller_print_error_file(thread, main->error, F_status_set_fine(status), "f_file_exists", F_true, pid_file, f_file_operation_find_s, fll_error_file_type_file_e);

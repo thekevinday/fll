@@ -100,8 +100,8 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_not (with error bit) the file does not exist.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -131,16 +131,18 @@ extern "C" {
  *   The path to the file to copy from.
  * @param destination
  *   The path to copy to.
- * @param role
- *   If TRUE, will copy the owner and group ids.
- *   If FALSE, will not copy the owner and group ids.
- *   (In both cases the file mode is copied.)
  * @param size_block
  *   The default number of chunks to read at a time with each chunk being 1-byte.
  *   Set to 0 to use default block read size.
- * @param exclusive
- *   If TRUE, will fail when file already exists.
- *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param flag
+ *   If f_file_stat_flag_exclusive_e, will fail when file already exists.
+ *   If not f_file_stat_flag_exclusive_e, will not fail if file already exists (existing file will be replaced).
+ *
+ *   If f_file_stat_flag_reference_e, will operate directly on a link rather than what it references.
+ *   If not f_file_stat_flag_reference_e, will dereference any links.
+ *
+ *   If either f_file_stat_flag_group_e or f_file_stat_flag_owner_e, will copy the owner and group ids.
+ *   If neither f_file_stat_flag_group_e nor f_file_stat_flag_owner_e, will not copy the owner and group ids.
  *
  * @return
  *   F_none on success.
@@ -170,7 +172,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  */
 #ifndef _di_f_file_clone_
-  extern f_status_t f_file_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive);
+  extern f_status_t f_file_clone(const f_string_static_t source, const f_string_static_t destination, const f_number_unsigned_t size_block, const uint8_t flag);
 #endif // _di_f_file_clone_
 
 /**
@@ -245,9 +247,12 @@ extern "C" {
  * @param size_block
  *   The default number of chunks to read at a time with each chunk being 1-byte.
  *   Set to 0 to use default block read size.
- * @param exclusive
- *   If TRUE, will fail when file already exists.
- *   If FALSE, will not fail if file already exists (existing file will be replaced).
+ * @param flag
+ *   If f_file_stat_flag_exclusive_e, will fail when file already exists.
+ *   If not f_file_stat_flag_exclusive_e, will not fail if file already exists (existing file will be replaced).
+ *
+ *   If f_file_stat_flag_reference_e, will operate directly on a link rather than what it references.
+ *   If not f_file_stat_flag_reference_e, will dereference any links.
  *
  * @return
  *   F_none on success.
@@ -274,7 +279,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  */
 #ifndef _di_f_file_copy_
-  extern f_status_t f_file_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive);
+  extern f_status_t f_file_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const uint8_t flag);
 #endif // _di_f_file_copy_
 
 /**
@@ -338,6 +343,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
@@ -422,8 +428,8 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
@@ -488,8 +494,8 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or ififos are exhausted.
  *   F_loop (with error bit) on loop error.
@@ -559,8 +565,8 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
@@ -588,7 +594,7 @@ extern "C" {
  *   F_none is returned on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_file (with error bit) if file is not a valid stream.
+ *   F_stream_not (with error bit) if file is not a valid stream.
  *
  * @see fileno()
  */
@@ -604,6 +610,9 @@ extern "C" {
  *
  * @param path
  *   The path file name.
+ * @param dereference
+ *   Set to TRUE to dereference symlinks.
+ *   Set to FALSE to operate on the symlink itself.
  *
  * @return
  *   F_true if path was found.
@@ -618,10 +627,11 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see lstat()
  * @see stat()
  */
 #ifndef _di_f_file_exists_
-  extern f_status_t f_file_exists(const f_string_static_t path);
+  extern f_status_t f_file_exists(const f_string_static_t path, const bool dereference);
 #endif // _di_f_file_exists_
 
 /**
@@ -643,6 +653,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) on access denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
  *   F_false (with error bit) on unknown/unhandled errors.
  *   F_loop (with error bit) on loop error.
@@ -685,6 +696,9 @@ extern "C" {
  *
  * @param path
  *   The path file name.
+ * @param dereference
+ *   Set to TRUE to dereference symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  * @param group
  *   The id of the file's group.
  *
@@ -701,10 +715,10 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fstat()
+ * @see stat()
  */
 #ifndef _di_f_file_group_read_
-  extern f_status_t f_file_group_read(const f_string_static_t path, uid_t * const group);
+  extern f_status_t f_file_group_read(const f_string_static_t path, const bool dereference, uid_t * const group);
 #endif // _di_f_file_group_read_
 
 /**
@@ -760,6 +774,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -831,8 +846,8 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
  *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -912,8 +927,8 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
+ *   F_directory_descriptor (with error bit) when either at_id_target or at_id_point is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -991,8 +1006,8 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found_not (with error bit) if the file at path was not found.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
@@ -1131,8 +1146,15 @@ extern "C" {
 /**
  * Get the current file mode as an f_file_mode_t.
  *
+ * The file mode contains more than the file modes such as read, write, and execute.
+ * The file mode also returns the file type.
+ * This means that this function must handle dereferencing as needed even if the file is a symbolic link.
+ *
  * @param path
  *   The path file name.
+ * @param dereference
+ *   Set to TRUE to dereference symlinks.
+ *   Set to FALSE to operate on the symlink itself.
  * @param mode
  *   The read file mode.
  *
@@ -1149,10 +1171,11 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fstat()
+ * @see lstat()
+ * @see stat()
  */
 #ifndef _di_f_file_mode_read_
-  extern f_status_t f_file_mode_read(const f_string_static_t path, mode_t * const mode);
+  extern f_status_t f_file_mode_read(const f_string_static_t path, const bool dereference, mode_t * const mode);
 #endif // _di_f_file_mode_read_
 
 /**
@@ -1170,6 +1193,7 @@ extern "C" {
  *   F_data_not if path.used is 0.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
@@ -1237,6 +1261,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
  *   F_file_found_not (with error bit) if file at path was not found.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
@@ -1412,6 +1437,9 @@ extern "C" {
  *
  * @param path
  *   The path file name.
+ * @param dereference
+ *   Set to TRUE to dereference symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  * @param owner
  *   The id of the file's owner.
  *
@@ -1428,10 +1456,10 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fstat()
+ * @see stat()
  */
 #ifndef _di_f_file_owner_read_
-  extern f_status_t f_file_owner_read(const f_string_static_t path, uid_t * const owner);
+  extern f_status_t f_file_owner_read(const f_string_static_t path, const bool dereference, uid_t * const owner);
 #endif // _di_f_file_owner_read_
 
 /**
@@ -1580,6 +1608,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found_not (with error bit) if file not found.
  *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
@@ -1670,8 +1699,8 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if file system is too busy to perform write.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id or to_id.
  *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_file_type_directory (with error bit) if destination is a directory but source is not.
@@ -1705,7 +1734,7 @@ extern "C" {
  *   The new group id to use.
  *   Set to -1 to not change.
  * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to TRUE to dereference symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
  *
  * @return
@@ -1757,8 +1786,8 @@ extern "C" {
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
  *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
@@ -1809,7 +1838,7 @@ extern "C" {
  * @param path
  *   The path to the file.
  * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to TRUE to dereference symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
  * @param size
  *   This gets set to the size of the file.
@@ -1840,7 +1869,7 @@ extern "C" {
  * @param path
  *   The path to the file.
  * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to TRUE to dereference symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
  * @param size
  *   This gets set to the size of the file.
@@ -1849,6 +1878,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
@@ -1895,7 +1925,7 @@ extern "C" {
  * @param path
  *   The path to the file.
  * @param dereference
- *   Set to TRUE to dereferenc symlinks (often is what is desired).
+ *   Set to TRUE to dereference symlinks (often is what is desired).
  *   Set to FALSE to operate on the symlink itself.
  * @param stat_file
  *   The statistics read.
@@ -1934,6 +1964,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
@@ -2459,8 +2490,8 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *
  *   F_busy (with error bit) if file system is too busy to perform write.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found (with error bit) if a file aleady exists at the path (when calling utimensat()).
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -2528,6 +2559,7 @@ extern "C" {
  *   F_file_found_not if the path was not found.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
+ *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) on invalid directory.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.

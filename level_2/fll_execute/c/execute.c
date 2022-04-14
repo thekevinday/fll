@@ -111,7 +111,7 @@ extern "C" {
       f_status_t status = F_none;
 
       if (last_slash) {
-        status = f_file_exists(program.used ? program : arguments.array[0]);
+        status = f_file_exists(program.used ? program : arguments.array[0], F_true);
 
         if (status != F_true) {
           return F_status_set_error(F_file_found_not);
@@ -149,7 +149,7 @@ extern "C" {
           status = f_string_dynamic_append(program_name, &paths.array[i]);
 
           if (F_status_is_error_not(status)) {
-            status = f_file_exists(paths.array[i]);
+            status = f_file_exists(paths.array[i], F_true);
 
             if (status == F_true) {
               found = &paths.array[i];
@@ -301,7 +301,7 @@ extern "C" {
       f_status_t status = F_none;
 
       if (last_slash) {
-        status = f_file_exists(program.used ? program : arguments.array[0]);
+        status = f_file_exists(program.used ? program : arguments.array[0], F_true);
 
         if (status != F_true) {
           f_string_dynamics_resize(0, &paths);
@@ -341,7 +341,7 @@ extern "C" {
           status = f_string_dynamic_append(program_name, &paths.array[i]);
 
           if (F_status_is_error_not(status)) {
-            status = f_file_exists(paths.array[i]);
+            status = f_file_exists(paths.array[i], F_true);
 
             if (status == F_true) {
               found = &paths.array[i];

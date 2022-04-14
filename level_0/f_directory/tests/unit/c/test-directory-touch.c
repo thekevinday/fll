@@ -126,7 +126,7 @@ void test__f_directory_touch__fails(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | S_IFDIR;
 
@@ -161,7 +161,7 @@ void test__f_directory_touch__works(void **state) {
   {
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | S_IFDIR;
 

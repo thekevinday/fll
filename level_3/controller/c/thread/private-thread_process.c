@@ -126,7 +126,7 @@ extern "C" {
 
       for (j = 0; j < process->path_pids.used; ++j) {
 
-        if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j]) == F_true) {
+        if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j], F_true) == F_true) {
           status = controller_file_pid_read(process->path_pids.array[j], &pid);
 
           if (pid) {
@@ -173,7 +173,7 @@ extern "C" {
 
           for (; spent < controller_thread_exit_process_cancel_total_d; ++spent) {
 
-            if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j]) == F_true) {
+            if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j], F_true) == F_true) {
               status = controller_file_pid_read(process->path_pids.array[j], &pid);
 
               if (pid) {
@@ -240,7 +240,7 @@ extern "C" {
 
       for (j = 0; j < process->path_pids.used; ++j) {
 
-        if (f_file_exists(process->path_pids.array[j]) == F_true) {
+        if (f_file_exists(process->path_pids.array[j], F_true) == F_true) {
           status = controller_file_pid_read(process->path_pids.array[j], &pid);
 
           if (pid) {

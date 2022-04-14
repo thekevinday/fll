@@ -30,6 +30,8 @@ extern "C" {
         recurse.output = data_make->main->output.to;
         recurse.verbose = fake_verbose_print_clone;
       }
+
+      recurse.flag = f_file_stat_flag_group_e | f_file_stat_flag_owner_e;
     }
     else {
       macro_f_mode_t_set_default_umask(mode, data_make->main->umask);
@@ -41,9 +43,15 @@ extern "C" {
     }
 
     bool existing = F_true;
+    f_array_length_t i = 0;
+
+    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
+      ++i;
+      recurse.flag |= f_file_stat_flag_reference_e;
+    }
 
     // In this case, the destination could be a file, so confirm this.
-    if (arguments.used == 2) {
+    if (arguments.used == 2 + i) {
       status = f_directory_is(arguments.array[1]);
 
       if (F_status_is_error(status)) {
@@ -57,7 +65,7 @@ extern "C" {
       }
     }
 
-    for (f_array_length_t i = 0; i < total; ++i) {
+    for (; i < total; ++i) {
 
       destination.used = arguments.array[total].used;
 
@@ -80,7 +88,7 @@ extern "C" {
 
       if (status_file == F_true) {
         if (clone) {
-          status_file = fl_directory_clone(arguments.array[i], destination, F_true, recurse);
+          status_file = fl_directory_clone(arguments.array[i], destination, recurse);
         }
         else {
           status_file = fl_directory_copy(arguments.array[i], destination, mode, recurse);
@@ -94,10 +102,10 @@ extern "C" {
       }
       else if (status_file == F_false) {
         if (clone) {
-          status_file = f_file_clone(arguments.array[i], destination, F_true, recurse.size_block, recurse.exclusive);
+          status_file = f_file_clone(arguments.array[i], destination, recurse.size_block, recurse.flag);
         }
         else {
-          status_file = f_file_copy(arguments.array[i], destination, mode, recurse.size_block, recurse.exclusive);
+          status_file = f_file_copy(arguments.array[i], destination, mode, recurse.size_block, recurse.flag);
         }
 
         if (F_status_is_error(status_file)) {
@@ -271,11 +279,18 @@ extern "C" {
     f_status_t status_file = F_none;
 
     gid_t id = 0;
+    bool dereference = F_true;
+    f_array_length_t i = 0;
 
-    status = fake_make_get_id_group(data_make->data, data_make->error, arguments.array[0], &id);
+    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
+      ++i;
+      dereference = F_false;
+    }
+
+    status = fake_make_get_id_group(data_make->data, data_make->error, arguments.array[i++], &id);
     if (F_status_is_error(status)) return 0;
 
-    for (f_array_length_t i = 1; i < arguments.used; ++i) {
+    for (; i < arguments.used; ++i) {
 
       status_file = fake_make_assure_inside_project(data_make, arguments.array[i]);
 
@@ -288,10 +303,10 @@ extern "C" {
       }
 
       if (all) {
-        status_file = fll_file_role_change_all(arguments.array[i], -1, id, F_false, fake_make_operation_recursion_depth_max_d);
+        status_file = fll_file_role_change_all(arguments.array[i], -1, id, dereference, fake_make_operation_recursion_depth_max_d);
       }
       else {
-        status_file = f_file_role_change(arguments.array[i], -1, id, F_false);
+        status_file = f_file_role_change(arguments.array[i], -1, id, dereference);
       }
 
       if (F_status_is_error(status_file)) {
@@ -477,12 +492,19 @@ extern "C" {
   f_status_t fake_make_operate_process_type_if_exists(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     f_status_t status = F_none;
+    f_array_length_t i = if_not ? 2 : 1;
+    bool dereference = F_true;
 
     state_process->condition_result = fake_condition_result_true_e;
 
-    for (f_array_length_t i = if_not ? 2 : 1; i < arguments.used; ++i) {
+    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
+      ++i;
+      dereference = F_false;
+    }
 
-      status = f_file_exists(arguments.array[i]);
+    for (; i < arguments.used; ++i) {
+
+      status = f_file_exists(arguments.array[i], dereference);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
@@ -526,6 +548,12 @@ extern "C" {
     uint8_t type = 0;
 
     f_array_length_t i = if_not ? 2 : 1;
+    bool dereference = F_true;
+
+    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
+      ++i;
+      dereference = F_false;
+    }
 
     status = F_none;
 
@@ -567,7 +595,7 @@ extern "C" {
 
     for (; i < arguments.used; ++i, mode_file = 0) {
 
-      status = f_file_mode_read(arguments.array[i], &mode_file);
+      status = f_file_mode_read(arguments.array[i], dereference, &mode_file);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
@@ -781,17 +809,22 @@ extern "C" {
 
     f_status_t status = F_none;
     uid_t id = 0;
+    f_array_length_t i = if_not ? 2 : 1;
+    bool dereference = F_true;
 
-    status = fake_make_get_id_group(data_make->data, data_make->error, arguments.array[if_not ? 2 : 1], &id);
+    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
+      ++i;
+      dereference = F_false;
+    }
+
+    status = fake_make_get_id_group(data_make->data, data_make->error, arguments.array[i++], &id);
     if (F_status_is_error(status)) return status;
-
-    uid_t id_file = 0;
 
     state_process->condition_result = fake_condition_result_true_e;
 
-    for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
+    for (uid_t id_file = 0; i < arguments.used; ++i, id_file = 0) {
 
-      status = f_file_group_read(arguments.array[i], &id_file);
+      status = f_file_group_read(arguments.array[i], dereference, &id_file);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
@@ -863,7 +896,7 @@ extern "C" {
 
     for (f_array_length_t i = if_not ? 4 : 3; i < arguments.used; ++i, mode_file = 0) {
 
-      status = f_file_mode_read(arguments.array[i], &mode_file);
+      status = f_file_mode_read(arguments.array[i], F_true, &mode_file);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
@@ -916,17 +949,22 @@ extern "C" {
 
     f_status_t status = F_none;
     uid_t id = 0;
+    f_array_length_t i = if_not ? 2 : 1;
+    bool dereference = F_true;
 
-    status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[if_not ? 2 : 1], &id);
+    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
+      ++i;
+      dereference = F_false;
+    }
+
+    status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[i++], &id);
     if (F_status_is_error(status)) return status;
-
-    uid_t id_file = 0;
 
     state_process->condition_result = fake_condition_result_true_e;
 
-    for (f_array_length_t i = if_not ? 3 : 2; i < arguments.used; ++i, id_file = 0) {
+    for (uid_t id_file = 0; i < arguments.used; ++i, id_file = 0) {
 
-      status = f_file_owner_read(arguments.array[i], &id_file);
+      status = f_file_owner_read(arguments.array[i], dereference, &id_file);
 
       if (F_status_is_error(status)) {
         state_process->condition_result = fake_condition_result_error_e;
@@ -974,7 +1012,7 @@ extern "C" {
 
     for (f_array_length_t i = 1; i < arguments.used; ++i, mode = 0) {
 
-      status = f_file_mode_read(arguments.array[i], &mode_file);
+      status = f_file_mode_read(arguments.array[i], F_true, &mode_file);
 
       if (F_status_is_error(status)) {
         fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_mode_read", F_true, arguments.array[i], f_file_operation_change_group_s, fll_error_file_type_file_e);
@@ -991,7 +1029,7 @@ extern "C" {
       }
 
       if (all) {
-        status = fll_file_mode_set_all(arguments.array[i], mode, fake_make_operation_recursion_depth_max_d);
+        status = fll_file_mode_set_all(arguments.array[i], F_true, mode, fake_make_operation_recursion_depth_max_d);
       }
       else {
         status = f_file_mode_set(arguments.array[i], mode);
@@ -1087,13 +1125,20 @@ extern "C" {
 
     f_status_t status = F_none;
     uid_t id = 0;
+    bool dereference = F_true;
+    f_array_length_t i = 0;
 
-    status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[0], &id);
+    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
+      ++i;
+      dereference = F_false;
+    }
+
+    status = fake_make_get_id_owner(data_make->data, data_make->error, arguments.array[i++], &id);
     if (F_status_is_error(status)) return status;
 
     f_status_t status_file = F_none;
 
-    for (f_array_length_t i = 1; i < arguments.used; ++i) {
+    for (; i < arguments.used; ++i) {
 
       status_file = fake_make_assure_inside_project(data_make, arguments.array[i]);
 
@@ -1106,10 +1151,10 @@ extern "C" {
       }
 
       if (all) {
-        status_file = fll_file_role_change_all(arguments.array[i], id, -1, F_false, fake_make_operation_recursion_depth_max_d);
+        status_file = fll_file_role_change_all(arguments.array[i], id, -1, dereference, fake_make_operation_recursion_depth_max_d);
       }
       else {
-        status_file = f_file_role_change(arguments.array[i], id, -1, F_false);
+        status_file = f_file_role_change(arguments.array[i], id, -1, dereference);
       }
 
       if (F_status_is_error(status_file)) {

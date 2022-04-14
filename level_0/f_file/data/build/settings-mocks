@@ -67,6 +67,7 @@ flags -Wl,--wrap=fchmodat
 flags -Wl,--wrap=fchownat
 flags -Wl,--wrap=feof
 flags -Wl,--wrap=ferror
+flags -Wl,--wrap=fileno
 flags -Wl,--wrap=flockfile
 flags -Wl,--wrap=fread_unlocked
 flags -Wl,--wrap=fstat

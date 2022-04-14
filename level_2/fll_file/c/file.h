@@ -40,6 +40,9 @@ extern "C" {
  *
  * @param path
  *   The path file name.
+ * @param dereference
+ *   Set to TRUE to dereference symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  * @param mode
  *   The new mode to use.
  * @param depth_max
@@ -66,7 +69,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_directory_list().
  */
 #ifndef _di_fll_file_mode_set_all_
-  extern f_status_t fll_file_mode_set_all(const f_string_static_t path, const mode_t mode, const f_number_unsigned_t depth_max);
+  extern f_status_t fll_file_mode_set_all(const f_string_static_t path, const bool dereference, const mode_t mode, const f_number_unsigned_t depth_max);
 #endif // _di_fll_file_mode_set_all_
 
 /**

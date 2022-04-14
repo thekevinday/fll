@@ -39,6 +39,7 @@ extern int __wrap_fchown(int fd, uid_t owner, gid_t group);
 extern int __wrap_fchownat(int dirfd, const char *pathname, uid_t owner, gid_t group, int flags);
 extern int __wrap_feof_unlocked(FILE *stream);
 extern int __wrap_ferror_unlocked(FILE *stream);
+extern int __wrap_fileno(FILE *stream);
 extern void __wrap_flockfile(FILE *filehandle);
 extern size_t __wrap_fread_unlocked(void *ptr, size_t size, size_t nmemb, FILE *stream);
 extern int __wrap_fstat(int fd, struct stat *statbuf);

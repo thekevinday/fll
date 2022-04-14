@@ -14,7 +14,7 @@ void test__f_file_copy__fails_during_read_write(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
@@ -22,9 +22,9 @@ void test__f_file_copy__fails_during_read_write(void **state) {
 
     memset(buffer, 0, sizeof(f_char_t));
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
 
     will_return(__wrap_open, false);
     will_return(__wrap_open, 0);
@@ -63,7 +63,7 @@ void test__f_file_copy__fails_during_read_write(void **state) {
     will_return(__wrap_close, false);
     will_return(__wrap_close, 0);
 
-    const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
     assert_int_equal(F_status_set_fine(status), F_file_write);
   }
@@ -113,15 +113,15 @@ void test__f_file_copy__fails_for_block(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_block_d;
 
     for (int i = 0; i < 15; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mknod, true);
       will_return(__wrap_mknod, errnos[i]);
@@ -131,7 +131,7 @@ void test__f_file_copy__fails_for_block(void **state) {
         will_return(__wrap_chmod, 0);
       }
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -173,7 +173,7 @@ void test__f_file_copy__fails_for_block(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_block_d;
 
@@ -183,9 +183,9 @@ void test__f_file_copy__fails_for_block(void **state) {
 
     for (int i = 0; i < 11; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mknod, false);
       will_return(__wrap_mknod, 0);
@@ -193,7 +193,7 @@ void test__f_file_copy__fails_for_block(void **state) {
       will_return(__wrap_chmod, true);
       will_return(__wrap_chmod, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -249,15 +249,15 @@ void test__f_file_copy__fails_for_character(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_character_d;
 
     for (int i = 0; i < 15; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mknod, true);
       will_return(__wrap_mknod, errnos[i]);
@@ -267,7 +267,7 @@ void test__f_file_copy__fails_for_character(void **state) {
         will_return(__wrap_chmod, 0);
       }
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -309,7 +309,7 @@ void test__f_file_copy__fails_for_character(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_character_d;
 
@@ -319,9 +319,9 @@ void test__f_file_copy__fails_for_character(void **state) {
 
     for (int i = 0; i < 11; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mknod, false);
       will_return(__wrap_mknod, 0);
@@ -329,7 +329,7 @@ void test__f_file_copy__fails_for_character(void **state) {
       will_return(__wrap_chmod, true);
       will_return(__wrap_chmod, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -385,15 +385,15 @@ void test__f_file_copy__fails_for_directory(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_directory_d;
 
     for (int i = 0; i < 15; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mkdir, true);
       will_return(__wrap_mkdir, errnos[i]);
@@ -403,7 +403,7 @@ void test__f_file_copy__fails_for_directory(void **state) {
         will_return(__wrap_chmod, 0);
       }
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -445,7 +445,7 @@ void test__f_file_copy__fails_for_directory(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_directory_d;
 
@@ -455,9 +455,9 @@ void test__f_file_copy__fails_for_directory(void **state) {
 
     for (int i = 0; i < 11; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mkdir, false);
       will_return(__wrap_mkdir, 0);
@@ -465,7 +465,7 @@ void test__f_file_copy__fails_for_directory(void **state) {
       will_return(__wrap_chmod, true);
       will_return(__wrap_chmod, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -511,15 +511,15 @@ void test__f_file_copy__fails_for_fifo(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_fifo_d;
 
     for (int i = 0; i < 10; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mkfifo, true);
       will_return(__wrap_mkfifo, errnos[i]);
@@ -529,7 +529,7 @@ void test__f_file_copy__fails_for_fifo(void **state) {
         will_return(__wrap_chmod, 0);
       }
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -571,7 +571,7 @@ void test__f_file_copy__fails_for_fifo(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_fifo_d;
 
@@ -581,9 +581,9 @@ void test__f_file_copy__fails_for_fifo(void **state) {
 
     for (int i = 0; i < 11; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mkfifo, false);
       will_return(__wrap_mkfifo, 0);
@@ -591,7 +591,7 @@ void test__f_file_copy__fails_for_fifo(void **state) {
       will_return(__wrap_chmod, true);
       will_return(__wrap_chmod, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -637,20 +637,20 @@ void test__f_file_copy__fails_for_link(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_link_d;
 
     for (int i = 0; i < 10; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_readlink, true);
       will_return(__wrap_readlink, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -701,7 +701,7 @@ void test__f_file_copy__fails_for_link(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_link_d;
 
@@ -711,9 +711,9 @@ void test__f_file_copy__fails_for_link(void **state) {
 
     for (int i = 0; i < 18; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_readlink, false);
       will_return(__wrap_readlink, (void *) buffer);
@@ -722,7 +722,7 @@ void test__f_file_copy__fails_for_link(void **state) {
       will_return(__wrap_symlink, true);
       will_return(__wrap_symlink, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -766,10 +766,10 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     for (int i = 0; i < 9; ++i) {
 
-      will_return(__wrap_lstat, true);
-      will_return(__wrap_lstat, errnos[i]);
+      will_return(__wrap_stat, true);
+      will_return(__wrap_stat, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -826,20 +826,20 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
     for (int i = 0; i < 21; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_open, true);
       will_return(__wrap_open, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -866,15 +866,15 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
     for (int i = 0; i < 6; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_open, false);
       will_return(__wrap_open, 0);
@@ -882,7 +882,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
       will_return(__wrap_fsync, true);
       will_return(__wrap_fsync, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -909,15 +909,15 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
     for (int i = 0; i < 6; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_open, false);
       will_return(__wrap_open, 0);
@@ -928,7 +928,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
       will_return(__wrap_close, true);
       will_return(__wrap_close, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -965,15 +965,15 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
     for (int i = 0; i < 11; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_open, false);
       will_return(__wrap_open, 0);
@@ -987,7 +987,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
       will_return(__wrap_chmod, true);
       will_return(__wrap_chmod, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -1044,15 +1044,15 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
     for (int i = 0; i < 11; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_open, false);
       will_return(__wrap_open, 0);
@@ -1069,7 +1069,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
       will_return(__wrap_open, true);
       will_return(__wrap_open, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -1126,15 +1126,15 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
     for (int i = 0; i < 11; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_open, false);
       will_return(__wrap_open, 0);
@@ -1161,7 +1161,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
       will_return(__wrap_close, false);
       will_return(__wrap_close, 0);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -1194,7 +1194,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
@@ -1204,9 +1204,9 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     for (int i = 0; i < 9; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_open, false);
       will_return(__wrap_open, 0);
@@ -1242,7 +1242,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
       will_return(__wrap_close, false);
       will_return(__wrap_close, 0);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -1285,7 +1285,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
@@ -1295,9 +1295,9 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
     for (int i = 0; i < 14; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_open, false);
       will_return(__wrap_open, 0);
@@ -1337,7 +1337,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
       will_return(__wrap_close, false);
       will_return(__wrap_close, 0);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_true);
+      const f_status_t status = f_file_copy(path, path, mode, 0, f_file_stat_flag_exclusive_e);
 
       assert_int_equal(F_status_set_fine(status), statuss[i]);
     } // for
@@ -1388,15 +1388,15 @@ void test__f_file_copy__fails_for_socket(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_socket_d;
 
     for (int i = 0; i < 15; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mknod, true);
       will_return(__wrap_mknod, errnos[i]);
@@ -1406,7 +1406,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
         will_return(__wrap_chmod, 0);
       }
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -1448,7 +1448,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
 
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_socket_d;
 
@@ -1458,9 +1458,9 @@ void test__f_file_copy__fails_for_socket(void **state) {
 
     for (int i = 0; i < 11; ++i) {
 
-      will_return(__wrap_lstat, false);
-      will_return(__wrap_lstat, &statistics);
-      will_return(__wrap_lstat, 0);
+      will_return(__wrap_stat, false);
+      will_return(__wrap_stat, &statistics);
+      will_return(__wrap_stat, 0);
 
       will_return(__wrap_mknod, false);
       will_return(__wrap_mknod, 0);
@@ -1468,7 +1468,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
       will_return(__wrap_chmod, true);
       will_return(__wrap_chmod, errnos[i]);
 
-      const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+      const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
       if (statuss[i] == F_file_found) {
         assert_int_equal(status, F_none);
@@ -1486,19 +1486,19 @@ void test__f_file_copy__returns_data_not(void **state) {
   const f_mode_t mode = f_mode_t_initialize;
 
   {
-    const f_status_t status = f_file_copy(f_string_empty_s, f_string_empty_s, mode, 0, F_false);
+    const f_status_t status = f_file_copy(f_string_empty_s, f_string_empty_s, mode, 0, 0);
 
     assert_int_equal(status, F_data_not);
   }
 
   {
-    const f_status_t status = f_file_copy(path, f_string_empty_s, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, f_string_empty_s, mode, 0, 0);
 
     assert_int_equal(status, F_data_not);
   }
 
   {
-    const f_status_t status = f_file_copy(f_string_empty_s, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(f_string_empty_s, path, mode, 0, 0);
 
     assert_int_equal(status, F_data_not);
   }
@@ -1512,13 +1512,13 @@ void test__f_file_copy__works_for_block(void **state) {
   {
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_block_d;
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
 
     will_return(__wrap_mknod, false);
     will_return(__wrap_mknod, 0);
@@ -1526,7 +1526,7 @@ void test__f_file_copy__works_for_block(void **state) {
     will_return(__wrap_chmod, false);
     will_return(__wrap_chmod, 0);
 
-    const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
     assert_int_equal(status, F_none);
   }
@@ -1540,13 +1540,13 @@ void test__f_file_copy__works_for_character(void **state) {
   {
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_character_d;
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
 
     will_return(__wrap_mknod, false);
     will_return(__wrap_mknod, 0);
@@ -1554,7 +1554,7 @@ void test__f_file_copy__works_for_character(void **state) {
     will_return(__wrap_chmod, false);
     will_return(__wrap_chmod, 0);
 
-    const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
     assert_int_equal(status, F_none);
   }
@@ -1568,13 +1568,13 @@ void test__f_file_copy__works_for_directory(void **state) {
   {
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_directory_d;
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
 
     will_return(__wrap_mkdir, false);
     will_return(__wrap_mkdir, 0);
@@ -1582,7 +1582,7 @@ void test__f_file_copy__works_for_directory(void **state) {
     will_return(__wrap_chmod, false);
     will_return(__wrap_chmod, 0);
 
-    const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
     assert_int_equal(status, F_none);
   }
@@ -1596,13 +1596,13 @@ void test__f_file_copy__works_for_fifo(void **state) {
   {
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_fifo_d;
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
 
     will_return(__wrap_mkfifo, false);
     will_return(__wrap_mkfifo, 0);
@@ -1610,7 +1610,7 @@ void test__f_file_copy__works_for_fifo(void **state) {
     will_return(__wrap_chmod, false);
     will_return(__wrap_chmod, 0);
 
-    const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
     assert_int_equal(status, F_none);
   }
@@ -1624,7 +1624,7 @@ void test__f_file_copy__works_for_link(void **state) {
   {
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_link_d;
 
@@ -1632,9 +1632,9 @@ void test__f_file_copy__works_for_link(void **state) {
 
     memset(buffer, 0, sizeof(f_char_t));
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
 
     will_return(__wrap_readlink, false);
     will_return(__wrap_readlink, (void *) buffer);
@@ -1643,7 +1643,7 @@ void test__f_file_copy__works_for_link(void **state) {
     will_return(__wrap_symlink, false);
     will_return(__wrap_symlink, 0);
 
-    const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
     assert_int_equal(status, F_none);
   }
@@ -1657,7 +1657,7 @@ void test__f_file_copy__works_for_regular(void **state) {
   {
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
 
@@ -1665,9 +1665,9 @@ void test__f_file_copy__works_for_regular(void **state) {
 
     memset(buffer, 0, sizeof(f_char_t));
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
 
     will_return(__wrap_open, false);
     will_return(__wrap_open, 0);
@@ -1710,7 +1710,7 @@ void test__f_file_copy__works_for_regular(void **state) {
     will_return(__wrap_close, false);
     will_return(__wrap_close, 0);
 
-    const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
     assert_int_equal(status, F_none);
   }
@@ -1724,13 +1724,13 @@ void test__f_file_copy__works_for_socket(void **state) {
   {
     struct stat statistics;
 
-    memset(&statistics, 0, sizeof (struct stat));
+    memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_socket_d;
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
 
     will_return(__wrap_mknod, false);
     will_return(__wrap_mknod, 0);
@@ -1738,7 +1738,7 @@ void test__f_file_copy__works_for_socket(void **state) {
     will_return(__wrap_chmod, false);
     will_return(__wrap_chmod, 0);
 
-    const f_status_t status = f_file_copy(path, path, mode, 0, F_false);
+    const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
     assert_int_equal(status, F_none);
   }

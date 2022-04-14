@@ -143,7 +143,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // The file exists, do not attempt to overwrite.
-    if (f_file_exists(path) == F_true) {
+    if (f_file_exists(path, F_true) == F_true) {
       return F_status_set_error(F_file_found);
     }
 
@@ -187,7 +187,7 @@ extern "C" {
   f_status_t controller_file_pid_delete(const pid_t pid, const f_string_static_t path) {
 
     // Only delete if the file exists and there is no error while checking.
-    if (f_file_exists(path) != F_true) {
+    if (f_file_exists(path, F_true) != F_true) {
       return F_none;
     }
 
@@ -238,7 +238,7 @@ extern "C" {
 
     *pid = 0;
 
-    f_status_t status = f_file_exists(path);
+    f_status_t status = f_file_exists(path, F_true);
     if (F_status_is_error(status)) return status;
 
     if (status != F_true) {
@@ -491,7 +491,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (global->setting->control.flag & controller_control_flag_readonly_e) {
-      if (f_file_exists(global->setting->path_control) != F_true) {
+      if (f_file_exists(global->setting->path_control, F_true) != F_true) {
         if (global->main->output.verbosity == f_console_verbosity_debug_e) {
           controller_lock_print(global->main->output.to, global->thread);
 

@@ -151,7 +151,6 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_define_e) {
-
       if (arguments.used > 1) {
         *status = f_environment_set(arguments.array[0], arguments.array[1], F_true);
       }

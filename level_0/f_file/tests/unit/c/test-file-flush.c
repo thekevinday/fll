@@ -8,43 +8,43 @@ extern "C" {
 void test__f_file_flush__fails(void **state) {
 
   int errnos[] = {
+    EBADF,
+    EDQUOT,
+    EIO,
+    ENOSPC,
+    EROFS,
     mock_errno_generic,
   };
 
   f_status_t statuss[] = {
+    F_file_descriptor,
+    F_filesystem_quota_block,
+    F_input_output,
+    F_space_not,
+    F_supported_not,
     F_failure,
   };
 
-  for (int i = 0; i < 1; ++i) {
+  for (int i = 0; i < 6; ++i) {
 
-    //will_return(__wrap_open, true);
-    //will_return(__wrap_open, errnos[i]);
+    will_return(__wrap_fsync, true);
+    will_return(__wrap_fsync, errnos[i]);
 
-    //const f_status_t status = f_file_flush(path, F_false, &id);
+    const f_status_t status = f_file_flush(0);
 
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
+    assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for
-}
-
-void test__f_file_flush__returns_data_not(void **state) {
-
-  {
-    //const f_status_t status = f_file_flush(f_string_empty_s);
-
-    //assert_int_equal(status, F_data_not);
-  }
 }
 
 void test__f_file_flush__works(void **state) {
 
   {
-    //will_return(__wrap_open, false);
-    //will_return(__wrap_open, 5);
+    will_return(__wrap_fsync, false);
+    will_return(__wrap_fsync, 0);
 
-    //const f_status_t status = f_file_flush();
+    const f_status_t status = f_file_flush(0);
 
-    //assert_int_equal(status, F_none);
-    //assert_int_equal(id, 5);
+    assert_int_equal(status, F_none);
   }
 }
 

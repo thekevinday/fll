@@ -7,23 +7,15 @@ extern "C" {
 
 void test__f_file_descriptor__fails(void **state) {
 
-  int errnos[] = {
-    mock_errno_generic,
-  };
+  {
+    f_file_t file = f_file_t_initialize;
 
-  f_status_t statuss[] = {
-    F_failure,
-  };
+    will_return(__wrap_fileno, -1);
 
-  for (int i = 0; i < 1; ++i) {
+    const f_status_t status = f_file_descriptor(&file);
 
-    //will_return(__wrap_open, true);
-    //will_return(__wrap_open, errnos[i]);
-
-    //const f_status_t status = f_file_descriptor(path, F_false, &id);
-
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
-  } // for
+    assert_int_equal(F_status_set_fine(status), F_stream_not);
+  }
 }
 
 #ifndef _di_level_0_parameter_checking_
@@ -37,25 +29,18 @@ void test__f_file_descriptor__fails(void **state) {
   }
 #endif // _di_level_0_parameter_checking_
 
-void test__f_file_descriptor__returns_data_not(void **state) {
-
-  {
-    //const f_status_t status = f_file_descriptor(f_string_empty_s);
-
-    //assert_int_equal(status, F_data_not);
-  }
-}
-
 void test__f_file_descriptor__works(void **state) {
 
   {
-    //will_return(__wrap_open, false);
-    //will_return(__wrap_open, 5);
+    const int id = 1;
+    f_file_t file = f_file_t_initialize;
 
-    //const f_status_t status = f_file_descriptor();
+    will_return(__wrap_fileno, id);
 
-    //assert_int_equal(status, F_none);
-    //assert_int_equal(id, 5);
+    const f_status_t status = f_file_descriptor(&file);
+
+    assert_int_equal(status, F_none);
+    assert_int_equal(file.id, id);
   }
 }
 

@@ -101,10 +101,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param role
- *   If TRUE, will copy the owner and group ids.
- *   If FALSE, will not copy the owner and group ids.
- *   (In both cases the file mode is copied.)
  * @param recurse
  *   The directory recurse data.
  *
@@ -124,7 +120,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_
-  extern f_status_t fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_clone_
 
 /**
@@ -145,10 +141,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param role
- *   If TRUE, will copy the owner and group ids.
- *   If FALSE, will not copy the owner and group ids.
- *   (In both cases the file mode is copied.)
  * @param recurse
  *   The directory recurse data.
  *
@@ -164,7 +156,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_content_
-  extern f_status_t fl_directory_clone_content(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_clone_content(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_clone_content_
 
 /**
@@ -192,7 +184,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if source.used or destination.used is 0.
  *
- *   F_directory_found (with error bit) if the destination directory is found and recurse.exclusive is TRUE.
+ *   F_directory_found (with error bit) if the destination directory is found and recurse.flag has f_file_stat_flag_exclusive_e.
  *   F_directory_not (with error bit) if the source directory does not exist.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *

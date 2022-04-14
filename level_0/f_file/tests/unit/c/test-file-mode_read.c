@@ -30,7 +30,7 @@ void test__f_file_mode_read__fails(void **state) {
   void test__f_file_mode_read__parameter_checking(void **state) {
 
     {
-      const f_status_t status = f_file_mode_read(f_string_empty_s, 0);
+      const f_status_t status = f_file_mode_read(f_string_empty_s, F_true, 0);
 
       assert_int_equal(F_status_set_fine(status), F_parameter);
     }
@@ -42,7 +42,7 @@ void test__f_file_mode_read__returns_data_not(void **state) {
   {
     mode_t mode = 0;
 
-    const f_status_t status = f_file_mode_read(f_string_empty_s, &mode);
+    const f_status_t status = f_file_mode_read(f_string_empty_s, F_true, &mode);
 
     assert_int_equal(status, F_data_not);
   }

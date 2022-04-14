@@ -27,13 +27,6 @@ extern void test__f_file_descriptor__fails(void **state);
 #endif // _di_level_0_parameter_checking_
 
 /**
- * Test that function works but the path is empty.
- *
- * @see f_file_descriptor()
- */
-extern void test__f_file_descriptor__returns_data_not(void **state);
-
-/**
  * Test that function works.
  *
  * @see f_file_descriptor()

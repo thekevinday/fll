@@ -431,7 +431,7 @@ extern "C" {
 
           for (f_array_length_t counter = 0; counter < main->parameters.remaining.used; ++counter) {
 
-            status = f_file_exists(data.argv[main->parameters.remaining.array[counter]]);
+            status = f_file_exists(data.argv[main->parameters.remaining.array[counter]], F_true);
 
             if (status == F_false) {
               status = F_status_set_error(F_file_found_not);

@@ -728,7 +728,7 @@ extern "C" {
         }
       }
 
-      status = f_file_exists(data->cache.small);
+      status = f_file_exists(data->cache.small, F_true);
 
       if (F_status_is_error(status) || status == F_false) {
         if (F_status_is_error(status)) {
@@ -797,7 +797,7 @@ extern "C" {
           } // for
 
           if (F_status_is_error_not(status)) {
-            status = f_file_exists(data->cache.small);
+            status = f_file_exists(data->cache.small, F_true);
 
             if (F_status_is_error(status) || status == F_false) {
               if (F_status_is_error(status)) {

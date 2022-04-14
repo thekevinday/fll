@@ -25,10 +25,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param role
- *   If TRUE, will copy the owner and group ids.
- *   If FALSE, will not copy the owner and group ids.
- *   (In both cases the file mode is copied.)
  * @param recurse
  *   The directory recurse data.
  * @param depth
@@ -42,7 +38,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #if !defined(_di_fl_directory_clone_)
-  extern f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_clone_)
 
 /**
@@ -59,10 +55,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param role
- *   If TRUE, will copy the owner and group ids.
- *   If FALSE, will not copy the owner and group ids.
- *   (In both cases the file mode is copied.)
  * @param recurse
  *   The directory recurse data.
  *
@@ -75,7 +67,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #if !defined(_di_fl_directory_clone_file_)
-  extern f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_directory_clone_file_)
 
 /**

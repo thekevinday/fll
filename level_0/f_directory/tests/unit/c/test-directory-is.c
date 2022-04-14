@@ -59,7 +59,7 @@ void test__f_directory_is__returns_false(void **state) {
 
   struct stat statistics;
 
-  memset(&statistics, 0, sizeof (struct stat));
+  memset(&statistics, 0, sizeof(struct stat));
 
   {
     will_return(__wrap_stat, false);
@@ -78,7 +78,7 @@ void test__f_directory_is__returns_true(void **state) {
 
   struct stat statistics;
 
-  memset(&statistics, 0, sizeof (struct stat));
+  memset(&statistics, 0, sizeof(struct stat));
 
   statistics.st_mode = 1 | S_IFDIR;
 

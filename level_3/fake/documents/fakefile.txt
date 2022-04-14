@@ -510,3 +510,13 @@ Fakefile Documentation:
 
     - work:value\:
       This variable holds the value part of the "work" program parameters, such as "work/".
+
+  The Content "no_dereference" may be specified in certain cases relating to files.
+  These cases operate on a file that can be a link itself or the link target.
+  The default behavior is normally to dereference the link target.
+
+  For example, consider a symbolic link, called "some_file", that points to a file that does not exist (which means that the link in question is a broken link).
+  The Operation "if exists some_file" would return false.
+  The Operation "if no_dereference exists some_file" would return true.
+  This is because the symbolic link itself, "some_file", does exist but the file it is pointing to does not.
+  The "no_dereference" is ignored for conditions that do not need it.

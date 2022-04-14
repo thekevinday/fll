@@ -24,13 +24,13 @@ void test__f_file_exists_at__fails(void **state) {
 
   f_status_t statuss[] = {
     F_access_denied,
-    F_file_descriptor,
+    F_directory_descriptor,
     F_buffer,
     F_loop,
     F_name,
-    F_file_found_not,
-    F_memory_not,
     F_false,
+    F_memory_not,
+    F_directory_not,
     F_number_overflow,
     F_file_stat,
   };
@@ -55,34 +55,15 @@ void test__f_file_exists_at__returns_data_not(void **state) {
   }
 }
 
-void test__f_file_exists_at__returns_false(void **state) {
+void test__f_file_exists_at__works(void **state) {
 
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   struct stat statistics;
 
-  memset(&statistics, 0, sizeof (struct stat));
+  memset(&statistics, 0, sizeof(struct stat));
 
-  {
-    will_return(__wrap_fstatat, false);
-    will_return(__wrap_fstatat, &statistics);
-    will_return(__wrap_fstatat, 0);
-
-    const f_status_t status = f_file_exists_at(0, path, 0);
-
-    assert_int_equal(status, F_false);
-  }
-}
-
-void test__f_file_exists_at__returns_true(void **state) {
-
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
-
-  struct stat statistics;
-
-  memset(&statistics, 0, sizeof (struct stat));
-
-  statistics.st_mode = 1 | F_file_type_directory_d;
+  statistics.st_mode = 1 | F_file_type_regular_d;
 
   {
     will_return(__wrap_fstatat, false);

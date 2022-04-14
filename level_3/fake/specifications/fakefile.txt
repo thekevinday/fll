@@ -42,7 +42,7 @@ Fakefile Specification:
   The build settings may also be specified in the Settings Section.
 
   The Section Operation Objects are\:
-  - and: One or more Content. First Content is the condition, remaining Content are specific to the condition.
+  - and: One or more Content. First Content is the condition or "no_dereference" (when "no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
   - break: Zero or One Content. If specified, First content must be one of "success" or "failure".
   - build: Zero or One Content. First Content represents file name of the settings file to use.
   - clean: Zero Content.
@@ -55,18 +55,18 @@ Fakefile Specification:
   - else: Zero Content.
   - exit: Zero or One Content. If specified, First content must be one of "succeed" or "fail".
   - fail: One Content. First Content must be one of "exit", "warn", or "ignore" (case-sensitive).
-  - group: Two or more Content. First Content is group name or number, remaining Content are paths to files.
-  - groups: Two or more Content. First Content is group name or number, remaining Content are paths to files.
-  - if: One or more Content. First Content is the condition, remaining Content are specific to the condition.
+  - group: Two or more Content. First Content is group name, number, or "no_dereference" (when "no_dereference", then the second Content is the group name or number, etc..), remaining Content are paths to files.
+  - groups: Two or more Content. First Content is group name, number, or "no_dereference" (when "no_dereference", then the second Content is the group name or number, etc..), remaining Content are paths to files.
+  - if: One or more Content. First Content is the condition or is "no_dereference" (when "no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
   - index: One or more Content.
   - link: Two Content. First Content is the link target file and second Content is the pointer file (the link).
   - mode: Two or more Content. First Content is the mode, remaining Content are paths to files.
   - modes: Two or more Content. First Content is the mode, remaining Content are paths to files.
   - move: Two or more Content representing paths to files.
   - operate: One Content. First Content is the name of a valid Section Object, except for the reserved Section Objects.
-  - or: One or more Content. First Content is the condition, remaining Content are specific to the condition.
-  - owner: Two or more Content. First Content is group name or number, remaining Content are paths to files.
-  - owners: Two or more Content. First Content is group name or number, remaining Content are paths to files.
+  - or: One or more Content. First Content is the condition or "no_dereference" (when "no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
+  - owner: Two or more Content. First Content is owner name, number, or "no_dereference" (when "no_dereference", then the second Content is the owner name or number, etc..), remaining Content are paths to files.
+  - owners: Two or more Content. First Content is owner name, number, or "no_dereference" (when "no_dereference", then the second Content is the owner name or number, etc..), remaining Content are paths to files.
   - parameter: First Content represents variable name (case-sensitive), remaining Content represents the value.
   - pop: Zero Content.
   - print: Zero or more Content.
@@ -85,11 +85,13 @@ Fakefile Specification:
   - <=: Two or more Content.
   - <>: Two or more Content.
   - defined: First Content is either "parameter" or "environment". Second or more Content are valid names, such that for "parameter" it is a valid IKI name and for "environment" it is a valid environment variable name.
+  - exists: One or more Content representing the files to check the existence of.
   - failure: has no other Content.
   - group: First Content is the name of a group. Second or more Content are paths to files.
-  - is: First Content is a list of "block", "character", "directory", "fifo", "link", "regular" , or "socket" followed by "for" and then the Remaining Content that are paths to files.
-  - mode: First Content is either "is" or "has". Second Content is a valid file mode. Third or more Content are paths to files.
-  - not: First Content is one of "defined", "exists", "group", "is", "mode", or "owner" and all remaining Content are based on the First Content's "if" Section Operation Content rules.
+  - is: First Content is a list of "block", "character", "no_dereference", "directory", "fifo", "link", "regular" , or "socket" followed by "for" and then the Remaining Content that are paths to files.
+  - mode: First Content is either "has", "is", or "no_dereference". Second Content is a valid file mode. Third or more Content are paths to files.
+  - no_dereference: A non-condition inserted before any of "exists", "is", and "mode" (then the second Content is the actual condition followed by any Content associated with that condition).
+  - not: First Content is one of "defined", "exists", "group", "is", "mode", "no_dereference", or "owner" and all remaining Content are based on the First Content's "if" Section Operation Content rules.
   - owner: First Content is the name of an owner. Second or more Content are paths to files.
   - success: has no other Content.
 

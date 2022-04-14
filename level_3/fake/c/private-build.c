@@ -346,7 +346,7 @@ extern "C" {
 #ifndef _di_fake_build_copy_
   void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return;
+    if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return;
 
     if (fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);
@@ -517,7 +517,7 @@ extern "C" {
           }
         }
 
-        *status = f_file_copy(path_source, destination_file, mode, F_file_default_read_size_d, F_false);
+        *status = f_file_copy(path_source, destination_file, mode, F_file_default_read_size_d, f_file_stat_flag_reference_e);
 
         if (F_status_is_error(*status)) {
           fake_print_error_build_operation_file(data, F_status_set_fine(*status), "f_file_copy", f_file_operation_copy_s, f_file_operation_to_s, path_source, destination_file, F_true);
@@ -553,7 +553,7 @@ extern "C" {
 #ifndef _di_fake_build_execute_process_script_
   int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage) == F_true || *status == F_child) return data->main->child;
+    if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
     if (!process_script.used) return 0;
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;

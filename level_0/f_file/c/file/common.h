@@ -428,6 +428,30 @@ extern "C" {
 #endif // _di_f_file_mode_
 
 /**
+ * File flag related to file statistics.
+ *
+ * These flags are meant to be bitwise for a uint8_t size type or larger.
+ *
+ * The f_file_stat_flag_none_e is expected to be 0, therefore it must be safe to use 0 directly.
+ *
+ * f_file_stat_flag_*:
+ *   - none:      No flags are set (enables non-exclusive and dereference).
+ *   - exclusive: Require that a file does not already exist.
+ *   - group:     Copy the group.
+ *   - owner:     Copy the owner.
+ *   - reference: Do not perform dereference.
+ */
+#ifndef _di_f_file_stat_flags_
+  enum {
+    f_file_stat_flag_none_e      = 0,
+    f_file_stat_flag_exclusive_e = 0x1,
+    f_file_stat_flag_group_e     = 0x2,
+    f_file_stat_flag_owner_e     = 0x4,
+    f_file_stat_flag_reference_e = 0x8,
+  }; // enum
+#endif // _di_f_file_stat_flags_
+
+/**
  * Provide common file operation strings.
  *
  * F_file_operation_*:

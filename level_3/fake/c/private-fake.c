@@ -103,7 +103,7 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    status = f_file_exists(path_file);
+    status = f_file_exists(path_file, F_true);
 
     if (status == F_true) {
       {
