@@ -1341,7 +1341,7 @@ extern "C" {
       }
 
       // Specials: U+FFF0 to U+FFF8.
-      if (character >= 0xefb000 && character <= 0xefbfb800) {
+      if (character >= 0xefbfb000 && character <= 0xefbfb800) {
         return F_true;
       }
 
