@@ -392,7 +392,7 @@ extern "C" {
         flockfile(main->output.to.stream);
 
         f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-        fl_print_format("%[Piped Byte Dump: (in ", main->output.to.stream, main->context.set.title);
+        fl_print_format("%[Piped " BYTE_DUMP_program_name_long_s ": (in ", main->output.to.stream, main->context.set.title);
 
         if (data.mode == byte_dump_mode_hexidecimal_e) {
           f_print_dynamic_raw(byte_dump_print_strings_hexidecimal_s, main->output.to.stream);
@@ -467,7 +467,7 @@ extern "C" {
 
           flockfile(main->output.to.stream);
 
-          fl_print_format("%r%[Byte Dump of: %]%[", main->output.to.stream, f_string_eol_s, main->context.set.title, main->context.set.title, main->context.set.notable);
+          fl_print_format("%r%[" BYTE_DUMP_program_name_long_s " of: %]%[", main->output.to.stream, f_string_eol_s, main->context.set.title, main->context.set.title, main->context.set.notable);
           fl_print_format("%Q%] %[(in ", main->output.to.stream, data.argv[main->parameters.remaining.array[counter]], main->context.set.notable, main->context.set.title);
 
           if (data.mode == byte_dump_mode_hexidecimal_e) {
