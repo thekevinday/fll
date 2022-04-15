@@ -516,7 +516,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     for (register f_array_length_t i = 0; string[i]; ) {
 
       safe = f_string_empty_s;
-      width = macro_f_utf_char_t_width(string[i]);
+      width = macro_f_utf_byte_width(string[i]);
 
       if (width > 1) {
         if (string[i + 1]) {

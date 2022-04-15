@@ -44,12 +44,12 @@ extern "C" {
         return F_none;
       }
     }
-    else if (macro_f_utf_char_t_width_is(character) == 1) {
+    else if (macro_f_utf_byte_width_is(character) == 1) {
       if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, output) == f_print_sequence_unknown_s.used) {
         return F_none;
       }
     }
-    else if (macro_f_utf_char_t_width_is(character) > 1 || character > 0x1f) {
+    else if (macro_f_utf_byte_width_is(character) > 1 || character > 0x1f) {
       if (fwrite_unlocked(&character, 1, 1, output)) {
         return F_utf;
       }
@@ -659,7 +659,7 @@ extern "C" {
     for (register f_array_length_t i = 0; string[i]; ) {
 
       safe.used = 0;
-      width = macro_f_utf_char_t_width(string[i]);
+      width = macro_f_utf_byte_width(string[i]);
 
       if (width > 1) {
         if (string[i + 1]) {
