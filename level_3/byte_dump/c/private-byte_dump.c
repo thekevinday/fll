@@ -191,8 +191,49 @@ extern "C" {
 
     // Print placeholders to fill out the remaining line and then optionally print the text block.
     if (cell.column && cell.column < data->width) {
-      previous.bytes = 0;
-      previous.invalid = 0;
+      const uint8_t width_missing = width_utf - width_count;
+      const uint8_t column_offset = data->width - cell.column;
+      width_count = 0;
+
+      // Handle incomplete character at the end of the stream.
+      if (width_count < width_utf) {
+        found_invalid_utf = F_true;
+        invalid[character_current] = width_utf;
+
+        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
+          character_reset = F_true;
+        }
+
+        if (++width_count < width_missing) {
+          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
+            character_reset = F_true;
+          }
+
+          if (++width_count < width_missing) {
+            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
+              character_reset = F_true;
+            }
+
+            if (++width_count < width_missing) {
+              if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
+                character_reset = F_true;
+              }
+            }
+          }
+        }
+
+        if (character_reset) {
+          characters.used = 0;
+          memset(&invalid, 0, sizeof(f_char_t) * data->width);
+
+          previous.bytes = column_offset;
+          previous.invalid = previous.bytes;
+        }
+        else {
+          previous.bytes = 0;
+          previous.invalid = 0;
+        }
+      }
 
       while (cell.column < data->width) {
 
