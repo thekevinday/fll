@@ -69,9 +69,10 @@ void test__f_directory_list__returns_directory_empty(void **state) {
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
-    struct dirent *directories[0];
+    struct dirent **directories;
 
-    memset(directories, 0, sizeof(struct dirent *));
+    // The scandir() allocates each struct dirent.
+    directories = malloc(sizeof(struct dirent *));
 
     will_return(__wrap_scandir, false);
     will_return(__wrap_scandir, directories);
@@ -91,9 +92,10 @@ void test__f_directory_list__works(void **state) {
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
-    struct dirent *directories[1];
+    struct dirent **directories;
 
     // The scandir() allocates each struct dirent.
+    directories = malloc(sizeof(struct dirent *));
     directories[0] = (struct dirent *) malloc(sizeof(struct dirent));
 
     memset(directories[0], 0, sizeof(struct dirent));
