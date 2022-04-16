@@ -404,7 +404,7 @@ extern "C" {
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
   f_status_t private_f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
 
-    // create a NULL terminated string based on file stat.
+    // Create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
       if (link_stat.st_size + 1 > F_array_length_t_size_d) {
         return F_status_set_error(F_string_too_large);

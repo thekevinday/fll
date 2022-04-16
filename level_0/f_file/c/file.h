@@ -929,6 +929,7 @@ extern "C" {
  *   F_busy (with error bit) if file system is too busy to perform write.
  *   F_directory_descriptor (with error bit) when either at_id_target or at_id_point is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_file_found (with error bit) if a file aleady exists at the path.
  *   F_file_found_not (with error bit) if a parent path in point does not exist or is a broken symlink.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.

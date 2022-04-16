@@ -578,9 +578,13 @@ extern "C" {
 #ifndef _di_f_file_link_hard_at_
   f_status_t f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_static_t target, const f_string_static_t point, const int flag) {
 
+    if (!target.used || !point.used) {
+      return F_data_not;
+    }
+
     if (linkat(at_id_target, target.string, at_id_point, point.string, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
