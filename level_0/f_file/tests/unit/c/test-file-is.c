@@ -28,23 +28,46 @@ void test__f_file_is__fails(void **state) {
     F_name,
     F_file_found_not,
     F_memory_not,
-    F_false,
+    F_directory_not,
     F_number_overflow,
     F_file_stat,
   };
 
-  // @todo an outer loop is needed to run this against all types.
   f_status_t types[] = {
+    F_file_type_block_d,
+    F_file_type_character_d,
+    F_file_type_directory_d,
+    F_file_type_fifo_d,
+    F_file_type_link_d,
+    F_file_type_mask_d,
+    F_file_type_regular_d,
+    F_file_type_socket_d,
   };
 
-  for (int i = 0; i < 9; ++i) {
+  for (int j = 0; j < 8; ++j) {
 
-    //will_return(__wrap_stat, true);
-    //will_return(__wrap_stat, errnos[i]);
+    for (int i = 0; i < 9; ++i) {
 
-    //const f_status_t status = f_file_is(path);
+      will_return(__wrap_lstat, true);
+      will_return(__wrap_lstat, errnos[i]);
 
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
+      const f_status_t status = f_file_is(path, types[j], F_false);
+
+      assert_int_equal(F_status_set_fine(status), statuss[i]);
+    } // for
+  } // for
+
+  for (int j = 0; j < 8; ++j) {
+
+    for (int i = 0; i < 9; ++i) {
+
+      will_return(__wrap_stat, true);
+      will_return(__wrap_stat, errnos[i]);
+
+      const f_status_t status = f_file_is(path, types[j], F_true);
+
+      assert_int_equal(F_status_set_fine(status), statuss[i]);
+    } // for
   } // for
 }
 
@@ -58,45 +81,75 @@ void test__f_file_is__returns_data_not(void **state) {
 }
 
 void test__f_file_is__returns_false(void **state) {
-/*
+
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
-  struct stat statistics;
+  f_status_t types[] = {
+    F_file_type_block_d,
+    F_file_type_character_d,
+    F_file_type_directory_d,
+    F_file_type_fifo_d,
+    F_file_type_link_d,
+    F_file_type_mask_d,
+    F_file_type_regular_d,
+    F_file_type_socket_d,
+  };
 
-  memset(&statistics, 0, sizeof(struct stat));
+  for (int j = 0; j < 8; ++j) {
 
-  {
-    will_return(__wrap_stat, false);
-    will_return(__wrap_stat, &statistics);
-    will_return(__wrap_stat, 0);
+    struct stat statistics;
 
-    const f_status_t status = f_file_is(path);
+    memset(&statistics, 0, sizeof(struct stat));
 
-    assert_int_equal(status, F_false);
-  }
-  */
+    statistics.st_mode = 1 | types[j];
+
+    for (int i = 0; i < 8; ++i) {
+
+      // Skip what would return true.
+      if (j == i) continue;
+
+      will_return(__wrap_lstat, false);
+      will_return(__wrap_lstat, &statistics);
+      will_return(__wrap_lstat, 0);
+
+      const f_status_t status = f_file_is(path, types[i], F_false);
+
+      assert_int_equal(status, F_false);
+    } // for
+  } // for
 }
 
 void test__f_file_is__returns_true(void **state) {
-/*
+
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
-  struct stat statistics;
+  f_status_t types[] = {
+    F_file_type_block_d,
+    F_file_type_character_d,
+    F_file_type_directory_d,
+    F_file_type_fifo_d,
+    F_file_type_link_d,
+    F_file_type_mask_d,
+    F_file_type_regular_d,
+    F_file_type_socket_d,
+  };
 
-  memset(&statistics, 0, sizeof(struct stat));
+  for (int i = 0; i < 8; ++i) {
 
-  statistics.st_mode = 1 | F_file_type_directory_d;
+    struct stat statistics;
 
-  {
-    will_return(__wrap_stat, false);
-    will_return(__wrap_stat, &statistics);
-    will_return(__wrap_stat, 0);
+    memset(&statistics, 0, sizeof(struct stat));
 
-    const f_status_t status = f_file_is(path);
+    statistics.st_mode = 1 | types[i];
+
+    will_return(__wrap_lstat, false);
+    will_return(__wrap_lstat, &statistics);
+    will_return(__wrap_lstat, 0);
+
+    const f_status_t status = f_file_is(path, types[i], F_false);
 
     assert_int_equal(status, F_true);
-  }
-  */
+  } // for
 }
 
 #ifdef __cplusplus

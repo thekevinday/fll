@@ -5,27 +5,6 @@
 extern "C" {
 #endif
 
-void test__f_file_mode_determine__fails(void **state) {
-
-  int errnos[] = {
-    mock_errno_generic,
-  };
-
-  f_status_t statuss[] = {
-    F_failure,
-  };
-
-  for (int i = 0; i < 1; ++i) {
-
-    //will_return(__wrap_open, true);
-    //will_return(__wrap_open, errnos[i]);
-
-    //const f_status_t status = f_file_mode_determine(path, F_false, &id);
-
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
-  } // for
-}
-
 #ifndef _di_level_0_parameter_checking_
   void test__f_file_mode_determine__parameter_checking(void **state) {
 
@@ -40,16 +19,237 @@ void test__f_file_mode_determine__fails(void **state) {
   }
 #endif // _di_level_0_parameter_checking_
 
-void test__f_file_mode_determine__works(void **state) {
+void test__f_file_mode_determine__works_basic(void **state) {
+
+  const mode_t existing = 0;
 
   {
-    //will_return(__wrap_open, false);
-    //will_return(__wrap_open, 5);
+    f_file_mode_t changes[] = {
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_set_group_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_set_owner_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_sticky_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+    };
 
-    //const f_status_t status = f_file_mode_determine();
+    mode_t changeds[] = {
+      F_file_mode_all_x_d,
+      0,
+      F_file_mode_all_r_d,
+      F_file_mode_special_set_group_d,
+      F_file_mode_special_set_user_d,
+      F_file_mode_special_sticky_d,
+      F_file_mode_all_w_d,
+      F_file_mode_owner_x_d,
+      0,
+      F_file_mode_owner_r_d,
+      F_file_mode_owner_w_d,
+      F_file_mode_group_x_d,
+      0,
+      F_file_mode_group_r_d,
+      F_file_mode_group_w_d,
+      F_file_mode_world_x_d,
+      0,
+      F_file_mode_world_r_d,
+      F_file_mode_world_w_d,
+    };
 
-    //assert_int_equal(status, F_none);
-    //assert_int_equal(id, 5);
+    for (uint8_t i = 0; i < 19; ++i) {
+
+      mode_t changed = 0;
+
+      const f_status_t status = f_file_mode_determine(existing, changes[i], 0, F_false, &changed);
+
+      assert_int_equal(status, F_none);
+      assert_int_equal(changed, changeds[i]);
+    } // for
+  }
+
+  {
+    f_file_mode_t changes[] = {
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_set_group_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_set_owner_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_sticky_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+    };
+
+    mode_t changeds[] = {
+      F_file_mode_all_x_d,
+      F_file_mode_all_x_d,
+      F_file_mode_all_r_d,
+      F_file_mode_special_set_group_d,
+      F_file_mode_special_set_user_d,
+      F_file_mode_special_sticky_d,
+      F_file_mode_all_w_d,
+      F_file_mode_owner_x_d,
+      F_file_mode_owner_x_d,
+      F_file_mode_owner_r_d,
+      F_file_mode_owner_w_d,
+      F_file_mode_group_x_d,
+      F_file_mode_group_x_d,
+      F_file_mode_group_r_d,
+      F_file_mode_group_w_d,
+      F_file_mode_world_x_d,
+      F_file_mode_world_x_d,
+      F_file_mode_world_r_d,
+      F_file_mode_world_w_d,
+    };
+
+    for (uint8_t i = 0; i < 19; ++i) {
+
+      mode_t changed = 0;
+
+      const f_status_t status = f_file_mode_determine(existing, changes[i], 0, F_true, &changed);
+
+      assert_int_equal(status, F_none);
+      assert_int_equal(changed, changeds[i]);
+    } // for
+  }
+}
+
+void test__f_file_mode_determine__works_basic_replace(void **state) {
+
+  const mode_t existing = F_file_mode_all_rwx_d;
+
+  {
+    f_file_mode_t changes[] = {
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_set_group_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_set_owner_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_sticky_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+    };
+
+    mode_t changeds[] = {
+      F_file_mode_all_x_d,
+      F_file_mode_all_x_d,
+      F_file_mode_all_r_d,
+      F_file_mode_special_set_group_d,
+      F_file_mode_special_set_user_d,
+      F_file_mode_special_sticky_d,
+      F_file_mode_all_w_d,
+      F_file_mode_owner_x_d,
+      F_file_mode_owner_x_d,
+      F_file_mode_owner_r_d,
+      F_file_mode_owner_w_d,
+      F_file_mode_group_x_d,
+      F_file_mode_group_x_d,
+      F_file_mode_group_r_d,
+      F_file_mode_group_w_d,
+      F_file_mode_world_x_d,
+      F_file_mode_world_x_d,
+      F_file_mode_world_r_d,
+      F_file_mode_world_w_d,
+    };
+
+    for (uint8_t i = 0; i < 19; ++i) {
+
+      mode_t changed = 0;
+
+      const f_status_t status = f_file_mode_determine(existing, changes[i], F_file_mode_t_replace_all_d, F_false, &changed);
+
+      assert_int_equal(status, F_none);
+      assert_int_equal(changed, changeds[i]);
+    } // for
+  }
+
+  {
+    f_file_mode_t changes[] = {
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_set_group_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_set_owner_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_sticky_d,
+      F_file_mode_t_block_all_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_owner_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_group_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_execute_only_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_read_d,
+      F_file_mode_t_block_world_d & F_file_mode_t_mask_how_add_d & F_file_mode_t_mask_bit_write_d,
+    };
+
+    mode_t changeds[] = {
+      F_file_mode_all_x_d,
+      F_file_mode_all_x_d,
+      F_file_mode_all_r_d,
+      F_file_mode_special_set_group_d,
+      F_file_mode_special_set_user_d,
+      F_file_mode_special_sticky_d,
+      F_file_mode_all_w_d,
+      F_file_mode_owner_x_d,
+      F_file_mode_owner_x_d,
+      F_file_mode_owner_r_d,
+      F_file_mode_owner_w_d,
+      F_file_mode_group_x_d,
+      F_file_mode_group_x_d,
+      F_file_mode_group_r_d,
+      F_file_mode_group_w_d,
+      F_file_mode_world_x_d,
+      F_file_mode_world_x_d,
+      F_file_mode_world_r_d,
+      F_file_mode_world_w_d,
+    };
+
+    for (uint8_t i = 0; i < 19; ++i) {
+
+      mode_t changed = 0;
+
+      const f_status_t status = f_file_mode_determine(existing, changes[i], F_file_mode_t_replace_all_d, F_true, &changed);
+
+      assert_int_equal(status, F_none);
+      assert_int_equal(changed, changeds[i]);
+    } // for
   }
 }
 

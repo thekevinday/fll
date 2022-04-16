@@ -269,6 +269,32 @@ int __wrap_lchown(const char *pathname, uid_t owner, gid_t group) {
   return mock_type(int);
 }
 
+int __wrap_link(const char *oldpath, const char *newpath) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
+int __wrap_linkat(const char *oldpath, const char *newpath) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
 int __wrap_lstat(const char *pathname, struct stat *statbuf) {
 
   const bool failure = mock_type(bool);
@@ -427,7 +453,9 @@ ssize_t __wrap_readlink(const char *pathname, char *buf, size_t bufsiz) {
     return -1;
   }
 
-  buf = mock_type(char *);
+  char *buffer = mock_type(char *);
+
+  memcpy(buf, buffer, bufsiz);
 
   return mock_type(int);
 }
@@ -442,7 +470,9 @@ ssize_t __wrap_readlinkat(int dirfd, const char *pathname, char *buf, size_t buf
     return -1;
   }
 
-  buf = mock_type(char *);
+  char *buffer = mock_type(char *);
+
+  memcpy(buf, buffer, bufsiz);
 
   return mock_type(int);
 }

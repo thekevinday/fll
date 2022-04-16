@@ -48,6 +48,8 @@ extern int __wrap_fsync(int fd);
 extern void __wrap_funlockfile(FILE *filehandle);
 extern size_t __wrap_fwrite_unlocked(const void *ptr, size_t size, size_t nmemb, FILE *stream);
 extern int __wrap_lchown(const char *pathname, uid_t owner, gid_t group);
+extern int __wrap_link(const char *oldpath, const char *newpath);
+extern int __wrap_linkat(const char *oldpath, const char *newpath);
 extern int __wrap_lstat(const char *pathname, struct stat *statbuf);
 extern int __wrap_mkdir(const char *pathname, mode_t mode);
 extern int __wrap_mkdirat(int dirfd, const char *pathname, mode_t mode);

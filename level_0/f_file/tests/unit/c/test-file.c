@@ -114,8 +114,6 @@ int main(void) {
     cmocka_unit_test(test__f_file_group_read__returns_data_not),
     cmocka_unit_test(test__f_file_group_read__works),
 
-/*
-
     cmocka_unit_test(test__f_file_is__fails),
     cmocka_unit_test(test__f_file_is__returns_data_not),
     cmocka_unit_test(test__f_file_is__returns_false),
@@ -126,17 +124,32 @@ int main(void) {
     cmocka_unit_test(test__f_file_is_at__returns_false),
     cmocka_unit_test(test__f_file_is_at__returns_true),
 
-    // f_file_link
+    cmocka_unit_test(test__f_file_link__fails),
+    cmocka_unit_test(test__f_file_link__returns_data_not),
+    cmocka_unit_test(test__f_file_link__works),
 
-    // f_file_link_at
+    cmocka_unit_test(test__f_file_link_at__fails),
+    cmocka_unit_test(test__f_file_link_at__returns_data_not),
+    cmocka_unit_test(test__f_file_link_at__works),
 
-    // f_file_link_hard
+    cmocka_unit_test(test__f_file_link_hard__fails),
+    cmocka_unit_test(test__f_file_link_hard__returns_data_not),
+    cmocka_unit_test(test__f_file_link_hard__works),
 
-    // f_file_link_hard_at
+    cmocka_unit_test(test__f_file_link_hard_at__fails),
+    cmocka_unit_test(test__f_file_link_hard_at__returns_data_not),
+    cmocka_unit_test(test__f_file_link_hard_at__works),
 
-    // f_file_link_read
+    cmocka_unit_test(test__f_file_link_read__fails),
+    cmocka_unit_test(test__f_file_link_read__returns_data_not),
+    cmocka_unit_test(test__f_file_link_read__works),
 
-    // f_file_link_read_at
+    cmocka_unit_test(test__f_file_link_read_at__fails),
+    cmocka_unit_test(test__f_file_link_read_at__returns_data_not),
+    cmocka_unit_test(test__f_file_link_read_at__works),
+
+    cmocka_unit_test(test__f_file_mode_determine__works_basic),
+    cmocka_unit_test(test__f_file_mode_determine__works_basic_replace),
 
     // f_file_mode_determine
 
@@ -156,6 +169,7 @@ int main(void) {
 
     // f_file_name_directory
 
+/*
     cmocka_unit_test(test__f_file_open__fails),
     cmocka_unit_test(test__f_file_open__returns_data_not),
     cmocka_unit_test(test__f_file_open__works),

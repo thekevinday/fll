@@ -11,13 +11,6 @@
 #define _TEST__F_file_mode_determine_h
 
 /**
- * Test that function fails.
- *
- * @see f_file_mode_determine()
- */
-extern void test__f_file_mode_determine__fails(void **state);
-
-/**
  * Test that parameter checking works as expected.
  *
  * @see f_file_mode_determine()
@@ -27,10 +20,17 @@ extern void test__f_file_mode_determine__fails(void **state);
 #endif // _di_level_0_parameter_checking_
 
 /**
- * Test that function works.
+ * Test that function works for basic combinations.
  *
  * @see f_file_mode_determine()
  */
-extern void test__f_file_mode_determine__works(void **state);
+extern void test__f_file_mode_determine__works_basic(void **state);
+
+/**
+ * Test that function works for basic combinations using replace.
+ *
+ * @see f_file_mode_determine()
+ */
+extern void test__f_file_mode_determine__works_basic_replace(void **state);
 
 #endif // _TEST__F_file_mode_determine_h
