@@ -404,21 +404,12 @@ extern "C" {
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
   f_status_t private_f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
 
-    // Create a NULL terminated string based on file stat.
-    if (link_stat.st_size + 1 > target->size) {
-      if (link_stat.st_size + 1 > F_array_length_t_size_d) {
-        return F_status_set_error(F_string_too_large);
-      }
+    target->used = 0;
 
-      const f_status_t status = f_string_dynamic_resize(link_stat.st_size + 1, target);
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = f_string_dynamic_increase_by(link_stat.st_size + 1, target);
+    if (F_status_is_error(status)) return status;
 
-    memset(target->string, 0, sizeof(f_char_t) * (target->used + 1));
-
-    target->used = link_stat.st_size;
-
-    if (readlink(path.string, target->string, target->used) < 0) {
+    if (readlink(path.string, target->string, link_stat.st_size) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -432,6 +423,11 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
+    target->used = link_stat.st_size;
+
+    status = f_string_dynamic_terminate_after(target);
+    if (F_status_is_error(status)) return status;
+
     return F_none;
   }
 #endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
@@ -439,21 +435,12 @@ extern "C" {
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
   f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
 
-    // Create a NULL terminated string based on file stat.
-    if (link_stat.st_size + 1 > target->size) {
-      if (link_stat.st_size + 1 > F_array_length_t_size_d) {
-        return F_status_set_error(F_string_too_large);
-      }
+    target->used = 0;
 
-      const f_status_t status = f_string_dynamic_resize(link_stat.st_size + 1, target);
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = f_string_dynamic_increase_by(link_stat.st_size + 1, target);
+    if (F_status_is_error(status)) return status;
 
-    memset(target->string, 0, sizeof(f_char_t) * (target->used + 1));
-
-    target->used = link_stat.st_size;
-
-    if (readlinkat(at_id, path.string, target->string, target->used) < 0) {
+    if (readlinkat(at_id, path.string, target->string, link_stat.st_size) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -467,6 +454,11 @@ extern "C" {
 
       return F_status_set_error(F_failure);
     }
+
+    target->used = link_stat.st_size;
+
+    status = f_string_dynamic_terminate_after(target);
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }

@@ -979,7 +979,13 @@ extern "C" {
  *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
  *   F_failure (with error bit) for any other error.
  *
+ *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after()
+ *
  * @see readlink()
+ *
+ * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_link_read_
   extern f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target);
@@ -1018,7 +1024,13 @@ extern "C" {
  *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
  *   F_failure (with error bit) for any other error.
  *
+ *   Errors (with error bit) from: f_string_dynamic_increase_by()
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after()
+ *
  * @see readlinkat()
+ *
+ * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_link_read_at_
   extern f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target);

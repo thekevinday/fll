@@ -543,6 +543,8 @@ extern "C" {
  *
  * @see f_file_copy()
  * @see f_file_link_read()
+ * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_terminate_after()
  */
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
   extern f_status_t private_f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
@@ -581,6 +583,8 @@ extern "C" {
  *
  * @see f_file_copy_at()
  * @see f_file_link_read_at()
+ * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_terminate_after()
  */
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
   extern f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
