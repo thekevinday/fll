@@ -513,7 +513,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if (stat_file.st_mode == (S_IFMT & S_IFDIR)) {
+    if (macro_f_file_type_get(stat_file.st_mode) == type) {
       return F_true;
     }
 
