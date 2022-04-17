@@ -333,7 +333,17 @@ extern "C" {
  *
  * The second type is f_file_mode_t, which utilizes 8-bit types with the following structure:
  *
- *   There should only be a single bit for each 'r', 'w', 'x', and 'X' bit (as well as 'S', 's', and 't'):
+ *   The f_file_mode_t structure is a 32-bit unsigned integer designed to directly represent the special, owner, group, and world mode bits along with their respective read, write, and execute bits (setuid, setgid, and sticky for the special bits).
+ *
+ *   Each bit is structured in 8-bit blocks as follows:
+ *     [ special ][ owner ][ group ][ world ]
+ *
+ *   Each block, from left to right, has 4 bits representing "subtract" followed by 4 bits representing "add".
+ *   As an exceptional case, the first bit (left most bit) for the "special" block is not used and expected to be 0.
+ *
+ *   Each of these 4-bits, respectively, represents "special", "read", "write", and "execute".
+ *
+ *   Each bit maps to some character 'r', 'w', 'x', and 'X' bit (as well as 'S', 's', and 't' for each "special"):
  *     'r' = read bit.
  *     'w' = write bit.
  *     'x' = execute bit.
@@ -341,6 +351,23 @@ extern "C" {
  *     'S' = set user bit (setuid).
  *     's' = set group bit (setgid).
  *     't' = sticky bit.
+ *
+ *   There exists both an "add" and a "subtract" block so that both operations can be passed.
+ *   Such as "+r,-w" meaning add read and subtract write.
+ *
+ *   For replacements, additional bits and masks are provided which are intended to be used in a separate variable given that only 8-bits are needed for replacements.
+ *
+ *   The replacements are, also from left to write, are broken up into the following bits of a single byte:
+ *     [ unused ] [ unused ] [ unused ] [ directory ] [ special ] [ owner ] [ group ] [ world ]
+ *
+ *   The directory bit is a special case bit used to declare that these bits are in respect to a directory.
+ *   Directory has special representation when it comes to the execute bit, namely when the "execute only" mode is being applied.
+ *   The directory bit may be applied even when there are no replacements.
+ *   This can be used to designate that the "add" or "subtract" is being applied to a directory.
+ *
+ *   When, say the "owner" bit is set in this replacement, this means that the owner bit is to be replaced before performing any add/subtract operations.
+ *   When using the replacement variable, the "subtract" is considered a no-op and is ignored.
+ *   Use only the "add" bits in conjuction with respective "replace" bits.
  *
  * The file mode macros with "f_file_mode_" prefix (has no "_t") refer to the first type (mode_t).
  * The file mode macros with "f_file_mode_t" prefix refer to the second type (f_file_mode_t).

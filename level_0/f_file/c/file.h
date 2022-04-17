@@ -1138,9 +1138,17 @@ extern "C" {
  * @param mode
  *   The determined mode.
  *   This uses bitwise data.
+ *
+ *   See the f_file_mode_t documentation for details.
  * @param replace
  *   The determined modes that are to be replaced, such as: F_file_mode_t_replace_owner_d.
  *   This uses bitwise data.
+ *
+ *   The flags F_file_mode_t_replace_* are used to designate which mask bits are to be replaced.
+ *   For example F_file_mode_t_replace_owner_d would designate that the owner bits are to be replaced.
+ *   A value of 0 means that there are no replacements being made.
+ *
+ *   Replacements replace the entire existing mode values where as "add" and "subtract" add or subtract modes, respectively, to the existing mode values.
  *
  * @return
  *   F_none on success.
@@ -1149,8 +1157,6 @@ extern "C" {
  *   F_syntax (with error bit) if the string fails to follow the syntax rules.
  *
  *   The parameters how, mode_normal, and mode_executable are all set to 0 on error.
- *
- * @see private_f_file_mode_determine()
  */
 #ifndef _di_f_file_mode_from_string_
   extern f_status_t f_file_mode_from_string(const f_string_static_t code, const mode_t umask, f_file_mode_t * const mode, uint8_t * const replace);
