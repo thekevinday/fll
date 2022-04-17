@@ -640,6 +640,7 @@ void test__f_file_copy__fails_for_link(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_link_d;
+    statistics.st_size = 1;
 
     for (int i = 0; i < 10; ++i) {
 
@@ -704,6 +705,7 @@ void test__f_file_copy__fails_for_link(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_link_d;
+    statistics.st_size = 1;
 
     f_char_t buffer[1];
 
@@ -829,6 +831,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     for (int i = 0; i < 21; ++i) {
 
@@ -869,6 +872,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     for (int i = 0; i < 6; ++i) {
 
@@ -912,6 +916,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     for (int i = 0; i < 6; ++i) {
 
@@ -968,6 +973,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     for (int i = 0; i < 11; ++i) {
 
@@ -1047,6 +1053,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     for (int i = 0; i < 11; ++i) {
 
@@ -1129,6 +1136,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     for (int i = 0; i < 11; ++i) {
 
@@ -1197,6 +1205,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     f_char_t buffer[1];
 
@@ -1288,6 +1297,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     f_char_t buffer[1];
 
@@ -1391,6 +1401,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_socket_d;
+    statistics.st_size = 1;
 
     for (int i = 0; i < 15; ++i) {
 
@@ -1451,6 +1462,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_socket_d;
+    statistics.st_size = 1;
 
     f_char_t buffer[1];
 
@@ -1515,6 +1527,7 @@ void test__f_file_copy__works_for_block(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_block_d;
+    statistics.st_size = 1;
 
     will_return(__wrap_stat, false);
     will_return(__wrap_stat, &statistics);
@@ -1543,6 +1556,7 @@ void test__f_file_copy__works_for_character(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_character_d;
+    statistics.st_size = 1;
 
     will_return(__wrap_stat, false);
     will_return(__wrap_stat, &statistics);
@@ -1571,6 +1585,7 @@ void test__f_file_copy__works_for_directory(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_directory_d;
+    statistics.st_size = 1;
 
     will_return(__wrap_stat, false);
     will_return(__wrap_stat, &statistics);
@@ -1599,6 +1614,7 @@ void test__f_file_copy__works_for_fifo(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_fifo_d;
+    statistics.st_size = 1;
 
     will_return(__wrap_stat, false);
     will_return(__wrap_stat, &statistics);
@@ -1627,6 +1643,7 @@ void test__f_file_copy__works_for_link(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_link_d;
+    statistics.st_size = 1;
 
     f_char_t buffer[1];
 
@@ -1660,6 +1677,7 @@ void test__f_file_copy__works_for_regular(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
 
     f_char_t buffer[1];
 
@@ -1727,6 +1745,7 @@ void test__f_file_copy__works_for_socket(void **state) {
     memset(&statistics, 0, sizeof(struct stat));
 
     statistics.st_mode = 1 | F_file_type_socket_d;
+    statistics.st_size = 1;
 
     will_return(__wrap_stat, false);
     will_return(__wrap_stat, &statistics);

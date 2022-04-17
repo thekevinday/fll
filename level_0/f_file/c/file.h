@@ -957,8 +957,9 @@ extern "C" {
  *
  * @param path
  *   The path file name.
- * @param link_stat
- *   The link file statistics.
+ * @param dereference
+ *   Set to TRUE to dereference symlinks.
+ *   Set to FALSE to operate on the symlink itself.
  * @param target
  *   Will be replaced with the path in which the link points to.
  *   Will be NULL terminated with the NULL at target.string[target.used];
@@ -982,13 +983,15 @@ extern "C" {
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *   Errors (with error bit) from: f_string_dynamic_terminate_after()
  *
+ * @see lstat()
  * @see readlink()
+ * @see stat()
  *
  * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_link_read_
-  extern f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target);
+  extern f_status_t f_file_link_read(const f_string_static_t path, const bool dereference, f_string_dynamic_t * const target);
 #endif // _di_f_file_link_read_
 
 /**
@@ -1001,8 +1004,8 @@ extern "C" {
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
- * @param link_stat
- *   The link file statistics.
+ * @param flag
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  * @param target
  *   Will be replaced with the path in which the link points to.
  *   Will be NULL terminated with the NULL at target.string[target.used];
@@ -1027,13 +1030,14 @@ extern "C" {
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *   Errors (with error bit) from: f_string_dynamic_terminate_after()
  *
+ * @see fstatat()
  * @see readlinkat()
  *
  * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_link_read_at_
-  extern f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target);
+  extern f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const int flag, f_string_dynamic_t * const target);
 #endif // _di_f_file_link_read_at_
 
 /**
@@ -1204,6 +1208,8 @@ extern "C" {
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
+ * @param flag
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
  * @param mode
  *   The read file mode.
  *
@@ -1224,7 +1230,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_mode_read_at_
-  extern f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, mode_t * const mode);
+  extern f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, const int flag, mode_t * const mode);
 #endif // _di_f_file_mode_read_at_
 
 /**

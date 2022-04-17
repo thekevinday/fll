@@ -188,7 +188,7 @@ extern "C" {
     if (macro_f_file_type_is_link(source_stat.st_mode)) {
       f_string_dynamic_t target = f_string_dynamic_t_initialize;
 
-      status = private_f_file_link_read(source, source_stat, &target);
+      status = private_f_file_link_read(source, source_stat.st_size, &target);
 
       if (F_status_is_error(status)) {
         f_string_dynamic_resize(0, &target);
@@ -609,9 +609,8 @@ extern "C" {
 #endif // _di_f_file_link_hard_at_
 
 #ifndef _di_f_file_link_read_
-  f_status_t f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
+  f_status_t f_file_link_read(const f_string_static_t path, const bool dereference, f_string_dynamic_t * const target) {
     #ifndef _di_level_0_parameter_checking_
-      if (!link_stat.st_size) return F_status_set_error(F_parameter);
       if (!target) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -619,14 +618,22 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_f_file_link_read(path, link_stat, target);
+    struct stat stat_file;
+
+    memset(&stat_file, 0, sizeof(struct stat));
+
+    {
+      const f_status_t status = private_f_file_stat(path, dereference, &stat_file);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_f_file_link_read(path, stat_file.st_size, target);
   }
 #endif // _di_f_file_link_read_
 
 #ifndef _di_f_file_link_read_at_
-  f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
+  f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const int flag, f_string_dynamic_t * const target) {
     #ifndef _di_level_0_parameter_checking_
-      if (!link_stat.st_size) return F_status_set_error(F_parameter);
       if (!target) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -634,7 +641,16 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_f_file_link_read_at(at_id, path, link_stat, target);
+    struct stat stat_file;
+
+    memset(&stat_file, 0, sizeof(struct stat));
+
+    {
+      const f_status_t status = private_f_file_stat_at(at_id, path, flag, &stat_file);
+      if (F_status_is_error(status)) return status;
+    }
+
+    return private_f_file_link_read_at(at_id, path, stat_file.st_size, target);
   }
 #endif // _di_f_file_link_read_at_
 
@@ -1343,17 +1359,21 @@ extern "C" {
 #endif // _di_f_file_mode_read_
 
 #ifndef _di_f_file_mode_read_at_
-  f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, mode_t * const mode) {
+  f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, const int flag, mode_t * const mode) {
     #ifndef _di_level_0_parameter_checking_
       if (!mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
 
     struct stat stat_file;
 
     memset(&stat_file, 0, sizeof(struct stat));
 
     {
-      const f_status_t status = private_f_file_stat(path, F_true, &stat_file);
+      const f_status_t status = private_f_file_stat_at(at_id, path, F_true, &stat_file);
       if (F_status_is_error(status)) return status;
     }
 

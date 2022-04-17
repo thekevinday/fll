@@ -47,10 +47,14 @@ void test__f_file_link_read__fails(void **state) {
 
     buffer.used = 0;
 
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
+
     will_return(__wrap_readlink, true);
     will_return(__wrap_readlink, errnos[i]);
 
-    const f_status_t status = f_file_link_read(path, statistics, &buffer);
+    const f_status_t status = f_file_link_read(path, F_true, &buffer);
 
     assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for
@@ -68,7 +72,7 @@ void test__f_file_link_read__fails(void **state) {
     f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
     {
-      const f_status_t status = f_file_link_read(f_string_empty_s, statistics, 0);
+      const f_status_t status = f_file_link_read(f_string_empty_s, F_true, 0);
 
       assert_int_equal(F_status_set_fine(status), F_parameter);
     }
@@ -90,7 +94,7 @@ void test__f_file_link_read__returns_data_not(void **state) {
   f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
   {
-    const f_status_t status = f_file_link_read(f_string_empty_s, statistics, &buffer);
+    const f_status_t status = f_file_link_read(f_string_empty_s, F_true, &buffer);
 
     assert_int_equal(status, F_data_not);
   }
@@ -113,11 +117,15 @@ void test__f_file_link_read__works(void **state) {
   char source[2] = { 'x', 0 };
 
   {
+    will_return(__wrap_stat, false);
+    will_return(__wrap_stat, &statistics);
+    will_return(__wrap_stat, 0);
+
     will_return(__wrap_readlink, false);
     will_return(__wrap_readlink, source);
     will_return(__wrap_readlink, 0);
 
-    const f_status_t status = f_file_link_read(path, statistics, &buffer);
+    const f_status_t status = f_file_link_read(path, F_true, &buffer);
 
     assert_int_equal(status, F_none);
   }

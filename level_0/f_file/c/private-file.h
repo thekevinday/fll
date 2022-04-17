@@ -520,8 +520,8 @@ extern "C" {
  *
  * @param path
  *   The path file name.
- * @param link_stat
- *   The link file statistics.
+ * @param size
+ *   The file size in bytes, such as (struct stat).st_size.
  * @param target
  *   Will be replaced with the path in which the link points to.
  *   Will be NULL terminated with the NULL at target.string[target.used];
@@ -547,7 +547,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
-  extern f_status_t private_f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_link_read(const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
 
 /**
@@ -559,8 +559,8 @@ extern "C" {
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
- * @param link_stat
- *   The link file statistics.
+ * @param size
+ *   The file size in bytes, such as (struct stat).st_size.
  * @param target
  *   Will be replaced with the path in which the link points to.
  *   Will be NULL terminated with the NULL at target.string[target.used];
@@ -587,7 +587,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
-  extern f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
 
 /**

@@ -402,28 +402,30 @@ extern "C" {
 #endif // !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
-  f_status_t private_f_file_link_read(const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
+  f_status_t private_f_file_link_read(const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) {
 
     target->used = 0;
 
-    f_status_t status = f_string_dynamic_increase_by(link_stat.st_size + 1, target);
+    f_status_t status = f_string_dynamic_increase_by(size + 1, target);
     if (F_status_is_error(status)) return status;
 
-    if (readlink(path.string, target->string, link_stat.st_size) < 0) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == EIO) return F_status_set_error(F_input_output);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
+    if (size) {
+      if (readlink(path.string, target->string, size) < 0) {
+        if (errno == EACCES) return F_status_set_error(F_access_denied);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == ELOOP) return F_status_set_error(F_loop);
+        if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+        if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+        if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+        if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
 
-      return F_status_set_error(F_failure);
+        return F_status_set_error(F_failure);
+      }
     }
 
-    target->used = link_stat.st_size;
+    target->used = size;
 
     status = f_string_dynamic_terminate_after(target);
     if (F_status_is_error(status)) return status;
@@ -433,29 +435,31 @@ extern "C" {
 #endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const struct stat link_stat, f_string_dynamic_t * const target) {
+  f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) {
 
     target->used = 0;
 
-    f_status_t status = f_string_dynamic_increase_by(link_stat.st_size + 1, target);
+    f_status_t status = f_string_dynamic_increase_by(size + 1, target);
     if (F_status_is_error(status)) return status;
 
-    if (readlinkat(at_id, path.string, target->string, link_stat.st_size) < 0) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == EIO) return F_status_set_error(F_input_output);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
+    if (size) {
+      if (readlinkat(at_id, path.string, target->string, size) < 0) {
+        if (errno == EACCES) return F_status_set_error(F_access_denied);
+        if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == ELOOP) return F_status_set_error(F_loop);
+        if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+        if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+        if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+        if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
 
-      return F_status_set_error(F_failure);
+        return F_status_set_error(F_failure);
+      }
     }
 
-    target->used = link_stat.st_size;
+    target->used = size;
 
     status = f_string_dynamic_terminate_after(target);
     if (F_status_is_error(status)) return status;
