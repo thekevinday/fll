@@ -164,9 +164,13 @@ int main(void) {
     cmocka_unit_test(test__f_file_mode_read_at__returns_data_not),
     cmocka_unit_test(test__f_file_mode_read_at__works),
 
-    // f_file_mode_set
+    cmocka_unit_test(test__f_file_mode_set__fails),
+    cmocka_unit_test(test__f_file_mode_set__returns_data_not),
+    cmocka_unit_test(test__f_file_mode_set__works),
 
-    // f_file_mode_set_at
+    cmocka_unit_test(test__f_file_mode_set_at__fails),
+    cmocka_unit_test(test__f_file_mode_set_at__returns_data_not),
+    cmocka_unit_test(test__f_file_mode_set_at__works),
 
     // f_file_mode_to_mode
 
