@@ -151,9 +151,10 @@ int main(void) {
     cmocka_unit_test(test__f_file_mode_determine__works_basic),
     cmocka_unit_test(test__f_file_mode_determine__works_basic_replace),
 
-    // f_file_mode_determine
-
-    // f_file_mode_from_string
+    cmocka_unit_test(test__f_file_mode_from_string__fails_basic),
+    cmocka_unit_test(test__f_file_mode_from_string__returns_data_not),
+    cmocka_unit_test(test__f_file_mode_from_string__works_basic_alphabet),
+    cmocka_unit_test(test__f_file_mode_from_string__works_basic_digit),
 
     // f_file_mode_read
 
