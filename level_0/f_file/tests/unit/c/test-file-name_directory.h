@@ -11,13 +11,6 @@
 #define _TEST__F_file_name_directory_h
 
 /**
- * Test that function fails.
- *
- * @see f_file_name_directory()
- */
-extern void test__f_file_name_directory__fails(void **state);
-
-/**
  * Test that parameter checking works as expected.
  *
  * @see f_file_name_directory()

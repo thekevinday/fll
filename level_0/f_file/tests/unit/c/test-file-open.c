@@ -11,10 +11,10 @@ void test__f_file_open__fails(void **state) {
 
   int errnos[] = {
     EACCES,
+    EDQUOT,
     EEXIST,
     EFAULT,
     EFBIG,
-    EDQUOT,
     EINTR,
     EINVAL,
     EISDIR,
@@ -35,10 +35,10 @@ void test__f_file_open__fails(void **state) {
 
   f_status_t statuss[] = {
     F_access_denied,
+    F_filesystem_quota_block,
     F_file_found,
     F_buffer,
     F_number_overflow,
-    F_filesystem_quota_block,
     F_interrupt,
     F_parameter,
     F_directory,
@@ -95,7 +95,7 @@ void test__f_file_open__returns_data_not(void **state) {
 }
 
 void test__f_file_open__works(void **state) {
-/*
+
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
@@ -107,9 +107,8 @@ void test__f_file_open__works(void **state) {
     const f_status_t status = f_file_open(path, 0, &file);
 
     assert_int_equal(status, F_none);
-    assert_int_equal(id, 5);
+    assert_int_equal(file.id, 5);
   }
-  */
 }
 
 #ifdef __cplusplus

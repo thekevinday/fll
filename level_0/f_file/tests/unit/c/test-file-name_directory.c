@@ -5,27 +5,6 @@
 extern "C" {
 #endif
 
-void test__f_file_name_directory__fails(void **state) {
-
-  int errnos[] = {
-    mock_errno_generic,
-  };
-
-  f_status_t statuss[] = {
-    F_failure,
-  };
-
-  for (int i = 0; i < 1; ++i) {
-
-    //will_return(__wrap_open, true);
-    //will_return(__wrap_open, errnos[i]);
-
-    //const f_status_t status = f_file_name_directory(path, F_false, &id);
-
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
-  } // for
-}
-
 #ifndef _di_level_0_parameter_checking_
   void test__f_file_name_directory__parameter_checking(void **state) {
 
@@ -39,24 +18,63 @@ void test__f_file_name_directory__fails(void **state) {
 
 void test__f_file_name_directory__returns_data_not(void **state) {
 
-  {
-    //const f_status_t status = f_file_name_directory(f_string_empty_s);
+  f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
-    //assert_int_equal(status, F_data_not);
+  {
+    const f_status_t status = f_file_name_directory(f_string_empty_s, &buffer);
+
+    assert_int_equal(status, F_data_not);
   }
+
+  f_string_dynamic_resize(0, &buffer);
 }
 
 void test__f_file_name_directory__works(void **state) {
 
-  {
-    //will_return(__wrap_open, false);
-    //will_return(__wrap_open, 5);
+  f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
-    //const f_status_t status = f_file_name_directory();
+  f_string_static_t paths[] = {
+    macro_f_string_static_t_initialize("/a", 0, 2),
+    macro_f_string_static_t_initialize("/a/b", 0, 4),
+    macro_f_string_static_t_initialize("/a/b/c", 0, 6),
+    macro_f_string_static_t_initialize("/a/", 0, 3),
+    macro_f_string_static_t_initialize("/a/b/", 0, 5),
+    macro_f_string_static_t_initialize("/a/b/c/", 0, 7),
+    macro_f_string_static_t_initialize("a", 0, 1),
+    macro_f_string_static_t_initialize("a/b", 0, 3),
+    macro_f_string_static_t_initialize("a/b/c", 0, 5),
+    macro_f_string_static_t_initialize("a/", 0, 2),
+    macro_f_string_static_t_initialize("a/b/", 0, 4),
+    macro_f_string_static_t_initialize("a/b/c/", 0, 6),
+  };
 
-    //assert_int_equal(status, F_none);
-    //assert_int_equal(id, 5);
-  }
+  f_string_static_t bases[] = {
+    macro_f_string_static_t_initialize("/", 0, 1),
+    macro_f_string_static_t_initialize("/a", 0, 2),
+    macro_f_string_static_t_initialize("/a/b", 0, 4),
+    macro_f_string_static_t_initialize("/", 0, 1),
+    macro_f_string_static_t_initialize("/a", 0, 2),
+    macro_f_string_static_t_initialize("/a/b", 0, 4),
+    macro_f_string_static_t_initialize("", 0, 0),
+    macro_f_string_static_t_initialize("a", 0, 1),
+    macro_f_string_static_t_initialize("a/b", 0, 3),
+    macro_f_string_static_t_initialize("", 0, 0),
+    macro_f_string_static_t_initialize("a", 0, 1),
+    macro_f_string_static_t_initialize("a/b", 0, 3),
+  };
+
+  for (uint8_t i = 0; i < 12; ++i) {
+
+    buffer.used = 0;
+
+    const f_status_t status = f_file_name_directory(paths[i], &buffer);
+
+    assert_int_equal(status, F_none);
+    assert_int_equal(buffer.used, bases[i].used);
+    assert_string_equal(buffer.string, bases[i].string);
+  } // for
+
+  f_string_dynamic_resize(0, &buffer);
 }
 
 #ifdef __cplusplus

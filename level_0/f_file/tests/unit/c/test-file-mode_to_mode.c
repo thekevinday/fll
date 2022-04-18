@@ -5,27 +5,6 @@
 extern "C" {
 #endif
 
-void test__f_file_mode_to_mode__fails(void **state) {
-
-  int errnos[] = {
-    mock_errno_generic,
-  };
-
-  f_status_t statuss[] = {
-    F_failure,
-  };
-
-  for (int i = 0; i < 1; ++i) {
-
-    //will_return(__wrap_open, true);
-    //will_return(__wrap_open, errnos[i]);
-
-    //const f_status_t status = f_file_mode_to_mode(path, F_false, &id);
-
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
-  } // for
-}
-
 #ifndef _di_level_0_parameter_checking_
   void test__f_file_mode_to_mode__parameter_checking(void **state) {
 
@@ -41,15 +20,77 @@ void test__f_file_mode_to_mode__fails(void **state) {
 
 void test__f_file_mode_to_mode__works(void **state) {
 
-  {
-    //will_return(__wrap_open, false);
-    //will_return(__wrap_open, 5);
+  f_file_mode_t file_modes[] = {
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_owner_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_write_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_owner_d & F_file_mode_t_mask_bit_read_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_owner_d & F_file_mode_t_mask_bit_write_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_owner_d & F_file_mode_t_mask_bit_execute_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_owner_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_write_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_owner_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_owner_d & (F_file_mode_t_mask_bit_write_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_group_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_write_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_group_d & F_file_mode_t_mask_bit_read_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_group_d & F_file_mode_t_mask_bit_write_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_group_d & F_file_mode_t_mask_bit_execute_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_group_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_write_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_group_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_group_d & (F_file_mode_t_mask_bit_write_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_world_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_write_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_read_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_write_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_world_d & F_file_mode_t_mask_bit_execute_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_world_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_write_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_world_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_world_d & (F_file_mode_t_mask_bit_write_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_all_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_write_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_all_d & F_file_mode_t_mask_bit_read_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_all_d & F_file_mode_t_mask_bit_write_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_all_d & F_file_mode_t_mask_bit_execute_d,
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_all_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_write_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_all_d & (F_file_mode_t_mask_bit_read_d | F_file_mode_t_mask_bit_execute_d),
+    F_file_mode_t_mask_how_add_d & F_file_mode_t_block_all_d & (F_file_mode_t_mask_bit_write_d | F_file_mode_t_mask_bit_execute_d),
+  };
 
-    //const f_status_t status = f_file_mode_to_mode();
+  f_file_mode_t modes[] = {
+    F_file_mode_owner_rwx_d,
+    F_file_mode_owner_r_d,
+    F_file_mode_owner_w_d,
+    F_file_mode_owner_x_d,
+    F_file_mode_owner_rw_d,
+    F_file_mode_owner_rx_d,
+    F_file_mode_owner_wx_d,
+    F_file_mode_group_rwx_d,
+    F_file_mode_group_r_d,
+    F_file_mode_group_w_d,
+    F_file_mode_group_x_d,
+    F_file_mode_group_rw_d,
+    F_file_mode_group_rx_d,
+    F_file_mode_group_wx_d,
+    F_file_mode_world_rwx_d,
+    F_file_mode_world_r_d,
+    F_file_mode_world_w_d,
+    F_file_mode_world_x_d,
+    F_file_mode_world_rw_d,
+    F_file_mode_world_rx_d,
+    F_file_mode_world_wx_d,
+    F_file_mode_all_rwx_d,
+    F_file_mode_all_r_d,
+    F_file_mode_all_w_d,
+    F_file_mode_all_x_d,
+    F_file_mode_all_rw_d,
+    F_file_mode_all_rx_d,
+    F_file_mode_all_wx_d,
+  };
 
-    //assert_int_equal(status, F_none);
-    //assert_int_equal(id, 5);
-  }
+  for (f_array_length_t i = 0; i < 28; ++i) {
+
+    mode_t mode = 0;
+
+    const f_status_t status = f_file_mode_to_mode(file_modes[i], &mode);
+
+    assert_int_equal(status, F_none);
+    assert_int_equal(mode, modes[i]);
+  } // for
 }
 
 #ifdef __cplusplus

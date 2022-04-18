@@ -11,13 +11,6 @@
 #define _TEST__F_file_name_base_h
 
 /**
- * Test that function fails.
- *
- * @see f_file_name_base()
- */
-extern void test__f_file_name_base__fails(void **state);
-
-/**
  * Test that parameter checking works as expected.
  *
  * @see f_file_name_base()

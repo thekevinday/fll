@@ -43,7 +43,8 @@ void test__f_file_clone__fails_during_read_write(void **state) {
     will_return(__wrap_open, 0);
 
     will_return(__wrap_read, false);
-    will_return(__wrap_read, (void *) buffer);
+    will_return(__wrap_read, buffer);
+    will_return(__wrap_read, 1);
     will_return(__wrap_read, 1);
 
     will_return(__wrap_write, false);
@@ -1090,7 +1091,8 @@ void test__f_file_clone__fails_for_regular(void **state) {
       will_return(__wrap_open, 0);
 
       will_return(__wrap_read, false);
-      will_return(__wrap_read, (void *) buffer);
+      will_return(__wrap_read, buffer);
+      will_return(__wrap_read, 1);
       will_return(__wrap_read, 1);
 
       will_return(__wrap_write, true);
@@ -1204,14 +1206,16 @@ void test__f_file_clone__works_for_regular(void **state) {
     will_return(__wrap_open, 0);
 
     will_return(__wrap_read, false);
-    will_return(__wrap_read, (void *) buffer);
+    will_return(__wrap_read, buffer);
+    will_return(__wrap_read, 1);
     will_return(__wrap_read, 1);
 
     will_return(__wrap_write, false);
     will_return(__wrap_write, 1);
 
     will_return(__wrap_read, false);
-    will_return(__wrap_read, (void *) buffer);
+    will_return(__wrap_read, buffer);
+    will_return(__wrap_read, 0);
     will_return(__wrap_read, 0);
 
     will_return(__wrap_fsync, false);

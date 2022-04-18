@@ -438,7 +438,12 @@ ssize_t __wrap_read(int fd, void *buf, size_t count) {
     return -1;
   }
 
-  buf = mock_type(void *);
+  char *buffer = mock_type(char *);
+  size_t size = mock_type(size_t);
+
+  if (size) {
+    memcpy(buf, buffer, size);
+  }
 
   return mock_type(int);
 }

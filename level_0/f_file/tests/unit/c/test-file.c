@@ -172,13 +172,14 @@ int main(void) {
     cmocka_unit_test(test__f_file_mode_set_at__returns_data_not),
     cmocka_unit_test(test__f_file_mode_set_at__works),
 
-    // f_file_mode_to_mode
+    cmocka_unit_test(test__f_file_mode_to_mode__works),
 
-    // f_file_name_base
+    cmocka_unit_test(test__f_file_name_base__returns_data_not),
+    cmocka_unit_test(test__f_file_name_base__works),
 
-    // f_file_name_directory
+    cmocka_unit_test(test__f_file_name_directory__returns_data_not),
+    cmocka_unit_test(test__f_file_name_directory__works),
 
-/*
     cmocka_unit_test(test__f_file_open__fails),
     cmocka_unit_test(test__f_file_open__returns_data_not),
     cmocka_unit_test(test__f_file_open__works),
@@ -187,14 +188,23 @@ int main(void) {
     cmocka_unit_test(test__f_file_open_at__returns_data_not),
     cmocka_unit_test(test__f_file_open_at__works),
 
-    // f_file_owner_read
+    cmocka_unit_test(test__f_file_owner_read__fails),
+    cmocka_unit_test(test__f_file_owner_read__returns_data_not),
+    cmocka_unit_test(test__f_file_owner_read__works),
 
-    // f_file_read
+    cmocka_unit_test(test__f_file_read__fails),
+    cmocka_unit_test(test__f_file_read__returns_file_closed),
+    cmocka_unit_test(test__f_file_read__works),
 
-    // f_file_read_block
+    cmocka_unit_test(test__f_file_read_block__fails),
+    cmocka_unit_test(test__f_file_read_block__returns_file_closed),
+    cmocka_unit_test(test__f_file_read_block__works),
 
-    // f_file_read_until
+    cmocka_unit_test(test__f_file_read_until__fails),
+    cmocka_unit_test(test__f_file_read_until__returns_file_closed),
+    cmocka_unit_test(test__f_file_read_until__works),
 
+/*
     cmocka_unit_test(test__f_file_remove__fails),
     cmocka_unit_test(test__f_file_remove__returns_data_not),
     cmocka_unit_test(test__f_file_remove__works),

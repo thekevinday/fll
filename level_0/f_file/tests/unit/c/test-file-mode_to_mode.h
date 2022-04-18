@@ -11,13 +11,6 @@
 #define _TEST__F_file_mode_to_mode_h
 
 /**
- * Test that function fails.
- *
- * @see f_file_mode_to_mode()
- */
-extern void test__f_file_mode_to_mode__fails(void **state);
-
-/**
  * Test that parameter checking works as expected.
  *
  * @see f_file_mode_to_mode()

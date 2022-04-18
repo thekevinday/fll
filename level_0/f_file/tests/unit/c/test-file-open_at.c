@@ -6,16 +6,16 @@ extern "C" {
 #endif
 
 void test__f_file_open_at__fails(void **state) {
-/*
-  const int at = 1;
+
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   int errnos[] = {
     EACCES,
+    EBADF,
+    EDQUOT,
     EEXIST,
     EFAULT,
     EFBIG,
-    EDQUOT,
     EINTR,
     EINVAL,
     EISDIR,
@@ -36,10 +36,11 @@ void test__f_file_open_at__fails(void **state) {
 
   f_status_t statuss[] = {
     F_access_denied,
+    F_directory_descriptor,
+    F_filesystem_quota_block,
     F_file_found,
     F_buffer,
     F_number_overflow,
-    F_filesystem_quota_block,
     F_interrupt,
     F_parameter,
     F_directory,
@@ -58,18 +59,17 @@ void test__f_file_open_at__fails(void **state) {
     F_failure,
   };
 
-  for (int i = 0; i < 17; ++i) {
+  for (int i = 0; i < 22; ++i) {
 
-    int id = 0;
+    f_file_t file = f_file_t_initialize;
 
     will_return(__wrap_openat, true);
     will_return(__wrap_openat, errnos[i]);
 
-    const f_status_t status = f_file_open_at(at, path, F_false, &id);
+    const f_status_t status = f_file_open_at(0, path, 0, &file);
 
     assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for
-  */
 }
 
 #ifndef _di_level_0_parameter_checking_
@@ -85,35 +85,30 @@ void test__f_file_open_at__fails(void **state) {
 
 void test__f_file_open_at__returns_data_not(void **state) {
 
-  const int at = 1;
-
   {
     f_file_t file = f_file_t_initialize;
 
-    const f_status_t status = f_file_open_at(at, f_string_empty_s, 0, &file);
+    const f_status_t status = f_file_open_at(0, f_string_empty_s, 0, &file);
 
     assert_int_equal(status, F_data_not);
   }
 }
 
 void test__f_file_open_at__works(void **state) {
-/*
-  const int at = 1;
 
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
-    int id = 0;
+    f_file_t file = f_file_t_initialize;
 
     will_return(__wrap_openat, false);
     will_return(__wrap_openat, 5);
 
-    const f_status_t status = f_file_open_at(at, path, F_false, &id);
+    const f_status_t status = f_file_open_at(0, path, F_false, &file);
 
     assert_int_equal(status, F_none);
-    assert_int_equal(id, 5);
+    assert_int_equal(file.id, 5);
   }
-  */
 }
 
 #ifdef __cplusplus
