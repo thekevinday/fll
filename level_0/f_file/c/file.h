@@ -1355,6 +1355,8 @@ extern "C" {
 /**
  * Get the directory name of a file path.
  *
+ * This does not consider '.' a directory for the purposes of appending the directory.
+ *
  * @param path
  *   The path file name.
  *   Need not be NULL terminated.
@@ -1372,10 +1374,12 @@ extern "C" {
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see dirname()
  *
  * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_name_directory_
   extern f_status_t f_file_name_directory(const f_string_static_t path, f_string_dynamic_t * const name_directory);
@@ -1573,6 +1577,7 @@ extern "C" {
  * @return
  *   F_none_eof on success and EOF was reached.
  *   F_none_stop on success and total was reached.
+ *   F_data_not if total is 0.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.

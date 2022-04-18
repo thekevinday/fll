@@ -1479,12 +1479,11 @@ extern "C" {
 
     // POSIX basename() modifies the path, so protect it (and add a terminating NULL).
     char path_argument[path.used + 1];
-    f_string_t path_to_name;
 
     memcpy(path_argument, path.string, sizeof(f_char_t) * path.used);
     path_argument[path.used] = 0;
 
-    path_to_name = (f_string_t) basename(path_argument);
+    char *path_to_name = basename(path_argument);
 
     const f_array_length_t size = strnlen(path_to_name, path.used);
 
@@ -1511,23 +1510,22 @@ extern "C" {
 
     // POSIX dirname() modifies the path, so protect it (and add a terminating NULL).
     char path_argument[path.used + 1];
-    f_string_t path_to_name;
 
     memcpy(path_argument, path.string, sizeof(f_char_t) * path.used);
     path_argument[path.used] = 0;
 
-    path_to_name = (f_string_t) dirname(path_argument);
+    char *path_to_name = dirname(path_argument);
 
     const f_array_length_t size = strnlen(path_to_name, path.used);
-
-    // Do not treat '.' as a directory.
-    if (size == 1 && f_string_ascii_plus_s.string[0]) {
-      return F_none;
-    }
 
     {
       const f_status_t status = f_string_dynamic_increase_by(size + 1, name_directory);
       if (F_status_is_error(status)) return status;
+    }
+
+    // Do not treat '.' as a directory.
+    if (size == 1 && path_to_name[0] == f_string_ascii_period_s.string[0]) {
+      return f_string_dynamic_terminate_after(name_directory);
     }
 
     memcpy(name_directory->string + name_directory->used, path_to_name, sizeof(f_char_t) * size);
@@ -1625,7 +1623,7 @@ extern "C" {
 
       buffer->used += size_read;
 
-    } while (size_read == file.size_read);
+    } while (size_read);
 
     return F_none_eof;
   }
@@ -1667,11 +1665,11 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (size_read < file.size_read) {
-      return F_none_eof;
+    if (size_read) {
+      return F_none;
     }
 
-    return F_none;
+    return F_none_eof;
   }
 #endif // _di_f_file_read_block_
 
@@ -1684,6 +1682,10 @@ extern "C" {
 
     if (file.id == -1) {
       return F_status_set_error(F_file_closed);
+    }
+
+    if (!total) {
+      return F_data_not;
     }
 
     f_array_length_t buffer_size = file.size_read;
@@ -1717,7 +1719,7 @@ extern "C" {
 
       buffer->used += size_read;
 
-      if (size_read < buffer_size) {
+      if (!size_read) {
         return F_none_eof;
       }
 
