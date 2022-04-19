@@ -204,7 +204,6 @@ int main(void) {
     cmocka_unit_test(test__f_file_read_until__returns_file_closed),
     cmocka_unit_test(test__f_file_read_until__works),
 
-/*
     cmocka_unit_test(test__f_file_remove__fails),
     cmocka_unit_test(test__f_file_remove__returns_data_not),
     cmocka_unit_test(test__f_file_remove__works),
@@ -213,27 +212,54 @@ int main(void) {
     cmocka_unit_test(test__f_file_remove_at__returns_data_not),
     cmocka_unit_test(test__f_file_remove_at__works),
 
-    // f_file_rename
+    cmocka_unit_test(test__f_file_rename__fails),
+    cmocka_unit_test(test__f_file_rename__returns_data_not),
+    cmocka_unit_test(test__f_file_rename__works),
 
-    // f_file_rename_at
+    cmocka_unit_test(test__f_file_rename_at__fails),
+    cmocka_unit_test(test__f_file_rename_at__returns_data_not),
+    cmocka_unit_test(test__f_file_rename_at__works),
 
-    // f_file_role_change
+    cmocka_unit_test(test__f_file_role_change__fails_for_dereference),
+    cmocka_unit_test(test__f_file_role_change__fails_for_reference),
+    cmocka_unit_test(test__f_file_role_change__returns_data_not),
+    cmocka_unit_test(test__f_file_role_change__works_for_dereference),
+    cmocka_unit_test(test__f_file_role_change__works_for_reference),
 
-    // f_file_role_change_at
+    cmocka_unit_test(test__f_file_role_change_at__fails_for_dereference),
+    cmocka_unit_test(test__f_file_role_change_at__fails_for_reference),
+    cmocka_unit_test(test__f_file_role_change_at__returns_data_not),
+    cmocka_unit_test(test__f_file_role_change_at__works_for_dereference),
+    cmocka_unit_test(test__f_file_role_change_at__works_for_reference),
 
-    // f_file_seek
+    cmocka_unit_test(test__f_file_seek__fails),
+    cmocka_unit_test(test__f_file_seek__works),
 
-    // f_file_size
+    cmocka_unit_test(test__f_file_size__fails),
+    cmocka_unit_test(test__f_file_size__returns_data_not),
+    cmocka_unit_test(test__f_file_size__works),
 
-    // f_file_size_at
+    cmocka_unit_test(test__f_file_size_at__fails),
+    cmocka_unit_test(test__f_file_size_at__returns_data_not),
+    cmocka_unit_test(test__f_file_size_at__works),
 
-    // f_file_size_by_id
+    cmocka_unit_test(test__f_file_size_by_id__fails),
+    cmocka_unit_test(test__f_file_size_by_id__returns_file_closed),
+    cmocka_unit_test(test__f_file_size_by_id__works),
 
-    // f_file_stat
+    cmocka_unit_test(test__f_file_stat__fails),
+    cmocka_unit_test(test__f_file_stat__returns_data_not),
+    cmocka_unit_test(test__f_file_stat__works),
 
-    // f_file_stat_at
+    cmocka_unit_test(test__f_file_stat_at__fails),
+    cmocka_unit_test(test__f_file_stat_at__returns_data_not),
+    cmocka_unit_test(test__f_file_stat_at__works),
 
-    // f_file_stat_by_id
+    cmocka_unit_test(test__f_file_stat_by_id__fails),
+    cmocka_unit_test(test__f_file_stat_by_id__returns_file_closed),
+    cmocka_unit_test(test__f_file_stat_by_id__works),
+
+/*
 
     // f_file_stream_close
 

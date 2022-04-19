@@ -12,6 +12,7 @@ void test__f_file_exists__fails(void **state) {
   int errnos[] = {
     EACCES,
     EFAULT,
+    EINVAL,
     ELOOP,
     ENAMETOOLONG,
     ENOENT,
@@ -24,6 +25,7 @@ void test__f_file_exists__fails(void **state) {
   f_status_t statuss[] = {
     F_access_denied,
     F_buffer,
+    F_parameter,
     F_loop,
     F_name,
     F_false,
@@ -33,7 +35,7 @@ void test__f_file_exists__fails(void **state) {
     F_file_stat,
   };
 
-  for (int i = 0; i < 9; ++i) {
+  for (int i = 0; i < 10; ++i) {
 
     will_return(__wrap_lstat, true);
     will_return(__wrap_lstat, errnos[i]);

@@ -7,22 +7,46 @@ extern "C" {
 
 void test__f_file_size_at__fails(void **state) {
 
+  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+
   int errnos[] = {
+    EACCES,
+    EBADF,
+    EFAULT,
+    EINVAL,
+    ELOOP,
+    ENAMETOOLONG,
+    ENOENT,
+    ENOMEM,
+    ENOTDIR,
+    EOVERFLOW,
     mock_errno_generic,
   };
 
   f_status_t statuss[] = {
-    F_failure,
+    F_access_denied,
+    F_directory_descriptor,
+    F_buffer,
+    F_parameter,
+    F_loop,
+    F_name,
+    F_file_found_not,
+    F_memory_not,
+    F_directory_not,
+    F_number_overflow,
+    F_file_stat,
   };
 
-  for (int i = 0; i < 1; ++i) {
+  for (int i = 0; i < 11; ++i) {
 
-    //will_return(__wrap_open, true);
-    //will_return(__wrap_open, errnos[i]);
+    off_t size = 0;
 
-    //const f_status_t status = f_file_size_at(path, F_false, &id);
+    will_return(__wrap_fstatat, true);
+    will_return(__wrap_fstatat, errnos[i]);
 
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
+    const f_status_t status = f_file_size_at(0, path, F_false, &size);
+
+    assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for
 }
 
@@ -40,7 +64,9 @@ void test__f_file_size_at__fails(void **state) {
 void test__f_file_size_at__returns_data_not(void **state) {
 
   {
-    const f_status_t status = f_file_size_at(0, f_string_empty_s, F_false, 0);
+    off_t size = 0;
+
+    const f_status_t status = f_file_size_at(0, f_string_empty_s, F_false, &size);
 
     assert_int_equal(status, F_data_not);
   }
@@ -48,14 +74,42 @@ void test__f_file_size_at__returns_data_not(void **state) {
 
 void test__f_file_size_at__works(void **state) {
 
+  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+
+  struct stat statistics;
+
+  memset(&statistics, 0, sizeof(struct stat));
+
   {
-    //will_return(__wrap_open, false);
-    //will_return(__wrap_open, 5);
+    off_t size = 0;
 
-    //const f_status_t status = f_file_size_at();
+    statistics.st_mode = 1 | F_file_type_link_d;
+    statistics.st_size = 1;
 
-    //assert_int_equal(status, F_none);
-    //assert_int_equal(id, 5);
+    will_return(__wrap_fstatat, false);
+    will_return(__wrap_fstatat, &statistics);
+    will_return(__wrap_fstatat, 0);
+
+    const f_status_t status = f_file_size_at(0, path, F_false, &size);
+
+    assert_int_equal(status, F_none);
+    assert_int_equal(size, statistics.st_size);
+  }
+
+  {
+    off_t size = 0;
+
+    statistics.st_mode = 1 | F_file_type_regular_d;
+    statistics.st_size = 1;
+
+    will_return(__wrap_fstatat, false);
+    will_return(__wrap_fstatat, &statistics);
+    will_return(__wrap_fstatat, 0);
+
+    const f_status_t status = f_file_size_at(0, path, F_true, &size);
+
+    assert_int_equal(status, F_none);
+    assert_int_equal(size, statistics.st_size);
   }
 }
 

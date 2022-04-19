@@ -295,6 +295,19 @@ int __wrap_linkat(const char *oldpath, const char *newpath) {
   return mock_type(int);
 }
 
+off_t __wrap_lseek(int fd, off_t offset, int whence) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
 int __wrap_lstat(const char *pathname, struct stat *statbuf) {
 
   const bool failure = mock_type(bool);
@@ -482,7 +495,33 @@ ssize_t __wrap_readlinkat(int dirfd, const char *pathname, char *buf, size_t buf
   return mock_type(int);
 }
 
-int __wrap_remove(const char *pathname) {
+int __wrap_rename(const char *oldpath, const char *newpath) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
+int __wrap_renameat(int olddirfd, const char *oldpath, int newdirfd, const char *newpath) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
+int __wrap_renameat2(int olddirfd, const char *oldpath, int newdirfd, const char *newpath, unsigned int flags) {
 
   const bool failure = mock_type(bool);
 

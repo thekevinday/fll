@@ -27,6 +27,13 @@ extern void test__f_file_size_by_id__fails(void **state);
 #endif // _di_level_0_parameter_checking_
 
 /**
+ * Test that function works but the file is closed.
+ *
+ * @see f_file_size_by_id()
+ */
+extern void test__f_file_size_by_id__returns_file_closed(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_file_size_by_id()

@@ -8,26 +8,52 @@ extern "C" {
 void test__f_file_seek__fails(void **state) {
 
   int errnos[] = {
+    EBADF,
+    EINVAL,
+    ENXIO,
+    EOVERFLOW,
+    ESPIPE,
     mock_errno_generic,
   };
 
   f_status_t statuss[] = {
+    F_file_descriptor,
+    F_parameter,
+    F_bound_not,
+    F_number_overflow,
+    F_file_type_pipe,
     F_failure,
   };
 
-  for (int i = 0; i < 1; ++i) {
+  for (int i = 0; i < 6; ++i) {
 
-    //will_return(__wrap_open, true);
-    //will_return(__wrap_open, errnos[i]);
+    off_t seeked = 0;
 
-    //const f_status_t status = f_file_seek(path, F_false, &id);
+    will_return(__wrap_lseek, true);
+    will_return(__wrap_lseek, errnos[i]);
 
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
+    const f_status_t status = f_file_seek(0, 0, 0, &seeked);
+
+    assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for
 }
 
 #ifndef _di_level_0_parameter_checking_
   void test__f_file_seek__parameter_checking(void **state) {
+
+    off_t seeked = 0;
+
+    {
+      const f_status_t status = f_file_seek(0, -1, 0, 0);
+
+      assert_int_equal(F_status_set_fine(status), F_parameter);
+    }
+
+    {
+      const f_status_t status = f_file_seek(0, -1, 0, &seeked);
+
+      assert_int_equal(F_status_set_fine(status), F_parameter);
+    }
 
     {
       const f_status_t status = f_file_seek(0, 0, 0, 0);
@@ -40,13 +66,14 @@ void test__f_file_seek__fails(void **state) {
 void test__f_file_seek__works(void **state) {
 
   {
-    //will_return(__wrap_open, false);
-    //will_return(__wrap_open, 5);
+    off_t seeked = 0;
 
-    //const f_status_t status = f_file_seek();
+    will_return(__wrap_lseek, false);
+    will_return(__wrap_lseek, 0);
 
-    //assert_int_equal(status, F_none);
-    //assert_int_equal(id, 5);
+    const f_status_t status = f_file_seek(0, 0, 0, &seeked);
+
+    assert_int_equal(status, F_none);
   }
 }
 
