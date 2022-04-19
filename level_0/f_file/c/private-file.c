@@ -642,7 +642,7 @@ extern "C" {
       }
     }
 
-    if (gid != -1) {
+    if (result == 0 && gid != -1) {
       result = fchownat(at_id, path.string, -1, gid, flag);
 
       if (result < 0 && errno == EPERM) {
@@ -675,6 +675,7 @@ extern "C" {
     if ((dereference ? stat(path.string, file_stat) : lstat(path.string, file_stat)) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
@@ -696,6 +697,7 @@ extern "C" {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
@@ -715,10 +717,12 @@ extern "C" {
 
     if (fstat(id, file_stat) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == ENOENT) return F_file_found_not;
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);

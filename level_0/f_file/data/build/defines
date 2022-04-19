@@ -1,1 +1,2 @@
 # fss-0000
+_f_file_rename_use_renameat2_ Use renameat2() instead of rename(), which allows for a flag value other than 0.

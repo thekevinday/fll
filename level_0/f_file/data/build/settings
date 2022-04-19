@@ -50,6 +50,8 @@ flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector
 
+#defines -D_f_file_rename_use_renameat2_
+
 flags_library -fPIC
 flags_object -fPIC
 flags_program -fPIE

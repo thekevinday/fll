@@ -1722,6 +1722,10 @@ extern "C" {
  *   The path to the file to copy from.
  * @param destination
  *   The path to copy to.
+ * @param flag
+ *   Any valid flag, such as F_file_at_path_empty_d, F_file_at_automount_no_d, or F_file_at_symlink_follow_no_d.
+ *   The POSIX renameat() doesn't support flag but Linux has a renameat2() that does.
+ *   If this is compiled with renameat2 support (), then flag is used otherwise flag is always 0 regardless of this property.
  *
  * @return
  *   F_none on success.
@@ -1749,7 +1753,7 @@ extern "C" {
  * @see renameat()
  */
 #ifndef _di_f_file_rename_at_
-  extern f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_static_t source, const f_string_static_t destination);
+  extern f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_static_t source, const f_string_static_t destination, const unsigned int flag);
 #endif // _di_f_file_rename_at_
 
 /**
@@ -1936,6 +1940,8 @@ extern "C" {
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_not (with error bit) on invalid directory.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
@@ -2093,6 +2099,7 @@ extern "C" {
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_deadlock (with error bit) if operation would cause a deadlock.
+ *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
