@@ -10,6 +10,7 @@ void test__f_file_flush__fails(void **state) {
   int errnos[] = {
     EBADF,
     EDQUOT,
+    EINVAL,
     EIO,
     ENOSPC,
     EROFS,
@@ -19,13 +20,14 @@ void test__f_file_flush__fails(void **state) {
   f_status_t statuss[] = {
     F_file_descriptor,
     F_filesystem_quota_block,
+    F_supported_not,
     F_input_output,
     F_space_not,
     F_supported_not,
-    F_failure,
+    F_file_synchronize,
   };
 
-  for (int i = 0; i < 6; ++i) {
+  for (int i = 0; i < 7; ++i) {
 
     will_return(__wrap_fsync, true);
     will_return(__wrap_fsync, errnos[i]);

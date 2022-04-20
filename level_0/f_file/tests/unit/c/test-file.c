@@ -259,12 +259,15 @@ int main(void) {
     cmocka_unit_test(test__f_file_stat_by_id__returns_file_closed),
     cmocka_unit_test(test__f_file_stat_by_id__works),
 
+    cmocka_unit_test(test__f_file_stream_close__fails_for_file_descriptor),
+    cmocka_unit_test(test__f_file_stream_close__fails_for_stream),
+    cmocka_unit_test(test__f_file_stream_close__works),
+
+    // __wrap_fdopen does not appear to be working.
+    //cmocka_unit_test(test__f_file_stream_open_descriptor__fails),
+    //cmocka_unit_test(test__f_file_stream_open_descriptor__works),
+
 /*
-
-    // f_file_stream_close
-
-    // f_file_stream_descriptor
-
     // f_file_stream_open
 
     // f_file_stream_read
@@ -364,7 +367,7 @@ int main(void) {
       cmocka_unit_test(test__f_file_stat_at__parameter_checking),
       cmocka_unit_test(test__f_file_stat_by_id__parameter_checking),
       cmocka_unit_test(test__f_file_stream_close__parameter_checking),
-      cmocka_unit_test(test__f_file_stream_descriptor__parameter_checking),
+      cmocka_unit_test(test__f_file_stream_open_descriptor__parameter_checking),
       cmocka_unit_test(test__f_file_stream_open__parameter_checking),
       cmocka_unit_test(test__f_file_stream_read__parameter_checking),
       cmocka_unit_test(test__f_file_stream_read_block__parameter_checking),

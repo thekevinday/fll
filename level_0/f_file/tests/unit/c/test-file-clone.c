@@ -495,49 +495,6 @@ void test__f_file_clone__fails_for_regular(void **state) {
     int errnos[] = {
       EBADF,
       EDQUOT,
-      EIO,
-      ENOSPC,
-      EROFS,
-      mock_errno_generic,
-    };
-
-    f_status_t statuss[] = {
-      F_file_synchronize,
-      F_file_synchronize,
-      F_file_synchronize,
-      F_file_synchronize,
-      F_file_synchronize,
-      F_file_synchronize,
-    };
-
-    struct stat statistics;
-
-    memset(&statistics, 0, sizeof(struct stat));
-
-    statistics.st_mode = 1 | F_file_type_regular_d;
-
-    for (int i = 0; i < 6; ++i) {
-
-      will_return(__wrap_stat, false);
-      will_return(__wrap_stat, &statistics);
-      will_return(__wrap_stat, 0);
-
-      will_return(__wrap_open, false);
-      will_return(__wrap_open, 0);
-
-      will_return(__wrap_fsync, true);
-      will_return(__wrap_fsync, errnos[i]);
-
-      const f_status_t status = f_file_clone(path, path, 0, 0);
-
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
-    } // for
-  }
-
-  {
-    int errnos[] = {
-      EBADF,
-      EDQUOT,
       EINTR,
       EIO,
       ENOSPC,

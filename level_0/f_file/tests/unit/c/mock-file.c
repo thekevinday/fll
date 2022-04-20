@@ -121,6 +121,58 @@ int __wrap_fchownat(int dirfd, const char *pathname, uid_t owner, gid_t group, i
   return mock_type(int);
 }
 
+int __wrap_fclose(FILE *stream) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return EOF;
+  }
+
+  return mock_type(int);
+}
+
+FILE *__wrap_fopen(const char *pathname, const char *mode) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return 0;
+  }
+
+  return mock_type(FILE *);
+}
+
+FILE *__wrap_fdopen(int fd, const char *mode) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return 0;
+  }
+
+  return mock_type(FILE *);
+}
+
+FILE *__wrap_freopen(const char *pathname, const char *mode, FILE *stream) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return 0;
+  }
+
+  return mock_type(FILE *);
+}
+
 int __wrap_feof_unlocked(FILE *stream) {
 
   const bool failure = mock_type(bool);
@@ -142,6 +194,19 @@ int __wrap_ferror_unlocked(FILE *stream) {
     errno = mock_type(int);
 
     return -1;
+  }
+
+  return mock_type(int);
+}
+
+int __wrap_fflush(FILE *stream) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return EOF;
   }
 
   return mock_type(int);

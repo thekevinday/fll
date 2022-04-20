@@ -11,11 +11,18 @@
 #define _TEST__F_file_stream_close_h
 
 /**
- * Test that function fails.
+ * Test that function fails for a file using the file descriptor.
  *
  * @see f_file_stream_close()
  */
-extern void test__f_file_stream_close__fails(void **state);
+extern void test__f_file_stream_close__fails_for_file_descriptor(void **state);
+
+/**
+ * Test that function fails for a file stream.
+ *
+ * @see f_file_stream_close()
+ */
+extern void test__f_file_stream_close__fails_for_stream(void **state);
 
 /**
  * Test that parameter checking works as expected.

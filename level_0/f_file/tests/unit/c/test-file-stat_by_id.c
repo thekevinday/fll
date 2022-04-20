@@ -43,8 +43,6 @@ void test__f_file_stat_by_id__fails(void **state) {
 
     memset(&result, 0, sizeof(struct stat));
 
-    printf("\nDEBUG: i=%d\n", i);
-
     will_return(__wrap_fstat, true);
     will_return(__wrap_fstat, errnos[i]);
 

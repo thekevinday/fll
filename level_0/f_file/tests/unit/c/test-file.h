@@ -82,7 +82,7 @@
 #include "test-file-stat_at.h"
 #include "test-file-stat_by_id.h"
 #include "test-file-stream_close.h"
-#include "test-file-stream_descriptor.h"
+#include "test-file-stream_open_descriptor.h"
 #include "test-file-stream_open.h"
 #include "test-file-stream_read.h"
 #include "test-file-stream_read_block.h"
