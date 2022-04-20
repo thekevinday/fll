@@ -20,12 +20,12 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param id
- *   The file descriptor.
- *   The value gets set to -1.
  * @param flush
  *   If TRUE, then perform flush before closing.
  *   If FALSE, then do not perform flush before closing.
+ * @param id
+ *   The file descriptor.
+ *   The value gets set to -1.
  *
  * @return
  *   F_none on success.
@@ -44,7 +44,7 @@ extern "C" {
  * @see f_file_stream_close()
  */
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  extern f_status_t private_f_file_close(int * const id, const bool flush) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_close(const bool flush, int * const id) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
 
 /**
@@ -427,7 +427,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_supported_not (with error bit) if the file system or file type does not support flushing.
- *   F_failure (with error bit) on any other failure.
+ *   F_file_synchronize (with error bit) on any other failure.
  *
  * @see f_file_close()
  * @see f_file_copy()
@@ -902,13 +902,13 @@ extern "C" {
  * @return
  *   A string representing the file mode for use in fopen(), fdopen(), or freopen().
  *
- * @see f_file_stream_descriptor()
+ * @see f_file_stream_open_descriptor()
  * @see f_file_stream_open()
  * @see f_file_stream_reopen()
  */
-#if !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
+#if !defined(_di_f_file_stream_open_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
   extern const f_string_t private_f_file_stream_open_mode_determine(const int flag) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
+#endif // !defined(_di_f_file_stream_open_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 
 /**
  * Private implementation of f_file_stream_write_until().

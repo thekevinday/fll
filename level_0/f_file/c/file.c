@@ -131,7 +131,7 @@ extern "C" {
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_close(id, F_false);
+    return private_f_file_close(F_false, id);
   }
 #endif // _di_f_file_close_
 
@@ -141,7 +141,7 @@ extern "C" {
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_file_close(id, F_true);
+    return private_f_file_close(F_true, id);
   }
 #endif // _di_f_file_close_flush_
 
@@ -2025,15 +2025,24 @@ extern "C" {
 #endif // _di_f_file_stat_by_id_
 
 #ifndef _di_f_file_stream_close_
-  f_status_t f_file_stream_close(const bool complete, f_file_t * const file) {
+  f_status_t f_file_stream_close(const bool flush, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file->stream) {
+      if (flush) {
+        fflush(file->stream);
+      }
+
       if (fclose(file->stream) == EOF) {
+
+        // According to man pages, further access to a stream on error results in undefined behavior.
+        file->stream = 0;
+        file->id = -1;
+
         if (errno == EACCES) return F_status_set_error(F_access_denied);
-        if (errno == EAGAIN) return F_status_set_error(F_prohibited);
+        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EBADF) return F_status_set_error(F_file_descriptor);
         if (errno == EFBIG) return F_status_set_error(F_file_overflow);
         if (errno == EDEADLK) return F_status_set_error(F_deadlock);
@@ -2049,66 +2058,69 @@ extern "C" {
         if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
         if (errno == EPERM) return F_status_set_error(F_prohibited);
         if (errno == EPIPE) return F_status_set_error(F_pipe_not);
-        if (errno == EWOULDBLOCK) return F_status_set_error(F_block);
 
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_file_close);
       }
 
       file->stream = 0;
-
-      // File stream will result in the file descriptor being invalid because it is already closed.
-      if (complete) {
-        file->id = -1;
-      }
+      file->id = -1;
 
       return F_none;
     }
 
-    if (complete) {
-      return private_f_file_close(&file->id, F_true);
-    }
+    const f_status_t status = private_f_file_close(flush, &file->id);
 
-    return F_none;
+    file->stream = 0;
+    file->id = -1;
+
+    return status;
   }
 #endif // _di_f_file_stream_close_
 
-#ifndef _di_f_file_stream_descriptor_
-  f_status_t f_file_stream_descriptor(const f_string_static_t mode, f_file_t * const file) {
+#ifndef _di_f_file_stream_open_descriptor_
+  f_status_t f_file_stream_open_descriptor(const f_string_static_t mode, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file->id == -1) {
-      return F_status_set_error(F_file_closed);
+      return F_status_set_error(F_file_descriptor);
     }
 
-    if (mode.string) {
-      file->stream = fdopen(file->id, mode.string);
+    if (mode.used) {
+      file->stream = fdopen(file->id, private_f_file_stream_open_mode_determine(file->flag));
     }
     else {
-      file->stream = fdopen(file->id, private_f_file_stream_open_mode_determine(file->flag));
+      file->stream = fdopen(file->id, mode.string);
     }
 
     if (!file->stream) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EAGAIN) return F_status_set_error(F_prohibited);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EFBIG) return F_status_set_error(F_file_overflow);
       if (errno == EDEADLK) return F_status_set_error(F_deadlock);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);
+      if (errno == EDQUOT) return F_status_set_error(F_space_not);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
+      if (errno == ENODEV) return F_status_set_error(F_device_not);
       if (errno == ENOLCK) return F_status_set_error(F_lock);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe_not);
 
       return F_status_set_error(F_failure);
     }
 
     return F_none;
   }
-#endif // _di_f_file_stream_descriptor_
-
+#endif // _di_f_file_stream_open_descriptor_
 
 #ifndef _di_f_file_stream_open_
   f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file) {
@@ -2389,16 +2401,22 @@ extern "C" {
 
     if (!result) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EAGAIN) return F_status_set_error(F_prohibited);
+      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EFBIG) return F_status_set_error(F_file_overflow);
       if (errno == EDEADLK) return F_status_set_error(F_deadlock);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);
+      if (errno == EDQUOT) return F_status_set_error(F_space_not);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENOLCK) return F_status_set_error(F_lock);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe_not);
 
       return F_status_set_error(F_failure);
     }

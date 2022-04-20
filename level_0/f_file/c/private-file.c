@@ -6,14 +6,14 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  f_status_t private_f_file_close(int * const id, const bool flush) {
+  f_status_t private_f_file_close(const bool flush, int * const id) {
 
     if (*id == -1) {
       return F_none;
     }
 
-    if (flush && F_status_is_error(private_f_file_flush(*id))) {
-      return F_status_set_error(F_file_synchronize);
+    if (flush) {
+      private_f_file_flush(*id);
     }
 
     if (close(*id) < 0) {
@@ -53,7 +53,7 @@ extern "C" {
     status = private_f_file_open(destination, 0, &file_destination);
 
     if (F_status_is_error(status)) {
-      private_f_file_close(&file_source.id, F_true);
+      private_f_file_close(F_true, &file_source.id);
 
       return status;
     }
@@ -69,15 +69,15 @@ extern "C" {
       size_write = write(file_destination.id, buffer, size_read);
 
       if (size_write < 0 || size_write != size_read) {
-        private_f_file_close(&file_destination.id, F_true);
-        private_f_file_close(&file_source.id, F_true);
+        private_f_file_close(F_true, &file_destination.id);
+        private_f_file_close(F_true, &file_source.id);
 
         return F_status_set_error(F_file_write);
       }
     } // while
 
-    private_f_file_close(&file_destination.id, F_true);
-    private_f_file_close(&file_source.id, F_true);
+    private_f_file_close(F_true, &file_destination.id);
+    private_f_file_close(F_true, &file_source.id);
 
     if (size_read < 0) {
       return F_status_set_error(F_file_read);
@@ -102,7 +102,7 @@ extern "C" {
     status = private_f_file_open_at(at_id, destination, 0, &file_destination);
 
     if (F_status_is_error(status)) {
-      private_f_file_close(&file_source.id, F_true);
+      private_f_file_close(F_true, &file_source.id);
 
       return status;
     }
@@ -118,15 +118,15 @@ extern "C" {
       size_write = write(file_destination.id, buffer, size_read);
 
       if (size_write < 0 || size_write != size_read) {
-        private_f_file_close(&file_destination.id, F_true);
-        private_f_file_close(&file_source.id, F_true);
+        private_f_file_close(F_true, &file_destination.id);
+        private_f_file_close(F_true, &file_source.id);
 
         return F_status_set_error(F_file_write);
       }
     } // while
 
-    private_f_file_close(&file_destination.id, F_true);
-    private_f_file_close(&file_source.id, F_true);
+    private_f_file_close(F_true, &file_destination.id);
+    private_f_file_close(F_true, &file_source.id);
 
     if (size_read < 0) {
       return F_status_set_error(F_file_read);
@@ -150,7 +150,7 @@ extern "C" {
     const f_status_t status = private_f_file_open(path, mode, &file);
 
     if (file.id != -1) {
-      return private_f_file_close(&file.id, F_true);
+      return private_f_file_close(F_true, &file.id);
     }
 
     return status;
@@ -171,7 +171,7 @@ extern "C" {
     const f_status_t status = private_f_file_open_at(at_id, path, mode, &file);
 
     if (file.id != -1) {
-      return private_f_file_close(&file.id, F_true);
+      return private_f_file_close(F_true, &file.id);
     }
 
     return status;
@@ -333,11 +333,12 @@ extern "C" {
     if (fsync(id) < 0) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
+      if (errno == EINVAL) return F_status_set_error(F_supported_not);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == EROFS) return F_status_set_error(F_supported_not);
 
-      return F_status_set_error(F_failure);
+      return F_status_set_error(F_file_synchronize);
     }
 
     return F_none;
@@ -734,7 +735,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
-#if !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
+#if !defined(_di_f_file_stream_open_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
   const f_string_t private_f_file_stream_open_mode_determine(const int flag) {
 
     if (flag & F_file_flag_read_write_d) {
@@ -761,7 +762,7 @@ extern "C" {
     // Failsafe to read only.
     return f_file_open_mode_read_s.string;
   }
-#endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
+#endif // !defined(_di_f_file_stream_open_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
   f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {

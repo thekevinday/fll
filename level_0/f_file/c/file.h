@@ -2044,12 +2044,15 @@ extern "C" {
 /**
  * Close an open file stream.
  *
- * @param complete
- *   If TRUE, will close the file descriptor as well, setting file.id is reset to -1, on success.
- *   If FALSE, will do nothing in regards to the file descriptor.
+ * @param flush
+ *   If TRUE, will explicitly flush all unwritten data in any buffers to the file.
+ *   If FALSE, will not explicitly flush unwritten data.
+ *
+ *   If TRUE and flush fails, then this will still attempt to close the stream.
  * @param file
  *   The file information.
- *   The file.stream is set to 0, on success.
+ *   The file.stream is set to 0, on success or on failure.
+ *   The file.id is set to 0, on success or on failure.
  *
  * @return
  *   F_none is returned on success.
@@ -2070,15 +2073,15 @@ extern "C" {
  *   F_lock (with error bit) if failed to lock, such as lock table is full or too many open segments.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_pipe_not (with error bit) if the stream is a pipe or a socket but the pipe or socket is already closed.
- *   F_prohibited (with error bit) if file system does not allow for making changes.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_socket_not (with error bit) if the datagram socket in which a peer has not been set (for socket related streams).
  *
  * @see close()
  * @see fclose()
+ * @see fflush()
  */
 #ifndef _di_f_file_stream_close_
-  extern f_status_t f_file_stream_close(const bool complete, f_file_t * const file);
+  extern f_status_t f_file_stream_close(const bool flush, f_file_t * const file);
 #endif // _di_f_file_stream_close_
 
 /**
@@ -2097,22 +2100,26 @@ extern "C" {
  *   F_none is returned on success.
  *
  *   F_access_denied (with error bit) on access denied.
+ *   F_block (with error bit) if the action would block and non-blocking is set on the stream.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_deadlock (with error bit) if operation would cause a deadlock.
- *   F_file_closed (with error bit) if file is not open.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
+ *   F_file_overflow (with error bit) if the write exceeds some implementation defined maximum file size.
  *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_lock (with error bit) if failed to lock, such as lock table is full or too many open segments.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_pipe_not (with error bit) if the stream is a pipe or a socket but the pipe or socket is already closed.
  *   F_prohibited (with error bit) if file system does not allow for making changes.
+ *   F_socket_not (with error bit) if socket is not connected.
+ *   F_space_not (with error bit) if the file system is out of space (or file system quota is reached).
  *
  * @see fdopen()
  */
-#ifndef _di_f_file_stream_descriptor_
-  extern f_status_t f_file_stream_descriptor(const f_string_static_t mode, f_file_t * const file);
-#endif // _di_f_file_stream_descriptor_
+#ifndef _di_f_file_stream_open_descriptor_
+  extern f_status_t f_file_stream_open_descriptor(const f_string_static_t mode, f_file_t * const file);
+#endif // _di_f_file_stream_open_descriptor_
 
 /**
  * Open a file stream.
