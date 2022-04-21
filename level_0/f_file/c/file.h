@@ -2647,6 +2647,7 @@ extern "C" {
  *
  * This sets the umask after getting the umask.
  * This is necessary because the umask() is poorly designed such that it requires changing the umask to get the current umask.
+ * The umask() function gets called twice because of this.
  *
  * @param mask
  *   The umask value.
@@ -2654,6 +2655,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see umask()
  */
 #ifndef _di_f_file_umask_get_
   extern f_status_t f_file_umask_get(mode_t * const mask);

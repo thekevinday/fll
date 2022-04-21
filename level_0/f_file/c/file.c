@@ -2796,6 +2796,9 @@ extern "C" {
 
 #ifndef _di_f_file_umask_get_
   f_status_t f_file_umask_get(mode_t * const mask) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mask) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     // Bad design in POSIX where there is no get umask without setting it.
     *mask = umask(0);
@@ -2835,7 +2838,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_write_until(file, buffer, buffer.used, written);
+      status = private_f_file_write_until(file, buffer, buffer.used, written);
 
       if (status == F_none && *written == buffer.used) {
         return F_none_eos;
@@ -2844,15 +2847,11 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_write_until(file, buffer, buffer.used, &written_local);
+      status = private_f_file_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none && written_local == buffer.used) {
         return F_none_eos;
       }
-    }
-
-    if (F_status_is_error(status)) {
-      return F_status_set_error(status);
     }
 
     return status;
@@ -2884,7 +2883,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_write_until(file, buffer, write_max, written);
+      status = private_f_file_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2899,7 +2898,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_write_until(file, buffer, write_max, &written_local);
+      status = private_f_file_write_until(file, buffer, write_max, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2920,7 +2919,6 @@ extern "C" {
   f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
-      if (!total) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (file.id == -1) {
@@ -2942,7 +2940,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_write_until(file, buffer, write_max, written);
+      status = private_f_file_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2957,7 +2955,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_write_until(file, buffer, buffer.used, &written_local);
+      status = private_f_file_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -3004,7 +3002,7 @@ extern "C" {
     if (written) {
       const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
 
-      private_f_file_write_until(file, buffer_adjusted, write_max, written);
+      status = private_f_file_write_until(file, buffer_adjusted, write_max, written);
 
       if (status == F_none) {
         if (range.start + *written == buffer.used) {
@@ -3020,7 +3018,7 @@ extern "C" {
       const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
       f_array_length_t written_local = 0;
 
-      private_f_file_write_until(file, buffer_adjusted, write_max, &written_local);
+      status = private_f_file_write_until(file, buffer_adjusted, write_max, &written_local);
 
       if (status == F_none) {
         if (range.start + written_local == buffer.used) {
