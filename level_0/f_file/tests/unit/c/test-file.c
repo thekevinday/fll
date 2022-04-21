@@ -267,24 +267,45 @@ int main(void) {
     //cmocka_unit_test(test__f_file_stream_open_descriptor__fails),
     //cmocka_unit_test(test__f_file_stream_open_descriptor__works),
 
-/*
-    // f_file_stream_open
+    cmocka_unit_test(test__f_file_stream_open__fails),
+    cmocka_unit_test(test__f_file_stream_open__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_open__works),
 
-    // f_file_stream_read
+    cmocka_unit_test(test__f_file_stream_read__fails),
+    cmocka_unit_test(test__f_file_stream_read__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_read__works),
 
-    // f_file_stream_read_block
+    cmocka_unit_test(test__f_file_stream_read_block__fails),
+    cmocka_unit_test(test__f_file_stream_read_block__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_read_block__works),
 
-    // f_file_stream_read_until
+    cmocka_unit_test(test__f_file_stream_read_until__fails),
+    cmocka_unit_test(test__f_file_stream_read_until__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_read_until__works),
 
-    // f_file_stream_reopen
+    cmocka_unit_test(test__f_file_stream_reopen__fails),
+    cmocka_unit_test(test__f_file_stream_reopen__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_reopen__works),
 
-    // f_file_stream_write
+    cmocka_unit_test(test__f_file_stream_write__fails),
+    cmocka_unit_test(test__f_file_stream_write__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_write__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_write__works),
 
-    // f_file_stream_write_block
+    cmocka_unit_test(test__f_file_stream_write_block__fails),
+    cmocka_unit_test(test__f_file_stream_write_block__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_write_block__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_write_block__works),
 
-    // f_file_stream_write_until
+    cmocka_unit_test(test__f_file_stream_write_range__fails),
+    cmocka_unit_test(test__f_file_stream_write_range__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_write_range__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_write_range__works),
 
-    // f_file_stream_write_range
+    cmocka_unit_test(test__f_file_stream_write_until__fails),
+    cmocka_unit_test(test__f_file_stream_write_until__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_write_until__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_write_until__works),
 
     cmocka_unit_test(test__f_file_touch__fails),
     cmocka_unit_test(test__f_file_touch__returns_data_not),
@@ -294,10 +315,15 @@ int main(void) {
     cmocka_unit_test(test__f_file_touch_at__returns_data_not),
     cmocka_unit_test(test__f_file_touch_at__works),
 
-    // f_file_type
+    cmocka_unit_test(test__f_file_type__fails),
+    cmocka_unit_test(test__f_file_type__returns_data_not),
+    cmocka_unit_test(test__f_file_type__works),
 
-    // f_file_type_at
+    cmocka_unit_test(test__f_file_type_at__fails),
+    cmocka_unit_test(test__f_file_type_at__returns_data_not),
+    cmocka_unit_test(test__f_file_type_at__works),
 
+/*
     // f_file_umask_get
 
     // f_file_umask_set

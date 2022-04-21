@@ -680,6 +680,19 @@ int __wrap_unlinkat(int dirfd, const char *pathname, int flags) {
   return mock_type(int);
 }
 
+int __wrap_utimensat(int dirfd, const char *pathname, const struct timespec times[2], int flags) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return mock_type(int);
+}
+
 ssize_t __wrap_write(int fd, const void *buf, size_t count) {
 
   const bool failure = mock_type(bool);
