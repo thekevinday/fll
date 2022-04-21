@@ -11,20 +11,6 @@
 #define _TEST__F_file_umask_set_h
 
 /**
- * Test that function fails.
- *
- * @see f_file_umask_set()
- */
-extern void test__f_file_umask_set__fails(void **state);
-
-/**
- * Test that function works but the path is empty.
- *
- * @see f_file_umask_set()
- */
-extern void test__f_file_umask_set__returns_data_not(void **state);
-
-/**
  * Test that function works.
  *
  * @see f_file_umask_set()

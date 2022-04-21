@@ -11,18 +11,13 @@
 #define _TEST__F_file_umask_get_h
 
 /**
- * Test that function fails.
+ * Test that parameter checking works as expected.
  *
  * @see f_file_umask_get()
  */
-extern void test__f_file_umask_get__fails(void **state);
-
-/**
- * Test that function works but the path is empty.
- *
- * @see f_file_umask_get()
- */
-extern void test__f_file_umask_get__returns_data_not(void **state);
+#ifndef _di_level_0_parameter_checking_
+  extern void test__f_file_umask_get__parameter_checking(void **state);
+#endif // _di_level_0_parameter_checking_
 
 /**
  * Test that function works.

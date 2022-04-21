@@ -7,22 +7,45 @@ extern "C" {
 
 void test__f_file_write_range__fails(void **state) {
 
+  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_range_t range = macro_f_string_range_t_initialize(0, 0);
+
   int errnos[] = {
+    EAGAIN,
+    EBADF,
+    EFAULT,
+    EINTR,
+    EINVAL,
+    EIO,
+    EISDIR,
+    EWOULDBLOCK,
     mock_errno_generic,
   };
 
   f_status_t statuss[] = {
-    F_failure,
+    F_block,
+    F_file_descriptor,
+    F_buffer,
+    F_interrupt,
+    F_parameter,
+    F_input_output,
+    F_file_type_directory,
+    F_block,
+    F_file_write,
   };
 
-  for (int i = 0; i < 1; ++i) {
+  for (int i = 0; i < 9; ++i) {
 
-    //will_return(__wrap_open, true);
-    //will_return(__wrap_open, errnos[i]);
+    f_file_t file = f_file_t_initialize;
+    file.size_write = 1;
+    file.id = 0;
 
-    //const f_status_t status = f_file_write_range(path, F_false, &id);
+    will_return(__wrap_write, true);
+    will_return(__wrap_write, errnos[i]);
 
-    //assert_int_equal(F_status_set_fine(status), statuss[i]);
+    const f_status_t status = f_file_write_range(file, path, range, 0);
+
+    assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for
 }
 
@@ -44,8 +67,10 @@ void test__f_file_write_range__fails(void **state) {
 
 void test__f_file_write_range__returns_file_closed(void **state) {
 
-  const f_file_t file = f_file_t_initialize;
+  f_file_t file = f_file_t_initialize;
   const f_string_range_t range = f_string_range_t_initialize;
+
+  file.size_write = 1;
 
   {
     const f_status_t status = f_file_write_range(file, f_string_empty_s, range, 0);
@@ -121,14 +146,33 @@ void test__f_file_write_range__returns_data_not(void **state) {
 
 void test__f_file_write_range__works(void **state) {
 
+  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_range_t range = macro_f_string_range_t_initialize(0, 0);
+
   {
-    //will_return(__wrap_open, false);
-    //will_return(__wrap_open, 5);
+    f_file_t file = f_file_t_initialize;
+    file.size_write = 1;
+    file.id = 0;
 
-    //const f_status_t status = f_file_write_range();
+    will_return(__wrap_write, false);
+    will_return(__wrap_write, file.size_write);
 
-    //assert_int_equal(status, F_none);
-    //assert_int_equal(id, 5);
+    const f_status_t status = f_file_write_range(file, path, range, 0);
+
+    assert_int_equal(status, F_none_stop);
+  }
+
+  {
+    f_file_t file = f_file_t_initialize;
+    file.size_write = path.used;
+    file.id = 0;
+
+    will_return(__wrap_write, false);
+    will_return(__wrap_write, file.size_write);
+
+    const f_status_t status = f_file_write_range(file, path, range, 0);
+
+    assert_int_equal(status, F_none_eos);
   }
 }
 

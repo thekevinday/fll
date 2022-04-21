@@ -107,4 +107,5 @@ flags -Wl,--wrap=symlinkat
 flags -Wl,--wrap=unlink
 flags -Wl,--wrap=unlinkat
 flags -Wl,--wrap=utimensat
+flags -Wl,--wrap=umask
 flags -Wl,--wrap=write

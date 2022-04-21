@@ -693,6 +693,11 @@ int __wrap_utimensat(int dirfd, const char *pathname, const struct timespec time
   return mock_type(int);
 }
 
+mode_t __wrap_umask(mode_t mask) {
+
+  return mock_type(mode_t);
+}
+
 ssize_t __wrap_write(int fd, const void *buf, size_t count) {
 
   const bool failure = mock_type(bool);

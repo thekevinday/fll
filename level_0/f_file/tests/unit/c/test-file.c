@@ -323,19 +323,30 @@ int main(void) {
     cmocka_unit_test(test__f_file_type_at__returns_data_not),
     cmocka_unit_test(test__f_file_type_at__works),
 
-/*
-    // f_file_umask_get
+    cmocka_unit_test(test__f_file_umask_get__works),
 
-    // f_file_umask_set
+    cmocka_unit_test(test__f_file_umask_set__works),
 
-    // f_file_write
+    cmocka_unit_test(test__f_file_write__fails),
+    cmocka_unit_test(test__f_file_write__returns_file_closed),
+    cmocka_unit_test(test__f_file_write__returns_data_not),
+    cmocka_unit_test(test__f_file_write__works),
 
-    // f_file_write_block
+    cmocka_unit_test(test__f_file_write_block__fails),
+    cmocka_unit_test(test__f_file_write_block__returns_file_closed),
+    cmocka_unit_test(test__f_file_write_block__returns_data_not),
+    cmocka_unit_test(test__f_file_write_block__works),
 
-    // f_file_write_until
+    cmocka_unit_test(test__f_file_write_range__fails),
+    cmocka_unit_test(test__f_file_write_range__returns_file_closed),
+    cmocka_unit_test(test__f_file_write_range__returns_data_not),
+    cmocka_unit_test(test__f_file_write_range__works),
 
-    // f_file_write_range
-*/
+    cmocka_unit_test(test__f_file_write_until__fails),
+    cmocka_unit_test(test__f_file_write_until__returns_file_closed),
+    cmocka_unit_test(test__f_file_write_until__returns_data_not),
+    cmocka_unit_test(test__f_file_write_until__works),
+
     #ifndef _di_level_0_parameter_checking_
       // f_file_access() doesn't use parameter checking.
       // f_file_access_at() doesn't use parameter checking.
@@ -407,7 +418,7 @@ int main(void) {
       // f_file_touch_at() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_type__parameter_checking),
       cmocka_unit_test(test__f_file_type_at__parameter_checking),
-      // f_file_umask_get() doesn't use parameter checking.
+      cmocka_unit_test(test__f_file_umask_get__parameter_checking),
       // f_file_umask_set() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_write__parameter_checking),
       cmocka_unit_test(test__f_file_write_block__parameter_checking),

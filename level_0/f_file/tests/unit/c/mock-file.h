@@ -76,6 +76,7 @@ extern int __wrap_symlink(const char *target, const char *linkpath);
 extern int __wrap_symlinkat(const char *target, int newdirfd, const char *linkpath);
 extern int __wrap_unlink(const char *pathname);
 extern int __wrap_unlinkat(int dirfd, const char *pathname, int flags);
+extern mode_t __wrap_umask(mode_t mask);
 extern int __wrap_utimensat(int dirfd, const char *pathname, const struct timespec times[2], int flags);
 extern ssize_t __wrap_write(int fd, const void *buf, size_t count);
 
