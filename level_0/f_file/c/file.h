@@ -2085,6 +2085,64 @@ extern "C" {
 #endif // _di_f_file_stream_close_
 
 /**
+ * Open a file stream.
+ *
+ * The file descriptor is retrieved on success, if necessary and able.
+ *
+ * If the file stream is open, it is closed before re-opening.
+ *
+ * This is often used for changing the file pointed to by standard streams such as stdout.
+ *
+ * @param path
+ *   The file path.
+ * @param mode
+ *   The file modes do use when opening, as an fopen() file mode string.
+ *   Set mode.used to 0 to determine mode from file.flags (falling back to read only as a failsafe).
+ *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
+ *
+ *   File Modes (fopen() file modes vs open file modes):
+ *     - "r":  O_RDONLY.
+ *     - "w":  O_WRONLY | O_CREAT | O_TRUNC.
+ *     - "a":  O_WRONLY | O_CREAT | O_APPEND.
+ *     - "r+": O_RDWR.
+ *     - "w+": O_RDWR | O_CREAT | O_TRUNC.
+ *     - "a+": O_RDWR | O_CREAT | O_APPEND.
+ * @param file
+ *   The file information.
+ *   The file.stream is updated if necessary.
+ *   The file.id is updated with the file descriptor, if necessary and able.
+ *
+ * @return
+ *   F_none is returned on success.
+ *   F_data_not if both path.used is 0.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_busy (with error bit) if file system is too busy to perform write.
+ *   F_file_descriptor (with error bit) if unable to load the file descriptor.
+ *   F_file_found_not (with error bit) if the file was not found.
+ *   F_file_open_max (with error bit) when system-wide max open files is reached.
+ *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
+ *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_name (with error bit) on path name is too long.
+ *   F_number_overflow (with error bit) on overflow error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if file system does not allow for making changes.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_supported_not (with error bit) fo unsupported file types.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see fileno()
+ * @see fopen()
+ */
+#ifndef _di_f_file_stream_open_
+  extern f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file);
+#endif // _di_f_file_stream_open_
+
+/**
  * Open a file stream from a file descriptor.
  *
  * @param mode
@@ -2120,59 +2178,6 @@ extern "C" {
 #ifndef _di_f_file_stream_open_descriptor_
   extern f_status_t f_file_stream_open_descriptor(const f_string_static_t mode, f_file_t * const file);
 #endif // _di_f_file_stream_open_descriptor_
-
-/**
- * Open a file stream.
- *
- * The file descriptor is retrieved on success, if necessary and able.
- *
- * @param path
- *   The file path
- * @param mode
- *   The file modes do use when opening, as an fopen() file mode string.
- *   Set mode.used to 0 to determine mode from file.flags (falling back to read only as a failsafe).
- *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
- *
- *   File Modes (fopen() file modes vs open file modes):
- *     - "r":  O_RDONLY.
- *     - "w":  O_WRONLY | O_CREAT | O_TRUNC.
- *     - "a":  O_WRONLY | O_CREAT | O_APPEND.
- *     - "r+": O_RDWR.
- *     - "w+": O_RDWR | O_CREAT | O_TRUNC.
- *     - "a+": O_RDWR | O_CREAT | O_APPEND.
- * @param file
- *   The file information.
- *   The file.stream is updated if necessary.
- *   The file.id is updated with the file descriptor, if necessary and able.
- *
- * @return
- *   F_none is returned on success.
- *
- *   F_access_denied (with error bit) on access denied.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_file_descriptor (with error bit) if unable to load the file descriptor.
- *   F_file_found_not (with error bit) if the file was not found.
- *   F_file_open_max (with error bit) when system-wide max open files is reached.
- *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
- *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
- *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
- *   F_loop (with error bit) on loop error.
- *   F_memory_not (with error bit) if out of memory.
- *   F_name (with error bit) on path name is too long.
- *   F_number_overflow (with error bit) on overflow error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if file system does not allow for making changes.
- *   F_read_only (with error bit) if file is read-only.
- *   F_supported_not (with error bit) fo unsupported file types.
- *   F_failure (with error bit) for any other error.
- *
- * @see fileno()
- * @see fopen()
- */
-#ifndef _di_f_file_stream_open_
-  extern f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file);
-#endif // _di_f_file_stream_open_
 
 /**
  * Read until EOF is reached.
@@ -2294,7 +2299,8 @@ extern "C" {
  * The file descriptor is retrieved on success, if necessary and able.
  *
  * @param path
- *   The file path
+ *   The file path.
+ *   Set path.used to 0 with a non-empty mode (mode.used > 0) to only change the mode of the existing stream.
  * @param mode
  *   The file modes do use when opening.
  *   Set to 0 to determine mode from file.flags (falling back to read only as a failsafe).
@@ -2306,6 +2312,7 @@ extern "C" {
  *
  * @return
  *   F_none is returned on success.
+ *   F_data_not if both path.used and mode.used are 0.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2360,7 +2367,12 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fwrite()
+ *   F_file_write (with error bit) on any other error.
+ *
+ * @see flockfile()
+ * @see fwrite_unlocked()
+ * @see ferror_unlocked()
+ * @see funlockfile()
  */
 #ifndef _di_f_file_stream_write_
   extern f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written);
@@ -2395,7 +2407,12 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fwrite()
+ *   F_file_write (with error bit) on any other error.
+ *
+ * @see flockfile()
+ * @see fwrite_unlocked()
+ * @see ferror_unlocked()
+ * @see funlockfile()
  */
 #ifndef _di_f_file_stream_write_block_
   extern f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t * const written);
@@ -2431,7 +2448,12 @@ extern "C" {
  *   F_interrupt (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fwrite()
+ *   F_file_write (with error bit) on any other error.
+ *
+ * @see flockfile()
+ * @see fwrite_unlocked()
+ * @see ferror_unlocked()
+ * @see funlockfile()
  */
 #ifndef _di_f_file_stream_write_until_
   extern f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written);
@@ -2565,6 +2587,9 @@ extern "C" {
  *
  * @param path
  *   The path file name.
+ * @param dereference
+ *   Set to TRUE to dereference symlinks (often is what is desired).
+ *   Set to FALSE to operate on the symlink itself.
  * @param type
  *   The type of the file.
  *
@@ -2583,7 +2608,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_type_
-  extern f_status_t f_file_type(const f_string_static_t path, int * const type);
+  extern f_status_t f_file_type(const f_string_static_t path, const bool dereference, int * const type);
 #endif //  _di_f_file_type_
 
 /**

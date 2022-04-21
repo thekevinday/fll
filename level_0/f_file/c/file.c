@@ -1373,7 +1373,7 @@ extern "C" {
     memset(&stat_file, 0, sizeof(struct stat));
 
     {
-      const f_status_t status = private_f_file_stat_at(at_id, path, F_true, &stat_file);
+      const f_status_t status = private_f_file_stat_at(at_id, path, flag, &stat_file);
       if (F_status_is_error(status)) return status;
     }
 
@@ -2077,6 +2077,57 @@ extern "C" {
   }
 #endif // _di_f_file_stream_close_
 
+#ifndef _di_f_file_stream_open_
+  f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!file) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!path.used) {
+      return F_data_not;
+    }
+
+    if (mode.used) {
+      file->stream = fopen(path.string, mode.string);
+    }
+    else {
+      file->stream = fopen(path.string, private_f_file_stream_open_mode_determine(file->flag));
+    }
+
+    if (!file->stream) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
+      if (errno == EEXIST) return F_status_set_error(F_file_found);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EFBIG || errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENFILE) return F_status_set_error(F_file_open_max);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+      if (errno == ETXTBSY) return F_status_set_error(F_busy);
+      if (errno == EISDIR) return F_status_set_error(F_directory);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    file->id = fileno(file->stream);
+
+    if (file->id == -1) {
+      return F_status_set_error(F_file_descriptor);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_file_stream_open_
+
 #ifndef _di_f_file_stream_open_descriptor_
   f_status_t f_file_stream_open_descriptor(const f_string_static_t mode, f_file_t * const file) {
     #ifndef _di_level_0_parameter_checking_
@@ -2121,53 +2172,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_file_stream_open_descriptor_
-
-#ifndef _di_f_file_stream_open_
-  f_status_t f_file_stream_open(const f_string_static_t path, const f_string_static_t mode, f_file_t * const file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (mode.used) {
-      file->stream = fopen(path.string, mode.string);
-    }
-    else {
-      file->stream = fopen(path.string, private_f_file_stream_open_mode_determine(file->flag));
-    }
-
-    if (!file->stream) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-      if (errno == EEXIST) return F_status_set_error(F_file_found);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EFBIG || errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EINTR) return F_status_set_error(F_interrupt);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-      if (errno == ENFILE) return F_status_set_error(F_file_open_max);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == EPERM) return F_status_set_error(F_prohibited);
-      if (errno == EROFS) return F_status_set_error(F_read_only);
-      if (errno == ETXTBSY) return F_status_set_error(F_busy);
-      if (errno == EISDIR) return F_status_set_error(F_directory);
-      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
-
-      return F_status_set_error(F_failure);
-    }
-
-    file->id = fileno(file->stream);
-
-    if (file->id == -1) {
-      return F_status_set_error(F_file_descriptor);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_file_stream_open_
 
 #ifndef _di_f_file_stream_read_
   f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t * const buffer) {
@@ -2310,6 +2314,10 @@ extern "C" {
       return F_status_set_error(F_file_closed);
     }
 
+    if (!total) {
+      return F_none_stop;
+    }
+
     flockfile(file.stream);
 
     if (feof_unlocked(file.stream)) {
@@ -2386,17 +2394,17 @@ extern "C" {
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
+    if (!path.used && !mode.used) {
       return F_data_not;
     }
 
     FILE *result = 0;
 
     if (mode.used) {
-      result = freopen(path.string, mode.string, file->stream);
+      result = freopen(path.used ? path.string : 0, mode.string, file->stream);
     }
     else {
-      result = freopen(path.string, private_f_file_stream_open_mode_determine(file->flag), file->stream);
+      result = freopen(path.used ? path.string : 0, private_f_file_stream_open_mode_determine(file->flag), file->stream);
     }
 
     if (!result) {
@@ -2421,6 +2429,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
+    file->stream = result;
     file->id = fileno(file->stream);
 
     if (file->id == -1) {
@@ -2452,7 +2461,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer, buffer.used, written);
+      status = private_f_file_stream_write_until(file, buffer, buffer.used, written);
 
       if (status == F_none && *written == buffer.used) {
         return F_none_eos;
@@ -2461,15 +2470,11 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
+      status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none && written_local == buffer.used) {
         return F_none_eos;
       }
-    }
-
-    if (F_status_is_error(status)) {
-      return F_status_set_error(status);
     }
 
     return status;
@@ -2503,7 +2508,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer, write_max, written);
+      status = private_f_file_stream_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2518,7 +2523,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer, write_max, &written_local);
+      status = private_f_file_stream_write_until(file, buffer, write_max, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2562,7 +2567,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer, write_max, written);
+      status = private_f_file_stream_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2577,7 +2582,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
+      status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2624,11 +2629,7 @@ extern "C" {
     if (written) {
       const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
 
-      flockfile(file.stream);
-
-      private_f_file_stream_write_until(file, buffer_adjusted, write_max, written);
-
-      funlockfile(file.stream);
+      status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, written);
 
       if (status == F_none) {
         if (range.start + *written == buffer.used) {
@@ -2644,11 +2645,7 @@ extern "C" {
       const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
       f_array_length_t written_local = 0;
 
-      flockfile(file.stream);
-
-      private_f_file_stream_write_until(file, buffer_adjusted, write_max, &written_local);
-
-      funlockfile(file.stream);
+      status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, &written_local);
 
       if (status == F_none) {
         if (range.start + written_local == buffer.used) {
@@ -2677,7 +2674,7 @@ extern "C" {
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    status = private_f_file_stat(path, F_false, &stat_file);
+    status = private_f_file_stat(path, dereference, &stat_file);
 
     if (F_status_set_fine(status) == F_file_found_not) {
       return private_f_file_create(path, mode, dereference);
@@ -2748,7 +2745,7 @@ extern "C" {
 #endif // _di_f_file_touch_at_
 
 #ifndef _di_f_file_type_
-  f_status_t f_file_type(const f_string_static_t path, int * const type) {
+  f_status_t f_file_type(const f_string_static_t path, const bool dereference, int * const type) {
     #ifndef _di_level_0_parameter_checking_
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2761,17 +2758,9 @@ extern "C" {
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    if (stat(path.string, &stat_file) < 0) {
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
-      if (errno == ENOENT) return F_file_found_not;
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-
-      return F_status_set_error(F_file_stat);
+    {
+      const f_status_t status = private_f_file_stat(path, dereference, &stat_file);
+      if (F_status_is_error(status)) return status;
     }
 
     *type = macro_f_file_type_get(stat_file.st_mode);
@@ -2794,18 +2783,9 @@ extern "C" {
 
     memset(&stat_file, 0, sizeof(struct stat));
 
-    if (fstatat(at_id, path.string, &stat_file, flag) < 0) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
-      if (errno == ENOENT) return F_file_found_not;
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == ELOOP) return F_status_set_error(F_loop);
-
-      return F_status_set_error(F_file_stat);
+    {
+      const f_status_t status = private_f_file_stat_at(at_id, path, flag, &stat_file);
+      if (F_status_is_error(status)) return status;
     }
 
     *type = macro_f_file_type_get(stat_file.st_mode);

@@ -787,11 +787,15 @@ extern "C" {
       }
     }
 
+    flockfile(file.stream);
+
     while (*written < write_max) {
 
       size_write = fwrite_unlocked(buffer.string + *written, write_amount, write_size, file.stream);
 
-      if (size_write < 0) {
+      if (ferror_unlocked(file.stream)) {
+        funlockfile(file.stream);
+
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EBADF) return F_status_set_error(F_file_descriptor);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -800,15 +804,19 @@ extern "C" {
         if (errno == EIO) return F_status_set_error(F_input_output);
         if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_file_write);
       }
 
       *written += size_write * write_amount;
 
       if (!size_write) {
+        funlockfile(file.stream);
+
         return F_none_stop;
       }
     } // while
+
+    funlockfile(file.stream);
 
     return F_none;
   }
@@ -850,7 +858,7 @@ extern "C" {
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-      return F_status_set_error(F_failure);
+      return F_status_set_error(F_file_write);
     }
 
     return F_none;
