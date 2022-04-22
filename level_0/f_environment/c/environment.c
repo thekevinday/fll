@@ -69,6 +69,47 @@ extern "C" {
   }
 #endif // _di_f_environment_get_
 
+#ifndef _di_f_environment_secure_is_
+  f_status_t f_environment_secure_is(void) {
+
+    if (geteuid() == getuid() && getegid() == getgid()) {
+      return F_true;
+    }
+
+    #ifndef _di_libcap_
+      cap_t capability = cap_get_proc();
+
+      if (!capability) {
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EPERM) return F_status_set_error(F_prohibited);
+        if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+
+        return F_status_set_error(F_failure);
+      }
+
+      cap_flag_value_t value;
+
+      memset(&value, 0, sizeof(cap_flag_value_t));
+
+      if (cap_get_flag(capability, CAP_SETUID, CAP_EFFECTIVE, &value) == -1) {
+        cap_free(capability);
+
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+        return F_status_set_error(F_failure);
+      }
+
+      cap_free(capability);
+
+      if (value == CAP_SET) {
+        return F_true;
+      }
+    #endif // _di_libcap_
+
+    return F_false;
+  }
+#endif // _di_f_environment_secure_is_
+
 #ifndef _di_f_environment_set_
   f_status_t f_environment_set(const f_string_static_t name, const f_string_static_t value, const bool replace) {
 
@@ -77,7 +118,7 @@ extern "C" {
     }
 
     if (setenv(name.string, value.string, replace) < 0) {
-      if (errno == EINVAL) return F_status_set_error(F_valid_not);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
       return F_status_set_error(F_failure);
@@ -95,7 +136,7 @@ extern "C" {
     }
 
     if (unsetenv(name.string) < 0) {
-      if (errno == EINVAL) return F_status_set_error(F_valid_not);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
       return F_status_set_error(F_failure);

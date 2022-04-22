@@ -12,7 +12,13 @@
 
 // Libc includes.
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+
+#ifndef _di_libcap_
+  #include <sys/capability.h>
+#endif // _di_libcap_
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>
@@ -97,6 +103,39 @@ extern "C" {
 #endif // _di_f_environment_get_
 
 /**
+ * Check to see if the environment is secure for calling getenv() safely for "secure execution".
+ *
+ * This is intended to closely mimic the checks secure_getenv().
+ *
+ * Any of these conditions must be true for secure environment:
+ * - The process' effective UID matches the real UID and the effective GID matches the real GID.
+ * - The process has the effective CAP_SETUID set.
+ *
+ * The documentation for secure_getenv() is unclear on which capabilities are expected to be set.
+ * This takes a conservative approach and only returns true for the above mentioned capabilities.
+ *
+ * @return
+ *   F_true if the environment is secure according to the described rules.
+ *   F_false if the environment is not secure according to the described rules.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if name is an invalid string.
+ *   F_prohibited (with error bit) if the file system does not permit this operation (usually due to the cap_get_proc() call).
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see cap_get_flag()
+ * @see cap_get_proc()
+ * @see getegid()
+ * @see geteuid()
+ * @see getgid()
+ * @see getuid()
+ */
+#ifndef _di_f_environment_secure_is_
+  extern f_status_t f_environment_secure_is(void);
+#endif // _di_f_environment_secure_is_
+
+/**
  * Assign the given value to the named environment variable.
  *
  * If the name does not exist, then it is created.
@@ -117,7 +156,8 @@ extern "C" {
  *   F_data_not if name.used is 0.
  *
  *   F_memory_not (with error bit) on out of memory.
- *   F_valid_not (with error bit) if name is an invalid string.
+ *   F_parameter (with error bit) if name is an invalid string.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see setenv()
@@ -139,7 +179,8 @@ extern "C" {
  *   F_data_not if name.used is 0.
  *
  *   F_memory_not (with error bit) on out of memory.
- *   F_valid_not (with error bit) if name is an invalid string.
+ *   F_parameter (with error bit) if name is an invalid string.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see unsetenv()
