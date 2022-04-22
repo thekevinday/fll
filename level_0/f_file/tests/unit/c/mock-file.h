@@ -20,7 +20,7 @@
 #include <cmocka.h>
 
 // FLL-0 includes.
-#include <fll/level_0/directory.h>
+#include <fll/level_0/file.h>
 
 #ifdef __cplusplus
 extern "C" {

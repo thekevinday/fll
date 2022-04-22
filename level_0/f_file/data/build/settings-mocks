@@ -55,7 +55,6 @@ flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector
 
 flags_library -fPIC
-close read write
 
 # Inject mocks.
 flags -Wl,--wrap=access
