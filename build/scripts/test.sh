@@ -199,7 +199,7 @@ test_main() {
   fi
 
   if [[ $failure -eq 0 && ! -d $path_test ]] ; then
-    mkdir $verbose_common $path_test
+    mkdir $verbose_common -p $path_test
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -316,6 +316,9 @@ test_operate() {
   local env_path="${path_test_project}programs/shared"
   local env_libs="${path_test_project}libraries/shared"
   local work_path="${path_test_project}"
+  local includes_path="${work_path}includes/"
+  local libraries_path="${work_path}libraries/shared/"
+  local github_arguments=
 
   if [[ $PATH != "" ]] ; then
     env_path="$env_path:$PATH"
@@ -323,6 +326,16 @@ test_operate() {
 
   if [[ $LD_LIBRARY_PATH != "" ]] ; then
     env_libs="$env_libs:$LD_LIBRARY_PATH"
+  fi
+
+  if [[ $test_system == "github" ]] ; then
+    github_arguments="-d -I$includes_path -d -L$libraries_path"
+
+    test_operate_github_prebuild
+
+    if [[ $? -ne 0 ]] ; then
+      return 1
+    fi
   fi
 
   if [[ $build_project == "yes" ]] ; then
@@ -340,7 +353,7 @@ test_operate() {
   fi
 
   if [[ $test_system == "github" ]] ; then
-    test_operate_github
+    test_operate_github_pretest
 
     if [[ $? -ne 0 ]] ; then
       return 1
@@ -350,157 +363,6 @@ test_operate() {
   test_operate_tests
 
   return $?
-}
-
-test_operate_github() {
-  local clone_quiet=
-  local path_original="$PWD/"
-  local cmocka_path="${path_test}cmocka/"
-  local cmocka_build="${cmocka_path}build/"
-  local cmocka_data="${cmocka_path}data/build/"
-  local cmocka_settings="${path_original}level_3/fake/data/projects/cmocka/1.1.5/settings"
-  local cmocka_uri="https://github.com/coreboot/cmocka.git"
-
-  if [[ $verbosity == "quiet" ]] ; then
-    clone_quiet="-q"
-  fi
-
-  if [[ $verbosity != "quiet" ]] ; then
-    echo
-    echo -e "${c_highlight}Performing Github Specific Operations.$c_reset"
-    echo -e "${c_title}--------------------------------------$c_reset"
-  fi
-
-  if [[ -d $cmocka_path ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
-      echo -e "Detected existing cmocka repository at \"$c_notice$cmocka_path$c_reset\", skipping this process."
-    fi
-
-    return 0
-  fi
-
-  if [[ $verbosity == "debug" ]] ; then
-    echo
-    echo "git clone $clone_quiet \"$cmocka_uri\" $cmocka_path"
-  fi
-
-  git clone $clone_quiet "$cmocka_uri" $cmocka_path
-
-  if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
-      echo -e "${c_error}ERROR: Failed to git clone '${c_notice}$cmocka_uri$c_error' onto  '${c_notice}$cmocka_path$c_error'.$c_reset"
-    fi
-
-    return 1
-  fi
-
-  if [[ $verbosity == "debug" ]] ; then
-    echo
-    echo "mkdir $verbose_common -p $cmocka_data"
-  fi
-
-  mkdir $verbose_common -p $cmocka_data
-
-  if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
-      echo -e "${c_error}ERROR: Failed to create cmocka build data directory '$c_notice$cmocka_data$c_error'.$c_reset"
-    fi
-
-    return 1
-  fi
-
-  if [[ $verbosity == "debug" ]] ; then
-    echo
-    echo "cp $verbose_common $cmocka_settings $cmocka_data"
-  fi
-
-  cp $verbose_common $cmocka_settings $cmocka_data
-
-  if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
-      echo -e "${c_error}ERROR: Failed to copy cmocka build settings: '$c_notice$cmocka_settings$c_error'.$c_reset"
-    fi
-
-    return 1
-  fi
-
-  if [[ $verbosity == "debug" ]] ; then
-    echo
-    echo "cd $cmocka_path"
-  fi
-
-  cd $cmocka_path
-
-  if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
-      echo -e "${c_error}ERROR: Failed to change cmocka source directory '$c_notice$cmocka_path$c_error'.$c_reset"
-    fi
-
-    return 1
-  fi
-
-  if [[ $verbosity == "debug" ]] ; then
-    echo
-    echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$path_test_work\" -m $build_compiler clean build"
-  fi
-
-  PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$path_test_work" -m $build_compiler clean build
-
-  if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
-      echo -e "${c_error}ERROR: Failed to build '${c_notice}cmocka$c_error'.$c_reset"
-    fi
-
-    cd ${path_original}
-
-    return 1
-  fi
-
-  if [[ $verbosity == "debug" ]] ; then
-    echo
-    echo "cp $verbose_common -R ${cmocka_build}includes/* ${work_path}includes/"
-  fi
-
-  cp $verbose_common -R ${cmocka_build}includes/* ${work_path}includes/
-
-  if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
-      echo -e "${c_error}ERROR: Failed to install cmocka headers to '$c_notice${work_path}includes/$c_error'.$c_reset"
-    fi
-
-    cd ${path_original}
-
-    return 1
-  fi
-
-  if [[ $verbosity == "debug" ]] ; then
-    echo
-    echo "cp $verbose_common -R ${cmocka_build}libraries/shared/* ${work_path}libraries/shared/"
-  fi
-
-  cp $verbose_common -R ${cmocka_build}libraries/shared/* ${work_path}libraries/shared/
-
-  if [[ $? -ne 0 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
-      echo -e "${c_error}ERROR: Failed to install cmocka libraries to '$c_notice${work_path}libraries/shared/$c_error'.$c_reset"
-    fi
-
-    cd ${path_original}
-
-    return 1
-  fi
-
-  cd ${path_original}
-
-  return 0
 }
 
 test_operate_build_individual() {
@@ -587,16 +449,16 @@ test_operate_build_project() {
       echo
 
       if [[ $build_compiler == "gcc" ]] ; then
-        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m $mode clean build"
+        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m $mode clean build $github_arguments"
       else
-        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m $build_compiler clean make -f testfile"
+        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m $build_compiler clean make -f testfile $github_arguments"
       fi
     fi
 
     if [[ $build_compiler == "gcc" ]] ; then
-      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test clean build
+      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test clean build $github_arguments
     else
-      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test -m $build_compiler clean build
+      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test -m $build_compiler clean build $github_arguments
     fi
   else
     if [[ $verbosity == "debug" ]] ; then
@@ -711,6 +573,249 @@ test_operate_build_tools() {
   return $failure
 }
 
+test_operate_github_prebuild() {
+  local clone_quiet=
+  local path_original="$PWD/"
+  local result=
+
+  if [[ $verbosity == "quiet" ]] ; then
+    clone_quiet="-q"
+  fi
+
+  if [[ $verbosity != "quiet" ]] ; then
+    echo
+    echo -e "${c_highlight}Performing Github Specific Pre-Build Operations.$c_reset"
+    echo -e "${c_title}------------------------------------------------$c_reset"
+  fi
+
+  test_operate_github_prebuild_libcap
+  result=$?
+
+  cd ${path_original}
+
+  return $result
+}
+
+test_operate_github_pretest() {
+  local clone_quiet=
+  local path_original="$PWD/"
+  local result=
+
+  if [[ $verbosity == "quiet" ]] ; then
+    clone_quiet="-q"
+  fi
+
+  if [[ $verbosity != "quiet" ]] ; then
+    echo
+    echo -e "${c_highlight}Performing Github Specific Pre-Test Operations.$c_reset"
+    echo -e "${c_title}-----------------------------------------------$c_reset"
+  fi
+
+  test_operate_github_pretest_cmocka
+  result=$?
+
+  cd ${path_original}
+
+  return $result
+}
+
+test_operate_github_pretest_cmocka() {
+  local cmocka_path="${path_test}cmocka/"
+  local cmocka_build="${cmocka_path}build/"
+  local cmocka_data="${cmocka_path}data/build/"
+  local cmocka_settings="${path_original}level_3/fake/data/projects/cmocka/1.1.5/settings"
+  local cmocka_uri="https://github.com/coreboot/cmocka.git"
+  local cmocka_branch="cmocka-1.1.5"
+
+  if [[ -d $cmocka_path ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "Detected existing cmocka repository at \"$c_notice$cmocka_path$c_reset\", skipping the cmocka process."
+    fi
+
+    return 0
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "git clone $clone_quiet --single-branch -b $cmocka_branch \"$cmocka_uri\" $cmocka_path"
+  fi
+
+  git clone $clone_quiet --single-branch -b $cmocka_branch "$cmocka_uri" $cmocka_path
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to git clone '${c_notice}$cmocka_uri$c_error' onto  '${c_notice}$cmocka_path$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "mkdir $verbose_common -p $cmocka_data"
+  fi
+
+  mkdir $verbose_common -p $cmocka_data
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to create cmocka build data directory '$c_notice$cmocka_data$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cp $verbose_common $cmocka_settings $cmocka_data"
+  fi
+
+  cp $verbose_common $cmocka_settings $cmocka_data
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to copy cmocka build settings: '$c_notice$cmocka_settings$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cd $cmocka_path"
+  fi
+
+  cd $cmocka_path
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to change cmocka source directory '$c_notice$cmocka_path$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$path_test_work\" -m $build_compiler clean build $github_arguments"
+  fi
+
+  PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$path_test_work" -m $build_compiler clean build $github_arguments
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to build '${c_notice}cmocka$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cp $verbose_common -R ${cmocka_build}includes/* ${work_path}includes/"
+  fi
+
+  cp $verbose_common -R ${cmocka_build}includes/* ${work_path}includes/
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to install cmocka headers to '$c_notice${work_path}includes/$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cp $verbose_common -R ${cmocka_build}libraries/shared/* ${work_path}libraries/shared/"
+  fi
+
+  cp $verbose_common -R ${cmocka_build}libraries/shared/* ${work_path}libraries/shared/
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to install cmocka libraries to '$c_notice${work_path}libraries/shared/$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  return 0
+}
+
+test_operate_github_prebuild_libcap() {
+  local libcap_path="${path_test}libcap/"
+  local libcap_uri="https://github.com/thekevinday/kernel.org-libcap.git"
+  local libcap_branch="master"
+
+  if [[ -d $libcap_path ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "Detected existing libcap repository at \"$c_notice$libcap_path$c_reset\", skipping the libcap process."
+    fi
+
+    return 0
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "git clone $clone_quiet --single-branch -b $libcap_branch \"$libcap_uri\" $libcap_path"
+  fi
+
+  git clone $clone_quiet --single-branch -b $libcap_branch "$libcap_uri" $libcap_path
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to git clone '${c_notice}$libcap_uri$c_error' onto  '${c_notice}$libcap_path$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cd $libcap_path"
+  fi
+
+  cd $libcap_path
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to change libcap source directory '$c_notice$libcap_path$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "make MANDIR=${work_path}fake/ SBINDIR=${work_path}fake/ INCDIR=${work_path}includes/ LIBDIR=${work_path}libraries/shared/ PKGCONFIGDIR=${work_path}fake/ install"
+  fi
+
+  make MANDIR=${work_path}fake/ SBINDIR=${work_path}fake/ INCDIR=${work_path}includes/ LIBDIR=${work_path}libraries/shared/ PKGCONFIGDIR=${work_path}fake/ install
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to build and install libcap into the work directory '$c_notice${work_path}$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  return 0
+}
+
 test_operate_tests() {
   local -i failure=0
   local project=
@@ -773,16 +878,16 @@ test_operate_tests() {
         echo
 
         if [[ $build_compiler == "gcc" ]] ; then
-          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test clean make -f testfile"
+          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test clean make -f testfile $github_arguments"
         else
-          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test -m $build_compiler clean make -f testfile"
+          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test -m $build_compiler clean make -f testfile $github_arguments"
         fi
       fi
 
       if [[ $build_compiler == "gcc" ]] ; then
-        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test clean make -f testfile
+        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test clean make -f testfile $github_arguments
       else
-        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test -m $build_compiler clean make -f testfile
+        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test -m $build_compiler clean make -f testfile $github_arguments
       fi
 
       if [[ $? -ne 0 ]] ; then
@@ -813,10 +918,13 @@ test_cleanup() {
 
   unset test_cleanup
   unset test_operate
-  unset test_operate_github
   unset test_operate_build_individual
   unset test_operate_build_project
   unset test_operate_build_tools
+  unset test_operate_github_prebuild
+  unset test_operate_github_prebuild_libcap
+  unset test_operate_github_pretest
+  unset test_operate_github_pretest_cmocka
   unset test_operate_tests
 }
 
