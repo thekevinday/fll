@@ -33,9 +33,9 @@ test_main() {
 
   local build_compiler=
   local build_project=no
-  local path_scripts=build/scripts/
+  local path_scripts=$PWD/build/scripts/
   local path_scripts_package=${path_scripts}package.sh
-  local path_test=test/
+  local path_test=$PWD/test/
   local path_test_package=${path_test}package/
   local path_test_project=${path_test}project/
   local path_test_work=${path_test}work/
@@ -61,6 +61,7 @@ test_main() {
     t=$#
 
     while [[ $i -lt $t ]] ; do
+
       let i=$i+1
       p=${!i}
 
@@ -165,7 +166,7 @@ test_main() {
     let failure=1
   fi
 
-  if [[ $failure -eq 0 && ( $test_system == "github" || $test_system == "gitlab" ) ]] ; then
+  if [[ $failure -eq 0 && $test_system == "gitlab" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: The build system $c_notice$test_system$c_error is not currently implemented.$c_reset"
     fi
@@ -289,7 +290,7 @@ test_help() {
   echo
   echo -e "$c_highlight$system_name$c_reset $c_notice[${c_reset} options $c_notice]$c_reset $c_notice[${c_reset} test_system $c_notice]$c_reset"
   echo -e " ${c_important}normal${c_reset}  Perform a normal test (default)."
-  echo -e " ${c_important}github${c_reset}  Perform a test meant to be used within Github (not yet supported)."
+  echo -e " ${c_important}github${c_reset}  Perform a test meant to be used within Github."
   echo -e " ${c_important}gitlab${c_reset}  Perform a test meant to be used within Gitlab (not yet supported)."
   echo
   echo -e "${c_highlight}Options:$c_reset"
@@ -312,8 +313,9 @@ test_help() {
 }
 
 test_operate() {
-  local env_path="$PWD/${path_test_project}programs/shared"
-  local env_libs="$PWD/${path_test_project}libraries/shared"
+  local env_path="${path_test_project}programs/shared"
+  local env_libs="${path_test_project}libraries/shared"
+  local work_path="${path_test_project}"
 
   if [[ $PATH != "" ]] ; then
     env_path="$env_path:$PATH"
@@ -337,9 +339,168 @@ test_operate() {
     return 1
   fi
 
+  if [[ $test_system == "github" ]] ; then
+    test_operate_github
+
+    if [[ $? -ne 0 ]] ; then
+      return 1
+    fi
+  fi
+
   test_operate_tests
 
   return $?
+}
+
+test_operate_github() {
+  local clone_quiet=
+  local path_original="$PWD/"
+  local cmocka_path="${path_test}cmocka/"
+  local cmocka_build="${cmocka_path}build/"
+  local cmocka_data="${cmocka_path}data/build/"
+  local cmocka_settings="${path_original}level_3/fake/data/projects/cmocka/1.1.5/settings"
+  local cmocka_uri="https://github.com/coreboot/cmocka.git"
+
+  if [[ $verbosity == "quiet" ]] ; then
+    clone_quiet="-q"
+  fi
+
+  if [[ $verbosity != "quiet" ]] ; then
+    echo
+    echo -e "${c_highlight}Performing Github Specific Operations.$c_reset"
+    echo -e "${c_title}--------------------------------------$c_reset"
+  fi
+
+  if [[ -d $cmocka_path ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "Detected existing cmocka repository at \"$c_notice$cmocka_path$c_reset\", skipping this process."
+    fi
+
+    return 0
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "git clone $clone_quiet \"$cmocka_uri\" $cmocka_path"
+  fi
+
+  git clone $clone_quiet "$cmocka_uri" $cmocka_path
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to git clone '${c_notice}$cmocka_uri$c_error' onto  '${c_notice}$cmocka_path$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "mkdir $verbose_common -p $cmocka_data"
+  fi
+
+  mkdir $verbose_common -p $cmocka_data
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to create cmocka build data directory '$c_notice$cmocka_data$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cp $verbose_common $cmocka_settings $cmocka_data"
+  fi
+
+  cp $verbose_common $cmocka_settings $cmocka_data
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to copy cmocka build settings: '$c_notice$cmocka_settings$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cd $cmocka_path"
+  fi
+
+  cd $cmocka_path
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to change cmocka source directory '$c_notice$cmocka_path$c_error'.$c_reset"
+    fi
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$path_test_work\" -m $build_compiler clean build"
+  fi
+
+  PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$path_test_work" -m $build_compiler clean build
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to build '${c_notice}cmocka$c_error'.$c_reset"
+    fi
+
+    cd ${path_original}
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cp $verbose_common -R ${cmocka_build}includes/* ${work_path}includes/"
+  fi
+
+  cp $verbose_common -R ${cmocka_build}includes/* ${work_path}includes/
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to install cmocka headers to '$c_notice${work_path}includes/$c_error'.$c_reset"
+    fi
+
+    cd ${path_original}
+
+    return 1
+  fi
+
+  if [[ $verbosity == "debug" ]] ; then
+    echo
+    echo "cp $verbose_common -R ${cmocka_build}libraries/shared/* ${work_path}libraries/shared/"
+  fi
+
+  cp $verbose_common -R ${cmocka_build}libraries/shared/* ${work_path}libraries/shared/
+
+  if [[ $? -ne 0 ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo
+      echo -e "${c_error}ERROR: Failed to install cmocka libraries to '$c_notice${work_path}libraries/shared/$c_error'.$c_reset"
+    fi
+
+    cd ${path_original}
+
+    return 1
+  fi
+
+  cd ${path_original}
+
+  return 0
 }
 
 test_operate_build_individual() {
@@ -373,7 +534,7 @@ test_operate_build_individual() {
 
   for project in $projects ; do
 
-    test_operate_build_project "$path_test_package_individual" "$path_original$path_test_work" "$project" individual
+    test_operate_build_project "$path_test_package_individual" "$path_test_work" "$project" individual
 
     if [[ $? -ne 0 ]] ; then
       let failure=1
@@ -511,7 +672,7 @@ test_operate_build_tools() {
     return 1
   fi
 
-  test_operate_build_project "$path_test_package_monolithic" "$path_original$path_test_project" fll monolithic bootstrap
+  test_operate_build_project "$path_test_package_monolithic" "$path_test_project" fll monolithic bootstrap
 
   if [[ $? -ne 0 ]] ; then
     let failure=1
@@ -538,7 +699,7 @@ test_operate_build_tools() {
       return 1
     fi
 
-    test_operate_build_project "$path_test_package_program" "$path_original$path_test_project" fake monolithic bootstrap
+    test_operate_build_project "$path_test_package_program" "$path_test_project" fake monolithic bootstrap
 
     if [[ $failure -ne 0 ]] ; then
       let failure=1
@@ -554,7 +715,7 @@ test_operate_tests() {
   local -i failure=0
   local project=
   local path_original="$PWD/"
-  local destination="$path_original$path_test_work"
+  local destination="$path_test_work"
 
   for project in $projects ; do
 
@@ -652,6 +813,7 @@ test_cleanup() {
 
   unset test_cleanup
   unset test_operate
+  unset test_operate_github
   unset test_operate_build_individual
   unset test_operate_build_project
   unset test_operate_build_tools
