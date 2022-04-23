@@ -1,0 +1,26 @@
+name: Development - Run Tests
+
+on:
+  push:
+    branches: [ github-development ]
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: 'github-development'
+
+      - name: Run Tests Using GCC
+        run: |
+          cd $GITHUB_WORKSPACE
+          bash build/scripts/test.sh -p github
+
+      - name: Run Tests Using CLang
+        run: |
+          cd $GITHUB_WORKSPACE
+          bash build/scripts/test.sh -p -c clang github
