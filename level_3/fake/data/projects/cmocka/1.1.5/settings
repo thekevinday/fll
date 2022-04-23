@@ -19,7 +19,7 @@ version_micro 5
 version_file micro
 version_target major
 
-modes individual gcc clang
+modes gcc clang
 modes_default gcc
 
 build_compiler gcc
