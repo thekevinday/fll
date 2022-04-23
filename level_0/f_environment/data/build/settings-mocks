@@ -32,7 +32,7 @@ build_libraries-individual -lf_memory -lf_string
 
 build_sources_library environment.c ../../tests/unit/c/mock-environment.c
 
-build_sources_headers environment.h environment/common.h environment/type.h
+build_sources_headers environment.h environment/common.h
 
 build_script yes
 build_shared yes
