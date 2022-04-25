@@ -15,6 +15,7 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include <stdint.h>
+#include <stdio.h>
 
 // cmocka includes.
 #include <cmocka.h>
