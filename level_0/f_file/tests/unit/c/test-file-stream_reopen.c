@@ -106,35 +106,34 @@ void test__f_file_stream_reopen__works(void **state) {
 
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
   const int id = 1;
-  FILE *file_pointer = stdout;
 
   {
     f_file_t file = f_file_t_initialize;
-    file.stream = file_pointer;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_freopen, false);
-    will_return(__wrap_freopen, file_pointer);
+    will_return(__wrap_freopen, F_type_input_d);
 
     will_return(__wrap_fileno, id);
 
     const f_status_t status = f_file_stream_reopen(path, path, &file);
 
     assert_int_equal(status, F_none);
-    assert_int_equal(file.stream, file_pointer);
+    assert_int_equal(file.stream, F_type_input_d);
   }
 
   {
     f_file_t file = f_file_t_initialize;
 
     will_return(__wrap_freopen, false);
-    will_return(__wrap_freopen, file_pointer);
+    will_return(__wrap_freopen, F_type_input_d);
 
     will_return(__wrap_fileno, id);
 
     const f_status_t status = f_file_stream_reopen(path, f_string_empty_s, &file);
 
     assert_int_equal(status, F_none);
-    assert_int_equal(file.stream, file_pointer);
+    assert_int_equal(file.stream, F_type_input_d);
   }
 }
 

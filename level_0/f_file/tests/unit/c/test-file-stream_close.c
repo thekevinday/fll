@@ -153,7 +153,7 @@ void test__f_file_stream_close__fails_for_stream(void **state) {
 
       f_file_t file = f_file_t_initialize;
       file.id = 0;
-      file.stream = stdout;
+      file.stream = F_type_input_d;
 
       if (flush) {
         if (flush == 1) {
@@ -199,7 +199,7 @@ void test__f_file_stream_close__works(void **state) {
     f_file_t file = f_file_t_initialize;
 
     file.id = 0;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_fclose, false);
     will_return(__wrap_fclose, 0);
@@ -231,7 +231,7 @@ void test__f_file_stream_close__works(void **state) {
     f_file_t file = f_file_t_initialize;
 
     file.id = 0;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_fflush, false);
     will_return(__wrap_fflush, 0);

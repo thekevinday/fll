@@ -37,7 +37,7 @@ void test__f_file_stream_write_block__fails(void **state) {
 
     f_file_t file = f_file_t_initialize;
     file.size_read = 1;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, errnos[i]);
@@ -79,8 +79,7 @@ void test__f_file_stream_write_block__returns_file_closed(void **state) {
 void test__f_file_stream_write_block__returns_data_not(void **state) {
 
   f_file_t file = f_file_t_initialize;
-  FILE file_stucture;
-  file.stream = &file_stucture;
+  file.stream = F_type_input_d;
 
   {
     const f_status_t status = f_file_stream_write_block(file, f_string_empty_s, 0);
@@ -105,7 +104,7 @@ void test__f_file_stream_write_block__works(void **state) {
   {
     f_file_t file = f_file_t_initialize;
     file.size_write = 1;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, file.size_write);
@@ -121,7 +120,7 @@ void test__f_file_stream_write_block__works(void **state) {
   {
     f_file_t file = f_file_t_initialize;
     file.size_write = path.used;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, file.size_write);

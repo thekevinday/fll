@@ -39,7 +39,7 @@ void test__f_file_stream_read_until__fails(void **state) {
 
     f_file_t file = f_file_t_initialize;
     file.size_read = 1;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_feof_unlocked, false);
     will_return(__wrap_feof_unlocked, 0);
@@ -115,7 +115,7 @@ void test__f_file_stream_read_until__works(void **state) {
   {
     f_file_t file = f_file_t_initialize;
     file.size_read = 1;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_feof_unlocked, false);
     will_return(__wrap_feof_unlocked, 0);

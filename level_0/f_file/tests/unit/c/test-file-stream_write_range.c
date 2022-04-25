@@ -38,7 +38,7 @@ void test__f_file_stream_write_range__fails(void **state) {
 
     f_file_t file = f_file_t_initialize;
     file.size_read = 1;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, errnos[i]);
@@ -83,8 +83,7 @@ void test__f_file_stream_write_range__returns_file_closed(void **state) {
 void test__f_file_stream_write_range__returns_data_not(void **state) {
 
   f_file_t file = f_file_t_initialize;
-  FILE file_stucture;
-  file.stream = &file_stucture;
+  file.stream = F_type_input_d;
 
   {
     const f_string_range_t range = f_string_range_t_initialize;
@@ -154,7 +153,7 @@ void test__f_file_stream_write_range__works(void **state) {
   {
     f_file_t file = f_file_t_initialize;
     file.size_write = 1;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, file.size_write);
@@ -170,7 +169,7 @@ void test__f_file_stream_write_range__works(void **state) {
   {
     f_file_t file = f_file_t_initialize;
     file.size_write = path.used;
-    file.stream = stdout;
+    file.stream = F_type_input_d;
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, file.size_write);

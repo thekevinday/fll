@@ -13,7 +13,7 @@ void test__f_conversion_number_unsigned_print__fails(void **state) {
     will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
 
-    const f_status_t status = f_conversion_number_unsigned_print(1, data, stdout);
+    const f_status_t status = f_conversion_number_unsigned_print(1, data, F_type_output_d);
 
     assert_int_equal(F_status_set_fine(status), F_output);
   }
@@ -27,7 +27,7 @@ void test__f_conversion_number_unsigned_print__fails_for_prepend(void **state) {
     will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
 
-    const f_status_t status = f_conversion_number_unsigned_print(1, data, stdout);
+    const f_status_t status = f_conversion_number_unsigned_print(1, data, F_type_output_d);
 
     assert_int_equal(F_status_set_fine(status), F_output);
   }
@@ -41,7 +41,7 @@ void test__f_conversion_number_unsigned_print__fails_for_zero(void **state) {
     will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
 
-    const f_status_t status = f_conversion_number_unsigned_print(0, data, stdout);
+    const f_status_t status = f_conversion_number_unsigned_print(0, data, F_type_output_d);
 
     assert_int_equal(F_status_set_fine(status), F_output);
   }
@@ -59,10 +59,10 @@ void test__f_conversion_number_unsigned_print__fails_for_zero(void **state) {
     }
 
     {
-      FILE file;
+      FILE *file = 0;
       const f_conversion_data_t data = macro_f_conversion_data_t_initialize(1, 0, 0);
 
-      const f_status_t status = f_conversion_number_unsigned_print(0, data, &file);
+      const f_status_t status = f_conversion_number_unsigned_print(0, data, file);
 
       assert_int_equal(F_status_set_fine(status), F_parameter);
     }
@@ -74,7 +74,7 @@ void test__f_conversion_number_unsigned_print__works(void **state) {
   {
     const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 0);
 
-    const f_status_t status = f_conversion_number_unsigned_print(1, data, stdout);
+    const f_status_t status = f_conversion_number_unsigned_print(1, data, F_type_output_d);
 
     will_return(__wrap_fwrite_unlocked, false);
 
