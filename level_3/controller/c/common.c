@@ -9,28 +9,6 @@ extern "C" {
   const f_string_static_t controller_program_version_s = macro_f_string_static_t_initialize(CONTROLLER_program_version_s, 0, CONTROLLER_program_version_s_length);
 #endif // _di_controller_program_version_
 
-#ifndef _di_controller_program_name_
-  const f_string_static_t controller_program_name_s = macro_f_string_static_t_initialize(CONTROLLER_program_name_s, 0, CONTROLLER_program_name_s_length);
-  const f_string_static_t controller_program_name_long_s = macro_f_string_static_t_initialize(CONTROLLER_program_name_long_s, 0, CONTROLLER_program_name_long_s_length);
-
-  const f_string_static_t controller_program_name_init_s = macro_f_string_static_t_initialize(CONTROLLER_program_name_init_s, 0, CONTROLLER_program_name_init_s_length);
-  const f_string_static_t controller_program_name_init_long_s = macro_f_string_static_t_initialize(CONTROLLER_program_name_init_long_s, 0, CONTROLLER_program_name_init_long_s_length);
-#endif // _di_controller_program_name_
-
-#ifndef _di_controller_defines_
-  const f_string_static_t controller_default_program_script_s = macro_f_string_static_t_initialize(CONTROLLER_default_program_script_s, 0, CONTROLLER_default_program_script_s_length);
-  const f_string_static_t controller_path_pid_s = macro_f_string_static_t_initialize(CONTROLLER_path_pid_s, 0, CONTROLLER_path_pid_s_length);
-  const f_string_static_t controller_path_pid_init_s = macro_f_string_static_t_initialize(CONTROLLER_path_pid_init_s, 0, CONTROLLER_path_pid_init_s_length);
-  const f_string_static_t controller_path_pid_prefix_s = macro_f_string_static_t_initialize(CONTROLLER_path_pid_prefix_s, 0, CONTROLLER_path_pid_prefix_s_length);
-  const f_string_static_t controller_path_pid_suffix_s = macro_f_string_static_t_initialize(CONTROLLER_path_pid_suffix_s, 0, CONTROLLER_path_pid_suffix_s_length);
-  const f_string_static_t controller_path_settings_s = macro_f_string_static_t_initialize(CONTROLLER_path_settings_s, 0, CONTROLLER_path_settings_s_length);
-  const f_string_static_t controller_path_settings_init_s = macro_f_string_static_t_initialize(CONTROLLER_path_settings_init_s, 0, CONTROLLER_path_settings_init_s_length);
-  const f_string_static_t controller_path_socket_s = macro_f_string_static_t_initialize(CONTROLLER_path_socket_s, 0, CONTROLLER_path_socket_s_length);
-  const f_string_static_t controller_path_socket_init_s = macro_f_string_static_t_initialize(CONTROLLER_path_socket_init_s, 0, CONTROLLER_path_socket_s_length);
-  const f_string_static_t controller_path_socket_prefix_s = macro_f_string_static_t_initialize(CONTROLLER_path_socket_prefix_s, 0, CONTROLLER_path_socket_prefix_s_length);
-  const f_string_static_t controller_path_socket_suffix_s = macro_f_string_static_t_initialize(CONTROLLER_path_socket_suffix_s, 0, CONTROLLER_path_socket_suffix_s_length);
-#endif // _di_controller_defines_
-
 #ifndef _di_controller_parameters_
   const f_string_static_t controller_short_cgroup_s = macro_f_string_static_t_initialize(CONTROLLER_short_cgroup_s, 0, CONTROLLER_short_cgroup_s_length);
   const f_string_static_t controller_short_daemon_s = macro_f_string_static_t_initialize(CONTROLLER_short_daemon_s, 0, CONTROLLER_short_daemon_s_length);
@@ -240,6 +218,9 @@ extern "C" {
     f_console_parameters_delete(&main->parameters);
 
     macro_f_color_context_t_delete_simple(main->context);
+
+    f_string_dynamic_resize(0, &main->path_pid);
+    f_string_dynamic_resize(0, &main->path_setting);
 
     return F_none;
   }

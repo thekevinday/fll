@@ -1131,7 +1131,7 @@ extern "C" {
               status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.script, arguments_none, options, &execute_set, process);
             }
             else {
-              status = controller_rule_execute_foreground(process->rule.items.array[i].type, controller_default_program_script_s, arguments_none, options, &execute_set, process);
+              status = controller_rule_execute_foreground(process->rule.items.array[i].type, *global.main->default_program_script, arguments_none, options, &execute_set, process);
             }
 
             if (status == F_child || F_status_set_fine(status) == F_lock) break;
@@ -1207,7 +1207,7 @@ extern "C" {
             }
 
             do {
-              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, process->rule.script.used ? process->rule.script : controller_default_program_script_s, arguments_none, options, process->rule.items.array[i].with, &execute_set, process);
+              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, process->rule.script.used ? process->rule.script : *global.main->default_program_script, arguments_none, options, process->rule.items.array[i].with, &execute_set, process);
 
               if (status == F_child || F_status_set_fine(status) == F_interrupt || F_status_set_fine(status) == F_lock) break;
               if (F_status_is_error(status) && F_status_set_fine(status) != F_failure) break;
@@ -1368,7 +1368,7 @@ extern "C" {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
-        status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(*main->default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {
@@ -1625,7 +1625,7 @@ extern "C" {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
-        status = fll_execute_program(controller_default_program_script_s, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(*main->default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {

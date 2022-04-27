@@ -15,6 +15,26 @@ extern "C" {
 #ifndef _di_controller_print_help_
   f_status_t controller_print_help(controller_main_t * const main) {
 
+    const f_string_static_t *path_setting = main->as_init ? main->default_path_setting_init : main->default_path_setting;
+    const f_string_static_t *path_socket = main->as_init ? main->default_path_socket_init : main->default_path_socket;
+    const f_string_static_t *path_pid = main->as_init ? main->default_path_pid_init : main->default_path_pid;
+
+    const int specify_custom_pid_length = 55 + path_pid->used + f_path_separator_s.used + controller_default_s.used + main->default_path_pid_suffix->used;
+    const int specify_path_settings_length = 50 + path_setting->used + f_path_separator_s.used;
+    const int specify_path_socket_length = 55 + path_socket->used + f_path_separator_s.used + controller_default_s.used + main->default_path_socket_suffix->used;
+
+    char specify_custom_pid[specify_custom_pid_length + 1];
+    char specify_path_settings[specify_path_settings_length + 1];
+    char specify_path_socket[specify_path_socket_length + 1];
+
+    specify_custom_pid[specify_custom_pid_length] = 0;
+    specify_path_settings[specify_path_settings_length] = 0;
+    specify_path_socket[specify_path_socket_length] = 0;
+
+    sprintf(specify_custom_pid, "            Specify a custom pid file path, such as '%s%s%s%s'.", path_pid->string, f_path_separator_s.string, controller_default_s.string, main->default_path_pid_suffix->string);
+    sprintf(specify_path_settings, "       Specify a custom settings path, such as '%s%s'.", path_setting->string, f_path_separator_s.string);
+    sprintf(specify_path_socket, "         Specify a custom socket file path, such as '%s%s%s%s'.", path_socket->string, f_path_separator_s.string, controller_default_s.string, main->default_path_socket_suffix->string);
+
     controller_lock_print(main->output.to, 0);
 
     fll_program_print_help_header(main->output.to, main->context, *main->program_name_long, controller_program_version_s);
@@ -26,7 +46,7 @@ extern "C" {
     fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal main->output.to.");
     fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal main->output.to.");
     fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal main->output.to.");
-    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal main->output.to.");
+    fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, increasing verbosity beyond normal main->output.to.");
     fll_program_print_help_option(main->output.to, main->context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
     f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
@@ -35,10 +55,10 @@ extern "C" {
     fll_program_print_help_option(main->output.to, main->context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(main->output.to, main->context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_interruptible_s, controller_long_interruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" CONTROLLER_path_pid_s F_path_separator_s CONTROLLER_default_s CONTROLLER_path_pid_suffix_s "'.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" CONTROLLER_path_settings_s F_path_separator_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, specify_custom_pid);
+    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, specify_path_settings);
     fll_program_print_help_option(main->output.to, main->context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_socket_s, controller_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Specify a custom socket file path, such as '" CONTROLLER_path_socket_s F_path_separator_s CONTROLLER_default_s CONTROLLER_path_socket_suffix_s "'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_socket_s, controller_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, specify_path_socket);
     fll_program_print_help_option(main->output.to, main->context, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
@@ -47,11 +67,7 @@ extern "C" {
     fl_print_format("  When both the %[%r%r%] parameter and the", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate_s, main->context.set.notable);
     fl_print_format(" %[%r%r%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_validate_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    #ifdef _controller_as_init_
-      const f_string_static_t interruptable = controller_long_uninterruptible_s;
-    #else
-      const f_string_static_t interruptable = controller_long_interruptible_s;
-    #endif // _controller_as_init_
+    const f_string_static_t interruptable = main->as_init ? controller_long_uninterruptible_s : controller_long_interruptible_s;
 
     fl_print_format(" The default interrupt behavior is to operate as if the %[%r%r%] parameter is passed.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, interruptable, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
@@ -214,14 +230,13 @@ extern "C" {
         }
       }
       else {
-        if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e && !main->as_init) {
-          status = f_string_dynamic_append(controller_path_settings_init_s, &setting.path_setting);
-        }
-        else if (main->default_path_setting->used) {
-          status = f_string_dynamic_append(*main->default_path_setting, &setting.path_setting);
+        setting.path_setting.used = 0;
+
+        if (main->as_init) {
+          status = f_string_dynamic_append(*main->default_path_setting_init, &setting.path_setting);
         }
         else {
-          status = f_string_dynamic_append(controller_path_settings_s, &setting.path_setting);
+          status = f_string_dynamic_append(*main->default_path_setting, &setting.path_setting);
         }
 
         if (F_status_is_error(status)) {
@@ -245,6 +260,8 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[controller_parameter_pid_e].locations.used) {
+        setting.path_pid.used = 0;
+
         const f_array_length_t index = main->parameters.array[controller_parameter_pid_e].values.array[main->parameters.array[controller_parameter_pid_e].values.used - 1];
 
         if (argv[index].used) {
@@ -254,15 +271,12 @@ extern "C" {
             fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
           }
         }
-        else {
-          setting.path_pid.used = 0;
-        }
       }
     }
 
     if (F_status_is_error_not(status) && !setting.path_pid.used && !main->parameters.array[controller_parameter_pid_e].locations.used) {
-      if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e) {
-        status = f_string_dynamic_append(controller_path_pid_init_s, &setting.path_pid);
+      if (main->as_init) {
+        status = f_string_dynamic_append(*main->default_path_pid_init, &setting.path_pid);
       }
       else {
         status = f_string_dynamic_append(*main->default_path_pid, &setting.path_pid);
@@ -273,7 +287,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_string_dynamic_append(controller_path_pid_prefix_s, &setting.path_pid);
+        status = f_string_dynamic_append(*main->default_path_pid_prefix, &setting.path_pid);
       }
 
       if (F_status_is_error_not(status)) {
@@ -281,7 +295,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_string_dynamic_append(controller_path_pid_suffix_s, &setting.path_pid);
+        status = f_string_dynamic_append(*main->default_path_pid_suffix, &setting.path_pid);
       }
 
       if (F_status_is_error(status)) {

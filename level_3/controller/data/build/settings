@@ -35,7 +35,7 @@ build_sources_library task/private-task.c task/private-task_print.c
 build_sources_library lock/private-lock.c lock/private-lock_print.c
 build_sources_library thread/private-thread.c thread/private-thread_control.c thread/private-thread_entry.c thread/private-thread_process.c thread/private-thread_rule.c thread/private-thread_signal.c
 
-build_sources_program main.c
+build_sources_program main.c main-common.c
 
 build_sources_headers controller.h common.h
 

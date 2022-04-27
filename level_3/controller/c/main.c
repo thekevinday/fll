@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "main-common.h"
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
@@ -19,21 +20,25 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   f_file_umask_get(&data.umask);
 
+  data.default_path_setting = &controller_path_settings_s;
+  data.default_path_setting_init = &controller_path_settings_init_s;
+  data.default_path_pid = &controller_path_pid_s;
+  data.default_path_pid_init = &controller_path_pid_init_s;
+  data.default_path_pid_prefix = &controller_path_pid_prefix_s;
+  data.default_path_pid_suffix = &controller_path_pid_suffix_s;
+  data.default_path_socket = &controller_path_socket_s;
+  data.default_path_socket_init = &controller_path_socket_init_s;
+  data.default_path_socket_prefix = &controller_path_socket_prefix_s;
+  data.default_path_socket_suffix = &controller_path_socket_suffix_s;
+  data.default_program_script = &controller_default_program_script_s;
+  data.program_name = &controller_program_name_s;
+  data.program_name_long = &controller_program_name_long_s;
+
   // When run as "init" by default, provide the default system-level init path.
-  // This change must only exist within this main file so that the change only exists within the program rather than the library.
   #ifdef _controller_as_init_
-    data.program_name = &controller_program_name_init_s;
-    data.program_name_long = &controller_program_name_init_long_s;
-    data.default_path_setting = &controller_path_settings_init_s;
-    data.default_path_pid = &controller_path_pid_init_s;
-    data.default_path_socket = &controller_path_socket_init_s;
     data.as_init = F_true;
   #else
-    data.program_name = &controller_program_name_s;
-    data.program_name_long = &controller_program_name_long_s;
-    data.default_path_setting = &controller_path_settings_s;
-    data.default_path_pid = &controller_path_pid_s;
-    data.default_path_socket = &controller_path_socket_s;
+    data.as_init = F_false;
   #endif // _controller_as_init_
 
   const f_status_t status = controller_main(&data, &arguments);
