@@ -110,10 +110,10 @@ extern "C" {
         const uint8_t code = WIFEXITED(process->result) ? WEXITSTATUS(process->result) : 0;
 
         if (code == F_execute_access) {
-          fl_print_format("%[' cannot be executed, access is denied.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed, access is denied.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_bad) {
-          fl_print_format("%[' cannot execute, unsupported format.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed, unsupported format.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_buffer) {
           fl_print_format("%[' invalid memory access in arguments buffer.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
@@ -137,7 +137,7 @@ extern "C" {
           fl_print_format("%[' failed during execution.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_file_found_not) {
-          fl_print_format("%[' could not be executed, unable to find file.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed, unable to find file.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_file_type_directory) {
           fl_print_format("%[' ELF interpreter is a directory.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
