@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: cc-by-sa-4.0
+#
 
 Output Documentation:
   This program either outputs a binary string representing UTF-8 character sequences or a string representing Unicode codepoints.

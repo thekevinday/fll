@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: cc-by-sa-4.0
+#
 
 Implicit Return Types for f_status_t:
   When f_status_t is used as the return type, there are a common set of status codes that should always be expected as a possible return value.

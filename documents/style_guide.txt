@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: cc-by-sa-4.0
+#
 
 Style Guide:
   The Featureless Linux Library uses a set of styles and practices designed in hopes to communicate both explicitly and implicitly multiple meanings and contexts.

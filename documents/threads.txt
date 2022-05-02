@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: cc-by-sa-4.0
+#
 
 Threads Documentation:
   With the inclusion of the f_thread project, the Featureless Linux Library supports and uses threads by default.

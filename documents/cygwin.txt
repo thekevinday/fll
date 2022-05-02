@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: cc-by-sa-4.0
+#
 
 Cygwin:
   The following are a collection of informal notes on getting this to compile and run under Windows using Cygwin.

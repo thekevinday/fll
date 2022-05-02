@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: open-standard-license-1.0
+#
 
 Packet Response:
   The control program sends packets and receives packet responses from the controller program over the controller program's control socket.

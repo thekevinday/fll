@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: cc-by-sa-4.0
+#
 
 About utf8 Documentation:
   The utf8 program is intended to provide simple support for identifying UTF-8 character sequences with regard to its Unicode codepoint designation.

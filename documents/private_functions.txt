@@ -1,4 +1,7 @@
 # fss-0002
+#
+# license: cc-by-sa-4.0
+#
 
 Private Functions:
   One of the objectives of this project is to make as much, if not all, of the functions available for use.

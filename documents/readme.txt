@@ -1,5 +1,7 @@
 # fss-0002
 #
+# license: cc-by-sa-4.0
+#
 # This readme file is inteded to provide a basic introduction to the Featureless Linux Library (FLL).
 #
 
