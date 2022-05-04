@@ -71,7 +71,7 @@ extern "C" {
       0, \
       0, \
       f_file_t_initialize, \
-      utf8_mode_from_binary_d | utf8_mode_to_codepoint_d, \
+      utf8_mode_from_bytecode_d | utf8_mode_to_codepoint_d, \
       f_color_set_t_initialize, \
       f_color_set_t_initialize, \
       f_string_static_t_initialize, \

@@ -38,7 +38,7 @@ extern "C" {
 #endif // _di_utf8_defines_
 
 #ifndef _di_utf8_parameters_
-  const f_string_static_t utf8_short_from_binary_s = macro_f_string_static_t_initialize(UTF8_short_from_binary_s, 0, UTF8_short_from_binary_s_length);
+  const f_string_static_t utf8_short_from_bytecode_s = macro_f_string_static_t_initialize(UTF8_short_from_bytecode_s, 0, UTF8_short_from_bytecode_s_length);
   const f_string_static_t utf8_short_from_codepoint_s = macro_f_string_static_t_initialize(UTF8_short_from_codepoint_s, 0, UTF8_short_from_codepoint_s_length);
   const f_string_static_t utf8_short_from_file_s = macro_f_string_static_t_initialize(UTF8_short_from_file_s, 0, UTF8_short_from_file_s_length);
 
@@ -47,13 +47,13 @@ extern "C" {
   const f_string_static_t utf8_short_strip_invalid_s = macro_f_string_static_t_initialize(UTF8_short_strip_invalid_s, 0, UTF8_short_strip_invalid_s_length);
   const f_string_static_t utf8_short_verify_s = macro_f_string_static_t_initialize(UTF8_short_verify_s, 0, UTF8_short_verify_s_length);
 
-  const f_string_static_t utf8_short_to_binary_s = macro_f_string_static_t_initialize(UTF8_short_to_binary_s, 0, UTF8_short_to_binary_s_length);
+  const f_string_static_t utf8_short_to_bytecode_s = macro_f_string_static_t_initialize(UTF8_short_to_bytecode_s, 0, UTF8_short_to_bytecode_s_length);
   const f_string_static_t utf8_short_to_codepoint_s = macro_f_string_static_t_initialize(UTF8_short_to_codepoint_s, 0, UTF8_short_to_codepoint_s_length);
   const f_string_static_t utf8_short_to_combining_s = macro_f_string_static_t_initialize(UTF8_short_to_combining_s, 0, UTF8_short_to_combining_s_length);
   const f_string_static_t utf8_short_to_file_s = macro_f_string_static_t_initialize(UTF8_short_to_file_s, 0, UTF8_short_to_file_s_length);
   const f_string_static_t utf8_short_to_width_s = macro_f_string_static_t_initialize(UTF8_short_to_width_s, 0, UTF8_short_to_width_s_length);
 
-  const f_string_static_t utf8_long_from_binary_s = macro_f_string_static_t_initialize(UTF8_long_from_binary_s, 0, UTF8_long_from_binary_s_length);
+  const f_string_static_t utf8_long_from_bytecode_s = macro_f_string_static_t_initialize(UTF8_long_from_bytecode_s, 0, UTF8_long_from_bytecode_s_length);
   const f_string_static_t utf8_long_from_codepoint_s = macro_f_string_static_t_initialize(UTF8_long_from_codepoint_s, 0, UTF8_long_from_codepoint_s_length);
   const f_string_static_t utf8_long_from_file_s = macro_f_string_static_t_initialize(UTF8_long_from_file_s, 0, UTF8_long_from_file_s_length);
 
@@ -62,7 +62,7 @@ extern "C" {
   const f_string_static_t utf8_long_strip_invalid_s = macro_f_string_static_t_initialize(UTF8_long_strip_invalid_s, 0, UTF8_long_strip_invalid_s_length);
   const f_string_static_t utf8_long_verify_s = macro_f_string_static_t_initialize(UTF8_long_verify_s, 0, UTF8_long_verify_s_length);
 
-  const f_string_static_t utf8_long_to_binary_s = macro_f_string_static_t_initialize(UTF8_long_to_binary_s, 0, UTF8_long_to_binary_s_length);
+  const f_string_static_t utf8_long_to_bytecode_s = macro_f_string_static_t_initialize(UTF8_long_to_bytecode_s, 0, UTF8_long_to_bytecode_s_length);
   const f_string_static_t utf8_long_to_codepoint_s = macro_f_string_static_t_initialize(UTF8_long_to_codepoint_s, 0, UTF8_long_to_codepoint_s_length);
   const f_string_static_t utf8_long_to_combining_s = macro_f_string_static_t_initialize(UTF8_long_to_combining_s, 0, UTF8_long_to_combining_s_length);
   const f_string_static_t utf8_long_to_file_s = macro_f_string_static_t_initialize(UTF8_long_to_file_s, 0, UTF8_long_to_file_s_length);

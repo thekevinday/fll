@@ -6,12 +6,12 @@
 extern "C" {
 #endif
 
-#ifndef _di_utf8_print_binary_
-  void utf8_print_binary(utf8_data_t * const data, const f_string_static_t character) {
+#ifndef _di_utf8_print_bytecode_
+  void utf8_print_bytecode(utf8_data_t * const data, const f_string_static_t character) {
 
     fl_print_format("%r%r%r", data->file.stream, data->prepend, character, data->append);
   }
-#endif // _di_utf8_print_binary_
+#endif // _di_utf8_print_bytecode_
 
 #ifndef _di_utf8_print_character_invalid_
   void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) {
@@ -24,7 +24,7 @@ extern "C" {
     if ((data->mode & utf8_mode_to_combining_d) || (data->mode & utf8_mode_to_width_d)) {
       utf8_print_combining_or_width(data, character);
     }
-    else if (data->mode & utf8_mode_to_binary_d) {
+    else if (data->mode & utf8_mode_to_bytecode_d) {
       fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
     }
     else if (data->mode & utf8_mode_from_codepoint_d) {

@@ -2,7 +2,7 @@
 #include "private-common.h"
 #include "private-print.h"
 #include "private-utf8.h"
-#include "private-utf8_binary.h"
+#include "private-utf8_bytecode.h"
 #include "private-utf8_codepoint.h"
 
 #ifdef __cplusplus
@@ -40,8 +40,8 @@ extern "C" {
 
       status = F_none;
 
-      if (data->mode & utf8_mode_from_binary_d) {
-        status = utf8_convert_binary(data, text);
+      if (data->mode & utf8_mode_from_bytecode_d) {
+        status = utf8_convert_bytecode(data, text);
       }
       else {
         status = utf8_detect_codepoint(data, text, &mode_codepoint);
@@ -65,7 +65,7 @@ extern "C" {
       utf8_process_text_width(&text);
     } // for
 
-    if (F_status_is_error_not(status) && !(data->mode & utf8_mode_from_binary_d)) {
+    if (F_status_is_error_not(status) && !(data->mode & utf8_mode_from_bytecode_d)) {
       if (mode_codepoint != utf8_codepoint_mode_ready_e && mode_codepoint != utf8_codepoint_mode_end_e && mode_codepoint != utf8_codepoint_mode_bad_end_e) {
         if (mode_codepoint == utf8_codepoint_mode_number_e) {
           mode_codepoint = utf8_codepoint_mode_end_e;

@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * Print the binary character (such as '豸').
+ * Print the bytecode character (such as '豸').
  *
  * @param data
  *   The program data.
@@ -21,12 +21,12 @@ extern "C" {
  *   The character to print.
  *   This is a string that represents a single character.
  */
-#ifndef _di_utf8_print_binary_
-  extern void utf8_print_binary(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_binary_
+#ifndef _di_utf8_print_bytecode_
+  extern void utf8_print_bytecode(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_bytecode_
 
 /**
- * Print an invalid character either as a Unicode codeblock or as a binary.
+ * Print an invalid character either as a Unicode codeblock or as a bytecode.
  *
  * This handles whether or not the invalid character should be printed or not based on program parameters.
  *

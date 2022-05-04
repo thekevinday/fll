@@ -5,15 +5,15 @@
  * API Version: 0.5
  * Licenses: lgpl-2.1-or-later
  */
-#ifndef _PRIVATE_utf8_binary_h
-#define _PRIVATE_utf8_binary_h
+#ifndef _PRIVATE_utf8_bytecode_h
+#define _PRIVATE_utf8_bytecode_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * Convert a binary character to another format.
+ * Convert a bytecode character to another format.
  *
  * This automatically determines the output format and is also handles the verify process.
  *
@@ -31,12 +31,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_unicode_to()
  */
-#ifndef _di_utf8_convert_binary_
-  extern f_status_t utf8_convert_binary(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
-#endif // _di_utf8_convert_binary_
+#ifndef _di_utf8_convert_bytecode_
+  extern f_status_t utf8_convert_bytecode(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+#endif // _di_utf8_convert_bytecode_
 
 /**
- * Process file as a binary input, handling conversion or verification as appropriate.
+ * Process file as a bytecode input, handling conversion or verification as appropriate.
  *
  * @param data
  *   The program data.
@@ -49,19 +49,19 @@ extern "C" {
  *   F_false on success and contains invalid sequences.
  *   F_interrupt on (exit) signal received.
  *
- *   Errors (with error bit) from: utf8_convert_binary()
+ *   Errors (with error bit) from: utf8_convert_bytecode()
  *   Errors (with error bit) from: utf8_detect_codepoint()
  *
  * @see fll_program_standard_signal_received()
- * @see utf8_convert_binary()
+ * @see utf8_convert_bytecode()
  * @see utf8_detect_codepoint()
  */
-#ifndef _di_utf8_process_file_binary_
-  extern f_status_t utf8_process_file_binary(utf8_data_t * const data, const f_file_t file) F_attribute_visibility_internal_d;
-#endif // _di_utf8_process_file_binary_
+#ifndef _di_utf8_process_file_bytecode_
+  extern f_status_t utf8_process_file_bytecode(utf8_data_t * const data, const f_file_t file) F_attribute_visibility_internal_d;
+#endif // _di_utf8_process_file_bytecode_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_utf8_binary_h
+#endif // _PRIVATE_utf8_bytecode_h

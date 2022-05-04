@@ -2,7 +2,7 @@
 #include "private-common.h"
 #include "private-print.h"
 #include "private-utf8.h"
-#include "private-utf8_binary.h"
+#include "private-utf8_bytecode.h"
 #include "private-utf8_codepoint.h"
 
 #ifdef __cplusplus
@@ -52,7 +52,7 @@ extern "C" {
         }
       }
       else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-        if (data->mode & utf8_mode_to_binary_d) {
+        if (data->mode & utf8_mode_to_bytecode_d) {
           f_char_t byte[5] = { 0, 0, 0, 0, 0 };
           f_string_static_t character = macro_f_string_static_t_initialize2(byte, 5);
 
@@ -65,7 +65,7 @@ extern "C" {
             status = F_none;
             character.used = macro_f_utf_byte_width(character.string[0]);
 
-            utf8_print_binary(data, character);
+            utf8_print_bytecode(data, character);
           }
         }
         else if (data->mode & utf8_mode_to_codepoint_d) {
@@ -243,8 +243,8 @@ extern "C" {
         } // for
 
         if (j == character.used) {
-          if (data->mode & utf8_mode_from_binary_d) {
-            status = utf8_convert_binary(data, character);
+          if (data->mode & utf8_mode_from_bytecode_d) {
+            status = utf8_convert_bytecode(data, character);
           }
           else {
             status = utf8_detect_codepoint(data, character, &mode_codepoint);
@@ -272,8 +272,8 @@ extern "C" {
     if (F_status_is_error_not(status) && status != F_interrupt && next == F_false) {
       character.used = j;
 
-      if (data->mode & utf8_mode_from_binary_d) {
-        status = utf8_convert_binary(data, character);
+      if (data->mode & utf8_mode_from_bytecode_d) {
+        status = utf8_convert_bytecode(data, character);
       }
       else {
         status = utf8_detect_codepoint(data, character, &mode_codepoint);
