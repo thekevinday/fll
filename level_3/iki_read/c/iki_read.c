@@ -396,7 +396,7 @@ extern "C" {
 
           size_file = 0;
 
-          status = f_file_size_by_id(file.id, &file.size_read);
+          status = f_file_size_by_id(file.id, &size_file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
@@ -407,7 +407,7 @@ extern "C" {
           }
 
           // Skip past empty files.
-          if (!file.size_read) {
+          if (!size_file) {
             f_file_stream_close(F_true, &file);
 
             continue;
