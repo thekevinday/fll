@@ -49,7 +49,7 @@ extern "C" {
     fl_print_format(" where the Object, is a machine-name representing the name and may only consist of \"word\" characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%r", file.stream, f_string_eol_s);
     fl_print_format("  This identifier, if provided, must exist on the first line in a file and must begin with the pound character: '#'.%r", file.stream, f_string_eol_s);
     fl_print_format("  Whitespace must follow this pound character.%r", file.stream, f_string_eol_s);
-    fl_print_format("  There may be multiple Object and Content pairs, separated by whitespace, such as: \"# fss-0002 fss-0000 iki-0002\".%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  There may be multiple Object and Content pairs, separated by white space, such as: \"# fss-0002 fss-0000 iki-0002\".%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 

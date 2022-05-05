@@ -28,13 +28,13 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, utf8_short_from_bytecode_s, utf8_long_from_bytecode_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The expected input format is bytecode (character data).");
+    fll_program_print_help_option(file, context, utf8_short_from_bytecode_s, utf8_long_from_bytecode_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The expected input format is byte code (character data).");
     fll_program_print_help_option(file, context, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The expected input format is codepoint (such as U+0000).");
     fll_program_print_help_option(file, context, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the input source.");
 
     f_print_dynamic_raw(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, utf8_short_to_bytecode_s, utf8_long_to_bytecode_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The output format is bytecode (character data).");
+    fll_program_print_help_option(file, context, utf8_short_to_bytecode_s, utf8_long_to_bytecode_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The output format is byte code (character data).");
     fll_program_print_help_option(file, context, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is codepoint (such as U+0000).");
     fll_program_print_help_option(file, context, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is to print whether or not character is combining or not.");
     fll_program_print_help_option(file, context, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the output destination.");
@@ -49,7 +49,7 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, utf8_program_name_s, utf8_program_help_parameters_s);
 
-    fl_print_format("  The default behavior is to assume the expected input is bytecode from the command line to be output to the screen as codepoints.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The default behavior is to assume the expected input is byte code from the command line to be output to the screen as codepoints.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
