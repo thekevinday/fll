@@ -38,7 +38,7 @@ extern "C" {
 
     fl_print_format("  Each object must have a content (and each content must have an object).%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When piping main to this program, a single end of line (\\n) must be used to separate each object from each content.%r", file.stream, f_string_eol_s);
+    fl_print_format("  When piping main to this program, a single form-feed character (\\f) must be used to separate each object from each content.%r", file.stream, f_string_eol_s);
     fl_print_format("  Furthermore, each object must be followed by a content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
@@ -315,7 +315,7 @@ extern "C" {
 
             if (!buffer.used) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_format("%r%[%QThe pipe has no main.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+                fll_print_format("%r%[%QThe pipe has no content.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
               }
 
               status = F_status_set_error(F_parameter);
@@ -327,10 +327,10 @@ extern "C" {
           }
 
           previous = range.start;
-          status = f_string_dynamic_seek_line(buffer, &range);
+          status = f_string_dynamic_seek_to(buffer, f_string_ascii_feed_form_s.string[0], &range);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_seek_line", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_seek_to", F_true);
 
             break;
           }
@@ -345,7 +345,7 @@ extern "C" {
 
           if (object_ended && previous == range.start) {
             if (main->error.verbosity != f_console_verbosity_quiet_e) {
-              fll_print_format("%r%[%QThe pipe has incorrectly placed newlines.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+              fll_print_format("%r%[%QThe pipe has incorrectly placed form-feed characters (\\f).%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
             }
 
             status = F_status_set_error(F_parameter);
