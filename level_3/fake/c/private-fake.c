@@ -290,7 +290,7 @@ extern "C" {
 
               fl_print_format("%r%[%QThe parameter '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
               fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, parameters_name[i], data->main->error.notable);
-              fl_print_format("%[' must not be empty and must not contain only whitespace.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+              fl_print_format("%[' must not be empty and must not contain only white space.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
               funlockfile(data->main->error.to.stream);
             }

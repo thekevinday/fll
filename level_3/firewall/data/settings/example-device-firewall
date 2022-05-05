@@ -15,7 +15,7 @@ main:
   device this
   direction none
 
-  # Define a blacklist and a whitelist, put ip addresses in the file named 'example-device-whitelist' separated by whitespace to whitelist an ip address
+  # Define a blacklist and a whitelist, put ip addresses in the file named 'example-device-whitelist' separated by white space to whitelist an ip address
   # (ip_list might be removed in the future once I figure out how ipset works and confirm if ipset can replace my ip_list.)
   #ip_list source example-device-whitelist -j ACCEPT
   #ip_list source example-device-blacklist -j REJECT

@@ -48,7 +48,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_next on success, but should not be processed (it is whitespace or NULL).
+ *   F_next on success, but should not be processed (it is white space or NULL).
  *
  *   Errors (with error bit) from: f_utf_is_whitespace()
  */

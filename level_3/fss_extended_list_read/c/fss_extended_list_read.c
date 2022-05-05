@@ -83,7 +83,7 @@ extern "C" {
     fl_print_format(" if the standard doesn't support multiple Content groups, then only a select of 0 would be valid.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The parameter %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_trim_s, context.set.notable);
-    fl_print_format(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format(" will remove leading and trailing white spaces when selecting objects or when printing objects.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  When specifying both the %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_object_s, context.set.notable);
     fl_print_format(" parameter and the %[%r%r%] parameter, the entire Object and Content are printed, including the formatting.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_content_s, context.set.notable, f_string_eol_s);

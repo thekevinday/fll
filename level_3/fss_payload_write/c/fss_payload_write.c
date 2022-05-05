@@ -40,7 +40,7 @@ extern "C" {
     fll_program_print_help_option(file, context, fss_payload_write_short_ignore_s, fss_payload_write_long_ignore_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a Content.");
     fll_program_print_help_option(file, context, fss_payload_write_short_object_s, fss_payload_write_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to write.");
     fll_program_print_help_option(file, context, fss_payload_write_short_partial_s, fss_payload_write_long_partial_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Do not write end of Object/Content character.");
-    fll_program_print_help_option(file, context, fss_payload_write_short_prepend_s, fss_payload_write_long_prepend_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Prepend the given whitespace characters to the start of each multi-line Content.");
+    fll_program_print_help_option(file, context, fss_payload_write_short_prepend_s, fss_payload_write_long_prepend_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Prepend the given white space characters to the start of each multi-line Content.");
     fll_program_print_help_option(file, context, fss_payload_write_short_single_s, fss_payload_write_long_single_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
     fll_program_print_help_option(file, context, fss_payload_write_short_trim_s, fss_payload_write_long_trim_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Trim Object names.");
 
@@ -330,7 +330,7 @@ extern "C" {
 
                 fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                 fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_prepend_s, main->error.notable);
-                fl_print_format("%[' must only contain whitespace.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+                fl_print_format("%[' must only contain white space.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
                 funlockfile(main->error.to.stream);
               }

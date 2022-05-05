@@ -17,10 +17,10 @@ extern "C" {
  *   - ready:     The codepoint has yet to be processed, skip leading spaces until first 'U' is matched.
  *   - begin:     The first 'U' is matched, look for the '+'.
  *   - number:    The '+' is matched, process numbers.
- *   - end:       The last number is reached (at either whitespace or EOS/EOF).
+ *   - end:       The last number is reached (at either white space or EOS/EOF).
  *   - bad:       This is not a valid codepoint.
  *   - bad_begin: This is the beginning of an invalid codepoint.
- *   - bad_end:   The end of bad is detected, which happens on whitespace or end of buffer.
+ *   - bad_end:   The end of bad is detected, which happens on white space or end of buffer.
  */
 #ifndef _di_utf8_codepoint_modes_
   enum {

@@ -34,12 +34,12 @@ Rule Specification:
   The "setting" Rule Type has the following FSS-0001 (Extended)\:
     - "affinity": One or more Content, each must be a 0 or greater whole number.
     - "capability": One Content representing capabilities.
-    - "cgroup": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid cgroup (control group) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
+    - "cgroup": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid cgroup (control group) name, must have at least 1 graph character (non white space printing character) (leading and trailing white space are trimmed off).
     - "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     - "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     - "group": One or more Content representing group names or group ids.
     - "limit": Three Content, with the first representing a valid resource type and the second and third being a valid resource limit number (positive whole number or 0).
-    - "name": One Content, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
+    - "name": One Content, must have at least 1 graph character (non white space printing character) (leading and trailing white space are trimmed off).
     - "nice": One Content, must be a valid number for process "niceness" (Any whole number inclusively between -20 to 19).
     - "on": Four Content, the first being a Rule Action, the second being "need", "want", or "wish", the third being a partial path, and the fourth being a Rule file name without ".rule" extension.
     - "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
