@@ -34,12 +34,12 @@ extern "C" {
     fll_program_print_help_usage(file, context, iki_write_program_name_s, f_string_empty_s);
 
     fl_print_format(" %[Notes:%]%r", file.stream, context.set.important, context.set.important, f_string_eol_s);
-    fl_print_format("  This program will accept object and content strings to generate an IKI string, such as %[object:\"content\"%].%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s);
+    fl_print_format("  This program will accept Object and Content strings to generate an IKI string, such as %[object:\"content\"%].%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s);
 
-    fl_print_format("  Each object must have a content (and each content must have an object).%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Each object must have a Content (and each Content must have an Object).%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When piping main to this program, a single form-feed character (\\f) must be used to separate each object from each content.%r", file.stream, f_string_eol_s);
-    fl_print_format("  Furthermore, each object must be followed by a content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When piping main to this program, a single form-feed character (\\f) must be used to separate each Object from each Content.%r", file.stream, f_string_eol_s);
+    fl_print_format("  Furthermore, each Object must be followed by a Content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 
