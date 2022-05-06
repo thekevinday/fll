@@ -29,7 +29,7 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
     fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    fl_print_format("%r%r %[Available Commands:%] ", file.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important);
+    fl_print_format("%r%r %[Commands:%] ", file.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important);
     fl_print_format("%r  %[%r%]    Turn on the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_start_s, context.set.standout);
     fl_print_format("%r  %[%r%]     Turn off the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_stop_s, context.set.standout);
     fl_print_format("%r  %[%r%]  Turn off and then turn on the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_restart_s, context.set.standout);
