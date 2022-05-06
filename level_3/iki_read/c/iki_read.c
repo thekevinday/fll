@@ -478,7 +478,7 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a new line is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status) || !data.mode) {
         if (F_status_set_fine(status) == F_interrupt) {

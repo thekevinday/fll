@@ -88,13 +88,11 @@ extern "C" {
     fl_print_format("  When specifying both the %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_object_s, context.set.notable);
     fl_print_format(" parameter and the %[%r%r%] parameter, the entire Object and Content are printed, including the formatting.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_content_s, context.set.notable, f_string_eol_s);
     fl_print_format("  Both the Object and Content printed are already escaped.%r", file.stream, f_string_eol_s);
-    fl_print_format("  Both the Object and Content are separated by an EOL.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Both the Object and Content are separated by a New Line character '\\n' (U+000A).%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The parameter %[%r%r%] accepts the following:%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, context.set.notable, f_string_eol_s);
     fl_print_format("  - %[%r%]: Do not apply delimits.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_none_s, context.set.notable, f_string_eol_s);
     fl_print_format("  - %[%r%]: (default) Apply all delimits.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_all_s, context.set.notable, f_string_eol_s);
-    // @todo
-    //fl_print_format("  - %[%r%]: Apply delimits for Objects.%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_object, context.set.notable, f_string_eol_s);
     fl_print_format("  - A number, 0 or greater: apply delimits for Content at the specified depth.%r", file.stream, f_string_eol_s);
     fl_print_format("  - A number, 0 or greater, followed by a %[%r%]: (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_greater_s, context.set.notable, f_string_eol_s, f_string_eol_s);
     fl_print_format("  - A number, 0 or lesser, followed by a %[%r%]: (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%r%r", file.stream, context.set.notable, fss_embedded_list_read_delimit_mode_name_lesser_s, context.set.notable, f_string_eol_s, f_string_eol_s);

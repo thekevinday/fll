@@ -88,7 +88,7 @@ extern "C" {
     fl_print_format("  When specifying both the %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_object_s, context.set.notable);
     fl_print_format(" parameter and the %[%r%r%] parameter, the entire Object and Content are printed, including the formatting.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_content_s, context.set.notable, f_string_eol_s);
     fl_print_format("  Both the Object and Content printed are already escaped.%r", file.stream, f_string_eol_s);
-    fl_print_format("  Both the Object and Content are separated by an EOL.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Both the Object and Content are separated by a New Line character '\\n' (U+000A).%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The parameter %[%r%r%] accepts the following:%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit_s, context.set.notable, f_string_eol_s);
     fl_print_format("  - %[%r%]: Do not apply delimits.%r", file.stream, context.set.notable, fss_extended_list_read_delimit_mode_name_none_s, context.set.notable, f_string_eol_s);

@@ -390,7 +390,7 @@ extern "C" {
             object_ended = F_true;
           }
 
-          // restore the range, positioned after the newline.
+          // Restore the range, positioned after the new line.
           range.start = range.stop + 2;
           range.stop = buffer.used - 1;
 
@@ -435,7 +435,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, file.stream);
         } // for
 
-        // Ensure there is always a newline at the end, unless in quiet mode.
+        // Ensure there is always a new line at the end, unless in quiet mode.
         if (F_status_is_error_not(status) && main->error.verbosity != f_console_verbosity_quiet_e && main->parameters.array[iki_write_parameter_file_e].result == f_console_result_none_e) {
           fll_print_dynamic_raw(f_string_eol_s, file.stream);
         }
@@ -450,7 +450,7 @@ extern "C" {
       }
     }
 
-    // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a new line is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_interrupt) {
