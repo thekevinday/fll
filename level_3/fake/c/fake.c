@@ -69,7 +69,7 @@ extern "C" {
     fl_print_format("  For example, when a %[%r%]", file.stream, context.set.notable, fake_make_parameter_variable_mode_s, context.set.notable);
     fl_print_format(" of 'fll_monolithic' is specified, build libraries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When specifying the %[%r%]  or the %[%r%]", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable, context.set.notable, fake_make_parameter_variable_settings_s, context.set.notable);
+    fl_print_format("  When specifying the %[%r%] or the %[%r%]", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable, context.set.notable, fake_make_parameter_variable_settings_s, context.set.notable);
     fl_print_format(" parameters, the filenames are relative to the data build directory, unless a path is used.%r", file.stream, f_string_eol_s);
 
     fl_print_format("  For example, with '%[%r%r my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
