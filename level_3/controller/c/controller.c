@@ -69,9 +69,9 @@ extern "C" {
 
     const f_string_static_t interruptable = main->as_init ? controller_long_uninterruptible_s : controller_long_interruptible_s;
 
-    fl_print_format(" The default interrupt behavior is to operate as if the %[%r%r%] parameter is passed.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, interruptable, main->context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The default interrupt behavior is to operate as if the %[%r%r%] parameter is passed.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, interruptable, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format(" Specify an empty string for the %[%r%r%] parameter to disable pid file creation for this program.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Specify an empty string for the %[%r%r%] parameter to disable pid file creation for this program.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
 
     controller_unlock_print_flush(main->output.to, 0);
 
