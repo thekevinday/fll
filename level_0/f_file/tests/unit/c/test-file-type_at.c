@@ -37,7 +37,7 @@ void test__f_file_type_at__fails(void **state) {
 
   for (int i = 0; i < 10; ++i) {
 
-    mode_t mode = 0;
+    int mode = 0;
 
     will_return(__wrap_fstatat, true);
     will_return(__wrap_fstatat, errnos[i]);

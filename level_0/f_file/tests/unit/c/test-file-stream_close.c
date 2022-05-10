@@ -25,15 +25,6 @@ void test__f_file_stream_close__fails_for_file_descriptor(void **state) {
     mock_errno_generic,
   };
 
-  f_status_t status_flushs[] = {
-    F_file_descriptor,
-    F_filesystem_quota_block,
-    F_supported_not,
-    F_input_output,
-    F_space_not,
-    F_supported_not,
-  };
-
   f_status_t status_closes[] = {
     F_file_descriptor,
     F_filesystem_quota_block,
@@ -101,28 +92,6 @@ void test__f_file_stream_close__fails_for_stream(void **state) {
     EPIPE,
     EWOULDBLOCK,
     mock_errno_generic,
-  };
-
-  f_status_t status_flushs[] = {
-    F_access_denied,
-    F_block,
-    F_file_descriptor,
-    F_file_overflow,
-    F_deadlock,
-    F_socket_not,
-    F_space_not,
-    F_buffer,
-    F_interrupt,
-    F_parameter,
-    F_input_output,
-    F_file_descriptor_max,
-    F_lock,
-    F_space_not,
-    F_file_type_not_directory,
-    F_prohibited,
-    F_pipe_not,
-    F_block,
-    F_file_synchronize,
   };
 
   f_status_t status_closes[] = {

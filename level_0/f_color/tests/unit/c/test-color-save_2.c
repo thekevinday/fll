@@ -8,7 +8,6 @@ extern "C" {
 #ifndef _di_level_0_parameter_checking_
   void test__f_color_save_2_parameter_checking(void **state) {
 
-    f_string_static_t buffer = f_string_static_t_initialize;
     const f_color_format_t format = f_color_format_t_initialize;
     const f_string_static_t color = macro_f_string_static_t_initialize2("color", 5);
 

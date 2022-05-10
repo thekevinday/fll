@@ -7,8 +7,6 @@ extern "C" {
 
 void test__f_iki_object_is__returns_false(void **state) {
 
-  f_string_static_t object = f_string_static_t_initialize;
-
   const f_string_static_t objects[] = {
     macro_f_string_static_t_initialize("fa lse", 0, 6),
     macro_f_string_static_t_initialize("filse@", 0, 6),
@@ -44,8 +42,6 @@ void test__f_iki_object_is__returns_data_not(void **state) {
 }
 
 void test__f_iki_object_is__returns_true(void **state) {
-
-  f_string_static_t object = f_string_static_t_initialize;
 
   const f_string_static_t objects[] = {
     macro_f_string_static_t_initialize("works", 0, 5),

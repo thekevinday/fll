@@ -70,6 +70,7 @@ void test__f_capability_to_text__works(void **state) {
     #if defined(_di_libcap_)
       assert_int_equal(F_status_set_fine(status), F_implemented_not);
     #else
+      assert_int_equal(status, F_none);
       assert_string_equal(text.string, string);
       assert_int_equal(text.used, 9);
     #endif // defined(_di_libcap_)

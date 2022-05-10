@@ -7,8 +7,6 @@ extern "C" {
 
 void test__f_file_stat_by_id__fails(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
-
   int errnos[] = {
     EACCES,
     EBADF,
@@ -77,8 +75,6 @@ void test__f_file_stat_by_id__returns_file_closed(void **state) {
 }
 
 void test__f_file_stat_by_id__works(void **state) {
-
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   struct stat statistics;
 

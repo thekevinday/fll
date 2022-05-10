@@ -7,7 +7,6 @@ extern "C" {
 
 void test__f_string_dynamicss_append_all__works(void **state) {
 
-  const int length = 5;
   const int length_inner = 2;
   const int length_outer = 2;
   f_string_dynamicss_t source = f_string_dynamicss_t_initialize;
@@ -26,7 +25,6 @@ void test__f_string_dynamicss_append_all__works(void **state) {
     assert_int_equal(source.size, length_outer);
 
     f_array_length_t i = 0;
-    f_array_length_t j = 0;
 
     for (; source.used < length_outer; ++source.used) {
 

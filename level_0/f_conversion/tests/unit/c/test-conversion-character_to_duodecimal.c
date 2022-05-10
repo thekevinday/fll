@@ -59,7 +59,7 @@ void test__f_conversion_character_to_duodecimal__works(void **state) {
 
     number = 255;
 
-    const f_status_t status = f_conversion_character_to_duodecimal(i, &number);
+    f_conversion_character_to_duodecimal(i, &number);
 
     switch (i) {
       case '0':

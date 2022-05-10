@@ -7,8 +7,6 @@ extern "C" {
 
 void test__f_iki_object_partial_is__returns_false(void **state) {
 
-  f_string_static_t object = f_string_static_t_initialize;
-
   const f_string_static_t objects[] = {
     macro_f_string_static_t_initialize("xxxxfa lsexxxx", 0, 14),
     macro_f_string_static_t_initialize("xxxxfalse@xxxx", 0, 14),
@@ -85,8 +83,6 @@ void test__f_iki_object_partial_is__returns_data_not_stop(void **state) {
 }
 
 void test__f_iki_object_partial_is__returns_true(void **state) {
-
-  f_string_static_t object = f_string_static_t_initialize;
 
   const f_string_static_t objects[] = {
     macro_f_string_static_t_initialize("xxxxworksxxxx", 0, 13),

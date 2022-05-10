@@ -349,15 +349,6 @@ void test__f_file_clone__fails_for_other(void **state) {
       F_file_type_socket_d,
     };
 
-    f_status_t statuss[] = {
-      F_supported_not,
-      F_supported_not,
-      F_supported_not,
-      F_supported_not,
-      F_supported_not,
-      F_supported_not,
-    };
-
     struct stat statistics;
 
     memset(&statistics, 0, sizeof(struct stat));

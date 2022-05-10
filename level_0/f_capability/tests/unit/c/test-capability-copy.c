@@ -11,18 +11,6 @@ void test__f_capability_copy__fails(void **state) {
     const f_capability_t capability_1 = f_capability_t_initialize;
     f_capability_t capability_2 = f_capability_t_initialize;
 
-    int errnos[] = {
-      EINVAL,
-      ENOMEM,
-      mock_errno_generic,
-    };
-
-    f_status_t statuss[] = {
-      F_parameter,
-      F_memory_not,
-      F_failure,
-    };
-
     for (int i = 0; i < 3; ++i) {
 
       will_return(__wrap_cap_dup, true);

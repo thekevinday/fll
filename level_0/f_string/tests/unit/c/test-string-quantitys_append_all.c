@@ -7,7 +7,6 @@ extern "C" {
 
 void test__f_string_quantitys_append_all__works(void **state) {
 
-  const int length = 5;
   const int length_sources = 2;
 
   f_string_quantity_t sources_array[] = {

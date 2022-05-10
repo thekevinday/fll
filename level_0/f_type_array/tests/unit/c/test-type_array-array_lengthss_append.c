@@ -8,7 +8,6 @@ extern "C" {
 void test__f_type_array_array_lengthss_append__works(void **state) {
 
   const int length = 5;
-  const int length_inner = 2;
   f_array_lengths_t source = f_array_lengths_t_initialize;
   f_array_lengthss_t destination = f_array_lengthss_t_initialize;
 

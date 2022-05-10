@@ -7,7 +7,6 @@ extern "C" {
 
 void test__f_type_array_fll_ids_append__works(void **state) {
 
-  const int length = 5;
   const f_fll_id_t source = { .name = "test", .type = 1, .used = 4 };
   f_fll_ids_t destination = f_fll_ids_t_initialize;
 

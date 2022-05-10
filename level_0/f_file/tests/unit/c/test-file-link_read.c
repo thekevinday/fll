@@ -83,7 +83,6 @@ void test__f_file_link_read__fails(void **state) {
 
 void test__f_file_link_read__returns_data_not(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   struct stat statistics;
 

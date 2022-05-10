@@ -7,8 +7,6 @@ extern "C" {
 
 void test__f_file_stream_read_block__fails(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
-
   int errnos[] = {
     EAGAIN,
     EBADF,
@@ -104,8 +102,6 @@ void test__f_file_stream_read_block__returns_file_closed(void **state) {
 }
 
 void test__f_file_stream_read_block__works(void **state) {
-
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 

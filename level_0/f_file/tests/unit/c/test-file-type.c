@@ -37,12 +37,12 @@ void test__f_file_type__fails(void **state) {
 
   for (int i = 0; i < 10; ++i) {
 
-    mode_t mode = 0;
+    int type = 0;
 
     will_return(__wrap_lstat, true);
     will_return(__wrap_lstat, errnos[i]);
 
-    const f_status_t status = f_file_type(path, F_false, &mode);
+    const f_status_t status = f_file_type(path, F_false, &type);
 
     assert_int_equal(F_status_set_fine(status), statuss[i]);
   } // for

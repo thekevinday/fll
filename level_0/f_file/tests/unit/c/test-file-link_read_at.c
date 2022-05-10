@@ -79,8 +79,6 @@ void test__f_file_link_read_at__fails(void **state) {
 
 void test__f_file_link_read_at__returns_data_not(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
-
   f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
   {

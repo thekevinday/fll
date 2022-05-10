@@ -47,7 +47,7 @@ void test__f_conversion_character_to_binary__works(void **state) {
 
     number = 255;
 
-    const f_status_t status = f_conversion_character_to_binary(i, &number);
+    f_conversion_character_to_binary(i, &number);
 
     switch (i) {
       case '0':

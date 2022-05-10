@@ -50,7 +50,7 @@ void test__f_capability_owner_set__fails(void **state) {
 void test__f_capability_owner_set__works(void **state) {
 
   const f_capability_t capability = f_capability_t_initialize;
-  const uid_t id;
+  const uid_t id = 0;
 
   #if defined(_di_libcap_) || defined(_libcap_legacy_only_)
     printf("[  WARN    ] f_capability_owner_set() is not implemented and cannot be fully tested.\n");

@@ -8,7 +8,6 @@ extern "C" {
 void test__f_string_map_multiss_append__works(void **state) {
 
   const int length_values = 2;
-  const int length_values_set = 2;
   const int length_inner = 2;
   f_string_map_multis_t source = f_string_map_multis_t_initialize;
   f_string_map_multiss_t destination = f_string_map_multiss_t_initialize;

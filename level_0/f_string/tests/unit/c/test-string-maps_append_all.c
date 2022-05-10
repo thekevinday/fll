@@ -7,7 +7,6 @@ extern "C" {
 
 void test__f_string_maps_append_all__works(void **state) {
 
-  const int length = 5;
   const int length_inner = 2;
   f_string_maps_t source = f_string_maps_t_initialize;
   f_string_maps_t destination = f_string_maps_t_initialize;
