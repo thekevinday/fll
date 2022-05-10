@@ -15,7 +15,7 @@ void test__f_type_array_statess_append__works(void **state) {
   int fake_2 = 2;
   int fake_3 = 3;
 
-  const f_state_t state_data = macro_f_state_t_initialize(12, 6, 0, 0, (void *) &fake_1, (void *) &fake_2, (void *) &fake_3);
+  const f_state_t state_data = macro_f_state_t_initialize(12, 6, 0, 0, 0, (void *) &fake_1, (void *) &fake_2, (void *) &fake_3);
 
   {
     const f_status_t status = f_states_resize(length, &source);

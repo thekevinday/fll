@@ -167,7 +167,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    const f_state_t state = macro_f_state_t_initialize(control_allocation_large_d, control_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
+    const f_state_t state = macro_f_state_t_initialize(control_allocation_large_d, control_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
 
     f_string_static_t contents_array[main->parameters.remaining.used];
     f_string_statics_t contents = macro_f_string_statics_t_initialize(contents_array, 0, main->parameters.remaining.used);
@@ -320,7 +320,7 @@ extern "C" {
     }
 
     {
-      f_state_t state = macro_f_state_t_initialize(control_allocation_large_d, control_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
+      f_state_t state = macro_f_state_t_initialize(control_allocation_large_d, control_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
       f_string_range_t range_packet = macro_f_string_range_t_initialize2(data->cache.large.used);
 
       status = fll_fss_basic_list_read(data->cache.large, state, &range_packet, &data->cache.packet_objects, &data->cache.packet_contents, &data->cache.delimits, 0, 0);

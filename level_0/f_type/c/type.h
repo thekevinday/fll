@@ -94,6 +94,7 @@ extern "C" {
  *
  * step_large: The allocation step to use for large buffers.
  * step_small: The allocation step to use for small buffers.
+ * flag:       A 32-bit digit intended for provided flags that are defined by the function.
  * handle:     A function to call on a specific error (allowing for the error to be handled before function returns). May be NULL.
  * interrupt:  A function to call for checking to see if an interrupt is to be called (return result is passed to and handled by caller). May be NULL.
  * callbacks:  A structure (defined by function/project using this) of additional functions to call. May be NULL.
@@ -104,6 +105,7 @@ extern "C" {
   typedef struct {
     uint16_t step_large;
     uint16_t step_small;
+    uint32_t flag;
 
     f_status_t (*handle)(const f_status_t error, void * const state, void * const internal);
     f_status_t (*interrupt)(void * const state, void * const internal);
@@ -113,11 +115,12 @@ extern "C" {
     void *data;
   } f_state_t;
 
-  #define f_state_t_initialize { F_memory_default_allocation_large_d, F_memory_default_allocation_small_d, 0, 0, 0, 0, 0 }
+  #define f_state_t_initialize { F_memory_default_allocation_large_d, F_memory_default_allocation_small_d, 0, 0, 0, 0, 0, 0 }
 
-  #define macro_f_state_t_initialize(step_large, step_small, handle, interrupt, callbacks, custom, data) { \
+  #define macro_f_state_t_initialize(step_large, step_small, flag, handle, interrupt, callbacks, custom, data) { \
     step_large, \
     step_small, \
+    flag, \
     handle, \
     interrupt, \
     callbacks, \

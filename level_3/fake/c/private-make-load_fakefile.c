@@ -55,7 +55,7 @@ extern "C" {
       f_fss_comments_t comments = f_fss_comments_t_initialize;
 
       {
-        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
+        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
 
         *status = fll_fss_basic_list_read(data_make->buffer, state, &range, &list_objects, &list_contents, &delimits, 0, &comments);
       }
@@ -88,7 +88,7 @@ extern "C" {
 
       f_fss_set_t settings = f_fss_set_t_initialize;
 
-      f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
+      f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
 
       if (list_objects.used > data_make->fakefile.size) {
         macro_f_fss_nameds_t_resize((*status), data_make->fakefile, list_objects.used);

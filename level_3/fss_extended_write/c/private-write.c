@@ -65,7 +65,7 @@ extern "C" {
   f_status_t fss_extended_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
-    f_state_t state = macro_f_state_t_initialize(fss_extended_write_common_allocation_large_d, fss_extended_write_common_allocation_small_d, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
+    f_state_t state = macro_f_state_t_initialize(fss_extended_write_common_allocation_large_d, fss_extended_write_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
