@@ -214,10 +214,8 @@ extern "C" {
   f_status_t f_utf_unicode_from(const f_utf_char_t unicode, const f_array_length_t width_max, f_string_t *character) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
-      if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // @fixme the code here needs to be reviewed for endianess accuracy for both big and little endian.
     if (unicode > 0x10ffff) {
       return F_status_set_error(F_utf);
     }
