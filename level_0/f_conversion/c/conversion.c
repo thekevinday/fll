@@ -122,7 +122,7 @@ extern "C" {
       return F_none;
     }
 
-    if (character > 0x40 && character < 0x43 || character > 0x60 && character < 0x63) {
+    if ((character > 0x40 && character < 0x43) || (character > 0x60 && character < 0x63)) {
       *number = 9 + (0xf & character);
 
       return F_none;
@@ -144,7 +144,7 @@ extern "C" {
       return F_none;
     }
 
-    if (character > 0x40 && character < 0x47 || character > 0x60 && character < 0x67) {
+    if ((character > 0x40 && character < 0x47) || (character > 0x60 && character < 0x67)) {
       *number = 9 + (0xf & character);
 
       return F_none;

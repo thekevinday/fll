@@ -377,11 +377,11 @@ extern "C" {
       return F_interrupt_not;
     }
 
-    fll_program_data_t *main = (fll_program_data_t *) state_ptr->custom;
+    fll_program_data_t *data = (fll_program_data_t *) state_ptr->custom;
 
-    main->signal_received = fll_program_standard_signal_received(main);
+    data->signal_received = fll_program_standard_signal_received(data);
 
-    if (main->signal_received == F_signal_abort || main->signal_received == F_signal_broken_pipe || main->signal_received == F_signal_hangup || main->signal_received == F_signal_interrupt || main->signal_received == F_signal_quit || main->signal_received == F_signal_termination) {
+    if (data->signal_received == F_signal_abort || data->signal_received == F_signal_broken_pipe || data->signal_received == F_signal_hangup || data->signal_received == F_signal_interrupt || data->signal_received == F_signal_quit || data->signal_received == F_signal_termination) {
       return F_status_set_error(F_interrupt);
     }
 

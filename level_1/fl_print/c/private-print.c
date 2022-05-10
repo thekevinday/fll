@@ -484,9 +484,6 @@ extern "C" {
                   }
                 }
                 else {
-                  const f_array_lengths_t except_at = f_array_lengths_t_initialize;
-                  const f_string_ranges_t except_in = f_string_ranges_t_initialize;
-
                   if (partial.start > partial.stop) {
                     *status = F_data_not;
 
@@ -886,9 +883,6 @@ extern "C" {
                   }
                 }
                 else {
-                  const f_array_lengths_t except_at = f_array_lengths_t_initialize;
-                  const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
-
                   if (partial.start > partial.stop) {
                     *status = F_data_not;
 
@@ -1254,8 +1248,6 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    f_string_t s = 0;
-
     while (i < length) {
 
       while (at < except_at.used && except_at.array[at] < i) {
@@ -1465,8 +1457,6 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    f_string_t s = 0;
-
     while (i < length) {
 
       while (at < except_at.used && except_at.array[at] < i) {
@@ -1528,7 +1518,7 @@ extern "C" {
 
           status = f_utf_is_whitespace(string + j, (length - j) + 1);
 
-          if (F_status_is_error(status) || status == F_false && string[i]) break;
+          if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
 
         if (j == length) break;
@@ -1589,8 +1579,6 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_string_t s = 0;
-
     // Skip past leading whitespace.
     while (i < length) {
 
@@ -1689,7 +1677,7 @@ extern "C" {
 
           status = f_utf_is_whitespace(string + j, (length - j) + 1);
 
-          if (F_status_is_error(status) || status == F_false && string[i]) break;
+          if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
 
         if (j == length || status == F_true) break;
@@ -1718,7 +1706,7 @@ extern "C" {
           }
 
           if (i + macro_f_utf_byte_width(string[i]) >= length) {
-            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+            if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
 
@@ -1746,7 +1734,7 @@ extern "C" {
             }
           }
           else {
-            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+            if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
           }
@@ -1768,7 +1756,7 @@ extern "C" {
       }
 
       if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
-        if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+        if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
 
@@ -1805,8 +1793,6 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_string_t s = 0;
-
     // Skip past leading whitespace.
     while (i < length) {
 
@@ -1905,7 +1891,7 @@ extern "C" {
 
           status = f_utf_is_whitespace(string + j, (length - j) + 1);
 
-          if (F_status_is_error(status) || status == F_false && string[i]) break;
+          if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
 
         if (j == length || status == F_true || !string[i]) break;
@@ -1934,7 +1920,7 @@ extern "C" {
           }
 
           if (i + macro_f_utf_byte_width(string[i]) >= length) {
-            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+            if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
 
@@ -1958,7 +1944,7 @@ extern "C" {
             }
           }
           else {
-            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+            if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
           }
@@ -1980,7 +1966,7 @@ extern "C" {
       }
 
       if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
-        if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+        if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
 
@@ -2036,8 +2022,6 @@ extern "C" {
 
       i += macro_f_utf_byte_width(string[i]);
     } // while
-
-    f_string_t s = 0;
 
     while (i < length) {
 
@@ -2162,8 +2146,6 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    f_string_t s = 0;
-
     while (i < length) {
 
       status = f_utf_is_whitespace(string + i, (length - i) + 1);
@@ -2183,7 +2165,7 @@ extern "C" {
 
           status = f_utf_is_whitespace(string + j, (length - j) + 1);
 
-          if (F_status_is_error(status) || status == F_false && string[i]) break;
+          if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
 
         if (j == length) break;
@@ -2220,8 +2202,6 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_string_t s = 0;
-
     // Skip past leading whitespace.
     while (i < length) {
 
@@ -2258,7 +2238,7 @@ extern "C" {
 
           status = f_utf_is_whitespace(string + j, (length - j) + 1);
 
-          if (F_status_is_error(status) || status == F_false && string[i]) break;
+          if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
 
         if (j == length || status == F_true) break;
@@ -2267,7 +2247,7 @@ extern "C" {
         while (i < j) {
 
           if (i + macro_f_utf_byte_width(string[i]) >= length) {
-            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+            if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
 
@@ -2295,7 +2275,7 @@ extern "C" {
             }
           }
           else {
-            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+            if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
           }
@@ -2317,7 +2297,7 @@ extern "C" {
       }
 
       if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
-        if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+        if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
 
@@ -2350,8 +2330,6 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_string_t s = 0;
-
     // Skip past leading whitespace.
     while (i < length) {
 
@@ -2388,7 +2366,7 @@ extern "C" {
 
           status = f_utf_is_whitespace(string + j, (length - j) + 1);
 
-          if (F_status_is_error(status) || status == F_false && string[i]) break;
+          if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
 
         if (j == length || status == F_true || !string[i]) break;
@@ -2397,7 +2375,7 @@ extern "C" {
         while (i < j) {
 
           if (i + macro_f_utf_byte_width(string[i]) >= length) {
-            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+            if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
 
@@ -2421,7 +2399,7 @@ extern "C" {
             }
           }
           else {
-            if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+            if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
           }
@@ -2443,7 +2421,7 @@ extern "C" {
       }
 
       if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
-        if (!fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
+        if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
 

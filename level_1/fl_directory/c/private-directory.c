@@ -450,7 +450,6 @@ extern "C" {
 
     struct dirent **entity = 0;
 
-    f_array_length_t size = 0;
     f_status_t status = F_none;
 
     DIR *parent = opendir(path.string);
@@ -490,7 +489,6 @@ extern "C" {
 
     f_string_static_t name_directory = f_string_static_t_initialize;
     f_string_dynamics_t *names = 0;
-    f_array_length_t total = 0;
     struct stat file_stat;
     int mode = 0;
     size_t i = 0;

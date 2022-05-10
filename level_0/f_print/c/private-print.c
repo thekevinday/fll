@@ -63,7 +63,7 @@ extern "C" {
       return f_string_empty_s;
     }
 
-    return f_print_sequence_set_control_s[character];
+    return f_print_sequence_set_control_s[(unsigned int) character];
   }
 #endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
 
@@ -340,7 +340,6 @@ extern "C" {
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    f_status_t status = F_none;
     f_string_static_t safe = f_string_static_t_initialize;
 
     uint8_t width = 0;
@@ -492,7 +491,6 @@ extern "C" {
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    f_status_t status = F_none;
     f_string_static_t safe = f_string_static_t_initialize;
 
     uint8_t width = 0;
@@ -726,7 +724,6 @@ extern "C" {
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    f_status_t status = F_none;
     f_string_static_t safe = f_string_static_t_initialize;
 
     uint8_t width = 0;
@@ -836,7 +833,6 @@ extern "C" {
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    f_status_t status = F_none;
     f_string_static_t safe = f_string_static_t_initialize;
 
     uint8_t width = 0;
@@ -1011,8 +1007,6 @@ extern "C" {
 #if !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
   f_status_t private_f_print_raw_safely(const f_string_t string, const f_array_length_t length, FILE * const output) {
 
-    f_status_t status = F_none;
-
     register f_array_length_t i = 0;
     f_array_length_t start = 0;
     f_array_length_t total = 0;
@@ -1108,8 +1102,6 @@ extern "C" {
 
 #if !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
   f_status_t private_f_print_safely(const f_string_t string, const f_array_length_t length, FILE * const output) {
-
-    f_status_t status = F_none;
 
     register f_array_length_t i = 0;
     f_array_length_t start = 0;
@@ -1239,7 +1231,7 @@ extern "C" {
       return f_string_empty_s;
     }
 
-    return f_print_sequence_set_control_s[character[0]];
+    return f_print_sequence_set_control_s[(unsigned int) character[0]];
   }
 #endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
 

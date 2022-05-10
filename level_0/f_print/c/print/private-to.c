@@ -15,6 +15,7 @@ extern "C" {
  *   The appropriate status.
  */
 static inline f_status_t private_inline_f_print_to_error(void) {
+
   if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
   if (errno == EBADF) return F_status_set_error(F_file_descriptor);
   if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);
@@ -83,7 +84,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       }
     }
     else {
-      if (write(id, f_print_sequence_set_control_s[character].string, f_print_sequence_set_control_s[character].used) != -1) {
+      if (write(id, f_print_sequence_set_control_s[(unsigned int) character].string, f_print_sequence_set_control_s[(unsigned int) character].used) != -1) {
         return F_none;
       }
     }
@@ -198,7 +199,6 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     f_array_length_t start = offset;
     f_array_length_t total = 0;
 
-    f_status_t status = F_none;
     f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
@@ -274,7 +274,6 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     f_array_length_t start = offset;
     f_array_length_t total = 0;
 
-    f_status_t status = F_none;
     f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
@@ -506,7 +505,6 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     f_array_length_t start = i;
     f_array_length_t total = 0;
 
-    f_status_t status = F_none;
     f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
@@ -612,7 +610,6 @@ static inline f_status_t private_inline_f_print_to_error(void) {
     f_array_length_t start = i;
     f_array_length_t total = 0;
 
-    f_status_t status = F_none;
     f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
@@ -764,8 +761,6 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #if !defined(_di_f_print_to_dynamic_raw_safely_) || !defined(_di_f_print_to_dynamic_partial_raw_safely_) || !defined(_di_f_print_to_raw_safely_)
   f_status_t private_f_print_to_raw_safely(const f_string_t string, const f_array_length_t length, const int id) {
 
-    f_status_t status = F_none;
-
     register f_array_length_t i = 0;
     f_array_length_t start = 0;
     f_array_length_t total = 0;
@@ -830,8 +825,6 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #if !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_safely_)
   f_status_t private_f_print_to_safely(const f_string_t string, const f_array_length_t length, const int id) {
-
-    f_status_t status = F_none;
 
     register f_array_length_t i = 0;
     f_array_length_t start = 0;

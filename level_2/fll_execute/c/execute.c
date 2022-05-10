@@ -293,7 +293,7 @@ extern "C" {
     private_fll_execute_path_arguments_fixate(program.used ? program : arguments.array[0], arguments, last_slash, !program.used, program_name, fixed_arguments);
 
     // Determine full path when the environment is to be cleared or full path is explicitly requested.
-    if (parameter && parameter->environment || parameter && (parameter->option & FL_execute_parameter_option_path_d)) {
+    if ((parameter && parameter->environment) || (parameter && (parameter->option & FL_execute_parameter_option_path_d))) {
       f_string_dynamic_t path = f_string_dynamic_t_initialize;
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
       f_string_dynamic_t *found = 0;

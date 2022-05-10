@@ -55,7 +55,7 @@ extern "C" {
       }
     }
     else {
-      if (fwrite_unlocked(f_print_sequence_set_control_s[character].string, 1, f_print_sequence_set_control_s[character].used, output) == f_print_sequence_set_control_s[character].used) {
+      if (fwrite_unlocked(f_print_sequence_set_control_s[(unsigned int) character].string, 1, f_print_sequence_set_control_s[(unsigned int) character].used, output) == f_print_sequence_set_control_s[(unsigned int) character].used) {
         return F_none;
       }
     }

@@ -340,14 +340,6 @@ extern "C" {
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
-    f_string_static_t debug1;
-    debug1.string = string1 + offset1;
-    debug1.used = (stop1 - offset1) + 1;
-
-    f_string_static_t debug2;
-    debug2.string = string2 + offset2;
-    debug2.used = (stop2 - offset2) + 1;
-
     uint8_t width = 0;
     f_array_length_t width_max = 0;
     f_status_t status = F_none;

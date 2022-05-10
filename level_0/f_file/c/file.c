@@ -1249,11 +1249,7 @@ extern "C" {
       // 1 = add, 2 = replace, 3 = subtract.
       uint8_t how = 0;
 
-      // 0 = none, 0x1 = leading zero.
-      uint8_t option = 0;
-
       f_array_length_t i = 0;
-      f_array_length_t j = 0;
 
       if (code.string[0] == f_string_ascii_plus_s.string[0]) {
         how = 1;
@@ -1865,7 +1861,7 @@ extern "C" {
 #ifndef _di_f_file_role_change_
   f_status_t f_file_role_change(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference) {
 
-    if (uid == -1 && gid == -1 || !path.used) {
+    if ((uid == -1 && gid == -1) || !path.used) {
       return F_data_not;
     }
 
@@ -1876,7 +1872,7 @@ extern "C" {
 #ifndef _di_f_file_role_change_at_
   f_status_t f_file_role_change_at(const int at_id, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag) {
 
-    if (uid == -1 && gid == -1 || !path.used) {
+    if ((uid == -1 && gid == -1) || !path.used) {
       return F_data_not;
     }
 
