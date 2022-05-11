@@ -118,7 +118,7 @@ extern "C" {
  * @see f_socket_read()
  * @see f_string_dynamic_increase_by()
  * @see fl_conversion_dynamic_partial_to_number_unsigned()
- * @see fl_fss_apply_delimit()
+ * @see f_fss_apply_delimit()
  * @see fll_fss_extended_read()
  * @see fll_fss_basic_list_read()
  * @see fll_status_string_from()
@@ -195,7 +195,7 @@ extern "C" {
  *   Errors (with error bit) from: f_string_dynamic_append_nulless().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: f_string_dynamics_resize().
- *   Errors (with error bit) from: fl_fss_apply_delimit().
+ *   Errors (with error bit) from: f_fss_apply_delimit().
  *   Errors (with error bit) from: fll_fss_extended_read().
  *
  * @see f_file_exists()
@@ -208,7 +208,7 @@ extern "C" {
  * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamics_resize()
- * @see fl_fss_apply_delimit()
+ * @see f_fss_apply_delimit()
  * @see fll_fss_extended_read()
  */
 #ifndef _di_control_settings_load_

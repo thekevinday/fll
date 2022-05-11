@@ -34,10 +34,10 @@ extern "C" {
  * @param buffer
  *   The buffer to read from.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
- *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *   There is no data structure passed to these functions.
  *
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
@@ -107,10 +107,10 @@ extern "C" {
  *   Any valid nested object open or valid nested object close inside an ingore range will not be escaped.
  *   Set the pointer address to 0 to disable.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
- *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *   There is no data structure passed to these functions.
  *
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.

@@ -335,7 +335,7 @@ extern "C" {
         return F_status_set_error(F_header);
       }
 
-      status = fl_fss_apply_delimit(data->cache.delimits, &data->cache.large);
+      status = f_fss_apply_delimit(state, data->cache.delimits, &data->cache.large);
 
       if (F_status_is_error(status)) {
         control_print_debug_packet_message(main, "Failure while processing delimits for the FSS Basic List in the response packet", 0, 0, &status);
@@ -415,7 +415,7 @@ extern "C" {
           return F_status_set_error(F_header_not);
         }
 
-        status = fl_fss_apply_delimit(data->cache.delimits, &data->cache.large);
+        status = f_fss_apply_delimit(state, data->cache.delimits, &data->cache.large);
 
         if (F_status_is_error(status)) {
           control_print_debug_packet_message(main, "Failure while processing delimits for the FSS Basic List in the response packet", 0, 0, &status);
@@ -665,10 +665,10 @@ extern "C" {
       fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
     }
     else {
-      status = fl_fss_apply_delimit(delimits, &data->cache.large);
+      status = f_fss_apply_delimit(state, delimits, &data->cache.large);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
       }
     }
 

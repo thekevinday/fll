@@ -60,7 +60,7 @@ extern "C" {
  *
  *   Errors (with error bit) from: controller_entry_actions_increase_by().
  *   Errors (with error bit) from: f_fss_count_lines().
- *   Errors (with error bit) from: fl_fss_apply_delimit().
+ *   Errors (with error bit) from: f_fss_apply_delimit().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: fl_string_dynamic_partial_rip_nulless().
  *   Errors (with error bit) from: f_string_dynamics_increase_by().
@@ -70,7 +70,7 @@ extern "C" {
  * @see f_fss_count_lines()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamics_increase_by()
- * @see fl_fss_apply_delimit()
+ * @see f_fss_apply_delimit()
  * @see fl_string_dynamic_partial_rip_nulless()
  * @see fll_fss_extended_read()
  */
@@ -170,7 +170,7 @@ extern "C" {
  *   Errors (with error bit) from: f_string_dynamic_partial_append().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: f_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_fss_apply_delimit().
+ *   Errors (with error bit) from: f_fss_apply_delimit().
  *   Errors (with error bit) from: fll_fss_basic_list_read().
  *
  * @see controller_entry_actions_read()
@@ -184,7 +184,7 @@ extern "C" {
  * @see f_string_dynamic_partial_append()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamic_terminate()
- * @see fl_fss_apply_delimit()
+ * @see f_fss_apply_delimit()
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_

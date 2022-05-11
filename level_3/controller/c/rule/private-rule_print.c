@@ -264,9 +264,11 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
+    f_state_t state = f_state_t_initialize;
+
     // Get the current line number within the settings item.
     cache->action.line_item = line_item;
-    f_fss_count_lines(cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item);
+    f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item);
 
     cache->action.line_action = ++cache->action.line_item;
 
@@ -285,9 +287,11 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
+    f_state_t state = f_state_t_initialize;
+
     // Get the current line number within the settings item.
     cache->action.line_item = line_item;
-    f_fss_count_lines(cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item);
+    f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[index].start, &cache->action.line_item);
 
     cache->action.line_action = ++cache->action.line_item;
 

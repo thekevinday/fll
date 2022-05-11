@@ -16,7 +16,7 @@ extern "C" {
 
     const f_array_length_t delimits_used = delimits->used;
 
-    f_status_t status = f_fss_skip_past_space(buffer, range);
+    f_status_t status = f_fss_skip_past_space(state, buffer, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_eol) {
@@ -41,7 +41,7 @@ extern "C" {
     // Ignore all comment lines.
     if (buffer.string[range->start] == f_fss_comment_s.string[0]) {
 
-      status = f_fss_seek_to_eol(buffer, range);
+      status = f_fss_seek_to_eol(state, buffer, range);
       if (F_status_is_error(status)) return status;
 
       if (status == F_none_eos) {
@@ -126,7 +126,7 @@ extern "C" {
 
             if (buffer.string[range->start] == f_fss_eol_s.string[0]) break;
 
-            status = f_fss_is_space(buffer, *range);
+            status = f_fss_is_space(state, buffer, *range);
             if (F_status_is_error(status)) break;
 
             if (status == F_false) break;
@@ -214,7 +214,7 @@ extern "C" {
 
           if (buffer.string[range->start] == f_fss_eol_s.string[0]) break;
 
-          status = f_fss_is_space(buffer, *range);
+          status = f_fss_is_space(state, buffer, *range);
           if (F_status_is_error(status)) break;
 
           if (status == F_false) break;
@@ -237,7 +237,7 @@ extern "C" {
         continue;
       }
       else if (graph_first) {
-        status = f_fss_is_space(buffer, *range);
+        status = f_fss_is_space(state, buffer, *range);
         if (F_status_is_error(status)) break;
 
         if (status == F_false) {
@@ -264,7 +264,7 @@ extern "C" {
     }
 
     // seek to the end of the line when no valid object is found.
-    status = f_fss_seek_to_eol(buffer, range);
+    status = f_fss_seek_to_eol(state, buffer, range);
 
     // move the start position to after the EOL.
     ++range->start;
@@ -285,7 +285,7 @@ extern "C" {
     const f_array_length_t delimits_used = delimits->used;
     const f_array_length_t comments_used = comments->used;
 
-    f_status_t status = f_fss_skip_past_delimit(buffer, range);
+    f_status_t status = f_fss_skip_past_delimit(state, buffer, range);
     if (F_status_is_error(status)) return status;
 
     private_macro_fl_fss_content_with_comments_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
@@ -373,7 +373,7 @@ extern "C" {
 
             if (buffer.string[range->start] == f_fss_eol_s.string[0]) break;
 
-            status = f_fss_is_space(buffer, *range);
+            status = f_fss_is_space(state, buffer, *range);
             if (F_status_is_error(status)) break;
 
             if (status == F_false) break;
@@ -452,7 +452,7 @@ extern "C" {
 
           if (buffer.string[range->start] == f_fss_eol_s.string[0]) break;
 
-          status = f_fss_is_space(buffer, *range);
+          status = f_fss_is_space(state, buffer, *range);
           if (F_status_is_error(status)) break;
 
           if (status == F_false) break;
@@ -499,7 +499,7 @@ extern "C" {
       if (graph_first == 0x1 && buffer.string[range->start] == f_fss_comment_s.string[0]) {
         start = newline_last + 1;
 
-        status = f_fss_seek_to_eol(buffer, range);
+        status = f_fss_seek_to_eol(state, buffer, range);
         if (F_status_is_error(status)) break;
 
         macro_f_fss_comments_t_increase(status, state.step_small, (*comments))
@@ -519,7 +519,7 @@ extern "C" {
       }
 
       if (graph_first == 0x1) {
-        status = f_fss_is_space(buffer, *range);
+        status = f_fss_is_space(state, buffer, *range);
         if (F_status_is_error(status)) break;
 
         if (status == F_false) {
@@ -562,7 +562,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = f_fss_skip_past_delimit(object, range);
+    f_status_t status = f_fss_skip_past_delimit(state, object, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_stop || status == F_none_eos) {
@@ -619,7 +619,7 @@ extern "C" {
         break;
       }
 
-      status = f_fss_is_graph(object, *range);
+      status = f_fss_is_graph(state, object, *range);
       if (F_status_is_error(status)) break;
 
       if (status == F_true) break;
@@ -632,7 +632,7 @@ extern "C" {
           break;
         }
 
-        status = f_fss_is_space(object, *range);
+        status = f_fss_is_space(state, object, *range);
         if (F_status_is_error(status)) break;
 
         if (status == F_true) {
@@ -780,7 +780,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = f_fss_skip_past_delimit(content, range);
+    f_status_t status = f_fss_skip_past_delimit(state, content, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_stop || status == F_none_eos) {
@@ -861,7 +861,7 @@ extern "C" {
         if (content.string[range->start] == f_fss_basic_list_open_s.string[0]) {
           start = range->start++;
 
-          status = f_fss_skip_past_space(content, range);
+          status = f_fss_skip_past_space(state, content, range);
           if (F_status_is_error(status)) break;
 
           if (content.string[range->start] == f_fss_eol_s.string[0] || range->start >= content.used || range->start > range->stop) {
@@ -906,7 +906,7 @@ extern "C" {
 
         has_graph = F_true;
 
-        status = f_fss_skip_past_space(content, range);
+        status = f_fss_skip_past_space(state, content, range);
         if (F_status_is_error(status)) break;
 
         if (content.string[range->start] == f_fss_eol_s.string[0] || range->start >= content.used || range->start > range->stop) {
@@ -942,7 +942,7 @@ extern "C" {
         is_comment = F_false;
       }
       else {
-        status = f_fss_is_graph(content, *range);
+        status = f_fss_is_graph(state, content, *range);
 
         if (status == F_true) {
           has_graph = F_true;

@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_fl_fss_apply_delimit_
-  f_status_t fl_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t * const buffer) {
+#ifndef _di_f_fss_apply_delimit_
+  f_status_t f_fss_apply_delimit(f_state_t state, const f_fss_delimits_t delimits, f_string_static_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -20,10 +20,10 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fl_fss_apply_delimit_
+#endif // _di_f_fss_apply_delimit_
 
-#ifndef _di_fl_fss_apply_delimit_between_
-  f_status_t fl_fss_apply_delimit_between(const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t * const buffer) {
+#ifndef _di_f_fss_apply_delimit_between_
+  f_status_t f_fss_apply_delimit_between(f_state_t state, const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -37,10 +37,10 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fl_fss_apply_delimit_between_
+#endif // _di_f_fss_apply_delimit_between_
 
 #ifndef _di_f_fss_count_lines_
-  f_status_t f_fss_count_lines(const f_string_static_t buffer, const f_array_length_t before, f_array_length_t * const line) {
+  f_status_t f_fss_count_lines(f_state_t state, const f_string_static_t buffer, const f_array_length_t before, f_array_length_t * const line) {
     #ifndef _di_level_0_parameter_checking_
       if (!line) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -65,7 +65,7 @@ extern "C" {
 #endif // _di_f_fss_count_lines_
 
 #ifndef _di_f_fss_count_lines_range_
-  f_status_t f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_array_length_t before, f_array_length_t * const line) {
+  f_status_t f_fss_count_lines_range(f_state_t state, const f_string_static_t buffer, const f_string_range_t range, const f_array_length_t before, f_array_length_t * const line) {
     #ifndef _di_level_0_parameter_checking_
       if (!line) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -89,8 +89,38 @@ extern "C" {
   }
 #endif // _di_f_fss_count_lines_range_
 
+#ifndef _di_f_fss_do_fail_utf_
+  f_status_t f_fss_fail_utf(f_state_t state, const f_status_t status) {
+
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf) {
+        if (!(state.flag & f_fss_state_flag_utf_fail_on_valid_not_e)) {
+          return F_status_set_fine(status);
+        }
+      }
+    }
+
+    return status;
+  }
+#endif // _di_f_fss_fail_utf_
+
+#ifndef _di_f_fss_do_fail_to_false_utf_
+  f_status_t f_fss_fail_utf_to_false(f_state_t state, const f_status_t status) {
+
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf) {
+        if (!(state.flag & f_fss_state_flag_utf_fail_on_valid_not_e)) {
+          return F_false;
+        }
+      }
+    }
+
+    return status;
+  }
+#endif // _di_f_fss_fail_utf_to_false_
+
 #ifndef _di_f_fss_is_graph_
-  f_status_t f_fss_is_graph(const f_string_static_t buffer, const f_string_range_t range) {
+  f_status_t f_fss_is_graph(f_state_t state, const f_string_static_t buffer, const f_string_range_t range) {
 
     if (range.stop < range.start || range.start >= buffer.used || !buffer.used) {
       return F_false;
@@ -102,12 +132,12 @@ extern "C" {
       width_max = buffer.used - range.start;
     }
 
-    return f_utf_is_graph(buffer.string + range.start, width_max);
+    return f_fss_fail_utf_to_false(state, f_utf_is_graph(buffer.string + range.start, width_max));
   }
 #endif // _di_f_fss_is_graph_
 
 #ifndef _di_f_fss_is_space_
-  f_status_t f_fss_is_space(const f_string_static_t buffer, const f_string_range_t range) {
+  f_status_t f_fss_is_space(f_state_t state, const f_string_static_t buffer, const f_string_range_t range) {
 
     if (range.stop < range.start || range.start >= buffer.used || !buffer.used) {
       return F_false;
@@ -119,7 +149,7 @@ extern "C" {
       width_max = buffer.used - range.start;
     }
 
-    f_status_t status = f_utf_is_zero_width(buffer.string + range.start, width_max);
+    f_status_t status = f_fss_fail_utf_to_false(state, f_utf_is_zero_width(buffer.string + range.start, width_max));
 
     if (status != F_false) {
       if (status == F_true) {
@@ -129,10 +159,10 @@ extern "C" {
       return status;
     }
 
-    status = f_utf_is_whitespace(buffer.string + range.start, width_max);
+    status = f_fss_fail_utf_to_false(state, f_utf_is_whitespace(buffer.string + range.start, width_max));
 
     if (status == F_false) {
-      return f_utf_is_control(buffer.string + range.start, width_max);
+      status = f_fss_fail_utf_to_false(state, f_utf_is_control(buffer.string + range.start, width_max));
     }
 
     return status;
@@ -140,7 +170,7 @@ extern "C" {
 #endif // _di_f_fss_is_space_
 
 #ifndef _di_f_fss_is_zero_width_
-  f_status_t f_fss_is_zero_width(const f_string_static_t buffer, const f_string_range_t range) {
+  f_status_t f_fss_is_zero_width(f_state_t state, const f_string_static_t buffer, const f_string_range_t range) {
 
     if (range.stop < range.start || range.start >= buffer.used || !buffer.used) {
       return F_false;
@@ -152,12 +182,12 @@ extern "C" {
       width_max = buffer.used - range.start;
     }
 
-    return f_utf_is_zero_width(buffer.string + range.start, width_max);
+    return f_fss_fail_utf_to_false(state, f_utf_is_zero_width(buffer.string + range.start, width_max));
   }
 #endif // _di_f_fss_is_zero_width_
 
 #ifndef _di_f_fss_seek_to_eol_
-  f_status_t f_fss_seek_to_eol(const f_string_dynamic_t buffer, f_string_range_t * const range) {
+  f_status_t f_fss_seek_to_eol(f_state_t state, const f_string_dynamic_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -174,7 +204,7 @@ extern "C" {
 #endif // _di_f_fss_seek_to_eol_
 
 #ifndef _di_f_fss_shift_delimit_
-  f_status_t f_fss_shift_delimit(const f_string_range_t range, f_string_dynamic_t * const buffer) {
+  f_status_t f_fss_shift_delimit(f_state_t state, const f_string_range_t range, f_string_dynamic_t * const buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -196,7 +226,7 @@ extern "C" {
         ++distance;
       }
 
-      // do not waste time trying to process what is only going to be replaced with a delimit placeholder.
+      // Do not waste time trying to process what is only going to be replaced with a delimit placeholder.
       if (position + distance >= buffer->used || position + distance > range.stop) {
         break;
       }
@@ -205,9 +235,9 @@ extern "C" {
 
       if (utf_width > 1) {
 
-        // not enough space in buffer or in range range to process UTF-8 character.
+        // Not enough space in buffer or in range range to process UTF-8 character.
         if (position + utf_width >= buffer->used || position + utf_width > range.stop) {
-          return F_status_set_error(F_utf);
+          return f_fss_fail_utf(state, F_status_set_error(F_utf));
         }
 
         if (distance > 0) {
@@ -221,7 +251,7 @@ extern "C" {
       }
       else {
 
-        // shift everything down one for each delimit placeholder found.
+        // Shift everything down one for each delimit placeholder found.
         if (distance > 0) {
           buffer->string[position] = buffer->string[position + distance];
         }
@@ -243,7 +273,7 @@ extern "C" {
 #endif // _di_f_fss_shift_delimit_
 
 #ifndef _di_f_fss_skip_past_delimit_
-  f_status_t f_fss_skip_past_delimit(const f_string_static_t buffer, f_string_range_t * const range) {
+  f_status_t f_fss_skip_past_delimit(f_state_t state, const f_string_static_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -260,7 +290,7 @@ extern "C" {
 #endif // _di_f_fss_skip_past_delimit_
 
 #ifndef _di_f_fss_skip_past_space_
-  f_status_t f_fss_skip_past_space(const f_string_static_t buffer, f_string_range_t * const range) {
+  f_status_t f_fss_skip_past_space(f_state_t state, const f_string_static_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -302,11 +332,11 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(buffer.string + range->start, width_max);
+      status = f_fss_fail_utf_to_false(state, f_utf_is_whitespace(buffer.string + range->start, width_max));
       if (F_status_is_error(status)) return status;
 
       if (status == F_false) {
-        status = f_utf_is_zero_width(buffer.string + range->start, width_max);
+        status = f_fss_fail_utf_to_false(state, f_utf_is_zero_width(buffer.string + range->start, width_max));
         if (F_status_is_error(status)) return status;
 
         if (status == F_false) {
@@ -322,15 +352,15 @@ extern "C" {
       else if (width == 1) {
 
         // Do not operate on UTF-8 fragments that are not the first byte of the character.
-        return F_status_set_error(F_complete_not_utf);
+        return f_fss_fail_utf(state, F_status_set_error(F_complete_not_utf));
       }
       else {
         if (range->start + width >= buffer.used) {
-          return F_status_set_error(F_complete_not_utf_eos);
+          return f_fss_fail_utf(state, F_status_set_error(F_complete_not_utf_eos));
         }
 
         if (range->start + width > range->stop) {
-          return F_status_set_error(F_complete_not_utf_stop);
+          return f_fss_fail_utf(state, F_status_set_error(F_complete_not_utf_stop));
         }
       }
 
@@ -356,7 +386,7 @@ extern "C" {
 #endif // _di_f_fss_skip_past_space_
 
 #ifndef _di_f_fss_skip_past_non_graph_
-  f_status_t f_fss_skip_past_non_graph(const f_string_static_t buffer, f_string_range_t * const range) {
+  f_status_t f_fss_skip_past_non_graph(f_state_t state, const f_string_static_t buffer, f_string_range_t * const range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -382,44 +412,39 @@ extern "C" {
     for (;;) {
 
       if (buffer.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
-        status = f_utf_is_graph(buffer.string + range->start, width_max);
+        status = f_fss_fail_utf_to_false(state, f_utf_is_graph(buffer.string + range->start, width_max));
 
         if (status == F_true) {
 
-          // stop at a graph.
+          // Stop at a graph.
           break;
         }
         else if (status == F_false) {
-          status = f_utf_is_zero_width(buffer.string + range->start, width_max);
+          status = f_fss_fail_utf_to_false(state, f_utf_is_zero_width(buffer.string + range->start, width_max));
 
           if (status == F_true) {
             next = range->start + 1;
 
             for (; next < buffer.used && next <= range->stop; next += macro_f_utf_byte_width_is(buffer.string[next])) {
 
-              status = f_utf_is_graph(buffer.string + next, width_max);
+              status = f_fss_fail_utf_to_false(state, f_utf_is_graph(buffer.string + next, width_max));
 
               if (status == F_true) {
 
-                // treat zero-width as a graph when preceding a graph.
+                // Treat zero-width as a graph when preceding a graph.
                 return F_none;
               }
-              else if (status == F_false) {
+
+              if (status == F_false) {
                 status = f_utf_is_zero_width(buffer.string + next, width_max);
 
-                if (status == F_true) {
+                // Seek until a non-zero-width is reached.
+                if (status == F_true) continue;
 
-                  // seek until a non-zero-width is reached.
-                  continue;
-                }
-                else if (status == F_false) {
+                // Treat zero-width as a non-graph when preceding a non-graph (that is not a zero-width).
+                if (status == F_false) break;
 
-                  // treat zero-width as a non-graph when preceding a non-graph (that is not a zero-width).
-                  break;
-                }
-                else if (F_status_is_error(status)) {
-                  return status;
-                }
+                if (F_status_is_error(status)) return status;
               }
               else if (F_status_is_error(status)) {
                 return status;
@@ -428,7 +453,7 @@ extern "C" {
           }
           else if (status == F_false) {
 
-            // continue on when non-graph and non-zero-width.
+            // Continue on when non-graph and non-zero-width.
             break;
           }
           else if (F_status_is_error(status)) {
@@ -448,15 +473,15 @@ extern "C" {
       else if (width == 1) {
 
         // Do not operate on UTF-8 fragments that are not the first byte of the character.
-        return F_status_set_error(F_complete_not_utf);
+        return f_fss_fail_utf(state, F_status_set_error(F_complete_not_utf));
       }
       else {
         if (range->start + width >= buffer.used) {
-          return F_status_set_error(F_complete_not_utf_eos);
+          return f_fss_fail_utf(state, F_status_set_error(F_complete_not_utf_eos));
         }
 
         if (range->start + width > range->stop) {
-          return F_status_set_error(F_complete_not_utf_stop);
+          return f_fss_fail_utf(state, F_status_set_error(F_complete_not_utf_stop));
         }
       }
 

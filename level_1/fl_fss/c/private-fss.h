@@ -24,8 +24,8 @@ extern "C" {
  * @param used_start
  *   The destination.used value before any operations were perfomed.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
  *   There is no data structure passed to these functions.
  *
@@ -55,8 +55,8 @@ extern "C" {
  * @param buffer
  *   The buffer to seek through.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
  *   There is no data structure passed to these functions.
  *
@@ -90,8 +90,8 @@ extern "C" {
  * @param used_start
  *   The destination.used value before any operations were performed.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
  *   There is no data structure passed to these functions.
  *
@@ -129,8 +129,8 @@ extern "C" {
  *   As Object, this checks if the first graph character is a comment character '#', or an escaped comment character '#'.
  *   As Content, this does nothing special in regards to a leading '#'.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
  *   There is no data structure passed to these functions.
  *
@@ -204,8 +204,8 @@ extern "C" {
  *   If 0, then double quotes are auto-inserted, if needed.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
  *   There is no data structure passed to these functions.
  *

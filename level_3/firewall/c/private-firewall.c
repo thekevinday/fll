@@ -644,10 +644,12 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
               }
 
               if (F_status_is_error_not(status)) {
-                status = fl_fss_apply_delimit(delimits, &local_buffer);
+                f_state_t state = f_state_t_initialize;
+
+                status = f_fss_apply_delimit(state, delimits, &local_buffer);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data->main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+                  fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
                 }
               }
 
@@ -1198,9 +1200,9 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
 
   f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
   f_fss_comments_t comments = f_fss_comments_t_initialize;
+  f_state_t state = f_state_t_initialize;
 
   {
-    f_state_t state = f_state_t_initialize;
     f_string_range_t input = macro_f_string_range_t_initialize2(local->buffer.used);
 
     status = fll_fss_basic_list_read(local->buffer, state, &input, &local->chain_objects, &local->chain_contents, &delimits, 0, &comments);
@@ -1225,10 +1227,10 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
     }
   }
   else {
-    status = fl_fss_apply_delimit(delimits, &local->buffer);
+    status = f_fss_apply_delimit(state, delimits, &local->buffer);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+      fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
     }
   }
 
@@ -1242,18 +1244,15 @@ f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t
 
   f_status_t status = F_none;
   f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+  f_state_t state = f_state_t_initialize;
 
-  {
-    f_state_t state = f_state_t_initialize;
-
-    status = fll_fss_extended_read(local->buffer, state, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
-  }
+  status = fll_fss_extended_read(local->buffer, state, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
 
   if (F_status_is_error_not(status)) {
-    status = fl_fss_apply_delimit(delimits, &local->buffer);
+    status = f_fss_apply_delimit(state, delimits, &local->buffer);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+      fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
     }
   }
 

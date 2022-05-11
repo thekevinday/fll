@@ -45,7 +45,7 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t status_allocate = F_none;
 
-    status = f_fss_skip_past_space(buffer, range);
+    status = f_fss_skip_past_space(state, buffer, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_eol) {

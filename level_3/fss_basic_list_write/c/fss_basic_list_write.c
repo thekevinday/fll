@@ -309,11 +309,12 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[fss_basic_list_write_parameter_prepend_e].values.array[main->parameters.array[fss_basic_list_write_parameter_prepend_e].values.used - 1];
 
         if (main->parameters.arguments.array[index].used) {
+          f_state_t state = f_state_t_initialize;
           f_string_range_t range = macro_f_string_range_t_initialize2(main->parameters.arguments.array[index].used);
 
           for (; range.start < main->parameters.arguments.array[index].used; ++range.start) {
 
-            status = f_fss_is_space(main->parameters.arguments.array[index], range);
+            status = f_fss_is_space(state, main->parameters.arguments.array[index], range);
             if (F_status_is_error(status)) break;
 
             if (status == F_false) {

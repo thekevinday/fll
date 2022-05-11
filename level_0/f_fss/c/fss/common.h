@@ -362,6 +362,24 @@ enum {
   #define macro_f_fss_contents_t_decimate_by(status, contents, amount) macro_f_string_rangess_t_decimate_by(status, contents, amount)
 #endif // _di_f_fss_contents_t_
 
+/**
+ * State flags associated with FSS functions.
+ *
+ * These flags are meant to be bitwise for the 32-bit f_state_t flag property.
+ *
+ * The f_fss_state_flag_none_e is expected to be 0, therefore it must be safe to use 0 directly.
+ *
+ * f_fss_state_flag_*:
+ *   - none:                  No flags are set.
+ *   - utf_fail_on_valid_not: Immediately fail on invalid UTF-8 character (including incomplete).
+ */
+#ifndef _di_f_fss_state_flags_
+  enum {
+    f_fss_state_flag_none_e                  = 0,
+    f_fss_state_flag_utf_fail_on_valid_not_e = 0x1,
+  }; // enum
+#endif // _di_f_fss_state_flags_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

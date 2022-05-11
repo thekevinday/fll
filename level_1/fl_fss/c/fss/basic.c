@@ -34,7 +34,7 @@ extern "C" {
       if (!delimits) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = f_fss_skip_past_space(buffer, range);
+    f_status_t status = f_fss_skip_past_space(state, buffer, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_eol) {
@@ -68,7 +68,7 @@ extern "C" {
         }
       }
 
-      status = f_fss_skip_past_delimit(buffer, range);
+      status = f_fss_skip_past_delimit(state, buffer, range);
       if (F_status_is_error(status)) break;
 
       if (status == F_none_eos || status == F_none_stop) {
@@ -160,7 +160,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    status = f_fss_skip_past_delimit(content, range);
+    status = f_fss_skip_past_delimit(state, content, range);
     if (F_status_is_error(status)) return status;
 
     if (range->start > range->stop || range->start >= content.used) {

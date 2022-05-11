@@ -253,10 +253,10 @@ extern "C" {
       }
 
       if (status == F_fss_found_content) {
-        status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
+        status = f_fss_apply_delimit(state, cache->delimits, &cache->buffer_item);
 
         if (F_status_is_error(status)) {
-          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
 
           return status;
         }
@@ -330,10 +330,10 @@ extern "C" {
           return status;
         }
 
-        status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
+        status = f_fss_apply_delimit(state, cache->delimits, &cache->buffer_item);
 
         if (F_status_is_error(status)) {
-          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
 
           return status;
         }
@@ -351,7 +351,7 @@ extern "C" {
             return status;
           }
 
-          status = f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &actions->array[actions->used].line);
+          status = f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &actions->array[actions->used].line);
 
           if (F_status_is_error(status)) {
             controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_count_lines", F_true);
@@ -390,10 +390,10 @@ extern "C" {
         controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fll_fss_extended_content_read", F_true);
       }
       else if (status == F_fss_found_content) {
-        status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
+        status = f_fss_apply_delimit(state, cache->delimits, &cache->buffer_item);
 
         if (F_status_is_error(status)) {
-          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
         }
         else if (type == controller_rule_action_type_pid_file_e) {
           item->pid_file.used = 0;
@@ -628,7 +628,7 @@ extern "C" {
           actions->array[actions->used++].parameters.used = 1;
         }
         else {
-          status = f_fss_count_lines(cache->buffer_item, range->start, &actions->array[actions->used].line);
+          status = f_fss_count_lines(state, cache->buffer_item, range->start, &actions->array[actions->used].line);
 
           if (F_status_is_error(status)) {
             controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_count_lines", F_true);
@@ -2266,15 +2266,15 @@ extern "C" {
         if (status != F_fss_found_object) continue;
       }
 
-      status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
+      status = f_fss_apply_delimit(state, cache->delimits, &cache->buffer_item);
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
 
         break;
       }
 
-      status = f_fss_count_lines(cache->buffer_item, cache->range_action.start, &cache->action.line_action);
+      status = f_fss_count_lines(state, cache->buffer_item, cache->range_action.start, &cache->action.line_action);
 
       if (F_status_is_error(status)) {
         controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_count_lines", F_true);
@@ -3589,10 +3589,10 @@ extern "C" {
           controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true);
         }
         else {
-          status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
+          status = f_fss_apply_delimit(state, cache->delimits, &cache->buffer_file);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
           }
         }
       }
@@ -3607,6 +3607,7 @@ extern "C" {
       else {
         f_array_length_t i = 0;
         f_array_length_t j = 0;
+        f_state_t state = f_state_t_initialize;
 
         for (; i < cache->object_items.used; ++i) {
 
@@ -3636,7 +3637,7 @@ extern "C" {
 
           for_item = F_true;
 
-          status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
+          status = f_fss_count_lines(state, cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
 
           if (F_status_is_error(status)) {
             controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_fss_count_lines", F_true);
@@ -3744,12 +3745,10 @@ extern "C" {
     f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_item.used);
     f_string_range_t range2 = f_string_range_t_initialize;
 
-    {
-      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
-      f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large_d, controller_common_allocation_small_d, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+    controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+    f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large_d, controller_common_allocation_small_d, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
 
-      status = fll_fss_extended_read(cache->buffer_item, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
-    }
+    status = fll_fss_extended_read(cache->buffer_item, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
 
     if (F_status_is_error(status)) {
       controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "fll_fss_extended_read", F_true, F_false);
@@ -3802,7 +3801,7 @@ extern "C" {
 
         // Get the current line number within the settings item.
         cache->action.line_item = line_item;
-        f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+        f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
         cache->action.line_action = ++cache->action.line_item;
 
@@ -3867,7 +3866,7 @@ extern "C" {
 
           // Get the current line number within the settings item.
           cache->action.line_item = line_item;
-          f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+          f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
           cache->action.line_action = ++cache->action.line_item;
 
@@ -3896,7 +3895,7 @@ extern "C" {
 
           // Get the current line number within the settings item.
           cache->action.line_item = line_item;
-          f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+          f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
           cache->action.line_action = ++cache->action.line_item;
 
@@ -3921,7 +3920,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -4050,7 +4049,7 @@ extern "C" {
 
           // Get the current line number within the settings item.
           cache->action.line_item = line_item;
-          f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+          f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
           cache->action.line_action = ++cache->action.line_item;
 
@@ -4078,7 +4077,7 @@ extern "C" {
 
           // Get the current line number within the settings item.
           cache->action.line_item = line_item;
-          f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+          f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
           cache->action.line_action = ++cache->action.line_item;
 
@@ -4104,7 +4103,7 @@ extern "C" {
 
           // Get the current line number within the settings item.
           cache->action.line_item = line_item;
-          f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+          f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
           cache->action.line_action = ++cache->action.line_item;
 
@@ -4195,7 +4194,7 @@ extern "C" {
 
           // get the current line number within the settings item.
           cache->action.line_item = line_item;
-          f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+          f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
           cache->action.line_action = ++cache->action.line_item;
 
@@ -4275,7 +4274,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -4304,7 +4303,7 @@ extern "C" {
 
               // get the current line number within the settings item.
               cache->action.line_item = line_item;
-              f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+              f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
               cache->action.line_action = ++cache->action.line_item;
 
@@ -4344,7 +4343,7 @@ extern "C" {
 
           // get the current line number within the settings item.
           cache->action.line_item = line_item;
-          f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+          f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
           cache->action.line_action = ++cache->action.line_item;
 
@@ -4458,7 +4457,7 @@ extern "C" {
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -4474,7 +4473,7 @@ extern "C" {
 
               // get the current line number within the settings item.
               cache->action.line_item = line_item;
-              f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+              f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
               cache->action.line_action = ++cache->action.line_item;
             }
@@ -4535,7 +4534,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -4619,7 +4618,7 @@ extern "C" {
 
                 // Get the current line number within the settings item.
                 cache->action.line_item = line_item;
-                f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+                f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
                 cache->action.line_action = ++cache->action.line_item;
 
@@ -4698,7 +4697,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -4746,7 +4745,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -4815,7 +4814,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -4845,7 +4844,7 @@ extern "C" {
 
               // Get the current line number within the settings item.
               cache->action.line_item = line_item;
-              f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+              f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
               cache->action.line_action = ++cache->action.line_item;
 
@@ -4895,7 +4894,7 @@ extern "C" {
 
                 // Get the current line number within the settings item.
                 cache->action.line_item = line_item;
-                f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+                f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
                 cache->action.line_action = ++cache->action.line_item;
 
@@ -4940,7 +4939,7 @@ extern "C" {
 
                 // Get the current line number within the settings item.
                 cache->action.line_item = line_item;
-                f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+                f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
                 cache->action.line_action = ++cache->action.line_item;
 
@@ -4990,7 +4989,7 @@ extern "C" {
 
               // Get the current line number within the settings item.
               cache->action.line_item = line_item;
-              f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+              f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
               cache->action.line_action = ++cache->action.line_item;
 
@@ -5054,7 +5053,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -5081,7 +5080,7 @@ extern "C" {
 
               // Get the current line number within the settings item.
               cache->action.line_item = line_item;
-              f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+              f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
               cache->action.line_action = ++cache->action.line_item;
 
@@ -5132,7 +5131,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -5162,7 +5161,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -5177,7 +5176,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -5279,7 +5278,7 @@ extern "C" {
 
           // Get the current line number within the settings item.
           cache->action.line_item = line_item;
-          f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+          f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
           cache->action.line_action = ++cache->action.line_item;
 
@@ -5330,7 +5329,7 @@ extern "C" {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
-            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+            f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
             cache->action.line_action = ++cache->action.line_item;
 
@@ -5372,7 +5371,7 @@ extern "C" {
 
         // Get the current line number within the settings item.
         cache->action.line_item = line_item;
-        f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+        f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
         cache->action.line_action = ++cache->action.line_item;
 
@@ -5397,7 +5396,7 @@ extern "C" {
 
         // Get the current line number within the settings item.
         cache->action.line_item = line_item;
-        f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+        f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
         cache->action.line_action = ++cache->action.line_item;
 

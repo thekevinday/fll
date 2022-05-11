@@ -107,10 +107,12 @@ extern "C" {
       return status;
     }
 
-    status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
+    f_state_t state = f_state_t_initialize;
+
+    status = f_fss_apply_delimit(state, cache->delimits, &cache->buffer_file);
 
     if (F_status_is_error(status)) {
-      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, global.thread);
+      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_apply_delimit", F_true, global.thread);
 
       return status;
     }
@@ -147,7 +149,7 @@ extern "C" {
       action->status = F_known_not;
       action->parameters.used = 0;
 
-      status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
+      status = f_fss_count_lines(state, cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
 
       if (F_status_is_error(status)) {
         controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
@@ -1577,10 +1579,10 @@ extern "C" {
           controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true);
         }
         else {
-          status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
+          status = f_fss_apply_delimit(state, cache->delimits, &cache->buffer_file);
 
           if (F_status_is_error(status)) {
-            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, global.thread);
+            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_apply_delimit", F_true, global.thread);
           }
         }
       }
@@ -1614,6 +1616,8 @@ extern "C" {
         f_array_length_t i = 0;
         f_array_length_t j = 0;
 
+        f_state_t state = f_state_t_initialize;
+
         for (; i < cache->object_items.used && controller_thread_is_enabled(is_entry, global.thread); ++i) {
 
           if (code & 0x2) {
@@ -1643,6 +1647,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, global.thread);
+
             break;
           }
 
@@ -1654,7 +1659,7 @@ extern "C" {
             break;
           }
 
-          status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
+          status = f_fss_count_lines(state, cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
 
           if (F_status_is_error(status)) {
             controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
@@ -1680,6 +1685,7 @@ extern "C" {
               }
 
               code |= 0x2;
+
               break;
             }
           } // for
@@ -1781,7 +1787,7 @@ extern "C" {
 
                 action = &entry->items.array[i].actions.array[j];
 
-                // only process actions that don't already have an error.
+                // Only process actions that don't already have an error.
                 if (F_status_is_error(action->status)) continue;
 
                 if (action->type == controller_entry_action_type_failsafe_e || action->type == controller_entry_action_type_item_e) {
@@ -1875,10 +1881,14 @@ extern "C" {
       return status;
     }
 
-    status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
+    {
+      f_state_t state = f_state_t_initialize;
+
+      status = f_fss_apply_delimit(state, cache->delimits, &cache->buffer_file);
+    }
 
     if (F_status_is_error(status)) {
-      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, global.thread);
+      controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_apply_delimit", F_true, global.thread);
 
       return status;
     }
@@ -1890,10 +1900,11 @@ extern "C" {
     f_array_length_t line = 0;
 
     controller_entry_t *entry = is_entry ? &global.setting->entry : &global.setting->exit;
+    f_state_t state = f_state_t_initialize;
 
     for (; i < cache->object_actions.used; ++i) {
 
-      status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
+      status = f_fss_count_lines(state, cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
 
       if (F_status_is_error(status)) {
         controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);

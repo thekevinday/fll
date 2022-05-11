@@ -358,8 +358,9 @@ extern "C" {
     if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
+    f_state_t state = f_state_t_initialize;
 
-    f_fss_count_lines(buffer, operation_name.start, &line);
+    f_fss_count_lines(state, buffer, operation_name.start, &line);
 
     flockfile(data->main->error.to.stream);
 
@@ -428,8 +429,9 @@ extern "C" {
     if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
+    f_state_t state = f_state_t_initialize;
 
-    f_fss_count_lines(buffer, operation_name.start, &line);
+    f_fss_count_lines(state, buffer, operation_name.start, &line);
 
     flockfile(data->main->error.to.stream);
 
@@ -453,8 +455,9 @@ extern "C" {
     if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
+    f_state_t state = f_state_t_initialize;
 
-    f_fss_count_lines(buffer, operation_name.start, &line);
+    f_fss_count_lines(state, buffer, operation_name.start, &line);
 
     flockfile(data->main->error.to.stream);
 

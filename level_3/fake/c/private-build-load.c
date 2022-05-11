@@ -109,21 +109,18 @@ extern "C" {
       if (F_status_is_error_not(*status)) {
         f_string_range_t range = macro_f_string_range_t_initialize2(buffer.used);
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data->main, 0);
 
-        {
-          f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data->main, 0);
-
-          *status = fll_fss_extended_read(buffer, state, &range, &objects, &contents, 0, 0, &delimits, 0);
-        }
+        *status = fll_fss_extended_read(buffer, state, &range, &objects, &contents, 0, 0, &delimits, 0);
 
         if (F_status_is_error(*status)) {
           fake_print_error_fss(data, F_status_set_fine(*status), "fll_fss_extended_read", data->file_data_build_settings, range, F_true);
         }
         else {
-          *status = fl_fss_apply_delimit(delimits, &buffer);
+          *status = f_fss_apply_delimit(state, delimits, &buffer);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data->main->error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
+            fll_error_print(data->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
           }
           else {
             fake_build_load_setting_process(data, F_true, setting_file.used ? path_file : data->file_data_build_settings, buffer, objects, contents, setting, status);

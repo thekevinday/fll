@@ -49,7 +49,7 @@ extern "C" {
 
         if (destination->string[destination_range.start] == f_fss_delimit_placeholder_s.string[0]) continue;
 
-        status = f_fss_is_space(*destination, destination_range);
+        status = f_fss_is_space(state, *destination, destination_range);
 
         if (F_status_is_error(status)) {
           destination->used = used_start;
@@ -102,7 +102,7 @@ extern "C" {
 
         if (destination->string[destination_range.start] == f_fss_delimit_placeholder_s.string[0]) continue;
 
-        status = f_fss_is_space(*destination, destination_range);
+        status = f_fss_is_space(state, *destination, destination_range);
 
         // When going backwards, getting incomplete UTF-8 sequences is not an error.
         if (F_status_set_fine(status) == F_complete_not_utf) continue;
@@ -135,7 +135,7 @@ extern "C" {
           }
         }
 
-        status = f_fss_is_space(*destination, destination_range);
+        status = f_fss_is_space(state, *destination, destination_range);
 
         if (F_status_is_error(status)) {
           destination->used = used_start;
@@ -205,7 +205,7 @@ extern "C" {
 
       if (destination->string[destination_range.start] == f_fss_delimit_placeholder_s.string[0]) continue;
 
-      status = f_fss_is_space(*destination, destination_range);
+      status = f_fss_is_space(state, *destination, destination_range);
 
       if (F_status_is_error(status)) {
         destination->used = used_start;
@@ -238,7 +238,7 @@ extern "C" {
         continue;
       }
 
-      status = f_fss_is_space(*destination, destination_range);
+      status = f_fss_is_space(state, *destination, destination_range);
 
       // When going backwards, getting incomplete UTF-8 sequences is not an error.
       if (F_status_set_fine(status) == F_complete_not_utf) continue;
@@ -255,7 +255,7 @@ extern "C" {
     } // for
 
     if (destination_range.start == 0) {
-      status = f_fss_is_space(*destination, destination_range);
+      status = f_fss_is_space(state, *destination, destination_range);
 
       if (F_status_is_error(status)) {
         destination->used = used_start;
@@ -275,7 +275,7 @@ extern "C" {
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
   f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t *quoted, f_fss_delimits_t * const delimits) {
 
-    f_status_t status = f_fss_skip_past_space(buffer, range);
+    f_status_t status = f_fss_skip_past_space(state, buffer, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_eol) {
@@ -355,8 +355,8 @@ extern "C" {
           }
         }
 
-        status = f_fss_is_zero_width(buffer, *range);
-        if (F_status_is_error(status)) break;
+        status = f_fss_is_zero_width(state, buffer, *range);
+        if (F_status_is_error(status)) return status;
 
         if (status == F_true) {
           status = f_utf_buffer_increment(buffer, range, 1);
@@ -366,8 +366,8 @@ extern "C" {
         }
 
         if (buffer.string[range->start] != f_fss_delimit_slash_s.string[0]) {
-          status = f_fss_is_space(buffer, *range);
-          if (F_status_is_error(status)) break;
+          status = f_fss_is_space(state, buffer, *range);
+          if (F_status_is_error(status)) return status;
 
           // Found the end of the object while processing the slash for potential delimits.
           if (status == F_true) {
@@ -437,12 +437,13 @@ extern "C" {
 
           if (F_status_set_fine(status) == F_interrupt) {
             status = F_status_set_error(F_interrupt);
+
             break;
           }
         }
 
-        status = f_fss_is_space(buffer, *range);
-        if (F_status_is_error(status)) break;
+        status = f_fss_is_space(state, buffer, *range);
+        if (F_status_is_error(status)) return status;
 
         if (status == F_true) break;
 
@@ -534,7 +535,7 @@ extern "C" {
             if (range->start + 1 <= range->stop && range->start + 1 < buffer.used) {
               ++range->start;
 
-              status = f_fss_skip_past_delimit(buffer, range);
+              status = f_fss_skip_past_delimit(state, buffer, range);
               if (F_status_is_error(status)) return status;
 
               if (range->start > range->stop || range->start >= buffer.used) {
@@ -544,7 +545,7 @@ extern "C" {
                 status = F_true;
               }
               else {
-                status = f_fss_is_space(buffer, *range);
+                status = f_fss_is_space(state, buffer, *range);
                 if (F_status_is_error(status)) return status;
               }
             }
@@ -602,7 +603,7 @@ extern "C" {
                   if (range->start > range->stop) return F_none_stop;
                 } // while
 
-                status = f_fss_is_graph(buffer, *range);
+                status = f_fss_is_graph(state, buffer, *range);
                 if (F_status_is_error(status)) return status;
 
                 if (status == F_true) {
@@ -689,7 +690,7 @@ extern "C" {
           if (range->start + 1 <= range->stop && range->start + 1 < buffer.used) {
             ++range->start;
 
-            status = f_fss_skip_past_delimit(buffer, range);
+            status = f_fss_skip_past_delimit(state, buffer, range);
             if (F_status_is_error(status)) return status;
 
             if (range->start > range->stop || range->start >= buffer.used) {
@@ -699,7 +700,7 @@ extern "C" {
               status = F_true;
             }
             else {
-              status = f_fss_is_space(buffer, *range);
+              status = f_fss_is_space(state, buffer, *range);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -745,7 +746,7 @@ extern "C" {
                 return F_fss_found_object_content_not;
               }
 
-              status = f_fss_is_space(buffer, *range);
+              status = f_fss_is_space(state, buffer, *range);
               if (F_status_is_error(status)) return status;
 
               if (status == F_true) {
@@ -831,7 +832,7 @@ extern "C" {
     }
 
     // Seek to the EOL when no valid object is found.
-    status = f_fss_seek_to_eol(buffer, range);
+    status = f_fss_seek_to_eol(state, buffer, range);
     if (F_status_is_error(status)) return status;
 
     // Move the start position to after the EOL.
@@ -844,7 +845,7 @@ extern "C" {
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
   f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quoted, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
 
-    f_status_t status = f_fss_skip_past_space(object, range);
+    f_status_t status = f_fss_skip_past_space(state, object, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_eos) {
@@ -962,7 +963,7 @@ extern "C" {
         if (object.string[range->start] == quote_char) {
           item_first = range->start++;
 
-          status = f_fss_skip_past_delimit(object, range);
+          status = f_fss_skip_past_delimit(state, object, range);
           if (F_status_is_error(status)) return status;
 
           if (range->start > range->stop || range->start >= object.used) {
@@ -980,7 +981,7 @@ extern "C" {
           }
 
           // if any space is found after a quote after a slash, then this must be delimited and quoted.
-          status = f_fss_is_space(object, *range);
+          status = f_fss_is_space(state, object, *range);
           if (F_status_is_error(status)) break;
 
           if (status == F_true) {
@@ -1042,7 +1043,7 @@ extern "C" {
         else {
 
           // If any space is found, then this must be quoted.
-          status = f_fss_is_space(object, *range);
+          status = f_fss_is_space(state, object, *range);
           if (F_status_is_error(status)) break;
 
           if (status == F_true) {
@@ -1078,7 +1079,7 @@ extern "C" {
           destination->string[used_start + 1] = f_fss_delimit_slash_s.string[0];
         }
 
-        status = f_fss_skip_past_delimit(object, range);
+        status = f_fss_skip_past_delimit(state, object, range);
         if (F_status_is_error(status)) return status;
 
         if (range->start > range->stop || range->start >= object.used) {
@@ -1102,7 +1103,7 @@ extern "C" {
         }
 
         // If any space is found, then this must be quoted.
-        status = f_fss_is_space(object, *range);
+        status = f_fss_is_space(state, object, *range);
         if (F_status_is_error(status)) break;
 
         if (status == F_true) {
@@ -1134,7 +1135,7 @@ extern "C" {
       }
       else if (object.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
         if (!quoted_is) {
-          status = f_fss_is_space(object, *range);
+          status = f_fss_is_space(state, object, *range);
           if (F_status_is_error(status)) break;
 
           if (status == F_true) {
@@ -1196,7 +1197,7 @@ extern "C" {
 
           range_i.start = i;
 
-          status = f_fss_is_space(object, range_i);
+          status = f_fss_is_space(state, object, range_i);
 
           if (F_status_is_error(status)) {
             destination->used = used_start;

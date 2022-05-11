@@ -636,7 +636,7 @@ extern "C" {
  * @see controller_rule_items_increase_by().
  * @see controller_rule_item_read().
  * @see f_fss_count_lines().
- * @see fl_fss_apply_delimit().
+ * @see f_fss_apply_delimit().
  * @see f_string_dynamic_partial_append().
  * @see f_string_dynamic_partial_append_nulless().
  * @see fll_fss_basic_list_read().

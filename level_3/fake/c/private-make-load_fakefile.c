@@ -53,21 +53,18 @@ extern "C" {
       f_string_range_t range = macro_f_string_range_t_initialize2(data_make->buffer.used);
       f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
       f_fss_comments_t comments = f_fss_comments_t_initialize;
+      f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
 
-      {
-        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
-
-        *status = fll_fss_basic_list_read(data_make->buffer, state, &range, &list_objects, &list_contents, &delimits, 0, &comments);
-      }
+      *status = fll_fss_basic_list_read(data_make->buffer, state, &range, &list_objects, &list_contents, &delimits, 0, &comments);
 
       if (F_status_is_error(*status)) {
         fake_print_error_fss(data_make->data, F_status_set_fine(*status), "fll_fss_basic_list_read", data_make->data->file_data_build_fakefile, range, F_true);
       }
       else {
-        *status = fl_fss_apply_delimit(delimits, &data_make->buffer);
+        *status = f_fss_apply_delimit(state, delimits, &data_make->buffer);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data_make->main->error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
+          fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
         }
       }
 
@@ -140,10 +137,10 @@ extern "C" {
               break;
             }
 
-            *status = fl_fss_apply_delimit(delimits, &data_make->buffer);
+            *status = f_fss_apply_delimit(state, delimits, &data_make->buffer);
 
             if (F_status_is_error(*status)) {
-              fll_error_print(data_make->main->error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
+              fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
 
               break;
             }
@@ -177,10 +174,10 @@ extern "C" {
             break;
           }
 
-          *status = fl_fss_apply_delimit(delimits, &data_make->buffer);
+          *status = f_fss_apply_delimit(state, delimits, &data_make->buffer);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
+            fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
 
             break;
           }

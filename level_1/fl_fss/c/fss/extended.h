@@ -37,10 +37,10 @@ extern "C" {
  * @param buffer
  *   The buffer to read from.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
- *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *   There is no data structure passed to these functions.
  *
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
@@ -92,10 +92,10 @@ extern "C" {
  * @param buffer
  *   The buffer to read from.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
- *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *   There is no data structure passed to these functions.
  *
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
@@ -156,10 +156,10 @@ extern "C" {
  *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this object.
  *   If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this object.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
- *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *   There is no data structure passed to these functions.
  *
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
@@ -211,10 +211,10 @@ extern "C" {
  *   If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this content, except for the final newline.
  *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this content, including the final newline.
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
  *   There is no functions structure.
- *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *   There is no data structure passed to these functions.
  *
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.

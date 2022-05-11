@@ -322,10 +322,11 @@ extern "C" {
         // Even though this standard does not utilize this parameter, provide the validation for consistency.
         if (argv[index].used) {
           f_string_range_t range = macro_f_string_range_t_initialize2(argv[index].used);
+          f_state_t state = f_state_t_initialize;
 
           for (; range.start < argv[index].used; ++range.start) {
 
-            status = f_fss_is_space(argv[index], range);
+            status = f_fss_is_space(state, argv[index], range);
             if (F_status_is_error(status)) break;
 
             if (status == F_false) {
