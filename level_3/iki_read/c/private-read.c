@@ -73,7 +73,7 @@ extern "C" {
 
       status = iki_read_process_at(data, &buffer_range);
 
-      if (status == F_true && buffer_range.start > data->buffer.used || status == F_data_not) {
+      if ((status == F_true && buffer_range.start > data->buffer.used) || status == F_data_not) {
         f_iki_data_delete(&iki_data);
 
         return F_data_not;

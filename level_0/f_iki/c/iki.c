@@ -112,7 +112,7 @@ extern "C" {
     do {
 
       // Find the start of the vocabulary name.
-      while (F_status_is_error_not(status) && range->start <= range->stop && range->start < buffer->used) {
+      while (range->start <= range->stop && range->start < buffer->used) {
 
         if (state.interrupt) {
           status = state.interrupt((void *) &state, 0);
@@ -127,7 +127,19 @@ extern "C" {
         width_max = buffer->used - range->start;
 
         status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
-        if (F_status_is_error(status)) break;
+
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf) {
+            if (state.flag & f_iki_state_flag_utf_fail_on_valid_not_e) {
+              break;
+            }
+
+            status = F_false;
+          }
+          else {
+            break;
+          }
+        }
 
         if (status == F_true) {
           found_vocabulary.start = range->start++;
@@ -136,6 +148,7 @@ extern "C" {
         }
 
         status = f_utf_buffer_increment(*buffer, range, 1);
+        if (F_status_is_error(status)) break;
       } // while
 
       // Find the end of the vocabulary name.
@@ -232,7 +245,19 @@ extern "C" {
           width_max = buffer->used - range->start;
 
           status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
-          if (F_status_is_error(status)) break;
+
+          if (F_status_is_error(status)) {
+            if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf) {
+              if (state.flag & f_iki_state_flag_utf_fail_on_valid_not_e) {
+                break;
+              }
+
+              status = F_false;
+            }
+            else {
+              break;
+            }
+          }
 
           // Not a valid IKI vocabulary name.
           if (status != F_true) break;
@@ -430,6 +455,12 @@ extern "C" {
       if (F_status_is_error(status)) break;
 
     } while (range->start <= range->stop && range->start < buffer->used);
+
+    if (F_status_set_fine(status) == F_complete_not_utf_eos || F_status_set_fine(status) == F_complete_not_utf_stop) {
+      if (!(state.flag & f_iki_state_flag_utf_fail_on_valid_not_e)) {
+        status = F_status_set_fine(status);
+      }
+    }
 
     if (F_status_is_error(status)) {
       data->delimits.used = delimits_used;

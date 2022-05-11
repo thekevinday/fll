@@ -17,6 +17,24 @@ extern "C" {
 #endif
 
 /**
+ * State flags associated with iki functions.
+ *
+ * These flags are meant to be bitwise for the 32-bit f_state_t flag property.
+ *
+ * The f_iki_state_flag_none_e is expected to be 0, therefore it must be safe to use 0 directly.
+ *
+ * f_iki_state_flag_*:
+ *   - none:                  No flags are set.
+ *   - utf_fail_on_valid_not: Immediately fail on invalid UTF-8 character (including incomplete).
+ */
+#ifndef _di_f_iki_state_flags_
+  enum {
+    f_iki_state_flag_none_e                  = 0,
+    f_iki_state_flag_utf_fail_on_valid_not_e = 0x1,
+  }; // enum
+#endif // _di_f_iki_state_flags_
+
+/**
  * IKI-specific syntax.
  */
 #ifndef _di_f_iki_syntax_

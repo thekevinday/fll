@@ -417,17 +417,14 @@ extern "C" {
           if (size_file > iki_read_block_max) {
             file.size_read = iki_read_block_read_large;
             size_block = iki_read_block_max;
-
-            // Pre-allocate entire file buffer plus space for the terminating NULL.
-            f_string_dynamic_increase_by(size_file + (size_block - (size_file % size_block)) + 1, &data.buffer);
           }
           else {
             file.size_read = iki_read_block_read_small;
             size_block = size_file;
-
-            // Pre-allocate entire file buffer plus space for the terminating NULL.
-            f_string_dynamic_increase_by(size_file + 1, &data.buffer);
           }
+
+          // Pre-allocate entire file buffer plus space for the terminating NULL.
+          f_string_dynamic_increase_by(size_file + 1, &data.buffer);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);

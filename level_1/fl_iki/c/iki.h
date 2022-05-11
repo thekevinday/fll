@@ -36,14 +36,7 @@ extern "C" {
  * This only finds complete vocabulary names and their respective content.
  *
  * @param state
- *   A state for handling interrupts during long running operations.
- *   There is no print_error() usage at this time (@todo this should be implemented and supported).
- *   There is no functions structure.
- *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
- *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
- *   Error bit designates an error but must be passed along with F_interrupt.
- *   All other statuses are ignored.
+ *   A state for providing flags and handling interrupts during long running operations.
  * @param buffer
  *   The string to process.
  * @param range
@@ -58,6 +51,8 @@ extern "C" {
  *   F_none on success and an IKI vocabulary name was found.
  *   F_none_stop on success and an IKI vocabulary name was found and stop point was reached.
  *   F_none_eos on success and an IKI vocabulary name was found and end of string was reached.
+ *   F_complete_not_utf_eos on success and EOS was reached, but at an incomplete UTF-8 sequence.
+ *   F_complete_not_utf_stop on success and stop point was reached, but at an incomplete UTF-8 sequence.
  *   F_data_not_eos on success and EOS was reached, but there were no IKI vocabularie names found.
  *   F_data_not_stop on success and stop point was reached, but there were no IKI vocabularie names found.
  *

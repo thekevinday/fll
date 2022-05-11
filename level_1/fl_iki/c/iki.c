@@ -17,17 +17,9 @@ extern "C" {
       status = f_iki_read(state, buffer, range, data);
       if (F_status_is_error(status)) return status;
 
-      if (status == F_data_not_eos || status == F_data_not_stop) {
-        return status;
-      }
-
-      if (status == F_none_eos || status == F_none_stop) {
-        return status;
-      }
-
     } while (range->start <= range->stop && range->start < buffer->used);
 
-    return F_none;
+    return status;
   }
 #endif // _di_fl_iki_read_
 
