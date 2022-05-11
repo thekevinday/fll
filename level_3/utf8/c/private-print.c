@@ -113,6 +113,9 @@ extern "C" {
     if (F_status_set_fine(status) == F_utf) {
       fl_print_format("%[', not a valid UTF-8 character sequence.%]%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
     }
+    else if (F_status_set_fine(status) == F_complete_not_utf) {
+      fl_print_format("%[', invalid UTF-8 (truncated).%]%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
+    }
     else if (F_status_set_fine(status) == F_utf_fragment) {
       fl_print_format("%[', invalid UTF-8 fragment.%]%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
     }

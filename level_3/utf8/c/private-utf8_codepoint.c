@@ -38,7 +38,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);
 
-        if (status == F_failure || status == F_utf || status == F_utf_fragment || status == F_valid_not) {
+        if (status == F_failure || status == F_utf || status == F_complete_not_utf || status == F_utf_fragment || status == F_valid_not) {
           valid_not = F_true;
 
           utf8_print_character_invalid(data, character);
@@ -113,7 +113,7 @@ extern "C" {
       status = f_utf_is_whitespace(character.string, 4);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_utf_fragment) {
+        if (F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf_fragment) {
           status = F_valid_not;
         }
         else {
@@ -129,11 +129,11 @@ extern "C" {
       }
     }
     else {
-      if (character.string[0] < 0x30 || character.string[0] > 0x39 && character.string[0] < 0x41 || character.string[0] > 0x46 && character.string[0] < 0x61 || character.string[0] > 0x66) {
+      if (character.string[0] < 0x30 || character.string[0] > (0x39 && character.string[0] < 0x41) || (character.string[0] > 0x46 && character.string[0] < 0x61) || character.string[0] > 0x66) {
         status = f_utf_is_whitespace(character.string, 4);
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_utf_fragment) {
+          if (F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf_fragment) {
             status = F_valid_not;
           }
           else {

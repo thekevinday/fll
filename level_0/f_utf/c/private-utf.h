@@ -35,7 +35,7 @@ extern "C" {
  * @return
  *   F_none if conversion was successful.
  *
- *   F_failure (with error bit) if width_max is not long enough to convert.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 sequence.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if unicode is an invalid Unicode character.
  *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.

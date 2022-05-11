@@ -19,7 +19,7 @@ extern "C" {
     }
 
     if (macro_f_utf_byte_width_is(*character) > width_max) {
-      return F_status_set_error(F_failure);
+      return F_status_set_error(F_complete_not_utf);
     }
 
     *character_utf = macro_f_utf_char_t_from_char_1(character[0]);

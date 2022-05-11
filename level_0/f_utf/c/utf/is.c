@@ -21,7 +21,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -54,7 +54,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -87,7 +87,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -120,7 +120,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -142,7 +142,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -172,7 +172,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -201,7 +201,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -234,7 +234,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -264,7 +264,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -298,7 +298,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -331,7 +331,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -375,7 +375,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -421,7 +421,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -454,7 +454,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -484,7 +484,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -514,7 +514,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -573,7 +573,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -617,7 +617,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -647,7 +647,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -677,7 +677,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -707,7 +707,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -740,7 +740,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -770,7 +770,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -797,7 +797,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -827,7 +827,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -860,7 +860,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -893,7 +893,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {
@@ -926,7 +926,7 @@ extern "C" {
 
     if (macro_f_utf_byte_width_is(*character)) {
       if (macro_f_utf_byte_width_is(*character) > width_max) {
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_complete_not_utf);
       }
 
       if (macro_f_utf_byte_width_is(*character) == 1) {

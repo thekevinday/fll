@@ -27,7 +27,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
-      if (status == F_failure || status == F_utf || status == F_utf_fragment || status == F_valid_not) {
+      if (status == F_failure || status == F_utf || status == F_complete_not_utf || status == F_utf_fragment || status == F_valid_not) {
         valid_not = F_true;
 
         utf8_print_character_invalid(data, character);

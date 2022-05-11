@@ -385,7 +385,7 @@ extern "C" {
           status = utf8_process_file_codepoint(&data, file);
         }
 
-        if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment) {
+        if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment && F_status_set_fine(status) != F_complete_not_utf) {
           fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_bytecode_d ? "utf8_process_file_bytecode" : "utf8_process_file_codepoint", F_true, f_string_empty_s, f_file_operation_process_s, fll_error_file_type_pipe_e);
         }
       }
@@ -435,7 +435,7 @@ extern "C" {
             }
           }
 
-          if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment) {
+          if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment && F_status_set_fine(status) != F_complete_not_utf) {
             fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_bytecode_d ? "utf8_process_file_bytecode" : "utf8_process_file_codepoint", F_true, data.argv[index], f_file_operation_process_s, fll_error_file_type_file_e);
 
             break;
