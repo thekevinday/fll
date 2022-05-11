@@ -2349,7 +2349,7 @@ extern "C" {
         buffer_size = total - buffer_count;
       }
 
-      size_read = fread_unlocked(buffer->string + buffer->used, sizeof(f_char_t), file.size_read, file.stream);
+      size_read = fread_unlocked(buffer->string + buffer->used, sizeof(f_char_t), buffer_size, file.stream);
 
       if (ferror_unlocked(file.stream)) {
         funlockfile(file.stream);
