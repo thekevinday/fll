@@ -173,6 +173,26 @@ extern "C" {
   }
 #endif // _di_f_path_is_
 
+#ifndef _di_f_path_is_absolute_
+  f_status_t f_path_is_absolute(const f_string_static_t path) {
+
+    if (!path.string || !path.used) {
+      return F_data_not;
+    }
+
+    f_array_length_t i = 0;
+
+    for (; i < path.used; ++i) {
+      if (path.string[i]) break;
+    } // for
+
+    if (i == path.used) return F_data_not;
+    if (path.string[i] == f_path_separator_s.string[0]) return F_true;
+
+    return F_false;
+  }
+#endif // _di_f_path_is_absolute_
+
 #ifndef _di_f_path_is_relative_
   f_status_t f_path_is_relative(const f_string_static_t path) {
 
@@ -186,9 +206,8 @@ extern "C" {
       if (path.string[i]) break;
     } // for
 
-    if (path.string[i] == f_path_separator_s.string[0]) {
-      return F_false;
-    }
+    if (i == path.used) return F_data_not;
+    if (path.string[i] == f_path_separator_s.string[0]) return F_false;
 
     return F_true;
   }
@@ -207,27 +226,24 @@ extern "C" {
       if (path.string[i]) break;
     } // for
 
-    if (path.string[i] == f_path_separator_s.string[0]) {
-      return F_false;
-    }
+    if (i == path.used) return F_data_not;
+    if (path.string[i] == f_path_separator_s.string[0]) return F_false;
 
     if (path.string[i] == f_path_separator_current_s.string[0]) {
-      for (; i < path.used; ++i) {
+      for (++i; i < path.used; ++i) {
         if (path.string[i]) break;
       } // for
 
-      if (path.string[i] == f_path_separator_s.string[0]) {
-        return F_true;
-      }
+      if (i == path.used) return F_false;
+      if (path.string[i] == f_path_separator_s.string[0]) return F_true;
 
       if (path.string[i] == f_path_separator_current_s.string[0]) {
-        for (; i < path.used; ++i) {
+        for (++i; i < path.used; ++i) {
           if (path.string[i]) break;
         } // for
 
-        if (path.string[i] == f_path_separator_s.string[0]) {
-          return F_true;
-        }
+        if (i == path.used) return F_false;
+        if (path.string[i] == f_path_separator_s.string[0]) return F_true;
       }
     }
 

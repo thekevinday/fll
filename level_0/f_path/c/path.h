@@ -169,6 +169,27 @@ extern "C" {
 #endif // _di_f_path_is_
 
 /**
+ * Identify whether or not a string represents an absolute path string.
+ *
+ * This does not check to see if the path exists or not.
+ * This does not stop on NULL (NULL characters are ignored).
+ *
+ * A string with path parts that start with '/' is an absolute path.
+ * That is to say "/my_file.txt" is an absolute path string.
+ *
+ * @param path
+ *   The string that may or may not represent an absolute path.
+ *
+ * @return
+ *   F_true if the string is an absolute path string.
+ *   F_false if the string is not an absolute path string.
+ *   F_data_not if the string has a length of 0 or the string is NULL.
+ */
+#ifndef _di_f_path_is_absolute_
+  extern f_status_t f_path_is_absolute(const f_string_static_t path);
+#endif // _di_f_path_is_absolute_
+
+/**
  * Identify whether or not a string represents a relative path string.
  *
  * This does not check to see if the path exists or not.
