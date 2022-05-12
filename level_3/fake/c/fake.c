@@ -306,13 +306,10 @@ extern "C" {
           }
         }
         else if (data.operation == fake_operation_clean_e) {
-          if (validate_parameter_directories) {
-            validate_parameter_directories = F_false;
-          }
+          status = fake_clean_operate(&data);
 
-          if (F_status_is_error_not(status)) {
-            status = fake_clean_operate(&data);
-          }
+          // Reset in case next operation needs files.
+          validate_parameter_directories = F_true;
         }
         else if (data.operation == fake_operation_make_e) {
           if (validate_parameter_directories) {
@@ -327,6 +324,9 @@ extern "C" {
         }
         else if (data.operation == fake_operation_skeleton_e) {
           status = fake_skeleton_operate(&data);
+
+          // Skeleton is supposed to guarantee these.
+          validate_parameter_directories = F_false;
         }
 
         if (status == F_child) break;

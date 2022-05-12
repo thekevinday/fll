@@ -533,18 +533,42 @@ extern "C" {
       data->path_work,
     };
 
-    const bool parameters_required[] = {
+    uint8_t parameters_required[] = {
       F_false,
       F_true,
       F_false,
     };
+
+    // Check only expected operations (fake_operation_clean_e and fake_operation_skeleton_e should not call this function).
+    if (data->operation == fake_operation_make_e) {
+
+      // If a custom --data or a custom --fakefile parameter is passed and uses an absolute or relative to current path, then do not check.
+      if (data->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = data->main->parameters.array[fake_parameter_fakefile_e].values.array[data->main->parameters.array[fake_parameter_fakefile_e].values.used - 1];
+
+        if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
+          parameters_required[1] = F_none;
+        }
+      }
+    }
+    else if (data->operation == fake_operation_build_e) {
+
+      // If a custom --data or a custom --settings parameter is passed and uses an absolute or relative to current path, then do not check.
+      if (data->main->parameters.array[fake_parameter_settings_e].result == f_console_result_additional_e) {
+        const f_array_length_t index = data->main->parameters.array[fake_parameter_fakefile_e].values.array[data->main->parameters.array[fake_parameter_fakefile_e].values.used - 1];
+
+        if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
+          parameters_required[1] = F_none;
+        }
+      }
+    }
 
     struct stat directory_stat;
     f_status_t status = F_none;
 
     for (uint8_t i = 0; i < 3; ++i) {
 
-      if (parameters_value[i].used) {
+      if (parameters_required[i] != F_none && parameters_value[i].used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
         status = f_file_stat(parameters_value[i], F_true, &directory_stat);
@@ -559,7 +583,7 @@ extern "C" {
           }
         }
       }
-      else if (parameters_required[i]) {
+      else if (parameters_required[i] == F_true) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QNo valid path for the (required) directory parameter '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
