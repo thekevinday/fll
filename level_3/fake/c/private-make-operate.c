@@ -165,10 +165,6 @@ extern "C" {
     const f_string_static_t vocabulary_define = macro_f_string_static_t_initialize2(F_iki_vocabulary_0002_define_s, F_iki_vocabulary_0002_define_s_length);
     const f_string_static_t vocabulary_parameter = macro_f_string_static_t_initialize2(F_iki_vocabulary_0002_parameter_s, F_iki_vocabulary_0002_parameter_s_length);
 
-    const f_string_range_t range_context = macro_f_string_range_t_initialize2(F_iki_vocabulary_0002_context_s_length);
-    const f_string_range_t range_define = macro_f_string_range_t_initialize2(F_iki_vocabulary_0002_define_s_length);
-    const f_string_range_t range_parameter = macro_f_string_range_t_initialize2(F_iki_vocabulary_0002_parameter_s_length);
-
     f_iki_data_t iki_data = f_iki_data_t_initialize;
 
     f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
@@ -302,19 +298,19 @@ extern "C" {
 
           is = 0;
 
-          *status = fl_string_dynamic_partial_compare(vocabulary_define, data_make->buffer, range_define, iki_data.vocabulary.array[j]);
+          *status = fl_string_dynamic_partial_compare_string(vocabulary_define.string, data_make->buffer, vocabulary_define.used, iki_data.vocabulary.array[j]);
 
           if (*status == F_equal_to) {
             is = 2;
           }
           else if (*status == F_equal_to_not) {
-            *status = fl_string_dynamic_partial_compare(vocabulary_parameter, data_make->buffer, range_parameter, iki_data.vocabulary.array[j]);
+            *status = fl_string_dynamic_partial_compare_string(vocabulary_parameter.string, data_make->buffer, vocabulary_parameter.used, iki_data.vocabulary.array[j]);
 
             if (*status == F_equal_to) {
               is = 1;
             }
             else if (*status == F_equal_to_not) {
-              *status = fl_string_dynamic_partial_compare(vocabulary_context, data_make->buffer, range_context, iki_data.vocabulary.array[j]);
+              *status = fl_string_dynamic_partial_compare_string(vocabulary_context.string, data_make->buffer, vocabulary_context.used, iki_data.vocabulary.array[j]);
 
               if (*status == F_equal_to) {
                 is = 3;
@@ -477,14 +473,12 @@ extern "C" {
             }
           }
           else if (is == 2) {
-            if (data_make->setting_make.load_build) {
-              *status = fake_make_operate_expand_environment(data_make, quotes.array[i], iki_data.content.array[j], arguments);
+            *status = fake_make_operate_expand_environment(data_make, quotes.array[i], iki_data.content.array[j], arguments);
 
-              if (F_status_is_error(*status)) {
-                fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_environment", F_true);
+            if (F_status_is_error(*status)) {
+              fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_operate_expand_environment", F_true);
 
-                break;
-              }
+              break;
             }
           }
           else if (is == 3) {
