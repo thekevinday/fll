@@ -6,7 +6,10 @@ extern "C" {
 
 #ifndef _di_f_pipe_input_exists_
   f_status_t f_pipe_input_exists(void) {
+
     struct stat st_info;
+
+    memset(&st_info, 0, sizeof(struct stat));
 
     if (fstat(F_type_descriptor_input_d, &st_info) != 0) {
       return F_status_set_error(F_file_stat);
@@ -22,7 +25,10 @@ extern "C" {
 
 #ifndef _di_f_pipe_warning_exists_
   f_status_t f_pipe_warning_exists(void) {
+
     struct stat st_info;
+
+    memset(&st_info, 0, sizeof(struct stat));
 
     if (fstat(F_type_descriptor_warning_d, &st_info) != 0) {
       return F_status_set_error(F_file_stat);
@@ -38,7 +44,10 @@ extern "C" {
 
 #ifndef _di_f_pipe_error_exists_
   f_status_t f_pipe_error_exists(void) {
+
     struct stat st_info;
+
+    memset(&st_info, 0, sizeof(struct stat));
 
     if (fstat(F_type_descriptor_error_d, &st_info) != 0) {
       return F_status_set_error(F_file_stat);
@@ -54,7 +63,10 @@ extern "C" {
 
 #ifndef _di_f_pipe_debug_exists_
   f_status_t f_pipe_debug_exists(void) {
+
     struct stat st_info;
+
+    memset(&st_info, 0, sizeof(struct stat));
 
     if (fstat(F_type_descriptor_debug_d, &st_info) != 0) {
       return F_status_set_error(F_file_stat);
