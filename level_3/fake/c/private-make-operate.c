@@ -122,7 +122,7 @@ extern "C" {
     }
 
     if (status != F_child) {
-      f_status_t status_path = f_path_change_at(data_make.path.top.id);
+      const f_status_t status_path = f_path_change_at(data_make.path.top.id);
 
       if (F_status_is_error(status_path) && data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
         flockfile(data->main->warning.to.stream);
@@ -167,7 +167,7 @@ extern "C" {
 
     f_iki_data_t iki_data = f_iki_data_t_initialize;
 
-    f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->data, 0);
+    f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->main, 0);
 
     f_string_range_t range = f_string_range_t_initialize;
     f_string_map_multis_t *parameter = &data_make->setting_make.parameter;
