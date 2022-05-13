@@ -390,6 +390,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   Errors (with error bit) from: f_signal_close().
  *
  * @see f_signal_close()
@@ -409,6 +411,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_signal_mask().
  *   Errors (with error bit) from: f_signal_open().
@@ -433,7 +437,7 @@ extern "C" {
  *
  * @return
  *   A positive number representing a valid signal on signal received.
- *   F_false on no signal received.
+ *   F_false on no signal received or when main is NULL.
  *
  * @see f_signal_read()
  */

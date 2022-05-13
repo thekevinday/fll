@@ -290,6 +290,10 @@ extern "C" {
 
 #ifndef _di_fll_program_standard_setdown_
   f_status_t fll_program_standard_setdown(f_signal_t * const signal) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!signal) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
+
 
     // Flush output pipes before closing.
     fflush(F_type_output_d);
@@ -310,6 +314,9 @@ extern "C" {
 
 #ifndef _di_fll_program_standard_setup_
   f_status_t fll_program_standard_setup(f_signal_t * const signal) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!signal) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
     f_signal_set_empty(&signal->set);
     f_signal_set_add(F_signal_abort, &signal->set);
@@ -340,7 +347,7 @@ extern "C" {
 #ifndef _di_fll_program_standard_signal_received_
   f_status_t fll_program_standard_signal_received(fll_program_data_t * const main) {
 
-    if (main->signal.id == -1) {
+    if (!main || main->signal.id == -1) {
       return F_false;
     }
 
@@ -377,11 +384,11 @@ extern "C" {
       return F_interrupt_not;
     }
 
-    fll_program_data_t *data = (fll_program_data_t *) state_ptr->custom;
+    fll_program_data_t *custom = (fll_program_data_t *) state_ptr->custom;
 
-    data->signal_received = fll_program_standard_signal_received(data);
+    custom->signal_received = fll_program_standard_signal_received(custom);
 
-    if (data->signal_received == F_signal_abort || data->signal_received == F_signal_broken_pipe || data->signal_received == F_signal_hangup || data->signal_received == F_signal_interrupt || data->signal_received == F_signal_quit || data->signal_received == F_signal_termination) {
+    if (custom->signal_received == F_signal_abort || custom->signal_received == F_signal_broken_pipe || custom->signal_received == F_signal_hangup || custom->signal_received == F_signal_interrupt || custom->signal_received == F_signal_quit || custom->signal_received == F_signal_termination) {
       return F_status_set_error(F_interrupt);
     }
 
