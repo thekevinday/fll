@@ -33,6 +33,7 @@ extern "C" {
 
     if (fchdir(at_id) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ELOOP) return F_status_set_error(F_loop);
@@ -40,7 +41,6 @@ extern "C" {
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
 
       return F_status_set_error(F_failure);
     }
@@ -97,56 +97,48 @@ extern "C" {
       if (!directory) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const f_array_length_t used_original = argument.used;
-
     directory->used = 0;
 
-    if (!used_original) {
+    if (!argument.used) {
       return F_none;
     }
 
-    // Ensure enough space is available for termiting slash and terminating NULL.
+    // Ensure enough space is available for terminating slash and terminating NULL.
     if (argument.string[argument.used - 1] == f_path_separator_s.string[0]) {
-      const f_status_t status = f_string_dynamic_increase_by(used_original + 1, directory);
+      const f_status_t status = f_string_dynamic_increase_by(argument.used + 1, directory);
       if (F_status_is_error(status)) return status;
     }
     else {
-      const f_status_t status = f_string_dynamic_increase_by(used_original + 2, directory);
+      const f_status_t status = f_string_dynamic_increase_by(argument.used + 2, directory);
       if (F_status_is_error(status)) return status;
-    }
-
-    if (used_original == 1) {
-      directory->string[0] = argument.string[0];
-
-      return F_none;
     }
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    do {
+    while (i < argument.used) {
+
       if (argument.string[i] == f_path_separator_s.string[0]) {
         directory->string[directory->used++] = f_path_separator_s.string[0];
 
         do {
           ++i;
-        } while (i < used_original && (argument.string[i] == f_path_separator_s.string[0] || !argument.string[i]));
+        } while (i < argument.used && (argument.string[i] == f_path_separator_s.string[0] || !argument.string[i]));
       }
       else {
         j = i + 1;
 
-        while (j < used_original && argument.string[j] != f_path_separator_s.string[0]) {
+        while (j < argument.used && argument.string[j] != f_path_separator_s.string[0]) {
           ++j;
         } // while
 
-        // Use memcpy() to take advantage of its optimized copy behaviors whenever possible.
+        // Use memcpy() to take advantage of its optimized copy behaviors.
         memcpy(directory->string + directory->used, argument.string + i, sizeof(f_char_t) * (j - i));
 
         directory->used += j - i;
         i = j;
       }
-
-    } while (i < used_original);
+    } // while
 
     if (directory->string[directory->used - 1] != f_path_separator_s.string[0]) {
       directory->string[directory->used++] = f_path_separator_s.string[0];
@@ -161,7 +153,7 @@ extern "C" {
 #ifndef _di_f_path_is_
   f_status_t f_path_is(const f_string_static_t path) {
 
-    if (!path.string || !path.used) {
+    if (!path.used || !path.string) {
       return F_data_not;
     }
 
@@ -176,7 +168,7 @@ extern "C" {
 #ifndef _di_f_path_is_absolute_
   f_status_t f_path_is_absolute(const f_string_static_t path) {
 
-    if (!path.string || !path.used) {
+    if (!path.used || !path.string) {
       return F_data_not;
     }
 
@@ -196,7 +188,7 @@ extern "C" {
 #ifndef _di_f_path_is_relative_
   f_status_t f_path_is_relative(const f_string_static_t path) {
 
-    if (!path.string || !path.used) {
+    if (!path.used || !path.string) {
       return F_data_not;
     }
 
@@ -216,7 +208,7 @@ extern "C" {
 #ifndef _di_f_path_is_relative_current_
   f_status_t f_path_is_relative_current(const f_string_static_t path) {
 
-    if (!path.string || !path.used) {
+    if (!path.used || !path.string) {
       return F_data_not;
     }
 

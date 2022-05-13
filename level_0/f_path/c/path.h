@@ -36,6 +36,8 @@ extern "C" {
 /**
  * Change to a path.
  *
+ * When path.used is 0, then this is treated as an empty string.
+ *
  * @param path
  *   The file path.
  *
@@ -197,6 +199,8 @@ extern "C" {
  *
  * A string without any path parts that could be a path is considered a relative path by this function.
  * That is to say "my_file.txt" is a relative path string.
+ *
+ * The strings that are relative to the current path, such as  "./my_file.txt", are considered relative by this function.
  *
  * @param path
  *   The string that may or may not represent a relative path.
