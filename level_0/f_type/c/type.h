@@ -125,12 +125,13 @@ extern "C" {
     interrupt, \
     callbacks, \
     custom, \
-    data \
+    data, \
   }
 
   #define macro_f_state_t_clear(state) \
     state.step_large = 0; \
     state.step_small = 0; \
+    state.flag = 0; \
     state.handle = 0; \
     state.interrupt = 0; \
     state.callbacks = 0; \
