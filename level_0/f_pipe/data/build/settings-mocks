@@ -1,0 +1,50 @@
+# fss-0001
+
+build_name f_pipe
+
+version_major 0
+version_minor 5
+version_micro 9
+version_file micro
+version_target minor
+
+modes individual clang test
+modes_default individual
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc
+build_libraries-individual
+
+build_sources_library pipe.c ../../tests/unit/c/mock-pipe.c
+
+build_sources_headers pipe.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll/level_0
+path_library_script script
+path_library_shared shared
+path_library_static static
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+flags -O0 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector
+
+flags_library -fPIC
+
+# Inject mocks.
+flags -Wl,--wrap=fstat
