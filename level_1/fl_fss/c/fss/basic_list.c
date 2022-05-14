@@ -636,6 +636,12 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (status == F_true) {
+          if (object.string[range->start] == f_fss_eol_s.string[0]) {
+            status = F_status_set_error(F_none_eol);
+
+            break;
+          }
+
           width = macro_f_utf_byte_width(object.string[range->start]);
 
           status = f_string_dynamic_increase_by(width, destination);

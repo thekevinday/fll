@@ -856,6 +856,10 @@ extern "C" {
       return F_data_not_stop;
     }
 
+    if (status == F_none_eol) {
+      return F_status_set_error(F_none_eol);
+    }
+
     // Ensure that there is room for the potential start and stop quotes, a potential delimit at start, and the potential object open character.
     status = f_string_dynamic_increase_by(5, destination);
     if (F_status_is_error(status)) return status;
@@ -985,6 +989,12 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           if (status == F_true) {
+            if (object.string[range->start] == f_fss_eol_s.string[0]) {
+              status = F_status_set_error(F_none_eol);
+
+              break;
+            }
+
             quoted_is = F_true;
 
             status = f_string_dynamic_increase_by(item_total, destination);
@@ -1047,6 +1057,12 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           if (status == F_true) {
+            if (object.string[range->start] == f_fss_eol_s.string[0]) {
+              status = F_status_set_error(F_none_eol);
+
+              break;
+            }
+
             quoted_is = F_true;
           }
 
@@ -1107,6 +1123,12 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (status == F_true) {
+          if (object.string[range->start] == f_fss_eol_s.string[0]) {
+            status = F_status_set_error(F_none_eol);
+
+            break;
+          }
+
           if (item_first != input_start) {
             status = f_string_dynamic_increase(state.step_large, destination);
             if (F_status_is_error(status)) break;
@@ -1205,7 +1227,14 @@ extern "C" {
             return status;
           }
 
-          if (status == F_false) {
+          if (status == F_true) {
+            if (object.string[i] == f_fss_eol_s.string[0]) {
+              destination->used = used_start;
+
+              return F_status_set_error(F_none_eol);
+            }
+          }
+          else {
             destination->string[used_start + 1] = f_fss_delimit_placeholder_s.string[0];
           }
         }
