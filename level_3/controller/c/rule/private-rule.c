@@ -4309,7 +4309,7 @@ extern "C" {
 
               controller_lock_print(global.main->error.to, global.thread);
 
-              fl_print_format("%r%[%QThe resource limit type is already specified%]%r", global.main->error.to.stream, f_string_eol_s, global.main->error.context, main->error.prefix, global.main->error.context, f_string_eol_s);
+              fl_print_format("%r%[%QThe resource limit type is already specified%]%r", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s);
 
               controller_rule_print_error_cache(global.main->error, cache->action, F_false);
 
